@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="null" threshold="null">
+
+    <appender class="org.apache.log4j.ConsoleAppender" name="StdOut">
+        <param name="Threshold" value="debug" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{HH:mm:ss.SSS}  %-5p  %m%n"/>
+        </layout>
+    </appender>
+
+    <appender class="org.apache.log4j.DailyRollingFileAppender" name="RollingFile">
+        <param name="File" value="debug.log" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+        <param name="Threshold" value="debug" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{HH:mm:ss.SSS}  %-5p  %m%n"/>
+        </layout>
+    </appender>
+
+    <appender class="org.apache.log4j.DailyRollingFileAppender" name="PacketLogFile">
+        <param name="File" value="packet.log" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+        <param name="Threshold" value="trace" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS}%m%n"/>
+        </layout>
+    </appender>
+
+    <logger additivity="false" name="com.zsmartsystems.zigbee.network.port.PacketLogger">
+        <level value="trace"/>
+        <appender-ref ref="PacketLogFile" />
+    </logger>
+
+    <logger additivity="true" name="com.zsmartsystems.zigbee">
+        <level value="debug"/>
+        <appender-ref ref="StdOut" />
+        <appender-ref ref="RollingFile" />
+    </logger>
+
+    <!-- Set the commons logging that the XML parser uses to WARN -->
+    <logger name="org.apache.commons">
+        <level value="off"/>
+    </logger>
+
+    <root>
+        <priority value ="debug" />
+        <appender-ref ref="RollingFile" />
+    </root>
+
+</log4j:configuration>

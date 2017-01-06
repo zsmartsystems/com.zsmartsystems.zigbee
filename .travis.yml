@@ -1,0 +1,24 @@
+language: java
+before_script:
+- echo "https://${GH_TOKEN}:@github.com" > .git/credentials
+install:
+- git clone https://github.com/$TRAVIS_REPO_SLUG.git $HOME/$TRAVIS_REPO_SLUG
+- cd $HOME/$TRAVIS_REPO_SLUG
+- git checkout -qf $TRAVIS_COMMIT
+script: mvn clean test jacoco:report coveralls:report
+notifications:
+  email:
+  - chris@cd-jackson.com
+before_deploy: git checkout master
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: mvn -B release:prepare release:perform  -DskipTests=true --settings settings.xml
+  on:
+    condition: "$TRAVIS_TAG = *-release-ready"
+    all_branches: true
+env:
+  global:
+  - secure: mvuWhm/PsG4PMXsA0R8pEj1iSTbWuQKq57W9zaQGO1MuzK7e5lA1wHJp86GbFVphummUmB7YQJ8cGQgFof4vUi7EiN/7YAWys3xb+zLFe0Oo7s7gaHcR9sreolQ3TOHD0OdH+KHwMv8Oyr0vQpD75AP5RdazOGnniXKvKZ9JViISfn7DwPmQHnswS5OiXifbyAOqXjlIiv8fX3XUiLdSkK0ZxkPAfEfwE1BBEMxjcck4mo2OsiztvJBVO1pfnMMtNV4NbFkyEJjYj78QLEPFlgeGLzAdjpbguCblZL/dWdZb2z9nRMlAg21DtHx7M7nk1OG9zP9U5WPznnZm94qDYwY1XlcSNiZSH5mLiejKwRYACwAPZf4eIEnecnj2yXaq4C7TmE/XB034/X4rd0PhAZSJxbES4hjnc5zZ8s8Aid4jCr17rTiLlNPA+A52HIS6az93DyMzZQVexbUk6Bu1k7/s0Uk8pSa/ZiGw/p4W1L4JR/SjNv7spjYzFZF5+BBHp7BXGdNycwrT7P11z699ZRRd2UsBhgC8X3/rcl2AujTDLMLz3Yb2Ze+sq3DSKujYxwH+mdAC0T6GrXXmHww2eu0i5ltTLw2+7/JGMjUBYUI2pKYpmvJ9qpgSyU7vQeEz/nW7/BGyTS98Tm/E+KT2fKQnTI0EoaedZWXl1XpuKzU=
+  - secure: oP8szR+N0Hlee+Y3JTpA8N+Easpd6YtsZf01+Ix1n/cC8Uas8O5wLHDYA01fBlk5KjgENlULwsAZJQjpl7EMzK1P9LjqaMKJ3mmi+EsyPFifwhQrRpU8U/7IIl7vQbiBlulatY6jhIaecTndJIoACL5KE4rgICS27P7/hnFBoYeLW/dWoYfKh324X7YaCRSmV8zsKcxadE1gdMU3NiS9wgP77lOVH0rOwYP7fK/xPEDcKIOF0BQVVFroY/5Jpliq2TyEncVb7aLj2Gt7PqrToXUYgL3r9TkbgnwT8N9uQNVGoczUiytKIvGldfUB0luSzqQvlJfRv8soziDuuSGpxKATwO/k0tYKVJdtQqdg1wnE/sByOzWXfFIZ/v768GyPnOBD5G6Cpea2x3axq+iXItwrGHzQBVICPxSY7KA/y1D2VcfcwmH6JSH5uGR4QZIeOFQ0zF7fALIOR7C1AgDIdC05Zmg3IDAxig6vuREi9xKW00wnSgej2JS3eHbRRxVHOgZtUcGNAMVkLmAKFqr8YAdlyvaGWm37/AxiTtFQ6IIatGIbSZRvrbpCxvmYAZ2P7NDH+dXtrh9gzcjjKaJaNdrp8Z4WoPpXdxve1tgSJw51tu9AQcxna5sMbwlmsrMRu41KNwZY9ak36JOtLrfJ+vpvsaZ3gqw62TGUzKq3PJc=
+  - secure: UzuMC4uzC+DXkcgXexqwSSsJF4EiFZxMc7HPQo7MvxrDiQx5h0NyOeubnO7jvPjuPU3JViRIfq1Crz9tpAKdax+bgFqsBflamQQxqzsMQwX+jqUtJmyx3ES8cgBuWVxU84mcct4XX/EtM6iiEWeNg8Oab0JtrZxxAZ1LDfJ+uvRVv9ZWfJBT2JRW13KBvKa05mAgPd1zKGUtollbntvP9qbdqOobArf/hyWHPi7bFpWUpLnmtNSI9gD9+p73iv/b4mpC6g0CZuGy8Q1c6NoohUw4LOf8V5kSOdv0DhWb6XTsQpLRAr6pYdhyv4hxzsTTvDaJ0PNMLUlOdpUOg873bMjmOeHEA9EpAZK5qUT2aWBriQvCSdWJUt3F57LLcxZR5zSMkvz/FDdVEI8OItJXx3k6vAkha2++jJsIAsxsopp2UK+Di2+P6Alt38dzFEjLLEMmS8vxmzUI7Ngy10EwyKqLY2uBd3D2Eai5eP4SiES3SzPBq/a9HsCHqctNAPJSfGuDnJ0L4z9FlJU1TWWLRbd85oo6cMG9I+FaeshLUBx39YNeUOSnD7Bg/JWbu5AyDIuzMB1A924dNEHbll3Z/L/+Je5x2Kc1CklDlkflFe7ofPLIvtzeJBscsMguVfm8xiW/ygS/AhS1dv7+iRczpwwRw/SDjjWJuua+kFwPIuw=

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="null" threshold="null">
+
+    <appender class="org.apache.log4j.ConsoleAppender" name="STDOUT">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{HH:mm:ss SSS}  %-5p  %m%n"/>
+        </layout>
+    </appender>
+
+    <logger additivity="true" name="org.bubblecloud.zigbee">
+        <level value="debug"/>
+    </logger>
+
+
+    <!-- Set the commons logging that the XML parser uses to WARN, it is very chatty at debug -->
+    <logger name="org.apache.commons">
+        <level value="off"/>
+    </logger>
+
+    <root>
+        <priority value ="info" />
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</log4j:configuration>
