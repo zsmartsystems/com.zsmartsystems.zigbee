@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -38,23 +37,12 @@ public class DiscoverAttributesCommand extends ZclCommand {
     private Integer maximumAttributeIdentifiers;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public DiscoverAttributesCommand() {
         genericCommand = true;
         commandId = 12;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public DiscoverAttributesCommand(final Map<Integer, Object> fields) {
-        this();
-        startAttributeIdentifier = (Integer) fields.get(0);
-        maximumAttributeIdentifiers = (Integer) fields.get(1);
     }
 
     /**

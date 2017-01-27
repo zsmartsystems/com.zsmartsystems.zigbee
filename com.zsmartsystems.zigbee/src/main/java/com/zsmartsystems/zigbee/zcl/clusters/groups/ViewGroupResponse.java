@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -57,25 +56,13 @@ public class ViewGroupResponse extends ZclCommand {
     private String groupName;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public ViewGroupResponse() {
         genericCommand = false;
         clusterId = 4;
         commandId = 1;
         commandDirection = false;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public ViewGroupResponse(final Map<Integer, Object> fields) {
-        this();
-        status = (Integer) fields.get(0);
-        groupId = (Integer) fields.get(1);
-        groupName = (String) fields.get(2);
     }
 
     /**

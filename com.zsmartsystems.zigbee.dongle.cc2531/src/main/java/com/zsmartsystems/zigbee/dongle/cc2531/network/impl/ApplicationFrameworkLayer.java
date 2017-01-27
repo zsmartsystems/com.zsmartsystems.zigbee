@@ -34,8 +34,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.dongle.cc2531.network.ClusterMessage;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER_SRSP;
@@ -53,14 +51,23 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclProfileType;
  *
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:francesco.furfari@isti.cnr.it">Francesco Furfari</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
- * @since 0.1.0
+ * @author Chris Jackson
  */
 public class ApplicationFrameworkLayer {
 
     private final static Object LOCK = new Object();
     private final static Logger logger = LoggerFactory.getLogger(ApplicationFrameworkLayer.class);
     private final static int MAX_CLUSTERS_PER_AF_REGISTER = 16;
+
+    private static ApplicationFrameworkLayer singleton;
+
+    private final HashMap<SenderIdentifier, Short> sender2EndPoint = new HashMap<SenderIdentifier, Short>();
+    private final HashMap<Integer, List<Integer>> profile2Cluster = new HashMap<Integer, List<Integer>>();
+    private final HashMap<Short, Byte> endPoint2Transaction = new HashMap<Short, Byte>();
+
+    private final ZigBeeNetworkManager driver;
+
+    private byte firstFreeEndPoint;
 
     class SenderIdentifier {
         int profileId;
@@ -87,21 +94,9 @@ public class ApplicationFrameworkLayer {
         }
     }
 
-    private static ApplicationFrameworkLayer singleton;
-
-    final HashMap<SenderIdentifier, Short> sender2EndPoint = new HashMap<SenderIdentifier, Short>();
-    final HashMap<Integer, List<Integer>> profile2Cluster = new HashMap<Integer, List<Integer>>();
-    final HashMap<Short, Byte> endPoint2Transaction = new HashMap<Short, Byte>();
-
-    private final ZigBeeNetworkManager driver;
-    private final ZigBeeNetwork network;
-
-    private byte firstFreeEndPoint;
-
     private ApplicationFrameworkLayer(ZigBeeNetworkManager driver) {
         this.driver = driver;
         firstFreeEndPoint = 1;
-        network = new ZigBeeNetwork();
     }
 
     public static ApplicationFrameworkLayer getAFLayer(ZigBeeNetworkManager driver) {
@@ -144,9 +139,9 @@ public class ApplicationFrameworkLayer {
         throw new IllegalArgumentException("No sender EndPoint " + endpointId + " with cluster " + clusterId + ".");
     }
 
-    public short getSendingEndpoint(ZigBeeEndpoint endpoint, ClusterMessage input) {
-        return getSendingEndpoint(endpoint.getProfileId(), input.getId());
-    }
+    // public short getSendingEndpoint(ZigBeeEndpoint endpoint, ClusterMessage input) {
+    // return getSendingEndpoint(endpoint.getProfileId(), input.getId());
+    // }
 
     /**
      * Creates default sending end point.
@@ -293,7 +288,7 @@ public class ApplicationFrameworkLayer {
 
     private Set<Integer> collectClusterForProfile(int profileId) {
         final HashSet<Integer> clusters = new HashSet<Integer>();
-        final Collection<ZigBeeEndpoint> endpoints = network.getEndpoints(profileId);
+        final Collection<ZigBeeEndpoint> endpoints = getEndpoints(profileId);
         logger.debug("Found {} devices belonging to profile {}", endpoints.size(), profileId);
         for (ZigBeeEndpoint endpoint : endpoints) {
             int[] ids;
@@ -321,13 +316,18 @@ public class ApplicationFrameworkLayer {
         return clusters;
     }
 
-    /**
-     * Returns the {@link ZigBeeNetwork}
-     *
-     * @return {@link ZigBeeNetwork}
-     */
-    public ZigBeeNetwork getZigBeeNetwork() {
-        return network;
+    private final HashMap<Integer, ArrayList<ZigBeeEndpoint>> profiles = new HashMap<Integer, ArrayList<ZigBeeEndpoint>>();
+
+    public synchronized Collection<ZigBeeEndpoint> getEndpoints(int profileId) {
+        final ArrayList<ZigBeeEndpoint> result = new ArrayList<ZigBeeEndpoint>();
+        final ArrayList<ZigBeeEndpoint> values = profiles.get(profileId);
+        if (values == null) {
+            logger.warn("No endpoints found implementing the profile={}", profileId);
+        } else {
+            logger.trace("We found {} implementing the profile={}", values.size(), profileId);
+            result.addAll(values);
+        }
+        return result;
     }
 
     /**

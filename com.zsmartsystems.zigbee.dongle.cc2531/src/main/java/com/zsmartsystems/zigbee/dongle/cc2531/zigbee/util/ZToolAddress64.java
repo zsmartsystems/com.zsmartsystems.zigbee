@@ -26,7 +26,6 @@
 package com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util;
 
 import java.util.Arrays;
-import java.util.StringTokenizer;
 
 /**
  * Big Endian container for 64-bit XBee Address
@@ -48,56 +47,12 @@ public class ZToolAddress64 extends ZToolAddress {
 
     private byte[] address;
 
-    /**
-     * Parses an 64-bit XBee address from a string representation
-     * Must be in the format "## ## ## ## ## ## ## ##" (i.e. don't use 0x prefix)
-     *
-     * @param addressStr
-     */
-    public ZToolAddress64(String addressStr) {
-        StringTokenizer st = new StringTokenizer(addressStr, " ");
-
-        address = new byte[8];
-
-        for (int i = 0; i < address.length; i++) {
-            String byteStr = st.nextToken();
-            address[i] = (byte) (Integer.parseInt(byteStr, 16) & 0xFF);
-
-            // log.debug("byte is " + ByteUtils.toBase16(address[i]) + " at pos " + i);
-        }
-    }
-
     public ZToolAddress64(long ieee) {
         address = new byte[8];
         for (int i = address.length - 1; i >= 0; i--) {
             address[i] = (byte) ieee;
             ieee = ieee >> 8;
         }
-    }
-
-    /**
-     * Creates a 64-bit address
-     *
-     * @param b1 MSB
-     * @param b2
-     * @param b3
-     * @param b4
-     * @param b5
-     * @param b6
-     * @param b7
-     * @param b8 LSB
-     */
-    public ZToolAddress64(byte b1, byte b2, byte b3, byte b4, byte b5, byte b6, byte b7, byte b8) {
-        address = new byte[8];
-
-        address[0] = b1;
-        address[1] = b2;
-        address[2] = b3;
-        address[3] = b4;
-        address[4] = b5;
-        address[5] = b6;
-        address[6] = b7;
-        address[7] = b8;
     }
 
     public ZToolAddress64(byte[] address) {

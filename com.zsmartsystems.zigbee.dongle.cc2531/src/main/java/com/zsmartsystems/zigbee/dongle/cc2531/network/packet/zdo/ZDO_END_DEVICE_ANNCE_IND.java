@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,10 +33,10 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
  * This callback indicates the ZDO End Device Announce, as long as the ZCD_NV_ZDO_DIRECT_CB
  * configuration item is set to TRUE. This can be caused by another device sending out the
  * END_DEVICE_ANNCE message to the network.
+ * 
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
  */
-public class ZDO_END_DEVICE_ANNCE_IND extends ZToolPacket /*implements IRESPONSE_CALLBACK,IZDO*/ {
+public class ZDO_END_DEVICE_ANNCE_IND extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     /// <name>TI.ZPI2.ZDO_END_DEVICE_ANNCE_IND.Capabilities</name>
     /// <summary>Capabilities</summary>
     public int Capabilities;

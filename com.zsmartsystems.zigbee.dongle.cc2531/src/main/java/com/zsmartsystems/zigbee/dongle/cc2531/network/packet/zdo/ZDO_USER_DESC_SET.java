@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,22 +30,20 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 
 /**
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
  */
-public class ZDO_USER_DESC_SET extends ZToolPacket /*implements IREQUEST,IZDO*/ {
+public class ZDO_USER_DESC_SET extends ZToolPacket /* implements IREQUEST,IZDO */ {
     /// <name>TI.ZPI1.ZDO_USER_DESC_SET.DescLen</name>
     /// <summary>Length, in bytes, of the user descriptor.</summary>
-    public int DescLen;
+    private int DescLen;
     /// <name>TI.ZPI1.ZDO_USER_DESC_SET.Descriptor</name>
     /// <summary>User descriptor array (can be up to 15 bytes).</summary>
-    public int[] Descriptor;
+    private int[] Descriptor;
     /// <name>TI.ZPI1.ZDO_USER_DESC_SET.DstAddr</name>
     /// <summary>Destination network address.</summary>
-    public ZToolAddress16 DstAddr;
+    private ZToolAddress16 DstAddr;
     /// <name>TI.ZPI1.ZDO_USER_DESC_SET.NWKAddrOfInterest</name>
     /// <summary>NWK address for the request.</summary>
-    public ZToolAddress16 nwkAddr;
-
+    private ZToolAddress16 nwkAddr;
 
     /// <name>TI.ZPI1.ZDO_USER_DESC_SET</name>
     /// <summary>Constructor</summary>
@@ -59,12 +57,14 @@ public class ZDO_USER_DESC_SET extends ZToolPacket /*implements IREQUEST,IZDO*/ 
         this.DescLen = num3;
         this.Descriptor = new int[buffer1.length];
         this.Descriptor = buffer1;
-        /*if (buffer1.Length > 15)
-        {
-        throw new Exception("Error creating object.");
-        }
-        this.Descriptor = new byte[15];
-        Array.Copy(buffer1, this.Descriptor, buffer1.Length);*/
+        /*
+         * if (buffer1.Length > 15)
+         * {
+         * throw new Exception("Error creating object.");
+         * }
+         * this.Descriptor = new byte[15];
+         * Array.Copy(buffer1, this.Descriptor, buffer1.Length);
+         */
 
         int[] framedata = new int[5 + this.Descriptor.length];
         framedata[0] = this.DstAddr.getLsb();

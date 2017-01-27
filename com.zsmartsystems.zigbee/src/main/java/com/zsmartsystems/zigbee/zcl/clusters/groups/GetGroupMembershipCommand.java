@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.List;
 import java.util.Map;
@@ -54,24 +53,13 @@ public class GetGroupMembershipCommand extends ZclCommand {
     private List<Unsigned16BitInteger> groupList;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public GetGroupMembershipCommand() {
         genericCommand = false;
         clusterId = 4;
         commandId = 2;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public GetGroupMembershipCommand(final Map<Integer, Object> fields) {
-        this();
-        groupCount = (Integer) fields.get(0);
-        groupList = (List<Unsigned16BitInteger>) fields.get(1);
     }
 
     /**

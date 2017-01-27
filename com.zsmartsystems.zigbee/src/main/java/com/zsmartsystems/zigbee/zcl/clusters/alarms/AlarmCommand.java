@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -47,24 +46,13 @@ public class AlarmCommand extends ZclCommand {
     private Integer clusterIdentifier;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public AlarmCommand() {
         genericCommand = false;
         clusterId = 9;
         commandId = 0;
         commandDirection = false;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public AlarmCommand(final Map<Integer, Object> fields) {
-        this();
-        alarmCode = (Integer) fields.get(0);
-        clusterIdentifier = (Integer) fields.get(1);
     }
 
     /**

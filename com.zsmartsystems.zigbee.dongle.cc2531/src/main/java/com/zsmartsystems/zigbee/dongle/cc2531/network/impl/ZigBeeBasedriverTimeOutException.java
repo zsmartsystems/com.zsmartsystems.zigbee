@@ -24,8 +24,6 @@ package com.zsmartsystems.zigbee.dongle.cc2531.network.impl;
 
 /**
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
- * @since 0.6.0
  */
 public class ZigBeeBasedriverTimeOutException extends ZigBeeNetworkManagerException {
 
@@ -37,13 +35,4 @@ public class ZigBeeBasedriverTimeOutException extends ZigBeeNetworkManagerExcept
     public ZigBeeBasedriverTimeOutException() {
         super("Timeout expired before receiving any data");
     }
-
-    public ZigBeeBasedriverTimeOutException(String msg) {
-        super(msg);
-    }
-
-    public ZigBeeBasedriverTimeOutException(Throwable ex) {
-        super(ex);
-    }
-
 }

@@ -652,10 +652,12 @@ public class ZclProtocolCodeGenerator {
                     // out.println("import " + packageRootPrefix + packageZcl + ".ZclCommandMessage;");
                     out.println("import " + packageRootPrefix + packageZcl + ".ZclCommand;");
                     // out.println("import " + packageRootPrefix + packageZcl + ".ZclField;");
-                    out.println("import " + packageRootPrefix + packageZcl + ".ZclFieldSerializer;");
-                    out.println("import " + packageRootPrefix + packageZcl + ".ZclFieldDeserializer;");
+                    if (fields.size() > 0) {
+                        out.println("import " + packageRootPrefix + packageZcl + ".ZclFieldSerializer;");
+                        out.println("import " + packageRootPrefix + packageZcl + ".ZclFieldDeserializer;");
+                    }
                     out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclDataType;");
-                    out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclClusterType;");
+                    // out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclClusterType;");
                     // out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclCommandType;");
                     // if (!fields.isEmpty()) {
                     // out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclFieldType;");
@@ -749,7 +751,7 @@ public class ZclProtocolCodeGenerator {
                     // }
 
                     out.println("    /**");
-                    out.println("     * Default constructor setting the command type field.");
+                    out.println("     * Default constructor.");
                     out.println("     */");
                     out.println("    public " + className + "() {");
                     // out.println(" setType(ZclCommandType." + command.commandType + ");");
@@ -764,19 +766,19 @@ public class ZclProtocolCodeGenerator {
                             + (cluster.received.containsValue(command) ? "true" : "false") + ";");
 
                     out.println("    }");
-                    out.println();
-                    out.println("    /**");
-                    out.println("     * Constructor copying field values from command message.");
-                    out.println("     *");
-                    out.println("     * @param fields a {@link Map} containing the value {@link Object}s");
-                    out.println("     */");
-                    out.println("    public " + className + "(final Map<Integer, Object> fields) {");
-                    out.println("        this();");
-                    for (final Field field : fields) {
-                        out.println("        " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
-                                + ") fields.get(" + field.fieldId + ");");
-                    }
-                    out.println("    }");
+                    // out.println();
+                    // out.println(" /**");
+                    // out.println(" * Constructor copying field values from command message.");
+                    // out.println(" *");
+                    // out.println(" * @param fields a {@link Map} containing the value {@link Object}s");
+                    // out.println(" */");
+                    // out.println(" public " + className + "(final Map<Integer, Object> fields) {");
+                    // out.println(" this();");
+                    // for (final Field field : fields) {
+                    // out.println(" " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
+                    // + ") fields.get(" + field.fieldId + ");");
+                    // }
+                    // out.println(" }");
                     // out.println();
                     // out.println(" @Override");
                     // out.println(" public ZclCommandMessage toCommandMessage() {");
@@ -1042,7 +1044,10 @@ public class ZclProtocolCodeGenerator {
 
                 imports.add(packageRoot + packageZcl + ".ZclCluster");
                 imports.add(packageRoot + packageZclProtocol + ".ZclDataType");
-                imports.add(packageRoot + packageZcl + ".ZclCommand");
+
+                if (!commands.isEmpty()) {
+                    imports.add(packageRoot + packageZcl + ".ZclCommand");
+                }
                 // imports.add(packageRoot + packageZcl + ".ZclCommandMessage");
 
                 // imports.add(packageRoot + ".ZigBeeDestination");
@@ -1134,22 +1139,22 @@ public class ZclProtocolCodeGenerator {
                     if (attribute.attributeAccess.toLowerCase().contains("write")) {
                         out.println();
                         outputAttributeJavaDoc(out, "Set", attribute);
-                        out.println("    public Future<CommandResult> set" + attribute.nameUpperCamelCase
-                                + "(final Object value) {");
+                        out.println("    public Future<CommandResult> set"
+                                + attribute.nameUpperCamelCase.replace("_", "") + "(final Object value) {");
                         out.println("        return write(attributes.get(" + attribute.enumName + "), value);");
                         out.println("    }");
                     }
 
                     if (attribute.attributeAccess.toLowerCase().contains("read")) {
                         outputAttributeJavaDoc(out, "Get", attribute);
-                        out.println(
-                                "    public Future<CommandResult> get" + attribute.nameUpperCamelCase + "Async() {");
+                        out.println("    public Future<CommandResult> get"
+                                + attribute.nameUpperCamelCase.replace("_", "") + "Async() {");
                         out.println("        return read(attributes.get(" + attribute.enumName + "));");
                         out.println("    }");
                         out.println();
                         outputAttributeJavaDoc(out, "Synchronously get", attribute);
-                        out.println("    public " + attribute.dataTypeClass + " get" + attribute.nameUpperCamelCase
-                                + "() {");
+                        out.println("    public " + attribute.dataTypeClass + " get"
+                                + attribute.nameUpperCamelCase.replace("_", "") + "() {");
                         out.println("        return (" + attribute.dataTypeClass + ") readSync(attributes.get("
                                 + attribute.enumName + "));");
                         out.println("    }");

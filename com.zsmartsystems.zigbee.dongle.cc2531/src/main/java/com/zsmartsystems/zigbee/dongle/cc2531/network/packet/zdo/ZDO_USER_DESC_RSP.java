@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,19 +23,18 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo;
 
+import java.util.Arrays;
+
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ResponseStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 
-import java.util.Arrays;
-
 /**
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
  */
-public class ZDO_USER_DESC_RSP extends ZToolPacket/* implements IRESPONSE_CALLBACK,IZDO*/ {
+public class ZDO_USER_DESC_RSP extends ZToolPacket/* implements IRESPONSE_CALLBACK,IZDO */ {
 
     /// <name>TI.ZPI1.ZDO_USER_DESC_RSP.DescLen</name>
     /// <summary>Length, in bytes, of the user descriptor</summary>
@@ -79,12 +78,8 @@ public class ZDO_USER_DESC_RSP extends ZToolPacket/* implements IRESPONSE_CALLBA
 
     @Override
     public String toString() {
-        return "ZDO_USER_DESC_RSP{" +
-                "DescLen=" + DescLen +
-                ", Descriptor=" + Arrays.toString(Descriptor) +
-                ", nwkAddr=" + nwkAddr +
-                ", SrcAddress=" + SrcAddress +
-                ", Status=" + ResponseStatus.getStatus(Status) +
-                '}';
+        return "ZDO_USER_DESC_RSP{" + "DescLen=" + DescLen + ", Descriptor=" + Arrays.toString(Descriptor)
+                + ", nwkAddr=" + nwkAddr + ", SrcAddress=" + SrcAddress + ", Status=" + ResponseStatus.getStatus(Status)
+                + '}';
     }
 }

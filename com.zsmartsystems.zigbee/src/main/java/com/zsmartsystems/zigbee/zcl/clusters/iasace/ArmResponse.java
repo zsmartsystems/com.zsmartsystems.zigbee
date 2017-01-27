@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -34,23 +33,13 @@ public class ArmResponse extends ZclCommand {
     private Integer armNotification;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public ArmResponse() {
         genericCommand = false;
         clusterId = 1281;
         commandId = 0;
         commandDirection = false;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public ArmResponse(final Map<Integer, Object> fields) {
-        this();
-        armNotification = (Integer) fields.get(0);
     }
 
     /**

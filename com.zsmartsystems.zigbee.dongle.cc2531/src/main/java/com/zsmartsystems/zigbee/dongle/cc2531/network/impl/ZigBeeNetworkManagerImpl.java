@@ -112,26 +112,26 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
     private final static Logger logger = LoggerFactory.getLogger(ZigBeeNetworkManagerImpl.class);
 
-    public static final int DEFAULT_TIMEOUT = 8000;
-    public static final String TIMEOUT_KEY = "zigbee.driver.cc2531.timeout";
+    private static final int DEFAULT_TIMEOUT = 8000;
+    private static final String TIMEOUT_KEY = "zigbee.driver.cc2531.timeout";
 
-    public static final int RESET_TIMEOUT_DEFAULT = 5000;
-    public static final String RESET_TIMEOUT_KEY = "zigbee.driver.cc2531.reset.timeout";
+    private static final int RESET_TIMEOUT_DEFAULT = 5000;
+    private static final String RESET_TIMEOUT_KEY = "zigbee.driver.cc2531.reset.timeout";
 
-    public static final int STARTUP_TIMEOUT_DEFAULT = 10000;
-    public static final String STARTUP_TIMEOUT_KEY = "zigbee.driver.cc2531.startup.timeout";
+    private static final int STARTUP_TIMEOUT_DEFAULT = 10000;
+    private static final String STARTUP_TIMEOUT_KEY = "zigbee.driver.cc2531.startup.timeout";
 
-    public static final int RESEND_TIMEOUT_DEFAULT = 1000;
-    public static final String RESEND_TIMEOUT_KEY = "zigbee.driver.cc2531.resend.timeout";
+    private static final int RESEND_TIMEOUT_DEFAULT = 1000;
+    private static final String RESEND_TIMEOUT_KEY = "zigbee.driver.cc2531.resend.timeout";
 
-    public static final int RESEND_MAX_RESEND_DEFAULT = 3;
-    public static final String RESEND_MAX_RESEND_KEY = "zigbee.driver.cc2531.resend.max";
+    private static final int RESEND_MAX_RESEND_DEFAULT = 3;
+    private static final String RESEND_MAX_RESEND_KEY = "zigbee.driver.cc2531.resend.max";
 
-    public static final boolean RESEND_ONLY_EXCEPTION_DEFAULT = true;
-    public static final String RESEND_ONLY_EXCEPTION_KEY = "zigbee.driver.cc2531.resend.exceptionally";
+    private static final boolean RESEND_ONLY_EXCEPTION_DEFAULT = true;
+    private static final String RESEND_ONLY_EXCEPTION_KEY = "zigbee.driver.cc2531.resend.exceptionally";
 
-    public static final int BOOTLOADER_MAGIC_BYTE_DEFAULT = 0xef;
-    public static final String BOOTLOADER_MAGIC_BYTE_KEY = "zigbee.driver.cc2531.bl.magic.byte";
+    private static final int BOOTLOADER_MAGIC_BYTE_DEFAULT = 0xef;
+    private static final String BOOTLOADER_MAGIC_BYTE_KEY = "zigbee.driver.cc2531.bl.magic.byte";
 
     private final int TIMEOUT;
     private final int RESET_TIMEOUT;
@@ -158,6 +158,9 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     private byte[] networkKey; // 16 byte network key
     private boolean distributeNetworkKey = true; // distribute network key in clear (be careful)
     private int securityMode = 1; // int for future extensibility
+
+    private int[] ep, prof, dev, ver;
+    private short[][] inp, out;
 
     // private final Set<AnnounceListener> announceListeners = new HashSet<AnnounceListener>();
     private final NetworkStateListener announceListenerFilter = new NetworkStateListener();
@@ -316,11 +319,10 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
         setState(DriverStatus.NETWORK_INITIALIZING);
 
-        if (cleanStatus) {
-            if (!configureZigBeeNetwork()) {
-                shutdown();
-                return false;
-            }
+        if (cleanStatus && !configureZigBeeNetwork()) {
+            shutdown();
+            return false;
+
         }
         if (!createZigBeeNetwork()) {
             logger.error("Failed to start zigbee network.");
@@ -961,7 +963,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         return true;
     }
 
-    static final int[] buildChannelMask(int channel) {
+    private static final int[] buildChannelMask(int channel) {
         int channelMask = 1 << channel;
         int[] mask = new int[4];
         for (int i = 0; i < mask.length; i++) {
@@ -1358,7 +1360,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
      */
     @Override
     public int getCurrentPanId() {
-        if (waitForHardware() == false) {
+        if (!waitForHardware()) {
             logger.info("Failed to reach the {} level: getCurrentPanId() failed", DriverStatus.NETWORK_READY);
             return -1;
         }
@@ -1459,29 +1461,9 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         return state;
     }
 
-    private int[] ep, prof, dev, ver;
-    private short[][] inp, out;
-
-    private boolean checkString(String s) {
-        if (s != null && !s.isEmpty()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private Short toShort(String s) {
-
-        try {
-            return Short.parseShort(s);
-        } catch (Exception ex) {
-            return -1;
-        }
-    }
-
-    public void createCustomDevicesOnDongle() {
-
-        int[] input, output;
+    private void createCustomDevicesOnDongle() {
+        int[] input;
+        int[] output;
 
         if (this.ep != null) {
             for (int i = 0; i < this.ep.length; i++) {
@@ -1529,7 +1511,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
     }
 
-    public boolean newDevice(AF_REGISTER request) {
+    private boolean newDevice(AF_REGISTER request) {
         try {
             AF_REGISTER_SRSP response = (AF_REGISTER_SRSP) sendSynchrouns(commandInterface, request);
             if (response != null && response.Status == 0) {
@@ -1657,7 +1639,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
         @Override
         public void receivedUnclaimedSynchronousCommandResponse(ZToolPacket packet) {
-
+            // No need to handle unclaimed responses here
         }
 
     }

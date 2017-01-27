@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.List;
 import java.util.Map;
@@ -38,22 +37,12 @@ public class ReadAttributesResponse extends ZclCommand {
     private List<ReadAttributeStatusRecord> records;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public ReadAttributesResponse() {
         genericCommand = true;
         commandId = 1;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public ReadAttributesResponse(final Map<Integer, Object> fields) {
-        this();
-        records = (List<ReadAttributeStatusRecord>) fields.get(0);
     }
 
     /**

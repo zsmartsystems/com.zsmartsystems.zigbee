@@ -32,29 +32,24 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 
 /**
  * This command starts the device in the network.
+ *
  * @author alfiva
  */
-public class ZDO_STARTUP_FROM_APP extends ZToolPacket /*implements IREQUEST,ISYSTEM*/ {
-    public int Status;
-
+public class ZDO_STARTUP_FROM_APP extends ZToolPacket /* implements IREQUEST,ISYSTEM */ {
     public ZDO_STARTUP_FROM_APP() {
     }
 
     /**
      * Creates the ZDO_STARTUP_FROM_APP packet
+     *
      * @param start_delay Specifies the time delay before the device starts in milliseconds.
      */
     public ZDO_STARTUP_FROM_APP(int start_delay) {
         int[] framedata = new int[2];
-        framedata[0] = (start_delay  & 0xff);
+        framedata[0] = (start_delay & 0xff);
         framedata[1] = (start_delay & 0xff) >> 8;
 
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_STARTUP_FROM_APP), framedata);
     }
 
-    public ZDO_STARTUP_FROM_APP(int[] framedata) {
-        this.Status = framedata[0];
-
-        super.buildPacket(new DoubleByte(ZToolCMD.ZDO_STARTUP_FROM_APP), framedata);
-    }
 }

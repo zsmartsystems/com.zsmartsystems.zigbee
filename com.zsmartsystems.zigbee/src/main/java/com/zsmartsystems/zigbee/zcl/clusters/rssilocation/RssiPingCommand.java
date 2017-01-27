@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -28,23 +27,13 @@ public class RssiPingCommand extends ZclCommand {
     private Integer locationType;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public RssiPingCommand() {
         genericCommand = false;
         clusterId = 11;
         commandId = 4;
         commandDirection = false;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public RssiPingCommand(final Map<Integer, Object> fields) {
-        this();
-        locationType = (Integer) fields.get(0);
     }
 
     /**

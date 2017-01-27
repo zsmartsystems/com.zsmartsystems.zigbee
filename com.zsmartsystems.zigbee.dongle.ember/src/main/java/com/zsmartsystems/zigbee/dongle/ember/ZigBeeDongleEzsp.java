@@ -57,7 +57,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     /**
      * Flag to reset the network on startup
      */
-    private boolean resetNetwork = false;
+    // private boolean resetNetwork = false;
 
     /**
      * The serial port used to connect to the dongle
@@ -79,14 +79,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     public ZigBeeDongleEzsp(final ZigBeePort serialPort, final int pan, final int channel, final byte[] networkKey,
             final boolean resetNetwork) {
         this.serialPort = serialPort;
-        this.resetNetwork = resetNetwork;
+        // this.resetNetwork = resetNetwork;
     }
 
     @Override
     public boolean startup() {
         zigbeeTransportReceive.setNetworkState(TransportState.UNINITIALISED);
 
-        if (serialPort.open() == false) {
+        if (!serialPort.open()) {
             logger.error("Unable to open serial port");
             return false;
         }
@@ -271,6 +271,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     }
 
     @Override
-    public void handleLinkStateChange(int linkState) {
+    public void handleLinkStateChange(boolean linkState) {
+        // TODO: Handle link changes and notify framework or just reset link with dongle?
     }
 }

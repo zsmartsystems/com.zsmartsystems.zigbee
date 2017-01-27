@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -38,24 +37,13 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
     private Integer extendedStatus;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public ZoneStatusChangeNotificationCommand() {
         genericCommand = false;
         clusterId = 1280;
         commandId = 0;
         commandDirection = false;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public ZoneStatusChangeNotificationCommand(final Map<Integer, Object> fields) {
-        this();
-        zoneStatus = (Integer) fields.get(0);
-        extendedStatus = (Integer) fields.get(1);
     }
 
     /**

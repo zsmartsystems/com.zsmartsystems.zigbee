@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,26 +29,16 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 
 /**
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
- * @since 0.6.0
+ * @author Chris Jackson
  */
-public class UTIL_SET_PANID_RESPONSE extends ZToolPacket/* implements IRESPONSE,ISYSTEM*/ {
+public class UTIL_SET_PANID_RESPONSE extends ZToolPacket/* implements IRESPONSE,ISYSTEM */ {
     /// <name>TI.ZPI1.SYS_SET_PANID_RESPONSE.Status</name>
     /// <summary>Status</summary>
-    public int Status;
+    private int Status;
 
     /// <name>TI.ZPI1.SYS_SET_PANID_RESPONSE</name>
     /// <summary>Constructor</summary>
     public UTIL_SET_PANID_RESPONSE() {
-    }
-
-    public UTIL_SET_PANID_RESPONSE(int cmd_status1) {
-        this.Status = cmd_status1;
-
-        int[] framedata = new int[1];
-        framedata[0] = this.Status;
-
-        super.buildPacket(new DoubleByte(ZToolCMD.UTIL_SET_PANID_RESPONSE), framedata);
     }
 
     public UTIL_SET_PANID_RESPONSE(int[] framedata) {
@@ -59,8 +49,6 @@ public class UTIL_SET_PANID_RESPONSE extends ZToolPacket/* implements IRESPONSE,
 
     @Override
     public String toString() {
-        return "UTIL_SET_PANID_RESPONSE{" +
-                "Status=" + ResponseStatus.getStatus(Status) +
-                '}';
+        return "UTIL_SET_PANID_RESPONSE{" + "Status=" + ResponseStatus.getStatus(Status) + '}';
     }
 }

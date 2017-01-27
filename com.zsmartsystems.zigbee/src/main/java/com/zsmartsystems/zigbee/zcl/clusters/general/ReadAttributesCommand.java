@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.List;
 import java.util.Map;
@@ -35,22 +34,12 @@ public class ReadAttributesCommand extends ZclCommand {
     private List<AttributeIdentifier> identifiers;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public ReadAttributesCommand() {
         genericCommand = true;
         commandId = 0;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public ReadAttributesCommand(final Map<Integer, Object> fields) {
-        this();
-        identifiers = (List<AttributeIdentifier>) fields.get(0);
     }
 
     /**

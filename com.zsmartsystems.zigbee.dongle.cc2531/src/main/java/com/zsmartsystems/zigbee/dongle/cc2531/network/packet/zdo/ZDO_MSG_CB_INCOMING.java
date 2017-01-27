@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,12 +38,11 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 
 /**
  * @author <a href="mailto:ryan@presslab.us">Ryan Press</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2015-03-09 19:00:05 +0300 (Mon, 09 Mar 2015) $)
  */
-public class ZDO_MSG_CB_INCOMING extends ZToolPacket /*implements IRESPONSE_CALLBACK,IZDO*/ {
+public class ZDO_MSG_CB_INCOMING extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     private final static Logger logger = LoggerFactory.getLogger(ZDO_MSG_CB_INCOMING.class);
 
-    static final Map<Integer, Class<? extends ZToolPacket>> clusterToRSP;
+    private static final Map<Integer, Class<? extends ZToolPacket>> clusterToRSP;
     static {
         final Map<Integer, Class<? extends ZToolPacket>> build = new HashMap<Integer, Class<? extends ZToolPacket>>();
         build.put(0x0013, ZDO_END_DEVICE_ANNCE_IND.class);
@@ -65,29 +64,29 @@ public class ZDO_MSG_CB_INCOMING extends ZToolPacket /*implements IRESPONSE_CALL
         clusterToRSP = Collections.unmodifiableMap(build);
     }
 
-    int FCS;
+    private int FCS;
 
     /// <name>TI.ZPI2.ZDO_MSG_CB_INCOMING.SrcAddr</name>
     /// <summary>Short address (LSB-MSB) of the source of the ZDO message.</summary>
-    public ZToolAddress16 SrcAddr;
+    private ZToolAddress16 SrcAddr;
     /// <name>TI.ZPI2.ZDO_MSG_CB_INCOMING.WasBroadcast</name>
     /// <summary>This field indicates whether or not this ZDO message was broadcast.</summary>
-    public int WasBroadcast;
+    private int WasBroadcast;
     /// <name>TI.ZPI2.ZDO_MSG_CB_INCOMING.ClusterId</name>
     /// <summary>The ZDO Cluster Id of this message.</summary>
-    public DoubleByte ClusterId;
+    private DoubleByte ClusterId;
     /// <name>TI.ZPI2.ZDO_MSG_CB_INCOMING.SecurityUse</name>
     /// <summary>N/A - not used.</summary>
-    public int SecurityUse;
+    private int SecurityUse;
     /// <name>TI.ZPI2.ZDO_MSG_CB_INCOMING.SeqNum</name>
     /// <summary>The sequence number of this ZDO message.</summary>
-    public int SeqNum;
+    private int SeqNum;
     /// <name>TI.ZPI2.ZDO_MSG_CB_INCOMING.MacDstAddr</name>
     /// <summary>TThe MAC destination short address (LSB-MSB) of the ZDO message.</summary>
-    public ZToolAddress16 MacDstAddr;
+    private ZToolAddress16 MacDstAddr;
     /// <name>TI.ZPI2.ZDO_MSG_CB_INCOMING.Data</name>
     /// <summary>The data that corresponds to the Cluster Id of the message.</summary>
-    public int[] Data;
+    private int[] Data;
 
     /// <name>TI.ZPI2.ZDO_MSG_CB_INCOMING</name>
     /// <summary>Constructor</summary>
@@ -112,17 +111,17 @@ public class ZDO_MSG_CB_INCOMING extends ZToolPacket /*implements IRESPONSE_CALL
      */
     public ZToolPacket translate() {
         ZToolPacket newPacket;
-        int [] frame;
+        int[] frame;
 
         logger.trace("Translating ZDO cluster callback {}", ClusterId);
 
         Class<? extends ZToolPacket> newPacketClass = clusterToRSP.get(ClusterId.get16BitValue());
 
-        if(newPacketClass == null) {
+        if (newPacketClass == null) {
             logger.error("Unhandled ZDO cluster callback {}", ClusterId);
             return this;
         } else if (newPacketClass == ZDO_NWK_ADDR_RSP.class || newPacketClass == ZDO_IEEE_ADDR_RSP.class) {
-            // The address responses don't need SrcAddr.  NumAssocDev and StartIndex positions are reversed.
+            // The address responses don't need SrcAddr. NumAssocDev and StartIndex positions are reversed.
 
             // The new response frame is at least 13 bytes long.
             frame = new int[Math.max(Data.length, 13)];
@@ -137,15 +136,15 @@ public class ZDO_MSG_CB_INCOMING extends ZToolPacket /*implements IRESPONSE_CALL
             }
         } else {
             // Default frame translation, this works for most callbacks.
-            //  Get 2 extra bytes at the beginning to put source address into.
+            // Get 2 extra bytes at the beginning to put source address into.
             frame = new int[Data.length + 2];
-            System.arraycopy(Data,  0,  frame,  2,  Data.length);
+            System.arraycopy(Data, 0, frame, 2, Data.length);
             frame[0] = SrcAddr.getLsb();
             frame[1] = SrcAddr.getMsb();
         }
 
         try {
-            newPacket = (ZToolPacket) newPacketClass.getConstructor(int[].class).newInstance(frame);
+            newPacket = newPacketClass.getConstructor(int[].class).newInstance(frame);
         } catch (Exception e) {
             logger.error("Error constructing response packet {}", e);
             return this;

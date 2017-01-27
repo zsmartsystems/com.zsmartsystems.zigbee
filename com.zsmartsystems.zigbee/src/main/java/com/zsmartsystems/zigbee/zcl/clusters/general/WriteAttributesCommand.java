@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.List;
 import java.util.Map;
@@ -36,22 +35,12 @@ public class WriteAttributesCommand extends ZclCommand {
     private List<WriteAttributeRecord> records;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public WriteAttributesCommand() {
         genericCommand = true;
         commandId = 2;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public WriteAttributesCommand(final Map<Integer, Object> fields) {
-        this();
-        records = (List<WriteAttributeRecord>) fields.get(0);
     }
 
     /**

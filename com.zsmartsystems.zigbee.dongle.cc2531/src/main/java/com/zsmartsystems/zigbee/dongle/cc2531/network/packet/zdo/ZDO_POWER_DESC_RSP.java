@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,13 +36,13 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
  * The node power descriptor gives a dynamic indication of the power status of
  * the node and is mandatory for each node. There shall be only one node
  * power descriptor in a node.
- * 
+ *
  * @author <a href="mailto:chris@cd-jackson.com">Chris Jackson</a>
  */
-public class ZDO_POWER_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALLBACK,IZDO*/ {
+public class ZDO_POWER_DESC_RSP extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     /// <name>TI.ZPI1.ZDO_NODE_DESC_RSP.NWKAddrOfInterest</name>
     /// <summary>Device's short address of this Node descriptor</summary>
-    public ZToolAddress16 nwkAddr;
+    private ZToolAddress16 nwkAddr;
     /// <name>TI.ZPI1.ZDO_NODE_DESC_RSP.SrcAddress</name>
     /// <summary>the message's source network address.</summary>
     public ZToolAddress16 SrcAddress;
@@ -55,7 +55,7 @@ public class ZDO_POWER_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALLB
     public int AvailableSources;
     public int CurrentSource;
     public int CurrentLevel;
-    
+
     /// <name>TI.ZPI1.ZDO_NODE_DESC_RSP</name>
     /// <summary>Constructor</summary>
     public ZDO_POWER_DESC_RSP() {
@@ -75,14 +75,8 @@ public class ZDO_POWER_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALLB
 
     @Override
     public String toString() {
-        return "ZDO_NODE_DESC_RSP{" +
-                "nwkAddr=" + nwkAddr +
-                ", SrcAddress=" + SrcAddress +
-                ", Status=" + ResponseStatus.getStatus(Status) +
-                ", CurrentMode=" + CurrentMode +
-                ", AvailableSources=" + AvailableSources +
-                ", CurrentSource=" + CurrentSource +
-                ", CurrentLevel=" + CurrentLevel +
-                "}";
+        return "ZDO_NODE_DESC_RSP{" + "nwkAddr=" + nwkAddr + ", SrcAddress=" + SrcAddress + ", Status="
+                + ResponseStatus.getStatus(Status) + ", CurrentMode=" + CurrentMode + ", AvailableSources="
+                + AvailableSources + ", CurrentSource=" + CurrentSource + ", CurrentLevel=" + CurrentLevel + "}";
     }
 }

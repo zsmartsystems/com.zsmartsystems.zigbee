@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,39 +23,42 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo;
 
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.*;
+import java.util.Arrays;
+
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ResponseStatus;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
 
-import java.util.Arrays;
-
 /**
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
  */
-public class ZDO_NWK_ADDR_RSP extends ZToolPacket /*implements IRESPONSE_CALLBACK,IZDO*/ {
+public class ZDO_NWK_ADDR_RSP extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     /// <name>TI.ZPI1.ZDO_NWK_ADDR_RSP.AssocDevList</name>
-    /// <summary>Dynamic array, array of 16 bit short addresses - list of network address for associated devices.  This list can be a partial list if the entire list doesn't fit into a packet.  If it is a partial list, the starting index is StartIndex.</summary>
-    public ZToolAddress16[] AssocDevList;
+    /// <summary>Dynamic array, array of 16 bit short addresses - list of network address for associated devices. This
+    /// list can be a partial list if the entire list doesn't fit into a packet. If it is a partial list, the starting
+    /// index is StartIndex.</summary>
+    private ZToolAddress16[] AssocDevList;
     /// <name>TI.ZPI1.ZDO_NWK_ADDR_RSP.IEEEAddr</name>
     /// <summary>64 bit IEEE address of source device</summary>
-    public ZToolAddress64 IEEEAddr;
+    private ZToolAddress64 IEEEAddr;
     /// <name>TI.ZPI1.ZDO_NWK_ADDR_RSP.NumAssocDev</name>
     /// <summary>number of associated devices</summary>
-    public int NumAssocDev;
+    private int NumAssocDev;
     /// <name>TI.ZPI1.ZDO_NWK_ADDR_RSP.nwkAddr</name>
     /// <summary>short network address of responding device</summary>
-    public ZToolAddress16 nwkAddr;
+    private ZToolAddress16 nwkAddr;
     /// <name>TI.ZPI1.ZDO_NWK_ADDR_RSP.SrcAddress</name>
     /// <summary>Source address, size is dependent on SrcAddrMode</summary>
-    public ZToolAddress64 SrcAddress;
+    private ZToolAddress64 SrcAddress;
     /// <name>TI.ZPI1.ZDO_NWK_ADDR_RSP.StartIndex</name>
     /// <summary>Starting index into the list of associated devices for this report.</summary>
-    public int StartIndex;
+    private int StartIndex;
     /// <name>TI.ZPI1.ZDO_NWK_ADDR_RSP.Status</name>
     /// <summary>this field indicates either SUCCESS or FAILURE</summary>
-    public int Status;
+    private int Status;
 
     /// <name>TI.ZPI1.ZDO_NWK_ADDR_RSP</name>
     /// <summary>Constructor</summary>
@@ -64,8 +67,8 @@ public class ZDO_NWK_ADDR_RSP extends ZToolPacket /*implements IRESPONSE_CALLBAC
     }
 
     public ZDO_NWK_ADDR_RSP(int[] framedata) {
-        ///WARNING: variable length.
-        ///resulting SrcAddress is 8 bytes but serialized is either 2 or 8 depending on Mode
+        /// WARNING: variable length.
+        /// resulting SrcAddress is 8 bytes but serialized is either 2 or 8 depending on Mode
         this.Status = framedata[0];
         byte[] bytes = new byte[8];
         for (int i = 0; i < 8; i++) {
@@ -84,14 +87,8 @@ public class ZDO_NWK_ADDR_RSP extends ZToolPacket /*implements IRESPONSE_CALLBAC
 
     @Override
     public String toString() {
-        return "ZDO_NWK_ADDR_RSP{" +
-                "AssocDevList=" + Arrays.toString(AssocDevList) +
-                ", IEEEAddr=" + IEEEAddr +
-                ", NumAssocDev=" + NumAssocDev +
-                ", nwkAddr=" + nwkAddr +
-                ", SrcAddress=" + SrcAddress +
-                ", StartIndex=" + StartIndex +
-                ", Status=" + ResponseStatus.getStatus(Status) +
-                '}';
+        return "ZDO_NWK_ADDR_RSP{" + "AssocDevList=" + Arrays.toString(AssocDevList) + ", IEEEAddr=" + IEEEAddr
+                + ", NumAssocDev=" + NumAssocDev + ", nwkAddr=" + nwkAddr + ", SrcAddress=" + SrcAddress
+                + ", StartIndex=" + StartIndex + ", Status=" + ResponseStatus.getStatus(Status) + '}';
     }
 }

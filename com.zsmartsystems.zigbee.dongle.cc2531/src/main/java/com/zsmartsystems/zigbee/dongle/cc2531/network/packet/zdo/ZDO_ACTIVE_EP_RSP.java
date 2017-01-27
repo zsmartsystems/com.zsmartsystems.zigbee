@@ -1,15 +1,15 @@
 /*
    Copyright 2008-2013 CNR-ISTI, http://isti.cnr.it
-   Institute of Information Science and Technologies 
-   of the Italian National Research Council 
+   Institute of Information Science and Technologies
+   of the Italian National Research Council
 
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,13 +27,13 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo;
 
+import java.util.Arrays;
+
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ResponseStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
-
-import java.util.Arrays;
 
 /**
  * Processes the ACTIVE_EP_RSP packet.
@@ -44,14 +44,11 @@ import java.util.Arrays;
  * is received with a Status of SUCCESS, the ActiveEPCount field indicates the
  * number of entries in the ActiveEPList field. Otherwise, the Status field
  * indicates the error and the ActiveEPList field is not included.
- * 
+ *
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05
- *          +0300 (Tue, 06 Aug 2013) $)
- * @since 0.1.0
  */
-public class ZDO_ACTIVE_EP_RSP extends ZToolPacket /*implements IRESPONSE_CALLBACK,IZDO*/ {
+public class ZDO_ACTIVE_EP_RSP extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     /// <name>TI.ZPI1.ZDO_ACTIVE_EP_RSP.ActiveEndpointCount</name>
     /// <summary>Number of active endpoint in the list</summary>
     public int ActiveEndpointCount;
@@ -89,7 +86,6 @@ public class ZDO_ACTIVE_EP_RSP extends ZToolPacket /*implements IRESPONSE_CALLBA
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_ACTIVE_EP_RSP), framedata);
     }
 
-
     public short[] getActiveEndPointList() {
         if (list == null) {
             list = new short[super.packet[ZToolPacket.PAYLOAD_START_INDEX + 5]];
@@ -102,12 +98,8 @@ public class ZDO_ACTIVE_EP_RSP extends ZToolPacket /*implements IRESPONSE_CALLBA
 
     @Override
     public String toString() {
-        return "ZDO_ACTIVE_EP_RSP{" +
-                "ActiveEndpointCount=" + ActiveEndpointCount +
-                ", ActiveEndpointList=" + Arrays.toString(ActiveEndpointList) +
-                ", nwkAddr=" + nwkAddr +
-                ", SrcAddress=" + SrcAddress +
-                ", Status=" + ResponseStatus.getStatus(Status) +
-                '}';
+        return "ZDO_ACTIVE_EP_RSP{" + "ActiveEndpointCount=" + ActiveEndpointCount + ", ActiveEndpointList="
+                + Arrays.toString(ActiveEndpointList) + ", nwkAddr=" + nwkAddr + ", SrcAddress=" + SrcAddress
+                + ", Status=" + ResponseStatus.getStatus(Status) + '}';
     }
 }

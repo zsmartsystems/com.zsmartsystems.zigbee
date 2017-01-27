@@ -33,7 +33,8 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG;
  * This class register itself as
  * {@link com.zsmartsystems.zigbee.dongle.cc2531.network.ApplicationFrameworkMessageConsumer} to the given
  * {@link com.zsmartsystems.zigbee.dongle.cc2531.network.ApplicationFrameworkMessageProducer}<br>
- * and it wait for a matching {@link com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG}. As soon as the matching
+ * and it wait for a matching {@link com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG}. As soon
+ * as the matching
  * {@link com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG}<br>
  * is received or the timeout expires the the object unregister itself from
  * {@link com.zsmartsystems.zigbee.dongle.cc2531.network.ApplicationFrameworkMessageProducer}<br>
@@ -56,7 +57,7 @@ public class WaitForClusterResponse implements ApplicationFrameworkMessageConsum
     /**
      * @param timeout the maximum number of milliseconds to wait for. The value -1 means unlimited waiting time.
      */
-    public WaitForClusterResponse(final ApplicationFrameworkMessageProducer producer,
+    private WaitForClusterResponse(final ApplicationFrameworkMessageProducer producer,
             final int clusterMessageTransactionId, final short id, final long timeout, final Thread thread) {
 
         synchronized (this) {
@@ -104,12 +105,14 @@ public class WaitForClusterResponse implements ApplicationFrameworkMessageConsum
     }
 
     /**
-     * Wait until an {@link com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG} arrives from the <i>ZigBee
+     * Wait until an {@link com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG} arrives from the
+     * <i>ZigBee
      * Network</i>.
      * The message has to match the specified parameters and has to arrive before a timout otherwise <code>null</code>
      * will be returned.
      *
-     * @return {@link com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG} that match the filter used with the
+     * @return {@link com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG} that match the filter
+     *         used with the
      *         constructor
      *         {@link #WaitForClusterResponse(byte, short)}
      */

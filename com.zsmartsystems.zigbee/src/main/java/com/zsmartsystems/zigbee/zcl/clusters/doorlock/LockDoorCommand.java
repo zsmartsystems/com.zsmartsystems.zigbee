@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -28,23 +27,13 @@ public class LockDoorCommand extends ZclCommand {
     private String pinCode;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public LockDoorCommand() {
         genericCommand = false;
         clusterId = 257;
         commandId = 0;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public LockDoorCommand(final Map<Integer, Object> fields) {
-        this();
-        pinCode = (String) fields.get(0);
     }
 
     /**

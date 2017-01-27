@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.List;
 import java.util.Map;
@@ -40,25 +39,13 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
     private List<NeighborInformation> neighborsInformation;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public ReportRssiMeasurementsCommand() {
         genericCommand = false;
         clusterId = 11;
         commandId = 6;
         commandDirection = false;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public ReportRssiMeasurementsCommand(final Map<Integer, Object> fields) {
-        this();
-        reportingAddress = (Long) fields.get(0);
-        numberOfNeighbors = (Integer) fields.get(1);
-        neighborsInformation = (List<NeighborInformation>) fields.get(2);
     }
 
     /**

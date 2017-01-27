@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,35 +23,35 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo;
 
+import java.util.Arrays;
+
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ResponseStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 
-import java.util.Arrays;
-
 /**
  * This callback indicates that Match Descriptor Response has been sent.
+ *
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
  */
-public class ZDO_MATCH_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALLBACK,IZDo*/ {
+public class ZDO_MATCH_DESC_RSP extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDo */ {
     /// <name>TI.ZPI1.ZDO_MATCH_DESC_RSP.MatchCount</name>
     /// <summary>Number of active endpoints in the list</summary>
-    public int MatchCount;
+    private int MatchCount;
     /// <name>TI.ZPI1.ZDO_MATCH_DESC_RSP.MatchEndpointList</name>
     /// <summary>Array of active endpoints on this device</summary>
-    public int[] MatchEndpointList;
+    private int[] MatchEndpointList;
     /// <name>TI.ZPI1.ZDO_MATCH_DESC_RSP.NWKAddrOfInterest</name>
     /// <summary>Device's short address that this response describes</summary>
-    public ZToolAddress16 NWKAddrOfInterest;
+    private ZToolAddress16 NWKAddrOfInterest;
     /// <name>TI.ZPI1.ZDO_MATCH_DESC_RSP.SrcAddress</name>
     /// <summary>the message's source network address</summary>
-    public ZToolAddress16 SrcAddress;
+    private ZToolAddress16 SrcAddress;
     /// <name>TI.ZPI1.ZDO_MATCH_DESC_RSP.Status</name>
     /// <summary>this field indicates either SUCCESS or FAILURE</summary>
-    public int Status;
+    private int Status;
 
     /// <name>TI.ZPI1.ZDO_MATCH_DESC_RSP</name>
     /// <summary>Constructor</summary>
@@ -73,12 +73,8 @@ public class ZDO_MATCH_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALLB
 
     @Override
     public String toString() {
-        return "ZDO_MATCH_DESC_RSP{" +
-                "MatchCount=" + MatchCount +
-                ", MatchEndpointList=" + Arrays.toString(MatchEndpointList) +
-                ", NWKAddrOfInterest=" + NWKAddrOfInterest +
-                ", SrcAddress=" + SrcAddress +
-                ", Status=" + ResponseStatus.getStatus(Status) +
-                '}';
+        return "ZDO_MATCH_DESC_RSP{" + "MatchCount=" + MatchCount + ", MatchEndpointList="
+                + Arrays.toString(MatchEndpointList) + ", NWKAddrOfInterest=" + NWKAddrOfInterest + ", SrcAddress="
+                + SrcAddress + ", Status=" + ResponseStatus.getStatus(Status) + '}';
     }
 }

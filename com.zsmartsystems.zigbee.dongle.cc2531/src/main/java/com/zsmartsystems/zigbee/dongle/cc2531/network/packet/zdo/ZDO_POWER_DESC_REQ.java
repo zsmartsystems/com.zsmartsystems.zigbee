@@ -1,15 +1,15 @@
 /*
    Copyright 2008-2013 CNR-ISTI, http://isti.cnr.it
-   Institute of Information Science and Technologies 
-   of the Italian National Research Council 
+   Institute of Information Science and Technologies
+   of the Italian National Research Council
 
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,16 +35,16 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 
 /**
  * Requests the Power Descriptor for a node.
- * 
+ *
  * @author <a href="mailto:chris@cd-jackson.com">Chris Jackson</a>
  */
-public class ZDO_POWER_DESC_REQ extends ZToolPacket /*implements IREQUEST,IZDO*/ {
+public class ZDO_POWER_DESC_REQ extends ZToolPacket /* implements IREQUEST,IZDO */ {
     /// <name>TI.ZPI1.ZDO_POWER_DESC_REQ.DstAddr</name>
     /// <summary>destination address</summary>
-    public ZToolAddress16 DstAddr;
+    private ZToolAddress16 DstAddr;
     /// <name>TI.ZPI1.ZDO_POWER_DESC_REQ.NWKAddrOfInterest</name>
     /// <summary>NWK address for the request</summary>
-    public ZToolAddress16 NWKAddrOfInterest;
+    private ZToolAddress16 NWKAddrOfInterest;
 
     /// <name>TI.ZPI1.ZDO_POWER_DESC_REQ</name>
     /// <summary>Constructor</summary>
@@ -52,24 +52,12 @@ public class ZDO_POWER_DESC_REQ extends ZToolPacket /*implements IREQUEST,IZDO*/
     }
 
     public ZDO_POWER_DESC_REQ(int destination) {
-        //TODO Check compatibility with other Constructor
+        // TODO Check compatibility with other Constructor
         int[] framedata = new int[4];
         framedata[0] = Integers.getByteAsInteger(destination, 0);
         framedata[1] = Integers.getByteAsInteger(destination, 1);
         framedata[2] = framedata[0];
         framedata[3] = framedata[1];
-        super.buildPacket(new DoubleByte(ZToolCMD.ZDO_POWER_DESC_REQ), framedata);
-    }
-
-    public ZDO_POWER_DESC_REQ(ZToolAddress16 num1, ZToolAddress16 num2) {
-        this.DstAddr = num1;
-        this.NWKAddrOfInterest = num2;
-
-        int[] framedata = new int[4];
-        framedata[0] = this.DstAddr.getLsb();
-        framedata[1] = this.DstAddr.getMsb();
-        framedata[2] = this.NWKAddrOfInterest.getLsb();
-        framedata[3] = this.NWKAddrOfInterest.getMsb();
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_POWER_DESC_REQ), framedata);
     }
 

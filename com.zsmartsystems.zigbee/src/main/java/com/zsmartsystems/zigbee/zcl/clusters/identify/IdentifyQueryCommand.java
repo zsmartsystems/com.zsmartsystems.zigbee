@@ -1,10 +1,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.identify;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -31,22 +28,13 @@ import java.util.HashMap;
  */
 public class IdentifyQueryCommand extends ZclCommand {
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public IdentifyQueryCommand() {
         genericCommand = false;
         clusterId = 3;
         commandId = 1;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public IdentifyQueryCommand(final Map<Integer, Object> fields) {
-        this();
     }
 
     @Override

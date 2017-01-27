@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -44,25 +43,13 @@ public class StepHueCommand extends ZclCommand {
     private Integer transitionTime;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public StepHueCommand() {
         genericCommand = false;
         clusterId = 768;
         commandId = 2;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public StepHueCommand(final Map<Integer, Object> fields) {
-        this();
-        stepMode = (Integer) fields.get(0);
-        stepSize = (Integer) fields.get(1);
-        transitionTime = (Integer) fields.get(2);
     }
 
     /**

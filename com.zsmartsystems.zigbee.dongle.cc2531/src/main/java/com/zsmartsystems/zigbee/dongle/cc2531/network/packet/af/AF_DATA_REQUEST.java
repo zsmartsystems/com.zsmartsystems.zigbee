@@ -23,9 +23,6 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
@@ -37,7 +34,6 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
  * @author Chris Jackson
  */
 public class AF_DATA_REQUEST extends ZToolPacket/* implements IREQUEST,IAF */ {
-    private static final Logger logger = LoggerFactory.getLogger(AF_DATA_REQUEST.class);
     /// <name>TI.ZPI2.AF_DATA_REQUEST.ClusterID</name>
     /// <summary>specifies the cluster PROFILE_ID_HOME_AUTOMATION</summary>
     public DoubleByte ClusterID;

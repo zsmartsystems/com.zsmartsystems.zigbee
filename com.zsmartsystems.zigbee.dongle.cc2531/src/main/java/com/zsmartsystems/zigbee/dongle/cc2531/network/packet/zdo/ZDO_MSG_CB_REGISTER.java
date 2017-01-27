@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,9 +29,8 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 
 /**
  * @author <a href="mailto:ryan@presslab.us">Ryan Press</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2015-03-09 19:00:05 +0300 (Mon, 09 Mar 2015) $)
  */
-public class ZDO_MSG_CB_REGISTER extends ZToolPacket /*implements IREQUEST,IZDO*/ {
+public class ZDO_MSG_CB_REGISTER extends ZToolPacket /* implements IREQUEST,IZDO */ {
     public ZDO_MSG_CB_REGISTER(DoubleByte cluster) {
         int[] framedata = new int[2];
         framedata[0] = cluster.getLsb();

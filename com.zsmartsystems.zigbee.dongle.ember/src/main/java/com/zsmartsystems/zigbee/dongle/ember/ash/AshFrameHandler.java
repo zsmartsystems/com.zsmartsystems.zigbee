@@ -80,8 +80,8 @@ public class AshFrameHandler {
 
     private boolean stateConnected = false;
 
-    ExecutorService executor = Executors.newCachedThreadPool();
-    final List<AshListener> transactionListeners = new ArrayList<AshListener>();
+    private ExecutorService executor = Executors.newCachedThreadPool();
+    private final List<AshListener> transactionListeners = new ArrayList<AshListener>();
 
     /**
      * The packet handler.
@@ -144,7 +144,7 @@ public class AshFrameHandler {
 
                             continue;
                         } else if (val == ASH_FLAG_BYTE) {
-                            if (inputError == false && inputCount != 0) {
+                            if (!inputError && inputCount != 0) {
                                 AshFrame responseFrame = null;
 
                                 // StringBuilder result = new StringBuilder();
@@ -183,7 +183,7 @@ public class AshFrameHandler {
                                                         .createHandler((AshFrameData) packet);
 
                                                 // Notify any waiting synchronous transactions.
-                                                if (notifyTransactionComplete(response) == false) {
+                                                if (!notifyTransactionComplete(response)) {
                                                     // No transactions owned this
                                                     // response, so we pass it to
                                                     // our unhandled response
@@ -295,7 +295,7 @@ public class AshFrameHandler {
 
     private void sendNextFrame() {
         // We're not allowed to send if we're not connected
-        if (stateConnected == false) {
+        if (!stateConnected) {
             return;
         }
 
@@ -327,7 +327,7 @@ public class AshFrameHandler {
         outputFrame(ashFrame);
     }
 
-    void sendRetry() {
+    private void sendRetry() {
         AshFrameData ashFrame = sentQueue.peek();
         if (ashFrame == null) {
             logger.debug("Retry, but nothing to resend!");
@@ -457,8 +457,8 @@ public class AshFrameHandler {
 
             if (retries++ > ACK_TIMEOUTS) {
                 // Too many retries.
-                // TODO: We probably should alert the upper layer so they can
-                // reset the link?
+                // TODO: We probably should alert the upper layer so they can reset the link?
+                frameHandler.handleLinkStateChange(false);
             }
 
             sendRetry();
@@ -479,7 +479,7 @@ public class AshFrameHandler {
         // transaction.getNodeId(), transaction.getTransactionId());
         synchronized (transactionListeners) {
             for (AshListener listener : transactionListeners) {
-                if (listener.transactionEvent(response) == true) {
+                if (listener.transactionEvent(response)) {
                     processed = true;
                 }
             }
@@ -488,7 +488,7 @@ public class AshFrameHandler {
         return processed;
     }
 
-    private void AddTransactionListener(AshListener listener) {
+    private void addTransactionListener(AshListener listener) {
         synchronized (transactionListeners) {
             if (transactionListeners.contains(listener)) {
                 return;
@@ -498,7 +498,7 @@ public class AshFrameHandler {
         }
     }
 
-    private void RemoveTransactionListener(AshListener listener) {
+    private void removeTransactionListener(AshListener listener) {
         synchronized (transactionListeners) {
             transactionListeners.remove(listener);
         }
@@ -513,12 +513,12 @@ public class AshFrameHandler {
      */
     public Future<EzspFrame> sendEzspRequestAsync(final EzspFrameRequest request) {
         class TransactionWaiter implements Callable<EzspFrame>, AshListener {
-            EzspFrame response = null;
+            private EzspFrame response = null;
 
             @Override
             public EzspFrame call() throws Exception {
                 // Register a listener
-                AddTransactionListener(this);
+                addTransactionListener(this);
 
                 // Send the transaction
                 queueFrame(request);
@@ -531,7 +531,7 @@ public class AshFrameHandler {
                 }
 
                 // Remove the listener
-                RemoveTransactionListener(this);
+                removeTransactionListener(this);
 
                 return response;
             }
@@ -539,7 +539,7 @@ public class AshFrameHandler {
             @Override
             public boolean transactionEvent(EzspFrameResponse ezspResponse) {
                 // Check if this response completes out transaction
-                if (request.processResponse(ezspResponse) == false) {
+                if (!request.processResponse(ezspResponse)) {
                     return false;
                 }
 

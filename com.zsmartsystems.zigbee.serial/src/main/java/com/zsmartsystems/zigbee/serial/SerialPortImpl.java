@@ -23,7 +23,7 @@ public class SerialPortImpl implements ZigBeePort, SerialPortEventListener {
     /**
      * The logger.
      */
-    private final static Logger LOGGER = LoggerFactory.getLogger(SerialPortImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(SerialPortImpl.class);
     /**
      * The portName portName.
      */
@@ -63,7 +63,7 @@ public class SerialPortImpl implements ZigBeePort, SerialPortEventListener {
 
             return true;
         } catch (Exception e) {
-            LOGGER.warn("Unable to open serial port: " + e.getMessage());
+            logger.warn("Unable to open serial port: " + e.getMessage());
             return false;
         }
     }
@@ -85,7 +85,7 @@ public class SerialPortImpl implements ZigBeePort, SerialPortEventListener {
             serialPort.setParams(baudRate, 8, 1, 0);
             serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_RTSCTS_OUT); // FLOWCONTROL_NONE);
         } catch (SerialPortException e) {
-            LOGGER.error("Error opening serial port.", e);
+            logger.error("Error opening serial port.", e);
             throw new RuntimeException("Failed to open serial port: " + portName, e);
         }
 
@@ -102,23 +102,23 @@ public class SerialPortImpl implements ZigBeePort, SerialPortEventListener {
                         try {
                             Thread.sleep(100);
                         } catch (final InterruptedException e) {
-                            LOGGER.warn("Interrupted while waiting input stream to flush.");
+                            logger.warn("Interrupted while waiting input stream to flush.");
                         }
                     }
                 } catch (Exception e) {
-                    LOGGER.trace("Exception in reading from serial port.", e);
+                    logger.trace("Exception in reading from serial port.", e);
                 }
                 inputStream.close();
                 outputStream.flush();
                 outputStream.close();
                 serialPort.closePort();
-                LOGGER.info("Serial portName '" + serialPort.getPortName() + "' closed.");
+                logger.info("Serial portName '" + serialPort.getPortName() + "' closed.");
                 serialPort = null;
                 inputStream = null;
                 outputStream = null;
             }
         } catch (Exception e) {
-            LOGGER.warn("Error closing portName portName: '" + serialPort.getPortName() + "'", e);
+            logger.warn("Error closing portName portName: '" + serialPort.getPortName() + "'", e);
         }
     }
 
@@ -142,7 +142,7 @@ public class SerialPortImpl implements ZigBeePort, SerialPortEventListener {
                     }
                 }
             } catch (IOException e) {
-                LOGGER.error("Error while handling serial event.", e);
+                logger.error("Error while handling serial event.", e);
             }
         }
     }

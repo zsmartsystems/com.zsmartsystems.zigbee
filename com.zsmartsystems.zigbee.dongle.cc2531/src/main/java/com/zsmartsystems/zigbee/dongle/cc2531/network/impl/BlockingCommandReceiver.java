@@ -60,6 +60,7 @@ public class BlockingCommandReceiver implements AsynchronousCommandListener {
 
     /**
      * Gets command packet and blocks until the command packet is available or timeoutMillis occurs.
+     * 
      * @param timeoutMillis the timeout in milliseconds
      * @return the command packet or null if time out occurs.
      */
@@ -95,7 +96,9 @@ public class BlockingCommandReceiver implements AsynchronousCommandListener {
     public void receivedAsynchronousCommand(ZToolPacket packet) {
         LOGGER.trace("Received a packet {} and waiting for {}", packet.getCMD().get16BitValue(), commandId);
         LOGGER.trace("received {} {}", packet.getClass(), packet.toString());
-        if (packet.isError()) return;
+        if (packet.isError()) {
+            return;
+        }
         if (packet.getCMD().get16BitValue() != commandId) {
             LOGGER.trace("Received unexpected packet: " + packet.getClass().getSimpleName());
             return;
@@ -109,7 +112,7 @@ public class BlockingCommandReceiver implements AsynchronousCommandListener {
 
     @Override
     public void receivedUnclaimedSynchronousCommandResponse(ZToolPacket packet) {
-
+        // Response handler not required
     }
 
 }

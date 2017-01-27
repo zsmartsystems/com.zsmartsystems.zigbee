@@ -1,0 +1,22 @@
+{
+    "package": {
+        "name": "bin",
+        "repo": "com.zsmartsystems.zigbee",
+        "subject": "zsmartsystems"
+    },
+
+    "version": {
+        "name": "1.0.0-SNAPSHOT",
+        "desc": ""
+    },
+
+    "files":
+    [
+        {"includePattern": "com.zsmartsystems.zigbee/target/com.zsmartsystems.zigbee-1.0.0-SNAPSHOT.jar", "excludePattern": "",
+			"matrixParams": {
+		        "override": 1
+		    }
+		}
+	],
+    "publish": true
+}

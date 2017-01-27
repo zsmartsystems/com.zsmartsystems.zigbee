@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,16 +30,17 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 
 /**
  * This command is generated to request the destination device to return its neighbor table.
+ *
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
  */
-public class ZDO_MGMT_LQI_REQ extends ZToolPacket /*implements IREQUEST,IZDO*/ {
+public class ZDO_MGMT_LQI_REQ extends ZToolPacket /* implements IREQUEST,IZDO */ {
     /// <name>TI.ZPI1.ZDO_MGMT_LQI_REQ.DstAddr</name>
     /// <summary>Destination network address.</summary>
-    public ZToolAddress16 DstAddr;
+    private ZToolAddress16 DstAddr;
     /// <name>TI.ZPI1.ZDO_MGMT_LQI_REQ.StartIndex</name>
-    /// <summary>Where to start.  The result can be more networks than can be reported, so this field allows a user to ask for more.</summary>
-    public int StartIndex;
+    /// <summary>Where to start. The result can be more networks than can be reported, so this field allows a user to
+    /// ask for more.</summary>
+    private int StartIndex;
 
     /// <name>TI.ZPI1.ZDO_MGMT_LQI_REQ</name>
     /// <summary>Constructor</summary>

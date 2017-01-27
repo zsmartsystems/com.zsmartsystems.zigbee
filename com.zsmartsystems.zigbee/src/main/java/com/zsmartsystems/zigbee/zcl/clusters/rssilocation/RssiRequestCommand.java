@@ -1,10 +1,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.rssilocation;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -23,22 +20,13 @@ import java.util.HashMap;
  */
 public class RssiRequestCommand extends ZclCommand {
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public RssiRequestCommand() {
         genericCommand = false;
         clusterId = 11;
         commandId = 5;
         commandDirection = false;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public RssiRequestCommand(final Map<Integer, Object> fields) {
-        this();
     }
 
     @Override

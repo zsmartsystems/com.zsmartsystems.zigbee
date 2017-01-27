@@ -52,15 +52,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.simple.ZB_SEND_DATA
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.simple.ZB_START_CONFIRM;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.simple.ZB_START_REQUEST_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.simple.ZB_WRITE_CONFIGURATION_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_ADC_READ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_GPIO_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_OSAL_NV_READ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_OSAL_NV_WRITE_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_OSAL_START_TIMER_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_OSAL_STOP_TIMER_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_OSAL_TIMER_EXPIRED_IND;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_PING_RESPONSE;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_RANDOM_SRSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_RESET_RESPONSE;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_RPC_ERROR;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_TEST_LOOPBACK_SRSP;
@@ -136,77 +128,6 @@ public class ZToolPacketStream implements IIntArrayInputStream {
         this.in = in;
     }
 
-    /**
-     * Parses the incoming <b>int</b> array of data and produces a {@link ZToolPacket}
-     *
-     * @param packet integer array
-     * @return {@link ZToolPacket}
-     * @since 0.6.0 - Revision 60
-     */
-    public static ZToolPacket parsePacket(int[] packet) {
-        final ZToolPacket response;
-        int idx = 1;
-        final int length = packet[idx];
-        idx++;
-        // log.debug("data length is " + ByteUtils.formatByte(length.getLength()));
-        final int[] payload = new int[length];
-        final DoubleByte cmdId = new DoubleByte(packet[idx], packet[idx + 1]);
-        idx += 2;
-        for (int i = 0; i < payload.length; i++) {
-            payload[i] = packet[idx];
-            idx++;
-        }
-        response = parsePayload(cmdId, payload);
-        int fcs = packet[idx];
-        idx++;
-        if (fcs != response.getFCS()) {
-            log.debug("Parsed packet was {}", packet);
-            throw new ZToolParseException("Packet checksum failed");
-        }
-        if (idx != packet.length) {
-            log.warn("Packet buffer contains more data that has been ignored");
-        }
-        return response;
-    }
-
-    /**
-     * Parses the incoming <b>byte</b> array of data and produces a {@link ZToolPacket}
-     *
-     * @param packet byte array
-     * @return {@link ZToolPacket}
-     * @since 0.6.0 - Revision 60
-     */
-    public static ZToolPacket parsePacket(byte[] packet) {
-        final ZToolPacket response;
-        int idx = 1;
-        if (packet[0] != 0xFE) {
-            throw new ZToolParseException("Buffer is not a valid packet, it doesn't start with 0xFE");
-        }
-        final int length = packet[idx] & 0xFF;
-        idx++;
-        // log.debug("data length is " + ByteUtils.formatByte(length.getLength()));
-        final int[] payload = new int[length];
-        final int cmdIdHiByte = packet[idx] & 0xFF;
-        idx++;
-        final int cmdIdLoByte = packet[idx] & 0xFF;
-        idx++;
-        final DoubleByte cmdId = new DoubleByte(cmdIdHiByte, cmdIdLoByte);
-        for (int i = 0; i < payload.length; i++) {
-            payload[i] = packet[idx] & 0xFF;
-            idx++;
-        }
-        response = parsePayload(cmdId, payload);
-        int fcs = packet[idx] & 0xFF;
-        idx++;
-        if (fcs != response.getFCS()) {
-            throw new ZToolParseException("Packet checksum failed");
-        }
-        if (idx != packet.length) {
-            log.warn("Packet buffer contains more data that has been ignored");
-        }
-        return response;
-    }
-
     public ZToolPacket parsePacket() throws IOException {
 
         Exception exception;
@@ -264,30 +185,14 @@ public class ZToolPacketStream implements IIntArrayInputStream {
 
     private static ZToolPacket parsePayload(final DoubleByte cmdId, final int[] payload) {
         switch (cmdId.get16BitValue()) {
-            case ZToolCMD.SYS_ADC_READ_SRSP:
-                return new SYS_ADC_READ_SRSP(payload);
             case ZToolCMD.SYS_RESET_RESPONSE:
                 return new SYS_RESET_RESPONSE(payload);
             case ZToolCMD.SYS_VERSION_RESPONSE:
                 return new SYS_VERSION_RESPONSE(payload);
             case ZToolCMD.SYS_PING_RESPONSE:
                 return new SYS_PING_RESPONSE(payload);
-            case ZToolCMD.SYS_OSAL_NV_READ_SRSP:
-                return new SYS_OSAL_NV_READ_SRSP(payload);
-            case ZToolCMD.SYS_OSAL_NV_WRITE_SRSP:
-                return new SYS_OSAL_NV_WRITE_SRSP(payload);
-            case ZToolCMD.SYS_OSAL_START_TIMER_SRSP:
-                return new SYS_OSAL_START_TIMER_SRSP(payload);
-            case ZToolCMD.SYS_OSAL_STOP_TIMER_SRSP:
-                return new SYS_OSAL_STOP_TIMER_SRSP(payload);
-            case ZToolCMD.SYS_OSAL_TIMER_EXPIRED_IND:
-                return new SYS_OSAL_TIMER_EXPIRED_IND(payload);
-            case ZToolCMD.SYS_RANDOM_SRSP:
-                return new SYS_RANDOM_SRSP(payload);
             case ZToolCMD.SYS_RPC_ERROR:
                 return new SYS_RPC_ERROR(payload);
-            case ZToolCMD.SYS_GPIO_SRSP:
-                return new SYS_GPIO_SRSP(payload);
             case ZToolCMD.SYS_TEST_LOOPBACK_SRSP:
                 return new SYS_TEST_LOOPBACK_SRSP(payload);
             case ZToolCMD.AF_DATA_CONFIRM:

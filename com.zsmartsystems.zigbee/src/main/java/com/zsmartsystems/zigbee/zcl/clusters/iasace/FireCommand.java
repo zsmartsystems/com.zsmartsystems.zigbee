@@ -1,10 +1,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.iasace;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -29,22 +26,13 @@ import java.util.HashMap;
  */
 public class FireCommand extends ZclCommand {
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public FireCommand() {
         genericCommand = false;
         clusterId = 1281;
         commandId = 3;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public FireCommand(final Map<Integer, Object> fields) {
-        this();
     }
 
     @Override

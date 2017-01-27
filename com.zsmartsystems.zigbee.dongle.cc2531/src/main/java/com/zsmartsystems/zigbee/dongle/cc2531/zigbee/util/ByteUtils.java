@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author <a href="mailto:andrew.rapp@gmail.com">Andrew Rapp</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public class ByteUtils {
 
@@ -49,10 +50,10 @@ public class ByteUtils {
     public static int convertMultiByteToInt(int[] bytes) {
 
         if (bytes.length > 4) {
-            throw new RuntimeException("too big");
+            throw new NumberFormatException("Value too big");
         } else if (bytes.length == 4 && ((bytes[0] & 0x80) == 0x80)) {
             // 0x80 == 10000000, 0x7e == 01111111
-            throw new RuntimeException("Java int can't support a four byte value, with msb byte greater than 7e");
+            throw new NumberFormatException("Java int can't support a four byte value, with msb byte greater than 7e");
         }
 
         int val = 0;
@@ -60,7 +61,7 @@ public class ByteUtils {
         for (int i = 0; i < bytes.length; i++) {
 
             if (bytes[i] > 0xFF) {
-                throw new RuntimeException("Values exceeds byte range: " + bytes[i]);
+                throw new NumberFormatException("Values exceeds byte range: " + bytes[i]);
             }
 
             if (i == (bytes.length - 1)) {
@@ -79,7 +80,7 @@ public class ByteUtils {
             throw new IllegalArgumentException("too many bytes can't be converted to long");
         } else if (bytes.length == 8 && ((bytes[0] & 0x80) == 0x80)) {
             // 0x80 == 10000000, 0x7e == 01111111
-            throw new RuntimeException("Java long can't support a 8 bytes value, where msb byte greater than 7e");
+            throw new NumberFormatException("Java long can't support a 8 bytes value, where msb byte greater than 7e");
         }
 
         long val = 0;
@@ -127,7 +128,7 @@ public class ByteUtils {
         return toBase16(arr, 0, arr.length);
     }
 
-    public final static String toBase16(final int[] arr, final int start, final int end) {
+    private final static String toBase16(final int[] arr, final int start, final int end) {
 
         StringBuffer sb = new StringBuffer();
 
@@ -140,68 +141,6 @@ public class ByteUtils {
         }
 
         return sb.toString();
-    }
-
-    /**
-     * @param bytes the String representing the bytes in hex form
-     * @return the formatted bytes
-     * @since 0.6.0 - Revision 60
-     */
-    public static int[] fromBase16toIntArray(String bytes) {
-        final String PATTERN = "\\s*((0x[0-9a-f]{2}|[0-9a-f]{2})\\s*)+";
-        bytes = bytes.toLowerCase();
-        if (!bytes.matches(PATTERN)) {
-            throw new IllegalArgumentException("Unable to parse " + bytes + " doesn't match regex " + PATTERN);
-        }
-        String[] singleBytes = bytes.split("\\s+");
-        String item;
-        int[] values = new int[singleBytes.length];
-        for (int i = 0; i < singleBytes.length; i++) {
-            item = singleBytes[i];
-            if (item.length() == 0) {
-                continue;
-            }
-
-            if (item.startsWith("0x")) {
-                item = item.substring(2);
-            }
-
-            values[i] = (Integer.parseInt(item, 16) & 0xFF);
-        }
-        return values;
-    }
-
-    /**
-     * This method return a <code>byte[]</code> from a <code>String</code>. It support the format<br>
-     * of the {@link #toBase16(byte[])} and in general it supports the following {@link java.util.regex.Pattern}:<br>
-     *
-     * <pre>
-     * \s*((0x[0-9a-f]{2}|[0-9a-f]{2})\s*)+
-     * </pre>
-     *
-     * <b>Exmaple:</b>
-     *
-     * <pre>
-     * 0x23 0xab 0xfE 0xDD
-     * 0x23 0xab 0xfe 0xdd
-     * 0x23 ab 0xfE DD
-     * </pre>
-     *
-     * <b>NOTE</b><br>
-     * The main difference with {@link #fromBase16toIntArray(String)} is that the data returned<br>
-     * is signed, so values goes from <code>-128 to 127</code>
-     *
-     * @param bytes the String representing the bytes in hex form
-     * @return the formatted bytes
-     * @since 0.6.0 - Revision 60
-     */
-    public static byte[] fromBase16toByteArray(String bytes) {
-        int[] values = fromBase16toIntArray(bytes);
-        byte[] returns = new byte[values.length];
-        for (int i = 0; i < values.length; i++) {
-            returns[i] = (byte) (values[i] & 0xFF);
-        }
-        return returns;
     }
 
     public static String toBase16(byte[] arr) {
@@ -227,30 +166,8 @@ public class ByteUtils {
     }
 
     /**
-     * Returns true if the bit is on (1) at the specified position
-     * Position range: 1-8
-     */
-    public static boolean getBit(int b, int position) {
-
-        if (position < 1 || position > 8) {
-            throw new IllegalArgumentException("Position is out of range");
-        }
-
-        if (b > 0xff) {
-            throw new IllegalArgumentException("input value is larger than a byte");
-        }
-
-        if (((b >> (--position)) & 0x1) == 0x1) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * @param b the int value to check if it contains a byte representable value
      * @return true if the value of the int could be expressed with 8 bits
-     * @since 0.8.0
      */
     public static boolean isByteValue(int b) {
         final boolean valid = ((b & 0xffffff00) == 0 || (b & 0xffffff00) == 0xffffff00);
@@ -279,7 +196,7 @@ public class ByteUtils {
         }
     }
 
-    public static String toBase2(int b) {
+    private static String toBase2(int b) {
 
         if (b > 0xff) {
             throw new IllegalArgumentException("input value is larger than a byte");
@@ -292,11 +209,4 @@ public class ByteUtils {
         return "base10=" + Integer.toString(b) + ",base16=" + toBase16(b) + ",base2=" + toBase2(b);
     }
 
-    public static byte unsignedByteFromInt(int i) {
-        return (byte) (i > 127 ? i - 256 : i); // This is an explicit form of the conversion java performs anyway
-    }
-
-    public static int intFromUnsignedByte(byte b) {
-        return (b < 0 ? b + 256 : b);
-    }
 }

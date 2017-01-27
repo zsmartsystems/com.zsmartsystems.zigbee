@@ -37,7 +37,7 @@ public class Checksum {
 
     // private final static Logger log = Logger.getLogger(Checksum.class);
 
-    public int checksum = 0;
+    private int checksum = 0;
 
     /**
      * Don't add Checksum byte when computing checksum!!
@@ -64,17 +64,6 @@ public class Checksum {
         // log.debug("computed checksum is " + ByteUtils.formatByte(checksum));
     }
 
-    /**
-     * First add all relevant bytes, including checksum
-     *
-     * @return true if the checksum is correct (equals 0xff)
-     */
-    public boolean verify() {
-        checksum = checksum & 0xff;
-        // log.debug("verify checksum is " + checksum);
-        return 0xff == checksum;
-    }
-
     public int getChecksum() {
         return checksum;
     }
@@ -83,7 +72,7 @@ public class Checksum {
      * public static void main(String[] args) {
      * //83 56 78 24 00 01 02 00 03 ff 85
      * Checksum ck = new Checksum();
-     * 
+     *
      * ck.addByte(0x83);
      * ck.addByte(0x56);
      * ck.addByte(0x78);
@@ -96,11 +85,11 @@ public class Checksum {
      * ck.addByte(0xff);
      * // checksum
      * ck.addByte(0x83);
-     * 
+     *
      * // checksum is 0x83
      * //ck.compute();
      * ck.verify();
-     * 
+     *
      * System.out.println("checksum is " + ByteUtils.formatByte(ck.getChecksum()));
      * }
      */

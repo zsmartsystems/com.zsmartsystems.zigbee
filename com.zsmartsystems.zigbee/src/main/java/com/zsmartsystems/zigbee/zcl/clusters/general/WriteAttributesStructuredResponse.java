@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.List;
 import java.util.Map;
@@ -34,22 +33,12 @@ public class WriteAttributesStructuredResponse extends ZclCommand {
     private List<WriteAttributeStatusRecord> records;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public WriteAttributesStructuredResponse() {
         genericCommand = true;
         commandId = 16;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public WriteAttributesStructuredResponse(final Map<Integer, Object> fields) {
-        this();
-        records = (List<WriteAttributeStatusRecord>) fields.get(0);
     }
 
     /**

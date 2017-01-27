@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.List;
 import java.util.Map;
@@ -61,27 +60,13 @@ public class GetSceneMembershipResponse extends ZclCommand {
     private List<Unsigned8BitInteger> sceneList;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public GetSceneMembershipResponse() {
         genericCommand = false;
         clusterId = 5;
         commandId = 5;
         commandDirection = false;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public GetSceneMembershipResponse(final Map<Integer, Object> fields) {
-        this();
-        status = (Integer) fields.get(0);
-        capacity = (Integer) fields.get(1);
-        groupId = (Integer) fields.get(2);
-        sceneCount = (Integer) fields.get(3);
-        sceneList = (List<Unsigned8BitInteger>) fields.get(4);
     }
 
     /**

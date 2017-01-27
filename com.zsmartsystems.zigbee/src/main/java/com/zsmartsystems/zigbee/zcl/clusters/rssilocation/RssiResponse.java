@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -53,28 +52,13 @@ public class RssiResponse extends ZclCommand {
     private Integer numberRssiMeasurements;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public RssiResponse() {
         genericCommand = false;
         clusterId = 11;
         commandId = 4;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public RssiResponse(final Map<Integer, Object> fields) {
-        this();
-        replyingDevice = (Long) fields.get(0);
-        coordinate1 = (Integer) fields.get(1);
-        coordinate2 = (Integer) fields.get(2);
-        coordinate3 = (Integer) fields.get(3);
-        rssi = (Integer) fields.get(4);
-        numberRssiMeasurements = (Integer) fields.get(5);
     }
 
     /**

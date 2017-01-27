@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,20 +30,14 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 
 /**
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
  */
-public class ZDO_USER_DESC_REQ extends ZToolPacket /*implements IREQUEST,IZDO*/ {
+public class ZDO_USER_DESC_REQ extends ZToolPacket /* implements IREQUEST,IZDO */ {
     /// <name>TI.ZPI1.ZDO_USER_DESC_REQ.DstAddr</name>
     /// <summary>destination address</summary>
-    public ZToolAddress16 DstAddr;
+    private ZToolAddress16 DstAddr;
     /// <name>TI.ZPI1.ZDO_USER_DESC_REQ.NWKAddrOfInterest</name>
     /// <summary>NWK address for the request</summary>
     public ZToolAddress16 nwkAddr;
-
-    /// <name>TI.ZPI1.ZDO_USER_DESC_REQ</name>
-    /// <summary>Constructor</summary>
-    public ZDO_USER_DESC_REQ() {
-    }
 
     public ZDO_USER_DESC_REQ(ZToolAddress16 num1, ZToolAddress16 num2) {
         this.DstAddr = num1;

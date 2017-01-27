@@ -10,7 +10,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 /**
  * This function will start a scan and process the response handlers until the scan is complete.
  * It will build a list of all responses
- * 
+ *
  * EMBER_SUCCESS signals that the scan successfully started. Possible error
  * responses and their meanings: EMBER_MAC_SCANNING, we are already scanning;
  * EMBER_MAC_JOINED_NETWORK, we are currently joined to a network and cannot
@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
  *
  */
 public class EzspStartScanRequest extends EzspFrameRequest {
-    List<EzspFrameResponse> responseList = new ArrayList<EzspFrameResponse>();
+    private List<EzspFrameResponse> responseList = new ArrayList<EzspFrameResponse>();
 
     /**
      * Indicates the type of scan to be performed. Possible values are:
@@ -53,7 +53,7 @@ public class EzspStartScanRequest extends EzspFrameRequest {
 
     /**
      * Creates an EZSP <i>startScan</i> frame
-     * 
+     *
      * @param desiredProtocolVersion
      *            The EZSP version the Host wishes to use
      */

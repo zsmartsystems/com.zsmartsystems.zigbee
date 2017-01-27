@@ -1,15 +1,15 @@
 /*
    Copyright 2008-2013 CNR-ISTI, http://isti.cnr.it
-   Institute of Information Science and Technologies 
-   of the Italian National Research Council 
+   Institute of Information Science and Technologies
+   of the Italian National Research Council
 
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,10 +36,8 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 /**
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
- * @since 0.1.0
  */
-public class ZDO_SIMPLE_DESC_REQ extends ZToolPacket /*implements IREQUEST,IZDO*/ {
+public class ZDO_SIMPLE_DESC_REQ extends ZToolPacket /* implements IREQUEST,IZDO */ {
     /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_REQ.DstAddr</name>
     /// <summary>destination address</summary>
     public ZToolAddress16 DstAddr;
@@ -53,16 +51,6 @@ public class ZDO_SIMPLE_DESC_REQ extends ZToolPacket /*implements IREQUEST,IZDO*
     /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_REQ</name>
     /// <summary>Constructor</summary>
     public ZDO_SIMPLE_DESC_REQ() {
-    }
-
-    public ZDO_SIMPLE_DESC_REQ(ZToolAddress16 dstAddr, ZToolAddress16 nwkAddressOfInterest, int endPoint) {
-        int[] framedata = new int[5];
-        framedata[0] = dstAddr.getLsb();
-        framedata[1] = dstAddr.getMsb();
-        framedata[2] = nwkAddressOfInterest.getLsb();
-        framedata[3] = nwkAddressOfInterest.getMsb();
-        framedata[4] = endPoint;
-        super.buildPacket(new DoubleByte(ZToolCMD.ZDO_SIMPLE_DESC_REQ), framedata);
     }
 
     public ZDO_SIMPLE_DESC_REQ(short nwkAddress, short endPoint) {

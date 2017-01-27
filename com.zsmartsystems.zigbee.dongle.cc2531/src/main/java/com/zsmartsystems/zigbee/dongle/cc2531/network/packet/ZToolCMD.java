@@ -28,9 +28,6 @@ package com.zsmartsystems.zigbee.dongle.cc2531.network.packet;
  */
 public class ZToolCMD {
 
-    private ZToolCMD() {
-    }
-
     /**
      * AF Data confirm.
      */
@@ -619,7 +616,7 @@ public class ZToolCMD {
      */
     public static final int ZB_READ_CONFIGURATION = 0x2604;
     /**
-     * 
+     *
      */
     public static final int ZB_READ_CONFIGURATION_RSP = 0x6604;
     /**
@@ -1189,4 +1186,8 @@ public class ZToolCMD {
      * Response for ZMAC_SYNCHRONIZE_REQUEST
      */
     public static final int ZMAC_SYNCHRONIZE_RESPONSE = 0x6204;
+
+    private ZToolCMD() {
+    }
+
 }

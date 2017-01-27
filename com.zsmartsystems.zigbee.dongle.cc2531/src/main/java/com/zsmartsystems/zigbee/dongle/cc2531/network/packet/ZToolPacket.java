@@ -37,19 +37,20 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.Integers;
  * @author <a href="mailto:andrew.rapp@gmail.com">Andrew Rapp</a>
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public class ZToolPacket {
 
     public final static int PAYLOAD_START_INDEX = 4;
 
-    public enum CommandType {
+    private enum CommandType {
         POLL,
         SREQ,
         AREQ,
         SRSP
     }
 
-    public enum CommandSubsystem {
+    private enum CommandSubsystem {
         RESERVED_0,
         SYS,
         RESERVED_1,
@@ -59,7 +60,6 @@ public class ZToolPacket {
         ZB
     }
 
-    // private final static Logger log = Logger.getLogger(ZToolPacket.class);
     public final static int START_BYTE = 0xFE;
     protected int[] packet;
     private int LEN;
@@ -105,7 +105,7 @@ public class ZToolPacket {
         // data
         for (int i = 0; i < frameData.length; i++) {
             if (!ByteUtils.isByteValue(frameData[i])) {
-                throw new RuntimeException("Value is greater than one byte: " + frameData[i] + " ("
+                throw new NumberFormatException("Value is greater than one byte: " + frameData[i] + " ("
                         + Integer.toHexString(frameData[i]) + ")");
             }
             packet[PAYLOAD_START_INDEX + i] = frameData[i];
@@ -156,14 +156,6 @@ public class ZToolPacket {
 
     public void setFCS(int fcs) {
         this.FCS = fcs;
-    }
-
-    public static boolean isSpecialByte(int b) {
-        if (b == ZToolPacket.START_BYTE) {
-            return true;
-        }
-
-        return false;
     }
 
     public boolean isError() {

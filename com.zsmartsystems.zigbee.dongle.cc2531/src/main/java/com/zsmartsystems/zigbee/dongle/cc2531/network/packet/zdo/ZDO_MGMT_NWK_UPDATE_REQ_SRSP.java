@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,14 +28,13 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 
-
 /**
  * Response for requesting the network to switch channel or change PAN PROFILE_ID_HOME_AUTOMATION.
  *
  * @author <a href="mailto:tommmi.s.e.laukkanen@gmail.com">Tommi S.E. Laukkanen</a>
  */
 public class ZDO_MGMT_NWK_UPDATE_REQ_SRSP extends ZToolPacket {
-    public int Status;
+    private int Status;
 
     public ZDO_MGMT_NWK_UPDATE_REQ_SRSP(int[] framedata) {
         this.Status = framedata[0];
@@ -44,9 +43,7 @@ public class ZDO_MGMT_NWK_UPDATE_REQ_SRSP extends ZToolPacket {
 
     @Override
     public String toString() {
-        return "ZDO_MGMT_NWK_UPDATE_REQ_SRSP{" +
-                "Status=" + ResponseStatus.getStatus(Status) +
-                '}';
+        return "ZDO_MGMT_NWK_UPDATE_REQ_SRSP{" + "Status=" + ResponseStatus.getStatus(Status) + '}';
     }
 
 }

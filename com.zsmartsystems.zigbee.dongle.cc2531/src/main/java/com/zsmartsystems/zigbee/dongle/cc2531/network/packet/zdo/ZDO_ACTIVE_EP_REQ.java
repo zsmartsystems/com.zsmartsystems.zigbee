@@ -1,15 +1,15 @@
 /*
    Copyright 2008-2013 CNR-ISTI, http://isti.cnr.it
-   Institute of Information Science and Technologies 
-   of the Italian National Research Council 
+   Institute of Information Science and Technologies
+   of the Italian National Research Council
 
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,17 +30,16 @@ package com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
-import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.Integers;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 
 /**
  * Processes the ACTIVE_EP_REQ packet to get the active endpoints from a node.
- * 
+ *
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
+ * @author Chris Jackson
  */
-public class ZDO_ACTIVE_EP_REQ extends ZToolPacket /*implements IREQUEST,IZDO*/ {
+public class ZDO_ACTIVE_EP_REQ extends ZToolPacket /* implements IREQUEST,IZDO */ {
     /// <name>TI.ZPI1.ZDO_ACTIVE_EP_REQ.DstAddr</name>
     /// <summary>destination address</summary>
 
@@ -58,28 +57,6 @@ public class ZDO_ACTIVE_EP_REQ extends ZToolPacket /*implements IREQUEST,IZDO*/ 
         framedata[1] = dstAddr.getMsb();
         framedata[2] = nwkAddrOfInterest.getLsb();
         framedata[3] = nwkAddrOfInterest.getMsb();
-
-        super.buildPacket(new DoubleByte(ZToolCMD.ZDO_ACTIVE_EP_REQ), framedata);
-    }
-
-    public ZDO_ACTIVE_EP_REQ(short nwkAddress) {
-        int[] framedata = new int[4];
-
-        framedata[0] = Integers.getByteAsInteger(nwkAddress, 0);
-        framedata[1] = Integers.getByteAsInteger(nwkAddress, 1);
-        framedata[2] = framedata[0];
-        framedata[3] = framedata[1];
-
-        super.buildPacket(new DoubleByte(ZToolCMD.ZDO_ACTIVE_EP_REQ), framedata);
-    }
-
-    public ZDO_ACTIVE_EP_REQ(int nwkAddress) {
-        int[] framedata = new int[4];
-
-        framedata[0] = Integers.getByteAsInteger((short) nwkAddress, 0);
-        framedata[1] = Integers.getByteAsInteger((short) nwkAddress, 1);
-        framedata[2] = framedata[0];
-        framedata[3] = framedata[1];
 
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_ACTIVE_EP_REQ), framedata);
     }

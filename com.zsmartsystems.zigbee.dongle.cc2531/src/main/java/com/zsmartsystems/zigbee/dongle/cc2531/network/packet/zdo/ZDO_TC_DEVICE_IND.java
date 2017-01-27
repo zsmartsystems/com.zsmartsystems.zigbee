@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,10 +31,10 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
 
 /**
  * This command handles the Trust Center device indication
+ * 
  * @author <a href="mailto:ryan@presslab.us">Ryan Press</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2015-03-15 19:00:05 +0300 (Sun, 15 Mar 2015) $)
  */
-public class ZDO_TC_DEVICE_IND extends ZToolPacket /*implements IRESPONSE_CALLBACK,IZDO*/ {
+public class ZDO_TC_DEVICE_IND extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     /**
      * 64 bit IEEE address of source device
      */
@@ -56,6 +56,7 @@ public class ZDO_TC_DEVICE_IND extends ZToolPacket /*implements IRESPONSE_CALLBA
 
     /**
      * Constructor
+     * 
      * @param framedata
      */
     public ZDO_TC_DEVICE_IND(int[] framedata) {

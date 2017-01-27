@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -39,23 +38,12 @@ public class DefaultResponse extends ZclCommand {
     private Integer statusCode;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public DefaultResponse() {
         genericCommand = true;
         commandId = 11;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public DefaultResponse(final Map<Integer, Object> fields) {
-        this();
-        commandIdentifier = (Integer) fields.get(0);
-        statusCode = (Integer) fields.get(1);
     }
 
     /**

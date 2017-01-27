@@ -207,7 +207,7 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param ias_Cie_Address the {@link Long} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setIas_Cie_Address(final Object value) {
+    public Future<CommandResult> setIasCieAddress(final Object value) {
         return write(attributes.get(ATTR_IAS_CIE_ADDRESS), value);
     }
 
@@ -236,7 +236,7 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getIas_Cie_AddressAsync() {
+    public Future<CommandResult> getIasCieAddressAsync() {
         return read(attributes.get(ATTR_IAS_CIE_ADDRESS));
     }
 
@@ -267,7 +267,7 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @return the {@link Long} attribute value, or null on error
      */
-    public Long getIas_Cie_Address() {
+    public Long getIasCieAddress() {
         return (Long) readSync(attributes.get(ATTR_IAS_CIE_ADDRESS));
     }
 

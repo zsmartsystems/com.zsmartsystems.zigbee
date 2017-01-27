@@ -1,15 +1,15 @@
 /*
    Copyright 2008-2013 CNR-ISTI, http://isti.cnr.it
-   Institute of Information Science and Technologies 
-   of the Italian National Research Council 
+   Institute of Information Science and Technologies
+   of the Italian National Research Council
 
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,45 +27,48 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.*;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ResponseStatus;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
 
-import java.util.Arrays;
-
 /**
  * This command will request a devices IEEE 64-bit address.
+ *
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
- * @since 0.1.0
  */
-public class ZDO_IEEE_ADDR_RSP extends ZToolPacket /*implements IRESPONSE_CALLBACK_IZDO*/ {
+public class ZDO_IEEE_ADDR_RSP extends ZToolPacket /* implements IRESPONSE_CALLBACK_IZDO */ {
     private static final Logger logger = LoggerFactory.getLogger(ZDO_IEEE_ADDR_RSP.class);
     /// <name>TI.ZPI1.ZDO_IEEE_ADDR_RSP.AssocDevList</name>
-    /// <summary>Dynamic array, array of 16 bit short addresses - list of network address for associated devices.  This list can be a partial list if the entire list doesn't fit into a packet.  If it is a partial list, the starting index is StartIndex.</summary>
-    public ZToolAddress16[] AssocDevList;
-    public short[] assocDevList;
+    /// <summary>Dynamic array, array of 16 bit short addresses - list of network address for associated devices. This
+    /// list can be a partial list if the entire list doesn't fit into a packet. If it is a partial list, the starting
+    /// index is StartIndex.</summary>
+    private ZToolAddress16[] AssocDevList;
+    private short[] assocDevList;
     /// <name>TI.ZPI1.ZDO_IEEE_ADDR_RSP.IEEEAddr</name>
     /// <summary>64 bit IEEE address of source device</summary>
-    public ZToolAddress64 IEEEAddr;
+    private ZToolAddress64 IEEEAddr;
     public ZToolAddress16 nwkAddr;
     /// <name>TI.ZPI1.ZDO_IEEE_ADDR_RSP.NumAssocDev</name>
     /// <summary>the number of associated devices</summary>
-    public int NumAssocDev;
+    private int NumAssocDev;
     /// <name>TI.ZPI1.ZDO_IEEE_ADDR_RSP.SrcAddress</name>
     /// <summary>Source address, size is dependent on SrcAddrMode</summary>
-    public ZToolAddress64 SrcAddress;
+    private ZToolAddress64 SrcAddress;
     /// <name>TI.ZPI1.ZDO_IEEE_ADDR_RSP.SrcAddrMode</name>
     /// <summary>indicates that the SrcAddr is either 16 bits or 64 bits</summary>
     public int SrcAddrMode;
     /// <name>TI.ZPI1.ZDO_IEEE_ADDR_RSP.StartIndex</name>
     /// <summary>Starting index into the list of associated devices for this report.</summary>
-    public int StartIndex;
+    private int StartIndex;
     /// <name>TI.ZPI1.ZDO_IEEE_ADDR_RSP.Status</name>
     /// <summary>this field indicates either SUCCESS or FAILURE</summary>
     public int Status;
@@ -102,7 +105,7 @@ public class ZDO_IEEE_ADDR_RSP extends ZToolPacket /*implements IRESPONSE_CALLBA
         int[] values = new int[AssocDevList.length];
         for (int i = 0; i < AssocDevList.length; i++) {
             logger.trace("Associated node - msb: " + AssocDevList[i].getMsb() + " lsb: " + AssocDevList[i].getLsb());
-            values[i] = ((int) AssocDevList[i].get16BitValue() & 0xFFFF);
+            values[i] = (AssocDevList[i].get16BitValue() & 0xFFFF);
         }
         return values;
     }
@@ -117,16 +120,9 @@ public class ZDO_IEEE_ADDR_RSP extends ZToolPacket /*implements IRESPONSE_CALLBA
 
     @Override
     public String toString() {
-        return "ZDO_IEEE_ADDR_RSP{" +
-                "AssocDevList=" + Arrays.toString(AssocDevList) +
-                ", assocDevList=" + Arrays.toString(assocDevList) +
-                ", IEEEAddr=" + IEEEAddr +
-                ", nwkAddr=" + nwkAddr +
-                ", NumAssocDev=" + NumAssocDev +
-                ", SrcAddress=" + SrcAddress +
-                ", SrcAddrMode=" + SrcAddrMode +
-                ", StartIndex=" + StartIndex +
-                ", Status=" + ResponseStatus.getStatus(Status) +
-                '}';
+        return "ZDO_IEEE_ADDR_RSP{" + "AssocDevList=" + Arrays.toString(AssocDevList) + ", assocDevList="
+                + Arrays.toString(assocDevList) + ", IEEEAddr=" + IEEEAddr + ", nwkAddr=" + nwkAddr + ", NumAssocDev="
+                + NumAssocDev + ", SrcAddress=" + SrcAddress + ", SrcAddrMode=" + SrcAddrMode + ", StartIndex="
+                + StartIndex + ", Status=" + ResponseStatus.getStatus(Status) + '}';
     }
 }

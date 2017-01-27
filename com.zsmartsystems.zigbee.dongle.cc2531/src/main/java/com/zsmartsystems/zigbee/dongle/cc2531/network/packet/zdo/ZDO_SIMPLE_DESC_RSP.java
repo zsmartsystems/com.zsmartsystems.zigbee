@@ -1,15 +1,15 @@
 /*
    Copyright 2008-2013 CNR-ISTI, http://isti.cnr.it
-   Institute of Information Science and Technologies 
-   of the Italian National Research Council 
+   Institute of Information Science and Technologies
+   of the Italian National Research Council
 
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,6 +27,8 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo;
 
+import java.util.Arrays;
+
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ResponseStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
@@ -34,40 +36,36 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.Integers;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 
-import java.util.Arrays;
-
 /**
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
- * @since 0.1.0
  */
-public class ZDO_SIMPLE_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALLBACK,IZDO*/ {
+public class ZDO_SIMPLE_DESC_RSP extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_RSP.AppDevID</name>
     /// <summary>The Device Description PROFILE_ID_HOME_AUTOMATION for this endpoint.</summary>
-    public DoubleByte DevID;
+    private DoubleByte DevID;
     /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_RSP.AppDevVer</name>
     /// <summary>Flags indicating app version</summary>
-    public int DevVer;
+    private int DevVer;
     /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_RSP.AppInClusterCount</name>
     /// <summary>The number of input clusters in the AppInClusterList</summary>
-    public int InClusterCount;
+    private int InClusterCount;
     /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_RSP.AppInClusterList</name>
     /// <summary>List of input cluster IDs supported</summary>
-    public DoubleByte[] InClusterList;
+    private DoubleByte[] InClusterList;
     /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_RSP.AppOutClusterCount</name>
     /// <summary>The number of output clusters in the AppOutClusterList</summary>
-    public int OutClusterCount;
+    private int OutClusterCount;
     /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_RSP.AppOutClusterList</name>
     /// <summary>List of output cluster IDs supported</summary>
-    public DoubleByte[] OutClusterList;
+    private DoubleByte[] OutClusterList;
     /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_RSP.AppProfID</name>
     /// <summary>The profile PROFILE_ID_HOME_AUTOMATION for this endpoint.</summary>
-    public DoubleByte ProfID;
+    private DoubleByte ProfID;
 
     /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_RSP.Endpoint</name>
     /// <summary>End point</summary>
-    public int Endpoint;
+    private int Endpoint;
     /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_RSP.NWKAddrOfInterest</name>
     /// <summary>Device's short address that this response describes.</summary>
     public ZToolAddress16 nwkAddr;
@@ -77,7 +75,7 @@ public class ZDO_SIMPLE_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALL
     /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_RSP.Status</name>
     /// <summary>this field indicates either SUCCESS or FAILURE.</summary>
     public int Status;
-    public int len;
+    private int len;
     private short[] inputs;
     private short[] outputs;
 
@@ -112,19 +110,12 @@ public class ZDO_SIMPLE_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALL
             this.OutClusterCount = framedata[((this.InClusterCount) * 2) + 13];
             this.OutClusterList = new DoubleByte[this.OutClusterCount];
             for (int i = 0; i < this.OutClusterCount; i++) {
-                this.OutClusterList[i] = new DoubleByte(framedata[(i * 2) + ((this.InClusterCount) * 2) + 15], framedata[(i * 2) + ((this.InClusterCount) * 2) + 14]);
-           }
+                this.OutClusterList[i] = new DoubleByte(framedata[(i * 2) + ((this.InClusterCount) * 2) + 15],
+                        framedata[(i * 2) + ((this.InClusterCount) * 2) + 14]);
+            }
         }
 
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_SIMPLE_DESC_RSP), framedata);
-    }
-
-    /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_RSP.APP_DEV_VER</name>
-    /// <summary>App dev ver</summary>
-    public class DEV_VER {
-        /// <name>TI.ZPI1.ZDO_SIMPLE_DESC_RSP.APP_DEV_VER.VER_100</name>
-        /// <summary>App dev ver</summary>
-        public static final int VER_100 = 0;
     }
 
     public short[] getInputClustersList() {
@@ -133,11 +124,8 @@ public class ZDO_SIMPLE_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALL
                 inputs = new short[super.packet[ZToolPacket.PAYLOAD_START_INDEX + 12]];
                 int j = 0;
                 for (int i = 0; i < inputs.length; i++) {
-                    inputs[i] = Integers.shortFromInts(
-                            super.packet,
-                            ZToolPacket.PAYLOAD_START_INDEX + 14 + j,
-                            ZToolPacket.PAYLOAD_START_INDEX + 13 + j
-                    );
+                    inputs[i] = Integers.shortFromInts(super.packet, ZToolPacket.PAYLOAD_START_INDEX + 14 + j,
+                            ZToolPacket.PAYLOAD_START_INDEX + 13 + j);
                     j += 2;
                 }
             } else {
@@ -151,18 +139,14 @@ public class ZDO_SIMPLE_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALL
         return getInputClustersList().length;
     }
 
-
     public short[] getOutputClustersList() {
         if (outputs == null) {
             if (len >= MIN_DESC_LEN) {
                 int j = getInputClustersCount() * 2;
                 outputs = new short[super.packet[ZToolPacket.PAYLOAD_START_INDEX + 13 + j]];
                 for (int i = 0; i < outputs.length; i++) {
-                    outputs[i] = Integers.shortFromInts(
-                            super.packet,
-                            ZToolPacket.PAYLOAD_START_INDEX + 15 + j,
-                            ZToolPacket.PAYLOAD_START_INDEX + 14 + j
-                    );
+                    outputs[i] = Integers.shortFromInts(super.packet, ZToolPacket.PAYLOAD_START_INDEX + 15 + j,
+                            ZToolPacket.PAYLOAD_START_INDEX + 14 + j);
                     j += 2;
                 }
             } else {
@@ -186,11 +170,8 @@ public class ZDO_SIMPLE_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALL
 
     public short getProfileId() {
         if (len >= MIN_DESC_LEN) {
-            return Integers.shortFromInts(
-                    super.packet,
-                    ZToolPacket.PAYLOAD_START_INDEX + 8,
-                    ZToolPacket.PAYLOAD_START_INDEX + 7
-            );
+            return Integers.shortFromInts(super.packet, ZToolPacket.PAYLOAD_START_INDEX + 8,
+                    ZToolPacket.PAYLOAD_START_INDEX + 7);
         } else {
             return -1;
         }
@@ -198,11 +179,8 @@ public class ZDO_SIMPLE_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALL
 
     public short getDeviceId() {
         if (len >= MIN_DESC_LEN) {
-            return Integers.shortFromInts(
-                    super.packet,
-                    ZToolPacket.PAYLOAD_START_INDEX + 10,
-                    ZToolPacket.PAYLOAD_START_INDEX + 9
-            );
+            return Integers.shortFromInts(super.packet, ZToolPacket.PAYLOAD_START_INDEX + 10,
+                    ZToolPacket.PAYLOAD_START_INDEX + 9);
         } else {
             return -1;
         }
@@ -218,21 +196,11 @@ public class ZDO_SIMPLE_DESC_RSP extends ZToolPacket /*implements IRESPONSE_CALL
 
     @Override
     public String toString() {
-        return "ZDO_SIMPLE_DESC_RSP{" +
-                "DevID=" + DevID +
-                ", DevVer=" + DevVer +
-                ", InClusterCount=" + InClusterCount +
-                ", InClusterList=" + Arrays.toString(InClusterList) +
-                ", OutClusterCount=" + OutClusterCount +
-                ", OutClusterList=" + Arrays.toString(OutClusterList) +
-                ", ProfID=" + ProfID +
-                ", Endpoint=" + Endpoint +
-                ", nwkAddr=" + nwkAddr +
-                ", SrcAddress=" + SrcAddress +
-                ", Status=" + ResponseStatus.getStatus(Status) +
-                ", len=" + len +
-                ", inputs=" + Arrays.toString(inputs) +
-                ", outputs=" + Arrays.toString(outputs) +
-                '}';
+        return "ZDO_SIMPLE_DESC_RSP{" + "DevID=" + DevID + ", DevVer=" + DevVer + ", InClusterCount=" + InClusterCount
+                + ", InClusterList=" + Arrays.toString(InClusterList) + ", OutClusterCount=" + OutClusterCount
+                + ", OutClusterList=" + Arrays.toString(OutClusterList) + ", ProfID=" + ProfID + ", Endpoint="
+                + Endpoint + ", nwkAddr=" + nwkAddr + ", SrcAddress=" + SrcAddress + ", Status="
+                + ResponseStatus.getStatus(Status) + ", len=" + len + ", inputs=" + Arrays.toString(inputs)
+                + ", outputs=" + Arrays.toString(outputs) + '}';
     }
 }

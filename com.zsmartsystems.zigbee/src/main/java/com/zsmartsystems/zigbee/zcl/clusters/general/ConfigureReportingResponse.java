@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.List;
 import java.util.Map;
@@ -34,22 +33,12 @@ public class ConfigureReportingResponse extends ZclCommand {
     private List<AttributeStatusRecord> records;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public ConfigureReportingResponse() {
         genericCommand = true;
         commandId = 7;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public ConfigureReportingResponse(final Map<Integer, Object> fields) {
-        this();
-        records = (List<AttributeStatusRecord>) fields.get(0);
     }
 
     /**

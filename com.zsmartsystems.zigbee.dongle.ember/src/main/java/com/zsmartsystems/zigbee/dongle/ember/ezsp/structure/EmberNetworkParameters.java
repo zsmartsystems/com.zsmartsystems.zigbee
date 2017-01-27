@@ -2,11 +2,58 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
 /**
  * Defines the network parameters for an Ember network
- * 
+ *
  * @author Chris Jackson
  *
  */
 public class EmberNetworkParameters extends EmberStructure {
+
+    /**
+     * The network's extended PAN identifier.
+     */
+    private int[] extendedPanId;
+
+    /**
+     * The network's PAN identifier.
+     */
+    private int panId;
+
+    /**
+     * A power setting, in dBm.
+     */
+    private int radioTxPower;
+
+    /**
+     * A radio channel.
+     */
+    private int radioChannel;
+
+    /**
+     * The method used to initially join the network.
+     */
+    private EmberJoinMethod joinMethod;
+
+    /**
+     * NWK Manager ID. The ID of the network manager in the current network.
+     * This may only be set at joining when using EMBER_USE_NWK_COMMISSIONING as
+     * the join method.
+     */
+    private int nwkManagerId;
+
+    /**
+     * NWK Update ID. The value of the ZigBee nwkUpdateId known by the stack.
+     * This is used to determine the newest instance of the network after a PAN
+     * ID or channel change. This may only be set at joining when using
+     * EMBER_USE_NWK_COMMISSIONING as the join method.
+     */
+    private int nwkUpdateId;
+
+    /**
+     * NWK channel mask. The list of preferred channels that the NWK manager has
+     * told this device to use when searching for the network. This may only be
+     * set at joining when using EMBER_USE_NWK_COMMISSIONING as the join method.
+     */
+    private int channels;
 
     public EmberNetworkParameters() {
     }
@@ -23,53 +70,6 @@ public class EmberNetworkParameters extends EmberStructure {
         nwkUpdateId = inputUInt8();
         channels = inputUInt32();
     }
-
-    /**
-     * The network's extended PAN identifier.
-     */
-    int[] extendedPanId;
-
-    /**
-     * The network's PAN identifier.
-     */
-    int panId;
-
-    /**
-     * A power setting, in dBm.
-     */
-    int radioTxPower;
-
-    /**
-     * A radio channel.
-     */
-    int radioChannel;
-
-    /**
-     * The method used to initially join the network.
-     */
-    EmberJoinMethod joinMethod;
-
-    /**
-     * NWK Manager ID. The ID of the network manager in the current network.
-     * This may only be set at joining when using EMBER_USE_NWK_COMMISSIONING as
-     * the join method.
-     */
-    int nwkManagerId;
-
-    /**
-     * NWK Update ID. The value of the ZigBee nwkUpdateId known by the stack.
-     * This is used to determine the newest instance of the network after a PAN
-     * ID or channel change. This may only be set at joining when using
-     * EMBER_USE_NWK_COMMISSIONING as the join method.
-     */
-    int nwkUpdateId;
-
-    /**
-     * NWK channel mask. The list of preferred channels that the NWK manager has
-     * told this device to use when searching for the network. This may only be
-     * set at joining when using EMBER_USE_NWK_COMMISSIONING as the join method.
-     */
-    int channels;
 
     public int[] getExtendedPanId() {
         return extendedPanId;
@@ -119,7 +119,7 @@ public class EmberNetworkParameters extends EmberStructure {
      * NWK Manager ID. The ID of the network manager in the current network.
      * This may only be set at joining when using EMBER_USE_NWK_COMMISSIONING as
      * the join method.
-     * 
+     *
      * @param nwkManagerId
      */
     public void setNwkManagerId(int nwkManagerId) {
@@ -135,7 +135,7 @@ public class EmberNetworkParameters extends EmberStructure {
      * This is used to determine the newest instance of the network after a PAN
      * ID or channel change. This may only be set at joining when using
      * EMBER_USE_NWK_COMMISSIONING as the join method.
-     * 
+     *
      * @param nwkUpdateId
      */
     public void setNwkUpdateId(int nwkUpdateId) {
@@ -150,7 +150,7 @@ public class EmberNetworkParameters extends EmberStructure {
      * NWK channel mask. The list of preferred channels that the NWK manager has
      * told this device to use when searching for the network. This may only be
      * set at joining when using EMBER_USE_NWK_COMMISSIONING as the join method.
-     * 
+     *
      * @param channels
      */
     public void setChannels(int channels) {
@@ -178,8 +178,9 @@ public class EmberNetworkParameters extends EmberStructure {
         return "EmberNetworkParameters [extendedPanId="
                 + String.format("%02X %02X %02X %02X %02X %02X %02X %02X", extendedPanId[0], extendedPanId[1],
                         extendedPanId[2], extendedPanId[3], extendedPanId[4], extendedPanId[5], extendedPanId[6],
-                        extendedPanId[7]) + ", panId=" + panId + ", radioTxPower=" + radioTxPower + ", radioChannel="
-                + radioChannel + ", joinMethod=" + joinMethod + ", nwkManagerId=" + nwkManagerId + ", nwkUpdateId="
-                + nwkUpdateId + ", channels=" + channels + "]";
+                        extendedPanId[7])
+                + ", panId=" + panId + ", radioTxPower=" + radioTxPower + ", radioChannel=" + radioChannel
+                + ", joinMethod=" + joinMethod + ", nwkManagerId=" + nwkManagerId + ", nwkUpdateId=" + nwkUpdateId
+                + ", channels=" + channels + "]";
     }
 }

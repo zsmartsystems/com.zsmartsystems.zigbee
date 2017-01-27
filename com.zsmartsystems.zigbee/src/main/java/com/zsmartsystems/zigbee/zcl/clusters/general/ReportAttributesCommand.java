@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.List;
 import java.util.Map;
@@ -36,22 +35,12 @@ public class ReportAttributesCommand extends ZclCommand {
     private List<AttributeReport> reports;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public ReportAttributesCommand() {
         genericCommand = true;
         commandId = 10;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public ReportAttributesCommand(final Map<Integer, Object> fields) {
-        this();
-        reports = (List<AttributeReport>) fields.get(0);
     }
 
     /**

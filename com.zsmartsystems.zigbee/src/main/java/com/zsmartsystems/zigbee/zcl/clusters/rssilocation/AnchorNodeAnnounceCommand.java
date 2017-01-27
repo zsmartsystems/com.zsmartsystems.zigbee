@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -43,26 +42,13 @@ public class AnchorNodeAnnounceCommand extends ZclCommand {
     private Integer coordinate3;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public AnchorNodeAnnounceCommand() {
         genericCommand = false;
         clusterId = 11;
         commandId = 6;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public AnchorNodeAnnounceCommand(final Map<Integer, Object> fields) {
-        this();
-        anchorNodeAddress = (Long) fields.get(0);
-        coordinate1 = (Integer) fields.get(1);
-        coordinate2 = (Integer) fields.get(2);
-        coordinate3 = (Integer) fields.get(3);
     }
 
     /**

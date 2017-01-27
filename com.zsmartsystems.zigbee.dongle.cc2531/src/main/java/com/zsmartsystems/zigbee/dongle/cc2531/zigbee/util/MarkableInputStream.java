@@ -24,15 +24,10 @@ package com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  */
 public class MarkableInputStream extends InputStream {
-
-    private static final Logger logger = LoggerFactory.getLogger(MarkableInputStream.class);
 
     private final InputStream in;
     private CircularBufferInt buffer;

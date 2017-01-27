@@ -52,21 +52,4 @@ public class ThreadUtils {
         } while (end > System.currentTimeMillis());
     }
 
-    /**
-     * Wait for up to x ms, in fact if interrupt is received it will end before the expected time
-     *
-     * @param time the number of ms to wait
-     * @since 0.4.0
-     */
-    public static final void waitingUntil(long time) {
-        do {
-            try {
-                final long delta = Math.max(time - System.currentTimeMillis(), 0);
-                logger.trace("{} waiting for {}ms", Thread.currentThread(), delta);
-                Thread.sleep(delta);
-            } catch (InterruptedException ignored) {
-                break;
-            }
-        } while (time > System.currentTimeMillis());
-    }
 }

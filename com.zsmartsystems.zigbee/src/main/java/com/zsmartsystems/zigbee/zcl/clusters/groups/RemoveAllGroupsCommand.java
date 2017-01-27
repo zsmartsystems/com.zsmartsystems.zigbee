@@ -1,10 +1,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.groups;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -42,22 +39,13 @@ import java.util.HashMap;
  */
 public class RemoveAllGroupsCommand extends ZclCommand {
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public RemoveAllGroupsCommand() {
         genericCommand = false;
         clusterId = 4;
         commandId = 4;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public RemoveAllGroupsCommand(final Map<Integer, Object> fields) {
-        this();
     }
 
     @Override

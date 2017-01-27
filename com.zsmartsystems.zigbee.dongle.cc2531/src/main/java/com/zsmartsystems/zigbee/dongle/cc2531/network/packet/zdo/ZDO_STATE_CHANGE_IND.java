@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,19 +23,19 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * This callback message indicates the ZDO state change.
+ *
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
  */
-public class ZDO_STATE_CHANGE_IND extends ZToolPacket /*implements IRESPONSE_CALLBACK,IZDO*/ {
+public class ZDO_STATE_CHANGE_IND extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     /// <name>TI.ZPI2.ZDO_STATE_CHANGE_IND.State</name>
     /// <summary>State</summary>
     public int State;
@@ -52,12 +52,10 @@ public class ZDO_STATE_CHANGE_IND extends ZToolPacket /*implements IRESPONSE_CAL
 
     @Override
     public String toString() {
-        return "ZDO_STATE_CHANGE_IND{" +
-                "State=" + CMD_STATUS.getStatus(State) +
-                '}';
+        return "ZDO_STATE_CHANGE_IND{" + "State=" + CMD_STATUS.getStatus(State) + '}';
     }
 
-    public enum CMD_STATUS {
+    private enum CMD_STATUS {
         DEV_HOLD(0x00), // Initialized - not started automatically
         DEV_INIT(0x01), // Initialized - not connected to anything
         DEV_NWK_DISC(0x02), // Discovering PAN's to join
@@ -75,10 +73,6 @@ public class ZDO_STATE_CHANGE_IND extends ZToolPacket /*implements IRESPONSE_CAL
 
         private CMD_STATUS(int value) {
             this.value = value;
-        }
-
-        public int getValue() {
-            return value;
         }
 
         public static CMD_STATUS getStatus(int value) {

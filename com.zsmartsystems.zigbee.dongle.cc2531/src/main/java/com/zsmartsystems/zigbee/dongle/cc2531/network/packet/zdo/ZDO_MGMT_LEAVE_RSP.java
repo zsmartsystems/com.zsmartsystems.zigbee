@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,12 +31,11 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 
 /**
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
  */
-public class ZDO_MGMT_LEAVE_RSP extends ZToolPacket /*implements IRESPONSE_CALLBACK,IZDO*/ {
+public class ZDO_MGMT_LEAVE_RSP extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     /// <name>TI.ZPI1.ZDO_MGMT_LEAVE_RSP.SrcAddress</name>
     /// <summary>Source address of the message</summary>
-    public ZToolAddress16 SrcAddress;
+    private ZToolAddress16 SrcAddress;
     /// <name>TI.ZPI1.ZDO_MGMT_LEAVE_RSP.Status</name>
     /// <summary>this field indicates either SUCCESS (0) or FAILURE (1).</summary>
     public int Status;
@@ -54,9 +53,7 @@ public class ZDO_MGMT_LEAVE_RSP extends ZToolPacket /*implements IRESPONSE_CALLB
 
     @Override
     public String toString() {
-        return "ZDO_MGMT_LEAVE_RSP{" +
-                "SrcAddress=" + SrcAddress +
-                ", Status=" + ResponseStatus.getStatus(Status) +
-                '}';
+        return "ZDO_MGMT_LEAVE_RSP{" + "SrcAddress=" + SrcAddress + ", Status=" + ResponseStatus.getStatus(Status)
+                + '}';
     }
 }

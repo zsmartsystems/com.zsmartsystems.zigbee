@@ -4,7 +4,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * BindRequest.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class BindRequest extends ZdoRequest {
@@ -12,27 +12,27 @@ public class BindRequest extends ZdoRequest {
     /**
      * Bind source address.
      */
-    long bindSourceAddress;
+    private long bindSourceAddress;
     /**
      * Bind source end point.
      */
-    int bindSourceEndpoint;
+    private int bindSourceEndpoint;
     /**
      * Bind cluster.
      */
-    int bindCluster;
+    private int bindCluster;
     /**
      * Bind destination addressing mode.
      */
-    int bindDestinationAddressingMode;
+    private int bindDestinationAddressingMode;
     /**
      * Bind destination address.
      */
-    long bindDestinationAddress;
+    private long bindDestinationAddress;
     /**
      * Bind destination endpoint.
      */
-    int bindDestinationEndpoint;
+    private int bindDestinationEndpoint;
 
     public BindRequest() {
     }

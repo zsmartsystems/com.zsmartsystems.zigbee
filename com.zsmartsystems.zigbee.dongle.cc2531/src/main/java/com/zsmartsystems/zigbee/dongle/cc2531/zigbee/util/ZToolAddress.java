@@ -30,12 +30,9 @@ package com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util;
  *
  * @author <a href="mailto:andrew.rapp@gmail.com">Andrew Rapp</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public abstract class ZToolAddress {
-
-    public ZToolAddress() {
-
-    }
 
     public abstract byte[] getAddress();
 

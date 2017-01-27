@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,19 +32,21 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
 /**
  * This command is generated to request a Management Leave Request for the target device and is used to remove
  * devices from the network.
+ *
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
  */
-public class ZDO_MGMT_LEAVE_REQ extends ZToolPacket /*implements IREQUEST,IZDO*/ {
+public class ZDO_MGMT_LEAVE_REQ extends ZToolPacket /* implements IREQUEST,IZDO */ {
     /// <name>TI.ZPI1.ZDO_MGMT_LEAVE_REQ.DeviceAddress</name>
     /// <summary>The 64 bit IEEE Address of the device you want to leave.</summary>
-    public ZToolAddress64 DeviceAddress;
+    private ZToolAddress64 DeviceAddress;
     /// <name>TI.ZPI1.ZDO_MGMT_LEAVE_REQ.DstAddr</name>
     /// <summary>Destination network address.</summary>
-    public ZToolAddress16 DstAddr;
+    private ZToolAddress16 DstAddr;
     /// <name>TI.ZPI1.ZDO_MGMT_LEAVE_REQ.RemoveChildren</name>
-    /// <summary>This field has a value of 1 if the device being asked to leave the network is also being asked to remove its child devices, if any. Otherwise it has a value of 0. Currently, the stack profile of Home Control specifies that this field should always be set to 0</summary>
-    public int RemoveChildren_Rejoin;
+    /// <summary>This field has a value of 1 if the device being asked to leave the network is also being asked to
+    /// remove its child devices, if any. Otherwise it has a value of 0. Currently, the stack profile of Home Control
+    /// specifies that this field should always be set to 0</summary>
+    private int RemoveChildren_Rejoin;
 
     /// <name>TI.ZPI1.ZDO_MGMT_LEAVE_REQ</name>
     /// <summary>Constructor</summary>

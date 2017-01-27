@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -33,24 +32,13 @@ public class RestoreStartupParametersCommand extends ZclCommand {
     private Integer index;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public RestoreStartupParametersCommand() {
         genericCommand = false;
         clusterId = 21;
         commandId = 2;
         commandDirection = true;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public RestoreStartupParametersCommand(final Map<Integer, Object> fields) {
-        this();
-        option = (Integer) fields.get(0);
-        index = (Integer) fields.get(1);
     }
 
     /**

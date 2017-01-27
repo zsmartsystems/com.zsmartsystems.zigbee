@@ -115,7 +115,7 @@ public abstract class EzspFrame extends EzspData {
      *
      * @param inputBuffer
      */
-    EzspFrame(int[] inputBuffer) {
+    public EzspFrame(int[] inputBuffer) {
         this.buffer = inputBuffer;
 
         this.sequenceNumber = inputBuffer[0];

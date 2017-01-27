@@ -4,7 +4,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -109,38 +108,13 @@ public class GetZoneIdMapResponse extends ZclCommand {
     private Integer zoneIdMapSection15;
 
     /**
-     * Default constructor setting the command type field.
+     * Default constructor.
      */
     public GetZoneIdMapResponse() {
         genericCommand = false;
         clusterId = 1281;
         commandId = 1;
         commandDirection = false;
-    }
-
-    /**
-     * Constructor copying field values from command message.
-     *
-     * @param fields a {@link Map} containing the value {@link Object}s
-     */
-    public GetZoneIdMapResponse(final Map<Integer, Object> fields) {
-        this();
-        zoneIdMapSection0 = (Integer) fields.get(0);
-        zoneIdMapSection1 = (Integer) fields.get(1);
-        zoneIdMapSection2 = (Integer) fields.get(2);
-        zoneIdMapSection3 = (Integer) fields.get(3);
-        zoneIdMapSection4 = (Integer) fields.get(4);
-        zoneIdMapSection5 = (Integer) fields.get(5);
-        zoneIdMapSection6 = (Integer) fields.get(6);
-        zoneIdMapSection7 = (Integer) fields.get(7);
-        zoneIdMapSection8 = (Integer) fields.get(8);
-        zoneIdMapSection9 = (Integer) fields.get(9);
-        zoneIdMapSection10 = (Integer) fields.get(10);
-        zoneIdMapSection11 = (Integer) fields.get(11);
-        zoneIdMapSection12 = (Integer) fields.get(12);
-        zoneIdMapSection13 = (Integer) fields.get(13);
-        zoneIdMapSection14 = (Integer) fields.get(14);
-        zoneIdMapSection15 = (Integer) fields.get(15);
     }
 
     /**

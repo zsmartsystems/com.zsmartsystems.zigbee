@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,12 +30,12 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 
 /**
  * @author <a href="mailto:ryan@presslab.us">Ryan Press</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2015-03-09 19:00:05 +0300 (Mon, 09 Mar 2015) $)
  */
-public class ZDO_MSG_CB_REGISTER_SRSP extends ZToolPacket /*implements IRESPONSE_CALLBACK,IZDO*/ {
+public class ZDO_MSG_CB_REGISTER_SRSP extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     /// <name>TI.ZPI2.ZDO_MSG_CB_REGISTER_SRSP.Status</name>
     /// <summary>this field indicates either SUCCESS or FAILURE.</summary>
-    public int Status;
+    private int Status;
+
     /// <name>TI.ZPI2.ZDO_MSG_CB_REGISTER_SRSP</name>
     /// <summary>Constructor</summary>
     public ZDO_MSG_CB_REGISTER_SRSP() {
@@ -48,8 +48,6 @@ public class ZDO_MSG_CB_REGISTER_SRSP extends ZToolPacket /*implements IRESPONSE
 
     @Override
     public String toString() {
-        return "ZDO_MSG_CB_REGISTER_SRSP{" +
-                "Status=" + ResponseStatus.getStatus(Status) +
-                '}';
+        return "ZDO_MSG_CB_REGISTER_SRSP{" + "Status=" + ResponseStatus.getStatus(Status) + '}';
     }
 }
