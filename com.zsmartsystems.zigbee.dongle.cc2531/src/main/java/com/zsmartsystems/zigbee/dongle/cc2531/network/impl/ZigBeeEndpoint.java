@@ -23,7 +23,6 @@
 package com.zsmartsystems.zigbee.dongle.cc2531.network.impl;
 
 import java.util.Arrays;
-import java.util.HashSet;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.slf4j.Logger;
@@ -70,6 +69,10 @@ public class ZigBeeEndpoint implements ApplicationFrameworkMessageProducer {
      */
     private int profileId;
     /**
+     * The device version
+     */
+    private int deviceVersion;
+    /**
      * The end point.
      */
     private short endPointAddress;
@@ -88,18 +91,6 @@ public class ZigBeeEndpoint implements ApplicationFrameworkMessageProducer {
     private String endpointId = null;
 
     /**
-     * The bound clusters.
-     */
-    @JsonIgnore
-    private final HashSet<Integer> boundCluster = new HashSet<Integer>();
-
-    /**
-     * The application framework message consumers.
-     */
-    @JsonIgnore
-    private final HashSet<ApplicationFrameworkMessageConsumer> consumers = new HashSet<ApplicationFrameworkMessageConsumer>();
-
-    /**
      * Constructor which sets Endpoint base information.
      *
      * @param node the node
@@ -115,6 +106,7 @@ public class ZigBeeEndpoint implements ApplicationFrameworkMessageProducer {
         this.node = node;
         this.deviceTypeId = deviceId;
         this.endPointAddress = endPoint;
+        this.deviceVersion = deviceVersion;
         this.inputClusters = inputs;
         this.outputClusters = outputs;
         this.profileId = profileId;
@@ -133,7 +125,7 @@ public class ZigBeeEndpoint implements ApplicationFrameworkMessageProducer {
         if (zigBeeNetworkManager == null || n == null) {
             logger.error("Creating {} with some nulls parameters {}",
                     new Object[] { ZigBeeEndpoint.class, zigBeeNetworkManager, n, ep });
-            throw new NullPointerException(
+            throw new IllegalArgumentException(
                     "Cannot create a device with a null ZigBeeNetworkManager or a null ZigBeeNode");
         }
         networkManager = zigBeeNetworkManager;
@@ -214,7 +206,16 @@ public class ZigBeeEndpoint implements ApplicationFrameworkMessageProducer {
         this.deviceTypeId = deviceTypeId;
     }
 
+    public int getDeviceTypeId() {
+        return deviceTypeId;
+    }
+
     public void setDeviceVersion(short deviceVersion) {
+        this.deviceVersion = deviceVersion;
+    }
+
+    public int getDeviceVersion() {
+        return deviceVersion;
     }
 
     public void setEndPointAddress(short endPointAddress) {
@@ -251,6 +252,10 @@ public class ZigBeeEndpoint implements ApplicationFrameworkMessageProducer {
 
     public void setProfileId(int profileId) {
         this.profileId = profileId;
+    }
+
+    public int getProfileId() {
+        return profileId;
     }
 
     @Override

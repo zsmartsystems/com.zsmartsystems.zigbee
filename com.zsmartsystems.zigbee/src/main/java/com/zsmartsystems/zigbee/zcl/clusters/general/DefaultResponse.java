@@ -5,26 +5,20 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * <p>
  * Default Response value object class.
- * </p>
  * <p>
  * The default response command is generated when a device receives a unicast
  * command, there is no other relevant response specified for the command, and
  * either an error results or the Disable default response bit of its Frame control field
  * is set to 0.
- * </p>
  * <p>
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
- * </p>
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- * </p>
  */
 public class DefaultResponse extends ZclCommand {
     /**
@@ -47,13 +41,10 @@ public class DefaultResponse extends ZclCommand {
     }
 
     /**
-     * <p>
      * Sets the cluster ID for <i>generic</i> commands. {@link DefaultResponse} is a <i>generic</i> command.
-     * </p>
      * <p>
      * For commands that are not <i>generic</i>, this method will do nothing as the cluster ID is fixed.
      * To test if a command is <i>generic</i>, use the {@link #isGenericCommand} method.
-     * </p>
      *
      * @param clusterId the cluster ID used for <i>generic</i> commands as an {@link Integer}
      */

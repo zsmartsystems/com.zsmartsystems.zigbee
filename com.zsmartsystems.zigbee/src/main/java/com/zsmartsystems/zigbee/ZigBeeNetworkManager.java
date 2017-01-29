@@ -321,7 +321,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             deserializer = constructor.newInstance(new Object[] { payload });
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
+            logger.debug(e.getMessage());
             return;
         }
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -508,7 +508,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      *            the command
      * @return the command result future
      */
-    Future<CommandResult> send(ZigBeeAddress destination, ZclCommand command) {
+    public Future<CommandResult> send(ZigBeeAddress destination, ZclCommand command) {
         command.setDestinationAddress(destination);
         if (destination.isGroup()) {
             return broadcast(command);
@@ -545,7 +545,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      *            the response matcher.
      * @return the command result future.
      */
-    Future<CommandResult> unicast(final Command command, final CommandResponseMatcher responseMatcher) {
+    public Future<CommandResult> unicast(final Command command, final CommandResponseMatcher responseMatcher) {
         synchronized (command) {
             final CommandResultFuture future = new CommandResultFuture(this);
             final CommandExecution commandExecution = new CommandExecution(System.currentTimeMillis(), command, future);

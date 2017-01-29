@@ -29,7 +29,7 @@ import java.util.concurrent.Future;
  * specified according to the Commission Internationale de l'Éclairage (CIE)
  * specification CIE 1931 Color Space, [B4]. Color control is carried out in terms of
  * x,y values, as defined by this specification.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclColorControlCluster extends ZclCluster {
@@ -88,13 +88,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * If this attribute is implemented then the CurrentSaturation and ColorMode
      * attributes shall also be implemented.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -116,14 +114,12 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * If this attribute is implemented then the CurrentSaturation and ColorMode
      * attributes shall also be implemented.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -145,13 +141,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * If this attribute is implemented then the CurrentSaturation and ColorMode
      * attributes shall also be implemented.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -175,13 +169,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254 inclusive)
      * If this attribute is implemented then the CurrentHue and ColorMode attributes
      * shall also be implemented.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -203,14 +195,12 @@ public class ZclColorControlCluster extends ZclCluster {
      * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254 inclusive)
      * If this attribute is implemented then the CurrentHue and ColorMode attributes
      * shall also be implemented.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -232,13 +222,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254 inclusive)
      * If this attribute is implemented then the CurrentHue and ColorMode attributes
      * shall also be implemented.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -257,13 +245,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
      * until the currently active command will be complete.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -280,14 +266,12 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
      * until the currently active command will be complete.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -308,13 +292,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The value of x shall be related to the CurrentX attribute by the relationship
      * <br>
      * x = CurrentX / 65535 (CurrentX in the range 0 to 65279 inclusive)
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -336,14 +318,12 @@ public class ZclColorControlCluster extends ZclCluster {
      * The value of x shall be related to the CurrentX attribute by the relationship
      * <br>
      * x = CurrentX / 65535 (CurrentX in the range 0 to 65279 inclusive)
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -365,13 +345,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The value of x shall be related to the CurrentX attribute by the relationship
      * <br>
      * x = CurrentX / 65535 (CurrentX in the range 0 to 65279 inclusive)
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -395,13 +373,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The value of y shall be related to the CurrentY attribute by the relationship
      * <br>
      * y = CurrentY / 65535 (CurrentY in the range 0 to 65279 inclusive)
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -423,14 +399,12 @@ public class ZclColorControlCluster extends ZclCluster {
      * The value of y shall be related to the CurrentY attribute by the relationship
      * <br>
      * y = CurrentY / 65535 (CurrentY in the range 0 to 65279 inclusive)
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -452,13 +426,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The value of y shall be related to the CurrentY attribute by the relationship
      * <br>
      * y = CurrentY / 65535 (CurrentY in the range 0 to 65279 inclusive)
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -477,13 +449,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * The DriftCompensation attribute indicates what mechanism, if any, is in use for
      * compensation for color/intensity drift over time.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -500,14 +470,12 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * The DriftCompensation attribute indicates what mechanism, if any, is in use for
      * compensation for color/intensity drift over time.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -523,13 +491,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * The CompensationText attribute holds a textual indication of what mechanism, if
      * any, is in use to compensate for color/intensity drift over time.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -546,14 +512,12 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * The CompensationText attribute holds a textual indication of what mechanism, if
      * any, is in use to compensate for color/intensity drift over time.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link String} attribute value, or null on error
      */
@@ -580,13 +544,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * The value ColorTemperature = 0 indicates an undefined value. The value
      * ColorTemperature = 65535 indicates an invalid value.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -614,14 +576,12 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * The value ColorTemperature = 0 indicates an undefined value. The value
      * ColorTemperature = 65535 indicates an invalid value.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -649,13 +609,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * The value ColorTemperature = 0 indicates an undefined value. The value
      * ColorTemperature = 65535 indicates an invalid value.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -674,13 +632,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * The ColorMode attribute indicates which attributes are currently determining the
      * color of the device
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -697,14 +653,12 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * The ColorMode attribute indicates which attributes are currently determining the
      * color of the device
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */

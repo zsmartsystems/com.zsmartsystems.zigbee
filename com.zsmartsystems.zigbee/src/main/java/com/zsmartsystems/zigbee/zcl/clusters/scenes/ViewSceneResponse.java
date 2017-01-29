@@ -6,18 +6,14 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 
 /**
  * <p>
  * View Scene Response value object class.
- * </p>
  * <p>
  * Cluster: <b>Scenes</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
- * </p>
  * <p>
  * The scenes cluster provides attributes and commands for setting up and recalling
  * scenes. Each scene corresponds to a set of stored values of specified attributes for
@@ -28,10 +24,8 @@ import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
  * that extra care is required in these cases to avoid a scene ID collision, and that
  * commands related to scenes without a group may only be unicast, i.e.: they may
  * not be multicast or broadcast.
- * </p>
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- * </p>
  */
 public class ViewSceneResponse extends ZclCommand {
     /**

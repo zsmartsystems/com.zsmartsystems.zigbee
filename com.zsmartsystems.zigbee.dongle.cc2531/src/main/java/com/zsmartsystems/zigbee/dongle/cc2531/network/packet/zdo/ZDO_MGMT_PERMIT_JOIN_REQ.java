@@ -32,6 +32,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
  * This command is generated to set the Permit Join for the destination device.
  *
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public class ZDO_MGMT_PERMIT_JOIN_REQ extends ZToolPacket /* implements IREQUEST,IZDO */ {
     /// <name>TI.ZPI1.ZDO_MGMT_PERMIT_JOIN_REQ.AddrMode</name>
@@ -68,5 +69,37 @@ public class ZDO_MGMT_PERMIT_JOIN_REQ extends ZToolPacket /* implements IREQUEST
         framedata[3] = this.Duration;
         framedata[4] = this.TCSignificance;
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_MGMT_PERMIT_JOIN_REQ), framedata);
+    }
+
+    public byte getAddrMode() {
+        return AddrMode;
+    }
+
+    public void setAddrMode(byte addrMode) {
+        AddrMode = addrMode;
+    }
+
+    public ZToolAddress16 getDstAddr() {
+        return DstAddr;
+    }
+
+    public void setDstAddr(ZToolAddress16 dstAddr) {
+        DstAddr = dstAddr;
+    }
+
+    public int getDuration() {
+        return Duration;
+    }
+
+    public void setDuration(int duration) {
+        Duration = duration;
+    }
+
+    public int getTCSignificance() {
+        return TCSignificance;
+    }
+
+    public void setTCSignificance(int tCSignificance) {
+        TCSignificance = tCSignificance;
     }
 }

@@ -354,7 +354,7 @@ public class AshFrameHandler {
                 outputStream.write(b);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.debug(e.getMessage());
         }
 
         // logger.debug(result.toString());
@@ -516,7 +516,7 @@ public class AshFrameHandler {
             private EzspFrame response = null;
 
             @Override
-            public EzspFrame call() throws Exception {
+            public EzspFrame call() {
                 // Register a listener
                 addTransactionListener(this);
 
@@ -526,7 +526,11 @@ public class AshFrameHandler {
                 // Wait for the transaction to complete
                 synchronized (this) {
                     while (response == null) {
-                        wait();
+                        try {
+                            wait();
+                        } catch (InterruptedException e) {
+                            logger.debug(e.getMessage());
+                        }
                     }
                 }
 

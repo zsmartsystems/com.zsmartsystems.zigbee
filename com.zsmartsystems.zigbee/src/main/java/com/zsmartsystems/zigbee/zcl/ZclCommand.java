@@ -62,8 +62,8 @@ public abstract class ZclCommand extends Command {
     /**
      * Default constructor.
      */
-    public ZclCommand() {
-    }
+    // public ZclCommand() {
+    // }
 
     /**
      * Constructor which copies field values from command message.
@@ -244,9 +244,11 @@ public abstract class ZclCommand extends Command {
     // }
 
     public void serialize(ZclFieldSerializer serializer) {
+        // Default implementation does nothing - overridden by each class
     }
 
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        // Default implementation does nothing - overridden by each class
     }
 
     @Override

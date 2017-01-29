@@ -34,11 +34,12 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
  * This callback message indicates the ZDO state change.
  *
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public class ZDO_STATE_CHANGE_IND extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     /// <name>TI.ZPI2.ZDO_STATE_CHANGE_IND.State</name>
     /// <summary>State</summary>
-    public int State;
+    private CMD_STATUS status;
 
     /// <name>TI.ZPI2.ZDO_STATE_CHANGE_IND</name>
     /// <summary>Constructor</summary>
@@ -46,16 +47,20 @@ public class ZDO_STATE_CHANGE_IND extends ZToolPacket /* implements IRESPONSE_CA
     }
 
     public ZDO_STATE_CHANGE_IND(int[] framedata) {
-        this.State = framedata[0];
+        status = CMD_STATUS.getStatus(framedata[0]);
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_STATE_CHANGE_IND), framedata);
+    }
+
+    public CMD_STATUS getStatus() {
+        return status;
     }
 
     @Override
     public String toString() {
-        return "ZDO_STATE_CHANGE_IND{" + "State=" + CMD_STATUS.getStatus(State) + '}';
+        return "ZDO_STATE_CHANGE_IND{" + "State=" + status + '}';
     }
 
-    private enum CMD_STATUS {
+    public enum CMD_STATUS {
         DEV_HOLD(0x00), // Initialized - not started automatically
         DEV_INIT(0x01), // Initialized - not connected to anything
         DEV_NWK_DISC(0x02), // Discovering PAN's to join
@@ -65,7 +70,7 @@ public class ZDO_STATE_CHANGE_IND extends ZToolPacket /* implements IRESPONSE_CA
         DEV_END_DEVICE(0x06), // Started as device after authentication
         DEV_ROUTER(0x07), // Device joined, authenticated and is a router
         DEV_COORD_STARTING(0x08), // Started as ZigBee Coordinator
-        DEV_ZB_COORD(0x09), // Started as ZigBee Coordinator
+        DEV_COORD_STARTED(0x09), // Started as ZigBee Coordinator
         DEV_NWK_ORPHAN(0x0A); // Device has lost information about its parent
 
         private static Map<Integer, CMD_STATUS> mapping = new HashMap<Integer, CMD_STATUS>();

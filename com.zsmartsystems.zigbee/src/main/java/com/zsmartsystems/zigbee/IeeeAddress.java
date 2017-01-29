@@ -1,18 +1,28 @@
 package com.zsmartsystems.zigbee;
 
 /**
- * Represents an IEEE address
- * 
+ * Represents a 64 bit IEEE network address
+ *
  * @author Chris Jackson
  *
  */
 public class IeeeAddress {
     private long address;
 
+    /**
+     * Create an {@link IeeeAddress} from a {@link Long}
+     *
+     * @param address the address as a {@link Long}
+     */
     public IeeeAddress(long address) {
         this.address = address;
     }
 
+    /**
+     * Create an {@link IeeeAddress} from a {@link String}
+     *
+     * @param address the address as a {@link String}
+     */
     public IeeeAddress(String address) {
         this.address = Long.parseLong(address, 16);
     }
@@ -30,14 +40,11 @@ public class IeeeAddress {
             return false;
         }
         final IeeeAddress other = (IeeeAddress) obj;
-        if (other.getLong() == address) {
-            return true;
-        }
-        return false;
+        return (other.getLong() == address) ? true : false;
     }
 
     @Override
     public String toString() {
-        return String.format("%08X", address);
+        return String.format("IEEE=%08X", address);
     }
 }

@@ -12,36 +12,28 @@ public class Cie {
     public double y;
     public double Y;
 
-    public static Cie rgb2cie2(double R, double G, double B) {
-        double X = 0.412315f * R + 0.357600f * G + 0.180500f * B;
-        double Y = 0.212600f * R + 0.715200f * G + 0.072200f * B;
-        double Z = 0.019327f * R + 0.119200f * G + 0.950633f * B;
-
-        Cie cie = new Cie();
-        cie.x = X / (X + Y + Z);
-        cie.y = Y / (X + Y + Z);
-        cie.Y = Y;
-        return cie;
-    }
-
     public static Cie rgb2cie(double r, double g, double b) {
+        double X;
+        double Y;
+        double Z;
 
-        double X, Y, Z;
-
-        if (r <= 0.04045)
+        if (r <= 0.04045) {
             r = r / 12;
-        else
+        } else {
             r = (float) Math.pow((r + 0.055) / 1.055, 2.4);
+        }
 
-        if (g <= 0.04045)
+        if (g <= 0.04045) {
             g = g / 12;
-        else
+        } else {
             g = (float) Math.pow((g + 0.055) / 1.055, 2.4);
+        }
 
-        if (b <= 0.04045)
+        if (b <= 0.04045) {
             b = b / 12;
-        else
+        } else {
             b = (float) Math.pow((b + 0.055) / 1.055, 2.4);
+        }
 
         X = 0.436052025f * r + 0.385081593f * g + 0.143087414f * b;
         Y = 0.222491598f * r + 0.71688606f * g + 0.060621486f * b;
@@ -68,17 +60,4 @@ public class Cie {
         cie.Y = Y;
         return cie;
     }
-
-    public static Cie rgb2cie3(double R, double G, double B) {
-        double X = 0.436052025f * R + 0.385081593f * G + 0.143087414f * B;
-        double Y = 0.222491598f * R + 0.71688606f * G + 0.060621486f * B;
-        double Z = 0.013929122f * R + 0.097097002f * G + 0.71418547f * B;
-
-        Cie cie = new Cie();
-        cie.x = X / (X + Y + Z);
-        cie.y = Y / (X + Y + Z);
-        cie.Y = Y;
-        return cie;
-    }
-
 }

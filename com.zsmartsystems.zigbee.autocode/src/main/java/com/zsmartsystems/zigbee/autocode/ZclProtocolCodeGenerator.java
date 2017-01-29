@@ -655,8 +655,8 @@ public class ZclProtocolCodeGenerator {
                     if (fields.size() > 0) {
                         out.println("import " + packageRootPrefix + packageZcl + ".ZclFieldSerializer;");
                         out.println("import " + packageRootPrefix + packageZcl + ".ZclFieldDeserializer;");
+                        out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclDataType;");
                     }
-                    out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclDataType;");
                     // out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclClusterType;");
                     // out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclCommandType;");
                     // if (!fields.isEmpty()) {
@@ -671,8 +671,8 @@ public class ZclProtocolCodeGenerator {
                         out.println("import java.util.List;");
                     }
 
-                    out.println("import java.util.Map;");
-                    out.println("import java.util.HashMap;");
+                    // out.println("import java.util.Map;");
+                    // out.println("import java.util.HashMap;");
 
                     for (final Field field : fields) {
                         switch (field.dataTypeClass) {
@@ -698,14 +698,12 @@ public class ZclProtocolCodeGenerator {
                     out.println("/**");
                     out.println(" * <p>");
                     out.println(" * " + command.commandLabel + " value object class.");
-                    out.println(" * </p>");
 
                     if (command.commandDescription != null && command.commandDescription.size() != 0) {
                         out.println(" * <p>");
                         for (String line : command.commandDescription) {
                             out.println(" * " + line);
                         }
-                        out.println(" * </p>");
                     }
 
                     out.println(" * <p>");
@@ -715,19 +713,15 @@ public class ZclProtocolCodeGenerator {
                             ? "a <b>generic</b> command used across the profile."
                             : "a <b>specific</b> command used for the " + cluster.clusterName + " cluster."));
 
-                    out.println(" * </p>");
-
                     if (cluster.clusterDescription.size() > 0) {
                         out.println(" * <p>");
                         for (String line : cluster.clusterDescription) {
                             out.println(" * " + line);
                         }
-                        out.println(" * </p>");
                     }
 
                     out.println(" * <p>");
                     out.println(" * Code is auto-generated. Modifications may be overwritten!");
-                    out.println(" * </p>");
 
                     out.println(" */");
                     out.println("public class " + className + " extends ZclCommand {");
@@ -793,16 +787,13 @@ public class ZclProtocolCodeGenerator {
                     if (cluster.clusterType.equals("GENERAL")) {
                         out.println();
                         out.println("    /**");
-                        out.println("     * <p>");
                         out.println("     * Sets the cluster ID for <i>generic</i> commands. {@link " + className
                                 + "} is a <i>generic</i> command.");
-                        out.println("     * </p>");
                         out.println("     * <p>");
                         out.println(
                                 "     * For commands that are not <i>generic</i>, this method will do nothing as the cluster ID is fixed.");
                         out.println(
                                 "     * To test if a command is <i>generic</i>, use the {@link #isGenericCommand} method.");
-                        out.println("     * </p>");
                         out.println("     *");
                         out.println(
                                 "     * @param clusterId the cluster ID used for <i>generic</i> commands as an {@link Integer}");
@@ -1025,9 +1016,11 @@ public class ZclProtocolCodeGenerator {
 
                 boolean addAttributeTypes = false;
                 boolean readAttributes = false;
+                boolean writeAttributes = false;
                 for (final Attribute attribute : cluster.attributes.values()) {
                     if (attribute.attributeAccess.toLowerCase().contains("write")) {
                         addAttributeTypes = true;
+                        writeAttributes = true;
                     }
                     if (attribute.attributeAccess.toLowerCase().contains("read")) {
                         readAttributes = true;
@@ -1043,7 +1036,9 @@ public class ZclProtocolCodeGenerator {
                 }
 
                 imports.add(packageRoot + packageZcl + ".ZclCluster");
-                imports.add(packageRoot + packageZclProtocol + ".ZclDataType");
+                if (cluster.attributes.size() != 0) {
+                    imports.add(packageRoot + packageZclProtocol + ".ZclDataType");
+                }
 
                 if (!commands.isEmpty()) {
                     imports.add(packageRoot + packageZcl + ".ZclCommand");
@@ -1053,12 +1048,17 @@ public class ZclProtocolCodeGenerator {
                 // imports.add(packageRoot + ".ZigBeeDestination");
                 imports.add(packageRoot + ".ZigBeeDeviceAddress");
                 imports.add(packageRoot + ".ZigBeeNetworkManager");
-                imports.add(packageRoot + ".CommandResult");
+                if (!cluster.attributes.isEmpty() | !commands.isEmpty()) {
+                    imports.add(packageRoot + ".CommandResult");
+                }
                 // imports.add(packageRoot + ".ZigBeeDevice");
                 imports.add(packageRoot + packageZcl + ".ZclAttribute");
                 imports.add("java.util.Map");
                 imports.add("java.util.HashMap");
-                imports.add("java.util.concurrent.Future");
+
+                if (!cluster.attributes.isEmpty() | !commands.isEmpty()) {
+                    imports.add("java.util.concurrent.Future");
+                }
                 // imports.add("com.zsmartsystems.zigbee.model.ZigBeeType");
 
                 for (final Command command : commands) {
@@ -1081,8 +1081,8 @@ public class ZclProtocolCodeGenerator {
                     for (String line : cluster.clusterDescription) {
                         out.println(" * " + line);
                     }
-                    out.println(" * </p>");
                 }
+                out.println(" * <p>");
                 out.println(" * Code is auto-generated. Modifications may be overwritten!");
 
                 out.println(" */");
@@ -1181,7 +1181,6 @@ public class ZclProtocolCodeGenerator {
                         for (String line : command.commandDescription) {
                             out.println("     * " + line);
                         }
-                        out.println("     * </p>");
                     }
                     out.println("     *");
 
@@ -1282,17 +1281,15 @@ public class ZclProtocolCodeGenerator {
                 out.println("     * " + line);
             }
         }
-        out.println("     * </p>");
+        out.println("     * <p>");
         if ("Synchronously get".equals(type)) {
             out.println("     * This method will block until the response is received or a timeout occurs.");
         }
         out.println("     * <p>");
         out.println("     * The attribute is of type {@link " + attribute.dataTypeClass + "}.");
-        out.println("     * </p>");
         out.println("     * <p>");
         out.println("     * The implementation of this attribute by a device is "
                 + attribute.attributeImplementation.toUpperCase());
-        out.println("     * </p>");
         out.println("     *");
         if ("Set".equals(type)) {
             out.println("     * @param " + attribute.nameLowerCamelCase + " the {@link " + attribute.dataTypeClass

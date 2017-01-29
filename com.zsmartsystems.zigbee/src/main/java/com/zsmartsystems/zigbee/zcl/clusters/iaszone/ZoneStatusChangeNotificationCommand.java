@@ -5,25 +5,19 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * <p>
  * Zone Status Change Notification Command value object class.
- * </p>
  * <p>
  * Cluster: <b>IAS Zone</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS Zone cluster.
- * </p>
  * <p>
  * The IAS Zone cluster defines an interface to the functionality of an IAS security
  * zone device. IAS Zone supports up to two alarm types per zone, low battery
  * reports and supervision of the IAS network.
- * </p>
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- * </p>
  */
 public class ZoneStatusChangeNotificationCommand extends ZclCommand {
     /**

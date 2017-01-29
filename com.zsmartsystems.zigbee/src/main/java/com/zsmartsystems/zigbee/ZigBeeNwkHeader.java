@@ -91,6 +91,38 @@ public class ZigBeeNwkHeader {
         this.sequence = sequence;
     }
 
+    public boolean isSecurityEnable() {
+        return securityEnable;
+    }
+
+    public void setSecurityEnable(boolean securityEnable) {
+        this.securityEnable = securityEnable;
+    }
+
+    public boolean isDiscoverRoute() {
+        return discoverRoute;
+    }
+
+    public void setDiscoverRoute(boolean discoverRoute) {
+        this.discoverRoute = discoverRoute;
+    }
+
+    public int getNonMemberRadius() {
+        return nonMemberRadius;
+    }
+
+    public void setNonMemberRadius(int nonMemberRadius) {
+        this.nonMemberRadius = nonMemberRadius;
+    }
+
+    public ZigBeeNwkAddressMode getAddressMode() {
+        return addressMode;
+    }
+
+    public void setAddressMode(ZigBeeNwkAddressMode addressMode) {
+        this.addressMode = addressMode;
+    }
+
     @Override
     public String toString() {
         return "ZigBeeNetworkHeader [destinationAddress=" + destinationAddress + ", sourceAddress=" + sourceAddress

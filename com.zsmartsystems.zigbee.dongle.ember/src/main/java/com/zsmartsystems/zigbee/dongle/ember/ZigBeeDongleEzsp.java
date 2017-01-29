@@ -26,22 +26,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.network.EmberNetworkInitialisation;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclProfileType;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
-import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsRequest;
-import com.zsmartsystems.zigbee.zdo.command.BindRequest;
-import com.zsmartsystems.zigbee.zdo.command.IeeeAddressRequest;
-import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoinRequest;
-import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorRequest;
-import com.zsmartsystems.zigbee.zdo.command.PowerDescriptorRequest;
-import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorRequest;
-import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
-import com.zsmartsystems.zigbee.zdo.command.UserDescriptorRequest;
-import com.zsmartsystems.zigbee.zdo.command.UserDescriptorSet;
 
 /**
  *
@@ -153,13 +142,17 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         logger.debug(networkInit.toString());
 
         // Check if the network is initialised or if we're yet to join
-        if (networkInit.getEmberStatus() == EmberStatus.EMBER_SUCCESS) {
-            // We're done (??)
-        } else if (networkInit.getEmberStatus() == EmberStatus.EMBER_NOT_JOINED) {
-            EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(ashHandler);
-            netInitialiser.formNetwork();
-        } else {
-            // Unknown response
+        switch (networkInit.getEmberStatus()) {
+            case EMBER_SUCCESS:
+                // We're done (??)
+                break;
+            case EMBER_NOT_JOINED:
+                EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(ashHandler);
+                netInitialiser.formNetwork();
+                break;
+            default:
+                // Unknown response
+                break;
         }
 
         /*
@@ -212,16 +205,16 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
 
     @Override
     public void sendZdoCommand(ZdoCommand command) {
-        if (command instanceof ActiveEndpointsRequest) {
-        }
-        if (command instanceof IeeeAddressRequest) {
-        }
-        if (command instanceof SimpleDescriptorRequest) {
-        }
-        if (command instanceof NodeDescriptorRequest) {
-        }
-        if (command instanceof PowerDescriptorRequest) {
-        }
+        // if (command instanceof ActiveEndpointsRequest) {
+        // }
+        // if (command instanceof IeeeAddressRequest) {
+        // }
+        // if (command instanceof SimpleDescriptorRequest) {
+        // }
+        // if (command instanceof NodeDescriptorRequest) {
+        // }
+        // if (command instanceof PowerDescriptorRequest) {
+        // }
         if (command instanceof ManagementPermitJoinRequest) {
             ManagementPermitJoinRequest join = (ManagementPermitJoinRequest) command;
             join.getDuration();
@@ -231,16 +224,16 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             emberJoin = (EzspPermitJoiningRequest) ashHandler.sendEzspRequest(emberJoin);
             logger.debug(emberJoin.toString());
         }
-        if (command instanceof BindRequest) {
-        }
-        if (command instanceof UnbindRequest) {
-        }
-        if (command instanceof UserDescriptorSet) {
-        }
-        if (command instanceof UserDescriptorRequest) {
-        }
-        if (command instanceof ManagementLqiRequest) {
-        }
+        // if (command instanceof BindRequest) {
+        // }
+        // if (command instanceof UnbindRequest) {
+        // }
+        // if (command instanceof UserDescriptorSet) {
+        // }
+        // if (command instanceof UserDescriptorRequest) {
+        // }
+        // if (command instanceof ManagementLqiRequest) {
+        // }
     }
 
     @Override

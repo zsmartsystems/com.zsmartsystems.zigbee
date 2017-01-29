@@ -16,7 +16,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 /**
  * Value object for ZigBee device.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -235,10 +235,10 @@ public class ZigBeeDevice implements CommandListener {
                 // it
                 continue;
             }
-            if (isInput == true && cluster.isServer() == false) {
+            if (isInput && !cluster.isServer()) {
                 cluster.setServer(false);
             }
-            if (isInput == false && cluster.isClient() == false) {
+            if (isInput && !cluster.isClient()) {
                 cluster.setClient(false);
             }
 

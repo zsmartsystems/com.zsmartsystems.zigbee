@@ -32,7 +32,7 @@ import java.util.concurrent.Future;
  * <br>
  * Alarms may either reset automatically when the conditions that cause are no
  * longer active, or may need to be explicitly reset.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclAlarmsCluster extends ZclCluster {
@@ -73,13 +73,11 @@ public class ZclAlarmsCluster extends ZclCluster {
      * <br>
      * If alarm logging is not implemented this attribute shall always take the value
      * 0x00.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -99,14 +97,12 @@ public class ZclAlarmsCluster extends ZclCluster {
      * <br>
      * If alarm logging is not implemented this attribute shall always take the value
      * 0x00.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */

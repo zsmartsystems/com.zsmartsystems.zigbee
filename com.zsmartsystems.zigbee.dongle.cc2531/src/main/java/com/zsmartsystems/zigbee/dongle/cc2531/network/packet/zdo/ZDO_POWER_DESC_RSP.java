@@ -45,16 +45,16 @@ public class ZDO_POWER_DESC_RSP extends ZToolPacket /* implements IRESPONSE_CALL
     private ZToolAddress16 nwkAddr;
     /// <name>TI.ZPI1.ZDO_NODE_DESC_RSP.SrcAddress</name>
     /// <summary>the message's source network address.</summary>
-    public ZToolAddress16 SrcAddress;
+    private ZToolAddress16 SrcAddress;
     /// <name>TI.ZPI1.ZDO_NODE_DESC_RSP.Status</name>
     /// <summary>this field indicates either SUCCESS or FAILURE.</summary>
-    public int Status;
+    private int Status;
 
     // TODO: Add doc!
-    public int CurrentMode;
-    public int AvailableSources;
-    public int CurrentSource;
-    public int CurrentLevel;
+    private int CurrentMode;
+    private int AvailableSources;
+    private int CurrentSource;
+    private int CurrentLevel;
 
     /// <name>TI.ZPI1.ZDO_NODE_DESC_RSP</name>
     /// <summary>Constructor</summary>
@@ -71,6 +71,62 @@ public class ZDO_POWER_DESC_RSP extends ZToolPacket /* implements IRESPONSE_CALL
         this.CurrentLevel = (framedata[6] & (0xF0)) >> 4;
 
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_POWER_DESC_RSP), framedata);
+    }
+
+    public ZToolAddress16 getNwkAddr() {
+        return nwkAddr;
+    }
+
+    public void setNwkAddr(ZToolAddress16 nwkAddr) {
+        this.nwkAddr = nwkAddr;
+    }
+
+    public ZToolAddress16 getSrcAddress() {
+        return SrcAddress;
+    }
+
+    public void setSrcAddress(ZToolAddress16 srcAddress) {
+        SrcAddress = srcAddress;
+    }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int status) {
+        Status = status;
+    }
+
+    public int getCurrentMode() {
+        return CurrentMode;
+    }
+
+    public void setCurrentMode(int currentMode) {
+        CurrentMode = currentMode;
+    }
+
+    public int getAvailableSources() {
+        return AvailableSources;
+    }
+
+    public void setAvailableSources(int availableSources) {
+        AvailableSources = availableSources;
+    }
+
+    public int getCurrentSource() {
+        return CurrentSource;
+    }
+
+    public void setCurrentSource(int currentSource) {
+        CurrentSource = currentSource;
+    }
+
+    public int getCurrentLevel() {
+        return CurrentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        CurrentLevel = currentLevel;
     }
 
     @Override

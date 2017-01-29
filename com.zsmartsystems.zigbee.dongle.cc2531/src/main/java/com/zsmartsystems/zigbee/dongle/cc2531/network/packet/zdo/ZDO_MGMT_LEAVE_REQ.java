@@ -34,6 +34,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
  * devices from the network.
  *
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public class ZDO_MGMT_LEAVE_REQ extends ZToolPacket /* implements IREQUEST,IZDO */ {
     /// <name>TI.ZPI1.ZDO_MGMT_LEAVE_REQ.DeviceAddress</name>
@@ -67,4 +68,29 @@ public class ZDO_MGMT_LEAVE_REQ extends ZToolPacket /* implements IREQUEST,IZDO 
         framedata[10] = this.RemoveChildren_Rejoin;
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_MGMT_LEAVE_REQ), framedata);
     }
+
+    public ZToolAddress64 getDeviceAddress() {
+        return DeviceAddress;
+    }
+
+    public void setDeviceAddress(ZToolAddress64 deviceAddress) {
+        DeviceAddress = deviceAddress;
+    }
+
+    public ZToolAddress16 getDstAddr() {
+        return DstAddr;
+    }
+
+    public void setDstAddr(ZToolAddress16 dstAddr) {
+        DstAddr = dstAddr;
+    }
+
+    public int getRemoveChildrenRejoin() {
+        return RemoveChildren_Rejoin;
+    }
+
+    public void setRemoveChildrenRejoin(int removeChildren_Rejoin) {
+        RemoveChildren_Rejoin = removeChildren_Rejoin;
+    }
+
 }

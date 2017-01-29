@@ -18,7 +18,7 @@ import java.util.concurrent.Future;
  * <b>On/Off</b> cluster implementation (<i>Cluster ID 0x0006</i>).
  * <p>
  * Attributes and commands for switching devices between ‘On’ and ‘Off’ states.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclOnOffCluster extends ZclCluster {
@@ -54,13 +54,11 @@ public class ZclOnOffCluster extends ZclCluster {
      * <p>
      * <p>
      * The OnOff attribute has the following values: 0 = Off, 1 = On
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Boolean}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -75,14 +73,12 @@ public class ZclOnOffCluster extends ZclCluster {
      * <p>
      * <p>
      * The OnOff attribute has the following values: 0 = Off, 1 = On
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Boolean}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Boolean} attribute value, or null on error
      */
@@ -97,13 +93,11 @@ public class ZclOnOffCluster extends ZclCluster {
      * <p>
      * <p>
      * The OnOff attribute has the following values: 0 = Off, 1 = On
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Boolean}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period

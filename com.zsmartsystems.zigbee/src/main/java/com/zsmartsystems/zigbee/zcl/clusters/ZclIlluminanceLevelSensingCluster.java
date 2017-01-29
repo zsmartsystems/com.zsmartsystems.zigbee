@@ -16,7 +16,7 @@ import java.util.concurrent.Future;
  * The cluster provides an interface to illuminance level sensing functionality,
  * including configuration and provision of notifications of whether the illuminance
  * is within, above or below a target band.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
@@ -55,13 +55,11 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * <p>
      * The LevelStatus attribute indicates whether the measured illuminance is above,
      * below, or within a band around IlluminanceTargetLevel .
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -77,14 +75,12 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * <p>
      * The LevelStatus attribute indicates whether the measured illuminance is above,
      * below, or within a band around IlluminanceTargetLevel .
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -100,13 +96,11 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * <p>
      * The LevelStatus attribute indicates whether the measured illuminance is above,
      * below, or within a band around IlluminanceTargetLevel .
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -124,13 +118,11 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * <p>
      * <br>
      * The LightSensorType attribute specifies the electronic type of the light sensor.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -146,14 +138,12 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * <p>
      * <br>
      * The LightSensorType attribute specifies the electronic type of the light sensor.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */

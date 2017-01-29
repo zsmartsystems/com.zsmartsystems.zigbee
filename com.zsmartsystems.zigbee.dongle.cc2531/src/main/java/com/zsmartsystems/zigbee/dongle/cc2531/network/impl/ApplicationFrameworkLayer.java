@@ -64,14 +64,15 @@ public class ApplicationFrameworkLayer {
     private final HashMap<SenderIdentifier, Short> sender2EndPoint = new HashMap<SenderIdentifier, Short>();
     private final HashMap<Integer, List<Integer>> profile2Cluster = new HashMap<Integer, List<Integer>>();
     private final HashMap<Short, Byte> endPoint2Transaction = new HashMap<Short, Byte>();
+    private final HashMap<Integer, ArrayList<ZigBeeEndpoint>> profiles = new HashMap<Integer, ArrayList<ZigBeeEndpoint>>();
 
     private final ZigBeeNetworkManager driver;
 
     private byte firstFreeEndPoint;
 
     class SenderIdentifier {
-        int profileId;
-        int clusterId;
+        private int profileId;
+        private int clusterId;
 
         public SenderIdentifier(int profileId, int clusterId) {
             this.profileId = profileId;
@@ -315,8 +316,6 @@ public class ApplicationFrameworkLayer {
 
         return clusters;
     }
-
-    private final HashMap<Integer, ArrayList<ZigBeeEndpoint>> profiles = new HashMap<Integer, ArrayList<ZigBeeEndpoint>>();
 
     public synchronized Collection<ZigBeeEndpoint> getEndpoints(int profileId) {
         final ArrayList<ZigBeeEndpoint> result = new ArrayList<ZigBeeEndpoint>();

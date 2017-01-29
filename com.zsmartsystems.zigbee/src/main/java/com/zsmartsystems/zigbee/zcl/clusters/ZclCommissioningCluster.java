@@ -14,13 +14,13 @@ import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestoreStartupParamet
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestoreStartupParametersResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.SaveStartupParametersCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.SaveStartupParametersResponse;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
  * <b>Commissioning</b> cluster implementation (<i>Cluster ID 0x0015</i>).
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclCommissioningCluster extends ZclCluster {

@@ -76,11 +76,13 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     /**
      * Map of power descriptor request times.
      */
-    final Map<Integer, Long> powerDescriptorRequestTimes = Collections.synchronizedMap(new HashMap<Integer, Long>());
+    // private final Map<Integer, Long> powerDescriptorRequestTimes = Collections
+    // .synchronizedMap(new HashMap<Integer, Long>());
     /**
      * Map of active endpoints request times.
      */
-    final Map<Integer, Long> activeEndpointsRequestTimes = Collections.synchronizedMap(new HashMap<Integer, Long>());
+    private final Map<Integer, Long> activeEndpointsRequestTimes = Collections
+            .synchronizedMap(new HashMap<Integer, Long>());
     /**
      * Map of endpoint descriptor request times.
      */

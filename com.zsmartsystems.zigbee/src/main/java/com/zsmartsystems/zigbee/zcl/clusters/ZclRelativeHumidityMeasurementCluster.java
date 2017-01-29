@@ -16,7 +16,7 @@ import java.util.concurrent.Future;
  * The server cluster provides an interface to relative humidity measurement
  * functionality, including configuration and provision of notifications of relative
  * humidity measurements.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
@@ -69,13 +69,11 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * A MeasuredValue of 0xffff indicates that the measurement is invalid.
      * <br>
      * MeasuredValue is updated continuously as new measurements are made.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -101,14 +99,12 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * A MeasuredValue of 0xffff indicates that the measurement is invalid.
      * <br>
      * MeasuredValue is updated continuously as new measurements are made.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -134,13 +130,11 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * A MeasuredValue of 0xffff indicates that the measurement is invalid.
      * <br>
      * MeasuredValue is updated continuously as new measurements are made.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -159,13 +153,11 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
      * that can be measured. A value of 0xffff means this attribute is not defined
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -182,14 +174,12 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
      * that can be measured. A value of 0xffff means this attribute is not defined
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -209,13 +199,11 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <br>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -236,14 +224,12 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <br>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -260,13 +246,11 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -284,14 +268,12 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -309,13 +291,11 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period

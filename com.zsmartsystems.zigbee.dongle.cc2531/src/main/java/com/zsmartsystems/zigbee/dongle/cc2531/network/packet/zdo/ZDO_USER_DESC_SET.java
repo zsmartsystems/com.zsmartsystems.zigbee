@@ -30,6 +30,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 
 /**
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public class ZDO_USER_DESC_SET extends ZToolPacket /* implements IREQUEST,IZDO */ {
     /// <name>TI.ZPI1.ZDO_USER_DESC_SET.DescLen</name>
@@ -76,6 +77,38 @@ public class ZDO_USER_DESC_SET extends ZToolPacket /* implements IREQUEST,IZDO *
             framedata[i + 5] = this.Descriptor[i];
         }
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_USER_DESC_SET), framedata);
+    }
+
+    public int getDescLen() {
+        return DescLen;
+    }
+
+    public void setDescLen(int descLen) {
+        DescLen = descLen;
+    }
+
+    public int[] getDescriptor() {
+        return Descriptor;
+    }
+
+    public void setDescriptor(int[] descriptor) {
+        Descriptor = descriptor;
+    }
+
+    public ZToolAddress16 getDstAddr() {
+        return DstAddr;
+    }
+
+    public void setDstAddr(ZToolAddress16 dstAddr) {
+        DstAddr = dstAddr;
+    }
+
+    public ZToolAddress16 getNwkAddr() {
+        return nwkAddr;
+    }
+
+    public void setNwkAddr(ZToolAddress16 nwkAddr) {
+        this.nwkAddr = nwkAddr;
     }
 
 }

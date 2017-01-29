@@ -17,7 +17,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetZoneInformationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetZoneInformationResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.PanicCommand;
 import com.zsmartsystems.zigbee.zcl.field.*;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ import java.util.concurrent.Future;
  * Control Equipment of the IAS system. Using this cluster, a ZigBee enabled ACE
  * device can access a IAS CIE device and manipulate the IAS system, on behalf of a
  * level-2 user.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclIasAceCluster extends ZclCluster {

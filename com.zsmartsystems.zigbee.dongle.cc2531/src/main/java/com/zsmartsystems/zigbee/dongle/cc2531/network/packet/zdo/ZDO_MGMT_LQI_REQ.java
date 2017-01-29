@@ -32,6 +32,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
  * This command is generated to request the destination device to return its neighbor table.
  *
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public class ZDO_MGMT_LQI_REQ extends ZToolPacket /* implements IREQUEST,IZDO */ {
     /// <name>TI.ZPI1.ZDO_MGMT_LQI_REQ.DstAddr</name>
@@ -59,4 +60,21 @@ public class ZDO_MGMT_LQI_REQ extends ZToolPacket /* implements IREQUEST,IZDO */
         framedata[2] = this.StartIndex;
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_MGMT_LQI_REQ), framedata);
     }
+
+    public ZToolAddress16 getDstAddr() {
+        return DstAddr;
+    }
+
+    public void setDstAddr(ZToolAddress16 dstAddr) {
+        DstAddr = dstAddr;
+    }
+
+    public int getStartIndex() {
+        return StartIndex;
+    }
+
+    public void setStartIndex(int startIndex) {
+        StartIndex = startIndex;
+    }
+
 }

@@ -5,20 +5,15 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * <p>
  * Setpoint Raise/Lower Command value object class.
- * </p>
  * <p>
  * Cluster: <b>Thermostat</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Thermostat cluster.
- * </p>
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- * </p>
  */
 public class SetpointRaiseLowerCommand extends ZclCommand {
     /**

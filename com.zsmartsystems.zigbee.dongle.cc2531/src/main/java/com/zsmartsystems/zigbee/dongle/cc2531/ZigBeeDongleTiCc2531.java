@@ -48,7 +48,6 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_POWER_DESC_
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_POWER_DESC_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_REQ;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STATE_CHANGE_IND;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_REQ;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_USER_DESC_CONF;
@@ -192,7 +191,7 @@ public class ZigBeeDongleTiCc2531
 
             // TODO: How to differentiate group and device addressing?????
             boolean groupCommand = false;
-            if (groupCommand == false) {
+            if (!groupCommand) {
                 final AF_DATA_CONFIRM response = networkManager.sendAFDataRequest(new AF_DATA_REQUEST(
                         nwkHeader.getDestinationAddress(), (short) apsHeader.getDestinationEndpoint(), sender,
                         apsHeader.getCluster(), nwkHeader.getSequence(), (byte) 0, (byte) 0, payload));
@@ -433,11 +432,11 @@ public class ZigBeeDongleTiCc2531
 
         if (packet.getCMD().get16BitValue() == ZToolCMD.ZDO_POWER_DESC_RSP) {
             final ZDO_POWER_DESC_RSP message = (ZDO_POWER_DESC_RSP) packet;
-            final PowerDescriptor powerDescriptor = new PowerDescriptor(message.CurrentMode, message.AvailableSources,
-                    message.CurrentSource, message.CurrentLevel);
+            final PowerDescriptor powerDescriptor = new PowerDescriptor(message.getCurrentMode(),
+                    message.getAvailableSources(), message.getCurrentSource(), message.getCurrentLevel());
 
-            final PowerDescriptorResponse command = new PowerDescriptorResponse(message.Status,
-                    message.SrcAddress.get16BitValue(), powerDescriptor);
+            final PowerDescriptorResponse command = new PowerDescriptorResponse(message.getStatus(),
+                    message.getSrcAddress().get16BitValue(), powerDescriptor);
 
             zigbeeNetworkReceive.receiveZdoCommand(command);
             return;
@@ -517,9 +516,10 @@ public class ZigBeeDongleTiCc2531
             return;
         }
 
-        if (packet.getCMD().get16BitValue() == ZToolCMD.ZDO_STATE_CHANGE_IND) {
-            final ZDO_STATE_CHANGE_IND message = (ZDO_STATE_CHANGE_IND) packet;
-        }
+        // TODO: Implement state change handler
+        // if (packet.getCMD().get16BitValue() == ZToolCMD.ZDO_STATE_CHANGE_IND) {
+        // final ZDO_STATE_CHANGE_IND message = (ZDO_STATE_CHANGE_IND) packet;
+        // }
     }
 
     @Override

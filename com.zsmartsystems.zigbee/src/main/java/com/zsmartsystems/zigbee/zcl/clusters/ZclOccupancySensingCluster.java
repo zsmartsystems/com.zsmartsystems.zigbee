@@ -15,7 +15,7 @@ import java.util.concurrent.Future;
  * <p>
  * The cluster provides an interface to occupancy sensing functionality,
  * including configuration and provision of notifications of occupancy status.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclOccupancySensingCluster extends ZclCluster {
@@ -66,13 +66,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <br>
      * Bit 0 specifies the sensed occupancy as follows: 1 = occupied, 0 = unoccupied.
      * All other bits are reserved.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -90,14 +88,12 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <br>
      * Bit 0 specifies the sensed occupancy as follows: 1 = occupied, 0 = unoccupied.
      * All other bits are reserved.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -115,13 +111,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <br>
      * Bit 0 specifies the sensed occupancy as follows: 1 = occupied, 0 = unoccupied.
      * All other bits are reserved.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -139,13 +133,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * <br>
      * The OccupancySensorType attribute specifies the type of the occupancy sensor.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -161,14 +153,12 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * <br>
      * The OccupancySensorType attribute specifies the type of the occupancy sensor.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -181,13 +171,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * Set the <i>PIROccupiedToUnoccupiedDelay</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param pirOccupiedToUnoccupiedDelay the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -200,13 +188,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * Get the <i>PIROccupiedToUnoccupiedDelay</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -219,14 +205,12 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>PIROccupiedToUnoccupiedDelay</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -239,13 +223,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * Set the <i>PIRUnoccupiedToOccupiedDelay</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param pirUnoccupiedToOccupiedDelay the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -258,13 +240,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * Get the <i>PIRUnoccupiedToOccupiedDelay</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -277,14 +257,12 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>PIRUnoccupiedToOccupiedDelay</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -304,13 +282,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * sensed area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter'
      * when used in an area where occupation changes frequently.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param ultraSonicOccupiedToUnoccupiedDelay the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -330,13 +306,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * sensed area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter'
      * when used in an area where occupation changes frequently.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -356,14 +330,12 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * sensed area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter'
      * when used in an area where occupation changes frequently.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -381,13 +353,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the
      * sensed area becomes occupied.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param ultraSonicUnoccupiedToOccupiedDelay the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -405,13 +375,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the
      * sensed area becomes occupied.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -429,14 +397,12 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the
      * sensed area becomes occupied.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -449,13 +415,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * Set the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param ultrasonicUnoccupiedToOccupiedThreshold the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -468,13 +432,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * Get the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -487,14 +449,12 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */

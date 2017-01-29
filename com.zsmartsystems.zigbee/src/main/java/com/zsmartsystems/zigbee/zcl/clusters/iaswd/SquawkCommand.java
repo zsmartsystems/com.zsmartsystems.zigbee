@@ -5,26 +5,20 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * <p>
  * Squawk Command value object class.
- * </p>
  * <p>
  * Cluster: <b>IAS WD</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS WD cluster.
- * </p>
  * <p>
  * The IAS WD cluster provides an interface to the functionality of any Warning
  * Device equipment of the IAS system. Using this cluster, a ZigBee enabled CIE
  * device can access a ZigBee enabled IAS WD device and issue alarm warning
  * indications (siren, strobe lighting, etc.) when a system alarm condition is detected.
- * </p>
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- * </p>
  */
 public class SquawkCommand extends ZclCommand {
     /**

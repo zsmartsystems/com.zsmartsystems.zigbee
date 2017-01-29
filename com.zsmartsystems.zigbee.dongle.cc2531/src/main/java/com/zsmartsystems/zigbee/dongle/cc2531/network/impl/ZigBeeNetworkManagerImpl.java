@@ -1531,55 +1531,21 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
                 return;
             }
             if (packet.getCMD().get16BitValue() == ZToolCMD.ZDO_STATE_CHANGE_IND) {
-                try {
-                    ZDO_STATE_CHANGE_IND p = ((ZDO_STATE_CHANGE_IND) packet);
-                    switch (p.State) {
-                        case 0:
-                            logger.trace("Initialized - not started automatically");
-                            break;
-                        case 1:
-                            logger.trace("Initialized - not connected to anything");
-                            break;
-                        case 2:
-                            logger.trace("Discovering PANs to join or waiting for permit join");
-                            break;
-                        case 3:
-                            logger.trace("Joining a PAN");
-                            break;
-                        case 4:
-                            logger.trace("Rejoining a PAN, only for end-devices");
-                            break;
-                        case 5:
-                            logger.trace("Joined but not yet authenticated by trust center");
-                            break;
-                        case 6:
-                            logger.trace("Started as device after authentication");
-                            break;
-                        case 7:
-                            logger.trace("Device joined, authenticated and is a router");
-                            break;
-                        case 8:
-                            logger.trace("Starting as ZigBee Coordinator");
-                            break;
-                        case 9:
-                            logger.debug("Started as ZigBee Coordinator");
-                            setState(DriverStatus.NETWORK_READY);
-                            break;
-                        case 10:
-                            logger.debug("Device has lost information about its parent");
-                            break;
-                        default:
-                            break;
-                    }
-                } catch (Exception ex) {
-                    // ignored
+                ZDO_STATE_CHANGE_IND p = ((ZDO_STATE_CHANGE_IND) packet);
+                switch (p.getStatus()) {
+                    case DEV_COORD_STARTED:
+                        logger.debug("Started as ZigBee Coordinator");
+                        setState(DriverStatus.NETWORK_READY);
+                        break;
+                    default:
+                        break;
                 }
             }
         }
 
         @Override
         public void receivedUnclaimedSynchronousCommandResponse(ZToolPacket packet) {
-
+            // Processing not required
         }
 
     }
@@ -1588,7 +1554,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         /**
          * The logger.
          */
-        private static final Logger LOGGER = LoggerFactory.getLogger(AFMessageListenerFilter.class);
+        private static final Logger logger = LoggerFactory.getLogger(AFMessageListenerFilter.class);
 
         private final Collection<ApplicationFrameworkMessageListener> listeners;
 
@@ -1624,16 +1590,9 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
                     try {
                         l.notify(msg);
                     } catch (final Exception e) {
-                        LOGGER.error("Error AF message listener notify.", e);
+                        logger.error("Error AF message listener notify.", e);
                     }
                 }
-
-                /*
-                 * ZCLFrame frame = new ZCLFrame(new ClusterMessageImpl(msg.getData(), msg.getClusterId()));
-                 * logger.debug("Received: [ ZCL Header: " + ByteUtils.toBase16(frame.getHeader().toByte())
-                 * + ", ZCL Payload: " + ByteUtils.toBase16(frame.getPayload())
-                 * + "]");
-                 */
             }
         }
 

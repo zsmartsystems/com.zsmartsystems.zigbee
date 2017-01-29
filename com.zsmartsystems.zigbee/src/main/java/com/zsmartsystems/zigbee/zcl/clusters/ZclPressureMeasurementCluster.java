@@ -15,7 +15,7 @@ import java.util.concurrent.Future;
  * <p>
  * The cluster provides an interface to pressure measurement functionality,
  * including configuration and provision of notifications of pressure measurements.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclPressureMeasurementCluster extends ZclCluster {
@@ -77,13 +77,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <br>
      * A MeasuredValue of 0x8000 indicates that the pressure measurement is invalid.
      * MeasuredValue is updated continuously as new measurements are made.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -108,14 +106,12 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <br>
      * A MeasuredValue of 0x8000 indicates that the pressure measurement is invalid.
      * MeasuredValue is updated continuously as new measurements are made.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -140,13 +136,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <br>
      * A MeasuredValue of 0x8000 indicates that the pressure measurement is invalid.
      * MeasuredValue is updated continuously as new measurements are made.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -165,13 +159,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
      * that can be measured. A value of 0x8000 means this attribute is not defined.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -188,14 +180,12 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
      * that can be measured. A value of 0x8000 means this attribute is not defined.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -215,13 +205,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <br>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -242,14 +230,12 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <br>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -270,13 +256,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <br>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -296,13 +280,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -320,14 +302,12 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -339,13 +319,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <p>
      * Get the <i>ScaledValue</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -358,14 +336,12 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>ScaledValue</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -378,13 +354,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <p>
      * Configure reporting for the <i>ScaledValue</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -399,13 +373,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <p>
      * Get the <i>MinScaledValue</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -418,14 +390,12 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>MinScaledValue</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -437,13 +407,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <p>
      * Get the <i>MaxScaledValue</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -456,14 +424,12 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>MaxScaledValue</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -475,13 +441,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <p>
      * Get the <i>ScaledTolerance</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -494,14 +458,12 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>ScaledTolerance</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -514,13 +476,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <p>
      * Configure reporting for the <i>ScaledTolerance</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -535,13 +495,11 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <p>
      * Get the <i>Scale</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -554,14 +512,12 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>Scale</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */

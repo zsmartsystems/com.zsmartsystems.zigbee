@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 
 /**
  * <b>Temperature measurement</b> cluster implementation (<i>Cluster ID 0x0402</i>).
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclTemperatureMeasurementCluster extends ZclCluster {
@@ -64,13 +65,11 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * invalid.
      * <br>
      * MeasuredValue is updated continuously as new measurements are made.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -96,14 +95,12 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * invalid.
      * <br>
      * MeasuredValue is updated continuously as new measurements are made.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -129,13 +126,11 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * invalid.
      * <br>
      * MeasuredValue is updated continuously as new measurements are made.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -155,13 +150,11 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
      * that is capable of being measured. A MinMeasuredValue of 0x8000 indicates that
      * the minimum value is unknown.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -179,14 +172,12 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
      * that is capable of being measured. A MinMeasuredValue of 0x8000 indicates that
      * the minimum value is unknown.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -208,13 +199,11 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
      * <br>
      * A MaxMeasuredValue of 0x8000 indicates that the maximum value is unknown.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -237,14 +226,12 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
      * <br>
      * A MaxMeasuredValue of 0x8000 indicates that the maximum value is unknown.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -261,13 +248,11 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -285,14 +270,12 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -310,13 +293,11 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period

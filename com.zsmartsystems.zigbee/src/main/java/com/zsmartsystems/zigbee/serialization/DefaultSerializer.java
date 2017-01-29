@@ -11,15 +11,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Serializes data in a standard binary format.
  * </p>
- * 
+ *
  * @author Chris Jackson
  */
 public class DefaultSerializer implements ZigBeeSerializer {
     private int[] buffer = new int[131];
     private int length = 0;
-
-    public DefaultSerializer() {
-    }
 
     @Override
     public int[] getPayload() {
@@ -29,7 +26,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
     @Override
     public void appendZigBeeType(Object data, ZclDataType type) {
         if (data == null) {
-            throw new NullPointerException("You can not append null data to a stream");
+            throw new IllegalArgumentException("You can not append null data to a stream");
         }
 
         switch (type) {

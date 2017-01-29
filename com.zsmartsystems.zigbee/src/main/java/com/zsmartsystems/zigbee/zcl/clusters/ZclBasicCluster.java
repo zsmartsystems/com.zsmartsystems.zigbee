@@ -14,6 +14,7 @@ import java.util.concurrent.Future;
 
 /**
  * <b>Basic</b> cluster implementation (<i>Cluster ID 0x0000</i>).
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclBasicCluster extends ZclCluster {
@@ -74,13 +75,11 @@ public class ZclBasicCluster extends ZclCluster {
      * <p>
      * The ZCLVersion attribute is 8 bits in length and specifies the version number of
      * the ZigBee Cluster Library that all clusters on this endpoint conform to.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -96,14 +95,12 @@ public class ZclBasicCluster extends ZclCluster {
      * <p>
      * The ZCLVersion attribute is 8 bits in length and specifies the version number of
      * the ZigBee Cluster Library that all clusters on this endpoint conform to.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -120,13 +117,11 @@ public class ZclBasicCluster extends ZclCluster {
      * The ApplicationVersion attribute is 8 bits in length and specifies the version
      * number of the application software contained in the device. The usage of this
      * attribute is manufacturer dependent.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -144,14 +139,12 @@ public class ZclBasicCluster extends ZclCluster {
      * The ApplicationVersion attribute is 8 bits in length and specifies the version
      * number of the application software contained in the device. The usage of this
      * attribute is manufacturer dependent.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -168,13 +161,11 @@ public class ZclBasicCluster extends ZclCluster {
      * The StackVersion attribute is 8 bits in length and specifies the version number
      * of the implementation of the ZigBee stack contained in the device. The usage of
      * this attribute is manufacturer dependent.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -192,14 +183,12 @@ public class ZclBasicCluster extends ZclCluster {
      * The StackVersion attribute is 8 bits in length and specifies the version number
      * of the implementation of the ZigBee stack contained in the device. The usage of
      * this attribute is manufacturer dependent.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -215,13 +204,11 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The HWVersion attribute is 8 bits in length and specifies the version number of
      * the hardware of the device. The usage of this attribute is manufacturer dependent.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -238,14 +225,12 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The HWVersion attribute is 8 bits in length and specifies the version number of
      * the hardware of the device. The usage of this attribute is manufacturer dependent.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -261,13 +246,11 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The ManufacturerName attribute is a maximum of 32 bytes in length and specifies
      * the name of the manufacturer as a ZigBee character string.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -284,14 +267,12 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The ManufacturerName attribute is a maximum of 32 bytes in length and specifies
      * the name of the manufacturer as a ZigBee character string.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link String} attribute value, or null on error
      */
@@ -307,13 +288,11 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The ModelIdentifier attribute is a maximum of 32 bytes in length and specifies the
      * model number (or other identifier) assigned by the manufacturer as a ZigBee character string.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -330,14 +309,12 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The ModelIdentifier attribute is a maximum of 32 bytes in length and specifies the
      * model number (or other identifier) assigned by the manufacturer as a ZigBee character string.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link String} attribute value, or null on error
      */
@@ -354,13 +331,11 @@ public class ZclBasicCluster extends ZclCluster {
      * The DateCode attribute is a ZigBee character string with a maximum length of 16 bytes.
      * The first 8 characters specify the date of manufacturer of the device in international
      * date notation according to ISO 8601, i.e. YYYYMMDD, e.g. 20060814.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -378,14 +353,12 @@ public class ZclBasicCluster extends ZclCluster {
      * The DateCode attribute is a ZigBee character string with a maximum length of 16 bytes.
      * The first 8 characters specify the date of manufacturer of the device in international
      * date notation according to ISO 8601, i.e. YYYYMMDD, e.g. 20060814.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link String} attribute value, or null on error
      */
@@ -403,13 +376,11 @@ public class ZclBasicCluster extends ZclCluster {
      * available to the device. Bits b0–b6 of this attribute represent the primary power
      * source of the device and bit b7 indicates whether the device has a secondary power
      * source in the form of a battery backup.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -428,14 +399,12 @@ public class ZclBasicCluster extends ZclCluster {
      * available to the device. Bits b0–b6 of this attribute represent the primary power
      * source of the device and bit b7 indicates whether the device has a secondary power
      * source in the form of a battery backup.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -452,13 +421,11 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The LocationDescription attribute is a maximum of 16 bytes in length and describes
      * the physical location of the device as a ZigBee character string.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param locationDescription the {@link String} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -475,13 +442,11 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The LocationDescription attribute is a maximum of 16 bytes in length and describes
      * the physical location of the device as a ZigBee character string.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -498,14 +463,12 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The LocationDescription attribute is a maximum of 16 bytes in length and describes
      * the physical location of the device as a ZigBee character string.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link String} attribute value, or null on error
      */
@@ -522,13 +485,11 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The PhysicalEnvironment attribute is 8 bits in length and specifies the type of
      * physical environment in which the device will operate.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param physicalEnvironment the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -545,13 +506,11 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The PhysicalEnvironment attribute is 8 bits in length and specifies the type of
      * physical environment in which the device will operate.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -568,14 +527,12 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The PhysicalEnvironment attribute is 8 bits in length and specifies the type of
      * physical environment in which the device will operate.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -592,13 +549,11 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The DeviceEnabled attribute is a boolean and specifies whether the device is enabled
      * or disabled.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Boolean}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param deviceEnabled the {@link Boolean} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -615,13 +570,11 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The DeviceEnabled attribute is a boolean and specifies whether the device is enabled
      * or disabled.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Boolean}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -638,14 +591,12 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The DeviceEnabled attribute is a boolean and specifies whether the device is enabled
      * or disabled.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Boolean}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Boolean} attribute value, or null on error
      */
@@ -662,13 +613,11 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The AlarmMask attribute is 8 bits in length and specifies which of a number of general
      * alarms may be generated.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param alarmMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -685,13 +634,11 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The AlarmMask attribute is 8 bits in length and specifies which of a number of general
      * alarms may be generated.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -708,14 +655,12 @@ public class ZclBasicCluster extends ZclCluster {
      * <br>
      * The AlarmMask attribute is 8 bits in length and specifies which of a number of general
      * alarms may be generated.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -736,13 +681,11 @@ public class ZclBasicCluster extends ZclCluster {
      * The intention of this attribute is to allow disabling of any local configuration
      * user interface, for example to prevent reset or binding buttons being activated by
      * unauthorised persons in a public building.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param disableLocalConfig the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -763,13 +706,11 @@ public class ZclBasicCluster extends ZclCluster {
      * The intention of this attribute is to allow disabling of any local configuration
      * user interface, for example to prevent reset or binding buttons being activated by
      * unauthorised persons in a public building.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -790,14 +731,12 @@ public class ZclBasicCluster extends ZclCluster {
      * The intention of this attribute is to allow disabling of any local configuration
      * user interface, for example to prevent reset or binding buttons being activated by
      * unauthorised persons in a public building.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */

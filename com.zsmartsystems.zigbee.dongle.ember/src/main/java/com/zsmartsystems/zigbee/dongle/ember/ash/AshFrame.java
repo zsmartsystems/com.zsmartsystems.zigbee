@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
  * ASH Frame Handling: Asynchronous Serial Host (ASH) protocol. The ASH protocol
  * is a data-link layer protocol below EZSP and above the serial device (or
  * UART) driver.
- * 
+ *
  * UG101: UART GATEWAY PROTOCOL REFERENCE: FOR THE EMBER® EZSP NETWORK
  * CO-PROCESSOR
- * 
+ *
  * @author Chris Jackson
  *
  */
@@ -36,7 +36,7 @@ public class AshFrame {
 
     /**
      * Constructor to create an ASH frame from a byte buffer.
-     * 
+     *
      * @param buffer
      */
     // protected AshFrame(FrameType frameType, int[] frameBuffer) {
@@ -46,7 +46,7 @@ public class AshFrame {
 
     /**
      * Returns the data to be sent to the NCP
-     * 
+     *
      * @return integer array of data to be sent
      */
     // public int[] getOutputBuffer() {
@@ -63,7 +63,7 @@ public class AshFrame {
      * <li>The frame is byte stuffed to remove reserved byte values (see Reserved bytes and byte stuffing).
      * <li>A Flag Byte is added after the CRC.
      * </ol>
-     * 
+     *
      * @param frmNum
      * @param ackNum
      * @return integer array of data to be sent
@@ -181,7 +181,7 @@ public class AshFrame {
         boolean escape = false;
         for (int cnt = 0; cnt < length; cnt++) {
             int data = buffer[cnt];
-            if (escape == true) {
+            if (escape) {
                 escape = false;
                 if ((data & 0x20) == 0) {
                     data = (byte) (data + 0x20);
@@ -221,6 +221,8 @@ public class AshFrame {
                 return new AshFrameRst();
             case RSTACK:
                 return new AshFrameRstAck(frameBuffer);
+            default:
+                break;
         }
         return null;
     }

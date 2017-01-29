@@ -20,7 +20,7 @@ import java.util.concurrent.Future;
  * The IAS Zone cluster defines an interface to the functionality of an IAS security
  * zone device. IAS Zone supports up to two alarm types per zone, low battery
  * reports and supervision of the IAS network.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclIasZoneCluster extends ZclCluster {
@@ -60,13 +60,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * <p>
      * Get the <i>ZoneState</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -79,14 +77,12 @@ public class ZclIasZoneCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>ZoneState</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -100,13 +96,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * <p>
      * <p>
      * The Zone Type dictates the meaning of Alarm1 and Alarm2 bits of the ZoneStatus attribute
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -121,14 +115,12 @@ public class ZclIasZoneCluster extends ZclCluster {
      * <p>
      * <p>
      * The Zone Type dictates the meaning of Alarm1 and Alarm2 bits of the ZoneStatus attribute
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -143,13 +135,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * <p>
      * <br>
      * The ZoneStatus attribute is a bit map.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -165,14 +155,12 @@ public class ZclIasZoneCluster extends ZclCluster {
      * <p>
      * <br>
      * The ZoneStatus attribute is a bit map.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -196,13 +184,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * to implement some auto-detect for the CIE (example: by requesting the ZigBee
      * cluster discovery service to locate a Zone Server cluster.) or require the
      * intervention of a CT in order to configure this attribute during installation.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Long}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param ias_Cie_Address the {@link Long} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -226,13 +212,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * to implement some auto-detect for the CIE (example: by requesting the ZigBee
      * cluster discovery service to locate a Zone Server cluster.) or require the
      * intervention of a CT in order to configure this attribute during installation.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Long}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -256,14 +240,12 @@ public class ZclIasZoneCluster extends ZclCluster {
      * to implement some auto-detect for the CIE (example: by requesting the ZigBee
      * cluster discovery service to locate a Zone Server cluster.) or require the
      * intervention of a CT in order to configure this attribute during installation.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Long}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Long} attribute value, or null on error
      */

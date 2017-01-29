@@ -23,7 +23,7 @@ import java.util.concurrent.Future;
  * <br>
  * Note that this cluster cannot be disabled, and remains functional regardless of the
  * setting of the DeviceEnable attribute in the Basic cluster.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclIdentifyCluster extends ZclCluster {
@@ -70,13 +70,11 @@ public class ZclIdentifyCluster extends ZclCluster {
      * <br>
      * If this attribute reaches or is set to the value 0x0000 then the device shall
      * terminate its identification procedure.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param identifyTime the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -101,13 +99,11 @@ public class ZclIdentifyCluster extends ZclCluster {
      * <br>
      * If this attribute reaches or is set to the value 0x0000 then the device shall
      * terminate its identification procedure.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -132,14 +128,12 @@ public class ZclIdentifyCluster extends ZclCluster {
      * <br>
      * If this attribute reaches or is set to the value 0x0000 then the device shall
      * terminate its identification procedure.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -151,7 +145,6 @@ public class ZclIdentifyCluster extends ZclCluster {
      * The Identify Command
      * <p>
      * The identify command starts or stops the receiving device identifying itself.
-     * </p>
      *
      * @param identifyTime {@link Integer} Identify Time
      * @return the {@link Future<CommandResult>} command result future
@@ -181,7 +174,6 @@ public class ZclIdentifyCluster extends ZclCluster {
      * <p>
      * The identify query response command is generated in response to receiving an
      * Identify Query command in the case that the device is currently identifying itself.
-     * </p>
      *
      * @param identifyTime {@link Integer} Identify Time
      * @return the {@link Future<CommandResult>} command result future

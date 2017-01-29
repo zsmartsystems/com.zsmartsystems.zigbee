@@ -100,19 +100,19 @@ public class ZDO_BIND_REQ extends ZToolPacket /* implements IREQUEST,IZDO */ {
     private class ADDRESS_MODE {
         /// <name>TI.ZPI1.ZDO_BIND_REQ.ADDRESS_MODE.ADDRESS_16_BIT</name>
         /// <summary>Specified the format of the coordinator address</summary>
-        private static final int ADDRESS_16_BIT = 2;
+        // private static final int ADDRESS_16_BIT = 2;
         /// <name>TI.ZPI1.ZDO_BIND_REQ.ADDRESS_MODE.ADDRESS_64_BIT</name>
         /// <summary>Specified the format of the coordinator address</summary>
         private static final int ADDRESS_64_BIT = 3;
         /// <name>TI.ZPI1.ZDO_BIND_REQ.ADDRESS_MODE.ADDRESS_NOT_PRESENT</name>
         /// <summary>Specified the format of the coordinator address</summary>
-        private static final int ADDRESS_NOT_PRESENT = 0;
+        // private static final int ADDRESS_NOT_PRESENT = 0;
         /// <name>TI.ZPI1.ZDO_BIND_REQ.ADDRESS_MODE.BROADCAST</name>
         /// <summary>Specified the format of the coordinator address</summary>
-        private static final int BROADCAST = 15;
+        // private static final int BROADCAST = 15;
         /// <name>TI.ZPI1.ZDO_BIND_REQ.ADDRESS_MODE.GROUP_ADDRESS</name>
         /// <summary>Specified the format of the coordinator address</summary>
-        private static final int GROUP_ADDRESS = 1;
+        // private static final int GROUP_ADDRESS = 1;
     }
 
 }

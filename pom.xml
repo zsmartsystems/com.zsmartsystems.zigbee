@@ -38,25 +38,14 @@
         </repository>
     </distributionManagement>
 
-    <profiles>
-        <profile>
-            <id>all</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-                <property>
-                    <name>default</name>
-                    <value>!disabled</value>
-                </property>
-            </activation>
-            <modules>
-                <module>com.zsmartsystems.zigbee</module>
-                <module>com.zsmartsystems.zigbee.dongle.cc2531</module>
-                <module>com.zsmartsystems.zigbee.dongle.ember</module>
-                <module>com.zsmartsystems.zigbee.console</module>
-                <module>com.zsmartsystems.zigbee.serial</module>
-            </modules>
-        </profile>
-    </profiles>
+    <modules>
+        <module>com.zsmartsystems.zigbee</module>
+        <module>com.zsmartsystems.zigbee.dongle.cc2531</module>
+        <module>com.zsmartsystems.zigbee.dongle.ember</module>
+        <module>com.zsmartsystems.zigbee.console</module>
+        <module>com.zsmartsystems.zigbee.serial</module>
+        <module>com.zsmartsystems.zigbee.test</module>
+    </modules>
 
     <build>
         <plugins>
@@ -107,32 +96,16 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.7.8</version>
-                <configuration>
-                    <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
-                    <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>jacoco-initialize</id>
+                        <id>jacoco-prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>jacoco-site</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
                 </executions>
             </plugin>
-        
-            <plugin>
-                <groupId>org.eluder.coveralls</groupId>
-                <artifactId>coveralls-maven-plugin</artifactId>
-                <version>4.3.0</version>
-            </plugin>
+
         </plugins>
     </build>
 
@@ -150,12 +123,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.5</version>
         </dependency>
 

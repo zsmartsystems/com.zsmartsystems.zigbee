@@ -17,7 +17,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupResponse;
 import com.zsmartsystems.zigbee.zcl.field.*;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +42,7 @@ import java.util.concurrent.Future;
  * Furthermore, the placement of the management commands here allows developers
  * of proprietary profiles to avoid implementing the library cluster but still exploit
  * group addressing
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclGroupsCluster extends ZclCluster {

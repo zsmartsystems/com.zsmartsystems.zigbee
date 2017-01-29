@@ -6,25 +6,19 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 
 /**
  * <p>
  * Read Reporting Configuration Command value object class.
- * </p>
  * <p>
  * The Read Reporting Configuration command is used to read the configuration
  * details of the reporting mechanism for one or more of the attributes of a cluster.
- * </p>
  * <p>
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
- * </p>
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- * </p>
  */
 public class ReadReportingConfigurationCommand extends ZclCommand {
     /**
@@ -42,13 +36,10 @@ public class ReadReportingConfigurationCommand extends ZclCommand {
     }
 
     /**
-     * <p>
      * Sets the cluster ID for <i>generic</i> commands. {@link ReadReportingConfigurationCommand} is a <i>generic</i> command.
-     * </p>
      * <p>
      * For commands that are not <i>generic</i>, this method will do nothing as the cluster ID is fixed.
      * To test if a command is <i>generic</i>, use the {@link #isGenericCommand} method.
-     * </p>
      *
      * @param clusterId the cluster ID used for <i>generic</i> commands as an {@link Integer}
      */

@@ -5,26 +5,20 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * <p>
  * Move Color Command value object class.
- * </p>
  * <p>
  * Cluster: <b>Color control</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Color control cluster.
- * </p>
  * <p>
  * This cluster provides an interface for changing the color of a light. Color is
  * specified according to the Commission Internationale de l'Éclairage (CIE)
  * specification CIE 1931 Color Space, [B4]. Color control is carried out in terms of
  * x,y values, as defined by this specification.
- * </p>
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- * </p>
  */
 public class MoveColorCommand extends ZclCommand {
     /**

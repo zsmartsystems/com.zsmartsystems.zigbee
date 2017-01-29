@@ -13,9 +13,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
  * The EmberZNet Serial Protocol (EZSP) is the protocol used by a host
  * application processor to interact with the EmberZNet PRO stack running on a
  * Network CoProcessor (NCP).
- *
- * UG100: EZSP Reference Guide
- *
+ * <p>
+ * Reference: UG100: EZSP Reference Guide
+ * <p>
  * An EZSP Frame is made up as follows -:
  * <ul>
  * <li>Sequence : 1 byte sequence number
@@ -163,11 +163,11 @@ public abstract class EzspFrame extends EzspData {
         return emberStatus;
     }
 
-    EmberStatus inputEmberStatus() {
+    protected EmberStatus inputEmberStatus() {
         return EmberStatus.getEmberStatus(buffer[position++]);
     }
 
-    EmberNodeType inputEmberNodeType() {
+    protected EmberNodeType inputEmberNodeType() {
         return EmberNodeType.getEmberNodeType(buffer[position++]);
     }
 

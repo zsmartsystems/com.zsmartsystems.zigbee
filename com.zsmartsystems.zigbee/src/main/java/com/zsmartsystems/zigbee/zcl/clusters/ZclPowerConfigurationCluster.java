@@ -15,7 +15,7 @@ import java.util.concurrent.Future;
  * <p>
  * Attributes for determining detailed information about a device’s power source(s),
  * and for configuring under/over voltage alarms.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclPowerConfigurationCluster extends ZclCluster {
@@ -79,13 +79,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The MainsVoltage attribute is 16-bits in length and specifies the actual (measured)
      * RMS voltage (or DC voltage in the case of a DC supply) currently applied to the
      * device, measured in units of 100mV.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -102,14 +100,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The MainsVoltage attribute is 16-bits in length and specifies the actual (measured)
      * RMS voltage (or DC voltage in the case of a DC supply) currently applied to the
      * device, measured in units of 100mV.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -137,13 +133,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <li>0x00 indicates a frequency that is too low to be measured.</li>
      * <li>0xfe indicates a frequency that is too high to be measured.</li>
      * <li>0xff indicates that the frequency could not be measured.</li>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -172,14 +166,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <li>0x00 indicates a frequency that is too low to be measured.</li>
      * <li>0xfe indicates a frequency that is too high to be measured.</li>
      * <li>0xff indicates that the frequency could not be measured.</li>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -196,13 +188,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The MainsAlarmMask attribute is 8-bits in length and specifies which mains
      * alarms may be generated. A ‘1’ in each bit position enables the alarm.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param mainsAlarmMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -219,13 +209,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The MainsAlarmMask attribute is 8-bits in length and specifies which mains
      * alarms may be generated. A ‘1’ in each bit position enables the alarm.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -242,14 +230,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The MainsAlarmMask attribute is 8-bits in length and specifies which mains
      * alarms may be generated. A ‘1’ in each bit position enables the alarm.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -279,13 +265,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * 0x00.
      * <br>
      * If this attribute takes the value 0xffff then this alarm shall not be generated.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param mainsVoltageMinThreshold the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -315,13 +299,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * 0x00.
      * <br>
      * If this attribute takes the value 0xffff then this alarm shall not be generated.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -351,14 +333,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * 0x00.
      * <br>
      * If this attribute takes the value 0xffff then this alarm shall not be generated.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -388,13 +368,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * 0x01.
      * <br>
      * If this attribute takes the value 0xffff then this alarm shall not be generated.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param mainsVoltageMaxThreshold the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -424,13 +402,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * 0x01.
      * <br>
      * If this attribute takes the value 0xffff then this alarm shall not be generated.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -460,14 +436,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * 0x01.
      * <br>
      * If this attribute takes the value 0xffff then this alarm shall not be generated.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -488,13 +462,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * If this attribute takes the value 0xffff then the associated alarms shall not be
      * generated.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param mainsVoltageDwellTripPoint the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -515,13 +487,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * If this attribute takes the value 0xffff then the associated alarms shall not be
      * generated.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -542,14 +512,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * If this attribute takes the value 0xffff then the associated alarms shall not be
      * generated.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -566,13 +534,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The BatteryVoltage attribute is 8-bits in length and specifies the current actual
      * (measured) battery voltage, in units of 100mV.
      * The value 0xff indicates an invalid or unknown reading.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -590,14 +556,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The BatteryVoltage attribute is 8-bits in length and specifies the current actual
      * (measured) battery voltage, in units of 100mV.
      * The value 0xff indicates an invalid or unknown reading.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -614,13 +578,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryManufacturer attribute is a maximum of 16 bytes in length and
      * specifies the name of the battery manufacturer as a ZigBee character string.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param batteryManufacturer the {@link String} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -637,13 +599,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryManufacturer attribute is a maximum of 16 bytes in length and
      * specifies the name of the battery manufacturer as a ZigBee character string.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -660,14 +620,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryManufacturer attribute is a maximum of 16 bytes in length and
      * specifies the name of the battery manufacturer as a ZigBee character string.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link String}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link String} attribute value, or null on error
      */
@@ -684,13 +642,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatterySize attribute is an enumeration which specifies the type of battery
      * being used by the device.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param batterySize the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -707,13 +663,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatterySize attribute is an enumeration which specifies the type of battery
      * being used by the device.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -730,14 +684,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatterySize attribute is an enumeration which specifies the type of battery
      * being used by the device.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -754,13 +706,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryAHrRating attribute is 16-bits in length and specifies the Ampere-hour
      * rating of the battery, measured in units of 10mAHr.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param batteryAHrRating the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -777,13 +727,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryAHrRating attribute is 16-bits in length and specifies the Ampere-hour
      * rating of the battery, measured in units of 10mAHr.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -800,14 +748,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryAHrRating attribute is 16-bits in length and specifies the Ampere-hour
      * rating of the battery, measured in units of 10mAHr.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -824,13 +770,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryQuantity attribute is 8-bits in length and specifies the number of
      * battery cells used to power the device.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param batteryQuantity the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -847,13 +791,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryQuantity attribute is 8-bits in length and specifies the number of
      * battery cells used to power the device.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -870,14 +812,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryQuantity attribute is 8-bits in length and specifies the number of
      * battery cells used to power the device.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -894,13 +834,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryRatedVoltage attribute is 8-bits in length and specifies the rated
      * voltage of the battery being used in the device, measured in units of 100mV.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param batteryRatedVoltage the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -917,13 +855,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryRatedVoltage attribute is 8-bits in length and specifies the rated
      * voltage of the battery being used in the device, measured in units of 100mV.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -940,14 +876,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryRatedVoltage attribute is 8-bits in length and specifies the rated
      * voltage of the battery being used in the device, measured in units of 100mV.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -964,13 +898,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryAlarmMask attribute is 8-bits in length and specifies which battery
      * alarms may be generated.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param batteryAlarmMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -987,13 +919,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryAlarmMask attribute is 8-bits in length and specifies which battery
      * alarms may be generated.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -1010,14 +940,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * <br>
      * The BatteryAlarmMask attribute is 8-bits in length and specifies which battery
      * alarms may be generated.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -1042,13 +970,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The Alarm Code field included in the generated alarm shall be 0x10.
      * <br>
      * If this attribute takes the value 0xff then this alarm shall not be generated.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param batteryVoltageMinThreshold the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -1073,13 +999,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The Alarm Code field included in the generated alarm shall be 0x10.
      * <br>
      * If this attribute takes the value 0xff then this alarm shall not be generated.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -1104,14 +1028,12 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The Alarm Code field included in the generated alarm shall be 0x10.
      * <br>
      * If this attribute takes the value 0xff then this alarm shall not be generated.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */

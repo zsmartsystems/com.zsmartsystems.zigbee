@@ -37,6 +37,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
  *
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public class ZDO_NODE_DESC_REQ extends ZToolPacket /* implements IREQUEST,IZDO */ {
     /// <name>TI.ZPI1.ZDO_NODE_DESC_REQ.DstAddr</name>
@@ -63,4 +64,19 @@ public class ZDO_NODE_DESC_REQ extends ZToolPacket /* implements IREQUEST,IZDO *
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_NODE_DESC_REQ), framedata);
     }
 
+    public ZToolAddress16 getDstAddr() {
+        return DstAddr;
+    }
+
+    public void setDstAddr(ZToolAddress16 dstAddr) {
+        DstAddr = dstAddr;
+    }
+
+    public ZToolAddress16 getNWKAddrOfInterest() {
+        return NWKAddrOfInterest;
+    }
+
+    public void setNWKAddrOfInterest(ZToolAddress16 nWKAddrOfInterest) {
+        NWKAddrOfInterest = nWKAddrOfInterest;
+    }
 }

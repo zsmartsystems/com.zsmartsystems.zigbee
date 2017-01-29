@@ -10,13 +10,13 @@ import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.UnlockDoorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.UnlockDoorResponse;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
  * <b>Door Lock</b> cluster implementation (<i>Cluster ID 0x0101</i>).
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclDoorLockCluster extends ZclCluster {

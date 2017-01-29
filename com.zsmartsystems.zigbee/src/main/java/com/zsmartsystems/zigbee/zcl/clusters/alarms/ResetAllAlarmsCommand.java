@@ -1,19 +1,14 @@
 package com.zsmartsystems.zigbee.zcl.clusters.alarms;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * <p>
  * Reset All Alarms Command value object class.
- * </p>
  * <p>
  * Cluster: <b>Alarms</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Alarms cluster.
- * </p>
  * <p>
  * Attributes and commands for sending alarm notifications and configuring alarm
  * functionality.
@@ -27,10 +22,8 @@ import java.util.HashMap;
  * <br>
  * Alarms may either reset automatically when the conditions that cause are no
  * longer active, or may need to be explicitly reset.
- * </p>
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- * </p>
  */
 public class ResetAllAlarmsCommand extends ZclCommand {
     /**

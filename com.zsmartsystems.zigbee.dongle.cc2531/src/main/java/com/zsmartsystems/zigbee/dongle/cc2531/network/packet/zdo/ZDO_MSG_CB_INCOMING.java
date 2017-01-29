@@ -38,6 +38,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 
 /**
  * @author <a href="mailto:ryan@presslab.us">Ryan Press</a>
+ * @author Chris Jackson
  */
 public class ZDO_MSG_CB_INCOMING extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     private final static Logger logger = LoggerFactory.getLogger(ZDO_MSG_CB_INCOMING.class);
@@ -154,6 +155,76 @@ public class ZDO_MSG_CB_INCOMING extends ZToolPacket /* implements IRESPONSE_CAL
         newPacket.setFCS(this.FCS);
 
         return newPacket;
+    }
+
+    @Override
+    public int getFCS() {
+        return FCS;
+    }
+
+    @Override
+    public void setFCS(int fCS) {
+        FCS = fCS;
+    }
+
+    public ZToolAddress16 getSrcAddr() {
+        return SrcAddr;
+    }
+
+    public void setSrcAddr(ZToolAddress16 srcAddr) {
+        SrcAddr = srcAddr;
+    }
+
+    public int getWasBroadcast() {
+        return WasBroadcast;
+    }
+
+    public void setWasBroadcast(int wasBroadcast) {
+        WasBroadcast = wasBroadcast;
+    }
+
+    public DoubleByte getClusterId() {
+        return ClusterId;
+    }
+
+    public void setClusterId(DoubleByte clusterId) {
+        ClusterId = clusterId;
+    }
+
+    public int getSecurityUse() {
+        return SecurityUse;
+    }
+
+    public void setSecurityUse(int securityUse) {
+        SecurityUse = securityUse;
+    }
+
+    public int getSeqNum() {
+        return SeqNum;
+    }
+
+    public void setSeqNum(int seqNum) {
+        SeqNum = seqNum;
+    }
+
+    public ZToolAddress16 getMacDstAddr() {
+        return MacDstAddr;
+    }
+
+    public void setMacDstAddr(ZToolAddress16 macDstAddr) {
+        MacDstAddr = macDstAddr;
+    }
+
+    public int[] getData() {
+        return Data;
+    }
+
+    public void setData(int[] data) {
+        Data = data;
+    }
+
+    public static Map<Integer, Class<? extends ZToolPacket>> getClustertorsp() {
+        return clusterToRSP;
     }
 
     @Override

@@ -1,17 +1,15 @@
 package com.zsmartsystems.zigbee.zcl.clusters;
 
-import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 /**
  * <b>Binary Input (BACnet Regular)</b> cluster implementation (<i>Cluster ID 0x0608</i>).
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclBinaryInputBaCnetRegularCluster extends ZclCluster {

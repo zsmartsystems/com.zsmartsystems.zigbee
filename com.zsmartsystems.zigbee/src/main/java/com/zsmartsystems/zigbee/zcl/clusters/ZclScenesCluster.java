@@ -38,7 +38,7 @@ import java.util.concurrent.Future;
  * that extra care is required in these cases to avoid a scene ID collision, and that
  * commands related to scenes without a group may only be unicast, i.e.: they may
  * not be multicast or broadcast.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclScenesCluster extends ZclCluster {
@@ -85,13 +85,11 @@ public class ZclScenesCluster extends ZclCluster {
      * <p>
      * The SceneCount attribute specifies the number of scenes currently in the device's
      * scene table.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -107,14 +105,12 @@ public class ZclScenesCluster extends ZclCluster {
      * <p>
      * The SceneCount attribute specifies the number of scenes currently in the device's
      * scene table.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -129,13 +125,11 @@ public class ZclScenesCluster extends ZclCluster {
      * <p>
      * <br>
      * The CurrentScene attribute holds the Scene ID of the scene last invoked.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -151,14 +145,12 @@ public class ZclScenesCluster extends ZclCluster {
      * <p>
      * <br>
      * The CurrentScene attribute holds the Scene ID of the scene last invoked.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -174,13 +166,11 @@ public class ZclScenesCluster extends ZclCluster {
      * <br>
      * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
      * 0x0000 if the scene last invoked is not associated with a group.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -197,14 +187,12 @@ public class ZclScenesCluster extends ZclCluster {
      * <br>
      * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
      * 0x0000 if the scene last invoked is not associated with a group.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -226,13 +214,11 @@ public class ZclScenesCluster extends ZclCluster {
      * successful Store Scene or Recall Scene command it is set to TRUE. If, after a
      * scene is stored or recalled, the state of the device is modified, this attribute is set to
      * FALSE.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Boolean}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -255,14 +241,12 @@ public class ZclScenesCluster extends ZclCluster {
      * successful Store Scene or Recall Scene command it is set to TRUE. If, after a
      * scene is stored or recalled, the state of the device is modified, this attribute is set to
      * FALSE.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Boolean}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Boolean} attribute value, or null on error
      */
@@ -279,13 +263,11 @@ public class ZclScenesCluster extends ZclCluster {
      * The most significant bit of the NameSupport attribute indicates whether or not
      * scene names are supported. A value of 1 indicates that they are supported, and a
      * value of 0 indicates that they are not supported.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -303,14 +285,12 @@ public class ZclScenesCluster extends ZclCluster {
      * The most significant bit of the NameSupport attribute indicates whether or not
      * scene names are supported. A value of 1 indicates that they are supported, and a
      * value of 0 indicates that they are not supported.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -329,13 +309,11 @@ public class ZclScenesCluster extends ZclCluster {
      * <br>
      * The value 0xffffffffffffffff indicates that the device has not been configured, or
      * that the address of the device that last configured the scenes cluster is not known.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Long}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -355,14 +333,12 @@ public class ZclScenesCluster extends ZclCluster {
      * <br>
      * The value 0xffffffffffffffff indicates that the device has not been configured, or
      * that the address of the device that last configured the scenes cluster is not known.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Long}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Long} attribute value, or null on error
      */
@@ -374,7 +350,6 @@ public class ZclScenesCluster extends ZclCluster {
      * The Add Scene Command
      * <p>
      * The Add Scene command shall be addressed to a single device (not a group).
-     * </p>
      *
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
@@ -400,7 +375,6 @@ public class ZclScenesCluster extends ZclCluster {
      * The View Scene Command
      * <p>
      * The View Scene command shall be addressed to a single device (not a group).
-     * </p>
      *
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
@@ -420,7 +394,6 @@ public class ZclScenesCluster extends ZclCluster {
      * The Remove Scene Command
      * <p>
      * The Remove All Scenes may be addressed to a single device or to a group.
-     * </p>
      *
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
@@ -440,7 +413,6 @@ public class ZclScenesCluster extends ZclCluster {
      * The Remove All Scenes Command
      * <p>
      * The Remove All Scenes may be addressed to a single device or to a group.
-     * </p>
      *
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
@@ -458,7 +430,6 @@ public class ZclScenesCluster extends ZclCluster {
      * The Store Scene Command
      * <p>
      * The Store Scene command may be addressed to a single device or to a group.
-     * </p>
      *
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
@@ -478,7 +449,6 @@ public class ZclScenesCluster extends ZclCluster {
      * The Recall Scene Command
      * <p>
      * The Recall Scene command may be addressed to a single device or to a group.
-     * </p>
      *
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
@@ -501,7 +471,6 @@ public class ZclScenesCluster extends ZclCluster {
      * number within the group when no commissioning tool is in the network, or for a
      * commissioning tool to get used scenes for a group on a single device or on all
      * devices in the group.
-     * </p>
      *
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future

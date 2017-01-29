@@ -20,7 +20,7 @@ import java.util.concurrent.Future;
  * Device equipment of the IAS system. Using this cluster, a ZigBee enabled CIE
  * device can access a ZigBee enabled IAS WD device and issue alarm warning
  * indications (siren, strobe lighting, etc.) when a system alarm condition is detected.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclIasWdCluster extends ZclCluster {
@@ -64,13 +64,11 @@ public class ZclIasWdCluster extends ZclCluster {
      * <p>
      * The MaxDuration attribute specifies the maximum time in seconds that the siren
      * will sound continuously, regardless of start/stop commands.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param maxDuration the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -86,13 +84,11 @@ public class ZclIasWdCluster extends ZclCluster {
      * <p>
      * The MaxDuration attribute specifies the maximum time in seconds that the siren
      * will sound continuously, regardless of start/stop commands.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -108,14 +104,12 @@ public class ZclIasWdCluster extends ZclCluster {
      * <p>
      * The MaxDuration attribute specifies the maximum time in seconds that the siren
      * will sound continuously, regardless of start/stop commands.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -127,13 +121,11 @@ public class ZclIasWdCluster extends ZclCluster {
      * <p>
      * Get the <i>ZoneType</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -146,14 +138,12 @@ public class ZclIasWdCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>ZoneType</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -165,13 +155,11 @@ public class ZclIasWdCluster extends ZclCluster {
      * <p>
      * Get the <i>ZoneStatus</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -184,14 +172,12 @@ public class ZclIasWdCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>ZoneStatus</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -204,13 +190,11 @@ public class ZclIasWdCluster extends ZclCluster {
      * <p>
      * Set the <i>IAS_CIE_Address</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Long}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param ias_Cie_Address the {@link Long} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -223,13 +207,11 @@ public class ZclIasWdCluster extends ZclCluster {
      * <p>
      * Get the <i>IAS_CIE_Address</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Long}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -242,14 +224,12 @@ public class ZclIasWdCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>IAS_CIE_Address</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Long}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Long} attribute value, or null on error
      */
@@ -265,7 +245,6 @@ public class ZclIasWdCluster extends ZclCluster {
      * <br>
      * A Start Warning command shall always terminate the effect of any previous
      * command that is still current.
-     * </p>
      *
      * @param header {@link Integer} Header
      * @param warningDuration {@link Integer} Warning duration

@@ -1,19 +1,14 @@
 package com.zsmartsystems.zigbee.zcl.clusters.identify;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * <p>
  * Identify Query Command value object class.
- * </p>
  * <p>
  * Cluster: <b>Identify</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Identify cluster.
- * </p>
  * <p>
  * Attributes and commands to put a device into an Identification mode (e.g. flashing
  * a light), that indicates to an observer – e.g. an installer - which of several devices
@@ -21,10 +16,8 @@ import java.util.HashMap;
  * <br>
  * Note that this cluster cannot be disabled, and remains functional regardless of the
  * setting of the DeviceEnable attribute in the Basic cluster.
- * </p>
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- * </p>
  */
 public class IdentifyQueryCommand extends ZclCommand {
     /**

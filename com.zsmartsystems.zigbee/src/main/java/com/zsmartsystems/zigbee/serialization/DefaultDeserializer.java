@@ -8,7 +8,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * @author Chris Jackson
  */
 public class DefaultDeserializer implements ZigBeeDeserializer {
-    int index = 0;
+    private int index = 0;
     private int[] payload;
 
     public DefaultDeserializer(int[] payload) {
@@ -100,9 +100,9 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
             case UNSIGNED_16_BIT_INTEGER:
                 short s = (short) ((payload[index++] << 8) + payload[index++]);
                 if (type == ZclDataType.UNSIGNED_16_BIT_INTEGER) {
-                    value[0] = new Integer(s & 0xFFFF);
+                    value[0] = Integer.valueOf(s & 0xFFFF);
                 } else {
-                    value[0] = new Integer(s);
+                    value[0] = Integer.valueOf(s);
                 }
                 break;
             case SIGNED_32_BIT_INTEGER:

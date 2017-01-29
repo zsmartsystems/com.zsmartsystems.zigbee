@@ -1,19 +1,14 @@
 package com.zsmartsystems.zigbee.zcl.clusters.groups;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * <p>
  * Remove All Groups Command value object class.
- * </p>
  * <p>
  * Cluster: <b>Groups</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Groups cluster.
- * </p>
  * <p>
  * The ZigBee specification provides the capability for group addressing. That is,
  * any endpoint on any device may be assigned to one or more groups, each labeled
@@ -32,10 +27,8 @@ import java.util.HashMap;
  * Furthermore, the placement of the management commands here allows developers
  * of proprietary profiles to avoid implementing the library cluster but still exploit
  * group addressing
- * </p>
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- * </p>
  */
 public class RemoveAllGroupsCommand extends ZclCommand {
     /**

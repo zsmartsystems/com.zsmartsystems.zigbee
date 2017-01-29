@@ -25,7 +25,7 @@ import java.util.concurrent.Future;
  * This cluster provides an interface for controlling a characteristic of a device that
  * can be set to a level, for example the brightness of a light, the degree of closure of
  * a door, or the power output of a heater.
- * </p>
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclLevelControlCluster extends ZclCluster {
@@ -68,13 +68,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
      * meaning of 'level' is device dependent.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -90,14 +88,12 @@ public class ZclLevelControlCluster extends ZclCluster {
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
      * meaning of 'level' is device dependent.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -113,13 +109,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
      * meaning of 'level' is device dependent.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
@@ -138,13 +132,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * <br>
      * The RemainingTime attribute represents the time remaining until the current
      * command is complete - it is specified in 1/10ths of a second.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -161,14 +153,12 @@ public class ZclLevelControlCluster extends ZclCluster {
      * <br>
      * The RemainingTime attribute represents the time remaining until the current
      * command is complete - it is specified in 1/10ths of a second.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -190,13 +180,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The actual time taken should be as close to OnOffTransitionTime as the device is
      * able. N.B. If the device is not able to move at a variable rate, the
      * OnOffTransitionTime attribute should not be implemented.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param onOffTransitionTime the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -218,13 +206,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The actual time taken should be as close to OnOffTransitionTime as the device is
      * able. N.B. If the device is not able to move at a variable rate, the
      * OnOffTransitionTime attribute should not be implemented.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -246,14 +232,12 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The actual time taken should be as close to OnOffTransitionTime as the device is
      * able. N.B. If the device is not able to move at a variable rate, the
      * OnOffTransitionTime attribute should not be implemented.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -271,13 +255,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
      * when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
      * the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param onLevel the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -295,13 +277,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
      * when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
      * the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -319,14 +299,12 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
      * when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
      * the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */

@@ -30,6 +30,7 @@ import java.util.concurrent.Future;
 
 /**
  * <b>RSSI Location</b> cluster implementation (<i>Cluster ID 0x000B</i>).
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclRssiLocationCluster extends ZclCluster {
@@ -89,13 +90,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * <p>
      * <p>
      * The LocationType attribute is 8 bits long and is divided into bit fields.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -110,14 +109,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * <p>
      * <p>
      * The LocationType attribute is 8 bits long and is divided into bit fields.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -129,13 +126,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * <p>
      * Get the <i>LocationMethod</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -148,14 +143,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * <p>
      * Synchronously get the <i>LocationMethod</i> attribute.
      * <p>
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -172,13 +165,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The LocationAge attribute indicates the amount of time, measured in seconds, that
      * has transpired since the location information was last calculated. This attribute is
      * not valid if the Absolute bit of the LocationType attribute is set to one.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -196,14 +187,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The LocationAge attribute indicates the amount of time, measured in seconds, that
      * has transpired since the location information was last calculated. This attribute is
      * not valid if the Absolute bit of the LocationType attribute is set to one.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -225,13 +214,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * dependent).
      * <br>
      * This field is not valid if the Absolute bit of the LocationType attribute is set to one.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -254,14 +241,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * dependent).
      * <br>
      * This field is not valid if the Absolute bit of the LocationType attribute is set to one.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -278,13 +263,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The NumberOfDevices attribute is the number of devices whose location data
      * were used to calculate the last location value. This attribute is related to the
      * QualityMeasure attribute.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -302,14 +285,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The NumberOfDevices attribute is the number of devices whose location data
      * were used to calculate the last location value. This attribute is related to the
      * QualityMeasure attribute.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -332,13 +313,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param coordinate1 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -361,13 +340,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -390,14 +367,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -420,13 +395,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param coordinate2 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -449,13 +422,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -478,14 +449,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -508,13 +477,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param coordinate3 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -537,13 +504,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -566,14 +531,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -594,13 +557,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * P0 = Power / 100
      * <br>
      * A value of 0x8000 indicates that Power is unknown.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param power the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -621,13 +582,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * P0 = Power / 100
      * <br>
      * A value of 0x8000 indicates that Power is unknown.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -648,14 +607,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * P0 = Power / 100
      * <br>
      * A value of 0x8000 indicates that Power is unknown.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -677,13 +634,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * n = PathLossExponent / 100
      * <br>
      * A value of 0xffff indicates that PathLossExponent is unknown.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @param pathLossExponent the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -705,13 +660,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * n = PathLossExponent / 100
      * <br>
      * A value of 0xffff indicates that PathLossExponent is unknown.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -733,14 +686,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * n = PathLossExponent / 100
      * <br>
      * A value of 0xffff indicates that PathLossExponent is unknown.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is MANDATORY
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -760,13 +711,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * command. The minimum value this attribute can take is specified by the profile in
      * use. If ReportingPeriod is zero, the device does not automatically report its
      * location. Note that location information can always be polled at any time.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param reportingPeriod the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -786,13 +735,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * command. The minimum value this attribute can take is specified by the profile in
      * use. If ReportingPeriod is zero, the device does not automatically report its
      * location. Note that location information can always be polled at any time.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -812,14 +759,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * command. The minimum value this attribute can take is specified by the profile in
      * use. If ReportingPeriod is zero, the device does not automatically report its
      * location. Note that location information can always be polled at any time.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -838,13 +783,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * calculations of the device's location. If CalculationPeriod is less than the
      * physically possible minimum period that the calculation can be performed, the
      * calculation will be repeated as frequently as possible.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param calculationPeriod the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -863,13 +806,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * calculations of the device's location. If CalculationPeriod is less than the
      * physically possible minimum period that the calculation can be performed, the
      * calculation will be repeated as frequently as possible.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -888,14 +829,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * calculations of the device's location. If CalculationPeriod is less than the
      * physically possible minimum period that the calculation can be performed, the
      * calculation will be repeated as frequently as possible.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */
@@ -914,13 +853,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * measurements to be used to generate one location estimate. The measurements are
      * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
      * equal to 1.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @param numberRssiMeasurements the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
@@ -939,13 +876,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * measurements to be used to generate one location estimate. The measurements are
      * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
      * equal to 1.
-     * </p>
+     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -964,14 +899,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * measurements to be used to generate one location estimate. The measurements are
      * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
      * equal to 1.
-     * </p>
+     * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
      * The attribute is of type {@link Integer}.
-     * </p>
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
-     * </p>
      *
      * @return the {@link Integer} attribute value, or null on error
      */

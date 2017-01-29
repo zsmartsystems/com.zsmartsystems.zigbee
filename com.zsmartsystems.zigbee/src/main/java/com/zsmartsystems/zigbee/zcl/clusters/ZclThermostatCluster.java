@@ -7,13 +7,13 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.thermostat.SetpointRaiseLowerCommand;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
  * <b>Thermostat</b> cluster implementation (<i>Cluster ID 0x0201</i>).
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclThermostatCluster extends ZclCluster {

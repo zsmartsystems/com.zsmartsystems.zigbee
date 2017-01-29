@@ -63,7 +63,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
     /**
      * The port interface.
      */
-    final ZigBeePort port;
+    private final ZigBeePort port;
     /**
      * The packet parser.
      */
@@ -167,6 +167,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
 
             default:
                 LOGGER.error("Received unknown packet. {}", packet.getClass().getSimpleName());
+                break;
         }
     }
 

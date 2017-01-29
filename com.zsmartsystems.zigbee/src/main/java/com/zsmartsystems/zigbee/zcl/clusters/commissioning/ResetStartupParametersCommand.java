@@ -5,20 +5,15 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * <p>
  * Reset Startup Parameters Command value object class.
- * </p>
  * <p>
  * Cluster: <b>Commissioning</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Commissioning cluster.
- * </p>
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- * </p>
  */
 public class ResetStartupParametersCommand extends ZclCommand {
     /**
