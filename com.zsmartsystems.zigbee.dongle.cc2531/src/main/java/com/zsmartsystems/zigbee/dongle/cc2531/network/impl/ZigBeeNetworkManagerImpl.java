@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import org.bouncycastle.util.encoders.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,7 +98,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
 
 /**
- * The zigbee network manager port implementation.
+ * The ZigBee network manager port implementation.
  *
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:michele.girolami@isti.cnr.it">Michele Girolami</a>
@@ -152,17 +151,20 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     private ZigBeePort port;
     private DriverStatus state;
     private NetworkMode mode;
-    private short pan = AUTO_PANID;
-    private byte channel;
+    private int pan = AUTO_PANID;
+    private int channel;
     private long extendedPanId; // do not initialize to use dongle defaults (the IEEE address)
     private byte[] networkKey; // 16 byte network key
     private boolean distributeNetworkKey = true; // distribute network key in clear (be careful)
     private int securityMode = 1; // int for future extensibility
 
-    private int[] ep, prof, dev, ver;
-    private short[][] inp, out;
+    private int[] ep;
+    private int[] prof;
+    private int[] dev;
+    private int[] ver;
+    private short[][] inp;
+    private short[][] out;
 
-    // private final Set<AnnounceListener> announceListeners = new HashSet<AnnounceListener>();
     private final NetworkStateListener announceListenerFilter = new NetworkStateListener();
 
     private final ArrayList<ApplicationFrameworkMessageListener> messageListeners = new ArrayList<ApplicationFrameworkMessageListener>();
@@ -179,8 +181,8 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
     private final HashMap<Class<?>, Thread> conversation3Way = new HashMap<Class<?>, Thread>();
 
-    public ZigBeeNetworkManagerImpl(ZigBeePort port, NetworkMode mode, int pan, int channel, byte[] networkKey,
-            long timeout) {
+    public ZigBeeNetworkManagerImpl(ZigBeePort port, NetworkMode mode, long timeout) {
+        this.mode = mode;
 
         int aux = RESEND_TIMEOUT_DEFAULT;
         try {
@@ -247,9 +249,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
         state = DriverStatus.CLOSED;
         setSerialPort(port);
-        setZigBeeNetwork((byte) channel, (short) pan);
-        setZigBeeNodeMode(mode);
-        setZigBeeNetworkKey(networkKey);
     }
 
     @Override
@@ -314,32 +313,39 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         return true;
     }
 
-    public boolean initializeZigBeeNetwork(boolean cleanStatus) {
+    public boolean initializeZigBeeNetwork() {
         logger.trace("Initializing network.");
 
         setState(DriverStatus.NETWORK_INITIALIZING);
 
-        if (cleanStatus && !configureZigBeeNetwork()) {
-            shutdown();
-            return false;
-
-        }
         if (!createZigBeeNetwork()) {
             logger.error("Failed to start zigbee network.");
             shutdown();
             return false;
         }
-        if (checkZigBeeNetworkConfiguration()) {
-            logger.error("Dongle configuration does not match the specified configuration.");
-            shutdown();
-            return false;
-        }
+
         return true;
     }
 
     private boolean createZigBeeNetwork() {
         createCustomDevicesOnDongle();
         logger.debug("Creating network as {}", mode.toString());
+
+        // Make sure we start clearing configuration and state
+        logger.debug("Changing the Network Mode to {}.", mode);
+        if (!dongleSetNetworkMode()) {
+            logger.error("Unable to set NETWORK_MODE for ZigBee Network");
+            return false;
+        } else {
+            logger.trace("NETWORK_MODE set");
+        }
+
+        // A dongle reset is needed to put into effect the network mode.
+        logger.info("Resetting dongle.");
+        if (!dongleReset()) {
+            logger.error("Unable to reset dongle");
+            return false;
+        }
 
         final int ALL_CLUSTERS = 0xFFFF;
 
@@ -359,155 +365,23 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
 
         switch (response.Status) {
-            case 0: {
+            case 0:
                 logger.info("Initialized ZigBee network with existing network state.");
-                return true;
-            }
-            case 1: {
+                break;
+            case 1:
                 logger.info("Initialized ZigBee network with new or reset network state.");
-                return true;
-            }
-            case 2: {
+                break;
+            case 2:
                 logger.warn("Initializing ZigBee network failed.");
                 return false;
-            }
-            default: {
+
+            default:
                 logger.error("Unexpected response state for ZDO_STARTUP_FROM_APP {}", response.Status);
                 return false;
-            }
         }
 
-    }
+        // New stuff
 
-    private boolean checkZigBeeNetworkConfiguration() {
-        int value;
-        long longValue;
-        boolean mismatch = false;
-        if ((value = getCurrentChannel()) != channel) {
-            logger.warn("The channel configuration differ from the channel configuration in use: "
-                    + "in use {}, while the configured is {}.\n"
-                    + "The ZigBee network should be reconfigured or configuration corrected.", value, channel);
-            mismatch = true;
-        }
-        // Do not check the current PAN ID if a random one is generated
-        // by the dongle.
-        if (pan != AUTO_PANID && (value = getCurrentPanId()) != pan) {
-            logger.warn("The PanId configuration differ from the PanId configuration in use: "
-                    + "in use {}, while the configured is {}.\n"
-                    + "The ZigBee network should be reconfigured or configuration corrected.", value, pan);
-            mismatch = true;
-        }
-        if (extendedPanId != 0 && (longValue = getExtendedPanId()) != extendedPanId) {
-            logger.warn(
-                    "The ExtendedPanId configuration differ from the ExtendedPanId configuration in use: "
-                            + "in use {}, while the configured is {}.\n"
-                            + "The ZigBee network should be reconfigured or configuration corrected.",
-                    longValue, extendedPanId);
-            mismatch = true;
-        }
-        if ((value = getZigBeeNodeMode()) != mode.ordinal()) {
-            logger.warn(
-                    "The NetworkMode configuration differ from the NetworkMode configuration in use: "
-                            + "in use {}, while the configured is {}.\n"
-                            + "The ZigBee network should be reconfigured or configuration corrected.",
-                    value, mode.ordinal());
-            mismatch = true;
-        }
-
-        if (networkKey != null) {
-            final byte[] readNetworkKey = getZigBeeNetworkKey();
-            if (readNetworkKey == null) {
-                logger.warn("Could not read preconfigured network key.");
-                mismatch = true;
-            } else {
-                boolean networkKeyMismatch = false;
-                for (int i = 0; i < 16; i++) {
-                    if (networkKey[i] != readNetworkKey[i]) {
-                        networkKeyMismatch = true;
-                        break;
-                    }
-                }
-                if (networkKeyMismatch) {
-                    logger.warn("The NetworkKey configuration differ from the NetworkKey configuration in use.",
-                            Hex.toHexString(networkKey), Hex.toHexString(readNetworkKey));
-                    mismatch = true;
-                }
-            }
-        }
-
-        return mismatch;
-    }
-
-    private boolean configureZigBeeNetwork() {
-        logger.debug("Resetting network stack.");
-
-        // Make sure we start clearing configuration and state
-        logger.info("Setting clean state.");
-        if (!dongleSetStartupOption(STARTOPT_CLEAR_CONFIG | STARTOPT_CLEAR_STATE)) {
-            logger.error("Unable to set clean state for dongle");
-            return false;
-        }
-        logger.debug("Changing the Network Mode to {}.", mode);
-        if (!dongleSetNetworkMode()) {
-            logger.error("Unable to set NETWORK_MODE for ZigBee Network");
-            return false;
-        } else {
-            logger.trace("NETWORK_MODE set");
-        }
-        // A dongle reset is needed to put into effect
-        // configuration clear and network mode.
-        logger.info("Resetting dongle.");
-        if (!dongleReset()) {
-            logger.error("Unable to reset dongle");
-            return false;
-        }
-
-        logger.debug("Setting channel to {}.", channel);
-        if (!dongleSetChannel()) {
-            logger.error("Unable to set CHANNEL for ZigBee Network");
-            return false;
-        } else {
-            logger.trace("CHANNEL set");
-        }
-        logger.debug("Setting PAN to {}.", String.format("%04X", pan & 0x0000ffff));
-        if (!dongleSetPanId()) {
-            logger.error("Unable to set PANID for ZigBee Network");
-            return false;
-        } else {
-            logger.trace("PANID set");
-        }
-        if (extendedPanId != 0) {
-            logger.debug("Setting Extended PAN ID to {}.", String.format("%08X", extendedPanId));
-            if (!dongleSetExtendedPanId()) {
-                logger.error("Unable to set EXT_PANID for ZigBee Network");
-                return false;
-            } else {
-                logger.trace("EXT_PANID set");
-            }
-        }
-        if (networkKey != null) {
-            logger.debug("Setting NETWORK_KEY.");
-            if (!dongleSetNetworkKey()) {
-                logger.error("Unable to set NETWORK_KEY for ZigBee Network");
-                return false;
-            } else {
-                logger.trace("NETWORK_KEY set");
-            }
-        }
-        logger.debug("Setting Distribute Network Key to {}.", distributeNetworkKey);
-        if (!dongleSetDistributeNetworkKey()) {
-            logger.error("Unable to set DISTRIBUTE_NETWORK_KEY for ZigBee Network");
-            return false;
-        } else {
-            logger.trace("DISTRIBUTE_NETWORK_KEY set");
-        }
-        logger.debug("Setting Security Mode to {}.", securityMode);
-        if (!dongleSetSecurityMode()) {
-            logger.error("Unable to set SECURITY_MODE for ZigBee Network");
-            return false;
-        } else {
-            logger.trace("SECURITY_MODE set");
-        }
         return true;
     }
 
@@ -569,35 +443,70 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     @Override
     public void setZigBeeNodeMode(NetworkMode networkMode) {
         if (state != DriverStatus.CLOSED) {
-            throw new IllegalStateException(
-                    "Network mode can be changed only " + "if driver is CLOSED while it is:" + state);
+            throw new IllegalStateException("Network key can be changed only if driver is CLOSED while it is:" + state);
         }
         mode = networkMode;
     }
 
     public void setZigBeeNetworkKey(byte[] networkKey) {
         if (state != DriverStatus.CLOSED) {
-            throw new IllegalStateException(
-                    "Network key can be changed only " + "if driver is CLOSED while it is:" + state);
+            throw new IllegalStateException("Network key can be changed only if driver is CLOSED while it is:" + state);
         }
         this.networkKey = networkKey;
+        dongleSetNetworkKey();
     }
 
     @Override
-    public void setZigBeeNetwork(byte ch, short panId) {
+    public boolean setZigBeePanId(int panId) {
         if (state != DriverStatus.CLOSED) {
-            throw new IllegalStateException(
-                    "Network mode can be changed only " + "if driver is CLOSED while it is:" + state);
+            throw new IllegalStateException("Network key can be changed only if driver is CLOSED while it is:" + state);
         }
-        channel = ch;
         pan = panId;
+
+        return dongleSetPanId();
+    }
+
+    @Override
+    public boolean setZigBeeChannel(int channel) {
+        if (state != DriverStatus.CLOSED) {
+            throw new IllegalStateException("Network key can be changed only if driver is CLOSED while it is:" + state);
+        }
+        this.channel = channel;
+
+        return dongleSetChannel();
+    }
+
+    @Override
+    public boolean setZigBeeExtendedPanId(long extendedPanId) {
+        this.extendedPanId = extendedPanId;
+        return dongleSetExtendedPanId();
+    }
+
+    @Override
+    public boolean setNetworkKey(byte[] networkKey) {
+        this.networkKey = networkKey;
+
+        return dongleSetNetworkKey();
+    }
+
+    @Override
+    public boolean setDistributeNetworkKey(boolean distributeNetworkKey) {
+        this.distributeNetworkKey = distributeNetworkKey;
+
+        return dongleSetDistributeNetworkKey();
+    }
+
+    @Override
+    public boolean setSecurityMode(int securityMode) {
+        this.securityMode = securityMode;
+
+        return dongleSetSecurityMode();
     }
 
     @Override
     public void setSerialPort(ZigBeePort port) {
         if (state != DriverStatus.CLOSED) {
-            throw new IllegalStateException(
-                    "Serial port can be changed only " + "if driver is CLOSED while it is:" + state);
+            throw new IllegalStateException("Network key can be changed only if driver is CLOSED while it is:" + state);
         }
         this.port = port;
     }
@@ -983,12 +892,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         return response != null && response.Status == 0;
     }
 
-    private boolean dongleSetChannel(int ch) {
-        int[] channelMask = buildChannelMask(ch);
-
-        return dongleSetChannel(channelMask);
-    }
-
     private boolean dongleSetChannel() {
         int[] channelMask = buildChannelMask(channel);
 
@@ -996,7 +899,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     private boolean dongleSetNetworkMode() {
-
         ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchrouns(commandInterface,
                 new ZB_WRITE_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_LOGICAL_TYPE,
                         new int[] { mode.ordinal() }));
@@ -1145,10 +1047,10 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         return response;
     }
 
-    @Override
     /**
      * @param request {@link AF_DATA_REQUEST}
      */
+    @Override
     public AF_DATA_CONFIRM sendAFDataRequest(AF_DATA_REQUEST request) {
         if (!waitForNetwork()) {
             return null;
@@ -1305,7 +1207,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
      * Gets the extended PAN ID
      *
      * @return the PAN ID or -1 on failure
-     * @since 0.2.0
      */
     @Override
     public long getExtendedPanId() {
@@ -1328,7 +1229,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
      * Gets the IEEE address of our node on the network
      *
      * @return the IEEE address as a long or -1 on failure
-     * @since 0.2.0
      */
     @Override
     public long getIeeeAddress() {
@@ -1356,7 +1256,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
      * Gets the current PAN ID
      *
      * @return current PAN ID as an int or -1 on failure
-     * @since 0.2.0
      */
     @Override
     public int getCurrentPanId() {
@@ -1383,7 +1282,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
      * Gets the current ZigBee channe number
      *
      * @return the current channel as an int, or -1 on failure
-     * @since 0.2.0
      */
     @Override
     public int getCurrentChannel() {
@@ -1393,7 +1291,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
 
         int[] result = getDeviceInfo(ZB_GET_DEVICE_INFO.DEV_INFO_TYPE.CHANNEL);
-
         if (result == null) {
             return -1;
         } else {
@@ -1600,6 +1497,5 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         public void receivedUnclaimedSynchronousCommandResponse(ZToolPacket packet) {
             // No need to handle unclaimed responses here
         }
-
     }
 }

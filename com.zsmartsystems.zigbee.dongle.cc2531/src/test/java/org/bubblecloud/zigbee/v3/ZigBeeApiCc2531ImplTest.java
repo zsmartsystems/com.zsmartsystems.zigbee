@@ -1,6 +1,7 @@
 
-
 package org.bubblecloud.zigbee.v3;
+
+import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -13,8 +14,6 @@ import com.zsmartsystems.zigbee.ZigBeePort;
 import com.zsmartsystems.zigbee.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
 
-import java.util.List;
-
 /**
  * Test class for local ZigBee API.
  */
@@ -24,7 +23,6 @@ public class ZigBeeApiCc2531ImplTest {
      */
     private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ZigBeeApiCc2531ImplTest.class);
 
-
     /**
      * Tests local ZigBee API.
      */
@@ -32,10 +30,9 @@ public class ZigBeeApiCc2531ImplTest {
     @Ignore
     public void testZigBeeApiLocal() {
         final ZigBeePort port = null;// = new SerialPortImpl("COM5");
-        final ZigBeeTransportTransmit dongle = new ZigBeeDongleTiCc2531(port, 4951, 11, null, false);
+        final ZigBeeTransportTransmit dongle = new ZigBeeDongleTiCc2531(port);
 
-//        final ZigBeeApiDongleImpl api = new ZigBeeApiDongleImpl(dongle, false);
-        ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(dongle, false);
+        ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(dongle);
 
         networkManager.addNetworkDeviceListener(new ZigBeeNetworkDeviceListener() {
             @Override

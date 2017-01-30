@@ -23,6 +23,7 @@
 package com.zsmartsystems.zigbee.dongle.cc2531.network;
 
 import com.zsmartsystems.zigbee.ZigBeePort;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.model.DriverStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.model.NetworkMode;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_CONFIRM;
@@ -59,14 +60,6 @@ public interface ZigBeeNetworkManager {
      * @param networkMode the network mode
      */
     void setZigBeeNodeMode(NetworkMode networkMode);
-
-    /**
-     * Sets network channel and pan ID.
-     *
-     * @param channel the channel
-     * @param panId the pan ID
-     */
-    void setZigBeeNetwork(byte channel, short panId);
 
     /**
      * Sets serial port.
@@ -181,7 +174,6 @@ public interface ZigBeeNetworkManager {
      * This method is used for the discovering of {@link ZigBeeEndpoint}
      *
      * @return the answer to the request or null in case of an error
-     * @since 0.7.0
      */
     ZDO_MGMT_LQI_RSP sendLQIRequest(ZDO_MGMT_LQI_REQ request);
 
@@ -191,7 +183,6 @@ public interface ZigBeeNetworkManager {
      *
      * @return The long representing the IEEE Address of coordinator of the ZigBee network in use, or -1 if and only if
      *         the method failed
-     * @since 0.2.0
      */
     long getExtendedPanId();
 
@@ -200,7 +191,6 @@ public interface ZigBeeNetworkManager {
      * thus, it may be quite slow or end up in a deadlock of the application
      *
      * @return The long representing the IEEE Address of ZigBee device in use, or -1 if and only if the method failed
-     * @since 0.2.0
      */
     long getIeeeAddress();
 
@@ -209,7 +199,6 @@ public interface ZigBeeNetworkManager {
      * thus, it may be quite slow or end up in a deadlock of the application
      *
      * @return The panId of ZigBee network configured in use, or -1 if and only if the method failed
-     * @since 0.2.0
      */
     int getCurrentPanId();
 
@@ -218,9 +207,26 @@ public interface ZigBeeNetworkManager {
      * thus, it may be quite slow or end up in a deadlock of the application
      *
      * @return The ZigBee network channel in use, or -1 if and only if the method failed
-     * @since 0.2.0
      */
     int getCurrentChannel();
+
+    boolean setNetworkKey(byte[] networkKey);
+
+    public boolean setZigBeeExtendedPanId(long extendedPanId);
+
+    boolean setDistributeNetworkKey(boolean distributeNetworkKey);
+
+    boolean setSecurityMode(int securityMode);
+
+    boolean setZigBeeChannel(int channel);
+
+    /**
+     * Set the PAN ID
+     * 
+     * @param panId
+     * @return
+     */
+    boolean setZigBeePanId(int panId);
 
     /**
      * <b>WARNING</b>: This method may have to wait for the initialization of the ZigBee network

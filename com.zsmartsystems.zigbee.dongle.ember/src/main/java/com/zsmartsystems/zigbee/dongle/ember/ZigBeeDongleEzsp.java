@@ -33,6 +33,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoinRequest;
 
 /**
+ * Implementation of the Silabs Ember NCP (Network Co Processor) EZSP dongle implementation.
  *
  * @author Chris Jackson
  *
@@ -42,11 +43,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
      * The {@link Logger}.
      */
     private final Logger logger = LoggerFactory.getLogger(ZigBeeDongleEzsp.class);
-
-    /**
-     * Flag to reset the network on startup
-     */
-    // private boolean resetNetwork = false;
 
     /**
      * The serial port used to connect to the dongle
@@ -65,10 +61,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
      */
     private ZigBeeTransportReceive zigbeeTransportReceive;
 
-    public ZigBeeDongleEzsp(final ZigBeePort serialPort, final int pan, final int channel, final byte[] networkKey,
-            final boolean resetNetwork) {
+    public ZigBeeDongleEzsp(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
-        // this.resetNetwork = resetNetwork;
     }
 
     @Override
@@ -266,5 +260,47 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     @Override
     public void handleLinkStateChange(boolean linkState) {
         // TODO: Handle link changes and notify framework or just reset link with dongle?
+    }
+
+    @Override
+    public boolean initialize() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public int getZigBeeChannel() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public boolean setZigBeeChannel(int channel) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public int getZigBeePanId() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public boolean setZigBeePanId(int panId) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public long getZigBeeExtendedPanId() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public boolean setZigBeeExtendedPanId(long extendedPanId) {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

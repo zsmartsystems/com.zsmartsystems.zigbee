@@ -79,11 +79,13 @@ public class ZigBeeConsoleMain {
 
         final ZigBeePort serialPort = new SerialPortImpl(serialPortName, serialBaud);
 
+        System.out.println("Initialising console...");
+
         final ZigBeeTransportTransmit dongle;
         if (dongleName.toUpperCase().equals("CC2531")) {
-            dongle = new ZigBeeDongleTiCc2531(serialPort, pan, channel, networkKey, resetNetwork);
+            dongle = new ZigBeeDongleTiCc2531(serialPort);
         } else if (dongleName.toUpperCase().equals("EMBER")) {
-            dongle = new ZigBeeDongleEzsp(serialPort, pan, channel, networkKey, resetNetwork);
+            dongle = new ZigBeeDongleEzsp(serialPort);
         } else {
             dongle = null;
         }
@@ -94,9 +96,19 @@ public class ZigBeeConsoleMain {
             return;
         }
 
-        ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(dongle, resetNetwork);
+        ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(dongle);
+
+        // Initialise the network
+        networkManager.initialize();
+
+        System.out.println("PAN ID          = " + networkManager.getZigBeePanId());
+        System.out.println("Extended PAN ID = " + String.format("%08X", networkManager.getZigBeeExtendedPanId()));
+        System.out.println("Channel         = " + networkManager.getZigBeeChannel());
+
+        // networkManager.set
+
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
-        final ZigBeeConsole console = new ZigBeeConsole(networkManager, dongle, resetNetwork);
+        final ZigBeeConsole console = new ZigBeeConsole(networkManager, dongle);
 
         console.start();
     }

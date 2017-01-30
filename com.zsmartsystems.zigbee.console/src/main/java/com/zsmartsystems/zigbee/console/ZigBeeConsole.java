@@ -75,10 +75,8 @@ public final class ZigBeeConsole {
      * Constructor which configures ZigBee API and constructs commands.
      *
      * @param dongle the dongle
-     * @param resetNetwork whether network is to be reset
      */
-    public ZigBeeConsole(final ZigBeeNetworkManager networkManager, final ZigBeeTransportTransmit dongle,
-            final boolean resetNetwork) {
+    public ZigBeeConsole(final ZigBeeNetworkManager networkManager, final ZigBeeTransportTransmit dongle) {
 
         commands.put("node", new NodeCommand());
 

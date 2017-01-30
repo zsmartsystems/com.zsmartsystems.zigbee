@@ -98,15 +98,11 @@ public class ZigBeeDongleTiCc2531
      * The {@link Logger}.
      */
     private final static Logger logger = LoggerFactory.getLogger(ZigBeeDongleTiCc2531.class);
+
     /**
      * The {@link ZigBeeNetworkManagerImpl ZigBee network manager}.
      */
     private final ZigBeeNetworkManagerImpl networkManager;
-
-    /**
-     * Flag to reset the network on startup
-     */
-    private boolean resetNetwork = false;
 
     /**
      * The reference to the network
@@ -118,41 +114,64 @@ public class ZigBeeDongleTiCc2531
      *
      * @param serialPort
      *            the serial port
-     * @param pan
-     *            the pan
-     * @param channel
-     *            the channel
-     * @param networkKey
-     *            the network key or null for default testing key
-     * @param resetNetwork
-     *            the reset network flag
      */
-    public ZigBeeDongleTiCc2531(final ZigBeePort serialPort, final int pan, final int channel, final byte[] networkKey,
-            final boolean resetNetwork) {
-        this.resetNetwork = resetNetwork;
-
-        networkManager = new ZigBeeNetworkManagerImpl(serialPort, NetworkMode.Coordinator, pan, channel, networkKey,
-                2500L);
+    public ZigBeeDongleTiCc2531(final ZigBeePort serialPort) {
+        networkManager = new ZigBeeNetworkManagerImpl(serialPort, NetworkMode.Coordinator, 2500L);
     }
 
     @Override
-    public boolean startup() {
+    public boolean initialize() {
         zigbeeNetworkReceive.setNetworkState(TransportState.UNINITIALISED);
 
         if (!networkManager.startup()) {
             return false;
         }
 
+        zigbeeNetworkReceive.setNetworkState(TransportState.INITIALISING);
+
+        return networkManager.initializeZigBeeNetwork();
+    }
+
+    @Override
+    public int getZigBeeChannel() {
+        return networkManager.getCurrentChannel();
+    }
+
+    @Override
+    public boolean setZigBeeChannel(int channel) {
+        return networkManager.setZigBeeChannel(channel);
+    }
+
+    @Override
+    public int getZigBeePanId() {
+        return networkManager.getCurrentPanId();
+    }
+
+    @Override
+    public boolean setZigBeePanId(int panId) {
+        return networkManager.setZigBeePanId(panId);
+    }
+
+    @Override
+    public long getZigBeeExtendedPanId() {
+        return networkManager.getExtendedPanId();
+    }
+
+    @Override
+    public boolean setZigBeeExtendedPanId(long panId) {
+        return networkManager.setZigBeeExtendedPanId(panId);
+    }
+
+    @Override
+    public boolean startup() {
         // Add listeners for ZCL and ZDO received messages
         networkManager.addAFMessageListener(this);
         networkManager.addAsynchronousCommandListener(this);
 
-        zigbeeNetworkReceive.setNetworkState(TransportState.INITIALISING);
-
-        if (!networkManager.initializeZigBeeNetwork(resetNetwork)) {
-            zigbeeNetworkReceive.setNetworkState(TransportState.UNINITIALISED);
-            return false;
-        }
+        // if (!networkManager.initializeZigBeeNetwork()) {
+        // zigbeeNetworkReceive.setNetworkState(TransportState.UNINITIALISED);
+        // return false;
+        // }
 
         while (true) {
             if (networkManager.getDriverStatus() == DriverStatus.NETWORK_READY) {
@@ -544,4 +563,5 @@ public class ZigBeeDongleTiCc2531
             }
         }
     }
+
 }

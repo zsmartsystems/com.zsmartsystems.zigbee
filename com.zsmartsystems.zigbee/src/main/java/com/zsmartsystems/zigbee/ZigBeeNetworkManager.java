@@ -40,9 +40,34 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoinRequest;
 import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
 
 /**
+ * Implements functions for managing the ZigBee interfaces.
  * <p>
- * Implements functions for managing the ZigBee interface.
- * </p>
+ * The ZigBee lifecycle is as follows -:
+ * <ul>
+ * <li>Instantiate a {@link ZigBeeTransportTransmit} class
+ * <li>Instantiate a {@link ZigBeeNetworkManager} class passing the previously created {@link ZigBeeTransportTransmit}
+ * class
+ * <li>Optionally set the {@link ZigBeeSerializer} and {@link ZigBeeDeserializer} using the {@link #setSerializer}
+ * method
+ * <li>Call the {@link #initialize} method to perform the initial initialization of the ZigBee network
+ * <li>Set the network configuration (see below).
+ * <li>Call the {@link #startup} method to start using the configured ZigBee network. Configuration methods may not be
+ * used.
+ * <li>Call the {@link shutdown} method to close the network
+ * </ul>
+ * <p>
+ * Following a call to {@link #initialize} configuration calls can be made to configure the transport layer. This
+ * includes -:
+ * <ul>
+ * <li>{@link #getZigBeeChannel}
+ * <li>{@link #setZigBeeChannel}
+ * <li>{@link #getZigBeePanId}
+ * <li>{@link #setZigBeePanId}
+ * <li>{@link #getZigBeeExtendedPanId}
+ * <li>{@link #setZigBeeExtendedPanId}
+ * </ul>
+ * <p>
+ * Once all transport initialization is complete, {@link #startup} must be called.
  *
  * @author Chris Jackson
  */
@@ -82,11 +107,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     private List<ZigBeeNetworkDeviceListener> deviceListeners = Collections
             .unmodifiableList(new ArrayList<ZigBeeNetworkDeviceListener>());
-
-    /**
-     * The network reset flag.
-     */
-    private final boolean resetNetwork;
 
     /**
      * {@link AtomicLong} used to generate transaction sequence numbers
@@ -139,10 +159,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param resetNetwork
      *            whether network is to be reset
      */
-    public ZigBeeNetworkManager(final ZigBeeTransportTransmit transport, final boolean resetNetwork) {
+    public ZigBeeNetworkManager(final ZigBeeTransportTransmit transport) {
         this.transport = transport;
         this.networkDiscoverer = new ZigBeeNetworkDiscoverer(this);
-        this.resetNetwork = resetNetwork;
 
         transport.setZigBeeTransportReceive(this);
     }
@@ -171,9 +190,98 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
+     * Initializes ZigBee manager components and initializes the transport layer.
+     * <p>
+     * Following a call to {@link #initialize} configuration calls can be made to configure the transport layer. This
+     * includes -:
+     * <ul>
+     * <li>{@link #getZigBeeChannel}
+     * <li>{@link #setZigBeeChannel}
+     * <li>{@link #getZigBeePanId}
+     * <li>{@link #setZigBeePanId}
+     * <li>{@link #getZigBeeExtendedPanId}
+     * <li>{@link #setZigBeeExtendedPanId}
+     * </ul>
+     * <p>
+     * Once all transport initialization is complete, {@link #startup} must be called.
+     *
+     * @return true if startup was successful.
+     */
+    public boolean initialize() {
+        return transport.initialize();
+    }
+
+    /**
+     * Gets the current ZigBee RF channel.
+     *
+     * @return the current channel or -1 on error
+     * @return
+     */
+    public int getZigBeeChannel() {
+        return transport.getZigBeeChannel();
+    }
+
+    /**
+     * Sets the ZigBee RF channel.
+     * <p>
+     * Note that this method may only be called following the {@link #initialize} call, and before the {@link #startup}
+     * call.
+     *
+     * @param channel {@link int} defining the channel to use
+     * @return true if the channel was set
+     */
+    public boolean setZigBeeChannel(int channel) {
+        return transport.setZigBeeChannel(channel);
+    }
+
+    /**
+     * Gets the ZigBee PAN ID currently in use by the transport
+     *
+     * @return the PAN ID
+     */
+    public int getZigBeePanId() {
+        return transport.getZigBeePanId();
+    }
+
+    /**
+     * Sets the ZigBee PAN ID to the specified value
+     * <p>
+     * Note that this method may only be called following the {@link #initialize} call, and before the {@link #startup}
+     * call.
+     *
+     * @param panId the new PAN ID
+     * @return true if the PAN Id was set correctly
+     */
+    public boolean setZigBeePanId(int panId) {
+        return transport.setZigBeePanId(panId);
+    }
+
+    /**
+     * Gets the ZigBee Extended PAN ID currently in use by the transport
+     *
+     * @return the PAN ID
+     */
+    public long getZigBeeExtendedPanId() {
+        return transport.getZigBeeExtendedPanId();
+    }
+
+    /**
+     * Sets the ZigBee Extended PAN ID to the specified value
+     * <p>
+     * Note that this method may only be called following the {@link #initialize} call, and before the {@link #startup}
+     * call.
+     *
+     * @param panId the new PAN ID
+     * @return true if the PAN Id was set correctly
+     */
+    public boolean setZigBeeExtendedPanId(long panId) {
+        return transport.setZigBeeExtendedPanId(panId);
+    }
+
+    /**
      * Starts up ZigBee manager components.
      *
-     * @return TRUE if startup was successful.
+     * @return true if startup was successful.
      */
     public boolean startup() {
         if (networkStateSerializer != null) {
