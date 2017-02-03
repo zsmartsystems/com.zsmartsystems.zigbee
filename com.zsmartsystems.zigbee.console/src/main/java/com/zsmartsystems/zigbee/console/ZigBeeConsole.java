@@ -20,12 +20,12 @@ import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApi;
 import com.zsmartsystems.zigbee.ZigBeeDevice;
 import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
-import com.zsmartsystems.zigbee.ZigBeeNetwork.TransportState;
 import com.zsmartsystems.zigbee.ZigBeeNetworkDeviceListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
@@ -130,7 +130,7 @@ public final class ZigBeeConsole {
 
         zigBeeApi.getNetwork().addNetworkStateListener(new ZigBeeNetworkStateListener() {
             @Override
-            public void networkStateUpdated(TransportState state) {
+            public void networkStateUpdated(ZigBeeTransportState state) {
                 print("ZigBee network state updated to " + state.toString(), System.out);
             }
         });

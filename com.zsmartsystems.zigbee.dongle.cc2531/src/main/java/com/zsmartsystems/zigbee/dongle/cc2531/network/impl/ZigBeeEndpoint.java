@@ -24,7 +24,6 @@ package com.zsmartsystems.zigbee.dongle.cc2531.network.impl;
 
 import java.util.Arrays;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +51,6 @@ public class ZigBeeEndpoint implements ApplicationFrameworkMessageProducer {
     /**
      * The network manager.
      */
-    @JsonIgnore
     private ZigBeeNetworkManager networkManager;
 
     /**

@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsHeader;
 import com.zsmartsystems.zigbee.ZigBeeException;
-import com.zsmartsystems.zigbee.ZigBeeNetwork.TransportState;
 import com.zsmartsystems.zigbee.ZigBeeNwkHeader;
 import com.zsmartsystems.zigbee.ZigBeePort;
 import com.zsmartsystems.zigbee.ZigBeeTransportReceive;
+import com.zsmartsystems.zigbee.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.ApplicationFrameworkMessageListener;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.AsynchronousCommandListener;
@@ -121,13 +121,13 @@ public class ZigBeeDongleTiCc2531
 
     @Override
     public boolean initialize() {
-        zigbeeNetworkReceive.setNetworkState(TransportState.UNINITIALISED);
+        zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
         if (!networkManager.startup()) {
             return false;
         }
 
-        zigbeeNetworkReceive.setNetworkState(TransportState.INITIALISING);
+        zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
         return networkManager.initializeZigBeeNetwork();
     }
@@ -178,20 +178,20 @@ public class ZigBeeDongleTiCc2531
                 break;
             }
             if (networkManager.getDriverStatus() == DriverStatus.CLOSED) {
-                zigbeeNetworkReceive.setNetworkState(TransportState.UNINITIALISED);
+                zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
                 return false;
             }
             try {
                 Thread.sleep(10);
             } catch (final InterruptedException e) {
-                zigbeeNetworkReceive.setNetworkState(TransportState.UNINITIALISED);
+                zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
                 return false;
             }
         }
 
         ApplicationFrameworkLayer.getAFLayer(networkManager).createDefaultSendingEndPoint();
 
-        zigbeeNetworkReceive.setNetworkState(TransportState.ONLINE);
+        zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.ONLINE);
 
         return true;
     }

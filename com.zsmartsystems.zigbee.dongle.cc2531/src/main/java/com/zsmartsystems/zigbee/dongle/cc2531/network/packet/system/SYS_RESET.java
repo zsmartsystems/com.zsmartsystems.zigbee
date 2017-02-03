@@ -29,18 +29,12 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 
 /**
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public class SYS_RESET extends ZToolPacket /* implements IREQUEST,ISYSTEM */ {
-    /// <name>TI.ZPI1.SYS_RESET.Type</name>
-    /// <summary>requests a target device reset (0) or port bootloader reset (1). If the target device does not support
-    /// port bootloading, bootloader reset commands are ignored and no response is sent from the target.</summary>
-    private int Type;
-
-    public SYS_RESET(int reset_type1) {
-        this.Type = reset_type1;
-
+    public SYS_RESET(int resetType) {
         int[] framedata = new int[1];
-        framedata[0] = this.Type;
+        framedata[0] = resetType;
 
         super.buildPacket(new DoubleByte(ZToolCMD.SYS_RESET), framedata);
     }

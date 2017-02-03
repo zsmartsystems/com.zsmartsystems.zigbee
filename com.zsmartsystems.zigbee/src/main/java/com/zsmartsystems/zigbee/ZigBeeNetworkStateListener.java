@@ -1,19 +1,17 @@
 package com.zsmartsystems.zigbee;
 
-import com.zsmartsystems.zigbee.ZigBeeNetwork.TransportState;
-
 /**
  * ZigBee network listener. Provides notifications on updates to the network state
- * 
- * @author Tommi S.E. Laukkanen
+ *
+ * @author Chris Jackson
  */
 public interface ZigBeeNetworkStateListener {
 
     /**
-     * Network state has been update.
+     * Network state has been updated.
      *
      * @param state
      *            the updated {@link TransportState}
      */
-    void networkStateUpdated(final TransportState state);
+    void networkStateUpdated(final ZigBeeTransportState state);
 }

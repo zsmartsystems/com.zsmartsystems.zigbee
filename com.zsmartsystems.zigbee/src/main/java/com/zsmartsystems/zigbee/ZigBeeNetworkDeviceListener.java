@@ -3,8 +3,8 @@ package com.zsmartsystems.zigbee;
 /**
  * ZigBee network listener. Provides notifications on devices - eg devices added
  * to the network, removed from the network, or updated.
- * 
- * @author Tommi S.E. Laukkanen
+ *
+ * @author Chris Jackson
  */
 public interface ZigBeeNetworkDeviceListener {
 

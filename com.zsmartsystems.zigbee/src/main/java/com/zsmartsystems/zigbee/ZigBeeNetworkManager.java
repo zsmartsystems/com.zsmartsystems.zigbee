@@ -222,7 +222,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Sets the ZigBee RF channel.
+     * Sets the ZigBee RF channel. The allowable channel range is 11 to 26.
      * <p>
      * Note that this method may only be called following the {@link #initialize} call, and before the {@link #startup}
      * call.
@@ -231,6 +231,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return true if the channel was set
      */
     public boolean setZigBeeChannel(int channel) {
+        if (channel < 11 || channel > 26) {
+            return false;
+        }
         return transport.setZigBeeChannel(channel);
     }
 
@@ -244,7 +247,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Sets the ZigBee PAN ID to the specified value
+     * Sets the ZigBee PAN ID to the specified value. The range of the PAN ID is 0 to 0x3FFF.
+     * Additionally a value of 0xFFFF is allowed to indicate the user doesn't care and a random value
+     * can be set by the transport.
      * <p>
      * Note that this method may only be called following the {@link #initialize} call, and before the {@link #startup}
      * call.
@@ -253,6 +258,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return true if the PAN Id was set correctly
      */
     public boolean setZigBeePanId(int panId) {
+        if ((panId < 0 || panId > 0x3fff) & panId != 0xffff) {
+            return false;
+        }
         return transport.setZigBeePanId(panId);
     }
 
@@ -502,7 +510,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     @Override
-    public void setNetworkState(TransportState state) {
+    public void setNetworkState(ZigBeeTransportState state) {
         for (final ZigBeeNetworkStateListener stateListener : stateListeners) {
             stateListener.networkStateUpdated(state);
         }

@@ -10,10 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ZigBeeApsHeader;
 import com.zsmartsystems.zigbee.ZigBeeException;
-import com.zsmartsystems.zigbee.ZigBeeNetwork.TransportState;
 import com.zsmartsystems.zigbee.ZigBeeNwkHeader;
 import com.zsmartsystems.zigbee.ZigBeePort;
 import com.zsmartsystems.zigbee.ZigBeeTransportReceive;
+import com.zsmartsystems.zigbee.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspAddEndpointRequest;
@@ -67,7 +67,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
 
     @Override
     public boolean startup() {
-        zigbeeTransportReceive.setNetworkState(TransportState.UNINITIALISED);
+        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
         if (!serialPort.open()) {
             logger.error("Unable to open serial port");
@@ -77,7 +77,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         // final OutputStream out = serialPort.getOutputStream();
         ashHandler = new AshFrameHandler(serialPort.getInputStream(), serialPort.getOutputStream(), this);
 
-        zigbeeTransportReceive.setNetworkState(TransportState.INITIALISING);
+        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
         ashHandler.connect();
 
@@ -158,7 +158,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
          * EzspNetworkScanType.EZSP_ENERGY_SCAN, 0, 1));
          * logger.debug(scanStart.toString());
          */
-        zigbeeTransportReceive.setNetworkState(TransportState.ONLINE);
+        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
 
         return true;
     }

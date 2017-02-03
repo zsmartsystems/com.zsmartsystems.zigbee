@@ -1,30 +1,3 @@
-/*
-   Copyright 2008-2013 CNR-ISTI, http://isti.cnr.it
-   Institute of Information Science and Technologies
-   of the Italian National Research Council
-
-   Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion
-   Avanzadas - Grupo Tecnologias para la Salud y el
-   Bienestar (TSB)
-
-
-   See the NOTICE file distributed with this work for additional
-   information regarding copyright ownership
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-     http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
-
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo;
 
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
@@ -36,9 +9,9 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 /**
  * Requests the Power Descriptor for a node.
  *
- * @author <a href="mailto:chris@cd-jackson.com">Chris Jackson</a>
+ * @author Chris Jackson
  */
-public class ZDO_POWER_DESC_REQ extends ZToolPacket /* implements IREQUEST,IZDO */ {
+public class ZDO_POWER_DESC_REQ extends ZToolPacket {
     /// <name>TI.ZPI1.ZDO_POWER_DESC_REQ.DstAddr</name>
     /// <summary>destination address</summary>
     private ZToolAddress16 DstAddr;
@@ -61,4 +34,19 @@ public class ZDO_POWER_DESC_REQ extends ZToolPacket /* implements IREQUEST,IZDO 
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_POWER_DESC_REQ), framedata);
     }
 
+    public ZToolAddress16 getDstAddr() {
+        return DstAddr;
+    }
+
+    public void setDstAddr(ZToolAddress16 dstAddr) {
+        DstAddr = dstAddr;
+    }
+
+    public ZToolAddress16 getNWKAddrOfInterest() {
+        return NWKAddrOfInterest;
+    }
+
+    public void setNWKAddrOfInterest(ZToolAddress16 nWKAddrOfInterest) {
+        NWKAddrOfInterest = nWKAddrOfInterest;
+    }
 }

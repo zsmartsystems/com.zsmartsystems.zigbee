@@ -196,7 +196,7 @@ public abstract class EzspFrame extends EzspData {
 
     protected boolean initialEzspResponse(EzspFrame response) {
         // Make sure this is a response
-        if (response.isResponse() == false) {
+        if (!response.isResponse()) {
             return false;
         }
 

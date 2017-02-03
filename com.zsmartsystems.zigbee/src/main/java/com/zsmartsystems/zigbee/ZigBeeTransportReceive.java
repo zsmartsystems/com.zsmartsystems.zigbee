@@ -1,6 +1,5 @@
 package com.zsmartsystems.zigbee;
 
-import com.zsmartsystems.zigbee.ZigBeeNetwork.TransportState;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
@@ -69,7 +68,7 @@ public interface ZigBeeTransportReceive {
      *
      * @param state
      */
-    void setNetworkState(TransportState state);
+    void setNetworkState(ZigBeeTransportState state);
 
     /**
      * Adds a ZigBee network state listener.

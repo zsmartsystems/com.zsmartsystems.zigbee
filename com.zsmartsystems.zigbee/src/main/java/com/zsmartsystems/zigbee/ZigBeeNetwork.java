@@ -9,12 +9,6 @@ package com.zsmartsystems.zigbee;
  * @author Chris Jackson
  */
 public interface ZigBeeNetwork {
-    enum TransportState {
-        UNINITIALISED,
-        INITIALISING,
-        ONLINE
-    }
-
     /**
      * <p>
      * Sends ZigBee library command without waiting for response.
