@@ -1,5 +1,6 @@
 package com.zsmartsystems.zigbee.serialization;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -62,9 +63,13 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 value[0] = Integer.valueOf((byte) payload[index++] & 0xFF);
                 break;
             case IEEE_ADDRESS:
-                value[0] = (long) ((payload[index++] << 56) + (payload[index++] << 48) + (payload[index++] << 40)
-                        + (payload[index++] << 32) + (payload[index++] << 24) + (payload[index++] << 16)
-                        + (payload[index++] << 8) + payload[index++]);
+                long result = 0;
+                for (int i = 7; i >= 0; i--) {
+                    result <<= 8;
+                    result |= (payload[index + i] & 0xFF);
+                }
+                index += 8;
+                value[0] = new IeeeAddress(result);
                 break;
             case N_X_ATTRIBUTE_IDENTIFIER:
                 break;
@@ -98,17 +103,17 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
             case ENUMERATION_16_BIT:
             case SIGNED_16_BIT_INTEGER:
             case UNSIGNED_16_BIT_INTEGER:
-                short s = (short) ((payload[index++] << 8) + payload[index++]);
-                if (type == ZclDataType.UNSIGNED_16_BIT_INTEGER) {
-                    value[0] = Integer.valueOf(s & 0xFFFF);
-                } else {
+                short s = (short) (payload[index++] + (payload[index++] << 8));
+                if (type == ZclDataType.SIGNED_16_BIT_INTEGER) {
                     value[0] = Integer.valueOf(s);
+                } else {
+                    value[0] = Integer.valueOf(s & 0xFFFF);
                 }
                 break;
             case SIGNED_32_BIT_INTEGER:
             case UNSIGNED_32_BIT_INTEGER:
-                value[0] = (payload[index++] << 24) + (payload[index++] << 16) + (payload[index++] << 8)
-                        + payload[index++];
+                value[0] = payload[index++] + (payload[index++] << 8) + (payload[index++] << 16)
+                        + (payload[index++] << 24);
                 break;
             case SIGNED_8_BIT_INTEGER:
                 value[0] = Integer.valueOf((byte) payload[index++]);

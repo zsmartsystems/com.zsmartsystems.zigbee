@@ -326,6 +326,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             int sequence = sequenceNumber.getAndIncrement() & 0xff;
             zclCommand.setTransactionId(sequence);
 
+            logger.debug("TX ZCL: " + command);
+
             // Create the network and application sublayer headers
             ZigBeeNwkHeader nwkHeader = new ZigBeeNwkHeader();
             ZigBeeApsHeader apsHeader = new ZigBeeApsHeader();
@@ -393,6 +395,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         if (command instanceof ZdoCommand) {
+            logger.debug("TX ZDO: " + command);
+
             // For ZDO commands we pass down the command class since some dongles implement ZDO commands as individual
             // commands rather than a general "sendZDO" type command. This gives the transport implementation maximum
             // flexibility for translating the command as it requires.
@@ -487,6 +491,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setSourceAddress(srcAddress);
         command.setTransactionId(zclHeader.getSequenceNumber());
 
+        logger.debug("RX ZCL: " + command);
+
         // Notify the listeners
         for (final CommandListener commandListener : commandListeners) {
             commandListener.commandReceived(command);
@@ -495,6 +501,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     @Override
     public void receiveZdoCommand(ZdoCommand command) {
+        logger.debug("RX ZDO: " + command);
+
         // Notify the listeners
         for (final CommandListener commandListener : commandListeners) {
             commandListener.commandReceived(command);

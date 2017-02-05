@@ -56,7 +56,7 @@ public class ZclIdentifyCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>IdentifyTime</i> attribute.
+     * Set the <i>IdentifyTime</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The IdentifyTime attribute specifies the remaining length of time, in seconds, that
@@ -70,7 +70,6 @@ public class ZclIdentifyCluster extends ZclCluster {
      * <br>
      * If this attribute reaches or is set to the value 0x0000 then the device shall
      * terminate its identification procedure.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -85,7 +84,7 @@ public class ZclIdentifyCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>IdentifyTime</i> attribute.
+     * Get the <i>IdentifyTime</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The IdentifyTime attribute specifies the remaining length of time, in seconds, that
@@ -100,7 +99,6 @@ public class ZclIdentifyCluster extends ZclCluster {
      * If this attribute reaches or is set to the value 0x0000 then the device shall
      * terminate its identification procedure.
      * <p>
-     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -114,7 +112,7 @@ public class ZclIdentifyCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>IdentifyTime</i> attribute.
+     * Synchronously get the <i>IdentifyTime</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The IdentifyTime attribute specifies the remaining length of time, in seconds, that

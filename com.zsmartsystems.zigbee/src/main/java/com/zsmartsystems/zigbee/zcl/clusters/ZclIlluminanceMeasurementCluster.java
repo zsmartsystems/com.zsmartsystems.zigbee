@@ -56,7 +56,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MeasuredValue</i> attribute.
+     * Get the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
@@ -69,7 +69,6 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * The following special values of MeasuredValue apply.
      * <li>0x0000 indicates a value of Illuminance that is too low to be measured.</li>
      * <li>0xffff indicates that the Illuminance measurement is invalid.</li>
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -84,7 +83,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MeasuredValue</i> attribute.
+     * Synchronously get the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
@@ -113,7 +112,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>MeasuredValue</i> attribute.
+     * Configure reporting for the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
@@ -126,7 +125,6 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * The following special values of MeasuredValue apply.
      * <li>0x0000 indicates a value of Illuminance that is too low to be measured.</li>
      * <li>0xffff indicates that the Illuminance measurement is invalid.</li>
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -143,13 +141,12 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MinMeasuredValue</i> attribute.
+     * Get the <i>MinMeasuredValue</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
      * that can be measured. A value of 0xffff indicates that this attribute is not defined.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -164,7 +161,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MinMeasuredValue</i> attribute.
+     * Synchronously get the <i>MinMeasuredValue</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
@@ -185,7 +182,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MaxMeasuredValue</i> attribute.
+     * Get the <i>MaxMeasuredValue</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
@@ -195,7 +192,6 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <br>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -210,7 +206,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MaxMeasuredValue</i> attribute.
+     * Synchronously get the <i>MaxMeasuredValue</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
@@ -235,14 +231,13 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>Tolerance</i> attribute.
+     * Get the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -257,7 +252,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Tolerance</i> attribute.
+     * Synchronously get the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
@@ -280,14 +275,13 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>Tolerance</i> attribute.
+     * Configure reporting for the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -304,12 +298,11 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>LightSensorType</i> attribute.
+     * Get the <i>LightSensorType</i> attribute [Attribute ID <b>4</b>].
      * <p>
      * <p>
      * <br>
      * The LightSensorType attribute specifies the electronic type of the light sensor.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -324,7 +317,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LightSensorType</i> attribute.
+     * Synchronously get the <i>LightSensorType</i> attribute [Attribute ID <b>4</b>].
      * <p>
      * <p>
      * <br>

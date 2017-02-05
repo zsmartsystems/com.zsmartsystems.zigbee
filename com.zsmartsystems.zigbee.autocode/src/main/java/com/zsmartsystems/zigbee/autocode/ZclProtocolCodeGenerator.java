@@ -1273,7 +1273,8 @@ public class ZclProtocolCodeGenerator {
         out.println();
         out.println("    /**");
         out.println("     * <p>");
-        out.println("     * " + type + " the <i>" + attribute.attributeLabel + "</i> attribute.");
+        out.println("     * " + type + " the <i>" + attribute.attributeLabel + "</i> attribute [Attribute ID <b>"
+                + attribute.attributeId + "</b>].");
         out.println("     * <p>");
         if (attribute.attributeDescription.size() != 0) {
             out.println("     * <p>");
@@ -1281,8 +1282,8 @@ public class ZclProtocolCodeGenerator {
                 out.println("     * " + line);
             }
         }
-        out.println("     * <p>");
         if ("Synchronously get".equals(type)) {
+            out.println("     * <p>");
             out.println("     * This method will block until the response is received or a timeout occurs.");
         }
         out.println("     * <p>");

@@ -7,7 +7,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Attribute Identifier field.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -47,6 +47,6 @@ public class AttributeIdentifier implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Attribute Identifier " + ", attributeIdentifier=" + attributeIdentifier;
+        return "Attribute Identifier: attributeIdentifier=" + attributeIdentifier;
     }
 }

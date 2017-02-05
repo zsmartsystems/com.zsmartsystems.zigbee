@@ -59,12 +59,11 @@ public class ZclIasWdCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>MaxDuration</i> attribute.
+     * Set the <i>MaxDuration</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The MaxDuration attribute specifies the maximum time in seconds that the siren
      * will sound continuously, regardless of start/stop commands.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -79,12 +78,11 @@ public class ZclIasWdCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MaxDuration</i> attribute.
+     * Get the <i>MaxDuration</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The MaxDuration attribute specifies the maximum time in seconds that the siren
      * will sound continuously, regardless of start/stop commands.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -99,7 +97,7 @@ public class ZclIasWdCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MaxDuration</i> attribute.
+     * Synchronously get the <i>MaxDuration</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The MaxDuration attribute specifies the maximum time in seconds that the siren
@@ -119,8 +117,7 @@ public class ZclIasWdCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ZoneType</i> attribute.
-     * <p>
+     * Get the <i>ZoneType</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -136,7 +133,7 @@ public class ZclIasWdCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ZoneType</i> attribute.
+     * Synchronously get the <i>ZoneType</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.
@@ -153,8 +150,7 @@ public class ZclIasWdCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ZoneStatus</i> attribute.
-     * <p>
+     * Get the <i>ZoneStatus</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -170,7 +166,7 @@ public class ZclIasWdCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ZoneStatus</i> attribute.
+     * Synchronously get the <i>ZoneStatus</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.
@@ -188,8 +184,7 @@ public class ZclIasWdCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>IAS_CIE_Address</i> attribute.
-     * <p>
+     * Set the <i>IAS_CIE_Address</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Long}.
@@ -205,8 +200,7 @@ public class ZclIasWdCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>IAS_CIE_Address</i> attribute.
-     * <p>
+     * Get the <i>IAS_CIE_Address</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Long}.
@@ -222,7 +216,7 @@ public class ZclIasWdCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>IAS_CIE_Address</i> attribute.
+     * Synchronously get the <i>IAS_CIE_Address</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.

@@ -63,7 +63,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MeasuredValue</i> attribute.
+     * Get the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * MeasuredValue represents the pressure in kPa as follows:-
@@ -78,7 +78,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * A MeasuredValue of 0x8000 indicates that the pressure measurement is invalid.
      * MeasuredValue is updated continuously as new measurements are made.
      * <p>
-     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -92,7 +91,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MeasuredValue</i> attribute.
+     * Synchronously get the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * MeasuredValue represents the pressure in kPa as follows:-
@@ -122,7 +121,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>MeasuredValue</i> attribute.
+     * Configure reporting for the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * MeasuredValue represents the pressure in kPa as follows:-
@@ -136,7 +135,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * <br>
      * A MeasuredValue of 0x8000 indicates that the pressure measurement is invalid.
      * MeasuredValue is updated continuously as new measurements are made.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -153,13 +151,12 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MinMeasuredValue</i> attribute.
+     * Get the <i>MinMeasuredValue</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
      * that can be measured. A value of 0x8000 means this attribute is not defined.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -174,7 +171,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MinMeasuredValue</i> attribute.
+     * Synchronously get the <i>MinMeasuredValue</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
@@ -195,7 +192,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MaxMeasuredValue</i> attribute.
+     * Get the <i>MaxMeasuredValue</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
@@ -205,7 +202,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <br>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -220,7 +216,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MaxMeasuredValue</i> attribute.
+     * Synchronously get the <i>MaxMeasuredValue</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
@@ -246,7 +242,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>MaxMeasuredValue</i> attribute.
+     * Configure reporting for the <i>MaxMeasuredValue</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
@@ -256,7 +252,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <br>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -273,14 +268,13 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>Tolerance</i> attribute.
+     * Get the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -295,7 +289,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Tolerance</i> attribute.
+     * Synchronously get the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
@@ -317,8 +311,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ScaledValue</i> attribute.
-     * <p>
+     * Get the <i>ScaledValue</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -334,7 +327,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ScaledValue</i> attribute.
+     * Synchronously get the <i>ScaledValue</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.
@@ -352,8 +345,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>ScaledValue</i> attribute.
-     * <p>
+     * Configure reporting for the <i>ScaledValue</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -371,8 +363,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MinScaledValue</i> attribute.
-     * <p>
+     * Get the <i>MinScaledValue</i> attribute [Attribute ID <b>17</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -388,7 +379,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MinScaledValue</i> attribute.
+     * Synchronously get the <i>MinScaledValue</i> attribute [Attribute ID <b>17</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.
@@ -405,8 +396,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MaxScaledValue</i> attribute.
-     * <p>
+     * Get the <i>MaxScaledValue</i> attribute [Attribute ID <b>18</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -422,7 +412,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MaxScaledValue</i> attribute.
+     * Synchronously get the <i>MaxScaledValue</i> attribute [Attribute ID <b>18</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.
@@ -439,8 +429,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ScaledTolerance</i> attribute.
-     * <p>
+     * Get the <i>ScaledTolerance</i> attribute [Attribute ID <b>19</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -456,7 +445,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ScaledTolerance</i> attribute.
+     * Synchronously get the <i>ScaledTolerance</i> attribute [Attribute ID <b>19</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.
@@ -474,8 +463,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>ScaledTolerance</i> attribute.
-     * <p>
+     * Configure reporting for the <i>ScaledTolerance</i> attribute [Attribute ID <b>19</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -493,8 +481,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>Scale</i> attribute.
-     * <p>
+     * Get the <i>Scale</i> attribute [Attribute ID <b>20</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -510,7 +497,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Scale</i> attribute.
+     * Synchronously get the <i>Scale</i> attribute [Attribute ID <b>20</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.

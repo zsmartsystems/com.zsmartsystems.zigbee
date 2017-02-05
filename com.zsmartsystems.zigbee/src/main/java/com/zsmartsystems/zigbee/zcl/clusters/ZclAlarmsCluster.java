@@ -64,7 +64,7 @@ public class ZclAlarmsCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>AlarmCount</i> attribute.
+     * Get the <i>AlarmCount</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The AlarmCount attribute is 16-bits in length and specifies the number of entries
@@ -73,7 +73,6 @@ public class ZclAlarmsCluster extends ZclCluster {
      * <br>
      * If alarm logging is not implemented this attribute shall always take the value
      * 0x00.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -88,7 +87,7 @@ public class ZclAlarmsCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>AlarmCount</i> attribute.
+     * Synchronously get the <i>AlarmCount</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The AlarmCount attribute is 16-bits in length and specifies the number of entries

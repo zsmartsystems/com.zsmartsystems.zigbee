@@ -50,12 +50,11 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>LevelStatus</i> attribute.
+     * Get the <i>LevelStatus</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The LevelStatus attribute indicates whether the measured illuminance is above,
      * below, or within a band around IlluminanceTargetLevel .
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -70,7 +69,7 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LevelStatus</i> attribute.
+     * Synchronously get the <i>LevelStatus</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The LevelStatus attribute indicates whether the measured illuminance is above,
@@ -91,12 +90,11 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>LevelStatus</i> attribute.
+     * Configure reporting for the <i>LevelStatus</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The LevelStatus attribute indicates whether the measured illuminance is above,
      * below, or within a band around IlluminanceTargetLevel .
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -113,12 +111,11 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>LightSensorType</i> attribute.
+     * Get the <i>LightSensorType</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
      * The LightSensorType attribute specifies the electronic type of the light sensor.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -133,7 +130,7 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LightSensorType</i> attribute.
+     * Synchronously get the <i>LightSensorType</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>

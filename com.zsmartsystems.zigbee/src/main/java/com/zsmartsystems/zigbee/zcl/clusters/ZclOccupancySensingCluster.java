@@ -59,14 +59,13 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>Occupancy</i> attribute.
+     * Get the <i>Occupancy</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The Occupancy attribute is a bitmap.
      * <br>
      * Bit 0 specifies the sensed occupancy as follows: 1 = occupied, 0 = unoccupied.
      * All other bits are reserved.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -81,7 +80,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Occupancy</i> attribute.
+     * Synchronously get the <i>Occupancy</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The Occupancy attribute is a bitmap.
@@ -104,14 +103,13 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>Occupancy</i> attribute.
+     * Configure reporting for the <i>Occupancy</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The Occupancy attribute is a bitmap.
      * <br>
      * Bit 0 specifies the sensed occupancy as follows: 1 = occupied, 0 = unoccupied.
      * All other bits are reserved.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -128,12 +126,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>OccupancySensorType</i> attribute.
+     * Get the <i>OccupancySensorType</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
      * The OccupancySensorType attribute specifies the type of the occupancy sensor.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -148,7 +145,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>OccupancySensorType</i> attribute.
+     * Synchronously get the <i>OccupancySensorType</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
@@ -169,8 +166,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>PIROccupiedToUnoccupiedDelay</i> attribute.
-     * <p>
+     * Set the <i>PIROccupiedToUnoccupiedDelay</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -186,8 +182,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>PIROccupiedToUnoccupiedDelay</i> attribute.
-     * <p>
+     * Get the <i>PIROccupiedToUnoccupiedDelay</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -203,7 +198,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>PIROccupiedToUnoccupiedDelay</i> attribute.
+     * Synchronously get the <i>PIROccupiedToUnoccupiedDelay</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.
@@ -221,8 +216,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>PIRUnoccupiedToOccupiedDelay</i> attribute.
-     * <p>
+     * Set the <i>PIRUnoccupiedToOccupiedDelay</i> attribute [Attribute ID <b>17</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -238,8 +232,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>PIRUnoccupiedToOccupiedDelay</i> attribute.
-     * <p>
+     * Get the <i>PIRUnoccupiedToOccupiedDelay</i> attribute [Attribute ID <b>17</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -255,7 +248,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>PIRUnoccupiedToOccupiedDelay</i> attribute.
+     * Synchronously get the <i>PIRUnoccupiedToOccupiedDelay</i> attribute [Attribute ID <b>17</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.
@@ -273,7 +266,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute.
+     * Set the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute [Attribute ID <b>32</b>].
      * <p>
      * <p>
      * <br>
@@ -282,7 +275,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * sensed area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter'
      * when used in an area where occupation changes frequently.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -297,7 +289,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute.
+     * Get the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute [Attribute ID <b>32</b>].
      * <p>
      * <p>
      * <br>
@@ -306,7 +298,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * sensed area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter'
      * when used in an area where occupation changes frequently.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -321,7 +312,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute.
+     * Synchronously get the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute [Attribute ID <b>32</b>].
      * <p>
      * <p>
      * <br>
@@ -346,14 +337,13 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute.
+     * Set the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute [Attribute ID <b>33</b>].
      * <p>
      * <p>
      * <br>
      * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the
      * sensed area becomes occupied.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -368,14 +358,13 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute.
+     * Get the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute [Attribute ID <b>33</b>].
      * <p>
      * <p>
      * <br>
      * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the
      * sensed area becomes occupied.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -390,7 +379,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute.
+     * Synchronously get the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute [Attribute ID <b>33</b>].
      * <p>
      * <p>
      * <br>
@@ -413,8 +402,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute.
-     * <p>
+     * Set the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute [Attribute ID <b>34</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -430,8 +418,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute.
-     * <p>
+     * Get the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute [Attribute ID <b>34</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -447,7 +434,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute.
+     * Synchronously get the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute [Attribute ID <b>34</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.

@@ -7,7 +7,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Read Attribute Status Record field.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -99,7 +99,7 @@ public class AttributeStatusRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Attribute Status Record " + ", status=" + status + ", direction=" + direction + ", attributeIdentifier="
+        return "Attribute Status Record: status=" + status + ", direction=" + direction + ", attributeIdentifier="
                 + attributeIdentifier;
     }
 }

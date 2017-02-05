@@ -80,12 +80,11 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>SceneCount</i> attribute.
+     * Get the <i>SceneCount</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The SceneCount attribute specifies the number of scenes currently in the device's
      * scene table.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -100,7 +99,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>SceneCount</i> attribute.
+     * Synchronously get the <i>SceneCount</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The SceneCount attribute specifies the number of scenes currently in the device's
@@ -120,12 +119,11 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CurrentScene</i> attribute.
+     * Get the <i>CurrentScene</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
      * The CurrentScene attribute holds the Scene ID of the scene last invoked.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -140,7 +138,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentScene</i> attribute.
+     * Synchronously get the <i>CurrentScene</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
@@ -160,13 +158,12 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CurrentGroup</i> attribute.
+     * Get the <i>CurrentGroup</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
      * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
      * 0x0000 if the scene last invoked is not associated with a group.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -181,7 +178,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentGroup</i> attribute.
+     * Synchronously get the <i>CurrentGroup</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
@@ -202,7 +199,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>SceneValid</i> attribute.
+     * Get the <i>SceneValid</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
@@ -214,7 +211,6 @@ public class ZclScenesCluster extends ZclCluster {
      * successful Store Scene or Recall Scene command it is set to TRUE. If, after a
      * scene is stored or recalled, the state of the device is modified, this attribute is set to
      * FALSE.
-     * <p>
      * <p>
      * The attribute is of type {@link Boolean}.
      * <p>
@@ -229,7 +225,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>SceneValid</i> attribute.
+     * Synchronously get the <i>SceneValid</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
@@ -256,14 +252,13 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>NameSupport</i> attribute.
+     * Get the <i>NameSupport</i> attribute [Attribute ID <b>4</b>].
      * <p>
      * <p>
      * <br>
      * The most significant bit of the NameSupport attribute indicates whether or not
      * scene names are supported. A value of 1 indicates that they are supported, and a
      * value of 0 indicates that they are not supported.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -278,7 +273,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>NameSupport</i> attribute.
+     * Synchronously get the <i>NameSupport</i> attribute [Attribute ID <b>4</b>].
      * <p>
      * <p>
      * <br>
@@ -300,7 +295,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>LastConfiguredBy</i> attribute.
+     * Get the <i>LastConfiguredBy</i> attribute [Attribute ID <b>5</b>].
      * <p>
      * <p>
      * <br>
@@ -309,7 +304,6 @@ public class ZclScenesCluster extends ZclCluster {
      * <br>
      * The value 0xffffffffffffffff indicates that the device has not been configured, or
      * that the address of the device that last configured the scenes cluster is not known.
-     * <p>
      * <p>
      * The attribute is of type {@link Long}.
      * <p>
@@ -324,7 +318,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LastConfiguredBy</i> attribute.
+     * Synchronously get the <i>LastConfiguredBy</i> attribute [Attribute ID <b>5</b>].
      * <p>
      * <p>
      * <br>

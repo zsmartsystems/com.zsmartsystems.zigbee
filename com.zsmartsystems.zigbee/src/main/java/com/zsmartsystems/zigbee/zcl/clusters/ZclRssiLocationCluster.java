@@ -86,11 +86,10 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>LocationType</i> attribute.
+     * Get the <i>LocationType</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The LocationType attribute is 8 bits long and is divided into bit fields.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -105,7 +104,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LocationType</i> attribute.
+     * Synchronously get the <i>LocationType</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The LocationType attribute is 8 bits long and is divided into bit fields.
@@ -124,8 +123,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>LocationMethod</i> attribute.
-     * <p>
+     * Get the <i>LocationMethod</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -141,7 +139,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LocationMethod</i> attribute.
+     * Synchronously get the <i>LocationMethod</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.
@@ -158,14 +156,13 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>LocationAge</i> attribute.
+     * Get the <i>LocationAge</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
      * The LocationAge attribute indicates the amount of time, measured in seconds, that
      * has transpired since the location information was last calculated. This attribute is
      * not valid if the Absolute bit of the LocationType attribute is set to one.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -180,7 +177,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LocationAge</i> attribute.
+     * Synchronously get the <i>LocationAge</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
@@ -202,7 +199,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>QualityMeasure</i> attribute.
+     * Get the <i>QualityMeasure</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
@@ -214,7 +211,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * dependent).
      * <br>
      * This field is not valid if the Absolute bit of the LocationType attribute is set to one.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -229,7 +225,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>QualityMeasure</i> attribute.
+     * Synchronously get the <i>QualityMeasure</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
@@ -256,14 +252,13 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>NumberOfDevices</i> attribute.
+     * Get the <i>NumberOfDevices</i> attribute [Attribute ID <b>4</b>].
      * <p>
      * <p>
      * <br>
      * The NumberOfDevices attribute is the number of devices whose location data
      * were used to calculate the last location value. This attribute is related to the
      * QualityMeasure attribute.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -278,7 +273,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>NumberOfDevices</i> attribute.
+     * Synchronously get the <i>NumberOfDevices</i> attribute [Attribute ID <b>4</b>].
      * <p>
      * <p>
      * <br>
@@ -301,7 +296,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>Coordinate1</i> attribute.
+     * Set the <i>Coordinate1</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * <br>
@@ -313,7 +308,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -328,7 +322,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>Coordinate1</i> attribute.
+     * Get the <i>Coordinate1</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * <br>
@@ -340,7 +334,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -355,7 +348,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Coordinate1</i> attribute.
+     * Synchronously get the <i>Coordinate1</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * <br>
@@ -383,7 +376,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>Coordinate2</i> attribute.
+     * Set the <i>Coordinate2</i> attribute [Attribute ID <b>17</b>].
      * <p>
      * <p>
      * <br>
@@ -395,7 +388,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -410,7 +402,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>Coordinate2</i> attribute.
+     * Get the <i>Coordinate2</i> attribute [Attribute ID <b>17</b>].
      * <p>
      * <p>
      * <br>
@@ -422,7 +414,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -437,7 +428,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Coordinate2</i> attribute.
+     * Synchronously get the <i>Coordinate2</i> attribute [Attribute ID <b>17</b>].
      * <p>
      * <p>
      * <br>
@@ -465,7 +456,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>Coordinate3</i> attribute.
+     * Set the <i>Coordinate3</i> attribute [Attribute ID <b>18</b>].
      * <p>
      * <p>
      * <br>
@@ -477,7 +468,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -492,7 +482,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>Coordinate3</i> attribute.
+     * Get the <i>Coordinate3</i> attribute [Attribute ID <b>18</b>].
      * <p>
      * <p>
      * <br>
@@ -504,7 +494,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -519,7 +508,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Coordinate3</i> attribute.
+     * Synchronously get the <i>Coordinate3</i> attribute [Attribute ID <b>18</b>].
      * <p>
      * <p>
      * <br>
@@ -547,7 +536,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>Power</i> attribute.
+     * Set the <i>Power</i> attribute [Attribute ID <b>19</b>].
      * <p>
      * <p>
      * <br>
@@ -557,7 +546,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * P0 = Power / 100
      * <br>
      * A value of 0x8000 indicates that Power is unknown.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -572,7 +560,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>Power</i> attribute.
+     * Get the <i>Power</i> attribute [Attribute ID <b>19</b>].
      * <p>
      * <p>
      * <br>
@@ -582,7 +570,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * P0 = Power / 100
      * <br>
      * A value of 0x8000 indicates that Power is unknown.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -597,7 +584,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Power</i> attribute.
+     * Synchronously get the <i>Power</i> attribute [Attribute ID <b>19</b>].
      * <p>
      * <p>
      * <br>
@@ -623,7 +610,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>PathLossExponent</i> attribute.
+     * Set the <i>PathLossExponent</i> attribute [Attribute ID <b>20</b>].
      * <p>
      * <p>
      * <br>
@@ -634,7 +621,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * n = PathLossExponent / 100
      * <br>
      * A value of 0xffff indicates that PathLossExponent is unknown.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -649,7 +635,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>PathLossExponent</i> attribute.
+     * Get the <i>PathLossExponent</i> attribute [Attribute ID <b>20</b>].
      * <p>
      * <p>
      * <br>
@@ -660,7 +646,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * n = PathLossExponent / 100
      * <br>
      * A value of 0xffff indicates that PathLossExponent is unknown.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -675,7 +660,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>PathLossExponent</i> attribute.
+     * Synchronously get the <i>PathLossExponent</i> attribute [Attribute ID <b>20</b>].
      * <p>
      * <p>
      * <br>
@@ -702,7 +687,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>ReportingPeriod</i> attribute.
+     * Set the <i>ReportingPeriod</i> attribute [Attribute ID <b>21</b>].
      * <p>
      * <p>
      * <br>
@@ -711,7 +696,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * command. The minimum value this attribute can take is specified by the profile in
      * use. If ReportingPeriod is zero, the device does not automatically report its
      * location. Note that location information can always be polled at any time.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -726,7 +710,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ReportingPeriod</i> attribute.
+     * Get the <i>ReportingPeriod</i> attribute [Attribute ID <b>21</b>].
      * <p>
      * <p>
      * <br>
@@ -735,7 +719,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * command. The minimum value this attribute can take is specified by the profile in
      * use. If ReportingPeriod is zero, the device does not automatically report its
      * location. Note that location information can always be polled at any time.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -750,7 +733,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ReportingPeriod</i> attribute.
+     * Synchronously get the <i>ReportingPeriod</i> attribute [Attribute ID <b>21</b>].
      * <p>
      * <p>
      * <br>
@@ -775,7 +758,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>CalculationPeriod</i> attribute.
+     * Set the <i>CalculationPeriod</i> attribute [Attribute ID <b>22</b>].
      * <p>
      * <p>
      * <br>
@@ -783,7 +766,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * calculations of the device's location. If CalculationPeriod is less than the
      * physically possible minimum period that the calculation can be performed, the
      * calculation will be repeated as frequently as possible.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -798,7 +780,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CalculationPeriod</i> attribute.
+     * Get the <i>CalculationPeriod</i> attribute [Attribute ID <b>22</b>].
      * <p>
      * <p>
      * <br>
@@ -806,7 +788,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * calculations of the device's location. If CalculationPeriod is less than the
      * physically possible minimum period that the calculation can be performed, the
      * calculation will be repeated as frequently as possible.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -821,7 +802,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CalculationPeriod</i> attribute.
+     * Synchronously get the <i>CalculationPeriod</i> attribute [Attribute ID <b>22</b>].
      * <p>
      * <p>
      * <br>
@@ -845,7 +826,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>NumberRSSIMeasurements</i> attribute.
+     * Set the <i>NumberRSSIMeasurements</i> attribute [Attribute ID <b>23</b>].
      * <p>
      * <p>
      * <br>
@@ -853,7 +834,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * measurements to be used to generate one location estimate. The measurements are
      * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
      * equal to 1.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -868,7 +848,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>NumberRSSIMeasurements</i> attribute.
+     * Get the <i>NumberRSSIMeasurements</i> attribute [Attribute ID <b>23</b>].
      * <p>
      * <p>
      * <br>
@@ -876,7 +856,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * measurements to be used to generate one location estimate. The measurements are
      * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
      * equal to 1.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -891,7 +870,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>NumberRSSIMeasurements</i> attribute.
+     * Synchronously get the <i>NumberRSSIMeasurements</i> attribute [Attribute ID <b>23</b>].
      * <p>
      * <p>
      * <br>

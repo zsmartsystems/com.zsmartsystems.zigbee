@@ -1,7 +1,5 @@
 package com.zsmartsystems.zigbee.zcl;
 
-import java.util.Map;
-
 import com.zsmartsystems.zigbee.Command;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
@@ -53,48 +51,6 @@ public abstract class ZclCommand extends Command {
      * </p>
      */
     protected boolean commandDirection;
-
-    /**
-     * Field configuration
-     */
-    // protected final static Map<Integer, ZclField> fields = new HashMap<Integer, ZclField>();
-
-    /**
-     * Default constructor.
-     */
-    // public ZclCommand() {
-    // }
-
-    /**
-     * Constructor which copies field values from command message.
-     *
-     * @param commandMessage the command message
-     */
-    // public ZclCommand(final ZclCommandMessage commandMessage) {
-    // this.sourceAddress = commandMessage.getSourceAddress();
-    // this.destinationAddress = commandMessage.getDestinationAddress();
-    // this.type = commandMessage.getType();
-    // this.clusterId = commandMessage.getClusterId();
-    // this.transactionId = commandMessage.getTransactionId();
-    // }
-
-    /**
-     * Gets the type
-     *
-     * @return the type
-     */
-    // public ZclCommandType getType() {
-    // return type;
-    // }
-
-    /**
-     * Sets the command
-     *
-     * @param type the command
-     */
-    // public void setType(final ZclCommandType type) {
-    // this.type = type;
-    // }
 
     /**
      * Gets destination address.
@@ -208,41 +164,6 @@ public abstract class ZclCommand extends Command {
         this.transactionId = transactionId;
     }
 
-    /**
-     * Converts ZclCommand to ZclCommandMessage.
-     *
-     * @return the ZclCommandMessage
-     */
-    // public ZclCommandMessage toCommandMessage() {
-    // final ZclCommandMessage commandMessage = new ZclCommandMessage();
-    // commandMessage.setSourceAddress(sourceAddress);
-    // commandMessage.setDestinationAddress(destinationAddress);
-    // commandMessage.setType(type);
-    // commandMessage.setClusterId(clusterId);
-    // commandMessage.setTransactionId(transactionId);
-    // return commandMessage;
-    // }
-
-    /**
-     * Get the list of fields for this command
-     *
-     * @return {@link Collection} of {@link ZclField}
-     */
-    // public Collection<ZclField> getFields() {
-    // return fields.values();
-    // }
-
-    /**
-     * Update the field values
-     *
-     * @param values a {@link Map} of field numbers mapped to {@link Object}
-     */
-    // public void setFieldValues(final Map<Integer, Object> values) {
-    // for (Integer field : values.keySet()) {
-    // fields.get(field).setValue(values.get(field));
-    // }
-    // }
-
     public void serialize(ZclFieldSerializer serializer) {
         // Default implementation does nothing - overridden by each class
     }
@@ -254,13 +175,7 @@ public abstract class ZclCommand extends Command {
     @Override
     public String toString() {
         Integer resolvedClusterId = getClusterId();
-        if (resolvedClusterId == null) {
-            // resolvedClusterId = type.getClusterType().getId();
-        }
         return ZclClusterType.getValueById(resolvedClusterId).getLabel() + " - " + sourceAddress + " -> "
-                + destinationAddress + " tid=" + transactionId;
-        // return ZclClusterType.getValueById(resolvedClusterId).getLabel() + " - " + type + " " + sourceAddress + " ->
-        // "
-        // + destinationAddress + " tid=" + transactionId;
+                + destinationAddress + " TransID=" + transactionId;
     }
 }

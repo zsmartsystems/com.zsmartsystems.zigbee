@@ -53,7 +53,7 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MeasuredValue</i> attribute.
+     * Get the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * MeasuredValue represents the flow in m3/h as follows:-
@@ -71,7 +71,6 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
      * <br>
      * MeasuredValue is updated continuously as new measurements are made.
      * <p>
-     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -85,7 +84,7 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MeasuredValue</i> attribute.
+     * Synchronously get the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * MeasuredValue represents the flow in m3/h as follows:-
@@ -118,7 +117,7 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>MeasuredValue</i> attribute.
+     * Configure reporting for the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * MeasuredValue represents the flow in m3/h as follows:-
@@ -136,7 +135,6 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
      * <br>
      * MeasuredValue is updated continuously as new measurements are made.
      * <p>
-     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -152,13 +150,12 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MinMeasuredValue</i> attribute.
+     * Get the <i>MinMeasuredValue</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
      * that can be measured. A value of 0xffff means this attribute is not defined
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -173,7 +170,7 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MinMeasuredValue</i> attribute.
+     * Synchronously get the <i>MinMeasuredValue</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
@@ -194,7 +191,7 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MaxMeasuredValue</i> attribute.
+     * Get the <i>MaxMeasuredValue</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
@@ -204,7 +201,6 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <br>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -219,7 +215,7 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MaxMeasuredValue</i> attribute.
+     * Synchronously get the <i>MaxMeasuredValue</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
@@ -244,14 +240,13 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>Tolerance</i> attribute.
+     * Get the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -266,7 +261,7 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Tolerance</i> attribute.
+     * Synchronously get the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
@@ -289,14 +284,13 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>Tolerance</i> attribute.
+     * Configure reporting for the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>

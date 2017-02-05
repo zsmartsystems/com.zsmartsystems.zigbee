@@ -58,8 +58,7 @@ public class ZclIasZoneCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ZoneState</i> attribute.
-     * <p>
+     * Get the <i>ZoneState</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The attribute is of type {@link Integer}.
@@ -75,7 +74,7 @@ public class ZclIasZoneCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ZoneState</i> attribute.
+     * Synchronously get the <i>ZoneState</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * This method will block until the response is received or a timeout occurs.
@@ -92,11 +91,10 @@ public class ZclIasZoneCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ZoneType</i> attribute.
+     * Get the <i>ZoneType</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * The Zone Type dictates the meaning of Alarm1 and Alarm2 bits of the ZoneStatus attribute
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -111,7 +109,7 @@ public class ZclIasZoneCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ZoneType</i> attribute.
+     * Synchronously get the <i>ZoneType</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * The Zone Type dictates the meaning of Alarm1 and Alarm2 bits of the ZoneStatus attribute
@@ -130,12 +128,11 @@ public class ZclIasZoneCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ZoneStatus</i> attribute.
+     * Get the <i>ZoneStatus</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
      * The ZoneStatus attribute is a bit map.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -150,7 +147,7 @@ public class ZclIasZoneCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ZoneStatus</i> attribute.
+     * Synchronously get the <i>ZoneStatus</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
@@ -171,7 +168,7 @@ public class ZclIasZoneCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>IAS_CIE_Address</i> attribute.
+     * Set the <i>IAS_CIE_Address</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * <br>
@@ -184,7 +181,6 @@ public class ZclIasZoneCluster extends ZclCluster {
      * to implement some auto-detect for the CIE (example: by requesting the ZigBee
      * cluster discovery service to locate a Zone Server cluster.) or require the
      * intervention of a CT in order to configure this attribute during installation.
-     * <p>
      * <p>
      * The attribute is of type {@link Long}.
      * <p>
@@ -199,7 +195,7 @@ public class ZclIasZoneCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>IAS_CIE_Address</i> attribute.
+     * Get the <i>IAS_CIE_Address</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * <br>
@@ -212,7 +208,6 @@ public class ZclIasZoneCluster extends ZclCluster {
      * to implement some auto-detect for the CIE (example: by requesting the ZigBee
      * cluster discovery service to locate a Zone Server cluster.) or require the
      * intervention of a CT in order to configure this attribute during installation.
-     * <p>
      * <p>
      * The attribute is of type {@link Long}.
      * <p>
@@ -227,7 +222,7 @@ public class ZclIasZoneCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>IAS_CIE_Address</i> attribute.
+     * Synchronously get the <i>IAS_CIE_Address</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * <br>

@@ -60,7 +60,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>Time</i> attribute.
+     * Set the <i>Time</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The Time attribute is 32-bits in length and holds the time value of a real time
@@ -70,7 +70,6 @@ public class ZclTimeCluster extends ZclCluster {
      * If the Master bit of the TimeStatus attribute has a value of 0, writing to this
      * attribute shall set the real time clock to the written value, otherwise it cannot be
      * written. The value 0xffffffff indicates an invalid time.
-     * <p>
      * <p>
      * The attribute is of type {@link Calendar}.
      * <p>
@@ -85,7 +84,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>Time</i> attribute.
+     * Get the <i>Time</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The Time attribute is 32-bits in length and holds the time value of a real time
@@ -95,7 +94,6 @@ public class ZclTimeCluster extends ZclCluster {
      * If the Master bit of the TimeStatus attribute has a value of 0, writing to this
      * attribute shall set the real time clock to the written value, otherwise it cannot be
      * written. The value 0xffffffff indicates an invalid time.
-     * <p>
      * <p>
      * The attribute is of type {@link Calendar}.
      * <p>
@@ -110,7 +108,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Time</i> attribute.
+     * Synchronously get the <i>Time</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The Time attribute is 32-bits in length and holds the time value of a real time
@@ -136,12 +134,11 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>TimeStatus</i> attribute.
+     * Set the <i>TimeStatus</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
      * The TimeStatus attribute holds a number of bit fields.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -156,12 +153,11 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>TimeStatus</i> attribute.
+     * Get the <i>TimeStatus</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
      * The TimeStatus attribute holds a number of bit fields.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -176,7 +172,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>TimeStatus</i> attribute.
+     * Synchronously get the <i>TimeStatus</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
@@ -197,13 +193,12 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>TimeZone</i> attribute.
+     * Set the <i>TimeZone</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
      * The TimeZone attribute indicates the local time zone, as a signed offset in seconds
      * from the Time attribute value. The value 0xffffffff indicates an invalid time zone.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -218,13 +213,12 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>TimeZone</i> attribute.
+     * Get the <i>TimeZone</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
      * The TimeZone attribute indicates the local time zone, as a signed offset in seconds
      * from the Time attribute value. The value 0xffffffff indicates an invalid time zone.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -239,7 +233,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>TimeZone</i> attribute.
+     * Synchronously get the <i>TimeZone</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
@@ -261,13 +255,12 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>DstStart</i> attribute.
+     * Set the <i>DstStart</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
      * indicates an invalid DST start time.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -282,13 +275,12 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>DstStart</i> attribute.
+     * Get the <i>DstStart</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
      * indicates an invalid DST start time.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -303,7 +295,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>DstStart</i> attribute.
+     * Synchronously get the <i>DstStart</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
@@ -325,7 +317,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>DstEnd</i> attribute.
+     * Set the <i>DstEnd</i> attribute [Attribute ID <b>4</b>].
      * <p>
      * <p>
      * <br>
@@ -344,7 +336,6 @@ public class ZclTimeCluster extends ZclCluster {
      * <br>
      * Note that this attribute should be set to a new value once every year, and should be
      * written synchronously with the DstStart attribute
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -359,7 +350,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>DstEnd</i> attribute.
+     * Get the <i>DstEnd</i> attribute [Attribute ID <b>4</b>].
      * <p>
      * <p>
      * <br>
@@ -379,7 +370,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Note that this attribute should be set to a new value once every year, and should be
      * written synchronously with the DstStart attribute
      * <p>
-     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -393,7 +383,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>DstEnd</i> attribute.
+     * Synchronously get the <i>DstEnd</i> attribute [Attribute ID <b>4</b>].
      * <p>
      * <p>
      * <br>
@@ -428,7 +418,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>DstShift</i> attribute.
+     * Set the <i>DstShift</i> attribute [Attribute ID <b>5</b>].
      * <p>
      * <p>
      * <br>
@@ -439,7 +429,6 @@ public class ZclTimeCluster extends ZclCluster {
      * The range of this attribute is +/- one day. Note that the actual range of DST values
      * employed by countries is much smaller than this, so the manufacturer has the
      * option to impose a smaller range.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -454,7 +443,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>DstShift</i> attribute.
+     * Get the <i>DstShift</i> attribute [Attribute ID <b>5</b>].
      * <p>
      * <p>
      * <br>
@@ -465,7 +454,6 @@ public class ZclTimeCluster extends ZclCluster {
      * The range of this attribute is +/- one day. Note that the actual range of DST values
      * employed by countries is much smaller than this, so the manufacturer has the
      * option to impose a smaller range.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -480,7 +468,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>DstShift</i> attribute.
+     * Synchronously get the <i>DstShift</i> attribute [Attribute ID <b>5</b>].
      * <p>
      * <p>
      * <br>
@@ -506,7 +494,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>StandardTime</i> attribute.
+     * Get the <i>StandardTime</i> attribute [Attribute ID <b>6</b>].
      * <p>
      * <p>
      * <br>
@@ -514,7 +502,6 @@ public class ZclTimeCluster extends ZclCluster {
      * and adding them together. If implemented however, the optional StandardTime
      * attribute indicates this time directly. The value 0xffffffff indicates an invalid
      * Standard Time.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -529,7 +516,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>StandardTime</i> attribute.
+     * Synchronously get the <i>StandardTime</i> attribute [Attribute ID <b>6</b>].
      * <p>
      * <p>
      * <br>
@@ -552,7 +539,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>LocalTime</i> attribute.
+     * Get the <i>LocalTime</i> attribute [Attribute ID <b>7</b>].
      * <p>
      * <p>
      * <br>
@@ -560,7 +547,6 @@ public class ZclTimeCluster extends ZclCluster {
      * and DstShift attributes and performing the calculation. If implemented however,
      * the optional LocalTime attribute indicates this time directly. The value 0xffffffff
      * indicates an invalid Local Time.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -575,7 +561,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LocalTime</i> attribute.
+     * Synchronously get the <i>LocalTime</i> attribute [Attribute ID <b>7</b>].
      * <p>
      * <p>
      * <br>

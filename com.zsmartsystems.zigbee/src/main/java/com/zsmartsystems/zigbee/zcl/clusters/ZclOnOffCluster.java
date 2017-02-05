@@ -50,11 +50,10 @@ public class ZclOnOffCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>OnOff</i> attribute.
+     * Get the <i>OnOff</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The OnOff attribute has the following values: 0 = Off, 1 = On
-     * <p>
      * <p>
      * The attribute is of type {@link Boolean}.
      * <p>
@@ -69,7 +68,7 @@ public class ZclOnOffCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>OnOff</i> attribute.
+     * Synchronously get the <i>OnOff</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The OnOff attribute has the following values: 0 = Off, 1 = On
@@ -89,11 +88,10 @@ public class ZclOnOffCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>OnOff</i> attribute.
+     * Configure reporting for the <i>OnOff</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The OnOff attribute has the following values: 0 = Off, 1 = On
-     * <p>
      * <p>
      * The attribute is of type {@link Boolean}.
      * <p>

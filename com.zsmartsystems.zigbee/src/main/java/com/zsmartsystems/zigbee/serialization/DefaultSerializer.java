@@ -2,15 +2,13 @@ package com.zsmartsystems.zigbee.serialization;
 
 import java.util.Arrays;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * <p>
  * The implementation of the {@link ZigBeeSerializer}.
- * </p>
  * <p>
  * Serializes data in a standard binary format.
- * </p>
  *
  * @author Chris Jackson
  */
@@ -24,7 +22,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
     }
 
     @Override
-    public void appendZigBeeType(Object data, ZclDataType type) {
+    public void appendZigBeeType(Object data, ZclDataType type) throws IllegalArgumentException {
         if (data == null) {
             throw new IllegalArgumentException("You can not append null data to a stream");
         }
@@ -38,8 +36,8 @@ public class DefaultSerializer implements ZigBeeSerializer {
             case UNSIGNED_16_BIT_INTEGER:
             case ENUMERATION_16_BIT:
                 final short shortValue = ((Number) data).shortValue();
-                buffer[length++] = (shortValue >> 8) & 0xFF;
                 buffer[length++] = shortValue & 0xFF;
+                buffer[length++] = (shortValue >> 8) & 0xFF;
                 break;
             case DATA_8_BIT:
             case BITMAP_8_BIT:
@@ -50,15 +48,15 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 buffer[length++] = byteValue & 0xFF;
                 break;
             case IEEE_ADDRESS:
-                long longVal = (long) data;
-                buffer[length++] = (int) ((longVal >> 56) & 0xFF);
-                buffer[length++] = (int) ((longVal >> 48) & 0xFF);
-                buffer[length++] = (int) ((longVal >> 40) & 0xFF);
-                buffer[length++] = (int) ((longVal >> 32) & 0xFF);
-                buffer[length++] = (int) ((longVal >> 24) & 0xFF);
-                buffer[length++] = (int) ((longVal >> 16) & 0xFF);
-                buffer[length++] = (int) ((longVal >> 8) & 0xFF);
+                long longVal = ((IeeeAddress) data).getLong();
                 buffer[length++] = (int) (longVal & 0xFF);
+                buffer[length++] = (int) ((longVal >> 8) & 0xFF);
+                buffer[length++] = (int) ((longVal >> 16) & 0xFF);
+                buffer[length++] = (int) ((longVal >> 24) & 0xFF);
+                buffer[length++] = (int) ((longVal >> 32) & 0xFF);
+                buffer[length++] = (int) ((longVal >> 40) & 0xFF);
+                buffer[length++] = (int) ((longVal >> 48) & 0xFF);
+                buffer[length++] = (int) ((longVal >> 56) & 0xFF);
                 break;
             case N_X_ATTRIBUTE_IDENTIFIER:
                 break;
@@ -98,17 +96,17 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 break;
             case SIGNED_32_BIT_INTEGER:
                 final int intValue = (Integer) data;
-                buffer[length++] = (intValue >> 24) & 0xFF;
-                buffer[length++] = (intValue >> 16) & 0xFF;
-                buffer[length++] = (intValue >> 8) & 0xFF;
                 buffer[length++] = intValue & 0xFF;
+                buffer[length++] = (intValue >> 8) & 0xFF;
+                buffer[length++] = (intValue >> 16) & 0xFF;
+                buffer[length++] = (intValue >> 24) & 0xFF;
                 break;
             case UNSIGNED_32_BIT_INTEGER:
                 final int uintValue = (Integer) data;
-                buffer[length++] = (uintValue >> 24) & 0xFF;
-                buffer[length++] = (uintValue >> 16) & 0xFF;
-                buffer[length++] = (uintValue >> 8) & 0xFF;
                 buffer[length++] = uintValue & 0xFF;
+                buffer[length++] = (uintValue >> 8) & 0xFF;
+                buffer[length++] = (uintValue >> 16) & 0xFF;
+                buffer[length++] = (uintValue >> 24) & 0xFF;
                 break;
             case UTCTIME:
                 break;

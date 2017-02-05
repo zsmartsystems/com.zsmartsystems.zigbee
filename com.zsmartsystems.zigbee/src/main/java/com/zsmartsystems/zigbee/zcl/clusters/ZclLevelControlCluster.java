@@ -63,12 +63,11 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CurrentLevel</i> attribute.
+     * Get the <i>CurrentLevel</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
      * meaning of 'level' is device dependent.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -83,7 +82,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentLevel</i> attribute.
+     * Synchronously get the <i>CurrentLevel</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
@@ -104,12 +103,11 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>CurrentLevel</i> attribute.
+     * Configure reporting for the <i>CurrentLevel</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
      * meaning of 'level' is device dependent.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -126,13 +124,12 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>RemainingTime</i> attribute.
+     * Get the <i>RemainingTime</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
      * The RemainingTime attribute represents the time remaining until the current
      * command is complete - it is specified in 1/10ths of a second.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -147,7 +144,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>RemainingTime</i> attribute.
+     * Synchronously get the <i>RemainingTime</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
@@ -169,7 +166,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>OnOffTransitionTime</i> attribute.
+     * Set the <i>OnOffTransitionTime</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * <br>
@@ -180,7 +177,6 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The actual time taken should be as close to OnOffTransitionTime as the device is
      * able. N.B. If the device is not able to move at a variable rate, the
      * OnOffTransitionTime attribute should not be implemented.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -195,7 +191,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>OnOffTransitionTime</i> attribute.
+     * Get the <i>OnOffTransitionTime</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * <br>
@@ -206,7 +202,6 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The actual time taken should be as close to OnOffTransitionTime as the device is
      * able. N.B. If the device is not able to move at a variable rate, the
      * OnOffTransitionTime attribute should not be implemented.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -221,7 +216,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>OnOffTransitionTime</i> attribute.
+     * Synchronously get the <i>OnOffTransitionTime</i> attribute [Attribute ID <b>16</b>].
      * <p>
      * <p>
      * <br>
@@ -248,14 +243,13 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>OnLevel</i> attribute.
+     * Set the <i>OnLevel</i> attribute [Attribute ID <b>17</b>].
      * <p>
      * <p>
      * <br>
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
      * when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
      * the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -270,14 +264,13 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>OnLevel</i> attribute.
+     * Get the <i>OnLevel</i> attribute [Attribute ID <b>17</b>].
      * <p>
      * <p>
      * <br>
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
      * when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
      * the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -292,7 +285,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>OnLevel</i> attribute.
+     * Synchronously get the <i>OnLevel</i> attribute [Attribute ID <b>17</b>].
      * <p>
      * <p>
      * <br>

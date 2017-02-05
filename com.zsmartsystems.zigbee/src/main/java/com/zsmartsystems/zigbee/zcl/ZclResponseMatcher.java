@@ -4,13 +4,10 @@ import com.zsmartsystems.zigbee.Command;
 import com.zsmartsystems.zigbee.CommandResponseMatcher;
 
 /**
- * <p>
  * The ZCL response matcher.
- * </p>
  * <p>
  * Implements {@link CommandResponseMatcher} to check if a ZCL transaction matches a request.
  * The matcher will return true if the request and response transaction IDs match.
- * </p>
  *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson

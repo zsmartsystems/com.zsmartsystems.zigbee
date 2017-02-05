@@ -9,7 +9,7 @@
         </layout>
     </appender>
 
-    <logger additivity="true" name="org.bubblecloud.zigbee">
+    <logger additivity="true" name="com.zsmartsystems.zigbee">
         <level value="debug"/>
     </logger>
 

@@ -7,7 +7,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Attribute Information field.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -71,7 +71,7 @@ public class AttributeInformation implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Attribute Information " + "attributeDataType=" + attributeDataType + ", attributeIdentifier="
+        return "Attribute Information: attributeDataType=" + attributeDataType + ", attributeIdentifier="
                 + attributeIdentifier;
     }
 }

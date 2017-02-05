@@ -7,7 +7,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Write Attribute Status Record field.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -73,6 +73,6 @@ public class WriteAttributeStatusRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Write Attribute Status Record " + "status=" + status + ", attributeIdentifier=" + attributeIdentifier;
+        return "Write Attribute Status Record: status=" + status + ", attributeIdentifier=" + attributeIdentifier;
     }
 }

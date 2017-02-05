@@ -7,7 +7,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Attribute Identifier field.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -167,7 +167,7 @@ public class NeighborInformation implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Neighbor Information " + "coordinate1=" + coordinate1 + ", neighborAddress=" + neighborAddress
+        return "Neighbor Information: coordinate1=" + coordinate1 + ", neighborAddress=" + neighborAddress
                 + ", coordinate2=" + coordinate2 + ", coordinate3=" + coordinate3 + ", rssi=" + rssi
                 + ", measurementCount=" + measurementCount;
     }

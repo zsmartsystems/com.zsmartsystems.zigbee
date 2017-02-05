@@ -7,7 +7,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Write Attribute Record field.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -96,7 +96,7 @@ public class WriteAttributeRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Write Attribute Record " + "attributeDataType=" + attributeDataType + ", attributeIdentifier="
+        return "Write Attribute Record: attributeDataType=" + attributeDataType + ", attributeIdentifier="
                 + attributeIdentifier + ", attributeValue=" + attributeValue;
     }
 }

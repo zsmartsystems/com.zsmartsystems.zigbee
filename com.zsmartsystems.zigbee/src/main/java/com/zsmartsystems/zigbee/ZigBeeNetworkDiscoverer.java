@@ -125,8 +125,6 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
 
     @Override
     public void commandReceived(final Command command) {
-        logger.info("Received: " + command);
-
         // 0. ZCL command received from remote node. Request IEEE address if it
         // is not yet known.
         if (command instanceof ZclCommand) {

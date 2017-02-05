@@ -7,7 +7,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Read Attribute Status Record field.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -210,7 +210,7 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Attribute Reporting Configuration Record " + "attributeDataType=" + attributeDataType
+        return "Attribute Reporting Configuration Record: attributeDataType=" + attributeDataType
                 + ", attributeIdentifier=" + attributeIdentifier + ", minimumReportingInterval="
                 + minimumReportingInterval + ", maximumReportingInterval=" + maximumReportingInterval
                 + ", reportableChange=" + reportableChange + ", timeoutPeriod=" + timeoutPeriod;

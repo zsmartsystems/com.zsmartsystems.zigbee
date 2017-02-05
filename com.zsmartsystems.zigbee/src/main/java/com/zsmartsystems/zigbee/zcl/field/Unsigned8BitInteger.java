@@ -7,7 +7,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Unsigned 8 Bit Integer field.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -47,6 +47,6 @@ public class Unsigned8BitInteger implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Unsigned 8 Bit Integer " + ", value=" + value;
+        return "Unsigned 8 Bit Integer: value=" + value;
     }
 }

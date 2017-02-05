@@ -77,7 +77,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CurrentHue</i> attribute.
+     * Get the <i>CurrentHue</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The CurrentHue attribute contains the current hue value of the light. It is updated
@@ -88,7 +88,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * If this attribute is implemented then the CurrentSaturation and ColorMode
      * attributes shall also be implemented.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -103,7 +102,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentHue</i> attribute.
+     * Synchronously get the <i>CurrentHue</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The CurrentHue attribute contains the current hue value of the light. It is updated
@@ -130,7 +129,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>CurrentHue</i> attribute.
+     * Configure reporting for the <i>CurrentHue</i> attribute [Attribute ID <b>0</b>].
      * <p>
      * <p>
      * The CurrentHue attribute contains the current hue value of the light. It is updated
@@ -141,7 +140,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * <br>
      * If this attribute is implemented then the CurrentSaturation and ColorMode
      * attributes shall also be implemented.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -158,7 +156,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CurrentSaturation</i> attribute.
+     * Get the <i>CurrentSaturation</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
@@ -169,7 +167,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254 inclusive)
      * If this attribute is implemented then the CurrentHue and ColorMode attributes
      * shall also be implemented.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -184,7 +181,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentSaturation</i> attribute.
+     * Synchronously get the <i>CurrentSaturation</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
@@ -211,7 +208,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>CurrentSaturation</i> attribute.
+     * Configure reporting for the <i>CurrentSaturation</i> attribute [Attribute ID <b>1</b>].
      * <p>
      * <p>
      * <br>
@@ -222,7 +219,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254 inclusive)
      * If this attribute is implemented then the CurrentHue and ColorMode attributes
      * shall also be implemented.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -239,13 +235,12 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>RemainingTime</i> attribute.
+     * Get the <i>RemainingTime</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
      * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
      * until the currently active command will be complete.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -260,7 +255,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>RemainingTime</i> attribute.
+     * Synchronously get the <i>RemainingTime</i> attribute [Attribute ID <b>2</b>].
      * <p>
      * <p>
      * <br>
@@ -281,7 +276,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CurrentX</i> attribute.
+     * Get the <i>CurrentX</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
@@ -292,7 +287,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * The value of x shall be related to the CurrentX attribute by the relationship
      * <br>
      * x = CurrentX / 65535 (CurrentX in the range 0 to 65279 inclusive)
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -307,7 +301,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentX</i> attribute.
+     * Synchronously get the <i>CurrentX</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
@@ -334,7 +328,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>CurrentX</i> attribute.
+     * Configure reporting for the <i>CurrentX</i> attribute [Attribute ID <b>3</b>].
      * <p>
      * <p>
      * <br>
@@ -345,7 +339,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * The value of x shall be related to the CurrentX attribute by the relationship
      * <br>
      * x = CurrentX / 65535 (CurrentX in the range 0 to 65279 inclusive)
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -362,7 +355,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CurrentY</i> attribute.
+     * Get the <i>CurrentY</i> attribute [Attribute ID <b>4</b>].
      * <p>
      * <p>
      * <br>
@@ -373,7 +366,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * The value of y shall be related to the CurrentY attribute by the relationship
      * <br>
      * y = CurrentY / 65535 (CurrentY in the range 0 to 65279 inclusive)
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -388,7 +380,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentY</i> attribute.
+     * Synchronously get the <i>CurrentY</i> attribute [Attribute ID <b>4</b>].
      * <p>
      * <p>
      * <br>
@@ -415,7 +407,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>CurrentY</i> attribute.
+     * Configure reporting for the <i>CurrentY</i> attribute [Attribute ID <b>4</b>].
      * <p>
      * <p>
      * <br>
@@ -426,7 +418,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * The value of y shall be related to the CurrentY attribute by the relationship
      * <br>
      * y = CurrentY / 65535 (CurrentY in the range 0 to 65279 inclusive)
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -443,13 +434,12 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>DriftCompensation</i> attribute.
+     * Get the <i>DriftCompensation</i> attribute [Attribute ID <b>5</b>].
      * <p>
      * <p>
      * <br>
      * The DriftCompensation attribute indicates what mechanism, if any, is in use for
      * compensation for color/intensity drift over time.
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -464,7 +454,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>DriftCompensation</i> attribute.
+     * Synchronously get the <i>DriftCompensation</i> attribute [Attribute ID <b>5</b>].
      * <p>
      * <p>
      * <br>
@@ -485,13 +475,12 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CompensationText</i> attribute.
+     * Get the <i>CompensationText</i> attribute [Attribute ID <b>6</b>].
      * <p>
      * <p>
      * <br>
      * The CompensationText attribute holds a textual indication of what mechanism, if
      * any, is in use to compensate for color/intensity drift over time.
-     * <p>
      * <p>
      * The attribute is of type {@link String}.
      * <p>
@@ -506,7 +495,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CompensationText</i> attribute.
+     * Synchronously get the <i>CompensationText</i> attribute [Attribute ID <b>6</b>].
      * <p>
      * <p>
      * <br>
@@ -527,7 +516,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ColorTemperature</i> attribute.
+     * Get the <i>ColorTemperature</i> attribute [Attribute ID <b>7</b>].
      * <p>
      * <p>
      * <br>
@@ -545,7 +534,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * The value ColorTemperature = 0 indicates an undefined value. The value
      * ColorTemperature = 65535 indicates an invalid value.
      * <p>
-     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -559,7 +547,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ColorTemperature</i> attribute.
+     * Synchronously get the <i>ColorTemperature</i> attribute [Attribute ID <b>7</b>].
      * <p>
      * <p>
      * <br>
@@ -592,7 +580,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>ColorTemperature</i> attribute.
+     * Configure reporting for the <i>ColorTemperature</i> attribute [Attribute ID <b>7</b>].
      * <p>
      * <p>
      * <br>
@@ -610,7 +598,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * The value ColorTemperature = 0 indicates an undefined value. The value
      * ColorTemperature = 65535 indicates an invalid value.
      * <p>
-     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -626,13 +613,12 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ColorMode</i> attribute.
+     * Get the <i>ColorMode</i> attribute [Attribute ID <b>8</b>].
      * <p>
      * <p>
      * <br>
      * The ColorMode attribute indicates which attributes are currently determining the
      * color of the device
-     * <p>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -647,7 +633,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ColorMode</i> attribute.
+     * Synchronously get the <i>ColorMode</i> attribute [Attribute ID <b>8</b>].
      * <p>
      * <p>
      * <br>

@@ -7,7 +7,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Unsigned 16 Bit Integer field.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -47,6 +47,6 @@ public class Unsigned16BitInteger implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Unsigned 16 Bit Integer " + ", value=" + value;
+        return "Unsigned 16 Bit Integer: value=" + value;
     }
 }

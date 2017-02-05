@@ -9,7 +9,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Attribute Identifier field.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -104,7 +104,6 @@ public class ExtensionFieldSet implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Extension Field Set " + "clusterId=" + clusterId + ", length=" + length + ", data="
-                + Arrays.toString(data);
+        return "Extension Field Set: clusterId=" + clusterId + ", length=" + length + ", data=" + Arrays.toString(data);
     }
 }
