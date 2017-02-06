@@ -1,7 +1,7 @@
 package com.zsmartsystems.zigbee;
 
 /**
- * ZigBee group.
+ * ZigBee group address
  *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson

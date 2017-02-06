@@ -1,7 +1,10 @@
 package com.zsmartsystems.zigbee;
 
 /**
- * Defines a unicast ZigBee address - extends {@link ZigBeeAddress}
+ * Defines a unicast ZigBee address - extends {@link ZigBeeAddress}.
+ * <p>
+ * The {@link ZigBeeDeviceAddress} is defined by the 16 bit network address
+ * and the endpoint Id
  *
  * @author Chris Jackson
  */
@@ -37,16 +40,6 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
     }
 
     /**
-     * Sets the endpoint number
-     *
-     * @param endpoint
-     *            number
-     */
-    // public void setEndpoint(int endpoint) {
-    // this.endpoint = endpoint;
-    // }
-
-    /**
      * Returns the endpoint number
      *
      * @return the endpoint number
@@ -63,16 +56,6 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
     public int getAddress() {
         return address;
     }
-
-    /**
-     * Sets the network address
-     *
-     * @param address
-     *            the network address
-     */
-    // public void setAddress(int address) {
-    // this.address = address;
-    // }
 
     @Override
     public boolean equals(Object obj) {

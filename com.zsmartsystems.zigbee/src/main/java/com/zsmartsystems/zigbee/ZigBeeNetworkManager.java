@@ -963,6 +963,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
+    /**
+     * Gets a device given the {@link ZigBeeAddress} address.
+     *
+     * @param networkAddress the {@link ZigBeeAddress}
+     * @return the {@link ZigBeeDevice}
+     */
     public ZigBeeDevice getDevice(final ZigBeeAddress networkAddress) {
         if (networkAddress.isGroup()) {
             return null;
@@ -971,6 +977,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         synchronized (networkDevices) {
             return networkDevices.get(networkAddress);
         }
+    }
+
+    /**
+     * Gets a device given the device {@link IeeeAddress} address
+     *
+     * @param ieeeAddress the {@link IeeeAddress}
+     * @return the {@link ZigBeeDevice}
+     */
+    public ZigBeeDevice getDevice(IeeeAddress ieeeAddress) {
+        return null;
     }
 
     public void removeDevice(final ZigBeeAddress networkAddress) {
@@ -1029,10 +1045,21 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
+    /**
+     * Gets a node give the network address
+     *
+     * @param networkAddress the 16 bit network address
+     * @return the {@link ZigBeeNode}
+     */
     public ZigBeeNode getNode(Integer networkAddress) {
         return networkNodes.get(networkAddress);
     }
 
+    /**
+     * Removes a node given the network address
+     *
+     * @param networkAddress the 16 bit network address
+     */
     public void removeNode(Integer networkAddress) {
         final ZigBeeNode node;
         synchronized (networkNodes) {

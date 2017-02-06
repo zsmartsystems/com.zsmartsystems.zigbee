@@ -217,7 +217,7 @@ public abstract class ZclCluster {
 
     private void notifyAttributeListener(ZclAttribute attribute) {
         for (ZclAttributeListener listener : attributeListeners) {
-            listener.AttributeUpdated(attribute);
+            listener.attributeUpdated(attribute);
         }
     }
 
@@ -252,7 +252,7 @@ public abstract class ZclCluster {
     /**
      * Gets a command from the command ID (ie a command from client to server). If no command with the requested id is
      * found, null is returned.
-     * 
+     *
      * @param commandId the command ID
      * @return the {@link ZclCommand} or null if no command found.
      */
@@ -263,7 +263,7 @@ public abstract class ZclCluster {
     /**
      * Gets a response from the command ID (ie a command from server to client). If no command with the requested id is
      * found, null is returned.
-     * 
+     *
      * @param commandId the command ID
      * @return the {@link ZclCommand} or null if no command found.
      */
