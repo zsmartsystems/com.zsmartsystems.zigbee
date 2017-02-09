@@ -5,6 +5,7 @@ import java.util.Calendar;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
+ * Defines a Cluster Library Attribute
  *
  * @author Chris Jackson
  *
@@ -270,8 +271,7 @@ public class ZclAttribute {
     }
 
     /**
-     * Updates the attribute value This will also record the time of the last
-     * update
+     * Updates the attribute value This will also record the time of the last update
      *
      * @param attributeValue
      *            the attribute value to be updated {@link Object}
@@ -279,5 +279,11 @@ public class ZclAttribute {
     public void updateValue(Object attributeValue) {
         lastValue = attributeValue;
         lastReportTime = Calendar.getInstance();
+    }
+
+    @Override
+    public String toString() {
+        return "ZclAttribute [id=" + id + ", name=" + name + ", dataType=" + dataType + ", lastValue=" + lastValue
+                + "]";
     }
 }

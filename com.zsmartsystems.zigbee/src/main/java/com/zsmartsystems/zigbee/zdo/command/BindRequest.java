@@ -98,7 +98,7 @@ public class BindRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        return "Bind Request " + "destinationAddress=" + destinationAddress + ", bindSourceAddress=" + bindSourceAddress
+        return "Bind Request: destinationAddress=" + destinationAddress + ", bindSourceAddress=" + bindSourceAddress
                 + ", bindSourceEndpoint=" + bindSourceEndpoint + ", bindCluster=" + bindCluster
                 + ", bindDestinationAddressingMode=" + bindDestinationAddressingMode + ", bindDestinationAddress="
                 + bindDestinationAddress + ", bindDestinationEndpoint=" + bindDestinationEndpoint;

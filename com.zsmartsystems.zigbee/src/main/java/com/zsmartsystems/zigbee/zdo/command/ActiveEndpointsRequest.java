@@ -29,7 +29,7 @@ public class ActiveEndpointsRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        return "Active Endpoints Request " + "destinationAddress=" + destinationAddress + ", networkAddressOfInterest="
+        return "Active Endpoints Request: destinationAddress=" + destinationAddress + ", networkAddressOfInterest="
                 + networkAddressOfInterest;
     }
 }

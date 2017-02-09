@@ -63,8 +63,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CurrentLevel</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Get the <i>CurrentLevel</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
      * meaning of 'level' is device dependent.
@@ -82,8 +81,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentLevel</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Synchronously get the <i>CurrentLevel</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
      * meaning of 'level' is device dependent.
@@ -103,8 +101,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>CurrentLevel</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Set reporting for the <i>CurrentLevel</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
      * meaning of 'level' is device dependent.
@@ -118,14 +115,13 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configCurrentLevelReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_CURRENTLEVEL, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentLevelReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_CURRENTLEVEL), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * <p>
-     * Get the <i>RemainingTime</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Get the <i>RemainingTime</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The RemainingTime attribute represents the time remaining until the current
@@ -144,8 +140,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>RemainingTime</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Synchronously get the <i>RemainingTime</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The RemainingTime attribute represents the time remaining until the current
@@ -166,8 +161,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>OnOffTransitionTime</i> attribute [Attribute ID <b>16</b>].
-     * <p>
+     * Set the <i>OnOffTransitionTime</i> attribute [attribute ID <b>16</b>].
      * <p>
      * <br>
      * The OnOffTransitionTime attribute represents the time taken to move to or from
@@ -191,8 +185,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>OnOffTransitionTime</i> attribute [Attribute ID <b>16</b>].
-     * <p>
+     * Get the <i>OnOffTransitionTime</i> attribute [attribute ID <b>16</b>].
      * <p>
      * <br>
      * The OnOffTransitionTime attribute represents the time taken to move to or from
@@ -216,8 +209,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>OnOffTransitionTime</i> attribute [Attribute ID <b>16</b>].
-     * <p>
+     * Synchronously get the <i>OnOffTransitionTime</i> attribute [attribute ID <b>16</b>].
      * <p>
      * <br>
      * The OnOffTransitionTime attribute represents the time taken to move to or from
@@ -243,8 +235,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>OnLevel</i> attribute [Attribute ID <b>17</b>].
-     * <p>
+     * Set the <i>OnLevel</i> attribute [attribute ID <b>17</b>].
      * <p>
      * <br>
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
@@ -264,8 +255,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>OnLevel</i> attribute [Attribute ID <b>17</b>].
-     * <p>
+     * Get the <i>OnLevel</i> attribute [attribute ID <b>17</b>].
      * <p>
      * <br>
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
@@ -285,8 +275,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>OnLevel</i> attribute [Attribute ID <b>17</b>].
-     * <p>
+     * Synchronously get the <i>OnLevel</i> attribute [attribute ID <b>17</b>].
      * <p>
      * <br>
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to

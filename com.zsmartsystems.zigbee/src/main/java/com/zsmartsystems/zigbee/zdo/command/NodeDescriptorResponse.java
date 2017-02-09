@@ -6,7 +6,7 @@ import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
 
 /**
  * NodeDescriptorResponse.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class NodeDescriptorResponse extends ZdoCommand implements ZdoResponse {
@@ -67,7 +67,7 @@ public class NodeDescriptorResponse extends ZdoCommand implements ZdoResponse {
 
     @Override
     public String toString() {
-        return "Node Descriptor Response " + "status=" + status + ", sourceAddress=" + sourceAddress
-                + ", networkAddress=" + networkAddress + ", nodeDescriptor=" + nodeDescriptor;
+        return "Node Descriptor Response: status=" + status + ", sourceAddress=" + sourceAddress + ", networkAddress="
+                + networkAddress + ", nodeDescriptor=" + nodeDescriptor;
     }
 }

@@ -4,7 +4,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * NodeDescriptorRequest.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class NodeDescriptorRequest extends ZdoRequest {
@@ -31,7 +31,7 @@ public class NodeDescriptorRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        return "Node Descriptor Request " + "destinationAddress=" + destinationAddress + ", networkAddressOfInterest="
+        return "Node Descriptor Request: destinationAddress=" + destinationAddress + ", networkAddressOfInterest="
                 + networkAddressOfInterest;
     }
 }

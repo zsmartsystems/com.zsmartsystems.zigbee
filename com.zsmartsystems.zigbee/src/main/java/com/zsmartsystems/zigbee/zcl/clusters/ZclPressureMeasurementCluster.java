@@ -63,8 +63,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the pressure in kPa as follows:-
      * <br>
@@ -91,8 +90,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Synchronously get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the pressure in kPa as follows:-
      * <br>
@@ -121,8 +119,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Set reporting for the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the pressure in kPa as follows:-
      * <br>
@@ -145,14 +142,13 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configMeasuredValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_MEASUREDVALUE, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setMeasuredValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_MEASUREDVALUE), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * <p>
-     * Get the <i>MinMeasuredValue</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
@@ -171,8 +167,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MinMeasuredValue</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Synchronously get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
@@ -192,8 +187,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MaxMeasuredValue</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
@@ -216,8 +210,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MaxMeasuredValue</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Synchronously get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
@@ -242,8 +235,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>MaxMeasuredValue</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Set reporting for the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
@@ -262,14 +254,13 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configMaxMeasuredValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_MAXMEASUREDVALUE, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setMaxMeasuredValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_MAXMEASUREDVALUE), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * <p>
-     * Get the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
@@ -289,8 +280,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
@@ -311,8 +301,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ScaledValue</i> attribute [Attribute ID <b>16</b>].
-     * <p>
+     * Get the <i>ScaledValue</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -327,8 +316,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ScaledValue</i> attribute [Attribute ID <b>16</b>].
-     * <p>
+     * Synchronously get the <i>ScaledValue</i> attribute [attribute ID <b>16</b>].
      * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
@@ -345,8 +333,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>ScaledValue</i> attribute [Attribute ID <b>16</b>].
-     * <p>
+     * Set reporting for the <i>ScaledValue</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -357,14 +344,13 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configScaledValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_SCALEDVALUE, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setScaledValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_SCALEDVALUE), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * <p>
-     * Get the <i>MinScaledValue</i> attribute [Attribute ID <b>17</b>].
-     * <p>
+     * Get the <i>MinScaledValue</i> attribute [attribute ID <b>17</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -379,8 +365,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MinScaledValue</i> attribute [Attribute ID <b>17</b>].
-     * <p>
+     * Synchronously get the <i>MinScaledValue</i> attribute [attribute ID <b>17</b>].
      * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
@@ -396,8 +381,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MaxScaledValue</i> attribute [Attribute ID <b>18</b>].
-     * <p>
+     * Get the <i>MaxScaledValue</i> attribute [attribute ID <b>18</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -412,8 +396,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MaxScaledValue</i> attribute [Attribute ID <b>18</b>].
-     * <p>
+     * Synchronously get the <i>MaxScaledValue</i> attribute [attribute ID <b>18</b>].
      * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
@@ -429,8 +412,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ScaledTolerance</i> attribute [Attribute ID <b>19</b>].
-     * <p>
+     * Get the <i>ScaledTolerance</i> attribute [attribute ID <b>19</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -445,8 +427,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ScaledTolerance</i> attribute [Attribute ID <b>19</b>].
-     * <p>
+     * Synchronously get the <i>ScaledTolerance</i> attribute [attribute ID <b>19</b>].
      * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>
@@ -463,8 +444,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>ScaledTolerance</i> attribute [Attribute ID <b>19</b>].
-     * <p>
+     * Set reporting for the <i>ScaledTolerance</i> attribute [attribute ID <b>19</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -475,14 +455,13 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configScaledToleranceReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_SCALEDTOLERANCE, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setScaledToleranceReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_SCALEDTOLERANCE), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * <p>
-     * Get the <i>Scale</i> attribute [Attribute ID <b>20</b>].
-     * <p>
+     * Get the <i>Scale</i> attribute [attribute ID <b>20</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -497,8 +476,7 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Scale</i> attribute [Attribute ID <b>20</b>].
-     * <p>
+     * Synchronously get the <i>Scale</i> attribute [attribute ID <b>20</b>].
      * <p>
      * This method will block until the response is received or a timeout occurs.
      * <p>

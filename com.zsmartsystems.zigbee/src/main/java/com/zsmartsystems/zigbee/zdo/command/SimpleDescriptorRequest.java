@@ -4,7 +4,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * SimpleDescriptorRequest
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class SimpleDescriptorRequest extends ZdoRequest {
@@ -31,6 +31,6 @@ public class SimpleDescriptorRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        return "Simple Descriptor Request " + "destinationAddress=" + destinationAddress + ", endpoint=" + endpoint;
+        return "Simple Descriptor Request: destinationAddress=" + destinationAddress + ", endpoint=" + endpoint;
     }
 }

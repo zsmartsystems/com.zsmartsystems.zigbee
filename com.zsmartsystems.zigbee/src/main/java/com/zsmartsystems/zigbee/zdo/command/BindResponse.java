@@ -5,7 +5,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
  * BindResponse.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class BindResponse extends ZdoCommand implements ZdoResponse {
@@ -46,6 +46,6 @@ public class BindResponse extends ZdoCommand implements ZdoResponse {
 
     @Override
     public String toString() {
-        return "Bind Response " + "sourceAddress=" + sourceAddress + ", status=" + status;
+        return "Bind Response: sourceAddress=" + sourceAddress + ", status=" + status;
     }
 }

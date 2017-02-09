@@ -397,20 +397,34 @@ public class ZclProtocolCodeGenerator {
         out.println("        this.label = label;");
         out.println("    }");
         out.println();
-        out.println("    public int getId() { return id; }");
-        out.println("    public ZclProfileType getProfileType() { return profileType; }");
-        out.println("    public String getLabel() { return label; }");
-        out.println("    public String toString() { return label; }");
-        out.println("    public Class<? extends ZclCluster> getClusterClass() { return clusterClass; }");
-        out.println();
-        out.println("    public static ZclClusterType getValueById(final int id) {");
-        out.println("        return idValueMap.get(id);");
-        out.println("    }");
-        out.println();
         out.println("    static {");
         out.println("        for (final ZclClusterType value : values()) {");
         out.println("            idValueMap.put(value.id, value);");
         out.println("        }");
+        out.println("    }");
+        out.println();
+        out.println("    public int getId() {");
+        out.println("        return id;");
+        out.println("    }");
+        out.println();
+        out.println("    public ZclProfileType getProfileType() {");
+        out.println("        return profileType;");
+        out.println("    }");
+        out.println();
+        out.println("    public String getLabel() {");
+        out.println("        return label;");
+        out.println("    }");
+        out.println();
+        // out.println(" public String toString() {");
+        // out.println(" return label;");
+        // out.println(" }");
+        // out.println();
+        out.println("    public Class<? extends ZclCluster> getClusterClass() {");
+        out.println("        return clusterClass;");
+        out.println("    }");
+        out.println();
+        out.println("    public static ZclClusterType getValueById(final int id) {");
+        out.println("        return idValueMap.get(id);");
         out.println("    }");
         out.println();
         out.println("}");
@@ -862,8 +876,7 @@ public class ZclProtocolCodeGenerator {
                     out.println("        final StringBuilder builder = new StringBuilder();");
                     out.println("        builder.append(super.toString());");
                     for (final Field field : fields) {
-                        out.println("        builder.append(\", \");");
-                        out.println("        builder.append(\"" + field.nameLowerCamelCase + " = \");");
+                        out.println("        builder.append(\", " + field.nameLowerCamelCase + "=\");");
                         out.println("        builder.append(" + field.nameLowerCamelCase + ");");
                     }
                     out.println("        return builder.toString();");
@@ -1136,9 +1149,11 @@ public class ZclProtocolCodeGenerator {
                 out.println();
 
                 for (final Attribute attribute : cluster.attributes.values()) {
+                    DataTypeMap zclDataType = ZclDataType.getDataTypeMapping().get(attribute.dataType);
+
                     if (attribute.attributeAccess.toLowerCase().contains("write")) {
                         out.println();
-                        outputAttributeJavaDoc(out, "Set", attribute);
+                        outputAttributeJavaDoc(out, "Set", attribute, zclDataType);
                         out.println("    public Future<CommandResult> set"
                                 + attribute.nameUpperCamelCase.replace("_", "") + "(final Object value) {");
                         out.println("        return write(attributes.get(" + attribute.enumName + "), value);");
@@ -1146,13 +1161,13 @@ public class ZclProtocolCodeGenerator {
                     }
 
                     if (attribute.attributeAccess.toLowerCase().contains("read")) {
-                        outputAttributeJavaDoc(out, "Get", attribute);
+                        outputAttributeJavaDoc(out, "Get", attribute, zclDataType);
                         out.println("    public Future<CommandResult> get"
                                 + attribute.nameUpperCamelCase.replace("_", "") + "Async() {");
                         out.println("        return read(attributes.get(" + attribute.enumName + "));");
                         out.println("    }");
                         out.println();
-                        outputAttributeJavaDoc(out, "Synchronously get", attribute);
+                        outputAttributeJavaDoc(out, "Synchronously get", attribute, zclDataType);
                         out.println("    public " + attribute.dataTypeClass + " get"
                                 + attribute.nameUpperCamelCase.replace("_", "") + "() {");
                         out.println("        return (" + attribute.dataTypeClass + ") readSync(attributes.get("
@@ -1163,11 +1178,18 @@ public class ZclProtocolCodeGenerator {
                     if (attribute.attributeAccess.toLowerCase().contains("read")
                             && attribute.attributeReporting.toLowerCase().equals("mandatory")) {
                         out.println();
-                        outputAttributeJavaDoc(out, "Configure reporting for", attribute);
-                        out.println("    public Future<CommandResult> config" + attribute.nameUpperCamelCase
-                                + "Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {");
-                        out.println("        return report(" + attribute.enumName
-                                + ", minInterval, maxInterval, reportableChange);");
+                        outputAttributeJavaDoc(out, "Set reporting for", attribute, zclDataType);
+                        if (zclDataType.analogue) {
+                            out.println("    public Future<CommandResult> set" + attribute.nameUpperCamelCase
+                                    + "Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {");
+                            out.println("        return setReporting(attributes.get(" + attribute.enumName
+                                    + "), minInterval, maxInterval, reportableChange);");
+                        } else {
+                            out.println("    public Future<CommandResult> set" + attribute.nameUpperCamelCase
+                                    + "Reporting(final int minInterval, final int maxInterval) {");
+                            out.println("        return setReporting(attributes.get(" + attribute.enumName
+                                    + "), minInterval, maxInterval);");
+                        }
                         out.println("    }");
                     }
                 }
@@ -1269,13 +1291,13 @@ public class ZclProtocolCodeGenerator {
         }
     }
 
-    private static void outputAttributeJavaDoc(PrintWriter out, String type, Attribute attribute) {
+    private static void outputAttributeJavaDoc(PrintWriter out, String type, Attribute attribute,
+            DataTypeMap zclDataType) {
         out.println();
         out.println("    /**");
         out.println("     * <p>");
-        out.println("     * " + type + " the <i>" + attribute.attributeLabel + "</i> attribute [Attribute ID <b>"
+        out.println("     * " + type + " the <i>" + attribute.attributeLabel + "</i> attribute [attribute ID <b>"
                 + attribute.attributeId + "</b>].");
-        out.println("     * <p>");
         if (attribute.attributeDescription.size() != 0) {
             out.println("     * <p>");
             for (String line : attribute.attributeDescription) {
@@ -1292,15 +1314,17 @@ public class ZclProtocolCodeGenerator {
         out.println("     * The implementation of this attribute by a device is "
                 + attribute.attributeImplementation.toUpperCase());
         out.println("     *");
-        if ("Set".equals(type)) {
+        if ("Set reporting for".equals(type)) {
+            out.println("     * @param minInterval {@link int} minimum reporting period");
+            out.println("     * @param maxInterval {@link int} maximum reporting period");
+            if (zclDataType.analogue) {
+                out.println("     * @param reportableChange {@link Object} delta required to trigger report");
+            }
+        } else if ("Set".equals(type)) {
             out.println("     * @param " + attribute.nameLowerCamelCase + " the {@link " + attribute.dataTypeClass
                     + "} attribute value to be set");
         }
-        if ("Configure reporting for".equals(type)) {
-            out.println("     * @param minInterval {@link int} minimum reporting period");
-            out.println("     * @param maxInterval {@link int} maximum reporting period");
-            out.println("     * @param reportableChange {@link Object} delta required to trigger report");
-        }
+
         if ("Synchronously get".equals(type)) {
             out.println("     * @return the {@link " + attribute.dataTypeClass + "} attribute value, or null on error");
         } else {
@@ -1463,8 +1487,7 @@ public class ZclProtocolCodeGenerator {
                     out.println("        final StringBuilder builder = new StringBuilder();");
                     out.println("        builder.append(super.toString());");
                     for (final Field field : fields) {
-                        out.println("        builder.append(\", \");");
-                        out.println("        builder.append(\"" + field.nameLowerCamelCase + " = \");");
+                        out.println("        builder.append(\", " + field.nameLowerCamelCase + "=");
                         out.println("        builder.append(" + field.nameLowerCamelCase + ");");
                     }
                     out.println("        return builder.toString();");

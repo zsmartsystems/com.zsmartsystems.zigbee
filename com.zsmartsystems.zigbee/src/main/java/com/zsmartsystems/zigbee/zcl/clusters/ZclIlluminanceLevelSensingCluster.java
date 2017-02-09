@@ -50,8 +50,7 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>LevelStatus</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Get the <i>LevelStatus</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The LevelStatus attribute indicates whether the measured illuminance is above,
      * below, or within a band around IlluminanceTargetLevel .
@@ -69,8 +68,7 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LevelStatus</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Synchronously get the <i>LevelStatus</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The LevelStatus attribute indicates whether the measured illuminance is above,
      * below, or within a band around IlluminanceTargetLevel .
@@ -90,8 +88,7 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>LevelStatus</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Set reporting for the <i>LevelStatus</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The LevelStatus attribute indicates whether the measured illuminance is above,
      * below, or within a band around IlluminanceTargetLevel .
@@ -102,17 +99,15 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
-     * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configLevelStatusReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_LEVELSTATUS, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setLevelStatusReporting(final int minInterval, final int maxInterval) {
+        return setReporting(attributes.get(ATTR_LEVELSTATUS), minInterval, maxInterval);
     }
 
     /**
      * <p>
-     * Get the <i>LightSensorType</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Get the <i>LightSensorType</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The LightSensorType attribute specifies the electronic type of the light sensor.
@@ -130,8 +125,7 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LightSensorType</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Synchronously get the <i>LightSensorType</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The LightSensorType attribute specifies the electronic type of the light sensor.

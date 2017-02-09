@@ -4,7 +4,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * UserDescriptorRequest.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class UserDescriptorRequest extends ZdoRequest {
@@ -31,7 +31,7 @@ public class UserDescriptorRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        return "User Descriptor Request " + "destinationAddress=" + destinationAddress + ", networkAddressOfInterest="
+        return "User Descriptor Request: destinationAddress=" + destinationAddress + ", networkAddressOfInterest="
                 + networkAddressOfInterest;
     }
 }

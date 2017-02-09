@@ -16,23 +16,29 @@ public class CodeGeneratorUtil {
     }
 
     public static String labelToEnumerationValue(String dataType) {
-        String val = dataType.trim().toUpperCase().replace(" ", "_").replace("-", "_").replace("/", "_").replace("(", "_").replace(")", "_");
+        String val = dataType.toUpperCase().trim().replace(" ", "_").replace("-", "_").replace("/", "_")
+                .replace("(", "_").replace(")", "_");
+        if (val.endsWith("_")) {
+            val = val.substring(0, val.length() - 1);
+        }
         if ("0123456789".indexOf(val.charAt(0)) >= 0) {
-        	// Swap the last word to the beginning
-        	String partsInitial[] = val.split("_");
-        	StringBuilder sb = new StringBuilder();
-        	sb.append(partsInitial[partsInitial.length-1]);
-        	for(int c = 0; c < partsInitial.length-1; c++) {
-        		sb.append("_");
-        		sb.append(partsInitial[c]);
-        	}
+            // Swap the last word to the beginning
+            String partsInitial[] = val.split("_");
+            StringBuilder sb = new StringBuilder();
+            sb.append(partsInitial[partsInitial.length - 1]);
+            for (int c = 0; c < partsInitial.length - 1; c++) {
+                sb.append("_");
+                sb.append(partsInitial[c]);
+            }
             return sb.toString();
         }
         return val;
     }
 
     public static String labelToUpperCamelCase(String value) {
-        return WordUtils.capitalizeFully(splitCamelCase(value).replace("-", " ").replace("/", " ").replace("(", " ").replace(")", " "), new char[]{' '}).replaceAll(" ", "");
+        return WordUtils.capitalizeFully(
+                splitCamelCase(value).replace("-", " ").replace("/", " ").replace("(", " ").replace(")", " "),
+                new char[] { ' ' }).replaceAll(" ", "");
     }
 
     public static String upperCamelCaseToLowerCamelCase(String value) {
@@ -40,13 +46,7 @@ public class CodeGeneratorUtil {
     }
 
     public static String splitCamelCase(String value) {
-        return value.replaceAll(
-                String.format("%s|%s|%s",
-                        "(?<=[A-Z])(?=[A-Z][a-z])",
-                        "(?<=[^A-Z])(?=[A-Z])",
-                        "(?<=[A-Za-z])(?=[^A-Za-z])"
-                ),
-                " "
-        );
+        return value.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])", "(?<=[^A-Z])(?=[A-Z])",
+                "(?<=[A-Za-z])(?=[^A-Za-z])"), " ");
     }
 }

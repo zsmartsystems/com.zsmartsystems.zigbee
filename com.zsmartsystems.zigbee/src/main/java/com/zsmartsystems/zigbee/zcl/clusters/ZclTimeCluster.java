@@ -60,8 +60,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>Time</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Set the <i>Time</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The Time attribute is 32-bits in length and holds the time value of a real time
      * clock. This attribute has data type UTCTime, but note that it may not actually be
@@ -84,8 +83,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>Time</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Get the <i>Time</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The Time attribute is 32-bits in length and holds the time value of a real time
      * clock. This attribute has data type UTCTime, but note that it may not actually be
@@ -108,8 +106,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Time</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Synchronously get the <i>Time</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The Time attribute is 32-bits in length and holds the time value of a real time
      * clock. This attribute has data type UTCTime, but note that it may not actually be
@@ -134,8 +131,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>TimeStatus</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Set the <i>TimeStatus</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The TimeStatus attribute holds a number of bit fields.
@@ -153,8 +149,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>TimeStatus</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Get the <i>TimeStatus</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The TimeStatus attribute holds a number of bit fields.
@@ -172,8 +167,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>TimeStatus</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Synchronously get the <i>TimeStatus</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The TimeStatus attribute holds a number of bit fields.
@@ -193,8 +187,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>TimeZone</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Set the <i>TimeZone</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The TimeZone attribute indicates the local time zone, as a signed offset in seconds
@@ -213,8 +206,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>TimeZone</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Get the <i>TimeZone</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The TimeZone attribute indicates the local time zone, as a signed offset in seconds
@@ -233,8 +225,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>TimeZone</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Synchronously get the <i>TimeZone</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The TimeZone attribute indicates the local time zone, as a signed offset in seconds
@@ -255,8 +246,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>DstStart</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Set the <i>DstStart</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
@@ -275,8 +265,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>DstStart</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Get the <i>DstStart</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
@@ -295,8 +284,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>DstStart</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Synchronously get the <i>DstStart</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
@@ -317,8 +305,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>DstEnd</i> attribute [Attribute ID <b>4</b>].
-     * <p>
+     * Set the <i>DstEnd</i> attribute [attribute ID <b>4</b>].
      * <p>
      * <br>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
@@ -350,8 +337,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>DstEnd</i> attribute [Attribute ID <b>4</b>].
-     * <p>
+     * Get the <i>DstEnd</i> attribute [attribute ID <b>4</b>].
      * <p>
      * <br>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
@@ -383,8 +369,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>DstEnd</i> attribute [Attribute ID <b>4</b>].
-     * <p>
+     * Synchronously get the <i>DstEnd</i> attribute [attribute ID <b>4</b>].
      * <p>
      * <br>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
@@ -418,8 +403,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>DstShift</i> attribute [Attribute ID <b>5</b>].
-     * <p>
+     * Set the <i>DstShift</i> attribute [attribute ID <b>5</b>].
      * <p>
      * <br>
      * The DstShift attribute represents a signed offset in seconds from the standard time,
@@ -443,8 +427,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>DstShift</i> attribute [Attribute ID <b>5</b>].
-     * <p>
+     * Get the <i>DstShift</i> attribute [attribute ID <b>5</b>].
      * <p>
      * <br>
      * The DstShift attribute represents a signed offset in seconds from the standard time,
@@ -468,8 +451,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>DstShift</i> attribute [Attribute ID <b>5</b>].
-     * <p>
+     * Synchronously get the <i>DstShift</i> attribute [attribute ID <b>5</b>].
      * <p>
      * <br>
      * The DstShift attribute represents a signed offset in seconds from the standard time,
@@ -494,8 +476,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>StandardTime</i> attribute [Attribute ID <b>6</b>].
-     * <p>
+     * Get the <i>StandardTime</i> attribute [attribute ID <b>6</b>].
      * <p>
      * <br>
      * A device may derive the time by reading the Time and TimeZone attributes
@@ -516,8 +497,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>StandardTime</i> attribute [Attribute ID <b>6</b>].
-     * <p>
+     * Synchronously get the <i>StandardTime</i> attribute [attribute ID <b>6</b>].
      * <p>
      * <br>
      * A device may derive the time by reading the Time and TimeZone attributes
@@ -539,8 +519,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>LocalTime</i> attribute [Attribute ID <b>7</b>].
-     * <p>
+     * Get the <i>LocalTime</i> attribute [attribute ID <b>7</b>].
      * <p>
      * <br>
      * A device may derive the time by reading the Time, TimeZone, DstStart, DstEnd
@@ -561,8 +540,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LocalTime</i> attribute [Attribute ID <b>7</b>].
-     * <p>
+     * Synchronously get the <i>LocalTime</i> attribute [attribute ID <b>7</b>].
      * <p>
      * <br>
      * A device may derive the time by reading the Time, TimeZone, DstStart, DstEnd

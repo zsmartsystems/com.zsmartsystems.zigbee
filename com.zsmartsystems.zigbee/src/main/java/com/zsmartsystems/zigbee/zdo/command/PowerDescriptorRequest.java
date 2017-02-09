@@ -3,7 +3,7 @@ package com.zsmartsystems.zigbee.zdo.command;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
- * 
+ *
  * @author Chris Jackson
  *
  */
@@ -31,7 +31,7 @@ public class PowerDescriptorRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        return "Power Descriptor Request " + "destinationAddress=" + destinationAddress + ", networkAddressOfInterest="
+        return "Power Descriptor Request: destinationAddress=" + destinationAddress + ", networkAddressOfInterest="
                 + networkAddressOfInterest;
     }
 }

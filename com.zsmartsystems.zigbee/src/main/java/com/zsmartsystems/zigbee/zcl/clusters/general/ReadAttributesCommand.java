@@ -79,8 +79,7 @@ public class ReadAttributesCommand extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("identifiers = ");
+        builder.append(", identifiers=");
         builder.append(identifiers);
         return builder.toString();
     }

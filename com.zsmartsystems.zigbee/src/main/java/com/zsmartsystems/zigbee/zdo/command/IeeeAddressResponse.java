@@ -7,13 +7,14 @@ import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
- * IeeeAddressResponse.
- * 
+ * Returns the IEEE address of a node, given a 16-bit short address.
+ *
  * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
 public class IeeeAddressResponse extends ZdoCommand implements ZdoResponse {
     /**
-     * The status.
+     * The response status.
      */
     private int status;
     /**
@@ -85,6 +86,11 @@ public class IeeeAddressResponse extends ZdoCommand implements ZdoResponse {
         this.ieeeAddress = ieeeAddress;
     }
 
+    /**
+     * Returns the 16 bit network address
+     *
+     * @return 16 bit network address
+     */
     public int getNetworkAddress() {
         return networkAddress;
     }
@@ -119,8 +125,8 @@ public class IeeeAddressResponse extends ZdoCommand implements ZdoResponse {
 
     @Override
     public String toString() {
-        return "IEEE Address Response " + "status=" + status + ", sourceAddressMode=" + sourceAddressMode
-                + ", ieeeAddress=" + ieeeAddress + ", networkAddress=" + networkAddress + ", startIndex=" + startIndex
+        return "IEEE Address Response: status=" + status + ", sourceAddressMode=" + sourceAddressMode + ", ieeeAddress="
+                + ieeeAddress + ", networkAddress=" + networkAddress + ", startIndex=" + startIndex
                 + ", numberOfAssociatedDevices=" + numberOfAssociatedDevices + ", associatedDeviceList="
                 + Arrays.toString(associatedDeviceList);
     }

@@ -80,8 +80,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>SceneCount</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Get the <i>SceneCount</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The SceneCount attribute specifies the number of scenes currently in the device's
      * scene table.
@@ -99,8 +98,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>SceneCount</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Synchronously get the <i>SceneCount</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The SceneCount attribute specifies the number of scenes currently in the device's
      * scene table.
@@ -119,8 +117,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CurrentScene</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Get the <i>CurrentScene</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The CurrentScene attribute holds the Scene ID of the scene last invoked.
@@ -138,8 +135,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentScene</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Synchronously get the <i>CurrentScene</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The CurrentScene attribute holds the Scene ID of the scene last invoked.
@@ -158,8 +154,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CurrentGroup</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Get the <i>CurrentGroup</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
@@ -178,8 +173,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentGroup</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Synchronously get the <i>CurrentGroup</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
@@ -199,8 +193,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>SceneValid</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Get the <i>SceneValid</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The SceneValid attribute indicates whether the state of the device corresponds to
@@ -225,8 +218,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>SceneValid</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Synchronously get the <i>SceneValid</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The SceneValid attribute indicates whether the state of the device corresponds to
@@ -252,8 +244,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>NameSupport</i> attribute [Attribute ID <b>4</b>].
-     * <p>
+     * Get the <i>NameSupport</i> attribute [attribute ID <b>4</b>].
      * <p>
      * <br>
      * The most significant bit of the NameSupport attribute indicates whether or not
@@ -273,8 +264,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>NameSupport</i> attribute [Attribute ID <b>4</b>].
-     * <p>
+     * Synchronously get the <i>NameSupport</i> attribute [attribute ID <b>4</b>].
      * <p>
      * <br>
      * The most significant bit of the NameSupport attribute indicates whether or not
@@ -295,8 +285,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>LastConfiguredBy</i> attribute [Attribute ID <b>5</b>].
-     * <p>
+     * Get the <i>LastConfiguredBy</i> attribute [attribute ID <b>5</b>].
      * <p>
      * <br>
      * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address
@@ -318,8 +307,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LastConfiguredBy</i> attribute [Attribute ID <b>5</b>].
-     * <p>
+     * Synchronously get the <i>LastConfiguredBy</i> attribute [attribute ID <b>5</b>].
      * <p>
      * <br>
      * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address

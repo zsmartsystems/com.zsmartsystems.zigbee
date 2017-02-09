@@ -77,8 +77,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CurrentHue</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Get the <i>CurrentHue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentHue attribute contains the current hue value of the light. It is updated
      * as fast as practical during commands that change the hue.
@@ -102,8 +101,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentHue</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Synchronously get the <i>CurrentHue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentHue attribute contains the current hue value of the light. It is updated
      * as fast as practical during commands that change the hue.
@@ -129,8 +127,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>CurrentHue</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Set reporting for the <i>CurrentHue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentHue attribute contains the current hue value of the light. It is updated
      * as fast as practical during commands that change the hue.
@@ -150,14 +147,13 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configCurrentHueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_CURRENTHUE, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentHueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_CURRENTHUE), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * <p>
-     * Get the <i>CurrentSaturation</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Get the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The CurrentSaturation attribute holds the current saturation value of the light. It is
@@ -181,8 +177,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentSaturation</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Synchronously get the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The CurrentSaturation attribute holds the current saturation value of the light. It is
@@ -208,8 +203,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>CurrentSaturation</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Set reporting for the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The CurrentSaturation attribute holds the current saturation value of the light. It is
@@ -229,14 +223,13 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configCurrentSaturationReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_CURRENTSATURATION, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentSaturationReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_CURRENTSATURATION), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * <p>
-     * Get the <i>RemainingTime</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Get the <i>RemainingTime</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
@@ -255,8 +248,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>RemainingTime</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Synchronously get the <i>RemainingTime</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
@@ -276,8 +268,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CurrentX</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Get the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The CurrentX attribute contains the current value of the normalized chromaticity
@@ -301,8 +292,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentX</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Synchronously get the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The CurrentX attribute contains the current value of the normalized chromaticity
@@ -328,8 +318,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>CurrentX</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Set reporting for the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The CurrentX attribute contains the current value of the normalized chromaticity
@@ -349,14 +338,13 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configCurrentXReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_CURRENTX, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentXReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_CURRENTX), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * <p>
-     * Get the <i>CurrentY</i> attribute [Attribute ID <b>4</b>].
-     * <p>
+     * Get the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
      * <p>
      * <br>
      * The CurrentY attribute contains the current value of the normalized chromaticity
@@ -380,8 +368,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CurrentY</i> attribute [Attribute ID <b>4</b>].
-     * <p>
+     * Synchronously get the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
      * <p>
      * <br>
      * The CurrentY attribute contains the current value of the normalized chromaticity
@@ -407,8 +394,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>CurrentY</i> attribute [Attribute ID <b>4</b>].
-     * <p>
+     * Set reporting for the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
      * <p>
      * <br>
      * The CurrentY attribute contains the current value of the normalized chromaticity
@@ -428,14 +414,13 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configCurrentYReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_CURRENTY, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentYReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_CURRENTY), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * <p>
-     * Get the <i>DriftCompensation</i> attribute [Attribute ID <b>5</b>].
-     * <p>
+     * Get the <i>DriftCompensation</i> attribute [attribute ID <b>5</b>].
      * <p>
      * <br>
      * The DriftCompensation attribute indicates what mechanism, if any, is in use for
@@ -454,8 +439,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>DriftCompensation</i> attribute [Attribute ID <b>5</b>].
-     * <p>
+     * Synchronously get the <i>DriftCompensation</i> attribute [attribute ID <b>5</b>].
      * <p>
      * <br>
      * The DriftCompensation attribute indicates what mechanism, if any, is in use for
@@ -475,8 +459,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>CompensationText</i> attribute [Attribute ID <b>6</b>].
-     * <p>
+     * Get the <i>CompensationText</i> attribute [attribute ID <b>6</b>].
      * <p>
      * <br>
      * The CompensationText attribute holds a textual indication of what mechanism, if
@@ -495,8 +478,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>CompensationText</i> attribute [Attribute ID <b>6</b>].
-     * <p>
+     * Synchronously get the <i>CompensationText</i> attribute [attribute ID <b>6</b>].
      * <p>
      * <br>
      * The CompensationText attribute holds a textual indication of what mechanism, if
@@ -516,8 +498,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ColorTemperature</i> attribute [Attribute ID <b>7</b>].
-     * <p>
+     * Get the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
      * <p>
      * <br>
      * The ColorTemperature attribute contains a scaled inverse of the current value of
@@ -547,8 +528,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ColorTemperature</i> attribute [Attribute ID <b>7</b>].
-     * <p>
+     * Synchronously get the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
      * <p>
      * <br>
      * The ColorTemperature attribute contains a scaled inverse of the current value of
@@ -580,8 +560,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>ColorTemperature</i> attribute [Attribute ID <b>7</b>].
-     * <p>
+     * Set reporting for the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
      * <p>
      * <br>
      * The ColorTemperature attribute contains a scaled inverse of the current value of
@@ -607,14 +586,13 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configColorTemperatureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_COLORTEMPERATURE, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setColorTemperatureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_COLORTEMPERATURE), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * <p>
-     * Get the <i>ColorMode</i> attribute [Attribute ID <b>8</b>].
-     * <p>
+     * Get the <i>ColorMode</i> attribute [attribute ID <b>8</b>].
      * <p>
      * <br>
      * The ColorMode attribute indicates which attributes are currently determining the
@@ -633,8 +611,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ColorMode</i> attribute [Attribute ID <b>8</b>].
-     * <p>
+     * Synchronously get the <i>ColorMode</i> attribute [attribute ID <b>8</b>].
      * <p>
      * <br>
      * The ColorMode attribute indicates which attributes are currently determining the

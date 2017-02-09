@@ -107,14 +107,11 @@ public class GetLocationDataCommand extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("header = ");
+        builder.append(", header=");
         builder.append(header);
-        builder.append(", ");
-        builder.append("numberResponses = ");
+        builder.append(", numberResponses=");
         builder.append(numberResponses);
-        builder.append(", ");
-        builder.append("targetAddress = ");
+        builder.append(", targetAddress=");
         builder.append(targetAddress);
         return builder.toString();
     }

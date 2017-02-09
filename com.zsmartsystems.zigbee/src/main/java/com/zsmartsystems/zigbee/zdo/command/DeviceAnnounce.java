@@ -4,7 +4,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 
 /**
  * DeviceAnnounce.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class DeviceAnnounce extends ZdoCommand {
@@ -69,7 +69,7 @@ public class DeviceAnnounce extends ZdoCommand {
 
     @Override
     public String toString() {
-        return "Device Announce " + "sourceAddress=" + sourceAddress + ", ieeeAddress=" + ieeeAddress
-                + ", networkAddress=" + networkAddress + ", capabilities=" + capabilities;
+        return "Device Announce: sourceAddress=" + sourceAddress + ", ieeeAddress=" + ieeeAddress + ", networkAddress="
+                + networkAddress + ", capabilities=" + capabilities;
     }
 }

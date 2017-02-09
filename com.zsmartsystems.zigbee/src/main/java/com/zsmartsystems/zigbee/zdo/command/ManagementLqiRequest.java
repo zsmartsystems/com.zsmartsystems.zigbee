@@ -4,7 +4,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * ManagementLqiRequest.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class ManagementLqiRequest extends ZdoRequest {
@@ -39,7 +39,7 @@ public class ManagementLqiRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        return "Management LQI Request " + "networkAddress=" + destinationAddress + ", startIndex=" + startIndex;
+        return "Management LQI Request: networkAddress=" + destinationAddress + ", startIndex=" + startIndex;
     }
 
 }

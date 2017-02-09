@@ -5,7 +5,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
  * User Descriptor Configuration.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class UserDescriptorConfiguration extends ZdoCommand implements ZdoResponse {
@@ -59,7 +59,7 @@ public class UserDescriptorConfiguration extends ZdoCommand implements ZdoRespon
 
     @Override
     public String toString() {
-        return "User Descriptor Configuration " + "sourceAddress=" + sourceAddress + ", networkAddress="
-                + networkAddress + ", status=" + status;
+        return "User Descriptor Configuration: sourceAddress=" + sourceAddress + ", networkAddress=" + networkAddress
+                + ", status=" + status;
     }
 }

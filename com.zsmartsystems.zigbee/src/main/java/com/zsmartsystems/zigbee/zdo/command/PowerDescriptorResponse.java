@@ -5,7 +5,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
 
 /**
- * 
+ *
  * @author Chris Jackson
  *
  */
@@ -33,6 +33,7 @@ public class PowerDescriptorResponse extends ZdoCommand implements ZdoResponse {
         this.powerDescriptor = powerDescriptor;
     }
 
+    @Override
     public int getStatus() {
         return status;
     }
@@ -41,6 +42,7 @@ public class PowerDescriptorResponse extends ZdoCommand implements ZdoResponse {
         this.status = status;
     }
 
+    @Override
     public int getSourceAddress() {
         return sourceAddress;
     }
@@ -55,7 +57,7 @@ public class PowerDescriptorResponse extends ZdoCommand implements ZdoResponse {
 
     @Override
     public String toString() {
-        return "Power Descriptor Response " + "status=" + status + ", sourceAddress=" + sourceAddress
-                + ", powerDescriptor=" + powerDescriptor;
+        return "Power Descriptor Response: status=" + status + ", sourceAddress=" + sourceAddress + ", powerDescriptor="
+                + powerDescriptor;
     }
 }

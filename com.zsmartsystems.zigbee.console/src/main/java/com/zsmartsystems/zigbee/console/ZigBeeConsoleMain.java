@@ -16,6 +16,9 @@ import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
 
 /**
  * The ZigBee gateway server.
+ * 
+ * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
 public class ZigBeeConsoleMain {
     /**

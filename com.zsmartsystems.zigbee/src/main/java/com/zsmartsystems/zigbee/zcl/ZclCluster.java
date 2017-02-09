@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.zcl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +12,10 @@ import java.util.concurrent.Future;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
+import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 
 /**
@@ -98,15 +101,86 @@ public abstract class ZclCluster {
      *
      * @param attribute the {@link ZclAttribute} to write
      * @param value the value to set (as {@link Object})
-     * @return command future
+     * @return command future {@link CommandResult}
      */
-    protected Future<CommandResult> write(ZclAttribute attribute, final Object value) {
+    protected Future<CommandResult> write(final ZclAttribute attribute, final Object value) {
         return zigbeeManager.write(this, attribute, value);
     }
 
-    public Future<CommandResult> report(final int attributeId, final int minInterval, final int maxInterval,
-            final Object reportableChange) {
-        return zigbeeManager.report(zigbeeAddress, clusterId, attributeId, minInterval, maxInterval, reportableChange);
+    /**
+     * Configures the reporting for the specified attribute ID for analog attributes.
+     * <p>
+     * <b>minInterval</b>:
+     * The minimum reporting interval field is 16 bits in length and shall contain the
+     * minimum interval, in seconds, between issuing reports of the specified attribute.
+     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+     * imposed by the specification of the cluster using this reporting mechanism or by
+     * the applicable profile.
+     * <p>
+     * <b>maxInterval</b>:
+     * The maximum reporting interval field is 16 bits in length and shall contain the
+     * maximum interval, in seconds, between issuing reports of the specified attribute.
+     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+     * attribute, and the configuration information for that attribute need not be
+     * maintained.
+     * <p>
+     * <b>reportableChange</b>:
+     * The reportable change field shall contain the minimum change to the attribute that
+     * will result in a report being issued. This field is of variable length. For attributes
+     * with 'analog' data type the field has the same data type as the attribute. The sign (if any) of the reportable
+     * change field is ignored.
+     *
+     * @param attribute the {@link ZclAttribute} to configure reporting
+     * @param minInterval the minimum reporting interval
+     * @param maxInterval the maximum reporting interval
+     * @param reportableChange the minimum change required to report an update
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> setReporting(final ZclAttribute attribute, final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+
+        final ConfigureReportingCommand command = new ConfigureReportingCommand();
+        command.setClusterId(clusterId);
+
+        final AttributeReportingConfigurationRecord record = new AttributeReportingConfigurationRecord();
+        record.setDirection(0);
+        record.setAttributeIdentifier(attribute.getId());
+        record.setAttributeDataType(attribute.getDataType());
+        record.setMinimumReportingInterval(minInterval);
+        record.setMaximumReportingInterval(maxInterval);
+        record.setReportableChange(reportableChange);
+        record.setTimeoutPeriod(0);
+        command.setRecords(Collections.singletonList(record));
+        command.setDestinationAddress(zigbeeAddress);
+
+        return zigbeeManager.unicast(command);
+    }
+
+    /**
+     * Configures the reporting for the specified attribute ID for discrete attributes.
+     * <p>
+     * <b>minInterval</b>:
+     * The minimum reporting interval field is 16 bits in length and shall contain the
+     * minimum interval, in seconds, between issuing reports of the specified attribute.
+     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+     * imposed by the specification of the cluster using this reporting mechanism or by
+     * the applicable profile.
+     * <p>
+     * <b>maxInterval</b>:
+     * The maximum reporting interval field is 16 bits in length and shall contain the
+     * maximum interval, in seconds, between issuing reports of the specified attribute.
+     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+     * attribute, and the configuration information for that attribute need not be
+     * maintained.
+     *
+     * @param attribute the {@link ZclAttribute} to configure reporting
+     * @param minInterval the minimum reporting interval
+     * @param maxInterval the maximum reporting interval
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> setReporting(final ZclAttribute attribute, final int minInterval,
+            final int maxInterval) {
+        return setReporting(attribute, minInterval, maxInterval, null);
     }
 
     /**
@@ -114,8 +188,7 @@ public abstract class ZclCluster {
      * attributes, even if they are not actually supported by the device. The
      * user should check to see if this is implemented.
      *
-     * @return {@link Set} containing all {@link ZclAttributes} available in
-     *         this cluster
+     * @return {@link Set} containing all {@link ZclAttributes} available in this cluster
      */
     public Set<ZclAttribute> getAttributes() {
         Set<ZclAttribute> attr = new HashSet<ZclAttribute>();

@@ -112,14 +112,11 @@ public class GetZoneInformationResponse extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("zoneId = ");
+        builder.append(", zoneId=");
         builder.append(zoneId);
-        builder.append(", ");
-        builder.append("zoneType = ");
+        builder.append(", zoneType=");
         builder.append(zoneType);
-        builder.append(", ");
-        builder.append("ieeeAddress = ");
+        builder.append(", ieeeAddress=");
         builder.append(ieeeAddress);
         return builder.toString();
     }

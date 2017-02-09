@@ -56,8 +56,7 @@ public class ZclIdentifyCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>IdentifyTime</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Set the <i>IdentifyTime</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The IdentifyTime attribute specifies the remaining length of time, in seconds, that
      * the device will continue to identify itself.
@@ -84,8 +83,7 @@ public class ZclIdentifyCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>IdentifyTime</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Get the <i>IdentifyTime</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The IdentifyTime attribute specifies the remaining length of time, in seconds, that
      * the device will continue to identify itself.
@@ -112,8 +110,7 @@ public class ZclIdentifyCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>IdentifyTime</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Synchronously get the <i>IdentifyTime</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The IdentifyTime attribute specifies the remaining length of time, in seconds, that
      * the device will continue to identify itself.

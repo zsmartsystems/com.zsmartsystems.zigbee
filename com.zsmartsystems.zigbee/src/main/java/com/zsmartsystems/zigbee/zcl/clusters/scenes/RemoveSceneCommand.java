@@ -96,11 +96,9 @@ public class RemoveSceneCommand extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("groupId = ");
+        builder.append(", groupId=");
         builder.append(groupId);
-        builder.append(", ");
-        builder.append("sceneId = ");
+        builder.append(", sceneId=");
         builder.append(sceneId);
         return builder.toString();
     }

@@ -56,8 +56,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
      * <br>
@@ -83,8 +82,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Synchronously get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
      * <br>
@@ -112,8 +110,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>MeasuredValue</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Set reporting for the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
      * <br>
@@ -135,14 +132,13 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configMeasuredValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_MEASUREDVALUE, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setMeasuredValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_MEASUREDVALUE), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * <p>
-     * Get the <i>MinMeasuredValue</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
@@ -161,8 +157,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MinMeasuredValue</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Synchronously get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
@@ -182,8 +177,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MaxMeasuredValue</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
@@ -206,8 +200,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MaxMeasuredValue</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Synchronously get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
@@ -231,8 +224,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
@@ -252,8 +244,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
@@ -275,8 +266,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>Tolerance</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Set reporting for the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
@@ -292,14 +282,13 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configToleranceReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_TOLERANCE, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setToleranceReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_TOLERANCE), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * <p>
-     * Get the <i>LightSensorType</i> attribute [Attribute ID <b>4</b>].
-     * <p>
+     * Get the <i>LightSensorType</i> attribute [attribute ID <b>4</b>].
      * <p>
      * <br>
      * The LightSensorType attribute specifies the electronic type of the light sensor.
@@ -317,8 +306,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LightSensorType</i> attribute [Attribute ID <b>4</b>].
-     * <p>
+     * Synchronously get the <i>LightSensorType</i> attribute [attribute ID <b>4</b>].
      * <p>
      * <br>
      * The LightSensorType attribute specifies the electronic type of the light sensor.

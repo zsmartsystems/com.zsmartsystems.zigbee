@@ -137,7 +137,7 @@ public class ZigBeeNode {
         if (nodeDescriptor == null) {
             return "IEEE=" + ieeeAddress + " NWK=" + networkAddress;
         }
-        return "IEEE=" + ieeeAddress + " NWK=" + networkAddress + " Type=" + nodeDescriptor.getLogicalType() + " Bands="
-                + nodeDescriptor.getFrequencyBands();
+        return "IEEE=" + ieeeAddress + ", NWK=" + networkAddress + ", Type=" + nodeDescriptor.getLogicalType()
+                + ", Bands=" + nodeDescriptor.getFrequencyBands();
     }
 }

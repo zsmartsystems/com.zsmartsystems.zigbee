@@ -112,14 +112,11 @@ public class StepColorCommand extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("stepX = ");
+        builder.append(", stepX=");
         builder.append(stepX);
-        builder.append(", ");
-        builder.append("stepY = ");
+        builder.append(", stepY=");
         builder.append(stepY);
-        builder.append(", ");
-        builder.append("transitionTime = ");
+        builder.append(", transitionTime=");
         builder.append(transitionTime);
         return builder.toString();
     }

@@ -84,11 +84,9 @@ public class SetpointRaiseLowerCommand extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("mode = ");
+        builder.append(", mode=");
         builder.append(mode);
-        builder.append(", ");
-        builder.append("amount = ");
+        builder.append(", amount=");
         builder.append(amount);
         return builder.toString();
     }

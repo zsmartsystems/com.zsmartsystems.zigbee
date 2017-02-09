@@ -50,8 +50,7 @@ public class ZclOnOffCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>OnOff</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Get the <i>OnOff</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The OnOff attribute has the following values: 0 = Off, 1 = On
      * <p>
@@ -68,8 +67,7 @@ public class ZclOnOffCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>OnOff</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Synchronously get the <i>OnOff</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The OnOff attribute has the following values: 0 = Off, 1 = On
      * <p>
@@ -88,8 +86,7 @@ public class ZclOnOffCluster extends ZclCluster {
 
     /**
      * <p>
-     * Configure reporting for the <i>OnOff</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Set reporting for the <i>OnOff</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The OnOff attribute has the following values: 0 = Off, 1 = On
      * <p>
@@ -99,11 +96,10 @@ public class ZclOnOffCluster extends ZclCluster {
      *
      * @param minInterval {@link int} minimum reporting period
      * @param maxInterval {@link int} maximum reporting period
-     * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configOnOffReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return report(ATTR_ONOFF, minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setOnOffReporting(final int minInterval, final int maxInterval) {
+        return setReporting(attributes.get(ATTR_ONOFF), minInterval, maxInterval);
     }
 
     /**

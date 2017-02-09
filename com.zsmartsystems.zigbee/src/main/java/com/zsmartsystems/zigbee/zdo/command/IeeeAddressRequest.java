@@ -4,7 +4,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * IeeeAddressRequest.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class IeeeAddressRequest extends ZdoRequest {
@@ -56,7 +56,7 @@ public class IeeeAddressRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        return "IEEE Address Request " + "networkAddress=" + networkAddress + ", type=" + type + ", startIndex="
+        return "IEEE Address Request: networkAddress=" + networkAddress + ", type=" + type + ", startIndex="
                 + startIndex;
     }
 }

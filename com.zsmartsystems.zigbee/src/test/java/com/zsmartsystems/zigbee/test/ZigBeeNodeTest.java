@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.CurrentPowerModeType;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.PowerLevelType;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.PowerSourceType;
 
@@ -23,9 +24,9 @@ public class ZigBeeNodeTest {
         PowerDescriptor descriptor = new PowerDescriptor(1, 2, 4, 0xc0);
         ZigBeeNode node = new ZigBeeNode();
         node.setPowerDescriptor(descriptor);
-        assertEquals(1, node.getPowerDescriptor().getCurrentPowerMode());
-        assertEquals(PowerSourceType.DisposableBattery, node.getPowerDescriptor().getCurrentPowerSource());
-        assertEquals(PowerLevelType.Full, node.getPowerDescriptor().getPowerLevel());
+        assertEquals(CurrentPowerModeType.RECEIVER_ON_PERIODICALLY, node.getPowerDescriptor().getCurrentPowerMode());
+        assertEquals(PowerSourceType.DISPOSABLE_BATTERY, node.getPowerDescriptor().getCurrentPowerSource());
+        assertEquals(PowerLevelType.FULL, node.getPowerDescriptor().getPowerLevel());
     }
 
 }

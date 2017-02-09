@@ -78,13 +78,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private final Logger logger = LoggerFactory.getLogger(ZigBeeNetworkManager.class);
 
     /**
-     * The nodes in the ZigBee network - maps network address to
-     * {@link ZigBeeNode}
+     * The nodes in the ZigBee network - maps 16 bit network address to {@link ZigBeeNode}
      */
     private Map<Integer, ZigBeeNode> networkNodes = new TreeMap<Integer, ZigBeeNode>();
 
     /**
-     * Map of devices in the ZigBee network - maps address to
+     * Map of devices in the ZigBee network - maps {@link ZigBeeDeviceAddress} to
      * {@link ZigBeeDevice}
      */
     private Map<ZigBeeDeviceAddress, ZigBeeDevice> networkDevices = new TreeMap<ZigBeeDeviceAddress, ZigBeeDevice>();
@@ -527,6 +526,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Sets device label.
      *
+     * @deprecated
+     *             Use {@link ZigBeeDevice#setLabel}
+     *
      * @param networkAddress
      *            the network address
      * @param endPointId
@@ -534,6 +536,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param label
      *            the label
      */
+    @Deprecated
     public void setDeviceLabel(final int networkAddress, final int endPointId, final String label) {
         final ZigBeeDevice device = getDevice(new ZigBeeDeviceAddress(networkAddress, endPointId));
         device.setLabel(label);
@@ -767,8 +770,15 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
+    /**
+     * Enables or disables devices to join the network.
+     * <p>
+     * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
+     * since it allows devices to join the network without the installer knowing.
+     * 
+     * @param enable if true joining is enabled, otherwise it is disabled
+     */
     public void permitJoin(final boolean enable) {
-
         final ManagementPermitJoinRequest command = new ManagementPermitJoinRequest();
 
         if (enable) {
@@ -877,40 +887,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         return unicast(command, new ZclCustomResponseMatcher());
     }
 
-    /**
-     * Configures attribute reporting.
-     *
-     * @param zigbeeAddress the {@link ZigBeeDeviceAddress}
-     * @param clusterId the cluster ID
-     * @param attributeId the attribute ID
-     * @param minInterval the minimum interval
-     * @param maxInterval the maximum interval
-     * @param reportableChange the reportable change
-     * @return the command result future
-     */
-    public Future<CommandResult> report(final ZigBeeDeviceAddress zigbeeAddress, final int clusterId,
-            final int attributeId, final int minInterval, final int maxInterval, final Object reportableChange) {
-
-        return null;
-        // TODO: Fix the report command
-        // final ConfigureReportingCommand command = new ConfigureReportingCommand();
-        // command.setClusterId(clusterId);
-
-        // final AttributeReportingConfigurationRecord record = new AttributeReportingConfigurationRecord();
-        // record.setDirection(0);
-        // record.setAttributeIdentifier(attributeId);
-        // record.setAttributeDataType(ZclAttributeType.get(clusterId, attributeId).getZigBeeType().getId());
-        // record.setMinimumReportingInterval(minInterval);
-        // record.setMinimumReportingInterval(maxInterval);
-        // record.setReportableChange(reportableChange);
-        // record.setTimeoutPeriod(0);
-        // command.setRecords(Collections.singletonList(record));
-
-        // command.setDestinationAddress(zigbeeAddress);
-
-        // return unicast(command, new ZclCustomResponseMatcher());
-    }
-
     public void addGroup(final ZigBeeGroupAddress group) {
         synchronized (networkGroups) {
             networkGroups.put(group.getGroupId(), group);
@@ -952,7 +928,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
-    public void updateDevice(ZigBeeDevice device) {
+    public void updateDevice(final ZigBeeDevice device) {
         synchronized (networkDevices) {
             networkDevices.put(device.getDeviceAddress(), device);
         }
@@ -979,16 +955,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
-    /**
-     * Gets a device given the device {@link IeeeAddress} address
-     *
-     * @param ieeeAddress the {@link IeeeAddress}
-     * @return the {@link ZigBeeDevice}
-     */
-    public ZigBeeDevice getDevice(IeeeAddress ieeeAddress) {
-        return null;
-    }
-
     public void removeDevice(final ZigBeeAddress networkAddress) {
         final ZigBeeDevice device;
         synchronized (networkDevices) {
@@ -1003,6 +969,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
+    /**
+     * Return a {@link List} of {@link ZigBeeDevice}s known by the network
+     *
+     * @return {@link List} of {@link ZigBeeDevice}s
+     */
     public List<ZigBeeDevice> getDevices() {
         synchronized (networkDevices) {
             return new ArrayList<ZigBeeDevice>(networkDevices.values());
@@ -1010,6 +981,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     public void addNetworkNodeListener(final ZigBeeNetworkNodeListener networkNodeListener) {
+        if (networkNodeListener == null) {
+            return;
+        }
         synchronized (this) {
             final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<ZigBeeNetworkNodeListener>(
                     nodeListeners);
@@ -1046,36 +1020,84 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Gets a node give the network address
+     * Gets a {@link Set} of {@link ZigBeeNode}s known by the network
      *
-     * @param networkAddress the 16 bit network address
+     * @return {@link Set} of {@link ZigBeeNode}s
+     */
+    public Set<ZigBeeNode> getNodes() {
+        synchronized (networkDevices) {
+            return new HashSet<ZigBeeNode>(networkNodes.values());
+        }
+    }
+
+    /**
+     * Gets a node given the 16 bit network address
+     *
+     * @param networkAddress the 16 bit network address as {@link Integer}
      * @return the {@link ZigBeeNode}
      */
-    public ZigBeeNode getNode(Integer networkAddress) {
+    public ZigBeeNode getNode(final Integer networkAddress) {
         return networkNodes.get(networkAddress);
     }
 
     /**
-     * Removes a node given the network address
+     * Gets a node given the {@link IeeeAddress}
      *
-     * @param networkAddress the 16 bit network address
+     * @param ieeeAddress the {@link IeeeAddress}
+     * @return the {@link ZigBeeNode}
      */
-    public void removeNode(Integer networkAddress) {
-        final ZigBeeNode node;
+    public ZigBeeNode getNode(final IeeeAddress ieeeAddress) {
         synchronized (networkNodes) {
-            node = networkNodes.remove(networkAddress);
+            for (ZigBeeNode node : networkNodes.values()) {
+                if (node.getIeeeAddress().equals(ieeeAddress)) {
+                    return node;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Removes a {@link ZigBeeNode} from the network
+     *
+     * @param node the {@link ZigBeeNode} to remove - must not be null
+     */
+    public void removeNode(final ZigBeeNode node) {
+        if (node == null) {
+            return;
+        }
+
+        synchronized (networkNodes) {
+            // Don't update if the node is already known
+            // We especially don't want to notify listeners
+            if (!networkNodes.containsKey(node.getNetworkAddress())) {
+                return;
+            }
+            networkNodes.remove(node.getNetworkAddress());
         }
         synchronized (this) {
-            if (node != null) {
-                for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-                    listener.nodeRemoved(node);
-                }
+            for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
+                listener.nodeRemoved(node);
             }
         }
     }
 
+    /**
+     * Adds a {@link ZigBeeNode} to the network
+     *
+     * @param node the {@link ZigBeeNode} to add
+     */
     public void addNode(final ZigBeeNode node) {
+        if (node == null) {
+            return;
+        }
+
         synchronized (networkNodes) {
+            // Don't update if the node is already known
+            // We especially don't want to notify listeners
+            if (networkNodes.containsKey(node.getNetworkAddress())) {
+                return;
+            }
             networkNodes.put(node.getNetworkAddress(), node);
         }
         synchronized (this) {
@@ -1085,12 +1107,24 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
-    public void updateNode(ZigBeeNode node) {
+    /**
+     * Update a {@link ZigBeeNode} within the network
+     *
+     * @param node the {@link ZigBeeNode} to update
+     */
+    public void updateNode(final ZigBeeNode node) {
+        if (node == null) {
+            return;
+        }
+
+        synchronized (networkNodes) {
+            networkNodes.remove(node.getNetworkAddress());
+            networkNodes.put(node.getNetworkAddress(), node);
+        }
+
         synchronized (this) {
-            if (node != null) {
-                for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-                    listener.nodeUpdated(node);
-                }
+            for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
+                listener.nodeUpdated(node);
             }
         }
     }

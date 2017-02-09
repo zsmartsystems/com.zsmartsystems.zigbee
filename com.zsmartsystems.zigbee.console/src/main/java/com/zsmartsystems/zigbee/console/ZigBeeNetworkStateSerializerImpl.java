@@ -17,6 +17,8 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 
 /**
  * Serializes and deserializes the ZigBee network state.
+ *
+ * @author Tommi S.E. Laukkanen
  */
 public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSerializer {
     /**

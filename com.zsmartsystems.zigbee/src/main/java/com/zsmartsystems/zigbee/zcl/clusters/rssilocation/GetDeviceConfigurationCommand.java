@@ -61,8 +61,7 @@ public class GetDeviceConfigurationCommand extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("targetAddress = ");
+        builder.append(", targetAddress=");
         builder.append(targetAddress);
         return builder.toString();
     }

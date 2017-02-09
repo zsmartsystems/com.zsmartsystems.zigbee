@@ -88,11 +88,9 @@ public class ZoneEnrollResponse extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("enrollResponseCode = ");
+        builder.append(", enrollResponseCode=");
         builder.append(enrollResponseCode);
-        builder.append(", ");
-        builder.append("zoneId = ");
+        builder.append(", zoneId=");
         builder.append(zoneId);
         return builder.toString();
     }

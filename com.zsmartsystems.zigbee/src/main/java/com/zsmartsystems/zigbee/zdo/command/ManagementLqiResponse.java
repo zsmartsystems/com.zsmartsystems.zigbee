@@ -7,7 +7,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
  * ManagementLqiResponse.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class ManagementLqiResponse extends ZdoCommand implements ZdoResponse {
@@ -88,7 +88,7 @@ public class ManagementLqiResponse extends ZdoCommand implements ZdoResponse {
 
     @Override
     public String toString() {
-        return "Management LQI Response " + "status=" + status + ", sourceAddress=" + sourceAddress + ", startIndex="
+        return "Management LQI Response: status=" + status + ", sourceAddress=" + sourceAddress + ", startIndex="
                 + startIndex + ", numberOfNeighbors=" + numberOfNeighbors + ", neighbors=" + Arrays.toString(neighbors);
     }
 

@@ -5,7 +5,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
  * ManagementPermitJoinResponse.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class ManagementPermitJoinResponse extends ZdoCommand implements ZdoResponse {
@@ -46,6 +46,6 @@ public class ManagementPermitJoinResponse extends ZdoCommand implements ZdoRespo
 
     @Override
     public String toString() {
-        return "ManagementPermitJoinResponse " + "sourceAddress=" + sourceAddress + ", status=" + status;
+        return "ManagementPermitJoinResponse: sourceAddress=" + sourceAddress + ", status=" + status;
     }
 }

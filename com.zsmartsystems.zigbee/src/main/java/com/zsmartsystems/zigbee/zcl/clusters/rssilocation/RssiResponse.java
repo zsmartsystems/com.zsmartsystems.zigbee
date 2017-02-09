@@ -176,23 +176,17 @@ public class RssiResponse extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("replyingDevice = ");
+        builder.append(", replyingDevice=");
         builder.append(replyingDevice);
-        builder.append(", ");
-        builder.append("coordinate1 = ");
+        builder.append(", coordinate1=");
         builder.append(coordinate1);
-        builder.append(", ");
-        builder.append("coordinate2 = ");
+        builder.append(", coordinate2=");
         builder.append(coordinate2);
-        builder.append(", ");
-        builder.append("coordinate3 = ");
+        builder.append(", coordinate3=");
         builder.append(coordinate3);
-        builder.append(", ");
-        builder.append("rssi = ");
+        builder.append(", rssi=");
         builder.append(rssi);
-        builder.append(", ");
-        builder.append("numberRssiMeasurements = ");
+        builder.append(", numberRssiMeasurements=");
         builder.append(numberRssiMeasurements);
         return builder.toString();
     }

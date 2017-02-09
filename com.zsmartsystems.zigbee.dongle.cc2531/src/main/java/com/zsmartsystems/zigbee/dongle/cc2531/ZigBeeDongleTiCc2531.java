@@ -366,8 +366,6 @@ public class ZigBeeDongleTiCc2531
             return;
         }
 
-        logger.debug("Received Async Cmd: {}", packet);
-
         if (packet.getCMD().get16BitValue() == ZToolCMD.ZDO_SIMPLE_DESC_RSP) {
             final ZDO_SIMPLE_DESC_RSP message = (ZDO_SIMPLE_DESC_RSP) packet;
 

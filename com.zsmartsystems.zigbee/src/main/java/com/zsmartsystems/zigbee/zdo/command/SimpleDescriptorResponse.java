@@ -7,8 +7,9 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
  * SimpleDescriptorResponse.
- * 
+ *
  * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
 public class SimpleDescriptorResponse extends ZdoCommand implements ZdoResponse {
     /**
@@ -141,7 +142,7 @@ public class SimpleDescriptorResponse extends ZdoCommand implements ZdoResponse 
 
     @Override
     public String toString() {
-        return "Simple Descriptor Response " + "deviceId=" + deviceId + ", sourceAddress=" + sourceAddress + ", status="
+        return "Simple Descriptor Response: deviceId=" + deviceId + ", sourceAddress=" + sourceAddress + ", status="
                 + status + ", profileId=" + profileId + ", deviceVersion=" + deviceVersion + ", networkAddress="
                 + networkAddress + ", endpoint=" + endpoint + ", inputClusters=" + inputClusters.toString()
                 + ", outputClusters=" + outputClusters.toString();

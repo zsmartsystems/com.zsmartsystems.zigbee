@@ -4,7 +4,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * ManagementPermitJoinRequest.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class ManagementPermitJoinRequest extends ZdoRequest {
@@ -59,7 +59,7 @@ public class ManagementPermitJoinRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        return "ManagementPermitJoinRequest " + "addressingMode=" + addressingMode + ", destinationAddress="
+        return "ManagementPermitJoinRequest: addressingMode=" + addressingMode + ", destinationAddress="
                 + destinationAddress + ", duration=" + duration + ", trustCenterSignificance="
                 + trustCenterSignificance;
     }

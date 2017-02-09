@@ -188,23 +188,17 @@ public class ViewSceneResponse extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("status = ");
+        builder.append(", status=");
         builder.append(status);
-        builder.append(", ");
-        builder.append("groupId = ");
+        builder.append(", groupId=");
         builder.append(groupId);
-        builder.append(", ");
-        builder.append("sceneId = ");
+        builder.append(", sceneId=");
         builder.append(sceneId);
-        builder.append(", ");
-        builder.append("transitionTime = ");
+        builder.append(", transitionTime=");
         builder.append(transitionTime);
-        builder.append(", ");
-        builder.append("sceneName = ");
+        builder.append(", sceneName=");
         builder.append(sceneName);
-        builder.append(", ");
-        builder.append("extensionFieldSets = ");
+        builder.append(", extensionFieldSets=");
         builder.append(extensionFieldSets);
         return builder.toString();
     }

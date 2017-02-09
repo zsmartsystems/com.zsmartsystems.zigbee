@@ -42,6 +42,9 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * ZigBee command line console is an example usage of simple ZigBee API.
  * This implementation is experimental.
+ *
+ * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
 public final class ZigBeeConsole {
     /**
@@ -1376,8 +1379,14 @@ public final class ZigBeeConsole {
                 reportableChange = parseValue(args[6], attribute.getDataType());
             }
 
-            final CommandResult result = zigbeeApi.report(device.getDeviceAddress(), clusterId, attributeId,
-                    minInterval, maxInterval, reportableChange).get();
+            ZclAttribute zclAttribute = cluster.getAttribute(attributeId);
+            if (zclAttribute == null) {
+                out.println("Attribute not known.");
+                return false;
+            }
+
+            final CommandResult result = cluster.setReporting(zclAttribute, minInterval, maxInterval, reportableChange)
+                    .get();
             if (result.isSuccess()) {
                 final ConfigureReportingResponse response = result.getResponse();
                 final int statusCode = response.getRecords().get(0).getStatus();
@@ -1445,8 +1454,13 @@ public final class ZigBeeConsole {
                 reportableChange = parseValue(args[4], attribute.getDataType());
             }
 
-            final CommandResult result = zigbeeApi
-                    .report(device.getDeviceAddress(), clusterId, attributeId, 0, 0xffff, reportableChange).get();
+            ZclAttribute zclAttribute = cluster.getAttribute(attributeId);
+            if (zclAttribute == null) {
+                out.println("Attribute not known.");
+                return false;
+            }
+
+            final CommandResult result = cluster.setReporting(zclAttribute, 0, 0xffff, reportableChange).get();
             if (result.isSuccess()) {
                 final ConfigureReportingResponse response = result.getResponse();
                 final int statusCode = response.getRecords().get(0).getStatus();

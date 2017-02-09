@@ -80,8 +80,7 @@ public class WriteAttributesNoResponse extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("records = ");
+        builder.append(", records=");
         builder.append(records);
         return builder.toString();
     }

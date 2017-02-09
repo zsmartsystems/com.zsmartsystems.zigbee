@@ -98,8 +98,8 @@ public class UnbindRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        return "Unbind Request " + "destinationAddress=" + destinationAddress + ", bindSourceAddress="
-                + bindSourceAddress + ", bindSourceEndpoint=" + bindSourceEndpoint + ", bindCluster=" + bindCluster
+        return "Unbind Request: destinationAddress=" + destinationAddress + ", bindSourceAddress=" + bindSourceAddress
+                + ", bindSourceEndpoint=" + bindSourceEndpoint + ", bindCluster=" + bindCluster
                 + ", bindDestinationAddressingMode=" + bindDestinationAddressingMode + ", bindDestinationAddress="
                 + bindDestinationAddress + ", bindDestinationEndpoint=" + bindDestinationEndpoint;
     }

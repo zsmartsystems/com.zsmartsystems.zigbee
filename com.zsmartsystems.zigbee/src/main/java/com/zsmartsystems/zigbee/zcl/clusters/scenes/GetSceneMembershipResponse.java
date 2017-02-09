@@ -165,20 +165,15 @@ public class GetSceneMembershipResponse extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("status = ");
+        builder.append(", status=");
         builder.append(status);
-        builder.append(", ");
-        builder.append("capacity = ");
+        builder.append(", capacity=");
         builder.append(capacity);
-        builder.append(", ");
-        builder.append("groupId = ");
+        builder.append(", groupId=");
         builder.append(groupId);
-        builder.append(", ");
-        builder.append("sceneCount = ");
+        builder.append(", sceneCount=");
         builder.append(sceneCount);
-        builder.append(", ");
-        builder.append("sceneList = ");
+        builder.append(", sceneList=");
         builder.append(sceneList);
         return builder.toString();
     }

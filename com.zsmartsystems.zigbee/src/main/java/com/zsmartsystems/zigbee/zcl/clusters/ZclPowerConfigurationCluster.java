@@ -73,8 +73,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MainsVoltage</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Get the <i>MainsVoltage</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The MainsVoltage attribute is 16-bits in length and specifies the actual (measured)
      * RMS voltage (or DC voltage in the case of a DC supply) currently applied to the
@@ -93,8 +92,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MainsVoltage</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Synchronously get the <i>MainsVoltage</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The MainsVoltage attribute is 16-bits in length and specifies the actual (measured)
      * RMS voltage (or DC voltage in the case of a DC supply) currently applied to the
@@ -114,8 +112,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MainsFrequency</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Get the <i>MainsFrequency</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The MainsFrequency attribute is 8-bits in length and represents the frequency, in
@@ -146,8 +143,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MainsFrequency</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Synchronously get the <i>MainsFrequency</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The MainsFrequency attribute is 8-bits in length and represents the frequency, in
@@ -180,8 +176,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>MainsAlarmMask</i> attribute [Attribute ID <b>16</b>].
-     * <p>
+     * Set the <i>MainsAlarmMask</i> attribute [attribute ID <b>16</b>].
      * <p>
      * <br>
      * The MainsAlarmMask attribute is 8-bits in length and specifies which mains
@@ -200,8 +195,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MainsAlarmMask</i> attribute [Attribute ID <b>16</b>].
-     * <p>
+     * Get the <i>MainsAlarmMask</i> attribute [attribute ID <b>16</b>].
      * <p>
      * <br>
      * The MainsAlarmMask attribute is 8-bits in length and specifies which mains
@@ -220,8 +214,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MainsAlarmMask</i> attribute [Attribute ID <b>16</b>].
-     * <p>
+     * Synchronously get the <i>MainsAlarmMask</i> attribute [attribute ID <b>16</b>].
      * <p>
      * <br>
      * The MainsAlarmMask attribute is 8-bits in length and specifies which mains
@@ -242,8 +235,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>MainsVoltageMinThreshold</i> attribute [Attribute ID <b>17</b>].
-     * <p>
+     * Set the <i>MainsVoltageMinThreshold</i> attribute [attribute ID <b>17</b>].
      * <p>
      * <br>
      * The MainsVoltageMinThreshold attribute is 16-bits in length and specifies the
@@ -275,8 +267,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MainsVoltageMinThreshold</i> attribute [Attribute ID <b>17</b>].
-     * <p>
+     * Get the <i>MainsVoltageMinThreshold</i> attribute [attribute ID <b>17</b>].
      * <p>
      * <br>
      * The MainsVoltageMinThreshold attribute is 16-bits in length and specifies the
@@ -308,8 +299,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MainsVoltageMinThreshold</i> attribute [Attribute ID <b>17</b>].
-     * <p>
+     * Synchronously get the <i>MainsVoltageMinThreshold</i> attribute [attribute ID <b>17</b>].
      * <p>
      * <br>
      * The MainsVoltageMinThreshold attribute is 16-bits in length and specifies the
@@ -343,8 +333,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>MainsVoltageMaxThreshold</i> attribute [Attribute ID <b>18</b>].
-     * <p>
+     * Set the <i>MainsVoltageMaxThreshold</i> attribute [attribute ID <b>18</b>].
      * <p>
      * <br>
      * The MainsVoltageMaxThreshold attribute is 16-bits in length and specifies the
@@ -376,8 +365,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MainsVoltageMaxThreshold</i> attribute [Attribute ID <b>18</b>].
-     * <p>
+     * Get the <i>MainsVoltageMaxThreshold</i> attribute [attribute ID <b>18</b>].
      * <p>
      * <br>
      * The MainsVoltageMaxThreshold attribute is 16-bits in length and specifies the
@@ -409,8 +397,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MainsVoltageMaxThreshold</i> attribute [Attribute ID <b>18</b>].
-     * <p>
+     * Synchronously get the <i>MainsVoltageMaxThreshold</i> attribute [attribute ID <b>18</b>].
      * <p>
      * <br>
      * The MainsVoltageMaxThreshold attribute is 16-bits in length and specifies the
@@ -444,8 +431,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>MainsVoltageDwellTripPoint</i> attribute [Attribute ID <b>19</b>].
-     * <p>
+     * Set the <i>MainsVoltageDwellTripPoint</i> attribute [attribute ID <b>19</b>].
      * <p>
      * <br>
      * The MainsVoltageDwellTripPoint attribute is 16-bits in length and specifies the
@@ -468,8 +454,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>MainsVoltageDwellTripPoint</i> attribute [Attribute ID <b>19</b>].
-     * <p>
+     * Get the <i>MainsVoltageDwellTripPoint</i> attribute [attribute ID <b>19</b>].
      * <p>
      * <br>
      * The MainsVoltageDwellTripPoint attribute is 16-bits in length and specifies the
@@ -492,8 +477,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>MainsVoltageDwellTripPoint</i> attribute [Attribute ID <b>19</b>].
-     * <p>
+     * Synchronously get the <i>MainsVoltageDwellTripPoint</i> attribute [attribute ID <b>19</b>].
      * <p>
      * <br>
      * The MainsVoltageDwellTripPoint attribute is 16-bits in length and specifies the
@@ -517,8 +501,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>BatteryVoltage</i> attribute [Attribute ID <b>32</b>].
-     * <p>
+     * Get the <i>BatteryVoltage</i> attribute [attribute ID <b>32</b>].
      * <p>
      * <br>
      * The BatteryVoltage attribute is 8-bits in length and specifies the current actual
@@ -538,8 +521,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>BatteryVoltage</i> attribute [Attribute ID <b>32</b>].
-     * <p>
+     * Synchronously get the <i>BatteryVoltage</i> attribute [attribute ID <b>32</b>].
      * <p>
      * <br>
      * The BatteryVoltage attribute is 8-bits in length and specifies the current actual
@@ -561,8 +543,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>BatteryManufacturer</i> attribute [Attribute ID <b>48</b>].
-     * <p>
+     * Set the <i>BatteryManufacturer</i> attribute [attribute ID <b>48</b>].
      * <p>
      * <br>
      * The BatteryManufacturer attribute is a maximum of 16 bytes in length and
@@ -581,8 +562,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>BatteryManufacturer</i> attribute [Attribute ID <b>48</b>].
-     * <p>
+     * Get the <i>BatteryManufacturer</i> attribute [attribute ID <b>48</b>].
      * <p>
      * <br>
      * The BatteryManufacturer attribute is a maximum of 16 bytes in length and
@@ -601,8 +581,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>BatteryManufacturer</i> attribute [Attribute ID <b>48</b>].
-     * <p>
+     * Synchronously get the <i>BatteryManufacturer</i> attribute [attribute ID <b>48</b>].
      * <p>
      * <br>
      * The BatteryManufacturer attribute is a maximum of 16 bytes in length and
@@ -623,8 +602,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>BatterySize</i> attribute [Attribute ID <b>49</b>].
-     * <p>
+     * Set the <i>BatterySize</i> attribute [attribute ID <b>49</b>].
      * <p>
      * <br>
      * The BatterySize attribute is an enumeration which specifies the type of battery
@@ -643,8 +621,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>BatterySize</i> attribute [Attribute ID <b>49</b>].
-     * <p>
+     * Get the <i>BatterySize</i> attribute [attribute ID <b>49</b>].
      * <p>
      * <br>
      * The BatterySize attribute is an enumeration which specifies the type of battery
@@ -663,8 +640,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>BatterySize</i> attribute [Attribute ID <b>49</b>].
-     * <p>
+     * Synchronously get the <i>BatterySize</i> attribute [attribute ID <b>49</b>].
      * <p>
      * <br>
      * The BatterySize attribute is an enumeration which specifies the type of battery
@@ -685,8 +661,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>BatteryAHrRating</i> attribute [Attribute ID <b>50</b>].
-     * <p>
+     * Set the <i>BatteryAHrRating</i> attribute [attribute ID <b>50</b>].
      * <p>
      * <br>
      * The BatteryAHrRating attribute is 16-bits in length and specifies the Ampere-hour
@@ -705,8 +680,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>BatteryAHrRating</i> attribute [Attribute ID <b>50</b>].
-     * <p>
+     * Get the <i>BatteryAHrRating</i> attribute [attribute ID <b>50</b>].
      * <p>
      * <br>
      * The BatteryAHrRating attribute is 16-bits in length and specifies the Ampere-hour
@@ -725,8 +699,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>BatteryAHrRating</i> attribute [Attribute ID <b>50</b>].
-     * <p>
+     * Synchronously get the <i>BatteryAHrRating</i> attribute [attribute ID <b>50</b>].
      * <p>
      * <br>
      * The BatteryAHrRating attribute is 16-bits in length and specifies the Ampere-hour
@@ -747,8 +720,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>BatteryQuantity</i> attribute [Attribute ID <b>51</b>].
-     * <p>
+     * Set the <i>BatteryQuantity</i> attribute [attribute ID <b>51</b>].
      * <p>
      * <br>
      * The BatteryQuantity attribute is 8-bits in length and specifies the number of
@@ -767,8 +739,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>BatteryQuantity</i> attribute [Attribute ID <b>51</b>].
-     * <p>
+     * Get the <i>BatteryQuantity</i> attribute [attribute ID <b>51</b>].
      * <p>
      * <br>
      * The BatteryQuantity attribute is 8-bits in length and specifies the number of
@@ -787,8 +758,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>BatteryQuantity</i> attribute [Attribute ID <b>51</b>].
-     * <p>
+     * Synchronously get the <i>BatteryQuantity</i> attribute [attribute ID <b>51</b>].
      * <p>
      * <br>
      * The BatteryQuantity attribute is 8-bits in length and specifies the number of
@@ -809,8 +779,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>BatteryRatedVoltage</i> attribute [Attribute ID <b>52</b>].
-     * <p>
+     * Set the <i>BatteryRatedVoltage</i> attribute [attribute ID <b>52</b>].
      * <p>
      * <br>
      * The BatteryRatedVoltage attribute is 8-bits in length and specifies the rated
@@ -829,8 +798,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>BatteryRatedVoltage</i> attribute [Attribute ID <b>52</b>].
-     * <p>
+     * Get the <i>BatteryRatedVoltage</i> attribute [attribute ID <b>52</b>].
      * <p>
      * <br>
      * The BatteryRatedVoltage attribute is 8-bits in length and specifies the rated
@@ -849,8 +817,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>BatteryRatedVoltage</i> attribute [Attribute ID <b>52</b>].
-     * <p>
+     * Synchronously get the <i>BatteryRatedVoltage</i> attribute [attribute ID <b>52</b>].
      * <p>
      * <br>
      * The BatteryRatedVoltage attribute is 8-bits in length and specifies the rated
@@ -871,8 +838,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>BatteryAlarmMask</i> attribute [Attribute ID <b>53</b>].
-     * <p>
+     * Set the <i>BatteryAlarmMask</i> attribute [attribute ID <b>53</b>].
      * <p>
      * <br>
      * The BatteryAlarmMask attribute is 8-bits in length and specifies which battery
@@ -891,8 +857,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>BatteryAlarmMask</i> attribute [Attribute ID <b>53</b>].
-     * <p>
+     * Get the <i>BatteryAlarmMask</i> attribute [attribute ID <b>53</b>].
      * <p>
      * <br>
      * The BatteryAlarmMask attribute is 8-bits in length and specifies which battery
@@ -911,8 +876,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>BatteryAlarmMask</i> attribute [Attribute ID <b>53</b>].
-     * <p>
+     * Synchronously get the <i>BatteryAlarmMask</i> attribute [attribute ID <b>53</b>].
      * <p>
      * <br>
      * The BatteryAlarmMask attribute is 8-bits in length and specifies which battery
@@ -933,8 +897,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>BatteryVoltageMinThreshold</i> attribute [Attribute ID <b>54</b>].
-     * <p>
+     * Set the <i>BatteryVoltageMinThreshold</i> attribute [attribute ID <b>54</b>].
      * <p>
      * <br>
      * The BatteryVoltageMinThreshold attribute is 8-bits in length and specifies the low
@@ -961,8 +924,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>BatteryVoltageMinThreshold</i> attribute [Attribute ID <b>54</b>].
-     * <p>
+     * Get the <i>BatteryVoltageMinThreshold</i> attribute [attribute ID <b>54</b>].
      * <p>
      * <br>
      * The BatteryVoltageMinThreshold attribute is 8-bits in length and specifies the low
@@ -989,8 +951,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>BatteryVoltageMinThreshold</i> attribute [Attribute ID <b>54</b>].
-     * <p>
+     * Synchronously get the <i>BatteryVoltageMinThreshold</i> attribute [attribute ID <b>54</b>].
      * <p>
      * <br>
      * The BatteryVoltageMinThreshold attribute is 8-bits in length and specifies the low

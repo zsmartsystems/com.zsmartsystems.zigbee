@@ -153,20 +153,15 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("power = ");
+        builder.append(", power=");
         builder.append(power);
-        builder.append(", ");
-        builder.append("pathLossExponent = ");
+        builder.append(", pathLossExponent=");
         builder.append(pathLossExponent);
-        builder.append(", ");
-        builder.append("calculationPeriod = ");
+        builder.append(", calculationPeriod=");
         builder.append(calculationPeriod);
-        builder.append(", ");
-        builder.append("numberRssiMeasurements = ");
+        builder.append(", numberRssiMeasurements=");
         builder.append(numberRssiMeasurements);
-        builder.append(", ");
-        builder.append("reportingPeriod = ");
+        builder.append(", reportingPeriod=");
         builder.append(reportingPeriod);
         return builder.toString();
     }

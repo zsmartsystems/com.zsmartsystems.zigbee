@@ -28,7 +28,12 @@ import com.zsmartsystems.zigbee.zdo.command.UserDescriptorSet;
 
 /**
  * ZigBee API. This API is experimental and under development.
- * 
+ *
+ * @deprecated
+ *             This interface will be removed in (near) future. Users should use the {@link ZigBeeNetworkManager} and
+ *             interfaces in the {@link ZclCluster}, {@link ZigBeeDevice}, {@link ZigBeeNode} (etc) classes as it
+ *             provides a more object oriented interface.
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -388,10 +393,10 @@ public class ZigBeeApi {
      * @param reportableChange the reportable change
      * @return the command result future
      */
-    public Future<CommandResult> report(final ZigBeeDeviceAddress device, final int clusterId, final int attributeId,
-            final int minInterval, final int maxInterval, final Object reportableChange) {
-        return networkManager.report(device, clusterId, attributeId, minInterval, maxInterval, reportableChange);
-    }
+    // public Future<CommandResult> report(final ZigBeeDeviceAddress device, final int clusterId, final int attributeId,
+    // final int minInterval, final int maxInterval, final Object reportableChange) {
+    // return networkManager.setReporting(device, clusterId, attributeId, minInterval, maxInterval, reportableChange);
+    // }
 
     /**
      * Permit joining.

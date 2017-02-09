@@ -6,7 +6,39 @@ import com.zsmartsystems.zigbee.zcl.ZclListItemField;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Read Attribute Status Record field.
+ * Attribute Status Record field.
+ * <p>
+ * <b>minInterval</b>:
+ * The minimum reporting interval field is 16 bits in length and shall contain the
+ * minimum interval, in seconds, between issuing reports of the specified attribute.
+ * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+ * imposed by the specification of the cluster using this reporting mechanism or by
+ * the applicable profile.
+ * <p>
+ * <b>maxInterval</b>:
+ * The maximum reporting interval field is 16 bits in length and shall contain the
+ * maximum interval, in seconds, between issuing reports of the specified attribute.
+ * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+ * attribute, and the configuration information for that attribute need not be
+ * maintained.
+ * <p>
+ * <b>reportableChange</b>:
+ * The reportable change field shall contain the minimum change to the attribute that
+ * will result in a report being issued. This field is of variable length. For attributes
+ * with 'analog' data type the field has the same data type as the attribute. The sign (if any) of the reportable
+ * change field is ignored.
+ * <p>
+ * <b>timeout</b>:
+ * The timeout period field is 16 bits in length and shall contain the maximum
+ * expected time, in seconds, between received reports for the attribute specified in
+ * the attribute identifier field. If more time than this elapses between reports, this
+ * may be an indication that there is a problem with reporting.
+ * If timeout is set to 0x0000, reports of the attribute are not subject to timeout.
+ * Note that, for a server/client connection to work properly using automatic
+ * reporting, the timeout value set for attribute reports to be received by the client (or
+ * server) cluster must be set somewhat higher than the maximum reporting interval
+ * set for the attribute on the server (or client) cluster.
+ *
  *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
@@ -26,18 +58,45 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
     private ZclDataType attributeDataType;
     /**
      * The minimum reporting interval.
+     * <p>
+     * The minimum reporting interval field is 16 bits in length and shall contain the
+     * minimum interval, in seconds, between issuing reports of the specified attribute.
+     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+     * imposed by the specification of the cluster using this reporting mechanism or by
+     * the applicable profile.
      */
     private int minimumReportingInterval;
     /**
      * The maximum reporting interval.
+     * <p>
+     * The maximum reporting interval field is 16 bits in length and shall contain the
+     * maximum interval, in seconds, between issuing reports of the specified attribute.
+     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+     * attribute, and the configuration information for that attribute need not be
+     * maintained.
      */
     private int maximumReportingInterval;
     /**
      * The reportable change.
+     * <p>
+     * The reportable change field shall contain the minimum change to the attribute that
+     * will result in a report being issued. This field is of variable length. For attributes
+     * with 'analog' data type the field has the same data type as the attribute. The sign (if any) of the reportable
+     * change field is ignored.
      */
     private Object reportableChange;
     /**
      * The maximum reporting interval.
+     * <p>
+     * The timeout period field is 16 bits in length and shall contain the maximum
+     * expected time, in seconds, between received reports for the attribute specified in
+     * the attribute identifier field. If more time than this elapses between reports, this
+     * may be an indication that there is a problem with reporting.
+     * If timeout is set to 0x0000, reports of the attribute are not subject to timeout.
+     * Note that, for a server/client connection to work properly using automatic
+     * reporting, the timeout value set for attribute reports to be received by the client (or
+     * server) cluster must be set somewhat higher than the maximum reporting interval
+     * set for the attribute on the server (or client) cluster.
      */
     private int timeoutPeriod;
 
@@ -97,6 +156,12 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     /**
      * Gets maximum reporting interval.
+     * <p>
+     * The maximum reporting interval field is 16 bits in length and shall contain the
+     * maximum interval, in seconds, between issuing reports of the specified attribute.
+     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+     * attribute, and the configuration information for that attribute need not be
+     * maintained.
      *
      * @return the maximum reporting interval
      */
@@ -106,6 +171,12 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     /**
      * Sets maximum reporting interval.
+     * <p>
+     * The maximum reporting interval field is 16 bits in length and shall contain the
+     * maximum interval, in seconds, between issuing reports of the specified attribute.
+     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+     * attribute, and the configuration information for that attribute need not be
+     * maintained.
      *
      * @param maximumReportingInterval the maximum reporting interval
      */
@@ -115,6 +186,12 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     /**
      * Gets minimum reporting interval.
+     * <p>
+     * The minimum reporting interval field is 16 bits in length and shall contain the
+     * minimum interval, in seconds, between issuing reports of the specified attribute.
+     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+     * imposed by the specification of the cluster using this reporting mechanism or by
+     * the applicable profile.
      *
      * @return the minimum reporting interval
      */
@@ -124,6 +201,12 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     /**
      * Sets minimum reporting interval.
+     * <p>
+     * The minimum reporting interval field is 16 bits in length and shall contain the
+     * minimum interval, in seconds, between issuing reports of the specified attribute.
+     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+     * imposed by the specification of the cluster using this reporting mechanism or by
+     * the applicable profile.
      *
      * @param minimumReportingInterval the minimum reporting interval
      */
@@ -133,6 +216,11 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     /**
      * Gets reportable change.
+     * <p>
+     * The reportable change field shall contain the minimum change to the attribute that
+     * will result in a report being issued. This field is of variable length. For attributes
+     * with 'analog' data type the field has the same data type as the attribute. The sign (if any) of the reportable
+     * change field is ignored.
      *
      * @return the reportable change
      */
@@ -142,6 +230,11 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     /**
      * Sets reportable change.
+     * <p>
+     * The reportable change field shall contain the minimum change to the attribute that
+     * will result in a report being issued. This field is of variable length. For attributes
+     * with 'analog' data type the field has the same data type as the attribute. The sign (if any) of the reportable
+     * change field is ignored.
      *
      * @param reportableChange the reportable change
      */
@@ -151,6 +244,16 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     /**
      * Gets timeout period.
+     * <p>
+     * The timeout period field is 16 bits in length and shall contain the maximum
+     * expected time, in seconds, between received reports for the attribute specified in
+     * the attribute identifier field. If more time than this elapses between reports, this
+     * may be an indication that there is a problem with reporting.
+     * If timeout is set to 0x0000, reports of the attribute are not subject to timeout.
+     * Note that, for a server/client connection to work properly using automatic
+     * reporting, the timeout value set for attribute reports to be received by the client (or
+     * server) cluster must be set somewhat higher than the maximum reporting interval
+     * set for the attribute on the server (or client) cluster.
      *
      * @return the timeout period
      */
@@ -160,6 +263,16 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     /**
      * Sets timeout period.
+     * <p>
+     * The timeout period field is 16 bits in length and shall contain the maximum
+     * expected time, in seconds, between received reports for the attribute specified in
+     * the attribute identifier field. If more time than this elapses between reports, this
+     * may be an indication that there is a problem with reporting.
+     * If timeout is set to 0x0000, reports of the attribute are not subject to timeout.
+     * Note that, for a server/client connection to work properly using automatic
+     * reporting, the timeout value set for attribute reports to be received by the client (or
+     * server) cluster must be set somewhat higher than the maximum reporting interval
+     * set for the attribute on the server (or client) cluster.
      *
      * @param timeoutPeriod the timeout period
      */
@@ -173,14 +286,26 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
         serializer.appendZigBeeType(attributeIdentifier, ZclDataType.UNSIGNED_16_BIT_INTEGER);
 
         if (direction == 1) {
-            // CASE OF ATTRIBUTE CONFIGURATION SENT TO CLIENT
-            // Size of: Direction + Attribute Id + Timeout
+            // If direction is set to 0x01, then the timeout period field is included in the payload,
+            // and the attribute data type field, the minimum reporting interval field, the
+            // maximum reporting interval field and the reportable change field are omitted. The
+            // record is sent to a cluster client (or server) to configure how it should expect
+            // reports from a server (or client) of the same cluster.
             serializer.appendZigBeeType(timeoutPeriod, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         } else {
+            // If direction is set to 0x00, then the attribute data type field, the minimum
+            // reporting interval field, the maximum reporting interval field and the reportable
+            // change field are included in the payload, and the timeout period field is omitted.
+            // The record is sent to a cluster server (or client) to configure how it sends reports to
+            // a client (or server) of the same cluster.
             serializer.appendZigBeeType(attributeDataType.getId(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
             serializer.appendZigBeeType(minimumReportingInterval, ZclDataType.UNSIGNED_16_BIT_INTEGER);
             serializer.appendZigBeeType(maximumReportingInterval, ZclDataType.UNSIGNED_16_BIT_INTEGER);
 
+            // The reportable change field shall contain the minimum change to the attribute that
+            // will result in a report being issued. This field is of variable length. For attributes
+            // with 'analog' data typethe field has the same data type as the attribute. The sign (if any) of the
+            // reportable change field is ignored. For attributes of 'discrete' data type this field is omitted.
             if (attributeDataType.isAnalog()) {
                 serializer.appendZigBeeType(reportableChange, attributeDataType);
             }
@@ -192,17 +317,27 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
         direction = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         if (direction == 1) {
-            // CASE OF ATTRIBUTE CONFIGURATION SENT TO CLIENT
-            // Size of: Direction + Attribute Id + Timeout
+            // If direction is set to 0x01, then the timeout period field is included in the payload,
+            // and the attribute data type field, the minimum reporting interval field, the
+            // maximum reporting interval field and the reportable change field are omitted. The
+            // record is sent to a cluster client (or server) to configure how it should expect
+            // reports from a server (or client) of the same cluster.
             timeoutPeriod = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         } else {
+            // If direction is set to 0x00, then the attribute data type field, the minimum
+            // reporting interval field, the maximum reporting interval field and the reportable
+            // change field are included in the payload, and the timeout period field is omitted.
+            // The record is sent to a cluster server (or client) to configure how it sends reports to
+            // a client (or server) of the same cluster.
             attributeDataType = ZclDataType
                     .getType((int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER));
             minimumReportingInterval = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
             maximumReportingInterval = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
             if (attributeDataType.isAnalog()) {
-                // CASE OF ATTRIBUTE CONFIGURATION SENT TO SERVER OF A ANALOG ATTRIBUTE
-                // Size of: Direction + Attribute Id + Data Type + Minimum + Maximum + Change
+                // The reportable change field shall contain the minimum change to the attribute that
+                // will result in a report being issued. This field is of variable length. For attributes
+                // with 'analog' data typethe field has the same data type as the attribute. The sign (if any) of the
+                // reportable change field is ignored. For attributes of 'discrete' data type this field is omitted.
                 reportableChange = deserializer.readZigBeeType(attributeDataType);
             }
         }

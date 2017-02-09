@@ -26,10 +26,13 @@ import com.zsmartsystems.zigbee.zdo.command.UserDescriptorResponse;
 /**
  * <p>
  * ZigBee network discoverer is used to discover devices in the network.
- * </p>
+ * <p>
+ * Notifications will be sent to the listeners when nodes and devices are discovered.
+ * Device listeners are always notified first as each device discovery completes.
+ * Once a node is fully discovered and all its devices are included into the network,
+ * we can notify the node listeners.
  * <p>
  * This class is thread safe.
- * </p>
  *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
@@ -40,8 +43,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
      */
     private final static Logger logger = LoggerFactory.getLogger(ZigBeeNetworkDiscoverer.class);
     /**
-     * Minimum time before information can be queried again for same network
-     * address or endpoint.
+     * Minimum time before information can be queried again for same network address or endpoint.
      */
     private static final int MINIMUM_REQUERY_TIME_MILLIS = 10000;
     /**
@@ -90,8 +92,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
             .synchronizedMap(new HashMap<ZigBeeDeviceAddress, Long>());
 
     /**
-     * List of devices being discovered so we know when to notify of node
-     * updates
+     * List of devices being discovered so we know when to notify of node updates
      */
     private final List<ZigBeeDeviceAddress> discoveryProgress = new ArrayList<ZigBeeDeviceAddress>();
 
@@ -404,7 +405,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
         // Remove this device from the progress list
         discoveryProgress.remove(networkAddress);
 
-        // Check the progress list to see if there
+        // Check the progress list to see if there are still devices to be discovered on this node
         boolean deviceOngoing = false;
         for (ZigBeeDeviceAddress address : discoveryProgress) {
             if (address.getAddress() == networkAddress.getAddress()) {

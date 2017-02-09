@@ -232,9 +232,9 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         boolean b = RESEND_ONLY_EXCEPTION_DEFAULT;
         try {
             b = Boolean.parseBoolean(System.getProperty(RESEND_ONLY_EXCEPTION_KEY));
-            logger.trace("Using RESEND_MAX_RETRY set from enviroment {}", aux);
+            logger.trace("Using RESEND_ONLY_EXCEPTION set from enviroment {}", aux);
         } catch (NumberFormatException ex) {
-            logger.trace("Using RESEND_MAX_RETRY set as DEFAULT {}", aux);
+            logger.trace("Using RESEND_ONLY_EXCEPTION set as DEFAULT {}", aux);
         }
         RESEND_ONLY_EXCEPTION = b;
 
@@ -386,7 +386,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     private void setState(DriverStatus value) {
-        logger.trace("{} -> {}", this.state, value);
+        logger.trace("{} -> {}", state, value);
         synchronized (this) {
             state = value;
             notifyAll();
@@ -443,7 +443,8 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     @Override
     public void setZigBeeNodeMode(NetworkMode networkMode) {
         if (state != DriverStatus.CLOSED) {
-            throw new IllegalStateException("Network key can be changed only if driver is CLOSED while it is:" + state);
+            throw new IllegalStateException(
+                    "Interface mode can be changed only if driver is CLOSED while it is:" + state);
         }
         mode = networkMode;
     }
@@ -459,7 +460,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     @Override
     public boolean setZigBeePanId(int panId) {
         if (state != DriverStatus.CLOSED) {
-            throw new IllegalStateException("Network key can be changed only if driver is CLOSED while it is:" + state);
+            throw new IllegalStateException("PAN ID can be changed only if driver is CLOSED while it is:" + state);
         }
         pan = panId;
 
@@ -469,7 +470,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     @Override
     public boolean setZigBeeChannel(int channel) {
         if (state != DriverStatus.CLOSED) {
-            throw new IllegalStateException("Network key can be changed only if driver is CLOSED while it is:" + state);
+            throw new IllegalStateException("Channel can be changed only if driver is CLOSED while it is:" + state);
         }
         this.channel = channel;
 
@@ -506,7 +507,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     @Override
     public void setSerialPort(ZigBeePort port) {
         if (state != DriverStatus.CLOSED) {
-            throw new IllegalStateException("Network key can be changed only if driver is CLOSED while it is:" + state);
+            throw new IllegalStateException("Serial port can be changed only if driver is CLOSED while it is:" + state);
         }
         this.port = port;
     }
@@ -997,7 +998,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
                 } catch (Exception ex) {
                     logger.error("Synchronous command send failed due to unexpected exception.", ex);
                 }
-                logger.trace("{} sent (synchronous command, retry: {}).", request.getClass().getSimpleName(), sending);
+                logger.trace("{} sent (synchronous command, attempt {}).", request.getClass().getSimpleName(), sending);
                 synchronized (response) {
                     long wakeUpTime = System.currentTimeMillis() + timeout;
                     while (response[0] == null && wakeUpTime > System.currentTimeMillis()) {
@@ -1018,17 +1019,17 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
                             response[0].getClass().getSimpleName());
                     break; // Break out as we have response.
                 } else {
-                    logger.warn("{} executed and timed out while waiting for response.",
+                    logger.debug("{} executed and timed out while waiting for response.",
                             request.getClass().getSimpleName());
                 }
                 if (RESEND_ONLY_EXCEPTION) {
                     break;
                 } else {
-                    logger.info("Failed to send {} during the {}-th tentative", request.getClass().getName(), sending);
+                    logger.debug("Failed to send {} [attempt {}]", request.getClass().getSimpleName(), sending);
                     sending++;
                 }
             } catch (Exception ignored) {
-                logger.info("Failed to send {} during the {}-th tentative", request.getClass().getName(), sending);
+                logger.debug("Failed to send {} [attempt {}]", request.getClass().getSimpleName(), sending);
                 logger.trace("Sending operation failed due to ", ignored);
                 sending++;
             }
@@ -1143,11 +1144,12 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
             }
         }
         if (result) {
-            logger.trace("Removed ApplicationFrameworkMessageListener {}:{}", listener, listener.getClass().getName());
+            logger.trace("Removed ApplicationFrameworkMessageListener {}:{}", listener,
+                    listener.getClass().getSimpleName());
             return true;
         } else {
             logger.warn("Could not remove ApplicationFrameworkMessageListener {}:{}", listener,
-                    listener.getClass().getName());
+                    listener.getClass().getSimpleName());
             return false;
         }
     }
@@ -1168,10 +1170,10 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         if (messageListeners.isEmpty() && isHardwareReady()) {
             if (commandInterface.addAsynchronousCommandListener(afMessageListenerFilter)) {
                 logger.trace("Added AsynchrounsCommandListener {} to ZigBeeSerialInterface",
-                        afMessageListenerFilter.getClass().getName());
+                        afMessageListenerFilter.getClass().getSimpleName());
             } else {
                 logger.trace("Could not add AsynchrounsCommandListener {} to ZigBeeSerialInterface",
-                        afMessageListenerFilter.getClass().getName());
+                        afMessageListenerFilter.getClass().getSimpleName());
             }
         }
         boolean result;
@@ -1180,11 +1182,12 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
 
         if (result) {
-            logger.trace("Added ApplicationFrameworkMessageListener {}:{}", listener, listener.getClass().getName());
+            logger.trace("Added ApplicationFrameworkMessageListener {}:{}", listener,
+                    listener.getClass().getSimpleName());
             return true;
         } else {
             logger.warn("Could not add ApplicationFrameworkMessageListener {}:{}", listener,
-                    listener.getClass().getName());
+                    listener.getClass().getSimpleName());
             return false;
         }
     }

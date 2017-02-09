@@ -153,20 +153,15 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
-        builder.append(", ");
-        builder.append("coordinate1 = ");
+        builder.append(", coordinate1=");
         builder.append(coordinate1);
-        builder.append(", ");
-        builder.append("coordinate2 = ");
+        builder.append(", coordinate2=");
         builder.append(coordinate2);
-        builder.append(", ");
-        builder.append("coordinate3 = ");
+        builder.append(", coordinate3=");
         builder.append(coordinate3);
-        builder.append(", ");
-        builder.append("power = ");
+        builder.append(", power=");
         builder.append(power);
-        builder.append(", ");
-        builder.append("pathLossExponent = ");
+        builder.append(", pathLossExponent=");
         builder.append(pathLossExponent);
         return builder.toString();
     }

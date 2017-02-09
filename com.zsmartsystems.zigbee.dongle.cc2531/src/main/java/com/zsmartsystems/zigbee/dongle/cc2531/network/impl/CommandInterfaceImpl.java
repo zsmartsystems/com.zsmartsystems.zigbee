@@ -49,17 +49,13 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:tommi.s.e.laukkanen@gmail.com">Tommi S.E. Laukkanen</a>
  * @author <a href="mailto:christopherhattonuk@gmail.com">Chris Hatton</a>
+ * @author Chris Jackson
  */
 public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterface {
     /**
      * The logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(CommandInterfaceImpl.class);
-    /**
-     * The packet logger.
-     */
-    private static final Logger PACKET_LOGGER = LoggerFactory
-            .getLogger("org.bubblecloud.zigbee.network.port.PacketLogger");
+    private static final Logger logger = LoggerFactory.getLogger(CommandInterfaceImpl.class);
     /**
      * The port interface.
      */
@@ -137,9 +133,9 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
     @Override
     public void error(final Throwable th) {
         if (th instanceof IOException) {
-            LOGGER.error("IO exception in packet parsing.", th);
+            logger.error("IO exception in packet parsing.", th);
         } else {
-            LOGGER.error("Unexpected exception in packet parsing: ", th);
+            logger.error("Unexpected exception in packet parsing: ", th);
         }
     }
 
@@ -151,22 +147,21 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
     @Override
     public void handlePacket(final ZToolPacket packet) {
         final DoubleByte cmdId = packet.getCMD();
-        PACKET_LOGGER.trace("|<|{}|{}", packet.getClass().getSimpleName(), ByteUtils.toBase16(packet.getPacket()));
         switch (cmdId.getMsb() & 0xE0) {
             // Received incoming message which can be either message from dongle or remote device.
             case 0x40:
-                LOGGER.debug("<-- {} ({})", packet.getClass().getSimpleName(), ByteUtils.toBase16(packet.getPacket()));
+                logger.debug("<-- {} ({})", packet.getClass().getSimpleName(), ByteUtils.toBase16(packet.getPacket()));
                 notifyAsynchronousCommand(packet);
                 break;
 
             // Received synchronous command response.
             case 0x60:
-                LOGGER.debug("<- {} ({})", packet.getClass().getSimpleName(), ByteUtils.toBase16(packet.getPacket()));
+                logger.debug("<-  {} ({})", packet.getClass().getSimpleName(), ByteUtils.toBase16(packet.getPacket()));
                 notifySynchronousCommand(packet);
                 break;
 
             default:
-                LOGGER.error("Received unknown packet. {}", packet.getClass().getSimpleName());
+                logger.error("Received unknown packet. {}", packet.getClass().getSimpleName());
                 break;
         }
     }
@@ -179,8 +174,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
      */
     @Override
     public void sendPacket(final ZToolPacket packet) throws IOException {
-        LOGGER.debug("-> {} ({}) ", packet.getClass().getSimpleName(), packet);
-        PACKET_LOGGER.trace("|>|{}|{}", packet.getClass().getSimpleName(), packet.getPacket());
+        logger.debug("->  {} ({}) ", packet.getClass().getSimpleName(), packet);
         final int[] pck = packet.getPacket();
         sendRaw(pck);
     }
@@ -243,7 +237,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
                 final short id = (short) (cmdId.get16BitValue() & 0x1FFF);
                 while (synchronousCommandListeners.get(cmdId) != null) {
                     try {
-                        LOGGER.trace("Waiting for other request {} to complete", id);
+                        logger.trace("Waiting for other request {} to complete", id);
                         synchronousCommandListeners.wait(500);
                         cleanExpiredSynchronousCommandListeners();
                     } catch (InterruptedException ignored) {
@@ -256,17 +250,17 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
                 final short id = (short) (cmdId.get16BitValue() & 0x1FFF);
                 while (!synchronousCommandListeners.isEmpty()) {
                     try {
-                        LOGGER.trace("Waiting for other request to complete");
+                        logger.trace("Waiting for other request to complete");
                         synchronousCommandListeners.wait(500);
                         cleanExpiredSynchronousCommandListeners();
                     } catch (InterruptedException ignored) {
                     }
                 }
-                LOGGER.trace("Put synchronousCommandListeners listener for {} command", id);
+                logger.trace("Put synchronousCommandListeners listener for {} command", id);
                 synchronousCommandListeners.put(id, listener);
             }
         }
-        LOGGER.trace("Sending SynchrounsCommand {} ", packet);
+        logger.trace("Sending SynchrounsCommand {} ", packet);
         sendPacket(packet);
     }
 
@@ -331,7 +325,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
                     try {
                         asynchronousCommandListener.receivedUnclaimedSynchronousCommandResponse(packet);
                     } catch (Throwable e) {
-                        LOGGER.error("Error in incoming asynchronous message processing.", e);
+                        logger.error("Error in incoming asynchronous message processing.", e);
                     }
                 }
             }
@@ -381,11 +375,13 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
             listeners = asynchrounsCommandListeners.toArray(new AsynchronousCommandListener[] {});
         }
 
+        logger.debug("Received Async Cmd: {}", packet);
+
         for (final AsynchronousCommandListener listener : listeners) {
             try {
                 listener.receivedAsynchronousCommand(packet);
             } catch (Throwable e) {
-                LOGGER.error("Error in incoming asynchronous message processing.", e);
+                logger.error("Error in incoming asynchronous message processing.", e);
             }
         }
     }

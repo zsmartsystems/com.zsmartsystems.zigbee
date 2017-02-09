@@ -70,8 +70,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ZCLVersion</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Get the <i>ZCLVersion</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The ZCLVersion attribute is 8 bits in length and specifies the version number of
      * the ZigBee Cluster Library that all clusters on this endpoint conform to.
@@ -89,8 +88,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ZCLVersion</i> attribute [Attribute ID <b>0</b>].
-     * <p>
+     * Synchronously get the <i>ZCLVersion</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The ZCLVersion attribute is 8 bits in length and specifies the version number of
      * the ZigBee Cluster Library that all clusters on this endpoint conform to.
@@ -109,8 +107,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ApplicationVersion</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Get the <i>ApplicationVersion</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The ApplicationVersion attribute is 8 bits in length and specifies the version
@@ -130,8 +127,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ApplicationVersion</i> attribute [Attribute ID <b>1</b>].
-     * <p>
+     * Synchronously get the <i>ApplicationVersion</i> attribute [attribute ID <b>1</b>].
      * <p>
      * <br>
      * The ApplicationVersion attribute is 8 bits in length and specifies the version
@@ -152,8 +148,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>StackVersion</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Get the <i>StackVersion</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The StackVersion attribute is 8 bits in length and specifies the version number
@@ -173,8 +168,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>StackVersion</i> attribute [Attribute ID <b>2</b>].
-     * <p>
+     * Synchronously get the <i>StackVersion</i> attribute [attribute ID <b>2</b>].
      * <p>
      * <br>
      * The StackVersion attribute is 8 bits in length and specifies the version number
@@ -195,8 +189,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>HWVersion</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Get the <i>HWVersion</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The HWVersion attribute is 8 bits in length and specifies the version number of
@@ -215,8 +208,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>HWVersion</i> attribute [Attribute ID <b>3</b>].
-     * <p>
+     * Synchronously get the <i>HWVersion</i> attribute [attribute ID <b>3</b>].
      * <p>
      * <br>
      * The HWVersion attribute is 8 bits in length and specifies the version number of
@@ -236,8 +228,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ManufacturerName</i> attribute [Attribute ID <b>4</b>].
-     * <p>
+     * Get the <i>ManufacturerName</i> attribute [attribute ID <b>4</b>].
      * <p>
      * <br>
      * The ManufacturerName attribute is a maximum of 32 bytes in length and specifies
@@ -256,8 +247,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ManufacturerName</i> attribute [Attribute ID <b>4</b>].
-     * <p>
+     * Synchronously get the <i>ManufacturerName</i> attribute [attribute ID <b>4</b>].
      * <p>
      * <br>
      * The ManufacturerName attribute is a maximum of 32 bytes in length and specifies
@@ -277,8 +267,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>ModelIdentifier</i> attribute [Attribute ID <b>5</b>].
-     * <p>
+     * Get the <i>ModelIdentifier</i> attribute [attribute ID <b>5</b>].
      * <p>
      * <br>
      * The ModelIdentifier attribute is a maximum of 32 bytes in length and specifies the
@@ -297,8 +286,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>ModelIdentifier</i> attribute [Attribute ID <b>5</b>].
-     * <p>
+     * Synchronously get the <i>ModelIdentifier</i> attribute [attribute ID <b>5</b>].
      * <p>
      * <br>
      * The ModelIdentifier attribute is a maximum of 32 bytes in length and specifies the
@@ -318,8 +306,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>DateCode</i> attribute [Attribute ID <b>6</b>].
-     * <p>
+     * Get the <i>DateCode</i> attribute [attribute ID <b>6</b>].
      * <p>
      * <br>
      * The DateCode attribute is a ZigBee character string with a maximum length of 16 bytes.
@@ -339,8 +326,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>DateCode</i> attribute [Attribute ID <b>6</b>].
-     * <p>
+     * Synchronously get the <i>DateCode</i> attribute [attribute ID <b>6</b>].
      * <p>
      * <br>
      * The DateCode attribute is a ZigBee character string with a maximum length of 16 bytes.
@@ -361,8 +347,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>PowerSource</i> attribute [Attribute ID <b>7</b>].
-     * <p>
+     * Get the <i>PowerSource</i> attribute [attribute ID <b>7</b>].
      * <p>
      * <br>
      * The PowerSource attribute is 8 bits in length and specifies the source(s) of power
@@ -383,8 +368,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>PowerSource</i> attribute [Attribute ID <b>7</b>].
-     * <p>
+     * Synchronously get the <i>PowerSource</i> attribute [attribute ID <b>7</b>].
      * <p>
      * <br>
      * The PowerSource attribute is 8 bits in length and specifies the source(s) of power
@@ -407,8 +391,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>LocationDescription</i> attribute [Attribute ID <b>16</b>].
-     * <p>
+     * Set the <i>LocationDescription</i> attribute [attribute ID <b>16</b>].
      * <p>
      * <br>
      * The LocationDescription attribute is a maximum of 16 bytes in length and describes
@@ -427,8 +410,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>LocationDescription</i> attribute [Attribute ID <b>16</b>].
-     * <p>
+     * Get the <i>LocationDescription</i> attribute [attribute ID <b>16</b>].
      * <p>
      * <br>
      * The LocationDescription attribute is a maximum of 16 bytes in length and describes
@@ -447,8 +429,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>LocationDescription</i> attribute [Attribute ID <b>16</b>].
-     * <p>
+     * Synchronously get the <i>LocationDescription</i> attribute [attribute ID <b>16</b>].
      * <p>
      * <br>
      * The LocationDescription attribute is a maximum of 16 bytes in length and describes
@@ -469,8 +450,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>PhysicalEnvironment</i> attribute [Attribute ID <b>17</b>].
-     * <p>
+     * Set the <i>PhysicalEnvironment</i> attribute [attribute ID <b>17</b>].
      * <p>
      * <br>
      * The PhysicalEnvironment attribute is 8 bits in length and specifies the type of
@@ -489,8 +469,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>PhysicalEnvironment</i> attribute [Attribute ID <b>17</b>].
-     * <p>
+     * Get the <i>PhysicalEnvironment</i> attribute [attribute ID <b>17</b>].
      * <p>
      * <br>
      * The PhysicalEnvironment attribute is 8 bits in length and specifies the type of
@@ -509,8 +488,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>PhysicalEnvironment</i> attribute [Attribute ID <b>17</b>].
-     * <p>
+     * Synchronously get the <i>PhysicalEnvironment</i> attribute [attribute ID <b>17</b>].
      * <p>
      * <br>
      * The PhysicalEnvironment attribute is 8 bits in length and specifies the type of
@@ -531,8 +509,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>DeviceEnabled</i> attribute [Attribute ID <b>18</b>].
-     * <p>
+     * Set the <i>DeviceEnabled</i> attribute [attribute ID <b>18</b>].
      * <p>
      * <br>
      * The DeviceEnabled attribute is a boolean and specifies whether the device is enabled
@@ -551,8 +528,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>DeviceEnabled</i> attribute [Attribute ID <b>18</b>].
-     * <p>
+     * Get the <i>DeviceEnabled</i> attribute [attribute ID <b>18</b>].
      * <p>
      * <br>
      * The DeviceEnabled attribute is a boolean and specifies whether the device is enabled
@@ -571,8 +547,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>DeviceEnabled</i> attribute [Attribute ID <b>18</b>].
-     * <p>
+     * Synchronously get the <i>DeviceEnabled</i> attribute [attribute ID <b>18</b>].
      * <p>
      * <br>
      * The DeviceEnabled attribute is a boolean and specifies whether the device is enabled
@@ -593,8 +568,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>AlarmMask</i> attribute [Attribute ID <b>19</b>].
-     * <p>
+     * Set the <i>AlarmMask</i> attribute [attribute ID <b>19</b>].
      * <p>
      * <br>
      * The AlarmMask attribute is 8 bits in length and specifies which of a number of general
@@ -613,8 +587,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>AlarmMask</i> attribute [Attribute ID <b>19</b>].
-     * <p>
+     * Get the <i>AlarmMask</i> attribute [attribute ID <b>19</b>].
      * <p>
      * <br>
      * The AlarmMask attribute is 8 bits in length and specifies which of a number of general
@@ -633,8 +606,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>AlarmMask</i> attribute [Attribute ID <b>19</b>].
-     * <p>
+     * Synchronously get the <i>AlarmMask</i> attribute [attribute ID <b>19</b>].
      * <p>
      * <br>
      * The AlarmMask attribute is 8 bits in length and specifies which of a number of general
@@ -655,8 +627,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Set the <i>DisableLocalConfig</i> attribute [Attribute ID <b>20</b>].
-     * <p>
+     * Set the <i>DisableLocalConfig</i> attribute [attribute ID <b>20</b>].
      * <p>
      * <br>
      * The DisableLocalConfig attribute allows a number of local device configuration
@@ -679,8 +650,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Get the <i>DisableLocalConfig</i> attribute [Attribute ID <b>20</b>].
-     * <p>
+     * Get the <i>DisableLocalConfig</i> attribute [attribute ID <b>20</b>].
      * <p>
      * <br>
      * The DisableLocalConfig attribute allows a number of local device configuration
@@ -703,8 +673,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * <p>
-     * Synchronously get the <i>DisableLocalConfig</i> attribute [Attribute ID <b>20</b>].
-     * <p>
+     * Synchronously get the <i>DisableLocalConfig</i> attribute [attribute ID <b>20</b>].
      * <p>
      * <br>
      * The DisableLocalConfig attribute allows a number of local device configuration
