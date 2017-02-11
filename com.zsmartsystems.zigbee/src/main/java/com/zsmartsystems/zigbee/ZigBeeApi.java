@@ -81,16 +81,17 @@ public class ZigBeeApi {
      * @param label the label
      */
     public void setDeviceLabel(final int networkAddress, final int endPointId, final String label) {
-        networkManager.setDeviceLabel(networkAddress, endPointId, label);
+        ZigBeeDevice device = networkManager.getDevice(new ZigBeeDeviceAddress(networkAddress, endPointId));
+        device.setLabel(label);
     }
 
     /**
      * Removes device(s) by network address.
      *
-     * @param networkAddress the network address
+     * @param address the network address
      */
-    public void removeDevice(final int networkAddress) {
-        networkManager.removeDevice(networkAddress);
+    public void removeDevice(final ZigBeeDeviceAddress address) {
+        networkManager.removeDevice(address);
     }
 
     /**

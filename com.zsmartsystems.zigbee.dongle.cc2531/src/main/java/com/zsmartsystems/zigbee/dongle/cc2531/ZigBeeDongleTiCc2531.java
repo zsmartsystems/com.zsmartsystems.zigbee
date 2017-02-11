@@ -182,7 +182,7 @@ public class ZigBeeDongleTiCc2531
                 return false;
             }
             try {
-                Thread.sleep(10);
+                Thread.sleep(50);
             } catch (final InterruptedException e) {
                 zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
                 return false;

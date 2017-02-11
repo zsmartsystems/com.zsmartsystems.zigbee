@@ -1021,7 +1021,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            zigbeeApi.removeDevice(device.getNetworkAddress());
+            zigbeeApi.removeDevice(device.getDeviceAddress());
             return true;
         }
     }

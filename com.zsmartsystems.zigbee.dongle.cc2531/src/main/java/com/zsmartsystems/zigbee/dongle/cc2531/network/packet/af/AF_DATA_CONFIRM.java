@@ -84,7 +84,7 @@ public class AF_DATA_CONFIRM extends ZToolPacket/* implements ICONFIRMATION, IAF
 
     @Override
     public String toString() {
-        return "AF_DATA_CONFIRM{" + "Endpoint=" + Endpoint + ", Status=" + ResponseStatus.getStatus(Status)
-                + ", TransID=" + TransID + '}';
+        return "AF_DATA_CONFIRM(Endpoint=" + Endpoint + ", Status=" + ResponseStatus.getStatus(Status) + ", TransID="
+                + TransID + ')';
     }
 }

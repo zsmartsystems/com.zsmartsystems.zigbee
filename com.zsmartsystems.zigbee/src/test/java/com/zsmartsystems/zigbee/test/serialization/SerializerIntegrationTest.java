@@ -16,7 +16,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * @author Chris Jackson
  *
  */
-public class DefaultSerializerIntegrationTest {
+public class SerializerIntegrationTest {
     @Test
     public void testDeserialize_BITMAP_8_BIT() {
         int valIn = 0x91;

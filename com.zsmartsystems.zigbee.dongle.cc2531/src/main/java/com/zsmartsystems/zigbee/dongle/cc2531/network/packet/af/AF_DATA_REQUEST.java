@@ -104,7 +104,6 @@ public class AF_DATA_REQUEST extends ZToolPacket/* implements IREQUEST,IAF */ {
             framedata[10 + i] = payload[i];
         }
         super.buildPacket(new DoubleByte(ZToolCMD.AF_DATA_REQUEST), framedata);
-
     }
 
 }

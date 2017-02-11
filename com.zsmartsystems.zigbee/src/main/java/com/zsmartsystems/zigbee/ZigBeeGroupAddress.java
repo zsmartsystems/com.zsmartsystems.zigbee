@@ -104,4 +104,16 @@ public class ZigBeeGroupAddress extends ZigBeeAddress {
 
         return 1;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!ZigBeeGroupAddress.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        final ZigBeeGroupAddress other = (ZigBeeGroupAddress) obj;
+        return other.getGroupId() == getGroupId();
+    }
 }

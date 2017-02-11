@@ -16,6 +16,7 @@ public class AF_DATA_SRSP_EXT extends ZToolPacket {
 
     /**
      * Constructor which sets frame data.
+     *
      * @param framedata the frame data
      */
     public AF_DATA_SRSP_EXT(int[] framedata) {
@@ -25,13 +26,12 @@ public class AF_DATA_SRSP_EXT extends ZToolPacket {
 
     @Override
     public String toString() {
-        return "AF_DATA_SRSP_EXT{" +
-                "Status=" + ResponseStatus.getStatus(status) +
-                '}';
+        return "AF_DATA_SRSP_EXT(Status=" + ResponseStatus.getStatus(status) + ')';
     }
 
     /**
      * Gets response status.
+     *
      * @return the status
      */
     public int getStatus() {

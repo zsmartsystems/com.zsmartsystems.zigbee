@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,18 +23,18 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet.simple;
 
+import java.util.Arrays;
+
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ResponseStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 
-import java.util.Arrays;
-
 /**
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
  * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
  */
-public class ZB_READ_CONFIGURATION_RSP extends ZToolPacket /*implements IRESPONSE,ISIMPLEAPI*/ {
+public class ZB_READ_CONFIGURATION_RSP extends ZToolPacket /* implements IRESPONSE,ISIMPLEAPI */ {
     // <name>TI.ZPI2.ZB_READ_CONFIGURATION_RSP.ConfigId</name>
     /// <summary>The identifier of the property that was read.</summary>
     public int ConfigId;
@@ -64,12 +64,14 @@ public class ZB_READ_CONFIGURATION_RSP extends ZToolPacket /*implements IRESPONS
         for (int i = 0; i < this.Value.length; i++) {
             this.Value[i] = framedata[i + 3];
         }
-            /*if (buffer1.Length > 0xff)
-            {
-                throw new Exception("Error creating object.");
-            }
-            this.Value = new byte[0xff];
-            Array.Copy(buffer1, this.Value, buffer1.Length);*/
+        /*
+         * if (buffer1.Length > 0xff)
+         * {
+         * throw new Exception("Error creating object.");
+         * }
+         * this.Value = new byte[0xff];
+         * Array.Copy(buffer1, this.Value, buffer1.Length);
+         */
         super.buildPacket(new DoubleByte(ZToolCMD.ZB_READ_CONFIGURATION_RSP), framedata);
     }
 
@@ -98,11 +100,7 @@ public class ZB_READ_CONFIGURATION_RSP extends ZToolPacket /*implements IRESPONS
 
     @Override
     public String toString() {
-        return "ZB_READ_CONFIGURATION_RSP{" +
-                "ConfigId=" + ConfigId +
-                ", Len=" + Len +
-                ", Status=" + ResponseStatus.getStatus(Status) +
-                ", Value=" + Arrays.toString(Value) +
-                '}';
+        return "ZB_READ_CONFIGURATION_RSP(ConfigId=" + ConfigId + ", Len=" + Len + ", Status="
+                + ResponseStatus.getStatus(Status) + ", Value=" + Arrays.toString(Value) + ')';
     }
 }

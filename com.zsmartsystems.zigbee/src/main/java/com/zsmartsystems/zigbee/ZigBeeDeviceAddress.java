@@ -73,11 +73,6 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
     }
 
     @Override
-    public String toString() {
-        return address + "/" + endpoint;
-    }
-
-    @Override
     public int compareTo(Object that) {
         if (this == that) {
             return 0;
@@ -91,4 +86,10 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
 
         return 1;
     }
+
+    @Override
+    public String toString() {
+        return address + "/" + endpoint;
+    }
+
 }

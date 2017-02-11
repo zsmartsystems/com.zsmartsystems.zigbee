@@ -325,7 +325,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             int sequence = sequenceNumber.getAndIncrement() & 0xff;
             zclCommand.setTransactionId(sequence);
 
-            logger.debug("TX ZCL: " + command);
+            logger.debug("TX ZCL: " + zclCommand);
 
             // Create the network and application sublayer headers
             ZigBeeNwkHeader nwkHeader = new ZigBeeNwkHeader();
@@ -334,11 +334,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             // TODO: Set the source address correctly?
             nwkHeader.setSourceAddress(0);
             if (zclCommand.getDestinationAddress() instanceof ZigBeeDeviceAddress) {
+                nwkHeader.setAddressMode(ZigBeeNwkAddressMode.DEVICE);
                 nwkHeader
                         .setDestinationAddress(((ZigBeeDeviceAddress) zclCommand.getDestinationAddress()).getAddress());
                 apsHeader.setDestinationEndpoint(
                         ((ZigBeeDeviceAddress) zclCommand.getDestinationAddress()).getEndpoint());
             } else {
+                nwkHeader.setAddressMode(ZigBeeNwkAddressMode.GROUP);
                 // TODO: Handle multicast
             }
             nwkHeader.setSequence(sequence);
@@ -431,6 +433,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         // Get the device
         ZigBeeDevice device = getDevice(srcAddress);
+        if (device == null) {
+            logger.debug("Message from unknown device {}", srcAddress);
+            return;
+        }
 
         // Create the deserialiser
         Constructor<? extends ZigBeeDeserializer> constructor;
@@ -508,7 +514,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
-    @Override
     public void addNetworkStateListener(ZigBeeNetworkStateListener stateListener) {
         final List<ZigBeeNetworkStateListener> modifiedStateListeners = new ArrayList<ZigBeeNetworkStateListener>(
                 stateListeners);
@@ -516,50 +521,17 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         stateListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
 
+    public void removeNetworkStateListener(ZigBeeNetworkStateListener stateListener) {
+        final List<ZigBeeNetworkStateListener> modifiedStateListeners = new ArrayList<ZigBeeNetworkStateListener>(
+                stateListeners);
+        modifiedStateListeners.remove(stateListener);
+        stateListeners = Collections.unmodifiableList(modifiedStateListeners);
+    }
+
     @Override
     public void setNetworkState(ZigBeeTransportState state) {
         for (final ZigBeeNetworkStateListener stateListener : stateListeners) {
             stateListener.networkStateUpdated(state);
-        }
-    }
-
-    /**
-     * Sets device label.
-     *
-     * @deprecated
-     *             Use {@link ZigBeeDevice#setLabel}
-     *
-     * @param networkAddress
-     *            the network address
-     * @param endPointId
-     *            the end point ID
-     * @param label
-     *            the label
-     */
-    @Deprecated
-    public void setDeviceLabel(final int networkAddress, final int endPointId, final String label) {
-        final ZigBeeDevice device = getDevice(new ZigBeeDeviceAddress(networkAddress, endPointId));
-        device.setLabel(label);
-        updateDevice(device);
-    }
-
-    /**
-     * Removes device(s) by network address.
-     *
-     * @param networkAddress
-     *            the network address
-     */
-    public void removeDevice(final int networkAddress) {
-        final List<ZigBeeDevice> devices = getDevices();
-        final List<ZigBeeDevice> devicesToRemove = new ArrayList<ZigBeeDevice>();
-        for (final ZigBeeDevice device : devices) {
-            if (device.getNetworkAddress() == networkAddress) {
-                devicesToRemove.add(device);
-            }
-        }
-
-        for (final ZigBeeDevice device : devicesToRemove) {
-            removeDevice(device.getDeviceAddress());
         }
     }
 
@@ -775,7 +747,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * <p>
      * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
      * since it allows devices to join the network without the installer knowing.
-     * 
+     *
      * @param enable if true joining is enabled, otherwise it is disabled
      */
     public void permitJoin(final boolean enable) {
@@ -946,7 +918,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return the {@link ZigBeeDevice}
      */
     public ZigBeeDevice getDevice(final ZigBeeAddress networkAddress) {
-        if (networkAddress.isGroup()) {
+        if (networkAddress == null || networkAddress.isGroup()) {
             return null;
         }
 
@@ -955,6 +927,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
+    /**
+     * Removes device(s) by network address.
+     *
+     * @param networkAddress
+     *            the network address
+     */
     public void removeDevice(final ZigBeeAddress networkAddress) {
         final ZigBeeDevice device;
         synchronized (networkDevices) {

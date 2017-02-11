@@ -1,11 +1,11 @@
 /*
    Copyright 2008-2013 ITACA-TSB, http://www.tsb.upv.es/
-   Instituto Tecnologico de Aplicaciones de Comunicacion 
-   Avanzadas - Grupo Tecnologias para la Salud y el 
+   Instituto Tecnologico de Aplicaciones de Comunicacion
+   Avanzadas - Grupo Tecnologias para la Salud y el
    Bienestar (TSB)
 
 
-   See the NOTICE file distributed with this work for additional 
+   See the NOTICE file distributed with this work for additional
    information regarding copyright ownership
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
  * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
  */
-public class ZB_WRITE_CONFIGURATION_RSP extends ZToolPacket/* implements IRESPONSE,ISIMPLEAPI*/ {
+public class ZB_WRITE_CONFIGURATION_RSP extends ZToolPacket/* implements IRESPONSE,ISIMPLEAPI */ {
     /// <name>TI.ZPI2.ZB_WRITE_CONFIGURATION_RSP.Status</name>
     /// <summary>The immediate return value from executing the RPC.</summary>
     public int Status;
@@ -51,8 +51,6 @@ public class ZB_WRITE_CONFIGURATION_RSP extends ZToolPacket/* implements IRESPON
 
     @Override
     public String toString() {
-        return "ZB_WRITE_CONFIGURATION_RSP{" +
-                "Status=" + ResponseStatus.getStatus(Status) +
-                '}';
+        return "ZB_WRITE_CONFIGURATION_RSP(Status=" + ResponseStatus.getStatus(Status) + ')';
     }
 }

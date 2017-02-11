@@ -81,7 +81,7 @@ public class ZigBeeNode {
      * @return true if the device is a Full Function Device
      */
     public boolean isFullFuntionDevice() {
-        return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.FullFunctionDevice);
+        return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.FULL_FUNCTION_DEVICE);
     }
 
     /**
@@ -93,27 +93,27 @@ public class ZigBeeNode {
      * @return true if the device is a Reduced Function Device
      */
     public boolean isReducedFuntionDevice() {
-        return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.ReducedFunctionDevice);
+        return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.REDUCED_FUNCTION_DEVICE);
     }
 
     public boolean isSecurityCapable() {
-        return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.SecurityCapable);
+        return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.SECURITY_CAPABLE);
     }
 
     public boolean isPrimaryTrustCenter() {
-        return nodeDescriptor.getServerCapabilities().contains(ServerCapabilitiesType.PrimaryTrustCenter);
+        return nodeDescriptor.getServerCapabilities().contains(ServerCapabilitiesType.PRIMARY_TRUST_CENTER);
     }
 
     public boolean supportsFrequencyBand868MHz() {
-        return nodeDescriptor.getFrequencyBands().contains(FrequencyBandType.Freq868MHz);
+        return nodeDescriptor.getFrequencyBands().contains(FrequencyBandType.FREQ_868_MHZ);
     }
 
     public boolean supportsFrequencyBand902MHz() {
-        return nodeDescriptor.getFrequencyBands().contains(FrequencyBandType.Freq902MHz);
+        return nodeDescriptor.getFrequencyBands().contains(FrequencyBandType.FREQ_902_MHZ);
     }
 
     public boolean supportsFrequencyBand2400MHz() {
-        return nodeDescriptor.getFrequencyBands().contains(FrequencyBandType.Freq2400MHz);
+        return nodeDescriptor.getFrequencyBands().contains(FrequencyBandType.FREQ_2400_MHZ);
     }
 
     /**
@@ -121,9 +121,9 @@ public class ZigBeeNode {
      * <p>
      * Possible types are -:
      * <ul>
-     * <li>{@link LogicalType#Coordinator}
-     * <li>{@link LogicalType#Router}
-     * <li>{@link LogicalType#EndDevice}
+     * <li>{@link LogicalType#COORDINATOR}
+     * <li>{@link LogicalType#ROUTER}
+     * <li>{@link LogicalType#END_DEVICE}
      * <ul>
      *
      * @return the {@link LogicalType} of the device

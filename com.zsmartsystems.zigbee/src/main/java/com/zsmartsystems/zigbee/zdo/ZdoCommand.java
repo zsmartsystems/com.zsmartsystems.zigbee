@@ -6,7 +6,8 @@ import com.zsmartsystems.zigbee.Command;
  * Base class for value object classes holding ZDO commands.
  *
  * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
-public class ZdoCommand extends Command {
+public abstract class ZdoCommand extends Command {
 
 }
