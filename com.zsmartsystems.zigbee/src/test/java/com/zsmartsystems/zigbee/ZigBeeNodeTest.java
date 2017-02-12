@@ -1,4 +1,4 @@
-package com.zsmartsystems.zigbee.test;
+package com.zsmartsystems.zigbee;
 
 import static org.junit.Assert.assertEquals;
 

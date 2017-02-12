@@ -1,4 +1,4 @@
-package com.zsmartsystems.zigbee.test.serialization;
+package com.zsmartsystems.zigbee.serialization;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

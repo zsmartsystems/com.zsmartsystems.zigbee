@@ -9,7 +9,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
  * <p>
  * Implements {@link CommandResponseMatcher} to check if a ZCL transaction matches a request.
  * The matcher will return true if the request and response transaction IDs match.
- * If the response matches the {@link DefaultResponse} class, then the status code is mustn't be 0.
+ * If the response matches the {@link DefaultResponse} class, then the status code must not be 0.
  *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
@@ -17,7 +17,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 public class ZclCustomResponseMatcher implements CommandResponseMatcher {
     @Override
     public boolean isMatch(Command request, Command response) {
-        if (((ZclCommand) request).getTransactionId() != null) {
+        if (response instanceof ZclCommand && ((ZclCommand) request).getTransactionId() != null) {
             final int transactionId = ((ZclCommand) request).getTransactionId();
             if (Integer.valueOf(transactionId).equals(((ZclCommand) response).getTransactionId())) {
                 if (response instanceof DefaultResponse) {
@@ -29,7 +29,7 @@ public class ZclCustomResponseMatcher implements CommandResponseMatcher {
                 return false; // Transaction ID mismatch.
             }
         } else {
-            return false; // Transaction ID not set in original command.
+            return false; // Transaction ID not set in original command or not ZclCommand.
         }
     }
 }
