@@ -6,6 +6,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -58,11 +59,10 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Get the <i>Occupancy</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The Occupancy attribute is a bitmap.
-     * <br>
+     * <p>
      * Bit 0 specifies the sensed occupancy as follows: 1 = occupied, 0 = unoccupied.
      * All other bits are reserved.
      * <p>
@@ -78,33 +78,44 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>Occupancy</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The Occupancy attribute is a bitmap.
-     * <br>
+     * <p>
      * Bit 0 specifies the sensed occupancy as follows: 1 = occupied, 0 = unoccupied.
      * All other bits are reserved.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getOccupancy() {
+    public Integer getOccupancy(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_OCCUPANCY).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_OCCUPANCY).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_OCCUPANCY).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_OCCUPANCY));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>Occupancy</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The Occupancy attribute is a bitmap.
-     * <br>
+     * <p>
      * Bit 0 specifies the sensed occupancy as follows: 1 = occupied, 0 = unoccupied.
      * All other bits are reserved.
      * <p>
@@ -121,10 +132,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>OccupancySensorType</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The OccupancySensorType attribute specifies the type of the occupancy sensor.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -139,27 +148,37 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>OccupancySensorType</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The OccupancySensorType attribute specifies the type of the occupancy sensor.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getOccupancySensorType() {
+    public Integer getOccupancySensorType(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_OCCUPANCYSENSORTYPE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_OCCUPANCYSENSORTYPE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_OCCUPANCYSENSORTYPE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_OCCUPANCYSENSORTYPE));
     }
 
 
     /**
-     * <p>
      * Set the <i>PIROccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -174,7 +193,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>PIROccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -189,24 +207,35 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>PIROccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getPirOccupiedToUnoccupiedDelay() {
+    public Integer getPirOccupiedToUnoccupiedDelay(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY));
     }
 
 
     /**
-     * <p>
      * Set the <i>PIRUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>17</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -221,7 +250,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>PIRUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>17</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -236,28 +264,39 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>PIRUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getPirUnoccupiedToOccupiedDelay() {
+    public Integer getPirUnoccupiedToOccupiedDelay(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY));
     }
 
 
     /**
-     * <p>
      * Set the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>32</b>].
      * <p>
-     * <br>
      * The UltraSonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
+     * <p>
      * seconds, before the ultrasonic sensor changes to its occupied state when the
      * sensed area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter'
@@ -275,11 +314,10 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>32</b>].
      * <p>
-     * <br>
      * The UltraSonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
+     * <p>
      * seconds, before the ultrasonic sensor changes to its occupied state when the
      * sensed area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter'
@@ -297,35 +335,46 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>32</b>].
      * <p>
-     * <br>
      * The UltraSonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
+     * <p>
      * seconds, before the ultrasonic sensor changes to its occupied state when the
      * sensed area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter'
      * when used in an area where occupation changes frequently.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getUltraSonicOccupiedToUnoccupiedDelay() {
+    public Integer getUltraSonicOccupiedToUnoccupiedDelay(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY));
     }
 
 
     /**
-     * <p>
      * Set the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>33</b>].
      * <p>
-     * <br>
      * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
+     * <p>
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the
      * sensed area becomes occupied.
      * <p>
@@ -341,11 +390,10 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>33</b>].
      * <p>
-     * <br>
      * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
+     * <p>
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the
      * sensed area becomes occupied.
      * <p>
@@ -361,29 +409,40 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>33</b>].
      * <p>
-     * <br>
      * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
+     * <p>
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the
      * sensed area becomes occupied.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getUltraSonicUnoccupiedToOccupiedDelay() {
+    public Integer getUltraSonicUnoccupiedToOccupiedDelay(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY));
     }
 
 
     /**
-     * <p>
      * Set the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute [attribute ID <b>34</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -398,7 +457,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute [attribute ID <b>34</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -413,18 +471,30 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute [attribute ID <b>34</b>].
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getUltrasonicUnoccupiedToOccupiedThreshold() {
+    public Integer getUltrasonicUnoccupiedToOccupiedThreshold(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
     }
 

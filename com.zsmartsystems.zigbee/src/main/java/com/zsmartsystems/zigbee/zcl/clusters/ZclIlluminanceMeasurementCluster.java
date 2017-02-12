@@ -6,6 +6,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -55,16 +56,15 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
-     * <br>
+     * <p>
      * MeasuredValue = 10,000 x log10 Illuminance + 1
-     * <br>
+     * <p>
      * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
      * the range 1 to 0xfffe.
-     * <br>
+     * <p>
      * The following special values of MeasuredValue apply.
      * <li>0x0000 indicates a value of Illuminance that is too low to be measured.</li>
      * <li>0xffff indicates that the Illuminance measurement is invalid.</li>
@@ -81,44 +81,55 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
-     * <br>
+     * <p>
      * MeasuredValue = 10,000 x log10 Illuminance + 1
-     * <br>
+     * <p>
      * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
      * the range 1 to 0xfffe.
-     * <br>
+     * <p>
      * The following special values of MeasuredValue apply.
      * <li>0x0000 indicates a value of Illuminance that is too low to be measured.</li>
      * <li>0xffff indicates that the Illuminance measurement is invalid.</li>
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMeasuredValue() {
+    public Integer getMeasuredValue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MEASUREDVALUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MEASUREDVALUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MEASUREDVALUE));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
-     * <br>
+     * <p>
      * MeasuredValue = 10,000 x log10 Illuminance + 1
-     * <br>
+     * <p>
      * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
      * the range 1 to 0xfffe.
-     * <br>
+     * <p>
      * The following special values of MeasuredValue apply.
      * <li>0x0000 indicates a value of Illuminance that is too low to be measured.</li>
      * <li>0xffff indicates that the Illuminance measurement is invalid.</li>
@@ -137,11 +148,10 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
+     * <p>
      * that can be measured. A value of 0xffff indicates that this attribute is not defined.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -156,35 +166,46 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
+     * <p>
      * that can be measured. A value of 0xffff indicates that this attribute is not defined.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMinMeasuredValue() {
+    public Integer getMinMeasuredValue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MINMEASUREDVALUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MINMEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MINMEASUREDVALUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MINMEASUREDVALUE));
     }
 
     /**
-     * <p>
      * Get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
+     * <p>
      * that can be measured. A value of 0xffff indicates that this attribute is not defined.
-     * <br>
+     * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
-     * <br>
+     * <p>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -199,35 +220,46 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
+     * <p>
      * that can be measured. A value of 0xffff indicates that this attribute is not defined.
-     * <br>
+     * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
-     * <br>
+     * <p>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMaxMeasuredValue() {
+    public Integer getMaxMeasuredValue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MAXMEASUREDVALUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MAXMEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MAXMEASUREDVALUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MAXMEASUREDVALUE));
     }
 
     /**
-     * <p>
      * Get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
+     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>
@@ -243,33 +275,44 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
+     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getTolerance() {
+    public Integer getTolerance(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_TOLERANCE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_TOLERANCE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_TOLERANCE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_TOLERANCE));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
+     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>
@@ -287,10 +330,8 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>LightSensorType</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The LightSensorType attribute specifies the electronic type of the light sensor.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -305,21 +346,32 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>LightSensorType</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The LightSensorType attribute specifies the electronic type of the light sensor.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getLightSensorType() {
+    public Integer getLightSensorType(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_LIGHTSENSORTYPE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_LIGHTSENSORTYPE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_LIGHTSENSORTYPE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_LIGHTSENSORTYPE));
     }
 

@@ -1074,6 +1074,12 @@ public class ZclProtocolCodeGenerator {
                 }
                 // imports.add("com.zsmartsystems.zigbee.model.ZigBeeType");
 
+                for (final Attribute attribute : cluster.attributes.values()) {
+                    if (attribute.attributeAccess.toLowerCase().contains("read")) {
+                        imports.add("java.util.Calendar");
+                    }
+                }
+
                 for (final Command command : commands) {
                     imports.add(getClusterCommandPackage(packageRoot, cluster) + "." + command.nameUpperCamelCase);
                 }
@@ -1169,7 +1175,18 @@ public class ZclProtocolCodeGenerator {
                         out.println();
                         outputAttributeJavaDoc(out, "Synchronously get", attribute, zclDataType);
                         out.println("    public " + attribute.dataTypeClass + " get"
-                                + attribute.nameUpperCamelCase.replace("_", "") + "() {");
+                                + attribute.nameUpperCamelCase.replace("_", "") + "(final long refreshPeriod) {");
+                        out.println("        if(refreshPeriod > 0 && attributes.get(" + attribute.enumName
+                                + ").getLastReportTime() != null) {");
+                        out.println(
+                                "            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;");
+                        out.println("            if(attributes.get(" + attribute.enumName
+                                + ").getLastReportTime().getTimeInMillis() < refreshTime) {");
+                        out.println("                return (" + attribute.dataTypeClass + ") attributes.get("
+                                + attribute.enumName + ").getLastValue();");
+                        out.println("            }");
+                        out.println("        }");
+                        out.println();
                         out.println("        return (" + attribute.dataTypeClass + ") readSync(attributes.get("
                                 + attribute.enumName + "));");
                         out.println("    }");
@@ -1295,7 +1312,6 @@ public class ZclProtocolCodeGenerator {
             DataTypeMap zclDataType) {
         out.println();
         out.println("    /**");
-        out.println("     * <p>");
         out.println("     * " + type + " the <i>" + attribute.attributeLabel + "</i> attribute [attribute ID <b>"
                 + attribute.attributeId + "</b>].");
         if (attribute.attributeDescription.size() != 0) {
@@ -1306,7 +1322,16 @@ public class ZclProtocolCodeGenerator {
         }
         if ("Synchronously get".equals(type)) {
             out.println("     * <p>");
-            out.println("     * This method will block until the response is received or a timeout occurs.");
+            out.println("     * This method can return cached data if the attribute has already been received.");
+            out.println(
+                    "     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received");
+            out.println(
+                    "     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value");
+            out.println(
+                    "     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.");
+            out.println("     * <p>");
+            out.println(
+                    "     * This method will block until the response is received or a timeout occurs unless the current value is returned.");
         }
         out.println("     * <p>");
         out.println("     * The attribute is of type {@link " + attribute.dataTypeClass + "}.");
@@ -1326,6 +1351,8 @@ public class ZclProtocolCodeGenerator {
         }
 
         if ("Synchronously get".equals(type)) {
+            out.println(
+                    "     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed");
             out.println("     * @return the {@link " + attribute.dataTypeClass + "} attribute value, or null on error");
         } else {
             out.println("     * @return the {@link Future<CommandResult>} command result future");

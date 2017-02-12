@@ -87,6 +87,12 @@ public enum ZclClusterType {
         this.label = label;
     }
 
+    static {
+        for (final ZclClusterType value : values()) {
+            idValueMap.put(value.id, value);
+        }
+    }
+
     public int getId() {
         return id;
     }
@@ -99,22 +105,12 @@ public enum ZclClusterType {
         return label;
     }
 
-    public String toString() {
-        return label;
-    }
-
     public Class<? extends ZclCluster> getClusterClass() {
         return clusterClass;
     }
 
     public static ZclClusterType getValueById(final int id) {
         return idValueMap.get(id);
-    }
-
-    static {
-        for (final ZclClusterType value : values()) {
-            idValueMap.put(value.id, value);
-        }
     }
 
 }

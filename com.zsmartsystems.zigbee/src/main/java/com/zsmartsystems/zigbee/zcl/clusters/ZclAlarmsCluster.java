@@ -13,6 +13,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.alarms.ResetAlarmCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.alarms.ResetAlarmLogCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.alarms.ResetAllAlarmsCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -22,14 +23,14 @@ import java.util.concurrent.Future;
  * <p>
  * Attributes and commands for sending alarm notifications and configuring alarm
  * functionality.
- * <br>
+ * <p>
  * Alarm conditions and their respective alarm codes are described in individual
  * clusters, along with an alarm mask field. Where not masked, alarm notifications
  * are reported to subscribed targets using binding.
- * <br>
+ * <p>
  * Where an alarm table is implemented, all alarms, masked or otherwise, are
  * recorded and may be retrieved on demand.
- * <br>
+ * <p>
  * Alarms may either reset automatically when the conditions that cause are no
  * longer active, or may need to be explicitly reset.
  * <p>
@@ -63,13 +64,12 @@ public class ZclAlarmsCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Get the <i>AlarmCount</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The AlarmCount attribute is 16-bits in length and specifies the number of entries
      * currently in the alarm table. This attribute shall be specified in the range 0x00 to
      * the maximum defined in the profile using this cluster.
-     * <br>
+     * <p>
      * If alarm logging is not implemented this attribute shall always take the value
      * 0x00.
      * <p>
@@ -85,25 +85,37 @@ public class ZclAlarmsCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>AlarmCount</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The AlarmCount attribute is 16-bits in length and specifies the number of entries
      * currently in the alarm table. This attribute shall be specified in the range 0x00 to
      * the maximum defined in the profile using this cluster.
-     * <br>
+     * <p>
      * If alarm logging is not implemented this attribute shall always take the value
      * 0x00.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getAlarmCount() {
+    public Integer getAlarmCount(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ALARMCOUNT).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ALARMCOUNT).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ALARMCOUNT).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_ALARMCOUNT));
     }
 

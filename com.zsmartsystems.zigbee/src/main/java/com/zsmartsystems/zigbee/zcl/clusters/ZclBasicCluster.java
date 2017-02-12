@@ -8,6 +8,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.basic.ResetToFactoryDefaultsCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -69,7 +70,6 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Get the <i>ZCLVersion</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The ZCLVersion attribute is 8 bits in length and specifies the version number of
@@ -87,30 +87,41 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>ZCLVersion</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The ZCLVersion attribute is 8 bits in length and specifies the version number of
      * the ZigBee Cluster Library that all clusters on this endpoint conform to.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getZclVersion() {
+    public Integer getZclVersion(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ZCLVERSION).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ZCLVERSION).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ZCLVERSION).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_ZCLVERSION));
     }
 
     /**
-     * <p>
      * Get the <i>ApplicationVersion</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The ApplicationVersion attribute is 8 bits in length and specifies the version
+     * <p>
      * number of the application software contained in the device. The usage of this
      * attribute is manufacturer dependent.
      * <p>
@@ -126,32 +137,43 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>ApplicationVersion</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The ApplicationVersion attribute is 8 bits in length and specifies the version
+     * <p>
      * number of the application software contained in the device. The usage of this
      * attribute is manufacturer dependent.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getApplicationVersion() {
+    public Integer getApplicationVersion(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_APPLICATIONVERSION).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_APPLICATIONVERSION).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_APPLICATIONVERSION).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_APPLICATIONVERSION));
     }
 
     /**
-     * <p>
      * Get the <i>StackVersion</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The StackVersion attribute is 8 bits in length and specifies the version number
+     * <p>
      * of the implementation of the ZigBee stack contained in the device. The usage of
      * this attribute is manufacturer dependent.
      * <p>
@@ -167,32 +189,43 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>StackVersion</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The StackVersion attribute is 8 bits in length and specifies the version number
+     * <p>
      * of the implementation of the ZigBee stack contained in the device. The usage of
      * this attribute is manufacturer dependent.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getStackVersion() {
+    public Integer getStackVersion(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_STACKVERSION).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_STACKVERSION).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_STACKVERSION).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_STACKVERSION));
     }
 
     /**
-     * <p>
      * Get the <i>HWVersion</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The HWVersion attribute is 8 bits in length and specifies the version number of
+     * <p>
      * the hardware of the device. The usage of this attribute is manufacturer dependent.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -207,31 +240,42 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>HWVersion</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The HWVersion attribute is 8 bits in length and specifies the version number of
+     * <p>
      * the hardware of the device. The usage of this attribute is manufacturer dependent.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getHwVersion() {
+    public Integer getHwVersion(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_HWVERSION).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_HWVERSION).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_HWVERSION).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_HWVERSION));
     }
 
     /**
-     * <p>
      * Get the <i>ManufacturerName</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The ManufacturerName attribute is a maximum of 32 bytes in length and specifies
+     * <p>
      * the name of the manufacturer as a ZigBee character string.
      * <p>
      * The attribute is of type {@link String}.
@@ -246,31 +290,42 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>ManufacturerName</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The ManufacturerName attribute is a maximum of 32 bytes in length and specifies
+     * <p>
      * the name of the manufacturer as a ZigBee character string.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link String}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
      */
-    public String getManufacturerName() {
+    public String getManufacturerName(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MANUFACTURERNAME).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MANUFACTURERNAME).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (String) attributes.get(ATTR_MANUFACTURERNAME).getLastValue();
+            }
+        }
+
         return (String) readSync(attributes.get(ATTR_MANUFACTURERNAME));
     }
 
     /**
-     * <p>
      * Get the <i>ModelIdentifier</i> attribute [attribute ID <b>5</b>].
      * <p>
-     * <br>
      * The ModelIdentifier attribute is a maximum of 32 bytes in length and specifies the
+     * <p>
      * model number (or other identifier) assigned by the manufacturer as a ZigBee character string.
      * <p>
      * The attribute is of type {@link String}.
@@ -285,31 +340,42 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>ModelIdentifier</i> attribute [attribute ID <b>5</b>].
      * <p>
-     * <br>
      * The ModelIdentifier attribute is a maximum of 32 bytes in length and specifies the
+     * <p>
      * model number (or other identifier) assigned by the manufacturer as a ZigBee character string.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link String}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
      */
-    public String getModelIdentifier() {
+    public String getModelIdentifier(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MODELIDENTIFIER).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MODELIDENTIFIER).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (String) attributes.get(ATTR_MODELIDENTIFIER).getLastValue();
+            }
+        }
+
         return (String) readSync(attributes.get(ATTR_MODELIDENTIFIER));
     }
 
     /**
-     * <p>
      * Get the <i>DateCode</i> attribute [attribute ID <b>6</b>].
      * <p>
-     * <br>
      * The DateCode attribute is a ZigBee character string with a maximum length of 16 bytes.
+     * <p>
      * The first 8 characters specify the date of manufacturer of the device in international
      * date notation according to ISO 8601, i.e. YYYYMMDD, e.g. 20060814.
      * <p>
@@ -325,32 +391,43 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>DateCode</i> attribute [attribute ID <b>6</b>].
      * <p>
-     * <br>
      * The DateCode attribute is a ZigBee character string with a maximum length of 16 bytes.
+     * <p>
      * The first 8 characters specify the date of manufacturer of the device in international
      * date notation according to ISO 8601, i.e. YYYYMMDD, e.g. 20060814.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link String}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
      */
-    public String getDateCode() {
+    public String getDateCode(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_DATECODE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_DATECODE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (String) attributes.get(ATTR_DATECODE).getLastValue();
+            }
+        }
+
         return (String) readSync(attributes.get(ATTR_DATECODE));
     }
 
     /**
-     * <p>
      * Get the <i>PowerSource</i> attribute [attribute ID <b>7</b>].
      * <p>
-     * <br>
      * The PowerSource attribute is 8 bits in length and specifies the source(s) of power
+     * <p>
      * available to the device. Bits b0–b6 of this attribute represent the primary power
      * source of the device and bit b7 indicates whether the device has a secondary power
      * source in the form of a battery backup.
@@ -367,34 +444,45 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>PowerSource</i> attribute [attribute ID <b>7</b>].
      * <p>
-     * <br>
      * The PowerSource attribute is 8 bits in length and specifies the source(s) of power
+     * <p>
      * available to the device. Bits b0–b6 of this attribute represent the primary power
      * source of the device and bit b7 indicates whether the device has a secondary power
      * source in the form of a battery backup.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getPowerSource() {
+    public Integer getPowerSource(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_POWERSOURCE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_POWERSOURCE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_POWERSOURCE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_POWERSOURCE));
     }
 
 
     /**
-     * <p>
      * Set the <i>LocationDescription</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * <br>
      * The LocationDescription attribute is a maximum of 16 bytes in length and describes
+     * <p>
      * the physical location of the device as a ZigBee character string.
      * <p>
      * The attribute is of type {@link String}.
@@ -409,11 +497,10 @@ public class ZclBasicCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>LocationDescription</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * <br>
      * The LocationDescription attribute is a maximum of 16 bytes in length and describes
+     * <p>
      * the physical location of the device as a ZigBee character string.
      * <p>
      * The attribute is of type {@link String}.
@@ -428,32 +515,43 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>LocationDescription</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * <br>
      * The LocationDescription attribute is a maximum of 16 bytes in length and describes
+     * <p>
      * the physical location of the device as a ZigBee character string.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link String}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
      */
-    public String getLocationDescription() {
+    public String getLocationDescription(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_LOCATIONDESCRIPTION).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_LOCATIONDESCRIPTION).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (String) attributes.get(ATTR_LOCATIONDESCRIPTION).getLastValue();
+            }
+        }
+
         return (String) readSync(attributes.get(ATTR_LOCATIONDESCRIPTION));
     }
 
 
     /**
-     * <p>
      * Set the <i>PhysicalEnvironment</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * <br>
      * The PhysicalEnvironment attribute is 8 bits in length and specifies the type of
+     * <p>
      * physical environment in which the device will operate.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -468,11 +566,10 @@ public class ZclBasicCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>PhysicalEnvironment</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * <br>
      * The PhysicalEnvironment attribute is 8 bits in length and specifies the type of
+     * <p>
      * physical environment in which the device will operate.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -487,32 +584,43 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>PhysicalEnvironment</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * <br>
      * The PhysicalEnvironment attribute is 8 bits in length and specifies the type of
+     * <p>
      * physical environment in which the device will operate.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getPhysicalEnvironment() {
+    public Integer getPhysicalEnvironment(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_PHYSICALENVIRONMENT).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_PHYSICALENVIRONMENT).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_PHYSICALENVIRONMENT).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_PHYSICALENVIRONMENT));
     }
 
 
     /**
-     * <p>
      * Set the <i>DeviceEnabled</i> attribute [attribute ID <b>18</b>].
      * <p>
-     * <br>
      * The DeviceEnabled attribute is a boolean and specifies whether the device is enabled
+     * <p>
      * or disabled.
      * <p>
      * The attribute is of type {@link Boolean}.
@@ -527,11 +635,10 @@ public class ZclBasicCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>DeviceEnabled</i> attribute [attribute ID <b>18</b>].
      * <p>
-     * <br>
      * The DeviceEnabled attribute is a boolean and specifies whether the device is enabled
+     * <p>
      * or disabled.
      * <p>
      * The attribute is of type {@link Boolean}.
@@ -546,32 +653,43 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>DeviceEnabled</i> attribute [attribute ID <b>18</b>].
      * <p>
-     * <br>
      * The DeviceEnabled attribute is a boolean and specifies whether the device is enabled
+     * <p>
      * or disabled.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Boolean}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
      */
-    public Boolean getDeviceEnabled() {
+    public Boolean getDeviceEnabled(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_DEVICEENABLED).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_DEVICEENABLED).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Boolean) attributes.get(ATTR_DEVICEENABLED).getLastValue();
+            }
+        }
+
         return (Boolean) readSync(attributes.get(ATTR_DEVICEENABLED));
     }
 
 
     /**
-     * <p>
      * Set the <i>AlarmMask</i> attribute [attribute ID <b>19</b>].
      * <p>
-     * <br>
      * The AlarmMask attribute is 8 bits in length and specifies which of a number of general
+     * <p>
      * alarms may be generated.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -586,11 +704,10 @@ public class ZclBasicCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>AlarmMask</i> attribute [attribute ID <b>19</b>].
      * <p>
-     * <br>
      * The AlarmMask attribute is 8 bits in length and specifies which of a number of general
+     * <p>
      * alarms may be generated.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -605,34 +722,45 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>AlarmMask</i> attribute [attribute ID <b>19</b>].
      * <p>
-     * <br>
      * The AlarmMask attribute is 8 bits in length and specifies which of a number of general
+     * <p>
      * alarms may be generated.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getAlarmMask() {
+    public Integer getAlarmMask(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ALARMMASK).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ALARMMASK).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ALARMMASK).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_ALARMMASK));
     }
 
 
     /**
-     * <p>
      * Set the <i>DisableLocalConfig</i> attribute [attribute ID <b>20</b>].
      * <p>
-     * <br>
      * The DisableLocalConfig attribute allows a number of local device configuration
+     * <p>
      * functions to be disabled.
-     * <br>
+     * <p>
      * The intention of this attribute is to allow disabling of any local configuration
      * user interface, for example to prevent reset or binding buttons being activated by
      * unauthorised persons in a public building.
@@ -649,13 +777,12 @@ public class ZclBasicCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>DisableLocalConfig</i> attribute [attribute ID <b>20</b>].
      * <p>
-     * <br>
      * The DisableLocalConfig attribute allows a number of local device configuration
+     * <p>
      * functions to be disabled.
-     * <br>
+     * <p>
      * The intention of this attribute is to allow disabling of any local configuration
      * user interface, for example to prevent reset or binding buttons being activated by
      * unauthorised persons in a public building.
@@ -672,26 +799,38 @@ public class ZclBasicCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>DisableLocalConfig</i> attribute [attribute ID <b>20</b>].
      * <p>
-     * <br>
      * The DisableLocalConfig attribute allows a number of local device configuration
+     * <p>
      * functions to be disabled.
-     * <br>
+     * <p>
      * The intention of this attribute is to allow disabling of any local configuration
      * user interface, for example to prevent reset or binding buttons being activated by
      * unauthorised persons in a public building.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getDisableLocalConfig() {
+    public Integer getDisableLocalConfig(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_DISABLELOCALCONFIG).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_DISABLELOCALCONFIG).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_DISABLELOCALCONFIG).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_DISABLELOCALCONFIG));
     }
 

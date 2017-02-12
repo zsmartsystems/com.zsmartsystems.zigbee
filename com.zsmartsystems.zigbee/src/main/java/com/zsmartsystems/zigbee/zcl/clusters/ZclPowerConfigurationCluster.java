@@ -6,6 +6,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -72,7 +73,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Get the <i>MainsVoltage</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The MainsVoltage attribute is 16-bits in length and specifies the actual (measured)
@@ -91,39 +91,50 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MainsVoltage</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The MainsVoltage attribute is 16-bits in length and specifies the actual (measured)
      * RMS voltage (or DC voltage in the case of a DC supply) currently applied to the
      * device, measured in units of 100mV.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMainsVoltage() {
+    public Integer getMainsVoltage(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MAINSVOLTAGE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MAINSVOLTAGE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MAINSVOLTAGE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MAINSVOLTAGE));
     }
 
     /**
-     * <p>
      * Get the <i>MainsFrequency</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The MainsFrequency attribute is 8-bits in length and represents the frequency, in
+     * <p>
      * Hertz, of the mains as determined by the device as follows:-
-     * <br>
+     * <p>
      * MainsFrequency = 0.5 x measured frequency
-     * <br>
+     * <p>
      * Where 2 Hz <= measured frequency <= 506 Hz, corresponding to a
-     * <br>
+     * <p>
      * MainsFrequency in the range 1 to 0xfd.
-     * <br>
+     * <p>
      * The maximum resolution this format allows is 2 Hz.
      * The following special values of MainsFrequency apply.
      * <li>0x00 indicates a frequency that is too low to be measured.</li>
@@ -142,44 +153,55 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MainsFrequency</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The MainsFrequency attribute is 8-bits in length and represents the frequency, in
+     * <p>
      * Hertz, of the mains as determined by the device as follows:-
-     * <br>
+     * <p>
      * MainsFrequency = 0.5 x measured frequency
-     * <br>
+     * <p>
      * Where 2 Hz <= measured frequency <= 506 Hz, corresponding to a
-     * <br>
+     * <p>
      * MainsFrequency in the range 1 to 0xfd.
-     * <br>
+     * <p>
      * The maximum resolution this format allows is 2 Hz.
      * The following special values of MainsFrequency apply.
      * <li>0x00 indicates a frequency that is too low to be measured.</li>
      * <li>0xfe indicates a frequency that is too high to be measured.</li>
      * <li>0xff indicates that the frequency could not be measured.</li>
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMainsFrequency() {
+    public Integer getMainsFrequency(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MAINSFREQUENCY).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MAINSFREQUENCY).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MAINSFREQUENCY).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MAINSFREQUENCY));
     }
 
 
     /**
-     * <p>
      * Set the <i>MainsAlarmMask</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * <br>
      * The MainsAlarmMask attribute is 8-bits in length and specifies which mains
+     * <p>
      * alarms may be generated. A ‘1’ in each bit position enables the alarm.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -194,11 +216,10 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>MainsAlarmMask</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * <br>
      * The MainsAlarmMask attribute is 8-bits in length and specifies which mains
+     * <p>
      * alarms may be generated. A ‘1’ in each bit position enables the alarm.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -213,45 +234,56 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MainsAlarmMask</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * <br>
      * The MainsAlarmMask attribute is 8-bits in length and specifies which mains
+     * <p>
      * alarms may be generated. A ‘1’ in each bit position enables the alarm.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMainsAlarmMask() {
+    public Integer getMainsAlarmMask(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MAINSALARMMASK).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MAINSALARMMASK).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MAINSALARMMASK).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MAINSALARMMASK));
     }
 
 
     /**
-     * <p>
      * Set the <i>MainsVoltageMinThreshold</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * <br>
      * The MainsVoltageMinThreshold attribute is 16-bits in length and specifies the
+     * <p>
      * lower alarm threshold, measured in units of 100mV, for the MainsVoltage
      * attribute. The value of this attribute shall be less than MainsVoltageMaxThreshold.
-     * <br>
+     * <p>
      * If the value of MainsVoltage drops below the threshold specified by
      * MainsVoltageMinThreshold, the device shall start a timer to expire after
      * MainsVoltageDwellTripPoint seconds. If the value of this attribute increases to
      * greater than or equal to MainsVoltageMinThreshold before the timer expires, the
      * device shall stop and reset the timer. If the timer expires, an alarm shall be
      * generated.
-     * <br>
+     * <p>
      * The Alarm Code field (see 3.11.2.3.1) included in the generated alarm shall be
      * 0x00.
-     * <br>
+     * <p>
      * If this attribute takes the value 0xffff then this alarm shall not be generated.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -266,24 +298,23 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>MainsVoltageMinThreshold</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * <br>
      * The MainsVoltageMinThreshold attribute is 16-bits in length and specifies the
+     * <p>
      * lower alarm threshold, measured in units of 100mV, for the MainsVoltage
      * attribute. The value of this attribute shall be less than MainsVoltageMaxThreshold.
-     * <br>
+     * <p>
      * If the value of MainsVoltage drops below the threshold specified by
      * MainsVoltageMinThreshold, the device shall start a timer to expire after
      * MainsVoltageDwellTripPoint seconds. If the value of this attribute increases to
      * greater than or equal to MainsVoltageMinThreshold before the timer expires, the
      * device shall stop and reset the timer. If the timer expires, an alarm shall be
      * generated.
-     * <br>
+     * <p>
      * The Alarm Code field (see 3.11.2.3.1) included in the generated alarm shall be
      * 0x00.
-     * <br>
+     * <p>
      * If this attribute takes the value 0xffff then this alarm shall not be generated.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -298,58 +329,69 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MainsVoltageMinThreshold</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * <br>
      * The MainsVoltageMinThreshold attribute is 16-bits in length and specifies the
+     * <p>
      * lower alarm threshold, measured in units of 100mV, for the MainsVoltage
      * attribute. The value of this attribute shall be less than MainsVoltageMaxThreshold.
-     * <br>
+     * <p>
      * If the value of MainsVoltage drops below the threshold specified by
      * MainsVoltageMinThreshold, the device shall start a timer to expire after
      * MainsVoltageDwellTripPoint seconds. If the value of this attribute increases to
      * greater than or equal to MainsVoltageMinThreshold before the timer expires, the
      * device shall stop and reset the timer. If the timer expires, an alarm shall be
      * generated.
-     * <br>
+     * <p>
      * The Alarm Code field (see 3.11.2.3.1) included in the generated alarm shall be
      * 0x00.
-     * <br>
+     * <p>
      * If this attribute takes the value 0xffff then this alarm shall not be generated.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMainsVoltageMinThreshold() {
+    public Integer getMainsVoltageMinThreshold(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD));
     }
 
 
     /**
-     * <p>
      * Set the <i>MainsVoltageMaxThreshold</i> attribute [attribute ID <b>18</b>].
      * <p>
-     * <br>
      * The MainsVoltageMaxThreshold attribute is 16-bits in length and specifies the
+     * <p>
      * upper alarm threshold, measured in units of 100mV, for the MainsVoltage
      * attribute. The value of this attribute shall be greater than
      * MainsVoltageMinThreshold.
-     * <br>
+     * <p>
      * If the value of MainsVoltage rises above the threshold specified by
      * MainsVoltageMaxThreshold, the device shall start a timer to expire after
      * MainsVoltageDwellTripPoint seconds. If the value of this attribute drops to lower
      * than or equal to MainsVoltageMaxThreshold before the timer expires, the device
      * shall stop and reset the timer. If the timer expires, an alarm shall be generated.
-     * <br>
+     * <p>
      * The Alarm Code field (see 3.11.2.3.1) included in the generated alarm shall be
      * 0x01.
-     * <br>
+     * <p>
      * If this attribute takes the value 0xffff then this alarm shall not be generated.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -364,24 +406,23 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>MainsVoltageMaxThreshold</i> attribute [attribute ID <b>18</b>].
      * <p>
-     * <br>
      * The MainsVoltageMaxThreshold attribute is 16-bits in length and specifies the
+     * <p>
      * upper alarm threshold, measured in units of 100mV, for the MainsVoltage
      * attribute. The value of this attribute shall be greater than
      * MainsVoltageMinThreshold.
-     * <br>
+     * <p>
      * If the value of MainsVoltage rises above the threshold specified by
      * MainsVoltageMaxThreshold, the device shall start a timer to expire after
      * MainsVoltageDwellTripPoint seconds. If the value of this attribute drops to lower
      * than or equal to MainsVoltageMaxThreshold before the timer expires, the device
      * shall stop and reset the timer. If the timer expires, an alarm shall be generated.
-     * <br>
+     * <p>
      * The Alarm Code field (see 3.11.2.3.1) included in the generated alarm shall be
      * 0x01.
-     * <br>
+     * <p>
      * If this attribute takes the value 0xffff then this alarm shall not be generated.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -396,48 +437,59 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MainsVoltageMaxThreshold</i> attribute [attribute ID <b>18</b>].
      * <p>
-     * <br>
      * The MainsVoltageMaxThreshold attribute is 16-bits in length and specifies the
+     * <p>
      * upper alarm threshold, measured in units of 100mV, for the MainsVoltage
      * attribute. The value of this attribute shall be greater than
      * MainsVoltageMinThreshold.
-     * <br>
+     * <p>
      * If the value of MainsVoltage rises above the threshold specified by
      * MainsVoltageMaxThreshold, the device shall start a timer to expire after
      * MainsVoltageDwellTripPoint seconds. If the value of this attribute drops to lower
      * than or equal to MainsVoltageMaxThreshold before the timer expires, the device
      * shall stop and reset the timer. If the timer expires, an alarm shall be generated.
-     * <br>
+     * <p>
      * The Alarm Code field (see 3.11.2.3.1) included in the generated alarm shall be
      * 0x01.
-     * <br>
+     * <p>
      * If this attribute takes the value 0xffff then this alarm shall not be generated.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMainsVoltageMaxThreshold() {
+    public Integer getMainsVoltageMaxThreshold(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD));
     }
 
 
     /**
-     * <p>
      * Set the <i>MainsVoltageDwellTripPoint</i> attribute [attribute ID <b>19</b>].
      * <p>
-     * <br>
      * The MainsVoltageDwellTripPoint attribute is 16-bits in length and specifies the
+     * <p>
      * length of time, in seconds that the value of MainsVoltage may exist beyond either
      * of its thresholds before an alarm is generated.
-     * <br>
+     * <p>
      * If this attribute takes the value 0xffff then the associated alarms shall not be
      * generated.
      * <p>
@@ -453,14 +505,13 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>MainsVoltageDwellTripPoint</i> attribute [attribute ID <b>19</b>].
      * <p>
-     * <br>
      * The MainsVoltageDwellTripPoint attribute is 16-bits in length and specifies the
+     * <p>
      * length of time, in seconds that the value of MainsVoltage may exist beyond either
      * of its thresholds before an alarm is generated.
-     * <br>
+     * <p>
      * If this attribute takes the value 0xffff then the associated alarms shall not be
      * generated.
      * <p>
@@ -476,35 +527,46 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MainsVoltageDwellTripPoint</i> attribute [attribute ID <b>19</b>].
      * <p>
-     * <br>
      * The MainsVoltageDwellTripPoint attribute is 16-bits in length and specifies the
+     * <p>
      * length of time, in seconds that the value of MainsVoltage may exist beyond either
      * of its thresholds before an alarm is generated.
-     * <br>
+     * <p>
      * If this attribute takes the value 0xffff then the associated alarms shall not be
      * generated.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMainsVoltageDwellTripPoint() {
+    public Integer getMainsVoltageDwellTripPoint(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT));
     }
 
     /**
-     * <p>
      * Get the <i>BatteryVoltage</i> attribute [attribute ID <b>32</b>].
      * <p>
-     * <br>
      * The BatteryVoltage attribute is 8-bits in length and specifies the current actual
+     * <p>
      * (measured) battery voltage, in units of 100mV.
      * The value 0xff indicates an invalid or unknown reading.
      * <p>
@@ -520,33 +582,44 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>BatteryVoltage</i> attribute [attribute ID <b>32</b>].
      * <p>
-     * <br>
      * The BatteryVoltage attribute is 8-bits in length and specifies the current actual
+     * <p>
      * (measured) battery voltage, in units of 100mV.
      * The value 0xff indicates an invalid or unknown reading.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getBatteryVoltage() {
+    public Integer getBatteryVoltage(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYVOLTAGE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYVOLTAGE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYVOLTAGE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGE));
     }
 
 
     /**
-     * <p>
      * Set the <i>BatteryManufacturer</i> attribute [attribute ID <b>48</b>].
      * <p>
-     * <br>
      * The BatteryManufacturer attribute is a maximum of 16 bytes in length and
+     * <p>
      * specifies the name of the battery manufacturer as a ZigBee character string.
      * <p>
      * The attribute is of type {@link String}.
@@ -561,11 +634,10 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>BatteryManufacturer</i> attribute [attribute ID <b>48</b>].
      * <p>
-     * <br>
      * The BatteryManufacturer attribute is a maximum of 16 bytes in length and
+     * <p>
      * specifies the name of the battery manufacturer as a ZigBee character string.
      * <p>
      * The attribute is of type {@link String}.
@@ -580,32 +652,43 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>BatteryManufacturer</i> attribute [attribute ID <b>48</b>].
      * <p>
-     * <br>
      * The BatteryManufacturer attribute is a maximum of 16 bytes in length and
+     * <p>
      * specifies the name of the battery manufacturer as a ZigBee character string.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link String}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
      */
-    public String getBatteryManufacturer() {
+    public String getBatteryManufacturer(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYMANUFACTURER).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYMANUFACTURER).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (String) attributes.get(ATTR_BATTERYMANUFACTURER).getLastValue();
+            }
+        }
+
         return (String) readSync(attributes.get(ATTR_BATTERYMANUFACTURER));
     }
 
 
     /**
-     * <p>
      * Set the <i>BatterySize</i> attribute [attribute ID <b>49</b>].
      * <p>
-     * <br>
      * The BatterySize attribute is an enumeration which specifies the type of battery
+     * <p>
      * being used by the device.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -620,11 +703,10 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>BatterySize</i> attribute [attribute ID <b>49</b>].
      * <p>
-     * <br>
      * The BatterySize attribute is an enumeration which specifies the type of battery
+     * <p>
      * being used by the device.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -639,32 +721,43 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>BatterySize</i> attribute [attribute ID <b>49</b>].
      * <p>
-     * <br>
      * The BatterySize attribute is an enumeration which specifies the type of battery
+     * <p>
      * being used by the device.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getBatterySize() {
+    public Integer getBatterySize(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYSIZE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYSIZE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYSIZE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_BATTERYSIZE));
     }
 
 
     /**
-     * <p>
      * Set the <i>BatteryAHrRating</i> attribute [attribute ID <b>50</b>].
      * <p>
-     * <br>
      * The BatteryAHrRating attribute is 16-bits in length and specifies the Ampere-hour
+     * <p>
      * rating of the battery, measured in units of 10mAHr.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -679,11 +772,10 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>BatteryAHrRating</i> attribute [attribute ID <b>50</b>].
      * <p>
-     * <br>
      * The BatteryAHrRating attribute is 16-bits in length and specifies the Ampere-hour
+     * <p>
      * rating of the battery, measured in units of 10mAHr.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -698,32 +790,43 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>BatteryAHrRating</i> attribute [attribute ID <b>50</b>].
      * <p>
-     * <br>
      * The BatteryAHrRating attribute is 16-bits in length and specifies the Ampere-hour
+     * <p>
      * rating of the battery, measured in units of 10mAHr.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getBatteryAHrRating() {
+    public Integer getBatteryAHrRating(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYAHRRATING).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYAHRRATING).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYAHRRATING).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_BATTERYAHRRATING));
     }
 
 
     /**
-     * <p>
      * Set the <i>BatteryQuantity</i> attribute [attribute ID <b>51</b>].
      * <p>
-     * <br>
      * The BatteryQuantity attribute is 8-bits in length and specifies the number of
+     * <p>
      * battery cells used to power the device.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -738,11 +841,10 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>BatteryQuantity</i> attribute [attribute ID <b>51</b>].
      * <p>
-     * <br>
      * The BatteryQuantity attribute is 8-bits in length and specifies the number of
+     * <p>
      * battery cells used to power the device.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -757,32 +859,43 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>BatteryQuantity</i> attribute [attribute ID <b>51</b>].
      * <p>
-     * <br>
      * The BatteryQuantity attribute is 8-bits in length and specifies the number of
+     * <p>
      * battery cells used to power the device.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getBatteryQuantity() {
+    public Integer getBatteryQuantity(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYQUANTITY).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYQUANTITY).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYQUANTITY).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_BATTERYQUANTITY));
     }
 
 
     /**
-     * <p>
      * Set the <i>BatteryRatedVoltage</i> attribute [attribute ID <b>52</b>].
      * <p>
-     * <br>
      * The BatteryRatedVoltage attribute is 8-bits in length and specifies the rated
+     * <p>
      * voltage of the battery being used in the device, measured in units of 100mV.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -797,11 +910,10 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>BatteryRatedVoltage</i> attribute [attribute ID <b>52</b>].
      * <p>
-     * <br>
      * The BatteryRatedVoltage attribute is 8-bits in length and specifies the rated
+     * <p>
      * voltage of the battery being used in the device, measured in units of 100mV.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -816,32 +928,43 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>BatteryRatedVoltage</i> attribute [attribute ID <b>52</b>].
      * <p>
-     * <br>
      * The BatteryRatedVoltage attribute is 8-bits in length and specifies the rated
+     * <p>
      * voltage of the battery being used in the device, measured in units of 100mV.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getBatteryRatedVoltage() {
+    public Integer getBatteryRatedVoltage(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYRATEDVOLTAGE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYRATEDVOLTAGE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYRATEDVOLTAGE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_BATTERYRATEDVOLTAGE));
     }
 
 
     /**
-     * <p>
      * Set the <i>BatteryAlarmMask</i> attribute [attribute ID <b>53</b>].
      * <p>
-     * <br>
      * The BatteryAlarmMask attribute is 8-bits in length and specifies which battery
+     * <p>
      * alarms may be generated.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -856,11 +979,10 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>BatteryAlarmMask</i> attribute [attribute ID <b>53</b>].
      * <p>
-     * <br>
      * The BatteryAlarmMask attribute is 8-bits in length and specifies which battery
+     * <p>
      * alarms may be generated.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -875,40 +997,51 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>BatteryAlarmMask</i> attribute [attribute ID <b>53</b>].
      * <p>
-     * <br>
      * The BatteryAlarmMask attribute is 8-bits in length and specifies which battery
+     * <p>
      * alarms may be generated.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getBatteryAlarmMask() {
+    public Integer getBatteryAlarmMask(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYALARMMASK).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYALARMMASK).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYALARMMASK).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_BATTERYALARMMASK));
     }
 
 
     /**
-     * <p>
      * Set the <i>BatteryVoltageMinThreshold</i> attribute [attribute ID <b>54</b>].
      * <p>
-     * <br>
      * The BatteryVoltageMinThreshold attribute is 8-bits in length and specifies the low
+     * <p>
      * voltage alarm threshold, measured in units of 100mV, for the BatteryVoltage
      * attribute.
-     * <br>
+     * <p>
      * If the value of BatteryVoltage drops below the threshold specified by
      * BatteryVoltageMinThreshold an alarm shall be generated.
-     * <br>
+     * <p>
      * The Alarm Code field included in the generated alarm shall be 0x10.
-     * <br>
+     * <p>
      * If this attribute takes the value 0xff then this alarm shall not be generated.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -923,19 +1056,18 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>BatteryVoltageMinThreshold</i> attribute [attribute ID <b>54</b>].
      * <p>
-     * <br>
      * The BatteryVoltageMinThreshold attribute is 8-bits in length and specifies the low
+     * <p>
      * voltage alarm threshold, measured in units of 100mV, for the BatteryVoltage
      * attribute.
-     * <br>
+     * <p>
      * If the value of BatteryVoltage drops below the threshold specified by
      * BatteryVoltageMinThreshold an alarm shall be generated.
-     * <br>
+     * <p>
      * The Alarm Code field included in the generated alarm shall be 0x10.
-     * <br>
+     * <p>
      * If this attribute takes the value 0xff then this alarm shall not be generated.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -950,30 +1082,42 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>BatteryVoltageMinThreshold</i> attribute [attribute ID <b>54</b>].
      * <p>
-     * <br>
      * The BatteryVoltageMinThreshold attribute is 8-bits in length and specifies the low
+     * <p>
      * voltage alarm threshold, measured in units of 100mV, for the BatteryVoltage
      * attribute.
-     * <br>
+     * <p>
      * If the value of BatteryVoltage drops below the threshold specified by
      * BatteryVoltageMinThreshold an alarm shall be generated.
-     * <br>
+     * <p>
      * The Alarm Code field included in the generated alarm shall be 0x10.
-     * <br>
+     * <p>
      * If this attribute takes the value 0xff then this alarm shall not be generated.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getBatteryVoltageMinThreshold() {
+    public Integer getBatteryVoltageMinThreshold(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD));
     }
 

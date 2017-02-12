@@ -18,6 +18,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepColorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepSaturationCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -76,15 +77,14 @@ public class ZclColorControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Get the <i>CurrentHue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentHue attribute contains the current hue value of the light. It is updated
      * as fast as practical during commands that change the hue.
-     * <br>
+     * <p>
      * The hue in degrees shall be related to the CurrentHue attribute by the relationship
      * Hue = CurrentHue x 360 / 254 (CurrentHue in the range 0 - 254 inclusive)
-     * <br>
+     * <p>
      * If this attribute is implemented then the CurrentSaturation and ColorMode
      * attributes shall also be implemented.
      * <p>
@@ -100,41 +100,52 @@ public class ZclColorControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>CurrentHue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentHue attribute contains the current hue value of the light. It is updated
      * as fast as practical during commands that change the hue.
-     * <br>
+     * <p>
      * The hue in degrees shall be related to the CurrentHue attribute by the relationship
      * Hue = CurrentHue x 360 / 254 (CurrentHue in the range 0 - 254 inclusive)
-     * <br>
+     * <p>
      * If this attribute is implemented then the CurrentSaturation and ColorMode
      * attributes shall also be implemented.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getCurrentHue() {
+    public Integer getCurrentHue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTHUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_CURRENTHUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_CURRENTHUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_CURRENTHUE));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>CurrentHue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentHue attribute contains the current hue value of the light. It is updated
      * as fast as practical during commands that change the hue.
-     * <br>
+     * <p>
      * The hue in degrees shall be related to the CurrentHue attribute by the relationship
      * Hue = CurrentHue x 360 / 254 (CurrentHue in the range 0 - 254 inclusive)
-     * <br>
+     * <p>
      * If this attribute is implemented then the CurrentSaturation and ColorMode
      * attributes shall also be implemented.
      * <p>
@@ -152,11 +163,10 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The CurrentSaturation attribute holds the current saturation value of the light. It is
+     * <p>
      * updated as fast as practical during commands that change the saturation.
      * The saturation shall be related to the CurrentSaturation attribute by the
      * relationship
@@ -176,11 +186,10 @@ public class ZclColorControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The CurrentSaturation attribute holds the current saturation value of the light. It is
+     * <p>
      * updated as fast as practical during commands that change the saturation.
      * The saturation shall be related to the CurrentSaturation attribute by the
      * relationship
@@ -188,25 +197,37 @@ public class ZclColorControlCluster extends ZclCluster {
      * If this attribute is implemented then the CurrentHue and ColorMode attributes
      * shall also be implemented.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getCurrentSaturation() {
+    public Integer getCurrentSaturation(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTSATURATION).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_CURRENTSATURATION).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_CURRENTSATURATION).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_CURRENTSATURATION));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The CurrentSaturation attribute holds the current saturation value of the light. It is
+     * <p>
      * updated as fast as practical during commands that change the saturation.
      * The saturation shall be related to the CurrentSaturation attribute by the
      * relationship
@@ -228,11 +249,10 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>RemainingTime</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
+     * <p>
      * until the currently active command will be complete.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -247,36 +267,47 @@ public class ZclColorControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>RemainingTime</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
+     * <p>
      * until the currently active command will be complete.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getRemainingTime() {
+    public Integer getRemainingTime(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_REMAININGTIME).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_REMAININGTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_REMAININGTIME).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_REMAININGTIME));
     }
 
     /**
-     * <p>
      * Get the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The CurrentX attribute contains the current value of the normalized chromaticity
+     * <p>
      * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical
      * during commands that change the color.
-     * <br>
+     * <p>
      * The value of x shall be related to the CurrentX attribute by the relationship
-     * <br>
+     * <p>
      * x = CurrentX / 65535 (CurrentX in the range 0 to 65279 inclusive)
      * <p>
      * The attribute is of type {@link Integer}.
@@ -291,42 +322,53 @@ public class ZclColorControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The CurrentX attribute contains the current value of the normalized chromaticity
+     * <p>
      * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical
      * during commands that change the color.
-     * <br>
+     * <p>
      * The value of x shall be related to the CurrentX attribute by the relationship
-     * <br>
+     * <p>
      * x = CurrentX / 65535 (CurrentX in the range 0 to 65279 inclusive)
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getCurrentX() {
+    public Integer getCurrentX(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTX).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_CURRENTX).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_CURRENTX).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_CURRENTX));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The CurrentX attribute contains the current value of the normalized chromaticity
+     * <p>
      * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical
      * during commands that change the color.
-     * <br>
+     * <p>
      * The value of x shall be related to the CurrentX attribute by the relationship
-     * <br>
+     * <p>
      * x = CurrentX / 65535 (CurrentX in the range 0 to 65279 inclusive)
      * <p>
      * The attribute is of type {@link Integer}.
@@ -343,16 +385,15 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The CurrentY attribute contains the current value of the normalized chromaticity
+     * <p>
      * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical
      * during commands that change the color.
-     * <br>
+     * <p>
      * The value of y shall be related to the CurrentY attribute by the relationship
-     * <br>
+     * <p>
      * y = CurrentY / 65535 (CurrentY in the range 0 to 65279 inclusive)
      * <p>
      * The attribute is of type {@link Integer}.
@@ -367,42 +408,53 @@ public class ZclColorControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The CurrentY attribute contains the current value of the normalized chromaticity
+     * <p>
      * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical
      * during commands that change the color.
-     * <br>
+     * <p>
      * The value of y shall be related to the CurrentY attribute by the relationship
-     * <br>
+     * <p>
      * y = CurrentY / 65535 (CurrentY in the range 0 to 65279 inclusive)
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getCurrentY() {
+    public Integer getCurrentY(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTY).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_CURRENTY).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_CURRENTY).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_CURRENTY));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The CurrentY attribute contains the current value of the normalized chromaticity
+     * <p>
      * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical
      * during commands that change the color.
-     * <br>
+     * <p>
      * The value of y shall be related to the CurrentY attribute by the relationship
-     * <br>
+     * <p>
      * y = CurrentY / 65535 (CurrentY in the range 0 to 65279 inclusive)
      * <p>
      * The attribute is of type {@link Integer}.
@@ -419,11 +471,10 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>DriftCompensation</i> attribute [attribute ID <b>5</b>].
      * <p>
-     * <br>
      * The DriftCompensation attribute indicates what mechanism, if any, is in use for
+     * <p>
      * compensation for color/intensity drift over time.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -438,31 +489,42 @@ public class ZclColorControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>DriftCompensation</i> attribute [attribute ID <b>5</b>].
      * <p>
-     * <br>
      * The DriftCompensation attribute indicates what mechanism, if any, is in use for
+     * <p>
      * compensation for color/intensity drift over time.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getDriftCompensation() {
+    public Integer getDriftCompensation(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_DRIFTCOMPENSATION).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_DRIFTCOMPENSATION).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_DRIFTCOMPENSATION).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_DRIFTCOMPENSATION));
     }
 
     /**
-     * <p>
      * Get the <i>CompensationText</i> attribute [attribute ID <b>6</b>].
      * <p>
-     * <br>
      * The CompensationText attribute holds a textual indication of what mechanism, if
+     * <p>
      * any, is in use to compensate for color/intensity drift over time.
      * <p>
      * The attribute is of type {@link String}.
@@ -477,41 +539,52 @@ public class ZclColorControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>CompensationText</i> attribute [attribute ID <b>6</b>].
      * <p>
-     * <br>
      * The CompensationText attribute holds a textual indication of what mechanism, if
+     * <p>
      * any, is in use to compensate for color/intensity drift over time.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link String}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
      */
-    public String getCompensationText() {
+    public String getCompensationText(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COMPENSATIONTEXT).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COMPENSATIONTEXT).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (String) attributes.get(ATTR_COMPENSATIONTEXT).getLastValue();
+            }
+        }
+
         return (String) readSync(attributes.get(ATTR_COMPENSATIONTEXT));
     }
 
     /**
-     * <p>
      * Get the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
      * <p>
-     * <br>
      * The ColorTemperature attribute contains a scaled inverse of the current value of
+     * <p>
      * the color temperature. It is updated as fast as practical during commands that
      * change the color.
-     * <br>
+     * <p>
      * The color temperature value in Kelvins shall be related to the ColorTemperature
      * attribute by the relationship
-     * <br>
+     * <p>
      * Color temperature = 1,000,000 / ColorTemperature (ColorTemperature in the
      * range 1 to 65279 inclusive, giving a color temperature range from 1,000,000
      * Kelvins to 15.32 Kelvins).
-     * <br>
+     * <p>
      * The value ColorTemperature = 0 indicates an undefined value. The value
      * ColorTemperature = 65535 indicates an invalid value.
      * <p>
@@ -527,53 +600,64 @@ public class ZclColorControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
      * <p>
-     * <br>
      * The ColorTemperature attribute contains a scaled inverse of the current value of
+     * <p>
      * the color temperature. It is updated as fast as practical during commands that
      * change the color.
-     * <br>
+     * <p>
      * The color temperature value in Kelvins shall be related to the ColorTemperature
      * attribute by the relationship
-     * <br>
+     * <p>
      * Color temperature = 1,000,000 / ColorTemperature (ColorTemperature in the
      * range 1 to 65279 inclusive, giving a color temperature range from 1,000,000
      * Kelvins to 15.32 Kelvins).
-     * <br>
+     * <p>
      * The value ColorTemperature = 0 indicates an undefined value. The value
      * ColorTemperature = 65535 indicates an invalid value.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getColorTemperature() {
+    public Integer getColorTemperature(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COLORTEMPERATURE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COLORTEMPERATURE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COLORTEMPERATURE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_COLORTEMPERATURE));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
      * <p>
-     * <br>
      * The ColorTemperature attribute contains a scaled inverse of the current value of
+     * <p>
      * the color temperature. It is updated as fast as practical during commands that
      * change the color.
-     * <br>
+     * <p>
      * The color temperature value in Kelvins shall be related to the ColorTemperature
      * attribute by the relationship
-     * <br>
+     * <p>
      * Color temperature = 1,000,000 / ColorTemperature (ColorTemperature in the
      * range 1 to 65279 inclusive, giving a color temperature range from 1,000,000
      * Kelvins to 15.32 Kelvins).
-     * <br>
+     * <p>
      * The value ColorTemperature = 0 indicates an undefined value. The value
      * ColorTemperature = 65535 indicates an invalid value.
      * <p>
@@ -591,11 +675,10 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>ColorMode</i> attribute [attribute ID <b>8</b>].
      * <p>
-     * <br>
      * The ColorMode attribute indicates which attributes are currently determining the
+     * <p>
      * color of the device
      * <p>
      * The attribute is of type {@link Integer}.
@@ -610,22 +693,34 @@ public class ZclColorControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>ColorMode</i> attribute [attribute ID <b>8</b>].
      * <p>
-     * <br>
      * The ColorMode attribute indicates which attributes are currently determining the
+     * <p>
      * color of the device
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getColorMode() {
+    public Integer getColorMode(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COLORMODE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COLORMODE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COLORMODE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_COLORMODE));
     }
 

@@ -24,7 +24,6 @@ import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.command.UserDescriptorResponse;
 
 /**
- * <p>
  * ZigBee network discoverer is used to discover devices in the network.
  * <p>
  * Notifications will be sent to the listeners when nodes and devices are discovered.
@@ -126,8 +125,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
 
     @Override
     public void commandReceived(final Command command) {
-        // 0. ZCL command received from remote node. Request IEEE address if it
-        // is not yet known.
+        // 0. ZCL command received from remote node. Request IEEE address if it is not yet known.
         if (command instanceof ZclCommand) {
             final ZclCommand zclCommand = (ZclCommand) command;
             if (networkManager.getDevice(zclCommand.getSourceAddress()) == null) {
@@ -143,7 +141,20 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
             requestNodeIeeeAddressAndAssociatedNodes(deviceAnnounce.getNetworkAddress());
         }
 
-        // 1. Node IEEE address and associated nodes have been received.
+        checkIeeeAddressResponse(command);
+        checkNodeDescriptorResponse(command);
+        checkPowerDescriptorResponse(command);
+        checkActiveEndpointsResponse(command);
+        checkSimpleDescriptorResponse(command);
+        checkUserDescriptorResponse(command);
+    }
+
+    /**
+     * 1. Node IEEE address and associated nodes have been received.
+     *
+     * @param command the received {@link Command} to be processed
+     */
+    private void checkIeeeAddressResponse(final Command command) {
         if (command instanceof IeeeAddressResponse) {
             final IeeeAddressResponse ieeeAddressResponse = (IeeeAddressResponse) command;
 
@@ -158,8 +169,14 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
                 logger.warn(ieeeAddressResponse.toString());
             }
         }
+    }
 
-        // 2. Node has been described.
+    /**
+     * 2. Node has been described.
+     *
+     * @param command the received {@link Command} to be processed
+     */
+    private void checkNodeDescriptorResponse(final Command command) {
         if (command instanceof NodeDescriptorResponse) {
             final NodeDescriptorResponse nodeDescriptorResponse = (NodeDescriptorResponse) command;
 
@@ -172,8 +189,15 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
                 logger.warn(nodeDescriptorResponse.toString());
             }
         }
+    }
 
-        // 3. Node power descriptor has been received
+    /**
+     * 3. Node power descriptor has been received
+     *
+     * @param command the received {@link Command} to be processed
+     */
+    private void checkPowerDescriptorResponse(final Command command) {
+
         if (command instanceof PowerDescriptorResponse) {
             final PowerDescriptorResponse powerDescriptorResponse = (PowerDescriptorResponse) command;
 
@@ -185,8 +209,14 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
                 logger.warn(powerDescriptorResponse.toString());
             }
         }
+    }
 
-        // 4. Endpoints have been received.
+    /**
+     * 4. Endpoints have been received.
+     *
+     * @param command the received {@link Command} to be processed
+     */
+    private void checkActiveEndpointsResponse(final Command command) {
         if (command instanceof ActiveEndpointsResponse) {
             final ActiveEndpointsResponse activeEndpointsResponse = (ActiveEndpointsResponse) command;
             if (activeEndpointsResponse.getStatus() == 0) {
@@ -203,8 +233,14 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
                 logger.warn(activeEndpointsResponse.toString());
             }
         }
+    }
 
-        // 5. Endpoint is described.
+    /**
+     * 5. Endpoint is described.
+     *
+     * @param command the received {@link Command} to be processed
+     */
+    private void checkSimpleDescriptorResponse(final Command command) {
         if (command instanceof SimpleDescriptorResponse) {
             final SimpleDescriptorResponse simpleDescriptorResponse = (SimpleDescriptorResponse) command;
             if (simpleDescriptorResponse.getStatus() == 0) {
@@ -221,13 +257,21 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
                 logger.warn(simpleDescriptorResponse.toString());
             }
         }
+    }
 
-        // 6. Endpoint user descriptor is received.
+    /**
+     * 6. Endpoint user descriptor is received.
+     *
+     * @param command the received {@link Command} to be processed
+     */
+    private void checkUserDescriptorResponse(final Command command) {
         if (command instanceof UserDescriptorResponse) {
             final UserDescriptorResponse userDescriptorResponse = (UserDescriptorResponse) command;
             logger.info("Received user descriptor response: " + userDescriptorResponse);
         }
     }
+
+    // TODO: 7. Get supported Attributes
 
     /**
      * Requests node IEEE address and associated nodes.

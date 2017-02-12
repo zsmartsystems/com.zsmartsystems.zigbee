@@ -9,6 +9,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.SquawkCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.StartWarningCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -58,7 +59,6 @@ public class ZclIasWdCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Set the <i>MaxDuration</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The MaxDuration attribute specifies the maximum time in seconds that the siren
@@ -76,7 +76,6 @@ public class ZclIasWdCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>MaxDuration</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The MaxDuration attribute specifies the maximum time in seconds that the siren
@@ -94,26 +93,37 @@ public class ZclIasWdCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MaxDuration</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The MaxDuration attribute specifies the maximum time in seconds that the siren
      * will sound continuously, regardless of start/stop commands.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMaxDuration() {
+    public Integer getMaxDuration(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MAXDURATION).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MAXDURATION).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MAXDURATION).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MAXDURATION));
     }
 
     /**
-     * <p>
      * Get the <i>ZoneType</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -128,23 +138,34 @@ public class ZclIasWdCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>ZoneType</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getZoneType() {
+    public Integer getZoneType(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ZONETYPE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ZONETYPE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ZONETYPE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_ZONETYPE));
     }
 
     /**
-     * <p>
      * Get the <i>ZoneStatus</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -159,24 +180,35 @@ public class ZclIasWdCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>ZoneStatus</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getZoneStatus() {
+    public Integer getZoneStatus(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ZONESTATUS).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ZONESTATUS).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ZONESTATUS).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_ZONESTATUS));
     }
 
 
     /**
-     * <p>
      * Set the <i>IAS_CIE_Address</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The attribute is of type {@link Long}.
@@ -191,7 +223,6 @@ public class ZclIasWdCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>IAS_CIE_Address</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The attribute is of type {@link Long}.
@@ -206,18 +237,30 @@ public class ZclIasWdCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>IAS_CIE_Address</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Long}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Long} attribute value, or null on error
      */
-    public Long getIasCieAddress() {
+    public Long getIasCieAddress(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_IAS_CIE_ADDRESS).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_IAS_CIE_ADDRESS).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Long) attributes.get(ATTR_IAS_CIE_ADDRESS).getLastValue();
+            }
+        }
+
         return (Long) readSync(attributes.get(ATTR_IAS_CIE_ADDRESS));
     }
 

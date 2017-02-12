@@ -10,6 +10,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.ToggleCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -49,7 +50,6 @@ public class ZclOnOffCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Get the <i>OnOff</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The OnOff attribute has the following values: 0 = Off, 1 = On
@@ -66,26 +66,37 @@ public class ZclOnOffCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>OnOff</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The OnOff attribute has the following values: 0 = Off, 1 = On
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Boolean}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
      */
-    public Boolean getOnOff() {
+    public Boolean getOnOff(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ONOFF).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ONOFF).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Boolean) attributes.get(ATTR_ONOFF).getLastValue();
+            }
+        }
+
         return (Boolean) readSync(attributes.get(ATTR_ONOFF));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>OnOff</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The OnOff attribute has the following values: 0 = Off, 1 = On

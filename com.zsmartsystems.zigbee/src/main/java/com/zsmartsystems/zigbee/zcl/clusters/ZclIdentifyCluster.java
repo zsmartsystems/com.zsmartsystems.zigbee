@@ -10,6 +10,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.identify.IdentifyCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.identify.IdentifyQueryCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.identify.IdentifyQueryResponse;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -20,7 +21,7 @@ import java.util.concurrent.Future;
  * Attributes and commands to put a device into an Identification mode (e.g. flashing
  * a light), that indicates to an observer – e.g. an installer - which of several devices
  * it is, also to request any device that is identifying itself to respond to the initiator.
- * <br>
+ * <p>
  * Note that this cluster cannot be disabled, and remains functional regardless of the
  * setting of the DeviceEnable attribute in the Basic cluster.
  * <p>
@@ -55,18 +56,17 @@ public class ZclIdentifyCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Set the <i>IdentifyTime</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The IdentifyTime attribute specifies the remaining length of time, in seconds, that
      * the device will continue to identify itself.
-     * <br>
+     * <p>
      * If this attribute is set to a value other than 0x0000 then the device shall enter its
      * identification procedure, in order to indicate to an observer which of several
      * devices it is. It is recommended that this procedure consists of flashing a light
      * with a period of 0.5 seconds. The IdentifyTime attribute shall be decremented
      * every second.
-     * <br>
+     * <p>
      * If this attribute reaches or is set to the value 0x0000 then the device shall
      * terminate its identification procedure.
      * <p>
@@ -82,18 +82,17 @@ public class ZclIdentifyCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>IdentifyTime</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The IdentifyTime attribute specifies the remaining length of time, in seconds, that
      * the device will continue to identify itself.
-     * <br>
+     * <p>
      * If this attribute is set to a value other than 0x0000 then the device shall enter its
      * identification procedure, in order to indicate to an observer which of several
      * devices it is. It is recommended that this procedure consists of flashing a light
      * with a period of 0.5 seconds. The IdentifyTime attribute shall be decremented
      * every second.
-     * <br>
+     * <p>
      * If this attribute reaches or is set to the value 0x0000 then the device shall
      * terminate its identification procedure.
      * <p>
@@ -109,30 +108,42 @@ public class ZclIdentifyCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>IdentifyTime</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The IdentifyTime attribute specifies the remaining length of time, in seconds, that
      * the device will continue to identify itself.
-     * <br>
+     * <p>
      * If this attribute is set to a value other than 0x0000 then the device shall enter its
      * identification procedure, in order to indicate to an observer which of several
      * devices it is. It is recommended that this procedure consists of flashing a light
      * with a period of 0.5 seconds. The IdentifyTime attribute shall be decremented
      * every second.
-     * <br>
+     * <p>
      * If this attribute reaches or is set to the value 0x0000 then the device shall
      * terminate its identification procedure.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getIdentifyTime() {
+    public Integer getIdentifyTime(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_IDENTIFYTIME).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_IDENTIFYTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_IDENTIFYTIME).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_IDENTIFYTIME));
     }
 

@@ -19,7 +19,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * Attributes and commands to put a device into an Identification mode (e.g. flashing
  * a light), that indicates to an observer – e.g. an installer - which of several devices
  * it is, also to request any device that is identifying itself to respond to the initiator.
- * <br>
+ * <p>
  * Note that this cluster cannot be disabled, and remains functional regardless of the
  * setting of the DeviceEnable attribute in the Basic cluster.
  * <p>

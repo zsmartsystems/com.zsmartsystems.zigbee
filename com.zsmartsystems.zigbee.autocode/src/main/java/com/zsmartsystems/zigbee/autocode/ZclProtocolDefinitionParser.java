@@ -126,8 +126,8 @@ public class ZclProtocolDefinitionParser {
                 addBreak = true;
                 continue;
             }
-            if (addBreak) {
-                context.cluster.clusterDescription.add("<br>");
+            if (addBreak && context.cluster.clusterDescription.size() > 0) {
+                context.cluster.clusterDescription.add("<p>");
                 addBreak = false;
             }
             context.cluster.clusterDescription.add(line.trim());
@@ -299,8 +299,8 @@ public class ZclProtocolDefinitionParser {
                 addBreak = true;
                 continue;
             }
-            if (addBreak) {
-                attribute.attributeDescription.add("<br>");
+            if (addBreak && attribute.attributeDescription.size() > 0) {
+                attribute.attributeDescription.add("<p>");
                 addBreak = false;
             }
             attribute.attributeDescription.add(line.trim());

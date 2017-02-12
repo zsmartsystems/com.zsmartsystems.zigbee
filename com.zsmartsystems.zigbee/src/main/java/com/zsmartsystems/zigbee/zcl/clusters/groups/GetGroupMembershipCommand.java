@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.field.Unsigned16BitInteger;
  * group addressing, will be delivered to every endpoint assigned to the group
  * address named in the DstAddr parameter of the outgoing APSDE-DATA.request
  * primitive on every device in the network for which there are such endpoints.
- * <br>
+ * <p>
  * Management of group membership on each device and endpoint is implemented
  * by the APS, but the over-the-air messages that allow for remote management and
  * commissioning of groups are defined here in the cluster library on the theory that,

@@ -15,14 +15,14 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Attributes and commands for sending alarm notifications and configuring alarm
  * functionality.
- * <br>
+ * <p>
  * Alarm conditions and their respective alarm codes are described in individual
  * clusters, along with an alarm mask field. Where not masked, alarm notifications
  * are reported to subscribed targets using binding.
- * <br>
+ * <p>
  * Where an alarm table is implemented, all alarms, masked or otherwise, are
  * recorded and may be retrieved on demand.
- * <br>
+ * <p>
  * Alarms may either reset automatically when the conditions that cause are no
  * longer active, or may need to be explicitly reset.
  * <p>

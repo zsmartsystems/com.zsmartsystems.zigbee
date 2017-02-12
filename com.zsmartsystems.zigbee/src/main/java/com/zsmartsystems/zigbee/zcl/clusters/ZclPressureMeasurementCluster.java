@@ -6,6 +6,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -62,18 +63,17 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the pressure in kPa as follows:-
-     * <br>
+     * <p>
      * MeasuredValue = 10 x Pressure
-     * <br>
+     * <p>
      * Where -3276.7 kPa <= Pressure <= 3276.7 kPa, corresponding to a
      * MeasuredValue in the range 0x8001 to 0x7fff.
-     * <br>
+     * <p>
      * Note:- The maximum resolution this format allows is 0.1 kPa.
-     * <br>
+     * <p>
      * A MeasuredValue of 0x8000 indicates that the pressure measurement is invalid.
      * MeasuredValue is updated continuously as new measurements are made.
      * <p>
@@ -89,47 +89,58 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the pressure in kPa as follows:-
-     * <br>
+     * <p>
      * MeasuredValue = 10 x Pressure
-     * <br>
+     * <p>
      * Where -3276.7 kPa <= Pressure <= 3276.7 kPa, corresponding to a
      * MeasuredValue in the range 0x8001 to 0x7fff.
-     * <br>
+     * <p>
      * Note:- The maximum resolution this format allows is 0.1 kPa.
-     * <br>
+     * <p>
      * A MeasuredValue of 0x8000 indicates that the pressure measurement is invalid.
      * MeasuredValue is updated continuously as new measurements are made.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMeasuredValue() {
+    public Integer getMeasuredValue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MEASUREDVALUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MEASUREDVALUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MEASUREDVALUE));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the pressure in kPa as follows:-
-     * <br>
+     * <p>
      * MeasuredValue = 10 x Pressure
-     * <br>
+     * <p>
      * Where -3276.7 kPa <= Pressure <= 3276.7 kPa, corresponding to a
      * MeasuredValue in the range 0x8001 to 0x7fff.
-     * <br>
+     * <p>
      * Note:- The maximum resolution this format allows is 0.1 kPa.
-     * <br>
+     * <p>
      * A MeasuredValue of 0x8000 indicates that the pressure measurement is invalid.
      * MeasuredValue is updated continuously as new measurements are made.
      * <p>
@@ -147,11 +158,10 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
+     * <p>
      * that can be measured. A value of 0x8000 means this attribute is not defined.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -166,35 +176,46 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
+     * <p>
      * that can be measured. A value of 0x8000 means this attribute is not defined.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMinMeasuredValue() {
+    public Integer getMinMeasuredValue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MINMEASUREDVALUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MINMEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MINMEASUREDVALUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MINMEASUREDVALUE));
     }
 
     /**
-     * <p>
      * Get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
+     * <p>
      * that can be measured. A value of 0x8000 means this attribute is not defined.
-     * <br>
+     * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
-     * <br>
+     * <p>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -209,40 +230,51 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
+     * <p>
      * that can be measured. A value of 0x8000 means this attribute is not defined.
-     * <br>
+     * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
-     * <br>
+     * <p>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMaxMeasuredValue() {
+    public Integer getMaxMeasuredValue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MAXMEASUREDVALUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MAXMEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MAXMEASUREDVALUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MAXMEASUREDVALUE));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
+     * <p>
      * that can be measured. A value of 0x8000 means this attribute is not defined.
-     * <br>
+     * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
-     * <br>
+     * <p>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -259,11 +291,10 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
+     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>
@@ -279,28 +310,39 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
+     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getTolerance() {
+    public Integer getTolerance(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_TOLERANCE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_TOLERANCE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_TOLERANCE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_TOLERANCE));
     }
 
     /**
-     * <p>
      * Get the <i>ScaledValue</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -315,24 +357,35 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>ScaledValue</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getScaledValue() {
+    public Integer getScaledValue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_SCALEDVALUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_SCALEDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_SCALEDVALUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_SCALEDVALUE));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>ScaledValue</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -349,7 +402,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>MinScaledValue</i> attribute [attribute ID <b>17</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -364,23 +416,34 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MinScaledValue</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMinScaledValue() {
+    public Integer getMinScaledValue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MINSCALEDVALUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MINSCALEDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MINSCALEDVALUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MINSCALEDVALUE));
     }
 
     /**
-     * <p>
      * Get the <i>MaxScaledValue</i> attribute [attribute ID <b>18</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -395,23 +458,34 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MaxScaledValue</i> attribute [attribute ID <b>18</b>].
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMaxScaledValue() {
+    public Integer getMaxScaledValue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MAXSCALEDVALUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MAXSCALEDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MAXSCALEDVALUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MAXSCALEDVALUE));
     }
 
     /**
-     * <p>
      * Get the <i>ScaledTolerance</i> attribute [attribute ID <b>19</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -426,24 +500,35 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>ScaledTolerance</i> attribute [attribute ID <b>19</b>].
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getScaledTolerance() {
+    public Integer getScaledTolerance(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_SCALEDTOLERANCE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_SCALEDTOLERANCE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_SCALEDTOLERANCE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_SCALEDTOLERANCE));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>ScaledTolerance</i> attribute [attribute ID <b>19</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -460,7 +545,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>Scale</i> attribute [attribute ID <b>20</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -475,18 +559,30 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>Scale</i> attribute [attribute ID <b>20</b>].
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getScale() {
+    public Integer getScale(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_SCALE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_SCALE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_SCALE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_SCALE));
     }
 

@@ -383,12 +383,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 payload = zclHeader.serialize(fieldSerializer, fieldSerializer.getPayload());
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                     | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
+                logger.debug("Error serializing ZigBee frame {}", e);
             }
 
-            if (payload == null) {
-                // TODO handle error
-            }
+            // if (payload == null) {
+            // TODO handle error
+            // }
 
             transport.sendZclCommand(nwkHeader, apsHeader, payload);
 

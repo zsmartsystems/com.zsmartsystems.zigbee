@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.field.Unsigned8BitInteger;
  * The scenes cluster provides attributes and commands for setting up and recalling
  * scenes. Each scene corresponds to a set of stored values of specified attributes for
  * one or more clusters on the same end point as the scenes cluster.
- * <br>
+ * <p>
  * In most cases scenes are associated with a particular group ID. Scenes may also
  * exist without a group, in which case the value 0x0000 replaces the group ID. Note
  * that extra care is required in these cases to avoid a scene ID collision, and that

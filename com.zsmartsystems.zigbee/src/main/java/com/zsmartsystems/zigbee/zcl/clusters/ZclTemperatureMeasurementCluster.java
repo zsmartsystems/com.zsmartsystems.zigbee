@@ -6,6 +6,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -49,20 +50,19 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the temperature in degrees Celsius as follows:-
      * MeasuredValue = 100 x temperature in degrees Celsius.
-     * <br>
+     * <p>
      * Where -273.15°C <= temperature <= 327.67 ºC, corresponding to a
-     * <br>
+     * <p>
      * MeasuredValue in the range 0x954d to 0x7fff. The maximum resolution this
      * format allows is 0.01 ºC.
-     * <br>
+     * <p>
      * A MeasuredValue of 0x8000 indicates that the temperature measurement is
      * invalid.
-     * <br>
+     * <p>
      * MeasuredValue is updated continuously as new measurements are made.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -77,50 +77,61 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the temperature in degrees Celsius as follows:-
      * MeasuredValue = 100 x temperature in degrees Celsius.
-     * <br>
+     * <p>
      * Where -273.15°C <= temperature <= 327.67 ºC, corresponding to a
-     * <br>
+     * <p>
      * MeasuredValue in the range 0x954d to 0x7fff. The maximum resolution this
      * format allows is 0.01 ºC.
-     * <br>
+     * <p>
      * A MeasuredValue of 0x8000 indicates that the temperature measurement is
      * invalid.
-     * <br>
+     * <p>
      * MeasuredValue is updated continuously as new measurements are made.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMeasuredValue() {
+    public Integer getMeasuredValue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MEASUREDVALUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MEASUREDVALUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MEASUREDVALUE));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
      * MeasuredValue represents the temperature in degrees Celsius as follows:-
      * MeasuredValue = 100 x temperature in degrees Celsius.
-     * <br>
+     * <p>
      * Where -273.15°C <= temperature <= 327.67 ºC, corresponding to a
-     * <br>
+     * <p>
      * MeasuredValue in the range 0x954d to 0x7fff. The maximum resolution this
      * format allows is 0.01 ºC.
-     * <br>
+     * <p>
      * A MeasuredValue of 0x8000 indicates that the temperature measurement is
      * invalid.
-     * <br>
+     * <p>
      * MeasuredValue is updated continuously as new measurements are made.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -137,11 +148,10 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
+     * <p>
      * that is capable of being measured. A MinMeasuredValue of 0x8000 indicates that
      * the minimum value is unknown.
      * <p>
@@ -157,38 +167,49 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
+     * <p>
      * that is capable of being measured. A MinMeasuredValue of 0x8000 indicates that
      * the minimum value is unknown.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMinMeasuredValue() {
+    public Integer getMinMeasuredValue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MINMEASUREDVALUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MINMEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MINMEASUREDVALUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MINMEASUREDVALUE));
     }
 
     /**
-     * <p>
      * Get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
+     * <p>
      * that is capable of being measured.
-     * <br>
+     * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
-     * <br>
+     * <p>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
-     * <br>
+     * <p>
      * A MaxMeasuredValue of 0x8000 indicates that the maximum value is unknown.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -203,37 +224,48 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
+     * <p>
      * that is capable of being measured.
-     * <br>
+     * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
-     * <br>
+     * <p>
      * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
-     * <br>
+     * <p>
      * A MaxMeasuredValue of 0x8000 indicates that the maximum value is unknown.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getMaxMeasuredValue() {
+    public Integer getMaxMeasuredValue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_MAXMEASUREDVALUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_MAXMEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_MAXMEASUREDVALUE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_MAXMEASUREDVALUE));
     }
 
     /**
-     * <p>
      * Get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
+     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>
@@ -249,33 +281,44 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
+     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getTolerance() {
+    public Integer getTolerance(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_TOLERANCE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_TOLERANCE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_TOLERANCE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_TOLERANCE));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The Tolerance attribute indicates the magnitude of the possible error that is
+     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>

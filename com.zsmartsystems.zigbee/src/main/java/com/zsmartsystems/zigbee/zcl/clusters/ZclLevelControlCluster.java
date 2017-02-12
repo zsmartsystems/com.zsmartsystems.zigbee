@@ -15,6 +15,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StepWithOnOffCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.Stop2Command;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StopCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -62,7 +63,6 @@ public class ZclLevelControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Get the <i>CurrentLevel</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
@@ -80,27 +80,38 @@ public class ZclLevelControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>CurrentLevel</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
      * meaning of 'level' is device dependent.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getCurrentLevel() {
+    public Integer getCurrentLevel(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTLEVEL).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_CURRENTLEVEL).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_CURRENTLEVEL).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_CURRENTLEVEL));
     }
 
 
     /**
-     * <p>
      * Set reporting for the <i>CurrentLevel</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
@@ -120,11 +131,10 @@ public class ZclLevelControlCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>RemainingTime</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The RemainingTime attribute represents the time remaining until the current
+     * <p>
      * command is complete - it is specified in 1/10ths of a second.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -139,35 +149,46 @@ public class ZclLevelControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>RemainingTime</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The RemainingTime attribute represents the time remaining until the current
+     * <p>
      * command is complete - it is specified in 1/10ths of a second.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getRemainingTime() {
+    public Integer getRemainingTime(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_REMAININGTIME).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_REMAININGTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_REMAININGTIME).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_REMAININGTIME));
     }
 
 
     /**
-     * <p>
      * Set the <i>OnOffTransitionTime</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * <br>
      * The OnOffTransitionTime attribute represents the time taken to move to or from
+     * <p>
      * the target level when On of Off commands are received by an On/Off cluster on
      * the same endpoint. It is specified in 1/10ths of a second.
-     * <br>
+     * <p>
      * The actual time taken should be as close to OnOffTransitionTime as the device is
      * able. N.B. If the device is not able to move at a variable rate, the
      * OnOffTransitionTime attribute should not be implemented.
@@ -184,14 +205,13 @@ public class ZclLevelControlCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>OnOffTransitionTime</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * <br>
      * The OnOffTransitionTime attribute represents the time taken to move to or from
+     * <p>
      * the target level when On of Off commands are received by an On/Off cluster on
      * the same endpoint. It is specified in 1/10ths of a second.
-     * <br>
+     * <p>
      * The actual time taken should be as close to OnOffTransitionTime as the device is
      * able. N.B. If the device is not able to move at a variable rate, the
      * OnOffTransitionTime attribute should not be implemented.
@@ -208,37 +228,48 @@ public class ZclLevelControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>OnOffTransitionTime</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * <br>
      * The OnOffTransitionTime attribute represents the time taken to move to or from
+     * <p>
      * the target level when On of Off commands are received by an On/Off cluster on
      * the same endpoint. It is specified in 1/10ths of a second.
-     * <br>
+     * <p>
      * The actual time taken should be as close to OnOffTransitionTime as the device is
      * able. N.B. If the device is not able to move at a variable rate, the
      * OnOffTransitionTime attribute should not be implemented.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getOnOffTransitionTime() {
+    public Integer getOnOffTransitionTime(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ONOFFTRANSITIONTIME).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ONOFFTRANSITIONTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ONOFFTRANSITIONTIME).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_ONOFFTRANSITIONTIME));
     }
 
 
     /**
-     * <p>
      * Set the <i>OnLevel</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * <br>
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
+     * <p>
      * when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
      * the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.
      * <p>
@@ -254,11 +285,10 @@ public class ZclLevelControlCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>OnLevel</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * <br>
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
+     * <p>
      * when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
      * the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.
      * <p>
@@ -274,23 +304,35 @@ public class ZclLevelControlCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>OnLevel</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * <br>
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
+     * <p>
      * when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
      * the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getOnLevel() {
+    public Integer getOnLevel(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ONLEVEL).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ONLEVEL).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ONLEVEL).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_ONLEVEL));
     }
 

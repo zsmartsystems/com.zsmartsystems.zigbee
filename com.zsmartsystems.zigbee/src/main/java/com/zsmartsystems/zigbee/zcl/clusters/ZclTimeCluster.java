@@ -59,13 +59,12 @@ public class ZclTimeCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Set the <i>Time</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The Time attribute is 32-bits in length and holds the time value of a real time
      * clock. This attribute has data type UTCTime, but note that it may not actually be
      * synchronised to UTC - see discussion of the TimeStatus attribute below.
-     * <br>
+     * <p>
      * If the Master bit of the TimeStatus attribute has a value of 0, writing to this
      * attribute shall set the real time clock to the written value, otherwise it cannot be
      * written. The value 0xffffffff indicates an invalid time.
@@ -82,13 +81,12 @@ public class ZclTimeCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>Time</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The Time attribute is 32-bits in length and holds the time value of a real time
      * clock. This attribute has data type UTCTime, but note that it may not actually be
      * synchronised to UTC - see discussion of the TimeStatus attribute below.
-     * <br>
+     * <p>
      * If the Master bit of the TimeStatus attribute has a value of 0, writing to this
      * attribute shall set the real time clock to the written value, otherwise it cannot be
      * written. The value 0xffffffff indicates an invalid time.
@@ -105,35 +103,45 @@ public class ZclTimeCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>Time</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The Time attribute is 32-bits in length and holds the time value of a real time
      * clock. This attribute has data type UTCTime, but note that it may not actually be
      * synchronised to UTC - see discussion of the TimeStatus attribute below.
-     * <br>
+     * <p>
      * If the Master bit of the TimeStatus attribute has a value of 0, writing to this
      * attribute shall set the real time clock to the written value, otherwise it cannot be
      * written. The value 0xffffffff indicates an invalid time.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Calendar}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
      */
-    public Calendar getTime() {
+    public Calendar getTime(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_TIME).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_TIME).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Calendar) attributes.get(ATTR_TIME).getLastValue();
+            }
+        }
+
         return (Calendar) readSync(attributes.get(ATTR_TIME));
     }
 
 
     /**
-     * <p>
      * Set the <i>TimeStatus</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The TimeStatus attribute holds a number of bit fields.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -148,10 +156,8 @@ public class ZclTimeCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>TimeStatus</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The TimeStatus attribute holds a number of bit fields.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -166,31 +172,41 @@ public class ZclTimeCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>TimeStatus</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The TimeStatus attribute holds a number of bit fields.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getTimeStatus() {
+    public Integer getTimeStatus(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_TIMESTATUS).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_TIMESTATUS).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_TIMESTATUS).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_TIMESTATUS));
     }
 
 
     /**
-     * <p>
      * Set the <i>TimeZone</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The TimeZone attribute indicates the local time zone, as a signed offset in seconds
+     * <p>
      * from the Time attribute value. The value 0xffffffff indicates an invalid time zone.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -205,11 +221,10 @@ public class ZclTimeCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>TimeZone</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The TimeZone attribute indicates the local time zone, as a signed offset in seconds
+     * <p>
      * from the Time attribute value. The value 0xffffffff indicates an invalid time zone.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -224,32 +239,43 @@ public class ZclTimeCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>TimeZone</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The TimeZone attribute indicates the local time zone, as a signed offset in seconds
+     * <p>
      * from the Time attribute value. The value 0xffffffff indicates an invalid time zone.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getTimeZone() {
+    public Integer getTimeZone(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_TIMEZONE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_TIMEZONE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_TIMEZONE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_TIMEZONE));
     }
 
 
     /**
-     * <p>
      * Set the <i>DstStart</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
+     * <p>
      * indicates an invalid DST start time.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -264,11 +290,10 @@ public class ZclTimeCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>DstStart</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
+     * <p>
      * indicates an invalid DST start time.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -283,44 +308,55 @@ public class ZclTimeCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>DstStart</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
+     * <p>
      * indicates an invalid DST start time.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getDstStart() {
+    public Integer getDstStart(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_DSTSTART).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_DSTSTART).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_DSTSTART).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_DSTSTART));
     }
 
 
     /**
-     * <p>
      * Set the <i>DstEnd</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
+     * <p>
      * indicates an invalid DST end time.
-     * <br>
+     * <p>
      * Note that the three attributes DstStart, DstEnd and DstShift are optional, but if any
      * one of them is implemented the other two must also be implemented.
      * Note that this attribute should be set to a new value once every year.
-     * <br>
+     * <p>
      * Note that this attribute should be set to a new value once every year, and should be
      * written synchronously with the DstStart attribute.
-     * <br>
+     * <p>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
      * indicates an invalid DST end time.
-     * <br>
+     * <p>
      * Note that this attribute should be set to a new value once every year, and should be
      * written synchronously with the DstStart attribute
      * <p>
@@ -336,23 +372,22 @@ public class ZclTimeCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>DstEnd</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
+     * <p>
      * indicates an invalid DST end time.
-     * <br>
+     * <p>
      * Note that the three attributes DstStart, DstEnd and DstShift are optional, but if any
      * one of them is implemented the other two must also be implemented.
      * Note that this attribute should be set to a new value once every year.
-     * <br>
+     * <p>
      * Note that this attribute should be set to a new value once every year, and should be
      * written synchronously with the DstStart attribute.
-     * <br>
+     * <p>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
      * indicates an invalid DST end time.
-     * <br>
+     * <p>
      * Note that this attribute should be set to a new value once every year, and should be
      * written synchronously with the DstStart attribute
      * <p>
@@ -368,48 +403,59 @@ public class ZclTimeCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>DstEnd</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
+     * <p>
      * indicates an invalid DST end time.
-     * <br>
+     * <p>
      * Note that the three attributes DstStart, DstEnd and DstShift are optional, but if any
      * one of them is implemented the other two must also be implemented.
      * Note that this attribute should be set to a new value once every year.
-     * <br>
+     * <p>
      * Note that this attribute should be set to a new value once every year, and should be
      * written synchronously with the DstStart attribute.
-     * <br>
+     * <p>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
      * indicates an invalid DST end time.
-     * <br>
+     * <p>
      * Note that this attribute should be set to a new value once every year, and should be
      * written synchronously with the DstStart attribute
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getDstEnd() {
+    public Integer getDstEnd(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_DSTEND).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_DSTEND).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_DSTEND).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_DSTEND));
     }
 
 
     /**
-     * <p>
      * Set the <i>DstShift</i> attribute [attribute ID <b>5</b>].
      * <p>
-     * <br>
      * The DstShift attribute represents a signed offset in seconds from the standard time,
+     * <p>
      * to be applied between the times DstStart and DstEnd to calculate the Local Time.
      * The value 0xffffffff indicates an invalid DST shift.
-     * <br>
+     * <p>
      * The range of this attribute is +/- one day. Note that the actual range of DST values
      * employed by countries is much smaller than this, so the manufacturer has the
      * option to impose a smaller range.
@@ -426,14 +472,13 @@ public class ZclTimeCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>DstShift</i> attribute [attribute ID <b>5</b>].
      * <p>
-     * <br>
      * The DstShift attribute represents a signed offset in seconds from the standard time,
+     * <p>
      * to be applied between the times DstStart and DstEnd to calculate the Local Time.
      * The value 0xffffffff indicates an invalid DST shift.
-     * <br>
+     * <p>
      * The range of this attribute is +/- one day. Note that the actual range of DST values
      * employed by countries is much smaller than this, so the manufacturer has the
      * option to impose a smaller range.
@@ -450,36 +495,47 @@ public class ZclTimeCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>DstShift</i> attribute [attribute ID <b>5</b>].
      * <p>
-     * <br>
      * The DstShift attribute represents a signed offset in seconds from the standard time,
+     * <p>
      * to be applied between the times DstStart and DstEnd to calculate the Local Time.
      * The value 0xffffffff indicates an invalid DST shift.
-     * <br>
+     * <p>
      * The range of this attribute is +/- one day. Note that the actual range of DST values
      * employed by countries is much smaller than this, so the manufacturer has the
      * option to impose a smaller range.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getDstShift() {
+    public Integer getDstShift(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_DSTSHIFT).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_DSTSHIFT).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_DSTSHIFT).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_DSTSHIFT));
     }
 
     /**
-     * <p>
      * Get the <i>StandardTime</i> attribute [attribute ID <b>6</b>].
      * <p>
-     * <br>
      * A device may derive the time by reading the Time and TimeZone attributes
+     * <p>
      * and adding them together. If implemented however, the optional StandardTime
      * attribute indicates this time directly. The value 0xffffffff indicates an invalid
      * Standard Time.
@@ -496,33 +552,44 @@ public class ZclTimeCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>StandardTime</i> attribute [attribute ID <b>6</b>].
      * <p>
-     * <br>
      * A device may derive the time by reading the Time and TimeZone attributes
+     * <p>
      * and adding them together. If implemented however, the optional StandardTime
      * attribute indicates this time directly. The value 0xffffffff indicates an invalid
      * Standard Time.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getStandardTime() {
+    public Integer getStandardTime(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_STANDARDTIME).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_STANDARDTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_STANDARDTIME).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_STANDARDTIME));
     }
 
     /**
-     * <p>
      * Get the <i>LocalTime</i> attribute [attribute ID <b>7</b>].
      * <p>
-     * <br>
      * A device may derive the time by reading the Time, TimeZone, DstStart, DstEnd
+     * <p>
      * and DstShift attributes and performing the calculation. If implemented however,
      * the optional LocalTime attribute indicates this time directly. The value 0xffffffff
      * indicates an invalid Local Time.
@@ -539,24 +606,36 @@ public class ZclTimeCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>LocalTime</i> attribute [attribute ID <b>7</b>].
      * <p>
-     * <br>
      * A device may derive the time by reading the Time, TimeZone, DstStart, DstEnd
+     * <p>
      * and DstShift attributes and performing the calculation. If implemented however,
      * the optional LocalTime attribute indicates this time directly. The value 0xffffffff
      * indicates an invalid Local Time.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getLocalTime() {
+    public Integer getLocalTime(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_LOCALTIME).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_LOCALTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_LOCALTIME).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_LOCALTIME));
     }
 

@@ -23,6 +23,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SetAbsoluteLocationCom
 import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SetDeviceConfigurationCommand;
 import com.zsmartsystems.zigbee.zcl.field.*;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +86,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Get the <i>LocationType</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The LocationType attribute is 8 bits long and is divided into bit fields.
@@ -102,25 +102,36 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>LocationType</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The LocationType attribute is 8 bits long and is divided into bit fields.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getLocationType() {
+    public Integer getLocationType(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_LOCATIONTYPE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_LOCATIONTYPE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_LOCATIONTYPE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_LOCATIONTYPE));
     }
 
     /**
-     * <p>
      * Get the <i>LocationMethod</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -135,27 +146,38 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>LocationMethod</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getLocationMethod() {
+    public Integer getLocationMethod(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_LOCATIONMETHOD).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_LOCATIONMETHOD).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_LOCATIONMETHOD).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_LOCATIONMETHOD));
     }
 
     /**
-     * <p>
      * Get the <i>LocationAge</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The LocationAge attribute indicates the amount of time, measured in seconds, that
+     * <p>
      * has transpired since the location information was last calculated. This attribute is
      * not valid if the Absolute bit of the LocationType attribute is set to one.
      * <p>
@@ -171,38 +193,49 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>LocationAge</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The LocationAge attribute indicates the amount of time, measured in seconds, that
+     * <p>
      * has transpired since the location information was last calculated. This attribute is
      * not valid if the Absolute bit of the LocationType attribute is set to one.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getLocationAge() {
+    public Integer getLocationAge(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_LOCATIONAGE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_LOCATIONAGE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_LOCATIONAGE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_LOCATIONAGE));
     }
 
     /**
-     * <p>
      * Get the <i>QualityMeasure</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The QualityMeasure attribute is a measure of confidence in the corresponding
+     * <p>
      * location information. The higher the value, the more confident the transmitting
      * device is in the location information. A value of 0x64 indicates complete (100%)
      * confidence and a value of 0x00 indicates zero confidence. (Note: no fixed
      * confidence metric is mandated – the metric may be application and manufacturer
      * dependent).
-     * <br>
+     * <p>
      * This field is not valid if the Absolute bit of the LocationType attribute is set to one.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -217,37 +250,48 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>QualityMeasure</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The QualityMeasure attribute is a measure of confidence in the corresponding
+     * <p>
      * location information. The higher the value, the more confident the transmitting
      * device is in the location information. A value of 0x64 indicates complete (100%)
      * confidence and a value of 0x00 indicates zero confidence. (Note: no fixed
      * confidence metric is mandated – the metric may be application and manufacturer
      * dependent).
-     * <br>
+     * <p>
      * This field is not valid if the Absolute bit of the LocationType attribute is set to one.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getQualityMeasure() {
+    public Integer getQualityMeasure(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_QUALITYMEASURE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_QUALITYMEASURE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_QUALITYMEASURE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_QUALITYMEASURE));
     }
 
     /**
-     * <p>
      * Get the <i>NumberOfDevices</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The NumberOfDevices attribute is the number of devices whose location data
+     * <p>
      * were used to calculate the last location value. This attribute is related to the
      * QualityMeasure attribute.
      * <p>
@@ -263,37 +307,48 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>NumberOfDevices</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The NumberOfDevices attribute is the number of devices whose location data
+     * <p>
      * were used to calculate the last location value. This attribute is related to the
      * QualityMeasure attribute.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getNumberOfDevices() {
+    public Integer getNumberOfDevices(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_NUMBEROFDEVICES).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_NUMBEROFDEVICES).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_NUMBEROFDEVICES).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_NUMBEROFDEVICES));
     }
 
 
     /**
-     * <p>
      * Set the <i>Coordinate1</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * <br>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
+     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
-     * <br>
+     * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
-     * <br>
+     * <p>
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
@@ -310,15 +365,14 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>Coordinate1</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * <br>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
+     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
-     * <br>
+     * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
-     * <br>
+     * <p>
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
@@ -335,42 +389,53 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>Coordinate1</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * <br>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
+     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
-     * <br>
+     * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
-     * <br>
+     * <p>
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getCoordinate1() {
+    public Integer getCoordinate1(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COORDINATE1).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COORDINATE1).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COORDINATE1).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_COORDINATE1));
     }
 
 
     /**
-     * <p>
      * Set the <i>Coordinate2</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * <br>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
+     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
-     * <br>
+     * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
-     * <br>
+     * <p>
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
@@ -387,15 +452,14 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>Coordinate2</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * <br>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
+     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
-     * <br>
+     * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
-     * <br>
+     * <p>
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
@@ -412,42 +476,53 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>Coordinate2</i> attribute [attribute ID <b>17</b>].
      * <p>
-     * <br>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
+     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
-     * <br>
+     * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
-     * <br>
+     * <p>
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getCoordinate2() {
+    public Integer getCoordinate2(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COORDINATE2).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COORDINATE2).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COORDINATE2).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_COORDINATE2));
     }
 
 
     /**
-     * <p>
      * Set the <i>Coordinate3</i> attribute [attribute ID <b>18</b>].
      * <p>
-     * <br>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
+     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
-     * <br>
+     * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
-     * <br>
+     * <p>
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
@@ -464,15 +539,14 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>Coordinate3</i> attribute [attribute ID <b>18</b>].
      * <p>
-     * <br>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
+     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
-     * <br>
+     * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
-     * <br>
+     * <p>
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
@@ -489,42 +563,53 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>Coordinate3</i> attribute [attribute ID <b>18</b>].
      * <p>
-     * <br>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
+     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
-     * <br>
+     * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
-     * <br>
+     * <p>
      * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
      * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
      * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getCoordinate3() {
+    public Integer getCoordinate3(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COORDINATE3).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COORDINATE3).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COORDINATE3).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_COORDINATE3));
     }
 
 
     /**
-     * <p>
      * Set the <i>Power</i> attribute [attribute ID <b>19</b>].
      * <p>
-     * <br>
      * The Power attribute specifies the value of the average power P0, measured in
+     * <p>
      * dBm, received at a reference distance of one meter from the transmitter.
-     * <br>
+     * <p>
      * P0 = Power / 100
-     * <br>
+     * <p>
      * A value of 0x8000 indicates that Power is unknown.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -539,15 +624,14 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>Power</i> attribute [attribute ID <b>19</b>].
      * <p>
-     * <br>
      * The Power attribute specifies the value of the average power P0, measured in
+     * <p>
      * dBm, received at a reference distance of one meter from the transmitter.
-     * <br>
+     * <p>
      * P0 = Power / 100
-     * <br>
+     * <p>
      * A value of 0x8000 indicates that Power is unknown.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -562,41 +646,52 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>Power</i> attribute [attribute ID <b>19</b>].
      * <p>
-     * <br>
      * The Power attribute specifies the value of the average power P0, measured in
+     * <p>
      * dBm, received at a reference distance of one meter from the transmitter.
-     * <br>
+     * <p>
      * P0 = Power / 100
-     * <br>
+     * <p>
      * A value of 0x8000 indicates that Power is unknown.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getPower() {
+    public Integer getPower(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_POWER).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_POWER).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_POWER).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_POWER));
     }
 
 
     /**
-     * <p>
      * Set the <i>PathLossExponent</i> attribute [attribute ID <b>20</b>].
      * <p>
-     * <br>
      * The PathLossExponent attribute specifies the value of the Path Loss Exponent n,
+     * <p>
      * an exponent that describes the rate at which the signal power decays with
      * increasing distance from the transmitter.
-     * <br>
+     * <p>
      * n = PathLossExponent / 100
-     * <br>
+     * <p>
      * A value of 0xffff indicates that PathLossExponent is unknown.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -611,16 +706,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>PathLossExponent</i> attribute [attribute ID <b>20</b>].
      * <p>
-     * <br>
      * The PathLossExponent attribute specifies the value of the Path Loss Exponent n,
+     * <p>
      * an exponent that describes the rate at which the signal power decays with
      * increasing distance from the transmitter.
-     * <br>
+     * <p>
      * n = PathLossExponent / 100
-     * <br>
+     * <p>
      * A value of 0xffff indicates that PathLossExponent is unknown.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -635,37 +729,48 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>PathLossExponent</i> attribute [attribute ID <b>20</b>].
      * <p>
-     * <br>
      * The PathLossExponent attribute specifies the value of the Path Loss Exponent n,
+     * <p>
      * an exponent that describes the rate at which the signal power decays with
      * increasing distance from the transmitter.
-     * <br>
+     * <p>
      * n = PathLossExponent / 100
-     * <br>
+     * <p>
      * A value of 0xffff indicates that PathLossExponent is unknown.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getPathLossExponent() {
+    public Integer getPathLossExponent(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_PATHLOSSEXPONENT).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_PATHLOSSEXPONENT).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_PATHLOSSEXPONENT).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_PATHLOSSEXPONENT));
     }
 
 
     /**
-     * <p>
      * Set the <i>ReportingPeriod</i> attribute [attribute ID <b>21</b>].
      * <p>
-     * <br>
      * The ReportingPeriod attribute specifies the time in seconds between successive
+     * <p>
      * reports of the device's location by means of the Location Data Notification
      * command. The minimum value this attribute can take is specified by the profile in
      * use. If ReportingPeriod is zero, the device does not automatically report its
@@ -683,11 +788,10 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>ReportingPeriod</i> attribute [attribute ID <b>21</b>].
      * <p>
-     * <br>
      * The ReportingPeriod attribute specifies the time in seconds between successive
+     * <p>
      * reports of the device's location by means of the Location Data Notification
      * command. The minimum value this attribute can take is specified by the profile in
      * use. If ReportingPeriod is zero, the device does not automatically report its
@@ -705,35 +809,46 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>ReportingPeriod</i> attribute [attribute ID <b>21</b>].
      * <p>
-     * <br>
      * The ReportingPeriod attribute specifies the time in seconds between successive
+     * <p>
      * reports of the device's location by means of the Location Data Notification
      * command. The minimum value this attribute can take is specified by the profile in
      * use. If ReportingPeriod is zero, the device does not automatically report its
      * location. Note that location information can always be polled at any time.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getReportingPeriod() {
+    public Integer getReportingPeriod(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_REPORTINGPERIOD).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_REPORTINGPERIOD).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_REPORTINGPERIOD).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_REPORTINGPERIOD));
     }
 
 
     /**
-     * <p>
      * Set the <i>CalculationPeriod</i> attribute [attribute ID <b>22</b>].
      * <p>
-     * <br>
      * The CalculationPeriod attribute specifies the time in seconds between successive
+     * <p>
      * calculations of the device's location. If CalculationPeriod is less than the
      * physically possible minimum period that the calculation can be performed, the
      * calculation will be repeated as frequently as possible.
@@ -750,11 +865,10 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>CalculationPeriod</i> attribute [attribute ID <b>22</b>].
      * <p>
-     * <br>
      * The CalculationPeriod attribute specifies the time in seconds between successive
+     * <p>
      * calculations of the device's location. If CalculationPeriod is less than the
      * physically possible minimum period that the calculation can be performed, the
      * calculation will be repeated as frequently as possible.
@@ -771,34 +885,45 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>CalculationPeriod</i> attribute [attribute ID <b>22</b>].
      * <p>
-     * <br>
      * The CalculationPeriod attribute specifies the time in seconds between successive
+     * <p>
      * calculations of the device's location. If CalculationPeriod is less than the
      * physically possible minimum period that the calculation can be performed, the
      * calculation will be repeated as frequently as possible.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getCalculationPeriod() {
+    public Integer getCalculationPeriod(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_CALCULATIONPERIOD).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_CALCULATIONPERIOD).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_CALCULATIONPERIOD).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_CALCULATIONPERIOD));
     }
 
 
     /**
-     * <p>
      * Set the <i>NumberRSSIMeasurements</i> attribute [attribute ID <b>23</b>].
      * <p>
-     * <br>
      * The NumberRSSIMeasurements attribute specifies the number of RSSI
+     * <p>
      * measurements to be used to generate one location estimate. The measurements are
      * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
      * equal to 1.
@@ -815,11 +940,10 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * <p>
      * Get the <i>NumberRSSIMeasurements</i> attribute [attribute ID <b>23</b>].
      * <p>
-     * <br>
      * The NumberRSSIMeasurements attribute specifies the number of RSSI
+     * <p>
      * measurements to be used to generate one location estimate. The measurements are
      * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
      * equal to 1.
@@ -836,24 +960,36 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>NumberRSSIMeasurements</i> attribute [attribute ID <b>23</b>].
      * <p>
-     * <br>
      * The NumberRSSIMeasurements attribute specifies the number of RSSI
+     * <p>
      * measurements to be used to generate one location estimate. The measurements are
      * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
      * equal to 1.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getNumberRssiMeasurements() {
+    public Integer getNumberRssiMeasurements(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_NUMBERRSSIMEASUREMENTS).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_NUMBERRSSIMEASUREMENTS).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_NUMBERRSSIMEASUREMENTS).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_NUMBERRSSIMEASUREMENTS));
     }
 

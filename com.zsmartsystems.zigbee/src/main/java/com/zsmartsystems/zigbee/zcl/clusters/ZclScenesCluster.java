@@ -21,6 +21,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.scenes.ViewSceneCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.ViewSceneResponse;
 import com.zsmartsystems.zigbee.zcl.field.*;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,7 @@ import java.util.concurrent.Future;
  * The scenes cluster provides attributes and commands for setting up and recalling
  * scenes. Each scene corresponds to a set of stored values of specified attributes for
  * one or more clusters on the same end point as the scenes cluster.
- * <br>
+ * <p>
  * In most cases scenes are associated with a particular group ID. Scenes may also
  * exist without a group, in which case the value 0x0000 replaces the group ID. Note
  * that extra care is required in these cases to avoid a scene ID collision, and that
@@ -79,7 +80,6 @@ public class ZclScenesCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Get the <i>SceneCount</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The SceneCount attribute specifies the number of scenes currently in the device's
@@ -97,29 +97,39 @@ public class ZclScenesCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>SceneCount</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The SceneCount attribute specifies the number of scenes currently in the device's
      * scene table.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getSceneCount() {
+    public Integer getSceneCount(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_SCENECOUNT).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_SCENECOUNT).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_SCENECOUNT).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_SCENECOUNT));
     }
 
     /**
-     * <p>
      * Get the <i>CurrentScene</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The CurrentScene attribute holds the Scene ID of the scene last invoked.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -134,30 +144,40 @@ public class ZclScenesCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>CurrentScene</i> attribute [attribute ID <b>1</b>].
      * <p>
-     * <br>
      * The CurrentScene attribute holds the Scene ID of the scene last invoked.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getCurrentScene() {
+    public Integer getCurrentScene(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTSCENE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_CURRENTSCENE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_CURRENTSCENE).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_CURRENTSCENE));
     }
 
     /**
-     * <p>
      * Get the <i>CurrentGroup</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
+     * <p>
      * 0x0000 if the scene last invoked is not associated with a group.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -172,34 +192,45 @@ public class ZclScenesCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>CurrentGroup</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * <br>
      * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
+     * <p>
      * 0x0000 if the scene last invoked is not associated with a group.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getCurrentGroup() {
+    public Integer getCurrentGroup(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTGROUP).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_CURRENTGROUP).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_CURRENTGROUP).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_CURRENTGROUP));
     }
 
     /**
-     * <p>
      * Get the <i>SceneValid</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The SceneValid attribute indicates whether the state of the device corresponds to
+     * <p>
      * that associated with the CurrentScene and CurrentGroup attributes. TRUE
      * indicates that these attributes are valid, FALSE indicates that they are not valid.
-     * <br>
+     * <p>
      * Before a scene has been stored or recalled, this attribute is set to FALSE. After a
      * successful Store Scene or Recall Scene command it is set to TRUE. If, after a
      * scene is stored or recalled, the state of the device is modified, this attribute is set to
@@ -217,37 +248,48 @@ public class ZclScenesCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>SceneValid</i> attribute [attribute ID <b>3</b>].
      * <p>
-     * <br>
      * The SceneValid attribute indicates whether the state of the device corresponds to
+     * <p>
      * that associated with the CurrentScene and CurrentGroup attributes. TRUE
      * indicates that these attributes are valid, FALSE indicates that they are not valid.
-     * <br>
+     * <p>
      * Before a scene has been stored or recalled, this attribute is set to FALSE. After a
      * successful Store Scene or Recall Scene command it is set to TRUE. If, after a
      * scene is stored or recalled, the state of the device is modified, this attribute is set to
      * FALSE.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Boolean}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
      */
-    public Boolean getSceneValid() {
+    public Boolean getSceneValid(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_SCENEVALID).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_SCENEVALID).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Boolean) attributes.get(ATTR_SCENEVALID).getLastValue();
+            }
+        }
+
         return (Boolean) readSync(attributes.get(ATTR_SCENEVALID));
     }
 
     /**
-     * <p>
      * Get the <i>NameSupport</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The most significant bit of the NameSupport attribute indicates whether or not
+     * <p>
      * scene names are supported. A value of 1 indicates that they are supported, and a
      * value of 0 indicates that they are not supported.
      * <p>
@@ -263,34 +305,45 @@ public class ZclScenesCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>NameSupport</i> attribute [attribute ID <b>4</b>].
      * <p>
-     * <br>
      * The most significant bit of the NameSupport attribute indicates whether or not
+     * <p>
      * scene names are supported. A value of 1 indicates that they are supported, and a
      * value of 0 indicates that they are not supported.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getNameSupport() {
+    public Integer getNameSupport(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_NAMESUPPORT).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_NAMESUPPORT).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_NAMESUPPORT).getLastValue();
+            }
+        }
+
         return (Integer) readSync(attributes.get(ATTR_NAMESUPPORT));
     }
 
     /**
-     * <p>
      * Get the <i>LastConfiguredBy</i> attribute [attribute ID <b>5</b>].
      * <p>
-     * <br>
      * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address
+     * <p>
      * of the device that last configured the scene table.
-     * <br>
+     * <p>
      * The value 0xffffffffffffffff indicates that the device has not been configured, or
      * that the address of the device that last configured the scenes cluster is not known.
      * <p>
@@ -306,25 +359,37 @@ public class ZclScenesCluster extends ZclCluster {
 
 
     /**
-     * <p>
      * Synchronously get the <i>LastConfiguredBy</i> attribute [attribute ID <b>5</b>].
      * <p>
-     * <br>
      * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address
+     * <p>
      * of the device that last configured the scene table.
-     * <br>
+     * <p>
      * The value 0xffffffffffffffff indicates that the device has not been configured, or
      * that the address of the device that last configured the scenes cluster is not known.
      * <p>
-     * This method will block until the response is received or a timeout occurs.
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
      * The attribute is of type {@link Long}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Long} attribute value, or null on error
      */
-    public Long getLastConfiguredBy() {
+    public Long getLastConfiguredBy(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_LASTCONFIGUREDBY).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_LASTCONFIGUREDBY).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Long) attributes.get(ATTR_LASTCONFIGUREDBY).getLastValue();
+            }
+        }
+
         return (Long) readSync(attributes.get(ATTR_LASTCONFIGUREDBY));
     }
 
