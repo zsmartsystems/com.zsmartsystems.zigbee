@@ -1,14 +1,23 @@
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.internal;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.CommandListener;
+import com.zsmartsystems.zigbee.ZigBeeDevice;
+import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeException;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsRequest;
 import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsResponse;
@@ -24,7 +33,7 @@ import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.command.UserDescriptorResponse;
 
 /**
- * ZigBee network discoverer is used to discover devices in the network.
+ * {@link ZigBeeNetworkDiscoverer} is used to discover devices in the network.
  * <p>
  * Notifications will be sent to the listeners when nodes and devices are discovered.
  * Device listeners are always notified first as each device discovery completes.
@@ -96,6 +105,11 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     private final List<ZigBeeDeviceAddress> discoveryProgress = new ArrayList<ZigBeeDeviceAddress>();
 
     /**
+     * Executor service to execute discovery threads
+     */
+    private static ExecutorService executorService = Executors.newCachedThreadPool();
+
+    /**
      * Discovers ZigBee network state.
      *
      * @param networkState
@@ -111,7 +125,11 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
      * Starts up ZigBee network discoverer.
      */
     public void startup() {
+
+        executorService.execute(command);
+
         networkManager.addCommandListener(this);
+
         // Start discovery from root node.
         requestNodeIeeeAddressAndAssociatedNodes(0);
     }
