@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zsmartsystems.zigbee</groupId>
-    <artifactId>com.zsmartsystems.zigbee.codecreator</artifactId>
+    <artifactId>com.zsmartsystems.zigbee.autocode</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -11,6 +11,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+    
+    <parent>
+        <groupId>com.zsmartsystems</groupId>
+        <artifactId>zigbee</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
 
     <build>
         <plugins>
@@ -58,9 +64,4 @@
 
     </dependencies>
 
-    <parent>
-    	<groupId>com.zsmartsystems</groupId>
-    	<artifactId>zigbee</artifactId>
-    	<version>1.0.0-SNAPSHOT</version>
-    </parent>
 </project>
