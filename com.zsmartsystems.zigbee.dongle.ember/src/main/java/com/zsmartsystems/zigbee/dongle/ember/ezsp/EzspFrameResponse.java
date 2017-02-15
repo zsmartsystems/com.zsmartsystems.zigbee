@@ -1,12 +1,15 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp;
 
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
+
 /**
  * The EmberZNet Serial Protocol (EZSP) is the protocol used by a host
  * application processor to interact with the EmberZNet PRO stack running on a
  * Network CoProcessor (NCP).
- * 
+ *
  * UG100: EZSP Reference Guide
- * 
+ *
  * An EZSP Frame is made up as follows -:
  * <ul>
  * <li>Sequence : 1 byte sequence number
@@ -14,26 +17,68 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp;
  * <li>Frame ID : 1 byte
  * <li>Parameters : variable length
  * </ul>
- * 
+ *
  * @author Chris Jackson
  *
  */
 public abstract class EzspFrameResponse extends EzspFrame {
+    protected EzspDeserializer deserializer;
 
     /**
      * Constructor used to create a received frame
-     * 
+     *
      * @param inputBuffer
      */
     EzspFrameResponse(int[] inputBuffer) {
-        super(inputBuffer[2]);
+        super();
+        deserializer = new EzspDeserializer(inputBuffer);
 
-        this.buffer = inputBuffer;
-
-        this.sequenceNumber = inputBuffer[0];
+        this.sequenceNumber = deserializer.deserializeUInt8();
         this.frameControl = inputBuffer[1];
         this.isResponse = (inputBuffer[1] & 0x80) != 0;
-
-        position = 3;
     }
+
+    /*
+     * protected boolean initialiseEzspResponse(EzspDeserializer deserializer, int[] inputBuffer) {
+     * buffer = inputBuffer;
+     * position = 0;
+     *
+     * // Check the sequence number
+     * if (inputBuffer[0] != sequenceNumber) {
+     * return false;
+     * }
+     *
+     * // Make sure this is a response
+     * if ((inputBuffer[1] & 0x80) == 0) {
+     * return false;
+     * }
+     *
+     * position = 3;
+     *
+     * // Default the status to success. This can be overridden if the response
+     * // provides a status
+     * emberStatus = EmberStatus.EMBER_SUCCESS;
+     *
+     * return true;
+     * }
+     */
+
+    protected boolean initialEzspResponse(EzspFrame response) {
+        // Make sure this is a response
+        if (!response.isResponse()) {
+            return false;
+        }
+
+        // Check the sequence number
+        if (response.getSequenceNumber() != sequenceNumber) {
+            return false;
+        }
+
+        // Default the status to success. This can be overridden if the response
+        // provides a status
+        emberStatus = EmberStatus.EMBER_SUCCESS;
+
+        return true;
+    }
+
 }

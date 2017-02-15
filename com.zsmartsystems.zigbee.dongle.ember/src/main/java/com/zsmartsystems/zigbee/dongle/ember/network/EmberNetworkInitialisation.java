@@ -20,7 +20,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 
 /**
  * This class provides utility functions to establish an Ember ZigBee network
- * 
+ *
  * @author Chris Jackson
  *
  */
@@ -43,7 +43,7 @@ public class EmberNetworkInitialisation {
      * This utility function uses emberStartScan, emberStopScan, emberScanCompleteHandler, emberEnergyScanResultHandler,
      * and emberNetworkFoundHandler to discover other networks or determine the background noise level. It then uses
      * emberFormNetwork to create a new network with a unique PAN-ID on a channel with low background noise.
-     * 
+     *
      */
     public void formNetwork() {
         int scanDuration = 1; // 6
@@ -87,8 +87,8 @@ public class EmberNetworkInitialisation {
         EzspSetInitialSecurityStateRequest securityState = new EzspSetInitialSecurityStateRequest();
         EmberInitialSecurityState state = new EmberInitialSecurityState();
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_STANDARD_SECURITY_MODE);
-//        state.addBitmask(EmberInitialSecurityBitmask.);
-  //      state.setNetworkKey(networkKey);
+        // state.addBitmask(EmberInitialSecurityBitmask.);
+        // state.setNetworkKey(networkKey);
         securityState.setState(state);
         securityState = (EzspSetInitialSecurityStateRequest) ashHandler.sendEzspRequest(securityState);
         logger.debug(securityState.toString());

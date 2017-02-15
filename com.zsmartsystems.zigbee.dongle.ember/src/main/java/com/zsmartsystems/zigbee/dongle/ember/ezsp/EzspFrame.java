@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameData;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNodeType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
@@ -27,7 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
  * @author Chris Jackson
  *
  */
-public abstract class EzspFrame extends EzspData {
+public abstract class EzspFrame {
     protected EmberStatus emberStatus = EmberStatus.EMBER_UNINTIALISED;
 
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
@@ -80,7 +79,7 @@ public abstract class EzspFrame extends EzspData {
 
     protected int sequenceNumber;
     protected int frameControl;
-    protected final int frameId;
+    protected int frameId = 0;
     protected boolean isResponse = false;
 
     private static Map<Integer, Class<?>> ezspHandlerMap = new HashMap<Integer, Class<?>>();
@@ -99,29 +98,6 @@ public abstract class EzspFrame extends EzspData {
         ezspHandlerMap.put(FRAME_ID_STACK_STATUS_HANDLER, EzspStackStatusHandlerResponse.class);
         ezspHandlerMap.put(FRAME_ID_START_SCAN, EzspStartScanResponse.class);
         ezspHandlerMap.put(FRAME_ID_VERSION, EzspVersionResponse.class);
-    }
-
-    /**
-     * Constructor used to create an outgoing frame
-     *
-     * @param frameId
-     */
-    EzspFrame(int frameId) {
-        this.frameId = frameId;
-    }
-
-    /**
-     * Constructor used to create a received frame
-     *
-     * @param inputBuffer
-     */
-    public EzspFrame(int[] inputBuffer) {
-        this.buffer = inputBuffer;
-
-        this.sequenceNumber = inputBuffer[0];
-        this.frameControl = inputBuffer[1];
-        this.frameId = inputBuffer[2];
-        this.isResponse = (inputBuffer[1] & 0x80) != 0;
     }
 
     /**
@@ -148,68 +124,6 @@ public abstract class EzspFrame extends EzspData {
 
     public int getFrameId() {
         return frameId;
-    }
-
-    /**
-     * Returns the current status of the transaction. If the transaction has not
-     * been sent to the NCP, it will be EMBER_UNINITIALISED. Once a response has
-     * been received, this will reflect the status received from the NCP if the
-     * NCP provides a status with the response, otherwise the status will be set
-     * to EMBER_SUCCESS.
-     *
-     * @return {@link EmberStatus} of the transaction
-     */
-    public EmberStatus getEmberStatus() {
-        return emberStatus;
-    }
-
-    protected EmberStatus inputEmberStatus() {
-        return EmberStatus.getEmberStatus(buffer[position++]);
-    }
-
-    protected EmberNodeType inputEmberNodeType() {
-        return EmberNodeType.getEmberNodeType(buffer[position++]);
-    }
-
-    protected boolean initialiseEzspResponse(int[] inputBuffer) {
-        buffer = inputBuffer;
-        position = 0;
-
-        // Check the sequence number
-        if (inputBuffer[0] != sequenceNumber) {
-            return false;
-        }
-
-        // Make sure this is a response
-        if ((inputBuffer[1] & 0x80) == 0) {
-            return false;
-        }
-
-        position = 3;
-
-        // Default the status to success. This can be overridden if the response
-        // provides a status
-        emberStatus = EmberStatus.EMBER_SUCCESS;
-
-        return true;
-    }
-
-    protected boolean initialEzspResponse(EzspFrame response) {
-        // Make sure this is a response
-        if (!response.isResponse()) {
-            return false;
-        }
-
-        // Check the sequence number
-        if (response.getSequenceNumber() != sequenceNumber) {
-            return false;
-        }
-
-        // Default the status to success. This can be overridden if the response
-        // provides a status
-        emberStatus = EmberStatus.EMBER_SUCCESS;
-
-        return true;
     }
 
     public static EzspFrameResponse createHandler(AshFrameData data) {

@@ -22,6 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspIncomingMessageHandlerResp
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspNetworkInitRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspPermitJoiningRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspSendUnicast;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspSendUnicastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
@@ -171,7 +172,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     @Override
     public void sendZclCommand(ZigBeeNwkHeader nwkHeader, ZigBeeApsHeader apsHeader, int[] payload)
             throws ZigBeeException {
-        EzspSendUnicast emberUnicast = new EzspSendUnicast();
+        EzspSendUnicastRequest emberUnicast = new EzspSendUnicastRequest();
         EmberApsFrame apsFrame = new EmberApsFrame(apsHeader);
 
         apsFrame.setClusterId(apsHeader.getCluster());
