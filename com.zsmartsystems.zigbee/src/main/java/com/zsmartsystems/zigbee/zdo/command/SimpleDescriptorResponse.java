@@ -2,7 +2,6 @@ package com.zsmartsystems.zigbee.zdo.command;
 
 import java.util.List;
 
-import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
@@ -11,15 +10,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
-public class SimpleDescriptorResponse extends ZdoCommand implements ZdoResponse {
-    /**
-     * The source address.
-     */
-    public int sourceAddress;
-    /**
-     * The status.
-     */
-    public int status;
+public class SimpleDescriptorResponse extends ZdoResponse {
 
     /**
      * The profile ID.
@@ -120,24 +111,6 @@ public class SimpleDescriptorResponse extends ZdoCommand implements ZdoResponse 
 
     public void setProfileId(int profileId) {
         this.profileId = profileId;
-    }
-
-    @Override
-    public int getSourceAddress() {
-        return sourceAddress;
-    }
-
-    public void setSourceAddress(int sourceAddress) {
-        this.sourceAddress = sourceAddress;
-    }
-
-    @Override
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     @Override

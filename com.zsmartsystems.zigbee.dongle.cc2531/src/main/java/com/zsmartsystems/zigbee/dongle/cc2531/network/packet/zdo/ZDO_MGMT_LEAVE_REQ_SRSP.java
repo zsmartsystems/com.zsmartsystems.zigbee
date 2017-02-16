@@ -48,6 +48,6 @@ public class ZDO_MGMT_LEAVE_REQ_SRSP extends ZToolPacket /* implements IRESPONSE
 
     @Override
     public String toString() {
-        return "ZDO_MGMT_LEAVE_REQ_SRSP{" + "Status=" + ResponseStatus.getStatus(Status) + '}';
+        return "ZDO_MGMT_LEAVE_REQ_SRSP{Status=" + ResponseStatus.getStatus(Status) + '}';
     }
 }

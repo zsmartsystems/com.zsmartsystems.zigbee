@@ -1,9 +1,9 @@
 package com.zsmartsystems.zigbee.zdo;
 
 /**
- * Common interface for response commands.
- * 
- * @author Tommi S.E. Laukkanen
+ * Abstract class for ZDO response commands.
+ *
+ * @author Chris Jackson
  */
 public abstract class ZdoRequest extends ZdoCommand {
     /**
@@ -20,6 +20,11 @@ public abstract class ZdoRequest extends ZdoCommand {
         return destinationAddress;
     }
 
+    /**
+     * Set the destination address
+     *
+     * @param destinationAddress the destination address as {@link int}
+     */
     public void setDestinationAddress(int destinationAddress) {
         this.destinationAddress = destinationAddress;
     }

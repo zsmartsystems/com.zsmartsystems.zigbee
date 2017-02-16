@@ -260,8 +260,8 @@ public class ZigBeeDongleTiCc2531
             }
             if (command instanceof IeeeAddressRequest) {
                 final IeeeAddressRequest ieeeAddressRequest = (IeeeAddressRequest) command;
-                networkManager
-                        .sendCommand(new ZDO_IEEE_ADDR_REQ(getZToolAddress16(ieeeAddressRequest.getNetworkAddress()),
+                networkManager.sendCommand(
+                        new ZDO_IEEE_ADDR_REQ(getZToolAddress16(ieeeAddressRequest.getDestinationAddress()),
                                 ieeeAddressRequest.getType(), ieeeAddressRequest.getStartIndex()));
             }
             if (command instanceof SimpleDescriptorRequest) {

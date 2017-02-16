@@ -17,8 +17,14 @@ import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
+import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsResponse;
 
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
 public class ZigBeeNetworkManagerTest {
     private ZigBeeNetworkNodeListener mockedNodeListener;
     private ArgumentCaptor<ZigBeeNode> nodeNodeListenerCapture;
@@ -271,7 +277,7 @@ public class ZigBeeNetworkManagerTest {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
 
-        ActiveEndpointsResponse cmd = new ActiveEndpointsResponse();
+        ZdoCommand cmd = new ActiveEndpointsResponse();
         networkManager.receiveZdoCommand(cmd);
         Mockito.verify(mockedCommandListener, Mockito.timeout(100)).commandReceived(commandListenerCapture.capture());
     }

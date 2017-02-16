@@ -6,6 +6,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * SimpleDescriptorRequest
  *
  * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
 public class SimpleDescriptorRequest extends ZdoRequest {
     /**

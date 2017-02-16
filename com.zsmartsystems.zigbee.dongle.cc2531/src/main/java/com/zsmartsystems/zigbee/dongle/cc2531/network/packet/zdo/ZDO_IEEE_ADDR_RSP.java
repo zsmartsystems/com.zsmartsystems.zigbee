@@ -120,7 +120,7 @@ public class ZDO_IEEE_ADDR_RSP extends ZToolPacket /* implements IRESPONSE_CALLB
 
     @Override
     public String toString() {
-        return "ZDO_IEEE_ADDR_RSP{" + "AssocDevList=" + Arrays.toString(AssocDevList) + ", assocDevList="
+        return "ZDO_IEEE_ADDR_RSP{AssocDevList=" + Arrays.toString(AssocDevList) + ", assocDevList="
                 + Arrays.toString(assocDevList) + ", IEEEAddr=" + IEEEAddr + ", nwkAddr=" + nwkAddr + ", NumAssocDev="
                 + NumAssocDev + ", SrcAddress=" + SrcAddress + ", SrcAddrMode=" + SrcAddrMode + ", StartIndex="
                 + StartIndex + ", Status=" + ResponseStatus.getStatus(Status) + '}';

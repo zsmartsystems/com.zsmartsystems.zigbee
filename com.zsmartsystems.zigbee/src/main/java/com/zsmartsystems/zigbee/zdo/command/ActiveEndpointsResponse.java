@@ -2,13 +2,13 @@ package com.zsmartsystems.zigbee.zdo.command;
 
 import java.util.Arrays;
 
-import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
  * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
-public class ActiveEndpointsResponse extends ZdoCommand implements ZdoResponse {
+public class ActiveEndpointsResponse extends ZdoResponse {
     /**
      * Source address.
      */
@@ -41,6 +41,7 @@ public class ActiveEndpointsResponse extends ZdoCommand implements ZdoResponse {
         return sourceAddress;
     }
 
+    @Override
     public void setSourceAddress(int sourceAddress) {
         this.sourceAddress = sourceAddress;
     }
@@ -51,15 +52,6 @@ public class ActiveEndpointsResponse extends ZdoCommand implements ZdoResponse {
 
     public void setNetworkAddress(int networkAddress) {
         this.networkAddress = networkAddress;
-    }
-
-    @Override
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public int[] getActiveEndpoints() {

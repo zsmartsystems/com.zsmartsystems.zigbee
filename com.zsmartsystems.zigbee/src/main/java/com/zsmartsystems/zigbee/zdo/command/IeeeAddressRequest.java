@@ -8,10 +8,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * @author Tommi S.E. Laukkanen
  */
 public class IeeeAddressRequest extends ZdoRequest {
-    /**
-     * The network address.
-     */
-    private int networkAddress;
+
     /**
      * The type.
      */
@@ -25,17 +22,9 @@ public class IeeeAddressRequest extends ZdoRequest {
     }
 
     public IeeeAddressRequest(int networkAddress, int type, int startIndex) {
-        this.networkAddress = networkAddress;
+        this.destinationAddress = networkAddress;
         this.type = type;
         this.startIndex = startIndex;
-    }
-
-    public int getNetworkAddress() {
-        return networkAddress;
-    }
-
-    public void setNetworkAddress(int networkAddress) {
-        this.networkAddress = networkAddress;
     }
 
     public int getType() {
@@ -56,7 +45,7 @@ public class IeeeAddressRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        return "IEEE Address Request: networkAddress=" + networkAddress + ", type=" + type + ", startIndex="
+        return "IEEE Address Request: networkAddress=" + destinationAddress + ", type=" + type + ", startIndex="
                 + startIndex;
     }
 }
