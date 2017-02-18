@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.internal.ZigBeeNetworkDiscoverer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 import com.zsmartsystems.zigbee.util.ZigBeeConstants;
@@ -500,9 +499,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         logger.debug("RX ZCL: " + command);
 
         // Notify the listeners
-        for (final CommandListener commandListener : commandListeners) {
-            commandListener.commandReceived(command);
-        }
+        notifyCommandListeners(command);
     }
 
     @Override
@@ -510,8 +507,20 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         logger.debug("RX ZDO: " + command);
 
         // Notify the listeners
-        for (final CommandListener commandListener : commandListeners) {
-            commandListener.commandReceived(command);
+        notifyCommandListeners(command);
+    }
+
+    private void notifyCommandListeners(final Command command) {
+        synchronized (this) {
+            // Notify the listeners
+            for (final CommandListener commandListener : commandListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        commandListener.commandReceived(command);
+                    }
+                });
+            }
         }
     }
 
@@ -530,9 +539,17 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     @Override
-    public void setNetworkState(ZigBeeTransportState state) {
-        for (final ZigBeeNetworkStateListener stateListener : stateListeners) {
-            stateListener.networkStateUpdated(state);
+    public void setNetworkState(final ZigBeeTransportState state) {
+        synchronized (this) {
+            // Notify the listeners
+            for (final ZigBeeNetworkStateListener stateListener : stateListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        stateListener.networkStateUpdated(state);
+                    }
+                });
+            }
         }
     }
 
@@ -890,28 +907,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
-    public void addDevice(final ZigBeeDevice device) {
-        synchronized (networkDevices) {
-            networkDevices.put(device.getDeviceAddress(), device);
-        }
-        synchronized (this) {
-            for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
-                listener.deviceAdded(device);
-            }
-        }
-    }
-
-    public void updateDevice(final ZigBeeDevice device) {
-        synchronized (networkDevices) {
-            networkDevices.put(device.getDeviceAddress(), device);
-        }
-        synchronized (this) {
-            for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
-                listener.deviceUpdated(device);
-            }
-        }
-    }
-
     /**
      * Gets a device given the {@link ZigBeeAddress} address.
      *
@@ -925,6 +920,38 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         synchronized (networkDevices) {
             return networkDevices.get(networkAddress);
+        }
+    }
+
+    public void addDevice(final ZigBeeDevice device) {
+        synchronized (networkDevices) {
+            networkDevices.put(device.getDeviceAddress(), device);
+        }
+        synchronized (this) {
+            for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.deviceAdded(device);
+                    }
+                });
+            }
+        }
+    }
+
+    public void updateDevice(final ZigBeeDevice device) {
+        synchronized (networkDevices) {
+            networkDevices.put(device.getDeviceAddress(), device);
+        }
+        synchronized (this) {
+            for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.deviceUpdated(device);
+                    }
+                });
+            }
         }
     }
 
@@ -942,7 +969,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         synchronized (this) {
             if (device != null) {
                 for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
-                    listener.deviceRemoved(device);
+                    NotificationService.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.deviceRemoved(device);
+                        }
+                    });
                 }
             }
         }
@@ -1056,7 +1088,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
         synchronized (this) {
             for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-                listener.nodeRemoved(node);
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.nodeRemoved(node);
+                    }
+                });
             }
         }
     }
@@ -1081,7 +1118,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
         synchronized (this) {
             for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-                listener.nodeAdded(node);
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.nodeAdded(node);
+                    }
+                });
             }
         }
     }
@@ -1103,8 +1145,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         synchronized (this) {
             for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-                listener.nodeUpdated(node);
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.nodeUpdated(node);
+                    }
+                });
             }
         }
     }
+
 }
