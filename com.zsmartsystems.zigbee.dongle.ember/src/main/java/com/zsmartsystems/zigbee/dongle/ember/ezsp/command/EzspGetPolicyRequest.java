@@ -11,8 +11,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class to implement the Ember EZSP command <b>getPolicy</b>.
@@ -35,6 +33,9 @@ public class EzspGetPolicyRequest extends EzspFrameRequest {
      */
     private EzspPolicyId policyId;
 
+    /**
+     * Serialiser used to seialise to binary line data
+     */
     private EzspSerializer serializer;
 
     /**

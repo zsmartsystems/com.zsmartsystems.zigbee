@@ -30,7 +30,7 @@ The destination addressing on this command shall be unicast.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|NWKAddrOfInterest          |NWK address         |
+|NWKAddrOfInterest          |NWK address                |
 
 #### Node Descriptor Request [0x0002]
 
@@ -41,7 +41,7 @@ the discovery information of the remote device.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|NWKAddrOfInterest          |NWK address         |
+|NWKAddrOfInterest          |NWK address                |
 
 #### Power Descriptor Request [0x0003]
 

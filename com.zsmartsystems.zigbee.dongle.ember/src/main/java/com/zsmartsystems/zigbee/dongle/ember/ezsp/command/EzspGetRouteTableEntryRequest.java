@@ -10,8 +10,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class to implement the Ember EZSP command <b>getRouteTableEntry</b>.
@@ -35,6 +33,9 @@ public class EzspGetRouteTableEntryRequest extends EzspFrameRequest {
      */
     private int index;
 
+    /**
+     * Serialiser used to seialise to binary line data
+     */
     private EzspSerializer serializer;
 
     /**

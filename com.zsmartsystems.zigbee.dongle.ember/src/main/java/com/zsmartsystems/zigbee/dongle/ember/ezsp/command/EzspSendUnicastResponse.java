@@ -11,8 +11,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class to implement the Ember EZSP command <b>sendUnicast</b>.
@@ -23,12 +21,16 @@ import java.util.Map;
  * the FORCE_ROUTE_DISCOVERY option will force route discovery. Routes to end-device
  * children of the local node are always known. Setting the APS_RETRY option will cause the
  * message to be retransmitted until either a matching acknowledgement is received or three
- * transmissions have been made. Note: Using the FORCE_ROUTE_DISCOVERY option will cause the
- * first transmission to be consumed by a route request as part of discovery, so the application
+ * transmissions have been made.
+ * <p>
+ * <b>Note:</b> Using the FORCE_ROUTE_DISCOVERY option will cause the first
+ * transmission to be consumed by a route request as part of discovery, so the application
  * payload of this packet will not reach its destination on the first attempt. If you want the
  * packet to reach its destination, the APS_RETRY option must be set so that another attempt is
  * made to transmit the message with its application payload after the route has been
- * constructed. Note: When sending fragmented messages, the stack will only assign a new APS
+ * constructed.
+ * <p>
+ * <b>Note:</b> When sending fragmented messages, the stack will only assign a new APS
  * sequence number for the first fragment of the message (i.e., EMBER_APS_OPTION_FRAGMENT is
  * set and the low-order byte of the groupId field in the APS frame is zero). For all subsequent
  * fragments of the same message, the application must set the sequence number field in the APS

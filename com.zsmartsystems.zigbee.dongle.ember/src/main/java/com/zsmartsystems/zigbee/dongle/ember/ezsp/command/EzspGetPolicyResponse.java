@@ -12,8 +12,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class to implement the Ember EZSP command <b>getPolicy</b>.

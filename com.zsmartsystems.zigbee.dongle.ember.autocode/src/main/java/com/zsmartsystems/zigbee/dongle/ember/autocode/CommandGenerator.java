@@ -61,8 +61,8 @@ public class CommandGenerator extends ClassGenerator {
         // addImport("org.slf4j.Logger");
         // addImport("org.slf4j.LoggerFactory");
 
-        addImport("java.util.Map");
-        addImport("java.util.HashMap");
+        // addImport("java.util.Map");
+        // addImport("java.util.HashMap");
 
         out.println("/**");
         out.println(" * Class to implement the Ember EZSP command <b>" + command.name + "</b>.");
@@ -106,6 +106,9 @@ public class CommandGenerator extends ClassGenerator {
         if (className.endsWith("Request")) {
             addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer");
             out.println();
+            out.println("    /**");
+            out.println("     * Serialiser used to seialise to binary line data");
+            out.println("     */");
             out.println("    private EzspSerializer serializer;");
             out.println();
             out.println("    /**");

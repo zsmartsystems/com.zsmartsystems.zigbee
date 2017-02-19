@@ -13,8 +13,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class to implement the Ember EZSP command <b>messageSentHandler</b>.

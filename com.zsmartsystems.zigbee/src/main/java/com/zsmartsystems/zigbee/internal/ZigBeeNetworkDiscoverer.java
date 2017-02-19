@@ -283,7 +283,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
                     ieeeAddresses.put(ieeeAddressResponse.getSourceAddress(), ieeeAddressResponse);
                 }
                 // Start discovery for any associated nodes
-                for (final int deviceNetworkAddress : ieeeAddressResponse.associatedDeviceList) {
+                for (final int deviceNetworkAddress : ieeeAddressResponse.getAssociatedDeviceList()) {
                     startNodeDiscovery(deviceNetworkAddress);
                 }
                 return true;

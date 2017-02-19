@@ -11,16 +11,16 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class to implement the Ember EZSP command <b>setRadioChannel</b>.
  * <p>
  * Sets the channel to use for sending and receiving messages. For a list of available radio
  * channels, see the technical specification for the RF communication module in your
- * Developer Kit. Note: Care should be taken when using this API, as all devices on a network must
- * use the same channel.
+ * Developer Kit.
+ * <p>
+ * <b>Note:</b> Care should be taken when using this API, as all devices on a network must use
+ * the same channel.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

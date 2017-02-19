@@ -11,8 +11,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class to implement the Ember EZSP command <b>formNetwork</b>.
@@ -35,6 +33,9 @@ public class EzspFormNetworkRequest extends EzspFrameRequest {
      */
     private EmberNetworkParameters parameters;
 
+    /**
+     * Serialiser used to seialise to binary line data
+     */
     private EzspSerializer serializer;
 
     /**

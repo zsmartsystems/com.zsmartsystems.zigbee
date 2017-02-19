@@ -1414,7 +1414,7 @@ public class ZclProtocolCodeGenerator {
                     out.println("package " + packageRoot + ";");
                     out.println();
                     out.println("import " + packageRootPrefix + packageZcl + ".ZclCommandMessage;");
-                    out.println("import " + packageRootPrefix + packageZdp + ".ZcoCommand;");
+                    out.println("import " + packageRootPrefix + packageZdp + ".ZdoCommand;");
                     out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclCommandType;");
                     // if (!fields.isEmpty()) {
                     // out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclFieldType;");

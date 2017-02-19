@@ -23,11 +23,11 @@ public class IeeeAddressResponse extends ZdoResponse {
     /**
      * Start index.
      */
-    public int startIndex;
+    private int startIndex;
     /**
      * Number of associated devices.
      */
-    public int numberOfAssociatedDevices;
+    private int numberOfAssociatedDevices;
     /**
      * Associated device list.
      */
@@ -47,6 +47,7 @@ public class IeeeAddressResponse extends ZdoResponse {
         this.associatedDeviceList = associatedDeviceList;
     }
 
+    @Override
     public void setStatus(int status) {
         this.status = status;
     }
@@ -79,11 +80,10 @@ public class IeeeAddressResponse extends ZdoResponse {
         return numberOfAssociatedDevices;
     }
 
-    public void setNumberOfAssociatedDevices(int numberOfAssociatedDevices) {
-        this.numberOfAssociatedDevices = numberOfAssociatedDevices;
-    }
-
     public int[] getAssociatedDeviceList() {
+        if (associatedDeviceList == null) {
+            return new int[0];
+        }
         return associatedDeviceList;
     }
 
@@ -95,7 +95,6 @@ public class IeeeAddressResponse extends ZdoResponse {
     public String toString() {
         return "IEEE Address Response: status=" + status + ", sourceAddressMode=" + sourceAddressMode + ", ieeeAddress="
                 + ieeeAddress + ", networkAddress=" + sourceAddress + ", startIndex=" + startIndex
-                + ", numberOfAssociatedDevices=" + numberOfAssociatedDevices + ", associatedDeviceList="
-                + Arrays.toString(associatedDeviceList);
+                + ", associatedDeviceList=" + Arrays.toString(associatedDeviceList);
     }
 }

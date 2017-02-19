@@ -1,4 +1,4 @@
-package com.zsmartsystems.zigbee.dongle.ember.network;
+package com.zsmartsystems.zigbee.dongle.ember.internal;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -8,7 +8,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
@@ -30,7 +29,7 @@ public class EmberNetworkInitialisation {
     /**
      * The {@link Logger}.
      */
-    private final Logger logger = LoggerFactory.getLogger(ZigBeeDongleEzsp.class);
+    private final Logger logger = LoggerFactory.getLogger(EmberNetworkInitialisation.class);
 
     private AshFrameHandler ashHandler;
 

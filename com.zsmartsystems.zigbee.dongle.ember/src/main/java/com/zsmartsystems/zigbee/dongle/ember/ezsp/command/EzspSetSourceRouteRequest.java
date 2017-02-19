@@ -10,8 +10,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class to implement the Ember EZSP command <b>setSourceRoute</b>.
@@ -27,6 +25,9 @@ import java.util.Map;
 public class EzspSetSourceRouteRequest extends EzspFrameRequest {
     public static int FRAME_ID = 0x5A;
 
+    /**
+     * Serialiser used to seialise to binary line data
+     */
     private EzspSerializer serializer;
 
     /**

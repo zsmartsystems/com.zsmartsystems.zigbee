@@ -182,9 +182,9 @@ public class AshFrameHandler {
                                                 // Get the EZSP frame
                                                 EzspFrameResponse response = EzspFrame
                                                         .createHandler((AshFrameData) packet);
-
-                                                // Notify any waiting synchronous transactions.
-                                                if (!notifyTransactionComplete(response)) {
+                                                if (response == null) {
+                                                    logger.debug("No frame handler created for {}", packet);
+                                                } else if (response != null && !notifyTransactionComplete(response)) {
                                                     // No transactions owned this
                                                     // response, so we pass it to
                                                     // our unhandled response
@@ -370,11 +370,13 @@ public class AshFrameHandler {
 
     /**
      * Add an EZSP frame to the send queue. The sendQueue is a FIFO queue.
+     * This method queues a {@link EzspFrameRequest} frame without waiting for a response and
+     * no transaction management is performed.
      *
      * @param transaction
-     *            {@link EzspFrame}
+     *            {@link EzspFrameRequest}
      */
-    private void queueFrame(EzspFrameRequest request) {
+    public void queueFrame(EzspFrameRequest request) {
         // logger.debug("queue EZSP frame : " + request.toString());
 
         // Encapsulate the EZSP frame into the ASH packet

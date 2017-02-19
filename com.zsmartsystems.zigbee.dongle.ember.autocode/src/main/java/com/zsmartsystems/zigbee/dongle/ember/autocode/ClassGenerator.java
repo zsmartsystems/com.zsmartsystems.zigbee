@@ -126,6 +126,14 @@ public abstract class ClassGenerator {
 
         int len = 2;
         for (String word : words) {
+            if (word.toLowerCase().equals("note:")) {
+                if (len > 2) {
+                    out.println();
+                }
+                out.println(indent + " * <p>");
+                out.print(indent + " * <b>Note:</b>");
+                continue;
+            }
             if (len + word.length() > lineLen) {
                 out.println();
                 out.print(indent + " *");
