@@ -6,6 +6,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandlerResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandlerResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspFormNetworkResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandlerResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspPermitJoiningResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandlerResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurityStateResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandlerResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**

@@ -32,7 +32,7 @@ public abstract class EzspFrameRequest extends EzspFrame {
      *
      * @param frameId
      */
-    EzspFrameRequest() {
+    protected EzspFrameRequest() {
         sequenceNumber = (int) sequence.getAndIncrement();
         if (sequenceNumber == 254) {
             sequence.set(1);

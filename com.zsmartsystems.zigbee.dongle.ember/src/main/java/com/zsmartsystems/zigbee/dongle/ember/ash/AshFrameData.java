@@ -2,28 +2,28 @@ package com.zsmartsystems.zigbee.dongle.ember.ash;
 
 import java.util.Arrays;
 
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 
 /**
  * ASH Frame Error
- * 
+ *
  * @author Chris Jackson
  *
  */
 public class AshFrameData extends AshFrame {
     /**
      * Constructor to create an ASH Data frame for sending.
-     * 
+     *
      * @param buffer
      */
-    public AshFrameData(EzspFrame ezspFrame) {
+    public AshFrameData(EzspFrameRequest ezspRequestFrame) {
         frameType = FrameType.DATA;
-        dataBuffer = ezspFrame.getOutputBuffer();
+        dataBuffer = ezspRequestFrame.serialize();
     }
 
     /**
      * Create frame from incoming data
-     * 
+     *
      * @param frameBuffer
      */
     public AshFrameData(int[] frameBuffer) {
@@ -50,11 +50,11 @@ public class AshFrameData extends AshFrame {
         StringBuilder result = new StringBuilder();
         result.append("AshFrameData [frmNum=");
         result.append(frmNum);
-        result.append(" ackNum=");
+        result.append(", ackNum=");
         result.append(ackNum);
-        result.append(" reTx=");
+        result.append(", reTx=");
         result.append(reTx);
-        result.append(" data=");
+        result.append(", data=");
 
         for (int i = 0; i < dataBuffer.length; i++) {
             if (i != 0) {

@@ -8,6 +8,8 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -69,6 +71,10 @@ public class EmberRouteTableEntry {
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
     private int routeRecordState;
+
+    public EmberRouteTableEntry(EzspDeserializer deserializer) {
+        deserialize(deserializer);
+    }
 
     /**
      * The short id of the destination. A value of 0xFFFF indicates the entry is unused.
@@ -196,6 +202,37 @@ public class EmberRouteTableEntry {
      */
     public void setRouteRecordState(int routeRecordState) {
         this.routeRecordState = routeRecordState;
+    }
+
+    /**
+     * Serialise the contents of the EZSP structure.
+     *
+     * @param serializer the {@link EzspSerializer} used to serialize
+     */
+    public int[] serialize(EzspSerializer serializer) {
+        // Serialize the fields
+        serializer.serializeUInt16(destination);
+        serializer.serializeUInt16(nextHop);
+        serializer.serializeUInt8(status);
+        serializer.serializeUInt8(age);
+        serializer.serializeUInt8(concentratorType);
+        serializer.serializeUInt8(routeRecordState);
+        return serializer.getPayload();
+    }
+
+    /**
+     * Deserialise the contents of the EZSP structure.
+     *
+     * @param deserializer the {@link EzspDeserializer} used to deserialize
+     */
+    public void deserialize(EzspDeserializer deserializer) {
+        // Deserialize the fields
+        destination = deserializer.deserializeUInt16();
+        nextHop = deserializer.deserializeUInt16();
+        status = deserializer.deserializeUInt8();
+        age = deserializer.deserializeUInt8();
+        concentratorType = deserializer.deserializeUInt8();
+        routeRecordState = deserializer.deserializeUInt8();
     }
 
     @Override

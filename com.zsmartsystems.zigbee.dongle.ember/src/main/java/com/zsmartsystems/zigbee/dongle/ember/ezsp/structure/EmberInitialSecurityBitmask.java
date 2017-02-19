@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 
+ *
  * @author Chris Jackson
  *
  */
@@ -105,7 +105,7 @@ public enum EmberInitialSecurityBitmask {
      *            the code to lookup
      * @return enumeration value of the alarm type.
      */
-    public static EmberInitialSecurityBitmask getEzspNetworkScanType(int i) {
+    public static EmberInitialSecurityBitmask getEmberInitialSecurityBitmask(int i) {
         if (codeMapping == null) {
             initMapping();
         }

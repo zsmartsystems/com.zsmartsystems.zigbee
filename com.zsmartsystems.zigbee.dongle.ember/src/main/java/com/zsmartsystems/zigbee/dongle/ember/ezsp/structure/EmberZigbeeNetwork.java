@@ -8,6 +8,8 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -65,6 +67,10 @@ public class EmberZigbeeNetwork {
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
     private int nwkUpdateId;
+
+    public EmberZigbeeNetwork(EzspDeserializer deserializer) {
+        deserialize(deserializer);
+    }
 
     /**
      * The 802.15.4 channel associated with the network.
@@ -184,6 +190,37 @@ public class EmberZigbeeNetwork {
      */
     public void setNwkUpdateId(int nwkUpdateId) {
         this.nwkUpdateId = nwkUpdateId;
+    }
+
+    /**
+     * Serialise the contents of the EZSP structure.
+     *
+     * @param serializer the {@link EzspSerializer} used to serialize
+     */
+    public int[] serialize(EzspSerializer serializer) {
+        // Serialize the fields
+        serializer.serializeUInt8(channel);
+        serializer.serializeUInt16(panId);
+        serializer.serializeUInt8Array(extendedPanId);
+        serializer.serializeBool(allowingJoin);
+        serializer.serializeUInt8(stackProfile);
+        serializer.serializeUInt8(nwkUpdateId);
+        return serializer.getPayload();
+    }
+
+    /**
+     * Deserialise the contents of the EZSP structure.
+     *
+     * @param deserializer the {@link EzspDeserializer} used to deserialize
+     */
+    public void deserialize(EzspDeserializer deserializer) {
+        // Deserialize the fields
+        channel = deserializer.deserializeUInt8();
+        panId = deserializer.deserializeUInt16();
+        extendedPanId = deserializer.deserializeUInt8Array(8);
+        allowingJoin = deserializer.deserializeBool();
+        stackProfile = deserializer.deserializeUInt8();
+        nwkUpdateId = deserializer.deserializeUInt8();
     }
 
     @Override

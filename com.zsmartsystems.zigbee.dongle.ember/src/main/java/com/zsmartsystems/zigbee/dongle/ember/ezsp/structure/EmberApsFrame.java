@@ -8,6 +8,8 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -72,6 +74,10 @@ public class EmberApsFrame {
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
     private int sequence;
+
+    public EmberApsFrame(EzspDeserializer deserializer) {
+        deserialize(deserializer);
+    }
 
     /**
      * The application profile ID that describes the format of the message.
@@ -211,6 +217,39 @@ public class EmberApsFrame {
      */
     public void setSequence(int sequence) {
         this.sequence = sequence;
+    }
+
+    /**
+     * Serialise the contents of the EZSP structure.
+     *
+     * @param serializer the {@link EzspSerializer} used to serialize
+     */
+    public int[] serialize(EzspSerializer serializer) {
+        // Serialize the fields
+        serializer.serializeUInt16(profileId);
+        serializer.serializeUInt16(clusterId);
+        serializer.serializeUInt8(sourceEndpoint);
+        serializer.serializeUInt8(destinationEndpoint);
+        serializer.serializeEmberApsOption(options);
+        serializer.serializeUInt16(groupId);
+        serializer.serializeUInt8(sequence);
+        return serializer.getPayload();
+    }
+
+    /**
+     * Deserialise the contents of the EZSP structure.
+     *
+     * @param deserializer the {@link EzspDeserializer} used to deserialize
+     */
+    public void deserialize(EzspDeserializer deserializer) {
+        // Deserialize the fields
+        profileId = deserializer.deserializeUInt16();
+        clusterId = deserializer.deserializeUInt16();
+        sourceEndpoint = deserializer.deserializeUInt8();
+        destinationEndpoint = deserializer.deserializeUInt8();
+        options = deserializer.deserializeEmberApsOption();
+        groupId = deserializer.deserializeUInt16();
+        sequence = deserializer.deserializeUInt8();
     }
 
     @Override

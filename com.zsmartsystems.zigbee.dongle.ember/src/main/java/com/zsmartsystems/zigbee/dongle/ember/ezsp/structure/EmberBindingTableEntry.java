@@ -9,6 +9,8 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -71,6 +73,10 @@ public class EmberBindingTableEntry {
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
     private int uint8_t;
+
+    public EmberBindingTableEntry(EzspDeserializer deserializer) {
+        deserialize(deserializer);
+    }
 
     /**
      * The type of binding.
@@ -200,6 +206,37 @@ public class EmberBindingTableEntry {
      */
     public void setUint8_t(int uint8_t) {
         this.uint8_t = uint8_t;
+    }
+
+    /**
+     * Serialise the contents of the EZSP structure.
+     *
+     * @param serializer the {@link EzspSerializer} used to serialize
+     */
+    public int[] serialize(EzspSerializer serializer) {
+        // Serialize the fields
+        serializer.serializeEmberBindingType(type);
+        serializer.serializeUInt8(local);
+        serializer.serializeUInt16(clusterId);
+        serializer.serializeUInt8(remote);
+        serializer.serializeEmberEui64(identifier);
+        serializer.serializeUInt8(uint8_t);
+        return serializer.getPayload();
+    }
+
+    /**
+     * Deserialise the contents of the EZSP structure.
+     *
+     * @param deserializer the {@link EzspDeserializer} used to deserialize
+     */
+    public void deserialize(EzspDeserializer deserializer) {
+        // Deserialize the fields
+        type = deserializer.deserializeEmberBindingType();
+        local = deserializer.deserializeUInt8();
+        clusterId = deserializer.deserializeUInt16();
+        remote = deserializer.deserializeUInt8();
+        identifier = deserializer.deserializeEmberEui64();
+        uint8_t = deserializer.deserializeUInt8();
     }
 
     @Override

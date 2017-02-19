@@ -4,12 +4,16 @@ import java.util.Arrays;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingTableEntry;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityBitmask;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityState;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStructure;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
@@ -57,12 +61,6 @@ public class EzspSerializer {
         buffer[length++] = (val >> 8) & 0xFF;
         buffer[length++] = (val >> 16) & 0xFF;
         buffer[length++] = (val >> 24) & 0xFF;
-    }
-
-    public void serializeStructure(EmberStructure structure) {
-        for (int val : structure.getOutputBuffer()) {
-            buffer[length++] = val;
-        }
     }
 
     public void serializeUInt16Array(int[] array) {
@@ -120,6 +118,23 @@ public class EzspSerializer {
     }
 
     public void serializeEzspDecisionId(EzspDecisionId decisionId) {
+    }
+
+    public void serializeEmberBindingType(EmberBindingType bindingType) {
+    }
+
+    public void serializeEmberApsOption(EmberApsOption apsOption) {
+
+    }
+
+    public void serializeEmberCurrentSecurityBitmask(EmberCurrentSecurityBitmask securityBitmask) {
+    }
+
+    public void serializeEmberInitialSecurityBitmask(EmberInitialSecurityBitmask securityBitmask) {
+    }
+
+    public void serializeEmberJoinMethod(EmberJoinMethod joinMethod) {
+
     }
 
     /**

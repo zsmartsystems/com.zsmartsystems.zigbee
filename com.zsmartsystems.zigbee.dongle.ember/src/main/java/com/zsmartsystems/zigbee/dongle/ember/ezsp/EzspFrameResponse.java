@@ -25,17 +25,18 @@ public abstract class EzspFrameResponse extends EzspFrame {
     protected EzspDeserializer deserializer;
 
     /**
-     * Constructor used to create a received frame
+     * Constructor used to create a received frame. The constructor reads the header fields from the incoming message.
      *
      * @param inputBuffer
      */
-    EzspFrameResponse(int[] inputBuffer) {
+    protected EzspFrameResponse(int[] inputBuffer) {
         super();
         deserializer = new EzspDeserializer(inputBuffer);
 
-        this.sequenceNumber = deserializer.deserializeUInt8();
-        this.frameControl = inputBuffer[1];
-        this.isResponse = (inputBuffer[1] & 0x80) != 0;
+        sequenceNumber = deserializer.deserializeUInt8();
+        frameControl = deserializer.deserializeUInt8();
+        frameId = deserializer.deserializeUInt8();
+        isResponse = (frameControl & 0x80) != 0;
     }
 
     /*

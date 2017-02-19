@@ -1,13 +1,25 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingTableEntry;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityBitmask;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberIncomingMessageType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNeighborTableEntry;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNodeType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberRouteTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStructure;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberZigbeeNetwork;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 
 /**
  *
@@ -36,7 +48,7 @@ public class EzspDeserializer {
      *
      * @return value read from input
      */
-    public int deserializeInt8s() {
+    public int deserializeInt8S() {
         return buffer[position] > 127 ? buffer[position++] - 256 : buffer[position++];
     }
 
@@ -80,8 +92,22 @@ public class EzspDeserializer {
         return val;
     }
 
+    public int[] deserializeUInt16Array(int length) {
+        int[] val = new int[length];
+
+        for (int cnt = 0; cnt < length; cnt++) {
+            val[cnt] = deserializeUInt16();
+        }
+
+        return val;
+    }
+
     public EmberKeyData deserializeEmberKeyData() {
         return new EmberKeyData(deserializeUInt8Array(8));
+    }
+
+    public EzspStatus deserializeEzspStatus() {
+        return EzspStatus.getEzspStatus(deserializeUInt8());
     }
 
     /**
@@ -93,35 +119,72 @@ public class EzspDeserializer {
         return buffer[position++] + (buffer[position++] << 8) + (buffer[position++] << 16) + (buffer[position++] << 24);
     }
 
-    protected EmberStatus deserializeEmberStatus() {
-        return EmberStatus.getEmberStatus(buffer[position++]);
+    public EmberStatus deserializeEmberStatus() {
+        return EmberStatus.getEmberStatus(deserializeUInt8());
     }
 
-    protected EmberNodeType deserializeEmberNodeType() {
-        return EmberNodeType.getEmberNodeType(buffer[position++]);
+    public EmberNodeType deserializeEmberNodeType() {
+        return EmberNodeType.getEmberNodeType(deserializeUInt8());
     }
 
-    public EmberStructure deserializeStructure(Class<?> structureClass) {
-
-        Constructor<?> ctor;
-        try {
-            ctor = structureClass.getConstructor(int[].class, int.class);
-            return (EmberStructure) ctor.newInstance(buffer, position);
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public EmberBindingType deserializeEmberBindingType() {
+        return EmberBindingType.getEmberBindingType(deserializeUInt8());
     }
 
+    public EmberBindingTableEntry deserializeEmberBindingTableEntry() {
+        return new EmberBindingTableEntry(this);
+    }
+
+    public EmberCurrentSecurityState deserializeEmberCurrentSecurityState() {
+        return new EmberCurrentSecurityState(this);
+    }
+
+    public EmberNeighborTableEntry deserializeEmberNeighborTableEntry() {
+        return new EmberNeighborTableEntry(this);
+    }
+
+    public EmberNetworkParameters deserializeEmberNetworkParameters() {
+        return new EmberNetworkParameters(this);
+    }
+
+    public EzspDecisionId deserializeEzspDecisionId() {
+        return EzspDecisionId.getEzspDecisionId(deserializeUInt8());
+    }
+
+    public EmberRouteTableEntry deserializeEmberRouteTableEntry() {
+        return new EmberRouteTableEntry(this);
+    }
+
+    public EmberIncomingMessageType deserializeEmberIncomingMessageType() {
+        return EmberIncomingMessageType.getEmberIncomingMessageType(deserializeUInt8());
+    }
+
+    public EmberOutgoingMessageType deserializeEmberOutgoingMessageType() {
+        return EmberOutgoingMessageType.getEmberOutgoingMessageType(deserializeUInt8());
+    }
+
+    public EmberApsFrame deserializeEmberApsFrame() {
+        return new EmberApsFrame(this);
+    }
+
+    public EmberZigbeeNetwork deserializeEmberZigbeeNetwork() {
+        return new EmberZigbeeNetwork(this);
+    }
+
+    public EmberApsOption deserializeEmberApsOption() {
+        // TODO this should be a list
+        return EmberApsOption.getEmberApsOption(deserializeUInt16());
+    }
+
+    public EmberCurrentSecurityBitmask deserializeEmberCurrentSecurityBitmask() {
+        return EmberCurrentSecurityBitmask.getEmberCurrentSecurityBitmask(deserializeUInt8());
+    }
+
+    public EmberJoinMethod deserializeEmberJoinMethod() {
+        return EmberJoinMethod.getEmberJoinMethod(deserializeUInt8());
+    }
+
+    public EmberInitialSecurityBitmask deserializeEmberInitialSecurityBitmask() {
+        return EmberInitialSecurityBitmask.getEmberInitialSecurityBitmask(deserializeUInt8());
+    }
 }

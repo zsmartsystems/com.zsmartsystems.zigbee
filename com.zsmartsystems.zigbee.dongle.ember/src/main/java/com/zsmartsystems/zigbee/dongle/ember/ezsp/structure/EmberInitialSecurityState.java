@@ -9,6 +9,8 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -56,9 +58,9 @@ public class EmberInitialSecurityState {
      * The sequence number associated with the network key. This is only valid if the
      * EMBER_HAVE_NETWORK_KEY has been set in the security bitmask.
      * <p>
-     * EZSP type is <i>uint8_u</i> - Java type is {@link int[]}
+     * EZSP type is <i>uint8_u</i> - Java type is {@link int}
      */
-    private int[] networkKeySequenceNumber;
+    private int networkKeySequenceNumber;
 
     /**
      * This is the long address of the trust center on the network that will be joined. It is usually NOT
@@ -70,6 +72,10 @@ public class EmberInitialSecurityState {
      * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
      */
     private IeeeAddress preconfiguredTrustCenterEui64;
+
+    public EmberInitialSecurityState(EzspDeserializer deserializer) {
+        deserialize(deserializer);
+    }
 
     /**
      * A bitmask indicating the security state used to indicate what the security configuration will
@@ -145,11 +151,11 @@ public class EmberInitialSecurityState {
      * The sequence number associated with the network key. This is only valid if the
      * EMBER_HAVE_NETWORK_KEY has been set in the security bitmask.
      * <p>
-     * EZSP type is <i>uint8_u</i> - Java type is {@link int[]}
+     * EZSP type is <i>uint8_u</i> - Java type is {@link int}
      *
-     * @return the current networkKeySequenceNumber as {@link int[]}
+     * @return the current networkKeySequenceNumber as {@link int}
      */
-    public int[] getNetworkKeySequenceNumber() {
+    public int getNetworkKeySequenceNumber() {
         return networkKeySequenceNumber;
     }
 
@@ -157,9 +163,9 @@ public class EmberInitialSecurityState {
      * The sequence number associated with the network key. This is only valid if the
      * EMBER_HAVE_NETWORK_KEY has been set in the security bitmask.
      *
-     * @param networkKeySequenceNumber the networkKeySequenceNumber to set as {@link int[]}
+     * @param networkKeySequenceNumber the networkKeySequenceNumber to set as {@link int}
      */
-    public void setNetworkKeySequenceNumber(int[] networkKeySequenceNumber) {
+    public void setNetworkKeySequenceNumber(int networkKeySequenceNumber) {
         this.networkKeySequenceNumber = networkKeySequenceNumber;
     }
 
@@ -189,6 +195,35 @@ public class EmberInitialSecurityState {
      */
     public void setPreconfiguredTrustCenterEui64(IeeeAddress preconfiguredTrustCenterEui64) {
         this.preconfiguredTrustCenterEui64 = preconfiguredTrustCenterEui64;
+    }
+
+    /**
+     * Serialise the contents of the EZSP structure.
+     *
+     * @param serializer the {@link EzspSerializer} used to serialize
+     */
+    public int[] serialize(EzspSerializer serializer) {
+        // Serialize the fields
+        serializer.serializeEmberInitialSecurityBitmask(bitmask);
+        serializer.serializeEmberKeyData(preconfiguredKey);
+        serializer.serializeEmberKeyData(networkKey);
+        serializer.serializeUInt8(networkKeySequenceNumber);
+        serializer.serializeEmberEui64(preconfiguredTrustCenterEui64);
+        return serializer.getPayload();
+    }
+
+    /**
+     * Deserialise the contents of the EZSP structure.
+     *
+     * @param deserializer the {@link EzspDeserializer} used to deserialize
+     */
+    public void deserialize(EzspDeserializer deserializer) {
+        // Deserialize the fields
+        bitmask = deserializer.deserializeEmberInitialSecurityBitmask();
+        preconfiguredKey = deserializer.deserializeEmberKeyData();
+        networkKey = deserializer.deserializeEmberKeyData();
+        networkKeySequenceNumber = deserializer.deserializeUInt8();
+        preconfiguredTrustCenterEui64 = deserializer.deserializeEmberEui64();
     }
 
     @Override

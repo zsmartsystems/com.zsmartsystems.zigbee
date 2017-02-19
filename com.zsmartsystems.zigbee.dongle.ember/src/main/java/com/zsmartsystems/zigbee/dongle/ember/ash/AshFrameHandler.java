@@ -24,6 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrame.FrameType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
 
 /**
  * Frame parser for the Silicon Labs Asynchronous Serial Host (ASH) protocol.
@@ -163,7 +164,7 @@ public class AshFrameHandler {
                                     // Send a NAK
                                     responseFrame = new AshFrameNak(ackNum);
                                 } else {
-                                    logger.debug("Received ASH frame: {}", packet.toString());
+                                    logger.debug("<-- RX ASH frame: {}", packet.toString());
 
                                     // Extract the flags for DATA/ACK/NAK frames
                                     switch (packet.getFrameType()) {
@@ -358,7 +359,7 @@ public class AshFrameHandler {
         }
 
         // logger.debug(result.toString());
-        logger.debug("Sent ASH frame    : {}", ashFrame.toString());
+        logger.debug("--> TX ASH frame: {}", ashFrame.toString());
 
         // Only start the timer for data frames
         if (ashFrame instanceof AshFrameData) {
@@ -371,7 +372,7 @@ public class AshFrameHandler {
      * Add an EZSP frame to the send queue. The sendQueue is a FIFO queue.
      *
      * @param transaction
-     *            . {@link EzspFrame}
+     *            {@link EzspFrame}
      */
     private void queueFrame(EzspFrameRequest request) {
         // logger.debug("queue EZSP frame : " + request.toString());
@@ -415,8 +416,8 @@ public class AshFrameHandler {
             } else if (receiveTimeout > T_RX_ACK_MAX) {
                 receiveTimeout = T_RX_ACK_MAX;
             }
-            logger.debug("ASH RX Timer: took {}ms, timer now {}ms" + (System.nanoTime() - sentTime) / 1000000,
-                    +receiveTimeout);
+            logger.debug("ASH RX Timer: took {}ms, timer now {}ms", (System.nanoTime() - sentTime) / 1000000,
+                    receiveTimeout);
             sentTime = 0;
         }
 
@@ -507,13 +508,14 @@ public class AshFrameHandler {
     /**
      * Sends an EZSP request to the NCP without waiting for the response.
      *
-     * @param ezspRequest
-     *            Request {@link EzspFrame}
+     * @param ezspTransaction
+     *            Request {@link EzspTransaction}
      * @return response {@link Future} {@link EzspFrame}
      */
-    public Future<EzspFrame> sendEzspRequestAsync(final EzspFrameRequest request) {
+    public Future<EzspFrame> sendEzspRequestAsync(final EzspTransaction ezspTransaction) {
         class TransactionWaiter implements Callable<EzspFrame>, AshListener {
-            private EzspFrame response = null;
+            // private EzspFrame response = null;
+            private boolean complete = false;
 
             @Override
             public EzspFrame call() {
@@ -521,11 +523,11 @@ public class AshFrameHandler {
                 addTransactionListener(this);
 
                 // Send the transaction
-                queueFrame(request);
+                queueFrame(ezspTransaction.getRequest());
 
                 // Wait for the transaction to complete
                 synchronized (this) {
-                    while (response == null) {
+                    while (!complete) {
                         try {
                             wait();
                         } catch (InterruptedException e) {
@@ -537,17 +539,18 @@ public class AshFrameHandler {
                 // Remove the listener
                 removeTransactionListener(this);
 
-                return response;
+                return null;// response;
             }
 
             @Override
             public boolean transactionEvent(EzspFrameResponse ezspResponse) {
-                // Check if this response completes out transaction
-                if (!request.processResponse(ezspResponse)) {
+                // Check if this response completes our transaction
+                if (!ezspTransaction.isMatch(ezspResponse)) {
                     return false;
                 }
 
-                response = request;
+                // response = request;
+                complete = true;
                 synchronized (this) {
                     notify();
                 }
@@ -568,11 +571,35 @@ public class AshFrameHandler {
      *            Request {@link EzspFrame}
      * @return response {@link EzspFrame}
      */
-    public EzspFrame sendEzspRequest(EzspFrameRequest ezspRequest) {
-        Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspRequest);
+    /*
+     * public EzspFrame sendEzspRequest(EzspFrameRequest ezspRequest) {
+     * Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspRequest);
+     * try {
+     * EzspFrame ezspResponse = futureResponse.get();
+     * return ezspResponse;
+     * } catch (InterruptedException e) {
+     * e.printStackTrace();
+     * } catch (ExecutionException e) {
+     * e.printStackTrace();
+     * }
+     *
+     * return null;
+     * }
+     */
+
+    /**
+     * Sends an EZSP request to the NCP and waits for the response. The response
+     * is correlated with the request and the returned {@link EzspFrame} contains the request and response data.
+     *
+     * @param ezspRequest
+     *            Request {@link EzspFrame}
+     * @return response {@link EzspFrame}
+     */
+    public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
+        Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
         try {
-            EzspFrame ezspResponse = futureResponse.get();
-            return ezspResponse;
+            futureResponse.get();
+            return ezspTransaction;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

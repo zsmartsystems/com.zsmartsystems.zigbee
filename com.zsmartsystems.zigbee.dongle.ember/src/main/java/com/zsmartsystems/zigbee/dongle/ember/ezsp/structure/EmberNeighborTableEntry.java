@@ -9,6 +9,8 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -73,6 +75,10 @@ public class EmberNeighborTableEntry {
      * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
      */
     private IeeeAddress longId;
+
+    public EmberNeighborTableEntry(EzspDeserializer deserializer) {
+        deserialize(deserializer);
+    }
 
     /**
      * The neighbor's two byte network id.
@@ -204,6 +210,37 @@ public class EmberNeighborTableEntry {
      */
     public void setLongId(IeeeAddress longId) {
         this.longId = longId;
+    }
+
+    /**
+     * Serialise the contents of the EZSP structure.
+     *
+     * @param serializer the {@link EzspSerializer} used to serialize
+     */
+    public int[] serialize(EzspSerializer serializer) {
+        // Serialize the fields
+        serializer.serializeUInt16(shortId);
+        serializer.serializeUInt8(averageLqi);
+        serializer.serializeUInt8(inCost);
+        serializer.serializeUInt8(outCost);
+        serializer.serializeUInt16(age);
+        serializer.serializeEmberEui64(longId);
+        return serializer.getPayload();
+    }
+
+    /**
+     * Deserialise the contents of the EZSP structure.
+     *
+     * @param deserializer the {@link EzspDeserializer} used to deserialize
+     */
+    public void deserialize(EzspDeserializer deserializer) {
+        // Deserialize the fields
+        shortId = deserializer.deserializeUInt16();
+        averageLqi = deserializer.deserializeUInt8();
+        inCost = deserializer.deserializeUInt8();
+        outCost = deserializer.deserializeUInt8();
+        age = deserializer.deserializeUInt16();
+        longId = deserializer.deserializeEmberEui64();
     }
 
     @Override

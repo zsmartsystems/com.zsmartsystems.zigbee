@@ -9,6 +9,8 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -38,6 +40,10 @@ public class EmberCurrentSecurityState {
      * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
      */
     private IeeeAddress trustCenterLongAddress;
+
+    public EmberCurrentSecurityState(EzspDeserializer deserializer) {
+        deserialize(deserializer);
+    }
 
     /**
      * A bitmask indicating the security options currently in use by a device joined in the network.
@@ -77,6 +83,29 @@ public class EmberCurrentSecurityState {
      */
     public void setTrustCenterLongAddress(IeeeAddress trustCenterLongAddress) {
         this.trustCenterLongAddress = trustCenterLongAddress;
+    }
+
+    /**
+     * Serialise the contents of the EZSP structure.
+     *
+     * @param serializer the {@link EzspSerializer} used to serialize
+     */
+    public int[] serialize(EzspSerializer serializer) {
+        // Serialize the fields
+        serializer.serializeEmberCurrentSecurityBitmask(bitmask);
+        serializer.serializeEmberEui64(trustCenterLongAddress);
+        return serializer.getPayload();
+    }
+
+    /**
+     * Deserialise the contents of the EZSP structure.
+     *
+     * @param deserializer the {@link EzspDeserializer} used to deserialize
+     */
+    public void deserialize(EzspDeserializer deserializer) {
+        // Deserialize the fields
+        bitmask = deserializer.deserializeEmberCurrentSecurityBitmask();
+        trustCenterLongAddress = deserializer.deserializeEmberEui64();
     }
 
     @Override

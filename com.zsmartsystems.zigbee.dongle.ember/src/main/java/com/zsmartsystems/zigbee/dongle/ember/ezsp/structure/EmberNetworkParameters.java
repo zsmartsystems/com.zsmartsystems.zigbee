@@ -8,6 +8,8 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -84,6 +86,10 @@ public class EmberNetworkParameters {
      * EZSP type is <i>uint32_t</i> - Java type is {@link int}
      */
     private int channels;
+
+    public EmberNetworkParameters(EzspDeserializer deserializer) {
+        deserialize(deserializer);
+    }
 
     /**
      * The network's extended PAN identifier.
@@ -253,6 +259,41 @@ public class EmberNetworkParameters {
      */
     public void setChannels(int channels) {
         this.channels = channels;
+    }
+
+    /**
+     * Serialise the contents of the EZSP structure.
+     *
+     * @param serializer the {@link EzspSerializer} used to serialize
+     */
+    public int[] serialize(EzspSerializer serializer) {
+        // Serialize the fields
+        serializer.serializeUInt8Array(extendedPanId);
+        serializer.serializeUInt16(panId);
+        serializer.serializeUInt8(radioTxPower);
+        serializer.serializeUInt8(radioChannel);
+        serializer.serializeEmberJoinMethod(joinMethod);
+        serializer.serializeUInt16(nwkManagerId);
+        serializer.serializeUInt8(nwkUpdateId);
+        serializer.serializeUInt32(channels);
+        return serializer.getPayload();
+    }
+
+    /**
+     * Deserialise the contents of the EZSP structure.
+     *
+     * @param deserializer the {@link EzspDeserializer} used to deserialize
+     */
+    public void deserialize(EzspDeserializer deserializer) {
+        // Deserialize the fields
+        extendedPanId = deserializer.deserializeUInt8Array(8);
+        panId = deserializer.deserializeUInt16();
+        radioTxPower = deserializer.deserializeUInt8();
+        radioChannel = deserializer.deserializeUInt8();
+        joinMethod = deserializer.deserializeEmberJoinMethod();
+        nwkManagerId = deserializer.deserializeUInt16();
+        nwkUpdateId = deserializer.deserializeUInt8();
+        channels = deserializer.deserializeUInt32();
     }
 
     @Override

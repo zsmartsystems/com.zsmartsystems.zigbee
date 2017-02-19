@@ -44,7 +44,17 @@ public enum EzspStatus {
      * The NCP is reporting that the Command frame of the current transaction is oversized (the length
      * byte is too large).
      */
-    EZSP_SPI_ERR_OVERSIZED_EZSP_FRAME(16);
+    EZSP_SPI_ERR_OVERSIZED_EZSP_FRAME(16),
+
+    /**
+     * Insufficient memory was available
+     */
+    EZSP_ERROR_OUT_OF_MEMORY(53),
+
+    /**
+     * The value was out of bounds.
+     */
+    EZSP_ERROR_INVALID_VALUE(54);
     /**
      * A mapping between the integer code and its corresponding type to
      * facilitate lookup by code.

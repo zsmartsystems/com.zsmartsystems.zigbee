@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.zsmartsystems.zigbee.dongle.ember.autocode.xml.Command;
 import com.zsmartsystems.zigbee.dongle.ember.autocode.xml.Enumeration;
@@ -19,7 +21,7 @@ import com.zsmartsystems.zigbee.dongle.ember.autocode.xml.Value;
  *
  */
 public class CommandGenerator extends ClassGenerator {
-    final String ezspCommandPackage = "com.zsmartsystems.zigbee.dongle.ember.ezsp";
+    final String ezspCommandPackage = "com.zsmartsystems.zigbee.dongle.ember.ezsp.command";
     final String ezspStructurePackage = "com.zsmartsystems.zigbee.dongle.ember.ezsp.structure";
 
     public void go(Protocol protocol) throws FileNotFoundException {
@@ -49,8 +51,8 @@ public class CommandGenerator extends ClassGenerator {
         PrintWriter out = new PrintWriter(stringWriter);
 
         clearImports();
-        addImport("org.slf4j.Logger");
-        addImport("org.slf4j.LoggerFactory");
+        // addImport("org.slf4j.Logger");
+        // addImport("org.slf4j.LoggerFactory");
 
         addImport("java.util.Map");
         addImport("java.util.HashMap");
@@ -75,7 +77,9 @@ public class CommandGenerator extends ClassGenerator {
             out.println("public class " + className + " extends EzspFrameResponse {");
         }
 
-        out.println("    private static final Logger logger = LoggerFactory.getLogger(" + className + ".class);");
+        out.println("    public static int FRAME_ID = " + String.format("0x%02X", command.id) + ";");
+
+        // out.println(" private static final Logger logger = LoggerFactory.getLogger(" + className + ".class);");
 
         for (Parameter parameter : parameters) {
             if (parameter.auto_size != null) {
@@ -101,6 +105,7 @@ public class CommandGenerator extends ClassGenerator {
             out.println("     * Request constructor");
             out.println("     */");
             out.println("    public " + className + "() {");
+            out.println("        frameId = FRAME_ID;");
             out.println("        serializer = new EzspSerializer();");
             out.println("    }");
         } else {
@@ -112,7 +117,34 @@ public class CommandGenerator extends ClassGenerator {
             out.println("     * Response and Handler constructor");
             out.println("     */");
             out.println("    public " + className + "(int[] inputBuffer) {");
+            out.println("        // Super creates deserializer and reads header fields");
             out.println("        super(inputBuffer);");
+            out.println();
+            out.println("        // Deserialize the fields");
+            Map<String, String> autoSizers = new HashMap<String, String>();
+            for (Parameter parameter : parameters) {
+                if (parameter.auto_size != null) {
+                    out.println("        int " + parameter.name + " = deserializer.deserialize"
+                            + getTypeSerializer(parameter.data_type) + "();");
+                    autoSizers.put(parameter.auto_size, parameter.name);
+                    continue;
+                }
+                if (autoSizers.get(parameter.name) != null) {
+                    out.println("        " + parameter.name + "= deserializer.deserialize"
+                            + getTypeSerializer(parameter.data_type) + "(" + autoSizers.get(parameter.name) + ");");
+                    continue;
+                }
+                if (parameter.data_type.contains("[") && parameter.data_type.contains("]")
+                        && !parameter.data_type.contains("[]")) {
+                    int length = Integer.parseInt(parameter.data_type.substring(parameter.data_type.indexOf("[") + 1,
+                            parameter.data_type.indexOf("]")));
+                    out.println("        " + parameter.name + " = deserializer.deserialize"
+                            + getTypeSerializer(parameter.data_type) + "(" + length + ");");
+                    continue;
+                }
+                out.println("        " + parameter.name + " = deserializer.deserialize"
+                        + getTypeSerializer(parameter.data_type) + "();");
+            }
             out.println("    }");
         }
 
@@ -153,6 +185,10 @@ public class CommandGenerator extends ClassGenerator {
             out.println("    @Override");
             out.println("    public int[] serialize() {");
             // out.println(" EzspSerializer serializer = new EzspSerializer();");
+            out.println("        // Serialize the header");
+            out.println("        serializeHeader(serializer);");
+            out.println();
+            out.println("        // Serialize the fields");
             for (Parameter parameter : parameters) {
                 if (parameter.auto_size != null) {
                     out.println("        serializer.serialize" + getTypeSerializer(parameter.data_type) + "("
@@ -229,6 +265,9 @@ public class CommandGenerator extends ClassGenerator {
         addImport("java.util.Map");
         addImport("java.util.HashMap");
 
+        addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer");
+        addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer");
+
         out.println("/**");
         out.println(" * Class to implement the Ember Structure <b>" + structure.name + "</b>.");
         out.println(" * <p>");
@@ -255,6 +294,11 @@ public class CommandGenerator extends ClassGenerator {
             out.println("     */");
             out.println("    private " + getTypeClass(parameter.data_type) + " " + parameter.name + ";");
         }
+
+        out.println();
+        out.println("    public " + className + "(EzspDeserializer deserializer) {");
+        out.println("        deserialize(deserializer);");
+        out.println("    }");
 
         for (Parameter parameter : structure.parameters) {
             if (parameter.auto_size != null) {
@@ -287,6 +331,64 @@ public class CommandGenerator extends ClassGenerator {
             out.println("        this." + parameter.name + " = " + parameter.name + ";");
             out.println("    }");
         }
+
+        out.println();
+        out.println("    /**");
+        out.println("     * Serialise the contents of the EZSP structure.");
+        out.println("     *");
+        out.println("     * @param serializer the {@link EzspSerializer} used to serialize");
+        out.println("     */");
+        out.println("    public int[] serialize(EzspSerializer serializer) {");
+        // out.println(" EzspSerializer serializer = new EzspSerializer();");
+        out.println("        // Serialize the fields");
+        for (Parameter parameter : structure.parameters) {
+            if (parameter.auto_size != null) {
+                out.println("        serializer.serialize" + getTypeSerializer(parameter.data_type) + "("
+                        + parameter.auto_size + ".length);");
+                out.println("        serializer.serialize" + getTypeSerializer(parameter.data_type) + "("
+                        + parameter.auto_size + ".length);");
+                continue;
+            }
+            out.println("        serializer.serialize" + getTypeSerializer(parameter.data_type) + "(" + parameter.name
+                    + ");");
+        }
+        out.println("        return serializer.getPayload();");
+        out.println("    }");
+
+        out.println();
+        out.println("    /**");
+        out.println("     * Deserialise the contents of the EZSP structure.");
+        out.println("     *");
+        out.println("     * @param deserializer the {@link EzspDeserializer} used to deserialize");
+        out.println("     */");
+        out.println("    public void deserialize(EzspDeserializer deserializer) {");
+        // out.println(" EzspSerializer serializer = new EzspSerializer();");
+        out.println("        // Deserialize the fields");
+        Map<String, String> autoSizers = new HashMap<String, String>();
+        for (Parameter parameter : structure.parameters) {
+            if (parameter.auto_size != null) {
+                out.println("        int " + parameter.name + " = deserializer.deserialize"
+                        + getTypeSerializer(parameter.data_type) + "();");
+                autoSizers.put(parameter.auto_size, parameter.name);
+                continue;
+            }
+            if (autoSizers.get(parameter.name) != null) {
+                out.println("        " + parameter.name + "= deserializer.deserialize"
+                        + getTypeSerializer(parameter.data_type) + "(" + autoSizers.get(parameter.name) + ");");
+                continue;
+            }
+            if (parameter.data_type.contains("[") && parameter.data_type.contains("]")
+                    && !parameter.data_type.contains("[]")) {
+                int length = Integer.parseInt(parameter.data_type.substring(parameter.data_type.indexOf("[") + 1,
+                        parameter.data_type.indexOf("]")));
+                out.println("        " + parameter.name + " = deserializer.deserialize"
+                        + getTypeSerializer(parameter.data_type) + "(" + length + ");");
+                continue;
+            }
+            out.println("        " + parameter.name + " = deserializer.deserialize"
+                    + getTypeSerializer(parameter.data_type) + "();");
+        }
+        out.println("    }");
 
         out.println();
         out.println("    @Override");
@@ -453,7 +555,12 @@ public class CommandGenerator extends ClassGenerator {
     }
 
     protected String getTypeClass(String dataType) {
-        switch (dataType) {
+        String dataTypeLocal = new String(dataType);
+        if (dataType.contains("[")) {
+            dataTypeLocal = dataTypeLocal.substring(0, dataTypeLocal.indexOf("[") + 1);
+        }
+
+        switch (dataTypeLocal) {
             case "bool":
                 return "boolean";
             case "EzspValueId":
@@ -461,14 +568,13 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberCounterType":
             case "EzspConfigId":
             case "int8s":
+            case "uint8_u":
             case "uint8_t":
             case "uint16_t":
             case "uint32_t":
                 return "int";
-            case "uint8_u":
-            case "uint8_t[]":
-            case "uint8_t[8]":
-            case "uint16_t[]":
+            case "uint8_t[":
+            case "uint16_t[":
                 // if (dataType.endsWith("[]")) {
                 return "int[]";
             // }
@@ -531,22 +637,28 @@ public class CommandGenerator extends ClassGenerator {
     }
 
     protected String getTypeSerializer(String dataType) {
-        switch (dataType) {
+        String dataTypeLocal = new String(dataType);
+        if (dataType.contains("[")) {
+            dataTypeLocal = dataTypeLocal.substring(0, dataTypeLocal.indexOf("[") + 1);
+        }
+        switch (dataTypeLocal) {
             case "EzspValueId":
             case "EmberCounterType":
             case "EzspConfigId":
             case "uint8_t":
+            case "uint8_u":
                 return "UInt8";
             case "EmberNodeId":
             case "uint16_t":
                 return "UInt16";
             case "uint32_t":
                 return "UInt32";
-            case "uint8_t[]":
+            case "uint8_t[":
+            case "uint8_u[":
                 return "UInt8Array";
             case "int8s":
-                return "UInt8S";
-            case "uint16_t[]":
+                return "Int8S";
+            case "uint16_t[":
                 return "UInt16Array";
             case "Bool":
                 return "Boolean";

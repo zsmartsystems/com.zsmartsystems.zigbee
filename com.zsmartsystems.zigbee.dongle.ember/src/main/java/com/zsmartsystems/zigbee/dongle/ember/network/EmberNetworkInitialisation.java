@@ -1,22 +1,25 @@
 package com.zsmartsystems.zigbee.dongle.ember.network;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFormNetworkRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspGetNetworkParametersRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspSetInitialSecurityStateRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspStartScanRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityState;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandlerResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandlerResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandlerResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspMultiResponseTransaction;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
 
 /**
  * This class provides utility functions to establish an Ember ZigBee network
@@ -53,17 +56,27 @@ public class EmberNetworkInitialisation {
         energyScan.setChannelMask(EzspChannelMask.EZSP_CHANNEL_MASK_ALL.getKey());
         energyScan.setDuration(scanDuration);
         energyScan.setScanType(EzspNetworkScanType.EZSP_ENERGY_SCAN);
-        energyScan = (EzspStartScanRequest) ashHandler.sendEzspRequest(energyScan);
+
+        Set<Class<?>> relatedResponses = new HashSet<Class<?>>(Arrays.asList(EzspStartScanResponse.class,
+                EzspNetworkFoundHandlerResponse.class, EzspEnergyScanResultHandlerResponse.class));
+        EzspMultiResponseTransaction scanTransaction = new EzspMultiResponseTransaction(energyScan,
+                EzspScanCompleteHandlerResponse.class, relatedResponses);
+        EzspTransaction networkInitTransaction = ashHandler.sendEzspTransaction(scanTransaction);
+
+        EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
+        logger.debug(networkInitResponse.toString());
+
+        // energyScan = (EzspStartScanRequest) ashHandler.sendEzspRequest(energyScan);
         logger.debug(energyScan.toString());
-        logger.debug("Quietest channel is " + energyScan.getQuietestChannel());
+        // logger.debug("Quietest channel is " + energyScan.getQuietestChannel());
 
         // Now do an active scan to see if there are other networks operating
-        EzspStartScanRequest activeScan = new EzspStartScanRequest();
-        activeScan.setChannelMask(EzspChannelMask.EZSP_CHANNEL_MASK_ALL.getKey());
-        activeScan.setDuration(scanDuration);
-        activeScan.setScanType(EzspNetworkScanType.EZSP_ACTIVE_SCAN);
-        activeScan = (EzspStartScanRequest) ashHandler.sendEzspRequest(activeScan);
-        logger.debug(activeScan.toString());
+        // EzspStartScanRequest activeScan = new EzspStartScanRequest();
+        // activeScan.setChannelMask(EzspChannelMask.EZSP_CHANNEL_MASK_ALL.getKey());
+        // activeScan.setDuration(scanDuration);
+        // activeScan.setScanType(EzspNetworkScanType.EZSP_ACTIVE_SCAN);
+        // activeScan = (EzspStartScanRequest) ashHandler.sendEzspRequest(activeScan);
+        // logger.debug(activeScan.toString());
 
         // Check if any current networks were found and avoid those channels
 
@@ -74,28 +87,28 @@ public class EmberNetworkInitialisation {
         for (int cnt = 0; cnt < 8; cnt++) {
             extendedPanId[cnt] = random.nextInt(256);
         }
-        EmberNetworkParameters networkParameters = new EmberNetworkParameters();
-        networkParameters.setJoinMethod(EmberJoinMethod.EMBER_USE_MAC_ASSOCIATION);
-        networkParameters.setExtendedPanId(extendedPanId);
-        networkParameters.setPanId(panId);
-        networkParameters.setRadioChannel(energyScan.getQuietestChannel());
+        // EmberNetworkParameters networkParameters = new EmberNetworkParameters();
+        // networkParameters.setJoinMethod(EmberJoinMethod.EMBER_USE_MAC_ASSOCIATION);
+        // networkParameters.setExtendedPanId(extendedPanId);
+        // networkParameters.setPanId(panId);
+        // networkParameters.setRadioChannel(energyScan.getQuietestChannel());
 
-        EzspGetNetworkParametersRequest networkParms = new EzspGetNetworkParametersRequest();
-        networkParms = (EzspGetNetworkParametersRequest) ashHandler.sendEzspRequest(networkParms);
-        logger.debug(networkParms.toString());
+        // EzspGetNetworkParametersRequest networkParms = new EzspGetNetworkParametersRequest();
+        // networkParms = (EzspGetNetworkParametersRequest) ashHandler.sendEzspRequest(networkParms);
+        // logger.debug(networkParms.toString());
 
-        EzspSetInitialSecurityStateRequest securityState = new EzspSetInitialSecurityStateRequest();
-        EmberInitialSecurityState state = new EmberInitialSecurityState();
-        state.addBitmask(EmberInitialSecurityBitmask.EMBER_STANDARD_SECURITY_MODE);
+        // EzspSetInitialSecurityStateRequest securityState = new EzspSetInitialSecurityStateRequest();
+        // EmberInitialSecurityState state = new EmberInitialSecurityState();
+        // state.addBitmask(EmberInitialSecurityBitmask.EMBER_STANDARD_SECURITY_MODE);
         // state.addBitmask(EmberInitialSecurityBitmask.);
         // state.setNetworkKey(networkKey);
-        securityState.setState(state);
-        securityState = (EzspSetInitialSecurityStateRequest) ashHandler.sendEzspRequest(securityState);
-        logger.debug(securityState.toString());
+        // securityState.setState(state);
+        // securityState = (EzspSetInitialSecurityStateRequest) ashHandler.sendEzspRequest(securityState);
+        // logger.debug(securityState.toString());
 
-        EzspFormNetworkRequest formNetwork = new EzspFormNetworkRequest();
-        formNetwork.setParameters(networkParameters);
-        formNetwork = (EzspFormNetworkRequest) ashHandler.sendEzspRequest(formNetwork);
-        logger.debug(formNetwork.toString());
+        // EzspFormNetworkRequest formNetwork = new EzspFormNetworkRequest();
+        // formNetwork.setParameters(networkParameters);
+        // formNetwork = (EzspFormNetworkRequest) ashHandler.sendEzspRequest(formNetwork);
+        // logger.debug(formNetwork.toString());
     }
 }
