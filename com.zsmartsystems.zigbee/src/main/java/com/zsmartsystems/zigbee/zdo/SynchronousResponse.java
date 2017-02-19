@@ -2,7 +2,7 @@ package com.zsmartsystems.zigbee.zdo;
 
 /**
  * Synchronous response.
- * 
+ *
  * @author Tommi S.E. Laukkanen
  */
 public class SynchronousResponse {
@@ -41,6 +41,6 @@ public class SynchronousResponse {
 
     @Override
     public String toString() {
-        return "Synchronous Response " + "status=" + status + ", type='" + type + '\'';
+        return "Synchronous Response: status=" + status + ", type='" + type + '\'';
     }
 }

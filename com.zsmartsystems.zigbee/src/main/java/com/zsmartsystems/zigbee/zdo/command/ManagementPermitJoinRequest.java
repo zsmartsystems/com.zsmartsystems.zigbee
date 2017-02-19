@@ -6,6 +6,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * ManagementPermitJoinRequest.
  *
  * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
 public class ManagementPermitJoinRequest extends ZdoRequest {
     /**
