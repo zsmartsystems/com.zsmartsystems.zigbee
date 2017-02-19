@@ -119,7 +119,7 @@ public class CommandGenerator extends ClassGenerator {
             out.println("        serializer = new EzspSerializer();");
             out.println("    }");
         } else {
-            addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer");
+            // addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer");
             out.println();
             // out.println(" private EzspDeserializer serializer;");
             // out.println();

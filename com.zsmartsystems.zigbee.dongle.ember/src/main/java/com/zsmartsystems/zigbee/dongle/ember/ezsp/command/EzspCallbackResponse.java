@@ -9,7 +9,6 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 
 /**
  * Class to implement the Ember EZSP command <b>callback</b>.
