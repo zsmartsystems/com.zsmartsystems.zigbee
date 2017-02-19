@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 
 /**
- * <p>
  * View Scene Response value object class.
  * <p>
  * Cluster: <b>Scenes</b>. Command is sent <b>FROM</b> the server.

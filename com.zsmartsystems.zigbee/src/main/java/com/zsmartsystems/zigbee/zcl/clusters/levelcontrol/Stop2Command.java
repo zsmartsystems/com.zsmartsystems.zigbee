@@ -2,9 +2,7 @@ package com.zsmartsystems.zigbee.zcl.clusters.levelcontrol;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
-
 /**
- * <p>
  * Stop 2 Command value object class.
  * <p>
  * Cluster: <b>Level Control</b>. Command is sent <b>TO</b> the server.

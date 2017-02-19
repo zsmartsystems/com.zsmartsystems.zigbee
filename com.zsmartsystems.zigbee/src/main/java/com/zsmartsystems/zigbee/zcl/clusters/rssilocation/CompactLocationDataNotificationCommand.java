@@ -2,9 +2,7 @@ package com.zsmartsystems.zigbee.zcl.clusters.rssilocation;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
-
 /**
- * <p>
  * Compact Location Data Notification Command value object class.
  * <p>
  * Cluster: <b>RSSI Location</b>. Command is sent <b>FROM</b> the server.

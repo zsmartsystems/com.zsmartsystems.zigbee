@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 
 /**
- * <p>
  * Read Reporting Configuration Response value object class.
  * <p>
  * The Read Reporting Configuration Response command is used to respond to a

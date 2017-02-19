@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * View Scene Command value object class.
  * <p>
  * The View Scene command shall be addressed to a single device (not a group).

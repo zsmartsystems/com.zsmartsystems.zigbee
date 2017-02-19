@@ -2,9 +2,7 @@ package com.zsmartsystems.zigbee.zcl.clusters.basic;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
-
 /**
- * <p>
  * Reset to Factory Defaults Command value object class.
  * <p>
  * Cluster: <b>Basic</b>. Command is sent <b>TO</b> the server.

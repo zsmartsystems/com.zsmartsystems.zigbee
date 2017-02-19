@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Remove Scene Response value object class.
  * <p>
  * Cluster: <b>Scenes</b>. Command is sent <b>FROM</b> the server.

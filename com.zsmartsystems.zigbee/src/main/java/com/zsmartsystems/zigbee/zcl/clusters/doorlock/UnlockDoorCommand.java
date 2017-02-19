@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Unlock Door Command value object class.
  * <p>
  * Cluster: <b>Door Lock</b>. Command is sent <b>TO</b> the server.

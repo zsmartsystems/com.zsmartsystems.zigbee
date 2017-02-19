@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Get Scene Membership Command value object class.
  * <p>
  * The Get Scene Membership command can be used to find an unused scene

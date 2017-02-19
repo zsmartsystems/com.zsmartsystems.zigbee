@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Default Response value object class.
  * <p>
  * The default response command is generated when a device receives a unicast

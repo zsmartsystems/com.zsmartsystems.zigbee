@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.AttributeIdentifier;
 
 /**
- * <p>
  * Read Attributes Command value object class.
  * <p>
  * The read attributes command is generated when a device wishes to determine the

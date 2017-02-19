@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.Unsigned16BitInteger;
 
 /**
- * <p>
  * Get Group Membership Response value object class.
  * <p>
  * Cluster: <b>Groups</b>. Command is sent <b>FROM</b> the server.

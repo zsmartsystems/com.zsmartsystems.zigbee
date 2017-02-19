@@ -106,7 +106,7 @@ public class ZclProtocolCodeGenerator {
             final Context contextZdp = new Context();
             try {
                 contextZdp.lines = new ArrayList<String>(FileUtils.readLines(definitionFileZdp, "UTF-8"));
-                // generateZdpCode(contextZdp, sourceRootFile, packageRoot);
+                generateZdpCode(contextZdp, sourceRootFile, packageRoot);
             } catch (final IOException e) {
                 System.out.println(
                         "Reading lines from Zdp definition file failed: " + definitionFileZdp.getAbsolutePath());
@@ -680,8 +680,8 @@ public class ZclProtocolCodeGenerator {
                     // }
                     // }
 
-                    out.println();
                     if (fieldWithDataTypeList) {
+                        out.println();
                         out.println("import java.util.List;");
                     }
 
@@ -710,7 +710,6 @@ public class ZclProtocolCodeGenerator {
 
                     out.println();
                     out.println("/**");
-                    out.println(" * <p>");
                     out.println(" * " + command.commandLabel + " value object class.");
 
                     if (command.commandDescription != null && command.commandDescription.size() != 0) {
@@ -1413,80 +1412,115 @@ public class ZclProtocolCodeGenerator {
 
                     out.println("package " + packageRoot + ";");
                     out.println();
-                    out.println("import " + packageRootPrefix + packageZcl + ".ZclCommandMessage;");
-                    out.println("import " + packageRootPrefix + packageZdp + ".ZdoCommand;");
-                    out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclCommandType;");
-                    // if (!fields.isEmpty()) {
-                    // out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclFieldType;");
-                    // if (fieldWithDataTypeList) {
-                    // out.println("import " + packageRootPrefix + packageZclField + ".*;");
-                    // }
-                    // }
+                    // out.println("import " + packageRootPrefix + packageZcl + ".ZclCommandMessage;");
+                    // out.println("import " + packageRootPrefix + packageZdp + ".ZclCommand;");
+                    // out.println("import " + packageRootPrefix + packageZcl + ".ZclField;");
+                    if (fields.size() > 0) {
+                        out.println("import " + packageRootPrefix + packageZcl + ".ZclFieldSerializer;");
+                        out.println("import " + packageRootPrefix + packageZcl + ".ZclFieldDeserializer;");
+                        out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclDataType;");
+                    }
 
-                    out.println();
+                    if (className.endsWith("Request")) {
+                        out.println("import " + packageRootPrefix + packageZdp + ".ZdoRequest;");
+                    } else {
+                        out.println("import " + packageRootPrefix + packageZdp + ".ZdoRequest;");
+                    }
+
                     if (fieldWithDataTypeList) {
+                        out.println();
                         out.println("import java.util.List;");
                     }
-                    out.println("import java.util.Map;");
+
+                    // out.println("import java.util.Map;");
+                    // out.println("import java.util.HashMap;");
+
+                    for (final Field field : fields) {
+                        switch (field.dataTypeClass) {
+                            case "Integer":
+                            case "Boolean":
+                            case "Object":
+                            case "Long":
+                            case "String":
+                                continue;
+                        }
+                        if (field.dataTypeClass.startsWith("List")) {
+                            String s = field.dataTypeClass;
+                            s = s.substring(s.indexOf("<") + 1);
+                            s = s.substring(0, s.indexOf(">"));
+                            out.println("import " + packageRootPrefix + packageZclField + "." + s + ";");
+                        } else {
+                            out.println(
+                                    "import " + packageRootPrefix + packageZclField + "." + field.dataTypeClass + ";");
+                        }
+                    }
 
                     out.println();
                     out.println("/**");
                     out.println(" * " + command.commandLabel + " value object class.");
 
-                    out.println(" * ");
-                    for (String line : command.commandDescription) {
-                        out.println(" * " + line);
+                    if (command.commandDescription != null && command.commandDescription.size() != 0) {
+                        out.println(" * <p>");
+                        for (String line : command.commandDescription) {
+                            out.println(" * " + line);
+                        }
                     }
 
-                    out.println(" * ");
-                    out.println(" * Cluster: " + cluster.clusterName);
-                    for (String line : cluster.clusterDescription) {
-                        out.println(" * " + line);
+                    out.println(" * <p>");
+                    out.println(" * Cluster: <b>" + cluster.clusterName + "</b>. Command is sent <b>"
+                            + (cluster.received.containsValue(command) ? "TO" : "FROM") + "</b> the server.");
+                    out.println(" * This command is " + ((cluster.clusterType.equals("GENERAL"))
+                            ? "a <b>generic</b> command used across the profile."
+                            : "a <b>specific</b> command used for the " + cluster.clusterName + " cluster."));
+
+                    if (cluster.clusterDescription.size() > 0) {
+                        out.println(" * <p>");
+                        for (String line : cluster.clusterDescription) {
+                            out.println(" * " + line);
+                        }
                     }
 
-                    out.println(" * ");
-                    out.println(" * Code is autogenerated. Modifications may be overwritten!");
+                    out.println(" * <p>");
+                    out.println(" * Code is auto-generated. Modifications may be overwritten!");
 
                     out.println(" */");
-                    out.println("public class " + className + " extends ZdoCommand {");
+                    if (className.endsWith("Request")) {
+                        out.println("public class " + className + " extends ZdoRequest {");
+                    } else {
+                        out.println("public class " + className + " extends ZdoResponse {");
+                    }
 
                     for (final Field field : fields) {
                         out.println("    /**");
                         out.println("     * " + field.fieldLabel + " command message field.");
                         out.println("     */");
                         out.println("    private " + field.dataTypeClass + " " + field.nameLowerCamelCase + ";");
+                        out.println();
                     }
 
-                    out.println();
+                    // if (fields.size() > 0) {
+                    // out.println(" static {");
+                    // for (final Field field : fields) {
+                    // out.println(" fields.put(" + field.fieldId + ", new ZclField(" + field.fieldId
+                    // + ", \"" + field.fieldLabel + "\", ZclDataType." + field.dataType + "));");
+                    // }
+                    // out.println(" }");
+                    // out.println();
+                    // }
+
                     out.println("    /**");
-                    out.println("     * Default constructor setting the command type field.");
+                    out.println("     * Default constructor.");
                     out.println("     */");
                     out.println("    public " + className + "() {");
-                    out.println("        setType(ZclCommandType." + command.commandType + ");");
+                    // out.println(" setType(ZclCommandType." + command.commandType + ");");
+
+                    out.println("        commandId = " + command.commandId + ";");
+
+                    out.println("        commandDirection = "
+                            + (cluster.received.containsValue(command) ? "true" : "false") + ";");
+
                     out.println("    }");
-                    out.println();
-                    out.println("    /**");
-                    out.println("     * Constructor copying field values from command message.");
-                    out.println("     * @param fields a {@link Map} containing the {@link ZclField}s");
-                    out.println("     */");
-                    out.println("    public " + className + "(final Map<Integer, ZclField> fields) {");
-                    out.println("        super(message);");
-                    for (final Field field : fields) {
-                        out.println("        this." + field.nameLowerCamelCase + " = (" + field.dataTypeClass
-                                + ") message.getFields().get(ZclFieldType." + field.fieldType + ");");
-                    }
-                    out.println("    }");
-                    out.println();
-                    out.println("    @Override");
-                    out.println(
-                            "    public ZclCommandMessage toCommandMessage() { // TODO: Change to ZdoCommandMessage?");
-                    out.println("        final ZclCommandMessage message = super.toCommandMessage();");
-                    for (final Field field : fields) {
-                        out.println("        message.getFields().put(ZclFieldType." + field.fieldType + ","
-                                + field.nameLowerCamelCase + ");");
-                    }
-                    out.println("        return message;");
-                    out.println("    }");
+
                     for (final Field field : fields) {
                         out.println();
                         out.println("    /**");
@@ -1506,6 +1540,36 @@ public class ZclProtocolCodeGenerator {
                         out.println(
                                 "        this." + field.nameLowerCamelCase + " = " + field.nameLowerCamelCase + ";");
                         out.println("    }");
+
+                    }
+
+                    if (fields.size() > 0) {
+                        // out.println();
+                        // out.println(" @Override");
+                        // out.println(" public void setFieldValues(final Map<Integer, Object> values) {");
+                        // for (final Field field : fields) {
+                        // out.println(" " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
+                        // + ") values.get(" + field.fieldId + ");");
+                        // }
+                        // out.println(" }");
+
+                        out.println();
+                        out.println("    @Override");
+                        out.println("    public void serialize(final ZclFieldSerializer serializer) {");
+                        for (final Field field : fields) {
+                            out.println("        serializer.serialize(" + field.nameLowerCamelCase + ", ZclDataType."
+                                    + field.dataType + ");");
+                        }
+                        out.println("    }");
+
+                        out.println();
+                        out.println("    @Override");
+                        out.println("    public void deserialize(final ZclFieldDeserializer deserializer) {");
+                        for (final Field field : fields) {
+                            out.println("        " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
+                                    + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + ");");
+                        }
+                        out.println("    }");
                     }
 
                     out.println();
@@ -1514,7 +1578,7 @@ public class ZclProtocolCodeGenerator {
                     out.println("        final StringBuilder builder = new StringBuilder();");
                     out.println("        builder.append(super.toString());");
                     for (final Field field : fields) {
-                        out.println("        builder.append(\", " + field.nameLowerCamelCase + "=");
+                        out.println("        builder.append(\", " + field.nameLowerCamelCase + "=\");");
                         out.println("        builder.append(" + field.nameLowerCamelCase + ");");
                     }
                     out.println("        return builder.toString();");
@@ -1529,4 +1593,5 @@ public class ZclProtocolCodeGenerator {
             }
         }
     }
+
 }

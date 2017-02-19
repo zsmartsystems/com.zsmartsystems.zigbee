@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
 
 /**
- * <p>
  * Write Attributes Structured Response value object class.
  * <p>
  * The write attributes structured response command is generated in response to a

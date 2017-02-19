@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.NeighborInformation;
 
 /**
- * <p>
  * Report RSSI Measurements Command value object class.
  * <p>
  * Cluster: <b>RSSI Location</b>. Command is sent <b>FROM</b> the server.

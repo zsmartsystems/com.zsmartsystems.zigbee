@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 
 /**
- * <p>
  * Add Scene Command value object class.
  * <p>
  * The Add Scene command shall be addressed to a single device (not a group).

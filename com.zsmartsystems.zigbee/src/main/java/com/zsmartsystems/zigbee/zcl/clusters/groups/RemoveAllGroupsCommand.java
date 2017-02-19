@@ -2,9 +2,7 @@ package com.zsmartsystems.zigbee.zcl.clusters.groups;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
-
 /**
- * <p>
  * Remove All Groups Command value object class.
  * <p>
  * Cluster: <b>Groups</b>. Command is sent <b>TO</b> the server.

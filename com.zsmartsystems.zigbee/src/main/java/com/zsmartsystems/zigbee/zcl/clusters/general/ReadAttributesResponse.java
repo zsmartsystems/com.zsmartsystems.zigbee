@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 
 /**
- * <p>
  * Read Attributes Response value object class.
  * <p>
  * The read attributes response command is generated in response to a read attributes

@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 
 /**
- * <p>
  * Configure Reporting Command value object class.
  * <p>
  * The Configure Reporting command is used to configure the reporting mechanism

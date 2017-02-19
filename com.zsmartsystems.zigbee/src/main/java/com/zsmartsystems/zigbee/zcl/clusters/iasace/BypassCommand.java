@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.Unsigned8BitInteger;
 
 /**
- * <p>
  * Bypass Command value object class.
  * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.

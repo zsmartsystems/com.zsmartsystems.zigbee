@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.AttributeStatusRecord;
 
 /**
- * <p>
  * Configure Reporting Response value object class.
  * <p>
  * The Configure Reporting Response command is generated in response to a

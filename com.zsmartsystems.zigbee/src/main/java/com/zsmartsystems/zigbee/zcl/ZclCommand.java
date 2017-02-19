@@ -164,14 +164,6 @@ public abstract class ZclCommand extends Command {
         this.transactionId = transactionId;
     }
 
-    public void serialize(ZclFieldSerializer serializer) {
-        // Default implementation does nothing - overridden by each class
-    }
-
-    public void deserialize(final ZclFieldDeserializer deserializer) {
-        // Default implementation does nothing - overridden by each class
-    }
-
     @Override
     public String toString() {
         Integer resolvedClusterId = getClusterId();

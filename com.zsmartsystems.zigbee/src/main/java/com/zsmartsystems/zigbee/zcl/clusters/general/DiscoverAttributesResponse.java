@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
 
 /**
- * <p>
  * Discover Attributes Response value object class.
  * <p>
  * The discover attributes response command is generated in response to a discover

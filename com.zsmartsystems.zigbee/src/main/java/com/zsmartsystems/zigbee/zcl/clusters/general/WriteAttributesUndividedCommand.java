@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 
 /**
- * <p>
  * Write Attributes Undivided Command value object class.
  * <p>
  * The write attributes undivided command is generated when a device wishes to

@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 
 /**
- * <p>
  * Write Attributes Command value object class.
  * <p>
  * The write attributes command is generated when a device wishes to change the
