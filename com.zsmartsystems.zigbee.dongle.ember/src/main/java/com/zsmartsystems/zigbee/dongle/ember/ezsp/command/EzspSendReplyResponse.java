@@ -34,11 +34,11 @@ public class EzspSendReplyResponse extends EzspFrameResponse {
      * EZSP_HOST_WILL_NOT_SUPPLY_REPLY. This means the NCP will automatically send an empty
      * reply. The Host must change the policy to EZSP_HOST_WILL_SUPPLY_REPLY before it can supply
      * the reply. There is one exception to this rule: In the case of responses to message fragments,
-     * the host must call sendReply when a message fragment is received. In this case, the policy set on
-     * the NCP does not matter. The NCP expects a sendReply call from the Host for message fragments
-     * regardless of the current policy settings. EMBER_NO_BUFFERS - Not enough memory was
-     * available to send the reply. EMBER_NETWORK_BUSY - Either no route or insufficient resources
-     * available. EMBER_SUCCESS - The reply was successfully queued for transmission.
+     * the host must call sendReply when a message fragment is received. In this case, the policy set
+     * on the NCP does not matter. The NCP expects a sendReply call from the Host for message
+     * fragments regardless of the current policy settings. EMBER_NO_BUFFERS - Not enough memory
+     * was available to send the reply. EMBER_NETWORK_BUSY - Either no route or insufficient
+     * resources available. EMBER_SUCCESS - The reply was successfully queued for transmission.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      */
@@ -60,11 +60,11 @@ public class EzspSendReplyResponse extends EzspFrameResponse {
      * EZSP_HOST_WILL_NOT_SUPPLY_REPLY. This means the NCP will automatically send an empty
      * reply. The Host must change the policy to EZSP_HOST_WILL_SUPPLY_REPLY before it can supply
      * the reply. There is one exception to this rule: In the case of responses to message fragments,
-     * the host must call sendReply when a message fragment is received. In this case, the policy set on
-     * the NCP does not matter. The NCP expects a sendReply call from the Host for message fragments
-     * regardless of the current policy settings. EMBER_NO_BUFFERS - Not enough memory was
-     * available to send the reply. EMBER_NETWORK_BUSY - Either no route or insufficient resources
-     * available. EMBER_SUCCESS - The reply was successfully queued for transmission.
+     * the host must call sendReply when a message fragment is received. In this case, the policy set
+     * on the NCP does not matter. The NCP expects a sendReply call from the Host for message
+     * fragments regardless of the current policy settings. EMBER_NO_BUFFERS - Not enough memory
+     * was available to send the reply. EMBER_NETWORK_BUSY - Either no route or insufficient
+     * resources available. EMBER_SUCCESS - The reply was successfully queued for transmission.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      *
@@ -79,11 +79,11 @@ public class EzspSendReplyResponse extends EzspFrameResponse {
      * EZSP_HOST_WILL_NOT_SUPPLY_REPLY. This means the NCP will automatically send an empty
      * reply. The Host must change the policy to EZSP_HOST_WILL_SUPPLY_REPLY before it can supply
      * the reply. There is one exception to this rule: In the case of responses to message fragments,
-     * the host must call sendReply when a message fragment is received. In this case, the policy set on
-     * the NCP does not matter. The NCP expects a sendReply call from the Host for message fragments
-     * regardless of the current policy settings. EMBER_NO_BUFFERS - Not enough memory was
-     * available to send the reply. EMBER_NETWORK_BUSY - Either no route or insufficient resources
-     * available. EMBER_SUCCESS - The reply was successfully queued for transmission.
+     * the host must call sendReply when a message fragment is received. In this case, the policy set
+     * on the NCP does not matter. The NCP expects a sendReply call from the Host for message
+     * fragments regardless of the current policy settings. EMBER_NO_BUFFERS - Not enough memory
+     * was available to send the reply. EMBER_NETWORK_BUSY - Either no route or insufficient
+     * resources available. EMBER_SUCCESS - The reply was successfully queued for transmission.
      *
      * @param policyDecision the policyDecision to set as {@link EmberStatus}
      */

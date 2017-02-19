@@ -10,16 +10,15 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandlerResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandlerResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandlerResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspMultiResponseTransaction;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
 
 /**
  * This class provides utility functions to establish an Ember ZigBee network
@@ -58,16 +57,18 @@ public class EmberNetworkInitialisation {
         energyScan.setScanType(EzspNetworkScanType.EZSP_ENERGY_SCAN);
 
         Set<Class<?>> relatedResponses = new HashSet<Class<?>>(Arrays.asList(EzspStartScanResponse.class,
-                EzspNetworkFoundHandlerResponse.class, EzspEnergyScanResultHandlerResponse.class));
+                EzspNetworkFoundHandler.class, EzspEnergyScanResultHandler.class));
         EzspMultiResponseTransaction scanTransaction = new EzspMultiResponseTransaction(energyScan,
-                EzspScanCompleteHandlerResponse.class, relatedResponses);
-        EzspTransaction networkInitTransaction = ashHandler.sendEzspTransaction(scanTransaction);
+                EzspScanCompleteHandler.class, relatedResponses);
+        ashHandler.sendEzspTransaction(scanTransaction);
 
-        EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
-        logger.debug(networkInitResponse.toString());
+        EzspScanCompleteHandler scanCompleteResponse = (EzspScanCompleteHandler) scanTransaction.getResponse();
+        logger.debug(scanCompleteResponse.toString());
 
-        // energyScan = (EzspStartScanRequest) ashHandler.sendEzspRequest(energyScan);
-        logger.debug(energyScan.toString());
+        if (scanCompleteResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error during energy scan: {}", scanCompleteResponse);
+            // TODO: Error handling
+        }
         // logger.debug("Quietest channel is " + energyScan.getQuietestChannel());
 
         // Now do an active scan to see if there are other networks operating

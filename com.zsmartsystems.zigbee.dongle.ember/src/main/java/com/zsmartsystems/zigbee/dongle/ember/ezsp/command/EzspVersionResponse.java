@@ -16,9 +16,9 @@ import java.util.Map;
 /**
  * Class to implement the Ember EZSP command <b>version</b>.
  * <p>
- * The command allows the Host to specify the desired EZSP version and must be sent before any other
- * command. This document describes EZSP version 4 and stack type 2 (mesh). The response provides
- * information about the firmware running on the NCP.
+ * The command allows the Host to specify the desired EZSP version and must be sent before any
+ * other command. This document describes EZSP version 4 and stack type 2 (mesh). The response
+ * provides information about the firmware running on the NCP.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

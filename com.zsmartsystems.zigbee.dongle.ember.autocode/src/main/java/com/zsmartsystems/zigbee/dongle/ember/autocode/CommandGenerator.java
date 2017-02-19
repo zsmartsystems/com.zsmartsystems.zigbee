@@ -27,10 +27,17 @@ public class CommandGenerator extends ClassGenerator {
     public void go(Protocol protocol) throws FileNotFoundException {
         String className;
         for (Command command : protocol.commands) {
-            className = "Ezsp" + upperCaseFirstCharacter(command.name) + "Request";
-            createCommandClass(className, command, command.command_parameters);
-            className = "Ezsp" + command.name.substring(0, 1).toUpperCase() + command.name.substring(1) + "Response";
-            createCommandClass(className, command, command.response_parameters);
+            if (command.name.endsWith("Handler")) {
+                className = "Ezsp" + command.name.substring(0, 1).toUpperCase() + command.name.substring(1);
+                createCommandClass(className, command, command.response_parameters);
+            } else {
+                className = "Ezsp" + upperCaseFirstCharacter(command.name) + "Request";
+                createCommandClass(className, command, command.command_parameters);
+
+                className = "Ezsp" + command.name.substring(0, 1).toUpperCase() + command.name.substring(1)
+                        + "Response";
+                createCommandClass(className, command, command.response_parameters);
+            }
         }
 
         for (Structure structure : protocol.structures) {
@@ -193,8 +200,6 @@ public class CommandGenerator extends ClassGenerator {
                 if (parameter.auto_size != null) {
                     out.println("        serializer.serialize" + getTypeSerializer(parameter.data_type) + "("
                             + parameter.auto_size + ".length);");
-                    out.println("        serializer.serialize" + getTypeSerializer(parameter.data_type) + "("
-                            + parameter.auto_size + ".length);");
                     continue;
                 }
                 out.println("        serializer.serialize" + getTypeSerializer(parameter.data_type) + "("
@@ -259,11 +264,11 @@ public class CommandGenerator extends ClassGenerator {
         PrintWriter out = new PrintWriter(stringWriter);
 
         clearImports();
-        addImport("org.slf4j.Logger");
-        addImport("org.slf4j.LoggerFactory");
+        // addImport("org.slf4j.Logger");
+        // addImport("org.slf4j.LoggerFactory");
 
-        addImport("java.util.Map");
-        addImport("java.util.HashMap");
+        // addImport("java.util.Map");
+        // addImport("java.util.HashMap");
 
         addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer");
         addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer");
@@ -294,6 +299,13 @@ public class CommandGenerator extends ClassGenerator {
             out.println("     */");
             out.println("    private " + getTypeClass(parameter.data_type) + " " + parameter.name + ";");
         }
+
+        out.println();
+        out.println("    /**");
+        out.println("     * Default Constructor");
+        out.println("     */");
+        out.println("    public " + className + "() {");
+        out.println("    }");
 
         out.println();
         out.println("    public " + className + "(EzspDeserializer deserializer) {");
@@ -406,7 +418,24 @@ public class CommandGenerator extends ClassGenerator {
                 out.println("        builder.append(\", " + parameter.name + "=\");");
             }
             first = false;
-            out.println("        builder.append(" + parameter.name + ");");
+
+            // If it's an array, then we want to print hex data
+            if (parameter.data_type.contains("[")) {
+                out.println("        builder.append(\"{\");");
+                out.println("        if (" + parameter.name + " == null) {");
+                out.println("            builder.append(\"null\");");
+                out.println("        } else {");
+                out.println("            for (int cnt = 0; cnt < " + parameter.name + ".length; cnt++) {");
+                out.println("                if (cnt != 0) {");
+                out.println("                    builder.append(\" \");");
+                out.println("                }");
+                out.println("                builder.append(String.format(\"%02X\", " + parameter.name + "[cnt]));");
+                out.println("            }");
+                out.println("        }");
+                out.println("        builder.append(\"}\");");
+            } else {
+                out.println("        builder.append(" + parameter.name + ");");
+            }
         }
         out.println("        builder.append(\"]\");");
         out.println("        return builder.toString();");
@@ -449,8 +478,10 @@ public class CommandGenerator extends ClassGenerator {
 
         out.println("/**");
         out.println(" * Class to implement the Ember Enumeration <b>" + enumeration.name + "</b>.");
-        out.println(" * <p>");
-        outputWithLinebreak(out, "", enumeration.description);
+        if (enumeration.description != null && enumeration.description.trim().length() > 0) {
+            out.println(" * <p>");
+            outputWithLinebreak(out, "", enumeration.description);
+        }
         out.println(" * <p>");
         out.println(" * Note that this code is autogenerated. Manual changes may be overwritten.");
         out.println(" *");
@@ -479,6 +510,7 @@ public class CommandGenerator extends ClassGenerator {
 
         out.println(";");
 
+        out.println();
         out.println("    /**");
         out.println("     * A mapping between the integer code and its corresponding type to");
         out.println("     * facilitate lookup by code.");
@@ -525,7 +557,9 @@ public class CommandGenerator extends ClassGenerator {
         out.println("    }");
         out.println();
         out.println("    /**");
-        out.println("     * @return the key");
+        out.println("     * Returns the EZSP protocol defined value for this enum");
+        out.println("     *");
+        out.println("     * @return the EZSP protocol key");
         out.println("     */");
         out.println("    public int getKey() {");
         out.println("        return key;");

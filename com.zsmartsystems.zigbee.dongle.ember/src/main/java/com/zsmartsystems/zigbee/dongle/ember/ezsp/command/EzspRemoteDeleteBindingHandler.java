@@ -18,8 +18,8 @@ import java.util.Map;
  * Class to implement the Ember EZSP command <b>remoteDeleteBindingHandler</b>.
  * <p>
  * The NCP used the external binding modification policy to decide how to handle a remote delete
- * binding request. The Host cannot change the current decision, but it can change the policy for
- * future decisions using the setPolicy command.
+ * binding request. The Host cannot change the current decision, but it can change the policy
+ * for future decisions using the setPolicy command.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -27,7 +27,7 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspRemoteDeleteBindingHandlerResponse extends EzspFrameResponse {
+public class EzspRemoteDeleteBindingHandler extends EzspFrameResponse {
     public static int FRAME_ID = 0x32;
 
     /**
@@ -47,7 +47,7 @@ public class EzspRemoteDeleteBindingHandlerResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspRemoteDeleteBindingHandlerResponse(int[] inputBuffer) {
+    public EzspRemoteDeleteBindingHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
@@ -99,7 +99,7 @@ public class EzspRemoteDeleteBindingHandlerResponse extends EzspFrameResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspRemoteDeleteBindingHandlerResponse [index=");
+        builder.append("EzspRemoteDeleteBindingHandler [index=");
         builder.append(index);
         builder.append(", policyDecision=");
         builder.append(policyDecision);

@@ -1633,7 +1633,7 @@
 			</parameter>
 		</parameters>
 	</structure>
-	
+
 	<structure>
 		<name>EmberBindingTableEntry</name>
 		<description>An entry in the binding table.</description>
@@ -1684,6 +1684,18 @@
 				<data_type>EmberEUI64</data_type>
 				<name>trustCenterLongAddress</name>
 				<description>The IEEE Address of the Trust Center device.</description>
+			</parameter>
+		</parameters>
+	</structure>
+
+	<structure>
+		<name>EmberKeyData</name>
+		<description>A 128-bit key.</description>
+		<parameters>
+			<parameter>
+				<data_type>uint8_t[16]</data_type>
+				<name>contents</name>
+				<description>The key data.</description>
 			</parameter>
 		</parameters>
 	</structure>
@@ -1855,14 +1867,56 @@
 		</values>
 	</enum>
 
-
+	<enum>
+		<name>EmberJoinMethod</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_USE_MAC_ASSOCIATION</name>
+				<enum_value>0x0000</enum_value>
+				<description>Normally devices use MAC Association to join a network, which respects the "permit joining" flag in the MAC Beacon. For mobile nodes this value causes the device to use an Ember Mobile Node Join, which is functionally equivalent to a MAC association. This value should be used by default.</description>
+			</value>
+			<value>
+				<name>EMBER_USE_NWK_REJOIN</name>
+				<enum_value>0x0001</enum_value>
+				<description>For those networks where the "permit joining" flag is never turned on, they will need to use a ZigBee NWK Rejoin. This value causes the rejoin to be sent without NWK security and the Trust Center will be asked to send the NWK key to the device. The NWK key sent to the device can be encrypted with the device's corresponding Trust Center link key. That is determined by the ::EmberJoinDecision on the Trust Center returned by the ::emberTrustCenterJoinHandler(). For a mobile node this value will cause it to use an Ember Mobile node rejoin, which is functionally equivalent.</description>
+			</value>
+			<value>
+				<name>EMBER_USE_NWK_REJOIN_HAVE_NWK_KEY</name>
+				<enum_value>0x0002</enum_value>
+				<description>For those networks where the "permit joining" flag is never turned on, they will need to use a NWK Rejoin. If those devices have been preconfigured with the NWK key (including sequence number) they can use a secured rejoin. This is only necessary for end devices since they need a parent. Routers can simply use the ::EMBER_USE_NWK_COMMISSIONING join method below.</description>
+			</value>
+			<value>
+				<name>EMBER_USE_NWK_COMMISSIONING</name>
+				<enum_value>0x0003</enum_value>
+				<description>For those networks where all network and security information is known ahead of time, a router device may be commissioned such that it does not need to send any messages to begin communicating on the network.</description>
+			</value>
+		</values>
+	</enum>
+	
+	<enum>
+		<name>EzspNetworkScanType</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EZSP_ENERGY_SCAN</name>
+				<enum_value>0x00</enum_value>
+				<description>An energy scan scans each channel for its RSSI value.</description>
+			</value>
+			<value>
+				<name>EZSP_ACTIVE_SCAN</name>
+				<enum_value>0x01</enum_value>
+				<description>An active scan scans each channel for available networks.</description>
+			</value>
+		</values>
+	</enum>
+	
 <!--
 	<enum>
  	<name>EmberInitialSecurityBitmask</name>
 		<name>EzspStatus</name>
 	 	<name>EmberIncomingMessageType</name>
 	 	<name>EmberApsOption</name>
-	 	<name>EmberJoinMethod</name>
 	 	<name>EmberNodeType</name>
 	 	<name>EmberInitialSecurityBitmask</name>
 	 	<name>EzspChannelMask</name>

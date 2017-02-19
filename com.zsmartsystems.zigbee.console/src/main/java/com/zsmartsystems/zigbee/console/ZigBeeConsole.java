@@ -122,14 +122,6 @@ public final class ZigBeeConsole {
 
         this.networkManager = networkManager;
         zigBeeApi = new ZigBeeApi(networkManager);
-    }
-
-    /**
-     * Starts this console application
-     */
-    public void start() {
-        mainThread = Thread.currentThread();
-        System.out.print("ZigBee API starting up...");
 
         zigBeeApi.getNetwork().addNetworkStateListener(new ZigBeeNetworkStateListener() {
             @Override
@@ -137,13 +129,6 @@ public final class ZigBeeConsole {
                 print("ZigBee network state updated to " + state.toString(), System.out);
             }
         });
-
-        if (!networkManager.startup()) {
-            print("ZigBee API starting up ... [FAIL]", System.out);
-            return;
-        } else {
-            print("ZigBee API starting up ... [OK]", System.out);
-        }
 
         zigBeeApi.getNetwork().addNetworkDeviceListener(new ZigBeeNetworkDeviceListener() {
             @Override
@@ -205,6 +190,21 @@ public final class ZigBeeConsole {
                 }
             }
         }));
+    }
+
+    /**
+     * Starts this console application
+     */
+    public void start() {
+        mainThread = Thread.currentThread();
+        System.out.print("ZigBee API starting up...");
+
+        if (!networkManager.startup()) {
+            print("ZigBee API starting up ... [FAIL]", System.out);
+            return;
+        } else {
+            print("ZigBee API starting up ... [OK]", System.out);
+        }
 
         print("ZigBee console ready.", System.out);
 

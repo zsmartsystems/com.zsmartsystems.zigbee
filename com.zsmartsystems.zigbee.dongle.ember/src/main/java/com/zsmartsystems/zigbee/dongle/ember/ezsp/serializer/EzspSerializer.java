@@ -80,7 +80,7 @@ public class EzspSerializer {
     }
 
     public void serializeEmberKeyData(EmberKeyData keyData) {
-        serializeUInt8Array(keyData.getKey());
+        serializeUInt8Array(keyData.getContents());
     }
 
     public void serializeEmberEui64(IeeeAddress address) {
@@ -97,18 +97,22 @@ public class EzspSerializer {
     }
 
     public void serializeEmberNetworkParameters(EmberNetworkParameters networkParameters) {
+        networkParameters.serialize(this);
     }
 
     public void serializeEmberApsFrame(EmberApsFrame apsFrame) {
+        apsFrame.serialize(this);
     }
 
     public void serializeEzspNetworkScanType(EzspNetworkScanType scanType) {
+        buffer[length++] = scanType.getKey();
     }
 
     public void serializeEmberBindingTableEntry(EmberBindingTableEntry tableEntry) {
     }
 
     public void serializeEmberInitialSecurityState(EmberInitialSecurityState securityState) {
+        securityState.serialize(this);
     }
 
     public void serializeEmberOutgoingMessageType(EmberOutgoingMessageType messageType) {
@@ -134,7 +138,7 @@ public class EzspSerializer {
     }
 
     public void serializeEmberJoinMethod(EmberJoinMethod joinMethod) {
-
+        buffer[length++] = joinMethod.getKey();
     }
 
     /**

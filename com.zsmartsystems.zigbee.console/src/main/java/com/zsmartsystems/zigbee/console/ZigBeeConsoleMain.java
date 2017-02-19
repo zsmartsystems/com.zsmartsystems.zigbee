@@ -15,8 +15,8 @@ import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
 
 /**
- * The ZigBee gateway server.
- * 
+ * The ZigBee gateway console. Simple console used as an example and test application.
+ *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
@@ -101,17 +101,15 @@ public class ZigBeeConsoleMain {
 
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(dongle);
 
+        networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
+        final ZigBeeConsole console = new ZigBeeConsole(networkManager, dongle);
+
         // Initialise the network
         networkManager.initialize();
 
         System.out.println("PAN ID          = " + networkManager.getZigBeePanId());
         System.out.println("Extended PAN ID = " + String.format("%08X", networkManager.getZigBeeExtendedPanId()));
         System.out.println("Channel         = " + networkManager.getZigBeeChannel());
-
-        // networkManager.set
-
-        networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
-        final ZigBeeConsole console = new ZigBeeConsole(networkManager, dongle);
 
         console.start();
     }

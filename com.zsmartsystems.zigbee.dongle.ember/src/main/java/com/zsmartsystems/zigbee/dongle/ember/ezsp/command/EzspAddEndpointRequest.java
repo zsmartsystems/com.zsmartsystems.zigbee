@@ -213,8 +213,6 @@ public class EzspAddEndpointRequest extends EzspFrameRequest {
         serializer.serializeUInt16(deviceId);
         serializer.serializeUInt8(appFlags);
         serializer.serializeUInt8(inputClusterList.length);
-        serializer.serializeUInt8(inputClusterList.length);
-        serializer.serializeUInt8(outputClusterList.length);
         serializer.serializeUInt8(outputClusterList.length);
         serializer.serializeUInt16Array(inputClusterList);
         serializer.serializeUInt16Array(outputClusterList);

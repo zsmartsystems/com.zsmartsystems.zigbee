@@ -14,9 +14,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class to implement the Ember EZSP command <b>counterRolloverHandler</b>.
+ * Class to implement the Ember EZSP command <b>idConflictHandler</b>.
  * <p>
- * This call is fired when a counter exceeds its threshold.
+ * A callback invoked by the EmberZNet stack when an id conflict is discovered, that is, two
+ * different nodes in the network were found to be using the same short id. The stack
+ * automatically removes the conflicting short id from its internal tables (address,
+ * binding, route, neighbor, and child tables). The application should discontinue any other
+ * use of the id.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -24,52 +28,52 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspCounterRolloverHandlerResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0xF2;
+public class EzspIdConflictHandler extends EzspFrameResponse {
+    public static int FRAME_ID = 0x7C;
 
     /**
-     * Type of Counter.
+     * The short id for which a conflict was detected.
      * <p>
-     * EZSP type is <i>EmberCounterType</i> - Java type is {@link int}
+     * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
      */
-    private int type;
+    private int id;
 
     /**
      * Response and Handler constructor
      */
-    public EzspCounterRolloverHandlerResponse(int[] inputBuffer) {
+    public EzspIdConflictHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
         // Deserialize the fields
-        type = deserializer.deserializeUInt8();
+        id = deserializer.deserializeUInt16();
     }
 
     /**
-     * Type of Counter.
+     * The short id for which a conflict was detected.
      * <p>
-     * EZSP type is <i>EmberCounterType</i> - Java type is {@link int}
+     * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
      *
-     * @return the current type as {@link int}
+     * @return the current id as {@link int}
      */
-    public int getType() {
-        return type;
+    public int getId() {
+        return id;
     }
 
     /**
-     * Type of Counter.
+     * The short id for which a conflict was detected.
      *
-     * @param type the type to set as {@link int}
+     * @param id the id to set as {@link int}
      */
-    public void setType(int type) {
-        this.type = type;
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspCounterRolloverHandlerResponse [type=");
-        builder.append(type);
+        builder.append("EzspIdConflictHandler [id=");
+        builder.append(id);
         builder.append("]");
         return builder.toString();
     }

@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspIncomingMessageHandlerResponse extends EzspFrameResponse {
+public class EzspIncomingMessageHandler extends EzspFrameResponse {
     public static int FRAME_ID = 0x45;
 
     /**
@@ -75,8 +75,8 @@ public class EzspIncomingMessageHandlerResponse extends EzspFrameResponse {
     private int bindingIndex;
 
     /**
-     * The index of the entry in the address table that matches the sender of the message or 0xFF if there
-     * is no matching entry.
+     * The index of the entry in the address table that matches the sender of the message or 0xFF if
+     * there is no matching entry.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
@@ -92,7 +92,7 @@ public class EzspIncomingMessageHandlerResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspIncomingMessageHandlerResponse(int[] inputBuffer) {
+    public EzspIncomingMessageHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
@@ -235,8 +235,8 @@ public class EzspIncomingMessageHandlerResponse extends EzspFrameResponse {
     }
 
     /**
-     * The index of the entry in the address table that matches the sender of the message or 0xFF if there
-     * is no matching entry.
+     * The index of the entry in the address table that matches the sender of the message or 0xFF if
+     * there is no matching entry.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
@@ -247,8 +247,8 @@ public class EzspIncomingMessageHandlerResponse extends EzspFrameResponse {
     }
 
     /**
-     * The index of the entry in the address table that matches the sender of the message or 0xFF if there
-     * is no matching entry.
+     * The index of the entry in the address table that matches the sender of the message or 0xFF if
+     * there is no matching entry.
      *
      * @param addressIndex the addressIndex to set as {@link int}
      */
@@ -279,7 +279,7 @@ public class EzspIncomingMessageHandlerResponse extends EzspFrameResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspIncomingMessageHandlerResponse [type=");
+        builder.append("EzspIncomingMessageHandler [type=");
         builder.append(type);
         builder.append(", apsFrame=");
         builder.append(apsFrame);

@@ -16,8 +16,8 @@ import java.util.Map;
 /**
  * Class to implement the Ember EZSP command <b>getExtendedTimeout</b>.
  * <p>
- * Indicates whether or not the stack will extend the normal interval between retransmissions of
- * a retried unicast message by EMBER_INDIRECT_TRANSMISSION_TIMEOUT.
+ * Indicates whether or not the stack will extend the normal interval between retransmissions
+ * of a retried unicast message by EMBER_INDIRECT_TRANSMISSION_TIMEOUT.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

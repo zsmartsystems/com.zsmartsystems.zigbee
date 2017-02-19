@@ -11,10 +11,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
-import java.util.HashMap;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class to implement the Ember Structure <b>EmberBindingTableEntry</b>.
@@ -44,9 +40,9 @@ public class EmberBindingTableEntry {
     /**
      * A cluster ID that matches one from the local endpoint's simple descriptor. This cluster ID is
      * set by the provisioning application to indicate which part an endpoint's functionality is
-     * bound to this particular remote node and is used to distinguish between unicast and multicast
-     * bindings. Note that a binding can be used to send messages with any cluster ID, not just that
-     * listed in the binding.
+     * bound to this particular remote node and is used to distinguish between unicast and
+     * multicast bindings. Note that a binding can be used to send messages with any cluster ID, not
+     * just that listed in the binding.
      * <p>
      * EZSP type is <i>uint16_t</i> - Java type is {@link int}
      */
@@ -73,6 +69,12 @@ public class EmberBindingTableEntry {
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
     private int uint8_t;
+
+    /**
+     * Default Constructor
+     */
+    public EmberBindingTableEntry() {
+    }
 
     public EmberBindingTableEntry(EzspDeserializer deserializer) {
         deserialize(deserializer);
@@ -121,9 +123,9 @@ public class EmberBindingTableEntry {
     /**
      * A cluster ID that matches one from the local endpoint's simple descriptor. This cluster ID is
      * set by the provisioning application to indicate which part an endpoint's functionality is
-     * bound to this particular remote node and is used to distinguish between unicast and multicast
-     * bindings. Note that a binding can be used to send messages with any cluster ID, not just that
-     * listed in the binding.
+     * bound to this particular remote node and is used to distinguish between unicast and
+     * multicast bindings. Note that a binding can be used to send messages with any cluster ID, not
+     * just that listed in the binding.
      * <p>
      * EZSP type is <i>uint16_t</i> - Java type is {@link int}
      *
@@ -136,9 +138,9 @@ public class EmberBindingTableEntry {
     /**
      * A cluster ID that matches one from the local endpoint's simple descriptor. This cluster ID is
      * set by the provisioning application to indicate which part an endpoint's functionality is
-     * bound to this particular remote node and is used to distinguish between unicast and multicast
-     * bindings. Note that a binding can be used to send messages with any cluster ID, not just that
-     * listed in the binding.
+     * bound to this particular remote node and is used to distinguish between unicast and
+     * multicast bindings. Note that a binding can be used to send messages with any cluster ID, not
+     * just that listed in the binding.
      *
      * @param clusterId the clusterId to set as {@link int}
      */

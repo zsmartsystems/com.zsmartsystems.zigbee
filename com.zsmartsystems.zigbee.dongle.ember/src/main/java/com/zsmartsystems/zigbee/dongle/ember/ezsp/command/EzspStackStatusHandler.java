@@ -15,11 +15,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class to implement the Ember EZSP command <b>scanCompleteHandler</b>.
+ * Class to implement the Ember EZSP command <b>stackStatusHandler</b>.
  * <p>
- * Returns the status of the current scan of type EZSP_ENERGY_SCAN or EZSP_ACTIVE_SCAN.
- * EMBER_SUCCESS signals that the scan has completed. Other error conditions signify a failure
- * to scan on the channel specified.
+ *  A callback invoked when the status of the stack changes. If the status parameter equals
+ * EMBER_NETWORK_UP, then the getNetworkParameters command can be called to obtain the new
+ * network parameters. If any of the parameters are being stored in nonvolatile memory by the
+ * Host, the stored values should be updated.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -27,19 +28,12 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspScanCompleteHandlerResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x1C;
+public class EzspStackStatusHandler extends EzspFrameResponse {
+    public static int FRAME_ID = 0x19;
 
     /**
-     * The channel on which the current error occurred. Undefined for the case of EMBER_SUCCESS.
-     * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
-     */
-    private int channel;
-
-    /**
-     * The error condition that occurred on the current channel. Value will be EMBER_SUCCESS when the
-     * scan has completed.
+     * Stack status. One of the following: EMBER_NETWORK_UP, EMBER_NETWORK_DOWN,
+     * EMBER_JOIN_FAILED, EMBER_MOVE_FAILED
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      */
@@ -48,38 +42,17 @@ public class EzspScanCompleteHandlerResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspScanCompleteHandlerResponse(int[] inputBuffer) {
+    public EzspStackStatusHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
         // Deserialize the fields
-        channel = deserializer.deserializeUInt8();
         status = deserializer.deserializeEmberStatus();
     }
 
     /**
-     * The channel on which the current error occurred. Undefined for the case of EMBER_SUCCESS.
-     * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
-     *
-     * @return the current channel as {@link int}
-     */
-    public int getChannel() {
-        return channel;
-    }
-
-    /**
-     * The channel on which the current error occurred. Undefined for the case of EMBER_SUCCESS.
-     *
-     * @param channel the channel to set as {@link int}
-     */
-    public void setChannel(int channel) {
-        this.channel = channel;
-    }
-
-    /**
-     * The error condition that occurred on the current channel. Value will be EMBER_SUCCESS when the
-     * scan has completed.
+     * Stack status. One of the following: EMBER_NETWORK_UP, EMBER_NETWORK_DOWN,
+     * EMBER_JOIN_FAILED, EMBER_MOVE_FAILED
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      *
@@ -90,8 +63,8 @@ public class EzspScanCompleteHandlerResponse extends EzspFrameResponse {
     }
 
     /**
-     * The error condition that occurred on the current channel. Value will be EMBER_SUCCESS when the
-     * scan has completed.
+     * Stack status. One of the following: EMBER_NETWORK_UP, EMBER_NETWORK_DOWN,
+     * EMBER_JOIN_FAILED, EMBER_MOVE_FAILED
      *
      * @param status the status to set as {@link EmberStatus}
      */
@@ -102,9 +75,7 @@ public class EzspScanCompleteHandlerResponse extends EzspFrameResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspScanCompleteHandlerResponse [channel=");
-        builder.append(channel);
-        builder.append(", status=");
+        builder.append("EzspStackStatusHandler [status=");
         builder.append(status);
         builder.append("]");
         return builder.toString();

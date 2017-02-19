@@ -10,10 +10,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
-import java.util.HashMap;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class to implement the Ember Structure <b>EmberZigbeeNetwork</b>.
@@ -67,6 +63,12 @@ public class EmberZigbeeNetwork {
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
     private int nwkUpdateId;
+
+    /**
+     * Default Constructor
+     */
+    public EmberZigbeeNetwork() {
+    }
 
     public EmberZigbeeNetwork(EzspDeserializer deserializer) {
         deserialize(deserializer);
@@ -231,7 +233,18 @@ public class EmberZigbeeNetwork {
         builder.append(", panId=");
         builder.append(panId);
         builder.append(", extendedPanId=");
-        builder.append(extendedPanId);
+        builder.append("{");
+        if (extendedPanId == null) {
+            builder.append("null");
+        } else {
+            for (int cnt = 0; cnt < extendedPanId.length; cnt++) {
+                if (cnt != 0) {
+                    builder.append(" ");
+                }
+                builder.append(String.format("%02X", extendedPanId[cnt]));
+            }
+        }
+        builder.append("}");
         builder.append(", allowingJoin=");
         builder.append(allowingJoin);
         builder.append(", stackProfile=");

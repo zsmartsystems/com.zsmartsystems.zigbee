@@ -8,18 +8,16 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class to implement the Ember EZSP command <b>idConflictHandler</b>.
+ * Class to implement the Ember EZSP command <b>pollHandler</b>.
  * <p>
- * A callback invoked by the EmberZNet stack when an id conflict is discovered, that is, two
- * different nodes in the network were found to be using the same short id. The stack automatically
- * removes the conflicting short id from its internal tables (address, binding, route,
- * neighbor, and child tables). The application should discontinue any other use of the id.
+ * Indicates that the local node received a data poll from a child.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -27,52 +25,52 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspIdConflictHandlerResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x7C;
+public class EzspPollHandler extends EzspFrameResponse {
+    public static int FRAME_ID = 0x44;
 
     /**
-     * The short id for which a conflict was detected.
+     * The EUI64 of the sender.
      * <p>
-     * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
+     * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
      */
-    private int id;
+    private IeeeAddress senderEui64;
 
     /**
      * Response and Handler constructor
      */
-    public EzspIdConflictHandlerResponse(int[] inputBuffer) {
+    public EzspPollHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
         // Deserialize the fields
-        id = deserializer.deserializeUInt16();
+        senderEui64 = deserializer.deserializeEmberEui64();
     }
 
     /**
-     * The short id for which a conflict was detected.
+     * The EUI64 of the sender.
      * <p>
-     * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
+     * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
      *
-     * @return the current id as {@link int}
+     * @return the current senderEui64 as {@link IeeeAddress}
      */
-    public int getId() {
-        return id;
+    public IeeeAddress getSenderEui64() {
+        return senderEui64;
     }
 
     /**
-     * The short id for which a conflict was detected.
+     * The EUI64 of the sender.
      *
-     * @param id the id to set as {@link int}
+     * @param senderEui64 the senderEui64 to set as {@link IeeeAddress}
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setSenderEui64(IeeeAddress senderEui64) {
+        this.senderEui64 = senderEui64;
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspIdConflictHandlerResponse [id=");
-        builder.append(id);
+        builder.append("EzspPollHandler [senderEui64=");
+        builder.append(senderEui64);
         builder.append("]");
         return builder.toString();
     }

@@ -15,12 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class to implement the Ember EZSP command <b>stackStatusHandler</b>.
+ * Class to implement the Ember EZSP command <b>incomingRouteRecordHandler</b>.
  * <p>
- *  A callback invoked when the status of the stack changes. If the status parameter equals
- * EMBER_NETWORK_UP, then the getNetworkParameters command can be called to obtain the new
- * network parameters. If any of the parameters are being stored in nonvolatile memory by the
- * Host, the stored values should be updated.
+ * A callback invoked when a route error message is received. The error indicates that a problem
+ * routing to or from the target node was encountered.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -28,31 +26,37 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspStackStatusHandlerResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x19;
+public class EzspIncomingRouteRecordHandler extends EzspFrameResponse {
+    public static int FRAME_ID = 0x80;
 
     /**
-     * Stack status. One of the following: EMBER_NETWORK_UP, EMBER_NETWORK_DOWN,
-     * EMBER_JOIN_FAILED, EMBER_MOVE_FAILED
+     * EMBER_SOURCE_ROUTE_FAILURE or EMBER_MANY_TO_ONE_ROUTE_FAILURE.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      */
     private EmberStatus status;
 
     /**
+     * The short id of the remote node.
+     * <p>
+     * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
+     */
+    private int target;
+
+    /**
      * Response and Handler constructor
      */
-    public EzspStackStatusHandlerResponse(int[] inputBuffer) {
+    public EzspIncomingRouteRecordHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();
+        target = deserializer.deserializeUInt16();
     }
 
     /**
-     * Stack status. One of the following: EMBER_NETWORK_UP, EMBER_NETWORK_DOWN,
-     * EMBER_JOIN_FAILED, EMBER_MOVE_FAILED
+     * EMBER_SOURCE_ROUTE_FAILURE or EMBER_MANY_TO_ONE_ROUTE_FAILURE.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      *
@@ -63,8 +67,7 @@ public class EzspStackStatusHandlerResponse extends EzspFrameResponse {
     }
 
     /**
-     * Stack status. One of the following: EMBER_NETWORK_UP, EMBER_NETWORK_DOWN,
-     * EMBER_JOIN_FAILED, EMBER_MOVE_FAILED
+     * EMBER_SOURCE_ROUTE_FAILURE or EMBER_MANY_TO_ONE_ROUTE_FAILURE.
      *
      * @param status the status to set as {@link EmberStatus}
      */
@@ -72,11 +75,33 @@ public class EzspStackStatusHandlerResponse extends EzspFrameResponse {
         this.status = status;
     }
 
+    /**
+     * The short id of the remote node.
+     * <p>
+     * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
+     *
+     * @return the current target as {@link int}
+     */
+    public int getTarget() {
+        return target;
+    }
+
+    /**
+     * The short id of the remote node.
+     *
+     * @param target the target to set as {@link int}
+     */
+    public void setTarget(int target) {
+        this.target = target;
+    }
+
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspStackStatusHandlerResponse [status=");
+        builder.append("EzspIncomingRouteRecordHandler [status=");
         builder.append(status);
+        builder.append(", target=");
+        builder.append(target);
         builder.append("]");
         return builder.toString();
     }

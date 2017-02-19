@@ -18,8 +18,8 @@ import java.util.Map;
 /**
  * Class to implement the Ember EZSP command <b>getRouteTableEntry</b>.
  * <p>
- * Returns the route table entry at the given index. The route table size can be obtained using the
- * getConfigurationValue command.
+ * Returns the route table entry at the given index. The route table size can be obtained using
+ * the getConfigurationValue command.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

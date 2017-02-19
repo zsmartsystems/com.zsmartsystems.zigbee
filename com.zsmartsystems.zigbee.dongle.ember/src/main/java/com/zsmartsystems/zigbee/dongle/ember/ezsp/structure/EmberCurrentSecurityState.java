@@ -11,10 +11,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
-import java.util.HashMap;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class to implement the Ember Structure <b>EmberCurrentSecurityState</b>.
@@ -40,6 +36,12 @@ public class EmberCurrentSecurityState {
      * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
      */
     private IeeeAddress trustCenterLongAddress;
+
+    /**
+     * Default Constructor
+     */
+    public EmberCurrentSecurityState() {
+    }
 
     public EmberCurrentSecurityState(EzspDeserializer deserializer) {
         deserialize(deserializer);

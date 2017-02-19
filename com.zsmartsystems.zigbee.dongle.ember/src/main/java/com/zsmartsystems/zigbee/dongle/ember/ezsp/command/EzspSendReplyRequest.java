@@ -44,8 +44,8 @@ public class EzspSendReplyRequest extends EzspFrameRequest {
     private EmberApsFrame apsFrame;
 
     /**
-     * A value chosen by the Host. This value is used in the ezspMessageSentHandler response to refer
-     * to this message.
+     * A value chosen by the Host. This value is used in the ezspMessageSentHandler response to
+     * refer to this message.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
@@ -109,8 +109,8 @@ public class EzspSendReplyRequest extends EzspFrameRequest {
     }
 
     /**
-     * A value chosen by the Host. This value is used in the ezspMessageSentHandler response to refer
-     * to this message.
+     * A value chosen by the Host. This value is used in the ezspMessageSentHandler response to
+     * refer to this message.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
@@ -121,8 +121,8 @@ public class EzspSendReplyRequest extends EzspFrameRequest {
     }
 
     /**
-     * A value chosen by the Host. This value is used in the ezspMessageSentHandler response to refer
-     * to this message.
+     * A value chosen by the Host. This value is used in the ezspMessageSentHandler response to
+     * refer to this message.
      *
      * @param messageTag the messageTag to set as {@link int}
      */
@@ -159,7 +159,6 @@ public class EzspSendReplyRequest extends EzspFrameRequest {
         serializer.serializeUInt16(sender);
         serializer.serializeEmberApsFrame(apsFrame);
         serializer.serializeUInt8(messageTag);
-        serializer.serializeUInt8(messageContents.length);
         serializer.serializeUInt8(messageContents.length);
         serializer.serializeUInt8Array(messageContents);
         return serializer.getPayload();

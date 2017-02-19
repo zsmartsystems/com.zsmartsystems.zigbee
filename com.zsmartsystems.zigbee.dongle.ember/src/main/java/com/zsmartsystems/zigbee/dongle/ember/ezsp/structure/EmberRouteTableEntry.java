@@ -10,10 +10,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
-import java.util.HashMap;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class to implement the Ember Structure <b>EmberRouteTableEntry</b>.
@@ -56,21 +52,27 @@ public class EmberRouteTableEntry {
     private int age;
 
     /**
-     * Indicates whether this destination is a High RAM Concentrator (2), a Low RAM Concentrator (1),
-     * or not a concentrator (0).
+     * Indicates whether this destination is a High RAM Concentrator (2), a Low RAM Concentrator
+     * (1), or not a concentrator (0).
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
     private int concentratorType;
 
     /**
-     * For a High RAM Concentrator, indicates whether a route record is needed (2), has been sent (1),
-     * or is no long needed (0) because a source routed message from the concentrator has been
+     * For a High RAM Concentrator, indicates whether a route record is needed (2), has been sent
+     * (1), or is no long needed (0) because a source routed message from the concentrator has been
      * received.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
     private int routeRecordState;
+
+    /**
+     * Default Constructor
+     */
+    public EmberRouteTableEntry() {
+    }
 
     public EmberRouteTableEntry(EzspDeserializer deserializer) {
         deserialize(deserializer);
@@ -159,8 +161,8 @@ public class EmberRouteTableEntry {
     }
 
     /**
-     * Indicates whether this destination is a High RAM Concentrator (2), a Low RAM Concentrator (1),
-     * or not a concentrator (0).
+     * Indicates whether this destination is a High RAM Concentrator (2), a Low RAM Concentrator
+     * (1), or not a concentrator (0).
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
@@ -171,8 +173,8 @@ public class EmberRouteTableEntry {
     }
 
     /**
-     * Indicates whether this destination is a High RAM Concentrator (2), a Low RAM Concentrator (1),
-     * or not a concentrator (0).
+     * Indicates whether this destination is a High RAM Concentrator (2), a Low RAM Concentrator
+     * (1), or not a concentrator (0).
      *
      * @param concentratorType the concentratorType to set as {@link int}
      */
@@ -181,8 +183,8 @@ public class EmberRouteTableEntry {
     }
 
     /**
-     * For a High RAM Concentrator, indicates whether a route record is needed (2), has been sent (1),
-     * or is no long needed (0) because a source routed message from the concentrator has been
+     * For a High RAM Concentrator, indicates whether a route record is needed (2), has been sent
+     * (1), or is no long needed (0) because a source routed message from the concentrator has been
      * received.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
@@ -194,8 +196,8 @@ public class EmberRouteTableEntry {
     }
 
     /**
-     * For a High RAM Concentrator, indicates whether a route record is needed (2), has been sent (1),
-     * or is no long needed (0) because a source routed message from the concentrator has been
+     * For a High RAM Concentrator, indicates whether a route record is needed (2), has been sent
+     * (1), or is no long needed (0) because a source routed message from the concentrator has been
      * received.
      *
      * @param routeRecordState the routeRecordState to set as {@link int}

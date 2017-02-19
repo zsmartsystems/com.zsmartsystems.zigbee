@@ -11,10 +11,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
-import java.util.HashMap;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class to implement the Ember Structure <b>EmberNeighborTableEntry</b>.
@@ -36,8 +32,8 @@ public class EmberNeighborTableEntry {
     private int shortId;
 
     /**
-     * An exponentially weighted moving average of the link quality values of incoming packets from
-     * this neighbor as reported by the PHY.
+     * An exponentially weighted moving average of the link quality values of incoming packets
+     * from this neighbor as reported by the PHY.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
@@ -53,9 +49,9 @@ public class EmberNeighborTableEntry {
 
     /**
      * The outgoing cost for this neighbor, obtained from the most recently received neighbor
-     * exchange message from the neighbor. A value of zero means that a neighbor exchange message from
-     * the neighbor has not been received recently enough, or that our id was not present in the most
-     * recently received one.
+     * exchange message from the neighbor. A value of zero means that a neighbor exchange message
+     * from the neighbor has not been received recently enough, or that our id was not present in the
+     * most recently received one.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
@@ -75,6 +71,12 @@ public class EmberNeighborTableEntry {
      * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
      */
     private IeeeAddress longId;
+
+    /**
+     * Default Constructor
+     */
+    public EmberNeighborTableEntry() {
+    }
 
     public EmberNeighborTableEntry(EzspDeserializer deserializer) {
         deserialize(deserializer);
@@ -101,8 +103,8 @@ public class EmberNeighborTableEntry {
     }
 
     /**
-     * An exponentially weighted moving average of the link quality values of incoming packets from
-     * this neighbor as reported by the PHY.
+     * An exponentially weighted moving average of the link quality values of incoming packets
+     * from this neighbor as reported by the PHY.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
@@ -113,8 +115,8 @@ public class EmberNeighborTableEntry {
     }
 
     /**
-     * An exponentially weighted moving average of the link quality values of incoming packets from
-     * this neighbor as reported by the PHY.
+     * An exponentially weighted moving average of the link quality values of incoming packets
+     * from this neighbor as reported by the PHY.
      *
      * @param averageLqi the averageLqi to set as {@link int}
      */
@@ -146,9 +148,9 @@ public class EmberNeighborTableEntry {
 
     /**
      * The outgoing cost for this neighbor, obtained from the most recently received neighbor
-     * exchange message from the neighbor. A value of zero means that a neighbor exchange message from
-     * the neighbor has not been received recently enough, or that our id was not present in the most
-     * recently received one.
+     * exchange message from the neighbor. A value of zero means that a neighbor exchange message
+     * from the neighbor has not been received recently enough, or that our id was not present in the
+     * most recently received one.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
@@ -160,9 +162,9 @@ public class EmberNeighborTableEntry {
 
     /**
      * The outgoing cost for this neighbor, obtained from the most recently received neighbor
-     * exchange message from the neighbor. A value of zero means that a neighbor exchange message from
-     * the neighbor has not been received recently enough, or that our id was not present in the most
-     * recently received one.
+     * exchange message from the neighbor. A value of zero means that a neighbor exchange message
+     * from the neighbor has not been received recently enough, or that our id was not present in the
+     * most recently received one.
      *
      * @param outCost the outCost to set as {@link int}
      */

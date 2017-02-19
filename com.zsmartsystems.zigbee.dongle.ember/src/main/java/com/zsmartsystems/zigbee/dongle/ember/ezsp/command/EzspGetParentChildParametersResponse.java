@@ -36,16 +36,16 @@ public class EzspGetParentChildParametersResponse extends EzspFrameResponse {
     private int childCount;
 
     /**
-     * The parent's EUI64. The value is undefined for nodes without parents (coordinators and nodes
-     * that are not joined to a network)
+     * The parent's EUI64. The value is undefined for nodes without parents (coordinators and
+     * nodes that are not joined to a network)
      * <p>
      * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
      */
     private IeeeAddress parentEui64;
 
     /**
-     * The parent's node ID. The value is undefined for nodes without parents (coordinators and nodes
-     * that are not joined to a network).
+     * The parent's node ID. The value is undefined for nodes without parents (coordinators and
+     * nodes that are not joined to a network).
      * <p>
      * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
      */
@@ -85,8 +85,8 @@ public class EzspGetParentChildParametersResponse extends EzspFrameResponse {
     }
 
     /**
-     * The parent's EUI64. The value is undefined for nodes without parents (coordinators and nodes
-     * that are not joined to a network)
+     * The parent's EUI64. The value is undefined for nodes without parents (coordinators and
+     * nodes that are not joined to a network)
      * <p>
      * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
      *
@@ -97,8 +97,8 @@ public class EzspGetParentChildParametersResponse extends EzspFrameResponse {
     }
 
     /**
-     * The parent's EUI64. The value is undefined for nodes without parents (coordinators and nodes
-     * that are not joined to a network)
+     * The parent's EUI64. The value is undefined for nodes without parents (coordinators and
+     * nodes that are not joined to a network)
      *
      * @param parentEui64 the parentEui64 to set as {@link IeeeAddress}
      */
@@ -107,8 +107,8 @@ public class EzspGetParentChildParametersResponse extends EzspFrameResponse {
     }
 
     /**
-     * The parent's node ID. The value is undefined for nodes without parents (coordinators and nodes
-     * that are not joined to a network).
+     * The parent's node ID. The value is undefined for nodes without parents (coordinators and
+     * nodes that are not joined to a network).
      * <p>
      * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
      *
@@ -119,8 +119,8 @@ public class EzspGetParentChildParametersResponse extends EzspFrameResponse {
     }
 
     /**
-     * The parent's node ID. The value is undefined for nodes without parents (coordinators and nodes
-     * that are not joined to a network).
+     * The parent's node ID. The value is undefined for nodes without parents (coordinators and
+     * nodes that are not joined to a network).
      *
      * @param parentNodeId the parentNodeId to set as {@link int}
      */

@@ -16,9 +16,10 @@ import java.util.Map;
 /**
  * Class to implement the Ember EZSP command <b>setConfigurationValue</b>.
  * <p>
- * Writes a configuration value to the NCP. Configuration values can be modified by the Host after
- * the NCP has reset. Once the status of the stack changes to EMBER_NETWORK_UP, configuration
- * values can no longer be modified and this command will respond with EZSP_ERROR_INVALID_CALL.
+ * Writes a configuration value to the NCP. Configuration values can be modified by the Host
+ * after the NCP has reset. Once the status of the stack changes to EMBER_NETWORK_UP,
+ * configuration values can no longer be modified and this command will respond with
+ * EZSP_ERROR_INVALID_CALL.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

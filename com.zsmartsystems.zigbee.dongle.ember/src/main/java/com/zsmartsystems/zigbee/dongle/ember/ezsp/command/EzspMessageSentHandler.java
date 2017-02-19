@@ -27,7 +27,7 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspMessageSentHandlerResponse extends EzspFrameResponse {
+public class EzspMessageSentHandler extends EzspFrameResponse {
     public static int FRAME_ID = 0x3F;
 
     /**
@@ -70,7 +70,8 @@ public class EzspMessageSentHandlerResponse extends EzspFrameResponse {
 
     /**
      * The unicast message supplied by the Host. The message contents are only included here if the
-     * decision for the messageContentsInCallback policy is messageTagAndContentsInCallback.
+     * decision for the messageContentsInCallback policy is
+     * messageTagAndContentsInCallback.
      * <p>
      * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
      */
@@ -79,7 +80,7 @@ public class EzspMessageSentHandlerResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspMessageSentHandlerResponse(int[] inputBuffer) {
+    public EzspMessageSentHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
@@ -201,7 +202,8 @@ public class EzspMessageSentHandlerResponse extends EzspFrameResponse {
 
     /**
      * The unicast message supplied by the Host. The message contents are only included here if the
-     * decision for the messageContentsInCallback policy is messageTagAndContentsInCallback.
+     * decision for the messageContentsInCallback policy is
+     * messageTagAndContentsInCallback.
      * <p>
      * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
      *
@@ -213,7 +215,8 @@ public class EzspMessageSentHandlerResponse extends EzspFrameResponse {
 
     /**
      * The unicast message supplied by the Host. The message contents are only included here if the
-     * decision for the messageContentsInCallback policy is messageTagAndContentsInCallback.
+     * decision for the messageContentsInCallback policy is
+     * messageTagAndContentsInCallback.
      *
      * @param messageContents the messageContents to set as {@link int[]}
      */
@@ -224,7 +227,7 @@ public class EzspMessageSentHandlerResponse extends EzspFrameResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspMessageSentHandlerResponse [type=");
+        builder.append("EzspMessageSentHandler [type=");
         builder.append(type);
         builder.append(", indexOrDestination=");
         builder.append(indexOrDestination);

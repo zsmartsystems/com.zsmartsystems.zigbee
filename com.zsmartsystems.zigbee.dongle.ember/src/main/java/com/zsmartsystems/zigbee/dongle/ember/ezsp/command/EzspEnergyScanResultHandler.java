@@ -25,7 +25,7 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspEnergyScanResultHandlerResponse extends EzspFrameResponse {
+public class EzspEnergyScanResultHandler extends EzspFrameResponse {
     public static int FRAME_ID = 0x48;
 
     /**
@@ -45,7 +45,7 @@ public class EzspEnergyScanResultHandlerResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspEnergyScanResultHandlerResponse(int[] inputBuffer) {
+    public EzspEnergyScanResultHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
@@ -97,7 +97,7 @@ public class EzspEnergyScanResultHandlerResponse extends EzspFrameResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspEnergyScanResultHandlerResponse [channel=");
+        builder.append("EzspEnergyScanResultHandler [channel=");
         builder.append(channel);
         builder.append(", maxRssiValue=");
         builder.append(maxRssiValue);

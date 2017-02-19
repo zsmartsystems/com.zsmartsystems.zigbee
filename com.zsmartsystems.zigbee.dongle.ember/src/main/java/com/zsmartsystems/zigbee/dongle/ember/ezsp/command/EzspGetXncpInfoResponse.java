@@ -17,9 +17,9 @@ import java.util.Map;
 /**
  * Class to implement the Ember EZSP command <b>getXncpInfo</b>.
  * <p>
- * Allows the HOST to know whether the NCP is running the XNCP library. If so, the response contains
- * also the manufacturer ID and the version number of the XNCP application that is running on the
- * NCP.
+ * Allows the HOST to know whether the NCP is running the XNCP library. If so, the response
+ * contains also the manufacturer ID and the version number of the XNCP application that is
+ * running on the NCP.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

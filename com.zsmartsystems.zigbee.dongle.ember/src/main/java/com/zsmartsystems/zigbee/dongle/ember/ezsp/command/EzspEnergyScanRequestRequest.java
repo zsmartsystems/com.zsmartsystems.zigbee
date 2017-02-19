@@ -16,8 +16,8 @@ import java.util.Map;
 /**
  * Class to implement the Ember EZSP command <b>energyScanRequest</b>.
  * <p>
- * Sends a ZDO energy scan request. This request may only be sent by the current network manager and
- * must be unicast, not broadcast. See ezsp-utils.h for related macros
+ * Sends a ZDO energy scan request. This request may only be sent by the current network manager
+ * and must be unicast, not broadcast. See ezsp-utils.h for related macros
  * emberSetNetworkManagerRequest() and emberChangeChannelRequest()
  * <p>
  * This class provides methods for processing EZSP commands.

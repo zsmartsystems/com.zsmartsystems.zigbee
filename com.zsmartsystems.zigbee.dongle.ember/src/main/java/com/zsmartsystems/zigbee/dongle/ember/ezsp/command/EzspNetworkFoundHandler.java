@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspNetworkFoundHandlerResponse extends EzspFrameResponse {
+public class EzspNetworkFoundHandler extends EzspFrameResponse {
     public static int FRAME_ID = 0x1B;
 
     /**
@@ -53,7 +53,7 @@ public class EzspNetworkFoundHandlerResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspNetworkFoundHandlerResponse(int[] inputBuffer) {
+    public EzspNetworkFoundHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
@@ -126,7 +126,7 @@ public class EzspNetworkFoundHandlerResponse extends EzspFrameResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspNetworkFoundHandlerResponse [networkFound=");
+        builder.append("EzspNetworkFoundHandler [networkFound=");
         builder.append(networkFound);
         builder.append(", lastHopLqi=");
         builder.append(lastHopLqi);

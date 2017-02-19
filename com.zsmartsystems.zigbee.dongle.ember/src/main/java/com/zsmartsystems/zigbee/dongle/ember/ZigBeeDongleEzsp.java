@@ -21,7 +21,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRequest
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandlerResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspPermitJoiningRequest;
@@ -145,9 +145,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             endpoint++;
         }
 
-        EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(ashHandler);
-        netInitialiser.formNetwork();
-
         // Now initialise the network
         EzspNetworkInitRequest networkInitRequest = new EzspNetworkInitRequest();
         EzspTransaction networkInitTransaction = ashHandler.sendEzspTransaction(
@@ -156,18 +153,18 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         logger.debug(networkInitResponse.toString());
 
         // Check if the network is initialised or if we're yet to join
-        // switch (networkInitResponse.getStatus()) {
-        // case EMBER_SUCCESS:
-        // We're done (??)
-        // break;
-        // case EMBER_NOT_JOINED:
-        // EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(ashHandler);
-        // netInitialiser.formNetwork();
-        // break;
-        // default:
-        // Unknown response
-        // break;
-        // }
+        switch (networkInitResponse.getStatus()) {
+            case EMBER_SUCCESS:
+                // We're done (??)
+                break;
+            case EMBER_NOT_JOINED:
+                EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(ashHandler);
+                netInitialiser.formNetwork();
+                break;
+            default:
+                // Unknown response
+                break;
+        }
 
         EzspGetNetworkParametersRequest networkParametersRequest = new EzspGetNetworkParametersRequest();
         EzspTransaction networkParametersTransaction = ashHandler.sendEzspTransaction(
@@ -266,8 +263,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     public void handlePacket(EzspFrame response) {
         logger.debug("Unhandled EZSP Frame: " + response.toString());
 
-        if (response instanceof EzspIncomingMessageHandlerResponse) {
-            EzspIncomingMessageHandlerResponse incomingMessage = (EzspIncomingMessageHandlerResponse) response;
+        if (response instanceof EzspIncomingMessageHandler) {
+            EzspIncomingMessageHandler incomingMessage = (EzspIncomingMessageHandler) response;
             EmberApsFrame apsFrame = incomingMessage.getApsFrame();
 
             ZigBeeApsHeader apsHeader = new ZigBeeApsHeader();

@@ -16,7 +16,8 @@ import java.util.Map;
 /**
  * Class to implement the Ember EZSP command <b>setBindingRemoteNodeId</b>.
  * <p>
- * Set the node ID for the binding's destination. See getBindingRemoteNodeId for a description.
+ * Set the node ID for the binding's destination. See getBindingRemoteNodeId for a
+ * description.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

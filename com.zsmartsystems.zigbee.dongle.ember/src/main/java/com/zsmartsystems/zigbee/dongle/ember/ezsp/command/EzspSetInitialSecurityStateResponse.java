@@ -18,9 +18,9 @@ import java.util.Map;
  * Class to implement the Ember EZSP command <b>setInitialSecurityState</b>.
  * <p>
  * Sets the security state that will be used by the device when it forms or joins the network. This
- * call should not be used when restoring saved network state via networkInit as this will result
- * in a loss of security data and will cause communication problems when the device re-enters the
- * network.
+ * call should not be used when restoring saved network state via networkInit as this will
+ * result in a loss of security data and will cause communication problems when the device
+ * re-enters the network.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

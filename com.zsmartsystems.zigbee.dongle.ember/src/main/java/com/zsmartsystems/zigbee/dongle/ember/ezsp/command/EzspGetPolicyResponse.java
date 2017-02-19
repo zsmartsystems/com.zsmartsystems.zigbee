@@ -30,8 +30,8 @@ public class EzspGetPolicyResponse extends EzspFrameResponse {
     public static int FRAME_ID = 0x56;
 
     /**
-     * EZSP_SUCCESS if the policy was changed, EZSP_ERROR_INVALID_ID if the NCP does not recognize
-     * policyId.
+     * EZSP_SUCCESS if the policy was changed, EZSP_ERROR_INVALID_ID if the NCP does not
+     * recognize policyId.
      * <p>
      * EZSP type is <i>EzspStatus</i> - Java type is {@link EzspStatus}
      */
@@ -57,8 +57,8 @@ public class EzspGetPolicyResponse extends EzspFrameResponse {
     }
 
     /**
-     * EZSP_SUCCESS if the policy was changed, EZSP_ERROR_INVALID_ID if the NCP does not recognize
-     * policyId.
+     * EZSP_SUCCESS if the policy was changed, EZSP_ERROR_INVALID_ID if the NCP does not
+     * recognize policyId.
      * <p>
      * EZSP type is <i>EzspStatus</i> - Java type is {@link EzspStatus}
      *
@@ -69,8 +69,8 @@ public class EzspGetPolicyResponse extends EzspFrameResponse {
     }
 
     /**
-     * EZSP_SUCCESS if the policy was changed, EZSP_ERROR_INVALID_ID if the NCP does not recognize
-     * policyId.
+     * EZSP_SUCCESS if the policy was changed, EZSP_ERROR_INVALID_ID if the NCP does not
+     * recognize policyId.
      *
      * @param status the status to set as {@link EzspStatus}
      */

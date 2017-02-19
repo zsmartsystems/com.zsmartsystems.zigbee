@@ -29,8 +29,8 @@ public class EzspGetNeighborRequest extends EzspFrameRequest {
     public static int FRAME_ID = 0x79;
 
     /**
-     * The index of the neighbor of interest. Neighbors are stored in ascending order by node id, with
-     * all unused entries at the end of the table.
+     * The index of the neighbor of interest. Neighbors are stored in ascending order by node id,
+     * with all unused entries at the end of the table.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
@@ -47,8 +47,8 @@ public class EzspGetNeighborRequest extends EzspFrameRequest {
     }
 
     /**
-     * The index of the neighbor of interest. Neighbors are stored in ascending order by node id, with
-     * all unused entries at the end of the table.
+     * The index of the neighbor of interest. Neighbors are stored in ascending order by node id,
+     * with all unused entries at the end of the table.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
@@ -59,8 +59,8 @@ public class EzspGetNeighborRequest extends EzspFrameRequest {
     }
 
     /**
-     * The index of the neighbor of interest. Neighbors are stored in ascending order by node id, with
-     * all unused entries at the end of the table.
+     * The index of the neighbor of interest. Neighbors are stored in ascending order by node id,
+     * with all unused entries at the end of the table.
      *
      * @param index the index to set as {@link int}
      */

@@ -103,7 +103,7 @@ public class EzspDeserializer {
     }
 
     public EmberKeyData deserializeEmberKeyData() {
-        return new EmberKeyData(deserializeUInt8Array(8));
+        return new EmberKeyData(this);
     }
 
     public EzspStatus deserializeEzspStatus() {

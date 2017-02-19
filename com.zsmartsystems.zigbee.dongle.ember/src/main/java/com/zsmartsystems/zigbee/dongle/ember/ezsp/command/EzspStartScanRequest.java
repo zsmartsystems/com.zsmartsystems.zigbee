@@ -41,8 +41,8 @@ public class EzspStartScanRequest extends EzspFrameRequest {
     /**
      * Bits set as 1 indicate that this particular channel should be scanned. Bits set to 0 indicate
      * that this particular channel should not be scanned. For example, a channelMask value of
-     * 0x00000001 would indicate that only channel 0 should be scanned. Valid channels range from 11
-     * to 26 inclusive. This translates to a channel mask value of 0x07FFF800. As a convenience, a
+     * 0x00000001 would indicate that only channel 0 should be scanned. Valid channels range from
+     * 11 to 26 inclusive. This translates to a channel mask value of 0x07FFF800. As a convenience, a
      * value of 0 is reinterpreted as the mask for the current channel.
      * <p>
      * EZSP type is <i>uint32_t</i> - Java type is {@link int}
@@ -50,8 +50,8 @@ public class EzspStartScanRequest extends EzspFrameRequest {
     private int channelMask;
 
     /**
-     * Sets the exponent of the number of scan periods, where a scan period is 960 symbols. The scan will
-     * occur for ((2^duration) + 1) scan periods.
+     * Sets the exponent of the number of scan periods, where a scan period is 960 symbols. The scan
+     * will occur for ((2^duration) + 1) scan periods.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
@@ -96,8 +96,8 @@ public class EzspStartScanRequest extends EzspFrameRequest {
     /**
      * Bits set as 1 indicate that this particular channel should be scanned. Bits set to 0 indicate
      * that this particular channel should not be scanned. For example, a channelMask value of
-     * 0x00000001 would indicate that only channel 0 should be scanned. Valid channels range from 11
-     * to 26 inclusive. This translates to a channel mask value of 0x07FFF800. As a convenience, a
+     * 0x00000001 would indicate that only channel 0 should be scanned. Valid channels range from
+     * 11 to 26 inclusive. This translates to a channel mask value of 0x07FFF800. As a convenience, a
      * value of 0 is reinterpreted as the mask for the current channel.
      * <p>
      * EZSP type is <i>uint32_t</i> - Java type is {@link int}
@@ -111,8 +111,8 @@ public class EzspStartScanRequest extends EzspFrameRequest {
     /**
      * Bits set as 1 indicate that this particular channel should be scanned. Bits set to 0 indicate
      * that this particular channel should not be scanned. For example, a channelMask value of
-     * 0x00000001 would indicate that only channel 0 should be scanned. Valid channels range from 11
-     * to 26 inclusive. This translates to a channel mask value of 0x07FFF800. As a convenience, a
+     * 0x00000001 would indicate that only channel 0 should be scanned. Valid channels range from
+     * 11 to 26 inclusive. This translates to a channel mask value of 0x07FFF800. As a convenience, a
      * value of 0 is reinterpreted as the mask for the current channel.
      *
      * @param channelMask the channelMask to set as {@link int}
@@ -122,8 +122,8 @@ public class EzspStartScanRequest extends EzspFrameRequest {
     }
 
     /**
-     * Sets the exponent of the number of scan periods, where a scan period is 960 symbols. The scan will
-     * occur for ((2^duration) + 1) scan periods.
+     * Sets the exponent of the number of scan periods, where a scan period is 960 symbols. The scan
+     * will occur for ((2^duration) + 1) scan periods.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
@@ -134,8 +134,8 @@ public class EzspStartScanRequest extends EzspFrameRequest {
     }
 
     /**
-     * Sets the exponent of the number of scan periods, where a scan period is 960 symbols. The scan will
-     * occur for ((2^duration) + 1) scan periods.
+     * Sets the exponent of the number of scan periods, where a scan period is 960 symbols. The scan
+     * will occur for ((2^duration) + 1) scan periods.
      *
      * @param duration the duration to set as {@link int}
      */

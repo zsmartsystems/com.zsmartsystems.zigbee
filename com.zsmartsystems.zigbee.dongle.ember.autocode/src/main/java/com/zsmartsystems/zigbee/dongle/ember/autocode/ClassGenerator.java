@@ -124,12 +124,12 @@ public abstract class ClassGenerator {
 
         out.print(indent + " *");
 
-        int len = 0;
+        int len = 2;
         for (String word : words) {
             if (len + word.length() > lineLen) {
                 out.println();
                 out.print(indent + " *");
-                len = 0;
+                len = 2;
             }
             out.print(" ");
             out.print(word);

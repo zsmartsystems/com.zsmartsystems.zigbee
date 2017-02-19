@@ -65,7 +65,7 @@ public class EzspMultiResponseTransaction implements EzspTransaction {
         }
 
         // Check if this response completes the transaction
-        if (response.getClass() == requiredResponse && request.getFrameId() == response.getFrameId()) {
+        if (response.getClass() == requiredResponse && request.getSequenceNumber() == response.getSequenceNumber()) {
             responses.add(response);
             return true;
         } else {
@@ -90,7 +90,7 @@ public class EzspMultiResponseTransaction implements EzspTransaction {
 
     @Override
     public synchronized EzspFrameResponse getResponse() {
-        if (responses.isEmpty()) {
+        if (!responses.isEmpty()) {
             return responses.get(responses.size() - 1);
         }
         return null;

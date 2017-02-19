@@ -10,10 +10,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
-import java.util.HashMap;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class to implement the Ember Structure <b>EmberApsFrame</b>.
@@ -74,6 +70,12 @@ public class EmberApsFrame {
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
     private int sequence;
+
+    /**
+     * Default Constructor
+     */
+    public EmberApsFrame() {
+    }
 
     public EmberApsFrame(EzspDeserializer deserializer) {
         deserialize(deserializer);

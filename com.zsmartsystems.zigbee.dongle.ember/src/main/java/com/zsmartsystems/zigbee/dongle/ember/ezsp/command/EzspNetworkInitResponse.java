@@ -18,8 +18,8 @@ import java.util.Map;
  * Class to implement the Ember EZSP command <b>networkInit</b>.
  * <p>
  * Resume network operation after a reboot. The node retains its original type. This should be
- * called on startup whether or not the node was previously part of a network. EMBER_NOT_JOINED is
- * returned if the node is not part of a network.
+ * called on startup whether or not the node was previously part of a network. EMBER_NOT_JOINED
+ * is returned if the node is not part of a network.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

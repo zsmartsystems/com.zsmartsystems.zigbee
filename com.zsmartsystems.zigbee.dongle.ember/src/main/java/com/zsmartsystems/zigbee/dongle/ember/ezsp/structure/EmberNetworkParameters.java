@@ -10,10 +10,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
-import java.util.HashMap;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class to implement the Ember Structure <b>EmberNetworkParameters</b>.
@@ -70,22 +66,28 @@ public class EmberNetworkParameters {
     private int nwkManagerId;
 
     /**
-     * NWK Update ID. The value of the ZigBee nwkUpdateId known by the stack. This is used to determine
-     * the newest instance of the network after a PAN ID or channel change. This may only be set at
-     * joining when using EMBER_USE_NWK_COMMISSIONING as the join method.
+     * NWK Update ID. The value of the ZigBee nwkUpdateId known by the stack. This is used to
+     * determine the newest instance of the network after a PAN ID or channel change. This may only be
+     * set at joining when using EMBER_USE_NWK_COMMISSIONING as the join method.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
     private int nwkUpdateId;
 
     /**
-     * NWK channel mask. The list of preferred channels that the NWK manager has told this device to use
-     * when searching for the network. This may only be set at joining when using
+     * NWK channel mask. The list of preferred channels that the NWK manager has told this device to
+     * use when searching for the network. This may only be set at joining when using
      * EMBER_USE_NWK_COMMISSIONING as the join method.
      * <p>
      * EZSP type is <i>uint32_t</i> - Java type is {@link int}
      */
     private int channels;
+
+    /**
+     * Default Constructor
+     */
+    public EmberNetworkParameters() {
+    }
 
     public EmberNetworkParameters(EzspDeserializer deserializer) {
         deserialize(deserializer);
@@ -214,9 +216,9 @@ public class EmberNetworkParameters {
     }
 
     /**
-     * NWK Update ID. The value of the ZigBee nwkUpdateId known by the stack. This is used to determine
-     * the newest instance of the network after a PAN ID or channel change. This may only be set at
-     * joining when using EMBER_USE_NWK_COMMISSIONING as the join method.
+     * NWK Update ID. The value of the ZigBee nwkUpdateId known by the stack. This is used to
+     * determine the newest instance of the network after a PAN ID or channel change. This may only be
+     * set at joining when using EMBER_USE_NWK_COMMISSIONING as the join method.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
@@ -227,9 +229,9 @@ public class EmberNetworkParameters {
     }
 
     /**
-     * NWK Update ID. The value of the ZigBee nwkUpdateId known by the stack. This is used to determine
-     * the newest instance of the network after a PAN ID or channel change. This may only be set at
-     * joining when using EMBER_USE_NWK_COMMISSIONING as the join method.
+     * NWK Update ID. The value of the ZigBee nwkUpdateId known by the stack. This is used to
+     * determine the newest instance of the network after a PAN ID or channel change. This may only be
+     * set at joining when using EMBER_USE_NWK_COMMISSIONING as the join method.
      *
      * @param nwkUpdateId the nwkUpdateId to set as {@link int}
      */
@@ -238,8 +240,8 @@ public class EmberNetworkParameters {
     }
 
     /**
-     * NWK channel mask. The list of preferred channels that the NWK manager has told this device to use
-     * when searching for the network. This may only be set at joining when using
+     * NWK channel mask. The list of preferred channels that the NWK manager has told this device to
+     * use when searching for the network. This may only be set at joining when using
      * EMBER_USE_NWK_COMMISSIONING as the join method.
      * <p>
      * EZSP type is <i>uint32_t</i> - Java type is {@link int}
@@ -251,8 +253,8 @@ public class EmberNetworkParameters {
     }
 
     /**
-     * NWK channel mask. The list of preferred channels that the NWK manager has told this device to use
-     * when searching for the network. This may only be set at joining when using
+     * NWK channel mask. The list of preferred channels that the NWK manager has told this device to
+     * use when searching for the network. This may only be set at joining when using
      * EMBER_USE_NWK_COMMISSIONING as the join method.
      *
      * @param channels the channels to set as {@link int}
@@ -300,7 +302,18 @@ public class EmberNetworkParameters {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("EmberNetworkParameters [extendedPanId=");
-        builder.append(extendedPanId);
+        builder.append("{");
+        if (extendedPanId == null) {
+            builder.append("null");
+        } else {
+            for (int cnt = 0; cnt < extendedPanId.length; cnt++) {
+                if (cnt != 0) {
+                    builder.append(" ");
+                }
+                builder.append(String.format("%02X", extendedPanId[cnt]));
+            }
+        }
+        builder.append("}");
         builder.append(", panId=");
         builder.append(panId);
         builder.append(", radioTxPower=");

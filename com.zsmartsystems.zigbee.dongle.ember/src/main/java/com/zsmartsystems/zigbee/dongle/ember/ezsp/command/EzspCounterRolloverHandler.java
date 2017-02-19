@@ -8,16 +8,15 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
-import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class to implement the Ember EZSP command <b>pollHandler</b>.
+ * Class to implement the Ember EZSP command <b>counterRolloverHandler</b>.
  * <p>
- * Indicates that the local node received a data poll from a child.
+ * This call is fired when a counter exceeds its threshold.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -25,52 +24,52 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspPollHandlerResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x44;
+public class EzspCounterRolloverHandler extends EzspFrameResponse {
+    public static int FRAME_ID = 0xF2;
 
     /**
-     * The EUI64 of the sender.
+     * Type of Counter.
      * <p>
-     * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
+     * EZSP type is <i>EmberCounterType</i> - Java type is {@link int}
      */
-    private IeeeAddress senderEui64;
+    private int type;
 
     /**
      * Response and Handler constructor
      */
-    public EzspPollHandlerResponse(int[] inputBuffer) {
+    public EzspCounterRolloverHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
         // Deserialize the fields
-        senderEui64 = deserializer.deserializeEmberEui64();
+        type = deserializer.deserializeUInt8();
     }
 
     /**
-     * The EUI64 of the sender.
+     * Type of Counter.
      * <p>
-     * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
+     * EZSP type is <i>EmberCounterType</i> - Java type is {@link int}
      *
-     * @return the current senderEui64 as {@link IeeeAddress}
+     * @return the current type as {@link int}
      */
-    public IeeeAddress getSenderEui64() {
-        return senderEui64;
+    public int getType() {
+        return type;
     }
 
     /**
-     * The EUI64 of the sender.
+     * Type of Counter.
      *
-     * @param senderEui64 the senderEui64 to set as {@link IeeeAddress}
+     * @param type the type to set as {@link int}
      */
-    public void setSenderEui64(IeeeAddress senderEui64) {
-        this.senderEui64 = senderEui64;
+    public void setType(int type) {
+        this.type = type;
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspPollHandlerResponse [senderEui64=");
-        builder.append(senderEui64);
+        builder.append("EzspCounterRolloverHandler [type=");
+        builder.append(type);
         builder.append("]");
         return builder.toString();
     }

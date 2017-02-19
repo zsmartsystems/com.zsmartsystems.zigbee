@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspChildJoinHandlerResponse extends EzspFrameResponse {
+public class EzspChildJoinHandler extends EzspFrameResponse {
     public static int FRAME_ID = 0x23;
 
     /**
@@ -67,7 +67,7 @@ public class EzspChildJoinHandlerResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspChildJoinHandlerResponse(int[] inputBuffer) {
+    public EzspChildJoinHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
@@ -182,7 +182,7 @@ public class EzspChildJoinHandlerResponse extends EzspFrameResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspChildJoinHandlerResponse [index=");
+        builder.append("EzspChildJoinHandler [index=");
         builder.append(index);
         builder.append(", joining=");
         builder.append(joining);

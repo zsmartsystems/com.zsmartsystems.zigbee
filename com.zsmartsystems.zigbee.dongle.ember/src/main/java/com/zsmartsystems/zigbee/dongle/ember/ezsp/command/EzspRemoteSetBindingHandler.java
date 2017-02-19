@@ -19,8 +19,8 @@ import java.util.Map;
  * Class to implement the Ember EZSP command <b>remoteSetBindingHandler</b>.
  * <p>
  * The NCP used the external binding modification policy to decide how to handle a remote set
- * binding request. The Host cannot change the current decision, but it can change the policy for
- * future decisions using the setPolicy command.
+ * binding request. The Host cannot change the current decision, but it can change the policy
+ * for future decisions using the setPolicy command.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -28,7 +28,7 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspRemoteSetBindingHandlerResponse extends EzspFrameResponse {
+public class EzspRemoteSetBindingHandler extends EzspFrameResponse {
     public static int FRAME_ID = 0x31;
 
     /**
@@ -55,7 +55,7 @@ public class EzspRemoteSetBindingHandlerResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspRemoteSetBindingHandlerResponse(int[] inputBuffer) {
+    public EzspRemoteSetBindingHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
@@ -128,7 +128,7 @@ public class EzspRemoteSetBindingHandlerResponse extends EzspFrameResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspRemoteSetBindingHandlerResponse [entry=");
+        builder.append("EzspRemoteSetBindingHandler [entry=");
         builder.append(entry);
         builder.append(", index=");
         builder.append(index);

@@ -16,9 +16,9 @@ import java.util.Map;
 /**
  * Class to implement the Ember EZSP command <b>bindingIsActive</b>.
  * <p>
- * Indicates whether any messages are currently being sent using this binding table entry. Note
- * that this command does not indicate whether a binding is clear. To determine whether a binding
- * is clear, check whether the type field of the EmberBindingTableEntry has the value
+ * Indicates whether any messages are currently being sent using this binding table entry.
+ * Note that this command does not indicate whether a binding is clear. To determine whether a
+ * binding is clear, check whether the type field of the EmberBindingTableEntry has the value
  * EMBER_UNUSED_BINDING.
  * <p>
  * This class provides methods for processing EZSP commands.

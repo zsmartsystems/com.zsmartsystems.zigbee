@@ -16,12 +16,12 @@ import java.util.Map;
 /**
  * Class to implement the Ember EZSP command <b>getBindingRemoteNodeId</b>.
  * <p>
- * Returns the node ID for the binding's destination, if the ID is known. If a message is sent using
- * the binding and the destination's ID is not known, the stack will discover the ID by
+ * Returns the node ID for the binding's destination, if the ID is known. If a message is sent
+ * using the binding and the destination's ID is not known, the stack will discover the ID by
  * broadcasting a ZDO address request. The application can avoid the need for this discovery by
  * using setBindingRemoteNodeId when it knows the correct ID via some other means. The
- * destination's node ID is forgotten when the binding is changed, when the local node reboots or,
- * much more rarely, when the destination node changes its ID in response to an ID conflict.
+ * destination's node ID is forgotten when the binding is changed, when the local node reboots
+ * or, much more rarely, when the destination node changes its ID in response to an ID conflict.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

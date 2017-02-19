@@ -15,12 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class to implement the Ember EZSP command <b>setRadioChannel</b>.
+ * Class to implement the Ember EZSP command <b>scanCompleteHandler</b>.
  * <p>
- * Sets the channel to use for sending and receiving messages. For a list of available radio
- * channels, see the technical specification for the RF communication module in your
- * Developer Kit. Note: Care should be taken when using this API, as all devices on a network must
- * use the same channel.
+ * Returns the status of the current scan of type EZSP_ENERGY_SCAN or EZSP_ACTIVE_SCAN.
+ * EMBER_SUCCESS signals that the scan has completed. Other error conditions signify a
+ * failure to scan on the channel specified.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -28,11 +27,19 @@ import java.util.Map;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspSetRadioChannelResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x9A;
+public class EzspScanCompleteHandler extends EzspFrameResponse {
+    public static int FRAME_ID = 0x1C;
 
     /**
-     * An EmberStatus value indicating the success or failure of the command.
+     * The channel on which the current error occurred. Undefined for the case of EMBER_SUCCESS.
+     * <p>
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     */
+    private int channel;
+
+    /**
+     * The error condition that occurred on the current channel. Value will be EMBER_SUCCESS when
+     * the scan has completed.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      */
@@ -41,16 +48,38 @@ public class EzspSetRadioChannelResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspSetRadioChannelResponse(int[] inputBuffer) {
+    public EzspScanCompleteHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
         // Deserialize the fields
+        channel = deserializer.deserializeUInt8();
         status = deserializer.deserializeEmberStatus();
     }
 
     /**
-     * An EmberStatus value indicating the success or failure of the command.
+     * The channel on which the current error occurred. Undefined for the case of EMBER_SUCCESS.
+     * <p>
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     *
+     * @return the current channel as {@link int}
+     */
+    public int getChannel() {
+        return channel;
+    }
+
+    /**
+     * The channel on which the current error occurred. Undefined for the case of EMBER_SUCCESS.
+     *
+     * @param channel the channel to set as {@link int}
+     */
+    public void setChannel(int channel) {
+        this.channel = channel;
+    }
+
+    /**
+     * The error condition that occurred on the current channel. Value will be EMBER_SUCCESS when
+     * the scan has completed.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      *
@@ -61,7 +90,8 @@ public class EzspSetRadioChannelResponse extends EzspFrameResponse {
     }
 
     /**
-     * An EmberStatus value indicating the success or failure of the command.
+     * The error condition that occurred on the current channel. Value will be EMBER_SUCCESS when
+     * the scan has completed.
      *
      * @param status the status to set as {@link EmberStatus}
      */
@@ -72,7 +102,9 @@ public class EzspSetRadioChannelResponse extends EzspFrameResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspSetRadioChannelResponse [status=");
+        builder.append("EzspScanCompleteHandler [channel=");
+        builder.append(channel);
+        builder.append(", status=");
         builder.append(status);
         builder.append("]");
         return builder.toString();

@@ -16,8 +16,8 @@ import java.util.Map;
 /**
  * Class to implement the Ember EZSP command <b>permitJoining</b>.
  * <p>
- * Tells the stack to allow other nodes to join the network with this node as their parent. Joining
- * is initially disabled by default.
+ * Tells the stack to allow other nodes to join the network with this node as their parent.
+ * Joining is initially disabled by default.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
