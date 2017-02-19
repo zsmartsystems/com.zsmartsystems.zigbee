@@ -2,23 +2,16 @@ package com.zsmartsystems.zigbee.zdo.command;
 
 import java.util.Arrays;
 
-import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
  * ManagementLqiResponse.
  *
  * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
-public class ManagementLqiResponse extends ZdoCommand implements ZdoResponse {
-    /**
-     * The status.
-     */
-    private int status;
-    /**
-     * Network address.
-     */
-    private int sourceAddress;
+public class ManagementLqiResponse extends ZdoResponse {
+
     /**
      * Start index.
      */
@@ -42,24 +35,6 @@ public class ManagementLqiResponse extends ZdoCommand implements ZdoResponse {
         this.startIndex = startIndex;
         this.numberOfNeighbors = numberOfNeighbors;
         this.neighbors = associatedDeviceList;
-    }
-
-    @Override
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    @Override
-    public int getSourceAddress() {
-        return sourceAddress;
-    }
-
-    public void setSourceAddress(int sourceAddress) {
-        this.sourceAddress = sourceAddress;
     }
 
     public int getStartIndex() {

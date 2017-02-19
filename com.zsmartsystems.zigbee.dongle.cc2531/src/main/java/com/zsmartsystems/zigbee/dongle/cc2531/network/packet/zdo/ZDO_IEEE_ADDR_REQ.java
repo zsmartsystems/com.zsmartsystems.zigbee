@@ -35,8 +35,6 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 /**
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
- * @version $LastChangedRevision: 799 $ ($LastChangedDate: 2013-08-06 19:00:05 +0300 (Tue, 06 Aug 2013) $)
- * @since 0.1.0
  */
 public class ZDO_IEEE_ADDR_REQ extends ZToolPacket /* implements IREQUEST,IZDo */ {
     /// <name>TI.ZPI1.ZDO_IEEE_ADDR_REQ.ReqType</name>

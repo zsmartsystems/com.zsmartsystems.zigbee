@@ -1,24 +1,16 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
  * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
-public class UserDescriptorResponse extends ZdoCommand implements ZdoResponse {
-    /**
-     * Source address.
-     */
-    public int sourceAddress;
+public class UserDescriptorResponse extends ZdoResponse {
     /**
      * Network address.
      */
     public int networkAddress;
-    /**
-     * Status.
-     */
-    public int status;
     /**
      * Descriptor
      */
@@ -34,30 +26,12 @@ public class UserDescriptorResponse extends ZdoCommand implements ZdoResponse {
         this.descriptor = descriptor;
     }
 
-    @Override
-    public int getSourceAddress() {
-        return sourceAddress;
-    }
-
-    public void setSourceAddress(int sourceAddress) {
-        this.sourceAddress = sourceAddress;
-    }
-
     public int getNetworkAddress() {
         return networkAddress;
     }
 
     public void setNetworkAddress(int networkAddress) {
         this.networkAddress = networkAddress;
-    }
-
-    @Override
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public String getDescriptor() {

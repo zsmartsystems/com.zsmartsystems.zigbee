@@ -1,6 +1,5 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
 
@@ -8,16 +7,10 @@ import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
  * NodeDescriptorResponse.
  *
  * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
-public class NodeDescriptorResponse extends ZdoCommand implements ZdoResponse {
-    /**
-     * this field indicates either SUCCESS or FAILURE.
-     */
-    public int status;
-    /**
-     * the message's source network address.
-     */
-    public int sourceAddress;
+public class NodeDescriptorResponse extends ZdoResponse {
+
     /**
      * Device's short address of this Node descriptor.
      */
@@ -33,24 +26,6 @@ public class NodeDescriptorResponse extends ZdoCommand implements ZdoResponse {
         this.sourceAddress = sourceAddress;
         this.networkAddress = networkAddress;
         this.nodeDescriptor = nodeDescriptor;
-    }
-
-    @Override
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    @Override
-    public int getSourceAddress() {
-        return sourceAddress;
-    }
-
-    public void setSourceAddress(int sourceAddress) {
-        this.sourceAddress = sourceAddress;
     }
 
     public int getNetworkAddress() {

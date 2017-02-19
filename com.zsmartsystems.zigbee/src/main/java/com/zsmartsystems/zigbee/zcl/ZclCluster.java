@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
@@ -284,13 +285,18 @@ public abstract class ZclCluster {
         attributeListeners.add(listener);
     }
 
-    public void removeAttributeListener(ZclAttributeListener listener) {
+    public void removeAttributeListener(final ZclAttributeListener listener) {
         attributeListeners.remove(listener);
     }
 
-    private void notifyAttributeListener(ZclAttribute attribute) {
-        for (ZclAttributeListener listener : attributeListeners) {
-            listener.attributeUpdated(attribute);
+    private void notifyAttributeListener(final ZclAttribute attribute) {
+        for (final ZclAttributeListener listener : attributeListeners) {
+            NotificationService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    listener.attributeUpdated(attribute);
+                }
+            });
         }
     }
 

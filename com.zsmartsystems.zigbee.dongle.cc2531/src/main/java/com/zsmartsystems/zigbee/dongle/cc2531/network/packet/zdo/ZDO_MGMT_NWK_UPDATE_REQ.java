@@ -98,7 +98,7 @@ public class ZDO_MGMT_NWK_UPDATE_REQ extends ZToolPacket {
 
     @Override
     public String toString() {
-        return "ZDO_MGMT_NWK_UPDATE_REQ{" + "destinationAddress=" + destinationAddress + ", destinationAddressMode="
+        return "ZDO_MGMT_NWK_UPDATE_REQ{destinationAddress=" + destinationAddress + ", destinationAddressMode="
                 + destinationAddressMode + ", channelMask=" + channelMask + ", scanDuration=" + scanDuration
                 + ", scanCount=" + scanCount + ", networkManagerAddress=" + networkManagerAddress + '}';
     }

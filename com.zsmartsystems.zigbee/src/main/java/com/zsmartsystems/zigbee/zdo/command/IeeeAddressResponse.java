@@ -3,7 +3,6 @@ package com.zsmartsystems.zigbee.zdo.command;
 import java.util.Arrays;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
@@ -12,11 +11,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
-public class IeeeAddressResponse extends ZdoCommand implements ZdoResponse {
-    /**
-     * The response status.
-     */
-    private int status;
+public class IeeeAddressResponse extends ZdoResponse {
     /**
      * The source address mode.
      */
@@ -25,10 +20,6 @@ public class IeeeAddressResponse extends ZdoCommand implements ZdoResponse {
      * IEEE address.
      */
     private IeeeAddress ieeeAddress;
-    /**
-     * Network address.
-     */
-    private int networkAddress;
     /**
      * Start index.
      */
@@ -50,20 +41,10 @@ public class IeeeAddressResponse extends ZdoCommand implements ZdoResponse {
         this.status = status;
         this.sourceAddressMode = sourceAddressMode;
         this.ieeeAddress = ieeeAddress;
-        this.networkAddress = networkAddress;
+        this.sourceAddress = networkAddress;
         this.startIndex = startIndex;
         this.numberOfAssociatedDevices = numberOfAssociatedDevices;
         this.associatedDeviceList = associatedDeviceList;
-    }
-
-    @Override
-    public int getSourceAddress() {
-        return networkAddress;
-    }
-
-    @Override
-    public int getStatus() {
-        return status;
     }
 
     public void setStatus(int status) {
@@ -84,19 +65,6 @@ public class IeeeAddressResponse extends ZdoCommand implements ZdoResponse {
 
     public void setIeeeAddress(IeeeAddress ieeeAddress) {
         this.ieeeAddress = ieeeAddress;
-    }
-
-    /**
-     * Returns the 16 bit network address
-     *
-     * @return 16 bit network address
-     */
-    public int getNetworkAddress() {
-        return networkAddress;
-    }
-
-    public void setNetworkAddress(int networkAddress) {
-        this.networkAddress = networkAddress;
     }
 
     public int getStartIndex() {
@@ -126,7 +94,7 @@ public class IeeeAddressResponse extends ZdoCommand implements ZdoResponse {
     @Override
     public String toString() {
         return "IEEE Address Response: status=" + status + ", sourceAddressMode=" + sourceAddressMode + ", ieeeAddress="
-                + ieeeAddress + ", networkAddress=" + networkAddress + ", startIndex=" + startIndex
+                + ieeeAddress + ", networkAddress=" + sourceAddress + ", startIndex=" + startIndex
                 + ", numberOfAssociatedDevices=" + numberOfAssociatedDevices + ", associatedDeviceList="
                 + Arrays.toString(associatedDeviceList);
     }
