@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Defines the Ember Node Types
- * 
+ * Defines the Ember Status
+ *
  * @author Chris Jackson
  *
  */

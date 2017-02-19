@@ -98,7 +98,7 @@ public enum EmberApsOption {
      *            the code to lookup
      * @return enumeration value of the alarm type.
      */
-    public static EmberApsOption getEzspNetworkScanType(int i) {
+    public static EmberApsOption getEmberApsOption(int i) {
         if (codeMapping == null) {
             initMapping();
         }
@@ -116,4 +116,5 @@ public enum EmberApsOption {
     public int getKey() {
         return key;
     }
+
 }

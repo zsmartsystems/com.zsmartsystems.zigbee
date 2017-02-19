@@ -1,0 +1,1971 @@
+<protocol>
+	<command>
+		<name>version</name>
+		<id>0x00</id>
+		<description>The command allows the Host to specify the desired EZSP version and must be sent before any other command. This document describes EZSP version 4 and stack type 2 (mesh). The response provides information about the firmware running on the NCP.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>desiredProtocolVersion</name>
+				<description>The EZSP version the Host wishes to use. To successfully set the version and allow other commands.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>protocolVersion</name>
+				<description>The EZSP version the NCP is using</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>stackType</name>
+				<description>The type of stack running on the NCP</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>stackVersion</name>
+				<description>The version number of the stack</description>
+			</parameter>
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>getConfigurationValue</name>
+		<id>0x52</id>
+		<description>Reads a configuration value from the NCP</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EzspConfigId</data_type>
+				<name>configId</name>
+				<description>Identifies which configuration value to read</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>status</name>
+				<description>EZSP_SUCCESS if the value was read successfully, EZSP_ERROR_INVALID_ID if the NCP does not recognize configId.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>value</name>
+				<description>The configuration value.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+		
+	<command>
+		<name>setConfigurationValue</name>
+		<id>0x53</id>
+		<description>Writes a configuration value to the NCP. Configuration values can be modified by the Host after the NCP has reset. Once the status of the stack changes to EMBER_NETWORK_UP, configuration values can no longer be modified and this command will respond with EZSP_ERROR_INVALID_CALL.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EzspConfigId</data_type>
+				<name>configId</name>
+				<description>Identifies which configuration value to change.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>value</name>
+				<description>The new configuration value.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>status</name>
+				<description>EZSP_SUCCESS if the configuration value was changed, EZSP_ERROR_OUT_OF_MEMORY if the new value exceeded the available memory, EZSP_ERROR_INVALID_VALUE if the new value was out of bounds, EZSP_ERROR_INVALID_ID if the NCP does not recognize configId, EZSP_ERROR_INVALID_CALL if configuration values can no longer be modified.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+			
+	<command>
+		<name>addEndpoint</name>
+		<id>0x02</id>
+		<description>Configures endpoint information on the NCP. The NCP does not remember these settings after a reset. Endpoints can be added by the Host after the NCP has reset. Once the status of the stack changes to EMBER_NETWORK_UP, endpoints can no longer be added and this command will respond with EZSP_ERROR_INVALID_CALL.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>endpoint</name>
+				<description>The application endpoint to be added.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>profileId</name>
+				<description>The endpoint's application profile.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>deviceId</name>
+				<description>The endpoint's device ID within the application profile.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>appFlags</name>
+				<description>The device version and flags indicating description availability.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>inputClusterCount</name>
+				<description>The number of cluster IDs in inputClusterList.</description>
+				<auto_size>inputClusterList</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>outputClusterCount</name>
+				<description>The number of cluster IDs in outputClusterList</description>
+				<auto_size>outputClusterList</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t[]</data_type>
+				<name>inputClusterList</name>
+				<description>Input cluster IDs the endpoint will accept.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t[]</data_type>
+				<name>outputClusterList</name>
+				<description>Output cluster IDs the endpoint may send.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>status</name>
+				<description>EZSP_SUCCESS if the configuration value was changed, EZSP_ERROR_OUT_OF_MEMORY if the new value exceeded the available memory, EZSP_ERROR_INVALID_VALUE if the new value was out of bounds, EZSP_ERROR_INVALID_ID if the NCP does not recognize configId, EZSP_ERROR_INVALID_CALL if configuration values can no longer be modified.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>getConfigurationValue</name>
+		<id>0x52</id>
+		<description>Reads a configuration value from the NCP</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EzspConfigId</data_type>
+				<name>configId</name>
+				<description>Identifies which configuration value to read</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>status</name>
+				<description>EZSP_SUCCESS if the value was read successfully, EZSP_ERROR_INVALID_ID if the NCP does not recognize configId.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>value</name>
+				<description>The configuration value.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+		
+	<command>
+		<name>setPolicy</name>
+		<id>0x55</id>
+		<description>Allows the Host to change the policies used by the NCP to make fast decisions.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EzspPolicyId</data_type>
+				<name>policyId</name>
+				<description>Identifies which policy to modify.</description>
+			</parameter>
+			<parameter>
+				<data_type>EzspDecisionId</data_type>
+				<name>decisionId</name>
+				<description> The new decision for the specified policy.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>status</name>
+				<description>EZSP_SUCCESS if the policy was changed, EZSP_ERROR_INVALID_ID if the NCP does not recognize policyId.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+			
+	<command>
+		<name>getPolicy</name>
+		<id>0x56</id>
+		<description>Allows the Host to read the policies used by the NCP to make fast decisions.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EzspPolicyId</data_type>
+				<name>policyId</name>
+				<description>Identifies which policy to modify.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>status</name>
+				<description>EZSP_SUCCESS if the policy was changed, EZSP_ERROR_INVALID_ID if the NCP does not recognize policyId.</description>
+			</parameter>
+			<parameter>
+				<data_type>EzspDecisionId</data_type>
+				<name>decisionId</name>
+				<description>The current decision for the specified policy.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+					
+	<command>
+		<name>getValue</name>
+		<id>0xAA</id>
+		<description>Reads a value from the NCP.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EzspValueId</data_type>
+				<name>valueId</name>
+				<description>Identifies which policy to modify.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>status</name>
+				<description>EZSP_SUCCESS if the value was read successfully, EZSP_ERROR_INVALID_ID if the NCP does not recognize valueId.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>valueLength</name>
+				<description>The length of the value parameter in bytes.</description>
+				<auto_size>value</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>value</name>
+				<description>The value.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+				
+	<command>
+		<name>invalidCommand</name>
+		<id>0x58</id>
+		<description>Indicates that the NCP received an invalid command.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>reason</name>
+				<description>The reason why the command was invalid.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+			
+	<command>
+		<name>callback</name>
+		<id>0x06</id>
+		<description>Allows the NCP to respond with a pending callback.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>callback</name>
+		<id>0x07</id>
+		<description> Indicates that there are currently no pending callbacks.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>readAndClearCounters</name>
+		<id>0x65</id>
+		<description>Retrieves and clears Ember counters. See the EmberCounterType enumeration for the counter types.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint16_t[29]</data_type>
+				<name>values</name>
+				<description>A list of all counter values ordered according to the EmberCounterType enumeration.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+						
+	<command>
+		<name>readCounters</name>
+		<id>0xF1</id>
+		<description>Retrieves Ember counters. See the EmberCounterType enumeration for the counter types.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint16_t[29]</data_type>
+				<name>values</name>
+				<description>A list of all counter values ordered according to the EmberCounterType enumeration.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+									
+	<command>
+		<name>counterRolloverHandler</name>
+		<id>0xF2</id>
+		<description>This call is fired when a counter exceeds its threshold.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberCounterType</data_type>
+				<name>type</name>
+				<description>Type of Counter.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+												
+	<command>
+		<name>getXncpInfo</name>
+		<id>0x13</id>
+		<description>Allows the HOST to know whether the NCP is running the XNCP library. If so, the response contains also the manufacturer ID and the version number of the XNCP application that is running on the NCP.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>status</name>
+				<description>EMBER_SUCCESS if the NCP is running the XNCP library. EMBER_INVALID_CALL otherwise.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>manufacturerId</name>
+				<description>The manufactured ID the user has defined in the XNCP application.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>versionNumber</name>
+				<description>The version number of the XNCP application.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+															
+	<command>
+		<name>getEui64</name>
+		<id>0x26</id>
+		<description>Returns the EUI64 ID of the local node.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>eui64</name>
+				<description>The 64-bit ID.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+																		
+	<command>
+		<name>getNodeId</name>
+		<id>0x27</id>
+		<description>Returns the 16-bit node ID of the local node.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>nodeId</name>
+				<description>The 16-bit ID.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+											
+	<command>
+		<name>networkInit</name>
+		<id>0x17</id>
+		<description>Resume network operation after a reboot. The node retains its original type. This should be called on startup whether or not the node was previously part of a network. EMBER_NOT_JOINED is returned if the node is not part of a network.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value that indicates one of the following: successful initialization, EMBER_NOT_JOINED if the node is not part of a network, or the reason for failure.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+												
+	<command>
+		<name>stackStatusHandler</name>
+		<id>0x19</id>
+		<description> A callback invoked when the status of the stack changes. If the status parameter equals EMBER_NETWORK_UP, then the getNetworkParameters command can be called to obtain the new network parameters. If any of the parameters are being stored in nonvolatile memory by the Host, the stored values should be updated.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>Stack status. One of the following: EMBER_NETWORK_UP, EMBER_NETWORK_DOWN, EMBER_JOIN_FAILED, EMBER_MOVE_FAILED</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>startScan</name>
+		<id>0x1A</id>
+		<description>This function will start a scan.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EzspNetworkScanType</data_type>
+				<name>scanType</name>
+				<description>Indicates the type of scan to be performed. Possible values are: EZSP_ENERGY_SCAN and EZSP_ACTIVE_SCAN. For each type, the respective callback for reporting results is: energyScanResultHandler and networkFoundHandler. The energy scan and active scan report errors and completion via the scanCompleteHandler</description>
+			</parameter>
+			<parameter>
+				<data_type>uint32_t</data_type>
+				<name>channelMask</name>
+				<description>Bits set as 1 indicate that this particular channel should be scanned. Bits set to 0 indicate that this particular channel should not be scanned. For example, a channelMask value of 0x00000001 would indicate that only channel 0 should be scanned. Valid channels range from 11 to 26 inclusive. This translates to a channel mask value of 0x07FFF800. As a convenience, a value of 0 is reinterpreted as the mask for the current channel.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>duration</name>
+				<description>Sets the exponent of the number of scan periods, where a scan period is 960 symbols. The scan will occur for ((2^duration) + 1) scan periods.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_SUCCESS signals that the scan successfully started. Possible error responses and their meanings: EMBER_MAC_SCANNING, we are already scanning; EMBER_MAC_JOINED_NETWORK, we are currently joined to a network and cannot begin a scan; EMBER_MAC_BAD_SCAN_DURATION, we have set a duration value that is not 0..14 inclusive; EMBER_MAC_INCORRECT_SCAN_TYPE, we have requested an undefined scanning type; EMBER_MAC_INVALID_CHANNEL_MASK, our channel mask did not specify any valid channels.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>energyScanRequest</name>
+		<id>0x9C</id>
+		<description>Sends a ZDO energy scan request. This request may only be sent by the current network manager and must be unicast, not broadcast. See ezsp-utils.h for related macros emberSetNetworkManagerRequest() and emberChangeChannelRequest()</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>target</name>
+				<description>The network address of the node to perform the scan.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint32_t</data_type>
+				<name>scanChannels</name>
+				<description>A mask of the channels to be scanned.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>scanDuration</name>
+				<description>How long to scan on each channel. Allowed values are 0..5, with the scan times as specified by 802.15.4 (0 = 31ms, 1 = 46ms, 2 = 77ms, 3 = 138ms, 4 = 261ms, 5 = 507ms).</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>scanCount</name>
+				<description>The number of scans to be performed on each channel (1..8).</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+								
+	<command>
+		<name>energyScanResultHandler</name>
+		<id>0x48</id>
+		<description>Reports the result of an energy scan for a single channel. The scan is not complete until the scanCompleteHandler callback is called.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>channel</name>
+				<description>The 802.15.4 channel number that was scanned</description>
+			</parameter>
+			<parameter>
+				<data_type>int8s</data_type>
+				<name>maxRssiValue</name>
+				<description>The maximum RSSI value found on the channel.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+		
+	<command>
+		<name>networkFoundHandler</name>
+		<id>0x1B</id>
+		<description>Reports that a network was found as a result of a prior call to startScan. Gives the network parameters useful for deciding which network to join.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberZigbeeNetwork</data_type>
+				<name>networkFound</name>
+				<description>The parameters associated with the network found.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>lastHopLqi</name>
+				<description>The link quality from the node that generated this beacon.</description>
+			</parameter>
+			<parameter>
+				<data_type>int8s</data_type>
+				<name>lastHopRssi</name>
+				<description>The energy level (in units of dBm) observed during the reception.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+				
+	<command>
+		<name>scanCompleteHandler</name>
+		<id>0x1C</id>
+		<description>Returns the status of the current scan of type EZSP_ENERGY_SCAN or EZSP_ACTIVE_SCAN. EMBER_SUCCESS signals that the scan has completed. Other error conditions signify a failure to scan on the channel specified.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>channel</name>
+				<description>The channel on which the current error occurred. Undefined for the case of EMBER_SUCCESS.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>The error condition that occurred on the current channel. Value will be EMBER_SUCCESS when the scan has completed.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>stopScan</name>
+		<id>0x1D</id>
+		<description>Terminates a scan in progress.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+			
+	<command>
+		<name>formNetwork</name>
+		<id>0x1E</id>
+		<description>Forms a new network by becoming the coordinator.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberNetworkParameters</data_type>
+				<name>parameters</name>
+				<description>Specification of the new network.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+					
+	<command>
+		<name>permitJoining</name>
+		<id>0x22</id>
+		<description>Tells the stack to allow other nodes to join the network with this node as their parent. Joining is initially disabled by default.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>duration</name>
+				<description>A value of 0x00 disables joining. A value of 0xFF enables joining. Any other value enables joining for that number of seconds.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>childJoinHandler</name>
+		<id>0x23</id>
+		<description>Indicates that a child has joined or left.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of the child of interest.</description>
+			</parameter>
+			<parameter>
+				<data_type>bool</data_type>
+				<name>joining</name>
+				<description>True if the child is joining. False the child is leaving.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>childId</name>
+				<description>The node ID of the child.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>childEui64</name>
+				<description>The EUI64 of the child.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeType</data_type>
+				<name>childType</name>
+				<description>The node type of the child.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>getNetworkParameters</name>
+		<id>0x28</id>
+		<description>Returns the current network parameters.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeType</data_type>
+				<name>nodeType</name>
+				<description>An EmberNodeType value indicating the current node type.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNetworkParameters</data_type>
+				<name>parameters</name>
+				<description>The current network parameters.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>getParentChildParameters</name>
+		<id>0x29</id>
+		<description>Returns information about the children of the local node and the parent of the local node.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>childCount</name>
+				<description>The number of children the node currently has.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>parentEui64</name>
+				<description>The parent's EUI64. The value is undefined for nodes without parents (coordinators and nodes that are not joined to a network)</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>parentNodeId</name>
+				<description>The parent's node ID. The value is undefined for nodes without parents (coordinators and nodes that are not joined to a network).</description>
+			</parameter>
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>getChildData</name>
+		<id>0x4A</id>
+		<description>Returns information about a child of the local node.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of the child of interest in the child table. Possible indexes range from zero to EMBER_CHILD_TABLE_SIZE.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_SUCCESS if there is a child at index. EMBER_NOT_JOINED if there is no child at index.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>childId</name>
+				<description>The node ID of the child.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>childEui64</name>
+				<description>The EUI64 of the child</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeType</data_type>
+				<name>childType</name>
+				<description>The EmberNodeType value for the child.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>getNeighbor</name>
+		<id>0x79</id>
+		<description>Returns the neighbor table entry at the given index. The number of active neighbors can be obtained using the neighborCount command.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of the neighbor of interest. Neighbors are stored in ascending order by node id, with all unused entries at the end of the table.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_ERR_FATAL if the index is greater or equal to the number of active neighbors, or if the device is an end device. Returns EMBER_SUCCESS otherwise.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNeighborTableEntry</data_type>
+				<name>value</name>
+				<description>The contents of the neighbor table entry.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+		
+	<command>
+		<name>neighborCount</name>
+		<id>0x7A</id>
+		<description>Returns the number of active entries in the neighbor table.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>value</name>
+				<description>The number of active entries in the neighbor table</description>
+			</parameter>
+		</response_parameters>
+	</command>
+			
+	<command>
+		<name>getRouteTableEntry</name>
+		<id>0x7B</id>
+		<description>Returns the route table entry at the given index. The route table size can be obtained using the getConfigurationValue command.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of the route table entry of interest</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_ERR_FATAL if the index is out of range or the device is an end device, and EMBER_SUCCESS otherwise.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberRouteTableEntry</data_type>
+				<name>value</name>
+				<description>The contents of the route table entry.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+				
+	<command>
+		<name>setRadioChannel</name>
+		<id>0x9A</id>
+		<description>Sets the channel to use for sending and receiving messages. For a list of available radio channels, see the technical specification for the RF communication module in your Developer Kit. Note: Care should be taken when using this API, as all devices on a network must use the same channel.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>channel</name>
+				<description>Desired radio channel.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating the success or failure of the command.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+					
+	<command>
+		<name>clearBindingTable</name>
+		<id>0x2A</id>
+		<description>Deletes all binding table entries.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating the success or failure of the command.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+					
+	<command>
+		<name>setBinding</name>
+		<id>0x2B</id>
+		<description>Sets an entry in the binding table.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of a binding table entry.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberBindingTableEntry</data_type>
+				<name>value</name>
+				<description>The contents of the binding entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating the success or failure of the command.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+							
+	<command>
+		<name>getBinding</name>
+		<id>0x2C</id>
+		<description>Gets an entry in the binding table.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of a binding table entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating the success or failure of the command.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberBindingTableEntry</data_type>
+				<name>value</name>
+				<description>The contents of the binding entry.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+									
+	<command>
+		<name>deleteBinding</name>
+		<id>0x2D</id>
+		<description>Deletes an entry in the binding table.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of a binding table entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating the success or failure of the command.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+											
+	<command>
+		<name>bindingIsActive</name>
+		<id>0x2E</id>
+		<description>Indicates whether any messages are currently being sent using this binding table entry. Note that this command does not indicate whether a binding is clear. To determine whether a binding is clear, check whether the type field of the EmberBindingTableEntry has the value EMBER_UNUSED_BINDING.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of a binding table entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>bool</data_type>
+				<name>active</name>
+				<description>True if the binding table entry is active, false otherwise.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+													
+	<command>
+		<name>getBindingRemoteNodeId</name>
+		<id>0x2F</id>
+		<description>Returns the node ID for the binding's destination, if the ID is known. If a message is sent using the binding and the destination's ID is not known, the stack will discover the ID by broadcasting a ZDO address request. The application can avoid the need for this discovery by using setBindingRemoteNodeId when it knows the correct ID via some other means. The destination's node ID is forgotten when the binding is changed, when the local node reboots or, much more rarely, when the destination node changes its ID in response to an ID conflict.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of a binding table entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>nodeId</name>
+				<description>The short ID of the destination node or EMBER_NULL_NODE_ID if no destination is known.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+				
+	<command>
+		<name>setBindingRemoteNodeId</name>
+		<id>0x30</id>
+		<description>Set the node ID for the binding's destination. See getBindingRemoteNodeId for a description.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of a binding table entry.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>nodeId</name>
+				<description>The short ID of the destination node.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</command>
+								
+	<command>
+		<name>remoteSetBindingHandler</name>
+		<id>0x31</id>
+		<description>The NCP used the external binding modification policy to decide how to handle a remote set binding request. The Host cannot change the current decision, but it can change the policy for future decisions using the setPolicy command.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberBindingTableEntry</data_type>
+				<name>entry</name>
+				<description>The requested binding.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of a binding table entry.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>policyDecision</name>
+				<description>EMBER_SUCCESS if the binding was added to the table and any other status if not.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+										
+	<command>
+		<name>remoteDeleteBindingHandler</name>
+		<id>0x32</id>
+		<description>The NCP used the external binding modification policy to decide how to handle a remote delete binding request. The Host cannot change the current decision, but it can change the policy for future decisions using the setPolicy command.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of a binding table entry.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>policyDecision</name>
+				<description>EMBER_SUCCESS if the binding was removed from the table and any other status if not.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+												
+	<command>
+		<name>sendUnicast</name>
+		<id>0x34</id>
+		<description>Sends a unicast message as per the ZigBee specification. The message will arrive at its destination only if there is a known route to the destination node. Setting the ENABLE_ROUTE_DISCOVERY option will cause a route to be discovered if none is known. Setting the FORCE_ROUTE_DISCOVERY option will force route discovery. Routes to end-device children of the local node are always known. Setting the APS_RETRY option will cause the message to be retransmitted until either a matching acknowledgement is received or three transmissions have been made. Note: Using the FORCE_ROUTE_DISCOVERY option will cause the first transmission to be consumed by a route request as part of discovery, so the application payload of this packet will not reach its destination on the first attempt. If you want the packet to reach its destination, the APS_RETRY option must be set so that another attempt is made to transmit the message with its application payload after the route has been constructed. Note: When sending fragmented messages, the stack will only assign a new APS sequence number for the first fragment of the message (i.e., EMBER_APS_OPTION_FRAGMENT is set and the low-order byte of the groupId field in the APS frame is zero). For all subsequent fragments of the same message, the application must set the sequence number field in the APS frame to the sequence number assigned by the stack to the first fragment.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberOutgoingMessageType</data_type>
+				<name>type</name>
+				<description>Specifies the outgoing message type. Must be one of EMBER_OUTGOING_DIRECT, EMBER_OUTGOING_VIA_ADDRESS_TABLE, or EMBER_OUTGOING_VIA_BINDING.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>indexOrDestination</name>
+				<description>Depending on the type of addressing used, this is either the EmberNodeId of the destination, an index into the address table, or an index into the binding table.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberApsFrame</data_type>
+				<name>apsFrame</name>
+				<description>The APS frame which is to be added to the message.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>messageTag</name>
+				<description>A value chosen by the Host. This value is used in the ezspMessageSentHandler response to refer to this message.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>messageLength</name>
+				<description>The length of the messageContents parameter in bytes.</description>
+				<auto_size>messageContents</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>messageContents</name>
+				<description>Content of the message.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>policyDecision</name>
+				<description>EMBER_SUCCESS if the binding was removed from the table and any other status if not.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sequence</name>
+				<description>The sequence number that will be used when this message is transmitted.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+														
+	<command>
+		<name>sendReply</name>
+		<id>0x39</id>
+		<description>Sends a reply to a received unicast message. The incomingMessageHandler callback for the unicast being replied to supplies the values for all the parameters except the reply itself.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>sender</name>
+				<description>Value supplied by incoming unicast.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberApsFrame</data_type>
+				<name>apsFrame</name>
+				<description>Value supplied by incoming unicast.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>messageTag</name>
+				<description>A value chosen by the Host. This value is used in the ezspMessageSentHandler response to refer to this message.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>messageLength</name>
+				<description>The length of the messageContents parameter in bytes.</description>
+				<auto_size>messageContents</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>messageContents</name>
+				<description>The reply message.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>policyDecision</name>
+				<description>An EmberStatus value. EMBER_INVALID_CALL - The EZSP_UNICAST_REPLIES_POLICY is set to EZSP_HOST_WILL_NOT_SUPPLY_REPLY. This means the NCP will automatically send an empty reply. The Host must change the policy to EZSP_HOST_WILL_SUPPLY_REPLY before it can supply the reply. There is one exception to this rule: In the case of responses to message fragments, the host must call sendReply when a message fragment is received. In this case, the policy set on the NCP does not matter. The NCP expects a sendReply call from the Host for message fragments regardless of the current policy settings. EMBER_NO_BUFFERS - Not enough memory was available to send the reply. EMBER_NETWORK_BUSY - Either no route or insufficient resources available. EMBER_SUCCESS - The reply was successfully queued for transmission.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>messageSentHandler</name>
+		<id>0x3F</id>
+		<description>A callback indicating the stack has completed sending a message.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberOutgoingMessageType</data_type>
+				<name>type</name>
+				<description>The type of message sent.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>indexOrDestination</name>
+				<description>The destination to which the message was sent, for direct unicasts, or the address table or binding index for other unicasts. The value is unspecified for multicasts and broadcasts.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberApsFrame</data_type>
+				<name>apsFrame</name>
+				<description>The APS frame for the message.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>messageTag</name>
+				<description>The value supplied by the Host in the ezspSendUnicast, ezspSendBroadcast or ezspSendMulticast command.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value of EMBER_SUCCESS if an ACK was received from the destination or EMBER_DELIVERY_FAILED if no ACK was received.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>messageLength</name>
+				<description>The length of the messageContents parameter in bytes.</description>
+				<auto_size>messageContents</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>messageContents</name>
+				<description>The unicast message supplied by the Host. The message contents are only included here if the decision for the messageContentsInCallback policy is messageTagAndContentsInCallback.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+		
+	<command>
+		<name>pollHandler</name>
+		<id>0x44</id>
+		<description>Indicates that the local node received a data poll from a child.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>senderEui64</name>
+				<description>The EUI64 of the sender.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>incomingMessageHandler</name>
+		<id>0x45</id>
+		<description>A callback indicating a message has been received.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberIncomingMessageType</data_type>
+				<name>type</name>
+				<description>The type of the incoming message. One of the following: EMBER_INCOMING_UNICAST, EMBER_INCOMING_UNICAST_REPLY, EMBER_INCOMING_MULTICAST, EMBER_INCOMING_MULTICAST_LOOPBACK, EMBER_INCOMING_BROADCAST, EMBER_INCOMING_BROADCAST_LOOPBACK</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberApsFrame</data_type>
+				<name>apsFrame</name>
+				<description>The APS frame for the message.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>lastHopLqi</name>
+				<description>The link quality from the node that last relayed the message.</description>
+			</parameter>
+			<parameter>
+				<data_type>int8s</data_type>
+				<name>lastHopRssi</name>
+				<description>The energy level (in units of dBm) observed during the reception.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>sender</name>
+				<description>The sender of the message.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>bindingIndex</name>
+				<description>The index of a binding that matches the message or 0xFF if there is no matching binding.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>addressIndex</name>
+				<description>The index of the entry in the address table that matches the sender of the message or 0xFF if there is no matching entry.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>messageLength</name>
+				<description>The length of the messageContents parameter in bytes.</description>
+				<auto_size>messageContents</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>messageContents</name>
+				<description>The incoming message.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>setSourceRoute</name>
+		<id>0x5A</id>
+		<description>Supply a source route for the next outgoing message.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>destination</name>
+				<description>The destination of the source route.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>relayCount</name>
+				<description>The number of relays in relayList.</description>
+				<auto_size>relayList</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>relayList</name>
+				<description>The route record. Each relay in the list is an uint16_t node ID.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>incomingRouteRecordHandler</name>
+		<id>0x80</id>
+		<description>A callback invoked when a route error message is received. The error indicates that a problem routing to or from the target node was encountered.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_SOURCE_ROUTE_FAILURE or EMBER_MANY_TO_ONE_ROUTE_FAILURE.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>target</name>
+				<description>The short id of the remote node.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getAddressTableRemoteEui64</name>
+		<id>0x5E</id>
+		<description>Gets the EUI64 of an address table entry.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>addressTableIndex</name>
+				<description>The index of an address table entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>eui64</name>
+				<description>The EUI64 of the address table entry is copied to this location.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>setExtendedTimeout</name>
+		<id>0x7E</id>
+		<description>Tells the stack whether or not the normal interval between retransmissions of a retried unicast message should be increased by EMBER_INDIRECT_TRANSMISSION_TIMEOUT. The interval needs to be increased when sending to a sleepy node so that the message is not retransmitted until the destination has had time to wake up and poll its parent. The stack will automatically extend the timeout: - For our own sleepy children. - When an address response is received from a parent on behalf of its child. - When an indirect transaction expiry route error is received. - When an end device announcement is received from a sleepy node.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>remoteEui64</name>
+				<description>The address of the node for which the timeout is to be set.</description>
+			</parameter>
+			<parameter>
+				<data_type>bool</data_type>
+				<name>extendedTimeout</name>
+				<description>true if the retry interval should be increased by EMBER_INDIRECT_TRANSMISSION_TIMEOUT. false if the normal retry interval should be used.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getExtendedTimeout</name>
+		<id>0x7F</id>
+		<description>Indicates whether or not the stack will extend the normal interval between retransmissions of a retried unicast message by EMBER_INDIRECT_TRANSMISSION_TIMEOUT.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>remoteEui64</name>
+				<description>The address of the node for which the timeout is to be returned.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>bool</data_type>
+				<name>extendedTimeout</name>
+				<description>true if the retry interval should be increased by EMBER_INDIRECT_TRANSMISSION_TIMEOUT. false if the normal retry interval should be used.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>lookupNodeIdByEui64</name>
+		<id>0x60</id>
+		<description>Returns the node ID that corresponds to the specified EUI64. The node ID is found by searching through all stack tables for the specified EUI64.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>eui64</name>
+				<description>The EUI64 of the node to look up.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>nodeId</name>
+				<description>The short ID of the node or EMBER_NULL_NODE_ID if the short ID is not known.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>lookupEui64ByNodeId</name>
+		<id>0x61</id>
+		<description>Returns the EUI64 that corresponds to the specified node ID. The EUI64 is found by searching through all stack tables for the specified node ID.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>nodeId</name>
+				<description>The short ID of the node or EMBER_NULL_NODE_ID if the short ID is not known.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_SUCCESS if the EUI64 was found, EMBER_ERR_FATAL if the EUI64 is not known.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>eui64</name>
+				<description>The EUI64 of the node to look up.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>idConflictHandler</name>
+		<id>0x7C</id>
+		<description>A callback invoked by the EmberZNet stack when an id conflict is discovered, that is, two different nodes in the network were found to be using the same short id. The stack automatically removes the conflicting short id from its internal tables (address, binding, route, neighbor, and child tables). The application should discontinue any other use of the id.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>id</name>
+				<description>The short id for which a conflict was detected.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>setInitialSecurityState</name>
+		<id>0x68</id>
+		<description>Sets the security state that will be used by the device when it forms or joins the network. This call should not be used when restoring saved network state via networkInit as this will result in a loss of security data and will cause communication problems when the device re-enters the network.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberInitialSecurityState</data_type>
+				<name>state</name>
+				<description>The security configuration to be set.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>success</name>
+				<description>The success or failure code of the operation.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getCurrentSecurityState</name>
+		<id>0x69</id>
+		<description>Gets the current security state that is being used by a device that is joined in the network.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>success</name>
+				<description>The success or failure code of the operation.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberCurrentSecurityState</data_type>
+				<name>state</name>
+				<description>The security configuration in use by the stack.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<structure>
+		<name>EmberNetworkParameters</name>
+		<description>Network parameters.</description>
+		<parameters>
+			<parameter>
+				<data_type>uint8_t[8]</data_type>
+				<name>extendedPanId</name>
+				<description>The network's extended PAN identifier.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>panId</name>
+				<description>The network's PAN identifier.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>radioTxPower</name>
+				<description>A power setting, in dBm.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>radioChannel</name>
+				<description>A radio channel.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberJoinMethod</data_type>
+				<name>joinMethod</name>
+				<description>The method used to initially join the network</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>nwkManagerId</name>
+				<description>NWK Manager ID. The ID of the network manager in the current network. This may only be set at joining when using EMBER_USE_NWK_COMMISSIONING as the join method.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>nwkUpdateId</name>
+				<description>NWK Update ID. The value of the ZigBee nwkUpdateId known by the stack. This is used to determine the newest instance of the network after a PAN ID or channel change. This may only be set at joining when using EMBER_USE_NWK_COMMISSIONING as the join method.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint32_t</data_type>
+				<name>channels</name>
+				<description>NWK channel mask. The list of preferred channels that the NWK manager has told this device to use when searching for the network. This may only be set at joining when using EMBER_USE_NWK_COMMISSIONING as the join method.</description>
+			</parameter>
+		</parameters>
+	</structure>
+
+	<structure>
+		<name>EmberZigbeeNetwork</name>
+		<description>The parameters of a ZigBee network.</description>
+		<parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>channel</name>
+				<description>The 802.15.4 channel associated with the network.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>panId</name>
+				<description>The network's PAN identifier</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[8]</data_type>
+				<name>extendedPanId</name>
+				<description>The network's extended PAN identifier.</description>
+			</parameter>
+			<parameter>
+				<data_type>bool</data_type>
+				<name>allowingJoin</name>
+				<description>Whether the network is allowing MAC associations.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>stackProfile</name>
+				<description>The Stack Profile associated with the network.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>nwkUpdateId</name>
+				<description>The instance of the Network.</description>
+			</parameter>
+		</parameters>
+	</structure>
+
+	<structure>
+		<name>EmberApsFrame</name>
+		<description>ZigBee APS frame parameters.</description>
+		<parameters>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>profileId</name>
+				<description>The application profile ID that describes the format of the message.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>clusterId</name>
+				<description>The cluster ID for this message</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sourceEndpoint</name>
+				<description>The source endpoint.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>destinationEndpoint</name>
+				<description>The destination endpoint.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberApsOption</data_type>
+				<name>options</name>
+				<description>A bitmask of options.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>groupId</name>
+				<description>The group ID for this message, if it is multicast mode.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sequence</name>
+				<description>The sequence number.</description>
+			</parameter>
+		</parameters>
+	</structure>
+
+	<structure>
+		<name>EmberNeighborTableEntry</name>
+		<description>A neighbor table entry stores information about the reliability of RF links to and from neighboring nodes.</description>
+		<parameters>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>shortId</name>
+				<description>The neighbor's two byte network id.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>averageLqi</name>
+				<description>An exponentially weighted moving average of the link quality values of incoming packets from this neighbor as reported by the PHY.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>inCost</name>
+				<description>The incoming cost for this neighbor, computed from the average LQI. Values range from 1 for a good link to 7 for a bad link.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>outCost</name>
+				<description>The outgoing cost for this neighbor, obtained from the most recently received neighbor exchange message from the neighbor. A value of zero means that a neighbor exchange message from the neighbor has not been received recently enough, or that our id was not present in the most recently received one.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>age</name>
+				<description>The number of aging periods elapsed since a link status message was last received from this neighbor. The aging period is 16 seconds.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>longId</name>
+				<description>The 8 byte EUI64 of the neighbor.</description>
+			</parameter>
+		</parameters>
+	</structure>
+	
+	<structure>
+		<name>EmberInitialSecurityState</name>
+		<description>The security data used to set the configuration for the stack, or the retrieved configuration currently in use.</description>
+		<parameters>
+			<parameter>
+				<data_type>EmberInitialSecurityBitmask</data_type>
+				<name>bitmask</name>
+				<description>A bitmask indicating the security state used to indicate what the security configuration will be when the device forms or joins the network.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberKeyData</data_type>
+				<name>preconfiguredKey</name>
+				<description>The pre-configured Key data that should be used when forming or joining the network. The security bitmask must be set with the EMBER_HAVE_PRECONFIGURED_KEY bit to indicate that the key contains valid data.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberKeyData</data_type>
+				<name>networkKey</name>
+				<description>The Network Key that should be used by the Trust Center when it forms the network, or the Network Key currently in use by a joined device. The security bitmask must be set with EMBER_HAVE_NETWORK_KEY to indicate that the key contains valid data.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_u</data_type>
+				<name>networkKeySequenceNumber</name>
+				<description>The sequence number associated with the network key. This is only valid if the EMBER_HAVE_NETWORK_KEY has been set in the security bitmask.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>preconfiguredTrustCenterEui64</name>
+				<description>This is the long address of the trust center on the network that will be joined. It is usually NOT set prior to joining the network and instead it is learned during the joining message exchange. This field is only examined if EMBER_HAVE_TRUST_CENTER_EUI64 is set in the EmberInitialSecurityState::bitmask. Most devices should clear that bit and leave this field alone. This field must be set when using commissioning mode.</description>
+			</parameter>
+		</parameters>
+	</structure>
+	
+	<structure>
+		<name>EmberRouteTableEntry</name>
+		<description>A route table entry stores information about the next hop along the route to the destination.</description>
+		<parameters>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>destination</name>
+				<description>The short id of the destination. A value of 0xFFFF indicates the entry is unused.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>nextHop</name>
+				<description>The short id of the next hop to this destination.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>status</name>
+				<description>Indicates whether this entry is active (0), being discovered (1), unused (3), or validating (4).</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>age</name>
+				<description>The number of seconds since this route entry was last used to send a packet.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>concentratorType</name>
+				<description>Indicates whether this destination is a High RAM Concentrator (2), a Low RAM Concentrator (1), or not a concentrator (0).</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>routeRecordState</name>
+				<description>For a High RAM Concentrator, indicates whether a route record is needed (2), has been sent (1), or is no long needed (0) because a source routed message from the concentrator has been received.</description>
+			</parameter>
+		</parameters>
+	</structure>
+
+	<structure>
+		<name>EmberBindingTableEntry</name>
+		<description>An entry in the binding table.</description>
+		<parameters>
+			<parameter>
+				<data_type>EmberBindingType</data_type>
+				<name>type</name>
+				<description>The type of binding.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>local</name>
+				<description>The endpoint on the local node.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>clusterId</name>
+				<description>A cluster ID that matches one from the local endpoint's simple descriptor. This cluster ID is set by the provisioning application to indicate which part an endpoint's functionality is bound to this particular remote node and is used to distinguish between unicast and multicast bindings. Note that a binding can be used to send messages with any cluster ID, not just that listed in the binding.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>remote</name>
+				<description>The endpoint on the remote node (specified by identifier).</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>identifier</name>
+				<description>A 64-bit identifier. This is either the destination EUI64 (for unicasts) or the 64-bit group address (for multicasts).</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>uint8_t</name>
+				<description>The index of the network the binding belongs to.</description>
+			</parameter>
+		</parameters>
+	</structure>
+	
+	<structure>
+		<name>EmberCurrentSecurityState</name>
+		<description>The security options and information currently used by the stack.</description>
+		<parameters>
+			<parameter>
+				<data_type>EmberCurrentSecurityBitmask</data_type>
+				<name>bitmask</name>
+				<description>A bitmask indicating the security options currently in use by a device joined in the network.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>trustCenterLongAddress</name>
+				<description>The IEEE Address of the Trust Center device.</description>
+			</parameter>
+		</parameters>
+	</structure>
+
+	<structure>
+		<name>EmberKeyData</name>
+		<description>A 128-bit key.</description>
+		<parameters>
+			<parameter>
+				<data_type>uint8_t[16]</data_type>
+				<name>contents</name>
+				<description>The key data.</description>
+			</parameter>
+		</parameters>
+	</structure>
+
+	<enum>
+		<name>EzspPolicyId</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EZSP_TRUST_CENTER_POLICY</name>
+				<enum_value>0x00</enum_value>
+				<description>Controls trust center behavior.</description>
+			</value>
+			<value>
+				<name>EZSP_BINDING_MODIFICATION_POLICY</name>
+				<enum_value>0x01</enum_value>
+				<description>Controls how external binding modification requests are handled.</description>
+			</value>
+		</values>
+	</enum>
+	
+	<enum>
+		<name>EmberOutgoingMessageType</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_OUTGOING_DIRECT</name>
+				<enum_value>0x00</enum_value>
+				<description>Unicast sent directly to an EmberNodeId.</description>
+			</value>
+			<value>
+				<name>EMBER_OUTGOING_VIA_ADDRESS_TABLE</name>
+				<enum_value>0x01</enum_value>
+				<description>Unicast sent using an entry in the address table.</description>
+			</value>
+			<value>
+				<name>EMBER_OUTGOING_VIA_BINDING</name>
+				<enum_value>0x02</enum_value>
+				<description>Unicast sent using an entry in the binding table.</description>
+			</value>
+			<value>
+				<name>EMBER_OUTGOING_MULTICAST</name>
+				<enum_value>0x03</enum_value>
+				<description>Multicast message. This value is passed to emberMessageSentHandler() only. It may not be passed to emberSendUnicast().</description>
+			</value>
+			<value>
+				<name>EMBER_OUTGOING_BROADCAST</name>
+				<enum_value>0x04</enum_value>
+				<description>Broadcast message. This value is passed to emberMessageSentHandler() only. It may not be passed to emberSendUnicast().</description>
+			</value>
+		</values>
+	</enum>
+	
+	<enum>
+		<name>EzspDecisionId</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EZSP_ALLOW_JOINS</name>
+				<enum_value>0x00</enum_value>
+				<description>Send the network key in the clear to all joining and rejoining devices.</description>
+			</value>
+			<value>
+				<name>EZSP_ALLOW_JOINS_REJOINS_HAVE_LINK_KEY</name>
+				<enum_value>0x04</enum_value>
+				<description>Send the network key in the clear to all joining devices. Rejoining devices are sent the network key encrypted with their trust center link key. The trust center and any rejoining device are assumed to share a link key, either preconfigured or obtained under a previous policy.</description>
+			</value>
+		</values>
+	</enum>
+	
+	<enum>
+		<name>EmberBindingType</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_UNUSED_BINDING</name>
+				<enum_value>0x00</enum_value>
+				<description>A binding that is currently not in use.</description>
+			</value>
+			<value>
+				<name>EMBER_UNICAST_BINDING</name>
+				<enum_value>0x01</enum_value>
+				<description>A unicast binding whose 64-bit identifier is the destination EUI64.</description>
+			</value>
+			<value>
+				<name>EMBER_MANY_TO_ONE_BINDING</name>
+				<enum_value>0x02</enum_value>
+				<description>A unicast binding whose 64-bit identifier is the aggregator EUI64.</description>
+			</value>
+			<value>
+				<name>EMBER_MULTICAST_BINDING</name>
+				<enum_value>0x03</enum_value>
+				<description>A multicast binding whose 64-bit identifier is the group address. A multicast binding can be used to send messages to the group and to receive messages sent to the group.</description>
+			</value>
+		</values>
+	</enum>
+	
+	<enum>
+		<name>EmberCurrentSecurityBitmask</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_STANDARD_SECURITY_MODE</name>
+				<enum_value>0x0000</enum_value>
+				<description>This denotes that the device is running in a network with ZigBee Standard Security.</description>
+			</value>
+			<value>
+				<name>EMBER_HIGH_SECURITY_MODE</name>
+				<enum_value>0x0001</enum_value>
+				<description>This denotes that the device is running in a network with ZigBee High Security.</description>
+			</value>
+			<value>
+				<name>EMBER_DISTRIBUTED_TRUST_CENTER_MODE</name>
+				<enum_value>0x0002</enum_value>
+				<description>This denotes that the device is running in a network without a centralized Trust Center.</description>
+			</value>
+			<value>
+				<name>EMBER_GLOBAL_LINK_KEY</name>
+				<enum_value>0x0004</enum_value>
+				<description>This denotes that the device has a Global Link Key. The Trust Center Link Key is the same across multiple nodes.</description>
+			</value>
+			<value>
+				<name>EMBER_HAVE_TRUST_CENTER_LINK_KEY</name>
+				<enum_value>0x0010</enum_value>
+				<description>This denotes that the node has a Trust Center Link Key.</description>
+			</value>
+			<value>
+				<name>EMBER_TRUST_CENTER_USES_HASHED_LINK_KEY</name>
+				<enum_value>0x0084</enum_value>
+				<description>This denotes that the Trust Center is using a Hashed Link Key.</description>
+			</value>
+		</values>
+	</enum>
+	
+	<enum>
+		<name>EzspStatus</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EZSP_SUCCESS</name>
+				<enum_value>0x0000</enum_value>
+				<description>Success</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_FATAL</name>
+				<enum_value>0x0010</enum_value>
+				<description>Fatal error</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_NCP_RESET</name>
+				<enum_value>0x0011</enum_value>
+				<description>The Response frame of the current transaction indicates the NCP has reset.</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_OVERSIZED_EZSP_FRAME</name>
+				<enum_value>0x0010</enum_value>
+				<description>The NCP is reporting that the Command frame of the current transaction is oversized (the length byte is too large).</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_OUT_OF_MEMORY</name>
+				<enum_value>0x0035</enum_value>
+				<description>Insufficient memory was available</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_INVALID_VALUE</name>
+				<enum_value>0x0036</enum_value>
+				<description>The value was out of bounds.</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EmberJoinMethod</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_USE_MAC_ASSOCIATION</name>
+				<enum_value>0x0000</enum_value>
+				<description>Normally devices use MAC Association to join a network, which respects the "permit joining" flag in the MAC Beacon. For mobile nodes this value causes the device to use an Ember Mobile Node Join, which is functionally equivalent to a MAC association. This value should be used by default.</description>
+			</value>
+			<value>
+				<name>EMBER_USE_NWK_REJOIN</name>
+				<enum_value>0x0001</enum_value>
+				<description>For those networks where the "permit joining" flag is never turned on, they will need to use a ZigBee NWK Rejoin. This value causes the rejoin to be sent without NWK security and the Trust Center will be asked to send the NWK key to the device. The NWK key sent to the device can be encrypted with the device's corresponding Trust Center link key. That is determined by the ::EmberJoinDecision on the Trust Center returned by the ::emberTrustCenterJoinHandler(). For a mobile node this value will cause it to use an Ember Mobile node rejoin, which is functionally equivalent.</description>
+			</value>
+			<value>
+				<name>EMBER_USE_NWK_REJOIN_HAVE_NWK_KEY</name>
+				<enum_value>0x0002</enum_value>
+				<description>For those networks where the "permit joining" flag is never turned on, they will need to use a NWK Rejoin. If those devices have been preconfigured with the NWK key (including sequence number) they can use a secured rejoin. This is only necessary for end devices since they need a parent. Routers can simply use the ::EMBER_USE_NWK_COMMISSIONING join method below.</description>
+			</value>
+			<value>
+				<name>EMBER_USE_NWK_COMMISSIONING</name>
+				<enum_value>0x0003</enum_value>
+				<description>For those networks where all network and security information is known ahead of time, a router device may be commissioned such that it does not need to send any messages to begin communicating on the network.</description>
+			</value>
+		</values>
+	</enum>
+	
+	<enum>
+		<name>EzspNetworkScanType</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EZSP_ENERGY_SCAN</name>
+				<enum_value>0x00</enum_value>
+				<description>An energy scan scans each channel for its RSSI value.</description>
+			</value>
+			<value>
+				<name>EZSP_ACTIVE_SCAN</name>
+				<enum_value>0x01</enum_value>
+				<description>An active scan scans each channel for available networks.</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EmberZdoConfigurationFlags</name>
+		<description>This is a bitmask that controls which incoming ZDO request messages are passed to the application.</description>
+		<values>
+			<value>
+				<name>EMBER_APP_RECEIVES_SUPPORTED_ZDO_REQUESTS</name>
+				<enum_value>0x01</enum_value>
+				<description>Set this flag in order to receive supported ZDO request messages via the incomingMessageHandler callback. A supported ZDO request is one that is handled by the EmberZNet stack. The stack will continue to handle the request and send the appropriate ZDO response even if this configuration option is enabled.</description>
+			</value>
+			<value>
+				<name>EMBER_APP_HANDLES_UNSUPPORTED_ZDO_REQUESTS</name>
+				<enum_value>0x02</enum_value>
+				<description>Set this flag in order to receive unsupported ZDO request messages via the incomingMessageHandler callback. An unsupported ZDO request is one that is not handled by the EmberZNet stack, other than to send a 'not supported' ZDO response. If this configuration option is enabled, the stack will no longer send any ZDO response, and it is the application's responsibility to do so.</description>
+			</value>
+			<value>
+				<name>EMBER_APP_HANDLES_ZDO_ENDPOINT_REQUESTS</name>
+				<enum_value>0x04</enum_value>
+				<description>Set this flag in order to receive the following ZDO request messages via the incomingMessageHandler callback: SIMPLE_DESCRIPTOR_REQUEST, MATCH_DESCRIPTORS_REQUEST, and ACTIVE_ENDPOINTS_REQUEST. If this configuration option is enabled, the stack will no longer send any ZDO response for these requests, and it is the application's responsibility to do so.</description>
+			</value>
+			<value>
+				<name>EMBER_APP_HANDLES_ZDO_BINDING_REQUESTS</name>
+				<enum_value>0x08</enum_value>
+				<description>Set this flag in order to receive the following ZDO request messages via the incomingMessageHandler callback: BINDING_TABLE_REQUEST, BIND_REQUEST, and UNBIND_REQUEST. If this configuration option is enabled, the stack will no longer send any ZDO response for these requests, and it is the application's responsibility to do so.</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EzspConfigId</name>
+		<description>Identifies which configuration value to read or change with getConfigurationValue and setConfigurationValue.</description>
+		<values>
+			<value>
+				<name>EZSP_CONFIG_PACKET_BUFFER_COUNT</name>
+				<enum_value>0x01</enum_value>
+				<description>The number of packet buffers available to the stack. When set to the special value 0xFF, the NCP will allocate all remaining configuration RAM towards packet buffers, such that the resulting count will be the largest whole number of packet buffers that can fit into the available memory.</description>
+			</value>
+			<value>
+				<name>EZSP_CONFIG_APPLICATION_ZDO_FLAGS</name>
+				<enum_value>0x2A</enum_value>
+				<description>This is a bitmask that controls which incoming ZDO request messages are passed to the application. The bits are defined in the EmberZdoConfigurationFlags enumeration. To see if the application is required to send a ZDO response in reply to an incoming message, the application must check the APS options bitfield within the incomingMessageHandler callback to see if the EMBER_APS_OPTION_ZDO_RESPONSE_REQUIRED flag is set.</description>
+			</value>
+		</values>
+	</enum>
+
+<!--
+	<enum>
+ 	<name>EmberInitialSecurityBitmask</name>
+		<name>EzspStatus</name>
+	 	<name>EmberIncomingMessageType</name>
+	 	<name>EmberApsOption</name>
+	 	<name>EmberNodeType</name>
+	 	<name>EmberInitialSecurityBitmask</name>
+	 	<name>EzspChannelMask</name>
+	 	<name>EzspNetworkScanType</name>
+	</enum>	
+-->
+
+</protocol>

@@ -6,6 +6,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -17,28 +21,23 @@ import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
-import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsResponse;
 
-/**
- *
- * @author Chris Jackson
- *
- */
-public class ZigBeeNetworkManagerTest {
+public class ZigBeeNetworkManagerTest
+        implements ZigBeeNetworkNodeListener, ZigBeeNetworkStateListener, ZigBeeNetworkDeviceListener, CommandListener {
     private ZigBeeNetworkNodeListener mockedNodeListener;
-    private ArgumentCaptor<ZigBeeNode> nodeNodeListenerCapture;
+    private List<ZigBeeNode> nodeNodeListenerCapture;
     private ZigBeeNetworkDeviceListener mockedDeviceListener;
-    private ArgumentCaptor<ZigBeeDevice> nodeDeviceListenerCapture;
+    private List<ZigBeeDevice> nodeDeviceListenerCapture;
     private ArgumentCaptor<ZigBeeNwkHeader> mockedNwkHeaderListener;
     private ArgumentCaptor<ZigBeeApsHeader> mockedApsHeaderListener;
-    private ArgumentCaptor<ZigBeeTransportState> networkStateListenerCapture;
+    private List<ZigBeeTransportState> networkStateListenerCapture;
 
     private ZigBeeTransportTransmit mockedTransport;
     private ArgumentCaptor<int[]> mockedPayloadListener;
     private CommandListener mockedCommandListener;
     private ZigBeeNetworkStateListener mockedStateListener;
-    private ArgumentCaptor<Command> commandListenerCapture;
+    private List<Command> commandListenerCapture;
 
     @Test
     public void testAddRemoveNode() {
@@ -51,27 +50,23 @@ public class ZigBeeNetworkManagerTest {
 
         // Add a node and make sure it's in the list
         networkManager.addNode(node1);
-        // Mockito.verify(mockedNodeListener, Mockito.timeout(100)).nodeUpdated(nodeNodeListenerCapture.capture());
-
         assertEquals(1, networkManager.getNodes().size());
-        // assertEquals(1, nodeNodeListenerCapture.getAllValues().size());
+        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(1));
 
         // Add it again to make sure it's not duplicated
         networkManager.addNode(node1);
         assertEquals(1, networkManager.getNodes().size());
-        // assertEquals(1, nodeNodeListenerCapture.getAllValues().size());
-        //
+        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(1));
+
         // Add a null node to make sure it's not added
         networkManager.addNode(null);
         assertEquals(1, networkManager.getNodes().size());
-        // assertEquals(1, nodeNodeListenerCapture.getAllValues().size());
+        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(1));
 
         // Add a new node to make sure it's added
         networkManager.addNode(node2);
-        // Mockito.verify(mockedNodeListener, Mockito.timeout(100)).nodeUpdated(nodeNodeListenerCapture.capture());
-
         assertEquals(2, networkManager.getNodes().size());
-        // assertEquals(2, nodeNodeListenerCapture.getAllValues().size());
+        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(2));
 
         ZigBeeNode foundNode = networkManager.getNode(1234);
         assertNotNull(foundNode);
@@ -79,22 +74,18 @@ public class ZigBeeNetworkManagerTest {
 
         // Remove it and make sure it's gone
         networkManager.removeNode(node1);
-        // Mockito.verify(mockedNodeListener, Mockito.timeout(100)).nodeUpdated(nodeNodeListenerCapture.capture());
-
         assertEquals(1, networkManager.getNodes().size());
-        // assertEquals(3, nodeNodeListenerCapture.getAllValues().size());
+        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(3));
 
         // Remove again to make sure we're ok
         networkManager.removeNode(node1);
-        // Mockito.verify(mockedNodeListener, Mockito.timeout(100)).nodeUpdated(nodeNodeListenerCapture.capture());
-
         assertEquals(1, networkManager.getNodes().size());
-        // assertEquals(3, nodeNodeListenerCapture.getAllValues().size());
+        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(3));
 
         // Remove a null node to make sure we're ok
         networkManager.removeNode(null);
         assertEquals(1, networkManager.getNodes().size());
-        // assertEquals(3, nodeNodeListenerCapture.getAllValues().size());
+        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(3));
 
         // Really check it's gone
         foundNode = networkManager.getNode(1234);
@@ -102,11 +93,9 @@ public class ZigBeeNetworkManagerTest {
 
         node2.setIeeeAddress(new IeeeAddress("123456789ABCDEF0"));
         networkManager.updateNode(node2);
-        // Mockito.verify(mockedNodeListener, Mockito.timeout(100)).nodeUpdated(nodeNodeListenerCapture.capture());
-
-        // assertEquals(4, nodeNodeListenerCapture.getAllValues().size());
+        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(4));
         networkManager.updateNode(null);
-        // assertEquals(4, nodeNodeListenerCapture.getAllValues().size());
+        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(4));
         assertEquals(1, networkManager.getNodes().size());
 
         // Check we can also get using the IEEE address
@@ -262,9 +251,9 @@ public class ZigBeeNetworkManagerTest {
         int[] payload = zclHeader.serialize(fieldSerializer, new int[] {});
 
         networkManager.receiveZclCommand(nwkHeader, apsHeader, payload);
-        // assertEquals(1, commandListenerCapture.getAllValues().size());
-        Mockito.verify(mockedCommandListener, Mockito.timeout(100)).commandReceived(commandListenerCapture.capture());
-        ReadAttributesCommand response = (ReadAttributesCommand) commandListenerCapture.getValue();
+        org.awaitility.Awaitility.await().until(commandListenerUpdated(), org.hamcrest.Matchers.equalTo(1));
+
+        ReadAttributesCommand response = (ReadAttributesCommand) commandListenerCapture.get(0);
 
         assertEquals(6, (int) response.getClusterId());
         assertEquals(0, (int) response.getCommandId());
@@ -277,9 +266,9 @@ public class ZigBeeNetworkManagerTest {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
 
-        ZdoCommand cmd = new ActiveEndpointsResponse();
+        ActiveEndpointsResponse cmd = new ActiveEndpointsResponse();
         networkManager.receiveZdoCommand(cmd);
-        Mockito.verify(mockedCommandListener, Mockito.timeout(100)).commandReceived(commandListenerCapture.capture());
+        // assertEquals(1, commandListenerCapture.getAllValues().size());
     }
 
     @Test
@@ -288,11 +277,10 @@ public class ZigBeeNetworkManagerTest {
 
         networkManager.setNetworkState(ZigBeeTransportState.INITIALISING);
 
-        Mockito.verify(mockedStateListener, Mockito.timeout(100))
-                .networkStateUpdated(networkStateListenerCapture.capture());
+        org.awaitility.Awaitility.await().until(networkStateUpdatedSize(), org.hamcrest.Matchers.equalTo(1));
 
-        assertEquals(1, networkStateListenerCapture.getAllValues().size());
-        assertEquals(ZigBeeTransportState.INITIALISING, networkStateListenerCapture.getValue());
+        assertEquals(1, networkStateListenerCapture.size());
+        assertEquals(ZigBeeTransportState.INITIALISING, networkStateListenerCapture.get(0));
 
         networkManager.removeNetworkStateListener(mockedStateListener);
     }
@@ -301,25 +289,27 @@ public class ZigBeeNetworkManagerTest {
         mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
         mockedStateListener = Mockito.mock(ZigBeeNetworkStateListener.class);
         mockedNodeListener = Mockito.mock(ZigBeeNetworkNodeListener.class);
-        nodeNodeListenerCapture = ArgumentCaptor.forClass(ZigBeeNode.class);
+        nodeNodeListenerCapture = new ArrayList<ZigBeeNode>();
         mockedDeviceListener = Mockito.mock(ZigBeeNetworkDeviceListener.class);
-        nodeDeviceListenerCapture = ArgumentCaptor.forClass(ZigBeeDevice.class);
-        networkStateListenerCapture = ArgumentCaptor.forClass(ZigBeeTransportState.class);
+        // nodeDeviceListenerCapture = ArgumentCaptor.forClass(ZigBeeDevice.class);
+        // networkStateListenerCapture = ArgumentCaptor.forClass(ZigBeeTransportState.class);
+        networkStateListenerCapture = new ArrayList<ZigBeeTransportState>();
 
         final ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
 
         mockedCommandListener = Mockito.mock(CommandListener.class);
-        commandListenerCapture = ArgumentCaptor.forClass(Command.class);
+        commandListenerCapture = new ArrayList<>();
 
-        networkManager.addNetworkNodeListener(mockedNodeListener);
-        networkManager.addNetworkStateListener(mockedStateListener);
-        networkManager.addNetworkDeviceListener(mockedDeviceListener);
-        networkManager.addCommandListener(mockedCommandListener);
+        networkManager.addNetworkNodeListener(this);
+        networkManager.addNetworkStateListener(this);
+        networkManager.addNetworkDeviceListener(this);
+        networkManager.addCommandListener(this);
 
-        Mockito.doNothing().when(mockedNodeListener).nodeAdded(nodeNodeListenerCapture.capture());
+        // Mockito.doNothing().when(mockedNodeListener).nodeAdded(nodeNodeListenerCapture.capture());
         // Mockito.doNothing().when(mockedNodeListener).nodeUpdated(nodeNodeListenerCapture.capture());
         // Mockito.doNothing().when(mockedNodeListener).nodeRemoved(nodeNodeListenerCapture.capture());
-        Mockito.doNothing().when(mockedCommandListener).commandReceived(commandListenerCapture.capture());
+        // Mockito.doNothing().when(mockedCommandListener).commandReceived(commandListenerCapture.capture());
+        // Mockito.doNothing().when(mockedStateListener).networkStateUpdated(networkStateListenerCapture.capture());
 
         mockedNwkHeaderListener = ArgumentCaptor.forClass(ZigBeeNwkHeader.class);
         mockedApsHeaderListener = ArgumentCaptor.forClass(ZigBeeApsHeader.class);
@@ -338,5 +328,75 @@ public class ZigBeeNetworkManagerTest {
         }
 
         return networkManager;
+    }
+
+    @Override
+    public void deviceAdded(ZigBeeDevice device) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void deviceUpdated(ZigBeeDevice device) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void deviceRemoved(ZigBeeDevice device) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void networkStateUpdated(ZigBeeTransportState state) {
+        networkStateListenerCapture.add(state);
+    }
+
+    private Callable<Integer> networkStateUpdatedSize() {
+        return new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return networkStateListenerCapture.size(); // The condition that must be fulfilled
+            }
+        };
+    }
+
+    @Override
+    public void nodeAdded(ZigBeeNode node) {
+        nodeNodeListenerCapture.add(node);
+    }
+
+    @Override
+    public void nodeUpdated(ZigBeeNode node) {
+        nodeNodeListenerCapture.add(node);
+    }
+
+    @Override
+    public void nodeRemoved(ZigBeeNode node) {
+        nodeNodeListenerCapture.add(node);
+    }
+
+    private Callable<Integer> nodeListenerUpdated() {
+        return new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return nodeNodeListenerCapture.size(); // The condition that must be fulfilled
+            }
+        };
+    }
+
+    @Override
+    public void commandReceived(Command command) {
+        commandListenerCapture.add(command);
+    }
+
+    private Callable<Integer> commandListenerUpdated() {
+        return new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return commandListenerCapture.size(); // The condition that must be fulfilled
+            }
+        };
     }
 }

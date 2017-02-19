@@ -6,7 +6,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameData;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNodeType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspFormNetworkResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetChildDataResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupEui64ByNodeIdResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspPermitJoiningResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurityStateResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
@@ -27,7 +43,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
  * @author Chris Jackson
  *
  */
-public abstract class EzspFrame extends EzspData {
+public abstract class EzspFrame {
     protected EmberStatus emberStatus = EmberStatus.EMBER_UNINTIALISED;
 
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
@@ -38,7 +54,7 @@ public abstract class EzspFrame extends EzspData {
     protected static final int FRAME_ID_ENERGY_SCAN_RESULT_HANDLER = 0x48;
     protected static final int FRAME_ID_FORM_NETWORK = 0x1E;
     // protected static final int FRAME_ID_GET_BINDING = 0x2C;
-    // protected static final int FRAME_ID_GET_CHILD_DATA = 0x4A;
+    protected static final int FRAME_ID_GET_CHILD_DATA = 0x4A;
     protected static final int FRAME_ID_GET_CONFIGURATION_VALUE = 0x52;
     // protected static final int FRAME_ID_GET_EIU64 = 0x26;
     // protected static final int FRAME_ID_GET_NEIGHBOR = 0x79;
@@ -54,7 +70,7 @@ public abstract class EzspFrame extends EzspData {
     // protected static final int FRAME_ID_INVALID_COMMAND = 0x62;
     // protected static final int FRAME_ID_JOIN_NETWORK = 0x1F;
     // protected static final int FRAME_ID_LEAVE_NETWORK = 0x20;
-    // protected static final int FRAME_ID_LOOKUP_EUI64_BY_NODE_ID = 0x61;
+    protected static final int FRAME_ID_LOOKUP_EUI64_BY_NODE_ID = 0x61;
     // protected static final int FRAME_ID_MAXIMUM_PAYLOAD_LENGTH = 0x33;
     // protected static final int FRAME_ID_MESSAGE_SENT_HANDLER = 0x3F;
     // protected static final int FRAME_ID_NEIGHBOR_COUNT = 0x7A;
@@ -71,7 +87,7 @@ public abstract class EzspFrame extends EzspData {
     // protected static final int FRAME_ID_SEND_MULTICAST = 0x38;
     protected static final int FRAME_ID_SEND_UNICAST = 0x34;
     // protected static final int FRAME_ID_SET_BINDING = 0x2B;
-    // protected static final int FRAME_ID_SET_CONFIGURATION_VALUE = 0x53;
+    protected static final int FRAME_ID_SET_CONFIGURATION_VALUE = 0x53;
     protected static final int FRAME_ID_SET_INITIAL_SECURITY_STATE = 0x68;
     protected static final int FRAME_ID_STACK_STATUS_HANDLER = 0x19;
     protected static final int FRAME_ID_START_SCAN = 0x1A;
@@ -80,48 +96,28 @@ public abstract class EzspFrame extends EzspData {
 
     protected int sequenceNumber;
     protected int frameControl;
-    protected final int frameId;
+    protected int frameId = 0;
     protected boolean isResponse = false;
 
     private static Map<Integer, Class<?>> ezspHandlerMap = new HashMap<Integer, Class<?>>();
     static {
         ezspHandlerMap.put(FRAME_ID_ADD_ENDPOINT, EzspAddEndpointResponse.class);
-        ezspHandlerMap.put(FRAME_ID_CHILD_JOIN_HANDLER, EzspChildJoinHandlerResponse.class);
-        ezspHandlerMap.put(FRAME_ID_ENERGY_SCAN_RESULT_HANDLER, EzspEnergyScanResultHandlerResponse.class);
+        ezspHandlerMap.put(FRAME_ID_CHILD_JOIN_HANDLER, EzspChildJoinHandler.class);
+        ezspHandlerMap.put(FRAME_ID_ENERGY_SCAN_RESULT_HANDLER, EzspEnergyScanResultHandler.class);
         ezspHandlerMap.put(FRAME_ID_FORM_NETWORK, EzspFormNetworkResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_CHILD_DATA, EzspGetChildDataResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_CONFIGURATION_VALUE, EzspGetConfigurationValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_NETWORK_PARAMETERS, EzspGetNetworkParametersResponse.class);
-        ezspHandlerMap.put(FRAME_ID_NETWORK_FOUND_HANDLER, EzspNetworkFoundHandlerResponse.class);
+        ezspHandlerMap.put(FRAME_ID_LOOKUP_EUI64_BY_NODE_ID, EzspLookupEui64ByNodeIdResponse.class);
+        ezspHandlerMap.put(FRAME_ID_NETWORK_FOUND_HANDLER, EzspNetworkFoundHandler.class);
         ezspHandlerMap.put(FRAME_ID_NETWORK_INIT, EzspNetworkInitResponse.class);
         ezspHandlerMap.put(FRAME_ID_PERMIT_JOINING, EzspPermitJoiningResponse.class);
-        ezspHandlerMap.put(FRAME_ID_SCAN_COMPLETE_HANDLER, EzspScanCompleteHandlerResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SCAN_COMPLETE_HANDLER, EzspScanCompleteHandler.class);
+        ezspHandlerMap.put(FRAME_ID_SET_CONFIGURATION_VALUE, EzspSetConfigurationValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_INITIAL_SECURITY_STATE, EzspSetInitialSecurityStateResponse.class);
-        ezspHandlerMap.put(FRAME_ID_STACK_STATUS_HANDLER, EzspStackStatusHandlerResponse.class);
+        ezspHandlerMap.put(FRAME_ID_STACK_STATUS_HANDLER, EzspStackStatusHandler.class);
         ezspHandlerMap.put(FRAME_ID_START_SCAN, EzspStartScanResponse.class);
         ezspHandlerMap.put(FRAME_ID_VERSION, EzspVersionResponse.class);
-    }
-
-    /**
-     * Constructor used to create an outgoing frame
-     *
-     * @param frameId
-     */
-    EzspFrame(int frameId) {
-        this.frameId = frameId;
-    }
-
-    /**
-     * Constructor used to create a received frame
-     *
-     * @param inputBuffer
-     */
-    public EzspFrame(int[] inputBuffer) {
-        this.buffer = inputBuffer;
-
-        this.sequenceNumber = inputBuffer[0];
-        this.frameControl = inputBuffer[1];
-        this.frameId = inputBuffer[2];
-        this.isResponse = (inputBuffer[1] & 0x80) != 0;
     }
 
     /**
@@ -148,68 +144,6 @@ public abstract class EzspFrame extends EzspData {
 
     public int getFrameId() {
         return frameId;
-    }
-
-    /**
-     * Returns the current status of the transaction. If the transaction has not
-     * been sent to the NCP, it will be EMBER_UNINITIALISED. Once a response has
-     * been received, this will reflect the status received from the NCP if the
-     * NCP provides a status with the response, otherwise the status will be set
-     * to EMBER_SUCCESS.
-     *
-     * @return {@link EmberStatus} of the transaction
-     */
-    public EmberStatus getEmberStatus() {
-        return emberStatus;
-    }
-
-    protected EmberStatus inputEmberStatus() {
-        return EmberStatus.getEmberStatus(buffer[position++]);
-    }
-
-    protected EmberNodeType inputEmberNodeType() {
-        return EmberNodeType.getEmberNodeType(buffer[position++]);
-    }
-
-    protected boolean initialiseEzspResponse(int[] inputBuffer) {
-        buffer = inputBuffer;
-        position = 0;
-
-        // Check the sequence number
-        if (inputBuffer[0] != sequenceNumber) {
-            return false;
-        }
-
-        // Make sure this is a response
-        if ((inputBuffer[1] & 0x80) == 0) {
-            return false;
-        }
-
-        position = 3;
-
-        // Default the status to success. This can be overridden if the response
-        // provides a status
-        emberStatus = EmberStatus.EMBER_SUCCESS;
-
-        return true;
-    }
-
-    protected boolean initialEzspResponse(EzspFrame response) {
-        // Make sure this is a response
-        if (!response.isResponse()) {
-            return false;
-        }
-
-        // Check the sequence number
-        if (response.getSequenceNumber() != sequenceNumber) {
-            return false;
-        }
-
-        // Default the status to success. This can be overridden if the response
-        // provides a status
-        emberStatus = EmberStatus.EMBER_SUCCESS;
-
-        return true;
     }
 
     public static EzspFrameResponse createHandler(AshFrameData data) {

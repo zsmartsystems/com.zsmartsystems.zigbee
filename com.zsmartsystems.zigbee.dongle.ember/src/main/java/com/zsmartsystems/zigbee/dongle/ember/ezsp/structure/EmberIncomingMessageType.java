@@ -66,7 +66,7 @@ public enum EmberIncomingMessageType {
      *            the code to lookup
      * @return enumeration value of the alarm type.
      */
-    public static EmberIncomingMessageType getEmberOutgoingMessageType(int i) {
+    public static EmberIncomingMessageType getEmberIncomingMessageType(int i) {
         if (codeMapping == null) {
             initMapping();
         }
