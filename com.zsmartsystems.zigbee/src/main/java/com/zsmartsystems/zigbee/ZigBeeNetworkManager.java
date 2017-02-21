@@ -37,9 +37,7 @@ import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoResponseMatcher;
-import com.zsmartsystems.zigbee.zdo.command.BindRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoinRequest;
-import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
 
 /**
  * Implements functions for managing the ZigBee interfaces.
@@ -802,16 +800,25 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return TRUE if no errors occurred in sending.
      */
     public Future<CommandResult> bind(final ZigBeeDevice source, final ZigBeeDevice destination, final int clusterId) {
-        final int destinationAddress = source.getNetworkAddress();
-        final IeeeAddress bindSourceAddress = source.getIeeeAddress();
-        final int bindSourceEndpoint = source.getEndpoint();
-        final int bindCluster = clusterId;
-        final int bindDestinationAddressingMode = 3; // 64 bit addressing
-        final IeeeAddress bindDestinationAddress = destination.getIeeeAddress();
-        final int bindDestinationEndpoint = destination.getEndpoint();
-        final BindRequest command = new BindRequest(destinationAddress, bindSourceAddress.getLong(), bindSourceEndpoint,
-                bindCluster, bindDestinationAddressingMode, bindDestinationAddress.getLong(), bindDestinationEndpoint);
-        return unicast(command);
+        /*
+         * final int destinationAddress = source.getNetworkAddress();
+         * final IeeeAddress bindSourceAddress = source.getIeeeAddress();
+         * final int bindSourceEndpoint = source.getEndpoint();
+         * final int bindCluster = clusterId;
+         * final int bindDestinationAddressingMode = 3; // 64 bit addressing
+         * final IeeeAddress bindDestinationAddress = destination.getIeeeAddress();
+         * final int bindDestinationEndpoint = destination.getEndpoint();
+         * final BindRequest command = new BindRequest();
+         * command.setDstAddress(destinationAddress);
+         * command.setSrcAddress(bindSourceAddress.getLong());
+         * command.setSrcEndpoint(bindSourceEndpoint);
+         * command.setClusterId(bindCluster);
+         * command.setDstAddrMode(bindDestinationAddressingMode);
+         * command.setDstAddress(bindDestinationAddress.getLong());
+         * command.setDstEndpoint(bindDestinationEndpoint);
+         * return unicast(command);
+         */
+        return null;
     }
 
     /**
@@ -824,17 +831,20 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public Future<CommandResult> unbind(final ZigBeeDevice source, final ZigBeeDevice destination,
             final int clusterId) {
-        final int destinationAddress = source.getNetworkAddress();
-        final IeeeAddress bindSourceAddress = source.getIeeeAddress();
-        final int bindSourceEndpoint = source.getEndpoint();
-        final int bindCluster = clusterId;
-        final int bindDestinationAddressingMode = 3; // 64 bit addressing
-        final IeeeAddress bindDestinationAddress = destination.getIeeeAddress();
-        final int bindDestinationEndpoint = destination.getEndpoint();
-        final UnbindRequest command = new UnbindRequest(destinationAddress, bindSourceAddress.getLong(),
-                bindSourceEndpoint, bindCluster, bindDestinationAddressingMode, bindDestinationAddress.getLong(),
-                bindDestinationEndpoint);
-        return unicast(command);
+        /*
+         * final int destinationAddress = source.getNetworkAddress();
+         * final IeeeAddress bindSourceAddress = source.getIeeeAddress();
+         * final int bindSourceEndpoint = source.getEndpoint();
+         * final int bindCluster = clusterId;
+         * final int bindDestinationAddressingMode = 3; // 64 bit addressing
+         * final IeeeAddress bindDestinationAddress = destination.getIeeeAddress();
+         * final int bindDestinationEndpoint = destination.getEndpoint();
+         * final UnbindRequest command = new UnbindRequest(destinationAddress, bindSourceAddress.getLong(),
+         * bindSourceEndpoint, bindCluster, bindDestinationAddressingMode, bindDestinationAddress.getLong(),
+         * bindDestinationEndpoint);
+         * return unicast(command);
+         */
+        return null;
     }
 
     /**

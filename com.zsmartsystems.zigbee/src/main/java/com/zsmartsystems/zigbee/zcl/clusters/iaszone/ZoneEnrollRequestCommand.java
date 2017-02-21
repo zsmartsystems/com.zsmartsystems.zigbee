@@ -40,6 +40,7 @@ public class ZoneEnrollRequestCommand extends ZclCommand {
 
     /**
      * Gets Zone Type.
+     *
      * @return the Zone Type
      */
     public Integer getZoneType() {
@@ -48,6 +49,7 @@ public class ZoneEnrollRequestCommand extends ZclCommand {
 
     /**
      * Sets Zone Type.
+     *
      * @param zoneType the Zone Type
      */
     public void setZoneType(final Integer zoneType) {
@@ -56,6 +58,7 @@ public class ZoneEnrollRequestCommand extends ZclCommand {
 
     /**
      * Gets Manufacturer Code.
+     *
      * @return the Manufacturer Code
      */
     public Integer getManufacturerCode() {
@@ -64,6 +67,7 @@ public class ZoneEnrollRequestCommand extends ZclCommand {
 
     /**
      * Sets Manufacturer Code.
+     *
      * @param manufacturerCode the Manufacturer Code
      */
     public void setManufacturerCode(final Integer manufacturerCode) {

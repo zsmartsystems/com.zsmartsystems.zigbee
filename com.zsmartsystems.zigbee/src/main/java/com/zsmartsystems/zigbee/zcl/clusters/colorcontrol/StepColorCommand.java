@@ -46,6 +46,7 @@ public class StepColorCommand extends ZclCommand {
 
     /**
      * Gets StepX.
+     *
      * @return the StepX
      */
     public Integer getStepX() {
@@ -54,6 +55,7 @@ public class StepColorCommand extends ZclCommand {
 
     /**
      * Sets StepX.
+     *
      * @param stepX the StepX
      */
     public void setStepX(final Integer stepX) {
@@ -62,6 +64,7 @@ public class StepColorCommand extends ZclCommand {
 
     /**
      * Gets StepY.
+     *
      * @return the StepY
      */
     public Integer getStepY() {
@@ -70,6 +73,7 @@ public class StepColorCommand extends ZclCommand {
 
     /**
      * Sets StepY.
+     *
      * @param stepY the StepY
      */
     public void setStepY(final Integer stepY) {
@@ -78,6 +82,7 @@ public class StepColorCommand extends ZclCommand {
 
     /**
      * Gets Transition time.
+     *
      * @return the Transition time
      */
     public Integer getTransitionTime() {
@@ -86,6 +91,7 @@ public class StepColorCommand extends ZclCommand {
 
     /**
      * Sets Transition time.
+     *
      * @param transitionTime the Transition time
      */
     public void setTransitionTime(final Integer transitionTime) {

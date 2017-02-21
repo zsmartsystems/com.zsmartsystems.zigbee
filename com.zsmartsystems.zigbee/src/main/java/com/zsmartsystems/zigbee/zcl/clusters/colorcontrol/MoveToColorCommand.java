@@ -46,6 +46,7 @@ public class MoveToColorCommand extends ZclCommand {
 
     /**
      * Gets ColorX.
+     *
      * @return the ColorX
      */
     public Integer getColorX() {
@@ -54,6 +55,7 @@ public class MoveToColorCommand extends ZclCommand {
 
     /**
      * Sets ColorX.
+     *
      * @param colorX the ColorX
      */
     public void setColorX(final Integer colorX) {
@@ -62,6 +64,7 @@ public class MoveToColorCommand extends ZclCommand {
 
     /**
      * Gets ColorY.
+     *
      * @return the ColorY
      */
     public Integer getColorY() {
@@ -70,6 +73,7 @@ public class MoveToColorCommand extends ZclCommand {
 
     /**
      * Sets ColorY.
+     *
      * @param colorY the ColorY
      */
     public void setColorY(final Integer colorY) {
@@ -78,6 +82,7 @@ public class MoveToColorCommand extends ZclCommand {
 
     /**
      * Gets Transition time.
+     *
      * @return the Transition time
      */
     public Integer getTransitionTime() {
@@ -86,6 +91,7 @@ public class MoveToColorCommand extends ZclCommand {
 
     /**
      * Sets Transition time.
+     *
      * @param transitionTime the Transition time
      */
     public void setTransitionTime(final Integer transitionTime) {

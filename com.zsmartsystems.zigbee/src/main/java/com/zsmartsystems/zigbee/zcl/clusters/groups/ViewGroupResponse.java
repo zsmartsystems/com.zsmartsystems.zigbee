@@ -59,6 +59,7 @@ public class ViewGroupResponse extends ZclCommand {
 
     /**
      * Gets Status.
+     *
      * @return the Status
      */
     public Integer getStatus() {
@@ -67,6 +68,7 @@ public class ViewGroupResponse extends ZclCommand {
 
     /**
      * Sets Status.
+     *
      * @param status the Status
      */
     public void setStatus(final Integer status) {
@@ -75,6 +77,7 @@ public class ViewGroupResponse extends ZclCommand {
 
     /**
      * Gets Group ID.
+     *
      * @return the Group ID
      */
     public Integer getGroupId() {
@@ -83,6 +86,7 @@ public class ViewGroupResponse extends ZclCommand {
 
     /**
      * Sets Group ID.
+     *
      * @param groupId the Group ID
      */
     public void setGroupId(final Integer groupId) {
@@ -91,6 +95,7 @@ public class ViewGroupResponse extends ZclCommand {
 
     /**
      * Gets Group Name.
+     *
      * @return the Group Name
      */
     public String getGroupName() {
@@ -99,6 +104,7 @@ public class ViewGroupResponse extends ZclCommand {
 
     /**
      * Sets Group Name.
+     *
      * @param groupName the Group Name
      */
     public void setGroupName(final String groupName) {

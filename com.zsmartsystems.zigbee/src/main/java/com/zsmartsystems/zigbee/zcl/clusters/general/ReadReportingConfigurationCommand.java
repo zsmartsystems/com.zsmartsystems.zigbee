@@ -49,6 +49,7 @@ public class ReadReportingConfigurationCommand extends ZclCommand {
 
     /**
      * Gets Records.
+     *
      * @return the Records
      */
     public List<AttributeRecord> getRecords() {
@@ -57,6 +58,7 @@ public class ReadReportingConfigurationCommand extends ZclCommand {
 
     /**
      * Sets Records.
+     *
      * @param records the Records
      */
     public void setRecords(final List<AttributeRecord> records) {

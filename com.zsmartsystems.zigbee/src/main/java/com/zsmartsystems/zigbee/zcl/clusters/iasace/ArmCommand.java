@@ -36,6 +36,7 @@ public class ArmCommand extends ZclCommand {
 
     /**
      * Gets Arm Mode.
+     *
      * @return the Arm Mode
      */
     public Integer getArmMode() {
@@ -44,6 +45,7 @@ public class ArmCommand extends ZclCommand {
 
     /**
      * Sets Arm Mode.
+     *
      * @param armMode the Arm Mode
      */
     public void setArmMode(final Integer armMode) {

@@ -110,7 +110,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.IIntArrayInputStream;
  */
 public class ZToolPacketStream implements IIntArrayInputStream {
 
-    private final static Logger log = LoggerFactory.getLogger(ZToolPacketStream.class);
+    private final static Logger logger = LoggerFactory.getLogger(ZToolPacketStream.class);
 
     private boolean done;
 
@@ -170,7 +170,7 @@ public class ZToolPacketStream implements IIntArrayInputStream {
             }
             return response;
         } catch (Exception e) {
-            log.error("Packet parsing failed due to exception.", e);
+            logger.error("Packet parsing failed due to exception.", e);
             exception = e;
         }
         final ZToolPacket exceptionResponse = new ErrorPacket();
@@ -321,7 +321,7 @@ public class ZToolPacketStream implements IIntArrayInputStream {
             case ZToolCMD.UTIL_GET_DEVICE_INFO_RESPONSE:
                 return new UTIL_GET_DEVICE_INFO_RESPONSE(payload);
             default:
-                log.warn("Unknown command ID: 0x" + Integer.toHexString(cmdId.get16BitValue()));
+                logger.warn("Unknown command ID: 0x" + Integer.toHexString(cmdId.get16BitValue()));
                 return new ZToolPacket(cmdId, payload);
         }
     }
@@ -329,7 +329,7 @@ public class ZToolPacketStream implements IIntArrayInputStream {
     @Override
     public int read(final String context) throws IOException {
         int b = read();
-        log.trace("Read {}  byte, val is {}", context, ByteUtils.formatByte(b));
+        logger.trace("Read {}  byte, val is {}", context, ByteUtils.formatByte(b));
         return b;
     }
 

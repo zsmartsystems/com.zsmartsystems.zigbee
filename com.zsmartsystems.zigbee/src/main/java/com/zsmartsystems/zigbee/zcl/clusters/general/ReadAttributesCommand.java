@@ -50,6 +50,7 @@ public class ReadAttributesCommand extends ZclCommand {
 
     /**
      * Gets Identifiers.
+     *
      * @return the Identifiers
      */
     public List<AttributeIdentifier> getIdentifiers() {
@@ -58,6 +59,7 @@ public class ReadAttributesCommand extends ZclCommand {
 
     /**
      * Sets Identifiers.
+     *
      * @param identifiers the Identifiers
      */
     public void setIdentifiers(final List<AttributeIdentifier> identifiers) {

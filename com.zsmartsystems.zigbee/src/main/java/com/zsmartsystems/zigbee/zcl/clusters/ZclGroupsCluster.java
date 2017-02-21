@@ -104,10 +104,10 @@ public class ZclGroupsCluster extends ZclCluster {
      * The Get Group Membership Command
      *
      * @param groupCount {@link Integer} Group count
-     * @param groupList {@link List<Unsigned16BitInteger>} Group list
+     * @param groupList {@link List<Integer>} Group list
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getGroupMembershipCommand(Integer groupCount, List<Unsigned16BitInteger> groupList) {
+    public Future<CommandResult> getGroupMembershipCommand(Integer groupCount, List<Integer> groupList) {
         GetGroupMembershipCommand command = new GetGroupMembershipCommand();
 
         // Set the fields
@@ -201,10 +201,10 @@ public class ZclGroupsCluster extends ZclCluster {
      *
      * @param capacity {@link Integer} Capacity
      * @param groupCount {@link Integer} Group count
-     * @param groupList {@link List<Unsigned16BitInteger>} Group list
+     * @param groupList {@link List<Integer>} Group list
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getGroupMembershipResponse(Integer capacity, Integer groupCount, List<Unsigned16BitInteger> groupList) {
+    public Future<CommandResult> getGroupMembershipResponse(Integer capacity, Integer groupCount, List<Integer> groupList) {
         GetGroupMembershipResponse command = new GetGroupMembershipResponse();
 
         // Set the fields

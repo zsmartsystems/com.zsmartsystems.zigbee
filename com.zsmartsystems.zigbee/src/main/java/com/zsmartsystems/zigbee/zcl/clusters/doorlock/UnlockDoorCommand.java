@@ -31,6 +31,7 @@ public class UnlockDoorCommand extends ZclCommand {
 
     /**
      * Gets Pin code.
+     *
      * @return the Pin code
      */
     public String getPinCode() {
@@ -39,6 +40,7 @@ public class UnlockDoorCommand extends ZclCommand {
 
     /**
      * Sets Pin code.
+     *
      * @param pinCode the Pin code
      */
     public void setPinCode(final String pinCode) {

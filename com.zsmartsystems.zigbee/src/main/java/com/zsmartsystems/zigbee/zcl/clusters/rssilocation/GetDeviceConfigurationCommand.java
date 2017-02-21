@@ -31,6 +31,7 @@ public class GetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Gets Target Address.
+     *
      * @return the Target Address
      */
     public Long getTargetAddress() {
@@ -39,6 +40,7 @@ public class GetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Sets Target Address.
+     *
      * @param targetAddress the Target Address
      */
     public void setTargetAddress(final Long targetAddress) {

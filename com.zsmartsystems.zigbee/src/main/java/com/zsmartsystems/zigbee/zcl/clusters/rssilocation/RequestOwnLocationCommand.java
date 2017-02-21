@@ -31,6 +31,7 @@ public class RequestOwnLocationCommand extends ZclCommand {
 
     /**
      * Gets Requesting Address.
+     *
      * @return the Requesting Address
      */
     public Long getRequestingAddress() {
@@ -39,6 +40,7 @@ public class RequestOwnLocationCommand extends ZclCommand {
 
     /**
      * Sets Requesting Address.
+     *
      * @param requestingAddress the Requesting Address
      */
     public void setRequestingAddress(final Long requestingAddress) {

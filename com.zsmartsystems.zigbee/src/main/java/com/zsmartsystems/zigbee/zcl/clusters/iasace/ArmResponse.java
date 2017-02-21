@@ -36,6 +36,7 @@ public class ArmResponse extends ZclCommand {
 
     /**
      * Gets Arm Notification.
+     *
      * @return the Arm Notification
      */
     public Integer getArmNotification() {
@@ -44,6 +45,7 @@ public class ArmResponse extends ZclCommand {
 
     /**
      * Sets Arm Notification.
+     *
      * @param armNotification the Arm Notification
      */
     public void setArmNotification(final Integer armNotification) {

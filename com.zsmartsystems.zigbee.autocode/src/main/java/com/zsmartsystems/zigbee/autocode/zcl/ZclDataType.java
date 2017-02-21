@@ -39,13 +39,13 @@ public class ZclDataType {
         dataTypeMapping.put("USER_DESCRIPTOR", new DataTypeMap("UserDescriptor", 0, 0, false));
         dataTypeMapping.put("NWK_ADDRESS", new DataTypeMap("Integer", 0, 0, false, 0xffff));
         dataTypeMapping.put("N_X_IEEE_ADDRESS", new DataTypeMap("List<Long>", 0, 0, false));
-        dataTypeMapping.put("N_X_NWK_ADDRESS", new DataTypeMap("List<Long>", 0, 0, false));
+        dataTypeMapping.put("N_X_NWK_ADDRESS", new DataTypeMap("List<Integer>", 0, 0, false));
         dataTypeMapping.put("N_X_CLUSTERID", new DataTypeMap("List<Integer>", 0, 0, false));
         dataTypeMapping.put("N_X_ENDPOINT", new DataTypeMap("List<Integer>", 0, 0, false));
         dataTypeMapping.put("N_X_EXTENSION_FIELD_SET", new DataTypeMap("List<ExtensionFieldSet>", 0, 0, false));
         dataTypeMapping.put("N_X_NEIGHBORS_INFORMATION", new DataTypeMap("List<NeighborInformation>", 0, 0, false));
-        dataTypeMapping.put("N_X_UNSIGNED_16_BIT_INTEGER", new DataTypeMap("List<Unsigned16BitInteger>", 0, 0, false));
-        dataTypeMapping.put("N_X_UNSIGNED_8_BIT_INTEGER", new DataTypeMap("List<Unsigned8BitInteger>", 0, 0, false));
+        dataTypeMapping.put("N_X_UNSIGNED_16_BIT_INTEGER", new DataTypeMap("List<Integer>", 0, 0, false));
+        dataTypeMapping.put("N_X_UNSIGNED_8_BIT_INTEGER", new DataTypeMap("List<Integer>", 0, 0, false));
         dataTypeMapping.put("N_X_ATTRIBUTE_IDENTIFIER", new DataTypeMap("List<AttributeIdentifier>", 0, 0, false));
         dataTypeMapping.put("N_X_READ_ATTRIBUTE_STATUS_RECORD",
                 new DataTypeMap("List<ReadAttributeStatusRecord>", 0, 0, false));

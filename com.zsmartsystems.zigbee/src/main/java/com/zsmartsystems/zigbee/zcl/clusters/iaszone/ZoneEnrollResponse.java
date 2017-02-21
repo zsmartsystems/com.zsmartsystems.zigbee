@@ -40,6 +40,7 @@ public class ZoneEnrollResponse extends ZclCommand {
 
     /**
      * Gets Enroll response code.
+     *
      * @return the Enroll response code
      */
     public Integer getEnrollResponseCode() {
@@ -48,6 +49,7 @@ public class ZoneEnrollResponse extends ZclCommand {
 
     /**
      * Sets Enroll response code.
+     *
      * @param enrollResponseCode the Enroll response code
      */
     public void setEnrollResponseCode(final Integer enrollResponseCode) {
@@ -56,6 +58,7 @@ public class ZoneEnrollResponse extends ZclCommand {
 
     /**
      * Gets Zone ID.
+     *
      * @return the Zone ID
      */
     public Integer getZoneId() {
@@ -64,6 +67,7 @@ public class ZoneEnrollResponse extends ZclCommand {
 
     /**
      * Sets Zone ID.
+     *
      * @param zoneId the Zone ID
      */
     public void setZoneId(final Integer zoneId) {

@@ -31,6 +31,7 @@ public class RestoreStartupParametersResponse extends ZclCommand {
 
     /**
      * Gets Status.
+     *
      * @return the Status
      */
     public Integer getStatus() {
@@ -39,6 +40,7 @@ public class RestoreStartupParametersResponse extends ZclCommand {
 
     /**
      * Sets Status.
+     *
      * @param status the Status
      */
     public void setStatus(final Integer status) {

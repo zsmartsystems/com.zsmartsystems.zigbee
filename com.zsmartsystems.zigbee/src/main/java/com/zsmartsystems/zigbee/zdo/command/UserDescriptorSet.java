@@ -1,50 +1,40 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
- * UserDescriptorSet.
- *
- * @author Tommi S.E. Laukkanen
+ * User Descriptor Set value object class.
+ * <p>
+ * The User_Desc_set command is generated from a local device wishing to
+ * configure the user descriptor on a remote device. This command shall be unicast
+ * either to the remote device itself or to an alternative device that contains the
+ * discovery information of the remote device.
+ * <br>
+ * The local device shall generate the User_Desc_set command using the format
+ * illustrated in Table 2.55. The NWKAddrOfInterest field shall contain the network
+ * address of the remote device for which the user descriptor is to be configured and
+ * the UserDescription field shall contain the ASCII character string that is to be
+ * configured in the user descriptor. Characters with ASCII codes numbered 0x00
+ * through 0x1f are not permitted to be included in this string.
+ * <p>
+ * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * This command is a <b>generic</b> command used across the profile.
+ * <p>
+ * Code is auto-generated. Modifications may be overwritten!
  */
-public class UserDescriptorSet extends ZdoRequest {
+public class UserDescriptorSet extends ZdoResponse {
     /**
-     * The network address.
+     * Default constructor.
      */
-    public int networkAddress;
-    /**
-     * The user descriptor. Maximum 16 ASCII character set characters.
-     */
-    public String descriptor;
-
     public UserDescriptorSet() {
-    }
-
-    public UserDescriptorSet(int destinationAddress, int networkAddress, String descriptor) {
-        this.destinationAddress = destinationAddress;
-        this.networkAddress = networkAddress;
-        this.descriptor = descriptor;
-    }
-
-    public int getNetworkAddress() {
-        return networkAddress;
-    }
-
-    public void setNetworkAddress(int networkAddress) {
-        this.networkAddress = networkAddress;
-    }
-
-    public String getDescriptor() {
-        return descriptor;
-    }
-
-    public void setDescriptor(String descriptor) {
-        this.descriptor = descriptor;
     }
 
     @Override
     public String toString() {
-        return "UserDescriptorSet: destinationAddress=" + destinationAddress + ", networkAddress=" + networkAddress
-                + ", descriptor='" + descriptor + '\'';
+        final StringBuilder builder = new StringBuilder();
+        builder.append("UserDescriptorSet");
+        builder.append(super.toString());
+        return builder.toString();
     }
+
 }

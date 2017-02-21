@@ -49,6 +49,7 @@ public class WriteAttributesResponse extends ZclCommand {
 
     /**
      * Gets Records.
+     *
      * @return the Records
      */
     public List<WriteAttributeStatusRecord> getRecords() {
@@ -57,6 +58,7 @@ public class WriteAttributesResponse extends ZclCommand {
 
     /**
      * Sets Records.
+     *
      * @param records the Records
      */
     public void setRecords(final List<WriteAttributeStatusRecord> records) {

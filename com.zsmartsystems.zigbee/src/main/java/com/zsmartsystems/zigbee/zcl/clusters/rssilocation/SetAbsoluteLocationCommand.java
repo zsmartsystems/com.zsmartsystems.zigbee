@@ -51,6 +51,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
 
     /**
      * Gets Coordinate 1.
+     *
      * @return the Coordinate 1
      */
     public Integer getCoordinate1() {
@@ -59,6 +60,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
 
     /**
      * Sets Coordinate 1.
+     *
      * @param coordinate1 the Coordinate 1
      */
     public void setCoordinate1(final Integer coordinate1) {
@@ -67,6 +69,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
 
     /**
      * Gets Coordinate 2.
+     *
      * @return the Coordinate 2
      */
     public Integer getCoordinate2() {
@@ -75,6 +78,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
 
     /**
      * Sets Coordinate 2.
+     *
      * @param coordinate2 the Coordinate 2
      */
     public void setCoordinate2(final Integer coordinate2) {
@@ -83,6 +87,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
 
     /**
      * Gets Coordinate 3.
+     *
      * @return the Coordinate 3
      */
     public Integer getCoordinate3() {
@@ -91,6 +96,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
 
     /**
      * Sets Coordinate 3.
+     *
      * @param coordinate3 the Coordinate 3
      */
     public void setCoordinate3(final Integer coordinate3) {
@@ -99,6 +105,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
 
     /**
      * Gets Power.
+     *
      * @return the Power
      */
     public Integer getPower() {
@@ -107,6 +114,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
 
     /**
      * Sets Power.
+     *
      * @param power the Power
      */
     public void setPower(final Integer power) {
@@ -115,6 +123,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
 
     /**
      * Gets Path Loss Exponent.
+     *
      * @return the Path Loss Exponent
      */
     public Integer getPathLossExponent() {
@@ -123,6 +132,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
 
     /**
      * Sets Path Loss Exponent.
+     *
      * @param pathLossExponent the Path Loss Exponent
      */
     public void setPathLossExponent(final Integer pathLossExponent) {

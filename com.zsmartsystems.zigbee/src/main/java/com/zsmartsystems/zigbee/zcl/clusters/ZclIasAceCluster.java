@@ -74,10 +74,10 @@ public class ZclIasAceCluster extends ZclCluster {
      * The Bypass Command
      *
      * @param numberOfZones {@link Integer} Number of Zones
-     * @param zoneIDs {@link List<Unsigned8BitInteger>} Zone IDs
+     * @param zoneIDs {@link List<Integer>} Zone IDs
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> bypassCommand(Integer numberOfZones, List<Unsigned8BitInteger> zoneIDs) {
+    public Future<CommandResult> bypassCommand(Integer numberOfZones, List<Integer> zoneIDs) {
         BypassCommand command = new BypassCommand();
 
         // Set the fields

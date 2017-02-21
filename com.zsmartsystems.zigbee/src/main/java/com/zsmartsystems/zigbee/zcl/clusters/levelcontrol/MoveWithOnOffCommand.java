@@ -40,6 +40,7 @@ public class MoveWithOnOffCommand extends ZclCommand {
 
     /**
      * Gets Move mode.
+     *
      * @return the Move mode
      */
     public Integer getMoveMode() {
@@ -48,6 +49,7 @@ public class MoveWithOnOffCommand extends ZclCommand {
 
     /**
      * Sets Move mode.
+     *
      * @param moveMode the Move mode
      */
     public void setMoveMode(final Integer moveMode) {
@@ -56,6 +58,7 @@ public class MoveWithOnOffCommand extends ZclCommand {
 
     /**
      * Gets Rate.
+     *
      * @return the Rate
      */
     public Integer getRate() {
@@ -64,6 +67,7 @@ public class MoveWithOnOffCommand extends ZclCommand {
 
     /**
      * Sets Rate.
+     *
      * @param rate the Rate
      */
     public void setRate(final Integer rate) {

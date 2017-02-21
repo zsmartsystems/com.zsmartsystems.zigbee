@@ -40,6 +40,7 @@ public class MoveToLevelCommand extends ZclCommand {
 
     /**
      * Gets Level.
+     *
      * @return the Level
      */
     public Integer getLevel() {
@@ -48,6 +49,7 @@ public class MoveToLevelCommand extends ZclCommand {
 
     /**
      * Sets Level.
+     *
      * @param level the Level
      */
     public void setLevel(final Integer level) {
@@ -56,6 +58,7 @@ public class MoveToLevelCommand extends ZclCommand {
 
     /**
      * Gets Transition time.
+     *
      * @return the Transition time
      */
     public Integer getTransitionTime() {
@@ -64,6 +67,7 @@ public class MoveToLevelCommand extends ZclCommand {
 
     /**
      * Sets Transition time.
+     *
      * @param transitionTime the Transition time
      */
     public void setTransitionTime(final Integer transitionTime) {

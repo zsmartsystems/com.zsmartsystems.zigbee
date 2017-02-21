@@ -31,6 +31,7 @@ public class RssiPingCommand extends ZclCommand {
 
     /**
      * Gets Location Type.
+     *
      * @return the Location Type
      */
     public Integer getLocationType() {
@@ -39,6 +40,7 @@ public class RssiPingCommand extends ZclCommand {
 
     /**
      * Sets Location Type.
+     *
      * @param locationType the Location Type
      */
     public void setLocationType(final Integer locationType) {

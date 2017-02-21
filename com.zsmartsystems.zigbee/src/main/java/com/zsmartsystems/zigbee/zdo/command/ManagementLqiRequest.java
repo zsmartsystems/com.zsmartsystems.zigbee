@@ -1,45 +1,71 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
- * ManagementLqiRequest.
- *
- * @author Tommi S.E. Laukkanen
+ * Management LQI Request value object class.
+ * <p>
+ * The Mgmt_Lqi_req is generated from a Local Device wishing to obtain a
+ * neighbor list for the Remote Device along with associated LQI values to each
+ * neighbor. The destination addressing on this command shall be unicast only and
+ * the destination address must be that of a ZigBee Coordinator or ZigBee Router.
+ * <p>
+ * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * This command is a <b>generic</b> command used across the profile.
+ * <p>
+ * Code is auto-generated. Modifications may be overwritten!
  */
 public class ManagementLqiRequest extends ZdoRequest {
     /**
-     * The started index.
+     * StartIndex command message field.
      */
-    private int startIndex;
+    private Integer startIndex;
 
+    /**
+     * Default constructor.
+     */
     public ManagementLqiRequest() {
     }
 
-    public ManagementLqiRequest(int networkAddress, int type, int startIndex) {
-        this.destinationAddress = networkAddress;
-        this.startIndex = startIndex;
-    }
-
-    public int getNetworkAddress() {
-        return destinationAddress;
-    }
-
-    public void setNetworkAddress(int networkAddress) {
-        this.destinationAddress = networkAddress;
-    }
-
-    public int getStartIndex() {
+    /**
+     * Gets StartIndex.
+     *
+     * @return the StartIndex
+     */
+    public Integer getStartIndex() {
         return startIndex;
     }
 
-    public void setStartIndex(int startIndex) {
+    /**
+     * Sets StartIndex.
+     *
+     * @param startIndex the StartIndex
+     */
+    public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }
 
     @Override
+    public void serialize(final ZclFieldSerializer serializer) {
+        serializer.serialize(startIndex, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Override
+    public void deserialize(final ZclFieldDeserializer deserializer) {
+        startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Override
     public String toString() {
-        return "Management LQI Request: networkAddress=" + destinationAddress + ", startIndex=" + startIndex;
+        final StringBuilder builder = new StringBuilder();
+        builder.append("ManagementLqiRequest");
+        builder.append(super.toString());
+        builder.append(", startIndex=");
+        builder.append(startIndex);
+        return builder.toString();
     }
 
 }

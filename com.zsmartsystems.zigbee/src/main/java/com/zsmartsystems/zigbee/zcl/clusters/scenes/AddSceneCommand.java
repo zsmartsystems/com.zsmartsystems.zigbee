@@ -66,6 +66,7 @@ public class AddSceneCommand extends ZclCommand {
 
     /**
      * Gets Group ID.
+     *
      * @return the Group ID
      */
     public Integer getGroupId() {
@@ -74,6 +75,7 @@ public class AddSceneCommand extends ZclCommand {
 
     /**
      * Sets Group ID.
+     *
      * @param groupId the Group ID
      */
     public void setGroupId(final Integer groupId) {
@@ -82,6 +84,7 @@ public class AddSceneCommand extends ZclCommand {
 
     /**
      * Gets Scene ID.
+     *
      * @return the Scene ID
      */
     public Integer getSceneId() {
@@ -90,6 +93,7 @@ public class AddSceneCommand extends ZclCommand {
 
     /**
      * Sets Scene ID.
+     *
      * @param sceneId the Scene ID
      */
     public void setSceneId(final Integer sceneId) {
@@ -98,6 +102,7 @@ public class AddSceneCommand extends ZclCommand {
 
     /**
      * Gets Transition time.
+     *
      * @return the Transition time
      */
     public Integer getTransitionTime() {
@@ -106,6 +111,7 @@ public class AddSceneCommand extends ZclCommand {
 
     /**
      * Sets Transition time.
+     *
      * @param transitionTime the Transition time
      */
     public void setTransitionTime(final Integer transitionTime) {
@@ -114,6 +120,7 @@ public class AddSceneCommand extends ZclCommand {
 
     /**
      * Gets Scene Name.
+     *
      * @return the Scene Name
      */
     public String getSceneName() {
@@ -122,6 +129,7 @@ public class AddSceneCommand extends ZclCommand {
 
     /**
      * Sets Scene Name.
+     *
      * @param sceneName the Scene Name
      */
     public void setSceneName(final String sceneName) {
@@ -130,6 +138,7 @@ public class AddSceneCommand extends ZclCommand {
 
     /**
      * Gets Extension field sets.
+     *
      * @return the Extension field sets
      */
     public List<ExtensionFieldSet> getExtensionFieldSets() {
@@ -138,6 +147,7 @@ public class AddSceneCommand extends ZclCommand {
 
     /**
      * Sets Extension field sets.
+     *
      * @param extensionFieldSets the Extension field sets
      */
     public void setExtensionFieldSets(final List<ExtensionFieldSet> extensionFieldSets) {

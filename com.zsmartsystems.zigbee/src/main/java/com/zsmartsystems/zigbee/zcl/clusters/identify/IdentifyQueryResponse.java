@@ -41,6 +41,7 @@ public class IdentifyQueryResponse extends ZclCommand {
 
     /**
      * Gets Identify Time.
+     *
      * @return the Identify Time
      */
     public Integer getIdentifyTime() {
@@ -49,6 +50,7 @@ public class IdentifyQueryResponse extends ZclCommand {
 
     /**
      * Sets Identify Time.
+     *
      * @param identifyTime the Identify Time
      */
     public void setIdentifyTime(final Integer identifyTime) {

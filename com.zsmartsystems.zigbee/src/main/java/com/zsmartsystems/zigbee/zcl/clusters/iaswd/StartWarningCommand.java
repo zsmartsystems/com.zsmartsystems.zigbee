@@ -47,6 +47,7 @@ public class StartWarningCommand extends ZclCommand {
 
     /**
      * Gets Header.
+     *
      * @return the Header
      */
     public Integer getHeader() {
@@ -55,6 +56,7 @@ public class StartWarningCommand extends ZclCommand {
 
     /**
      * Sets Header.
+     *
      * @param header the Header
      */
     public void setHeader(final Integer header) {
@@ -63,6 +65,7 @@ public class StartWarningCommand extends ZclCommand {
 
     /**
      * Gets Warning duration.
+     *
      * @return the Warning duration
      */
     public Integer getWarningDuration() {
@@ -71,6 +74,7 @@ public class StartWarningCommand extends ZclCommand {
 
     /**
      * Sets Warning duration.
+     *
      * @param warningDuration the Warning duration
      */
     public void setWarningDuration(final Integer warningDuration) {

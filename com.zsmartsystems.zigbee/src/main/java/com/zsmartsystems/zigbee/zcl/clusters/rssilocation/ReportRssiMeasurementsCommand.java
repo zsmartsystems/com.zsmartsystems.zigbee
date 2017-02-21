@@ -44,6 +44,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
 
     /**
      * Gets Reporting Address.
+     *
      * @return the Reporting Address
      */
     public Long getReportingAddress() {
@@ -52,6 +53,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
 
     /**
      * Sets Reporting Address.
+     *
      * @param reportingAddress the Reporting Address
      */
     public void setReportingAddress(final Long reportingAddress) {
@@ -60,6 +62,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
 
     /**
      * Gets Number of Neighbors.
+     *
      * @return the Number of Neighbors
      */
     public Integer getNumberOfNeighbors() {
@@ -68,6 +71,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
 
     /**
      * Sets Number of Neighbors.
+     *
      * @param numberOfNeighbors the Number of Neighbors
      */
     public void setNumberOfNeighbors(final Integer numberOfNeighbors) {
@@ -76,6 +80,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
 
     /**
      * Gets Neighbors Information.
+     *
      * @return the Neighbors Information
      */
     public List<NeighborInformation> getNeighborsInformation() {
@@ -84,6 +89,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
 
     /**
      * Sets Neighbors Information.
+     *
      * @param neighborsInformation the Neighbors Information
      */
     public void setNeighborsInformation(final List<NeighborInformation> neighborsInformation) {

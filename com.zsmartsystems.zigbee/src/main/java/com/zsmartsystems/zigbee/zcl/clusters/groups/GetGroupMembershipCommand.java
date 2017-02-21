@@ -6,7 +6,6 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 import java.util.List;
-import com.zsmartsystems.zigbee.zcl.field.Unsigned16BitInteger;
 
 /**
  * Get Group Membership Command value object class.
@@ -43,7 +42,7 @@ public class GetGroupMembershipCommand extends ZclCommand {
     /**
      * Group list command message field.
      */
-    private List<Unsigned16BitInteger> groupList;
+    private List<Integer> groupList;
 
     /**
      * Default constructor.
@@ -57,6 +56,7 @@ public class GetGroupMembershipCommand extends ZclCommand {
 
     /**
      * Gets Group count.
+     *
      * @return the Group count
      */
     public Integer getGroupCount() {
@@ -65,6 +65,7 @@ public class GetGroupMembershipCommand extends ZclCommand {
 
     /**
      * Sets Group count.
+     *
      * @param groupCount the Group count
      */
     public void setGroupCount(final Integer groupCount) {
@@ -73,17 +74,19 @@ public class GetGroupMembershipCommand extends ZclCommand {
 
     /**
      * Gets Group list.
+     *
      * @return the Group list
      */
-    public List<Unsigned16BitInteger> getGroupList() {
+    public List<Integer> getGroupList() {
         return groupList;
     }
 
     /**
      * Sets Group list.
+     *
      * @param groupList the Group list
      */
-    public void setGroupList(final List<Unsigned16BitInteger> groupList) {
+    public void setGroupList(final List<Integer> groupList) {
         this.groupList = groupList;
     }
 
@@ -96,7 +99,7 @@ public class GetGroupMembershipCommand extends ZclCommand {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         groupCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        groupList = (List<Unsigned16BitInteger>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
+        groupList = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

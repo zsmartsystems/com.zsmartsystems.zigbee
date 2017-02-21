@@ -41,6 +41,7 @@ public class MoveColorCommand extends ZclCommand {
 
     /**
      * Gets RateX.
+     *
      * @return the RateX
      */
     public Integer getRateX() {
@@ -49,6 +50,7 @@ public class MoveColorCommand extends ZclCommand {
 
     /**
      * Sets RateX.
+     *
      * @param rateX the RateX
      */
     public void setRateX(final Integer rateX) {
@@ -57,6 +59,7 @@ public class MoveColorCommand extends ZclCommand {
 
     /**
      * Gets RateY.
+     *
      * @return the RateY
      */
     public Integer getRateY() {
@@ -65,6 +68,7 @@ public class MoveColorCommand extends ZclCommand {
 
     /**
      * Sets RateY.
+     *
      * @param rateY the RateY
      */
     public void setRateY(final Integer rateY) {

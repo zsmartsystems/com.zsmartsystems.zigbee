@@ -31,6 +31,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
             case BOOLEAN:
                 buffer[length++] = (Boolean) data ? 1 : 0;
                 break;
+            case NWK_ADDRESS:
             case BITMAP_16_BIT:
             case SIGNED_16_BIT_INTEGER:
             case UNSIGNED_16_BIT_INTEGER:
@@ -78,9 +79,21 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 break;
             case N_X_READ_ATTRIBUTE_STATUS_RECORD:
                 break;
+            case N_X_NWK_ADDRESS:
             case N_X_UNSIGNED_16_BIT_INTEGER:
+                Integer[] intArray16 = (Integer[]) data;
+                buffer[length++] = intArray16.length;
+                for (int cnt = 0; cnt < intArray16.length; cnt++) {
+                    buffer[length++] = intArray16[cnt] & 0xFF;
+                    buffer[length++] = (intArray16[cnt] >> 8) & 0xFF;
+                }
                 break;
             case N_X_UNSIGNED_8_BIT_INTEGER:
+                Integer[] intArray8 = (Integer[]) data;
+                buffer[length++] = intArray8.length;
+                for (int cnt = 0; cnt < intArray8.length; cnt++) {
+                    buffer[length++] = intArray8[cnt] & 0xFF;
+                }
                 break;
             case N_X_WRITE_ATTRIBUTE_RECORD:
                 break;

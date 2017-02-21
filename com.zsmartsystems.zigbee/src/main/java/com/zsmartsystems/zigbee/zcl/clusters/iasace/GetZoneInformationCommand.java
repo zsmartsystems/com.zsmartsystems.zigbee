@@ -36,6 +36,7 @@ public class GetZoneInformationCommand extends ZclCommand {
 
     /**
      * Gets Zone ID.
+     *
      * @return the Zone ID
      */
     public Integer getZoneId() {
@@ -44,6 +45,7 @@ public class GetZoneInformationCommand extends ZclCommand {
 
     /**
      * Sets Zone ID.
+     *
      * @param zoneId the Zone ID
      */
     public void setZoneId(final Integer zoneId) {

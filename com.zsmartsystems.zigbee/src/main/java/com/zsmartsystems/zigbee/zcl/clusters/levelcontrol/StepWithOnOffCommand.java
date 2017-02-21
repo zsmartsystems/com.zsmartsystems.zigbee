@@ -45,6 +45,7 @@ public class StepWithOnOffCommand extends ZclCommand {
 
     /**
      * Gets Step mode.
+     *
      * @return the Step mode
      */
     public Integer getStepMode() {
@@ -53,6 +54,7 @@ public class StepWithOnOffCommand extends ZclCommand {
 
     /**
      * Sets Step mode.
+     *
      * @param stepMode the Step mode
      */
     public void setStepMode(final Integer stepMode) {
@@ -61,6 +63,7 @@ public class StepWithOnOffCommand extends ZclCommand {
 
     /**
      * Gets Step size.
+     *
      * @return the Step size
      */
     public Integer getStepSize() {
@@ -69,6 +72,7 @@ public class StepWithOnOffCommand extends ZclCommand {
 
     /**
      * Sets Step size.
+     *
      * @param stepSize the Step size
      */
     public void setStepSize(final Integer stepSize) {
@@ -77,6 +81,7 @@ public class StepWithOnOffCommand extends ZclCommand {
 
     /**
      * Gets Transition time.
+     *
      * @return the Transition time
      */
     public Integer getTransitionTime() {
@@ -85,6 +90,7 @@ public class StepWithOnOffCommand extends ZclCommand {
 
     /**
      * Sets Transition time.
+     *
      * @param transitionTime the Transition time
      */
     public void setTransitionTime(final Integer transitionTime) {

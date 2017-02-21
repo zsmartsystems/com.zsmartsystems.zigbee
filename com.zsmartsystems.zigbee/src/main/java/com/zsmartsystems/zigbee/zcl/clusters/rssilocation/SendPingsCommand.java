@@ -41,6 +41,7 @@ public class SendPingsCommand extends ZclCommand {
 
     /**
      * Gets Target Address.
+     *
      * @return the Target Address
      */
     public Long getTargetAddress() {
@@ -49,6 +50,7 @@ public class SendPingsCommand extends ZclCommand {
 
     /**
      * Sets Target Address.
+     *
      * @param targetAddress the Target Address
      */
     public void setTargetAddress(final Long targetAddress) {
@@ -57,6 +59,7 @@ public class SendPingsCommand extends ZclCommand {
 
     /**
      * Gets Number RSSI Measurements.
+     *
      * @return the Number RSSI Measurements
      */
     public Integer getNumberRssiMeasurements() {
@@ -65,6 +68,7 @@ public class SendPingsCommand extends ZclCommand {
 
     /**
      * Sets Number RSSI Measurements.
+     *
      * @param numberRssiMeasurements the Number RSSI Measurements
      */
     public void setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
@@ -73,6 +77,7 @@ public class SendPingsCommand extends ZclCommand {
 
     /**
      * Gets Calculation Period.
+     *
      * @return the Calculation Period
      */
     public Integer getCalculationPeriod() {
@@ -81,6 +86,7 @@ public class SendPingsCommand extends ZclCommand {
 
     /**
      * Sets Calculation Period.
+     *
      * @param calculationPeriod the Calculation Period
      */
     public void setCalculationPeriod(final Integer calculationPeriod) {

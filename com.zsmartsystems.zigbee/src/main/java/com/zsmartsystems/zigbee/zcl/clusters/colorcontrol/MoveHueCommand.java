@@ -41,6 +41,7 @@ public class MoveHueCommand extends ZclCommand {
 
     /**
      * Gets Move mode.
+     *
      * @return the Move mode
      */
     public Integer getMoveMode() {
@@ -49,6 +50,7 @@ public class MoveHueCommand extends ZclCommand {
 
     /**
      * Sets Move mode.
+     *
      * @param moveMode the Move mode
      */
     public void setMoveMode(final Integer moveMode) {
@@ -57,6 +59,7 @@ public class MoveHueCommand extends ZclCommand {
 
     /**
      * Gets Rate.
+     *
      * @return the Rate
      */
     public Integer getRate() {
@@ -65,6 +68,7 @@ public class MoveHueCommand extends ZclCommand {
 
     /**
      * Sets Rate.
+     *
      * @param rate the Rate
      */
     public void setRate(final Integer rate) {

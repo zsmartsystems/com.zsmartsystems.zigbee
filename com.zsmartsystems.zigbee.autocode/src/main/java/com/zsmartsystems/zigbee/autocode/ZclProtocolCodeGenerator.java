@@ -42,6 +42,7 @@ public class ZclProtocolCodeGenerator {
 
     static String packageZdp = ".zdo";
     static String packageZdpCommand = packageZdp + ".command";
+    static String packageZdpDescriptors = packageZdp + ".descriptors";
 
     /**
      * The main method for running the code generator.
@@ -84,11 +85,11 @@ public class ZclProtocolCodeGenerator {
             packageRoot = "com.zsmartsystems.zigbee";
         }
 
+        final Context contextZcl = new Context();
         final File definitionFileZcl = new File(definitionFilePathZcl);
         if (!definitionFileZcl.exists()) {
             System.out.println("Definition file does not exist: " + definitionFilePathZcl);
         } else {
-            final Context contextZcl = new Context();
             try {
                 contextZcl.lines = new ArrayList<String>(FileUtils.readLines(definitionFileZcl, "UTF-8"));
                 generateZclCode(contextZcl, sourceRootFile, packageRoot);
@@ -99,11 +100,11 @@ public class ZclProtocolCodeGenerator {
             }
         }
 
+        final Context contextZdp = new Context();
         final File definitionFileZdp = new File(definitionFilePathZdp);
         if (!definitionFileZdp.exists()) {
             System.out.println("Definition file does not exist: " + definitionFilePathZdp);
         } else {
-            final Context contextZdp = new Context();
             try {
                 contextZdp.lines = new ArrayList<String>(FileUtils.readLines(definitionFileZdp, "UTF-8"));
                 generateZdpCode(contextZdp, sourceRootFile, packageRoot);
@@ -114,6 +115,32 @@ public class ZclProtocolCodeGenerator {
                 return;
             }
         }
+
+        final String packagePath = getPackagePath(sourceRootFile, packageRoot);
+        final File packageFile = getPackageFile(packagePath);
+
+        try {
+            final LinkedList<DataType> dataTypes = new LinkedList<DataType>(contextZcl.dataTypes.values());
+
+            boolean addIt;
+            for (DataType newType : contextZdp.dataTypes.values()) {
+                addIt = true;
+                for (DataType checkType : dataTypes) {
+                    if (checkType.dataTypeType.equals(newType.dataTypeType)) {
+                        addIt = false;
+                    }
+                }
+                if (addIt) {
+                    dataTypes.add(newType);
+                }
+            }
+
+            generateZclDataTypeEnumeration(dataTypes, packageRoot, packageFile);
+        } catch (final IOException e) {
+            System.out.println("Failed to generate data types enumeration.");
+            e.printStackTrace();
+            return;
+        }
     }
 
     public static void generateZclCode(final Context context, final File sourceRootPath, final String packageRoot) {
@@ -123,7 +150,10 @@ public class ZclProtocolCodeGenerator {
         final File packageFile = getPackageFile(packagePath);
 
         try {
-            generateZclDataTypeEnumeration(context, packageRoot, packageFile);
+            final LinkedList<DataType> dataTypes = new LinkedList<DataType>(context.dataTypes.values());
+            dataTypes.addAll(context.dataTypes.values());
+
+            generateZclDataTypeEnumeration(dataTypes, packageRoot, packageFile);
         } catch (final IOException e) {
             System.out.println("Failed to generate data types enumeration.");
             e.printStackTrace();
@@ -218,7 +248,7 @@ public class ZclProtocolCodeGenerator {
         return sourceRootPath.getAbsolutePath() + File.separator + packageRoot.replace(".", File.separator);
     }
 
-    private static void generateZclDataTypeEnumeration(Context context, final String packageRootPrefix,
+    private static void generateZclDataTypeEnumeration(LinkedList<DataType> dataTypes, final String packageRootPrefix,
             File sourceRootPath) throws IOException {
         final String className = "ZclDataType";
 
@@ -235,11 +265,12 @@ public class ZclProtocolCodeGenerator {
         out.println("import java.util.HashMap;");
         out.println("import java.util.Map;");
         out.println("import " + packageRootPrefix + packageZclField + ".*;");
+        out.println("import " + packageRootPrefix + packageZdpDescriptors + ".*;");
         out.println();
         outputClassJavaDoc(out);
         out.println("public enum " + className + " {");
 
-        final LinkedList<DataType> dataTypes = new LinkedList<DataType>(context.dataTypes.values());
+        // final LinkedList<DataType> dataTypes = new LinkedList<DataType>(context.dataTypes.values());
         for (final DataType dataType : dataTypes) {
             DataTypeMap zclDataType = ZclDataType.getDataTypeMapping().get(dataType.dataTypeType);
             final String dataTypeClass;
@@ -249,7 +280,7 @@ public class ZclProtocolCodeGenerator {
             } else {
                 dataTypeClass = dataType.dataTypeClass;
             }
-            out.print("    " + dataType.dataTypeType + "(\"" + dataType.dataTypeName + "\"," + dataTypeClass + ".class"
+            out.print("    " + dataType.dataTypeType + "(\"" + dataType.dataTypeName + "\", " + dataTypeClass + ".class"
                     + ", " + String.format("0x%02X", zclDataType.id) + ", " + zclDataType.analogue + ")");
             out.println(dataTypes.getLast().equals(dataType) ? ';' : ',');
         }
@@ -689,7 +720,23 @@ public class ZclProtocolCodeGenerator {
                     // out.println("import java.util.HashMap;");
 
                     for (final Field field : fields) {
-                        switch (field.dataTypeClass) {
+                        String packageName;
+                        if (field.dataTypeClass.contains("Descriptor")) {
+                            packageName = packageZdpDescriptors;
+                        } else {
+                            packageName = packageZclField;
+                        }
+
+                        String typeName;
+                        if (field.dataTypeClass.startsWith("List")) {
+                            typeName = field.dataTypeClass;
+                            typeName = typeName.substring(typeName.indexOf("<") + 1);
+                            typeName = typeName.substring(0, typeName.indexOf(">"));
+                        } else {
+                            typeName = field.dataTypeClass;
+                        }
+
+                        switch (typeName) {
                             case "Integer":
                             case "Boolean":
                             case "Object":
@@ -697,15 +744,8 @@ public class ZclProtocolCodeGenerator {
                             case "String":
                                 continue;
                         }
-                        if (field.dataTypeClass.startsWith("List")) {
-                            String s = field.dataTypeClass;
-                            s = s.substring(s.indexOf("<") + 1);
-                            s = s.substring(0, s.indexOf(">"));
-                            out.println("import " + packageRootPrefix + packageZclField + "." + s + ";");
-                        } else {
-                            out.println(
-                                    "import " + packageRootPrefix + packageZclField + "." + field.dataTypeClass + ";");
-                        }
+
+                        out.println("import " + packageRootPrefix + packageName + "." + typeName + ";");
                     }
 
                     out.println();
@@ -822,6 +862,7 @@ public class ZclProtocolCodeGenerator {
                         out.println();
                         out.println("    /**");
                         out.println("     * Gets " + field.fieldLabel + ".");
+                        out.println("     *");
                         out.println("     * @return the " + field.fieldLabel);
                         out.println("     */");
                         out.println("    public " + field.dataTypeClass + " get" + field.nameUpperCamelCase + "() {");
@@ -830,6 +871,7 @@ public class ZclProtocolCodeGenerator {
                         out.println();
                         out.println("    /**");
                         out.println("     * Sets " + field.fieldLabel + ".");
+                        out.println("     *");
                         out.println("     * @param " + field.nameLowerCamelCase + " the " + field.fieldLabel);
                         out.println("     */");
                         out.println("    public void set" + field.nameUpperCamelCase + "(final " + field.dataTypeClass
@@ -1386,6 +1428,10 @@ public class ZclProtocolCodeGenerator {
     private static void generateZdpCommandClasses(Context context, String packageRootPrefix, File sourceRootPath)
             throws IOException {
 
+        // List of fields that are handled internally by super class
+        List<String> reservedFields = new ArrayList<String>();
+        reservedFields.add("status");
+
         final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
         for (final Profile profile : profiles) {
             final LinkedList<Cluster> clusters = new LinkedList<Cluster>(profile.clusters.values());
@@ -1424,7 +1470,7 @@ public class ZclProtocolCodeGenerator {
                     if (className.endsWith("Request")) {
                         out.println("import " + packageRootPrefix + packageZdp + ".ZdoRequest;");
                     } else {
-                        out.println("import " + packageRootPrefix + packageZdp + ".ZdoRequest;");
+                        out.println("import " + packageRootPrefix + packageZdp + ".ZdoResponse;");
                     }
 
                     if (fieldWithDataTypeList) {
@@ -1436,7 +1482,27 @@ public class ZclProtocolCodeGenerator {
                     // out.println("import java.util.HashMap;");
 
                     for (final Field field : fields) {
-                        switch (field.dataTypeClass) {
+                        if (reservedFields.contains(field.nameLowerCamelCase)) {
+                            continue;
+                        }
+
+                        String packageName;
+                        if (field.dataTypeClass.contains("Descriptor")) {
+                            packageName = packageZdpDescriptors;
+                        } else {
+                            packageName = packageZclField;
+                        }
+
+                        String typeName;
+                        if (field.dataTypeClass.startsWith("List")) {
+                            typeName = field.dataTypeClass;
+                            typeName = typeName.substring(typeName.indexOf("<") + 1);
+                            typeName = typeName.substring(0, typeName.indexOf(">"));
+                        } else {
+                            typeName = field.dataTypeClass;
+                        }
+
+                        switch (typeName) {
                             case "Integer":
                             case "Boolean":
                             case "Object":
@@ -1444,15 +1510,8 @@ public class ZclProtocolCodeGenerator {
                             case "String":
                                 continue;
                         }
-                        if (field.dataTypeClass.startsWith("List")) {
-                            String s = field.dataTypeClass;
-                            s = s.substring(s.indexOf("<") + 1);
-                            s = s.substring(0, s.indexOf(">"));
-                            out.println("import " + packageRootPrefix + packageZclField + "." + s + ";");
-                        } else {
-                            out.println(
-                                    "import " + packageRootPrefix + packageZclField + "." + field.dataTypeClass + ";");
-                        }
+
+                        out.println("import " + packageRootPrefix + packageName + "." + typeName + ";");
                     }
 
                     out.println();
@@ -1491,6 +1550,10 @@ public class ZclProtocolCodeGenerator {
                     }
 
                     for (final Field field : fields) {
+                        if (reservedFields.contains(field.nameLowerCamelCase)) {
+                            continue;
+                        }
+
                         out.println("    /**");
                         out.println("     * " + field.fieldLabel + " command message field.");
                         out.println("     */");
@@ -1513,18 +1576,21 @@ public class ZclProtocolCodeGenerator {
                     out.println("     */");
                     out.println("    public " + className + "() {");
                     // out.println(" setType(ZclCommandType." + command.commandType + ");");
-
-                    out.println("        commandId = " + command.commandId + ";");
-
-                    out.println("        commandDirection = "
-                            + (cluster.received.containsValue(command) ? "true" : "false") + ";");
+                    // out.println(" commandId = " + command.commandId + ";");
+                    // out.println(" commandDirection = "
+                    // + (cluster.received.containsValue(command) ? "true" : "false") + ";");
 
                     out.println("    }");
 
                     for (final Field field : fields) {
+                        if (reservedFields.contains(field.nameLowerCamelCase)) {
+                            continue;
+                        }
+
                         out.println();
                         out.println("    /**");
                         out.println("     * Gets " + field.fieldLabel + ".");
+                        out.println("     *");
                         out.println("     * @return the " + field.fieldLabel);
                         out.println("     */");
                         out.println("    public " + field.dataTypeClass + " get" + field.nameUpperCamelCase + "() {");
@@ -1533,6 +1599,7 @@ public class ZclProtocolCodeGenerator {
                         out.println();
                         out.println("    /**");
                         out.println("     * Sets " + field.fieldLabel + ".");
+                        out.println("     *");
                         out.println("     * @param " + field.nameLowerCamelCase + " the " + field.fieldLabel);
                         out.println("     */");
                         out.println("    public void set" + field.nameUpperCamelCase + "(final " + field.dataTypeClass
@@ -1576,6 +1643,7 @@ public class ZclProtocolCodeGenerator {
                     out.println("    @Override");
                     out.println("    public String toString() {");
                     out.println("        final StringBuilder builder = new StringBuilder();");
+                    out.println("        builder.append(\"" + className + "\");");
                     out.println("        builder.append(super.toString());");
                     for (final Field field : fields) {
                         out.println("        builder.append(\", " + field.nameLowerCamelCase + "=\");");

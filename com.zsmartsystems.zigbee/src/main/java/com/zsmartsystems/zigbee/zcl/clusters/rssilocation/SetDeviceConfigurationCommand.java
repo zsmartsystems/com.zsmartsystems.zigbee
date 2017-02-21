@@ -51,6 +51,7 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Gets Power.
+     *
      * @return the Power
      */
     public Integer getPower() {
@@ -59,6 +60,7 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Sets Power.
+     *
      * @param power the Power
      */
     public void setPower(final Integer power) {
@@ -67,6 +69,7 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Gets Path Loss Exponent.
+     *
      * @return the Path Loss Exponent
      */
     public Integer getPathLossExponent() {
@@ -75,6 +78,7 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Sets Path Loss Exponent.
+     *
      * @param pathLossExponent the Path Loss Exponent
      */
     public void setPathLossExponent(final Integer pathLossExponent) {
@@ -83,6 +87,7 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Gets Calculation Period.
+     *
      * @return the Calculation Period
      */
     public Integer getCalculationPeriod() {
@@ -91,6 +96,7 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Sets Calculation Period.
+     *
      * @param calculationPeriod the Calculation Period
      */
     public void setCalculationPeriod(final Integer calculationPeriod) {
@@ -99,6 +105,7 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Gets Number RSSI Measurements.
+     *
      * @return the Number RSSI Measurements
      */
     public Integer getNumberRssiMeasurements() {
@@ -107,6 +114,7 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Sets Number RSSI Measurements.
+     *
      * @param numberRssiMeasurements the Number RSSI Measurements
      */
     public void setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
@@ -115,6 +123,7 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Gets Reporting Period.
+     *
      * @return the Reporting Period
      */
     public Integer getReportingPeriod() {
@@ -123,6 +132,7 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Sets Reporting Period.
+     *
      * @param reportingPeriod the Reporting Period
      */
     public void setReportingPeriod(final Integer reportingPeriod) {

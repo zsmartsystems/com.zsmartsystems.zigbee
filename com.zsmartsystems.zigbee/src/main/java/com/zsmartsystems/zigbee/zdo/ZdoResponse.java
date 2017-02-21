@@ -40,16 +40,24 @@ public abstract class ZdoResponse extends ZdoCommand {
      *
      * @return the response status
      */
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
     /**
      * Sets the response status
-     * 
+     *
      * @param status the response status as {@link int}
      */
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(": sourceAddress=");
+        builder.append(sourceAddress);
+        return builder.toString();
     }
 }

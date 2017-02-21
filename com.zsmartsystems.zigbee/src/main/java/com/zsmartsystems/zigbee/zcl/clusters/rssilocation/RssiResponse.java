@@ -56,6 +56,7 @@ public class RssiResponse extends ZclCommand {
 
     /**
      * Gets Replying Device.
+     *
      * @return the Replying Device
      */
     public Long getReplyingDevice() {
@@ -64,6 +65,7 @@ public class RssiResponse extends ZclCommand {
 
     /**
      * Sets Replying Device.
+     *
      * @param replyingDevice the Replying Device
      */
     public void setReplyingDevice(final Long replyingDevice) {
@@ -72,6 +74,7 @@ public class RssiResponse extends ZclCommand {
 
     /**
      * Gets Coordinate 1.
+     *
      * @return the Coordinate 1
      */
     public Integer getCoordinate1() {
@@ -80,6 +83,7 @@ public class RssiResponse extends ZclCommand {
 
     /**
      * Sets Coordinate 1.
+     *
      * @param coordinate1 the Coordinate 1
      */
     public void setCoordinate1(final Integer coordinate1) {
@@ -88,6 +92,7 @@ public class RssiResponse extends ZclCommand {
 
     /**
      * Gets Coordinate 2.
+     *
      * @return the Coordinate 2
      */
     public Integer getCoordinate2() {
@@ -96,6 +101,7 @@ public class RssiResponse extends ZclCommand {
 
     /**
      * Sets Coordinate 2.
+     *
      * @param coordinate2 the Coordinate 2
      */
     public void setCoordinate2(final Integer coordinate2) {
@@ -104,6 +110,7 @@ public class RssiResponse extends ZclCommand {
 
     /**
      * Gets Coordinate 3.
+     *
      * @return the Coordinate 3
      */
     public Integer getCoordinate3() {
@@ -112,6 +119,7 @@ public class RssiResponse extends ZclCommand {
 
     /**
      * Sets Coordinate 3.
+     *
      * @param coordinate3 the Coordinate 3
      */
     public void setCoordinate3(final Integer coordinate3) {
@@ -120,6 +128,7 @@ public class RssiResponse extends ZclCommand {
 
     /**
      * Gets RSSI.
+     *
      * @return the RSSI
      */
     public Integer getRssi() {
@@ -128,6 +137,7 @@ public class RssiResponse extends ZclCommand {
 
     /**
      * Sets RSSI.
+     *
      * @param rssi the RSSI
      */
     public void setRssi(final Integer rssi) {
@@ -136,6 +146,7 @@ public class RssiResponse extends ZclCommand {
 
     /**
      * Gets Number RSSI Measurements.
+     *
      * @return the Number RSSI Measurements
      */
     public Integer getNumberRssiMeasurements() {
@@ -144,6 +155,7 @@ public class RssiResponse extends ZclCommand {
 
     /**
      * Sets Number RSSI Measurements.
+     *
      * @param numberRssiMeasurements the Number RSSI Measurements
      */
     public void setNumberRssiMeasurements(final Integer numberRssiMeasurements) {

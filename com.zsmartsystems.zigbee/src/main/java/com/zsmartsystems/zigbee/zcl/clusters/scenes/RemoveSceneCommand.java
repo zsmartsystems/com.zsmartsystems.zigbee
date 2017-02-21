@@ -48,6 +48,7 @@ public class RemoveSceneCommand extends ZclCommand {
 
     /**
      * Gets Group ID.
+     *
      * @return the Group ID
      */
     public Integer getGroupId() {
@@ -56,6 +57,7 @@ public class RemoveSceneCommand extends ZclCommand {
 
     /**
      * Sets Group ID.
+     *
      * @param groupId the Group ID
      */
     public void setGroupId(final Integer groupId) {
@@ -64,6 +66,7 @@ public class RemoveSceneCommand extends ZclCommand {
 
     /**
      * Gets Scene ID.
+     *
      * @return the Scene ID
      */
     public Integer getSceneId() {
@@ -72,6 +75,7 @@ public class RemoveSceneCommand extends ZclCommand {
 
     /**
      * Sets Scene ID.
+     *
      * @param sceneId the Scene ID
      */
     public void setSceneId(final Integer sceneId) {

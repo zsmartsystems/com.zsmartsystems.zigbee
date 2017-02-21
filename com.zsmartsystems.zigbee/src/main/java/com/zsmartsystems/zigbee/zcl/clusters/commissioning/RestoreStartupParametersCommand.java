@@ -36,6 +36,7 @@ public class RestoreStartupParametersCommand extends ZclCommand {
 
     /**
      * Gets Option.
+     *
      * @return the Option
      */
     public Integer getOption() {
@@ -44,6 +45,7 @@ public class RestoreStartupParametersCommand extends ZclCommand {
 
     /**
      * Sets Option.
+     *
      * @param option the Option
      */
     public void setOption(final Integer option) {
@@ -52,6 +54,7 @@ public class RestoreStartupParametersCommand extends ZclCommand {
 
     /**
      * Gets Index.
+     *
      * @return the Index
      */
     public Integer getIndex() {
@@ -60,6 +63,7 @@ public class RestoreStartupParametersCommand extends ZclCommand {
 
     /**
      * Sets Index.
+     *
      * @param index the Index
      */
     public void setIndex(final Integer index) {

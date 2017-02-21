@@ -1851,18 +1851,293 @@
 			</value>
 			<value>
 				<name>EZSP_SPI_ERR_OVERSIZED_EZSP_FRAME</name>
-				<enum_value>0x0010</enum_value>
+				<enum_value>0x0012</enum_value>
 				<description>The NCP is reporting that the Command frame of the current transaction is oversized (the length byte is too large).</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_ABORTED_TRANSACTION</name>
+				<enum_value>0x0013</enum_value>
+				<description>The Response frame of the current transaction indicates the previous transaction was aborted (nSSEL deasserted too soon).</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_MISSING_FRAME_TERMINATOR</name>
+				<enum_value>0x0014</enum_value>
+				<description>The Response frame of the current transaction indicates the frame terminator is missing from the Command frame.</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_WAIT_SECTION_TIMEOUT</name>
+				<enum_value>0x0015</enum_value>
+				<description>The NCP has not provided a Response within the time limit defined by WAIT_SECTION_TIMEOUT.</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_NO_FRAME_TERMINATOR</name>
+				<enum_value>0x0016</enum_value>
+				<description>The Response frame from the NCP is missing the frame terminator.</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_EZSP_COMMAND_OVERSIZED</name>
+				<enum_value>0x0017</enum_value>
+				<description>The Host attempted to send an oversized Command (the length byte is too large) and the AVR's spi-protocol.c blocked the transmission.</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_EZSP_RESPONSE_OVERSIZED</name>
+				<enum_value>0x0018</enum_value>
+				<description>The NCP attempted to send an oversized Response (the length byte is too large) and the AVR's spi-protocol.c blocked the reception.</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_WAITING_FOR_RESPONSE</name>
+				<enum_value>0x0019</enum_value>
+				<description>The Host has sent the Command and is still waiting for the NCP to send a Response.</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_HANDSHAKE_TIMEOUT</name>
+				<enum_value>0x001A</enum_value>
+				<description>The NCP has not asserted nHOST_INT within the time limit defined by WAKE_HANDSHAKE_TIMEOUT.</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_STARTUP_TIMEOUT</name>
+				<enum_value>0x001B</enum_value>
+				<description>The NCP has not asserted nHOST_INT after an NCP reset within the time limit defined by STARTUP_TIMEOUT.</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_STARTUP_FAIL</name>
+				<enum_value>0x001C</enum_value>
+				<description>The Host attempted to verify the SPI Protocol activity and version number, and the verification failed.</description>
+			</value>
+			<value>
+				<name>EZSP_SPI_ERR_UNSUPPORTED_SPI_COMMAND</name>
+				<enum_value>0x001D</enum_value>
+				<description>The Host has sent a command with a SPI Byte that is unsupported by the current mode the NCP is operating in.</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_IN_PROGRESS</name>
+				<enum_value>0x0020</enum_value>
+				<description>Operation not yet complete.</description>
+			</value>
+			<value>
+				<name>EZSP_HOST_FATAL_ERROR</name>
+				<enum_value>0x0021</enum_value>
+				<description>Fatal error detected by host.</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_NCP_FATAL_ERROR</name>
+				<enum_value>0x0022</enum_value>
+				<description>Fatal error detected by NCP.</description>
+			</value>
+			<value>
+				<name>EZSP_DATA_FRAME_TOO_LONG</name>
+				<enum_value>0x0023</enum_value>
+				<description>Tried to send DATA frame too long.</description>
+			</value>
+			<value>
+				<name>EZSP_DATA_FRAME_TOO_SHORT</name>
+				<enum_value>0x0024</enum_value>
+				<description>Tried to send DATA frame too short.</description>
+			</value>
+			<value>
+				<name>EZSP_NO_TX_SPACE</name>
+				<enum_value>0x0025</enum_value>
+				<description>No space for tx'ed DATA frame.</description>
+			</value>
+			<value>
+				<name>EZSP_NO_RX_SPACE</name>
+				<enum_value>0x0026</enum_value>
+				<description>No space for rec'd DATA frame.</description>
+			</value>
+			<value>
+				<name>EZSP_NO_RX_DATA</name>
+				<enum_value>0x0027</enum_value>
+				<description>No receive data available.</description>
+			</value>
+			<value>
+				<name>EZSP_NOT_CONNECTED</name>
+				<enum_value>0x0028</enum_value>
+				<description>Not in Connected state</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_VERSION_NOT_SET</name>
+				<enum_value>0x0030</enum_value>
+				<description>The NCP received a command before the EZSP version had been set.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_INVALID_FRAME_ID</name>
+				<enum_value>0x0031</enum_value>
+				<description>The NCP received a command containing an unsupported frame ID</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_WRONG_DIRECTION</name>
+				<enum_value>0x0032</enum_value>
+				<description>The direction flag in the frame control field was incorrect.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_TRUNCATED</name>
+				<enum_value>0x0033</enum_value>
+				<description>The truncated flag in the frame control field was set, indicating there was not enough memory available to complete the response or that the response would have exceeded the maximum EZSP frame length.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_OVERFLOW</name>
+				<enum_value>0x0340</enum_value>
+				<description>The overflow flag in the frame control field was set, indicating one or more callbacks occurred since the previous response and there was not enough memory available to report them to the Host.</description>
 			</value>
 			<value>
 				<name>EZSP_ERROR_OUT_OF_MEMORY</name>
 				<enum_value>0x0035</enum_value>
-				<description>Insufficient memory was available</description>
+				<description>Insufficient memory was available.</description>
 			</value>
 			<value>
 				<name>EZSP_ERROR_INVALID_VALUE</name>
 				<enum_value>0x0036</enum_value>
 				<description>The value was out of bounds.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_INVALID_ID</name>
+				<enum_value>0x0037</enum_value>
+				<description>The configuration id was not recognized.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_INVALID_CALL</name>
+				<enum_value>0x0038</enum_value>
+				<description>Configuration values can no longer be modified.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_NO_RESPONSE</name>
+				<enum_value>0x0039</enum_value>
+				<description>The NCP failed to respond to a command</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_COMMAND_TOO_LONG</name>
+				<enum_value>0x0040</enum_value>
+				<description>The length of the command exceeded the maximum EZSP frame length.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_QUEUE_FULL</name>
+				<enum_value>0x0041</enum_value>
+				<description>The UART receive queue was full causing a callback response to be dropped.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_COMMAND_FILTERED</name>
+				<enum_value>0x0042</enum_value>
+				<description>The command has been filtered out by NCP.</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_ERROR_VERSION</name>
+				<enum_value>0x0050</enum_value>
+				<description>Incompatible ASH version</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_ERROR_TIMEOUTS</name>
+				<enum_value>0x0051</enum_value>
+				<description>Exceeded max ACK timeouts</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_ERROR_RESET_FAIL</name>
+				<enum_value>0x0052</enum_value>
+				<description>Timed out waiting for RSTACK</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_ERROR_NCP_RESET</name>
+				<enum_value>0x0053</enum_value>
+				<description>Unexpected NCP reset</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_SERIAL_INIT</name>
+				<enum_value>0x0054</enum_value>
+				<description>Serial port initialization failed</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_ERROR_NCP_TYPE</name>
+				<enum_value>0x0055</enum_value>
+				<description>Invalid NCP processor type</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_ERROR_RESET_METHOD</name>
+				<enum_value>0x0056</enum_value>
+				<description>Invalid ncp reset method</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_ERROR_XON_XOF</name>
+				<enum_value>0x0057</enum_value>
+				<description>XON/XOFF not supported by host driver</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_STARTED</name>
+				<enum_value>0x0070</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EZSP_ASH_CONNECTED</name>
+				<enum_value>0x0071</enum_value>
+				<description>ASH protocol connected</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_DISCONNECTED</name>
+				<enum_value>0x0072</enum_value>
+				<description>ASH protocol disconnected</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_ACK_TIMEOUT</name>
+				<enum_value>0x0073</enum_value>
+				<description>Timer expired waiting for ack</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_CANCELLED</name>
+				<enum_value>0x0074</enum_value>
+				<description>Frame in progress cancelled</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_OUT_OF_SEQUENCE</name>
+				<enum_value>0x0075</enum_value>
+				<description>Received frame out of sequence</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_BAD_CRC</name>
+				<enum_value>0x0076</enum_value>
+				<description>Received frame with CRC error</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_COMM_ERROR</name>
+				<enum_value>0x0077</enum_value>
+				<description>Received frame with comm error</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_BAD_ACKNUM</name>
+				<enum_value>0x0078</enum_value>
+				<description>Received frame with bad ackNum</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_TOO_SHORT</name>
+				<enum_value>0x0079</enum_value>
+				<description>Received frame shorter than minimum</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_TOO_LONG</name>
+				<enum_value>0x007A</enum_value>
+				<description>Received frame longer than maximum</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_BAD_CONTROL</name>
+				<enum_value>0x007B</enum_value>
+				<description>Received frame with illegal control byte</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_BAD_LENGTH</name>
+				<enum_value>0x007C</enum_value>
+				<description>Received frame with illegal length for its type</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_ACK_RECEIVED</name>
+				<enum_value>0x007D</enum_value>
+				<description> Received ASH Ack</description>
+			</value>
+			<value>
+				<name>EZSP_ASH_ACK_SENT</name>
+				<enum_value>0x007E</enum_value>
+				<description>Sent ASH Ack</description>
+			</value>
+			<value>
+				<name>EZSP_NO_ERROR</name>
+				<enum_value>0x00FF</enum_value>
+				<description>No reset or error</description>
 			</value>
 		</values>
 	</enum>
@@ -1955,17 +2230,1064 @@
 		</values>
 	</enum>
 
-<!--
 	<enum>
- 	<name>EmberInitialSecurityBitmask</name>
-		<name>EzspStatus</name>
-	 	<name>EmberIncomingMessageType</name>
-	 	<name>EmberApsOption</name>
-	 	<name>EmberNodeType</name>
-	 	<name>EmberInitialSecurityBitmask</name>
-	 	<name>EzspChannelMask</name>
-	 	<name>EzspNetworkScanType</name>
-	</enum>	
--->
+		<name>EmberStatus</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_SUCCESS</name>
+				<enum_value>0x0000</enum_value>
+				<description>The generic 'no error' message.</description>
+			</value>
+			<value>
+				<name>EMBER_ERR_FATAL</name>
+				<enum_value>0x0001</enum_value>
+				<description>The generic 'fatal error' message.</description>
+			</value>
+			<value>
+				<name>EMBER_BAD_ARGUMENT</name>
+				<enum_value>0x0002</enum_value>
+				<description>An invalid value was passed as an argument to a function</description>
+			</value>
+			<value>
+				<name>EMBER_EEPROM_MFG_STACK_VERSION_MISMATCH</name>
+				<enum_value>0x0004</enum_value>
+				<description>The manufacturing and stack token format in nonvolatile memory is different than what the stack expects (returned at initialization).</description>
+			</value>
+			<value>
+				<name>EMBER_INCOMPATIBLE_STATIC_MEMORY_DEFINITIONS</name>
+				<enum_value>0x0005</enum_value>
+				<description>The static memory definitions in ember-staticmemory.h are incompatible with this stack version</description>
+			</value>
+			<value>
+				<name>EMBER_EEPROM_MFG_VERSION_MISMATCH</name>
+				<enum_value>0x0006</enum_value>
+				<description>The manufacturing token format in non-volatile memory is different than what the stack expects (returned at initialization).</description>
+			</value>
+			<value>
+				<name>EMBER_EEPROM_STACK_VERSION_MISMATCH</name>
+				<enum_value>0x0007</enum_value>
+				<description>The stack token format in non-volatile memory is different than what the stack expects (returned at initialization).</description>
+			</value>
+			<value>
+				<name>EMBER_NO_BUFFERS</name>
+				<enum_value>0x0018</enum_value>
+				<description>There are no more buffers.</description>
+			</value>
+			<value>
+				<name>EMBER_SERIAL_INVALID_BAUD_RATE</name>
+				<enum_value>0x0020</enum_value>
+				<description>Specified an invalid baud rate</description>
+			</value>
+			<value>
+				<name>EMBER_SERIAL_INVALID_PORT</name>
+				<enum_value>0x0021</enum_value>
+				<description>Specified an invalid baud rate</description>
+			</value>
+			<value>
+				<name>EMBER_SERIAL_TX_OVERFLOW</name>
+				<enum_value>0x0022</enum_value>
+				<description>Tried to send too much data</description>
+			</value>
+			<value>
+				<name>EMBER_SERIAL_RX_OVERFLOW</name>
+				<enum_value>0x0023</enum_value>
+				<description>There was not enough space to store a received character and the character was dropped.</description>
+			</value>
+			<value>
+				<name>EMBER_SERIAL_RX_FRAME_ERROR</name>
+				<enum_value>0x0024</enum_value>
+				<description>Detected a UART framing error</description>
+			</value>
+			<value>
+				<name>EMBER_SERIAL_RX_PARITY_ERROR</name>
+				<enum_value>0x0025</enum_value>
+				<description>Detected a UART parity error.</description>
+			</value>
+			<value>
+				<name>EMBER_SERIAL_RX_EMPTY</name>
+				<enum_value>0x0026</enum_value>
+				<description>There is no received data to process.</description>
+			</value>
+			<value>
+				<name>EMBER_SERIAL_RX_OVERRUN_ERROR</name>
+				<enum_value>0x0027</enum_value>
+				<description>The receive interrupt was not handled in time, and a character was dropped.</description>
+			</value>
+			<value>
+				<name>EMBER_MAC_TRANSMIT_QUEUE_FULL</name>
+				<enum_value>0x0039</enum_value>
+				<description>The MAC transmit queue is full</description>
+			</value>
+			<value>
+				<name>EMBER_MAC_UNKNOWN_HEADER_TYPE</name>
+				<enum_value>0x003A</enum_value>
+				<description>MAC header FCR error on receive</description>
+			</value>
+			<value>
+				<name>EMBER_MAC_SCANNING</name>
+				<enum_value>0x003D</enum_value>
+				<description>The MAC can't complete this task because it is scanning.</description>
+			</value>
+			<value>
+				<name>EMBER_MAC_NO_DATA</name>
+				<enum_value>0x0031</enum_value>
+				<description>No pending data exists for device doing a data poll.</description>
+			</value>
+			<value>
+				<name>EMBER_MAC_JOINED_NETWORK</name>
+				<enum_value>0x0032</enum_value>
+				<description>Attempt to scan when we are joined to a network.</description>
+			</value>
+			<value>
+				<name>EMBER_MAC_BAD_SCAN_DURATION</name>
+				<enum_value>0x0033</enum_value>
+				<description>Scan duration must be 0 to 14 inclusive. Attempt was made to scan with an incorrect duration value.</description>
+			</value>
+			<value>
+				<name>EMBER_MAC_INCORRECT_SCAN_TYPE</name>
+				<enum_value>0x0034</enum_value>
+				<description>emberStartScan was called with an incorrect scan type.</description>
+			</value>
+			<value>
+				<name>EMBER_MAC_INVALID_CHANNEL_MASK</name>
+				<enum_value>0x0035</enum_value>
+				<description>emberStartScan was called with an invalid channel mask.</description>
+			</value>
+			<value>
+				<name>EMBER_MAC_COMMAND_TRANSMIT_FAILURE</name>
+				<enum_value>0x0036</enum_value>
+				<description>Failed to scan current channel because we were unable to transmit the relevant MAC command.</description>
+			</value>
+			<value>
+				<name>EMBER_MAC_NO_ACK_RECEIVED</name>
+				<enum_value>0x0040</enum_value>
+				<description>We expected to receive an ACK following the transmission, but the MAC level ACK was never received.</description>
+			</value>
+			<value>
+				<name>EMBER_MAC_INDIRECT_TIMEOUT</name>
+				<enum_value>0x0042</enum_value>
+				<description>Indirect data message timed out before polled.</description>
+			</value>
+			<value>
+				<name>EMBER_SIM_EEPROM_ERASE_PAGE_GREEN</name>
+				<enum_value>0x0043</enum_value>
+				<description>The Simulated EEPROM is telling the application that there is at least one flash page to be erased. The GREEN status means the current page has not filled above the ERASE_CRITICAL_THRESHOLD. The application should call the function halSimEepromErasePage when it can to erase a page.</description>
+			</value>
+			<value>
+				<name>EMBER_SIM_EEPROM_ERASE_PAGE_RED</name>
+				<enum_value>0x0044</enum_value>
+				<description>The Simulated EEPROM is telling the application that there is at least one flash page to be erased. The RED status means the current page has filled above the ERASE_CRITICAL_THRESHOLD. Due to the shrinking availability of write space, there is a danger of data loss. The application must call the function halSimEepromErasePage as soon as possible to erase a page.</description>
+			</value>
+			<value>
+				<name>EMBER_SIM_EEPROM_FULL</name>
+				<enum_value>0x0045</enum_value>
+				<description>The Simulated EEPROM has run out of room to write any new data and the data trying to be set has been lost. This error code is the result of ignoring the SIM_EEPROM_ERASE_PAGE_RED error code. The application must call the function halSimEepromErasePage to make room for any further calls to set a token.</description>
+			</value>
+			<value>
+				<name>EMBER_ERR_FLASH_WRITE_INHIBITED</name>
+				<enum_value>0x0046</enum_value>
+				<description>A fatal error has occurred while trying to write data to the Flash. The target memory attempting to be programmed is already programmed. The flash write routines were asked to flip a bit from a 0 to 1, which is physically impossible and the write was therefore inhibited. The data in the flash cannot be trusted after this error.</description>
+			</value>
+			<value>
+				<name>EMBER_ERR_FLASH_VERIFY_FAILED</name>
+				<enum_value>0x0047</enum_value>
+				<description>A fatal error has occurred while trying to write data to the Flash and the write verification has failed. The data in the flash cannot be trusted after this error, and it is possible this error is the result of exceeding the life cycles of the flash.</description>
+			</value>
+			<value>
+				<name>EMBER_SIM_EEPROM_INIT_1_FAILED</name>
+				<enum_value>0x0048</enum_value>
+				<description>Attempt 1 to initialize the Simulated EEPROM has failed. This failure means the information already stored in Flash (or a lack thereof), is fatally incompatible with the token information compiled into the code image being run.</description>
+			</value>
+			<value>
+				<name>EMBER_SIM_EEPROM_INIT_2_FAILED</name>
+				<enum_value>0x0049</enum_value>
+				<description>Attempt 2 to initialize the Simulated EEPROM has failed. This failure means Attempt 1 failed, and the token system failed to properly reload default tokens and reset the Simulated EEPROM.</description>
+			</value>
+			<value>
+				<name>EMBER_SIM_EEPROM_INIT_3_FAILED</name>
+				<enum_value>0x004A</enum_value>
+				<description>Attempt 3 to initialize the Simulated EEPROM has failed. This failure means one or both of the tokens TOKEN_MFG_NVDATA_VERSION or TOKEN_STACK_NVDATA_VERSION were incorrect and the token system failed to properly reload default tokens and reset the Simulated EEPROM.</description>
+			</value>
+			<value>
+				<name>EMBER_ERR_FLASH_PROG_FAIL</name>
+				<enum_value>0x004B</enum_value>
+				<description>A fatal error has occurred while trying to write data to the flash, possibly due to write protection or an invalid address. The data in the flash cannot be trusted after this error, and it is possible this error is the result of exceeding the life cycles of the flash.</description>
+			</value>
+			<value>
+				<name>EMBER_ERR_FLASH_ERASE_FAIL</name>
+				<enum_value>0x004C</enum_value>
+				<description>A fatal error has occurred while trying to erase flash, possibly due to write protection. The data in the flash cannot be trusted after this error, and it is possible this error is the result of exceeding the life cycles of the flash</description>
+			</value>
+			<value>
+				<name>EMBER_ERR_BOOTLOADER_TRAP_TABLE_BAD</name>
+				<enum_value>0x0058</enum_value>
+				<description>The bootloader received an invalid message (failed attempt to go into bootloader).</description>
+			</value>
+			<value>
+				<name>EMBER_ERR_BOOTLOADER_TRAP_UNKNOWN</name>
+				<enum_value>0x0059</enum_value>
+				<description>Bootloader received an invalid message (failed attempt to go into bootloader).</description>
+			</value>
+			<value>
+				<name>EMBER_ERR_BOOTLOADER_NO_IMAGE</name>
+				<enum_value>0x005A</enum_value>
+				<description>The bootloader cannot complete the bootload operation because either an image was not found or the image exceeded memory bounds.</description>
+			</value>
+			<value>
+				<name>EMBER_DELIVERY_FAILED</name>
+				<enum_value>0x0066</enum_value>
+				<description>The APS layer attempted to send or deliver a message, but it failed.</description>
+			</value>
+			<value>
+				<name>EMBER_BINDING_INDEX_OUT_OF_RANGE</name>
+				<enum_value>0x0069</enum_value>
+				<description>This binding index is out of range of the current binding table.</description>
+			</value>
+			<value>
+				<name>EMBER_ADDRESS_TABLE_INDEX_OUT_OF_RANGE</name>
+				<enum_value>0x006A</enum_value>
+				<description>This address table index is out of range for the current address table.</description>
+			</value>
+			<value>
+				<name>EMBER_INVALID_BINDING_INDEX</name>
+				<enum_value>0x006C</enum_value>
+				<description>An invalid binding table index was given to a function.</description>
+			</value>
+			<value>
+				<name>EMBER_INVALID_CALL</name>
+				<enum_value>0x0070</enum_value>
+				<description>The API call is not allowed given the current state of the stack</description>
+			</value>
+			<value>
+				<name>EMBER_COST_NOT_KNOWN</name>
+				<enum_value>0x0071</enum_value>
+				<description>The link cost to a node is not known.</description>
+			</value>
+			<value>
+				<name>EMBER_MAX_MESSAGE_LIMIT_REACHED</name>
+				<enum_value>0x0072</enum_value>
+				<description>The maximum number of in-flight messages (i.e. EMBER_APS_UNICAST_MESSAGE_COUNT) has been reached.</description>
+			</value>
+			<value>
+				<name>EMBER_MESSAGE_TOO_LONG</name>
+				<enum_value>0x0074</enum_value>
+				<description>The message to be transmitted is too big to fit into a single over-the-air packet</description>
+			</value>
+			<value>
+				<name>EMBER_BINDING_IS_ACTIVE</name>
+				<enum_value>0x0075</enum_value>
+				<description>The application is trying to delete or overwrite a binding that is in use.</description>
+			</value>
+			<value>
+				<name>EMBER_ADDRESS_TABLE_ENTRY_IS_ACTIVE</name>
+				<enum_value>0x0076</enum_value>
+				<description>The application is trying to overwrite an address table entry that is in use.</description>
+			</value>
+			<value>
+				<name>EMBER_ADC_CONVERSION_DONE</name>
+				<enum_value>0x0080</enum_value>
+				<description>Conversion is complete.</description>
+			</value>
+			<value>
+				<name>EMBER_ADC_CONVERSION_BUSY</name>
+				<enum_value>0x0081</enum_value>
+				<description>Conversion cannot be done because a request is being processed.</description>
+			</value>
+			<value>
+				<name>EMBER_ADC_CONVERSION_DEFERRED</name>
+				<enum_value>0x0082</enum_value>
+				<description>Conversion is deferred until the current request has been processed.</description>
+			</value>
+			<value>
+				<name>EMBER_ADC_NO_CONVERSION_PENDING</name>
+				<enum_value>0x0084</enum_value>
+				<description>No results are pending</description>
+			</value>
+			<value>
+				<name>EMBER_SLEEP_INTERRUPTED</name>
+				<enum_value>0x0085</enum_value>
+				<description>Sleeping (for a duration) has been abnormally interrupted and exited prematurely.</description>
+			</value>
+			<value>
+				<name>EMBER_PHY_TX_UNDERFLOW</name>
+				<enum_value>0x0088</enum_value>
+				<description>The transmit hardware buffer underflowed.</description>
+			</value>
+			<value>
+				<name>EMBER_PHY_TX_INCOMPLETE</name>
+				<enum_value>0x0089</enum_value>
+				<description>The transmit hardware did not finish transmitting a packet.</description>
+			</value>
+			<value>
+				<name>EMBER_PHY_INVALID_CHANNEL</name>
+				<enum_value>0x008A</enum_value>
+				<description>An unsupported channel setting was specified.</description>
+			</value>
+			<value>
+				<name>EMBER_PHY_INVALID_POWER</name>
+				<enum_value>0x008B</enum_value>
+				<description>An unsupported power setting was specified.</description>
+			</value>
+			<value>
+				<name>EMBER_PHY_TX_BUSY</name>
+				<enum_value>0x008C</enum_value>
+				<description>The packet cannot be transmitted because the physical MAC layer is currently transmitting a packet. (This is used for the MAC backoff algorithm.)</description>
+			</value>
+			<value>
+				<name>EMBER_PHY_TX_CCA_FAIL</name>
+				<enum_value>0x008D</enum_value>
+				<description>The transmit attempt failed because all CCA attempts indicated that the channel was busy</description>
+			</value>
+			<value>
+				<name>EMBER_PHY_OSCILLATOR_CHECK_FAILED</name>
+				<enum_value>0x008E</enum_value>
+				<description>The software installed on the hardware doesn't recognize the hardware radio type.</description>
+			</value>
+			<value>
+				<name>EMBER_PHY_ACK_RECEIVED</name>
+				<enum_value>0x008F</enum_value>
+				<description>The expected ACK was received after the last transmission.</description>
+			</value>
+			<value>
+				<name>EMBER_NETWORK_UP</name>
+				<enum_value>0x0090</enum_value>
+				<description>The stack software has completed initialization and is ready to send and receive packets over the air</description>
+			</value>
+			<value>
+				<name>EMBER_NETWORK_DOWN</name>
+				<enum_value>0x0091</enum_value>
+				<description>The network is not operating.</description>
+			</value>
+			<value>
+				<name>EMBER_JOIN_FAILED</name>
+				<enum_value>0x0094</enum_value>
+				<description>An attempt to join a network failed.</description>
+			</value>
+			<value>
+				<name>EMBER_MOVE_FAILED</name>
+				<enum_value>0x0096</enum_value>
+				<description>After moving, a mobile node's attempt to re-establish contact with the network failed.</description>
+			</value>
+			<value>
+				<name>EMBER_CANNOT_JOIN_AS_ROUTER</name>
+				<enum_value>0x0098</enum_value>
+				<description>An attempt to join as a router failed due to a ZigBee versus ZigBee Pro incompatibility. ZigBee devices joining ZigBee Pro networks (or vice versa) must join as End Devices, not Routers.</description>
+			</value>
+			<value>
+				<name>EMBER_NODE_ID_CHANGED</name>
+				<enum_value>0x099</enum_value>
+				<description>The local node ID has changed. The application can obtain the new node ID by calling emberGetNodeId().</description>
+			</value>
+			<value>
+				<name>EMBER_PAN_ID_CHANGED</name>
+				<enum_value>0x009A</enum_value>
+				<description>The local PAN ID has changed. The application can obtain the new PAN ID by calling emberGetPanId().</description>
+			</value>
+			<value>
+				<name>EMBER_NO_BEACONS</name>
+				<enum_value>0x00AB</enum_value>
+				<description>An attempt to join or rejoin the network failed because no router beacons could be heard by the joining node.</description>
+			</value>
+			<value>
+				<name>EMBER_RECEIVED_KEY_IN_THE_CLEAR</name>
+				<enum_value>0x00AC</enum_value>
+				<description>An attempt was made to join a Secured Network using a pre-configured key, but the Trust Center sent back a Network Key in-the-clear when an encrypted Network Key was required.</description>
+			</value>
+			<value>
+				<name>EMBER_NO_NETWORK_KEY_RECEIVED</name>
+				<enum_value>0x00AD</enum_value>
+				<description>An attempt was made to join a Secured Network, but the device did not receive a Network Key.</description>
+			</value>
+			<value>
+				<name>EMBER_NO_LINK_KEY_RECEIVED</name>
+				<enum_value>0x00AE</enum_value>
+				<description>After a device joined a Secured Network, a Link Key was requested but no response was ever received.</description>
+			</value>
+			<value>
+				<name>EMBER_PRECONFIGURED_KEY_REQUIRED</name>
+				<enum_value>0x00AF</enum_value>
+				<description>An attempt was made to join a Secured Network without a pre-configured key, but the Trust Center sent encrypted data using a pre-configured key.</description>
+			</value>
+			<value>
+				<name>EMBER_NOT_JOINED</name>
+				<enum_value>0x0093</enum_value>
+				<description>The node has not joined a network.</description>
+			</value>
+			<value>
+				<name>EMBER_INVALID_SECURITY_LEVEL</name>
+				<enum_value>0x0095</enum_value>
+				<description>The chosen security level (the value of EMBER_SECURITY_LEVEL) is not supported by the stack</description>
+			</value>
+			<value>
+				<name>EMBER_NETWORK_BUSY</name>
+				<enum_value>0x00A1</enum_value>
+				<description>A message cannot be sent because the network is currently overloaded.</description>
+			</value>
+			<value>
+				<name>EMBER_INVALID_ENDPOINT</name>
+				<enum_value>0x00A3</enum_value>
+				<description>The application tried to send a message using an endpoint that it has not defined.</description>
+			</value>
+			<value>
+				<name>EMBER_BINDING_HAS_CHANGED</name>
+				<enum_value>0x00A4</enum_value>
+				<description>The application tried to use a binding that has been remotely modified and the change has not yet been reported to the application.</description>
+			</value>
+			<value>
+				<name>EMBER_INSUFFICIENT_RANDOM_DATA</name>
+				<enum_value>0x00A5</enum_value>
+				<description>An attempt to generate random bytes failed because of insufficient random data from the radio.</description>
+			</value>
+			<value>
+				<name>EMBER_APS_ENCRYPTION_ERROR</name>
+				<enum_value>0x00A6</enum_value>
+				<description>There was an error in trying to encrypt at the APS Level. This could result from either an inability to determine the long address of the recipient from the short address (no entry in the binding table) or there is no link key entry in the table associated with the destination, or there was a failure to load the correct key into the encryption core.</description>
+			</value>
+			<value>
+				<name>EMBER_TRUST_CENTER_MASTER_KEY_NOT_SET</name>
+				<enum_value>0x00A7</enum_value>
+				<description> There was an attempt to form a network using commercial security without setting the Trust Center master key first.</description>
+			</value>
+			<value>
+				<name>EMBER_SECURITY_STATE_NOT_SET</name>
+				<enum_value>0x00A8</enum_value>
+				<description>There was an attempt to form or join a network with security without calling emberSetInitialSecurityState() first</description>
+			</value>
+			<value>
+				<name>EMBER_KEY_TABLE_INVALID_ADDRESS</name>
+				<enum_value>0x00B3</enum_value>
+				<description>There was an attempt to set an entry in the key table using an invalid long address. An entry cannot be set using either the local device's or Trust Center's IEEE address. Or an entry already exists in the table with the same IEEE address. An Address of all zeros or all F's are not valid addresses in 802.15.4.</description>
+			</value>
+			<value>
+				<name>EMBER_SECURITY_CONFIGURATION_INVALID</name>
+				<enum_value>0x00B7</enum_value>
+				<description>There was an attempt to set a security configuration that is not valid given the other security settings.</description>
+			</value>
+			<value>
+				<name>EMBER_TOO_SOON_FOR_SWITCH_KEY</name>
+				<enum_value>0x00B8</enum_value>
+				<description>There was an attempt to broadcast a key switch too quickly after broadcasting the next network key. The Trust Center must wait at least a period equal to the broadcast timeout so that all routers have a chance to receive the broadcast of the new network key.</description>
+			</value>
+			<value>
+				<name>EMBER_KEY_NOT_AUTHORIZED</name>
+				<enum_value>0x00BB</enum_value>
+				<description>The message could not be sent because the link key corresponding to the destination is not authorized for use in APS data messages. APS Commands (sent by the stack) are allowed. To use it for encryption of APS data messages it must be authorized using a key agreement protocol (such as CBKE).</description>
+			</value>
+			<value>
+				<name>EMBER_SECURITY_DATA_INVALID</name>
+				<enum_value>0x00BD</enum_value>
+				<description>The security data provided was not valid, or an integrity check failed.</description>
+			</value>
+			<value>
+				<name>EMBER_SOURCE_ROUTE_FAILURE</name>
+				<enum_value>0x00A9</enum_value>
+				<description>A ZigBee route error command frame was received indicating that a source routed message from this node failed en route.</description>
+			</value>
+			<value>
+				<name>EMBER_MANY_TO_ONE_ROUTE_FAILURE</name>
+				<enum_value>0x00AA</enum_value>
+				<description>A ZigBee route error command frame was received indicating that a message sent to this node along a many-to-one route failed en route. The route error frame was delivered by an ad-hoc search for a functioning route.</description>
+			</value>
+			<value>
+				<name>EMBER_STACK_AND_HARDWARE_MISMATCH</name>
+				<enum_value>0x00B0</enum_value>
+				<description>A critical and fatal error indicating that the version of the stack trying to run does not match with the chip it is running on. The software (stack) on the chip must be replaced with software that is compatible with the chip</description>
+			</value>
+			<value>
+				<name>EMBER_INDEX_OUT_OF_RANGE</name>
+				<enum_value>0x00B1</enum_value>
+				<description>An index was passed into the function that was larger than the valid range.</description>
+			</value>
+			<value>
+				<name>EMBER_TABLE_FULL</name>
+				<enum_value>0x00B4</enum_value>
+				<description>There are no empty entries left in the table.</description>
+			</value>
+			<value>
+				<name>EMBER_TABLE_ENTRY_ERASED</name>
+				<enum_value>0x00B6</enum_value>
+				<description>The requested table entry has been erased and contains no valid data.</description>
+			</value>
+			<value>
+				<name>EMBER_LIBRARY_NOT_PRESENT</name>
+				<enum_value>0x00B5</enum_value>
+				<description>The requested function cannot be executed because the library that contains the necessary functionality is not present.</description>
+			</value>
+			<value>
+				<name>EMBER_OPERATION_IN_PROGRESS</name>
+				<enum_value>0x00BA</enum_value>
+				<description>The stack accepted the command and is currently processing the request. The results will be returned via an appropriate handler.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_0</name>
+				<enum_value>0x00F0</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_1</name>
+				<enum_value>0x00F1</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_2</name>
+				<enum_value>0x00F2</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_3</name>
+				<enum_value>0x00F3</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_4</name>
+				<enum_value>0x00F4</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_5</name>
+				<enum_value>0x00F5</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_6</name>
+				<enum_value>0x00F6</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_7</name>
+				<enum_value>0x00F7</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_8</name>
+				<enum_value>0x00F8</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_9</name>
+				<enum_value>0x00F9</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_10</name>
+				<enum_value>0x00FA</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_11</name>
+				<enum_value>0x00FB</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_12</name>
+				<enum_value>0x00FC</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_13</name>
+				<enum_value>0x00FD</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_14</name>
+				<enum_value>0x00FE</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_ERROR_15</name>
+				<enum_value>0x00FF</enum_value>
+				<description>This error is reserved for customer application use. This will never be returned from any portion of the network stack or HAL.</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EmberIncomingMessageType</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_INCOMING_UNICAST</name>
+				<enum_value>0x0000</enum_value>
+				<description>Unicast</description>
+			</value>
+			<value>
+				<name>EMBER_INCOMING_UNICAST_REPLY</name>
+				<enum_value>0x0001</enum_value>
+				<description>Unicast reply</description>
+			</value>
+			<value>
+				<name>EMBER_INCOMING_MULTICAST</name>
+				<enum_value>0x0002</enum_value>
+				<description>Multicast</description>
+			</value>
+			<value>
+				<name>EMBER_INCOMING_MULTICAST_LOOPBACK</name>
+				<enum_value>0x0003</enum_value>
+				<description>Multicast sent by the local device</description>
+			</value>
+			<value>
+				<name>EMBER_INCOMING_BROADCAST</name>
+				<enum_value>0x0004</enum_value>
+				<description>Broadcast</description>
+			</value>
+			<value>
+				<name>EMBER_INCOMING_BROADCAST_LOOPBACK</name>
+				<enum_value>0x0005</enum_value>
+				<description>Broadcast sent by the local device.</description>
+			</value>
+			<value>
+				<name>EMBER_INCOMING_MANY_TO_ONE_ROUTE_REQUEST</name>
+				<enum_value>0x0006</enum_value>
+				<description>Many to one route request</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EmberIncomingMessageType</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_APS_OPTION_NONE</name>
+				<enum_value>0x0000</enum_value>
+				<description>No options</description>
+			</value>
+			<value>
+				<name>EMBER_APS_OPTION_ENCRYPTION</name>
+				<enum_value>0x0020</enum_value>
+				<description>Send the message using APS Encryption, using the Link Key shared with the destination node to encrypt the data at the APS Level.</description>
+			</value>
+			<value>
+				<name>EMBER_APS_OPTION_RETRY</name>
+				<enum_value>0x0040</enum_value>
+				<description>Resend the message using the APS retry mechanism.</description>
+			</value>
+			<value>
+				<name>EMBER_APS_OPTION_ENABLE_ROUTE_DISCOVERY</name>
+				<enum_value>0x0100</enum_value>
+				<description>Causes a route discovery to be initiated if no route to the destination is known.</description>
+			</value>
+			<value>
+				<name>EMBER_APS_OPTION_FORCE_ROUTE_DISCOVERY</name>
+				<enum_value>0x0200</enum_value>
+				<description>Causes a route discovery to be initiated even if one is known.</description>
+			</value>
+			<value>
+				<name>EMBER_APS_OPTION_SOURCE_EUI64</name>
+				<enum_value>0x0400</enum_value>
+				<description>Include the source EUI64 in the network frame.</description>
+			</value>
+			<value>
+				<name>EMBER_APS_OPTION_DESTINATION_EUI64</name>
+				<enum_value>0x0800</enum_value>
+				<description>Include the destination EUI64 in the network frame</description>
+			</value>
+			<value>
+				<name>EMBER_APS_OPTION_ENABLE_ADDRESS_DISCOVERY</name>
+				<enum_value>0x1000</enum_value>
+				<description>Send a ZDO request to discover the node ID of the destination, if it is not already know.</description>
+			</value>
+			<value>
+				<name>EMBER_APS_OPTION_POLL_RESPONSE</name>
+				<enum_value>0x2000</enum_value>
+				<description>Reserved</description>
+			</value>
+			<value>
+				<name>EMBER_APS_OPTION_ZDO_RESPONSE_REQUIRED</name>
+				<enum_value>0x4000</enum_value>
+				<description>This incoming message is a ZDO request not handled by the EmberZNet stack, and the application is responsible for sending a ZDO response. This flag is used only when the ZDO is configured to have requests handled by the application. See the EZSP_CONFIG_APPLICATION_ZDO_FLAGS configuration parameter for more information.</description>
+			</value>
+			<value>
+				<name>EMBER_APS_OPTION_FRAGMENT</name>
+				<enum_value>0x8000</enum_value>
+				<description>This message is part of a fragmented message. This option may only be set for unicasts. The groupId field gives the index of this fragment in the low-order byte. If the low-order byte is zero this is the first fragment and the high-order byte contains the number of fragments in the message.</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EmberNodeType</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_UNKNOWN_DEVICE</name>
+				<enum_value>0x0000</enum_value>
+				<description>Device is not joined</description>
+			</value>
+			<value>
+				<name>EMBER_COORDINATOR</name>
+				<enum_value>0x0001</enum_value>
+				<description>Will relay messages and can act as a parent to other nodes.</description>
+			</value>
+			<value>
+				<name>EMBER_ROUTER</name>
+				<enum_value>0x0002</enum_value>
+				<description>Will relay messages and can act as a parent to other nodes.</description>
+			</value>
+			<value>
+				<name>EMBER_END_DEVICE</name>
+				<enum_value>0x0003</enum_value>
+				<description>Communicates only with its parent and will not relay messages.</description>
+			</value>
+			<value>
+				<name>EMBER_SLEEPY_END_DEVICE</name>
+				<enum_value>0x0004</enum_value>
+				<description>An end device whose radio can be turned off to save power. The application must poll to receive messages.</description>
+			</value>
+			<value>
+				<name>EMBER_MOBILE_END_DEVICE</name>
+				<enum_value>0x0005</enum_value>
+				<description>A sleepy end device that can move through the network.</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EzspNetworkScanType</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EZSP_ENERGY_SCAN</name>
+				<enum_value>0x0000</enum_value>
+				<description>An energy scan scans each channel for its RSSI value.</description>
+			</value>
+			<value>
+				<name>EZSP_ACTIVE_SCAN</name>
+				<enum_value>0x0001</enum_value>
+				<description>An active scan scans each channel for available networks.</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EmberInitialSecurityBitmask</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_STANDARD_SECURITY_MODE</name>
+				<enum_value>0x0000</enum_value>
+				<description>This enables ZigBee Standard Security on the node.</description>
+			</value>
+			<value>
+				<name>EMBER_DISTRIBUTED_TRUST_CENTER_MODE</name>
+				<enum_value>0x0002</enum_value>
+				<description>This enables Distributed Trust Center Mode for the device forming the network. (Previously known as EMBER_NO_TRUST_CENTER_MODE)</description>
+			</value>
+			<value>
+				<name>EMBER_TRUST_CENTER_GLOBAL_LINK_KEY</name>
+				<enum_value>0x0004</enum_value>
+				<description>This enables a Global Link Key for the Trust Center. All nodes will share the same Trust Center Link Key</description>
+			</value>
+			<value>
+				<name>EMBER_PRECONFIGURED_NETWORK_KEY_MODE</name>
+				<enum_value>0x0008</enum_value>
+				<description>This enables devices that perform MAC Association with a pre-configured Network Key to join the network. It is only set on the Trust Center.</description>
+			</value>
+			<value>
+				<name>EMBER_TRUST_CENTER_USES_HASHED_LINK_KEY</name>
+				<enum_value>0x0084</enum_value>
+				<description>This denotes that the preconfiguredKey is not the actual Link Key but a Secret Key known only to the Trust Center. It is hashed with the IEEE Address of the destination device in order to create the actual Link Key used in encryption. This is bit is only used by the Trust Center. The joining device need not set this.</description>
+			</value>
+			<value>
+				<name>EMBER_HAVE_PRECONFIGURED_KEY</name>
+				<enum_value>0x0100</enum_value>
+				<description>This denotes that the preconfiguredKey element has valid data that should be used to configure the initial security state.</description>
+			</value>
+			<value>
+				<name>EMBER_HAVE_NETWORK_KEY</name>
+				<enum_value>0x0200</enum_value>
+				<description>This denotes that the networkKey element has valid data that should be used to configure the initial security state.</description>
+			</value>
+			<value>
+				<name>EMBER_GET_LINK_KEY_WHEN_JOINING</name>
+				<enum_value>0x0400</enum_value>
+				<description>This denotes to a joining node that it should attempt to acquire a Trust Center Link Key during joining. This is only necessary if the device does not have a pre-configured key.</description>
+			</value>
+			<value>
+				<name>EMBER_REQUIRE_ENCRYPTED_KEY</name>
+				<enum_value>0x0800</enum_value>
+				<description>This denotes that a joining device should only accept an encrypted network key from the Trust Center (using its preconfigured key). A key sent in-the-clear by the Trust Center will be rejected and the join will fail. This option is only valid when utilizing a pre-configured key.</description>
+			</value>
+			<value>
+				<name>EMBER_NO_FRAME_COUNTER_RESET</name>
+				<enum_value>0x1000</enum_value>
+				<description>This denotes whether the device should NOT reset its outgoing frame counters (both NWK and APS) when ::emberSetInitialSecurityState() is called. Normally it is advised to reset the frame counter before joining a new network. However in cases where a device is joining to the same network a again (but not using ::emberRejoinNetwork()) it should keep the NWK and APS frame counters stored in its tokens.</description>
+			</value>
+			<value>
+				<name>EMBER_GET_PRECONFIGURED_KEY_FROM_INSTALL_CODE</name>
+				<enum_value>0x2000</enum_value>
+				<description>This denotes that the device should obtain its preconfigured key from an installation code stored in the manufacturing token. The token contains a value that will be hashed to obtain the actual preconfigured key. If that token is not valid, then the call to emberSetInitialSecurityState() will fail.</description>
+			</value>
+			<value>
+				<name>EMBER_HAVE_TRUST_CENTER_EUI64</name>
+				<enum_value>0x0040</enum_value>
+				<description>This denotes that the ::EmberInitialSecurityState::preconfiguredTrustCenterEui64 has a value in it containing the trust center EUI64. The device will only join a network and accept commands from a trust center with that EUI64. Normally this bit is NOT set, and the EUI64 of the trust center is learned during the join process. When commissioning a device to join onto an existing network, which is using a trust center, and without sending any messages, this bit must be set and the field ::EmberInitialSecurityState::preconfiguredTrustCenterEui64 must be populated with the appropriate EUI64.</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EmberInitialSecurityBitmask</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_TRUST_CENTER_LINK_KEY</name>
+				<enum_value>0x0001</enum_value>
+				<description>A shared key between the Trust Center and a device.</description>
+			</value>
+			<value>
+				<name>EMBER_TRUST_CENTER_MASTER_KEY</name>
+				<enum_value>0x0002</enum_value>
+				<description>A shared secret used for deriving keys between the Trust Center and a device</description>
+			</value>
+			<value>
+				<name>EMBER_CURRENT_NETWORK_KEY</name>
+				<enum_value>0x0003</enum_value>
+				<description>The current active Network Key used by all devices in the network.</description>
+			</value>
+			<value>
+				<name>EMBER_NEXT_NETWORK_KEY</name>
+				<enum_value>0x0004</enum_value>
+				<description>The alternate Network Key that was previously in use, or the newer key that will be switched to.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_LINK_KEY</name>
+				<enum_value>0x0005</enum_value>
+				<description>An Application Link Key shared with another (non-Trust Center) device.</description>
+			</value>
+			<value>
+				<name>EMBER_APPLICATION_MASTER_KEY</name>
+				<enum_value>0x0006</enum_value>
+				<description>An Application Master Key shared secret used to derive an Application Link Key.</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EmberKeyStructBitmask</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_KEY_HAS_SEQUENCE_NUMBER</name>
+				<enum_value>0x0001</enum_value>
+				<description>The key has a sequence number associated with it.</description>
+			</value>
+			<value>
+				<name>EMBER_KEY_HAS_OUTGOING_FRAME_COUNTER</name>
+				<enum_value>0x0002</enum_value>
+				<description>The key has an outgoing frame counter associated with it.</description>
+			</value>
+			<value>
+				<name>EMBER_KEY_HAS_INCOMING_FRAME_COUNTER</name>
+				<enum_value>0x0003</enum_value>
+				<description>The key has an incoming frame counter associated with it.</description>
+			</value>
+			<value>
+				<name>EMBER_KEY_HAS_PARTNER_EUI64</name>
+				<enum_value>0x0004</enum_value>
+				<description>The key has a Partner IEEE address associated with it.</description>
+			</value>
+		</values>
+	</enum>
+	
+	<enum>
+		<name>EmberDeviceUpdate</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_STANDARD_SECURITY_SECURED_REJOIN</name>
+				<enum_value>0x0000</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_STANDARD_SECURITY_UNSECURED_JOIN</name>
+				<enum_value>0x0001</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_DEVICE_LEFT</name>
+				<enum_value>0x0002</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_STANDARD_SECURITY_UNSECURED_REJOIN</name>
+				<enum_value>0x0003</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_HIGH_SECURITY_SECURED_REJOIN</name>
+				<enum_value>0x0004</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_HIGH_SECURITY_UNSECURED_JOIN</name>
+				<enum_value>0x0005</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_HIGH_SECURITY_UNSECURED_REJOIN</name>
+				<enum_value>0x0007</enum_value>
+				<description></description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EmberCounterType</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_COUNTER_MAC_RX_BROADCAST</name>
+				<enum_value>0</enum_value>
+				<description>The MAC received a broadcast</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_MAC_TX_BROADCAST</name>
+				<enum_value>1</enum_value>
+				<description>The MAC transmitted a broadcast</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_MAC_RX_UNICAST</name>
+				<enum_value>2</enum_value>
+				<description>The MAC received a unicast</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_MAC_TX_UNICAST_SUCCESS</name>
+				<enum_value>3</enum_value>
+				<description>The MAC successfully transmitted a unicast.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_MAC_TX_UNICAST_RETRY</name>
+				<enum_value>4</enum_value>
+				<description>The MAC retried a unicast</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_MAC_TX_UNICAST_FAILED</name>
+				<enum_value>5</enum_value>
+				<description>The MAC unsuccessfully transmitted a unicast.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_APS_DATA_RX_BROADCAST</name>
+				<enum_value>6</enum_value>
+				<description>The APS layer received a data broadcast.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_APS_DATA_TX_BROADCAST</name>
+				<enum_value>7</enum_value>
+				<description>The APS layer transmitted a data broadcast.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_APS_DATA_RX_UNICAST</name>
+				<enum_value>8</enum_value>
+				<description>The APS layer received a data unicast.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_APS_DATA_TX_UNICAST_SUCCESS</name>
+				<enum_value>9</enum_value>
+				<description>The APS layer successfully transmitted a data unicast.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_APS_DATA_TX_UNICAST_RETRY</name>
+				<enum_value>10</enum_value>
+				<description>The APS layer retried a data unicast.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_APS_DATA_TX_UNICAST_FAILED</name>
+				<enum_value>11</enum_value>
+				<description>The APS layer unsuccessfully transmitted a data unicast.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_ROUTE_DISCOVERY_INITIATED</name>
+				<enum_value>12</enum_value>
+				<description>The network layer successfully submitted a new route discovery to the MAC.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_NEIGHBOR_ADDED</name>
+				<enum_value>13</enum_value>
+				<description>An entry was added to the neighbor table.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_NEIGHBOR_REMOVED</name>
+				<enum_value>14</enum_value>
+				<description>An entry was removed from the neighbor table.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_NEIGHBOR_STALE</name>
+				<enum_value>15</enum_value>
+				<description>A neighbor table entry became stale because it had not been heard from.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_JOIN_INDICATION</name>
+				<enum_value>16</enum_value>
+				<description>A node joined or rejoined to the network via this node.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_CHILD_REMOVED</name>
+				<enum_value>17</enum_value>
+				<description>An entry was removed from the child table.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_ASH_OVERFLOW_ERROR</name>
+				<enum_value>18</enum_value>
+				<description>EZSP-UART only. An overflow error occurred in the UART</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_ASH_FRAMING_ERROR</name>
+				<enum_value>19</enum_value>
+				<description>EZSP-UART only. A framing error occurred in the UART</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_ASH_OVERRUN_ERROR</name>
+				<enum_value>20</enum_value>
+				<description>EZSP-UART only. An overrun error occurred in the UART</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_NWK_FRAME_COUNTER_FAILURE</name>
+				<enum_value>21</enum_value>
+				<description>A message was dropped at the network layer because the NWK frame counter was not higher than the last message seen from that source.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_APS_FRAME_COUNTER_FAILURE</name>
+				<enum_value>22</enum_value>
+				<description>A message was dropped at the APS layer because the APS frame counter was not higher than the last message seen from that source.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_UTILITY</name>
+				<enum_value>23</enum_value>
+				<description>Utility counter for general debugging use.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_APS_LINK_KEY_NOT_AUTHORIZED</name>
+				<enum_value>24</enum_value>
+				<description>A message was dropped at the APS layer because it had APS encryption but the key associated with the sender has not been authenticated, and thus the key is not authorized for use in APS data messages.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_NWK_DECRYPTION_FAILURE</name>
+				<enum_value>25</enum_value>
+				<description>A NWK encrypted message was received but dropped because decryption failed.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_APS_DECRYPTION_FAILURE</name>
+				<enum_value>26</enum_value>
+				<description>An APS encrypted message was received but dropped because decryption failed.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_ALLOCATE_PACKET_BUFFER_FAILURE</name>
+				<enum_value>27</enum_value>
+				<description>The number of times we failed to allocate a set of linked packet buffers. This doesn't necessarily mean that the packet buffer count was 0 at the time, but that the number requested was greater than the number free.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_RELAYED_UNICAST</name>
+				<enum_value>28</enum_value>
+				<description>The number of relayed unicast packets.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_TYPE_COUNT</name>
+				<enum_value>29</enum_value>
+				<description>A placeholder giving the number of Ember counter types.</description>
+			</value>
+		</values>
+	</enum>
 
 </protocol>

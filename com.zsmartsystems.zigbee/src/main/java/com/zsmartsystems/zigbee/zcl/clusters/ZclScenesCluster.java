@@ -637,10 +637,10 @@ public class ZclScenesCluster extends ZclCluster {
      * @param capacity {@link Integer} Capacity
      * @param groupId {@link Integer} Group ID
      * @param sceneCount {@link Integer} Scene count
-     * @param sceneList {@link List<Unsigned8BitInteger>} Scene list
+     * @param sceneList {@link List<Integer>} Scene list
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getSceneMembershipResponse(Integer status, Integer capacity, Integer groupId, Integer sceneCount, List<Unsigned8BitInteger> sceneList) {
+    public Future<CommandResult> getSceneMembershipResponse(Integer status, Integer capacity, Integer groupId, Integer sceneCount, List<Integer> sceneList) {
         GetSceneMembershipResponse command = new GetSceneMembershipResponse();
 
         // Set the fields

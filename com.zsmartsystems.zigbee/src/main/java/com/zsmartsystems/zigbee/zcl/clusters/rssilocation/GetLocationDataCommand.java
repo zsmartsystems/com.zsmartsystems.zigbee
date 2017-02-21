@@ -41,6 +41,7 @@ public class GetLocationDataCommand extends ZclCommand {
 
     /**
      * Gets Header.
+     *
      * @return the Header
      */
     public Integer getHeader() {
@@ -49,6 +50,7 @@ public class GetLocationDataCommand extends ZclCommand {
 
     /**
      * Sets Header.
+     *
      * @param header the Header
      */
     public void setHeader(final Integer header) {
@@ -57,6 +59,7 @@ public class GetLocationDataCommand extends ZclCommand {
 
     /**
      * Gets Number Responses.
+     *
      * @return the Number Responses
      */
     public Integer getNumberResponses() {
@@ -65,6 +68,7 @@ public class GetLocationDataCommand extends ZclCommand {
 
     /**
      * Sets Number Responses.
+     *
      * @param numberResponses the Number Responses
      */
     public void setNumberResponses(final Integer numberResponses) {
@@ -73,6 +77,7 @@ public class GetLocationDataCommand extends ZclCommand {
 
     /**
      * Gets Target Address.
+     *
      * @return the Target Address
      */
     public Long getTargetAddress() {
@@ -81,6 +86,7 @@ public class GetLocationDataCommand extends ZclCommand {
 
     /**
      * Sets Target Address.
+     *
      * @param targetAddress the Target Address
      */
     public void setTargetAddress(final Long targetAddress) {

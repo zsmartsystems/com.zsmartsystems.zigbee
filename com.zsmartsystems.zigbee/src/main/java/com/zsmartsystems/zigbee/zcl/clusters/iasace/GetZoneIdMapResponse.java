@@ -111,6 +111,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 0.
+     *
      * @return the Zone ID Map section 0
      */
     public Integer getZoneIdMapSection0() {
@@ -119,6 +120,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 0.
+     *
      * @param zoneIdMapSection0 the Zone ID Map section 0
      */
     public void setZoneIdMapSection0(final Integer zoneIdMapSection0) {
@@ -127,6 +129,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 1.
+     *
      * @return the Zone ID Map section 1
      */
     public Integer getZoneIdMapSection1() {
@@ -135,6 +138,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 1.
+     *
      * @param zoneIdMapSection1 the Zone ID Map section 1
      */
     public void setZoneIdMapSection1(final Integer zoneIdMapSection1) {
@@ -143,6 +147,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 2.
+     *
      * @return the Zone ID Map section 2
      */
     public Integer getZoneIdMapSection2() {
@@ -151,6 +156,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 2.
+     *
      * @param zoneIdMapSection2 the Zone ID Map section 2
      */
     public void setZoneIdMapSection2(final Integer zoneIdMapSection2) {
@@ -159,6 +165,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 3.
+     *
      * @return the Zone ID Map section 3
      */
     public Integer getZoneIdMapSection3() {
@@ -167,6 +174,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 3.
+     *
      * @param zoneIdMapSection3 the Zone ID Map section 3
      */
     public void setZoneIdMapSection3(final Integer zoneIdMapSection3) {
@@ -175,6 +183,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 4.
+     *
      * @return the Zone ID Map section 4
      */
     public Integer getZoneIdMapSection4() {
@@ -183,6 +192,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 4.
+     *
      * @param zoneIdMapSection4 the Zone ID Map section 4
      */
     public void setZoneIdMapSection4(final Integer zoneIdMapSection4) {
@@ -191,6 +201,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 5.
+     *
      * @return the Zone ID Map section 5
      */
     public Integer getZoneIdMapSection5() {
@@ -199,6 +210,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 5.
+     *
      * @param zoneIdMapSection5 the Zone ID Map section 5
      */
     public void setZoneIdMapSection5(final Integer zoneIdMapSection5) {
@@ -207,6 +219,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 6.
+     *
      * @return the Zone ID Map section 6
      */
     public Integer getZoneIdMapSection6() {
@@ -215,6 +228,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 6.
+     *
      * @param zoneIdMapSection6 the Zone ID Map section 6
      */
     public void setZoneIdMapSection6(final Integer zoneIdMapSection6) {
@@ -223,6 +237,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 7.
+     *
      * @return the Zone ID Map section 7
      */
     public Integer getZoneIdMapSection7() {
@@ -231,6 +246,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 7.
+     *
      * @param zoneIdMapSection7 the Zone ID Map section 7
      */
     public void setZoneIdMapSection7(final Integer zoneIdMapSection7) {
@@ -239,6 +255,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 8.
+     *
      * @return the Zone ID Map section 8
      */
     public Integer getZoneIdMapSection8() {
@@ -247,6 +264,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 8.
+     *
      * @param zoneIdMapSection8 the Zone ID Map section 8
      */
     public void setZoneIdMapSection8(final Integer zoneIdMapSection8) {
@@ -255,6 +273,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 9.
+     *
      * @return the Zone ID Map section 9
      */
     public Integer getZoneIdMapSection9() {
@@ -263,6 +282,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 9.
+     *
      * @param zoneIdMapSection9 the Zone ID Map section 9
      */
     public void setZoneIdMapSection9(final Integer zoneIdMapSection9) {
@@ -271,6 +291,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 10.
+     *
      * @return the Zone ID Map section 10
      */
     public Integer getZoneIdMapSection10() {
@@ -279,6 +300,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 10.
+     *
      * @param zoneIdMapSection10 the Zone ID Map section 10
      */
     public void setZoneIdMapSection10(final Integer zoneIdMapSection10) {
@@ -287,6 +309,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 11.
+     *
      * @return the Zone ID Map section 11
      */
     public Integer getZoneIdMapSection11() {
@@ -295,6 +318,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 11.
+     *
      * @param zoneIdMapSection11 the Zone ID Map section 11
      */
     public void setZoneIdMapSection11(final Integer zoneIdMapSection11) {
@@ -303,6 +327,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 12.
+     *
      * @return the Zone ID Map section 12
      */
     public Integer getZoneIdMapSection12() {
@@ -311,6 +336,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 12.
+     *
      * @param zoneIdMapSection12 the Zone ID Map section 12
      */
     public void setZoneIdMapSection12(final Integer zoneIdMapSection12) {
@@ -319,6 +345,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 13.
+     *
      * @return the Zone ID Map section 13
      */
     public Integer getZoneIdMapSection13() {
@@ -327,6 +354,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 13.
+     *
      * @param zoneIdMapSection13 the Zone ID Map section 13
      */
     public void setZoneIdMapSection13(final Integer zoneIdMapSection13) {
@@ -335,6 +363,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 14.
+     *
      * @return the Zone ID Map section 14
      */
     public Integer getZoneIdMapSection14() {
@@ -343,6 +372,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 14.
+     *
      * @param zoneIdMapSection14 the Zone ID Map section 14
      */
     public void setZoneIdMapSection14(final Integer zoneIdMapSection14) {
@@ -351,6 +381,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Gets Zone ID Map section 15.
+     *
      * @return the Zone ID Map section 15
      */
     public Integer getZoneIdMapSection15() {
@@ -359,6 +390,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     /**
      * Sets Zone ID Map section 15.
+     *
      * @param zoneIdMapSection15 the Zone ID Map section 15
      */
     public void setZoneIdMapSection15(final Integer zoneIdMapSection15) {

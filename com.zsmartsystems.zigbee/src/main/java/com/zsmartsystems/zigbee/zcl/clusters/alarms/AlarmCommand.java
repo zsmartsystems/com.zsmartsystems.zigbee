@@ -49,6 +49,7 @@ public class AlarmCommand extends ZclCommand {
 
     /**
      * Gets Alarm code.
+     *
      * @return the Alarm code
      */
     public Integer getAlarmCode() {
@@ -57,6 +58,7 @@ public class AlarmCommand extends ZclCommand {
 
     /**
      * Sets Alarm code.
+     *
      * @param alarmCode the Alarm code
      */
     public void setAlarmCode(final Integer alarmCode) {
@@ -65,6 +67,7 @@ public class AlarmCommand extends ZclCommand {
 
     /**
      * Gets Cluster identifier.
+     *
      * @return the Cluster identifier
      */
     public Integer getClusterIdentifier() {
@@ -73,6 +76,7 @@ public class AlarmCommand extends ZclCommand {
 
     /**
      * Sets Cluster identifier.
+     *
      * @param clusterIdentifier the Cluster identifier
      */
     public void setClusterIdentifier(final Integer clusterIdentifier) {

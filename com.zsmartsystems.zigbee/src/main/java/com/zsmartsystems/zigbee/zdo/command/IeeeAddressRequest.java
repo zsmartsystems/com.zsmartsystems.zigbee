@@ -1,51 +1,70 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
- * IeeeAddressRequest.
- *
- * @author Tommi S.E. Laukkanen
+ * IEEE Address Request value object class.
+ * <p>
+ * The IEEE_addr_req is generated from a Local Device wishing to inquire as to the
+ * 64-bit IEEE address of the Remote Device based on their known 16-bit address.
+ * The destination addressing on this command shall be unicast.
+ * <p>
+ * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * This command is a <b>generic</b> command used across the profile.
+ * <p>
+ * Code is auto-generated. Modifications may be overwritten!
  */
 public class IeeeAddressRequest extends ZdoRequest {
+    /**
+     * NWKAddrOfInterest command message field.
+     */
+    private Integer nwkAddrOfInterest;
 
     /**
-     * The type.
+     * Default constructor.
      */
-    private int type;
-    /**
-     * The started index.
-     */
-    private int startIndex;
-
     public IeeeAddressRequest() {
     }
 
-    public IeeeAddressRequest(int networkAddress, int type, int startIndex) {
-        this.destinationAddress = networkAddress;
-        this.type = type;
-        this.startIndex = startIndex;
+    /**
+     * Gets NWKAddrOfInterest.
+     *
+     * @return the NWKAddrOfInterest
+     */
+    public Integer getNwkAddrOfInterest() {
+        return nwkAddrOfInterest;
     }
 
-    public int getType() {
-        return type;
+    /**
+     * Sets NWKAddrOfInterest.
+     *
+     * @param nwkAddrOfInterest the NWKAddrOfInterest
+     */
+    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+        this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    @Override
+    public void serialize(final ZclFieldSerializer serializer) {
+        serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
     }
 
-    public int getStartIndex() {
-        return startIndex;
-    }
-
-    public void setStartIndex(int startIndex) {
-        this.startIndex = startIndex;
+    @Override
+    public void deserialize(final ZclFieldDeserializer deserializer) {
+        nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
     }
 
     @Override
     public String toString() {
-        return "IEEE Address Request: networkAddress=" + destinationAddress + ", type=" + type + ", startIndex="
-                + startIndex;
+        final StringBuilder builder = new StringBuilder();
+        builder.append("IeeeAddressRequest");
+        builder.append(super.toString());
+        builder.append(", nwkAddrOfInterest=");
+        builder.append(nwkAddrOfInterest);
+        return builder.toString();
     }
+
 }

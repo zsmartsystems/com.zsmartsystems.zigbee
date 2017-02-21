@@ -28,4 +28,12 @@ public abstract class ZdoRequest extends ZdoCommand {
     public void setDestinationAddress(int destinationAddress) {
         this.destinationAddress = destinationAddress;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(": destinationAddress=");
+        builder.append(destinationAddress);
+        return builder.toString();
+    }
 }

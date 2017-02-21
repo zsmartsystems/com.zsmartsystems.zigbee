@@ -41,6 +41,7 @@ public class MoveToSaturationCommand extends ZclCommand {
 
     /**
      * Gets Saturation.
+     *
      * @return the Saturation
      */
     public Integer getSaturation() {
@@ -49,6 +50,7 @@ public class MoveToSaturationCommand extends ZclCommand {
 
     /**
      * Sets Saturation.
+     *
      * @param saturation the Saturation
      */
     public void setSaturation(final Integer saturation) {
@@ -57,6 +59,7 @@ public class MoveToSaturationCommand extends ZclCommand {
 
     /**
      * Gets Transition time.
+     *
      * @return the Transition time
      */
     public Integer getTransitionTime() {
@@ -65,6 +68,7 @@ public class MoveToSaturationCommand extends ZclCommand {
 
     /**
      * Sets Transition time.
+     *
      * @param transitionTime the Transition time
      */
     public void setTransitionTime(final Integer transitionTime) {

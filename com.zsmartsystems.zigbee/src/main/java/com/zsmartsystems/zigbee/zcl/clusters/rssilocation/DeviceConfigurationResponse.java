@@ -56,6 +56,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     /**
      * Gets Status.
+     *
      * @return the Status
      */
     public Integer getStatus() {
@@ -64,6 +65,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     /**
      * Sets Status.
+     *
      * @param status the Status
      */
     public void setStatus(final Integer status) {
@@ -72,6 +74,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     /**
      * Gets Power.
+     *
      * @return the Power
      */
     public Integer getPower() {
@@ -80,6 +83,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     /**
      * Sets Power.
+     *
      * @param power the Power
      */
     public void setPower(final Integer power) {
@@ -88,6 +92,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     /**
      * Gets Path Loss Exponent.
+     *
      * @return the Path Loss Exponent
      */
     public Integer getPathLossExponent() {
@@ -96,6 +101,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     /**
      * Sets Path Loss Exponent.
+     *
      * @param pathLossExponent the Path Loss Exponent
      */
     public void setPathLossExponent(final Integer pathLossExponent) {
@@ -104,6 +110,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     /**
      * Gets Calculation Period.
+     *
      * @return the Calculation Period
      */
     public Integer getCalculationPeriod() {
@@ -112,6 +119,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     /**
      * Sets Calculation Period.
+     *
      * @param calculationPeriod the Calculation Period
      */
     public void setCalculationPeriod(final Integer calculationPeriod) {
@@ -120,6 +128,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     /**
      * Gets Number RSSI Measurements.
+     *
      * @return the Number RSSI Measurements
      */
     public Integer getNumberRssiMeasurements() {
@@ -128,6 +137,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     /**
      * Sets Number RSSI Measurements.
+     *
      * @param numberRssiMeasurements the Number RSSI Measurements
      */
     public void setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
@@ -136,6 +146,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     /**
      * Gets Reporting Period.
+     *
      * @return the Reporting Period
      */
     public Integer getReportingPeriod() {
@@ -144,6 +155,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     /**
      * Sets Reporting Period.
+     *
      * @param reportingPeriod the Reporting Period
      */
     public void setReportingPeriod(final Integer reportingPeriod) {

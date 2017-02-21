@@ -52,6 +52,7 @@ public class DiscoverAttributesCommand extends ZclCommand {
 
     /**
      * Gets Start attribute identifier.
+     *
      * @return the Start attribute identifier
      */
     public Integer getStartAttributeIdentifier() {
@@ -60,6 +61,7 @@ public class DiscoverAttributesCommand extends ZclCommand {
 
     /**
      * Sets Start attribute identifier.
+     *
      * @param startAttributeIdentifier the Start attribute identifier
      */
     public void setStartAttributeIdentifier(final Integer startAttributeIdentifier) {
@@ -68,6 +70,7 @@ public class DiscoverAttributesCommand extends ZclCommand {
 
     /**
      * Gets Maximum attribute identifiers.
+     *
      * @return the Maximum attribute identifiers
      */
     public Integer getMaximumAttributeIdentifiers() {
@@ -76,6 +79,7 @@ public class DiscoverAttributesCommand extends ZclCommand {
 
     /**
      * Sets Maximum attribute identifiers.
+     *
      * @param maximumAttributeIdentifiers the Maximum attribute identifiers
      */
     public void setMaximumAttributeIdentifiers(final Integer maximumAttributeIdentifiers) {

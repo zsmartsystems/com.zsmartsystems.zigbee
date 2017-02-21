@@ -49,6 +49,7 @@ public class ConfigureReportingResponse extends ZclCommand {
 
     /**
      * Gets Records.
+     *
      * @return the Records
      */
     public List<AttributeStatusRecord> getRecords() {
@@ -57,6 +58,7 @@ public class ConfigureReportingResponse extends ZclCommand {
 
     /**
      * Sets Records.
+     *
      * @param records the Records
      */
     public void setRecords(final List<AttributeStatusRecord> records) {

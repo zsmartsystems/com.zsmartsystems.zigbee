@@ -40,6 +40,7 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
 
     /**
      * Gets Zone Status.
+     *
      * @return the Zone Status
      */
     public Integer getZoneStatus() {
@@ -48,6 +49,7 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
 
     /**
      * Sets Zone Status.
+     *
      * @param zoneStatus the Zone Status
      */
     public void setZoneStatus(final Integer zoneStatus) {
@@ -56,6 +58,7 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
 
     /**
      * Gets Extended Status.
+     *
      * @return the Extended Status
      */
     public Integer getExtendedStatus() {
@@ -64,6 +67,7 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
 
     /**
      * Sets Extended Status.
+     *
      * @param extendedStatus the Extended Status
      */
     public void setExtendedStatus(final Integer extendedStatus) {

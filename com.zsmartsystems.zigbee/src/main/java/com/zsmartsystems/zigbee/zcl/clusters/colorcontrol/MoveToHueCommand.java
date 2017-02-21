@@ -46,6 +46,7 @@ public class MoveToHueCommand extends ZclCommand {
 
     /**
      * Gets Hue.
+     *
      * @return the Hue
      */
     public Integer getHue() {
@@ -54,6 +55,7 @@ public class MoveToHueCommand extends ZclCommand {
 
     /**
      * Sets Hue.
+     *
      * @param hue the Hue
      */
     public void setHue(final Integer hue) {
@@ -62,6 +64,7 @@ public class MoveToHueCommand extends ZclCommand {
 
     /**
      * Gets Direction.
+     *
      * @return the Direction
      */
     public Integer getDirection() {
@@ -70,6 +73,7 @@ public class MoveToHueCommand extends ZclCommand {
 
     /**
      * Sets Direction.
+     *
      * @param direction the Direction
      */
     public void setDirection(final Integer direction) {
@@ -78,6 +82,7 @@ public class MoveToHueCommand extends ZclCommand {
 
     /**
      * Gets Transition time.
+     *
      * @return the Transition time
      */
     public Integer getTransitionTime() {
@@ -86,6 +91,7 @@ public class MoveToHueCommand extends ZclCommand {
 
     /**
      * Sets Transition time.
+     *
      * @param transitionTime the Transition time
      */
     public void setTransitionTime(final Integer transitionTime) {

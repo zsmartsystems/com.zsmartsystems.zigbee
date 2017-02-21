@@ -48,6 +48,7 @@ public class ReadAttributesStructuredCommand extends ZclCommand {
 
     /**
      * Gets Attribute selectors.
+     *
      * @return the Attribute selectors
      */
     public Object getAttributeSelectors() {
@@ -56,6 +57,7 @@ public class ReadAttributesStructuredCommand extends ZclCommand {
 
     /**
      * Sets Attribute selectors.
+     *
      * @param attributeSelectors the Attribute selectors
      */
     public void setAttributeSelectors(final Object attributeSelectors) {

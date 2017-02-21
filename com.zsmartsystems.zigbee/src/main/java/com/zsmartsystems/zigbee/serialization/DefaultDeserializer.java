@@ -91,14 +91,29 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 break;
             case N_X_READ_ATTRIBUTE_STATUS_RECORD:
                 break;
+            case N_X_NWK_ADDRESS:
             case N_X_UNSIGNED_16_BIT_INTEGER:
+                int cntN16 = Integer.valueOf((byte) payload[index++] & 0xFF);
+                Integer[] arrayN16 = new Integer[cntN16];
+                for (int arrayIndex = 0; arrayIndex < cntN16; arrayIndex++) {
+                    short s = (short) (payload[index++] + (payload[index++] << 8));
+                    arrayN16[arrayIndex] = Integer.valueOf(s);
+                }
+                value[0] = arrayN16;
                 break;
             case N_X_UNSIGNED_8_BIT_INTEGER:
+                int cntN8 = Integer.valueOf((byte) payload[index++] & 0xFF);
+                Integer[] arrayN8 = new Integer[cntN8];
+                for (int arrayIndex = 0; arrayIndex < cntN8; arrayIndex++) {
+                    arrayN8[arrayIndex] = Integer.valueOf(payload[index++]);
+                }
+                value[0] = arrayN8;
                 break;
             case N_X_WRITE_ATTRIBUTE_RECORD:
                 break;
             case N_X_WRITE_ATTRIBUTE_STATUS_RECORD:
                 break;
+            case NWK_ADDRESS:
             case BITMAP_16_BIT:
             case ENUMERATION_16_BIT:
             case SIGNED_16_BIT_INTEGER:

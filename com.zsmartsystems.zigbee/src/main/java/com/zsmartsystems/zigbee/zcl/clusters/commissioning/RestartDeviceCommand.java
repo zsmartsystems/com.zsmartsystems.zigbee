@@ -41,6 +41,7 @@ public class RestartDeviceCommand extends ZclCommand {
 
     /**
      * Gets Option.
+     *
      * @return the Option
      */
     public Integer getOption() {
@@ -49,6 +50,7 @@ public class RestartDeviceCommand extends ZclCommand {
 
     /**
      * Sets Option.
+     *
      * @param option the Option
      */
     public void setOption(final Integer option) {
@@ -57,6 +59,7 @@ public class RestartDeviceCommand extends ZclCommand {
 
     /**
      * Gets Delay.
+     *
      * @return the Delay
      */
     public Integer getDelay() {
@@ -65,6 +68,7 @@ public class RestartDeviceCommand extends ZclCommand {
 
     /**
      * Sets Delay.
+     *
      * @param delay the Delay
      */
     public void setDelay(final Integer delay) {
@@ -73,6 +77,7 @@ public class RestartDeviceCommand extends ZclCommand {
 
     /**
      * Gets Jitter.
+     *
      * @return the Jitter
      */
     public Integer getJitter() {
@@ -81,6 +86,7 @@ public class RestartDeviceCommand extends ZclCommand {
 
     /**
      * Sets Jitter.
+     *
      * @param jitter the Jitter
      */
     public void setJitter(final Integer jitter) {

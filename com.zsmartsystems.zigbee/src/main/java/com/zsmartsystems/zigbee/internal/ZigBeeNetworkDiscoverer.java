@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.Command;
 import com.zsmartsystems.zigbee.CommandListener;
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeDevice;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -162,7 +163,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
         // 0. Node has been announced.
         if (command instanceof DeviceAnnounce) {
             final DeviceAnnounce address = (DeviceAnnounce) command;
-            startNodeDiscovery(address.getNetworkAddress());
+            startNodeDiscovery(address.getNwkAddrOfInterest());
         }
 
     }
@@ -273,7 +274,8 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     private boolean getIeeeAddress(final int networkAddress) {
         try {
             // Request extended response, start index for associated list is 0
-            final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest(networkAddress, 1, 0);
+            final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
+            ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
             CommandResult response = networkManager
                     .unicast(ieeeAddressRequest, new ZdoPacketResponseMatcher(IeeeAddressResponse.class)).get();
 
@@ -283,7 +285,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
                     ieeeAddresses.put(ieeeAddressResponse.getSourceAddress(), ieeeAddressResponse);
                 }
                 // Start discovery for any associated nodes
-                for (final int deviceNetworkAddress : ieeeAddressResponse.getAssociatedDeviceList()) {
+                for (final int deviceNetworkAddress : ieeeAddressResponse.getNwkAddrAssocDevList()) {
                     startNodeDiscovery(deviceNetworkAddress);
                 }
                 return true;
@@ -306,8 +308,8 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     private boolean getNodeDescriptor(final int networkAddress) {
 
         try {
-            final NodeDescriptorRequest nodeDescriptorRequest = new NodeDescriptorRequest(networkAddress,
-                    networkAddress);
+            final NodeDescriptorRequest nodeDescriptorRequest = new NodeDescriptorRequest();
+            nodeDescriptorRequest.setNwkAddrOfInterest(networkAddress);
             CommandResult response = networkManager
                     .unicast(nodeDescriptorRequest, new ZdoPacketResponseMatcher(NodeDescriptorResponse.class)).get();
 
@@ -315,7 +317,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
             if (nodeDescriptorResponse != null && nodeDescriptorResponse.getStatus() == 0) {
                 // Create the node
                 synchronized (nodeDescriptors) {
-                    nodeDescriptors.put(nodeDescriptorResponse.getNetworkAddress(), nodeDescriptorResponse);
+                    nodeDescriptors.put(nodeDescriptorResponse.getNwkAddrOfInterest(), nodeDescriptorResponse);
                 }
                 return true;
             } else {
@@ -336,8 +338,8 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
      */
     private boolean getPowerDescriptor(final int networkAddress) {
         try {
-            final PowerDescriptorRequest powerDescriptorRequest = new PowerDescriptorRequest(networkAddress,
-                    networkAddress);
+            final PowerDescriptorRequest powerDescriptorRequest = new PowerDescriptorRequest();
+            powerDescriptorRequest.setNwkAddrOfInterest(networkAddress);
             CommandResult response = networkManager
                     .unicast(powerDescriptorRequest, new ZdoPacketResponseMatcher(PowerDescriptorResponse.class)).get();
 
@@ -370,7 +372,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
         try {
             final ActiveEndpointsRequest activeEndpointsRequest = new ActiveEndpointsRequest();
             activeEndpointsRequest.setDestinationAddress(networkAddress);
-            activeEndpointsRequest.setNetworkAddressOfInterest(networkAddress);
+            activeEndpointsRequest.setNwkAddrOfInterest(networkAddress);
             CommandResult response = networkManager
                     .unicast(activeEndpointsRequest, new ZdoPacketResponseMatcher(ActiveEndpointsResponse.class)).get();
 
@@ -378,9 +380,9 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
             if (activeEndpointsResponse != null && activeEndpointsResponse.getStatus() == 0) {
 
                 if (activeEndpointsResponse.getStatus() == 0) {
-                    for (final int endpoint : activeEndpointsResponse.getActiveEndpoints()) {
+                    for (final int endpoint : activeEndpointsResponse.getActiveEpList()) {
                         startDeviceDiscovery(
-                                new ZigBeeDeviceAddress(activeEndpointsResponse.getNetworkAddress(), endpoint));
+                                new ZigBeeDeviceAddress(activeEndpointsResponse.getNwkAddrOfInterest(), endpoint));
                     }
 
                     return true;
@@ -416,7 +418,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
                     final IeeeAddressResponse ieeeAddressResponse;
                     final NodeDescriptorResponse nodeDescriptorResponse;
 
-                    final int networkAddress = simpleDescriptorResponse.getNetworkAddress();
+                    final int networkAddress = simpleDescriptorResponse.getNwkAddrOfInterest();
 
                     synchronized (powerDescriptors) {
                         ieeeAddressResponse = ieeeAddresses.get(networkAddress);
@@ -459,7 +461,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
 
         node.setNetworkAddress(ieeeAddressResponse.getSourceAddress());
         node.setNodeDescriptor(nodeDescriptorResponse.getNodeDescriptor());
-        node.setIeeeAddress(ieeeAddressResponse.getIeeeAddress());
+        node.setIeeeAddress(new IeeeAddress(ieeeAddressResponse.getIeeeAddrRemoteDev()));
         node.setPowerDescriptor(powerDescriptorResponse.getPowerDescriptor());
 
         if (newDevice) {
@@ -495,13 +497,13 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
         ZigBeeDeviceAddress networkAddress = new ZigBeeDeviceAddress(ieeeAddressResponse.getSourceAddress(),
                 simpleDescriptorResponse.getEndpoint());
 
-        device.setIeeeAddress(ieeeAddressResponse.getIeeeAddress());
+        device.setIeeeAddress(new IeeeAddress(ieeeAddressResponse.getIeeeAddrRemoteDev()));
         device.setDeviceAddress(networkAddress);
-        device.setProfileId(simpleDescriptorResponse.getProfileId());
-        device.setDeviceId(simpleDescriptorResponse.getDeviceId());
-        device.setDeviceVersion(simpleDescriptorResponse.getDeviceVersion());
-        device.setInputClusterIds(simpleDescriptorResponse.getInputClusters());
-        device.setOutputClusterIds(simpleDescriptorResponse.getOutputClusters());
+        device.setProfileId(simpleDescriptorResponse.getApplicationProfileId());
+        device.setDeviceId(simpleDescriptorResponse.getApplicationDeviceId());
+        device.setDeviceVersion(simpleDescriptorResponse.getApplicationDeviceVersion());
+        device.setInputClusterIds(simpleDescriptorResponse.getApplicationInputClusters());
+        device.setOutputClusterIds(simpleDescriptorResponse.getApplicationOutputClusters());
 
         if (newDevice) {
             networkManager.addDevice(device);

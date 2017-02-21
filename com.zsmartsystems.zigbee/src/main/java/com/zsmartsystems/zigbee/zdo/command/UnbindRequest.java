@@ -1,106 +1,206 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
- * UnbindRequest.
- *
- * @author Tommi S.E. Laukkanen
- * @author Chris Jackson
+ * Unbind Request value object class.
+ * <p>
+ * The Unbind_req is generated from a Local Device wishing to remove a Binding
+ * Table entry for the source and destination addresses contained as parameters. The
+ * destination addressing on this command shall be unicast only and the destination
+ * address must be that of the a Primary binding table cache or the SrcAddress.
+ * <p>
+ * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * This command is a <b>generic</b> command used across the profile.
+ * <p>
+ * Code is auto-generated. Modifications may be overwritten!
  */
 public class UnbindRequest extends ZdoRequest {
     /**
-     * Bind source address.
+     * SrcAddress command message field.
      */
-    private long bindSourceAddress;
-    /**
-     * Bind source end point.
-     */
-    private int bindSourceEndpoint;
-    /**
-     * Bind cluster.
-     */
-    private int bindCluster;
-    /**
-     * Bind destination addressing mode.
-     */
-    private int bindDestinationAddressingMode;
-    /**
-     * Bind destination address.
-     */
-    private long bindDestinationAddress;
-    /**
-     * Bind destination endpoint.
-     */
-    private int bindDestinationEndpoint;
+    private Long srcAddress;
 
+    /**
+     * SrcEndpoint command message field.
+     */
+    private Integer srcEndpoint;
+
+    /**
+     * ClusterID command message field.
+     */
+    private Integer clusterId;
+
+    /**
+     * DstAddrMode command message field.
+     */
+    private Integer dstAddrMode;
+
+    /**
+     * DstAddress command message field.
+     */
+    private Long dstAddress;
+
+    /**
+     * DstEndpoint command message field.
+     */
+    private Integer dstEndpoint;
+
+    /**
+     * Default constructor.
+     */
     public UnbindRequest() {
     }
 
-    public UnbindRequest(int destinationAddress, long bindSourceAddress, int bindSourceEndpoint, int bindCluster,
-            int bindDestinationAddressingMode, long bindDestinationAddress, int bindDestinationEndpoint) {
-        this.destinationAddress = destinationAddress;
-        this.bindSourceAddress = bindSourceAddress;
-        this.bindSourceEndpoint = bindSourceEndpoint;
-        this.bindCluster = bindCluster;
-        this.bindDestinationAddressingMode = bindDestinationAddressingMode;
-        this.bindDestinationAddress = bindDestinationAddress;
-        this.bindDestinationEndpoint = bindDestinationEndpoint;
+    /**
+     * Gets SrcAddress.
+     *
+     * @return the SrcAddress
+     */
+    public Long getSrcAddress() {
+        return srcAddress;
     }
 
-    public long getBindSourceAddress() {
-        return bindSourceAddress;
+    /**
+     * Sets SrcAddress.
+     *
+     * @param srcAddress the SrcAddress
+     */
+    public void setSrcAddress(final Long srcAddress) {
+        this.srcAddress = srcAddress;
     }
 
-    public void setBindSourceAddress(long bindSourceAddress) {
-        this.bindSourceAddress = bindSourceAddress;
+    /**
+     * Gets SrcEndpoint.
+     *
+     * @return the SrcEndpoint
+     */
+    public Integer getSrcEndpoint() {
+        return srcEndpoint;
     }
 
-    public int getBindSourceEndpoint() {
-        return bindSourceEndpoint;
+    /**
+     * Sets SrcEndpoint.
+     *
+     * @param srcEndpoint the SrcEndpoint
+     */
+    public void setSrcEndpoint(final Integer srcEndpoint) {
+        this.srcEndpoint = srcEndpoint;
     }
 
-    public void setBindSourceEndpoint(int bindSourceEndpoint) {
-        this.bindSourceEndpoint = bindSourceEndpoint;
+    /**
+     * Gets ClusterID.
+     *
+     * @return the ClusterID
+     */
+    public Integer getClusterId() {
+        return clusterId;
     }
 
-    public int getBindCluster() {
-        return bindCluster;
+    /**
+     * Sets ClusterID.
+     *
+     * @param clusterId the ClusterID
+     */
+    public void setClusterId(final Integer clusterId) {
+        this.clusterId = clusterId;
     }
 
-    public void setBindCluster(int bindCluster) {
-        this.bindCluster = bindCluster;
+    /**
+     * Gets DstAddrMode.
+     *
+     * @return the DstAddrMode
+     */
+    public Integer getDstAddrMode() {
+        return dstAddrMode;
     }
 
-    public int getBindDestinationAddressingMode() {
-        return bindDestinationAddressingMode;
+    /**
+     * Sets DstAddrMode.
+     *
+     * @param dstAddrMode the DstAddrMode
+     */
+    public void setDstAddrMode(final Integer dstAddrMode) {
+        this.dstAddrMode = dstAddrMode;
     }
 
-    public void setBindDestinationAddressingMode(int bindDestinationAddressingMode) {
-        this.bindDestinationAddressingMode = bindDestinationAddressingMode;
+    /**
+     * Gets DstAddress.
+     *
+     * @return the DstAddress
+     */
+    public Long getDstAddress() {
+        return dstAddress;
     }
 
-    public long getBindDestinationAddress() {
-        return bindDestinationAddress;
+    /**
+     * Sets DstAddress.
+     *
+     * @param dstAddress the DstAddress
+     */
+    public void setDstAddress(final Long dstAddress) {
+        this.dstAddress = dstAddress;
     }
 
-    public void setBindDestinationAddress(long bindDestinationAddress) {
-        this.bindDestinationAddress = bindDestinationAddress;
+    /**
+     * Gets DstEndpoint.
+     *
+     * @return the DstEndpoint
+     */
+    public Integer getDstEndpoint() {
+        return dstEndpoint;
     }
 
-    public int getBindDestinationEndpoint() {
-        return bindDestinationEndpoint;
+    /**
+     * Sets DstEndpoint.
+     *
+     * @param dstEndpoint the DstEndpoint
+     */
+    public void setDstEndpoint(final Integer dstEndpoint) {
+        this.dstEndpoint = dstEndpoint;
     }
 
-    public void setBindDestinationEndpoint(int bindDestinationEndpoint) {
-        this.bindDestinationEndpoint = bindDestinationEndpoint;
+    @Override
+    public void serialize(final ZclFieldSerializer serializer) {
+        serializer.serialize(srcAddress, ZclDataType.IEEE_ADDRESS);
+        serializer.serialize(srcEndpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(clusterId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        serializer.serialize(dstAddrMode, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(dstAddress, ZclDataType.IEEE_ADDRESS);
+        serializer.serialize(dstEndpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Override
+    public void deserialize(final ZclFieldDeserializer deserializer) {
+        srcAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        srcEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        clusterId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        dstAddrMode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        dstAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        dstEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override
     public String toString() {
-        return "Unbind Request: destinationAddress=" + destinationAddress + ", bindSourceAddress=" + bindSourceAddress
-                + ", bindSourceEndpoint=" + bindSourceEndpoint + ", bindCluster=" + bindCluster
-                + ", bindDestinationAddressingMode=" + bindDestinationAddressingMode + ", bindDestinationAddress="
-                + bindDestinationAddress + ", bindDestinationEndpoint=" + bindDestinationEndpoint;
+        final StringBuilder builder = new StringBuilder();
+        builder.append("UnbindRequest");
+        builder.append(super.toString());
+        builder.append(", srcAddress=");
+        builder.append(srcAddress);
+        builder.append(", srcEndpoint=");
+        builder.append(srcEndpoint);
+        builder.append(", clusterId=");
+        builder.append(clusterId);
+        builder.append(", dstAddrMode=");
+        builder.append(dstAddrMode);
+        builder.append(", dstAddress=");
+        builder.append(dstAddress);
+        builder.append(", dstEndpoint=");
+        builder.append(dstEndpoint);
+        return builder.toString();
     }
+
 }

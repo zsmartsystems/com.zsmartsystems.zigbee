@@ -46,6 +46,7 @@ public class GetZoneInformationResponse extends ZclCommand {
 
     /**
      * Gets Zone ID.
+     *
      * @return the Zone ID
      */
     public Integer getZoneId() {
@@ -54,6 +55,7 @@ public class GetZoneInformationResponse extends ZclCommand {
 
     /**
      * Sets Zone ID.
+     *
      * @param zoneId the Zone ID
      */
     public void setZoneId(final Integer zoneId) {
@@ -62,6 +64,7 @@ public class GetZoneInformationResponse extends ZclCommand {
 
     /**
      * Gets Zone Type.
+     *
      * @return the Zone Type
      */
     public Integer getZoneType() {
@@ -70,6 +73,7 @@ public class GetZoneInformationResponse extends ZclCommand {
 
     /**
      * Sets Zone Type.
+     *
      * @param zoneType the Zone Type
      */
     public void setZoneType(final Integer zoneType) {
@@ -78,6 +82,7 @@ public class GetZoneInformationResponse extends ZclCommand {
 
     /**
      * Gets IEEE address.
+     *
      * @return the IEEE address
      */
     public Long getIeeeAddress() {
@@ -86,6 +91,7 @@ public class GetZoneInformationResponse extends ZclCommand {
 
     /**
      * Sets IEEE address.
+     *
      * @param ieeeAddress the IEEE address
      */
     public void setIeeeAddress(final Long ieeeAddress) {

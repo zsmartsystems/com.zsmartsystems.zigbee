@@ -36,6 +36,7 @@ public class SetpointRaiseLowerCommand extends ZclCommand {
 
     /**
      * Gets Mode.
+     *
      * @return the Mode
      */
     public Integer getMode() {
@@ -44,6 +45,7 @@ public class SetpointRaiseLowerCommand extends ZclCommand {
 
     /**
      * Sets Mode.
+     *
      * @param mode the Mode
      */
     public void setMode(final Integer mode) {
@@ -52,6 +54,7 @@ public class SetpointRaiseLowerCommand extends ZclCommand {
 
     /**
      * Gets Amount.
+     *
      * @return the Amount
      */
     public Integer getAmount() {
@@ -60,6 +63,7 @@ public class SetpointRaiseLowerCommand extends ZclCommand {
 
     /**
      * Sets Amount.
+     *
      * @param amount the Amount
      */
     public void setAmount(final Integer amount) {

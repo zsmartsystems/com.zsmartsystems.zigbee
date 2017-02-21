@@ -36,6 +36,7 @@ public class SquawkCommand extends ZclCommand {
 
     /**
      * Gets Header.
+     *
      * @return the Header
      */
     public Integer getHeader() {
@@ -44,6 +45,7 @@ public class SquawkCommand extends ZclCommand {
 
     /**
      * Sets Header.
+     *
      * @param header the Header
      */
     public void setHeader(final Integer header) {
