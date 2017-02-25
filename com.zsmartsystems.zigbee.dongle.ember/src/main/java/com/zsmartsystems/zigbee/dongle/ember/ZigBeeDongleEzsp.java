@@ -387,4 +387,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         // TODO Auto-generated method stub
         return false;
     }
+
+    @Override
+    public boolean setZigBeeSecurityKey(byte[] networkKey) {
+        return false;
+    }
 }

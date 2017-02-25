@@ -1,7 +1,7 @@
 package com.zsmartsystems.zigbee;
 
 /**
- * Defines a unicast ZigBee address - extends {@link ZigBeeAddress}.
+ * Defines a unicast ZigBee device address - extends {@link ZigBeeAddress}.
  * <p>
  * The {@link ZigBeeDeviceAddress} is defined by the 16 bit network address
  * and the endpoint Id
@@ -89,7 +89,7 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
 
     @Override
     public String toString() {
-        return address + "/" + endpoint;
+        return String.format("%04X/%d", address, endpoint);
     }
 
 }

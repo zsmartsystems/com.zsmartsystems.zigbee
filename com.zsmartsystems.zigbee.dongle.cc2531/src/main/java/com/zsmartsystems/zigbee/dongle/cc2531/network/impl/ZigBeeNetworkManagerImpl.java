@@ -442,7 +442,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
     @Override
     public void setZigBeeNodeMode(NetworkMode networkMode) {
-        if (state != DriverStatus.CLOSED) {
+        if (state != DriverStatus.HARDWARE_READY) {
             throw new IllegalStateException(
                     "Interface mode can be changed only if driver is CLOSED while it is:" + state);
         }
@@ -450,7 +450,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     public void setZigBeeNetworkKey(byte[] networkKey) {
-        if (state != DriverStatus.CLOSED) {
+        if (state != DriverStatus.HARDWARE_READY) {
             throw new IllegalStateException("Network key can be changed only if driver is CLOSED while it is:" + state);
         }
         this.networkKey = networkKey;
@@ -459,7 +459,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
     @Override
     public boolean setZigBeePanId(int panId) {
-        if (state != DriverStatus.CLOSED) {
+        if (state != DriverStatus.HARDWARE_READY) {
             throw new IllegalStateException("PAN ID can be changed only if driver is CLOSED while it is:" + state);
         }
         pan = panId;
@@ -469,7 +469,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
     @Override
     public boolean setZigBeeChannel(int channel) {
-        if (state != DriverStatus.CLOSED) {
+        if (state != DriverStatus.HARDWARE_READY) {
             throw new IllegalStateException("Channel can be changed only if driver is CLOSED while it is:" + state);
         }
         this.channel = channel;
@@ -1213,8 +1213,8 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
      */
     @Override
     public long getExtendedPanId() {
-        if (!waitForNetwork()) {
-            logger.info("Failed to reach the {} level: getExtendedPanId() failed", DriverStatus.NETWORK_READY);
+        if (!waitForHardware()) {
+            logger.info("Failed to reach the {} level: getExtendedPanId() failed", DriverStatus.HARDWARE_READY);
             return -1;
         }
 
@@ -1235,13 +1235,12 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
      */
     @Override
     public long getIeeeAddress() {
-
         if (ieeeAddress != -1) {
             return ieeeAddress;
         }
 
-        if (!waitForNetwork()) {
-            logger.info("Failed to reach the {} level: getIeeeAddress() failed", DriverStatus.NETWORK_READY);
+        if (!waitForHardware()) {
+            logger.info("Failed to reach the {} level: getIeeeAddress() failed", DriverStatus.HARDWARE_READY);
             return -1;
         }
 
@@ -1288,8 +1287,8 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
      */
     @Override
     public int getCurrentChannel() {
-        if (!waitForNetwork()) {
-            logger.info("Failed to reach the {} level: getCurrentChannel() failed", DriverStatus.NETWORK_READY);
+        if (!waitForHardware()) {
+            logger.info("Failed to reach the {} level: getCurrentChannel() failed", DriverStatus.HARDWARE_READY);
             return -1;
         }
 

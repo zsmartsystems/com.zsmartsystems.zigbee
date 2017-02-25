@@ -111,6 +111,12 @@ public class ZigBeeConsoleMain {
         System.out.println("Extended PAN ID = " + String.format("%08X", networkManager.getZigBeeExtendedPanId()));
         System.out.println("Channel         = " + networkManager.getZigBeeChannel());
 
+        if (resetNetwork == true) {
+            networkManager.setZigBeeChannel(channel);
+            networkManager.setZigBeePanId(pan);
+            networkManager.setZigBeeSecurityKey(networkKey);
+        }
+
         console.start();
     }
 
