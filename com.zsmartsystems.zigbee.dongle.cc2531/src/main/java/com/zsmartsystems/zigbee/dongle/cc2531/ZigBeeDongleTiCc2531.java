@@ -163,6 +163,11 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
+    public boolean setZigBeeSecurityKey(byte[] networkKey) {
+        return networkManager.setNetworkKey(networkKey);
+    }
+
+    @Override
     public boolean startup() {
         // Add listeners for ZCL and ZDO received messages
         networkManager.addAFMessageListener(this);

@@ -28,32 +28,32 @@ package com.zsmartsystems.zigbee.dongle.cc2531.network.model;
 public enum DriverStatus {
 
     /**
-     * The driver has been created and it will start to initialize all the hardware resources<br>
+     * The driver has been created and it will start to initialize all the hardware resources
      * and the ZigBee network (i.e.: it will either join or create a network).
      */
     CREATED,
 
     /**
-     * The driver has opened the hardware resources, and it is waiting for<br>
+     * The driver has opened the hardware resources, and it is waiting for
      * the hardware to complete the reset process
      */
     HARDWARE_OPEN,
 
     /**
-     * The driver has already initialized all the hardware resources, and it is waiting for<br>
+     * The driver has already initialized all the hardware resources, and it is waiting for
      * the hardware to complete the initialization process
      */
     HARDWARE_INITIALIZING,
 
     /**
-     * The all the hardware resources have been initialized successfully, it will start to<br>
+     * The all the hardware resources have been initialized successfully, it will start to
      * initialize the ZigBee network
      */
     HARDWARE_READY,
 
     /**
-     * The driver has already initialized the ZigBee network, and it is waiting for<br>
-     * the completion of process (i.e.: it joined to the network and it is waiting for <br>
+     * The driver has already initialized the ZigBee network, and it is waiting for
+     * the completion of process (i.e.: it joined to the network and it is waiting for
      * a network address)
      */
     NETWORK_INITIALIZING,

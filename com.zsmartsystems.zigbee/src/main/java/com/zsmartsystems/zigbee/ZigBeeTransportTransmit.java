@@ -130,4 +130,12 @@ public interface ZigBeeTransportTransmit {
      * @return true if the PAN Id was set correctly
      */
     boolean setZigBeeExtendedPanId(long panId);
+
+    /**
+     * Sets the ZigBee Extended PAN ID to the specified value
+     *
+     * @param key the new security key as {@link byte}[16]
+     * @return true if the PAN Id was set correctly
+     */
+    boolean setZigBeeSecurityKey(byte[] key);
 }
