@@ -13,9 +13,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * information for the NWKAddr and IEEEAddr in the request or the device of
  * interest itself and all other Remote Devices shall not supply a response.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class FindNodeCacheResponse extends ZdoResponse {

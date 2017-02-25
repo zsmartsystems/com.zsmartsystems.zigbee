@@ -17,9 +17,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * request to enable retrieval of lists of active endpoints from devices whose list exceeds
  * the size of a single ASDU and where fragmentation is not supported.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ExtendedActiveEndpointRequest extends ZdoRequest {

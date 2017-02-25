@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.autocode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -144,6 +145,10 @@ public class ZclProtocolDefinitionParser {
                 return;
             }
 
+            if (line.startsWith("##### Expected Response")) {
+                parseExpectedResponse(context);
+            }
+
             if (line.startsWith("#### ")) {
                 context.command = new Command();
                 context.command.commandLabel = getHeaderTitle(line).trim();
@@ -242,6 +247,29 @@ public class ZclProtocolDefinitionParser {
                 addBreak = false;
             }
             context.command.commandDescription.add(line.trim());
+        }
+    }
+
+    private static void parseExpectedResponse(Context context) {
+        context.command.responseMatchers = new HashMap<String, String>();
+        while (context.lines.size() > 0) {
+            final String line = context.lines.remove(0);
+
+            // Returning to previous level.
+            if (line.startsWith("#")) {
+                context.lines.add(0, line);
+                return;
+            }
+
+            if (line.startsWith("Packet: ")) {
+                context.command.responseCommand = line.substring(7).trim();
+            }
+
+            if (line.startsWith("Match: ")) {
+                String response = line.substring(7).trim();
+                String[] matcher = response.split("==");
+                context.command.responseMatchers.put(matcher[0].trim(), matcher[1].trim());
+            }
         }
     }
 

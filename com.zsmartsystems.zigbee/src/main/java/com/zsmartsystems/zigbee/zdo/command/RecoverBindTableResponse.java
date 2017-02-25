@@ -20,9 +20,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * BindingTableListCount is the number of entries which is being returned in the
  * response.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class RecoverBindTableResponse extends ZdoResponse {

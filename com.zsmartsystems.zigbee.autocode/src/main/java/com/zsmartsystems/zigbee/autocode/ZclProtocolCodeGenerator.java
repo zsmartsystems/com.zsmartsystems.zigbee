@@ -42,6 +42,7 @@ public class ZclProtocolCodeGenerator {
 
     static String packageZdp = ".zdo";
     static String packageZdpCommand = packageZdp + ".command";
+    static String packageZdpTransaction = packageZdp + ".transaction";
     static String packageZdpDescriptors = packageZdp + ".descriptors";
 
     /**
@@ -223,6 +224,14 @@ public class ZclProtocolCodeGenerator {
 
         try {
             generateZdpCommandClasses(context, packageRoot, sourceRootPath);
+        } catch (final IOException e) {
+            System.out.println("Failed to generate profile message classes.");
+            e.printStackTrace();
+            return;
+        }
+
+        try {
+            generateZdpCommandTransactions(context, packageRoot, sourceRootPath);
         } catch (final IOException e) {
             System.out.println("Failed to generate profile message classes.");
             e.printStackTrace();
@@ -1525,13 +1534,6 @@ public class ZclProtocolCodeGenerator {
                         }
                     }
 
-                    out.println(" * <p>");
-                    out.println(" * Cluster: <b>" + cluster.clusterName + "</b>. Command is sent <b>"
-                            + (cluster.received.containsValue(command) ? "TO" : "FROM") + "</b> the server.");
-                    out.println(" * This command is " + ((cluster.clusterType.equals("GENERAL"))
-                            ? "a <b>generic</b> command used across the profile."
-                            : "a <b>specific</b> command used for the " + cluster.clusterName + " cluster."));
-
                     if (cluster.clusterDescription.size() > 0) {
                         out.println(" * <p>");
                         for (String line : cluster.clusterDescription) {
@@ -1650,6 +1652,84 @@ public class ZclProtocolCodeGenerator {
                         out.println("        builder.append(" + field.nameLowerCamelCase + ");");
                     }
                     out.println("        return builder.toString();");
+                    out.println("    }");
+
+                    out.println();
+                    out.println("}");
+
+                    out.flush();
+                    out.close();
+                }
+            }
+        }
+    }
+
+    private static void generateZdpCommandTransactions(Context context, String packageRootPrefix, File sourceRootPath)
+            throws IOException {
+
+        final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
+        for (final Profile profile : profiles) {
+            final LinkedList<Cluster> clusters = new LinkedList<Cluster>(profile.clusters.values());
+            for (final Cluster cluster : clusters) {
+                final ArrayList<Command> commands = new ArrayList<Command>();
+                commands.addAll(cluster.received.values());
+                commands.addAll(cluster.generated.values());
+                for (final Command command : commands) {
+                    final String packageRoot = packageRootPrefix + packageZdpTransaction;
+                    final String packagePath = getPackagePath(sourceRootPath, packageRoot);
+                    final File packageFile = getPackageFile(packagePath);
+
+                    final String className = command.nameUpperCamelCase;
+                    final PrintWriter out = getClassOut(packageFile, className);
+
+                    out.println("package " + packageRoot + ";");
+                    out.println();
+                    // out.println("import " + packageRootPrefix + packageZcl + ".ZclCommandMessage;");
+                    // out.println("import " + packageRootPrefix + packageZdp + ".ZclCommand;");
+                    // out.println("import " + packageRootPrefix + packageZcl + ".ZclField;");
+
+                    out.println("import " + packageRootPrefix + packageZdp + ".ZdoRequest;");
+
+                    // out.println("import java.util.Map;");
+                    // out.println("import java.util.HashMap;");
+
+                    out.println();
+                    out.println("/**");
+                    out.println(" * " + command.commandLabel + " value object class.");
+
+                    if (command.commandDescription != null && command.commandDescription.size() != 0) {
+                        out.println(" * <p>");
+                        for (String line : command.commandDescription) {
+                            out.println(" * " + line);
+                        }
+                    }
+
+                    if (cluster.clusterDescription.size() > 0) {
+                        out.println(" * <p>");
+                        for (String line : cluster.clusterDescription) {
+                            out.println(" * " + line);
+                        }
+                    }
+
+                    out.println(" * <p>");
+                    out.println(" * Code is auto-generated. Modifications may be overwritten!");
+
+                    out.println(" */");
+                    if (className.endsWith("Request")) {
+                        out.println("public class " + className + " extends ZdoRequest {");
+                    } else {
+                        out.println("public class " + className + " extends ZdoResponse {");
+                    }
+
+                    out.println("    /**");
+                    out.println("     * Default constructor.");
+                    out.println("     */");
+                    out.println("    public " + className + "() {");
+                    // out.println(" setType(ZclCommandType." + command.commandType + ");");
+                    // out.println(" commandId = " + command.commandId + ";");
+                    // out.println(" commandDirection = "
+                    // + (cluster.received.containsValue(command) ? "true" : "false") + ";");
+
                     out.println("    }");
 
                     out.println();

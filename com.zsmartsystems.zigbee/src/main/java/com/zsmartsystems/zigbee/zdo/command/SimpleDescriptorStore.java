@@ -16,9 +16,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * endpoint is a field within the Simple Descriptor and is accessed by the Remote
  * Device to manage the discovery cache information for the Local Device.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class SimpleDescriptorStore extends ZdoResponse {

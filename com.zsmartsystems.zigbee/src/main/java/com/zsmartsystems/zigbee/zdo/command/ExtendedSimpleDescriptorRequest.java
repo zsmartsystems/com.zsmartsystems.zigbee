@@ -16,9 +16,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * larger number of application input or output clusters than can be described by the
  * Simple_Desc_req.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ExtendedSimpleDescriptorRequest extends ZdoRequest {

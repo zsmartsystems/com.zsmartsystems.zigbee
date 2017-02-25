@@ -22,9 +22,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * MSDU size, i.e., aMaxMACFrameSize, is reached. The number of
  * results reported shall be set in the NetworkListCount.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ManagementNetworkDiscoveryResponse extends ZdoResponse {

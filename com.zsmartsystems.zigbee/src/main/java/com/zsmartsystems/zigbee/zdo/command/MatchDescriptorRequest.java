@@ -12,9 +12,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * remote device itself or to an alternative device that contains the discovery
  * information of the remote device.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class MatchDescriptorRequest extends ZdoRequest {

@@ -15,9 +15,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * the binding entry from its binding table and return a status of SUCCESS. If the
  * entry is not found, it shall return a status of NO_ENTRY.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class RemoveBackupBindEntryResponse extends ZdoResponse {

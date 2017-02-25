@@ -16,9 +16,6 @@ import java.util.List;
  * on this command shall be unicast, and the destination address shall be that of the
  * ZigBee Coordinator.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class EndDeviceBind extends ZdoResponse {
@@ -28,9 +25,9 @@ public class EndDeviceBind extends ZdoResponse {
     private Integer bindingTarget;
 
     /**
-     * SrcIEEE Address command message field.
+     * SrcAddress command message field.
      */
-    private Long srcIeeeAddress;
+    private Long srcAddress;
 
     /**
      * SrcEndpoint command message field.
@@ -77,21 +74,21 @@ public class EndDeviceBind extends ZdoResponse {
     }
 
     /**
-     * Gets SrcIEEE Address.
+     * Gets SrcAddress.
      *
-     * @return the SrcIEEE Address
+     * @return the SrcAddress
      */
-    public Long getSrcIeeeAddress() {
-        return srcIeeeAddress;
+    public Long getSrcAddress() {
+        return srcAddress;
     }
 
     /**
-     * Sets SrcIEEE Address.
+     * Sets SrcAddress.
      *
-     * @param srcIeeeAddress the SrcIEEE Address
+     * @param srcAddress the SrcAddress
      */
-    public void setSrcIeeeAddress(final Long srcIeeeAddress) {
-        this.srcIeeeAddress = srcIeeeAddress;
+    public void setSrcAddress(final Long srcAddress) {
+        this.srcAddress = srcAddress;
     }
 
     /**
@@ -169,7 +166,7 @@ public class EndDeviceBind extends ZdoResponse {
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(bindingTarget, ZclDataType.NWK_ADDRESS);
-        serializer.serialize(srcIeeeAddress, ZclDataType.IEEE_ADDRESS);
+        serializer.serialize(srcAddress, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(srcEndpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(profileId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(inClusterList, ZclDataType.N_X_CLUSTERID);
@@ -179,7 +176,7 @@ public class EndDeviceBind extends ZdoResponse {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         bindingTarget = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        srcIeeeAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        srcAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         srcEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         profileId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         inClusterList = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_CLUSTERID);
@@ -193,8 +190,8 @@ public class EndDeviceBind extends ZdoResponse {
         builder.append(super.toString());
         builder.append(", bindingTarget=");
         builder.append(bindingTarget);
-        builder.append(", srcIeeeAddress=");
-        builder.append(srcIeeeAddress);
+        builder.append(", srcAddress=");
+        builder.append(srcAddress);
         builder.append(", srcEndpoint=");
         builder.append(srcEndpoint);
         builder.append(", profileId=");

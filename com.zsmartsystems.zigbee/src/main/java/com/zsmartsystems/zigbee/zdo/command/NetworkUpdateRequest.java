@@ -13,9 +13,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * operating environment. The destination addressing on this primitive shall be
  * unicast or broadcast to all devices for which macRxOnWhenIdle = TRUE.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class NetworkUpdateRequest extends ZdoRequest {

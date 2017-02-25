@@ -15,9 +15,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * binding entry to its binding table and return a status of SUCCESS. If there is no
  * room, it shall return a status of TABLE_FULL.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class StoreBackupBindEntryResponse extends ZdoResponse {

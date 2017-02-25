@@ -12,9 +12,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * the request is unsupported (meaning the Remote Device is not a Primary
  * Discovery Cache device), or insufficient space exists.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class DiscoveryStoreResponse extends ZdoResponse {

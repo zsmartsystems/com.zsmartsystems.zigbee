@@ -16,9 +16,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * device is also the ZigBee Coordinator) so that device shall issue a
  * NOT_SUPPORTED status to the Bind_req if not supported.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class BindRequest extends ZdoRequest {

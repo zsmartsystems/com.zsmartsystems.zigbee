@@ -12,9 +12,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * interest), or the request is not supported (meaning the Remote Device is not a
  * Primary Discovery Cache device).
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class RemoveNodeCache extends ZdoResponse {

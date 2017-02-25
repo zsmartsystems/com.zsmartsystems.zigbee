@@ -14,9 +14,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * the Primary binding table cache or SrcAddress but does not have Binding Table
  * resources for the request, a Status of TABLE_FULL is returned.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class BindResponse extends ZdoResponse {

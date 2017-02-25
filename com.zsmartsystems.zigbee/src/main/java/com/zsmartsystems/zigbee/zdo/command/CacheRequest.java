@@ -9,9 +9,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * retrieve a list of ZigBee End Devices registered with a Primary Discovery Cache
  * device. The destination addressing on this primitive shall be unicast.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class CacheRequest extends ZdoRequest {

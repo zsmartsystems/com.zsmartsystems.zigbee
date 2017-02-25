@@ -10,9 +10,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * returned and all parameter fields after the Status field shall be omitted. Otherwise,
  * the Remote Device shall implement the following processing.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ManagementBindResponse extends ZdoResponse {

@@ -18,9 +18,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * authentication policy will be affected. The addressing may be unicast or
  * "broadcast to all routers and coordinator".
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ManagementPermitJoiningRequest extends ZdoRequest {

@@ -264,7 +264,7 @@ public class ZigBeeDongleTiCc2531
             if (command instanceof NodeDescriptorRequest) {
                 final NodeDescriptorRequest nodeDescriptorRequest = (NodeDescriptorRequest) command;
                 networkManager.sendCommand(
-                        new ZDO_NODE_DESC_REQ(getZToolAddress16(nodeDescriptorRequest.getDestinationAddress()),
+                        new ZDO_NODE_DESC_REQ(getZToolAddress16(nodeDescriptorRequest.getNwkAddrOfInterest()),
                                 getZToolAddress16(nodeDescriptorRequest.getNwkAddrOfInterest())));
             }
             if (command instanceof PowerDescriptorRequest) {
@@ -317,7 +317,7 @@ public class ZigBeeDongleTiCc2531
             if (command instanceof UserDescriptorRequest) {
                 final UserDescriptorRequest userDescriptorRequest = (UserDescriptorRequest) command;
                 networkManager.sendCommand(
-                        new ZDO_USER_DESC_REQ(getZToolAddress16(userDescriptorRequest.getDestinationAddress()),
+                        new ZDO_USER_DESC_REQ(getZToolAddress16(userDescriptorRequest.getNwkAddrOfInterest()),
                                 getZToolAddress16(userDescriptorRequest.getNwkAddrOfInterest())));
             }
             if (command instanceof ManagementLqiRequest) {
@@ -538,7 +538,7 @@ public class ZigBeeDongleTiCc2531
         /*
          * if (packet.getCMD().get16BitValue() == ZToolCMD.ZDO_MGMT_LQI_RSP) {
          * final ZDO_MGMT_LQI_RSP message = (ZDO_MGMT_LQI_RSP) packet;
-         * 
+         *
          * final ZDO_MGMT_LQI_RSP.NeighborLqiListItemClass[] neighborItems = message.getNeighborLqiList();
          * final ManagementLqiResponse.Neighbor[] neighbors = new ManagementLqiResponse.Neighbor[neighborItems.length];
          * for (int i = 0; i < neighbors.length; i++) {
@@ -548,11 +548,11 @@ public class ZigBeeDongleTiCc2531
          * neighborItems[i].Reserved_Relationship_RxOnWhenIdle_DeviceType,
          * neighborItems[i].Reserved_PermitJoining, neighborItems[i].RxLQI);
          * }
-         * 
+         *
          * final ManagementLqiResponse command = new ManagementLqiResponse(message.Status,
          * message.SrcAddress.get16BitValue(), message.getStartIndex(), message.getNeighborLQICount(),
          * neighbors);
-         * 
+         *
          * zigbeeNetworkReceive.receiveZdoCommand(command);
          * return;
          * }

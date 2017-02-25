@@ -15,9 +15,6 @@ import java.util.List;
  * Device or the 64-bit IEEE address of an address held in a local discovery cache.
  * The destination addressing on this command shall be unicast.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class IeeeAddressResponse extends ZdoResponse {

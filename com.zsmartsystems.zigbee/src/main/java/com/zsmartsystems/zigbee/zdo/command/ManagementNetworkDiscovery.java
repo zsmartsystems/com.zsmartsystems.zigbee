@@ -12,9 +12,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * Remote Device execute a Scan to report back networks in the vicinity of the Local
  * Device. The destination addressing on this command shall be unicast.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ManagementNetworkDiscovery extends ZdoResponse {

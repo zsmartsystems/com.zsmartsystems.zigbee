@@ -11,9 +11,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * table entry has been unbound by the primary binding table cache. The destination
  * addressing mode for this request is unicast.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class RemoveBackupBindTableRequest extends ZdoRequest {

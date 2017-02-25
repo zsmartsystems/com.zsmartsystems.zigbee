@@ -10,9 +10,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * shall be unicast to each device involved in the bind attempt, using the
  * acknowledged data service.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class EndDeviceBindResponse extends ZdoResponse {

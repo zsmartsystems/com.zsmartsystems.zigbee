@@ -15,9 +15,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * is to be executed using the parameter supplied by
  * Mgmt_Direct_Join_req.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ManagementDirectJoinRequest extends ZdoRequest {

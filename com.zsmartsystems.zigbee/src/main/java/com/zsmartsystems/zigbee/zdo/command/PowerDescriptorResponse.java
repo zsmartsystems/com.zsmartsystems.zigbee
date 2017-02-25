@@ -13,9 +13,6 @@ import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
  * Power_Desc_req directed to the remote device. This command shall be unicast to
  * the originator of the Power_Desc_req command.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class PowerDescriptorResponse extends ZdoResponse {

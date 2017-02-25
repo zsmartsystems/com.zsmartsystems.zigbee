@@ -13,9 +13,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * neighbor. The destination addressing on this command shall be unicast only and
  * the destination address must be that of a ZigBee Coordinator or ZigBee Router.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ManagementLqiRequest extends ZdoRequest {

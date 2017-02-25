@@ -15,9 +15,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * Binding Table entry corresponding to the parameters received in the request, a
  * Status of NO_ENTRY is returned.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class UnbindResponse extends ZdoResponse {

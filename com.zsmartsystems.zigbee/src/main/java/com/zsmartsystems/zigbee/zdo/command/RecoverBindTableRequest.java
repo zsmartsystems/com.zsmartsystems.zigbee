@@ -10,9 +10,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * complete restore of the binding table. The destination addressing mode for this
  * request is unicast.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class RecoverBindTableRequest extends ZdoRequest {

@@ -12,9 +12,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * 64-bit IEEE address of the Remote Device based on their known 16-bit address.
  * The destination addressing on this command shall be unicast.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class IeeeAddressRequest extends ZdoRequest {

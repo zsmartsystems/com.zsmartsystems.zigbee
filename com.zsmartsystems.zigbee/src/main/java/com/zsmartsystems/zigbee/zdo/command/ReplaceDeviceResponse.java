@@ -16,9 +16,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * have NewAddress and possibly NewEndpoint. It shall then return a response of
  * SUCCESS.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ReplaceDeviceResponse extends ZdoResponse {

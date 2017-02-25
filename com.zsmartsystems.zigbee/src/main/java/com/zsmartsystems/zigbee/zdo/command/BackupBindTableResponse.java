@@ -19,9 +19,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * shall return a status of SUCCESS and EntryCount will be equal to StartIndex +
  * BindingTableListCount from Backup_Bind_Table_req.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class BackupBindTableResponse extends ZdoResponse {

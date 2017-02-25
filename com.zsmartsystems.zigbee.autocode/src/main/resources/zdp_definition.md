@@ -32,6 +32,10 @@ The destination addressing on this command shall be unicast.
 |---------------------------|---------------------------|
 |NWKAddrOfInterest          |NWK address                |
 
+##### Expected Response
+Packet: IEEE Address Response
+Match: NWKAddrOfInterest == NWKAddrRemoteDev
+
 #### Node Descriptor Request [0x0002]
 
 The Power_Desc_req command is generated from a local device wishing to
@@ -262,7 +266,7 @@ ZigBee Coordinator.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |BindingTarget              |NWK Address                |
-|SrcIEEE Address            |IEEE address               |
+|SrcAddress                 |IEEE address               |
 |SrcEndpoint                |Unsigned 8-bit integer     |
 |ProfileID                  |Unsigned 16-bit integer    |
 |InClusterList              |N X ClusterId              |
@@ -505,8 +509,8 @@ destination addressing on this command is unicast.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Status                     |Unsigned 8-bit integer     |
-|IEEEAddrRemoteDev          |IEEE Address                |
-|NWKAddrRemoteDev           |NWK address         |
+|IEEEAddrRemoteDev          |IEEE Address               |
+|NWKAddrRemoteDev           |NWK address                |
 |NumAssocDev                |Unsigned 8-bit integer     |
 |StartIndex                 |Unsigned 8-bit integer     |
 |NWKAddrAssocDevList        |N X NWK Address            | 
@@ -527,6 +531,7 @@ The destination addressing on this command shall be unicast.
 |NumAssocDev                |Unsigned 8-bit integer     |
 |StartIndex                 |Unsigned 8-bit integer     |
 |NWKAddrAssocDevList        |N X NWK Address            | 
+
 
 #### Node Descriptor Response [0x8002]
 
@@ -560,7 +565,7 @@ the matching child device in the NodeDescriptor field.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Status                     |Unsigned 8-bit integer     |
-|NWKAddrOfInterest          |NWK address         |
+|NWKAddrOfInterest          |NWK address                |
 |NodeDescriptor             |Node Descriptor            |
 
 #### Power Descriptor Response [0x8003]
@@ -966,7 +971,3 @@ which was not the ZigBee Coordinator or that the ZigBee Coordinator does not
 support End Device Binding. Otherwise, End_Device_Bind_req processing is
 performed as described below, including transmission of the
 End_Device_Bind_rsp. 
-
-
-
-

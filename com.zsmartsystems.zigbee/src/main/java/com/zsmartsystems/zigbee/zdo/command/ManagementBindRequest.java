@@ -14,9 +14,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * must be that of a Primary binding table cache or source device holding its own
  * binding table.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ManagementBindRequest extends ZdoRequest {

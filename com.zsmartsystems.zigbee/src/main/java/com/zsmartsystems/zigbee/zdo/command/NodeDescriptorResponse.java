@@ -36,9 +36,6 @@ import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
  * device shall set the Status field to SUCCESS and include the node descriptor of
  * the matching child device in the NodeDescriptor field.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class NodeDescriptorResponse extends ZdoResponse {

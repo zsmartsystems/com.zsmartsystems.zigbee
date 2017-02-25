@@ -17,9 +17,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * configured in the user descriptor. Characters with ASCII codes numbered 0x00
  * through 0x1f are not permitted to be included in this string.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class UserDescriptorSet extends ZdoResponse {

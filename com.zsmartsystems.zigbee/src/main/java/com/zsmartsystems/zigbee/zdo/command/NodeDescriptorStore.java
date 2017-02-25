@@ -11,9 +11,6 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * Discovery_store_req to the same Primary Discovery Cache device. Included in
  * this request is the Node Descriptor the Local Device wishes to cache.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>generic</b> command used across the profile.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class NodeDescriptorStore extends ZdoResponse {

@@ -1,10 +1,12 @@
 package com.zsmartsystems.zigbee.autocode.zcl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Created by tlaukkan on 4/10/2016.
+ * @author tlaukkan
+ * @author Chris Jackson
  */
 public class Command {
     public int commandId;
@@ -15,6 +17,9 @@ public class Command {
     public String dataTypeClass;
     public String nameUpperCamelCase;
     public String nameLowerCamelCase;
+
+    public String responseCommand;
+    public Map<String, String> responseMatchers;
 
     public TreeMap<Integer, Field> fields = new TreeMap<Integer, Field>();
 }
