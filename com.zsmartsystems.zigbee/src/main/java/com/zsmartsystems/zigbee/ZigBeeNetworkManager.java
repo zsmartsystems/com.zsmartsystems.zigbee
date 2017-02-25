@@ -20,7 +20,6 @@ import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeNetworkDiscoverer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
-import com.zsmartsystems.zigbee.util.ZigBeeConstants;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -36,8 +35,7 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeIdentifier;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
-import com.zsmartsystems.zigbee.zdo.ZdoResponseMatcher;
-import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoinRequest;
+import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 
 /**
  * Implements functions for managing the ZigBee interfaces.
@@ -630,7 +628,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (destination.isGroup()) {
             return broadcast(command);
         } else {
-            return unicast(command);
+            final CommandResponseMatcher responseMatcher = new ZclResponseMatcher();
+            return unicast(command, responseMatcher);
         }
     }
 
@@ -641,17 +640,17 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      *            the command
      * @return the command result future.
      */
-    public Future<CommandResult> unicast(final Command command) {
+    // public Future<CommandResult> unicast(final Command command) {
 
-        final CommandResponseMatcher responseMatcher;
-        if (command instanceof ZclCommand) {
-            responseMatcher = new ZclResponseMatcher();
-        } else {
-            responseMatcher = new ZdoResponseMatcher();
-        }
+    // final CommandResponseMatcher responseMatcher;
+    // if (command instanceof ZclCommand) {
+    // responseMatcher = new ZclResponseMatcher();
+    // } else {
+    // responseMatcher = new ZdoResponseMatcher();
+    // }
 
-        return unicast(command, responseMatcher);
-    }
+    // return unicast(command, responseMatcher);
+    // }
 
     /**
      * Sends ZCL command.
@@ -769,17 +768,17 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param enable if true joining is enabled, otherwise it is disabled
      */
     public void permitJoin(final boolean enable) {
-        final ManagementPermitJoinRequest command = new ManagementPermitJoinRequest();
+        final ManagementPermitJoiningRequest command = new ManagementPermitJoiningRequest();
 
         if (enable) {
-            command.setDuration(0xFF);
+            command.setPermitDuration(0xFF);
         } else {
-            command.setDuration(0);
+            command.setPermitDuration(0);
         }
 
-        command.setAddressingMode(ZigBeeConstants.BROADCAST_ADDRESS);
-        command.setDestinationAddress(ZigBeeConstants.ZCZR_BROADCAST);
-        command.setTrustCenterSignificance(1);
+        // command.setAddressingMode(ZigBeeConstants.BROADCAST_ADDRESS);
+        // command.set.setDestinationAddress(ZigBeeConstants.ZCZR_BROADCAST);
+        command.setTc_Significance(true);
 
         try {
             sendCommand(command);

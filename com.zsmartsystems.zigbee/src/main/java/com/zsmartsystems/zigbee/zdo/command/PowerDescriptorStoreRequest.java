@@ -1,9 +1,9 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoResponse;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
- * Power Descriptor Store value object class.
+ * Power Descriptor Store Request value object class.
  * <p>
  * The Power_Desc_store_req is provided to enable ZigBee end devices on the
  * network to request storage of their Power Descriptor on a Primary Discovery
@@ -13,17 +13,17 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class PowerDescriptorStore extends ZdoResponse {
+public class PowerDescriptorStoreRequest extends ZdoRequest {
     /**
      * Default constructor.
      */
-    public PowerDescriptorStore() {
+    public PowerDescriptorStoreRequest() {
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("PowerDescriptorStore");
+        builder.append("PowerDescriptorStoreRequest");
         builder.append(super.toString());
         return builder.toString();
     }

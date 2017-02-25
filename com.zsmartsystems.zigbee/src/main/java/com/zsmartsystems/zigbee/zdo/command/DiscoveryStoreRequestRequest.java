@@ -1,9 +1,9 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoResponse;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
- * Discovery Store REquest value object class.
+ * Discovery Store Request Request value object class.
  * <p>
  * The Discovery_store_req is provided to enable ZigBee end devices on the
  * network to request storage of their discovery cache information on a Primary
@@ -12,17 +12,17 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class DiscoveryStoreREquest extends ZdoResponse {
+public class DiscoveryStoreRequestRequest extends ZdoRequest {
     /**
      * Default constructor.
      */
-    public DiscoveryStoreREquest() {
+    public DiscoveryStoreRequestRequest() {
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("DiscoveryStoreREquest");
+        builder.append("DiscoveryStoreRequestRequest");
         builder.append(super.toString());
         return builder.toString();
     }

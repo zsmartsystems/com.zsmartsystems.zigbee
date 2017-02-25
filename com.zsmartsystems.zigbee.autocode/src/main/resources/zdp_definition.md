@@ -38,14 +38,19 @@ Match: NWKAddrOfInterest == NWKAddrRemoteDev
 
 #### Node Descriptor Request [0x0002]
 
-The Power_Desc_req command is generated from a local device wishing to
-inquire as to the power descriptor of a remote device. This command shall be
-unicast either to the remote device itself or to an alternative device that contains
-the discovery information of the remote device.
+The Node_Desc_req command is generated from a local device wishing to inquire
+as to the node descriptor of a remote device. This command shall be unicast either
+to the remote device itself or to an alternative device that contains the discovery
+information of the remote device.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |NWKAddrOfInterest          |NWK address                |
+
+##### Expected Response
+Packet: Node Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
+
 
 #### Power Descriptor Request [0x0003]
 
@@ -57,6 +62,11 @@ the discovery information of the remote device.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |NWKAddrOfInterest          |NWK address         |
+
+##### Expected Response
+Packet: Power Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
+
 
 #### Simple Descriptor Request [0x0004]
 
@@ -70,6 +80,11 @@ device that contains the discovery information of the remote device.
 |NWKAddrOfInterest          |NWK address         |
 |Endpoint                   |Unsigned 8-bit integer     |
 
+##### Expected Response
+Packet: Simple Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
+Match: Endpoint == Endpoint
+
 #### Active Endpoints Request [0x0005]
 
 The Active_EP_req command is generated from a local device wishing to acquire
@@ -80,6 +95,11 @@ contains the discovery information of the remote device.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |NWKAddrOfInterest          |NWK address         |
+
+##### Expected Response
+Packet: Active Endpoints Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
+
 
 #### Match Descriptor Request [0x0006]
 
@@ -101,6 +121,10 @@ the discovery information of the remote device.
 |---------------------------|---------------------------|
 |NWKAddrOfInterest          |NWK address         |
 
+##### Expected Response
+Packet: Complex Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
+
 
 #### User Descriptor Request [0x0011]
 
@@ -112,6 +136,11 @@ information of the remote device.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |NWKAddrOfInterest          |NWK address         |
+
+##### Expected Response
+Packet: User Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
+
 
 #### Discovery Cache Request [0x0012]
 
@@ -138,7 +167,7 @@ broadcast to all devices for which macRxOnWhenIdle = TRUE.
 |Capability                 |Bitmap 8-bit               |
 
 
-#### User Descriptor Set [0x0014]
+#### User Descriptor Set Request [0x0014]
 
 The User_Desc_set command is generated from a local device wishing to
 configure the user descriptor on a remote device. This command shall be unicast
@@ -159,14 +188,14 @@ discover the location of a particular system server or servers as indicated by t
 ServerMask parameter. The destination addressing on this request is "broadcast to
 all devices for which macRxOnWhenIdle = TRUE".
 
-#### Discovery Store REquest [0x0016]
+#### Discovery Store Request Request [0x0016]
 
 The Discovery_store_req is provided to enable ZigBee end devices on the
 network to request storage of their discovery cache information on a Primary
 Discovery Cache device. Included in the request is the amount of storage space
 the Local Device requires.
 
-#### Node Descriptor Store [0x0017]
+#### Node Descriptor Store Request [0x0017]
 
 The Node_Desc_store_req is provided to enable ZigBee end devices on the
 network to request storage of their Node Descriptor on a Primary Discovery
@@ -174,7 +203,7 @@ Cache device which has previously received a SUCCESS status from a
 Discovery_store_req to the same Primary Discovery Cache device. Included in
 this request is the Node Descriptor the Local Device wishes to cache. 
 
-#### Power Descriptor Store [0x0018]
+#### Power Descriptor Store Request [0x0018]
 
 The Power_Desc_store_req is provided to enable ZigBee end devices on the
 network to request storage of their Power Descriptor on a Primary Discovery
@@ -182,7 +211,7 @@ Cache device which has previously received a SUCCESS status from a
 Discovery_store_req to the same Primary Discovery Cache device. Included in
 this request is the Power Descriptor the Local Device wishes to cache.
 
-#### Active Endpoint Store [0x0019]
+#### Active Endpoint Store Request [0x0019]
 
 The Active_EP_store_req is provided to enable ZigBee end devices on the
 network to request storage of their list of Active Endpoints on a Primary
@@ -204,7 +233,7 @@ Descriptor the Local Device wishes to cache and the Simple Descriptor itself. Th
 endpoint is a field within the Simple Descriptor and is accessed by the Remote
 Device to manage the discovery cache information for the Local Device. 
 
-#### Remove Node Cache [0x001B]
+#### Remove Node Cache Request [0x001B]
 
 The Remove_node_cache_req is provided to enable ZigBee devices on the
 network to request removal of discovery cache information for a specified ZigBee
@@ -255,7 +284,7 @@ which the active endpoint list is required. The StartIndex field shall be set in
 request to enable retrieval of lists of active endpoints from devices whose list exceeds
 the size of a single ASDU and where fragmentation is not supported.
 
-#### End Device Bind [0x0020]
+#### End Device Bind Request [0x0020]
 
 The End_Device_Bind_req is generated from a Local Device wishing to perform
 End Device Bind with a Remote Device. The End_Device_Bind_req is generated,
@@ -686,7 +715,7 @@ Cache Device has space to store the discovery cache data for the Local Device),
 whether the request is not supported (meaning the Remote Device is not a Primary
 Discovery Cache device), or insufficient space exists.
 
-#### Active Endpoint Store Resposne [0x8019]
+#### Active Endpoint Store Response [0x8019]
 
 The Active_EP_store_rsp is provided to notify a Local Device of the request
 status from a Primary Discovery Cache device. Included in the response is a status
@@ -764,6 +793,11 @@ specified range. If it does not, a Status of INVALID_EP shall be returned If the
 Remote Device is the ZigBee Coordinator or SrcAddress but does not have a
 Binding Table entry corresponding to the parameters received in the request, a
 Status of NO_ENTRY is returned.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Unsigned 8-bit integer     |
+
 
 #### Bind Register Response [0x8023]
 
@@ -936,6 +970,11 @@ receipt and after support for Mgmt_Permit_Joining_req has been verified, the
 Remote Device shall execute the NLME-PERMIT-JOINING.request. The
 Mgmt_Permit-Joining_rsp shall contain the same status that was contained in the
 NLME-PERMIT-JOINING.confirm primitive. 
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Unsigned 8-bit integer     |
+
 
 #### Management Cache Response [0x8037]
 

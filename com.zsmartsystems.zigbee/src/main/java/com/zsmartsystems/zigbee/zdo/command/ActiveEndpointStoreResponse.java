@@ -3,7 +3,7 @@ package com.zsmartsystems.zigbee.zdo.command;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
- * Active Endpoint Store Resposne value object class.
+ * Active Endpoint Store Response value object class.
  * <p>
  * The Active_EP_store_rsp is provided to notify a Local Device of the request
  * status from a Primary Discovery Cache device. Included in the response is a status
@@ -14,17 +14,17 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class ActiveEndpointStoreResposne extends ZdoResponse {
+public class ActiveEndpointStoreResponse extends ZdoResponse {
     /**
      * Default constructor.
      */
-    public ActiveEndpointStoreResposne() {
+    public ActiveEndpointStoreResponse() {
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ActiveEndpointStoreResposne");
+        builder.append("ActiveEndpointStoreResponse");
         builder.append(super.toString());
         return builder.toString();
     }

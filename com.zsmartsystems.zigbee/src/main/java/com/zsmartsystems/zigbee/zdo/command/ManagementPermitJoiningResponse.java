@@ -1,5 +1,8 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
@@ -25,10 +28,22 @@ public class ManagementPermitJoiningResponse extends ZdoResponse {
     }
 
     @Override
+    public void serialize(final ZclFieldSerializer serializer) {
+        serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Override
+    public void deserialize(final ZclFieldDeserializer deserializer) {
+        status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("ManagementPermitJoiningResponse");
         builder.append(super.toString());
+        builder.append(", status=");
+        builder.append(status);
         return builder.toString();
     }
 

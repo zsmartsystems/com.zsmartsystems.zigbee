@@ -3,12 +3,12 @@ package com.zsmartsystems.zigbee.zdo.command;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zdo.ZdoResponse;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 import java.util.List;
 
 /**
- * End Device Bind value object class.
+ * End Device Bind Request value object class.
  * <p>
  * The End_Device_Bind_req is generated from a Local Device wishing to perform
  * End Device Bind with a Remote Device. The End_Device_Bind_req is generated,
@@ -18,7 +18,7 @@ import java.util.List;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class EndDeviceBind extends ZdoResponse {
+public class EndDeviceBindRequest extends ZdoRequest {
     /**
      * BindingTarget command message field.
      */
@@ -52,7 +52,7 @@ public class EndDeviceBind extends ZdoResponse {
     /**
      * Default constructor.
      */
-    public EndDeviceBind() {
+    public EndDeviceBindRequest() {
     }
 
     /**
@@ -186,7 +186,7 @@ public class EndDeviceBind extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EndDeviceBind");
+        builder.append("EndDeviceBindRequest");
         builder.append(super.toString());
         builder.append(", bindingTarget=");
         builder.append(bindingTarget);

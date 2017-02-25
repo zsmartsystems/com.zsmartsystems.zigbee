@@ -47,7 +47,7 @@ public class ZDO_MGMT_PERMIT_JOIN_REQ extends ZToolPacket /* implements IREQUEST
     private int Duration;
     /// <name>TI.ZPI1.ZDO_MGMT_PERMIT_JOIN_REQ.TCSignificance</name>
     /// <summary>Trust Center Significance</summary>
-    private int TCSignificance;
+    private boolean TCSignificance;
 
     /// <name>TI.ZPI1.ZDO_MGMT_PERMIT_JOIN_REQ</name>
     /// <summary>Constructor</summary>
@@ -56,7 +56,7 @@ public class ZDO_MGMT_PERMIT_JOIN_REQ extends ZToolPacket /* implements IREQUEST
 
     /// <name>TI.ZPI1.ZDO_MGMT_PERMIT_JOIN_REQ</name>
     /// <summary>Constructor</summary>
-    public ZDO_MGMT_PERMIT_JOIN_REQ(byte AddrMode, ZToolAddress16 DstAddr, int Duration, int TCSignificance) {
+    public ZDO_MGMT_PERMIT_JOIN_REQ(byte AddrMode, ZToolAddress16 DstAddr, int Duration, Boolean TCSignificance) {
         this.AddrMode = AddrMode;
         this.DstAddr = DstAddr;
         this.Duration = Duration;
@@ -67,7 +67,7 @@ public class ZDO_MGMT_PERMIT_JOIN_REQ extends ZToolPacket /* implements IREQUEST
         framedata[1] = this.DstAddr.getLsb();
         framedata[2] = this.DstAddr.getMsb();
         framedata[3] = this.Duration;
-        framedata[4] = this.TCSignificance;
+        framedata[4] = this.TCSignificance ? 1 : 0;
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_MGMT_PERMIT_JOIN_REQ), framedata);
     }
 
@@ -95,11 +95,11 @@ public class ZDO_MGMT_PERMIT_JOIN_REQ extends ZToolPacket /* implements IREQUEST
         Duration = duration;
     }
 
-    public int getTCSignificance() {
+    public boolean getTCSignificance() {
         return TCSignificance;
     }
 
-    public void setTCSignificance(int tCSignificance) {
+    public void setTCSignificance(boolean tCSignificance) {
         TCSignificance = tCSignificance;
     }
 }

@@ -4,6 +4,9 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
 
 /**
  * IEEE Address Request value object class.
@@ -14,7 +17,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class IeeeAddressRequest extends ZdoRequest {
+public class IeeeAddressRequest extends ZdoRequest implements CommandResponseMatcher {
     /**
      * NWKAddrOfInterest command message field.
      */
@@ -52,6 +55,19 @@ public class IeeeAddressRequest extends ZdoRequest {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+    }
+
+    @Override
+    public boolean isMatch(Command request, Command response) {
+        if (!(response instanceof IeeeAddressResponse)) {
+            return false;
+        }
+
+        if (((IeeeAddressRequest) request).getNwkAddrOfInterest() != ((IeeeAddressResponse) response).getNwkAddrRemoteDev()) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override

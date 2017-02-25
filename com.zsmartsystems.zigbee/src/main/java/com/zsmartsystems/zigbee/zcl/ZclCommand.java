@@ -1,7 +1,6 @@
 package com.zsmartsystems.zigbee.zcl;
 
 import com.zsmartsystems.zigbee.Command;
-import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 /**
@@ -11,15 +10,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
  * @author Chris Jackson
  */
 public abstract class ZclCommand extends Command {
-    /**
-     * The source address.
-     */
-    private ZigBeeAddress sourceAddress;
-
-    /**
-     * The destination address.
-     */
-    private ZigBeeAddress destinationAddress;
 
     /**
      *
@@ -51,42 +41,6 @@ public abstract class ZclCommand extends Command {
      * </p>
      */
     protected boolean commandDirection;
-
-    /**
-     * Gets destination address.
-     *
-     * @return the destination address.
-     */
-    public ZigBeeAddress getDestinationAddress() {
-        return destinationAddress;
-    }
-
-    /**
-     * Sets destination address.
-     *
-     * @param destinationAddress the destination address.
-     */
-    public void setDestinationAddress(final ZigBeeAddress destinationAddress) {
-        this.destinationAddress = destinationAddress;
-    }
-
-    /**
-     * Gets source address.
-     *
-     * @return the source address
-     */
-    public ZigBeeAddress getSourceAddress() {
-        return sourceAddress;
-    }
-
-    /**
-     * Sets source address.
-     *
-     * @param sourceAddress the source address
-     */
-    public void setSourceAddress(final ZigBeeAddress sourceAddress) {
-        this.sourceAddress = sourceAddress;
-    }
 
     /**
      * <p>
@@ -167,7 +121,11 @@ public abstract class ZclCommand extends Command {
     @Override
     public String toString() {
         Integer resolvedClusterId = getClusterId();
-        return ZclClusterType.getValueById(resolvedClusterId).getLabel() + " - " + sourceAddress + " -> "
-                + destinationAddress + " TransID=" + transactionId;
+        final StringBuilder builder = new StringBuilder();
+        builder.append(super.toString());
+        builder.append(ZclClusterType.getValueById(resolvedClusterId).getLabel());
+        builder.append(", TransID=");
+        builder.append(transactionId);
+        return builder.toString();
     }
 }

@@ -10,7 +10,7 @@ public abstract class ZdoResponse extends ZdoCommand {
     /**
      * Source address;
      */
-    protected int sourceAddress;
+    // protected int sourceAddress;
 
     /**
      * The response status.
@@ -22,18 +22,18 @@ public abstract class ZdoResponse extends ZdoCommand {
      *
      * @return the destination address
      */
-    public int getSourceAddress() {
-        return sourceAddress;
-    }
+    // public int getSourceAddress() {
+    // return sourceAddress;
+    // }
 
     /**
      * Set the source address
      *
      * @param sourceAddress the source address as {@link int}
      */
-    public void setSourceAddress(int sourceAddress) {
-        this.sourceAddress = sourceAddress;
-    }
+    // public void setSourceAddress(int sourceAddress) {
+    // this.sourceAddress = sourceAddress;
+    // }
 
     /**
      * Gets the response status
@@ -53,11 +53,11 @@ public abstract class ZdoResponse extends ZdoCommand {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(": sourceAddress=");
-        builder.append(sourceAddress);
-        return builder.toString();
-    }
+    // @Override
+    // public String toString() {
+    // final StringBuilder builder = new StringBuilder();
+    // builder.append(": sourceAddress=");
+    // builder.append(sourceAddress);
+    // return builder.toString();
+    // }
 }

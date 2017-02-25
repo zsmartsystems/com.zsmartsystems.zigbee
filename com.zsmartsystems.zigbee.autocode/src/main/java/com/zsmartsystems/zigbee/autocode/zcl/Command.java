@@ -19,6 +19,9 @@ public class Command {
     public String nameLowerCamelCase;
 
     public String responseCommand;
+    // public String responseRequest;
+    // public String responseResponse;
+
     public Map<String, String> responseMatchers;
 
     public TreeMap<Integer, Field> fields = new TreeMap<Integer, Field>();

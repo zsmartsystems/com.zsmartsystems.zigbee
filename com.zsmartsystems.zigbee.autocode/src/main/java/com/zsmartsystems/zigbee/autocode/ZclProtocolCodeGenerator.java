@@ -230,13 +230,13 @@ public class ZclProtocolCodeGenerator {
             return;
         }
 
-        try {
-            generateZdpCommandTransactions(context, packageRoot, sourceRootPath);
-        } catch (final IOException e) {
-            System.out.println("Failed to generate profile message classes.");
-            e.printStackTrace();
-            return;
-        }
+        // try {
+        // generateZdpCommandTransactions(context, packageRoot, sourceRootPath);
+        // } catch (final IOException e) {
+        // System.out.println("Failed to generate profile message classes.");
+        // e.printStackTrace();
+        // return;
+        // }
     }
 
     private static void outputClassJavaDoc(final PrintWriter out) {
@@ -1482,6 +1482,13 @@ public class ZclProtocolCodeGenerator {
                         out.println("import " + packageRootPrefix + packageZdp + ".ZdoResponse;");
                     }
 
+                    if (command.responseCommand != null && command.responseCommand.length() != 0) {
+                        out.println("import " + packageRootPrefix + ".Command;");
+                        out.println("import " + packageRootPrefix + ".CommandResponseMatcher;");
+                        out.println("import " + packageRootPrefix + packageZdpCommand + "." + command.responseCommand
+                                + ";");
+                    }
+
                     if (fieldWithDataTypeList) {
                         out.println();
                         out.println("import java.util.List;");
@@ -1546,10 +1553,15 @@ public class ZclProtocolCodeGenerator {
 
                     out.println(" */");
                     if (className.endsWith("Request")) {
-                        out.println("public class " + className + " extends ZdoRequest {");
+                        out.print("public class " + className + " extends ZdoRequest");
                     } else {
-                        out.println("public class " + className + " extends ZdoResponse {");
+                        out.print("public class " + className + " extends ZdoResponse");
                     }
+
+                    if (command.responseCommand != null && command.responseCommand.length() != 0) {
+                        out.print(" implements CommandResponseMatcher");
+                    }
+                    out.println(" {");
 
                     for (final Field field : fields) {
                         if (reservedFields.contains(field.nameLowerCamelCase)) {
@@ -1641,6 +1653,26 @@ public class ZclProtocolCodeGenerator {
                         out.println("    }");
                     }
 
+                    if (command.responseCommand != null && command.responseCommand.length() != 0) {
+                        out.println();
+                        out.println("    @Override");
+                        out.println("    public boolean isMatch(Command request, Command response) {");
+                        out.println("        if (!(response instanceof " + command.responseCommand + ")) {");
+                        out.println("            return false;");
+                        out.println("        }");
+                        out.println();
+                        for (String matcher : command.responseMatchers.keySet()) {
+                            out.println("        if (((" + command.nameUpperCamelCase + ") request).get" + matcher
+                                    + "() != ((" + command.responseCommand + ") response).get"
+                                    + command.responseMatchers.get(matcher) + "()) {");
+                            out.println("            return false;");
+                            out.println("        }");
+                        }
+                        out.println();
+                        out.println("        return true;");
+                        out.println("    }");
+                    }
+
                     out.println();
                     out.println("    @Override");
                     out.println("    public String toString() {");
@@ -1675,27 +1707,40 @@ public class ZclProtocolCodeGenerator {
                 commands.addAll(cluster.received.values());
                 commands.addAll(cluster.generated.values());
                 for (final Command command : commands) {
+                    if (command.responseCommand == null || command.responseCommand.length() == 0) {
+                        continue;
+                    }
+
                     final String packageRoot = packageRootPrefix + packageZdpTransaction;
                     final String packagePath = getPackagePath(sourceRootPath, packageRoot);
                     final File packageFile = getPackageFile(packagePath);
 
-                    final String className = command.nameUpperCamelCase;
+                    final String className = command.nameUpperCamelCase + "Transaction";
                     final PrintWriter out = getClassOut(packageFile, className);
 
                     out.println("package " + packageRoot + ";");
                     out.println();
+
                     // out.println("import " + packageRootPrefix + packageZcl + ".ZclCommandMessage;");
                     // out.println("import " + packageRootPrefix + packageZdp + ".ZclCommand;");
                     // out.println("import " + packageRootPrefix + packageZcl + ".ZclField;");
 
-                    out.println("import " + packageRootPrefix + packageZdp + ".ZdoRequest;");
+                    out.println(
+                            "import " + packageRootPrefix + packageZdpCommand + "." + command.nameUpperCamelCase + ";");
+                    out.println(
+                            "import " + packageRootPrefix + packageZdpCommand + "." + command.responseCommand + ";");
+
+                    out.println("import " + packageRootPrefix + ".Command;");
+                    out.println("import " + packageRootPrefix + ".CommandResponseMatcher;");
+                    // out.println("import " + packageRootPrefix + packageZdp + ".ZdoRequest;");
+                    // out.println("import " + packageRootPrefix + packageZdp + ".ZdoResponse;");
 
                     // out.println("import java.util.Map;");
                     // out.println("import java.util.HashMap;");
 
                     out.println();
                     out.println("/**");
-                    out.println(" * " + command.commandLabel + " value object class.");
+                    out.println(" * " + command.commandLabel + " transaction class.");
 
                     if (command.commandDescription != null && command.commandDescription.size() != 0) {
                         out.println(" * <p>");
@@ -1715,21 +1760,28 @@ public class ZclProtocolCodeGenerator {
                     out.println(" * Code is auto-generated. Modifications may be overwritten!");
 
                     out.println(" */");
-                    if (className.endsWith("Request")) {
-                        out.println("public class " + className + " extends ZdoRequest {");
-                    } else {
-                        out.println("public class " + className + " extends ZdoResponse {");
-                    }
+                    out.println("public class " + className + " implements CommandResponseMatcher {");
 
-                    out.println("    /**");
-                    out.println("     * Default constructor.");
-                    out.println("     */");
-                    out.println("    public " + className + "() {");
+                    // out.println(" /**");
+                    // out.println(" * Default constructor.");
+                    // out.println(" */");
+                    // out.println(" public " + className + "() {");
+                    // out.println(" }");
                     // out.println(" setType(ZclCommandType." + command.commandType + ");");
                     // out.println(" commandId = " + command.commandId + ";");
                     // out.println(" commandDirection = "
                     // + (cluster.received.containsValue(command) ? "true" : "false") + ";");
 
+                    out.println();
+                    out.println("    @Override");
+                    out.println("    public boolean isMatch(Command request, Command response) {");
+                    out.println("        if (response instanceof " + command.responseCommand + ") {");
+                    // out.println(" return ((" + command.nameUpperCamelCase + ") request).get"
+                    // + command.responseRequest + "() == ((" + command.responseCommand + ") response).get"
+                    // + command.responseResponse + "();");
+                    out.println("        } else {");
+                    out.println("            return false;");
+                    out.println("        }");
                     out.println("    }");
 
                     out.println();

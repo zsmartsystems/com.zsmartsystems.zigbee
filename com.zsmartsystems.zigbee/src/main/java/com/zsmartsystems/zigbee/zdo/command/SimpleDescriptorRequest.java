@@ -4,6 +4,9 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
 
 /**
  * Simple Descriptor Request value object class.
@@ -15,7 +18,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class SimpleDescriptorRequest extends ZdoRequest {
+public class SimpleDescriptorRequest extends ZdoRequest implements CommandResponseMatcher {
     /**
      * NWKAddrOfInterest command message field.
      */
@@ -78,6 +81,22 @@ public class SimpleDescriptorRequest extends ZdoRequest {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         endpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Override
+    public boolean isMatch(Command request, Command response) {
+        if (!(response instanceof SimpleDescriptorResponse)) {
+            return false;
+        }
+
+        if (((SimpleDescriptorRequest) request).getNwkAddrOfInterest() != ((SimpleDescriptorResponse) response).getNwkAddrOfInterest()) {
+            return false;
+        }
+        if (((SimpleDescriptorRequest) request).getEndpoint() != ((SimpleDescriptorResponse) response).getEndpoint()) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override

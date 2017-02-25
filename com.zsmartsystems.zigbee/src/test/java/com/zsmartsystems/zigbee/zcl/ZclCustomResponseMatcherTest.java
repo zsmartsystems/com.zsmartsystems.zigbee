@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
-import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoinResponse;
+import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingResponse;
 
 /**
  *
@@ -37,7 +37,7 @@ public class ZclCustomResponseMatcherTest {
         zclResponse.setTransactionId(222);
         assertFalse(matcher.isMatch(zclCommand, zclResponse));
 
-        ZdoCommand zdoResponse = new ManagementPermitJoinResponse();
+        ZdoCommand zdoResponse = new ManagementRoutingResponse();
         assertFalse(matcher.isMatch(zclCommand, zdoResponse));
     }
 }

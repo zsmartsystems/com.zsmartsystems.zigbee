@@ -1,9 +1,9 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoResponse;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
- * User Descriptor Set value object class.
+ * User Descriptor Set Request value object class.
  * <p>
  * The User_Desc_set command is generated from a local device wishing to
  * configure the user descriptor on a remote device. This command shall be unicast
@@ -19,17 +19,17 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class UserDescriptorSet extends ZdoResponse {
+public class UserDescriptorSetRequest extends ZdoRequest {
     /**
      * Default constructor.
      */
-    public UserDescriptorSet() {
+    public UserDescriptorSetRequest() {
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("UserDescriptorSet");
+        builder.append("UserDescriptorSetRequest");
         builder.append(super.toString());
         return builder.toString();
     }

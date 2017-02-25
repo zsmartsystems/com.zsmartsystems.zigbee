@@ -4,6 +4,9 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsResponse;
 
 /**
  * Active Endpoints Request value object class.
@@ -15,7 +18,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class ActiveEndpointsRequest extends ZdoRequest {
+public class ActiveEndpointsRequest extends ZdoRequest implements CommandResponseMatcher {
     /**
      * NWKAddrOfInterest command message field.
      */
@@ -53,6 +56,19 @@ public class ActiveEndpointsRequest extends ZdoRequest {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+    }
+
+    @Override
+    public boolean isMatch(Command request, Command response) {
+        if (!(response instanceof ActiveEndpointsResponse)) {
+            return false;
+        }
+
+        if (((ActiveEndpointsRequest) request).getNwkAddrOfInterest() != ((ActiveEndpointsResponse) response).getNwkAddrOfInterest()) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override

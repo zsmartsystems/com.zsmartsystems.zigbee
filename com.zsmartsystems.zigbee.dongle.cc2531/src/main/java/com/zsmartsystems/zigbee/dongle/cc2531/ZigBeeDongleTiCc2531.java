@@ -63,8 +63,7 @@ import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
 import com.zsmartsystems.zigbee.zdo.command.IeeeAddressRequest;
 import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
-import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoinRequest;
-import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoinResponse;
+import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.command.PowerDescriptorRequest;
@@ -272,8 +271,8 @@ public class ZigBeeDongleTiCc2531
                 networkManager
                         .sendCommand(new ZDO_POWER_DESC_REQ((short) powerDescriptorRequest.getDestinationAddress()));
             }
-            if (command instanceof ManagementPermitJoinRequest) {
-                final ManagementPermitJoinRequest managementPermitJoinRequest = (ManagementPermitJoinRequest) command;
+            if (command instanceof ManagementPermitJoiningRequest) {
+                final ManagementPermitJoiningRequest managementPermitJoinRequest = (ManagementPermitJoiningRequest) command;
                 networkManager.sendCommand(
                         new ZDO_MGMT_PERMIT_JOIN_REQ((byte) managementPermitJoinRequest.getAddressingMode(),
                                 getZToolAddress16(managementPermitJoinRequest.getDestinationAddress()),

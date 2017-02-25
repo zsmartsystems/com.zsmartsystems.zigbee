@@ -1,9 +1,9 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoResponse;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
- * Node Descriptor Store value object class.
+ * Node Descriptor Store Request value object class.
  * <p>
  * The Node_Desc_store_req is provided to enable ZigBee end devices on the
  * network to request storage of their Node Descriptor on a Primary Discovery
@@ -13,17 +13,17 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class NodeDescriptorStore extends ZdoResponse {
+public class NodeDescriptorStoreRequest extends ZdoRequest {
     /**
      * Default constructor.
      */
-    public NodeDescriptorStore() {
+    public NodeDescriptorStoreRequest() {
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("NodeDescriptorStore");
+        builder.append("NodeDescriptorStoreRequest");
         builder.append(super.toString());
         return builder.toString();
     }

@@ -262,13 +262,25 @@ public class ZclProtocolDefinitionParser {
             }
 
             if (line.startsWith("Packet: ")) {
-                context.command.responseCommand = line.substring(7).trim();
+                String cmd = line.substring(7);
+                String splits[] = cmd.split(" ");
+                StringBuilder sb = new StringBuilder();
+                for (int c = 0; c < splits.length - 1; c++) {
+                    if (c != 0) {
+                        sb.append(" ");
+                    }
+                    sb.append(splits[c]);
+                }
+                context.command.responseCommand = CodeGeneratorUtil.labelToUpperCamelCase(line.substring(7));
             }
 
             if (line.startsWith("Match: ")) {
                 String response = line.substring(7).trim();
                 String[] matcher = response.split("==");
-                context.command.responseMatchers.put(matcher[0].trim(), matcher[1].trim());
+
+                String responseRequest = CodeGeneratorUtil.labelToUpperCamelCase(matcher[0].trim());
+                String responseResponse = CodeGeneratorUtil.labelToUpperCamelCase(matcher[1].trim());
+                context.command.responseMatchers.put(responseRequest, responseResponse);
             }
         }
     }

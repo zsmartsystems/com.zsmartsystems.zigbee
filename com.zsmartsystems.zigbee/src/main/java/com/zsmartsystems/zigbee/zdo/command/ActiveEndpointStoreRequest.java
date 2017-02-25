@@ -1,9 +1,9 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoResponse;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
- * Active Endpoint Store value object class.
+ * Active Endpoint Store Request value object class.
  * <p>
  * The Active_EP_store_req is provided to enable ZigBee end devices on the
  * network to request storage of their list of Active Endpoints on a Primary
@@ -14,17 +14,17 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class ActiveEndpointStore extends ZdoResponse {
+public class ActiveEndpointStoreRequest extends ZdoRequest {
     /**
      * Default constructor.
      */
-    public ActiveEndpointStore() {
+    public ActiveEndpointStoreRequest() {
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ActiveEndpointStore");
+        builder.append("ActiveEndpointStoreRequest");
         builder.append(super.toString());
         return builder.toString();
     }
