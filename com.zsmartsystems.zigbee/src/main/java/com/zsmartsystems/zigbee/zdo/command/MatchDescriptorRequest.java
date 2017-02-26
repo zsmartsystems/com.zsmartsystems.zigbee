@@ -19,6 +19,7 @@ public class MatchDescriptorRequest extends ZdoRequest {
      * Default constructor.
      */
     public MatchDescriptorRequest() {
+        clusterId = 0x0006;
     }
 
     @Override

@@ -30,7 +30,7 @@ public enum EmberJoinMethod {
      * Node Join, which is functionally equivalent to a MAC association. This value should be used
      * by default.
      */
-    EMBER_USE_MAC_ASSOCIATION(0),
+    EMBER_USE_MAC_ASSOCIATION(0x0000),
 
     /**
      * For those networks where the "permit joining" flag is never turned on, they will need to use a
@@ -41,7 +41,7 @@ public enum EmberJoinMethod {
      * ::emberTrustCenterJoinHandler(). For a mobile node this value will cause it to use an Ember
      * Mobile node rejoin, which is functionally equivalent.
      */
-    EMBER_USE_NWK_REJOIN(1),
+    EMBER_USE_NWK_REJOIN(0x0001),
 
     /**
      * For those networks where the "permit joining" flag is never turned on, they will need to use a
@@ -49,14 +49,14 @@ public enum EmberJoinMethod {
      * number) they can use a secured rejoin. This is only necessary for end devices since they need a
      * parent. Routers can simply use the ::EMBER_USE_NWK_COMMISSIONING join method below.
      */
-    EMBER_USE_NWK_REJOIN_HAVE_NWK_KEY(2),
+    EMBER_USE_NWK_REJOIN_HAVE_NWK_KEY(0x0002),
 
     /**
      * For those networks where all network and security information is known ahead of time, a
      * router device may be commissioned such that it does not need to send any messages to begin
      * communicating on the network.
      */
-    EMBER_USE_NWK_COMMISSIONING(3);
+    EMBER_USE_NWK_COMMISSIONING(0x0003);
 
     /**
      * A mapping between the integer code and its corresponding type to

@@ -53,6 +53,7 @@ public class NodeDescriptorResponse extends ZdoResponse {
      * Default constructor.
      */
     public NodeDescriptorResponse() {
+        clusterId = 0x8002;
     }
 
     /**

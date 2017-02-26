@@ -29,12 +29,13 @@ public class ManagementPermitJoiningRequest extends ZdoRequest {
     /**
      * TC_Significance command message field.
      */
-    private Boolean tc_Significance;
+    private Boolean tcSignificance;
 
     /**
      * Default constructor.
      */
     public ManagementPermitJoiningRequest() {
+        clusterId = 0x0036;
     }
 
     /**
@@ -60,29 +61,29 @@ public class ManagementPermitJoiningRequest extends ZdoRequest {
      *
      * @return the TC_Significance
      */
-    public Boolean getTc_Significance() {
-        return tc_Significance;
+    public Boolean getTcSignificance() {
+        return tcSignificance;
     }
 
     /**
      * Sets TC_Significance.
      *
-     * @param tc_Significance the TC_Significance
+     * @param tcSignificance the TC_Significance
      */
-    public void setTc_Significance(final Boolean tc_Significance) {
-        this.tc_Significance = tc_Significance;
+    public void setTcSignificance(final Boolean tcSignificance) {
+        this.tcSignificance = tcSignificance;
     }
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(permitDuration, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(tc_Significance, ZclDataType.BOOLEAN);
+        serializer.serialize(tcSignificance, ZclDataType.BOOLEAN);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         permitDuration = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        tc_Significance = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
+        tcSignificance = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
     }
 
     @Override
@@ -92,8 +93,8 @@ public class ManagementPermitJoiningRequest extends ZdoRequest {
         builder.append(super.toString());
         builder.append(", permitDuration=");
         builder.append(permitDuration);
-        builder.append(", tc_Significance=");
-        builder.append(tc_Significance);
+        builder.append(", tcSignificance=");
+        builder.append(tcSignificance);
         return builder.toString();
     }
 

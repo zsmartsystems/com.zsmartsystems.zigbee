@@ -22,6 +22,7 @@ public class StoreBackupBindEntryResponse extends ZdoResponse {
      * Default constructor.
      */
     public StoreBackupBindEntryResponse() {
+        clusterId = 0x8025;
     }
 
     @Override

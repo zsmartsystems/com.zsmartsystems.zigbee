@@ -18,6 +18,7 @@ public class NodeDescriptorStoreRequest extends ZdoRequest {
      * Default constructor.
      */
     public NodeDescriptorStoreRequest() {
+        clusterId = 0x0017;
     }
 
     @Override

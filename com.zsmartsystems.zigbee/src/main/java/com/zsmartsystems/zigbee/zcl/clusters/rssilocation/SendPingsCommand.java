@@ -4,6 +4,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Send Pings Command value object class.
@@ -17,7 +18,7 @@ public class SendPingsCommand extends ZclCommand {
     /**
      * Target Address command message field.
      */
-    private Long targetAddress;
+    private IeeeAddress targetAddress;
 
     /**
      * Number RSSI Measurements command message field.
@@ -44,7 +45,7 @@ public class SendPingsCommand extends ZclCommand {
      *
      * @return the Target Address
      */
-    public Long getTargetAddress() {
+    public IeeeAddress getTargetAddress() {
         return targetAddress;
     }
 
@@ -53,7 +54,7 @@ public class SendPingsCommand extends ZclCommand {
      *
      * @param targetAddress the Target Address
      */
-    public void setTargetAddress(final Long targetAddress) {
+    public void setTargetAddress(final IeeeAddress targetAddress) {
         this.targetAddress = targetAddress;
     }
 
@@ -102,7 +103,7 @@ public class SendPingsCommand extends ZclCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        targetAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        targetAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         numberRssiMeasurements = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         calculationPeriod = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }

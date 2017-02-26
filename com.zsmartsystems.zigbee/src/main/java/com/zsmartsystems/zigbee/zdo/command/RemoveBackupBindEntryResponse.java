@@ -22,6 +22,7 @@ public class RemoveBackupBindEntryResponse extends ZdoResponse {
      * Default constructor.
      */
     public RemoveBackupBindEntryResponse() {
+        clusterId = 0x8026;
     }
 
     @Override

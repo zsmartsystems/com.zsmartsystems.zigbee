@@ -20,6 +20,7 @@ public class FindNodeCacheResponse extends ZdoResponse {
      * Default constructor.
      */
     public FindNodeCacheResponse() {
+        clusterId = 0x801C;
     }
 
     @Override

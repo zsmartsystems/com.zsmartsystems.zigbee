@@ -17,6 +17,7 @@ public class SystemServerDiscoveryRequest extends ZdoRequest {
      * Default constructor.
      */
     public SystemServerDiscoveryRequest() {
+        clusterId = 0x0015;
     }
 
     @Override

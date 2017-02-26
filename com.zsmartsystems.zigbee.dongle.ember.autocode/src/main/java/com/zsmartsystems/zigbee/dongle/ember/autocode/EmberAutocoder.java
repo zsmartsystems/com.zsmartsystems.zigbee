@@ -107,6 +107,7 @@ public class EmberAutocoder {
                         command.response_parameters = (List<Parameter>) processNode(nodes.item(temp));
                     }
                 }
+                System.out.println("Done: Command - " + command.name);
                 return command;
             case "command_parameters":
             case "response_parameters":
@@ -135,6 +136,7 @@ public class EmberAutocoder {
                         parameter.auto_size = nodes.item(temp).getTextContent();
                     }
                 }
+                System.out.println("Done: Parameter - " + parameter.name);
                 return parameter;
             case "structure":
                 Structure structure = new Structure();
@@ -152,6 +154,7 @@ public class EmberAutocoder {
                         structure.parameters = (List<Parameter>) processNode(nodes.item(temp));
                     }
                 }
+                System.out.println("Done: Structure - " + structure.name);
                 return structure;
             case "enum":
                 Enumeration enumeration = new Enumeration();
@@ -169,6 +172,7 @@ public class EmberAutocoder {
                         enumeration.values = (List<Value>) processNode(nodes.item(temp));
                     }
                 }
+                System.out.println("Done: Enum - " + enumeration.name);
                 return enumeration;
             case "values":
                 List<Value> values = new ArrayList<Value>();
@@ -190,13 +194,14 @@ public class EmberAutocoder {
                         if (id.startsWith("0x")) {
                             value.enum_value = Integer.parseInt(id.substring(2), 16);
                         } else {
-                            value.enum_value = Integer.parseInt(id.substring(2));
+                            value.enum_value = Integer.parseInt(id);
                         }
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
                         value.description = nodes.item(temp).getTextContent();
                     }
                 }
+                System.out.println("Done: Value - " + value.name);
                 return value;
         }
 

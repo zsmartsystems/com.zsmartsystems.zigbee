@@ -127,6 +127,12 @@ public class SerializerIntegrationTest {
         testSerializer(valIn, ZclDataType.CHARACTER_STRING);
     }
 
+    @Test
+    public void testSerialize_N_X_ENDPOINT() {
+        Integer[] valIn = new Integer[] { 1, 2, 3, 4, 3, 2, 1 };
+        testSerializer(valIn, ZclDataType.N_X_ENDPOINT);
+    }
+
     private void testSerializer(Object objectIn, ZclDataType type) {
         DefaultSerializer serializer = new DefaultSerializer();
         serializer.appendZigBeeType(objectIn, type);

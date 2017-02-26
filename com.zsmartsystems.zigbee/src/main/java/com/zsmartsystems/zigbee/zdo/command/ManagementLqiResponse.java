@@ -17,6 +17,7 @@ public class ManagementLqiResponse extends ZdoResponse {
      * Default constructor.
      */
     public ManagementLqiResponse() {
+        clusterId = 0x8031;
     }
 
     @Override

@@ -35,6 +35,7 @@ public class UserDescriptorResponse extends ZdoResponse {
      * Default constructor.
      */
     public UserDescriptorResponse() {
+        clusterId = 0x8011;
     }
 
     /**

@@ -28,6 +28,7 @@ public class PowerDescriptorRequest extends ZdoRequest implements CommandRespons
      * Default constructor.
      */
     public PowerDescriptorRequest() {
+        clusterId = 0x0003;
     }
 
     /**

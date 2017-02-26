@@ -16,6 +16,7 @@ public class MatchDescriptorResponse extends ZdoResponse {
      * Default constructor.
      */
     public MatchDescriptorResponse() {
+        clusterId = 0x8006;
     }
 
     @Override

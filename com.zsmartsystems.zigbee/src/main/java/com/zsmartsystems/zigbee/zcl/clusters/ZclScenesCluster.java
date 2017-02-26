@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
@@ -20,6 +21,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.scenes.StoreSceneResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.ViewSceneCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.ViewSceneResponse;
 import com.zsmartsystems.zigbee.zcl.field.*;
+import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -347,7 +349,7 @@ public class ZclScenesCluster extends ZclCluster {
      * The value 0xffffffffffffffff indicates that the device has not been configured, or
      * that the address of the device that last configured the scenes cluster is not known.
      * <p>
-     * The attribute is of type {@link Long}.
+     * The attribute is of type {@link IeeeAddress}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -375,22 +377,22 @@ public class ZclScenesCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Long}.
+     * The attribute is of type {@link IeeeAddress}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Long} attribute value, or null on error
+     * @return the {@link IeeeAddress} attribute value, or null on error
      */
-    public Long getLastConfiguredBy(final long refreshPeriod) {
+    public IeeeAddress getLastConfiguredBy(final long refreshPeriod) {
         if(refreshPeriod > 0 && attributes.get(ATTR_LASTCONFIGUREDBY).getLastReportTime() != null) {
             long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
             if(attributes.get(ATTR_LASTCONFIGUREDBY).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Long) attributes.get(ATTR_LASTCONFIGUREDBY).getLastValue();
+                return (IeeeAddress) attributes.get(ATTR_LASTCONFIGUREDBY).getLastValue();
             }
         }
 
-        return (Long) readSync(attributes.get(ATTR_LASTCONFIGUREDBY));
+        return (IeeeAddress) readSync(attributes.get(ATTR_LASTCONFIGUREDBY));
     }
 
     /**

@@ -88,6 +88,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
                     buffer[length++] = (intArray16[cnt] >> 8) & 0xFF;
                 }
                 break;
+            case N_X_ENDPOINT:
             case N_X_UNSIGNED_8_BIT_INTEGER:
                 Integer[] intArray8 = (Integer[]) data;
                 buffer[length++] = intArray8.length;
@@ -124,7 +125,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
             case UTCTIME:
                 break;
             default:
-                throw new IllegalArgumentException("No reader defined in " + ZigBeeDeserializer.class.getSimpleName()
+                throw new IllegalArgumentException("No writer defined in " + ZigBeeDeserializer.class.getSimpleName()
                         + " for " + type.toString() + " (" + type.getId() + ")");
         }
     }

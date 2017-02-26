@@ -28,6 +28,7 @@ public class ActiveEndpointsRequest extends ZdoRequest implements CommandRespons
      * Default constructor.
      */
     public ActiveEndpointsRequest() {
+        clusterId = 0x0005;
     }
 
     /**

@@ -2,6 +2,8 @@ package com.zsmartsystems.zigbee.serialization;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
 
 /**
  * The default implementation of the {@link ZigBeeDeserializer}
@@ -101,6 +103,7 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 }
                 value[0] = arrayN16;
                 break;
+            case N_X_ENDPOINT:
             case N_X_UNSIGNED_8_BIT_INTEGER:
                 int cntN8 = Integer.valueOf((byte) payload[index++] & 0xFF);
                 Integer[] arrayN8 = new Integer[cntN8];
@@ -137,6 +140,16 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 value[0] = Integer.valueOf((byte) payload[index++] & 0xFF);
                 break;
             case UTCTIME:
+                break;
+            case NODE_DESCRIPTOR:
+                NodeDescriptor nodeDescriptor = new NodeDescriptor();
+                nodeDescriptor.deserialize(this);
+                value[0] = nodeDescriptor;
+                break;
+            case POWER_DESCRIPTOR:
+                PowerDescriptor powerDescriptor = new PowerDescriptor();
+                powerDescriptor.deserialize(this);
+                value[0] = powerDescriptor;
                 break;
             default:
                 throw new IllegalArgumentException("No reader defined in " + ZigBeeDeserializer.class.getSimpleName()

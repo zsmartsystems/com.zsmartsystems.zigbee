@@ -23,6 +23,16 @@ public class Command {
     private ZigBeeAddress destinationAddress;
 
     /**
+     * The cluster ID
+     */
+    protected int clusterId;
+
+    /**
+     * The transaction ID.
+     */
+    private Integer transactionId;
+
+    /**
      * Gets destination address.
      *
      * @return the destination address.
@@ -59,6 +69,33 @@ public class Command {
     }
 
     /**
+     * Gets the cluster ID.
+     *
+     * @return the cluster ID.
+     */
+    public Integer getClusterId() {
+        return clusterId;
+    }
+
+    /**
+     * Gets the transaction ID.
+     *
+     * @return the transaction ID
+     */
+    public Integer getTransactionId() {
+        return transactionId;
+    }
+
+    /**
+     * Sets the transaction ID.
+     *
+     * @param transactionId the transaction ID
+     */
+    public void setTransactionId(final int transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    /**
      * Serialize the command class to the format required by the transport layer.
      *
      * @param serializer the {@link ZclFieldSerializer} to use
@@ -78,6 +115,12 @@ public class Command {
 
     @Override
     public String toString() {
-        return sourceAddress + " -> " + destinationAddress;
+        final StringBuilder builder = new StringBuilder();
+        builder.append(sourceAddress);
+        builder.append(" -> ");
+        builder.append(destinationAddress);
+        builder.append("");
+        builder.append(String.format(", cluster=%04X, TID=%02X", clusterId, transactionId));
+        return builder.toString();
     }
 }

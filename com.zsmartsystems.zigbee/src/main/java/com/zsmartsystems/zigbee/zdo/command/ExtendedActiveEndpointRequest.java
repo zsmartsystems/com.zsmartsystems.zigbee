@@ -24,6 +24,7 @@ public class ExtendedActiveEndpointRequest extends ZdoRequest {
      * Default constructor.
      */
     public ExtendedActiveEndpointRequest() {
+        clusterId = 0x001E;
     }
 
     @Override

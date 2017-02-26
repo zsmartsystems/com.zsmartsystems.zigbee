@@ -28,6 +28,7 @@ public class ManagementCacheResponse extends ZdoResponse {
      * Default constructor.
      */
     public ManagementCacheResponse() {
+        clusterId = 0x8037;
     }
 
     @Override

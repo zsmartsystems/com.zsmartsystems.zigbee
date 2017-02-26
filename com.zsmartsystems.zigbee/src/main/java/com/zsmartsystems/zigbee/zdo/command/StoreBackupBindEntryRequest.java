@@ -18,6 +18,7 @@ public class StoreBackupBindEntryRequest extends ZdoRequest {
      * Default constructor.
      */
     public StoreBackupBindEntryRequest() {
+        clusterId = 0x0025;
     }
 
     @Override

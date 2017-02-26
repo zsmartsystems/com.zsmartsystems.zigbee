@@ -23,6 +23,7 @@ public class ReplaceDeviceResponse extends ZdoResponse {
      * Default constructor.
      */
     public ReplaceDeviceResponse() {
+        clusterId = 0x8024;
     }
 
     @Override

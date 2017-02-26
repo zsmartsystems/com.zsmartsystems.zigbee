@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.Command;
 import com.zsmartsystems.zigbee.CommandListener;
 import com.zsmartsystems.zigbee.CommandResult;
-import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeDevice;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -73,19 +72,19 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     private ZigBeeNetworkManager networkManager;
 
     /**
-     * The received IEEE addresses.
+     * A map of the received IEEE addresses mapped to the network address.
      */
     private Map<Integer, IeeeAddressResponse> ieeeAddresses = Collections
             .synchronizedMap(new HashMap<Integer, IeeeAddressResponse>());
 
     /**
-     * The received node descriptors.
+     * A map of the received node descriptors mapped to the network address.
      */
     private Map<Integer, NodeDescriptorResponse> nodeDescriptors = Collections
             .synchronizedMap(new HashMap<Integer, NodeDescriptorResponse>());
 
     /**
-     * The received power descriptors.
+     * The received power descriptors mapped to the network address.
      */
     private Map<Integer, PowerDescriptorResponse> powerDescriptors = Collections
             .synchronizedMap(new HashMap<Integer, PowerDescriptorResponse>());
@@ -273,6 +272,9 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
         try {
             // Request extended response, start index for associated list is 0
             final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
+            ieeeAddressRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+            ieeeAddressRequest.setRequestType(0); // No associated devices
+            ieeeAddressRequest.setStartIndex(0);
             ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
             CommandResult response = networkManager.unicast(ieeeAddressRequest, ieeeAddressRequest).get();
 
@@ -282,9 +284,9 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
                     ieeeAddresses.put(ieeeAddressResponse.getNwkAddrRemoteDev(), ieeeAddressResponse);
                 }
                 // Start discovery for any associated nodes
-                for (final int deviceNetworkAddress : ieeeAddressResponse.getNwkAddrAssocDevList()) {
-                    startNodeDiscovery(deviceNetworkAddress);
-                }
+                // for (final int deviceNetworkAddress : ieeeAddressResponse.getNwkAddrAssocDevList()) {
+                // startNodeDiscovery(deviceNetworkAddress);
+                // }
                 return true;
             } else {
                 logger.debug("Ieee Address for {} returned {}", networkAddress, ieeeAddressResponse);
@@ -452,7 +454,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
 
         node.setNetworkAddress(ieeeAddressResponse.getNwkAddrRemoteDev());
         node.setNodeDescriptor(nodeDescriptorResponse.getNodeDescriptor());
-        node.setIeeeAddress(new IeeeAddress(ieeeAddressResponse.getIeeeAddrRemoteDev()));
+        node.setIeeeAddress(ieeeAddressResponse.getIeeeAddrRemoteDev());
         node.setPowerDescriptor(powerDescriptorResponse.getPowerDescriptor());
 
         if (newDevice) {
@@ -488,7 +490,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
         ZigBeeDeviceAddress networkAddress = new ZigBeeDeviceAddress(ieeeAddressResponse.getNwkAddrRemoteDev(),
                 simpleDescriptorResponse.getEndpoint());
 
-        device.setIeeeAddress(new IeeeAddress(ieeeAddressResponse.getIeeeAddrRemoteDev()));
+        device.setIeeeAddress(ieeeAddressResponse.getIeeeAddrRemoteDev());
         device.setDeviceAddress(networkAddress);
         device.setProfileId(simpleDescriptorResponse.getApplicationProfileId());
         device.setDeviceId(simpleDescriptorResponse.getApplicationDeviceId());

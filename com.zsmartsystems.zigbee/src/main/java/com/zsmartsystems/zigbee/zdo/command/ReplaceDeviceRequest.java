@@ -25,6 +25,7 @@ public class ReplaceDeviceRequest extends ZdoRequest {
      * Default constructor.
      */
     public ReplaceDeviceRequest() {
+        clusterId = 0x0024;
     }
 
     @Override

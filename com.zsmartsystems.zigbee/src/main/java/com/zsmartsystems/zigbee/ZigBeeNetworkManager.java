@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +34,7 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeIdentifier;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
+import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 
 /**
@@ -106,9 +106,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             .unmodifiableList(new ArrayList<ZigBeeNetworkDeviceListener>());
 
     /**
-     * {@link AtomicLong} used to generate transaction sequence numbers
+     * {@link AtomicInteger} used to generate transaction sequence numbers
      */
     private final static AtomicInteger sequenceNumber = new AtomicInteger();
+
+    /**
+     * {@link AtomicInteger} used to generate APS header counters
+     */
+    private final static AtomicInteger apsCounter = new AtomicInteger();
 
     /**
      * The network state serializer
@@ -328,38 +333,66 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     @Override
     public int sendCommand(Command command) throws ZigBeeException {
+        logger.debug("TX CMD: {}", command);
+
+        // Create the network and application sublayer headers
+        ZigBeeNwkHeader nwkHeader = new ZigBeeNwkHeader();
+        ZigBeeApsHeader apsHeader = new ZigBeeApsHeader();
+        int[] payload = null;
+        int sequence = 0;
+
+        apsHeader.setCluster(command.getClusterId());
+        apsHeader.setApsCounter(apsCounter.getAndIncrement() & 0xff);
+
+        sequence = sequenceNumber.getAndIncrement() & 0xff;
+        command.setTransactionId(sequence);
+
+        // TODO: Set the source address correctly?
+        nwkHeader.setSourceAddress(0);
+
+        nwkHeader.setSequence(sequence);
+        nwkHeader.setRadius(31);
+
+        if (command.getDestinationAddress() instanceof ZigBeeDeviceAddress) {
+            nwkHeader.setAddressMode(ZigBeeNwkAddressMode.DEVICE);
+            nwkHeader.setDestinationAddress(((ZigBeeDeviceAddress) command.getDestinationAddress()).getAddress());
+            apsHeader.setDestinationEndpoint(((ZigBeeDeviceAddress) command.getDestinationAddress()).getEndpoint());
+        } else {
+            nwkHeader.setAddressMode(ZigBeeNwkAddressMode.GROUP);
+            // TODO: Handle multicast
+        }
+
+        final ZclFieldSerializer fieldSerializer;
+        try {
+            Constructor<? extends ZigBeeSerializer> constructor;
+            constructor = serializerClass.getConstructor();
+            ZigBeeSerializer serializer = constructor.newInstance();
+            fieldSerializer = new ZclFieldSerializer(serializer);
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException e) {
+            logger.debug("Error serializing ZigBee frame {}", e);
+            return 0;
+        }
+
+        if (command instanceof ZdoCommand) {
+            // Source endpoint is (currently) set by the dongle since it registers the clusters into an endpoint
+            // apsHeader.setSourceEndpoint(sourceEndpoint);
+
+            apsHeader.setProfile(0);
+
+            command.serialize(fieldSerializer);
+
+            // Serialise the ZCL header and add the payload
+            payload = fieldSerializer.getPayload();
+        }
+
         if (command instanceof ZclCommand) {
             // For ZCL commands we pass the NWK and APS headers as classes to the transport layer.
             // The ZCL packet is serialised here.
             ZclCommand zclCommand = (ZclCommand) command;
 
-            int sequence = sequenceNumber.getAndIncrement() & 0xff;
-            zclCommand.setTransactionId(sequence);
-
-            logger.debug("TX ZCL: " + zclCommand);
-
-            // Create the network and application sublayer headers
-            ZigBeeNwkHeader nwkHeader = new ZigBeeNwkHeader();
-            ZigBeeApsHeader apsHeader = new ZigBeeApsHeader();
-
-            // TODO: Set the source address correctly?
-            nwkHeader.setSourceAddress(0);
-            if (zclCommand.getDestinationAddress() instanceof ZigBeeDeviceAddress) {
-                nwkHeader.setAddressMode(ZigBeeNwkAddressMode.DEVICE);
-                nwkHeader
-                        .setDestinationAddress(((ZigBeeDeviceAddress) zclCommand.getDestinationAddress()).getAddress());
-                apsHeader.setDestinationEndpoint(
-                        ((ZigBeeDeviceAddress) zclCommand.getDestinationAddress()).getEndpoint());
-            } else {
-                nwkHeader.setAddressMode(ZigBeeNwkAddressMode.GROUP);
-                // TODO: Handle multicast
-            }
-            nwkHeader.setSequence(sequence);
-            // nwkHeader.setRadius(radius);
-
             // Source endpoint is (currently) set by the dongle since it registers the clusters into an endpoint
             // apsHeader.setSourceEndpoint(sourceEndpoint);
-            apsHeader.setCluster(zclCommand.getClusterId());
 
             // TODO set the profile
             apsHeader.setProfile(0x104);
@@ -370,52 +403,33 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                     : ZclFrameType.CLUSTER_SPECIFIC_COMMAND);
             zclHeader.setCommandId(zclCommand.getCommandId());
             zclHeader.setDirectionServer(zclCommand.getCommandDirection());
-            zclHeader.setSequenceNumber(sequence);
             // zclHeader.setDisableDefaultResponse(true);
 
-            if (zclCommand.getDestinationAddress() instanceof ZigBeeDeviceAddress) {
-                ZigBeeDeviceAddress deviceAddress = (ZigBeeDeviceAddress) zclCommand.getDestinationAddress();
-                nwkHeader.setDestinationAddress(deviceAddress.getAddress());
+            command.serialize(fieldSerializer);
 
-                apsHeader.setDestinationEndpoint(deviceAddress.getEndpoint());
-            }
-
-            int[] payload = null;
-
-            Constructor<? extends ZigBeeSerializer> constructor;
-            try {
-                constructor = serializerClass.getConstructor();
-                ZigBeeSerializer serializer = constructor.newInstance();
-
-                final ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);
-                zclCommand.serialize(fieldSerializer);
-
-                // Serialise the ZCL header and add the payload
-                payload = zclHeader.serialize(fieldSerializer, fieldSerializer.getPayload());
-            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-                    | IllegalArgumentException | InvocationTargetException e) {
-                logger.debug("Error serializing ZigBee frame {}", e);
-            }
-
-            // if (payload == null) {
-            // TODO handle error
-            // }
-
-            transport.sendZclCommand(nwkHeader, apsHeader, payload);
-
-            return sequence;
+            // Serialise the ZCL header and add the payload
+            payload = zclHeader.serialize(fieldSerializer, fieldSerializer.getPayload());
         }
 
-        if (command instanceof ZdoCommand) {
-            logger.debug("TX ZDO: " + command);
+        // if (payload == null) {
+        // TODO handle error
+        // }
 
-            // For ZDO commands we pass down the command class since some dongles implement ZDO commands as individual
-            // commands rather than a general "sendZDO" type command. This gives the transport implementation maximum
-            // flexibility for translating the command as it requires.
-            transport.sendZdoCommand((ZdoCommand) command);
-        }
+        transport.sendZclCommand(nwkHeader, apsHeader, payload);
 
-        return 0;
+        return sequence;
+        // }
+
+        // if (command instanceof ZdoCommand) {
+        // logger.debug("TX ZDO: " + command);
+
+        // For ZDO commands we pass down the command class since some dongles implement ZDO commands as individual
+        // commands rather than a general "sendZDO" type command. This gives the transport implementation maximum
+        // flexibility for translating the command as it requires.
+        // transport.sendZdoCommand((ZdoCommand) command);
+        // }
+
+        // return 0;
     }
 
     @Override
@@ -435,20 +449,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     @Override
     public void receiveZclCommand(final ZigBeeNwkHeader nwkHeader, final ZigBeeApsHeader apsHeader,
             final int[] payload) {
-
-        // Create an address from the sourceAddress and endpoint
-        ZigBeeDeviceAddress srcAddress = new ZigBeeDeviceAddress(nwkHeader.getSourceAddress(),
-                apsHeader.getSourceEndpoint());
-        ZigBeeDeviceAddress dstAddress = new ZigBeeDeviceAddress(nwkHeader.getDestinationAddress(),
-                apsHeader.getDestinationEndpoint());
-
-        // Get the device
-        ZigBeeDevice device = getDevice(srcAddress);
-        if (device == null) {
-            logger.debug("Message from unknown device {}", srcAddress);
-            return;
-        }
-
         // Create the deserialiser
         Constructor<? extends ZigBeeDeserializer> constructor;
         ZigBeeDeserializer deserializer;
@@ -457,35 +457,97 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             deserializer = constructor.newInstance(new Object[] { payload });
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
-            logger.debug(e.getMessage());
+            logger.debug("Error creating deserializer", e);
             return;
         }
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
 
+        Command command = null;
+        switch (apsHeader.getProfile()) {
+            case 0x0000:
+                command = receiveZdoCommand(fieldDeserializer, nwkHeader, apsHeader, payload);
+                break;
+            case 0x0104:
+                command = receiveZclCommand(fieldDeserializer, nwkHeader, apsHeader, payload);
+                break;
+            default:
+                logger.debug("Received message unknown profile {}", String.format("%04X", apsHeader.getProfile()));
+                break;
+        }
+
+        if (command == null) {
+            logger.debug("Incoming message did not translate to command.");
+            return;
+        }
+
+        // Create an address from the sourceAddress and endpoint
+        command.setDestinationAddress(
+                new ZigBeeDeviceAddress(nwkHeader.getSourceAddress(), apsHeader.getSourceEndpoint()));
+        command.setSourceAddress(
+                new ZigBeeDeviceAddress(nwkHeader.getDestinationAddress(), apsHeader.getDestinationEndpoint()));
+
+        logger.debug("RX command: {}", command);
+
+        // Notify the listeners
+        notifyCommandListeners(command);
+    }
+
+    private Command receiveZdoCommand(final ZclFieldDeserializer fieldDeserializer, final ZigBeeNwkHeader nwkHeader,
+            final ZigBeeApsHeader apsHeader, final int[] payload) {
+
+        ZdoCommandType commandType = ZdoCommandType.getValueById(apsHeader.getCluster());
+        if (commandType == null) {
+            return null;
+        }
+
+        Command command;
+        try {
+            Class<? extends ZdoCommand> commandClass = commandType.getCommandClass();
+            Constructor<? extends ZdoCommand> constructor;
+            constructor = commandClass.getConstructor();
+            command = constructor.newInstance();
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException e) {
+            logger.debug("Error instantiating ZDO command", e);
+            return null;
+        }
+
+        command.deserialize(fieldDeserializer);
+
+        return command;
+    }
+
+    private Command receiveZclCommand(final ZclFieldDeserializer fieldDeserializer, final ZigBeeNwkHeader nwkHeader,
+            final ZigBeeApsHeader apsHeader, final int[] payload) {
+
         // Process the ZCL header
         ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
 
+        // Get the device
+        // ZigBeeDevice device = getDevice(srcAddress);
+        // if (device == null) {
+        // logger.debug("Received message from unknown device {}", srcAddress);
+        // return null;
+        // }
+
         ZclCluster cluster = null;
         if (zclHeader.getFrameType() == ZclFrameType.ENTIRE_PROFILE_COMMAND) {
-            // cluster = device.getCluster(ZclClusterType.GENERAL.getId());
-
             Constructor<? extends ZclCluster> clusterConstructor;
             try {
                 clusterConstructor = ZclClusterType.GENERAL.getClusterClass().getConstructor(ZigBeeNetworkManager.class,
                         ZigBeeDeviceAddress.class);
-                cluster = clusterConstructor.newInstance(this, device.getDeviceAddress());
+                // cluster = clusterConstructor.newInstance(this, device.getDeviceAddress());
             } catch (Exception e) {
-                // logger.debug("{}: Error instantiating cluster {}", networkAddress, ZclClusterType.GENERAL);
+                // logger.debug("{}: Error instantiating cluster {}", srcAddress, ZclClusterType.GENERAL);
             }
-
         } else {
             // Get the cluster
-            cluster = device.getCluster(apsHeader.getCluster());
+            // cluster = device.getCluster(apsHeader.getCluster());
         }
         if (cluster == null) {
             logger.debug("No cluster found for {}, cluster {}, command {}", zclHeader.getFrameType(),
                     apsHeader.getCluster(), zclHeader.getCommandId());
-            return;
+            return null;
         }
 
         // Get the command
@@ -498,19 +560,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (command == null) {
             logger.debug("No command found for {}, cluster {}, command {}", zclHeader.getFrameType(),
                     apsHeader.getCluster(), zclHeader.getCommandId());
-            return;
+            return null;
         }
 
         command.deserialize(fieldDeserializer);
-        command.setDestinationAddress(dstAddress);
-        command.setClusterId(apsHeader.getCluster());
-        command.setSourceAddress(srcAddress);
+        // command.setDestinationAddress(dstAddress);
+        // command.setClusterId(apsHeader.getCluster());
+        // command.setSourceAddress(srcAddress);
         command.setTransactionId(zclHeader.getSequenceNumber());
 
-        logger.debug("RX ZCL: " + command);
-
-        // Notify the listeners
-        notifyCommandListeners(command);
+        return command;
     }
 
     @Override
@@ -791,7 +850,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         // command.setAddressingMode(ZigBeeConstants.BROADCAST_ADDRESS);
         // command.set.setDestinationAddress(ZigBeeConstants.ZCZR_BROADCAST);
-        command.setTc_Significance(true);
+        command.setTcSignificance(true);
 
         try {
             sendCommand(command);

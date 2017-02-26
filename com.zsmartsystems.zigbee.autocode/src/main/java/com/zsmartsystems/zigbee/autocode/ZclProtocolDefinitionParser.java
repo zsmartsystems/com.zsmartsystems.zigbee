@@ -204,6 +204,7 @@ public class ZclProtocolDefinitionParser {
                 final String[] columns = row.split("\\|");
                 final Field field = new Field();
                 field.fieldId = fieldIndex;
+
                 field.fieldLabel = columns[0].trim();
                 field.fieldType = context.command.commandType + "_"
                         + CodeGeneratorUtil.labelToEnumerationValue(field.fieldLabel);

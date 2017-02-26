@@ -6,6 +6,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 import java.util.List;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Network Address Response value object class.
@@ -21,7 +22,7 @@ public class NetworkAddressResponse extends ZdoResponse {
     /**
      * IEEEAddrRemoteDev command message field.
      */
-    private Long ieeeAddrRemoteDev;
+    private IeeeAddress ieeeAddrRemoteDev;
 
     /**
      * NWKAddrRemoteDev command message field.
@@ -47,6 +48,7 @@ public class NetworkAddressResponse extends ZdoResponse {
      * Default constructor.
      */
     public NetworkAddressResponse() {
+        clusterId = 0x8000;
     }
 
     /**
@@ -54,7 +56,7 @@ public class NetworkAddressResponse extends ZdoResponse {
      *
      * @return the IEEEAddrRemoteDev
      */
-    public Long getIeeeAddrRemoteDev() {
+    public IeeeAddress getIeeeAddrRemoteDev() {
         return ieeeAddrRemoteDev;
     }
 
@@ -63,7 +65,7 @@ public class NetworkAddressResponse extends ZdoResponse {
      *
      * @param ieeeAddrRemoteDev the IEEEAddrRemoteDev
      */
-    public void setIeeeAddrRemoteDev(final Long ieeeAddrRemoteDev) {
+    public void setIeeeAddrRemoteDev(final IeeeAddress ieeeAddrRemoteDev) {
         this.ieeeAddrRemoteDev = ieeeAddrRemoteDev;
     }
 
@@ -152,7 +154,7 @@ public class NetworkAddressResponse extends ZdoResponse {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        ieeeAddrRemoteDev = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        ieeeAddrRemoteDev = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         nwkAddrRemoteDev = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         numAssocDev = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);

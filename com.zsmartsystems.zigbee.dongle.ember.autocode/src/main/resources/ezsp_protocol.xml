@@ -1027,8 +1027,8 @@
 		<response_parameters>
 			<parameter>
 				<data_type>EmberStatus</data_type>
-				<name>policyDecision</name>
-				<description>EMBER_SUCCESS if the binding was removed from the table and any other status if not.</description>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -2845,7 +2845,7 @@
 	</enum>
 
 	<enum>
-		<name>EmberIncomingMessageType</name>
+		<name>EmberApsOption</name>
 		<description></description>
 		<values>
 			<value>

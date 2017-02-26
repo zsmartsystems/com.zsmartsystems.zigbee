@@ -4,6 +4,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Device Announce value object class.
@@ -28,7 +29,7 @@ public class DeviceAnnounce extends ZdoResponse {
     /**
      * IEEEAddr command message field.
      */
-    private Long ieeeAddr;
+    private IeeeAddress ieeeAddr;
 
     /**
      * Capability command message field.
@@ -39,6 +40,7 @@ public class DeviceAnnounce extends ZdoResponse {
      * Default constructor.
      */
     public DeviceAnnounce() {
+        clusterId = 0x0013;
     }
 
     /**
@@ -64,7 +66,7 @@ public class DeviceAnnounce extends ZdoResponse {
      *
      * @return the IEEEAddr
      */
-    public Long getIeeeAddr() {
+    public IeeeAddress getIeeeAddr() {
         return ieeeAddr;
     }
 
@@ -73,7 +75,7 @@ public class DeviceAnnounce extends ZdoResponse {
      *
      * @param ieeeAddr the IEEEAddr
      */
-    public void setIeeeAddr(final Long ieeeAddr) {
+    public void setIeeeAddr(final IeeeAddress ieeeAddr) {
         this.ieeeAddr = ieeeAddr;
     }
 
@@ -105,7 +107,7 @@ public class DeviceAnnounce extends ZdoResponse {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        ieeeAddr = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        ieeeAddr = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         capability = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 

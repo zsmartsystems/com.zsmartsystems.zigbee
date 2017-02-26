@@ -7,7 +7,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsHeader;
+import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNwkHeader;
 import com.zsmartsystems.zigbee.ZigBeePort;
@@ -47,7 +49,6 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_REQ;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_USER_DESC_CONF;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_USER_DESC_REQ;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.Integers;
@@ -64,6 +65,7 @@ import com.zsmartsystems.zigbee.zdo.command.IeeeAddressRequest;
 import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
+import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningResponse;
 import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.command.PowerDescriptorRequest;
@@ -72,13 +74,12 @@ import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
 import com.zsmartsystems.zigbee.zdo.command.UnbindResponse;
-import com.zsmartsystems.zigbee.zdo.command.UserDescriptorConfiguration;
 import com.zsmartsystems.zigbee.zdo.command.UserDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
 
 /**
- * ZigBee Dongle TI CC2531 implementation.
+ * ZigBee Dongle TI implementation for the CC2531 processor.
  *
  * @author Chris Jackson
  *
@@ -250,19 +251,19 @@ public class ZigBeeDongleTiCc2531
         synchronized (networkManager) {
             if (command instanceof ActiveEndpointsRequest) {
                 final ActiveEndpointsRequest activeEndpointsRequest = (ActiveEndpointsRequest) command;
-                networkManager.sendCommand(
-                        new ZDO_ACTIVE_EP_REQ(getZToolAddress16(activeEndpointsRequest.getDestinationAddress()),
-                                getZToolAddress16(activeEndpointsRequest.getNwkAddrOfInterest())));
+                networkManager.sendCommand(new ZDO_ACTIVE_EP_REQ(
+                        getZToolAddress16(activeEndpointsRequest.getDestinationAddress().getAddress()),
+                        getZToolAddress16(activeEndpointsRequest.getNwkAddrOfInterest())));
             }
             if (command instanceof IeeeAddressRequest) {
                 final IeeeAddressRequest ieeeAddressRequest = (IeeeAddressRequest) command;
-                networkManager.sendCommand(
-                        new ZDO_IEEE_ADDR_REQ(getZToolAddress16(ieeeAddressRequest.getDestinationAddress()), 1, 0));
+                networkManager.sendCommand(new ZDO_IEEE_ADDR_REQ(
+                        getZToolAddress16(ieeeAddressRequest.getDestinationAddress().getAddress()), 1, 0));
             }
             if (command instanceof SimpleDescriptorRequest) {
                 final SimpleDescriptorRequest simpleDescriptorRequest = (SimpleDescriptorRequest) command;
-                networkManager
-                        .sendCommand(new ZDO_SIMPLE_DESC_REQ((short) simpleDescriptorRequest.getDestinationAddress(),
+                networkManager.sendCommand(
+                        new ZDO_SIMPLE_DESC_REQ((short) simpleDescriptorRequest.getDestinationAddress().getAddress(),
                                 simpleDescriptorRequest.getEndpoint().shortValue()));
             }
             if (command instanceof NodeDescriptorRequest) {
@@ -273,32 +274,34 @@ public class ZigBeeDongleTiCc2531
             }
             if (command instanceof PowerDescriptorRequest) {
                 final PowerDescriptorRequest powerDescriptorRequest = (PowerDescriptorRequest) command;
-                networkManager
-                        .sendCommand(new ZDO_POWER_DESC_REQ((short) powerDescriptorRequest.getDestinationAddress()));
+                networkManager.sendCommand(
+                        new ZDO_POWER_DESC_REQ((short) powerDescriptorRequest.getDestinationAddress().getAddress()));
             }
             if (command instanceof ManagementPermitJoiningRequest) {
                 final ManagementPermitJoiningRequest managementPermitJoinRequest = (ManagementPermitJoiningRequest) command;
-                networkManager.sendCommand(
-                        new ZDO_MGMT_PERMIT_JOIN_REQ((byte) managementPermitJoinRequest.getAddressingMode(),
-                                getZToolAddress16(managementPermitJoinRequest.getDestinationAddress()),
-                                managementPermitJoinRequest.getDuration(),
-                                managementPermitJoinRequest.getTrustCenterSignificance()));
+                networkManager.sendCommand(new ZDO_MGMT_PERMIT_JOIN_REQ((byte) 2, // (byte)
+                                                                                  // managementPermitJoinRequest.getAddressingMode(),
+                        getZToolAddress16(managementPermitJoinRequest.getDestinationAddress().getAddress()),
+                        managementPermitJoinRequest.getPermitDuration(),
+                        managementPermitJoinRequest.getTcSignificance()));
             }
 
             if (command instanceof BindRequest) {
                 final BindRequest bindRequest = (BindRequest) command;
-                networkManager.sendCommand(new ZDO_BIND_REQ(getZToolAddress16(bindRequest.getDestinationAddress()),
-                        getZToolAddress64(bindRequest.getSrcAddress()), bindRequest.getSrcEndpoint(),
+                networkManager.sendCommand(new ZDO_BIND_REQ(
+                        getZToolAddress16(bindRequest.getDestinationAddress().getAddress()),
+                        getZToolAddress64(bindRequest.getSrcAddress().getLong()), bindRequest.getSrcEndpoint(),
                         new DoubleByte(bindRequest.getClusterId()), bindRequest.getDstAddrMode(),
-                        getZToolAddress64(bindRequest.getDstAddress()), bindRequest.getDstEndpoint()));
+                        getZToolAddress64(bindRequest.getDstAddress().getLong()), bindRequest.getDstEndpoint()));
             }
 
             if (command instanceof UnbindRequest) {
                 final UnbindRequest unbindRequest = (UnbindRequest) command;
-                networkManager.sendCommand(new ZDO_UNBIND_REQ(getZToolAddress16(unbindRequest.getDestinationAddress()),
-                        getZToolAddress64(unbindRequest.getSrcAddress()), unbindRequest.getSrcEndpoint(),
+                networkManager.sendCommand(new ZDO_UNBIND_REQ(
+                        getZToolAddress16(unbindRequest.getDestinationAddress().getAddress()),
+                        getZToolAddress64(unbindRequest.getSrcAddress().getLong()), unbindRequest.getSrcEndpoint(),
                         new DoubleByte(unbindRequest.getClusterId()), unbindRequest.getDstAddrMode(),
-                        getZToolAddress64(unbindRequest.getDstAddress()), unbindRequest.getDstEndpoint()));
+                        getZToolAddress64(unbindRequest.getDstAddress().getLong()), unbindRequest.getDstEndpoint()));
             }
 
             /*
@@ -326,9 +329,9 @@ public class ZigBeeDongleTiCc2531
             }
             if (command instanceof ManagementLqiRequest) {
                 final ManagementLqiRequest managementLqiRequest = (ManagementLqiRequest) command;
-                networkManager.sendCommand(
-                        new ZDO_MGMT_LQI_REQ(getZToolAddress16(managementLqiRequest.getDestinationAddress()),
-                                managementLqiRequest.getStartIndex()));
+                networkManager.sendCommand(new ZDO_MGMT_LQI_REQ(
+                        getZToolAddress16(managementLqiRequest.getDestinationAddress().getAddress()),
+                        managementLqiRequest.getStartIndex()));
             }
         }
     }
@@ -367,7 +370,7 @@ public class ZigBeeDongleTiCc2531
             final ZDO_SIMPLE_DESC_RSP message = (ZDO_SIMPLE_DESC_RSP) packet;
 
             final SimpleDescriptorResponse command = new SimpleDescriptorResponse();
-            command.setSourceAddress(message.SrcAddress.get16BitValue());
+            command.setSourceAddress(new ZigBeeDeviceAddress(message.SrcAddress.get16BitValue()));
             command.setStatus(message.Status);
             command.setApplicationProfileId(message.getProfileId() & 0xffff);
             command.setApplicationDeviceId((int) message.getDeviceId());
@@ -395,7 +398,7 @@ public class ZigBeeDongleTiCc2531
             final ZDO_ACTIVE_EP_RSP message = (ZDO_ACTIVE_EP_RSP) packet;
 
             final ActiveEndpointsResponse command = new ActiveEndpointsResponse();
-            command.setSourceAddress(message.SrcAddress.get16BitValue());
+            command.setSourceAddress(new ZigBeeDeviceAddress(message.SrcAddress.get16BitValue()));
             command.setStatus(message.Status);
             command.setNwkAddrOfInterest(message.nwkAddr.get16BitValue());
 
@@ -414,8 +417,8 @@ public class ZigBeeDongleTiCc2531
             final ZDO_END_DEVICE_ANNCE_IND message = (ZDO_END_DEVICE_ANNCE_IND) packet;
 
             final DeviceAnnounce command = new DeviceAnnounce();
-            command.setSourceAddress(message.SrcAddr.get16BitValue());
-            command.setIeeeAddr(message.IEEEAddr.getLong());
+            command.setSourceAddress(new ZigBeeDeviceAddress(message.SrcAddr.get16BitValue()));
+            command.setIeeeAddr(new IeeeAddress(message.IEEEAddr.getLong()));
             command.setNwkAddrOfInterest(message.NwkAddr.get16BitValue());
             command.setCapability(message.Capabilities);
 
@@ -428,20 +431,22 @@ public class ZigBeeDongleTiCc2531
 
             final IeeeAddressResponse command = new IeeeAddressResponse();
             command.setStatus(message.Status);
-            command.setIeeeAddrRemoteDev(message.getIeeeAddress().getLong());
+            command.setIeeeAddrRemoteDev(new IeeeAddress(message.getIeeeAddress().getLong()));
 
             // message.SrcAddrMode;
 
-            command.setIeeeAddrRemoteDev(message.getIeeeAddress().getLong());
+            command.setIeeeAddrRemoteDev(new IeeeAddress(message.getIeeeAddress().getLong()));
             command.setNwkAddrRemoteDev(message.nwkAddr.get16BitValue());
-            command.setStartIndex(message.getStartIndex());
+
+            // TODO: Once extended responses are handled
+            // command.setStartIndex(message.getStartIndex());
 
             final int[] deviceList = message.getAssociatedNodesList();
             List<Integer> devices = new ArrayList<Integer>();
             for (int i = 0; i < deviceList.length; i++) {
                 devices.add(deviceList[i]);
             }
-            command.setNwkAddrAssocDevList(devices);
+            // command.setNwkAddrAssocDevList(devices);
 
             zigbeeNetworkReceive.receiveZdoCommand(command);
             return;
@@ -455,7 +460,7 @@ public class ZigBeeDongleTiCc2531
                     message.UserDescriptorAvailable, message.FreqBand);
             final NodeDescriptorResponse command = new NodeDescriptorResponse();
             command.setStatus(message.Status);
-            command.setSourceAddress(message.SrcAddress.get16BitValue());
+            command.setSourceAddress(new ZigBeeDeviceAddress(message.SrcAddress.get16BitValue()));
             command.setNwkAddrOfInterest(message.nwkAddr.get16BitValue());
             command.setNodeDescriptor(nodeDescriptor);
 
@@ -470,7 +475,7 @@ public class ZigBeeDongleTiCc2531
 
             final PowerDescriptorResponse command = new PowerDescriptorResponse();
             command.setStatus(message.getStatus());
-            command.setSourceAddress(message.getSrcAddress().get16BitValue());
+            command.setSourceAddress(new ZigBeeDeviceAddress(message.getSrcAddress().get16BitValue()));
             command.setPowerDescriptor(powerDescriptor);
 
             zigbeeNetworkReceive.receiveZdoCommand(command);
@@ -480,8 +485,9 @@ public class ZigBeeDongleTiCc2531
         if (packet.getCMD().get16BitValue() == ZToolCMD.ZDO_MGMT_PERMIT_JOIN_RSP) {
             final ZDO_MGMT_PERMIT_JOIN_RSP message = (ZDO_MGMT_PERMIT_JOIN_RSP) packet;
 
-            final ManagementPermitJoinResponse command = new ManagementPermitJoinResponse(message.Status,
-                    message.SrcAddress.get16BitValue());
+            final ManagementPermitJoiningResponse command = new ManagementPermitJoiningResponse();
+            command.setStatus(message.Status);
+            command.setSourceAddress(new ZigBeeDeviceAddress(message.SrcAddress.get16BitValue()));
 
             zigbeeNetworkReceive.receiveZdoCommand(command);
             return;
@@ -491,8 +497,8 @@ public class ZigBeeDongleTiCc2531
             final ZDO_BIND_RSP message = (ZDO_BIND_RSP) packet;
 
             final BindResponse command = new BindResponse();
-            command.setSourceAddress(message.Status);
-            command.setSourceAddress(message.SrcAddress.get16BitValue());
+            command.setStatus(message.Status);
+            command.setSourceAddress(new ZigBeeDeviceAddress(message.SrcAddress.get16BitValue()));
 
             zigbeeNetworkReceive.receiveZdoCommand(command);
             return;
@@ -503,7 +509,7 @@ public class ZigBeeDongleTiCc2531
 
             final UnbindResponse command = new UnbindResponse();
             command.setStatus(message.Status);
-            command.setSourceAddress(message.SrcAddress.get16BitValue());
+            command.setSourceAddress(new ZigBeeDeviceAddress(message.SrcAddress.get16BitValue()));
 
             zigbeeNetworkReceive.receiveZdoCommand(command);
             return;
@@ -529,15 +535,15 @@ public class ZigBeeDongleTiCc2531
          * }
          */
 
-        if (packet.getCMD().get16BitValue() == ZToolCMD.ZDO_USER_DESC_CONF) {
-            final ZDO_USER_DESC_CONF message = (ZDO_USER_DESC_CONF) packet;
+        // if (packet.getCMD().get16BitValue() == ZToolCMD.ZDO_USER_DESC_CONF) {
+        // final ZDO_USER_DESC_CONF message = (ZDO_USER_DESC_CONF) packet;
 
-            final UserDescriptorConfiguration command = new UserDescriptorConfiguration(
-                    message.SrcAddress.get16BitValue(), message.nwkAddr.get16BitValue(), message.Status);
+        // final UserDescriptorConfiguration command = new UserDescriptorConfiguration(
+        // message.SrcAddress.get16BitValue(), message.nwkAddr.get16BitValue(), message.Status);
 
-            zigbeeNetworkReceive.receiveZdoCommand(command);
-            return;
-        }
+        // zigbeeNetworkReceive.receiveZdoCommand(command);
+        // return;
+        // }
 
         /*
          * if (packet.getCMD().get16BitValue() == ZToolCMD.ZDO_MGMT_LQI_RSP) {

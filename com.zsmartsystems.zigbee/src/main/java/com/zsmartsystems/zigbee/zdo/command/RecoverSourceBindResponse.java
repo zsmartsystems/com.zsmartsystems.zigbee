@@ -27,6 +27,7 @@ public class RecoverSourceBindResponse extends ZdoResponse {
      * Default constructor.
      */
     public RecoverSourceBindResponse() {
+        clusterId = 0x8029;
     }
 
     @Override

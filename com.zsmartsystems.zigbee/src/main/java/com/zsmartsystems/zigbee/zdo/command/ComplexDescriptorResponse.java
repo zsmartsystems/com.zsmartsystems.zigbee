@@ -35,6 +35,7 @@ public class ComplexDescriptorResponse extends ZdoResponse {
      * Default constructor.
      */
     public ComplexDescriptorResponse() {
+        clusterId = 0x8010;
     }
 
     /**

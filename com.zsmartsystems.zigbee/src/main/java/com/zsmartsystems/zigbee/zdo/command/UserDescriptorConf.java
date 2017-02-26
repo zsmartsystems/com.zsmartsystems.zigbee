@@ -16,6 +16,7 @@ public class UserDescriptorConf extends ZdoResponse {
      * Default constructor.
      */
     public UserDescriptorConf() {
+        clusterId = 0x8014;
     }
 
     @Override

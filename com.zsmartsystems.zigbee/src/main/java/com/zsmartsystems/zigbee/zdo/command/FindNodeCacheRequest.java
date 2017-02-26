@@ -22,6 +22,7 @@ public class FindNodeCacheRequest extends ZdoRequest {
      * Default constructor.
      */
     public FindNodeCacheRequest() {
+        clusterId = 0x001C;
     }
 
     @Override

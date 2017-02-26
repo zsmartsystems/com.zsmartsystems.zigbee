@@ -17,6 +17,7 @@ public class DiscoveryCacheResponse extends ZdoResponse {
      * Default constructor.
      */
     public DiscoveryCacheResponse() {
+        clusterId = 0x8012;
     }
 
     @Override

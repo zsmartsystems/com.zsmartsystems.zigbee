@@ -27,6 +27,7 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
      * Default constructor.
      */
     public ManagementNetworkUpdateNotify() {
+        clusterId = 0x8038;
     }
 
     @Override

@@ -17,6 +17,7 @@ public class ManagementDirectJoinResponse extends ZdoResponse {
      * Default constructor.
      */
     public ManagementDirectJoinResponse() {
+        clusterId = 0x8035;
     }
 
     @Override

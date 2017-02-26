@@ -9,11 +9,23 @@ package com.zsmartsystems.zigbee;
  * @author Chris Jackson
  */
 public class ZigBeeDeviceAddress extends ZigBeeAddress {
-    final private int address;
-    final private int endpoint;
+    private int address;
+    private int endpoint;
 
     /**
-     * Constructor
+     * Constructor for ZDO ZigBee devices where only the address is defined
+     *
+     * @param address
+     *            the network address
+     *
+     */
+    public ZigBeeDeviceAddress(int address) {
+        this.address = address;
+        this.endpoint = 0;
+    }
+
+    /**
+     * Constructor for standard ZigBee devices where the address and endpoint are defined
      *
      * @param address
      *            the network address
@@ -26,12 +38,27 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
     }
 
     public ZigBeeDeviceAddress(String address) {
-        String[] splits = address.split("/");
-        if (splits.length != 2) {
-            throw new IllegalArgumentException();
+        if (address.contains("/")) {
+            String[] splits = address.split("/");
+            if (splits.length > 2) {
+                throw new IllegalArgumentException();
+            }
+            this.address = Integer.parseInt(splits[0]);
+            this.endpoint = Integer.parseInt(splits[1]);
+        } else {
+            this.address = Integer.parseInt(address);
+            this.endpoint = 0;
         }
-        this.address = Integer.parseInt(splits[0]);
-        this.endpoint = Integer.parseInt(splits[1]);
+    }
+
+    @Override
+    public int getAddress() {
+        return address;
+    }
+
+    @Override
+    public void setAddress(final int address) {
+        this.address = address;
     }
 
     @Override
@@ -49,12 +76,12 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
     }
 
     /**
-     * Returns the network address
+     * Sets the endpoint number
      *
-     * @return the network address
+     * @param the endpoint number
      */
-    public int getAddress() {
-        return address;
+    public void setEndpoint(final int endpoint) {
+        this.endpoint = endpoint;
     }
 
     @Override
@@ -80,11 +107,7 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
 
         ZigBeeDeviceAddress thatAddr = (ZigBeeDeviceAddress) that;
 
-        if (thatAddr.getAddress() == getAddress() && thatAddr.getEndpoint() == getEndpoint()) {
-            return 0;
-        }
-
-        return 1;
+        return (thatAddr.getAddress() == getAddress() && thatAddr.getEndpoint() == getEndpoint()) ? 0 : 1;
     }
 
     @Override

@@ -45,6 +45,7 @@ public class NetworkUpdateRequest extends ZdoRequest {
      * Default constructor.
      */
     public NetworkUpdateRequest() {
+        clusterId = 0x0038;
     }
 
     /**

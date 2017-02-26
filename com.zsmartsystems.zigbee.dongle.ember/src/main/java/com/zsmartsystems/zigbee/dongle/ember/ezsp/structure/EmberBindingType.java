@@ -27,23 +27,23 @@ public enum EmberBindingType {
     /**
      * A binding that is currently not in use.
      */
-    EMBER_UNUSED_BINDING(0),
+    EMBER_UNUSED_BINDING(0x0000),
 
     /**
      * A unicast binding whose 64-bit identifier is the destination EUI64.
      */
-    EMBER_UNICAST_BINDING(1),
+    EMBER_UNICAST_BINDING(0x0001),
 
     /**
      * A unicast binding whose 64-bit identifier is the aggregator EUI64.
      */
-    EMBER_MANY_TO_ONE_BINDING(2),
+    EMBER_MANY_TO_ONE_BINDING(0x0002),
 
     /**
      * A multicast binding whose 64-bit identifier is the group address. A multicast binding can be
      * used to send messages to the group and to receive messages sent to the group.
      */
-    EMBER_MULTICAST_BINDING(3);
+    EMBER_MULTICAST_BINDING(0x0003);
 
     /**
      * A mapping between the integer code and its corresponding type to

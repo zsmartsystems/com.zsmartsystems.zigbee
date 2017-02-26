@@ -16,6 +16,7 @@ public class BindRegister extends ZdoResponse {
      * Default constructor.
      */
     public BindRegister() {
+        clusterId = 0x0023;
     }
 
     @Override

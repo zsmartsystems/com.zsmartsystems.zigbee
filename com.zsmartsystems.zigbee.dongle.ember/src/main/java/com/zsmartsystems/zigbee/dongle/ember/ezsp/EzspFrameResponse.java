@@ -1,7 +1,6 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
  * The EmberZNet Serial Protocol (EZSP) is the protocol used by a host
@@ -63,23 +62,24 @@ public abstract class EzspFrameResponse extends EzspFrame {
      * return true;
      * }
      */
-
-    protected boolean initialEzspResponse(EzspFrame response) {
-        // Make sure this is a response
-        if (!response.isResponse()) {
-            return false;
-        }
-
-        // Check the sequence number
-        if (response.getSequenceNumber() != sequenceNumber) {
-            return false;
-        }
-
-        // Default the status to success. This can be overridden if the response
-        // provides a status
-        emberStatus = EmberStatus.EMBER_SUCCESS;
-
-        return true;
-    }
+    /*
+     * protected boolean initialEzspResponse(EzspFrame response) {
+     * // Make sure this is a response
+     * if (!response.isResponse()) {
+     * return false;
+     * }
+     * 
+     * // Check the sequence number
+     * if (response.getSequenceNumber() != sequenceNumber) {
+     * return false;
+     * }
+     * 
+     * // Default the status to success. This can be overridden if the response
+     * // provides a status
+     * emberStatus = EmberStatus.EMBER_SUCCESS;
+     * 
+     * return true;
+     * }
+     */
 
 }

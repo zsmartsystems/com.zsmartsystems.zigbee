@@ -42,6 +42,7 @@ public class BackupSourceBindRequest extends ZdoRequest {
      * Default constructor.
      */
     public BackupSourceBindRequest() {
+        clusterId = 0x0029;
     }
 
     /**

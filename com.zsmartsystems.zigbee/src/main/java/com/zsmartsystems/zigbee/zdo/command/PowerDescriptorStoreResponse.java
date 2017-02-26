@@ -19,6 +19,7 @@ public class PowerDescriptorStoreResponse extends ZdoResponse {
      * Default constructor.
      */
     public PowerDescriptorStoreResponse() {
+        clusterId = 0x8018;
     }
 
     @Override

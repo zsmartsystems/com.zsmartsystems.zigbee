@@ -17,6 +17,7 @@ public class DiscoveryStoreRequestRequest extends ZdoRequest {
      * Default constructor.
      */
     public DiscoveryStoreRequestRequest() {
+        clusterId = 0x0016;
     }
 
     @Override

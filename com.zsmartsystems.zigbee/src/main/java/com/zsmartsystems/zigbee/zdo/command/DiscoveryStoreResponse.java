@@ -19,6 +19,7 @@ public class DiscoveryStoreResponse extends ZdoResponse {
      * Default constructor.
      */
     public DiscoveryStoreResponse() {
+        clusterId = 0x8016;
     }
 
     @Override

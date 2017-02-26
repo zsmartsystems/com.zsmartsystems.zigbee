@@ -17,6 +17,7 @@ public class ManagementRoutingResponse extends ZdoResponse {
      * Default constructor.
      */
     public ManagementRoutingResponse() {
+        clusterId = 0x8032;
     }
 
     @Override

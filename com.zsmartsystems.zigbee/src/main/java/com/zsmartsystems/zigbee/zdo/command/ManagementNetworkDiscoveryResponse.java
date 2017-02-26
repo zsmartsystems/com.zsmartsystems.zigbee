@@ -29,6 +29,7 @@ public class ManagementNetworkDiscoveryResponse extends ZdoResponse {
      * Default constructor.
      */
     public ManagementNetworkDiscoveryResponse() {
+        clusterId = 0x8030;
     }
 
     @Override

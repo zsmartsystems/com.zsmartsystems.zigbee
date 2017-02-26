@@ -25,6 +25,7 @@ public class RecoverSourceBindRequest extends ZdoRequest {
      * Default constructor.
      */
     public RecoverSourceBindRequest() {
+        clusterId = 0x002A;
     }
 
     /**

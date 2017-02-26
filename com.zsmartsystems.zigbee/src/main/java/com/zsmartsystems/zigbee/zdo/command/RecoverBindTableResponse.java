@@ -27,6 +27,7 @@ public class RecoverBindTableResponse extends ZdoResponse {
      * Default constructor.
      */
     public RecoverBindTableResponse() {
+        clusterId = 0x8028;
     }
 
     @Override

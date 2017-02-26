@@ -33,6 +33,7 @@ public class SimpleDescriptorRequest extends ZdoRequest implements CommandRespon
      * Default constructor.
      */
     public SimpleDescriptorRequest() {
+        clusterId = 0x0004;
     }
 
     /**

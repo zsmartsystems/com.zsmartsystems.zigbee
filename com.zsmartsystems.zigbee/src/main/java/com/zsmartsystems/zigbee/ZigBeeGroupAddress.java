@@ -47,6 +47,16 @@ public class ZigBeeGroupAddress extends ZigBeeAddress {
         this.label = label;
     }
 
+    @Override
+    public int getAddress() {
+        return getGroupId();
+    }
+
+    @Override
+    public void setAddress(final int address) {
+        setGroupId(address);
+    }
+
     /**
      * Gets group ID.
      *

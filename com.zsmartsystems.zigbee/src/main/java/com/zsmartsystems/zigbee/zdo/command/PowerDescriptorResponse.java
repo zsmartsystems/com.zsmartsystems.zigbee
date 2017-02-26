@@ -1,7 +1,7 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
@@ -30,6 +30,7 @@ public class PowerDescriptorResponse extends ZdoResponse {
      * Default constructor.
      */
     public PowerDescriptorResponse() {
+        clusterId = 0x8003;
     }
 
     /**

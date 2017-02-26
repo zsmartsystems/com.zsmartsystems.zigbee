@@ -5,8 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.IeeeAddress;
-
 /**
  *
  * @author Chris Jackson
@@ -36,6 +34,6 @@ public class IeeeAddressTest {
     @Test
     public void testToString() {
         IeeeAddress address = new IeeeAddress("17880100dc880b");
-        assertEquals("17880100DC880B", address.toString());
+        assertEquals("0017880100DC880B", address.toString());
     }
 }

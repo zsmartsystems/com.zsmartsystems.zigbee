@@ -13,17 +13,19 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspFormNetworkRespons
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetChildDataResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupEui64ByNodeIdResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspPermitJoiningResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurityStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
  * The EmberZNet Serial Protocol (EZSP) is the protocol used by a host
@@ -44,7 +46,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
  *
  */
 public abstract class EzspFrame {
-    protected EmberStatus emberStatus = EmberStatus.EMBER_UNINTIALISED;
+    // protected EmberStatus emberStatus = EmberStatus.UNKNOWN;
 
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
     protected static final int FRAME_ID_CHILD_JOIN_HANDLER = 0x23;
@@ -64,7 +66,7 @@ public abstract class EzspFrame {
     // protected static final int FRAME_ID_GET_POLICY = 0x56;
     // protected static final int FRAME_ID_GET_ROUTE_TABLE_ENTRY = 0x7B;
     // protected static final int FRAME_ID_ID_CONFLICT_HANDLER = 0x7C;
-    // protected static final int FRAME_ID_INCOMING_MESSAGE_HANDLER = 0x45;
+    protected static final int FRAME_ID_INCOMING_MESSAGE_HANDLER = 0x45;
     // protected static final int FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER = 0x80;
     // protected static final int FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER = 0x59;
     // protected static final int FRAME_ID_INVALID_COMMAND = 0x62;
@@ -72,7 +74,7 @@ public abstract class EzspFrame {
     // protected static final int FRAME_ID_LEAVE_NETWORK = 0x20;
     protected static final int FRAME_ID_LOOKUP_EUI64_BY_NODE_ID = 0x61;
     // protected static final int FRAME_ID_MAXIMUM_PAYLOAD_LENGTH = 0x33;
-    // protected static final int FRAME_ID_MESSAGE_SENT_HANDLER = 0x3F;
+    protected static final int FRAME_ID_MESSAGE_SENT_HANDLER = 0x3F;
     // protected static final int FRAME_ID_NEIGHBOR_COUNT = 0x7A;
     protected static final int FRAME_ID_NETWORK_FOUND_HANDLER = 0x1B;
     protected static final int FRAME_ID_NETWORK_INIT = 0x17;
@@ -108,11 +110,14 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_CHILD_DATA, EzspGetChildDataResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_CONFIGURATION_VALUE, EzspGetConfigurationValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_NETWORK_PARAMETERS, EzspGetNetworkParametersResponse.class);
+        ezspHandlerMap.put(FRAME_ID_INCOMING_MESSAGE_HANDLER, EzspIncomingMessageHandler.class);
         ezspHandlerMap.put(FRAME_ID_LOOKUP_EUI64_BY_NODE_ID, EzspLookupEui64ByNodeIdResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MESSAGE_SENT_HANDLER, EzspMessageSentHandler.class);
         ezspHandlerMap.put(FRAME_ID_NETWORK_FOUND_HANDLER, EzspNetworkFoundHandler.class);
         ezspHandlerMap.put(FRAME_ID_NETWORK_INIT, EzspNetworkInitResponse.class);
         ezspHandlerMap.put(FRAME_ID_PERMIT_JOINING, EzspPermitJoiningResponse.class);
         ezspHandlerMap.put(FRAME_ID_SCAN_COMPLETE_HANDLER, EzspScanCompleteHandler.class);
+        ezspHandlerMap.put(FRAME_ID_SEND_UNICAST, EzspSendUnicastResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_CONFIGURATION_VALUE, EzspSetConfigurationValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_INITIAL_SECURITY_STATE, EzspSetInitialSecurityStateResponse.class);
         ezspHandlerMap.put(FRAME_ID_STACK_STATUS_HANDLER, EzspStackStatusHandler.class);

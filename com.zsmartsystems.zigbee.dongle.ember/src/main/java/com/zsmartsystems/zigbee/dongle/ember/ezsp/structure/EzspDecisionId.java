@@ -27,7 +27,7 @@ public enum EzspDecisionId {
     /**
      * Send the network key in the clear to all joining and rejoining devices.
      */
-    EZSP_ALLOW_JOINS(0),
+    EZSP_ALLOW_JOINS(0x0000),
 
     /**
      * Send the network key in the clear to all joining devices. Rejoining devices are sent the
@@ -35,7 +35,7 @@ public enum EzspDecisionId {
      * device are assumed to share a link key, either preconfigured or obtained under a previous
      * policy.
      */
-    EZSP_ALLOW_JOINS_REJOINS_HAVE_LINK_KEY(4);
+    EZSP_ALLOW_JOINS_REJOINS_HAVE_LINK_KEY(0x0004);
 
     /**
      * A mapping between the integer code and its corresponding type to

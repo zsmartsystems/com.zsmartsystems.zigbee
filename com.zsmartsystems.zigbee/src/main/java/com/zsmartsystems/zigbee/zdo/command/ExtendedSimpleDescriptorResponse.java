@@ -16,6 +16,7 @@ public class ExtendedSimpleDescriptorResponse extends ZdoResponse {
      * Default constructor.
      */
     public ExtendedSimpleDescriptorResponse() {
+        clusterId = 0x801D;
     }
 
     @Override

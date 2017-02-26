@@ -4,6 +4,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Network Address Request value object class.
@@ -19,7 +20,7 @@ public class NetworkAddressRequest extends ZdoRequest {
     /**
      * IEEEAddr command message field.
      */
-    private Long ieeeAddr;
+    private IeeeAddress ieeeAddr;
 
     /**
      * RequestType command message field.
@@ -35,6 +36,7 @@ public class NetworkAddressRequest extends ZdoRequest {
      * Default constructor.
      */
     public NetworkAddressRequest() {
+        clusterId = 0x0000;
     }
 
     /**
@@ -42,7 +44,7 @@ public class NetworkAddressRequest extends ZdoRequest {
      *
      * @return the IEEEAddr
      */
-    public Long getIeeeAddr() {
+    public IeeeAddress getIeeeAddr() {
         return ieeeAddr;
     }
 
@@ -51,7 +53,7 @@ public class NetworkAddressRequest extends ZdoRequest {
      *
      * @param ieeeAddr the IEEEAddr
      */
-    public void setIeeeAddr(final Long ieeeAddr) {
+    public void setIeeeAddr(final IeeeAddress ieeeAddr) {
         this.ieeeAddr = ieeeAddr;
     }
 
@@ -100,7 +102,7 @@ public class NetworkAddressRequest extends ZdoRequest {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        ieeeAddr = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        ieeeAddr = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         requestType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }

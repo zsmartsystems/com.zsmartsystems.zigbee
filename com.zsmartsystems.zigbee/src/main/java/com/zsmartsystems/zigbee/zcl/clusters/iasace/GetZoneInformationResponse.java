@@ -4,6 +4,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Get Zone Information Response value object class.
@@ -32,7 +33,7 @@ public class GetZoneInformationResponse extends ZclCommand {
     /**
      * IEEE address command message field.
      */
-    private Long ieeeAddress;
+    private IeeeAddress ieeeAddress;
 
     /**
      * Default constructor.
@@ -85,7 +86,7 @@ public class GetZoneInformationResponse extends ZclCommand {
      *
      * @return the IEEE address
      */
-    public Long getIeeeAddress() {
+    public IeeeAddress getIeeeAddress() {
         return ieeeAddress;
     }
 
@@ -94,7 +95,7 @@ public class GetZoneInformationResponse extends ZclCommand {
      *
      * @param ieeeAddress the IEEE address
      */
-    public void setIeeeAddress(final Long ieeeAddress) {
+    public void setIeeeAddress(final IeeeAddress ieeeAddress) {
         this.ieeeAddress = ieeeAddress;
     }
 
@@ -109,7 +110,7 @@ public class GetZoneInformationResponse extends ZclCommand {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         zoneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         zoneType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_16_BIT);
-        ieeeAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        ieeeAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
     }
 
     @Override

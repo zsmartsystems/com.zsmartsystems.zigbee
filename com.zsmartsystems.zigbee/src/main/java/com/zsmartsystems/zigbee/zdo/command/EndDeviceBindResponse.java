@@ -17,6 +17,7 @@ public class EndDeviceBindResponse extends ZdoResponse {
      * Default constructor.
      */
     public EndDeviceBindResponse() {
+        clusterId = 0x8020;
     }
 
     @Override

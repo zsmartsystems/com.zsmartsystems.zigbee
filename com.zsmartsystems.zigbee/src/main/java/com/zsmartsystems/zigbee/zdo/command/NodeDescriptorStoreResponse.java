@@ -19,6 +19,7 @@ public class NodeDescriptorStoreResponse extends ZdoResponse {
      * Default constructor.
      */
     public NodeDescriptorStoreResponse() {
+        clusterId = 0x8017;
     }
 
     @Override

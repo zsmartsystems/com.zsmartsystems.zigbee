@@ -230,7 +230,16 @@ public class CommandGenerator extends ClassGenerator {
                 out.println("        builder.append(\", " + parameter.name + "=\");");
             }
             first = false;
-            out.println("        builder.append(" + parameter.name + ");");
+            if (parameter.data_type.contains("[")) {
+                out.println("        for (int c = 0; c < " + parameter.name + ".length; c++) {");
+                out.println("            if (c > 0) {");
+                out.println("                builder.append(\" \");");
+                out.println("            }");
+                out.println("            builder.append(String.format(\"%02X\", " + parameter.name + "[c]));");
+                out.println("        }");
+            } else {
+                out.println("        builder.append(" + parameter.name + ");");
+            }
         }
         out.println("        builder.append(\"]\");");
         out.println("        return builder.toString();");
@@ -508,7 +517,7 @@ public class CommandGenerator extends ClassGenerator {
             out.println("    /**");
             outputWithLinebreak(out, "    ", value.description);
             out.println("     */");
-            out.print("    " + value.name + "(" + value.enum_value + ")");
+            out.print("    " + value.name + "(0x" + String.format("%04X", value.enum_value) + ")");
         }
 
         out.println(";");

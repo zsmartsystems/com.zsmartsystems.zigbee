@@ -17,6 +17,7 @@ public class RecoverBindTableRequest extends ZdoRequest {
      * Default constructor.
      */
     public RecoverBindTableRequest() {
+        clusterId = 0x0028;
     }
 
     @Override

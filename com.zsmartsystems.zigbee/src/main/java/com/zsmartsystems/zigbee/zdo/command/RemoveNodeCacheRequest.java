@@ -19,6 +19,7 @@ public class RemoveNodeCacheRequest extends ZdoRequest {
      * Default constructor.
      */
     public RemoveNodeCacheRequest() {
+        clusterId = 0x001B;
     }
 
     @Override

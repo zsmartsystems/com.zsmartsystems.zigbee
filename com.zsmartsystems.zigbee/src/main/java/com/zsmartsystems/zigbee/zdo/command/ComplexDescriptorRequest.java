@@ -28,6 +28,7 @@ public class ComplexDescriptorRequest extends ZdoRequest implements CommandRespo
      * Default constructor.
      */
     public ComplexDescriptorRequest() {
+        clusterId = 0x0010;
     }
 
     /**

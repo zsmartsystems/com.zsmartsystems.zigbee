@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
@@ -211,10 +212,10 @@ public class ZclIasAceCluster extends ZclCluster {
      *
      * @param zoneId {@link Integer} Zone ID
      * @param zoneType {@link Integer} Zone Type
-     * @param ieeeAddress {@link Long} IEEE address
+     * @param ieeeAddress {@link IeeeAddress} IEEE address
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getZoneInformationResponse(Integer zoneId, Integer zoneType, Long ieeeAddress) {
+    public Future<CommandResult> getZoneInformationResponse(Integer zoneId, Integer zoneType, IeeeAddress ieeeAddress) {
         GetZoneInformationResponse command = new GetZoneInformationResponse();
 
         // Set the fields

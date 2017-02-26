@@ -19,6 +19,7 @@ public class ActiveEndpointStoreResponse extends ZdoResponse {
      * Default constructor.
      */
     public ActiveEndpointStoreResponse() {
+        clusterId = 0x8019;
     }
 
     @Override

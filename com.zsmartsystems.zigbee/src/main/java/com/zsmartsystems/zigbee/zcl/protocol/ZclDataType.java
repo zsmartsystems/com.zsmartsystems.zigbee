@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.zsmartsystems.zigbee.zcl.field.*;
 import com.zsmartsystems.zigbee.zdo.descriptors.*;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Code is auto-generated. Modifications may be overwritten!
@@ -17,7 +18,7 @@ public enum ZclDataType {
     DATA_8_BIT("8-bit data", Integer.class, 0x08, false),
     ENUMERATION_16_BIT("16-bit Enumeration", Integer.class, 0x31, false),
     ENUMERATION_8_BIT("8-bit Enumeration", Integer.class, 0x30, false),
-    IEEE_ADDRESS("IEEE Address", Long.class, 0xF0, false),
+    IEEE_ADDRESS("IEEE Address", IeeeAddress.class, 0xF0, false),
     N_X_ATTRIBUTE_IDENTIFIER("N X Attribute identifier", AttributeIdentifier.class, 0x00, false),
     N_X_ATTRIBUTE_INFORMATION("N X Attribute information", AttributeInformation.class, 0x00, false),
     N_X_ATTRIBUTE_RECORD("N X Attribute record", AttributeRecord.class, 0x00, false),

@@ -26,6 +26,7 @@ public class ManagementBindRequest extends ZdoRequest {
      * Default constructor.
      */
     public ManagementBindRequest() {
+        clusterId = 0x0033;
     }
 
     /**

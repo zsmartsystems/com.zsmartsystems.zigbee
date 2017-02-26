@@ -25,6 +25,7 @@ public class ManagementLqiRequest extends ZdoRequest {
      * Default constructor.
      */
     public ManagementLqiRequest() {
+        clusterId = 0x0031;
     }
 
     /**

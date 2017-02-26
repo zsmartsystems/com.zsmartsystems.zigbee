@@ -31,7 +31,7 @@ public class ZclDataType {
         dataTypeMapping = new HashMap<String, DataTypeMap>();
 
         dataTypeMapping.put("CHARACTER_STRING", new DataTypeMap("String", 0x42, -1, false));
-        dataTypeMapping.put("IEEE_ADDRESS", new DataTypeMap("Long", 0xf0, 8, false, 0xffffffff));
+        dataTypeMapping.put("IEEE_ADDRESS", new DataTypeMap("IeeeAddress", 0xf0, 8, false, 0xffffffff));
         dataTypeMapping.put("NODE_DESCRIPTOR", new DataTypeMap("NodeDescriptor", 0, 0, false));
         dataTypeMapping.put("SIMPLE_DESCRIPTOR", new DataTypeMap("SimpleDescriptor", 0, 0, false));
         dataTypeMapping.put("COMPLEX_DESCRIPTOR", new DataTypeMap("ComplexDescriptor", 0, 0, false));

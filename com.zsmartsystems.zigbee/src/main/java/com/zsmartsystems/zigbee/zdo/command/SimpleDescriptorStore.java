@@ -23,6 +23,7 @@ public class SimpleDescriptorStore extends ZdoResponse {
      * Default constructor.
      */
     public SimpleDescriptorStore() {
+        clusterId = 0x001A;
     }
 
     @Override

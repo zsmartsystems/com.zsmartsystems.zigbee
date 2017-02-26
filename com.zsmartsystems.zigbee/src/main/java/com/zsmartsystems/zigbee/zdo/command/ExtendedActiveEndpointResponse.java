@@ -16,6 +16,7 @@ public class ExtendedActiveEndpointResponse extends ZdoResponse {
      * Default constructor.
      */
     public ExtendedActiveEndpointResponse() {
+        clusterId = 0x801E;
     }
 
     @Override

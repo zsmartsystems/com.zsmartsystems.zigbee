@@ -18,6 +18,7 @@ public class PowerDescriptorStoreRequest extends ZdoRequest {
      * Default constructor.
      */
     public PowerDescriptorStoreRequest() {
+        clusterId = 0x0018;
     }
 
     @Override

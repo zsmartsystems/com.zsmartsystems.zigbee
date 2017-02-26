@@ -31,6 +31,8 @@ The destination addressing on this command shall be unicast.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |NWKAddrOfInterest          |NWK address                |
+|RequestType                |Unsigned 8-bit integer     |
+|StartIndex                 |Unsigned 8-bit integer     |
 
 ##### Expected Response
 Packet: IEEE Address Response
@@ -557,9 +559,9 @@ The destination addressing on this command shall be unicast.
 |Status                     |Unsigned 8-bit integer     |
 |IEEEAddrRemoteDev          |IEEE Address               |
 |NWKAddrRemoteDev           |NWK address                |
-|NumAssocDev                |Unsigned 8-bit integer     |
-|StartIndex                 |Unsigned 8-bit integer     |
-|NWKAddrAssocDevList        |N X NWK Address            | 
+Optional |NumAssocDev                |Unsigned 8-bit integer     |
+Optional |StartIndex                 |Unsigned 8-bit integer     |
+Optional |NWKAddrAssocDevList        |N X NWK Address            | 
 
 
 #### Node Descriptor Response [0x8002]

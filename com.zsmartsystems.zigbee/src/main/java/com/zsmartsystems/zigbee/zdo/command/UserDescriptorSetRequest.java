@@ -24,6 +24,7 @@ public class UserDescriptorSetRequest extends ZdoRequest {
      * Default constructor.
      */
     public UserDescriptorSetRequest() {
+        clusterId = 0x0014;
     }
 
     @Override

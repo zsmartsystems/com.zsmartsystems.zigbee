@@ -61,6 +61,7 @@ public class SimpleDescriptorResponse extends ZdoResponse {
      * Default constructor.
      */
     public SimpleDescriptorResponse() {
+        clusterId = 0x8004;
     }
 
     /**

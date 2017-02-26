@@ -28,6 +28,7 @@ public class UserDescriptorRequest extends ZdoRequest implements CommandResponse
      * Default constructor.
      */
     public UserDescriptorRequest() {
+        clusterId = 0x0011;
     }
 
     /**

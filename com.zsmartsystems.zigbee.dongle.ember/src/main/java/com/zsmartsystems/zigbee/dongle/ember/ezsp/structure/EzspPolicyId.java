@@ -27,12 +27,12 @@ public enum EzspPolicyId {
     /**
      * Controls trust center behavior.
      */
-    EZSP_TRUST_CENTER_POLICY(0),
+    EZSP_TRUST_CENTER_POLICY(0x0000),
 
     /**
      * Controls how external binding modification requests are handled.
      */
-    EZSP_BINDING_MODIFICATION_POLICY(1);
+    EZSP_BINDING_MODIFICATION_POLICY(0x0001);
 
     /**
      * A mapping between the integer code and its corresponding type to

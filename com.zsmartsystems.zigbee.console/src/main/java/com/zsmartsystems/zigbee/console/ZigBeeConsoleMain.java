@@ -112,9 +112,9 @@ public class ZigBeeConsoleMain {
         System.out.println("Channel         = " + networkManager.getZigBeeChannel());
 
         if (resetNetwork == true) {
-            networkManager.setZigBeeChannel(channel);
-            networkManager.setZigBeePanId(pan);
-            networkManager.setZigBeeSecurityKey(networkKey);
+            // networkManager.setZigBeeChannel(channel);
+            // networkManager.setZigBeePanId(pan);
+            // networkManager.setZigBeeSecurityKey(networkKey);
         }
 
         console.start();

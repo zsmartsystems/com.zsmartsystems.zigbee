@@ -19,6 +19,7 @@ public class ActiveEndpointStoreRequest extends ZdoRequest {
      * Default constructor.
      */
     public ActiveEndpointStoreRequest() {
+        clusterId = 0x0019;
     }
 
     @Override

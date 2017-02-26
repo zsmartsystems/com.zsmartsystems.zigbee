@@ -1,11 +1,9 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
-
-import java.util.List;
 
 /**
  * Active Endpoints Response value object class.
@@ -30,12 +28,13 @@ public class ActiveEndpointsResponse extends ZdoResponse {
     /**
      * ActiveEPList command message field.
      */
-    private List<Integer> activeEpList;
+    private Integer[] activeEpList;
 
     /**
      * Default constructor.
      */
     public ActiveEndpointsResponse() {
+        clusterId = 0x8005;
     }
 
     /**
@@ -79,7 +78,7 @@ public class ActiveEndpointsResponse extends ZdoResponse {
      *
      * @return the ActiveEPList
      */
-    public List<Integer> getActiveEpList() {
+    public Integer[] getActiveEpList() {
         return activeEpList;
     }
 
@@ -88,7 +87,7 @@ public class ActiveEndpointsResponse extends ZdoResponse {
      *
      * @param activeEpList the ActiveEPList
      */
-    public void setActiveEpList(final List<Integer> activeEpList) {
+    public void setActiveEpList(final Integer[] activeEpList) {
         this.activeEpList = activeEpList;
     }
 
@@ -105,7 +104,7 @@ public class ActiveEndpointsResponse extends ZdoResponse {
         status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         activeEpCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        activeEpList = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_ENDPOINT);
+        activeEpList = (Integer[]) deserializer.deserialize(ZclDataType.N_X_ENDPOINT);
     }
 
     @Override

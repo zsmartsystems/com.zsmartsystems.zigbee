@@ -3,7 +3,10 @@ package com.zsmartsystems.zigbee;
 /**
  * Defines the ZigBee APS frame header.
  * <p>
- * Note that note all APS header fields may be present in this class. The class is passed from the framework to the
+ * The APS frame format is composed of an APS header and an APS payload. The fields of the APS header appear in a fixed
+ * order, however, the addressing fields may not be included in all frames.
+ * <p>
+ * Note that not all APS header fields may be present in this class. The class is passed from the framework to the
  * hardware drivers where it is processed accordingly. Should data be missing that is required by a hardware
  * implemention, it will be added.
  *
@@ -58,11 +61,17 @@ public class ZigBeeApsHeader {
      */
     private int groupAddress;
 
+    /**
+     * This field is eight bits in length and is used to prevent the reception of duplicate frames. This value shall be
+     * incremented by one for each new transmission.
+     */
+    private int apsCounter;
+
     public int getDestinationEndpoint() {
         return destinationEndpoint;
     }
 
-    public void setDestinationEndpoint(int destinationEndpoint) {
+    public void setDestinationEndpoint(final int destinationEndpoint) {
         this.destinationEndpoint = destinationEndpoint;
     }
 
@@ -70,7 +79,7 @@ public class ZigBeeApsHeader {
         return cluster;
     }
 
-    public void setCluster(int cluster) {
+    public void setCluster(final int cluster) {
         this.cluster = cluster;
     }
 
@@ -78,7 +87,7 @@ public class ZigBeeApsHeader {
         return profile;
     }
 
-    public void setProfile(int profile) {
+    public void setProfile(final int profile) {
         this.profile = profile;
     }
 
@@ -86,7 +95,7 @@ public class ZigBeeApsHeader {
         return sourceEndpoint;
     }
 
-    public void setSourceEndpoint(int sourceEndpoint) {
+    public void setSourceEndpoint(final int sourceEndpoint) {
         this.sourceEndpoint = sourceEndpoint;
     }
 
@@ -94,13 +103,22 @@ public class ZigBeeApsHeader {
         return groupAddress;
     }
 
-    public void setGroupAddress(int groupAddress) {
+    public void setGroupAddress(final int groupAddress) {
         this.groupAddress = groupAddress;
+    }
+
+    public int getApsCounter() {
+        return apsCounter;
+    }
+
+    public void setApsCounter(final int apsCounter) {
+        this.apsCounter = apsCounter;
     }
 
     @Override
     public String toString() {
-        return "ZigBeeApsHeader [destinationEndpoint=" + destinationEndpoint + ", cluster=" + cluster + ", profile="
-                + profile + ", sourceEndpoint=" + sourceEndpoint + ", groupAddress=" + groupAddress + "]";
+        return "ZigBeeApsHeader [counter=" + apsCounter + ", destinationEndpoint=" + destinationEndpoint + ", cluster="
+                + cluster + ", profile=" + profile + ", sourceEndpoint=" + sourceEndpoint + ", groupAddress="
+                + groupAddress + "]";
     }
 }

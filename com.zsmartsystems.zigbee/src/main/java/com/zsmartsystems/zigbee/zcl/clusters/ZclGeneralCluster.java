@@ -24,6 +24,15 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesStructuredCo
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesStructuredResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesUndividedCommand;
 import com.zsmartsystems.zigbee.zcl.field.*;
+import com.zsmartsystems.zigbee.zcl.field.AttributeIdentifier;
+import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
+import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
+import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
+import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
+import com.zsmartsystems.zigbee.zcl.field.AttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
+import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

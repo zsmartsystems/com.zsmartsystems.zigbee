@@ -25,6 +25,7 @@ public class ManagementRoutingRequest extends ZdoRequest {
      * Default constructor.
      */
     public ManagementRoutingRequest() {
+        clusterId = 0x0032;
     }
 
     /**

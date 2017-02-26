@@ -45,6 +45,6 @@ public class IeeeAddress {
 
     @Override
     public String toString() {
-        return String.format("%08X", address);
+        return String.format("%016X", address);
     }
 }

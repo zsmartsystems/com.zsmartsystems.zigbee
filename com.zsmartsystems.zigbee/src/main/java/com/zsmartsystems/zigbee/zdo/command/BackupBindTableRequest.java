@@ -17,6 +17,7 @@ public class BackupBindTableRequest extends ZdoRequest {
      * Default constructor.
      */
     public BackupBindTableRequest() {
+        clusterId = 0x0027;
     }
 
     @Override

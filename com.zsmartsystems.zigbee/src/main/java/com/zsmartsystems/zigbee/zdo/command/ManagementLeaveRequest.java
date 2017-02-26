@@ -4,6 +4,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Management Leave Request value object class.
@@ -20,7 +21,7 @@ public class ManagementLeaveRequest extends ZdoRequest {
     /**
      * DeviceAddress command message field.
      */
-    private Long deviceAddress;
+    private IeeeAddress deviceAddress;
 
     /**
      * RemoveChildren command message field.
@@ -36,6 +37,7 @@ public class ManagementLeaveRequest extends ZdoRequest {
      * Default constructor.
      */
     public ManagementLeaveRequest() {
+        clusterId = 0x0034;
     }
 
     /**
@@ -43,7 +45,7 @@ public class ManagementLeaveRequest extends ZdoRequest {
      *
      * @return the DeviceAddress
      */
-    public Long getDeviceAddress() {
+    public IeeeAddress getDeviceAddress() {
         return deviceAddress;
     }
 
@@ -52,7 +54,7 @@ public class ManagementLeaveRequest extends ZdoRequest {
      *
      * @param deviceAddress the DeviceAddress
      */
-    public void setDeviceAddress(final Long deviceAddress) {
+    public void setDeviceAddress(final IeeeAddress deviceAddress) {
         this.deviceAddress = deviceAddress;
     }
 
@@ -101,7 +103,7 @@ public class ManagementLeaveRequest extends ZdoRequest {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        deviceAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        deviceAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         removeChildren = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
         rejoin = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
     }

@@ -10,7 +10,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,7 +67,6 @@ public class ZclProtocolCodeGenerator {
         if (args.length != 0) {
             sourceRootPath = args[0];
         } else {
-            // sourceRootPath = "./src/main/blah/";
             sourceRootPath = "../com.zsmartsystems.zigbee/src/main/java/";
         }
 
@@ -177,14 +178,14 @@ public class ZclProtocolCodeGenerator {
             return;
         }
 
-        // try {
-        // generateZclCommandTypeEnumerationXXXXX(context, packageRoot, packageFile);
-        // generateZclCommandTypeEnumeration(context, packageRoot, packageFile);
-        // } catch (final IOException e) {
-        // System.out.println("Failed to generate command enumeration.");
-        // e.printStackTrace();
-        // return;
-        // }
+        try {
+            // generateZclCommandTypeEnumerationXXXXX(context, packageRoot, packageFile);
+            generateZclCommandTypeEnumeration(context, packageRoot, packageFile);
+        } catch (final IOException e) {
+            System.out.println("Failed to generate command enumeration.");
+            e.printStackTrace();
+            return;
+        }
 
         // try {
         // generateZclAttributeTypeEnumeration(context, packageRoot, packageFile);
@@ -222,10 +223,20 @@ public class ZclProtocolCodeGenerator {
     public static void generateZdpCode(final Context context, final File sourceRootPath, final String packageRoot) {
         ZclProtocolDefinitionParser.parseProfiles(context);
 
+        final File packageFile = getPackageFile(packageRoot);
+
         try {
             generateZdpCommandClasses(context, packageRoot, sourceRootPath);
         } catch (final IOException e) {
             System.out.println("Failed to generate profile message classes.");
+            e.printStackTrace();
+            return;
+        }
+
+        try {
+            generateZdoCommandTypeEnumeration(context, packageRoot, sourceRootPath);
+        } catch (final IOException e) {
+            System.out.println("Failed to generate command enumeration.");
             e.printStackTrace();
             return;
         }
@@ -275,6 +286,7 @@ public class ZclProtocolCodeGenerator {
         out.println("import java.util.Map;");
         out.println("import " + packageRootPrefix + packageZclField + ".*;");
         out.println("import " + packageRootPrefix + packageZdpDescriptors + ".*;");
+        out.println("import " + packageRootPrefix + "." + "IeeeAddress" + ";");
         out.println();
         outputClassJavaDoc(out);
         out.println("public enum " + className + " {");
@@ -752,6 +764,9 @@ public class ZclProtocolCodeGenerator {
                             case "Long":
                             case "String":
                                 continue;
+                            case "IeeeAddress":
+                                out.println("import " + packageRootPrefix + "." + typeName + ";");
+                                continue;
                         }
 
                         out.println("import " + packageRootPrefix + packageName + "." + typeName + ";");
@@ -942,9 +957,9 @@ public class ZclProtocolCodeGenerator {
         }
     }
 
-    private static String getCommandTypeEnum(final Cluster cluster, final Command command, boolean received) {
+    private static String getZclCommandTypeEnum(final Cluster cluster, final Command command, boolean received) {
         return command.commandType + "(ZclClusterType." + cluster.clusterType + ", " + command.commandId + ", "
-                + command.nameUpperCamelCase + ".class" + ", " + "\"" + command.commandLabel + "\", " + received + ")";
+                + command.nameUpperCamelCase + ".class" + ", " + received + ")";
     }
 
     private static void generateZclCommandTypeEnumeration(Context context, String packageRootPrefix,
@@ -963,7 +978,7 @@ public class ZclProtocolCodeGenerator {
         out.println("import " + packageRootPrefix + packageZcl + ".ZclCommand;");
         out.println();
 
-        List<String> commandEnum = new ArrayList<String>();
+        Map<String, Command> commandEnum = new TreeMap<String, Command>();
 
         final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
         for (final Profile profile : profiles) {
@@ -972,16 +987,18 @@ public class ZclProtocolCodeGenerator {
                 // Brute force to get the commands in order!
                 for (int c = 0; c < 65535; c++) {
                     if (cluster.received.get(c) != null) {
-                        out.println("import " + getClusterCommandPackage(packageRootPrefix, cluster) + "."
+                        out.println("import " + getZclClusterCommandPackage(packageRootPrefix, cluster) + "."
                                 + cluster.received.get(c).nameUpperCamelCase + ";");
 
-                        commandEnum.add(getCommandTypeEnum(cluster, cluster.received.get(c), true));
+                        commandEnum.put(getZclCommandTypeEnum(cluster, cluster.received.get(c), true),
+                                cluster.received.get(c));
                     }
                     if (cluster.generated.get(c) != null) {
-                        out.println("import " + getClusterCommandPackage(packageRootPrefix, cluster) + "."
+                        out.println("import " + getZclClusterCommandPackage(packageRootPrefix, cluster) + "."
                                 + cluster.generated.get(c).nameUpperCamelCase + ";");
 
-                        commandEnum.add(getCommandTypeEnum(cluster, cluster.generated.get(c), false));
+                        commandEnum.put(getZclCommandTypeEnum(cluster, cluster.generated.get(c), false),
+                                cluster.generated.get(c));
                     }
                 }
             }
@@ -991,35 +1008,46 @@ public class ZclProtocolCodeGenerator {
         out.println();
         outputClassJavaDoc(out);
         out.println("public enum " + className + " {");
-        out.println("    /**");
-        out.println("     * Register command types.");
-        out.println("     */");
+        boolean first = true;
+        for (String command : commandEnum.keySet()) {
+            Command cmd = commandEnum.get(command);
+            if (cmd == null) {
+                System.out.println("Command without data: " + command);
+                continue;
+            }
 
-        for (String command : commandEnum) {
+            if (!first) {
+                out.println(",");
+            }
+            first = false;
+            out.println("    /**");
+            out.println("     * " + cmd.commandLabel);
+            out.println("     * <p>");
+            out.println("     * See {@link " + cmd.nameUpperCamelCase + "}");
+            out.println("     */");
             out.print("    " + command);
-            out.println((commandEnum.indexOf(command) == commandEnum.size() - 1) ? ';' : ',');
         }
-        out.println();
+        out.println(";");
 
         out.println("    private final int commandId;");
         out.println("    private final ZclClusterType clusterType;");
         out.println("    private final Class<? extends ZclCommand> commandClass;");
-        out.println("    private final String label;");
+        // out.println(" private final String label;");
         out.println("    private final boolean received;");
         out.println();
         out.println("    " + className
-                + "(final ZclClusterType clusterType, final int commandId, final Class<? extends ZclCommand> commandClass, final String label, final boolean received) {");
+                + "(final ZclClusterType clusterType, final int commandId, final Class<? extends ZclCommand> commandClass, final boolean received) {");
         out.println("        this.clusterType = clusterType;");
         out.println("        this.commandId = commandId;");
         out.println("        this.commandClass = commandClass;");
-        out.println("        this.label = label;");
+        // out.println(" this.label = label;");
         out.println("        this.received = received;");
         out.println("    }");
         out.println();
 
         out.println("    public ZclClusterType getClusterType() { return clusterType; }");
         out.println("    public int getId() { return commandId; }");
-        out.println("    public String getLabel() { return label; }");
+        // out.println(" public String getLabel() { return label; }");
         out.println("    public boolean isGeneric() { return clusterType==ZclClusterType.GENERAL; }");
         out.println("    public boolean isReceived() { return received; }");
         out.println("    public Class<? extends ZclCommand> getCommandClass() { return commandClass; }");
@@ -1062,19 +1090,50 @@ public class ZclProtocolCodeGenerator {
 
                 Set<String> imports = new HashSet<String>();
 
+                boolean useList = false;
                 for (final Command command : commands) {
                     final LinkedList<Field> fields = new LinkedList<Field>(command.fields.values());
-                    for (final Field field : fields) {
-                        if (field.dataTypeClass.startsWith("List")) {
-                            imports.add("java.util.List");
-                            imports.add(packageRootPrefix + packageZclField + ".*");
-                            break;
-                        }
-                    }
+                    System.out.println("Checking command " + command.commandLabel);
 
-                    // if (!fields.isEmpty()) {
-                    // imports.add(packageRootPrefix + packageZclProtocol + ".ZclFieldType");
-                    // }
+                    for (final Field field : fields) {
+                        System.out.println("Checking " + field.dataTypeClass);
+                        String packageName;
+                        if (field.dataTypeClass.contains("Descriptor")) {
+                            packageName = packageZdpDescriptors;
+                        } else {
+                            packageName = packageZclField;
+                        }
+
+                        String typeName;
+                        if (field.dataTypeClass.startsWith("List")) {
+                            useList = true;
+                            typeName = field.dataTypeClass;
+                            typeName = typeName.substring(typeName.indexOf("<") + 1);
+                            typeName = typeName.substring(0, typeName.indexOf(">"));
+                        } else {
+                            typeName = field.dataTypeClass;
+                        }
+
+                        switch (typeName) {
+                            case "Integer":
+                            case "Boolean":
+                            case "Object":
+                            case "Long":
+                            case "String":
+                                continue;
+                            case "IeeeAddress":
+                                imports.add(packageRootPrefix + "." + typeName);
+                                System.out.println("Adding " + typeName);
+                                continue;
+                        }
+
+                        imports.add(packageRootPrefix + packageName + "." + typeName);
+                    }
+                }
+
+                if (useList) {
+                    imports.add("java.util.List");
+                    imports.add(packageRootPrefix + packageZclField + ".*");
                 }
 
                 boolean addAttributeTypes = false;
@@ -1091,6 +1150,9 @@ public class ZclProtocolCodeGenerator {
 
                     if ("Calendar".equals(attribute.dataTypeClass)) {
                         imports.add("java.util.Calendar");
+                    }
+                    if ("IeeeAddress".equals(attribute.dataTypeClass)) {
+                        imports.add("com.zsmartsystems.zigbee.IeeeAddress");
                     }
                 }
 
@@ -1131,9 +1193,12 @@ public class ZclProtocolCodeGenerator {
                 }
 
                 for (final Command command : commands) {
-                    imports.add(getClusterCommandPackage(packageRoot, cluster) + "." + command.nameUpperCamelCase);
+                    imports.add(getZclClusterCommandPackage(packageRoot, cluster) + "." + command.nameUpperCamelCase);
                 }
 
+                if (className.equals("ZclScenesCluster")) {
+                    System.out.println();
+                }
                 List<String> importList = new ArrayList<String>();
                 importList.addAll(imports);
                 Collections.sort(importList);
@@ -1430,7 +1495,7 @@ public class ZclProtocolCodeGenerator {
         return res;
     }
 
-    private static String getClusterCommandPackage(String packageRoot, Cluster cluster) {
+    private static String getZclClusterCommandPackage(String packageRoot, Cluster cluster) {
         return packageRoot + packageZclProtocolCommand + "." + cluster.clusterType.replace("_", "").toLowerCase();
     }
 
@@ -1525,6 +1590,9 @@ public class ZclProtocolCodeGenerator {
                             case "Long":
                             case "String":
                                 continue;
+                            case "IeeeAddress":
+                                out.println("import " + packageRootPrefix + "." + typeName + ";");
+                                continue;
                         }
 
                         out.println("import " + packageRootPrefix + packageName + "." + typeName + ";");
@@ -1591,6 +1659,7 @@ public class ZclProtocolCodeGenerator {
                     out.println("    public " + className + "() {");
                     // out.println(" setType(ZclCommandType." + command.commandType + ");");
                     // out.println(" commandId = " + command.commandId + ";");
+                    out.println("        clusterId = " + String.format("0x%04X", command.commandId) + ";");
                     // out.println(" commandDirection = "
                     // + (cluster.received.containsValue(command) ? "true" : "false") + ";");
 
@@ -1694,6 +1763,105 @@ public class ZclProtocolCodeGenerator {
                 }
             }
         }
+    }
+
+    private static String getZdoCommandTypeEnum(final Cluster cluster, final Command command, boolean received) {
+        return command.commandType + "(" + String.format("0x%04X", command.commandId) + ", "
+                + command.nameUpperCamelCase + ".class" + ")";
+    }
+
+    private static String getZdpClusterCommandPackage(String packageRoot, Cluster cluster) {
+        return packageRoot + packageZdpCommand + "." + cluster.clusterType.replace("_", "").toLowerCase();
+    }
+
+    private static void generateZdoCommandTypeEnumeration(Context context, String packageRootPrefix,
+            File sourceRootPath) throws IOException {
+        final String className = "ZdoCommandType";
+
+        final String packageRoot = packageRootPrefix + packageZdp;
+        final String packagePath = getPackagePath(sourceRootPath, packageRoot);
+        final File packageFile = getPackageFile(packagePath);
+
+        final PrintWriter out = getClassOut(packageFile, className);
+
+        out.println("package " + packageRoot + ";");
+        out.println();
+
+        Map<String, Command> commandEnum = new TreeMap<String, Command>();
+
+        final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
+        for (final Profile profile : profiles) {
+            final LinkedList<Cluster> clusters = new LinkedList<Cluster>(profile.clusters.values());
+            for (final Cluster cluster : clusters) {
+                // Brute force to get the commands in order!
+                for (int c = 0; c < 65535; c++) {
+                    if (cluster.received.get(c) != null) {
+                        out.println("import " + packageRootPrefix + packageZdpCommand + "."
+                                + cluster.received.get(c).nameUpperCamelCase + ";");
+
+                        commandEnum.put(getZdoCommandTypeEnum(cluster, cluster.received.get(c), true),
+                                cluster.received.get(c));
+                    }
+                }
+            }
+        }
+        out.println();
+
+        out.println();
+        outputClassJavaDoc(out);
+        out.println("public enum " + className + " {");
+        boolean first = true;
+        for (String command : commandEnum.keySet()) {
+            Command cmd = commandEnum.get(command);
+            if (cmd == null) {
+                System.out.println("Command without data: " + command);
+                continue;
+            }
+
+            if (!first) {
+                out.println(",");
+            }
+            first = false;
+            out.println("    /**");
+            out.println("     * " + cmd.commandLabel);
+            out.println("     * <p>");
+            out.println("     * See {@link " + cmd.nameUpperCamelCase + "}");
+            out.println("     */");
+            out.print("    " + command);
+        }
+        out.println(";");
+
+        out.println();
+        out.println("    private final int clusterId;");
+        out.println("    private final Class<? extends ZdoCommand> commandClass;");
+        out.println();
+        out.println("    " + className + "(final int clusterId, final Class<? extends ZdoCommand> commandClass) {");
+        out.println("        this.clusterId = clusterId;");
+        out.println("        this.commandClass = commandClass;");
+        // out.println(" this.label = label;");
+        out.println("    }");
+        out.println();
+
+        out.println("    public int getClusterId() {");
+        out.println("        return clusterId;");
+        out.println("    }");
+        out.println();
+        out.println("    public Class<? extends ZdoCommand> getCommandClass() {");
+        out.println("        return commandClass;");
+        out.println("    }");
+        out.println();
+        out.println("    public static ZdoCommandType getValueById(final int clusterId) {");
+        out.println("        for (final ZdoCommandType value : values()) {");
+        out.println("            if(value.clusterId == clusterId) {");
+        out.println("                return value;");
+        out.println("            }");
+        out.println("        }");
+        out.println("        return null;");
+        out.println("    }");
+        out.println("}");
+
+        out.flush();
+        out.close();
     }
 
     private static void generateZdpCommandTransactions(Context context, String packageRootPrefix, File sourceRootPath)

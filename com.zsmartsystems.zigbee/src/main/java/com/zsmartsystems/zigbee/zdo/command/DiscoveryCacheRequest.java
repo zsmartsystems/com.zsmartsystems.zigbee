@@ -17,6 +17,7 @@ public class DiscoveryCacheRequest extends ZdoRequest {
      * Default constructor.
      */
     public DiscoveryCacheRequest() {
+        clusterId = 0x0012;
     }
 
     @Override

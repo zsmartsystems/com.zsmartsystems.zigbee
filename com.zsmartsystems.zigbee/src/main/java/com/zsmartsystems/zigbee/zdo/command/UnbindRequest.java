@@ -4,6 +4,8 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Unbind Request value object class.
@@ -19,7 +21,7 @@ public class UnbindRequest extends ZdoRequest {
     /**
      * SrcAddress command message field.
      */
-    private Long srcAddress;
+    private IeeeAddress srcAddress;
 
     /**
      * SrcEndpoint command message field.
@@ -39,7 +41,7 @@ public class UnbindRequest extends ZdoRequest {
     /**
      * DstAddress command message field.
      */
-    private Long dstAddress;
+    private IeeeAddress dstAddress;
 
     /**
      * DstEndpoint command message field.
@@ -50,6 +52,7 @@ public class UnbindRequest extends ZdoRequest {
      * Default constructor.
      */
     public UnbindRequest() {
+        clusterId = 0x0022;
     }
 
     /**
@@ -57,7 +60,7 @@ public class UnbindRequest extends ZdoRequest {
      *
      * @return the SrcAddress
      */
-    public Long getSrcAddress() {
+    public IeeeAddress getSrcAddress() {
         return srcAddress;
     }
 
@@ -66,7 +69,7 @@ public class UnbindRequest extends ZdoRequest {
      *
      * @param srcAddress the SrcAddress
      */
-    public void setSrcAddress(final Long srcAddress) {
+    public void setSrcAddress(final IeeeAddress srcAddress) {
         this.srcAddress = srcAddress;
     }
 
@@ -129,7 +132,7 @@ public class UnbindRequest extends ZdoRequest {
      *
      * @return the DstAddress
      */
-    public Long getDstAddress() {
+    public IeeeAddress getDstAddress() {
         return dstAddress;
     }
 
@@ -138,7 +141,7 @@ public class UnbindRequest extends ZdoRequest {
      *
      * @param dstAddress the DstAddress
      */
-    public void setDstAddress(final Long dstAddress) {
+    public void setDstAddress(final IeeeAddress dstAddress) {
         this.dstAddress = dstAddress;
     }
 
@@ -172,11 +175,11 @@ public class UnbindRequest extends ZdoRequest {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        srcAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        srcAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         srcEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         clusterId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         dstAddrMode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        dstAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        dstAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         dstEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 

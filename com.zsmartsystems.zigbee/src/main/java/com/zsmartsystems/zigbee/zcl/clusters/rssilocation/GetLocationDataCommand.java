@@ -4,6 +4,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Get Location Data Command value object class.
@@ -27,7 +28,7 @@ public class GetLocationDataCommand extends ZclCommand {
     /**
      * Target Address command message field.
      */
-    private Long targetAddress;
+    private IeeeAddress targetAddress;
 
     /**
      * Default constructor.
@@ -80,7 +81,7 @@ public class GetLocationDataCommand extends ZclCommand {
      *
      * @return the Target Address
      */
-    public Long getTargetAddress() {
+    public IeeeAddress getTargetAddress() {
         return targetAddress;
     }
 
@@ -89,7 +90,7 @@ public class GetLocationDataCommand extends ZclCommand {
      *
      * @param targetAddress the Target Address
      */
-    public void setTargetAddress(final Long targetAddress) {
+    public void setTargetAddress(final IeeeAddress targetAddress) {
         this.targetAddress = targetAddress;
     }
 
@@ -104,7 +105,7 @@ public class GetLocationDataCommand extends ZclCommand {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         header = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
         numberResponses = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        targetAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        targetAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
     }
 
     @Override

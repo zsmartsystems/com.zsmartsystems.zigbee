@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
@@ -22,6 +23,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SendPingsCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SetAbsoluteLocationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SetDeviceConfigurationCommand;
 import com.zsmartsystems.zigbee.zcl.field.*;
+import com.zsmartsystems.zigbee.zcl.field.NeighborInformation;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -1042,10 +1044,10 @@ public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The Get Device Configuration Command
      *
-     * @param targetAddress {@link Long} Target Address
+     * @param targetAddress {@link IeeeAddress} Target Address
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getDeviceConfigurationCommand(Long targetAddress) {
+    public Future<CommandResult> getDeviceConfigurationCommand(IeeeAddress targetAddress) {
         GetDeviceConfigurationCommand command = new GetDeviceConfigurationCommand();
 
         // Set the fields
@@ -1059,10 +1061,10 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param header {@link Integer} Header
      * @param numberResponses {@link Integer} Number Responses
-     * @param targetAddress {@link Long} Target Address
+     * @param targetAddress {@link IeeeAddress} Target Address
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getLocationDataCommand(Integer header, Integer numberResponses, Long targetAddress) {
+    public Future<CommandResult> getLocationDataCommand(Integer header, Integer numberResponses, IeeeAddress targetAddress) {
         GetLocationDataCommand command = new GetLocationDataCommand();
 
         // Set the fields
@@ -1076,7 +1078,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The RSSI Response
      *
-     * @param replyingDevice {@link Long} Replying Device
+     * @param replyingDevice {@link IeeeAddress} Replying Device
      * @param coordinate1 {@link Integer} Coordinate 1
      * @param coordinate2 {@link Integer} Coordinate 2
      * @param coordinate3 {@link Integer} Coordinate 3
@@ -1084,7 +1086,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param numberRssiMeasurements {@link Integer} Number RSSI Measurements
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> rssiResponse(Long replyingDevice, Integer coordinate1, Integer coordinate2, Integer coordinate3, Integer rssi, Integer numberRssiMeasurements) {
+    public Future<CommandResult> rssiResponse(IeeeAddress replyingDevice, Integer coordinate1, Integer coordinate2, Integer coordinate3, Integer rssi, Integer numberRssiMeasurements) {
         RssiResponse command = new RssiResponse();
 
         // Set the fields
@@ -1101,12 +1103,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The Send Pings Command
      *
-     * @param targetAddress {@link Long} Target Address
+     * @param targetAddress {@link IeeeAddress} Target Address
      * @param numberRssiMeasurements {@link Integer} Number RSSI Measurements
      * @param calculationPeriod {@link Integer} Calculation Period
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> sendPingsCommand(Long targetAddress, Integer numberRssiMeasurements, Integer calculationPeriod) {
+    public Future<CommandResult> sendPingsCommand(IeeeAddress targetAddress, Integer numberRssiMeasurements, Integer calculationPeriod) {
         SendPingsCommand command = new SendPingsCommand();
 
         // Set the fields
@@ -1120,13 +1122,13 @@ public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The Anchor Node Announce Command
      *
-     * @param anchorNodeAddress {@link Long} Anchor Node Address
+     * @param anchorNodeAddress {@link IeeeAddress} Anchor Node Address
      * @param coordinate1 {@link Integer} Coordinate 1
      * @param coordinate2 {@link Integer} Coordinate 2
      * @param coordinate3 {@link Integer} Coordinate 3
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> anchorNodeAnnounceCommand(Long anchorNodeAddress, Integer coordinate1, Integer coordinate2, Integer coordinate3) {
+    public Future<CommandResult> anchorNodeAnnounceCommand(IeeeAddress anchorNodeAddress, Integer coordinate1, Integer coordinate2, Integer coordinate3) {
         AnchorNodeAnnounceCommand command = new AnchorNodeAnnounceCommand();
 
         // Set the fields
@@ -1267,12 +1269,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The Report RSSI Measurements Command
      *
-     * @param reportingAddress {@link Long} Reporting Address
+     * @param reportingAddress {@link IeeeAddress} Reporting Address
      * @param numberOfNeighbors {@link Integer} Number of Neighbors
      * @param neighborsInformation {@link List<NeighborInformation>} Neighbors Information
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> reportRssiMeasurementsCommand(Long reportingAddress, Integer numberOfNeighbors, List<NeighborInformation> neighborsInformation) {
+    public Future<CommandResult> reportRssiMeasurementsCommand(IeeeAddress reportingAddress, Integer numberOfNeighbors, List<NeighborInformation> neighborsInformation) {
         ReportRssiMeasurementsCommand command = new ReportRssiMeasurementsCommand();
 
         // Set the fields
@@ -1286,10 +1288,10 @@ public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The Request Own Location Command
      *
-     * @param requestingAddress {@link Long} Requesting Address
+     * @param requestingAddress {@link IeeeAddress} Requesting Address
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> requestOwnLocationCommand(Long requestingAddress) {
+    public Future<CommandResult> requestOwnLocationCommand(IeeeAddress requestingAddress) {
         RequestOwnLocationCommand command = new RequestOwnLocationCommand();
 
         // Set the fields

@@ -38,6 +38,7 @@ public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
      * Default constructor.
      */
     public ExtendedSimpleDescriptorRequest() {
+        clusterId = 0x001D;
     }
 
     /**

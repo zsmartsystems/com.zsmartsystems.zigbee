@@ -43,11 +43,11 @@ public class EzspSingleResponseTransaction implements EzspTransaction {
     @Override
     public EmberStatus getStatus() {
         if (response == null) {
-            return EmberStatus.EMBED_UNKNOWN_STATUS;
+            return EmberStatus.UNKNOWN;
         }
 
         // TODO: Fix the response status!
-        return EmberStatus.EMBED_UNKNOWN_STATUS;
+        return EmberStatus.UNKNOWN;
     }
 
     @Override

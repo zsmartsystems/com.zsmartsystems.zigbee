@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.CurrentPowerModeType;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.PowerLevelType;
@@ -21,7 +19,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testSetPowerDescriptor() {
-        PowerDescriptor descriptor = new PowerDescriptor(1, 2, 4, 0xc0);
+        PowerDescriptor descriptor = new PowerDescriptor(1, 2, 4, 0xc);
         ZigBeeNode node = new ZigBeeNode();
         node.setPowerDescriptor(descriptor);
         assertEquals(CurrentPowerModeType.RECEIVER_ON_PERIODICALLY, node.getPowerDescriptor().getCurrentPowerMode());

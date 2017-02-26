@@ -26,6 +26,7 @@ public class BackupBindTableResponse extends ZdoResponse {
      * Default constructor.
      */
     public BackupBindTableResponse() {
+        clusterId = 0x8027;
     }
 
     @Override

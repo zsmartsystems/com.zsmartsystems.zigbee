@@ -28,6 +28,7 @@ public class NodeDescriptorRequest extends ZdoRequest implements CommandResponse
      * Default constructor.
      */
     public NodeDescriptorRequest() {
+        clusterId = 0x0002;
     }
 
     /**

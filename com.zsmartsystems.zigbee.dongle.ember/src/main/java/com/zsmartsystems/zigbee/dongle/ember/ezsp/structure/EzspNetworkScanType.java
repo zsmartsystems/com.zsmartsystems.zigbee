@@ -27,12 +27,12 @@ public enum EzspNetworkScanType {
     /**
      * An energy scan scans each channel for its RSSI value.
      */
-    EZSP_ENERGY_SCAN(0),
+    EZSP_ENERGY_SCAN(0x0000),
 
     /**
      * An active scan scans each channel for available networks.
      */
-    EZSP_ACTIVE_SCAN(1);
+    EZSP_ACTIVE_SCAN(0x0001);
 
     /**
      * A mapping between the integer code and its corresponding type to

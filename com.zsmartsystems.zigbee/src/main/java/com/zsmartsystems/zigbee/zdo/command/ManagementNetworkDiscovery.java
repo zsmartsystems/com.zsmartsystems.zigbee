@@ -34,6 +34,7 @@ public class ManagementNetworkDiscovery extends ZdoResponse {
      * Default constructor.
      */
     public ManagementNetworkDiscovery() {
+        clusterId = 0x0030;
     }
 
     /**

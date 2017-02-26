@@ -17,6 +17,7 @@ public class ManagementLeaveResponse extends ZdoResponse {
      * Default constructor.
      */
     public ManagementLeaveResponse() {
+        clusterId = 0x8034;
     }
 
     @Override

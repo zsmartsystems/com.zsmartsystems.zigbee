@@ -16,6 +16,7 @@ public class CacheRequest extends ZdoRequest {
      * Default constructor.
      */
     public CacheRequest() {
+        clusterId = 0x0037;
     }
 
     @Override

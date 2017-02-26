@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
 import com.zsmartsystems.zigbee.zdo.command.BindRequest;
@@ -24,11 +25,11 @@ public class ZdoResponseMatcherTest {
         ZdoRequest zdoCommand = new BindRequest();
         BindResponse zdoResponse = new BindResponse();
 
-        zdoCommand.setDestinationAddress(1234);
-        zdoResponse.setSourceAddress(1234);
+        zdoCommand.setDestinationAddress(new ZigBeeDeviceAddress(1234));
+        zdoResponse.setSourceAddress(new ZigBeeDeviceAddress(1234));
         assertTrue(matcher.isMatch(zdoCommand, zdoResponse));
 
-        zdoResponse.setSourceAddress(5678);
+        zdoResponse.setSourceAddress(new ZigBeeDeviceAddress(5678));
         assertFalse(matcher.isMatch(zdoCommand, zdoResponse));
 
         ZclCommand zclResponse = new OffCommand();

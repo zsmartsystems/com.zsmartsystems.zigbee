@@ -25,6 +25,7 @@ public class ManagementPermitJoiningResponse extends ZdoResponse {
      * Default constructor.
      */
     public ManagementPermitJoiningResponse() {
+        clusterId = 0x8036;
     }
 
     @Override

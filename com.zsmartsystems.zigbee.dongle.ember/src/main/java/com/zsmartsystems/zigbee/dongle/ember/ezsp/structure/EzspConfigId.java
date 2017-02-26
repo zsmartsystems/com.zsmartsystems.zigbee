@@ -33,7 +33,7 @@ public enum EzspConfigId {
      * resulting count will be the largest whole number of packet buffers that can fit into the
      * available memory.
      */
-    EZSP_CONFIG_PACKET_BUFFER_COUNT(1),
+    EZSP_CONFIG_PACKET_BUFFER_COUNT(0x0001),
 
     /**
      * This is a bitmask that controls which incoming ZDO request messages are passed to the
@@ -42,7 +42,7 @@ public enum EzspConfigId {
      * application must check the APS options bitfield within the incomingMessageHandler
      * callback to see if the EMBER_APS_OPTION_ZDO_RESPONSE_REQUIRED flag is set.
      */
-    EZSP_CONFIG_APPLICATION_ZDO_FLAGS(42);
+    EZSP_CONFIG_APPLICATION_ZDO_FLAGS(0x002A);
 
     /**
      * A mapping between the integer code and its corresponding type to

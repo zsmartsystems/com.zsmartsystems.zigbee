@@ -19,6 +19,7 @@ public class RemoveNodeCache extends ZdoResponse {
      * Default constructor.
      */
     public RemoveNodeCache() {
+        clusterId = 0x801B;
     }
 
     @Override

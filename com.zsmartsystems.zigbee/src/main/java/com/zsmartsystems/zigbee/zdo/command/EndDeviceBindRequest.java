@@ -6,6 +6,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 import java.util.List;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * End Device Bind Request value object class.
@@ -27,7 +28,7 @@ public class EndDeviceBindRequest extends ZdoRequest {
     /**
      * SrcAddress command message field.
      */
-    private Long srcAddress;
+    private IeeeAddress srcAddress;
 
     /**
      * SrcEndpoint command message field.
@@ -53,6 +54,7 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Default constructor.
      */
     public EndDeviceBindRequest() {
+        clusterId = 0x0020;
     }
 
     /**
@@ -78,7 +80,7 @@ public class EndDeviceBindRequest extends ZdoRequest {
      *
      * @return the SrcAddress
      */
-    public Long getSrcAddress() {
+    public IeeeAddress getSrcAddress() {
         return srcAddress;
     }
 
@@ -87,7 +89,7 @@ public class EndDeviceBindRequest extends ZdoRequest {
      *
      * @param srcAddress the SrcAddress
      */
-    public void setSrcAddress(final Long srcAddress) {
+    public void setSrcAddress(final IeeeAddress srcAddress) {
         this.srcAddress = srcAddress;
     }
 
@@ -176,7 +178,7 @@ public class EndDeviceBindRequest extends ZdoRequest {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         bindingTarget = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        srcAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        srcAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         srcEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         profileId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         inClusterList = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_CLUSTERID);

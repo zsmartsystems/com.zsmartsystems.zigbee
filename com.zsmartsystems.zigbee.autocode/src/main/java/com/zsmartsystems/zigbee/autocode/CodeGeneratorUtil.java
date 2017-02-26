@@ -36,9 +36,8 @@ public class CodeGeneratorUtil {
     }
 
     public static String labelToUpperCamelCase(String value) {
-        return WordUtils.capitalizeFully(
-                splitCamelCase(value).replace("-", " ").replace("/", " ").replace("(", " ").replace(")", " "),
-                new char[] { ' ' }).replaceAll(" ", "");
+        return WordUtils.capitalizeFully(splitCamelCase(value).replace("-", " ").replace("_", " ").replace("/", " ")
+                .replace("(", " ").replace(")", " "), new char[] { ' ' }).replaceAll(" ", "");
     }
 
     public static String upperCamelCaseToLowerCamelCase(String value) {

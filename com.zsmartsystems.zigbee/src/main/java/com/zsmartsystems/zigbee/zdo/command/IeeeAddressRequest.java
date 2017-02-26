@@ -24,9 +24,20 @@ public class IeeeAddressRequest extends ZdoRequest implements CommandResponseMat
     private Integer nwkAddrOfInterest;
 
     /**
+     * RequestType command message field.
+     */
+    private Integer requestType;
+
+    /**
+     * StartIndex command message field.
+     */
+    private Integer startIndex;
+
+    /**
      * Default constructor.
      */
     public IeeeAddressRequest() {
+        clusterId = 0x0001;
     }
 
     /**
@@ -47,14 +58,54 @@ public class IeeeAddressRequest extends ZdoRequest implements CommandResponseMat
         this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
 
+    /**
+     * Gets RequestType.
+     *
+     * @return the RequestType
+     */
+    public Integer getRequestType() {
+        return requestType;
+    }
+
+    /**
+     * Sets RequestType.
+     *
+     * @param requestType the RequestType
+     */
+    public void setRequestType(final Integer requestType) {
+        this.requestType = requestType;
+    }
+
+    /**
+     * Gets StartIndex.
+     *
+     * @return the StartIndex
+     */
+    public Integer getStartIndex() {
+        return startIndex;
+    }
+
+    /**
+     * Sets StartIndex.
+     *
+     * @param startIndex the StartIndex
+     */
+    public void setStartIndex(final Integer startIndex) {
+        this.startIndex = startIndex;
+    }
+
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
+        serializer.serialize(requestType, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(startIndex, ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        requestType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override
@@ -77,6 +128,10 @@ public class IeeeAddressRequest extends ZdoRequest implements CommandResponseMat
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);
+        builder.append(", requestType=");
+        builder.append(requestType);
+        builder.append(", startIndex=");
+        builder.append(startIndex);
         return builder.toString();
     }
 

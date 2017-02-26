@@ -4,6 +4,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Anchor Node Announce Command value object class.
@@ -17,7 +18,7 @@ public class AnchorNodeAnnounceCommand extends ZclCommand {
     /**
      * Anchor Node Address command message field.
      */
-    private Long anchorNodeAddress;
+    private IeeeAddress anchorNodeAddress;
 
     /**
      * Coordinate 1 command message field.
@@ -49,7 +50,7 @@ public class AnchorNodeAnnounceCommand extends ZclCommand {
      *
      * @return the Anchor Node Address
      */
-    public Long getAnchorNodeAddress() {
+    public IeeeAddress getAnchorNodeAddress() {
         return anchorNodeAddress;
     }
 
@@ -58,7 +59,7 @@ public class AnchorNodeAnnounceCommand extends ZclCommand {
      *
      * @param anchorNodeAddress the Anchor Node Address
      */
-    public void setAnchorNodeAddress(final Long anchorNodeAddress) {
+    public void setAnchorNodeAddress(final IeeeAddress anchorNodeAddress) {
         this.anchorNodeAddress = anchorNodeAddress;
     }
 
@@ -126,7 +127,7 @@ public class AnchorNodeAnnounceCommand extends ZclCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        anchorNodeAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        anchorNodeAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         coordinate1 = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
         coordinate2 = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
         coordinate3 = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);

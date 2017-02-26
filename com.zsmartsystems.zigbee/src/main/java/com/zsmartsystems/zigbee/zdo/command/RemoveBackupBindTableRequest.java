@@ -18,6 +18,7 @@ public class RemoveBackupBindTableRequest extends ZdoRequest {
      * Default constructor.
      */
     public RemoveBackupBindTableRequest() {
+        clusterId = 0x0026;
     }
 
     @Override

@@ -17,6 +17,7 @@ public class ManagementBindResponse extends ZdoResponse {
      * Default constructor.
      */
     public ManagementBindResponse() {
+        clusterId = 0x8033;
     }
 
     @Override

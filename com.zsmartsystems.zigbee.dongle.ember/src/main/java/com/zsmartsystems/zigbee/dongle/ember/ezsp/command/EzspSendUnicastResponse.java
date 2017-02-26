@@ -45,11 +45,11 @@ public class EzspSendUnicastResponse extends EzspFrameResponse {
     public static int FRAME_ID = 0x34;
 
     /**
-     * EMBER_SUCCESS if the binding was removed from the table and any other status if not.
+     * An EmberStatus value indicating success or the reason for failure.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      */
-    private EmberStatus policyDecision;
+    private EmberStatus status;
 
     /**
      * The sequence number that will be used when this message is transmitted.
@@ -66,28 +66,28 @@ public class EzspSendUnicastResponse extends EzspFrameResponse {
         super(inputBuffer);
 
         // Deserialize the fields
-        policyDecision = deserializer.deserializeEmberStatus();
+        status = deserializer.deserializeEmberStatus();
         sequence = deserializer.deserializeUInt8();
     }
 
     /**
-     * EMBER_SUCCESS if the binding was removed from the table and any other status if not.
+     * An EmberStatus value indicating success or the reason for failure.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      *
-     * @return the current policyDecision as {@link EmberStatus}
+     * @return the current status as {@link EmberStatus}
      */
-    public EmberStatus getPolicyDecision() {
-        return policyDecision;
+    public EmberStatus getStatus() {
+        return status;
     }
 
     /**
-     * EMBER_SUCCESS if the binding was removed from the table and any other status if not.
+     * An EmberStatus value indicating success or the reason for failure.
      *
-     * @param policyDecision the policyDecision to set as {@link EmberStatus}
+     * @param status the status to set as {@link EmberStatus}
      */
-    public void setPolicyDecision(EmberStatus policyDecision) {
-        this.policyDecision = policyDecision;
+    public void setStatus(EmberStatus status) {
+        this.status = status;
     }
 
     /**
@@ -113,8 +113,8 @@ public class EzspSendUnicastResponse extends EzspFrameResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspSendUnicastResponse [policyDecision=");
-        builder.append(policyDecision);
+        builder.append("EzspSendUnicastResponse [status=");
+        builder.append(status);
         builder.append(", sequence=");
         builder.append(sequence);
         builder.append("]");
