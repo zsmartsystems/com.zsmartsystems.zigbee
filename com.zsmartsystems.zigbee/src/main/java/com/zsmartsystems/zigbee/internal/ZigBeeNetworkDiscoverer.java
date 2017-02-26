@@ -274,7 +274,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
             // Request extended response, start index for associated list is 0
             final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
             ieeeAddressRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
-            ieeeAddressRequest.setRequestType(0); // No associated devices
+            ieeeAddressRequest.setRequestType(1); // No associated devices
             ieeeAddressRequest.setStartIndex(0);
             ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
             CommandResult response = networkManager.unicast(ieeeAddressRequest, ieeeAddressRequest).get();

@@ -27,10 +27,6 @@ public class SimpleDescriptor {
 
     private List<Integer> outputClusterList;
 
-    public SimpleDescriptor() {
-
-    }
-
     /**
      * Deserialise the contents of the structure.
      *

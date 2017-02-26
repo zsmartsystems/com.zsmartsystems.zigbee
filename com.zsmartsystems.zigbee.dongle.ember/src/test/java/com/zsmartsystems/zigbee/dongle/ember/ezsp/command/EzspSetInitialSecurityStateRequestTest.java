@@ -36,7 +36,7 @@ public class EzspSetInitialSecurityStateRequestTest extends EzspFrameTest {
         request.setSequenceNumber(7);
         assertTrue(Arrays.equals(
                 getPacketData(
-                        "07 00 68 BB 00 00 00 00 00 00 00 00 00 00 00 00 00 00 BB AA 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AA 00 EF CD AB 90 78 56 34 12"),
+                        "07 00 68 03 BB 00 00 00 00 00 00 00 00 00 00 00 00 00 00 BB AA 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AA 00 EF CD AB 90 78 56 34 12"),
                 request.serialize()));
     }
 }

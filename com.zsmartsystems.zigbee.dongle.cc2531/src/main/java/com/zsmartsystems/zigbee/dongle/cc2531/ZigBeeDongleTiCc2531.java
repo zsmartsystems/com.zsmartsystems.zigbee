@@ -77,6 +77,7 @@ import com.zsmartsystems.zigbee.zdo.command.UnbindResponse;
 import com.zsmartsystems.zigbee.zdo.command.UserDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.descriptors.SimpleDescriptor;
 
 /**
  * ZigBee Dongle TI implementation for the CC2531 processor.
@@ -370,25 +371,28 @@ public class ZigBeeDongleTiCc2531
             final ZDO_SIMPLE_DESC_RSP message = (ZDO_SIMPLE_DESC_RSP) packet;
 
             final SimpleDescriptorResponse command = new SimpleDescriptorResponse();
+            SimpleDescriptor simpleDescriptor = new SimpleDescriptor();
             command.setSourceAddress(new ZigBeeDeviceAddress(message.SrcAddress.get16BitValue()));
             command.setStatus(message.Status);
-            command.setApplicationProfileId(message.getProfileId() & 0xffff);
-            command.setApplicationDeviceId((int) message.getDeviceId());
-            command.setApplicationDeviceVersion((int) message.getDeviceVersion());
+            command.setSimpleDescriptor(simpleDescriptor);
             command.setNwkAddrOfInterest(message.nwkAddr.get16BitValue());
-            command.setEndpoint(message.getEndPoint());
             final short[] inputClusterShorts = message.getInputClustersList();
             final List<Integer> inputClusters = new ArrayList<Integer>(message.getInputClustersCount());
             for (int i = 0; i < message.getInputClustersCount(); i++) {
                 inputClusters.add((int) inputClusterShorts[i]);
             }
-            command.setApplicationInputClusters(inputClusters);
+            simpleDescriptor.setInputClusterList(inputClusters);
             final short[] outputClusterShorts = message.getOutputClustersList();
             final List<Integer> outputClusters = new ArrayList<Integer>(message.getOutputClustersCount());
             for (int i = 0; i < message.getOutputClustersCount(); i++) {
                 outputClusters.add((int) outputClusterShorts[i]);
             }
-            command.setApplicationOutputClusters(outputClusters);
+            simpleDescriptor.setOutputClusterList(outputClusters);
+
+            simpleDescriptor.setProfileId(message.getProfileId() & 0xffff);
+            simpleDescriptor.setDeviceId(message.getDeviceId());
+            simpleDescriptor.setDeviceVersion(message.getDeviceVersion());
+            simpleDescriptor.setEndpoint(message.getEndPoint());
 
             zigbeeNetworkReceive.receiveZdoCommand(command);
             return;
