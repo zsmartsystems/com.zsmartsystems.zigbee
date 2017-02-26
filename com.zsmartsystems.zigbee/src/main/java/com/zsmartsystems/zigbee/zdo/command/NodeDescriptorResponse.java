@@ -94,6 +94,8 @@ public class NodeDescriptorResponse extends ZdoResponse {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
         serializer.serialize(nodeDescriptor, ZclDataType.NODE_DESCRIPTOR);
@@ -101,7 +103,13 @@ public class NodeDescriptorResponse extends ZdoResponse {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        if (status != 0) {
+            // Don't read the full response if we have an error
+            return;
+        }
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         nodeDescriptor = (NodeDescriptor) deserializer.deserialize(ZclDataType.NODE_DESCRIPTOR);
     }

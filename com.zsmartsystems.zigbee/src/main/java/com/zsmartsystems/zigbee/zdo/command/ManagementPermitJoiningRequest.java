@@ -76,12 +76,16 @@ public class ManagementPermitJoiningRequest extends ZdoRequest {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(permitDuration, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(tcSignificance, ZclDataType.BOOLEAN);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         permitDuration = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         tcSignificance = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
     }

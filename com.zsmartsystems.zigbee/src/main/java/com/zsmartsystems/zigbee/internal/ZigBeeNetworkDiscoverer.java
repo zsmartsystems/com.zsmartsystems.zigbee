@@ -31,6 +31,7 @@ import com.zsmartsystems.zigbee.zdo.command.PowerDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.PowerDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
+import com.zsmartsystems.zigbee.zdo.descriptors.SimpleDescriptor;
 
 /**
  * {@link ZigBeeNetworkDiscoverer} is used to discover devices in the network.
@@ -477,26 +478,27 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     private void addOrUpdateDevice(final IeeeAddressResponse ieeeAddressResponse,
             final SimpleDescriptorResponse simpleDescriptorResponse) {
         final ZigBeeDevice device;
+        final SimpleDescriptor simpleDescriptor = simpleDescriptorResponse.getSimpleDescriptor();
         final boolean newDevice = networkManager.getDevice(new ZigBeeDeviceAddress(
-                ieeeAddressResponse.getNwkAddrRemoteDev(), simpleDescriptorResponse.getEndpoint())) == null;
+                ieeeAddressResponse.getNwkAddrRemoteDev(), simpleDescriptor.getEndpoint())) == null;
 
         if (newDevice) {
             device = new ZigBeeDevice(networkManager);
         } else {
-            device = networkManager.getDevice(new ZigBeeDeviceAddress(ieeeAddressResponse.getNwkAddrRemoteDev(),
-                    simpleDescriptorResponse.getEndpoint()));
+            device = networkManager.getDevice(
+                    new ZigBeeDeviceAddress(ieeeAddressResponse.getNwkAddrRemoteDev(), simpleDescriptor.getEndpoint()));
         }
 
         ZigBeeDeviceAddress networkAddress = new ZigBeeDeviceAddress(ieeeAddressResponse.getNwkAddrRemoteDev(),
-                simpleDescriptorResponse.getEndpoint());
+                simpleDescriptor.getEndpoint());
 
         device.setIeeeAddress(ieeeAddressResponse.getIeeeAddrRemoteDev());
         device.setDeviceAddress(networkAddress);
-        device.setProfileId(simpleDescriptorResponse.getApplicationProfileId());
-        device.setDeviceId(simpleDescriptorResponse.getApplicationDeviceId());
-        device.setDeviceVersion(simpleDescriptorResponse.getApplicationDeviceVersion());
-        device.setInputClusterIds(simpleDescriptorResponse.getApplicationInputClusters());
-        device.setOutputClusterIds(simpleDescriptorResponse.getApplicationOutputClusters());
+        device.setProfileId(simpleDescriptor.getProfileId());
+        device.setDeviceId(simpleDescriptor.getDeviceId());
+        device.setDeviceVersion(simpleDescriptor.getDeviceVersion());
+        device.setInputClusterIds(simpleDescriptor.getInputClusterList());
+        device.setOutputClusterIds(simpleDescriptor.getOutputClusterList());
 
         if (newDevice) {
             networkManager.addDevice(device);

@@ -57,7 +57,7 @@ import com.zsmartsystems.zigbee.zdo.command.DiscoveryStoreResponse;
 import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorStoreResponse;
 import com.zsmartsystems.zigbee.zdo.command.PowerDescriptorStoreResponse;
 import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointStoreResponse;
-import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorStoreREsponse;
+import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorStoreResponse;
 import com.zsmartsystems.zigbee.zdo.command.RemoveNodeCache;
 import com.zsmartsystems.zigbee.zdo.command.FindNodeCacheResponse;
 import com.zsmartsystems.zigbee.zdo.command.ExtendedSimpleDescriptorResponse;
@@ -514,11 +514,11 @@ public enum ZdoCommandType {
      */
     SIMPLE_DESCRIPTOR_STORE(0x001A, SimpleDescriptorStore.class),
     /**
-     * Simple Descriptor Store REsponse
+     * Simple Descriptor Store Response
      * <p>
-     * See {@link SimpleDescriptorStoreREsponse}
+     * See {@link SimpleDescriptorStoreResponse}
      */
-    SIMPLE_DESCRIPTOR_STORE_RESPONSE(0x801A, SimpleDescriptorStoreREsponse.class),
+    SIMPLE_DESCRIPTOR_STORE_RESPONSE(0x801A, SimpleDescriptorStoreResponse.class),
     /**
      * Store Backup Bind Entry Request
      * <p>

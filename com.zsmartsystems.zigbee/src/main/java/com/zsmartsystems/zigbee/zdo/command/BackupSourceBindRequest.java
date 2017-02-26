@@ -119,6 +119,8 @@ public class BackupSourceBindRequest extends ZdoRequest {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(sourceTableEntries, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(startIndex, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(sourceTableListCount, ZclDataType.UNSIGNED_16_BIT_INTEGER);
@@ -127,6 +129,8 @@ public class BackupSourceBindRequest extends ZdoRequest {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         sourceTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         sourceTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);

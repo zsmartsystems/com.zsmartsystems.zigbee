@@ -96,6 +96,8 @@ public class IeeeAddressRequest extends ZdoRequest implements CommandResponseMat
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
         serializer.serialize(requestType, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(startIndex, ZclDataType.UNSIGNED_8_BIT_INTEGER);
@@ -103,6 +105,8 @@ public class IeeeAddressRequest extends ZdoRequest implements CommandResponseMat
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         requestType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);

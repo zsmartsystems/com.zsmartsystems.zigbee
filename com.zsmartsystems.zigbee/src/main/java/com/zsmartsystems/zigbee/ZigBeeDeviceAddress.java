@@ -1,5 +1,7 @@
 package com.zsmartsystems.zigbee;
 
+import java.util.Objects;
+
 /**
  * Defines a unicast ZigBee device address - extends {@link ZigBeeAddress}.
  * <p>
@@ -82,6 +84,11 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
      */
     public void setEndpoint(final int endpoint) {
         this.endpoint = endpoint;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address, endpoint);
     }
 
     @Override

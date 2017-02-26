@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
 
 /**
@@ -67,6 +70,8 @@ public class ZigBeeDeviceAddressTest {
         assertTrue(address1.equals(address2));
         ZigBeeDeviceAddress address3 = new ZigBeeDeviceAddress("25001/33");
         assertFalse(address1.equals(address3));
+        ZigBeeDeviceAddress address4 = new ZigBeeDeviceAddress(25000, 33);
+        assertTrue(address1.equals(address4));
     }
 
     @Test
@@ -97,5 +102,20 @@ public class ZigBeeDeviceAddressTest {
     public void testToString() {
         ZigBeeDeviceAddress address = new ZigBeeDeviceAddress("25000/33");
         assertEquals("61A8/33", address.toString());
+    }
+
+    @Test
+    public void testHashRemove() {
+        ZigBeeDeviceAddress address1 = new ZigBeeDeviceAddress("25000/33");
+        ZigBeeDeviceAddress address2 = new ZigBeeDeviceAddress("25000/33");
+        final Set<ZigBeeDeviceAddress> set = new HashSet<ZigBeeDeviceAddress>();
+        set.add(address1);
+        set.add(address2);
+
+        assertEquals(1, set.size());
+        assertTrue(set.contains(address1));
+        assertTrue(set.contains(address2));
+        set.remove(address2);
+        assertEquals(0, set.size());
     }
 }

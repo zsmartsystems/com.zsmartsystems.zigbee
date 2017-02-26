@@ -143,6 +143,8 @@ public class NetworkAddressResponse extends ZdoResponse {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(ieeeAddrRemoteDev, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(nwkAddrRemoteDev, ZclDataType.NWK_ADDRESS);
@@ -153,7 +155,13 @@ public class NetworkAddressResponse extends ZdoResponse {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        if (status != 0) {
+            // Don't read the full response if we have an error
+            return;
+        }
         ieeeAddrRemoteDev = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         nwkAddrRemoteDev = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         numAssocDev = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);

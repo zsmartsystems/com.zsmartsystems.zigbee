@@ -1,7 +1,7 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
@@ -71,6 +71,8 @@ public class PowerDescriptorResponse extends ZdoResponse {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
         serializer.serialize(powerDescriptor, ZclDataType.POWER_DESCRIPTOR);
@@ -78,7 +80,13 @@ public class PowerDescriptorResponse extends ZdoResponse {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        if (status != 0) {
+            // Don't read the full response if we have an error
+            return;
+        }
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         powerDescriptor = (PowerDescriptor) deserializer.deserialize(ZclDataType.POWER_DESCRIPTOR);
     }

@@ -74,12 +74,16 @@ public class SimpleDescriptorRequest extends ZdoRequest implements CommandRespon
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
         serializer.serialize(endpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         endpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
@@ -91,9 +95,6 @@ public class SimpleDescriptorRequest extends ZdoRequest implements CommandRespon
         }
 
         if (((SimpleDescriptorRequest) request).getNwkAddrOfInterest() != ((SimpleDescriptorResponse) response).getNwkAddrOfInterest()) {
-            return false;
-        }
-        if (((SimpleDescriptorRequest) request).getEndpoint() != ((SimpleDescriptorResponse) response).getEndpoint()) {
             return false;
         }
 

@@ -168,6 +168,8 @@ public class BindRequest extends ZdoRequest {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(srcAddress, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(srcEndpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(clusterId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
@@ -178,6 +180,8 @@ public class BindRequest extends ZdoRequest {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         srcAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         srcEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         clusterId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);

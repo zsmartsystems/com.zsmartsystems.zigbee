@@ -51,11 +51,15 @@ public class NodeDescriptorRequest extends ZdoRequest implements CommandResponse
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
     }
 

@@ -1,9 +1,13 @@
 package com.zsmartsystems.zigbee.serialization;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.descriptors.SimpleDescriptor;
 
 /**
  * The default implementation of the {@link ZigBeeDeserializer}
@@ -96,19 +100,19 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
             case N_X_NWK_ADDRESS:
             case N_X_UNSIGNED_16_BIT_INTEGER:
                 int cntN16 = Integer.valueOf((byte) payload[index++] & 0xFF);
-                Integer[] arrayN16 = new Integer[cntN16];
+                List<Integer> arrayN16 = new ArrayList<Integer>(cntN16);
                 for (int arrayIndex = 0; arrayIndex < cntN16; arrayIndex++) {
                     short s = (short) (payload[index++] + (payload[index++] << 8));
-                    arrayN16[arrayIndex] = Integer.valueOf(s);
+                    arrayN16.add(Integer.valueOf(s));
                 }
                 value[0] = arrayN16;
                 break;
             case N_X_ENDPOINT:
             case N_X_UNSIGNED_8_BIT_INTEGER:
                 int cntN8 = Integer.valueOf((byte) payload[index++] & 0xFF);
-                Integer[] arrayN8 = new Integer[cntN8];
+                List<Integer> arrayN8 = new ArrayList<Integer>(cntN8);
                 for (int arrayIndex = 0; arrayIndex < cntN8; arrayIndex++) {
-                    arrayN8[arrayIndex] = Integer.valueOf(payload[index++]);
+                    arrayN8.add(Integer.valueOf(payload[index++]));
                 }
                 value[0] = arrayN8;
                 break;
@@ -150,6 +154,11 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 PowerDescriptor powerDescriptor = new PowerDescriptor();
                 powerDescriptor.deserialize(this);
                 value[0] = powerDescriptor;
+                break;
+            case SIMPLE_DESCRIPTOR:
+                SimpleDescriptor simpleDescriptor = new SimpleDescriptor();
+                simpleDescriptor.deserialize(this);
+                value[0] = simpleDescriptor;
                 break;
             default:
                 throw new IllegalArgumentException("No reader defined in " + ZigBeeDeserializer.class.getSimpleName()

@@ -96,6 +96,8 @@ public class ManagementLeaveRequest extends ZdoRequest {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(deviceAddress, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(removeChildren, ZclDataType.BOOLEAN);
         serializer.serialize(rejoin, ZclDataType.BOOLEAN);
@@ -103,6 +105,8 @@ public class ManagementLeaveRequest extends ZdoRequest {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         deviceAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         removeChildren = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
         rejoin = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);

@@ -1706,6 +1706,8 @@ public class ZclProtocolCodeGenerator {
                         out.println();
                         out.println("    @Override");
                         out.println("    public void serialize(final ZclFieldSerializer serializer) {");
+                        out.println("        super.serialize(serializer);");
+                        out.println();
                         for (final Field field : fields) {
                             out.println("        serializer.serialize(" + field.nameLowerCamelCase + ", ZclDataType."
                                     + field.dataType + ");");
@@ -1715,9 +1717,17 @@ public class ZclProtocolCodeGenerator {
                         out.println();
                         out.println("    @Override");
                         out.println("    public void deserialize(final ZclFieldDeserializer deserializer) {");
+                        out.println("        super.deserialize(deserializer);");
+                        out.println();
                         for (final Field field : fields) {
                             out.println("        " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
                                     + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + ");");
+                            if (field.nameLowerCamelCase.equals("status")) {
+                                out.println("        if (status != 0) {");
+                                out.println("            // Don't read the full response if we have an error");
+                                out.println("            return;");
+                                out.println("        }");
+                            }
                         }
                         out.println("    }");
                     }

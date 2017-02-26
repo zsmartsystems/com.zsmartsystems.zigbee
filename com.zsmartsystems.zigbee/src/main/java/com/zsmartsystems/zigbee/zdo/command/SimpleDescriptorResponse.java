@@ -4,8 +4,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zdo.descriptors.SimpleDescriptor;
 
 /**
  * Simple Descriptor Response value object class.
@@ -28,34 +27,9 @@ public class SimpleDescriptorResponse extends ZdoResponse {
     private Integer length;
 
     /**
-     * Endpoint command message field.
+     * SimpleDescriptor command message field.
      */
-    private Integer endpoint;
-
-    /**
-     * Application Profile ID command message field.
-     */
-    private Integer applicationProfileId;
-
-    /**
-     * Application Device ID command message field.
-     */
-    private Integer applicationDeviceId;
-
-    /**
-     * Application Device Version command message field.
-     */
-    private Integer applicationDeviceVersion;
-
-    /**
-     * Application Input Clusters command message field.
-     */
-    private List<Integer> applicationInputClusters;
-
-    /**
-     * Application Output Clusters command message field.
-     */
-    private List<Integer> applicationOutputClusters;
+    private SimpleDescriptor simpleDescriptor;
 
     /**
      * Default constructor.
@@ -101,137 +75,45 @@ public class SimpleDescriptorResponse extends ZdoResponse {
     }
 
     /**
-     * Gets Endpoint.
+     * Gets SimpleDescriptor.
      *
-     * @return the Endpoint
+     * @return the SimpleDescriptor
      */
-    public Integer getEndpoint() {
-        return endpoint;
+    public SimpleDescriptor getSimpleDescriptor() {
+        return simpleDescriptor;
     }
 
     /**
-     * Sets Endpoint.
+     * Sets SimpleDescriptor.
      *
-     * @param endpoint the Endpoint
+     * @param simpleDescriptor the SimpleDescriptor
      */
-    public void setEndpoint(final Integer endpoint) {
-        this.endpoint = endpoint;
-    }
-
-    /**
-     * Gets Application Profile ID.
-     *
-     * @return the Application Profile ID
-     */
-    public Integer getApplicationProfileId() {
-        return applicationProfileId;
-    }
-
-    /**
-     * Sets Application Profile ID.
-     *
-     * @param applicationProfileId the Application Profile ID
-     */
-    public void setApplicationProfileId(final Integer applicationProfileId) {
-        this.applicationProfileId = applicationProfileId;
-    }
-
-    /**
-     * Gets Application Device ID.
-     *
-     * @return the Application Device ID
-     */
-    public Integer getApplicationDeviceId() {
-        return applicationDeviceId;
-    }
-
-    /**
-     * Sets Application Device ID.
-     *
-     * @param applicationDeviceId the Application Device ID
-     */
-    public void setApplicationDeviceId(final Integer applicationDeviceId) {
-        this.applicationDeviceId = applicationDeviceId;
-    }
-
-    /**
-     * Gets Application Device Version.
-     *
-     * @return the Application Device Version
-     */
-    public Integer getApplicationDeviceVersion() {
-        return applicationDeviceVersion;
-    }
-
-    /**
-     * Sets Application Device Version.
-     *
-     * @param applicationDeviceVersion the Application Device Version
-     */
-    public void setApplicationDeviceVersion(final Integer applicationDeviceVersion) {
-        this.applicationDeviceVersion = applicationDeviceVersion;
-    }
-
-    /**
-     * Gets Application Input Clusters.
-     *
-     * @return the Application Input Clusters
-     */
-    public List<Integer> getApplicationInputClusters() {
-        return applicationInputClusters;
-    }
-
-    /**
-     * Sets Application Input Clusters.
-     *
-     * @param applicationInputClusters the Application Input Clusters
-     */
-    public void setApplicationInputClusters(final List<Integer> applicationInputClusters) {
-        this.applicationInputClusters = applicationInputClusters;
-    }
-
-    /**
-     * Gets Application Output Clusters.
-     *
-     * @return the Application Output Clusters
-     */
-    public List<Integer> getApplicationOutputClusters() {
-        return applicationOutputClusters;
-    }
-
-    /**
-     * Sets Application Output Clusters.
-     *
-     * @param applicationOutputClusters the Application Output Clusters
-     */
-    public void setApplicationOutputClusters(final List<Integer> applicationOutputClusters) {
-        this.applicationOutputClusters = applicationOutputClusters;
+    public void setSimpleDescriptor(final SimpleDescriptor simpleDescriptor) {
+        this.simpleDescriptor = simpleDescriptor;
     }
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
         serializer.serialize(length, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(endpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(applicationProfileId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.serialize(applicationDeviceId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.serialize(applicationDeviceVersion, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(applicationInputClusters, ZclDataType.N_X_NWK_ADDRESS);
-        serializer.serialize(applicationOutputClusters, ZclDataType.N_X_NWK_ADDRESS);
+        serializer.serialize(simpleDescriptor, ZclDataType.SIMPLE_DESCRIPTOR);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        if (status != 0) {
+            // Don't read the full response if we have an error
+            return;
+        }
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         length = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        endpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        applicationProfileId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        applicationDeviceId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        applicationDeviceVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        applicationInputClusters = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_NWK_ADDRESS);
-        applicationOutputClusters = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_NWK_ADDRESS);
+        simpleDescriptor = (SimpleDescriptor) deserializer.deserialize(ZclDataType.SIMPLE_DESCRIPTOR);
     }
 
     @Override
@@ -245,18 +127,8 @@ public class SimpleDescriptorResponse extends ZdoResponse {
         builder.append(nwkAddrOfInterest);
         builder.append(", length=");
         builder.append(length);
-        builder.append(", endpoint=");
-        builder.append(endpoint);
-        builder.append(", applicationProfileId=");
-        builder.append(applicationProfileId);
-        builder.append(", applicationDeviceId=");
-        builder.append(applicationDeviceId);
-        builder.append(", applicationDeviceVersion=");
-        builder.append(applicationDeviceVersion);
-        builder.append(", applicationInputClusters=");
-        builder.append(applicationInputClusters);
-        builder.append(", applicationOutputClusters=");
-        builder.append(applicationOutputClusters);
+        builder.append(", simpleDescriptor=");
+        builder.append(simpleDescriptor);
         return builder.toString();
     }
 

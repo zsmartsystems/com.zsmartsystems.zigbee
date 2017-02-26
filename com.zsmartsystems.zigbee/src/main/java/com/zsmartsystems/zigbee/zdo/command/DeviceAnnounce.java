@@ -99,6 +99,8 @@ public class DeviceAnnounce extends ZdoResponse {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
         serializer.serialize(ieeeAddr, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(capability, ZclDataType.BITMAP_8_BIT);
@@ -106,6 +108,8 @@ public class DeviceAnnounce extends ZdoResponse {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         ieeeAddr = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         capability = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);

@@ -19,7 +19,7 @@ public class IeeeAddressResponseTest extends CommandTest {
     @Test
     public void testReceive() {
         // Short response - ie not extended
-        int[] packet = getPacketData("00 81 F0 F0 00 20 00 00 00 00 00 01");
+        int[] packet = getPacketData("00 00 81 F0 F0 00 20 00 00 00 00 00 01");
 
         IeeeAddressResponse addressResponse = new IeeeAddressResponse();
 

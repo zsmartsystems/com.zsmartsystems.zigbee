@@ -18,7 +18,7 @@ public class NodeDescriptorResponseTest extends CommandTest {
 
     @Test
     public void testReceive() {
-        int[] packet = getPacketData("00 00 00 00 40 8F CD AB 52 80 00 41 2A 80 00 00");
+        int[] packet = getPacketData("00 00 00 00 00 40 8F CD AB 52 80 00 41 2A 80 00 00");
 
         NodeDescriptorResponse descriptorResponse = new NodeDescriptorResponse();
 

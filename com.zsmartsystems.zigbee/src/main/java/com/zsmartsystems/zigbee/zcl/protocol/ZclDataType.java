@@ -50,6 +50,7 @@ public enum ZclDataType {
     N_X_IEEE_ADDRESS("N X IEEE Address", Long.class, 0x00, false),
     N_X_NWK_ADDRESS("N X NWK Address", Integer.class, 0x00, false),
     POWER_DESCRIPTOR("Power Descriptor", PowerDescriptor.class, 0x00, false),
+    SIMPLE_DESCRIPTOR("Simple Descriptor", SimpleDescriptor.class, 0x00, false),
     USER_DESCRIPTOR("User Descriptor", UserDescriptor.class, 0x00, false);
 
     private final String label;

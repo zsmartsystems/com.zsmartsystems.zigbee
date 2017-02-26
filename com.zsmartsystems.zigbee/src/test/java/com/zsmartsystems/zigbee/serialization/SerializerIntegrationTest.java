@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -25,13 +26,13 @@ public class SerializerIntegrationTest {
 
     @Test
     public void testDeserialize_N_X_UNSIGNED_8_BIT_INTEGER() {
-        Integer[] valIn = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+        List<Integer> valIn = Arrays.asList(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 });
         testSerializer(valIn, ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
     }
 
     @Test
     public void testDeserialize_N_X_UNSIGNED_16_BIT_INTEGER() {
-        Integer[] valIn = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+        List<Integer> valIn = Arrays.asList(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 });
         testSerializer(valIn, ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
     }
 
@@ -49,7 +50,7 @@ public class SerializerIntegrationTest {
 
     @Test
     public void testDeserialize_N_X_NWK_ADDRESS() {
-        Integer[] valIn = new Integer[] { 1111, 2222, 3333, 4444, 5555, 6666, 7777, 8888, 9999 };
+        List<Integer> valIn = Arrays.asList(new Integer[] { 1111, 2222, 3333, 4444, 5555, 6666, 7777, 8888, 9999 });
         testSerializer(valIn, ZclDataType.N_X_NWK_ADDRESS);
     }
 
@@ -129,7 +130,7 @@ public class SerializerIntegrationTest {
 
     @Test
     public void testSerialize_N_X_ENDPOINT() {
-        Integer[] valIn = new Integer[] { 1, 2, 3, 4, 3, 2, 1 };
+        List<Integer> valIn = Arrays.asList(new Integer[] { 1, 2, 3, 4, 3, 2, 1 });
         testSerializer(valIn, ZclDataType.N_X_ENDPOINT);
     }
 

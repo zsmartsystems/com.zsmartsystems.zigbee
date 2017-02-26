@@ -74,12 +74,16 @@ public class ManagementDirectJoinRequest extends ZdoRequest {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(deviceAddress, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(capabilityInformation, ZclDataType.BITMAP_8_BIT);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         deviceAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         capabilityInformation = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }

@@ -1,5 +1,7 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.CommandTest;
@@ -27,8 +29,10 @@ public class ActiveEndpointsResponseTest extends CommandTest {
 
         System.out.println(endpointsResponse);
 
-        // assertEquals(new IeeeAddress("0000002000F0F081"), addressResponse.getIeeeAddrRemoteDev());
-        // assertEquals(0x8001, (int) addressResponse.getClusterId());
-        // assertEquals(0, (int) addressResponse.getStatus());
+        assertEquals(1, endpointsResponse.getActiveEpList().size());
+        assertEquals(0x8005, (int) endpointsResponse.getClusterId());
+        assertEquals(0, (int) endpointsResponse.getStatus());
+        assertEquals(0, (int) endpointsResponse.getNwkAddrOfInterest());
+        assertEquals(1, (int) endpointsResponse.getActiveEpList().get(0));
     }
 }

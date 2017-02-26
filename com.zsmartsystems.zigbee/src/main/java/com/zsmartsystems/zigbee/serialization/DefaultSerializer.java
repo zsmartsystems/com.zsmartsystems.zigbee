@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.serialization;
 
 import java.util.Arrays;
+import java.util.List;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -81,19 +82,19 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 break;
             case N_X_NWK_ADDRESS:
             case N_X_UNSIGNED_16_BIT_INTEGER:
-                Integer[] intArray16 = (Integer[]) data;
-                buffer[length++] = intArray16.length;
-                for (int cnt = 0; cnt < intArray16.length; cnt++) {
-                    buffer[length++] = intArray16[cnt] & 0xFF;
-                    buffer[length++] = (intArray16[cnt] >> 8) & 0xFF;
+                List<Integer> intArray16 = (List<Integer>) data;
+                buffer[length++] = intArray16.size();
+                for (int value : intArray16) {
+                    buffer[length++] = value & 0xFF;
+                    buffer[length++] = (value >> 8) & 0xFF;
                 }
                 break;
             case N_X_ENDPOINT:
             case N_X_UNSIGNED_8_BIT_INTEGER:
-                Integer[] intArray8 = (Integer[]) data;
-                buffer[length++] = intArray8.length;
-                for (int cnt = 0; cnt < intArray8.length; cnt++) {
-                    buffer[length++] = intArray8[cnt] & 0xFF;
+                List<Integer> intArray8 = (List<Integer>) data;
+                buffer[length++] = intArray8.size();
+                for (int value : intArray8) {
+                    buffer[length++] = value & 0xFF;
                 }
                 break;
             case N_X_WRITE_ATTRIBUTE_RECORD:

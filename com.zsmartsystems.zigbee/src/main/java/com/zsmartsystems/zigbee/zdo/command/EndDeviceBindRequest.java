@@ -167,6 +167,8 @@ public class EndDeviceBindRequest extends ZdoRequest {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
         serializer.serialize(bindingTarget, ZclDataType.NWK_ADDRESS);
         serializer.serialize(srcAddress, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(srcEndpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
@@ -177,6 +179,8 @@ public class EndDeviceBindRequest extends ZdoRequest {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
         bindingTarget = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         srcAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         srcEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);

@@ -7,7 +7,7 @@ package com.zsmartsystems.zigbee;
  */
 public class CommandTest {
     protected int[] getPacketData(String stringData) {
-        String split[] = stringData.split(" ");
+        String split[] = stringData.trim().split(" ");
 
         int[] response = new int[split.length];
         int cnt = 0;

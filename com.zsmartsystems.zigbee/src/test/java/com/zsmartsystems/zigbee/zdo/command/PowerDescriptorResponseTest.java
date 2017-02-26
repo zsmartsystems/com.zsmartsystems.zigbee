@@ -21,8 +21,7 @@ public class PowerDescriptorResponseTest extends CommandTest {
 
     @Test
     public void testReceive() {
-        // int[] packet = getPacketData("00 00 00 00 10 C1");
-        int[] packet = getPacketData("00 00 00 10 C1");
+        int[] packet = getPacketData("00 00 00 00 10 C1");
 
         PowerDescriptorResponse descriptorResponse = new PowerDescriptorResponse();
 
