@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer;
 
 import java.util.Arrays;
+import java.util.Set;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
@@ -104,8 +105,11 @@ public class EzspSerializer {
         apsFrame.serialize(this);
     }
 
-    public void serializeEmberApsOption(EmberApsOption apsOption) {
-        int val = apsOption.getKey();
+    public void serializeEmberApsOption(Set<EmberApsOption> options) {
+        int val = 0;
+        for (EmberApsOption option : options) {
+            val += option.getKey();
+        }
         buffer[length++] = val & 0xFF;
         buffer[length++] = (val >> 8) & 0xFF;
     }

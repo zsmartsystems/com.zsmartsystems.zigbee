@@ -308,8 +308,18 @@ public class CommandGenerator extends ClassGenerator {
             out.println("     * <p>");
             out.println("     * EZSP type is <i>" + parameter.data_type + "</i> - Java type is {@link "
                     + getTypeClass(parameter.data_type) + "}");
+            if (parameter.multiple) {
+                out.println("     * Parameter allows multiple options so implemented as a {@link Set}.");
+            }
             out.println("     */");
-            out.println("    private " + getTypeClass(parameter.data_type) + " " + parameter.name + ";");
+            if (parameter.multiple) {
+                addImport("java.util.Set");
+                addImport("java.util.HashSet");
+                out.println("    private Set<" + getTypeClass(parameter.data_type) + "> " + parameter.name
+                        + " = new HashSet<" + getTypeClass(parameter.data_type) + ">();");
+            } else {
+                out.println("    private " + getTypeClass(parameter.data_type) + " " + parameter.name + ";");
+            }
         }
 
         out.println();
@@ -336,24 +346,59 @@ public class CommandGenerator extends ClassGenerator {
             out.println("     * EZSP type is <i>" + parameter.data_type + "</i> - Java type is {@link "
                     + getTypeClass(parameter.data_type) + "}");
             out.println("     *");
-            out.println("     * @return the current " + parameter.name + " as {@link "
-                    + getTypeClass(parameter.data_type) + "}");
+            if (parameter.multiple) {
+                out.println("     * @return the current " + parameter.name + " as {@link Set} of {@link "
+                        + getTypeClass(parameter.data_type) + "}");
+            } else {
+                out.println("     * @return the current " + parameter.name + " as {@link "
+                        + getTypeClass(parameter.data_type) + "}");
+            }
             out.println("     */");
-            out.println("    public " + getTypeClass(parameter.data_type) + " get"
-                    + upperCaseFirstCharacter(parameter.name) + "() {");
+            if (parameter.multiple) {
+                out.println("    public Set<" + getTypeClass(parameter.data_type) + "> get"
+                        + upperCaseFirstCharacter(parameter.name) + "() {");
+            } else {
+                out.println("    public " + getTypeClass(parameter.data_type) + " get"
+                        + upperCaseFirstCharacter(parameter.name) + "() {");
+            }
             out.println("        return " + parameter.name + ";");
             out.println("    }");
             out.println();
-            out.println("    /**");
-            outputWithLinebreak(out, "    ", parameter.description);
-            out.println("     *");
-            out.println("     * @param " + parameter.name + " the " + parameter.name + " to set as {@link "
-                    + getTypeClass(parameter.data_type) + "}");
-            out.println("     */");
-            out.println("    public void set" + upperCaseFirstCharacter(parameter.name) + "("
-                    + getTypeClass(parameter.data_type) + " " + parameter.name + ") {");
-            out.println("        this." + parameter.name + " = " + parameter.name + ";");
-            out.println("    }");
+
+            if (parameter.multiple) {
+                out.println("    /**");
+                outputWithLinebreak(out, "    ", parameter.description);
+                out.println("     *");
+                out.println("     * @param " + parameter.name + " the " + parameter.name
+                        + " to add to the {@link Set} as {@link " + getTypeClass(parameter.data_type) + "}");
+                out.println("     */");
+                out.println("    public void add" + upperCaseFirstCharacter(parameter.name) + "("
+                        + getTypeClass(parameter.data_type) + " " + parameter.name + ") {");
+                out.println("        this." + parameter.name + ".add(" + parameter.name + ");");
+                out.println("    }");
+                out.println();
+                out.println("    /**");
+                outputWithLinebreak(out, "    ", parameter.description);
+                out.println("     *");
+                out.println("     * @param " + parameter.name + " the " + parameter.name
+                        + " to remove to the {@link Set} as {@link " + getTypeClass(parameter.data_type) + "}");
+                out.println("     */");
+                out.println("    public void remove" + upperCaseFirstCharacter(parameter.name) + "("
+                        + getTypeClass(parameter.data_type) + " " + parameter.name + ") {");
+                out.println("        this." + parameter.name + ".remove(" + parameter.name + ");");
+                out.println("    }");
+            } else {
+                out.println("    /**");
+                outputWithLinebreak(out, "    ", parameter.description);
+                out.println("     *");
+                out.println("     * @param " + parameter.name + " the " + parameter.name + " to set as {@link "
+                        + getTypeClass(parameter.data_type) + "}");
+                out.println("     */");
+                out.println("    public void set" + upperCaseFirstCharacter(parameter.name) + "("
+                        + getTypeClass(parameter.data_type) + " " + parameter.name + ") {");
+                out.println("        this." + parameter.name + " = " + parameter.name + ";");
+                out.println("    }");
+            }
         }
 
         out.println();

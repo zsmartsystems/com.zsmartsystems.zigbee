@@ -308,6 +308,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     private boolean getNodeDescriptor(final int networkAddress) {
         try {
             final NodeDescriptorRequest nodeDescriptorRequest = new NodeDescriptorRequest();
+            nodeDescriptorRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
             nodeDescriptorRequest.setNwkAddrOfInterest(networkAddress);
             CommandResult response = networkManager.unicast(nodeDescriptorRequest, nodeDescriptorRequest).get();
 
@@ -337,6 +338,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     private boolean getPowerDescriptor(final int networkAddress) {
         try {
             final PowerDescriptorRequest powerDescriptorRequest = new PowerDescriptorRequest();
+            powerDescriptorRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
             powerDescriptorRequest.setNwkAddrOfInterest(networkAddress);
             CommandResult response = networkManager.unicast(powerDescriptorRequest, powerDescriptorRequest).get();
 
@@ -368,6 +370,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     private boolean getActiveEndpoints(final int networkAddress) {
         try {
             final ActiveEndpointsRequest activeEndpointsRequest = new ActiveEndpointsRequest();
+            activeEndpointsRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
             activeEndpointsRequest.setNwkAddrOfInterest(networkAddress);
             CommandResult response = networkManager.unicast(activeEndpointsRequest, activeEndpointsRequest).get();
 
@@ -401,6 +404,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     private boolean getSimpleDescriptor(final ZigBeeDeviceAddress deviceAddress) {
         try {
             final SimpleDescriptorRequest simpleDescriptorRequest = new SimpleDescriptorRequest();
+            simpleDescriptorRequest.setDestinationAddress(new ZigBeeDeviceAddress(deviceAddress.getAddress()));
             simpleDescriptorRequest.setNwkAddrOfInterest(deviceAddress.getAddress());
             simpleDescriptorRequest.setEndpoint(deviceAddress.getEndpoint());
             CommandResult response = networkManager.unicast(simpleDescriptorRequest, simpleDescriptorRequest).get();

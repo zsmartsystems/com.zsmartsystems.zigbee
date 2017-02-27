@@ -986,7 +986,7 @@
 			</parameter>
 		</response_parameters>
 	</command>
-												
+
 	<command>
 		<name>sendUnicast</name>
 		<id>0x34</id>
@@ -1037,7 +1037,58 @@
 			</parameter>
 		</response_parameters>
 	</command>
-														
+
+	<command>
+		<name>sendBroadcast</name>
+		<id>0x36</id>
+		<description>Sends a broadcast message as per the ZigBee specification.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>destination</name>
+				<description>The destination to which to send the broadcast. This must be one of the three ZigBee broadcast addresses.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberApsFrame</data_type>
+				<name>apsFrame</name>
+				<description>The APS frame which is to be added to the message.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>radius</name>
+				<description>The message will be delivered to all nodes within radius hops of the sender. A radius of zero is converted to EMBER_MAX_HOPS.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>messageTag</name>
+				<description>A value chosen by the Host. This value is used in the ezspMessageSentHandler response to refer to this message.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>messageLength</name>
+				<description>The length of the messageContents parameter in bytes.</description>
+				<auto_size>messageContents</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>messageContents</name>
+				<description>Content of the message.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sequence</name>
+				<description>The sequence number that will be used when this message is transmitted.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
 	<command>
 		<name>sendReply</name>
 		<id>0x39</id>
@@ -1511,7 +1562,7 @@
 				<description>The destination endpoint.</description>
 			</parameter>
 			<parameter>
-				<data_type>EmberApsOption</data_type>
+				<data_type multiple="true">EmberApsOption</data_type>
 				<name>options</name>
 				<description>A bitmask of options.</description>
 			</parameter>

@@ -57,7 +57,6 @@ public class EmberAutocoder {
     static Object processNode(Node node) {
         System.out.println("\nCurrent Element :" + node.getNodeName());
 
-        Element eElement = (Element) node;
         NodeList nodes = node.getChildNodes();
 
         switch (node.getNodeName()) {
@@ -125,6 +124,8 @@ public class EmberAutocoder {
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
                     if (nodes.item(temp).getNodeName().equals("data_type")) {
                         parameter.data_type = nodes.item(temp).getTextContent();
+                        Element dataTypeElement = (Element) nodes.item(temp);
+                        parameter.multiple = dataTypeElement.getAttribute("multiple").toLowerCase().equals("true");
                     }
                     if (nodes.item(temp).getNodeName().equals("name")) {
                         parameter.name = nodes.item(temp).getTextContent();

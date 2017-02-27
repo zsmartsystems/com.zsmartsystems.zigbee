@@ -1,6 +1,5 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -11,8 +10,6 @@ import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
@@ -20,54 +17,42 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 /**
  * @author Chris Jackson
  */
-public class EzspSendUnicastTest extends EzspFrameTest {
-
-    @Test
-    public void testReceive1() {
-        EzspSendUnicastResponse unicastResponse = new EzspSendUnicastResponse(getPacketData("02 80 34 00 9E"));
-
-        assertEquals(0x34, unicastResponse.getFrameId());
-        assertTrue(unicastResponse.isResponse());
-        assertEquals(EmberStatus.EMBER_SUCCESS, unicastResponse.getStatus());
-    }
+public class EzspSendBroadcastTest extends EzspFrameTest {
 
     @Test
     public void testSendPermitJoining() {
         ManagementPermitJoiningRequest permitJoining = new ManagementPermitJoiningRequest();
 
-        permitJoining.setDestinationAddress(new ZigBeeDeviceAddress(0x401C));
+        permitJoining.setDestinationAddress(new ZigBeeDeviceAddress(0xFFFC));
         permitJoining.setSourceAddress(new ZigBeeDeviceAddress(0));
-        permitJoining.setTcSignificance(false);
-        permitJoining.setPermitDuration(60);
+        permitJoining.setTcSignificance(true);
+        permitJoining.setPermitDuration(255);
 
         DefaultSerializer serializer = new DefaultSerializer();
         ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);
         permitJoining.serialize(fieldSerializer);
         int[] payload = serializer.getPayload();
 
-        EzspSendUnicastRequest emberUnicast = new EzspSendUnicastRequest();
+        EzspSendBroadcastRequest emberBroadcast = new EzspSendBroadcastRequest();
         EmberApsFrame apsFrame = new EmberApsFrame();
         apsFrame.setClusterId(permitJoining.getClusterId());
         apsFrame.setProfileId(0);
-        apsFrame.setSourceEndpoint(1);
+        apsFrame.setSourceEndpoint(0);
         apsFrame.setDestinationEndpoint(0);
-        apsFrame.setSequence(0x88);
+        apsFrame.setSequence(5);
         apsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_RETRY);
         apsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ADDRESS_DISCOVERY);
         apsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ROUTE_DISCOVERY);
-        apsFrame.setGroupId(0xffff);
+        apsFrame.setGroupId(0);
 
-        emberUnicast.setMessageTag(0x99);
-        emberUnicast.setSequenceNumber(0xaa);
-        emberUnicast.setType(EmberOutgoingMessageType.EMBER_OUTGOING_DIRECT);
-        emberUnicast.setApsFrame(apsFrame);
-        emberUnicast.setIndexOrDestination(permitJoining.getDestinationAddress().getAddress());
-        emberUnicast.setMessageContents(payload);
+        emberBroadcast.setMessageTag(5);
+        emberBroadcast.setSequenceNumber(5);
+        emberBroadcast.setApsFrame(apsFrame);
+        emberBroadcast.setDestination(permitJoining.getDestinationAddress().getAddress());
+        emberBroadcast.setMessageContents(payload);
+        emberBroadcast.setRadius(31);
 
-        int[] messageToSend = emberUnicast.serialize();
-
-        System.out.println(emberUnicast.toString());
-        System.out.println(Arrays.toString(messageToSend));
+        int[] messageToSend = emberBroadcast.serialize();
 
         String out = "";
         for (int c : messageToSend) {
@@ -75,8 +60,7 @@ public class EzspSendUnicastTest extends EzspFrameTest {
         }
         System.out.println(out);
 
-        // assertTrue(Arrays.equals(getPacketData("02 00 02 01 04 01 00 00 00 03 03 00 00 01 00 06 00 00 00 01 00 06
-        // 00"),
-        // messageToSend));
+        assertTrue(Arrays.equals(getPacketData("05 00 36 FC FF 00 00 36 00 00 00 40 11 00 00 05 1F 05 03 00 FF 01"),
+                messageToSend));
     }
 }

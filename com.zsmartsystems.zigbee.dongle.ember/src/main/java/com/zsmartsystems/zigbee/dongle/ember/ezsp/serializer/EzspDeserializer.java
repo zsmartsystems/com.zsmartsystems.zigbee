@@ -1,5 +1,8 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
@@ -172,9 +175,19 @@ public class EzspDeserializer {
         return new EmberApsFrame(this);
     }
 
-    public EmberApsOption deserializeEmberApsOption() {
-        // TODO this should be a list
-        return EmberApsOption.getEmberApsOption(deserializeUInt16());
+    public Set<EmberApsOption> deserializeEmberApsOption() {
+        int val = deserializeUInt16();
+        Set<EmberApsOption> options = new HashSet<EmberApsOption>();
+        for (EmberApsOption option : EmberApsOption.values()) {
+            if (option == EmberApsOption.UNKNOWN) {
+                continue;
+            }
+
+            if ((option.getKey() & val) != 0) {
+                options.add(option);
+            }
+        }
+        return options;
     }
 
     public EmberZigbeeNetwork deserializeEmberZigbeeNetwork() {

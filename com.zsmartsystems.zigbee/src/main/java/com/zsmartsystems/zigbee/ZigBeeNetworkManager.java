@@ -851,6 +851,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         // command.setAddressingMode(ZigBeeConstants.BROADCAST_ADDRESS);
         // command.set.setDestinationAddress(ZigBeeConstants.ZCZR_BROADCAST);
         command.setTcSignificance(true);
+        command.setDestinationAddress(
+                new ZigBeeDeviceAddress(ZigBeeBroadcastDestination.BROADCAST_ROUTERS_AND_COORD.getKey()));
+        command.setSourceAddress(new ZigBeeDeviceAddress(0));
 
         try {
             sendCommand(command);

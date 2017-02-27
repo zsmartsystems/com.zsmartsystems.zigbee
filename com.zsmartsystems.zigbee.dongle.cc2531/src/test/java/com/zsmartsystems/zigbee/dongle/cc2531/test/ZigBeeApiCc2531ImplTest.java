@@ -1,5 +1,5 @@
 
-package org.bubblecloud.zigbee.v3;
+package com.zsmartsystems.zigbee.dongle.cc2531.test;
 
 import java.util.List;
 
