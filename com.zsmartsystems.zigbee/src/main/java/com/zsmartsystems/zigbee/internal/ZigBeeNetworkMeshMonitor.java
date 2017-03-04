@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable;
 
 /**
- * {@link ZigBeeNetworkMesh} is used to walk through the network getting information about the mesh network.
+ * {@link ZigBeeNetworkMeshMonitor} is used to walk through the network getting information about the mesh network.
  * <p>
  * The class uses the following ZDO commands to get neighbor information and link quality information -:
  * <ul>
@@ -38,11 +38,11 @@ import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable;
  *
  * @author Chris Jackson
  */
-public class ZigBeeNetworkMesh {
+public class ZigBeeNetworkMeshMonitor {
     /**
      * The logger.
      */
-    private final static Logger logger = LoggerFactory.getLogger(ZigBeeNetworkMesh.class);
+    private final static Logger logger = LoggerFactory.getLogger(ZigBeeNetworkMeshMonitor.class);
 
     /**
      * Maximum number of retries to perform
@@ -79,12 +79,9 @@ public class ZigBeeNetworkMesh {
     /**
      * Discovers ZigBee network state.
      *
-     * @param networkState
-     *            the network state
-     * @param dongle
-     *            the command interface
+     * @param networkManager the {@link ZigBeeNetworkManager}
      */
-    public ZigBeeNetworkMesh(final ZigBeeNetworkManager networkManager) {
+    public ZigBeeNetworkMeshMonitor(final ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
     }
 

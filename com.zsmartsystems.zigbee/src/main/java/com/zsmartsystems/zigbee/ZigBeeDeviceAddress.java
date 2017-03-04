@@ -100,7 +100,7 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
             return false;
         }
         final ZigBeeDeviceAddress other = (ZigBeeDeviceAddress) obj;
-        if (other.getAddress() == address && other.getEndpoint() == endpoint) {
+        if (other.getAddress() == getAddress() && other.getEndpoint() == getEndpoint()) {
             return true;
         }
         return false;
@@ -114,7 +114,15 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
 
         ZigBeeDeviceAddress thatAddr = (ZigBeeDeviceAddress) that;
 
-        return (thatAddr.getAddress() == getAddress() && thatAddr.getEndpoint() == getEndpoint()) ? 0 : 1;
+        if (thatAddr.getAddress() == getAddress() && thatAddr.getEndpoint() == getEndpoint()) {
+            return 0;
+        }
+
+        if (thatAddr.getAddress() == getAddress()) {
+            return thatAddr.getEndpoint() - getEndpoint();
+        }
+
+        return thatAddr.getAddress() - getAddress();
     }
 
     @Override

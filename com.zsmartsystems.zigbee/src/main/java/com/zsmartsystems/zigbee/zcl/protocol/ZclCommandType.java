@@ -850,7 +850,7 @@ public enum ZclCommandType {
 
     public static ZclCommandType getRequest(final int clusterType, final int commandId) {
         for (final ZclCommandType value : values()) {
-            if(value.received == false && value.clusterType == clusterType && value.commandId == commandId) {
+            if (value.received == false && value.clusterType == clusterType && value.commandId == commandId) {
                 return value;
             }
         }
@@ -859,7 +859,16 @@ public enum ZclCommandType {
 
     public static ZclCommandType getResponse(final int clusterType, final int commandId) {
         for (final ZclCommandType value : values()) {
-            if(value.received == true && value.clusterType == clusterType && value.commandId == commandId) {
+            if (value.received == true && value.clusterType == clusterType && value.commandId == commandId) {
+                return value;
+            }
+        }
+        return null;
+    }
+
+    public static ZclCommandType getGeneric(final int commandId) {
+        for (final ZclCommandType value : values()) {
+            if (value.clusterType == 0xFFFF && value.commandId == commandId) {
                 return value;
             }
         }

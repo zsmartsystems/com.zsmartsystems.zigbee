@@ -1,5 +1,7 @@
 package com.zsmartsystems.zigbee;
 
+import java.util.Objects;
+
 /**
  * ZigBee group address
  *
@@ -101,6 +103,11 @@ public class ZigBeeGroupAddress extends ZigBeeAddress {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(groupId);
+    }
+
+    @Override
     public int compareTo(Object that) {
         if (this == that) {
             return 0;
@@ -112,7 +119,7 @@ public class ZigBeeGroupAddress extends ZigBeeAddress {
             return 0;
         }
 
-        return 1;
+        return (thatAddr.getGroupId() < getGroupId()) ? -1 : 1;
     }
 
     @Override

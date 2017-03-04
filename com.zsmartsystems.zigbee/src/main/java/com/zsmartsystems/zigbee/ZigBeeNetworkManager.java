@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeNetworkDiscoverer;
-import com.zsmartsystems.zigbee.internal.ZigBeeNetworkMesh;
+import com.zsmartsystems.zigbee.internal.ZigBeeNetworkMeshMonitor;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
@@ -136,11 +136,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private final ZigBeeNetworkDiscoverer networkDiscoverer;
 
     /**
-     * The ZigBee network {@link ZigBeeNetworkMesh} update class. The updater is
+     * The ZigBee network {@link ZigBeeNetworkMeshMonitor} update class. The updater is
      * responsible for periodic update of information relating to the mesh health
      * including neighbors, routes and link quality information
      */
-    private final ZigBeeNetworkMesh meshUpdater;
+    private final ZigBeeNetworkMeshMonitor meshUpdater;
 
     /**
      * The command listener creation times. Used to timeout queued commands.
@@ -172,7 +172,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public ZigBeeNetworkManager(final ZigBeeTransportTransmit transport) {
         this.transport = transport;
         this.networkDiscoverer = new ZigBeeNetworkDiscoverer(this);
-        this.meshUpdater = new ZigBeeNetworkMesh(this);
+        this.meshUpdater = new ZigBeeNetworkMeshMonitor(this);
 
         transport.setZigBeeTransportReceive(this);
     }
@@ -344,18 +344,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     @Override
     public int sendCommand(Command command) throws ZigBeeException {
-        logger.debug("TX CMD: {}", command);
-
         // Create the application frame
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
-        int[] payload = null;
-        int sequence = 0;
+
+        int sequence = sequenceNumber.getAndIncrement() & 0xff;
+        command.setTransactionId(sequence);
+
+        logger.debug("TX CMD: {}", command);
 
         apsFrame.setCluster(command.getClusterId());
         apsFrame.setApsCounter(apsCounter.getAndIncrement() & 0xff);
-
-        sequence = sequenceNumber.getAndIncrement() & 0xff;
-        command.setTransactionId(sequence);
 
         // TODO: Set the source address correctly?
         apsFrame.setSourceAddress(0);
@@ -389,11 +387,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             // apsHeader.setSourceEndpoint(sourceEndpoint);
 
             apsFrame.setProfile(0);
-
             command.serialize(fieldSerializer);
 
             // Serialise the ZCL header and add the payload
-            payload = fieldSerializer.getPayload();
             apsFrame.setPayload(fieldSerializer.getPayload());
         }
 
@@ -405,7 +401,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             // Source endpoint is (currently) set by the dongle since it registers the clusters into an endpoint
             // apsHeader.setSourceEndpoint(sourceEndpoint);
 
-            // TODO set the profile
+            // TODO set the profile properly
             apsFrame.setProfile(0x104);
 
             // Create the cluster library header
@@ -413,8 +409,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             zclHeader.setFrameType(zclCommand.isGenericCommand() ? ZclFrameType.ENTIRE_PROFILE_COMMAND
                     : ZclFrameType.CLUSTER_SPECIFIC_COMMAND);
             zclHeader.setCommandId(zclCommand.getCommandId());
+            zclHeader.setSequenceNumber(sequence);
             zclHeader.setDirectionServer(zclCommand.getCommandDirection());
-            // zclHeader.setDisableDefaultResponse(true);
 
             command.serialize(fieldSerializer);
 
@@ -530,15 +526,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         // Process the ZCL header
         ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
 
-        int clusterId = (zclHeader.getFrameType() == ZclFrameType.ENTIRE_PROFILE_COMMAND) ? 0xffff
-                : apsFrame.getCluster();
-
-        // Get the command
+        // Get the command type
         ZclCommandType commandType = null;
-        if (zclHeader.isDirectionServer()) {
-            commandType = ZclCommandType.getRequest(clusterId, zclHeader.getCommandId());
+        if (zclHeader.getFrameType() == ZclFrameType.ENTIRE_PROFILE_COMMAND) {
+            commandType = ZclCommandType.getGeneric(zclHeader.getCommandId());
         } else {
-            commandType = ZclCommandType.getResponse(clusterId, zclHeader.getCommandId());
+            if (zclHeader.isDirectionServer()) {
+                commandType = ZclCommandType.getRequest(apsFrame.getCluster(), zclHeader.getCommandId());
+            } else {
+                commandType = ZclCommandType.getResponse(apsFrame.getCluster(), zclHeader.getCommandId());
+            }
         }
 
         if (commandType == null) {

@@ -84,6 +84,7 @@ public abstract class ZclCommand extends Command {
         Integer resolvedClusterId = getClusterId();
         final StringBuilder builder = new StringBuilder();
         builder.append(ZclClusterType.getValueById(resolvedClusterId).getLabel());
+        builder.append(": ");
         builder.append(super.toString());
         return builder.toString();
     }

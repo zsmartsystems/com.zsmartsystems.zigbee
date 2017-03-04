@@ -200,12 +200,11 @@ public class ZigBeeApi {
      */
     public Future<CommandResult> on(final ZigBeeAddress destination) {
         ZigBeeDevice device = networkManager.getDevice(destination);
+        if (device == null) {
+            System.out.println("Device " + destination + " not found");
+        }
         ZclOnOffCluster cluster = (ZclOnOffCluster) device.getCluster(ZclOnOffCluster.CLUSTER_ID);
         return cluster.onCommand();
-
-        // final OnCommand command = new OnCommand();
-        // return send(destination, command);
-
     }
 
     /**

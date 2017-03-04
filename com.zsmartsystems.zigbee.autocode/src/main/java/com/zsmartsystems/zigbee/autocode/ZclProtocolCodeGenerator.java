@@ -1082,7 +1082,7 @@ public class ZclProtocolCodeGenerator {
         out.println("    public static ZclCommandType getRequest(final int clusterType, final int commandId) {");
         out.println("        for (final ZclCommandType value : values()) {");
         out.println(
-                "            if(value.received == false && value.clusterType == clusterType && value.commandId == commandId) {");
+                "            if (value.received == false && value.clusterType == clusterType && value.commandId == commandId) {");
         out.println("                return value;");
         out.println("            }");
         out.println("        }");
@@ -1093,7 +1093,17 @@ public class ZclProtocolCodeGenerator {
         out.println("    public static ZclCommandType getResponse(final int clusterType, final int commandId) {");
         out.println("        for (final ZclCommandType value : values()) {");
         out.println(
-                "            if(value.received == true && value.clusterType == clusterType && value.commandId == commandId) {");
+                "            if (value.received == true && value.clusterType == clusterType && value.commandId == commandId) {");
+        out.println("                return value;");
+        out.println("            }");
+        out.println("        }");
+        out.println("        return null;");
+        out.println("    }");
+
+        out.println();
+        out.println("    public static ZclCommandType getGeneric(final int commandId) {");
+        out.println("        for (final ZclCommandType value : values()) {");
+        out.println("            if (value.clusterType == 0xFFFF && value.commandId == commandId) {");
         out.println("                return value;");
         out.println("            }");
         out.println("        }");

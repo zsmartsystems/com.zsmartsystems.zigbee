@@ -80,7 +80,13 @@ public class ZigBeeDeviceAddressTest {
         ZigBeeDeviceAddress address2 = new ZigBeeDeviceAddress("25000/33");
         assertEquals(0, address1.compareTo(address2));
         ZigBeeDeviceAddress address3 = new ZigBeeDeviceAddress("25001/33");
-        assertEquals(1, address1.compareTo(address3));
+        assertTrue(address1.compareTo(address3) > 0);
+        ZigBeeDeviceAddress address4 = new ZigBeeDeviceAddress("24999/33");
+        assertTrue(address1.compareTo(address4) < 0);
+        ZigBeeDeviceAddress address5 = new ZigBeeDeviceAddress("25000/30");
+        assertTrue(address1.compareTo(address5) < 0);
+        ZigBeeDeviceAddress address6 = new ZigBeeDeviceAddress("25000/36");
+        assertTrue(address1.compareTo(address6) > 0);
     }
 
     @Test

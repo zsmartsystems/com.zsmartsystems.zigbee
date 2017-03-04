@@ -243,7 +243,6 @@ public class ZigBeeApsFrame {
 
     public void setPayload(int[] payload) {
         this.payload = payload;
-        this.payload[0] = 0; // TODO: Why!?!?
     }
 
     public int[] getPayload() {
@@ -252,8 +251,35 @@ public class ZigBeeApsFrame {
 
     @Override
     public String toString() {
-        return "ZigBeeApsFrame [sourceAddress=" + sourceAddress + "/" + sourceEndpoint + ", destinationAddress="
-                + destinationAddress + "/" + destinationEndpoint + ", profile=" + profile + ", cluster=" + cluster
-                + ", addressMode=" + addressMode + ", radius=" + radius + ", sequence=" + sequence + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("ZigBeeApsFrame [sourceAddress=");
+        builder.append(sourceAddress);
+        builder.append("/");
+        builder.append(sourceEndpoint);
+        builder.append(", destinationAddress=");
+        builder.append(destinationAddress);
+        builder.append("/");
+        builder.append(destinationEndpoint);
+        builder.append(", profile=");
+        builder.append(profile);
+        builder.append(", cluster=");
+        builder.append(cluster);
+        builder.append(", addressMode=");
+        builder.append(addressMode);
+        builder.append(", radius=");
+        builder.append(radius);
+        builder.append(", sequence=");
+        builder.append(sequence);
+        builder.append(", payload=");
+        if (payload != null) {
+            for (int c = 0; c < payload.length; c++) {
+                if (c != 0) {
+                    builder.append(" ");
+                }
+                builder.append(String.format("%02X", payload[c]));
+            }
+        }
+        builder.append("]");
+        return builder.toString();
     }
 }

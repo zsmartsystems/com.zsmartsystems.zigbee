@@ -120,10 +120,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     /**
      * Discovers ZigBee network state.
      *
-     * @param networkState
-     *            the network state
-     * @param dongle
-     *            the command interface
+     * @param networkManager the {@link ZigBeeNetworkManager}
      */
     public ZigBeeNetworkDiscoverer(final ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
