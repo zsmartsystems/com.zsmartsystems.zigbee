@@ -29,7 +29,7 @@ public class SimpleDescriptorStore extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("SimpleDescriptorStore");
+        builder.append("SimpleDescriptorStore ");
         builder.append(super.toString());
         return builder.toString();
     }

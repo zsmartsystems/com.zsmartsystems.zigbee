@@ -598,6 +598,7 @@ public class AshFrameHandler {
      * @return response {@link EzspFrame}
      */
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
+        logger.debug("Send: {}", ezspTransaction.getRequest());
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
         try {
             futureResponse.get();

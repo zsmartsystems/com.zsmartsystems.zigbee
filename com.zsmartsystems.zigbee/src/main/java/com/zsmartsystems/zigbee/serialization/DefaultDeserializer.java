@@ -50,9 +50,6 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
     public Object readZigBeeType(ZclDataType type) {
         Object[] value = new Object[1];
         switch (type) {
-            case BITMAP_8_BIT:
-                value[0] = Integer.valueOf((byte) payload[index++] & 0xFF);
-                break;
             case BOOLEAN:
                 value[0] = payload[index++] == 0 ? false : true;
                 break;
@@ -62,9 +59,9 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 value[0] = new String(payload, index, size);
                 index += size;
                 break;
+            case ENDPOINT:
+            case BITMAP_8_BIT:
             case DATA_8_BIT:
-                value[0] = Integer.valueOf((byte) payload[index++] & 0xFF);
-                break;
             case ENUMERATION_8_BIT:
                 value[0] = Integer.valueOf((byte) payload[index++] & 0xFF);
                 break;
@@ -107,7 +104,6 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 }
                 value[0] = arrayN16;
                 break;
-            case N_X_ENDPOINT:
             case N_X_UNSIGNED_8_BIT_INTEGER:
                 int cntN8 = Integer.valueOf((byte) payload[index++] & 0xFF);
                 List<Integer> arrayN8 = new ArrayList<Integer>(cntN8);

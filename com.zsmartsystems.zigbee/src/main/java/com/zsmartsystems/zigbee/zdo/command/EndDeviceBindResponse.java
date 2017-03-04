@@ -23,7 +23,7 @@ public class EndDeviceBindResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EndDeviceBindResponse");
+        builder.append("EndDeviceBindResponse ");
         builder.append(super.toString());
         return builder.toString();
     }

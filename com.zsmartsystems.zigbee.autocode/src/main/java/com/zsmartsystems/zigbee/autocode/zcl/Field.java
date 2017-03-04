@@ -11,4 +11,5 @@ public class Field {
     public String dataTypeClass;
     public String nameUpperCamelCase;
     public String nameLowerCamelCase;
+    public String listSizer;
 }

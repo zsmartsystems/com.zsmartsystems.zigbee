@@ -49,7 +49,7 @@ public class UnbindResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("UnbindResponse");
+        builder.append("UnbindResponse ");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);

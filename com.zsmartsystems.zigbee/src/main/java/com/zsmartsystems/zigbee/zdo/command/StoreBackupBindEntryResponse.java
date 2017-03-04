@@ -28,7 +28,7 @@ public class StoreBackupBindEntryResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("StoreBackupBindEntryResponse");
+        builder.append("StoreBackupBindEntryResponse ");
         builder.append(super.toString());
         return builder.toString();
     }

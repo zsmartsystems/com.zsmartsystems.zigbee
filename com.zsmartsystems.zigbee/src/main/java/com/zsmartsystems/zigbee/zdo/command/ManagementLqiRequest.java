@@ -4,6 +4,9 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 
 /**
  * Management LQI Request value object class.
@@ -15,7 +18,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class ManagementLqiRequest extends ZdoRequest {
+public class ManagementLqiRequest extends ZdoRequest implements CommandResponseMatcher {
     /**
      * StartIndex command message field.
      */
@@ -61,9 +64,23 @@ public class ManagementLqiRequest extends ZdoRequest {
     }
 
     @Override
+    public boolean isMatch(Command request, Command response) {
+        if (!(response instanceof ManagementLqiResponse)) {
+            return false;
+        }
+
+        if (!((ManagementLqiRequest) request).getSourceAddress()
+                .equals(((ManagementLqiResponse) response).getDestinationAddress())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementLqiRequest");
+        builder.append("ManagementLqiRequest ");
         builder.append(super.toString());
         builder.append(", startIndex=");
         builder.append(startIndex);

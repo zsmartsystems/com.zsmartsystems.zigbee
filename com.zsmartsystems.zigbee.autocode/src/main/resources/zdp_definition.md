@@ -85,6 +85,7 @@ device that contains the discovery information of the remote device.
 ##### Expected Response
 Packet: Simple Descriptor Response
 Match: NWKAddrOfInterest == NWKAddrOfInterest
+Match: Endpoint == SimpleDescriptor.Endpoint
 
 #### Active Endpoints Request [0x0005]
 
@@ -95,7 +96,7 @@ contains the discovery information of the remote device.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|NWKAddrOfInterest          |NWK address         |
+|NWKAddrOfInterest          |NWK address                |
 
 ##### Expected Response
 Packet: Active Endpoints Response
@@ -299,8 +300,10 @@ ZigBee Coordinator.
 |SrcAddress                 |IEEE address               |
 |SrcEndpoint                |Unsigned 8-bit integer     |
 |ProfileID                  |Unsigned 16-bit integer    |
-|InClusterList              |N X ClusterId              |
-|OutClusterList             |N X ClusterId              |
+|InClusterCount             |Unsigned 8-bit integer     |
+|InClusterList              |ClusterId[InClusterCount]  |
+|OutClusterCount            |Unsigned 8-bit integer     |
+|OutClusterList             |ClusterId[OutClusterCount] |
 
 
 #### Bind Request [0x0021]
@@ -438,6 +441,10 @@ the destination address must be that of a ZigBee Coordinator or ZigBee Router.
 |---------------------------|---------------------------|
 |StartIndex                 |Unsigned 8-bit integer     |
 
+##### Expected Response
+Packet: Management LQI Response
+Match: sourceAddress == destinationAddress
+
 #### Management Routing Request [0x0032]
 
 The Mgmt_Rtg_req is generated from a Local Device wishing to retrieve the
@@ -448,6 +455,11 @@ must be that of the ZigBee Router or ZigBee Coordinator.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |StartIndex                 |Unsigned 8-bit integer     |
+
+##### Expected Response
+Packet: Management Routing Response
+Match: sourceAddress == destinationAddress
+
 
 #### Management Bind Request [0x0033]
 
@@ -558,9 +570,9 @@ The destination addressing on this command shall be unicast.
 |Status                     |Unsigned 8-bit integer     |
 |IEEEAddrRemoteDev          |IEEE Address               |
 |NWKAddrRemoteDev           |NWK address                |
-Optional |NumAssocDev                |Unsigned 8-bit integer     |
-Optional |StartIndex                 |Unsigned 8-bit integer     |
-Optional |NWKAddrAssocDevList        |N X NWK Address            | 
+|NumAssocDev                |Unsigned 8-bit integer     |
+|StartIndex                 |Unsigned 8-bit integer     |
+|NWKAddrAssocDevList        |NWK Address[NumAssocDev]   | 
 
 
 #### Node Descriptor Response [0x8002]
@@ -634,7 +646,8 @@ the originator of the Active_EP_req command.
 |---------------------------|---------------------------|
 |Status                     |Unsigned 8-bit integer     |
 |NWKAddrOfInterest          |NWK address                |
-|ActiveEPList               |N X Endpoint               |
+|ActiveEPCnt                |Unsigned 8-bit integer     |
+|ActiveEPList               |Endpoint[ActiveEPCnt]      |
 
 #### Match Descriptor Response [0x8006]
 
@@ -926,12 +939,30 @@ management command is not supported, a status of NOT_SUPPORTED shall be
 returned and all parameter fields after the Status field shall be omitted. Otherwise,
 the Remote Device shall implement the following processing.
 
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Unsigned 8-bit integer     |
+|NeighborTableEntries       |Unsigned 8-bit integer     |
+|StartIndex                 |Unsigned 8-bit integer     |
+|NeighborTableListCount     |Unsigned 8-bit integer     |
+|NeighborTableList          |Neighbor Table[NeighborTableListCount]|
+
+
 #### Management Routing Response [0x8032]
 
 The Mgmt_Rtg_rsp is generated in response to an Mgmt_Rtg_req. If this
 management command is not supported, a status of NOT_SUPPORTED shall be
 returned and all parameter fields after the Status field shall be omitted. Otherwise,
 the Remote Device shall implement the following processing.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Unsigned 8-bit integer     |
+|RoutingTableEntries        |Unsigned 8-bit integer     |
+|StartIndex                 |Unsigned 8-bit integer     |
+|RoutingTableListCount      |Unsigned 8-bit integer     |
+|RoutingTableList           |Routing Table[RoutingTableListCount]|
+
 
 #### Management Bind Response [0x8033]
 

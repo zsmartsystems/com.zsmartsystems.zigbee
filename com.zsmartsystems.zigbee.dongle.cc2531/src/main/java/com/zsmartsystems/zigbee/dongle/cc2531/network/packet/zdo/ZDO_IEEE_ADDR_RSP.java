@@ -44,6 +44,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
  *
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public class ZDO_IEEE_ADDR_RSP extends ZToolPacket /* implements IRESPONSE_CALLBACK_IZDO */ {
     private static final Logger logger = LoggerFactory.getLogger(ZDO_IEEE_ADDR_RSP.class);
@@ -52,7 +53,6 @@ public class ZDO_IEEE_ADDR_RSP extends ZToolPacket /* implements IRESPONSE_CALLB
     /// list can be a partial list if the entire list doesn't fit into a packet. If it is a partial list, the starting
     /// index is StartIndex.</summary>
     private ZToolAddress16[] AssocDevList;
-    private short[] assocDevList;
     /// <name>TI.ZPI1.ZDO_IEEE_ADDR_RSP.IEEEAddr</name>
     /// <summary>64 bit IEEE address of source device</summary>
     private ZToolAddress64 IEEEAddr;
@@ -60,12 +60,6 @@ public class ZDO_IEEE_ADDR_RSP extends ZToolPacket /* implements IRESPONSE_CALLB
     /// <name>TI.ZPI1.ZDO_IEEE_ADDR_RSP.NumAssocDev</name>
     /// <summary>the number of associated devices</summary>
     private int NumAssocDev;
-    /// <name>TI.ZPI1.ZDO_IEEE_ADDR_RSP.SrcAddress</name>
-    /// <summary>Source address, size is dependent on SrcAddrMode</summary>
-    private ZToolAddress64 SrcAddress;
-    /// <name>TI.ZPI1.ZDO_IEEE_ADDR_RSP.SrcAddrMode</name>
-    /// <summary>indicates that the SrcAddr is either 16 bits or 64 bits</summary>
-    public int SrcAddrMode;
     /// <name>TI.ZPI1.ZDO_IEEE_ADDR_RSP.StartIndex</name>
     /// <summary>Starting index into the list of associated devices for this report.</summary>
     private int StartIndex;
@@ -90,7 +84,6 @@ public class ZDO_IEEE_ADDR_RSP extends ZToolPacket /* implements IRESPONSE_CALLB
         this.StartIndex = framedata[11];
         this.NumAssocDev = framedata[12];
         this.AssocDevList = new ZToolAddress16[this.NumAssocDev];
-        this.assocDevList = new short[this.NumAssocDev];
         for (int i = 0; i < this.AssocDevList.length; i++) {
             this.AssocDevList[i] = new ZToolAddress16(framedata[14 + (i * 2)], framedata[13 + (i * 2)]);
         }
@@ -120,9 +113,8 @@ public class ZDO_IEEE_ADDR_RSP extends ZToolPacket /* implements IRESPONSE_CALLB
 
     @Override
     public String toString() {
-        return "ZDO_IEEE_ADDR_RSP{AssocDevList=" + Arrays.toString(AssocDevList) + ", assocDevList="
-                + Arrays.toString(assocDevList) + ", IEEEAddr=" + IEEEAddr + ", nwkAddr=" + nwkAddr + ", NumAssocDev="
-                + NumAssocDev + ", SrcAddress=" + SrcAddress + ", SrcAddrMode=" + SrcAddrMode + ", StartIndex="
-                + StartIndex + ", Status=" + ResponseStatus.getStatus(Status) + '}';
+        return "ZDO_IEEE_ADDR_RSP{IEEEAddr=" + IEEEAddr + ", nwkAddr=" + nwkAddr + ", NumAssocDev=" + NumAssocDev
+                + ", StartIndex=" + StartIndex + ", AssocDevList=" + Arrays.toString(AssocDevList) + ", Status="
+                + ResponseStatus.getStatus(Status) + '}';
     }
 }

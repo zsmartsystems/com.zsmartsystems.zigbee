@@ -41,6 +41,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 buffer[length++] = shortValue & 0xFF;
                 buffer[length++] = (shortValue >> 8) & 0xFF;
                 break;
+            case ENDPOINT:
             case DATA_8_BIT:
             case BITMAP_8_BIT:
             case SIGNED_8_BIT_INTEGER:
@@ -89,7 +90,6 @@ public class DefaultSerializer implements ZigBeeSerializer {
                     buffer[length++] = (value >> 8) & 0xFF;
                 }
                 break;
-            case N_X_ENDPOINT:
             case N_X_UNSIGNED_8_BIT_INTEGER:
                 List<Integer> intArray8 = (List<Integer>) data;
                 buffer[length++] = intArray8.size();

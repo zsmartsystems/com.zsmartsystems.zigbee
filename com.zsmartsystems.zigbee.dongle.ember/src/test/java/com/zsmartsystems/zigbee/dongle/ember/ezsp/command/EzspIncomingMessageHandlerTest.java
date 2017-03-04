@@ -9,8 +9,7 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import com.zsmartsystems.zigbee.ZigBeeApsHeader;
-import com.zsmartsystems.zigbee.ZigBeeNwkHeader;
+import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
@@ -43,32 +42,28 @@ public class EzspIncomingMessageHandlerTest extends EzspFrameTest {
         assertEquals(EmberIncomingMessageType.EMBER_INCOMING_UNICAST, incomingMessageHandler.getType());
         System.out.println(incomingMessageHandler);
         ZigBeeTransportReceive transportReceiveMock = Mockito.mock(ZigBeeTransportReceive.class);
-        ArgumentCaptor<ZigBeeNwkHeader> nwkHeader = ArgumentCaptor.forClass(ZigBeeNwkHeader.class);
-        ArgumentCaptor<ZigBeeApsHeader> apsHeader = ArgumentCaptor.forClass(ZigBeeApsHeader.class);
-        ArgumentCaptor<int[]> payload = ArgumentCaptor.forClass(int[].class);
+        ArgumentCaptor<ZigBeeApsFrame> apsFrame = ArgumentCaptor.forClass(ZigBeeApsFrame.class);
 
-        Mockito.doNothing().when(transportReceiveMock).receiveZclCommand(nwkHeader.capture(), apsHeader.capture(),
-                payload.capture());
+        Mockito.doNothing().when(transportReceiveMock).receiveCommand(apsFrame.capture());
 
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
         dongle.setZigBeeTransportReceive(transportReceiveMock);
 
         dongle.handlePacket(incomingMessageHandler);
 
-        assertEquals(1, nwkHeader.getAllValues().size());
-        assertEquals(1, apsHeader.getAllValues().size());
-        assertEquals(1, payload.getAllValues().size());
+        assertEquals(1, apsFrame.getAllValues().size());
 
-        assertEquals(0, nwkHeader.getValue().getSourceAddress());
-        assertEquals(0, nwkHeader.getValue().getDestinationAddress());
+        assertEquals(0, apsFrame.getValue().getSourceAddress());
+        assertEquals(0, apsFrame.getValue().getDestinationAddress());
 
-        assertEquals(0, apsHeader.getValue().getProfile());
-        assertEquals(238, apsHeader.getValue().getApsCounter());
-        assertEquals(0x8001, apsHeader.getValue().getCluster());
-        assertEquals(0, apsHeader.getValue().getSourceEndpoint());
-        assertEquals(0, apsHeader.getValue().getDestinationEndpoint());
+        assertEquals(0, apsFrame.getValue().getProfile());
+        assertEquals(238, apsFrame.getValue().getApsCounter());
+        assertEquals(0x8001, apsFrame.getValue().getCluster());
+        assertEquals(0, apsFrame.getValue().getSourceEndpoint());
+        assertEquals(0, apsFrame.getValue().getDestinationEndpoint());
 
-        assertTrue(Arrays.equals(payload.getValue(), getPacketData("00 81 F0 F0 00 20 00 00 00 00 00 01")));
+        assertTrue(
+                Arrays.equals(apsFrame.getValue().getPayload(), getPacketData("00 81 F0 F0 00 20 00 00 00 00 00 01")));
     }
 
     @Test

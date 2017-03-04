@@ -123,15 +123,15 @@ public class SerializerIntegrationTest {
     }
 
     @Test
-    public void testSerialize_CHARACTER_STRING() {
-        String valIn = "Hello World";
-        testSerializer(valIn, ZclDataType.CHARACTER_STRING);
+    public void testSerialize_ENDPOINT() {
+        int valIn = 0x34;
+        testSerializer(valIn, ZclDataType.ENDPOINT);
     }
 
     @Test
-    public void testSerialize_N_X_ENDPOINT() {
-        List<Integer> valIn = Arrays.asList(new Integer[] { 1, 2, 3, 4, 3, 2, 1 });
-        testSerializer(valIn, ZclDataType.N_X_ENDPOINT);
+    public void testSerialize_CHARACTER_STRING() {
+        String valIn = "Hello World";
+        testSerializer(valIn, ZclDataType.CHARACTER_STRING);
     }
 
     private void testSerializer(Object objectIn, ZclDataType type) {

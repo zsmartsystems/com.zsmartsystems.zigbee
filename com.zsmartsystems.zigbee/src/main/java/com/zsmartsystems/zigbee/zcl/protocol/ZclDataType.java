@@ -42,14 +42,16 @@ public enum ZclDataType {
     UNSIGNED_8_BIT_INTEGER("Unsigned 8-bit integer", Integer.class, 0x20, true),
     UTCTIME("UTCTime", Calendar.class, 0xE2, true),
     BITMAP_32_BIT("Bitmap 32-bit", Integer.class, 0x1B, false),
+    CLUSTERID("ClusterId", Integer.class, 0x00, false),
     COMPLEX_DESCRIPTOR("Complex Descriptor", ComplexDescriptor.class, 0x00, false),
+    ENDPOINT("Endpoint", Integer.class, 0x00, false),
+    NEIGHBOR_TABLE("Neighbor Table", NeighborTable.class, 0x00, false),
     NODE_DESCRIPTOR("Node Descriptor", NodeDescriptor.class, 0x00, false),
     NWK_ADDRESS("NWK address", Integer.class, 0x00, false),
-    N_X_CLUSTERID("N X ClusterId", Integer.class, 0x00, false),
-    N_X_ENDPOINT("N X Endpoint", Integer.class, 0x00, false),
     N_X_IEEE_ADDRESS("N X IEEE Address", Long.class, 0x00, false),
     N_X_NWK_ADDRESS("N X NWK Address", Integer.class, 0x00, false),
     POWER_DESCRIPTOR("Power Descriptor", PowerDescriptor.class, 0x00, false),
+    ROUTING_TABLE("Routing Table", RoutingTable.class, 0x00, false),
     SIMPLE_DESCRIPTOR("Simple Descriptor", SimpleDescriptor.class, 0x00, false),
     USER_DESCRIPTOR("User Descriptor", UserDescriptor.class, 0x00, false);
 

@@ -69,7 +69,8 @@ public class PowerDescriptorRequest extends ZdoRequest implements CommandRespons
             return false;
         }
 
-        if (((PowerDescriptorRequest) request).getNwkAddrOfInterest() != ((PowerDescriptorResponse) response).getNwkAddrOfInterest()) {
+        if (!((PowerDescriptorRequest) request).getNwkAddrOfInterest()
+                .equals(((PowerDescriptorResponse) response).getNwkAddrOfInterest())) {
             return false;
         }
 
@@ -79,7 +80,7 @@ public class PowerDescriptorRequest extends ZdoRequest implements CommandRespons
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("PowerDescriptorRequest");
+        builder.append("PowerDescriptorRequest ");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);

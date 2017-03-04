@@ -22,7 +22,7 @@ public class MatchDescriptorResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("MatchDescriptorResponse");
+        builder.append("MatchDescriptorResponse ");
         builder.append(super.toString());
         return builder.toString();
     }

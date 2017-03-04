@@ -94,7 +94,12 @@ public class SimpleDescriptorRequest extends ZdoRequest implements CommandRespon
             return false;
         }
 
-        if (((SimpleDescriptorRequest) request).getNwkAddrOfInterest() != ((SimpleDescriptorResponse) response).getNwkAddrOfInterest()) {
+        if (!((SimpleDescriptorRequest) request).getNwkAddrOfInterest()
+                .equals(((SimpleDescriptorResponse) response).getNwkAddrOfInterest())) {
+            return false;
+        }
+        if (!((SimpleDescriptorRequest) request).getEndpoint()
+                .equals(((SimpleDescriptorResponse) response).getSimpleDescriptor().getEndpoint())) {
             return false;
         }
 
@@ -104,7 +109,7 @@ public class SimpleDescriptorRequest extends ZdoRequest implements CommandRespon
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("SimpleDescriptorRequest");
+        builder.append("SimpleDescriptorRequest ");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);

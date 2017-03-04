@@ -4,6 +4,9 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingResponse;
 
 /**
  * Management Routing Request value object class.
@@ -15,7 +18,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class ManagementRoutingRequest extends ZdoRequest {
+public class ManagementRoutingRequest extends ZdoRequest implements CommandResponseMatcher {
     /**
      * StartIndex command message field.
      */
@@ -61,9 +64,23 @@ public class ManagementRoutingRequest extends ZdoRequest {
     }
 
     @Override
+    public boolean isMatch(Command request, Command response) {
+        if (!(response instanceof ManagementRoutingResponse)) {
+            return false;
+        }
+
+        if (!((ManagementRoutingRequest) request).getSourceAddress()
+                .equals(((ManagementRoutingResponse) response).getDestinationAddress())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementRoutingRequest");
+        builder.append("ManagementRoutingRequest ");
         builder.append(super.toString());
         builder.append(", startIndex=");
         builder.append(startIndex);

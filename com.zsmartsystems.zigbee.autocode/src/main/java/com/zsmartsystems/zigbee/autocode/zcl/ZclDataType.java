@@ -32,15 +32,20 @@ public class ZclDataType {
 
         dataTypeMapping.put("CHARACTER_STRING", new DataTypeMap("String", 0x42, -1, false));
         dataTypeMapping.put("IEEE_ADDRESS", new DataTypeMap("IeeeAddress", 0xf0, 8, false, 0xffffffff));
+        dataTypeMapping.put("EXTENDED_PANID", new DataTypeMap("Long", 0, 0, false));
         dataTypeMapping.put("NODE_DESCRIPTOR", new DataTypeMap("NodeDescriptor", 0, 0, false));
         dataTypeMapping.put("SIMPLE_DESCRIPTOR", new DataTypeMap("SimpleDescriptor", 0, 0, false));
         dataTypeMapping.put("COMPLEX_DESCRIPTOR", new DataTypeMap("ComplexDescriptor", 0, 0, false));
         dataTypeMapping.put("POWER_DESCRIPTOR", new DataTypeMap("PowerDescriptor", 0, 0, false));
         dataTypeMapping.put("USER_DESCRIPTOR", new DataTypeMap("UserDescriptor", 0, 0, false));
+        dataTypeMapping.put("NEIGHBOR_TABLE", new DataTypeMap("NeighborTable", 0, 0, false));
+        dataTypeMapping.put("ROUTING_TABLE", new DataTypeMap("RoutingTable", 0, 0, false));
         dataTypeMapping.put("NWK_ADDRESS", new DataTypeMap("Integer", 0, 0, false, 0xffff));
         dataTypeMapping.put("N_X_IEEE_ADDRESS", new DataTypeMap("List<Long>", 0, 0, false));
         dataTypeMapping.put("N_X_NWK_ADDRESS", new DataTypeMap("List<Integer>", 0, 0, false));
+        dataTypeMapping.put("CLUSTERID", new DataTypeMap("Integer", 0, 0, false));
         dataTypeMapping.put("N_X_CLUSTERID", new DataTypeMap("List<Integer>", 0, 0, false));
+        dataTypeMapping.put("ENDPOINT", new DataTypeMap("Integer", 0, 0, false));
         dataTypeMapping.put("N_X_ENDPOINT", new DataTypeMap("List<Integer>", 0, 0, false));
         dataTypeMapping.put("N_X_EXTENSION_FIELD_SET", new DataTypeMap("List<ExtensionFieldSet>", 0, 0, false));
         dataTypeMapping.put("N_X_NEIGHBORS_INFORMATION", new DataTypeMap("List<NeighborInformation>", 0, 0, false));

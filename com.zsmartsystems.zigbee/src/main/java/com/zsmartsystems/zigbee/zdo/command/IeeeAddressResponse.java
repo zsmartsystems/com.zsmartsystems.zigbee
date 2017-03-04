@@ -4,6 +4,9 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
+
+import java.util.List;
+import java.util.ArrayList;
 import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
@@ -13,9 +16,6 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * IEEE_addr_req command inquiring as to the 64-bit IEEE address of the Remote
  * Device or the 64-bit IEEE address of an address held in a local discovery cache.
  * The destination addressing on this command shall be unicast.
- * Optional |NumAssocDev                |Unsigned 8-bit integer     |
- * Optional |StartIndex                 |Unsigned 8-bit integer     |
- * Optional |NWKAddrAssocDevList        |N X NWK Address            |
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
@@ -29,6 +29,21 @@ public class IeeeAddressResponse extends ZdoResponse {
      * NWKAddrRemoteDev command message field.
      */
     private Integer nwkAddrRemoteDev;
+
+    /**
+     * NumAssocDev command message field.
+     */
+    private Integer numAssocDev;
+
+    /**
+     * StartIndex command message field.
+     */
+    private Integer startIndex;
+
+    /**
+     * NWKAddrAssocDevList command message field.
+     */
+    private List<Integer> nwkAddrAssocDevList;
 
     /**
      * Default constructor.
@@ -73,6 +88,60 @@ public class IeeeAddressResponse extends ZdoResponse {
         this.nwkAddrRemoteDev = nwkAddrRemoteDev;
     }
 
+    /**
+     * Gets NumAssocDev.
+     *
+     * @return the NumAssocDev
+     */
+    public Integer getNumAssocDev() {
+        return numAssocDev;
+    }
+
+    /**
+     * Sets NumAssocDev.
+     *
+     * @param numAssocDev the NumAssocDev
+     */
+    public void setNumAssocDev(final Integer numAssocDev) {
+        this.numAssocDev = numAssocDev;
+    }
+
+    /**
+     * Gets StartIndex.
+     *
+     * @return the StartIndex
+     */
+    public Integer getStartIndex() {
+        return startIndex;
+    }
+
+    /**
+     * Sets StartIndex.
+     *
+     * @param startIndex the StartIndex
+     */
+    public void setStartIndex(final Integer startIndex) {
+        this.startIndex = startIndex;
+    }
+
+    /**
+     * Gets NWKAddrAssocDevList.
+     *
+     * @return the NWKAddrAssocDevList
+     */
+    public List<Integer> getNwkAddrAssocDevList() {
+        return nwkAddrAssocDevList;
+    }
+
+    /**
+     * Sets NWKAddrAssocDevList.
+     *
+     * @param nwkAddrAssocDevList the NWKAddrAssocDevList
+     */
+    public void setNwkAddrAssocDevList(final List<Integer> nwkAddrAssocDevList) {
+        this.nwkAddrAssocDevList = nwkAddrAssocDevList;
+    }
+
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         super.serialize(serializer);
@@ -80,6 +149,11 @@ public class IeeeAddressResponse extends ZdoResponse {
         serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(ieeeAddrRemoteDev, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(nwkAddrRemoteDev, ZclDataType.NWK_ADDRESS);
+        serializer.serialize(numAssocDev, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(startIndex, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        for (int cnt = 0; cnt < nwkAddrAssocDevList.size(); cnt++) {
+            serializer.serialize(nwkAddrAssocDevList.get(cnt), ZclDataType.NWK_ADDRESS);
+        }
     }
 
     @Override
@@ -93,12 +167,18 @@ public class IeeeAddressResponse extends ZdoResponse {
         }
         ieeeAddrRemoteDev = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         nwkAddrRemoteDev = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        numAssocDev = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        nwkAddrAssocDevList = new ArrayList<Integer>();
+        for (int cnt = 0; cnt < numAssocDev; cnt++) {
+            nwkAddrAssocDevList.add((Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS));
+        }
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("IeeeAddressResponse");
+        builder.append("IeeeAddressResponse ");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
@@ -106,6 +186,12 @@ public class IeeeAddressResponse extends ZdoResponse {
         builder.append(ieeeAddrRemoteDev);
         builder.append(", nwkAddrRemoteDev=");
         builder.append(nwkAddrRemoteDev);
+        builder.append(", numAssocDev=");
+        builder.append(numAssocDev);
+        builder.append(", startIndex=");
+        builder.append(startIndex);
+        builder.append(", nwkAddrAssocDevList=");
+        builder.append(nwkAddrAssocDevList);
         return builder.toString();
     }
 

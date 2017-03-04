@@ -119,7 +119,7 @@ public class UserDescriptorResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("UserDescriptorResponse");
+        builder.append("UserDescriptorResponse ");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);

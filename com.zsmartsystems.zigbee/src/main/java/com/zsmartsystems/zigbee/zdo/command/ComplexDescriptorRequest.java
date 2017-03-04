@@ -69,7 +69,8 @@ public class ComplexDescriptorRequest extends ZdoRequest implements CommandRespo
             return false;
         }
 
-        if (((ComplexDescriptorRequest) request).getNwkAddrOfInterest() != ((ComplexDescriptorResponse) response).getNwkAddrOfInterest()) {
+        if (!((ComplexDescriptorRequest) request).getNwkAddrOfInterest()
+                .equals(((ComplexDescriptorResponse) response).getNwkAddrOfInterest())) {
             return false;
         }
 
@@ -79,7 +80,7 @@ public class ComplexDescriptorRequest extends ZdoRequest implements CommandRespo
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ComplexDescriptorRequest");
+        builder.append("ComplexDescriptorRequest ");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);

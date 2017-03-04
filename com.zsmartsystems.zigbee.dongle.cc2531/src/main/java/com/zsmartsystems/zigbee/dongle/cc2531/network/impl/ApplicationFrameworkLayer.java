@@ -131,7 +131,7 @@ public class ApplicationFrameworkLayer {
         }
     }
 
-    public int getSenderEndpointProfileId(short endpointId, int clusterId) {
+    public int getSenderEndpointProfileId(short endpointId, int clusterId) throws IllegalArgumentException {
         for (final Map.Entry<SenderIdentifier, Short> entry : sender2EndPoint.entrySet()) {
             if (endpointId == entry.getValue().shortValue() && clusterId == entry.getKey().clusterId) {
                 return entry.getKey().profileId;
@@ -280,7 +280,7 @@ public class ApplicationFrameworkLayer {
                     }
                     logger.warn("Overriding a valid <profileId,clusterId> endpoint with this {}", adding);
                 }
-                logger.trace("Adding <profileId,clusterId> <{},{}> to sender2EndPoint hashtable", adding.profileId,
+                logger.debug("Adding <profileId,clusterId> <{},{}> to sender2EndPoint hashtable", adding.profileId,
                         adding.clusterId);
                 sender2EndPoint.put(adding, endPoint);
             }

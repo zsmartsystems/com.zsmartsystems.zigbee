@@ -6,6 +6,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Active Endpoints Response value object class.
@@ -21,6 +22,11 @@ public class ActiveEndpointsResponse extends ZdoResponse {
      * NWKAddrOfInterest command message field.
      */
     private Integer nwkAddrOfInterest;
+
+    /**
+     * ActiveEPCnt command message field.
+     */
+    private Integer activeEpCnt;
 
     /**
      * ActiveEPList command message field.
@@ -53,6 +59,24 @@ public class ActiveEndpointsResponse extends ZdoResponse {
     }
 
     /**
+     * Gets ActiveEPCnt.
+     *
+     * @return the ActiveEPCnt
+     */
+    public Integer getActiveEpCnt() {
+        return activeEpCnt;
+    }
+
+    /**
+     * Sets ActiveEPCnt.
+     *
+     * @param activeEpCnt the ActiveEPCnt
+     */
+    public void setActiveEpCnt(final Integer activeEpCnt) {
+        this.activeEpCnt = activeEpCnt;
+    }
+
+    /**
      * Gets ActiveEPList.
      *
      * @return the ActiveEPList
@@ -76,7 +100,10 @@ public class ActiveEndpointsResponse extends ZdoResponse {
 
         serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
-        serializer.serialize(activeEpList, ZclDataType.N_X_ENDPOINT);
+        serializer.serialize(activeEpCnt, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        for (int cnt = 0; cnt < activeEpList.size(); cnt++) {
+            serializer.serialize(activeEpList.get(cnt), ZclDataType.ENDPOINT);
+        }
     }
 
     @Override
@@ -89,18 +116,24 @@ public class ActiveEndpointsResponse extends ZdoResponse {
             return;
         }
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        activeEpList = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_ENDPOINT);
+        activeEpCnt = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        activeEpList = new ArrayList<Integer>();
+        for (int cnt = 0; cnt < activeEpCnt; cnt++) {
+            activeEpList.add((Integer) deserializer.deserialize(ZclDataType.ENDPOINT));
+        }
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ActiveEndpointsResponse");
+        builder.append("ActiveEndpointsResponse ");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);
+        builder.append(", activeEpCnt=");
+        builder.append(activeEpCnt);
         builder.append(", activeEpList=");
         builder.append(activeEpList);
         return builder.toString();

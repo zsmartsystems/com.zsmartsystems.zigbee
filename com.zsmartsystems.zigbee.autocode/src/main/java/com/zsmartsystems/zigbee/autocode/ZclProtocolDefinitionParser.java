@@ -211,10 +211,18 @@ public class ZclProtocolDefinitionParser {
                 field.nameUpperCamelCase = CodeGeneratorUtil.labelToEnumerationValue(field.fieldLabel);
                 field.nameUpperCamelCase = CodeGeneratorUtil.labelToUpperCamelCase(field.fieldLabel);
                 field.nameLowerCamelCase = CodeGeneratorUtil.upperCamelCaseToLowerCamelCase(field.nameUpperCamelCase);
-                field.dataType = CodeGeneratorUtil.labelToEnumerationValue(columns[1].trim());
+
+                String dataTypeName = columns[1].trim();
+                if (dataTypeName.contains("[")) {
+                    field.listSizer = dataTypeName.substring(dataTypeName.indexOf("[") + 1, dataTypeName.indexOf("]"));
+                    field.listSizer = CodeGeneratorUtil.labelToUpperCamelCase(field.listSizer);
+                    field.listSizer = CodeGeneratorUtil.upperCamelCaseToLowerCamelCase(field.listSizer);
+                    dataTypeName = dataTypeName.substring(0, dataTypeName.indexOf("["));
+                }
+                field.dataType = CodeGeneratorUtil.labelToEnumerationValue(dataTypeName);
 
                 final DataType dataType = new DataType();
-                dataType.dataTypeName = columns[1].trim();
+                dataType.dataTypeName = dataTypeName;
                 dataType.dataTypeType = field.dataType;
 
                 dataType.dataTypeClass = ZclDataType.getDataTypeMapping().get(field.dataType).dataClass;
@@ -279,11 +287,22 @@ public class ZclProtocolDefinitionParser {
                 String response = line.substring(7).trim();
                 String[] matcher = response.split("==");
 
-                String responseRequest = CodeGeneratorUtil.labelToUpperCamelCase(matcher[0].trim());
-                String responseResponse = CodeGeneratorUtil.labelToUpperCamelCase(matcher[1].trim());
+                String responseRequest = getMatcherResponse(matcher[0].trim());
+                String responseResponse = getMatcherResponse(matcher[1].trim());
                 context.command.responseMatchers.put(responseRequest, responseResponse);
             }
         }
+    }
+
+    private static String getMatcherResponse(String definition) {
+        if (!definition.contains(".")) {
+            return CodeGeneratorUtil.labelToUpperCamelCase(definition.trim());
+        }
+
+        String[] parts = definition.split("\\.");
+        parts[0] = CodeGeneratorUtil.labelToUpperCamelCase(parts[0].trim());
+        parts[1] = CodeGeneratorUtil.labelToUpperCamelCase(parts[1].trim());
+        return parts[0] + "().get" + parts[1];
     }
 
     private static String getHeaderTitle(String line) {

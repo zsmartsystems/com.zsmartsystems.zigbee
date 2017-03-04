@@ -28,7 +28,7 @@ public class RemoveBackupBindEntryResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("RemoveBackupBindEntryResponse");
+        builder.append("RemoveBackupBindEntryResponse ");
         builder.append(super.toString());
         return builder.toString();
     }

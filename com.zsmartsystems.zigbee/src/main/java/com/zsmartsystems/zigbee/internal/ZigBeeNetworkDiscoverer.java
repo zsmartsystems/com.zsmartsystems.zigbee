@@ -104,13 +104,13 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     /**
      * Executor service to execute discovery threads
      */
-    private static ExecutorService executorService = Executors.newCachedThreadPool();
+    private static ExecutorService executorService = Executors.newFixedThreadPool(6);
 
     private enum NodeDiscoveryState {
         IEEE_ADDRESS,
         NODE_DESCRIPTOR,
         POWER_DESCRIPTOR,
-        ACIVE_ENDPOINTS;
+        ACTIVE_ENDPOINTS;
 
         public NodeDiscoveryState next() {
             return values()[(this.ordinal() + 1) % values().length];
@@ -177,11 +177,13 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
         synchronized (ieeeAddressRequestTimes) {
             if (ieeeAddressRequestTimes.get(nodeNetworkAddress) != null && System.currentTimeMillis()
                     - ieeeAddressRequestTimes.get(nodeNetworkAddress) < MINIMUM_REQUERY_TIME_MILLIS) {
+                logger.debug("Node discovery already in progress for {}", nodeNetworkAddress);
                 return;
             }
             ieeeAddressRequestTimes.put(nodeNetworkAddress, System.currentTimeMillis());
         }
 
+        logger.debug("Scheduling node discovery for {}", nodeNetworkAddress);
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -201,7 +203,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
                         case POWER_DESCRIPTOR:
                             success = getPowerDescriptor(nodeNetworkAddress);
                             break;
-                        case ACIVE_ENDPOINTS:
+                        case ACTIVE_ENDPOINTS:
                             success = getActiveEndpoints(nodeNetworkAddress);
                             break;
                         default:
@@ -244,6 +246,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
             discoveryProgress.add(deviceNetworkAddress);
         }
 
+        logger.debug("Scheduling device discovery for {}", deviceNetworkAddress);
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -285,9 +288,9 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
                     ieeeAddresses.put(ieeeAddressResponse.getNwkAddrRemoteDev(), ieeeAddressResponse);
                 }
                 // Start discovery for any associated nodes
-                // for (final int deviceNetworkAddress : ieeeAddressResponse.getNwkAddrAssocDevList()) {
-                // startNodeDiscovery(deviceNetworkAddress);
-                // }
+                for (final int deviceNetworkAddress : ieeeAddressResponse.getNwkAddrAssocDevList()) {
+                    startNodeDiscovery(deviceNetworkAddress);
+                }
                 return true;
             } else {
                 logger.debug("Ieee Address for {} returned {}", networkAddress, ieeeAddressResponse);

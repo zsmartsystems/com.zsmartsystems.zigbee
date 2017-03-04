@@ -25,7 +25,7 @@ public class ActiveEndpointStoreResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ActiveEndpointStoreResponse");
+        builder.append("ActiveEndpointStoreResponse ");
         builder.append(super.toString());
         return builder.toString();
     }

@@ -6,6 +6,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Backup Source Bind Request value object class.
@@ -140,7 +141,7 @@ public class BackupSourceBindRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("BackupSourceBindRequest");
+        builder.append("BackupSourceBindRequest ");
         builder.append(super.toString());
         builder.append(", sourceTableEntries=");
         builder.append(sourceTableEntries);

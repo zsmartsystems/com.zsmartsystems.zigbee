@@ -1765,6 +1765,41 @@
 				<enum_value>0x01</enum_value>
 				<description>Controls how external binding modification requests are handled.</description>
 			</value>
+			<value>
+				<name>EZSP_UNICAST_REPLIES_POLICY</name>
+				<enum_value>0x02</enum_value>
+				<description>Controls whether the Host supplies unicast replies.</description>
+			</value>
+			<value>
+				<name>EZSP_POLL_HANDLER_POLICY</name>
+				<enum_value>0x03</enum_value>
+				<description>Controls whether pollHandler callbacks are generated.</description>
+			</value>
+			<value>
+				<name>EZSP_MESSAGE_CONTENTS_IN_CALLBACK_POLICY</name>
+				<enum_value>0x04</enum_value>
+				<description>Controls whether the message contents are included in the messageSentHandler callback.</description>
+			</value>
+			<value>
+				<name>EZSP_TC_KEY_REQUEST_POLICY</name>
+				<enum_value>0x05</enum_value>
+				<description>Controls whether the Trust Center will respond to Trust Center link key requests.</description>
+			</value>
+			<value>
+				<name>EZSP_APP_KEY_REQUEST_POLICY</name>
+				<enum_value>0x06</enum_value>
+				<description>Controls whether the Trust Center will respond to application link key requests.</description>
+			</value>
+			<value>
+				<name>EZSP_PACKET_VALIDATE_LIBRARY_POLICY</name>
+				<enum_value>0x07</enum_value>
+				<description>Controls whether ZigBee packets that appear invalid are automatically dropped by the stack. A counter will be incremented when this occurs.</description>
+			</value>
+			<value>
+				<name>EZSP_ZLL_POLICY</name>
+				<enum_value>0x08</enum_value>
+				<description>Controls whether the stack will process ZLL messages.</description>
+			</value>
 		</values>
 	</enum>
 	
@@ -1813,6 +1848,106 @@
 				<name>EZSP_ALLOW_JOINS_REJOINS_HAVE_LINK_KEY</name>
 				<enum_value>0x04</enum_value>
 				<description>Send the network key in the clear to all joining devices. Rejoining devices are sent the network key encrypted with their trust center link key. The trust center and any rejoining device are assumed to share a link key, either preconfigured or obtained under a previous policy.</description>
+			</value>
+			<value>
+				<name>EZSP_ALLOW_PRECONFIGURED_KEY_JOINS</name>
+				<enum_value>0x01</enum_value>
+				<description>Send the network key encrypted with the joining or rejoining device's trust center link key. The trust center and any joining or rejoining device are assumed to share a link key, either preconfigured or obtained under a previous policy. This is the default value for the EZSP_TRUST_CENTER_POLICY.</description>
+			</value>
+			<value>
+				<name>EZSP_ALLOW_REJOINS_ONLY</name>
+				<enum_value>0x02</enum_value>
+				<description>Send the network key encrypted with the rejoining device's trust center link key. The trust center and any rejoining device are assumed to share a link key, either preconfigured or obtained under a previous policy. No new devices are allowed to join.</description>
+			</value>
+			<value>
+				<name>EZSP_DISALLOW_ALL_JOINS_AND_REJOINS</name>
+				<enum_value>0x03</enum_value>
+				<description>Reject all unsecured join and rejoin attempts.</description>
+			</value>
+			<value>
+				<name>EZSP_IGNORE_TRUST_CENTER_REJOINS</name>
+				<enum_value>0x05</enum_value>
+				<description>Take no action on trust center rejoin attempts.</description>
+			</value>
+			<value>
+				<name>EZSP_DISALLOW_BINDING_MODIFICATION</name>
+				<enum_value>0x10</enum_value>
+				<description>EZSP_BINDING_MODIFICATION_POLICY default decision. Do not allow the local binding table to be changed by remote nodes.</description>
+			</value>
+			<value>
+				<name>EZSP_ALLOW_BINDING_MODIFICATION</name>
+				<enum_value>0x11</enum_value>
+				<description>EZSP_BINDING_MODIFICATION_POLICY decision. Allow remote nodes to change the local binding table.</description>
+			</value>
+			<value>
+				<name>EZSP_CHECK_BINDING_MODIFICATIONS_ARE_VALID_ENDPOINT_CLUSTERS</name>
+				<enum_value>0x12</enum_value>
+				<description>EZSP_BINDING_MODIFICATION_POLICY decision. Allows remote nodes to set local binding entries only if the entries correspond to endpoints defined on the device, and for output clusters bound to those endpoints.</description>
+			</value>
+			<value>
+				<name>EZSP_HOST_WILL_NOT_SUPPLY_REPLY </name>
+				<enum_value>0x20</enum_value>
+				<description>EZSP_UNICAST_REPLIES_POLICY default decision. The NCP will automatically send an empty reply (containing no payload) for every unicast received.</description>
+			</value>
+			<value>
+				<name>EZSP_HOST_WILL_SUPPLY_REPLY</name>
+				<enum_value>0x21</enum_value>
+				<description>EZSP_UNICAST_REPLIES_POLICY decision. The NCP will only send a reply if it receives a sendReply command from the Host.</description>
+			</value>
+			<value>
+				<name>EZSP_POLL_HANDLER_IGNORE</name>
+				<enum_value>0x30</enum_value>
+				<description>EZSP_POLL_HANDLER_POLICY default decision. Do not inform the Host when a child polls.</description>
+			</value>
+			<value>
+				<name>EZSP_POLL_HANDLER_CALLBACK</name>
+				<enum_value>0x31</enum_value>
+				<description>EZSP_POLL_HANDLER_POLICY decision. Generate a pollHandler callback when a child polls.</description>
+			</value>
+			<value>
+				<name>EZSP_MESSAGE_TAG_ONLY_IN_CALLBACK</name>
+				<enum_value>0x40</enum_value>
+				<description>EZSP_MESSAGE_CONTENTS_IN_CALLBACK_POLICY default decision. Include only the message tag in the messageSentHandler callback.</description>
+			</value>
+			<value>
+				<name>EZSP_MESSAGE_TAG_AND_CONTENTS_IN_CALLBACK</name>
+				<enum_value>0x41</enum_value>
+				<description>EZSP_MESSAGE_CONTENTS_IN_CALLBACK_POLICY decision. Include both the message tag and the message contents in the messageSentHandler callback.</description>
+			</value>
+			<value>
+				<name>EZSP_DENY_TC_KEY_REQUESTS</name>
+				<enum_value>0x50</enum_value>
+				<description>EZSP_TC_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for a Trust Center link key, it will be ignored.</description>
+			</value>
+			<value>
+				<name>EZSP_ALLOW_TC_KEY_REQUESTS</name>
+				<enum_value>0x51</enum_value>
+				<description>EZSP_TC_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for a Trust Center link key, it will reply to it with the corresponding key.</description>
+			</value>
+			<value>
+				<name>EZSP_GENERATE_NEW_TC_LINK_KEY</name>
+				<enum_value>0x52</enum_value>
+				<description>EZSP_TC_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for a Trust Center link key, it will generate a key to send to the joiner.</description>
+			</value>
+			<value>
+				<name>EZSP_DENY_APP_KEY_REQUESTS</name>
+				<enum_value>0x60</enum_value>
+				<description>EZSP_APP_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for an application link key, it will be ignored.</description>
+			</value>
+			<value>
+				<name>EZSP_ALLOW_APP_KEY_REQUESTS</name>
+				<enum_value>0x61</enum_value>
+				<description>EZSP_APP_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for an application link key, it will randomly generate a key and send it to both partners.</description>
+			</value>
+			<value>
+				<name>EZSP_PACKET_VALIDATE_LIBRARY_CHECKS_ENABLED</name>
+				<enum_value>0x62</enum_value>
+				<description>Indicates that packet validate library checks are enabled on the NCP.</description>
+			</value>
+			<value>
+				<name>EZSP_PACKET_VALIDATE_LIBRARY_CHECKS_DISABLED</name>
+				<enum_value>0x63</enum_value>
+				<description>Indicates that packet validate library checks are NOT enabled on the NCP.</description>
 			</value>
 		</values>
 	</enum>
@@ -2274,9 +2409,39 @@
 				<description>The number of packet buffers available to the stack. When set to the special value 0xFF, the NCP will allocate all remaining configuration RAM towards packet buffers, such that the resulting count will be the largest whole number of packet buffers that can fit into the available memory.</description>
 			</value>
 			<value>
+				<name>EZSP_CONFIG_STACK_PROFILE</name>
+				<enum_value>0x0C</enum_value>
+				<description>Specifies the stack profile.</description>
+			</value>
+			<value>
+				<name>EZSP_CONFIG_SECURITY_LEVEL</name>
+				<enum_value>0x0D</enum_value>
+				<description>The security level used for security at the MAC and network layers. The supported values are 0 (no security) and 5 (payload is encrypted and a four-byte MIC is used for authentication).</description>
+			</value>
+			<value>
+				<name>EZSP_CONFIG_MAX_END_DEVICE_CHILDREN</name>
+				<enum_value>0x11</enum_value>
+				<description>The maximum number of end device children that a router will support.</description>
+			</value>
+			<value>
+				<name>EZSP_CONFIG_TX_POWER_MODE</name>
+				<enum_value>0x17</enum_value>
+				<description>Enables boost power mode and/or the alternate transmitter output.</description>
+			</value>
+			<value>
+				<name>EZSP_CONFIG_KEY_TABLE_SIZE</name>
+				<enum_value>0x1E</enum_value>
+				<description>The size of the Key Table used for storing individual link keys (if the device is a Trust Center) or Application Link Keys (if the device is a normal node).</description>
+			</value>
+			<value>
 				<name>EZSP_CONFIG_APPLICATION_ZDO_FLAGS</name>
 				<enum_value>0x2A</enum_value>
 				<description>This is a bitmask that controls which incoming ZDO request messages are passed to the application. The bits are defined in the EmberZdoConfigurationFlags enumeration. To see if the application is required to send a ZDO response in reply to an incoming message, the application must check the APS options bitfield within the incomingMessageHandler callback to see if the EMBER_APS_OPTION_ZDO_RESPONSE_REQUIRED flag is set.</description>
+			</value>
+			<value>
+				<name>EZSP_CONFIG_SUPPORTED_NETWORKS</name>
+				<enum_value>0x2D</enum_value>
+				<description>The number of supported networks.</description>
 			</value>
 		</values>
 	</enum>

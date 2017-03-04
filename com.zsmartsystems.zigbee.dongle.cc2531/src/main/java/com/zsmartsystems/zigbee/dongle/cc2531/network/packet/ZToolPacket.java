@@ -50,7 +50,7 @@ public class ZToolPacket {
         SRSP
     }
 
-    private enum CommandSubsystem {
+    public enum CommandSubsystem {
         RESERVED_0,
         SYS,
         RESERVED_1,

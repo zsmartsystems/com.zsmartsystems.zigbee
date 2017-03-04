@@ -33,7 +33,7 @@ public class RecoverSourceBindResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("RecoverSourceBindResponse");
+        builder.append("RecoverSourceBindResponse ");
         builder.append(super.toString());
         return builder.toString();
     }

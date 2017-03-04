@@ -23,7 +23,7 @@ public class ManagementDirectJoinResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementDirectJoinResponse");
+        builder.append("ManagementDirectJoinResponse ");
         builder.append(super.toString());
         return builder.toString();
     }

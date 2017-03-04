@@ -69,7 +69,8 @@ public class UserDescriptorRequest extends ZdoRequest implements CommandResponse
             return false;
         }
 
-        if (((UserDescriptorRequest) request).getNwkAddrOfInterest() != ((UserDescriptorResponse) response).getNwkAddrOfInterest()) {
+        if (!((UserDescriptorRequest) request).getNwkAddrOfInterest()
+                .equals(((UserDescriptorResponse) response).getNwkAddrOfInterest())) {
             return false;
         }
 
@@ -79,7 +80,7 @@ public class UserDescriptorRequest extends ZdoRequest implements CommandResponse
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("UserDescriptorRequest");
+        builder.append("UserDescriptorRequest ");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);

@@ -32,7 +32,43 @@ public enum EzspPolicyId {
     /**
      * Controls how external binding modification requests are handled.
      */
-    EZSP_BINDING_MODIFICATION_POLICY(0x0001);
+    EZSP_BINDING_MODIFICATION_POLICY(0x0001),
+
+    /**
+     * Controls whether the Host supplies unicast replies.
+     */
+    EZSP_UNICAST_REPLIES_POLICY(0x0002),
+
+    /**
+     * Controls whether pollHandler callbacks are generated.
+     */
+    EZSP_POLL_HANDLER_POLICY(0x0003),
+
+    /**
+     * Controls whether the message contents are included in the messageSentHandler callback.
+     */
+    EZSP_MESSAGE_CONTENTS_IN_CALLBACK_POLICY(0x0004),
+
+    /**
+     * Controls whether the Trust Center will respond to Trust Center link key requests.
+     */
+    EZSP_TC_KEY_REQUEST_POLICY(0x0005),
+
+    /**
+     * Controls whether the Trust Center will respond to application link key requests.
+     */
+    EZSP_APP_KEY_REQUEST_POLICY(0x0006),
+
+    /**
+     * Controls whether ZigBee packets that appear invalid are automatically dropped by the
+     * stack. A counter will be incremented when this occurs.
+     */
+    EZSP_PACKET_VALIDATE_LIBRARY_POLICY(0x0007),
+
+    /**
+     * Controls whether the stack will process ZLL messages.
+     */
+    EZSP_ZLL_POLICY(0x0008);
 
     /**
      * A mapping between the integer code and its corresponding type to

@@ -225,7 +225,6 @@ public class NodeDescriptor {
         transferSize = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
 
         deserializer.readZigBeeType(ZclDataType.SIGNED_16_BIT_INTEGER);
-        deserializer.readZigBeeType(ZclDataType.SIGNED_16_BIT_INTEGER);
         deserializer.readZigBeeType(ZclDataType.SIGNED_8_BIT_INTEGER);
     }
 

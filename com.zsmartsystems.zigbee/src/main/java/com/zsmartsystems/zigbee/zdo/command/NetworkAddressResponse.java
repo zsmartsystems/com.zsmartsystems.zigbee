@@ -6,6 +6,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 import java.util.List;
+import java.util.ArrayList;
 import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
@@ -172,7 +173,7 @@ public class NetworkAddressResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("NetworkAddressResponse");
+        builder.append("NetworkAddressResponse ");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
