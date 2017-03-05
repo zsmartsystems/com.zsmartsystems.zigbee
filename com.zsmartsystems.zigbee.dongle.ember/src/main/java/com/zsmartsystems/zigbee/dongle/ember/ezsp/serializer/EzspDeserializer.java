@@ -1,5 +1,8 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
@@ -22,6 +25,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 
 /**
+ * The EmberZNet Serial Protocol Data Representation
+ *
+ * This class contains low level methods for deserialising Ember data packets and
+ * structures from the incoming received array
  *
  * @author Chris Jackson
  *
@@ -168,13 +175,23 @@ public class EzspDeserializer {
         return new EmberApsFrame(this);
     }
 
-    public EmberZigbeeNetwork deserializeEmberZigbeeNetwork() {
-        return new EmberZigbeeNetwork(this);
+    public Set<EmberApsOption> deserializeEmberApsOption() {
+        int val = deserializeUInt16();
+        Set<EmberApsOption> options = new HashSet<EmberApsOption>();
+        for (EmberApsOption option : EmberApsOption.values()) {
+            if (option == EmberApsOption.UNKNOWN) {
+                continue;
+            }
+
+            if ((option.getKey() & val) != 0) {
+                options.add(option);
+            }
+        }
+        return options;
     }
 
-    public EmberApsOption deserializeEmberApsOption() {
-        // TODO this should be a list
-        return EmberApsOption.getEmberApsOption(deserializeUInt16());
+    public EmberZigbeeNetwork deserializeEmberZigbeeNetwork() {
+        return new EmberZigbeeNetwork(this);
     }
 
     public EmberCurrentSecurityBitmask deserializeEmberCurrentSecurityBitmask() {

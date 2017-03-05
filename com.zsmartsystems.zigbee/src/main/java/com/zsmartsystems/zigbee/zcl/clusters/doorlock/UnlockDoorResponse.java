@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Unlock Door Response value object class.
  * <p>
  * Cluster: <b>Door Lock</b>. Command is sent <b>FROM</b> the server.
@@ -33,6 +31,7 @@ public class UnlockDoorResponse extends ZclCommand {
 
     /**
      * Gets Status.
+     *
      * @return the Status
      */
     public Integer getStatus() {
@@ -41,6 +40,7 @@ public class UnlockDoorResponse extends ZclCommand {
 
     /**
      * Sets Status.
+     *
      * @param status the Status
      */
     public void setStatus(final Integer status) {

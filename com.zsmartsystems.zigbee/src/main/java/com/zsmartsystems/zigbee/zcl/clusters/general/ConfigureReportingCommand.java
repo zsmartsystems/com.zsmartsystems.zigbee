@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 
 /**
- * <p>
  * Configure Reporting Command value object class.
  * <p>
  * The Configure Reporting command is used to configure the reporting mechanism
@@ -54,6 +53,7 @@ public class ConfigureReportingCommand extends ZclCommand {
 
     /**
      * Gets Records.
+     *
      * @return the Records
      */
     public List<AttributeReportingConfigurationRecord> getRecords() {
@@ -62,6 +62,7 @@ public class ConfigureReportingCommand extends ZclCommand {
 
     /**
      * Sets Records.
+     *
      * @param records the Records
      */
     public void setRecords(final List<AttributeReportingConfigurationRecord> records) {

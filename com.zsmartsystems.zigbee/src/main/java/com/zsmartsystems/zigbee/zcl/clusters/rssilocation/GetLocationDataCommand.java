@@ -4,10 +4,9 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
- * <p>
  * Get Location Data Command value object class.
  * <p>
  * Cluster: <b>RSSI Location</b>. Command is sent <b>TO</b> the server.
@@ -29,7 +28,7 @@ public class GetLocationDataCommand extends ZclCommand {
     /**
      * Target Address command message field.
      */
-    private Long targetAddress;
+    private IeeeAddress targetAddress;
 
     /**
      * Default constructor.
@@ -43,6 +42,7 @@ public class GetLocationDataCommand extends ZclCommand {
 
     /**
      * Gets Header.
+     *
      * @return the Header
      */
     public Integer getHeader() {
@@ -51,6 +51,7 @@ public class GetLocationDataCommand extends ZclCommand {
 
     /**
      * Sets Header.
+     *
      * @param header the Header
      */
     public void setHeader(final Integer header) {
@@ -59,6 +60,7 @@ public class GetLocationDataCommand extends ZclCommand {
 
     /**
      * Gets Number Responses.
+     *
      * @return the Number Responses
      */
     public Integer getNumberResponses() {
@@ -67,6 +69,7 @@ public class GetLocationDataCommand extends ZclCommand {
 
     /**
      * Sets Number Responses.
+     *
      * @param numberResponses the Number Responses
      */
     public void setNumberResponses(final Integer numberResponses) {
@@ -75,17 +78,19 @@ public class GetLocationDataCommand extends ZclCommand {
 
     /**
      * Gets Target Address.
+     *
      * @return the Target Address
      */
-    public Long getTargetAddress() {
+    public IeeeAddress getTargetAddress() {
         return targetAddress;
     }
 
     /**
      * Sets Target Address.
+     *
      * @param targetAddress the Target Address
      */
-    public void setTargetAddress(final Long targetAddress) {
+    public void setTargetAddress(final IeeeAddress targetAddress) {
         this.targetAddress = targetAddress;
     }
 
@@ -100,7 +105,7 @@ public class GetLocationDataCommand extends ZclCommand {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         header = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
         numberResponses = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        targetAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        targetAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
     }
 
     @Override

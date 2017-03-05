@@ -1,35 +1,86 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsResponse;
 
 /**
- * @author Tommi S.E. Laukkanen
+ * Active Endpoints Request value object class.
+ * <p>
+ * The Active_EP_req command is generated from a local device wishing to acquire
+ * the list of endpoints on a remote device with simple descriptors. This command
+ * shall be unicast either to the remote device itself or to an alternative device that
+ * contains the discovery information of the remote device.
+ * <p>
+ * Code is auto-generated. Modifications may be overwritten!
  */
-public class ActiveEndpointsRequest extends ZdoRequest {
+public class ActiveEndpointsRequest extends ZdoRequest implements CommandResponseMatcher {
     /**
-     * Network address of interest.
+     * NWKAddrOfInterest command message field.
      */
-    private int networkAddressOfInterest;
+    private Integer nwkAddrOfInterest;
 
+    /**
+     * Default constructor.
+     */
     public ActiveEndpointsRequest() {
+        clusterId = 0x0005;
     }
 
-    public ActiveEndpointsRequest(int destinationAddress, int networkAddressOfInterest) {
-        this.destinationAddress = destinationAddress;
-        this.networkAddressOfInterest = networkAddressOfInterest;
+    /**
+     * Gets NWKAddrOfInterest.
+     *
+     * @return the NWKAddrOfInterest
+     */
+    public Integer getNwkAddrOfInterest() {
+        return nwkAddrOfInterest;
     }
 
-    public int getNetworkAddressOfInterest() {
-        return networkAddressOfInterest;
+    /**
+     * Sets NWKAddrOfInterest.
+     *
+     * @param nwkAddrOfInterest the NWKAddrOfInterest
+     */
+    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+        this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
 
-    public void setNetworkAddressOfInterest(int networkAddressOfInterest) {
-        this.networkAddressOfInterest = networkAddressOfInterest;
+    @Override
+    public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
+        serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
+    }
+
+    @Override
+    public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
+        nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+    }
+
+    @Override
+    public boolean isMatch(Command request, Command response) {
+        if (!(response instanceof ActiveEndpointsResponse)) {
+            return false;
+        }
+
+        return (((ActiveEndpointsRequest) request).getNwkAddrOfInterest()
+                .equals(((ActiveEndpointsResponse) response).getNwkAddrOfInterest()));
     }
 
     @Override
     public String toString() {
-        return "Active Endpoints Request: destinationAddress=" + destinationAddress + ", networkAddressOfInterest="
-                + networkAddressOfInterest;
+        final StringBuilder builder = new StringBuilder();
+        builder.append("ActiveEndpointsRequest ");
+        builder.append(super.toString());
+        builder.append(", nwkAddrOfInterest=");
+        builder.append(nwkAddrOfInterest);
+        return builder.toString();
     }
+
 }

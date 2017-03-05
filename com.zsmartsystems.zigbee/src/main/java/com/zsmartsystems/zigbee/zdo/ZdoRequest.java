@@ -9,23 +9,31 @@ public abstract class ZdoRequest extends ZdoCommand {
     /**
      * Destination address;
      */
-    protected int destinationAddress;
+    // protected int destinationAddress;
 
     /**
      * Gets destination address.
      *
      * @return the destination address
      */
-    public int getDestinationAddress() {
-        return destinationAddress;
-    }
+    // public int getDestinationAddress() {
+    // return destinationAddress;
+    // }
 
     /**
      * Set the destination address
      *
      * @param destinationAddress the destination address as {@link int}
      */
-    public void setDestinationAddress(int destinationAddress) {
-        this.destinationAddress = destinationAddress;
-    }
+    // public void setDestinationAddress(int destinationAddress) {
+    // this.destinationAddress = destinationAddress;
+    // }
+
+    // @Override
+    // public String toString() {
+    // final StringBuilder builder = new StringBuilder();
+    // builder.append(": destinationAddress=");
+    // builder.append(destinationAddress);
+    // return builder.toString();
+    // }
 }

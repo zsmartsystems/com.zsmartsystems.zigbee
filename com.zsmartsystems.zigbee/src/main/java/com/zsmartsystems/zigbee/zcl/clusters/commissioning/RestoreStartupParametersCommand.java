@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Restore Startup Parameters Command value object class.
  * <p>
  * Cluster: <b>Commissioning</b>. Command is sent <b>TO</b> the server.
@@ -38,6 +36,7 @@ public class RestoreStartupParametersCommand extends ZclCommand {
 
     /**
      * Gets Option.
+     *
      * @return the Option
      */
     public Integer getOption() {
@@ -46,6 +45,7 @@ public class RestoreStartupParametersCommand extends ZclCommand {
 
     /**
      * Sets Option.
+     *
      * @param option the Option
      */
     public void setOption(final Integer option) {
@@ -54,6 +54,7 @@ public class RestoreStartupParametersCommand extends ZclCommand {
 
     /**
      * Gets Index.
+     *
      * @return the Index
      */
     public Integer getIndex() {
@@ -62,6 +63,7 @@ public class RestoreStartupParametersCommand extends ZclCommand {
 
     /**
      * Sets Index.
+     *
      * @param index the Index
      */
     public void setIndex(final Integer index) {

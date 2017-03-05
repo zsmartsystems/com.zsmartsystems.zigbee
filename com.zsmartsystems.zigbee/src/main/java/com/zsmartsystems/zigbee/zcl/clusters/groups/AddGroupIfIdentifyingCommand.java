@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Add Group If Identifying Command value object class.
  * <p>
  * Cluster: <b>Groups</b>. Command is sent <b>TO</b> the server.
@@ -56,6 +54,7 @@ public class AddGroupIfIdentifyingCommand extends ZclCommand {
 
     /**
      * Gets Group ID.
+     *
      * @return the Group ID
      */
     public Integer getGroupId() {
@@ -64,6 +63,7 @@ public class AddGroupIfIdentifyingCommand extends ZclCommand {
 
     /**
      * Sets Group ID.
+     *
      * @param groupId the Group ID
      */
     public void setGroupId(final Integer groupId) {
@@ -72,6 +72,7 @@ public class AddGroupIfIdentifyingCommand extends ZclCommand {
 
     /**
      * Gets Group Name.
+     *
      * @return the Group Name
      */
     public String getGroupName() {
@@ -80,6 +81,7 @@ public class AddGroupIfIdentifyingCommand extends ZclCommand {
 
     /**
      * Sets Group Name.
+     *
      * @param groupName the Group Name
      */
     public void setGroupName(final String groupName) {

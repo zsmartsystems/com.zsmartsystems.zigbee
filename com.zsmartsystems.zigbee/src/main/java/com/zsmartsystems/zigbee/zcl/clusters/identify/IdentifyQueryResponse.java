@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Identify Query Response value object class.
  * <p>
  * The identify query response command is generated in response to receiving an
@@ -43,6 +41,7 @@ public class IdentifyQueryResponse extends ZclCommand {
 
     /**
      * Gets Identify Time.
+     *
      * @return the Identify Time
      */
     public Integer getIdentifyTime() {
@@ -51,6 +50,7 @@ public class IdentifyQueryResponse extends ZclCommand {
 
     /**
      * Sets Identify Time.
+     *
      * @param identifyTime the Identify Time
      */
     public void setIdentifyTime(final Integer identifyTime) {

@@ -97,7 +97,12 @@ public class EzspSetSourceRouteResponse extends EzspFrameResponse {
         builder.append("EzspSetSourceRouteResponse [destination=");
         builder.append(destination);
         builder.append(", relayList=");
-        builder.append(relayList);
+        for (int c = 0; c < relayList.length; c++) {
+            if (c > 0) {
+                builder.append(" ");
+            }
+            builder.append(String.format("%02X", relayList[c]));
+        }
         builder.append("]");
         return builder.toString();
     }

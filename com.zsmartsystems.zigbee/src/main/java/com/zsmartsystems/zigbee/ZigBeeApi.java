@@ -23,8 +23,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.iaswd.SquawkCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.StartWarningCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.MoveToLevelCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
-import com.zsmartsystems.zigbee.zcl.field.Unsigned16BitInteger;
-import com.zsmartsystems.zigbee.zdo.command.UserDescriptorSet;
 
 /**
  * ZigBee API. This API is experimental and under development.
@@ -163,12 +161,11 @@ public class ZigBeeApi {
      * @param descriptor the descriptor
      * @return TRUE if no errors occurred in sending.
      */
-    public Future<CommandResult> describe(final ZigBeeDevice device, final String descriptor) {
-        final UserDescriptorSet command = new UserDescriptorSet(device.getNetworkAddress(), device.getNetworkAddress(),
-                descriptor);
-
-        return networkManager.unicast(command);
-    }
+    // public Future<CommandResult> describe(final ZigBeeDevice device, final String descriptor) {
+    // final UserDescriptorSet command = new UserDescriptorSet(device.getNetworkAddress(), device.getNetworkAddress(),
+    // descriptor);
+    // return networkManager.unicast(command);
+    // }
 
     /**
      * Binds two devices.
@@ -203,12 +200,11 @@ public class ZigBeeApi {
      */
     public Future<CommandResult> on(final ZigBeeAddress destination) {
         ZigBeeDevice device = networkManager.getDevice(destination);
+        if (device == null) {
+            return null;
+        }
         ZclOnOffCluster cluster = (ZclOnOffCluster) device.getCluster(ZclOnOffCluster.CLUSTER_ID);
         return cluster.onCommand();
-
-        // final OnCommand command = new OnCommand();
-        // return send(destination, command);
-
     }
 
     /**
@@ -436,7 +432,7 @@ public class ZigBeeApi {
         final GetGroupMembershipCommand command = new GetGroupMembershipCommand();
 
         command.setGroupCount(0);
-        command.setGroupList(Collections.<Unsigned16BitInteger> emptyList());
+        command.setGroupList(Collections.<Integer> emptyList());
         command.setDestinationAddress(device.getDeviceAddress());
 
         return networkManager.unicast(command, new ZclCustomResponseMatcher());

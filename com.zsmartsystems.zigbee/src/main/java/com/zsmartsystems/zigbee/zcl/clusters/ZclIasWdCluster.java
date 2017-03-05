@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
@@ -211,11 +212,11 @@ public class ZclIasWdCluster extends ZclCluster {
     /**
      * Set the <i>IAS_CIE_Address</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * The attribute is of type {@link Long}.
+     * The attribute is of type {@link IeeeAddress}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
-     * @param ias_Cie_Address the {@link Long} attribute value to be set
+     * @param iasCieAddress the {@link IeeeAddress} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> setIasCieAddress(final Object value) {
@@ -225,7 +226,7 @@ public class ZclIasWdCluster extends ZclCluster {
     /**
      * Get the <i>IAS_CIE_Address</i> attribute [attribute ID <b>16</b>].
      * <p>
-     * The attribute is of type {@link Long}.
+     * The attribute is of type {@link IeeeAddress}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -246,22 +247,22 @@ public class ZclIasWdCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Long}.
+     * The attribute is of type {@link IeeeAddress}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Long} attribute value, or null on error
+     * @return the {@link IeeeAddress} attribute value, or null on error
      */
-    public Long getIasCieAddress(final long refreshPeriod) {
+    public IeeeAddress getIasCieAddress(final long refreshPeriod) {
         if(refreshPeriod > 0 && attributes.get(ATTR_IAS_CIE_ADDRESS).getLastReportTime() != null) {
             long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
             if(attributes.get(ATTR_IAS_CIE_ADDRESS).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Long) attributes.get(ATTR_IAS_CIE_ADDRESS).getLastValue();
+                return (IeeeAddress) attributes.get(ATTR_IAS_CIE_ADDRESS).getLastValue();
             }
         }
 
-        return (Long) readSync(attributes.get(ATTR_IAS_CIE_ADDRESS));
+        return (IeeeAddress) readSync(attributes.get(ATTR_IAS_CIE_ADDRESS));
     }
 
     /**

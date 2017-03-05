@@ -36,7 +36,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupResponse;
-import com.zsmartsystems.zigbee.zcl.field.Unsigned16BitInteger;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -1105,8 +1104,9 @@ public final class ZigBeeConsole {
 
             final String label = args[2];
 
-            final CommandResult response = zigbeeApi.describe(device, label).get();
-            return defaultResponseProcessing(response, out);
+            return false;
+            // final CommandResult response = zigbeeApi.describe(device, label).get();
+            // return defaultResponseProcessing(response, out);
         }
     }
 
@@ -2083,9 +2083,9 @@ public final class ZigBeeConsole {
             if (result.isSuccess()) {
                 final GetGroupMembershipResponse response = result.getResponse();
                 out.print("Member of groups:");
-                for (final Unsigned16BitInteger value : response.getGroupList()) {
+                for (final Integer value : response.getGroupList()) {
                     out.print(' ');
-                    out.print(value.getValue());
+                    out.print(value);
                 }
                 out.println();
                 return true;

@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Remove All Scenes Response value object class.
  * <p>
  * Cluster: <b>Scenes</b>. Command is sent <b>FROM</b> the server.
@@ -48,6 +46,7 @@ public class RemoveAllScenesResponse extends ZclCommand {
 
     /**
      * Gets Status.
+     *
      * @return the Status
      */
     public Integer getStatus() {
@@ -56,6 +55,7 @@ public class RemoveAllScenesResponse extends ZclCommand {
 
     /**
      * Sets Status.
+     *
      * @param status the Status
      */
     public void setStatus(final Integer status) {
@@ -64,6 +64,7 @@ public class RemoveAllScenesResponse extends ZclCommand {
 
     /**
      * Gets Group ID.
+     *
      * @return the Group ID
      */
     public Integer getGroupId() {
@@ -72,6 +73,7 @@ public class RemoveAllScenesResponse extends ZclCommand {
 
     /**
      * Sets Group ID.
+     *
      * @param groupId the Group ID
      */
     public void setGroupId(final Integer groupId) {

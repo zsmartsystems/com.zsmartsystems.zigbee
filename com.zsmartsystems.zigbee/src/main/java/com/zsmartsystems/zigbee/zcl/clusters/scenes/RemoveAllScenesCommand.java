@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Remove All Scenes Command value object class.
  * <p>
  * The Remove All Scenes may be addressed to a single device or to a group.
@@ -45,6 +43,7 @@ public class RemoveAllScenesCommand extends ZclCommand {
 
     /**
      * Gets Group ID.
+     *
      * @return the Group ID
      */
     public Integer getGroupId() {
@@ -53,6 +52,7 @@ public class RemoveAllScenesCommand extends ZclCommand {
 
     /**
      * Sets Group ID.
+     *
      * @param groupId the Group ID
      */
     public void setGroupId(final Integer groupId) {

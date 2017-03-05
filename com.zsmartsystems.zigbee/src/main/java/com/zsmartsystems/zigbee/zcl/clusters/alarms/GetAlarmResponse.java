@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Get Alarm Response value object class.
  * <p>
  * Cluster: <b>Alarms</b>. Command is sent <b>FROM</b> the server.
@@ -61,6 +59,7 @@ public class GetAlarmResponse extends ZclCommand {
 
     /**
      * Gets Status.
+     *
      * @return the Status
      */
     public Integer getStatus() {
@@ -69,6 +68,7 @@ public class GetAlarmResponse extends ZclCommand {
 
     /**
      * Sets Status.
+     *
      * @param status the Status
      */
     public void setStatus(final Integer status) {
@@ -77,6 +77,7 @@ public class GetAlarmResponse extends ZclCommand {
 
     /**
      * Gets Alarm code.
+     *
      * @return the Alarm code
      */
     public Integer getAlarmCode() {
@@ -85,6 +86,7 @@ public class GetAlarmResponse extends ZclCommand {
 
     /**
      * Sets Alarm code.
+     *
      * @param alarmCode the Alarm code
      */
     public void setAlarmCode(final Integer alarmCode) {
@@ -93,6 +95,7 @@ public class GetAlarmResponse extends ZclCommand {
 
     /**
      * Gets Cluster identifier.
+     *
      * @return the Cluster identifier
      */
     public Integer getClusterIdentifier() {
@@ -101,6 +104,7 @@ public class GetAlarmResponse extends ZclCommand {
 
     /**
      * Sets Cluster identifier.
+     *
      * @param clusterIdentifier the Cluster identifier
      */
     public void setClusterIdentifier(final Integer clusterIdentifier) {
@@ -109,6 +113,7 @@ public class GetAlarmResponse extends ZclCommand {
 
     /**
      * Gets Timestamp.
+     *
      * @return the Timestamp
      */
     public Integer getTimestamp() {
@@ -117,6 +122,7 @@ public class GetAlarmResponse extends ZclCommand {
 
     /**
      * Sets Timestamp.
+     *
      * @param timestamp the Timestamp
      */
     public void setTimestamp(final Integer timestamp) {

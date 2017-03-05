@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.AttributeStatusRecord;
 
 /**
- * <p>
  * Configure Reporting Response value object class.
  * <p>
  * The Configure Reporting Response command is generated in response to a
@@ -50,6 +49,7 @@ public class ConfigureReportingResponse extends ZclCommand {
 
     /**
      * Gets Records.
+     *
      * @return the Records
      */
     public List<AttributeStatusRecord> getRecords() {
@@ -58,6 +58,7 @@ public class ConfigureReportingResponse extends ZclCommand {
 
     /**
      * Sets Records.
+     *
      * @param records the Records
      */
     public void setRecords(final List<AttributeStatusRecord> records) {

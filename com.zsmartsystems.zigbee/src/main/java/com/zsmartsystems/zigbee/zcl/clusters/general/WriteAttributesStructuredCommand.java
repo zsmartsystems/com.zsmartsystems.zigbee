@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Write Attributes Structured Command value object class.
  * <p>
  * The write attributes structured command is generated when a device wishes to
@@ -50,6 +48,7 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
 
     /**
      * Gets Attribute selectors.
+     *
      * @return the Attribute selectors
      */
     public Object getAttributeSelectors() {
@@ -58,6 +57,7 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
 
     /**
      * Sets Attribute selectors.
+     *
      * @param attributeSelectors the Attribute selectors
      */
     public void setAttributeSelectors(final Object attributeSelectors) {

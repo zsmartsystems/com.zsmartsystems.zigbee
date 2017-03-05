@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Move Command value object class.
  * <p>
  * Cluster: <b>Level Control</b>. Command is sent <b>TO</b> the server.
@@ -42,6 +40,7 @@ public class MoveCommand extends ZclCommand {
 
     /**
      * Gets Move mode.
+     *
      * @return the Move mode
      */
     public Integer getMoveMode() {
@@ -50,6 +49,7 @@ public class MoveCommand extends ZclCommand {
 
     /**
      * Sets Move mode.
+     *
      * @param moveMode the Move mode
      */
     public void setMoveMode(final Integer moveMode) {
@@ -58,6 +58,7 @@ public class MoveCommand extends ZclCommand {
 
     /**
      * Gets Rate.
+     *
      * @return the Rate
      */
     public Integer getRate() {
@@ -66,6 +67,7 @@ public class MoveCommand extends ZclCommand {
 
     /**
      * Sets Rate.
+     *
      * @param rate the Rate
      */
     public void setRate(final Integer rate) {

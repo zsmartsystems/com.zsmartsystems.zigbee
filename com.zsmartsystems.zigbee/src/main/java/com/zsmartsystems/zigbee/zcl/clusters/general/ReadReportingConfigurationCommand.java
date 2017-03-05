@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 
 /**
- * <p>
  * Read Reporting Configuration Command value object class.
  * <p>
  * The Read Reporting Configuration command is used to read the configuration
@@ -50,6 +49,7 @@ public class ReadReportingConfigurationCommand extends ZclCommand {
 
     /**
      * Gets Records.
+     *
      * @return the Records
      */
     public List<AttributeRecord> getRecords() {
@@ -58,6 +58,7 @@ public class ReadReportingConfigurationCommand extends ZclCommand {
 
     /**
      * Sets Records.
+     *
      * @param records the Records
      */
     public void setRecords(final List<AttributeRecord> records) {

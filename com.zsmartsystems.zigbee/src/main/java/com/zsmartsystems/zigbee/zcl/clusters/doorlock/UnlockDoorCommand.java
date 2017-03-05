@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Unlock Door Command value object class.
  * <p>
  * Cluster: <b>Door Lock</b>. Command is sent <b>TO</b> the server.
@@ -33,6 +31,7 @@ public class UnlockDoorCommand extends ZclCommand {
 
     /**
      * Gets Pin code.
+     *
      * @return the Pin code
      */
     public String getPinCode() {
@@ -41,6 +40,7 @@ public class UnlockDoorCommand extends ZclCommand {
 
     /**
      * Sets Pin code.
+     *
      * @param pinCode the Pin code
      */
     public void setPinCode(final String pinCode) {

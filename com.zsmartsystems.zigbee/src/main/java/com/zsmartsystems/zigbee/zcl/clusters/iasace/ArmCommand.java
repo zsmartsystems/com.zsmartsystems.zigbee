@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Arm Command value object class.
  * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.
@@ -38,6 +36,7 @@ public class ArmCommand extends ZclCommand {
 
     /**
      * Gets Arm Mode.
+     *
      * @return the Arm Mode
      */
     public Integer getArmMode() {
@@ -46,6 +45,7 @@ public class ArmCommand extends ZclCommand {
 
     /**
      * Sets Arm Mode.
+     *
      * @param armMode the Arm Mode
      */
     public void setArmMode(final Integer armMode) {

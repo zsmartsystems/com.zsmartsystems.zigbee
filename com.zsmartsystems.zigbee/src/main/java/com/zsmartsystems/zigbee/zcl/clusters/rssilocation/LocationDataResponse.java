@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Location Data Response value object class.
  * <p>
  * Cluster: <b>RSSI Location</b>. Command is sent <b>FROM</b> the server.
@@ -78,6 +76,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Gets Status.
+     *
      * @return the Status
      */
     public Integer getStatus() {
@@ -86,6 +85,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Sets Status.
+     *
      * @param status the Status
      */
     public void setStatus(final Integer status) {
@@ -94,6 +94,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Gets Location Type.
+     *
      * @return the Location Type
      */
     public Integer getLocationType() {
@@ -102,6 +103,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Sets Location Type.
+     *
      * @param locationType the Location Type
      */
     public void setLocationType(final Integer locationType) {
@@ -110,6 +112,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Gets Coordinate 1.
+     *
      * @return the Coordinate 1
      */
     public Integer getCoordinate1() {
@@ -118,6 +121,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Sets Coordinate 1.
+     *
      * @param coordinate1 the Coordinate 1
      */
     public void setCoordinate1(final Integer coordinate1) {
@@ -126,6 +130,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Gets Coordinate 2.
+     *
      * @return the Coordinate 2
      */
     public Integer getCoordinate2() {
@@ -134,6 +139,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Sets Coordinate 2.
+     *
      * @param coordinate2 the Coordinate 2
      */
     public void setCoordinate2(final Integer coordinate2) {
@@ -142,6 +148,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Gets Coordinate 3.
+     *
      * @return the Coordinate 3
      */
     public Integer getCoordinate3() {
@@ -150,6 +157,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Sets Coordinate 3.
+     *
      * @param coordinate3 the Coordinate 3
      */
     public void setCoordinate3(final Integer coordinate3) {
@@ -158,6 +166,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Gets Power.
+     *
      * @return the Power
      */
     public Integer getPower() {
@@ -166,6 +175,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Sets Power.
+     *
      * @param power the Power
      */
     public void setPower(final Integer power) {
@@ -174,6 +184,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Gets Path Loss Exponent.
+     *
      * @return the Path Loss Exponent
      */
     public Integer getPathLossExponent() {
@@ -182,6 +193,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Sets Path Loss Exponent.
+     *
      * @param pathLossExponent the Path Loss Exponent
      */
     public void setPathLossExponent(final Integer pathLossExponent) {
@@ -190,6 +202,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Gets Location Method.
+     *
      * @return the Location Method
      */
     public Integer getLocationMethod() {
@@ -198,6 +211,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Sets Location Method.
+     *
      * @param locationMethod the Location Method
      */
     public void setLocationMethod(final Integer locationMethod) {
@@ -206,6 +220,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Gets Quality Measure.
+     *
      * @return the Quality Measure
      */
     public Integer getQualityMeasure() {
@@ -214,6 +229,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Sets Quality Measure.
+     *
      * @param qualityMeasure the Quality Measure
      */
     public void setQualityMeasure(final Integer qualityMeasure) {
@@ -222,6 +238,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Gets Location Age.
+     *
      * @return the Location Age
      */
     public Integer getLocationAge() {
@@ -230,6 +247,7 @@ public class LocationDataResponse extends ZclCommand {
 
     /**
      * Sets Location Age.
+     *
      * @param locationAge the Location Age
      */
     public void setLocationAge(final Integer locationAge) {

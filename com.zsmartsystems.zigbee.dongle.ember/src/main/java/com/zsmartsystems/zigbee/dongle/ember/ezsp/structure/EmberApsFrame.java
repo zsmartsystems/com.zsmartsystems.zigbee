@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class to implement the Ember Structure <b>EmberApsFrame</b>.
@@ -54,8 +56,9 @@ public class EmberApsFrame {
      * A bitmask of options.
      * <p>
      * EZSP type is <i>EmberApsOption</i> - Java type is {@link EmberApsOption}
+     * Parameter allows multiple options so implemented as a {@link Set}.
      */
-    private EmberApsOption options;
+    private Set<EmberApsOption> options = new HashSet<EmberApsOption>();
 
     /**
      * The group ID for this message, if it is multicast mode.
@@ -166,19 +169,28 @@ public class EmberApsFrame {
      * <p>
      * EZSP type is <i>EmberApsOption</i> - Java type is {@link EmberApsOption}
      *
-     * @return the current options as {@link EmberApsOption}
+     * @return the current options as {@link Set} of {@link EmberApsOption}
      */
-    public EmberApsOption getOptions() {
+    public Set<EmberApsOption> getOptions() {
         return options;
     }
 
     /**
      * A bitmask of options.
      *
-     * @param options the options to set as {@link EmberApsOption}
+     * @param options the options to add to the {@link Set} as {@link EmberApsOption}
      */
-    public void setOptions(EmberApsOption options) {
-        this.options = options;
+    public void addOptions(EmberApsOption options) {
+        this.options.add(options);
+    }
+
+    /**
+     * A bitmask of options.
+     *
+     * @param options the options to remove to the {@link Set} as {@link EmberApsOption}
+     */
+    public void removeOptions(EmberApsOption options) {
+        this.options.remove(options);
     }
 
     /**

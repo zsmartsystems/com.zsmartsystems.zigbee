@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
@@ -74,10 +75,10 @@ public class ZclIasAceCluster extends ZclCluster {
      * The Bypass Command
      *
      * @param numberOfZones {@link Integer} Number of Zones
-     * @param zoneIDs {@link List<Unsigned8BitInteger>} Zone IDs
+     * @param zoneIDs {@link List<Integer>} Zone IDs
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> bypassCommand(Integer numberOfZones, List<Unsigned8BitInteger> zoneIDs) {
+    public Future<CommandResult> bypassCommand(Integer numberOfZones, List<Integer> zoneIDs) {
         BypassCommand command = new BypassCommand();
 
         // Set the fields
@@ -211,10 +212,10 @@ public class ZclIasAceCluster extends ZclCluster {
      *
      * @param zoneId {@link Integer} Zone ID
      * @param zoneType {@link Integer} Zone Type
-     * @param ieeeAddress {@link Long} IEEE address
+     * @param ieeeAddress {@link IeeeAddress} IEEE address
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getZoneInformationResponse(Integer zoneId, Integer zoneType, Long ieeeAddress) {
+    public Future<CommandResult> getZoneInformationResponse(Integer zoneId, Integer zoneType, IeeeAddress ieeeAddress) {
         GetZoneInformationResponse command = new GetZoneInformationResponse();
 
         // Set the fields

@@ -2,9 +2,7 @@ package com.zsmartsystems.zigbee.zcl.clusters.iasace;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
-
 /**
- * <p>
  * Emergency Command value object class.
  * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.

@@ -10,4 +10,5 @@ public class Parameter {
     public String name;
     public String description;
     public String auto_size;
+    public Boolean multiple;
 }

@@ -1,51 +1,139 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
 
 /**
- * IeeeAddressRequest.
- *
- * @author Tommi S.E. Laukkanen
+ * IEEE Address Request value object class.
+ * <p>
+ * The IEEE_addr_req is generated from a Local Device wishing to inquire as to the
+ * 64-bit IEEE address of the Remote Device based on their known 16-bit address.
+ * The destination addressing on this command shall be unicast.
+ * <p>
+ * Code is auto-generated. Modifications may be overwritten!
  */
-public class IeeeAddressRequest extends ZdoRequest {
+public class IeeeAddressRequest extends ZdoRequest implements CommandResponseMatcher {
+    /**
+     * NWKAddrOfInterest command message field.
+     */
+    private Integer nwkAddrOfInterest;
 
     /**
-     * The type.
+     * RequestType command message field.
      */
-    private int type;
-    /**
-     * The started index.
-     */
-    private int startIndex;
+    private Integer requestType;
 
+    /**
+     * StartIndex command message field.
+     */
+    private Integer startIndex;
+
+    /**
+     * Default constructor.
+     */
     public IeeeAddressRequest() {
+        clusterId = 0x0001;
     }
 
-    public IeeeAddressRequest(int networkAddress, int type, int startIndex) {
-        this.destinationAddress = networkAddress;
-        this.type = type;
-        this.startIndex = startIndex;
+    /**
+     * Gets NWKAddrOfInterest.
+     *
+     * @return the NWKAddrOfInterest
+     */
+    public Integer getNwkAddrOfInterest() {
+        return nwkAddrOfInterest;
     }
 
-    public int getType() {
-        return type;
+    /**
+     * Sets NWKAddrOfInterest.
+     *
+     * @param nwkAddrOfInterest the NWKAddrOfInterest
+     */
+    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+        this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    /**
+     * Gets RequestType.
+     *
+     * @return the RequestType
+     */
+    public Integer getRequestType() {
+        return requestType;
     }
 
-    public int getStartIndex() {
+    /**
+     * Sets RequestType.
+     *
+     * @param requestType the RequestType
+     */
+    public void setRequestType(final Integer requestType) {
+        this.requestType = requestType;
+    }
+
+    /**
+     * Gets StartIndex.
+     *
+     * @return the StartIndex
+     */
+    public Integer getStartIndex() {
         return startIndex;
     }
 
-    public void setStartIndex(int startIndex) {
+    /**
+     * Sets StartIndex.
+     *
+     * @param startIndex the StartIndex
+     */
+    public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }
 
     @Override
-    public String toString() {
-        return "IEEE Address Request: networkAddress=" + destinationAddress + ", type=" + type + ", startIndex="
-                + startIndex;
+    public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
+        serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
+        serializer.serialize(requestType, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(startIndex, ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
+
+    @Override
+    public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
+        nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        requestType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Override
+    public boolean isMatch(Command request, Command response) {
+        if (!(response instanceof IeeeAddressResponse)) {
+            return false;
+        }
+
+        return (((IeeeAddressRequest) request).getNwkAddrOfInterest()
+                .equals(((IeeeAddressResponse) response).getNwkAddrRemoteDev()));
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("IeeeAddressRequest ");
+        builder.append(super.toString());
+        builder.append(", nwkAddrOfInterest=");
+        builder.append(nwkAddrOfInterest);
+        builder.append(", requestType=");
+        builder.append(requestType);
+        builder.append(", startIndex=");
+        builder.append(startIndex);
+        return builder.toString();
+    }
+
 }

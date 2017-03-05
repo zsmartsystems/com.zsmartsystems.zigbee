@@ -6,10 +6,10 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 import java.util.List;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.field.NeighborInformation;
 
 /**
- * <p>
  * Report RSSI Measurements Command value object class.
  * <p>
  * Cluster: <b>RSSI Location</b>. Command is sent <b>FROM</b> the server.
@@ -21,7 +21,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
     /**
      * Reporting Address command message field.
      */
-    private Long reportingAddress;
+    private IeeeAddress reportingAddress;
 
     /**
      * Number of Neighbors command message field.
@@ -45,22 +45,25 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
 
     /**
      * Gets Reporting Address.
+     *
      * @return the Reporting Address
      */
-    public Long getReportingAddress() {
+    public IeeeAddress getReportingAddress() {
         return reportingAddress;
     }
 
     /**
      * Sets Reporting Address.
+     *
      * @param reportingAddress the Reporting Address
      */
-    public void setReportingAddress(final Long reportingAddress) {
+    public void setReportingAddress(final IeeeAddress reportingAddress) {
         this.reportingAddress = reportingAddress;
     }
 
     /**
      * Gets Number of Neighbors.
+     *
      * @return the Number of Neighbors
      */
     public Integer getNumberOfNeighbors() {
@@ -69,6 +72,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
 
     /**
      * Sets Number of Neighbors.
+     *
      * @param numberOfNeighbors the Number of Neighbors
      */
     public void setNumberOfNeighbors(final Integer numberOfNeighbors) {
@@ -77,6 +81,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
 
     /**
      * Gets Neighbors Information.
+     *
      * @return the Neighbors Information
      */
     public List<NeighborInformation> getNeighborsInformation() {
@@ -85,6 +90,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
 
     /**
      * Sets Neighbors Information.
+     *
      * @param neighborsInformation the Neighbors Information
      */
     public void setNeighborsInformation(final List<NeighborInformation> neighborsInformation) {
@@ -100,7 +106,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        reportingAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        reportingAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         numberOfNeighbors = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         neighborsInformation = (List<NeighborInformation>) deserializer.deserialize(ZclDataType.N_X_NEIGHBORS_INFORMATION);
     }

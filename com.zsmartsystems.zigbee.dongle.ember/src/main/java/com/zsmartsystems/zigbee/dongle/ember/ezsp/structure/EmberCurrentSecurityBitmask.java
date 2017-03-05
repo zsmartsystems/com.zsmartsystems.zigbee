@@ -27,33 +27,33 @@ public enum EmberCurrentSecurityBitmask {
     /**
      * This denotes that the device is running in a network with ZigBee Standard Security.
      */
-    EMBER_STANDARD_SECURITY_MODE(0),
+    EMBER_STANDARD_SECURITY_MODE(0x0000),
 
     /**
      * This denotes that the device is running in a network with ZigBee High Security.
      */
-    EMBER_HIGH_SECURITY_MODE(1),
+    EMBER_HIGH_SECURITY_MODE(0x0001),
 
     /**
      * This denotes that the device is running in a network without a centralized Trust Center.
      */
-    EMBER_DISTRIBUTED_TRUST_CENTER_MODE(2),
+    EMBER_DISTRIBUTED_TRUST_CENTER_MODE(0x0002),
 
     /**
      * This denotes that the device has a Global Link Key. The Trust Center Link Key is the same across
      * multiple nodes.
      */
-    EMBER_GLOBAL_LINK_KEY(4),
+    EMBER_GLOBAL_LINK_KEY(0x0004),
 
     /**
      * This denotes that the node has a Trust Center Link Key.
      */
-    EMBER_HAVE_TRUST_CENTER_LINK_KEY(16),
+    EMBER_HAVE_TRUST_CENTER_LINK_KEY(0x0010),
 
     /**
      * This denotes that the Trust Center is using a Hashed Link Key.
      */
-    EMBER_TRUST_CENTER_USES_HASHED_LINK_KEY(132);
+    EMBER_TRUST_CENTER_USES_HASHED_LINK_KEY(0x0084);
 
     /**
      * A mapping between the integer code and its corresponding type to

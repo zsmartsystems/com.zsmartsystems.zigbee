@@ -6,10 +6,8 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 import java.util.List;
-import com.zsmartsystems.zigbee.zcl.field.Unsigned8BitInteger;
 
 /**
- * <p>
  * Bypass Command value object class.
  * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.
@@ -31,7 +29,7 @@ public class BypassCommand extends ZclCommand {
     /**
      * Zone IDs command message field.
      */
-    private List<Unsigned8BitInteger> zoneIDs;
+    private List<Integer> zoneIDs;
 
     /**
      * Default constructor.
@@ -45,6 +43,7 @@ public class BypassCommand extends ZclCommand {
 
     /**
      * Gets Number of Zones.
+     *
      * @return the Number of Zones
      */
     public Integer getNumberOfZones() {
@@ -53,6 +52,7 @@ public class BypassCommand extends ZclCommand {
 
     /**
      * Sets Number of Zones.
+     *
      * @param numberOfZones the Number of Zones
      */
     public void setNumberOfZones(final Integer numberOfZones) {
@@ -61,17 +61,19 @@ public class BypassCommand extends ZclCommand {
 
     /**
      * Gets Zone IDs.
+     *
      * @return the Zone IDs
      */
-    public List<Unsigned8BitInteger> getZoneIDs() {
+    public List<Integer> getZoneIDs() {
         return zoneIDs;
     }
 
     /**
      * Sets Zone IDs.
+     *
      * @param zoneIDs the Zone IDs
      */
-    public void setZoneIDs(final List<Unsigned8BitInteger> zoneIDs) {
+    public void setZoneIDs(final List<Integer> zoneIDs) {
         this.zoneIDs = zoneIDs;
     }
 
@@ -84,7 +86,7 @@ public class BypassCommand extends ZclCommand {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         numberOfZones = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        zoneIDs = (List<Unsigned8BitInteger>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        zoneIDs = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

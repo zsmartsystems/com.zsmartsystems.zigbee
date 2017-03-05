@@ -2,7 +2,6 @@ package com.zsmartsystems.zigbee;
 
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
-import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 
 /**
  * Defines the interface for data passed from the transport layer (ie dongle) to the ZigBee stack framework.
@@ -33,11 +32,9 @@ public interface ZigBeeTransportReceive {
      * is deserialised by the framework using the {@link ZigBeeDeserializer} interface, thus allowing the format to be
      * set for different hardware implementations.
      *
-     * @param nwkHeader the {@link ZigBeeNwkHeader} for this command
-     * @param apsHeader the {@link ZigBeeApsHeader} for this command
-     * @param payload the serialised payload to be sent as {@link int[]}
+     * @param apsFrame the {@link ZigBeeApsFrame} for this command
      */
-    void receiveZclCommand(final ZigBeeNwkHeader nwkHeader, final ZigBeeApsHeader apsHeader, final int[] payload);
+    void receiveCommand(final ZigBeeApsFrame apsFrame);
 
     /**
      * The ZDO interface exchanges only command classes. This is different to the ZCL interface since different sticks
@@ -46,7 +43,7 @@ public interface ZigBeeTransportReceive {
      *
      * @param command the received {@link ZdoCommand}
      */
-    void receiveZdoCommand(final ZdoCommand command);
+    // void receiveZdoCommand(final ZdoCommand command);
 
     /**
      * Set the network state.

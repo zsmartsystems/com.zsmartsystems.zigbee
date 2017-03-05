@@ -4,7 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Defines the broadcast destination addresses defined in the ZigBee protocol
+ * Defines the broadcast destination addresses defined in the ZigBee protocol.
+ * <p>
+ * Broadcast transmissions shall not use the MAC sub-layer
+ * acknowledgement; instead, a passive acknowledgement mechanism may be used.
+ * Passive acknowledgement means that every ZigBee router and ZigBee
+ * coordinator keeps track of which of its neighboring devices have successfully
+ * relayed the broadcast transmission. The MAC sub-layer acknowledgement is
+ * disabled by setting the acknowledged transmission flag of the TxOptions
+ * parameter to FALSE. All other flags of the TxOptions parameter shall be set based
+ * on the network configuration
  *
  * @author Chris Jackson
  *

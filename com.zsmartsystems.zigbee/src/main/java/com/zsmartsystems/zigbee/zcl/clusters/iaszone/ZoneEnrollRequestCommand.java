@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Zone Enroll Request Command value object class.
  * <p>
  * Cluster: <b>IAS Zone</b>. Command is sent <b>FROM</b> the server.
@@ -42,6 +40,7 @@ public class ZoneEnrollRequestCommand extends ZclCommand {
 
     /**
      * Gets Zone Type.
+     *
      * @return the Zone Type
      */
     public Integer getZoneType() {
@@ -50,6 +49,7 @@ public class ZoneEnrollRequestCommand extends ZclCommand {
 
     /**
      * Sets Zone Type.
+     *
      * @param zoneType the Zone Type
      */
     public void setZoneType(final Integer zoneType) {
@@ -58,6 +58,7 @@ public class ZoneEnrollRequestCommand extends ZclCommand {
 
     /**
      * Gets Manufacturer Code.
+     *
      * @return the Manufacturer Code
      */
     public Integer getManufacturerCode() {
@@ -66,6 +67,7 @@ public class ZoneEnrollRequestCommand extends ZclCommand {
 
     /**
      * Sets Manufacturer Code.
+     *
      * @param manufacturerCode the Manufacturer Code
      */
     public void setManufacturerCode(final Integer manufacturerCode) {

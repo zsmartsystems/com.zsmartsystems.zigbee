@@ -33,7 +33,7 @@ public enum EmberZdoConfigurationFlags {
      * EmberZNet stack. The stack will continue to handle the request and send the appropriate ZDO
      * response even if this configuration option is enabled.
      */
-    EMBER_APP_RECEIVES_SUPPORTED_ZDO_REQUESTS(1),
+    EMBER_APP_RECEIVES_SUPPORTED_ZDO_REQUESTS(0x0001),
 
     /**
      * Set this flag in order to receive unsupported ZDO request messages via the
@@ -42,7 +42,7 @@ public enum EmberZdoConfigurationFlags {
      * configuration option is enabled, the stack will no longer send any ZDO response, and it is the
      * application's responsibility to do so.
      */
-    EMBER_APP_HANDLES_UNSUPPORTED_ZDO_REQUESTS(2),
+    EMBER_APP_HANDLES_UNSUPPORTED_ZDO_REQUESTS(0x0002),
 
     /**
      * Set this flag in order to receive the following ZDO request messages via the
@@ -51,7 +51,7 @@ public enum EmberZdoConfigurationFlags {
      * option is enabled, the stack will no longer send any ZDO response for these requests, and it is
      * the application's responsibility to do so.
      */
-    EMBER_APP_HANDLES_ZDO_ENDPOINT_REQUESTS(4),
+    EMBER_APP_HANDLES_ZDO_ENDPOINT_REQUESTS(0x0004),
 
     /**
      * Set this flag in order to receive the following ZDO request messages via the
@@ -59,7 +59,7 @@ public enum EmberZdoConfigurationFlags {
      * UNBIND_REQUEST. If this configuration option is enabled, the stack will no longer send any
      * ZDO response for these requests, and it is the application's responsibility to do so.
      */
-    EMBER_APP_HANDLES_ZDO_BINDING_REQUESTS(8);
+    EMBER_APP_HANDLES_ZDO_BINDING_REQUESTS(0x0008);
 
     /**
      * A mapping between the integer code and its corresponding type to

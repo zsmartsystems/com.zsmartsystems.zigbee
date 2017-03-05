@@ -81,11 +81,11 @@ public class EzspMultiResponseTransaction implements EzspTransaction {
     @Override
     public synchronized EmberStatus getStatus() {
         if (responses.isEmpty() == true) {
-            return EmberStatus.EMBED_UNKNOWN_STATUS;
+            return EmberStatus.UNKNOWN;
         }
 
         // TODO: Fix the response status!
-        return EmberStatus.EMBED_UNKNOWN_STATUS;
+        return EmberStatus.UNKNOWN;
     }
 
     @Override

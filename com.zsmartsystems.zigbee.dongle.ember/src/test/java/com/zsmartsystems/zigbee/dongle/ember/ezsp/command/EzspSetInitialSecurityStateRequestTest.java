@@ -31,12 +31,12 @@ public class EzspSetInitialSecurityStateRequestTest extends EzspFrameTest {
         state.setPreconfiguredKey(keyData);
         state.setPreconfiguredTrustCenterEui64(new IeeeAddress("1234567890ABCDEF"));
         state.setNetworkKeySequenceNumber(0);
-        state.setBitmask(EmberInitialSecurityBitmask.EMBER_STANDARD_SECURITY_MODE);
+        state.setBitmask(EmberInitialSecurityBitmask.EMBER_CURRENT_NETWORK_KEY);
         request.setState(state);
         request.setSequenceNumber(7);
         assertTrue(Arrays.equals(
                 getPacketData(
-                        "07 00 68 BB 00 00 00 00 00 00 00 00 00 00 00 00 00 00 BB AA 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AA 00 EF CD AB 90 78 56 34 12"),
+                        "07 00 68 03 BB 00 00 00 00 00 00 00 00 00 00 00 00 00 00 BB AA 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AA 00 EF CD AB 90 78 56 34 12"),
                 request.serialize()));
     }
 }

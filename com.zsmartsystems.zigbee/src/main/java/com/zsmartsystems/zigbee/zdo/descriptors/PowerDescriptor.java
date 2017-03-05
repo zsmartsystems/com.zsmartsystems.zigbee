@@ -3,6 +3,10 @@ package com.zsmartsystems.zigbee.zdo.descriptors;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+
 /**
  * The node power descriptor gives a dynamic indication of the power status of the
  * node and is mandatory for each node. There shall be only one node power
@@ -80,10 +84,14 @@ public class PowerDescriptor {
         UNKNOWN
     }
 
-    private final CurrentPowerModeType currentPowerMode;
-    private final Set<PowerSourceType> availablePowerSources;;
-    private final PowerSourceType currentPowerSource;
-    private final PowerLevelType powerLevel;
+    private CurrentPowerModeType currentPowerMode;
+    private Set<PowerSourceType> availablePowerSources;;
+    private PowerSourceType currentPowerSource;
+    private PowerLevelType powerLevel;
+
+    public PowerDescriptor() {
+        // Default constructor - does nothing
+    }
 
     /**
      *
@@ -110,21 +118,13 @@ public class PowerDescriptor {
      * @param powerLevel
      */
     public PowerDescriptor(int currentPowerMode, int availablePowerSources, int currentPowerSource, int powerLevel) {
-        switch (currentPowerMode) {
-            case 0x00:
-                this.currentPowerMode = CurrentPowerModeType.RECEIVER_ON_IDLE;
-                break;
-            case 0x01:
-                this.currentPowerMode = CurrentPowerModeType.RECEIVER_ON_PERIODICALLY;
-                break;
-            case 0x02:
-                this.currentPowerMode = CurrentPowerModeType.RECEIVER_ON_STIMULATED;
-                break;
-            default:
-                this.currentPowerMode = CurrentPowerModeType.UNKNOWN;
-                break;
-        }
+        setCurrentPowerMode(currentPowerMode);
+        setAvailablePowerSources(availablePowerSources);
+        setCurrentPowerSource(currentPowerSource);
+        setCurrentPowerLevel(powerLevel);
+    }
 
+    public void setCurrentPowerSource(int currentPowerSource) {
         switch (currentPowerSource) {
             case 0x01:
                 this.currentPowerSource = PowerSourceType.MAINS;
@@ -139,7 +139,9 @@ public class PowerDescriptor {
                 this.currentPowerSource = PowerSourceType.UNKNOWN;
                 break;
         }
+    }
 
+    public void setAvailablePowerSources(int availablePowerSources) {
         this.availablePowerSources = new HashSet<PowerSourceType>();
         if ((availablePowerSources & 0x01) != 0) {
             this.availablePowerSources.add(PowerSourceType.MAINS);
@@ -150,18 +152,20 @@ public class PowerDescriptor {
         if ((availablePowerSources & 0x04) != 0) {
             this.availablePowerSources.add(PowerSourceType.DISPOSABLE_BATTERY);
         }
+    }
 
+    public void setCurrentPowerLevel(int powerLevel) {
         switch (powerLevel) {
-            case 0xc0:
+            case 0xc:
                 this.powerLevel = PowerLevelType.FULL;
                 break;
-            case 0x80:
+            case 0x8:
                 this.powerLevel = PowerLevelType.MEDIUM;
                 break;
-            case 0x40:
+            case 0x4:
                 this.powerLevel = PowerLevelType.LOW;
                 break;
-            case 0x00:
+            case 0x0:
                 this.powerLevel = PowerLevelType.CRITICAL;
                 break;
             default:
@@ -177,6 +181,23 @@ public class PowerDescriptor {
      */
     public CurrentPowerModeType getCurrentPowerMode() {
         return currentPowerMode;
+    }
+
+    public void setCurrentPowerMode(int currentPowerMode) {
+        switch (currentPowerMode) {
+            case 0x00:
+                this.currentPowerMode = CurrentPowerModeType.RECEIVER_ON_IDLE;
+                break;
+            case 0x01:
+                this.currentPowerMode = CurrentPowerModeType.RECEIVER_ON_PERIODICALLY;
+                break;
+            case 0x02:
+                this.currentPowerMode = CurrentPowerModeType.RECEIVER_ON_STIMULATED;
+                break;
+            default:
+                this.currentPowerMode = CurrentPowerModeType.UNKNOWN;
+                break;
+        }
     }
 
     /**
@@ -204,6 +225,33 @@ public class PowerDescriptor {
      */
     public PowerLevelType getPowerLevel() {
         return powerLevel;
+    }
+
+    /**
+     * Serialise the contents of the structure.
+     *
+     * @param serializer the {@link ZclFieldSerializer} used to serialize
+     */
+    public int[] serialize(ZclFieldSerializer serializer) {
+        // Serialize the fields
+
+        return serializer.getPayload();
+    }
+
+    /**
+     * Deserialise the contents of the structure.
+     *
+     * @param deserializer the {@link ZigBeeDeserializer} used to deserialize
+     */
+    public void deserialize(ZigBeeDeserializer deserializer) {
+        // Deserialize the fields
+        int byte1 = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        int byte2 = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+
+        setCurrentPowerMode(byte1 & 0x0f);
+        setAvailablePowerSources(byte1 >> 4 & 0x0f);
+        setCurrentPowerSource(byte2 & 0x0f);
+        setCurrentPowerLevel(byte2 >> 4 & 0x0f);
     }
 
     @Override

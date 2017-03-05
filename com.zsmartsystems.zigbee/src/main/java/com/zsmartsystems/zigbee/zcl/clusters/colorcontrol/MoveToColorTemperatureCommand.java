@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Move to Color Temperature Command value object class.
  * <p>
  * Cluster: <b>Color control</b>. Command is sent <b>TO</b> the server.
@@ -43,6 +41,7 @@ public class MoveToColorTemperatureCommand extends ZclCommand {
 
     /**
      * Gets Color Temperature.
+     *
      * @return the Color Temperature
      */
     public Integer getColorTemperature() {
@@ -51,6 +50,7 @@ public class MoveToColorTemperatureCommand extends ZclCommand {
 
     /**
      * Sets Color Temperature.
+     *
      * @param colorTemperature the Color Temperature
      */
     public void setColorTemperature(final Integer colorTemperature) {
@@ -59,6 +59,7 @@ public class MoveToColorTemperatureCommand extends ZclCommand {
 
     /**
      * Gets Transition time.
+     *
      * @return the Transition time
      */
     public Integer getTransitionTime() {
@@ -67,6 +68,7 @@ public class MoveToColorTemperatureCommand extends ZclCommand {
 
     /**
      * Sets Transition time.
+     *
      * @param transitionTime the Transition time
      */
     public void setTransitionTime(final Integer transitionTime) {

@@ -2,9 +2,7 @@ package com.zsmartsystems.zigbee.zcl.clusters.identify;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
-
 /**
- * <p>
  * Identify Query Command value object class.
  * <p>
  * Cluster: <b>Identify</b>. Command is sent <b>TO</b> the server.

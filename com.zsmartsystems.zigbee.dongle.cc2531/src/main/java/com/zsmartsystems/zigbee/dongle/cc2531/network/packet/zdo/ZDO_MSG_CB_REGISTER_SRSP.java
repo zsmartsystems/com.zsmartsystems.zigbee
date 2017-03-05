@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 public class ZDO_MSG_CB_REGISTER_SRSP extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDO */ {
     /// <name>TI.ZPI2.ZDO_MSG_CB_REGISTER_SRSP.Status</name>
     /// <summary>this field indicates either SUCCESS or FAILURE.</summary>
-    private int Status;
+    public int Status;
 
     /// <name>TI.ZPI2.ZDO_MSG_CB_REGISTER_SRSP</name>
     /// <summary>Constructor</summary>

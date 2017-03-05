@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.CommandTest;
+import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.FrequencyBandType;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.LogicalType;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.MacCapabilitiesType;
@@ -15,7 +17,7 @@ import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.ServerCapabilitie
  * @author Chris Jackson
  *
  */
-public class NodeDescriptorTest {
+public class NodeDescriptorTest extends CommandTest {
 
     @Test
     public void testNodeDescriptor() {
@@ -35,4 +37,17 @@ public class NodeDescriptorTest {
         assertTrue(descriptor.getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE));
         assertTrue(descriptor.getMacCapabilities().contains(MacCapabilitiesType.FULL_FUNCTION_DEVICE));
     }
+
+    @Test
+    public void testNodeDescriptorDeserialize() {
+        int[] packet = getPacketData("00 00 00 00 00 40 8F CD AB 52 80 00 41 2A 80 00 00");
+
+        NodeDescriptor descriptor = new NodeDescriptor();
+
+        DefaultDeserializer deserializer = new DefaultDeserializer(packet);
+        descriptor.deserialize(deserializer);
+
+        assertEquals(0, descriptor.getManufacturerCode());
+    }
+
 }

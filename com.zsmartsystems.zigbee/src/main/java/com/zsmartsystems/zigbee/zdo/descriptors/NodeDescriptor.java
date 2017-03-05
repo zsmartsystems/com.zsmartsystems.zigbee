@@ -3,6 +3,10 @@ package com.zsmartsystems.zigbee.zdo.descriptors;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+
 /**
  * Describes the node descriptor
  *
@@ -10,16 +14,16 @@ import java.util.Set;
  *
  */
 public class NodeDescriptor {
-    private final int apsFlags;
-    private final int bufferSize;
-    private final boolean complexDescriptorAvailable;
-    private final int manufacturerCode;
-    private final LogicalType logicalType;
-    private final Set<ServerCapabilitiesType> serverCapabilities;
-    private final int transferSize;
-    private final boolean userDescriptorAvailable;
-    private final Set<FrequencyBandType> frequencyBands;
-    private final Set<MacCapabilitiesType> macCapabilities;
+    private int apsFlags;
+    private int bufferSize;
+    private boolean complexDescriptorAvailable;
+    private int manufacturerCode;
+    private LogicalType logicalType;
+    private Set<ServerCapabilitiesType> serverCapabilities;
+    private int transferSize;
+    private boolean userDescriptorAvailable;
+    private Set<FrequencyBandType> frequencyBands;
+    private final Set<MacCapabilitiesType> macCapabilities = new HashSet<MacCapabilitiesType>();
 
     public enum LogicalType {
         COORDINATOR,
@@ -58,6 +62,10 @@ public class NodeDescriptor {
         ADDRESS_ALLOCATION
     }
 
+    public NodeDescriptor() {
+        // Default constructor - does nothing
+    }
+
     public NodeDescriptor(int apsFlags, int bufferSize, int macCapabilities, boolean complexDescriptorAvailable,
             int manufacturerCode, int logicalType, int serverMask, int transferSize, boolean userDescriptorAvailable,
             int frequencyBand) {
@@ -83,7 +91,7 @@ public class NodeDescriptor {
                 break;
         }
 
-        this.macCapabilities = new HashSet<MacCapabilitiesType>();
+        this.macCapabilities.isEmpty();
         if ((macCapabilities & 0x01) != 0) {
             this.macCapabilities.add(MacCapabilitiesType.ALTERNATIVE_PAN);
         }
@@ -177,6 +185,47 @@ public class NodeDescriptor {
 
     public Set<FrequencyBandType> getFrequencyBands() {
         return frequencyBands;
+    }
+
+    /**
+     * Serialise the contents of the structure.
+     *
+     * @param serializer the {@link ZclFieldSerializer} used to serialize
+     */
+    public int[] serialize(ZclFieldSerializer serializer) {
+        // Serialize the fields
+        serializer.serialize(logicalType, ZclDataType.SIGNED_8_BIT_INTEGER);
+        serializer.serialize(logicalType, ZclDataType.SIGNED_8_BIT_INTEGER);
+        serializer.serialize(logicalType, ZclDataType.SIGNED_8_BIT_INTEGER);
+        serializer.serialize(logicalType, ZclDataType.SIGNED_8_BIT_INTEGER);
+        serializer.serialize(logicalType, ZclDataType.SIGNED_8_BIT_INTEGER);
+        serializer.serialize(logicalType, ZclDataType.SIGNED_8_BIT_INTEGER);
+        serializer.serialize(logicalType, ZclDataType.SIGNED_8_BIT_INTEGER);
+
+        return serializer.getPayload();
+    }
+
+    /**
+     * Deserialise the contents of the structure.
+     *
+     * @param deserializer the {@link ZigBeeDeserializer} used to deserialize
+     */
+    public void deserialize(ZigBeeDeserializer deserializer) {
+        // Deserialize the fields
+        // logicalType = (LogicalType) deserializer.deserialize(ZclDataType.SIGNED_8_BIT_INTEGER);
+
+        // Some flags...
+        deserializer.readZigBeeType(ZclDataType.BOOLEAN);
+        deserializer.readZigBeeType(ZclDataType.BOOLEAN);
+        deserializer.readZigBeeType(ZclDataType.BOOLEAN);
+        // complexDescriptorAvailable = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
+        // userDescriptorAvailable = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
+        manufacturerCode = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        bufferSize = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        transferSize = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+
+        deserializer.readZigBeeType(ZclDataType.SIGNED_16_BIT_INTEGER);
+        deserializer.readZigBeeType(ZclDataType.SIGNED_8_BIT_INTEGER);
     }
 
     @Override

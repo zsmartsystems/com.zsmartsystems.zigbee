@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 
 /**
- * <p>
  * Read Attributes Response value object class.
  * <p>
  * The read attributes response command is generated in response to a read attributes
@@ -54,6 +53,7 @@ public class ReadAttributesResponse extends ZclCommand {
 
     /**
      * Gets Records.
+     *
      * @return the Records
      */
     public List<ReadAttributeStatusRecord> getRecords() {
@@ -62,6 +62,7 @@ public class ReadAttributesResponse extends ZclCommand {
 
     /**
      * Sets Records.
+     *
      * @param records the Records
      */
     public void setRecords(final List<ReadAttributeStatusRecord> records) {

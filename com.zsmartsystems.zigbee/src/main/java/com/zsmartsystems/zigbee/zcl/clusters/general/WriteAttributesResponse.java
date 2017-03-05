@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
 
 /**
- * <p>
  * Write Attributes Response value object class.
  * <p>
  * The write attributes response command is generated in response to a write
@@ -50,6 +49,7 @@ public class WriteAttributesResponse extends ZclCommand {
 
     /**
      * Gets Records.
+     *
      * @return the Records
      */
     public List<WriteAttributeStatusRecord> getRecords() {
@@ -58,6 +58,7 @@ public class WriteAttributesResponse extends ZclCommand {
 
     /**
      * Sets Records.
+     *
      * @param records the Records
      */
     public void setRecords(final List<WriteAttributeStatusRecord> records) {

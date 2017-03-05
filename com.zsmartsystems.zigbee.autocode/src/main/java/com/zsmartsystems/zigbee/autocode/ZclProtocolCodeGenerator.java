@@ -10,7 +10,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,6 +44,8 @@ public class ZclProtocolCodeGenerator {
 
     static String packageZdp = ".zdo";
     static String packageZdpCommand = packageZdp + ".command";
+    static String packageZdpTransaction = packageZdp + ".transaction";
+    static String packageZdpDescriptors = packageZdp + ".descriptors";
 
     /**
      * The main method for running the code generator.
@@ -63,7 +67,6 @@ public class ZclProtocolCodeGenerator {
         if (args.length != 0) {
             sourceRootPath = args[0];
         } else {
-            // sourceRootPath = "./src/main/blah/";
             sourceRootPath = "../com.zsmartsystems.zigbee/src/main/java/";
         }
 
@@ -84,11 +87,11 @@ public class ZclProtocolCodeGenerator {
             packageRoot = "com.zsmartsystems.zigbee";
         }
 
+        final Context contextZcl = new Context();
         final File definitionFileZcl = new File(definitionFilePathZcl);
         if (!definitionFileZcl.exists()) {
             System.out.println("Definition file does not exist: " + definitionFilePathZcl);
         } else {
-            final Context contextZcl = new Context();
             try {
                 contextZcl.lines = new ArrayList<String>(FileUtils.readLines(definitionFileZcl, "UTF-8"));
                 generateZclCode(contextZcl, sourceRootFile, packageRoot);
@@ -99,20 +102,46 @@ public class ZclProtocolCodeGenerator {
             }
         }
 
+        final Context contextZdp = new Context();
         final File definitionFileZdp = new File(definitionFilePathZdp);
         if (!definitionFileZdp.exists()) {
             System.out.println("Definition file does not exist: " + definitionFilePathZdp);
         } else {
-            final Context contextZdp = new Context();
             try {
                 contextZdp.lines = new ArrayList<String>(FileUtils.readLines(definitionFileZdp, "UTF-8"));
-                // generateZdpCode(contextZdp, sourceRootFile, packageRoot);
+                generateZdpCode(contextZdp, sourceRootFile, packageRoot);
             } catch (final IOException e) {
                 System.out.println(
                         "Reading lines from Zdp definition file failed: " + definitionFileZdp.getAbsolutePath());
                 e.printStackTrace();
                 return;
             }
+        }
+
+        final String packagePath = getPackagePath(sourceRootFile, packageRoot);
+        final File packageFile = getPackageFile(packagePath);
+
+        try {
+            final LinkedList<DataType> dataTypes = new LinkedList<DataType>(contextZcl.dataTypes.values());
+
+            boolean addIt;
+            for (DataType newType : contextZdp.dataTypes.values()) {
+                addIt = true;
+                for (DataType checkType : dataTypes) {
+                    if (checkType.dataTypeType.equals(newType.dataTypeType)) {
+                        addIt = false;
+                    }
+                }
+                if (addIt) {
+                    dataTypes.add(newType);
+                }
+            }
+
+            generateZclDataTypeEnumeration(dataTypes, packageRoot, packageFile);
+        } catch (final IOException e) {
+            System.out.println("Failed to generate data types enumeration.");
+            e.printStackTrace();
+            return;
         }
     }
 
@@ -123,7 +152,10 @@ public class ZclProtocolCodeGenerator {
         final File packageFile = getPackageFile(packagePath);
 
         try {
-            generateZclDataTypeEnumeration(context, packageRoot, packageFile);
+            final LinkedList<DataType> dataTypes = new LinkedList<DataType>(context.dataTypes.values());
+            dataTypes.addAll(context.dataTypes.values());
+
+            generateZclDataTypeEnumeration(dataTypes, packageRoot, packageFile);
         } catch (final IOException e) {
             System.out.println("Failed to generate data types enumeration.");
             e.printStackTrace();
@@ -146,14 +178,14 @@ public class ZclProtocolCodeGenerator {
             return;
         }
 
-        // try {
-        // generateZclCommandTypeEnumerationXXXXX(context, packageRoot, packageFile);
-        // generateZclCommandTypeEnumeration(context, packageRoot, packageFile);
-        // } catch (final IOException e) {
-        // System.out.println("Failed to generate command enumeration.");
-        // e.printStackTrace();
-        // return;
-        // }
+        try {
+            // generateZclCommandTypeEnumerationXXXXX(context, packageRoot, packageFile);
+            generateZclCommandTypeEnumeration(context, packageRoot, packageFile);
+        } catch (final IOException e) {
+            System.out.println("Failed to generate command enumeration.");
+            e.printStackTrace();
+            return;
+        }
 
         // try {
         // generateZclAttributeTypeEnumeration(context, packageRoot, packageFile);
@@ -191,6 +223,8 @@ public class ZclProtocolCodeGenerator {
     public static void generateZdpCode(final Context context, final File sourceRootPath, final String packageRoot) {
         ZclProtocolDefinitionParser.parseProfiles(context);
 
+        final File packageFile = getPackageFile(packageRoot);
+
         try {
             generateZdpCommandClasses(context, packageRoot, sourceRootPath);
         } catch (final IOException e) {
@@ -198,6 +232,22 @@ public class ZclProtocolCodeGenerator {
             e.printStackTrace();
             return;
         }
+
+        try {
+            generateZdoCommandTypeEnumeration(context, packageRoot, sourceRootPath);
+        } catch (final IOException e) {
+            System.out.println("Failed to generate command enumeration.");
+            e.printStackTrace();
+            return;
+        }
+
+        // try {
+        // generateZdpCommandTransactions(context, packageRoot, sourceRootPath);
+        // } catch (final IOException e) {
+        // System.out.println("Failed to generate profile message classes.");
+        // e.printStackTrace();
+        // return;
+        // }
     }
 
     private static void outputClassJavaDoc(final PrintWriter out) {
@@ -218,7 +268,7 @@ public class ZclProtocolCodeGenerator {
         return sourceRootPath.getAbsolutePath() + File.separator + packageRoot.replace(".", File.separator);
     }
 
-    private static void generateZclDataTypeEnumeration(Context context, final String packageRootPrefix,
+    private static void generateZclDataTypeEnumeration(LinkedList<DataType> dataTypes, final String packageRootPrefix,
             File sourceRootPath) throws IOException {
         final String className = "ZclDataType";
 
@@ -235,11 +285,13 @@ public class ZclProtocolCodeGenerator {
         out.println("import java.util.HashMap;");
         out.println("import java.util.Map;");
         out.println("import " + packageRootPrefix + packageZclField + ".*;");
+        out.println("import " + packageRootPrefix + packageZdpDescriptors + ".*;");
+        out.println("import " + packageRootPrefix + "." + "IeeeAddress" + ";");
         out.println();
         outputClassJavaDoc(out);
         out.println("public enum " + className + " {");
 
-        final LinkedList<DataType> dataTypes = new LinkedList<DataType>(context.dataTypes.values());
+        // final LinkedList<DataType> dataTypes = new LinkedList<DataType>(context.dataTypes.values());
         for (final DataType dataType : dataTypes) {
             DataTypeMap zclDataType = ZclDataType.getDataTypeMapping().get(dataType.dataTypeType);
             final String dataTypeClass;
@@ -249,7 +301,7 @@ public class ZclProtocolCodeGenerator {
             } else {
                 dataTypeClass = dataType.dataTypeClass;
             }
-            out.print("    " + dataType.dataTypeType + "(\"" + dataType.dataTypeName + "\"," + dataTypeClass + ".class"
+            out.print("    " + dataType.dataTypeType + "(\"" + dataType.dataTypeName + "\", " + dataTypeClass + ".class"
                     + ", " + String.format("0x%02X", zclDataType.id) + ", " + zclDataType.analogue + ")");
             out.println(dataTypes.getLast().equals(dataType) ? ';' : ',');
         }
@@ -373,9 +425,9 @@ public class ZclProtocolCodeGenerator {
         for (final Profile profile : profiles) {
             final LinkedList<Cluster> clusters = new LinkedList<Cluster>(profile.clusters.values());
             for (final Cluster cluster : clusters) {
-                out.print("    " + cluster.clusterType + "(" + cluster.clusterId + ", ZclProfileType."
-                        + profile.profileType + ", Zcl" + cluster.nameUpperCamelCase + "Cluster.class, \""
-                        + cluster.clusterName + "\")");
+                out.print("    " + cluster.clusterType + "(" + String.format("0x%04X", cluster.clusterId)
+                        + ", ZclProfileType." + profile.profileType + ", Zcl" + cluster.nameUpperCamelCase
+                        + "Cluster.class, \"" + cluster.clusterName + "\")");
                 out.println(clusters.getLast().equals(cluster) ? ';' : ',');
             }
         }
@@ -680,8 +732,8 @@ public class ZclProtocolCodeGenerator {
                     // }
                     // }
 
-                    out.println();
                     if (fieldWithDataTypeList) {
+                        out.println();
                         out.println("import java.util.List;");
                     }
 
@@ -689,28 +741,39 @@ public class ZclProtocolCodeGenerator {
                     // out.println("import java.util.HashMap;");
 
                     for (final Field field : fields) {
-                        switch (field.dataTypeClass) {
+                        String packageName;
+                        if (field.dataTypeClass.contains("Descriptor")) {
+                            packageName = packageZdpDescriptors;
+                        } else {
+                            packageName = packageZclField;
+                        }
+
+                        String typeName;
+                        if (field.dataTypeClass.startsWith("List")) {
+                            typeName = field.dataTypeClass;
+                            typeName = typeName.substring(typeName.indexOf("<") + 1);
+                            typeName = typeName.substring(0, typeName.indexOf(">"));
+                        } else {
+                            typeName = field.dataTypeClass;
+                        }
+
+                        switch (typeName) {
                             case "Integer":
                             case "Boolean":
                             case "Object":
                             case "Long":
                             case "String":
                                 continue;
+                            case "IeeeAddress":
+                                out.println("import " + packageRootPrefix + "." + typeName + ";");
+                                continue;
                         }
-                        if (field.dataTypeClass.startsWith("List")) {
-                            String s = field.dataTypeClass;
-                            s = s.substring(s.indexOf("<") + 1);
-                            s = s.substring(0, s.indexOf(">"));
-                            out.println("import " + packageRootPrefix + packageZclField + "." + s + ";");
-                        } else {
-                            out.println(
-                                    "import " + packageRootPrefix + packageZclField + "." + field.dataTypeClass + ";");
-                        }
+
+                        out.println("import " + packageRootPrefix + packageName + "." + typeName + ";");
                     }
 
                     out.println();
                     out.println("/**");
-                    out.println(" * <p>");
                     out.println(" * " + command.commandLabel + " value object class.");
 
                     if (command.commandDescription != null && command.commandDescription.size() != 0) {
@@ -823,6 +886,7 @@ public class ZclProtocolCodeGenerator {
                         out.println();
                         out.println("    /**");
                         out.println("     * Gets " + field.fieldLabel + ".");
+                        out.println("     *");
                         out.println("     * @return the " + field.fieldLabel);
                         out.println("     */");
                         out.println("    public " + field.dataTypeClass + " get" + field.nameUpperCamelCase + "() {");
@@ -831,6 +895,7 @@ public class ZclProtocolCodeGenerator {
                         out.println();
                         out.println("    /**");
                         out.println("     * Sets " + field.fieldLabel + ".");
+                        out.println("     *");
                         out.println("     * @param " + field.nameLowerCamelCase + " the " + field.fieldLabel);
                         out.println("     */");
                         out.println("    public void set" + field.nameUpperCamelCase + "(final " + field.dataTypeClass
@@ -855,8 +920,16 @@ public class ZclProtocolCodeGenerator {
                         out.println("    @Override");
                         out.println("    public void serialize(final ZclFieldSerializer serializer) {");
                         for (final Field field : fields) {
-                            out.println("        serializer.serialize(" + field.nameLowerCamelCase + ", ZclDataType."
-                                    + field.dataType + ");");
+                            if (field.listSizer != null) {
+                                out.println("        for (int cnt = 0; cnt < " + field.nameLowerCamelCase
+                                        + ".size(); cnt++) {");
+                                out.println("            serializer.serialize(" + field.nameLowerCamelCase
+                                        + ".get(cnt), ZclDataType." + field.dataType + ");");
+                                out.println("        }");
+                            } else {
+                                out.println("        serializer.serialize(" + field.nameLowerCamelCase
+                                        + ", ZclDataType." + field.dataType + ");");
+                            }
                         }
                         out.println("    }");
 
@@ -892,9 +965,11 @@ public class ZclProtocolCodeGenerator {
         }
     }
 
-    private static String getCommandTypeEnum(final Cluster cluster, final Command command, boolean received) {
-        return command.commandType + "(ZclClusterType." + cluster.clusterType + ", " + command.commandId + ", "
-                + command.nameUpperCamelCase + ".class" + ", " + "\"" + command.commandLabel + "\", " + received + ")";
+    private static String getZclCommandTypeEnum(final Cluster cluster, final Command command, boolean received) {
+        return command.commandType + "(" + String.format("0x%04X", cluster.clusterId) + ", " + command.commandId + ", "
+                + command.nameUpperCamelCase + ".class" + ", " + received + ")";
+        // return command.commandType + "(ZclClusterType." + cluster.clusterType + ", " + command.commandId + ", "
+        // + command.nameUpperCamelCase + ".class" + ", " + received + ")";
     }
 
     private static void generateZclCommandTypeEnumeration(Context context, String packageRootPrefix,
@@ -910,10 +985,12 @@ public class ZclProtocolCodeGenerator {
         out.println("package " + packageRoot + ";");
         out.println();
 
+        out.println("import java.lang.reflect.Constructor;");
+        out.println();
         out.println("import " + packageRootPrefix + packageZcl + ".ZclCommand;");
         out.println();
 
-        List<String> commandEnum = new ArrayList<String>();
+        Map<String, Command> commandEnum = new TreeMap<String, Command>();
 
         final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
         for (final Profile profile : profiles) {
@@ -922,16 +999,18 @@ public class ZclProtocolCodeGenerator {
                 // Brute force to get the commands in order!
                 for (int c = 0; c < 65535; c++) {
                     if (cluster.received.get(c) != null) {
-                        out.println("import " + getClusterCommandPackage(packageRootPrefix, cluster) + "."
+                        out.println("import " + getZclClusterCommandPackage(packageRootPrefix, cluster) + "."
                                 + cluster.received.get(c).nameUpperCamelCase + ";");
 
-                        commandEnum.add(getCommandTypeEnum(cluster, cluster.received.get(c), true));
+                        commandEnum.put(getZclCommandTypeEnum(cluster, cluster.received.get(c), true),
+                                cluster.received.get(c));
                     }
                     if (cluster.generated.get(c) != null) {
-                        out.println("import " + getClusterCommandPackage(packageRootPrefix, cluster) + "."
+                        out.println("import " + getZclClusterCommandPackage(packageRootPrefix, cluster) + "."
                                 + cluster.generated.get(c).nameUpperCamelCase + ";");
 
-                        commandEnum.add(getCommandTypeEnum(cluster, cluster.generated.get(c), false));
+                        commandEnum.put(getZclCommandTypeEnum(cluster, cluster.generated.get(c), false),
+                                cluster.generated.get(c));
                     }
                 }
             }
@@ -941,48 +1020,108 @@ public class ZclProtocolCodeGenerator {
         out.println();
         outputClassJavaDoc(out);
         out.println("public enum " + className + " {");
-        out.println("    /**");
-        out.println("     * Register command types.");
-        out.println("     */");
+        boolean first = true;
+        for (String command : commandEnum.keySet()) {
+            Command cmd = commandEnum.get(command);
+            if (cmd == null) {
+                System.out.println("Command without data: " + command);
+                continue;
+            }
 
-        for (String command : commandEnum) {
+            if (!first) {
+                out.println(",");
+            }
+            first = false;
+            out.println("    /**");
+            out.println("     * " + cmd.commandType + ": " + cmd.commandLabel);
+            out.println("     * <p>");
+            out.println("     * See {@link " + cmd.nameUpperCamelCase + "}");
+            out.println("     */");
             out.print("    " + command);
-            out.println((commandEnum.indexOf(command) == commandEnum.size() - 1) ? ';' : ',');
         }
+        out.println(";");
         out.println();
 
         out.println("    private final int commandId;");
-        out.println("    private final ZclClusterType clusterType;");
+        out.println("    private final int clusterType;");
         out.println("    private final Class<? extends ZclCommand> commandClass;");
-        out.println("    private final String label;");
+        // out.println(" private final String label;");
         out.println("    private final boolean received;");
         out.println();
         out.println("    " + className
-                + "(final ZclClusterType clusterType, final int commandId, final Class<? extends ZclCommand> commandClass, final String label, final boolean received) {");
+                + "(final int clusterType, final int commandId, final Class<? extends ZclCommand> commandClass, final boolean received) {");
         out.println("        this.clusterType = clusterType;");
         out.println("        this.commandId = commandId;");
         out.println("        this.commandClass = commandClass;");
-        out.println("        this.label = label;");
+        // out.println(" this.label = label;");
         out.println("        this.received = received;");
         out.println("    }");
         out.println();
 
-        out.println("    public ZclClusterType getClusterType() { return clusterType; }");
-        out.println("    public int getId() { return commandId; }");
-        out.println("    public String getLabel() { return label; }");
-        out.println("    public boolean isGeneric() { return clusterType==ZclClusterType.GENERAL; }");
-        out.println("    public boolean isReceived() { return received; }");
-        out.println("    public Class<? extends ZclCommand> getCommandClass() { return commandClass; }");
+        out.println("    public int getClusterType() {");
+        out.println("        return clusterType;");
+        out.println("    }");
         out.println();
-        out.println(
-                "    public static ZclCommandType getValueById(final ZclClusterType clusterType, final int commandId) {");
+        out.println("    public int getId() {");
+        out.println("        return commandId;");
+        out.println("    }");
+        out.println();
+        // out.println(" public String getLabel() { return label; }");
+        out.println("    public boolean isGeneric() {");
+        out.println("        return clusterType==0xFFFF;");
+        out.println("    }");
+        out.println();
+        out.println("    public boolean isReceived() {");
+        out.println("        return received;");
+        out.println("    }");
+        out.println();
+        out.println("    public Class<? extends ZclCommand> getCommandClass() {");
+        out.println("        return commandClass;");
+        out.println("    }");
+        out.println();
+        out.println("    public static ZclCommandType getRequest(final int clusterType, final int commandId) {");
         out.println("        for (final ZclCommandType value : values()) {");
-        out.println("            if(value.clusterType == clusterType && value.commandId == commandId) {");
+        out.println(
+                "            if (!value.received && value.clusterType == clusterType && value.commandId == commandId) {");
         out.println("                return value;");
         out.println("            }");
         out.println("        }");
         out.println("        return null;");
         out.println("    }");
+
+        out.println();
+        out.println("    public static ZclCommandType getResponse(final int clusterType, final int commandId) {");
+        out.println("        for (final ZclCommandType value : values()) {");
+        out.println(
+                "            if (value.received && value.clusterType == clusterType && value.commandId == commandId) {");
+        out.println("                return value;");
+        out.println("            }");
+        out.println("        }");
+        out.println("        return null;");
+        out.println("    }");
+
+        out.println();
+        out.println("    public static ZclCommandType getGeneric(final int commandId) {");
+        out.println("        for (final ZclCommandType value : values()) {");
+        out.println("            if (value.clusterType == 0xFFFF && value.commandId == commandId) {");
+        out.println("                return value;");
+        out.println("            }");
+        out.println("        }");
+        out.println("        return null;");
+        out.println("    }");
+
+        out.println();
+        out.println("    public ZclCommand instantiateCommand() {");
+        out.println("        Constructor<? extends ZclCommand> cmdConstructor;");
+        out.println("        try {");
+        out.println("            cmdConstructor = commandClass.getConstructor();");
+        out.println("            return cmdConstructor.newInstance();");
+        out.println("        } catch (Exception e) {");
+        out.println("            // logger.debug(\"Error instantiating cluster command {}\", this);");
+        out.println("        }");
+        out.println("        return null;");
+        out.println("    }");
+
         out.println("}");
 
         out.flush();
@@ -1012,19 +1151,50 @@ public class ZclProtocolCodeGenerator {
 
                 Set<String> imports = new HashSet<String>();
 
+                boolean useList = false;
                 for (final Command command : commands) {
                     final LinkedList<Field> fields = new LinkedList<Field>(command.fields.values());
-                    for (final Field field : fields) {
-                        if (field.dataTypeClass.startsWith("List")) {
-                            imports.add("java.util.List");
-                            imports.add(packageRootPrefix + packageZclField + ".*");
-                            break;
-                        }
-                    }
+                    System.out.println("Checking command " + command.commandLabel);
 
-                    // if (!fields.isEmpty()) {
-                    // imports.add(packageRootPrefix + packageZclProtocol + ".ZclFieldType");
-                    // }
+                    for (final Field field : fields) {
+                        System.out.println("Checking " + field.dataTypeClass);
+                        String packageName;
+                        if (field.dataTypeClass.contains("Descriptor")) {
+                            packageName = packageZdpDescriptors;
+                        } else {
+                            packageName = packageZclField;
+                        }
+
+                        String typeName;
+                        if (field.dataTypeClass.startsWith("List")) {
+                            useList = true;
+                            typeName = field.dataTypeClass;
+                            typeName = typeName.substring(typeName.indexOf("<") + 1);
+                            typeName = typeName.substring(0, typeName.indexOf(">"));
+                        } else {
+                            typeName = field.dataTypeClass;
+                        }
+
+                        switch (typeName) {
+                            case "Integer":
+                            case "Boolean":
+                            case "Object":
+                            case "Long":
+                            case "String":
+                                continue;
+                            case "IeeeAddress":
+                                imports.add(packageRootPrefix + "." + typeName);
+                                System.out.println("Adding " + typeName);
+                                continue;
+                        }
+
+                        imports.add(packageRootPrefix + packageName + "." + typeName);
+                    }
+                }
+
+                if (useList) {
+                    imports.add("java.util.List");
+                    imports.add(packageRootPrefix + packageZclField + ".*");
                 }
 
                 boolean addAttributeTypes = false;
@@ -1041,6 +1211,9 @@ public class ZclProtocolCodeGenerator {
 
                     if ("Calendar".equals(attribute.dataTypeClass)) {
                         imports.add("java.util.Calendar");
+                    }
+                    if ("IeeeAddress".equals(attribute.dataTypeClass)) {
+                        imports.add("com.zsmartsystems.zigbee.IeeeAddress");
                     }
                 }
 
@@ -1081,9 +1254,12 @@ public class ZclProtocolCodeGenerator {
                 }
 
                 for (final Command command : commands) {
-                    imports.add(getClusterCommandPackage(packageRoot, cluster) + "." + command.nameUpperCamelCase);
+                    imports.add(getZclClusterCommandPackage(packageRoot, cluster) + "." + command.nameUpperCamelCase);
                 }
 
+                if (className.equals("ZclScenesCluster")) {
+                    System.out.println();
+                }
                 List<String> importList = new ArrayList<String>();
                 importList.addAll(imports);
                 Collections.sort(importList);
@@ -1380,12 +1556,24 @@ public class ZclProtocolCodeGenerator {
         return res;
     }
 
-    private static String getClusterCommandPackage(String packageRoot, Cluster cluster) {
+    private static String getZclClusterCommandPackage(String packageRoot, Cluster cluster) {
         return packageRoot + packageZclProtocolCommand + "." + cluster.clusterType.replace("_", "").toLowerCase();
+    }
+
+    private static String getFieldType(Field field) {
+        if (field.listSizer != null) {
+            return "List<" + field.dataTypeClass + ">";
+        } else {
+            return field.dataTypeClass;
+        }
     }
 
     private static void generateZdpCommandClasses(Context context, String packageRootPrefix, File sourceRootPath)
             throws IOException {
+
+        // List of fields that are handled internally by super class
+        List<String> reservedFields = new ArrayList<String>();
+        reservedFields.add("status");
 
         final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
         for (final Profile profile : profiles) {
@@ -1405,6 +1593,11 @@ public class ZclProtocolCodeGenerator {
                     final LinkedList<Field> fields = new LinkedList<Field>(command.fields.values());
                     boolean fieldWithDataTypeList = false;
                     for (final Field field : fields) {
+                        if (field.listSizer != null) {
+                            fieldWithDataTypeList = true;
+                            break;
+                        }
+
                         if (field.dataTypeClass.startsWith("List")) {
                             fieldWithDataTypeList = true;
                             break;
@@ -1413,98 +1606,249 @@ public class ZclProtocolCodeGenerator {
 
                     out.println("package " + packageRoot + ";");
                     out.println();
-                    out.println("import " + packageRootPrefix + packageZcl + ".ZclCommandMessage;");
-                    out.println("import " + packageRootPrefix + packageZdp + ".ZdoCommand;");
-                    out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclCommandType;");
-                    // if (!fields.isEmpty()) {
-                    // out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclFieldType;");
-                    // if (fieldWithDataTypeList) {
-                    // out.println("import " + packageRootPrefix + packageZclField + ".*;");
-                    // }
-                    // }
-
-                    out.println();
-                    if (fieldWithDataTypeList) {
-                        out.println("import java.util.List;");
+                    // out.println("import " + packageRootPrefix + packageZcl + ".ZclCommandMessage;");
+                    // out.println("import " + packageRootPrefix + packageZdp + ".ZclCommand;");
+                    // out.println("import " + packageRootPrefix + packageZcl + ".ZclField;");
+                    if (fields.size() > 0) {
+                        out.println("import " + packageRootPrefix + packageZcl + ".ZclFieldSerializer;");
+                        out.println("import " + packageRootPrefix + packageZcl + ".ZclFieldDeserializer;");
+                        out.println("import " + packageRootPrefix + packageZclProtocol + ".ZclDataType;");
                     }
-                    out.println("import java.util.Map;");
+
+                    if (className.endsWith("Request")) {
+                        out.println("import " + packageRootPrefix + packageZdp + ".ZdoRequest;");
+                    } else {
+                        out.println("import " + packageRootPrefix + packageZdp + ".ZdoResponse;");
+                    }
+
+                    if (command.responseCommand != null && command.responseCommand.length() != 0) {
+                        out.println("import " + packageRootPrefix + ".Command;");
+                        out.println("import " + packageRootPrefix + ".CommandResponseMatcher;");
+                        out.println("import " + packageRootPrefix + packageZdpCommand + "." + command.responseCommand
+                                + ";");
+                    }
+
+                    if (fieldWithDataTypeList) {
+                        out.println();
+                        out.println("import java.util.List;");
+                        out.println("import java.util.ArrayList;");
+                    }
+
+                    // out.println("import java.util.Map;");
+                    // out.println("import java.util.HashMap;");
+
+                    for (final Field field : fields) {
+                        if (reservedFields.contains(field.nameLowerCamelCase)) {
+                            continue;
+                        }
+
+                        String packageName;
+                        if (field.dataTypeClass.endsWith("Descriptor")) {
+                            packageName = packageZdpDescriptors;
+                        } else if (field.dataTypeClass.endsWith("Table")) {
+                            packageName = packageZdpDescriptors;
+                        } else {
+                            packageName = packageZclField;
+                        }
+
+                        String typeName;
+                        if (field.dataTypeClass.startsWith("List")) {
+                            typeName = field.dataTypeClass;
+                            typeName = typeName.substring(typeName.indexOf("<") + 1);
+                            typeName = typeName.substring(0, typeName.indexOf(">"));
+                        } else {
+                            typeName = field.dataTypeClass;
+                        }
+
+                        switch (typeName) {
+                            case "Integer":
+                            case "Boolean":
+                            case "Object":
+                            case "Long":
+                            case "String":
+                                continue;
+                            case "IeeeAddress":
+                                out.println("import " + packageRootPrefix + "." + typeName + ";");
+                                continue;
+                        }
+
+                        out.println("import " + packageRootPrefix + packageName + "." + typeName + ";");
+                    }
 
                     out.println();
                     out.println("/**");
                     out.println(" * " + command.commandLabel + " value object class.");
 
-                    out.println(" * ");
-                    for (String line : command.commandDescription) {
-                        out.println(" * " + line);
+                    if (command.commandDescription != null && command.commandDescription.size() != 0) {
+                        out.println(" * <p>");
+                        for (String line : command.commandDescription) {
+                            out.println(" * " + line);
+                        }
                     }
 
-                    out.println(" * ");
-                    out.println(" * Cluster: " + cluster.clusterName);
-                    for (String line : cluster.clusterDescription) {
-                        out.println(" * " + line);
+                    if (cluster.clusterDescription.size() > 0) {
+                        out.println(" * <p>");
+                        for (String line : cluster.clusterDescription) {
+                            out.println(" * " + line);
+                        }
                     }
 
-                    out.println(" * ");
-                    out.println(" * Code is autogenerated. Modifications may be overwritten!");
+                    out.println(" * <p>");
+                    out.println(" * Code is auto-generated. Modifications may be overwritten!");
 
                     out.println(" */");
-                    out.println("public class " + className + " extends ZdoCommand {");
+                    if (className.endsWith("Request")) {
+                        out.print("public class " + className + " extends ZdoRequest");
+                    } else {
+                        out.print("public class " + className + " extends ZdoResponse");
+                    }
+
+                    if (command.responseCommand != null && command.responseCommand.length() != 0) {
+                        out.print(" implements CommandResponseMatcher");
+                    }
+                    out.println(" {");
 
                     for (final Field field : fields) {
+                        if (reservedFields.contains(field.nameLowerCamelCase)) {
+                            continue;
+                        }
+
                         out.println("    /**");
                         out.println("     * " + field.fieldLabel + " command message field.");
                         out.println("     */");
-                        out.println("    private " + field.dataTypeClass + " " + field.nameLowerCamelCase + ";");
+                        out.println("    private " + getFieldType(field) + " " + field.nameLowerCamelCase + ";");
+                        out.println();
                     }
 
-                    out.println();
+                    // if (fields.size() > 0) {
+                    // out.println(" static {");
+                    // for (final Field field : fields) {
+                    // out.println(" fields.put(" + field.fieldId + ", new ZclField(" + field.fieldId
+                    // + ", \"" + field.fieldLabel + "\", ZclDataType." + field.dataType + "));");
+                    // }
+                    // out.println(" }");
+                    // out.println();
+                    // }
+
                     out.println("    /**");
-                    out.println("     * Default constructor setting the command type field.");
+                    out.println("     * Default constructor.");
                     out.println("     */");
                     out.println("    public " + className + "() {");
-                    out.println("        setType(ZclCommandType." + command.commandType + ");");
+                    // out.println(" setType(ZclCommandType." + command.commandType + ");");
+                    // out.println(" commandId = " + command.commandId + ";");
+                    out.println("        clusterId = " + String.format("0x%04X", command.commandId) + ";");
+                    // out.println(" commandDirection = "
+                    // + (cluster.received.containsValue(command) ? "true" : "false") + ";");
+
                     out.println("    }");
-                    out.println();
-                    out.println("    /**");
-                    out.println("     * Constructor copying field values from command message.");
-                    out.println("     * @param fields a {@link Map} containing the {@link ZclField}s");
-                    out.println("     */");
-                    out.println("    public " + className + "(final Map<Integer, ZclField> fields) {");
-                    out.println("        super(message);");
+
                     for (final Field field : fields) {
-                        out.println("        this." + field.nameLowerCamelCase + " = (" + field.dataTypeClass
-                                + ") message.getFields().get(ZclFieldType." + field.fieldType + ");");
-                    }
-                    out.println("    }");
-                    out.println();
-                    out.println("    @Override");
-                    out.println(
-                            "    public ZclCommandMessage toCommandMessage() { // TODO: Change to ZdoCommandMessage?");
-                    out.println("        final ZclCommandMessage message = super.toCommandMessage();");
-                    for (final Field field : fields) {
-                        out.println("        message.getFields().put(ZclFieldType." + field.fieldType + ","
-                                + field.nameLowerCamelCase + ");");
-                    }
-                    out.println("        return message;");
-                    out.println("    }");
-                    for (final Field field : fields) {
+                        if (reservedFields.contains(field.nameLowerCamelCase)) {
+                            continue;
+                        }
+
                         out.println();
                         out.println("    /**");
                         out.println("     * Gets " + field.fieldLabel + ".");
+                        out.println("     *");
                         out.println("     * @return the " + field.fieldLabel);
                         out.println("     */");
-                        out.println("    public " + field.dataTypeClass + " get" + field.nameUpperCamelCase + "() {");
+                        out.println("    public " + getFieldType(field) + " get" + field.nameUpperCamelCase + "() {");
                         out.println("        return " + field.nameLowerCamelCase + ";");
                         out.println("    }");
                         out.println();
                         out.println("    /**");
                         out.println("     * Sets " + field.fieldLabel + ".");
+                        out.println("     *");
                         out.println("     * @param " + field.nameLowerCamelCase + " the " + field.fieldLabel);
                         out.println("     */");
-                        out.println("    public void set" + field.nameUpperCamelCase + "(final " + field.dataTypeClass
+                        out.println("    public void set" + field.nameUpperCamelCase + "(final " + getFieldType(field)
                                 + " " + field.nameLowerCamelCase + ") {");
                         out.println(
                                 "        this." + field.nameLowerCamelCase + " = " + field.nameLowerCamelCase + ";");
+                        out.println("    }");
+
+                    }
+
+                    if (fields.size() > 0) {
+                        // out.println();
+                        // out.println(" @Override");
+                        // out.println(" public void setFieldValues(final Map<Integer, Object> values) {");
+                        // for (final Field field : fields) {
+                        // out.println(" " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
+                        // + ") values.get(" + field.fieldId + ");");
+                        // }
+                        // out.println(" }");
+
+                        out.println();
+                        out.println("    @Override");
+                        out.println("    public void serialize(final ZclFieldSerializer serializer) {");
+                        out.println("        super.serialize(serializer);");
+                        out.println();
+                        for (final Field field : fields) {
+                            if (field.listSizer != null) {
+                                out.println("        for (int cnt = 0; cnt < " + field.nameLowerCamelCase
+                                        + ".size(); cnt++) {");
+                                out.println("            serializer.serialize(" + field.nameLowerCamelCase
+                                        + ".get(cnt), ZclDataType." + field.dataType + ");");
+                                out.println("        }");
+                            } else {
+                                out.println("        serializer.serialize(" + field.nameLowerCamelCase
+                                        + ", ZclDataType." + field.dataType + ");");
+                            }
+                        }
+                        out.println("    }");
+
+                        out.println();
+                        out.println("    @Override");
+                        out.println("    public void deserialize(final ZclFieldDeserializer deserializer) {");
+                        out.println("        super.deserialize(deserializer);");
+                        out.println();
+                        for (final Field field : fields) {
+                            if (field.listSizer != null) {
+                                out.println("        " + field.nameLowerCamelCase + " = new ArrayList<"
+                                        + field.dataTypeClass + ">();");
+                                out.println("        for (int cnt = 0; cnt < " + field.listSizer + "; cnt++) {");
+                                out.println("            " + field.nameLowerCamelCase + ".add((" + field.dataTypeClass
+                                        + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + "));");
+                                out.println("        }");
+                            } else {
+                                out.println("        " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
+                                        + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + ");");
+                            }
+
+                            if (field.nameLowerCamelCase.equals("status")) {
+                                out.println("        if (status != 0) {");
+                                out.println("            // Don't read the full response if we have an error");
+                                out.println("            return;");
+                                out.println("        }");
+                            }
+                        }
+                        out.println("    }");
+                    }
+
+                    if (command.responseCommand != null && command.responseCommand.length() != 0) {
+                        out.println();
+                        out.println("    @Override");
+                        out.println("    public boolean isMatch(Command request, Command response) {");
+                        out.println("        if (!(response instanceof " + command.responseCommand + ")) {");
+                        out.println("            return false;");
+                        out.println("        }");
+                        out.println();
+                        out.print("        return ");
+                        boolean first = true;
+                        for (String matcher : command.responseMatchers.keySet()) {
+                            if (first == false) {
+                                out.println();
+                                out.print("                && ");
+                            }
+                            first = false;
+                            out.println("(((" + command.nameUpperCamelCase + ") request).get" + matcher + "()");
+                            out.print("                .equals(((" + command.responseCommand + ") response).get"
+                                    + command.responseMatchers.get(matcher) + "()))");
+                        }
+                        out.print(";");
+                        out.println();
                         out.println("    }");
                     }
 
@@ -1512,9 +1856,10 @@ public class ZclProtocolCodeGenerator {
                     out.println("    @Override");
                     out.println("    public String toString() {");
                     out.println("        final StringBuilder builder = new StringBuilder();");
+                    out.println("        builder.append(\"" + className + " \");");
                     out.println("        builder.append(super.toString());");
                     for (final Field field : fields) {
-                        out.println("        builder.append(\", " + field.nameLowerCamelCase + "=");
+                        out.println("        builder.append(\", " + field.nameLowerCamelCase + "=\");");
                         out.println("        builder.append(" + field.nameLowerCamelCase + ");");
                     }
                     out.println("        return builder.toString();");
@@ -1529,4 +1874,202 @@ public class ZclProtocolCodeGenerator {
             }
         }
     }
+
+    private static String getZdoCommandTypeEnum(final Cluster cluster, final Command command, boolean received) {
+        return command.commandType + "(" + String.format("0x%04X", command.commandId) + ", "
+                + command.nameUpperCamelCase + ".class" + ")";
+    }
+
+    private static String getZdpClusterCommandPackage(String packageRoot, Cluster cluster) {
+        return packageRoot + packageZdpCommand + "." + cluster.clusterType.replace("_", "").toLowerCase();
+    }
+
+    private static void generateZdoCommandTypeEnumeration(Context context, String packageRootPrefix,
+            File sourceRootPath) throws IOException {
+        final String className = "ZdoCommandType";
+
+        final String packageRoot = packageRootPrefix + packageZdp;
+        final String packagePath = getPackagePath(sourceRootPath, packageRoot);
+        final File packageFile = getPackageFile(packagePath);
+
+        final PrintWriter out = getClassOut(packageFile, className);
+
+        out.println("package " + packageRoot + ";");
+        out.println();
+
+        Map<String, Command> commandEnum = new TreeMap<String, Command>();
+
+        final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
+        for (final Profile profile : profiles) {
+            final LinkedList<Cluster> clusters = new LinkedList<Cluster>(profile.clusters.values());
+            for (final Cluster cluster : clusters) {
+                // Brute force to get the commands in order!
+                for (int c = 0; c < 65535; c++) {
+                    if (cluster.received.get(c) != null) {
+                        out.println("import " + packageRootPrefix + packageZdpCommand + "."
+                                + cluster.received.get(c).nameUpperCamelCase + ";");
+
+                        commandEnum.put(getZdoCommandTypeEnum(cluster, cluster.received.get(c), true),
+                                cluster.received.get(c));
+                    }
+                }
+            }
+        }
+        out.println();
+
+        out.println();
+        outputClassJavaDoc(out);
+        out.println("public enum " + className + " {");
+        boolean first = true;
+        for (String command : commandEnum.keySet()) {
+            Command cmd = commandEnum.get(command);
+            if (cmd == null) {
+                System.out.println("Command without data: " + command);
+                continue;
+            }
+
+            if (!first) {
+                out.println(",");
+            }
+            first = false;
+            out.println("    /**");
+            out.println("     * " + cmd.commandLabel);
+            out.println("     * <p>");
+            out.println("     * See {@link " + cmd.nameUpperCamelCase + "}");
+            out.println("     */");
+            out.print("    " + command);
+        }
+        out.println(";");
+
+        out.println();
+        out.println("    private final int clusterId;");
+        out.println("    private final Class<? extends ZdoCommand> commandClass;");
+        out.println();
+        out.println("    " + className + "(final int clusterId, final Class<? extends ZdoCommand> commandClass) {");
+        out.println("        this.clusterId = clusterId;");
+        out.println("        this.commandClass = commandClass;");
+        // out.println(" this.label = label;");
+        out.println("    }");
+        out.println();
+
+        out.println("    public int getClusterId() {");
+        out.println("        return clusterId;");
+        out.println("    }");
+        out.println();
+        out.println("    public Class<? extends ZdoCommand> getCommandClass() {");
+        out.println("        return commandClass;");
+        out.println("    }");
+        out.println();
+        out.println("    public static ZdoCommandType getValueById(final int clusterId) {");
+        out.println("        for (final ZdoCommandType value : values()) {");
+        out.println("            if(value.clusterId == clusterId) {");
+        out.println("                return value;");
+        out.println("            }");
+        out.println("        }");
+        out.println("        return null;");
+        out.println("    }");
+        out.println("}");
+
+        out.flush();
+        out.close();
+    }
+
+    private static void generateZdpCommandTransactions(Context context, String packageRootPrefix, File sourceRootPath)
+            throws IOException {
+
+        final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
+        for (final Profile profile : profiles) {
+            final LinkedList<Cluster> clusters = new LinkedList<Cluster>(profile.clusters.values());
+            for (final Cluster cluster : clusters) {
+                final ArrayList<Command> commands = new ArrayList<Command>();
+                commands.addAll(cluster.received.values());
+                commands.addAll(cluster.generated.values());
+                for (final Command command : commands) {
+                    if (command.responseCommand == null || command.responseCommand.length() == 0) {
+                        continue;
+                    }
+
+                    final String packageRoot = packageRootPrefix + packageZdpTransaction;
+                    final String packagePath = getPackagePath(sourceRootPath, packageRoot);
+                    final File packageFile = getPackageFile(packagePath);
+
+                    final String className = command.nameUpperCamelCase + "Transaction";
+                    final PrintWriter out = getClassOut(packageFile, className);
+
+                    out.println("package " + packageRoot + ";");
+                    out.println();
+
+                    // out.println("import " + packageRootPrefix + packageZcl + ".ZclCommandMessage;");
+                    // out.println("import " + packageRootPrefix + packageZdp + ".ZclCommand;");
+                    // out.println("import " + packageRootPrefix + packageZcl + ".ZclField;");
+
+                    out.println(
+                            "import " + packageRootPrefix + packageZdpCommand + "." + command.nameUpperCamelCase + ";");
+                    out.println(
+                            "import " + packageRootPrefix + packageZdpCommand + "." + command.responseCommand + ";");
+
+                    out.println("import " + packageRootPrefix + ".Command;");
+                    out.println("import " + packageRootPrefix + ".CommandResponseMatcher;");
+                    // out.println("import " + packageRootPrefix + packageZdp + ".ZdoRequest;");
+                    // out.println("import " + packageRootPrefix + packageZdp + ".ZdoResponse;");
+
+                    // out.println("import java.util.Map;");
+                    // out.println("import java.util.HashMap;");
+
+                    out.println();
+                    out.println("/**");
+                    out.println(" * " + command.commandLabel + " transaction class.");
+
+                    if (command.commandDescription != null && command.commandDescription.size() != 0) {
+                        out.println(" * <p>");
+                        for (String line : command.commandDescription) {
+                            out.println(" * " + line);
+                        }
+                    }
+
+                    if (cluster.clusterDescription.size() > 0) {
+                        out.println(" * <p>");
+                        for (String line : cluster.clusterDescription) {
+                            out.println(" * " + line);
+                        }
+                    }
+
+                    out.println(" * <p>");
+                    out.println(" * Code is auto-generated. Modifications may be overwritten!");
+
+                    out.println(" */");
+                    out.println("public class " + className + " implements CommandResponseMatcher {");
+
+                    // out.println(" /**");
+                    // out.println(" * Default constructor.");
+                    // out.println(" */");
+                    // out.println(" public " + className + "() {");
+                    // out.println(" }");
+                    // out.println(" setType(ZclCommandType." + command.commandType + ");");
+                    // out.println(" commandId = " + command.commandId + ";");
+                    // out.println(" commandDirection = "
+                    // + (cluster.received.containsValue(command) ? "true" : "false") + ";");
+
+                    out.println();
+                    out.println("    @Override");
+                    out.println("    public boolean isMatch(Command request, Command response) {");
+                    out.println("        if (response instanceof " + command.responseCommand + ") {");
+                    // out.println(" return ((" + command.nameUpperCamelCase + ") request).get"
+                    // + command.responseRequest + "() == ((" + command.responseCommand + ") response).get"
+                    // + command.responseResponse + "();");
+                    out.println("        } else {");
+                    out.println("            return false;");
+                    out.println("        }");
+                    out.println("    }");
+
+                    out.println();
+                    out.println("}");
+
+                    out.flush();
+                    out.close();
+                }
+            }
+        }
+    }
+
 }

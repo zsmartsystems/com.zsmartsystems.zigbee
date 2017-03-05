@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Remove Group Response value object class.
  * <p>
  * Cluster: <b>Groups</b>. Command is sent <b>FROM</b> the server.
@@ -56,6 +54,7 @@ public class RemoveGroupResponse extends ZclCommand {
 
     /**
      * Gets Status.
+     *
      * @return the Status
      */
     public Integer getStatus() {
@@ -64,6 +63,7 @@ public class RemoveGroupResponse extends ZclCommand {
 
     /**
      * Sets Status.
+     *
      * @param status the Status
      */
     public void setStatus(final Integer status) {
@@ -72,6 +72,7 @@ public class RemoveGroupResponse extends ZclCommand {
 
     /**
      * Gets Group ID.
+     *
      * @return the Group ID
      */
     public Integer getGroupId() {
@@ -80,6 +81,7 @@ public class RemoveGroupResponse extends ZclCommand {
 
     /**
      * Sets Group ID.
+     *
      * @param groupId the Group ID
      */
     public void setGroupId(final Integer groupId) {

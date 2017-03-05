@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Move to Level Command value object class.
  * <p>
  * Cluster: <b>Level Control</b>. Command is sent <b>TO</b> the server.
@@ -42,6 +40,7 @@ public class MoveToLevelCommand extends ZclCommand {
 
     /**
      * Gets Level.
+     *
      * @return the Level
      */
     public Integer getLevel() {
@@ -50,6 +49,7 @@ public class MoveToLevelCommand extends ZclCommand {
 
     /**
      * Sets Level.
+     *
      * @param level the Level
      */
     public void setLevel(final Integer level) {
@@ -58,6 +58,7 @@ public class MoveToLevelCommand extends ZclCommand {
 
     /**
      * Gets Transition time.
+     *
      * @return the Transition time
      */
     public Integer getTransitionTime() {
@@ -66,6 +67,7 @@ public class MoveToLevelCommand extends ZclCommand {
 
     /**
      * Sets Transition time.
+     *
      * @param transitionTime the Transition time
      */
     public void setTransitionTime(final Integer transitionTime) {

@@ -2,9 +2,7 @@ package com.zsmartsystems.zigbee.zcl.clusters.alarms;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
-
 /**
- * <p>
  * Get Alarm Command value object class.
  * <p>
  * Cluster: <b>Alarms</b>. Command is sent <b>TO</b> the server.

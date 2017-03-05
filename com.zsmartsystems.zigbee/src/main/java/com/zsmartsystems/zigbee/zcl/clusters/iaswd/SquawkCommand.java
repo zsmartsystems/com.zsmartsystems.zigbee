@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Squawk Command value object class.
  * <p>
  * Cluster: <b>IAS WD</b>. Command is sent <b>TO</b> the server.
@@ -38,6 +36,7 @@ public class SquawkCommand extends ZclCommand {
 
     /**
      * Gets Header.
+     *
      * @return the Header
      */
     public Integer getHeader() {
@@ -46,6 +45,7 @@ public class SquawkCommand extends ZclCommand {
 
     /**
      * Sets Header.
+     *
      * @param header the Header
      */
     public void setHeader(final Integer header) {

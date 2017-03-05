@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 
 /**
- * <p>
  * Write Attributes Undivided Command value object class.
  * <p>
  * The write attributes undivided command is generated when a device wishes to
@@ -58,6 +57,7 @@ public class WriteAttributesUndividedCommand extends ZclCommand {
 
     /**
      * Gets Records.
+     *
      * @return the Records
      */
     public List<WriteAttributeRecord> getRecords() {
@@ -66,6 +66,7 @@ public class WriteAttributesUndividedCommand extends ZclCommand {
 
     /**
      * Sets Records.
+     *
      * @param records the Records
      */
     public void setRecords(final List<WriteAttributeRecord> records) {

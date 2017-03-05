@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.serialization;
 
 import java.util.Arrays;
+import java.util.List;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -31,6 +32,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
             case BOOLEAN:
                 buffer[length++] = (Boolean) data ? 1 : 0;
                 break;
+            case NWK_ADDRESS:
             case BITMAP_16_BIT:
             case SIGNED_16_BIT_INTEGER:
             case UNSIGNED_16_BIT_INTEGER:
@@ -39,6 +41,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 buffer[length++] = shortValue & 0xFF;
                 buffer[length++] = (shortValue >> 8) & 0xFF;
                 break;
+            case ENDPOINT:
             case DATA_8_BIT:
             case BITMAP_8_BIT:
             case SIGNED_8_BIT_INTEGER:
@@ -78,9 +81,21 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 break;
             case N_X_READ_ATTRIBUTE_STATUS_RECORD:
                 break;
+            case N_X_NWK_ADDRESS:
             case N_X_UNSIGNED_16_BIT_INTEGER:
+                List<Integer> intArray16 = (List<Integer>) data;
+                buffer[length++] = intArray16.size();
+                for (int value : intArray16) {
+                    buffer[length++] = value & 0xFF;
+                    buffer[length++] = (value >> 8) & 0xFF;
+                }
                 break;
             case N_X_UNSIGNED_8_BIT_INTEGER:
+                List<Integer> intArray8 = (List<Integer>) data;
+                buffer[length++] = intArray8.size();
+                for (int value : intArray8) {
+                    buffer[length++] = value & 0xFF;
+                }
                 break;
             case N_X_WRITE_ATTRIBUTE_RECORD:
                 break;
@@ -111,7 +126,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
             case UTCTIME:
                 break;
             default:
-                throw new IllegalArgumentException("No reader defined in " + ZigBeeDeserializer.class.getSimpleName()
+                throw new IllegalArgumentException("No writer defined in " + ZigBeeDeserializer.class.getSimpleName()
                         + " for " + type.toString() + " (" + type.getId() + ")");
         }
     }

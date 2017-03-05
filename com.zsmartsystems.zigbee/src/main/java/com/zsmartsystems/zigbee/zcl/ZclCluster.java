@@ -52,7 +52,8 @@ public abstract class ZclCluster {
     protected Future<CommandResult> send(ZclCommand command) {
         command.setDestinationAddress(zigbeeAddress);
         // command.setDestinationEndpoint(zigbeeDevice.getEndpoint());
-        return zigbeeManager.unicast(command);
+
+        return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
     /**
@@ -76,11 +77,9 @@ public abstract class ZclCluster {
         try {
             result = zigbeeManager.read(this, attribute).get();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
         } catch (ExecutionException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
         }
@@ -154,7 +153,7 @@ public abstract class ZclCluster {
         command.setRecords(Collections.singletonList(record));
         command.setDestinationAddress(zigbeeAddress);
 
-        return zigbeeManager.unicast(command);
+        return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
     /**

@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Store Scene Response value object class.
  * <p>
  * Cluster: <b>Scenes</b>. Command is sent <b>FROM</b> the server.
@@ -53,6 +51,7 @@ public class StoreSceneResponse extends ZclCommand {
 
     /**
      * Gets Status.
+     *
      * @return the Status
      */
     public Integer getStatus() {
@@ -61,6 +60,7 @@ public class StoreSceneResponse extends ZclCommand {
 
     /**
      * Sets Status.
+     *
      * @param status the Status
      */
     public void setStatus(final Integer status) {
@@ -69,6 +69,7 @@ public class StoreSceneResponse extends ZclCommand {
 
     /**
      * Gets Group ID.
+     *
      * @return the Group ID
      */
     public Integer getGroupId() {
@@ -77,6 +78,7 @@ public class StoreSceneResponse extends ZclCommand {
 
     /**
      * Sets Group ID.
+     *
      * @param groupId the Group ID
      */
     public void setGroupId(final Integer groupId) {
@@ -85,6 +87,7 @@ public class StoreSceneResponse extends ZclCommand {
 
     /**
      * Gets Scene ID.
+     *
      * @return the Scene ID
      */
     public Integer getSceneId() {
@@ -93,6 +96,7 @@ public class StoreSceneResponse extends ZclCommand {
 
     /**
      * Sets Scene ID.
+     *
      * @param sceneId the Scene ID
      */
     public void setSceneId(final Integer sceneId) {

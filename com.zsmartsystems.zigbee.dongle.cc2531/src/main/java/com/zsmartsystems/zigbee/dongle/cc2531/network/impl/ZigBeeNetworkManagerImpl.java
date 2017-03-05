@@ -955,6 +955,12 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         return response != null && response.Status == 0;
     }
 
+    /**
+     * Sends a command without waiting for the response
+     *
+     * @param request {@link ZToolPacket}
+     * @throws ZigBeeException
+     */
     public void sendCommand(final ZToolPacket request) throws ZigBeeException {
         try {
             commandInterface.sendPacket(request);
@@ -1048,9 +1054,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         return response;
     }
 
-    /**
-     * @param request {@link AF_DATA_REQUEST}
-     */
     @Override
     public AF_DATA_CONFIRM sendAFDataRequest(AF_DATA_REQUEST request) {
         if (!waitForNetwork()) {
@@ -1072,6 +1075,11 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         return result;
     }
 
+    /**
+     * Sends an Application Framework data request and waits for the response.
+     *
+     * @param request {@link AF_DATA_REQUEST}
+     */
     public AF_DATA_SRSP_EXT sendAFDataRequestExt(AF_DATA_REQUEST_EXT request) {
         if (!waitForNetwork()) {
             return null;

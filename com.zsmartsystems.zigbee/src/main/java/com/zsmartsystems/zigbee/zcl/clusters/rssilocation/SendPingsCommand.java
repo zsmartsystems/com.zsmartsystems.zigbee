@@ -4,10 +4,9 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
- * <p>
  * Send Pings Command value object class.
  * <p>
  * Cluster: <b>RSSI Location</b>. Command is sent <b>TO</b> the server.
@@ -19,7 +18,7 @@ public class SendPingsCommand extends ZclCommand {
     /**
      * Target Address command message field.
      */
-    private Long targetAddress;
+    private IeeeAddress targetAddress;
 
     /**
      * Number RSSI Measurements command message field.
@@ -43,22 +42,25 @@ public class SendPingsCommand extends ZclCommand {
 
     /**
      * Gets Target Address.
+     *
      * @return the Target Address
      */
-    public Long getTargetAddress() {
+    public IeeeAddress getTargetAddress() {
         return targetAddress;
     }
 
     /**
      * Sets Target Address.
+     *
      * @param targetAddress the Target Address
      */
-    public void setTargetAddress(final Long targetAddress) {
+    public void setTargetAddress(final IeeeAddress targetAddress) {
         this.targetAddress = targetAddress;
     }
 
     /**
      * Gets Number RSSI Measurements.
+     *
      * @return the Number RSSI Measurements
      */
     public Integer getNumberRssiMeasurements() {
@@ -67,6 +69,7 @@ public class SendPingsCommand extends ZclCommand {
 
     /**
      * Sets Number RSSI Measurements.
+     *
      * @param numberRssiMeasurements the Number RSSI Measurements
      */
     public void setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
@@ -75,6 +78,7 @@ public class SendPingsCommand extends ZclCommand {
 
     /**
      * Gets Calculation Period.
+     *
      * @return the Calculation Period
      */
     public Integer getCalculationPeriod() {
@@ -83,6 +87,7 @@ public class SendPingsCommand extends ZclCommand {
 
     /**
      * Sets Calculation Period.
+     *
      * @param calculationPeriod the Calculation Period
      */
     public void setCalculationPeriod(final Integer calculationPeriod) {
@@ -98,7 +103,7 @@ public class SendPingsCommand extends ZclCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        targetAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        targetAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         numberRssiMeasurements = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         calculationPeriod = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }

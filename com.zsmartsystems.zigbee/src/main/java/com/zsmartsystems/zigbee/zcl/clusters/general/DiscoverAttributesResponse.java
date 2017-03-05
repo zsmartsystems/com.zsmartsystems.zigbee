@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
 
 /**
- * <p>
  * Discover Attributes Response value object class.
  * <p>
  * The discover attributes response command is generated in response to a discover
@@ -55,6 +54,7 @@ public class DiscoverAttributesResponse extends ZclCommand {
 
     /**
      * Gets Command identifier.
+     *
      * @return the Command identifier
      */
     public Boolean getCommandIdentifier() {
@@ -63,6 +63,7 @@ public class DiscoverAttributesResponse extends ZclCommand {
 
     /**
      * Sets Command identifier.
+     *
      * @param commandIdentifier the Command identifier
      */
     public void setCommandIdentifier(final Boolean commandIdentifier) {
@@ -71,6 +72,7 @@ public class DiscoverAttributesResponse extends ZclCommand {
 
     /**
      * Gets Information.
+     *
      * @return the Information
      */
     public List<AttributeInformation> getInformation() {
@@ -79,6 +81,7 @@ public class DiscoverAttributesResponse extends ZclCommand {
 
     /**
      * Sets Information.
+     *
      * @param information the Information
      */
     public void setInformation(final List<AttributeInformation> information) {

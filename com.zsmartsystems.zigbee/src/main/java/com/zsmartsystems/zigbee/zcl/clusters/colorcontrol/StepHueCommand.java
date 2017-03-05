@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Step Hue Command value object class.
  * <p>
  * Cluster: <b>Color control</b>. Command is sent <b>TO</b> the server.
@@ -48,6 +46,7 @@ public class StepHueCommand extends ZclCommand {
 
     /**
      * Gets Step mode.
+     *
      * @return the Step mode
      */
     public Integer getStepMode() {
@@ -56,6 +55,7 @@ public class StepHueCommand extends ZclCommand {
 
     /**
      * Sets Step mode.
+     *
      * @param stepMode the Step mode
      */
     public void setStepMode(final Integer stepMode) {
@@ -64,6 +64,7 @@ public class StepHueCommand extends ZclCommand {
 
     /**
      * Gets Step size.
+     *
      * @return the Step size
      */
     public Integer getStepSize() {
@@ -72,6 +73,7 @@ public class StepHueCommand extends ZclCommand {
 
     /**
      * Sets Step size.
+     *
      * @param stepSize the Step size
      */
     public void setStepSize(final Integer stepSize) {
@@ -80,6 +82,7 @@ public class StepHueCommand extends ZclCommand {
 
     /**
      * Gets Transition time.
+     *
      * @return the Transition time
      */
     public Integer getTransitionTime() {
@@ -88,6 +91,7 @@ public class StepHueCommand extends ZclCommand {
 
     /**
      * Sets Transition time.
+     *
      * @param transitionTime the Transition time
      */
     public void setTransitionTime(final Integer transitionTime) {

@@ -3,23 +3,56 @@ package com.zsmartsystems.zigbee.zcl;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Defines the ZCL Header field
+ * Defines the ZigBee Cluster Library (ZCL) Header fields-:
+ * <ul>
+ * <li>Frame Control (1 byte)
+ * <li>Manufacturer Code (2 bytes) [optional]
+ * <li>Transaction Sequence Number (1 byte)
+ * <li>Command ID (1 byte)
+ * </ul>
+ * <p>
+ * The <b>frame type</b> sub-field specifies if this is a <i>generic</i> command used across the entire profile
+ * {@link #ENTIRE_PROFILE_COMMAND}, or a command that is specific to a single cluster {@link #CLUSTER_SPECIFIC_COMMAND}.
+ * <p>
+ * The <b>manufacturer specific</b> sub-field is 1 bit in length and specifies whether this command refers to a
+ * manufacturer specific extension to a profile. If this value is set to 1, the manufacturer code field shall be
+ * present in the ZCL frame. If this value is set to 0, the manufacturer code field shall not be included in the ZCL
+ * frame.
+ * <p>
+ * The <b>direction</b> sub-field specifies the client/server direction for this command. If this value is set to 1, the
+ * command is being sent from the server side of a cluster to the client side of a cluster. If this value is set to
+ * 0, the command is being sent from the client side of a cluster to the server side of a cluster.
+ * <p>
+ * The <b>disable default response</b> sub-field is 1 bit in length. If it is set to 0, the Default response command
+ * will be returned. If it is set to 1, the Default response command will only be returned if there is an error.
+ * <p>
+ * The <b>command identifier</b> field is 8 bits in length and specifies the cluster command being used. If the frame
+ * type sub-field of the frame control field is set to 0b00, the command identifier corresponds to one of the
+ * non-reserved values of Table 2.9. If the frame type sub-field of the frame control field is set to 0b01, the
+ * command identifier corresponds to a cluster specific command. The cluster specific command identifiers can be
+ * found in each individual document describing the clusters.
+ * <p>
+ * The <b>transaction sequence number</b> field is 8 bits in length and specifies an identification number for the
+ * transaction so that a response-style command frame can be related to a request-style command frame. The
+ * application object itself shall maintain an 8-bit counter that is copied into this field and incremented by one
+ * for each command sent. When a value of 0xff is reached, the next command shall re-start the counter with a value
+ * of 0x00.
+ * The <b>transaction sequence number</b> field can be used by a controlling device, which may have issued multiple
+ * commands, so that it can match the incoming responses to the relevant command.
  *
  * @author Chris Jackson
  *
  */
 public class ZclHeader {
+    private final int MASK_MANUFACTURER_SPECIFIC = 0b00000100;
     private final int MASK_DIRECTION = 0b00001000;
     private final int MASK_DEFAULT_RESPONSE = 0b00010000;
 
     /**
-     * <p>
      * The frame type sub-field.
-     * </p>
      * <p>
      * Specifies if this is a <i>generic</i> command used across the entire profile {@link #ENTIRE_PROFILE_COMMAND},
      * or a command that is specific to a single cluster {@link #CLUSTER_SPECIFIC_COMMAND}.
-     * </p>
      */
     private ZclFrameType frameType;
 
@@ -52,17 +85,14 @@ public class ZclHeader {
     private int manufacturerCode;
 
     /**
-     * <p>
      * The transaction sequence number field is 8 bits in length and specifies an identification number for the
      * transaction so that a response-style command frame can be related to a request-style command frame. The
      * application object itself shall maintain an 8-bit counter that is copied into this field and incremented by one
      * for each command sent. When a value of 0xff is reached, the next command shall re-start the counter with a value
      * of 0x00.
      * </p>
-     * </p>
      * The transaction sequence number field can be used by a controlling device, which may have issued multiple
      * commands, so that it can match the incoming responses to the relevant command.
-     * </p>
      */
     private int sequenceNumber;
 
@@ -93,9 +123,9 @@ public class ZclHeader {
     public ZclHeader(ZclFieldDeserializer fieldDeserializer) {
         int frameControl = (int) fieldDeserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
 
-        if ((frameControl & 0x03) == 0b00) {
+        if ((frameControl & MASK_MANUFACTURER_SPECIFIC) == 0b00) {
             frameType = ZclFrameType.ENTIRE_PROFILE_COMMAND;
-        } else if ((frameControl & 0x03) == 0b01) {
+        } else if ((frameControl & MASK_MANUFACTURER_SPECIFIC) == 0b01) {
             frameType = ZclFrameType.CLUSTER_SPECIFIC_COMMAND;
         }
 

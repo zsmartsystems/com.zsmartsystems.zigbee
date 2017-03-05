@@ -4,10 +4,9 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
- * <p>
  * Request Own Location Command value object class.
  * <p>
  * Cluster: <b>RSSI Location</b>. Command is sent <b>FROM</b> the server.
@@ -19,7 +18,7 @@ public class RequestOwnLocationCommand extends ZclCommand {
     /**
      * Requesting Address command message field.
      */
-    private Long requestingAddress;
+    private IeeeAddress requestingAddress;
 
     /**
      * Default constructor.
@@ -33,17 +32,19 @@ public class RequestOwnLocationCommand extends ZclCommand {
 
     /**
      * Gets Requesting Address.
+     *
      * @return the Requesting Address
      */
-    public Long getRequestingAddress() {
+    public IeeeAddress getRequestingAddress() {
         return requestingAddress;
     }
 
     /**
      * Sets Requesting Address.
+     *
      * @param requestingAddress the Requesting Address
      */
-    public void setRequestingAddress(final Long requestingAddress) {
+    public void setRequestingAddress(final IeeeAddress requestingAddress) {
         this.requestingAddress = requestingAddress;
     }
 
@@ -54,7 +55,7 @@ public class RequestOwnLocationCommand extends ZclCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        requestingAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        requestingAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
     }
 
     @Override

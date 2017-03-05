@@ -10,13 +10,14 @@ import com.zsmartsystems.zigbee.CommandResponseMatcher;
  * and the response source address matches the destination of the request.
  *
  * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
 public class ZdoResponseMatcher implements CommandResponseMatcher {
 
     @Override
     public boolean isMatch(Command request, Command response) {
         if (response instanceof ZdoResponse) {
-            return ((ZdoRequest) request).getDestinationAddress() == ((ZdoResponse) response).getSourceAddress();
+            return ((ZdoRequest) request).getDestinationAddress().equals(((ZdoResponse) response).getSourceAddress());
         } else {
             return false;
         }

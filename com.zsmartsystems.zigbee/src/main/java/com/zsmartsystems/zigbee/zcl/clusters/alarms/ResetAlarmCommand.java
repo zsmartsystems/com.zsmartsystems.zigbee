@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Reset Alarm Command value object class.
  * <p>
  * Cluster: <b>Alarms</b>. Command is sent <b>TO</b> the server.
@@ -51,6 +49,7 @@ public class ResetAlarmCommand extends ZclCommand {
 
     /**
      * Gets Alarm code.
+     *
      * @return the Alarm code
      */
     public Integer getAlarmCode() {
@@ -59,6 +58,7 @@ public class ResetAlarmCommand extends ZclCommand {
 
     /**
      * Sets Alarm code.
+     *
      * @param alarmCode the Alarm code
      */
     public void setAlarmCode(final Integer alarmCode) {
@@ -67,6 +67,7 @@ public class ResetAlarmCommand extends ZclCommand {
 
     /**
      * Gets Cluster identifier.
+     *
      * @return the Cluster identifier
      */
     public Integer getClusterIdentifier() {
@@ -75,6 +76,7 @@ public class ResetAlarmCommand extends ZclCommand {
 
     /**
      * Sets Cluster identifier.
+     *
      * @param clusterIdentifier the Cluster identifier
      */
     public void setClusterIdentifier(final Integer clusterIdentifier) {

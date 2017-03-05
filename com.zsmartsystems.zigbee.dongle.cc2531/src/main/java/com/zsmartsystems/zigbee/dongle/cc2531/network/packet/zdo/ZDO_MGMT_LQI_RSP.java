@@ -43,6 +43,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
  * @author <a href="mailto:manlio.bacco@isti.cnr.it">Manlio Bacco</a>
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
+ * @author Chris Jackson
  */
 public class ZDO_MGMT_LQI_RSP extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDo */ {
     /// <name>TI.ZPI1.ZDO_MGMT_LQI_RSP.NeighborLQICount</name>
@@ -68,17 +69,17 @@ public class ZDO_MGMT_LQI_RSP extends ZToolPacket /* implements IRESPONSE_CALLBA
     /// <name>TI.ZPI1.ZDO_MGMT_LQI_RSP</name>
     /// <summary>Constructor</summary>
     public ZDO_MGMT_LQI_RSP() {
-        this.NeighborLqiList = new NeighborLqiListItemClass[] {};
+        NeighborLqiList = new NeighborLqiListItemClass[] {};
     }
 
     public ZDO_MGMT_LQI_RSP(int[] framedata) {
-        this.SrcAddress = new ZToolAddress16(framedata[1], framedata[0]);
-        this.Status = framedata[2];
+        SrcAddress = new ZToolAddress16(framedata[1], framedata[0]);
+        Status = framedata[2];
         if (framedata.length > 3) {
-            this.NeighborLQIEntries = framedata[3];
-            this.StartIndex = framedata[4];
-            this.NeighborLQICount = framedata[5];
-            this.NeighborLqiList = new NeighborLqiListItemClass[framedata[5]];
+            NeighborLQIEntries = framedata[3];
+            StartIndex = framedata[4];
+            NeighborLQICount = framedata[5];
+            NeighborLqiList = new NeighborLqiListItemClass[framedata[5]];
 
             int NOpt1;
             int NOpt2;
@@ -99,8 +100,7 @@ public class ZDO_MGMT_LQI_RSP extends ZToolPacket /* implements IRESPONSE_CALLBA
                 NOpt2 = framedata[25 + k];
                 final int lqi = framedata[26 + k];
                 final int depth = framedata[27 + k];
-                this.NeighborLqiList[z] = new NeighborLqiListItemClass(panId, ieeeAddr, nwkAddr, NOpt1, NOpt2, lqi,
-                        depth);
+                NeighborLqiList[z] = new NeighborLqiListItemClass(panId, ieeeAddr, nwkAddr, NOpt1, NOpt2, lqi, depth);
                 k += 22;
             }
         }
@@ -111,27 +111,34 @@ public class ZDO_MGMT_LQI_RSP extends ZToolPacket /* implements IRESPONSE_CALLBA
     /// <summary>Contains information in a single item of a network list</summary>
     public class NeighborLqiListItemClass {
 
-        public int Depth;
-        public ZToolAddress64 ExtendedAddress;
-        public long ExtendedPanID;
-        public ZToolAddress16 NetworkAddress;
+        public int depth;
+        public ZToolAddress64 extendedAddress;
+        public long extendedPanID;
+        public ZToolAddress16 networkAddress;
         public int Reserved_Relationship_RxOnWhenIdle_DeviceType;
         public int Reserved_PermitJoining;
-        public int RxLQI;
+        public int rxLQI;
 
         public NeighborLqiListItemClass() {
         }
 
-        private NeighborLqiListItemClass(long num1, ZToolAddress64 num2, ZToolAddress16 num3, int num4, int num5,
-                int num6, int num7) {
-            this.ExtendedPanID = num1;
-            this.ExtendedAddress = num2;
-            this.NetworkAddress = num3;
-            this.Reserved_Relationship_RxOnWhenIdle_DeviceType = num4;
-            this.Reserved_PermitJoining = num5;
-            this.Depth = num6;
-            this.RxLQI = num7;
+        private NeighborLqiListItemClass(long extendedPanID, ZToolAddress64 extendedAddress,
+                ZToolAddress16 networkAddress, int flags, int joining, int depth, int rxLqi) {
+            this.extendedPanID = extendedPanID;
+            this.extendedAddress = extendedAddress;
+            this.networkAddress = networkAddress;
+            this.Reserved_Relationship_RxOnWhenIdle_DeviceType = flags;
+            this.Reserved_PermitJoining = joining;
+            this.depth = depth;
+            this.rxLQI = rxLqi;
         }
+
+        @Override
+        public String toString() {
+            return "NeighborLqi [depth=" + depth + ", networkAddress=" + networkAddress + ", joining="
+                    + Reserved_PermitJoining + ", LQI=" + rxLQI + "]";
+        }
+
     }
 
     /**

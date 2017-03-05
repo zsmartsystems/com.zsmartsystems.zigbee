@@ -27,29 +27,29 @@ public enum EmberOutgoingMessageType {
     /**
      * Unicast sent directly to an EmberNodeId.
      */
-    EMBER_OUTGOING_DIRECT(0),
+    EMBER_OUTGOING_DIRECT(0x0000),
 
     /**
      * Unicast sent using an entry in the address table.
      */
-    EMBER_OUTGOING_VIA_ADDRESS_TABLE(1),
+    EMBER_OUTGOING_VIA_ADDRESS_TABLE(0x0001),
 
     /**
      * Unicast sent using an entry in the binding table.
      */
-    EMBER_OUTGOING_VIA_BINDING(2),
+    EMBER_OUTGOING_VIA_BINDING(0x0002),
 
     /**
      * Multicast message. This value is passed to emberMessageSentHandler() only. It may not be
      * passed to emberSendUnicast().
      */
-    EMBER_OUTGOING_MULTICAST(3),
+    EMBER_OUTGOING_MULTICAST(0x0003),
 
     /**
      * Broadcast message. This value is passed to emberMessageSentHandler() only. It may not be
      * passed to emberSendUnicast().
      */
-    EMBER_OUTGOING_BROADCAST(4);
+    EMBER_OUTGOING_BROADCAST(0x0004);
 
     /**
      * A mapping between the integer code and its corresponding type to

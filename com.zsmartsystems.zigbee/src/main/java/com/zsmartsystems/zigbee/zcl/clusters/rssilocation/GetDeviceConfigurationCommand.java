@@ -4,10 +4,9 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
- * <p>
  * Get Device Configuration Command value object class.
  * <p>
  * Cluster: <b>RSSI Location</b>. Command is sent <b>TO</b> the server.
@@ -19,7 +18,7 @@ public class GetDeviceConfigurationCommand extends ZclCommand {
     /**
      * Target Address command message field.
      */
-    private Long targetAddress;
+    private IeeeAddress targetAddress;
 
     /**
      * Default constructor.
@@ -33,17 +32,19 @@ public class GetDeviceConfigurationCommand extends ZclCommand {
 
     /**
      * Gets Target Address.
+     *
      * @return the Target Address
      */
-    public Long getTargetAddress() {
+    public IeeeAddress getTargetAddress() {
         return targetAddress;
     }
 
     /**
      * Sets Target Address.
+     *
      * @param targetAddress the Target Address
      */
-    public void setTargetAddress(final Long targetAddress) {
+    public void setTargetAddress(final IeeeAddress targetAddress) {
         this.targetAddress = targetAddress;
     }
 
@@ -54,7 +55,7 @@ public class GetDeviceConfigurationCommand extends ZclCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        targetAddress = (Long) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        targetAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
     }
 
     @Override

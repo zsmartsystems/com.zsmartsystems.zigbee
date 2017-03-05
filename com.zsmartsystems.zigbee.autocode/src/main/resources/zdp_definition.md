@@ -31,17 +31,28 @@ The destination addressing on this command shall be unicast.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |NWKAddrOfInterest          |NWK address                |
+|RequestType                |Unsigned 8-bit integer     |
+|StartIndex                 |Unsigned 8-bit integer     |
+
+##### Expected Response
+Packet: IEEE Address Response
+Match: NWKAddrOfInterest == NWKAddrRemoteDev
 
 #### Node Descriptor Request [0x0002]
 
-The Power_Desc_req command is generated from a local device wishing to
-inquire as to the power descriptor of a remote device. This command shall be
-unicast either to the remote device itself or to an alternative device that contains
-the discovery information of the remote device.
+The Node_Desc_req command is generated from a local device wishing to inquire
+as to the node descriptor of a remote device. This command shall be unicast either
+to the remote device itself or to an alternative device that contains the discovery
+information of the remote device.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |NWKAddrOfInterest          |NWK address                |
+
+##### Expected Response
+Packet: Node Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
+
 
 #### Power Descriptor Request [0x0003]
 
@@ -53,6 +64,11 @@ the discovery information of the remote device.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |NWKAddrOfInterest          |NWK address         |
+
+##### Expected Response
+Packet: Power Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
+
 
 #### Simple Descriptor Request [0x0004]
 
@@ -66,6 +82,11 @@ device that contains the discovery information of the remote device.
 |NWKAddrOfInterest          |NWK address         |
 |Endpoint                   |Unsigned 8-bit integer     |
 
+##### Expected Response
+Packet: Simple Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
+Match: Endpoint == SimpleDescriptor.Endpoint
+
 #### Active Endpoints Request [0x0005]
 
 The Active_EP_req command is generated from a local device wishing to acquire
@@ -75,7 +96,12 @@ contains the discovery information of the remote device.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|NWKAddrOfInterest          |NWK address         |
+|NWKAddrOfInterest          |NWK address                |
+
+##### Expected Response
+Packet: Active Endpoints Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
+
 
 #### Match Descriptor Request [0x0006]
 
@@ -97,6 +123,10 @@ the discovery information of the remote device.
 |---------------------------|---------------------------|
 |NWKAddrOfInterest          |NWK address         |
 
+##### Expected Response
+Packet: Complex Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
+
 
 #### User Descriptor Request [0x0011]
 
@@ -108,6 +138,11 @@ information of the remote device.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |NWKAddrOfInterest          |NWK address         |
+
+##### Expected Response
+Packet: User Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
+
 
 #### Discovery Cache Request [0x0012]
 
@@ -134,7 +169,7 @@ broadcast to all devices for which macRxOnWhenIdle = TRUE.
 |Capability                 |Bitmap 8-bit               |
 
 
-#### User Descriptor Set [0x0014]
+#### User Descriptor Set Request [0x0014]
 
 The User_Desc_set command is generated from a local device wishing to
 configure the user descriptor on a remote device. This command shall be unicast
@@ -155,14 +190,14 @@ discover the location of a particular system server or servers as indicated by t
 ServerMask parameter. The destination addressing on this request is "broadcast to
 all devices for which macRxOnWhenIdle = TRUE".
 
-#### Discovery Store REquest [0x0016]
+#### Discovery Store Request Request [0x0016]
 
 The Discovery_store_req is provided to enable ZigBee end devices on the
 network to request storage of their discovery cache information on a Primary
 Discovery Cache device. Included in the request is the amount of storage space
 the Local Device requires.
 
-#### Node Descriptor Store [0x0017]
+#### Node Descriptor Store Request [0x0017]
 
 The Node_Desc_store_req is provided to enable ZigBee end devices on the
 network to request storage of their Node Descriptor on a Primary Discovery
@@ -170,7 +205,7 @@ Cache device which has previously received a SUCCESS status from a
 Discovery_store_req to the same Primary Discovery Cache device. Included in
 this request is the Node Descriptor the Local Device wishes to cache. 
 
-#### Power Descriptor Store [0x0018]
+#### Power Descriptor Store Request [0x0018]
 
 The Power_Desc_store_req is provided to enable ZigBee end devices on the
 network to request storage of their Power Descriptor on a Primary Discovery
@@ -178,7 +213,7 @@ Cache device which has previously received a SUCCESS status from a
 Discovery_store_req to the same Primary Discovery Cache device. Included in
 this request is the Power Descriptor the Local Device wishes to cache.
 
-#### Active Endpoint Store [0x0019]
+#### Active Endpoint Store Request [0x0019]
 
 The Active_EP_store_req is provided to enable ZigBee end devices on the
 network to request storage of their list of Active Endpoints on a Primary
@@ -200,7 +235,7 @@ Descriptor the Local Device wishes to cache and the Simple Descriptor itself. Th
 endpoint is a field within the Simple Descriptor and is accessed by the Remote
 Device to manage the discovery cache information for the Local Device. 
 
-#### Remove Node Cache [0x001B]
+#### Remove Node Cache Request [0x001B]
 
 The Remove_node_cache_req is provided to enable ZigBee devices on the
 network to request removal of discovery cache information for a specified ZigBee
@@ -251,7 +286,7 @@ which the active endpoint list is required. The StartIndex field shall be set in
 request to enable retrieval of lists of active endpoints from devices whose list exceeds
 the size of a single ASDU and where fragmentation is not supported.
 
-#### End Device Bind [0x0020]
+#### End Device Bind Request [0x0020]
 
 The End_Device_Bind_req is generated from a Local Device wishing to perform
 End Device Bind with a Remote Device. The End_Device_Bind_req is generated,
@@ -262,13 +297,13 @@ ZigBee Coordinator.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |BindingTarget              |NWK Address                |
-|SrcIEEE Address             |IEEE address               |
+|SrcAddress                 |IEEE address               |
 |SrcEndpoint                |Unsigned 8-bit integer     |
 |ProfileID                  |Unsigned 16-bit integer    |
-|NumInClusters              |Unsigned 8-bit integer     |
-|InClusterList              |N X ClusterId              |
-|NumInClusters              |Unsigned 8-bit integer     |
-|OutClusterList             |N X ClusterId              |
+|InClusterCount             |Unsigned 8-bit integer     |
+|InClusterList              |ClusterId[InClusterCount]  |
+|OutClusterCount            |Unsigned 8-bit integer     |
+|OutClusterList             |ClusterId[OutClusterCount] |
 
 
 #### Bind Request [0x0021]
@@ -369,7 +404,7 @@ is unicast.
 |SourceTableEntries         |Unsigned 16-bit integer    |
 |StartIndex                 |Unsigned 16-bit integer    |
 |SourceTableListCount       |Unsigned 16-bit integer    |
-|SourceTableList            |N X IEEE Address            |
+|SourceTableList            |N X IEEE Address           |
 
 
 #### Recover Source Bind Request [0x002A]
@@ -406,6 +441,10 @@ the destination address must be that of a ZigBee Coordinator or ZigBee Router.
 |---------------------------|---------------------------|
 |StartIndex                 |Unsigned 8-bit integer     |
 
+##### Expected Response
+Packet: Management LQI Response
+Match: destinationAddress == sourceAddress
+
 #### Management Routing Request [0x0032]
 
 The Mgmt_Rtg_req is generated from a Local Device wishing to retrieve the
@@ -416,6 +455,11 @@ must be that of the ZigBee Router or ZigBee Coordinator.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |StartIndex                 |Unsigned 8-bit integer     |
+
+##### Expected Response
+Packet: Management Routing Response
+Match: destinationAddress == sourceAddress
+
 
 #### Management Bind Request [0x0033]
 
@@ -439,7 +483,7 @@ using the parameter supplied by Mgmt_Leave_req.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|DeviceAddress              |IEEE Address                |
+|DeviceAddress              |IEEE Address               |
 |RemoveChildren             |Boolean                    |
 |Rejoin                     |Boolean                    |
 
@@ -507,8 +551,8 @@ destination addressing on this command is unicast.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Status                     |Unsigned 8-bit integer     |
-|IEEEAddrRemoteDev          |IEEE Address                |
-|NWKAddrRemoteDev           |NWK address         |
+|IEEEAddrRemoteDev          |IEEE Address               |
+|NWKAddrRemoteDev           |NWK address                |
 |NumAssocDev                |Unsigned 8-bit integer     |
 |StartIndex                 |Unsigned 8-bit integer     |
 |NWKAddrAssocDevList        |N X NWK Address            | 
@@ -518,17 +562,18 @@ destination addressing on this command is unicast.
 
 The IEEE_addr_rsp is generated by a Remote Device in response to an
 IEEE_addr_req command inquiring as to the 64-bit IEEE address of the Remote
-Device or the 64-bit IEEE address of an address held in a local discovery cach.
+Device or the 64-bit IEEE address of an address held in a local discovery cache.
 The destination addressing on this command shall be unicast. 
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Status                     |Unsigned 8-bit integer     |
-|IEEEAddrRemoteDev          |IEEE Address                |
-|NWKAddrRemoteDev           |NWK address         |
+|IEEEAddrRemoteDev          |IEEE Address               |
+|NWKAddrRemoteDev           |NWK address                |
 |NumAssocDev                |Unsigned 8-bit integer     |
 |StartIndex                 |Unsigned 8-bit integer     |
-|NWKAddrAssocDevList        |N X NWK Address            | 
+|NWKAddrAssocDevList        |NWK Address[NumAssocDev]   | 
+
 
 #### Node Descriptor Response [0x8002]
 
@@ -562,7 +607,7 @@ the matching child device in the NodeDescriptor field.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Status                     |Unsigned 8-bit integer     |
-|NWKAddrOfInterest          |NWK address         |
+|NWKAddrOfInterest          |NWK address                |
 |NodeDescriptor             |Node Descriptor            |
 
 #### Power Descriptor Response [0x8003]
@@ -575,7 +620,7 @@ the originator of the Power_Desc_req command.
 |---------------------------|---------------------------|
 |Status                     |Unsigned 8-bit integer     |
 |NWKAddrOfInterest          |NWK address         |
-|NodeDescriptor             |Power Descriptor           |
+|PowerDescriptor            |Power Descriptor           |
 
 #### Simple Descriptor Response [0x8004]
 
@@ -583,12 +628,13 @@ The Simple_Desc_rsp is generated by a remote device in response to a
 Simple_Desc_req directed to the remote device. This command shall be unicast to
 the originator of the Simple_Desc_req command.
 
-|Field Name                 |Data Type                  |
-|---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
-|NWKAddrOfInterest          |NWK address         |
-|Length                     |Unsigned 8-bit integer     |
-|SimpleDescriptor           |Simple Descriptor          |
+|Field Name                     |Data Type                  |
+|-------------------------------|---------------------------|
+|Status                         |Unsigned 8-bit integer     |
+|NWKAddrOfInterest              |NWK address                |
+|Length                         |Unsigned 8-bit integer     |
+|SimpleDescriptor               |Simple Descriptor          |
+
 
 #### Active Endpoints Response [0x8005]
 
@@ -599,9 +645,9 @@ the originator of the Active_EP_req command.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Status                     |Unsigned 8-bit integer     |
-|NWKAddrOfInterest          |NWK address         |
-|ActiveEPCount              |Unsigned 8-bit integer     |
-|ActiveEPList               |N X Endpoint               |
+|NWKAddrOfInterest          |NWK address                |
+|ActiveEPCnt                |Unsigned 8-bit integer     |
+|ActiveEPList               |Endpoint[ActiveEPCnt]      |
 
 #### Match Descriptor Response [0x8006]
 
@@ -677,7 +723,7 @@ Cache Device has space to store the discovery cache data for the Local Device),
 whether the request is not supported (meaning the Remote Device is not a Primary
 Discovery Cache device), or insufficient space exists.
 
-#### Active Endpoint Store Resposne [0x8019]
+#### Active Endpoint Store Response [0x8019]
 
 The Active_EP_store_rsp is provided to notify a Local Device of the request
 status from a Primary Discovery Cache device. Included in the response is a status
@@ -686,7 +732,7 @@ Cache Device has space to store the discovery cache data for the Local Device),
 the request is not supported (meaning the Remote Device is not a Primary
 Discovery Cache device), or insufficient space exists. 
 
-#### Simple Descriptor Store REsponse [0x801a]
+#### Simple Descriptor Store Response [0x801a]
 
 The Simple_Desc_store_rsp is provided to notify a Local Device of the request
 status from a Primary Discovery Cache device. Included in the response is a status
@@ -755,6 +801,11 @@ specified range. If it does not, a Status of INVALID_EP shall be returned If the
 Remote Device is the ZigBee Coordinator or SrcAddress but does not have a
 Binding Table entry corresponding to the parameters received in the request, a
 Status of NO_ENTRY is returned.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Unsigned 8-bit integer     |
+
 
 #### Bind Register Response [0x8023]
 
@@ -888,12 +939,30 @@ management command is not supported, a status of NOT_SUPPORTED shall be
 returned and all parameter fields after the Status field shall be omitted. Otherwise,
 the Remote Device shall implement the following processing.
 
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Unsigned 8-bit integer     |
+|NeighborTableEntries       |Unsigned 8-bit integer     |
+|StartIndex                 |Unsigned 8-bit integer     |
+|NeighborTableListCount     |Unsigned 8-bit integer     |
+|NeighborTableList          |Neighbor Table[NeighborTableListCount]|
+
+
 #### Management Routing Response [0x8032]
 
 The Mgmt_Rtg_rsp is generated in response to an Mgmt_Rtg_req. If this
 management command is not supported, a status of NOT_SUPPORTED shall be
 returned and all parameter fields after the Status field shall be omitted. Otherwise,
 the Remote Device shall implement the following processing.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Unsigned 8-bit integer     |
+|RoutingTableEntries        |Unsigned 8-bit integer     |
+|StartIndex                 |Unsigned 8-bit integer     |
+|RoutingTableListCount      |Unsigned 8-bit integer     |
+|RoutingTableList           |Routing Table[RoutingTableListCount]|
+
 
 #### Management Bind Response [0x8033]
 
@@ -927,6 +996,11 @@ receipt and after support for Mgmt_Permit_Joining_req has been verified, the
 Remote Device shall execute the NLME-PERMIT-JOINING.request. The
 Mgmt_Permit-Joining_rsp shall contain the same status that was contained in the
 NLME-PERMIT-JOINING.confirm primitive. 
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Unsigned 8-bit integer     |
+
 
 #### Management Cache Response [0x8037]
 
@@ -962,7 +1036,3 @@ which was not the ZigBee Coordinator or that the ZigBee Coordinator does not
 support End Device Binding. Otherwise, End_Device_Bind_req processing is
 performed as described below, including transmission of the
 End_Device_Bind_rsp. 
-
-
-
-

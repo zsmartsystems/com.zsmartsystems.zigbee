@@ -22,6 +22,9 @@ public class ZigBeeNwkHeader {
      */
     private int destinationAddress;
 
+    /**
+     * Source address
+     */
     private int sourceAddress;
 
     /**
@@ -125,7 +128,7 @@ public class ZigBeeNwkHeader {
 
     @Override
     public String toString() {
-        return "ZigBeeNetworkHeader [destinationAddress=" + destinationAddress + ", sourceAddress=" + sourceAddress
-                + ", radius=" + radius + ", sequence=" + sequence + "]";
+        return "ZigBeeNetworkHeader [addressMode=" + addressMode + ", destinationAddress=" + destinationAddress
+                + ", sourceAddress=" + sourceAddress + ", radius=" + radius + ", sequence=" + sequence + "]";
     }
 }

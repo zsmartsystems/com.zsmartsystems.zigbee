@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Move to Saturation Command value object class.
  * <p>
  * Cluster: <b>Color control</b>. Command is sent <b>TO</b> the server.
@@ -43,6 +41,7 @@ public class MoveToSaturationCommand extends ZclCommand {
 
     /**
      * Gets Saturation.
+     *
      * @return the Saturation
      */
     public Integer getSaturation() {
@@ -51,6 +50,7 @@ public class MoveToSaturationCommand extends ZclCommand {
 
     /**
      * Sets Saturation.
+     *
      * @param saturation the Saturation
      */
     public void setSaturation(final Integer saturation) {
@@ -59,6 +59,7 @@ public class MoveToSaturationCommand extends ZclCommand {
 
     /**
      * Gets Transition time.
+     *
      * @return the Transition time
      */
     public Integer getTransitionTime() {
@@ -67,6 +68,7 @@ public class MoveToSaturationCommand extends ZclCommand {
 
     /**
      * Sets Transition time.
+     *
      * @param transitionTime the Transition time
      */
     public void setTransitionTime(final Integer transitionTime) {

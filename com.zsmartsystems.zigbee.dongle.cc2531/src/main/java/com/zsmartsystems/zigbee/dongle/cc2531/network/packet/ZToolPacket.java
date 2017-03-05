@@ -50,7 +50,7 @@ public class ZToolPacket {
         SRSP
     }
 
-    private enum CommandSubsystem {
+    public enum CommandSubsystem {
         RESERVED_0,
         SYS,
         RESERVED_1,
@@ -115,7 +115,6 @@ public class ZToolPacket {
         checksum.compute();
         this.FCS = checksum.getChecksum();
         packet[packet.length - 1] = this.FCS;
-
     }
 
     public CommandType getCommandType() {

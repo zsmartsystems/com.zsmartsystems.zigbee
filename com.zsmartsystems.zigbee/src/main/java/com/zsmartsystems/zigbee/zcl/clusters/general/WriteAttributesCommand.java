@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 
 /**
- * <p>
  * Write Attributes Command value object class.
  * <p>
  * The write attributes command is generated when a device wishes to change the
@@ -52,6 +51,7 @@ public class WriteAttributesCommand extends ZclCommand {
 
     /**
      * Gets Records.
+     *
      * @return the Records
      */
     public List<WriteAttributeRecord> getRecords() {
@@ -60,6 +60,7 @@ public class WriteAttributesCommand extends ZclCommand {
 
     /**
      * Sets Records.
+     *
      * @param records the Records
      */
     public void setRecords(final List<WriteAttributeRecord> records) {

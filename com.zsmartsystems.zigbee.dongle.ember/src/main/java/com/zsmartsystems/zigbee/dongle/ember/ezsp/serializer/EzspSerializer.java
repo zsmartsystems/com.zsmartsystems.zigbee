@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer;
 
 import java.util.Arrays;
+import java.util.Set;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
@@ -22,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
  * The EmberZNet Serial Protocol Data Representation
  *
  * This class contains low level methods for serialising Ember data packets and
- * structures
+ * structures to the array for sending
  *
  * @author Chris Jackson
  *
@@ -104,11 +105,21 @@ public class EzspSerializer {
         apsFrame.serialize(this);
     }
 
+    public void serializeEmberApsOption(Set<EmberApsOption> options) {
+        int val = 0;
+        for (EmberApsOption option : options) {
+            val += option.getKey();
+        }
+        buffer[length++] = val & 0xFF;
+        buffer[length++] = (val >> 8) & 0xFF;
+    }
+
     public void serializeEzspNetworkScanType(EzspNetworkScanType scanType) {
         buffer[length++] = scanType.getKey();
     }
 
     public void serializeEmberBindingTableEntry(EmberBindingTableEntry tableEntry) {
+        tableEntry.serialize(this);
     }
 
     public void serializeEmberInitialSecurityState(EmberInitialSecurityState securityState) {
@@ -116,25 +127,27 @@ public class EzspSerializer {
     }
 
     public void serializeEmberOutgoingMessageType(EmberOutgoingMessageType messageType) {
+        buffer[length++] = messageType.getKey();
     }
 
     public void serializeEzspPolicyId(EzspPolicyId policyId) {
+        buffer[length++] = policyId.getKey();
     }
 
     public void serializeEzspDecisionId(EzspDecisionId decisionId) {
+        buffer[length++] = decisionId.getKey();
     }
 
     public void serializeEmberBindingType(EmberBindingType bindingType) {
-    }
-
-    public void serializeEmberApsOption(EmberApsOption apsOption) {
-
+        buffer[length++] = bindingType.getKey();
     }
 
     public void serializeEmberCurrentSecurityBitmask(EmberCurrentSecurityBitmask securityBitmask) {
+        buffer[length++] = securityBitmask.getKey();
     }
 
     public void serializeEmberInitialSecurityBitmask(EmberInitialSecurityBitmask securityBitmask) {
+        buffer[length++] = securityBitmask.getKey();
     }
 
     public void serializeEmberJoinMethod(EmberJoinMethod joinMethod) {

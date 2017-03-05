@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * View Scene Command value object class.
  * <p>
  * The View Scene command shall be addressed to a single device (not a group).
@@ -50,6 +48,7 @@ public class ViewSceneCommand extends ZclCommand {
 
     /**
      * Gets Group ID.
+     *
      * @return the Group ID
      */
     public Integer getGroupId() {
@@ -58,6 +57,7 @@ public class ViewSceneCommand extends ZclCommand {
 
     /**
      * Sets Group ID.
+     *
      * @param groupId the Group ID
      */
     public void setGroupId(final Integer groupId) {
@@ -66,6 +66,7 @@ public class ViewSceneCommand extends ZclCommand {
 
     /**
      * Gets Scene ID.
+     *
      * @return the Scene ID
      */
     public Integer getSceneId() {
@@ -74,6 +75,7 @@ public class ViewSceneCommand extends ZclCommand {
 
     /**
      * Sets Scene ID.
+     *
      * @param sceneId the Scene ID
      */
     public void setSceneId(final Integer sceneId) {

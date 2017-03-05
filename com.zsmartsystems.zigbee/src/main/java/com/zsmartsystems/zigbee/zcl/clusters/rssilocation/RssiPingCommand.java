@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * RSSI Ping Command value object class.
  * <p>
  * Cluster: <b>RSSI Location</b>. Command is sent <b>FROM</b> the server.
@@ -33,6 +31,7 @@ public class RssiPingCommand extends ZclCommand {
 
     /**
      * Gets Location Type.
+     *
      * @return the Location Type
      */
     public Integer getLocationType() {
@@ -41,6 +40,7 @@ public class RssiPingCommand extends ZclCommand {
 
     /**
      * Sets Location Type.
+     *
      * @param locationType the Location Type
      */
     public void setLocationType(final Integer locationType) {

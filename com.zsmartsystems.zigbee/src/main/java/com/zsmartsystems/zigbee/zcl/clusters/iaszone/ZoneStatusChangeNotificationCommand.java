@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Zone Status Change Notification Command value object class.
  * <p>
  * Cluster: <b>IAS Zone</b>. Command is sent <b>FROM</b> the server.
@@ -42,6 +40,7 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
 
     /**
      * Gets Zone Status.
+     *
      * @return the Zone Status
      */
     public Integer getZoneStatus() {
@@ -50,6 +49,7 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
 
     /**
      * Sets Zone Status.
+     *
      * @param zoneStatus the Zone Status
      */
     public void setZoneStatus(final Integer zoneStatus) {
@@ -58,6 +58,7 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
 
     /**
      * Gets Extended Status.
+     *
      * @return the Extended Status
      */
     public Integer getExtendedStatus() {
@@ -66,6 +67,7 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
 
     /**
      * Sets Extended Status.
+     *
      * @param extendedStatus the Extended Status
      */
     public void setExtendedStatus(final Integer extendedStatus) {

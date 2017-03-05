@@ -1,75 +1,132 @@
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoCommand;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoResponse;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
- * DeviceAnnounce.
- *
- * @author Tommi S.E. Laukkanen
+ * Device Announce value object class.
+ * <p>
+ * The Device_annce is provided to enable ZigBee devices on the network to notify
+ * other ZigBee devices that the device has joined or re-joined the network,
+ * identifying the device's 64-bit IEEE address and new 16-bit NWK address, and
+ * informing the Remote Devices of the capability of the ZigBee device. This
+ * command shall be invoked for all ZigBee end devices upon join or rejoin. This
+ * command may also be invoked by ZigBee routers upon join or rejoin as part of
+ * NWK address conflict resolution. The destination addressing on this primitive is
+ * broadcast to all devices for which macRxOnWhenIdle = TRUE.
+ * <p>
+ * Code is auto-generated. Modifications may be overwritten!
  */
-public class DeviceAnnounce extends ZdoCommand {
+public class DeviceAnnounce extends ZdoResponse {
     /**
-     * Source address.
+     * NWKAddrOfInterest command message field.
      */
-    private int sourceAddress;
-    /**
-     * Device IEEE address.
-     */
-    private long ieeeAddress;
-    /**
-     * Device network address.
-     */
-    private int networkAddress;
-    /**
-     * Device capabilities.
-     */
-    private int capabilities;
+    private Integer nwkAddrOfInterest;
 
+    /**
+     * IEEEAddr command message field.
+     */
+    private IeeeAddress ieeeAddr;
+
+    /**
+     * Capability command message field.
+     */
+    private Integer capability;
+
+    /**
+     * Default constructor.
+     */
     public DeviceAnnounce() {
+        clusterId = 0x0013;
     }
 
-    public DeviceAnnounce(int sourceAddress, long ieeeAddress, int networkAddress, int capabilities) {
-        this.sourceAddress = sourceAddress;
-        this.ieeeAddress = ieeeAddress;
-        this.networkAddress = networkAddress;
-        this.capabilities = capabilities;
+    /**
+     * Gets NWKAddrOfInterest.
+     *
+     * @return the NWKAddrOfInterest
+     */
+    public Integer getNwkAddrOfInterest() {
+        return nwkAddrOfInterest;
     }
 
-    public int getSourceAddress() {
-        return sourceAddress;
+    /**
+     * Sets NWKAddrOfInterest.
+     *
+     * @param nwkAddrOfInterest the NWKAddrOfInterest
+     */
+    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+        this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
 
-    public void setSourceAddress(int sourceAddress) {
-        this.sourceAddress = sourceAddress;
+    /**
+     * Gets IEEEAddr.
+     *
+     * @return the IEEEAddr
+     */
+    public IeeeAddress getIeeeAddr() {
+        return ieeeAddr;
     }
 
-    public long getIeeeAddress() {
-        return ieeeAddress;
+    /**
+     * Sets IEEEAddr.
+     *
+     * @param ieeeAddr the IEEEAddr
+     */
+    public void setIeeeAddr(final IeeeAddress ieeeAddr) {
+        this.ieeeAddr = ieeeAddr;
     }
 
-    public void setIeeeAddress(long ieeeAddress) {
-        this.ieeeAddress = ieeeAddress;
+    /**
+     * Gets Capability.
+     *
+     * @return the Capability
+     */
+    public Integer getCapability() {
+        return capability;
     }
 
-    public int getNetworkAddress() {
-        return networkAddress;
+    /**
+     * Sets Capability.
+     *
+     * @param capability the Capability
+     */
+    public void setCapability(final Integer capability) {
+        this.capability = capability;
     }
 
-    public void setNetworkAddress(int networkAddress) {
-        this.networkAddress = networkAddress;
+    @Override
+    public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
+        serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
+        serializer.serialize(ieeeAddr, ZclDataType.IEEE_ADDRESS);
+        serializer.serialize(capability, ZclDataType.BITMAP_8_BIT);
     }
 
-    public int getCapabilities() {
-        return capabilities;
-    }
+    @Override
+    public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
 
-    public void setCapabilities(int capabilities) {
-        this.capabilities = capabilities;
+        nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        ieeeAddr = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        capability = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override
     public String toString() {
-        return "Device Announce: sourceAddress=" + sourceAddress + ", ieeeAddress=" + ieeeAddress + ", networkAddress="
-                + networkAddress + ", capabilities=" + capabilities;
+        final StringBuilder builder = new StringBuilder();
+        builder.append("DeviceAnnounce ");
+        builder.append(super.toString());
+        builder.append(", nwkAddrOfInterest=");
+        builder.append(nwkAddrOfInterest);
+        builder.append(", ieeeAddr=");
+        builder.append(ieeeAddr);
+        builder.append(", capability=");
+        builder.append(capability);
+        return builder.toString();
     }
+
 }

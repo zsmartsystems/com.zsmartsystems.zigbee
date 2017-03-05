@@ -66,12 +66,18 @@ public class ZDO_IEEE_ADDR_REQ extends ZToolPacket /* implements IREQUEST,IZDo *
         return super.packet[PAYLOAD_START_INDEX + 3];
     }
 
-    public ZDO_IEEE_ADDR_REQ(ZToolAddress16 num1, int req_type1, int num2) {
+    /**
+     *
+     * @param num1
+     * @param req_type
+     * @param startIdx
+     */
+    public ZDO_IEEE_ADDR_REQ(ZToolAddress16 num1, int req_type, int startIdx) {
         int[] framedata = new int[4];
         framedata[0] = num1.getLsb();
         framedata[1] = num1.getMsb();
-        framedata[2] = req_type1;
-        framedata[3] = num2;
+        framedata[2] = req_type;
+        framedata[3] = startIdx;
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_IEEE_ADDR_REQ), framedata);
     }
 

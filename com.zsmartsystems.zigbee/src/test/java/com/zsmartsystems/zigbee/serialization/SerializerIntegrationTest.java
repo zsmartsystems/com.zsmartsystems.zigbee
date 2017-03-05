@@ -3,11 +3,12 @@ package com.zsmartsystems.zigbee.serialization;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
-import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -24,9 +25,33 @@ public class SerializerIntegrationTest {
     }
 
     @Test
+    public void testDeserialize_N_X_UNSIGNED_8_BIT_INTEGER() {
+        List<Integer> valIn = Arrays.asList(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 });
+        testSerializer(valIn, ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Test
+    public void testDeserialize_N_X_UNSIGNED_16_BIT_INTEGER() {
+        List<Integer> valIn = Arrays.asList(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 });
+        testSerializer(valIn, ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
+    }
+
+    @Test
     public void testDeserialize_BITMAP_16_BIT() {
         int valIn = 0x9119;
         testSerializer(valIn, ZclDataType.BITMAP_16_BIT);
+    }
+
+    @Test
+    public void testDeserialize_NWK_ADDRESS() {
+        int valIn = 0x9119;
+        testSerializer(valIn, ZclDataType.NWK_ADDRESS);
+    }
+
+    @Test
+    public void testDeserialize_N_X_NWK_ADDRESS() {
+        List<Integer> valIn = Arrays.asList(new Integer[] { 1111, 2222, 3333, 4444, 5555, 6666, 7777, 8888, 9999 });
+        testSerializer(valIn, ZclDataType.N_X_NWK_ADDRESS);
     }
 
     @Test
@@ -98,6 +123,12 @@ public class SerializerIntegrationTest {
     }
 
     @Test
+    public void testSerialize_ENDPOINT() {
+        int valIn = 0x34;
+        testSerializer(valIn, ZclDataType.ENDPOINT);
+    }
+
+    @Test
     public void testSerialize_CHARACTER_STRING() {
         String valIn = "Hello World";
         testSerializer(valIn, ZclDataType.CHARACTER_STRING);
@@ -110,7 +141,12 @@ public class SerializerIntegrationTest {
         int size = buffer.length;
         DefaultDeserializer deserializer = new DefaultDeserializer(buffer);
         assertEquals(size, deserializer.getSize());
-        assertEquals(objectIn, deserializer.readZigBeeType(type));
+        Object objectOut = deserializer.readZigBeeType(type);
+        if (objectIn instanceof Integer[]) {
+            assertTrue(Arrays.equals((Integer[]) objectIn, (Integer[]) objectOut));
+        } else {
+            assertEquals(objectIn, objectOut);
+        }
         assertEquals(size, deserializer.getPosition());
         assertTrue(deserializer.endOfStream());
     }

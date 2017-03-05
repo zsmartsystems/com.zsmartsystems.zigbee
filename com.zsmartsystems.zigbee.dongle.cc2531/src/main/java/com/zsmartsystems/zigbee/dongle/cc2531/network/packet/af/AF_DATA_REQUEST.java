@@ -86,7 +86,7 @@ public class AF_DATA_REQUEST extends ZToolPacket/* implements IREQUEST,IAF */ {
         // TODO Check compatibility with other Constructor
 
         if (payload.length > 128) {
-            throw new IllegalArgumentException("Payload is too big, maxium is 128");
+            throw new IllegalArgumentException("Payload is too big, maximum is 128");
         }
 
         int[] framedata = new int[payload.length + 10];

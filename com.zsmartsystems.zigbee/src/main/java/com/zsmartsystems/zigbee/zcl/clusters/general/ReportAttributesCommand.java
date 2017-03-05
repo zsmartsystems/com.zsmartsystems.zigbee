@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 
 /**
- * <p>
  * Report Attributes Command value object class.
  * <p>
  * The report attributes command is used by a device to report the values of one or
@@ -52,6 +51,7 @@ public class ReportAttributesCommand extends ZclCommand {
 
     /**
      * Gets Reports.
+     *
      * @return the Reports
      */
     public List<AttributeReport> getReports() {
@@ -60,6 +60,7 @@ public class ReportAttributesCommand extends ZclCommand {
 
     /**
      * Sets Reports.
+     *
      * @param reports the Reports
      */
     public void setReports(final List<AttributeReport> reports) {

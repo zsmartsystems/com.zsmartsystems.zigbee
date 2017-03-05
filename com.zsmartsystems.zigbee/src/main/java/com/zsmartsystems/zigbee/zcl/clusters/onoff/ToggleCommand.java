@@ -2,9 +2,7 @@ package com.zsmartsystems.zigbee.zcl.clusters.onoff;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
-
 /**
- * <p>
  * Toggle Command value object class.
  * <p>
  * Cluster: <b>On/Off</b>. Command is sent <b>TO</b> the server.

@@ -9,7 +9,6 @@ import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.AttributeIdentifier;
 
 /**
- * <p>
  * Read Attributes Command value object class.
  * <p>
  * The read attributes command is generated when a device wishes to determine the
@@ -51,6 +50,7 @@ public class ReadAttributesCommand extends ZclCommand {
 
     /**
      * Gets Identifiers.
+     *
      * @return the Identifiers
      */
     public List<AttributeIdentifier> getIdentifiers() {
@@ -59,6 +59,7 @@ public class ReadAttributesCommand extends ZclCommand {
 
     /**
      * Sets Identifiers.
+     *
      * @param identifiers the Identifiers
      */
     public void setIdentifiers(final List<AttributeIdentifier> identifiers) {

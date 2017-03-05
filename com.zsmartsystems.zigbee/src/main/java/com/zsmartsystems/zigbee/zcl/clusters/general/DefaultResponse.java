@@ -5,9 +5,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
-
 /**
- * <p>
  * Default Response value object class.
  * <p>
  * The default response command is generated when a device receives a unicast
@@ -55,6 +53,7 @@ public class DefaultResponse extends ZclCommand {
 
     /**
      * Gets Command identifier.
+     *
      * @return the Command identifier
      */
     public Integer getCommandIdentifier() {
@@ -63,6 +62,7 @@ public class DefaultResponse extends ZclCommand {
 
     /**
      * Sets Command identifier.
+     *
      * @param commandIdentifier the Command identifier
      */
     public void setCommandIdentifier(final Integer commandIdentifier) {
@@ -71,6 +71,7 @@ public class DefaultResponse extends ZclCommand {
 
     /**
      * Gets Status code.
+     *
      * @return the Status code
      */
     public Integer getStatusCode() {
@@ -79,6 +80,7 @@ public class DefaultResponse extends ZclCommand {
 
     /**
      * Sets Status code.
+     *
      * @param statusCode the Status code
      */
     public void setStatusCode(final Integer statusCode) {

@@ -8,30 +8,29 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.ZigBeeApsHeader;
+import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
-import com.zsmartsystems.zigbee.ZigBeeNwkHeader;
+import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeePort;
 import com.zsmartsystems.zigbee.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupEui64ByNodeIdRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupEui64ByNodeIdResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspPermitJoiningRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberZdoConfigurationFlags;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
@@ -41,12 +40,6 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.EmberNetworkInitialisation
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberStackConfiguration;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclProfileType;
-import com.zsmartsystems.zigbee.zdo.ZdoCommand;
-import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
-import com.zsmartsystems.zigbee.zdo.command.IeeeAddressRequest;
-import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
-import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoinRequest;
-import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorRequest;
 
 /**
  * Implementation of the Silabs Ember NCP (Network Co Processor) EZSP dongle implementation.
@@ -88,6 +81,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         stackConfiguration = new HashMap<EzspConfigId, Integer>();
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS,
                 EmberZdoConfigurationFlags.EMBER_APP_RECEIVES_SUPPORTED_ZDO_REQUESTS.getKey());
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SECURITY_LEVEL, 5);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_STACK_PROFILE, 2);
     }
 
     @Override
@@ -221,78 +216,100 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     }
 
     @Override
-    public void sendZclCommand(ZigBeeNwkHeader nwkHeader, ZigBeeApsHeader apsHeader, int[] payload)
-            throws ZigBeeException {
-        EzspSendUnicastRequest emberUnicast = new EzspSendUnicastRequest();
-        // EmberApsFrame apsFrame = new EmberApsFrame(apsHeader);
+    public void sendCommand(final ZigBeeApsFrame apsFrame) throws ZigBeeException {
 
-        // apsFrame.setClusterId(apsHeader.getCluster());
-        // apsFrame.addOption(EmberApsOption.EMBER_APS_OPTION_RETRY);
+        EzspFrameRequest emberCommand;
 
-        // if (zclCommand.getDestinationAddress() instanceof ZigBeeDeviceAddress) {
-        // ZigBeeDeviceAddress deviceAddress = (ZigBeeDeviceAddress) zclCommand.getDestinationAddress();
-        // emberUnicast.setIndexOrDestination(deviceAddress.getAddress());
-        // apsFrame.setDestinationEndpoint(deviceAddress.getEndpoint());
-        // } else {
-        // ZigBeeGroupAddress groupAddress = (ZigBeeGroupAddress) zclCommand.getDestinationAddress();
-        // apsFrame.setGroupId(groupAddress.getGroupId());
-        // }
+        EmberApsFrame emberApsFrame = new EmberApsFrame();
+        emberApsFrame.setClusterId(apsFrame.getCluster());
+        emberApsFrame.setProfileId(apsFrame.getProfile());
+        emberApsFrame.setSourceEndpoint(apsFrame.getSourceEndpoint());
+        emberApsFrame.setDestinationEndpoint(apsFrame.getDestinationEndpoint());
+        emberApsFrame.setSequence(apsFrame.getApsCounter());
+        emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_RETRY);
+        emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ROUTE_DISCOVERY);
+        emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ADDRESS_DISCOVERY);
 
-        emberUnicast.setMessageTag(nwkHeader.getSequence());
-        emberUnicast.setSequenceNumber(nwkHeader.getSequence());
-        emberUnicast.setType(EmberOutgoingMessageType.EMBER_OUTGOING_DIRECT);
-        // emberUnicast.setApsFrame(apsFrame);
+        if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE && apsFrame.getDestinationAddress() < 0xfff8) {
 
-        emberUnicast.setMessageContents(payload);
+            EzspSendUnicastRequest emberUnicast = new EzspSendUnicastRequest();
+            emberUnicast.setIndexOrDestination(apsFrame.getDestinationAddress());
+            emberUnicast.setMessageTag(apsFrame.getSequence());
+            emberUnicast.setSequenceNumber(apsFrame.getSequence());
+            emberUnicast.setType(EmberOutgoingMessageType.EMBER_OUTGOING_DIRECT);
+            emberUnicast.setApsFrame(emberApsFrame);
+            emberUnicast.setMessageContents(apsFrame.getPayload());
+
+            emberCommand = emberUnicast;
+        } else if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE
+                && apsFrame.getDestinationAddress() >= 0xfff8) {
+
+            EzspSendBroadcastRequest emberBroadcast = new EzspSendBroadcastRequest();
+            emberBroadcast.setDestination(apsFrame.getDestinationAddress());
+            emberBroadcast.setMessageTag(apsFrame.getSequence());
+            emberBroadcast.setSequenceNumber(apsFrame.getSequence());
+            emberBroadcast.setApsFrame(emberApsFrame);
+            emberBroadcast.setRadius(apsFrame.getRadius());
+            emberBroadcast.setMessageContents(apsFrame.getPayload());
+
+            emberCommand = emberBroadcast;
+        } else {
+            logger.debug("EZSP message not sent: {}, {}", apsFrame);
+            // ZigBeeGroupAddress groupAddress = (ZigBeeGroupAddress) zclCommand.getDestinationAddress();
+            // apsFrame.setGroupId(groupAddress.getGroupId());
+            return;
+        }
+
+        logger.debug(emberCommand.toString());
+        ashHandler.queueFrame(emberCommand);
 
         // emberUnicast = (EzspSendUnicast) ashHandler.sendEzspRequestAsync(emberUnicast);
-        logger.debug(emberUnicast.toString());
     }
 
-    @Override
-    public void sendZdoCommand(ZdoCommand command) {
-        // if (command instanceof ActiveEndpointsRequest) {
-        // }
-        if (command instanceof IeeeAddressRequest) {
-            IeeeAddressRequest incomingCommand = (IeeeAddressRequest) command;
-            EzspLookupEui64ByNodeIdRequest request = new EzspLookupEui64ByNodeIdRequest();
-            request.setNodeId(incomingCommand.getDestinationAddress());
-            ashHandler.queueFrame(request);
+    // @Override
+    // public void sendZdoCommand(ZdoCommand command) {
+    // if (command instanceof ActiveEndpointsRequest) {
+    // }
+    // if (command instanceof IeeeAddressRequest) {
+    // IeeeAddressRequest incomingCommand = (IeeeAddressRequest) command;
+    // EzspLookupEui64ByNodeIdRequest request = new EzspLookupEui64ByNodeIdRequest();
+    // request.setNodeId(incomingCommand.getDestinationAddress());
+    // ashHandler.queueFrame(request);
 
-            return;
-        }
-        // if (command instanceof SimpleDescriptorRequest) {
-        // }
+    // return;
+    // }
+    // if (command instanceof SimpleDescriptorRequest) {
+    // }
 
-        if (command instanceof NodeDescriptorRequest) {
-            // (NodeDescriptorRequest)
-        }
+    // if (command instanceof NodeDescriptorRequest) {
+    // (NodeDescriptorRequest)
+    // }
 
-        // if (command instanceof PowerDescriptorRequest) {
-        // }
+    // if (command instanceof PowerDescriptorRequest) {
+    // }
 
-        if (command instanceof ManagementPermitJoinRequest) {
-            ManagementPermitJoinRequest incomingCommand = (ManagementPermitJoinRequest) command;
+    // if (command instanceof ManagementPermitJoiningRequest) {
+    // ManagementPermitJoiningRequest incomingCommand = (ManagementPermitJoiningRequest) command;
 
-            EzspPermitJoiningRequest emberJoin = new EzspPermitJoiningRequest();
-            emberJoin.setDuration(incomingCommand.getDuration());
-            ashHandler.queueFrame(emberJoin);
+    // EzspPermitJoiningRequest emberJoin = new EzspPermitJoiningRequest();
+    // emberJoin.setDuration(incomingCommand.getPermitDuration());
+    // ashHandler.queueFrame(emberJoin);
 
-            return;
-        }
-        // if (command instanceof BindRequest) {
-        // }
-        // if (command instanceof UnbindRequest) {
-        // }
-        // if (command instanceof UserDescriptorSet) {
-        // }
-        // if (command instanceof UserDescriptorRequest) {
-        // }
-        // if (command instanceof ManagementLqiRequest) {
-        // }
+    // return;
+    // }
+    // if (command instanceof BindRequest) {
+    // }
+    // if (command instanceof UnbindRequest) {
+    // }
+    // if (command instanceof UserDescriptorSet) {
+    // }
+    // if (command instanceof UserDescriptorRequest) {
+    // }
+    // if (command instanceof ManagementLqiRequest) {
+    // }
 
-        logger.debug("Unhandled ZDO Request: " + command.toString());
-    }
+    // logger.debug("Unhandled ZDO Request: " + command.toString());
+    // }
 
     @Override
     public void setZigBeeTransportReceive(ZigBeeTransportReceive zigbeeTransportReceive) {
@@ -303,40 +320,44 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     public void handlePacket(EzspFrame response) {
         if (response instanceof EzspIncomingMessageHandler) {
             EzspIncomingMessageHandler incomingMessage = (EzspIncomingMessageHandler) response;
-            EmberApsFrame apsFrame = incomingMessage.getApsFrame();
+            EmberApsFrame emberApsFrame = incomingMessage.getApsFrame();
 
-            ZigBeeApsHeader apsHeader = new ZigBeeApsHeader();
-            apsHeader.setCluster(apsFrame.getClusterId());
-            apsHeader.setDestinationEndpoint(apsFrame.getDestinationEndpoint());
-            apsHeader.setProfile(apsFrame.getProfileId());
-            apsHeader.setSourceEndpoint(apsFrame.getSourceEndpoint());
+            ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+            apsFrame.setApsCounter(emberApsFrame.getSequence());
+            apsFrame.setCluster(emberApsFrame.getClusterId());
+            apsFrame.setDestinationEndpoint(emberApsFrame.getDestinationEndpoint());
+            apsFrame.setProfile(emberApsFrame.getProfileId());
+            apsFrame.setSourceEndpoint(emberApsFrame.getSourceEndpoint());
 
-            ZigBeeNwkHeader nwkHeader = new ZigBeeNwkHeader();
-            nwkHeader.setSequence(incomingMessage.getSequenceNumber());
-            nwkHeader.setSourceAddress(incomingMessage.getAddressIndex());
-
-            // zigbeeTransportReceive.receiveZclCommand(nwkHeader, apsHeader, incomingMessage.getOutputBuffer());
-
-            return;
-        }
-
-        if (response instanceof EzspLookupEui64ByNodeIdResponse) {
-            IeeeAddressResponse zdoResponse = new IeeeAddressResponse();
-            zdoResponse.setIeeeAddress(((EzspLookupEui64ByNodeIdResponse) response).getEui64());
-            zigbeeTransportReceive.receiveZdoCommand(zdoResponse);
+            apsFrame.setSequence(incomingMessage.getSequenceNumber());
+            apsFrame.setSourceAddress(incomingMessage.getSender());
+            apsFrame.setPayload(incomingMessage.getMessageContents());
+            zigbeeTransportReceive.receiveCommand(apsFrame);
 
             return;
         }
 
-        if (response instanceof EzspChildJoinHandler) {
-            // Convert to an announce
-            DeviceAnnounce zdoResponse = new DeviceAnnounce();
-            zdoResponse.setIeeeAddress(((EzspChildJoinHandler) response).getChildEui64().getLong());
-            zdoResponse.setSourceAddress(((EzspChildJoinHandler) response).getChildId());
-            zigbeeTransportReceive.receiveZdoCommand(zdoResponse);
+        /*
+         * if (response instanceof EzspLookupEui64ByNodeIdResponse) {
+         * IeeeAddressResponse zdoResponse = new IeeeAddressResponse();
+         * zdoResponse.setIeeeAddress(((EzspLookupEui64ByNodeIdResponse) response).getEui64());
+         * zigbeeTransportReceive.receiveZdoCommand(zdoResponse);
+         *
+         * return;
+         * }
+         */
 
-            return;
-        }
+        /*
+         * if (response instanceof EzspChildJoinHandler) {
+         * // Convert to an announce
+         * DeviceAnnounce zdoResponse = new DeviceAnnounce();
+         * zdoResponse.setIeeeAddress(((EzspChildJoinHandler) response).getChildEui64().getLong());
+         * zdoResponse.setSourceAddress(((EzspChildJoinHandler) response).getChildId());
+         * zigbeeTransportReceive.receiveZdoCommand(zdoResponse);
+         *
+         * return;
+         * }
+         */
 
         logger.debug("Unhandled EZSP Frame: " + response.toString());
     }
