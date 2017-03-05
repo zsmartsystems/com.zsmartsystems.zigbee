@@ -443,7 +443,7 @@ the destination address must be that of a ZigBee Coordinator or ZigBee Router.
 
 ##### Expected Response
 Packet: Management LQI Response
-Match: sourceAddress == destinationAddress
+Match: destinationAddress == sourceAddress
 
 #### Management Routing Request [0x0032]
 
@@ -458,7 +458,7 @@ must be that of the ZigBee Router or ZigBee Coordinator.
 
 ##### Expected Response
 Packet: Management Routing Response
-Match: sourceAddress == destinationAddress
+Match: destinationAddress == sourceAddress
 
 
 #### Management Bind Request [0x0033]
@@ -483,7 +483,7 @@ using the parameter supplied by Mgmt_Leave_req.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|DeviceAddress              |IEEE Address                |
+|DeviceAddress              |IEEE Address               |
 |RemoveChildren             |Boolean                    |
 |Rejoin                     |Boolean                    |
 

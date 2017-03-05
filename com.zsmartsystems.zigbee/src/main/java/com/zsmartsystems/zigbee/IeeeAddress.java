@@ -1,5 +1,7 @@
 package com.zsmartsystems.zigbee;
 
+import java.util.Objects;
+
 /**
  * Represents a 64 bit IEEE network address
  *
@@ -29,6 +31,11 @@ public class IeeeAddress {
 
     public long getLong() {
         return address;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address);
     }
 
     @Override

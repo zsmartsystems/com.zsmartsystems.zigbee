@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.descriptors.SimpleDescriptor;
 
 /**
@@ -140,6 +142,16 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 value[0] = Integer.valueOf((byte) payload[index++] & 0xFF);
                 break;
             case UTCTIME:
+                break;
+            case ROUTING_TABLE:
+                RoutingTable routingTable = new RoutingTable();
+                routingTable.deserialize(this);
+                value[0] = routingTable;
+                break;
+            case NEIGHBOR_TABLE:
+                NeighborTable neighborTable = new NeighborTable();
+                neighborTable.deserialize(this);
+                value[0] = neighborTable;
                 break;
             case NODE_DESCRIPTOR:
                 NodeDescriptor nodeDescriptor = new NodeDescriptor();

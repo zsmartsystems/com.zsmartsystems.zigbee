@@ -115,7 +115,6 @@ public class ZToolPacket {
         checksum.compute();
         this.FCS = checksum.getChecksum();
         packet[packet.length - 1] = this.FCS;
-
     }
 
     public CommandType getCommandType() {

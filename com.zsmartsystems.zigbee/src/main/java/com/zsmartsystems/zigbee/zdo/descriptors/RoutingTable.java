@@ -1,5 +1,7 @@
 package com.zsmartsystems.zigbee.zdo.descriptors;
 
+import java.util.Objects;
+
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -23,6 +25,7 @@ public class RoutingTable {
     private Integer nextHopAddress;
 
     public enum DiscoveryState {
+        UNKNOWN,
         ACTIVE,
         DISCOVERY_UNDERWAY,
         DISCOVERY_FAILED,
@@ -54,6 +57,9 @@ public class RoutingTable {
                 break;
             case 4:
                 status = DiscoveryState.VALIDATION_UNDERWAY;
+                break;
+            default:
+                status = DiscoveryState.UNKNOWN;
                 break;
         }
 
@@ -109,6 +115,25 @@ public class RoutingTable {
 
     public void setNextHopAddress(Integer nextHopAddress) {
         this.nextHopAddress = nextHopAddress;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(status, destinationAddress, nextHopAddress, routeRecordRequired);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!RoutingTable.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        final RoutingTable other = (RoutingTable) obj;
+        return (getStatus().equals(other.getStatus()) && getDestinationAddress().equals(other.getDestinationAddress())
+                && getNextHopAddress().equals(other.getNextHopAddress())
+                && isRouteRecordRequired() == (other.isRouteRecordRequired())) ? true : false;
     }
 
     @Override

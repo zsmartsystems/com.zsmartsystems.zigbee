@@ -1,5 +1,7 @@
 package com.zsmartsystems.zigbee.zdo.descriptors;
 
+import java.util.Objects;
+
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -13,7 +15,7 @@ public class NeighborTable {
 
     private Long extendedPanId;
 
-    private Integer extendedAddress;
+    private IeeeAddress extendedAddress;
 
     private Integer networkAddress;
 
@@ -27,7 +29,7 @@ public class NeighborTable {
 
     private Integer depth;
 
-    private Integer lqi;
+    private Integer lqi = 0;
 
     /**
      * Deserialise the contents of the structure.
@@ -37,7 +39,7 @@ public class NeighborTable {
     public void deserialize(ZigBeeDeserializer deserializer) {
         // Deserialize the fields
         extendedPanId = ((IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS)).getLong();
-        extendedAddress = (int) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
+        extendedAddress = (IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
         networkAddress = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
 
         int temp = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
@@ -59,11 +61,11 @@ public class NeighborTable {
         this.extendedPanId = extendedPanId;
     }
 
-    public Integer getExtendedAddress() {
+    public IeeeAddress getExtendedAddress() {
         return extendedAddress;
     }
 
-    public void setExtendedAddress(Integer extendedAddress) {
+    public void setExtendedAddress(IeeeAddress extendedAddress) {
         this.extendedAddress = extendedAddress;
     }
 
@@ -121,6 +123,25 @@ public class NeighborTable {
 
     public void setLqi(Integer lqi) {
         this.lqi = lqi;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(extendedAddress, networkAddress, lqi);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!NeighborTable.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        final NeighborTable other = (NeighborTable) obj;
+        return (getExtendedAddress().equals(other.getExtendedAddress())
+                && getNetworkAddress().equals(other.getNetworkAddress()) && getLqi().equals(other.getLqi())) ? true
+                        : false;
     }
 
     @Override

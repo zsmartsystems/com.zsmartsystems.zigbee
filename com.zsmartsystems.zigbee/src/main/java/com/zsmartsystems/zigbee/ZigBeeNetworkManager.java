@@ -79,18 +79,18 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * The nodes in the ZigBee network - maps 16 bit network address to {@link ZigBeeNode}
      */
-    private Map<Integer, ZigBeeNode> networkNodes = new TreeMap<Integer, ZigBeeNode>();
+    private final Map<Integer, ZigBeeNode> networkNodes = new TreeMap<Integer, ZigBeeNode>();
 
     /**
      * Map of devices in the ZigBee network - maps {@link ZigBeeDeviceAddress} to
      * {@link ZigBeeDevice}
      */
-    private Map<ZigBeeDeviceAddress, ZigBeeDevice> networkDevices = new TreeMap<ZigBeeDeviceAddress, ZigBeeDevice>();
+    private final Map<ZigBeeDeviceAddress, ZigBeeDevice> networkDevices = new TreeMap<ZigBeeDeviceAddress, ZigBeeDevice>();
 
     /**
      * The groups in the ZigBee network.
      */
-    private Map<Integer, ZigBeeGroupAddress> networkGroups = new TreeMap<Integer, ZigBeeGroupAddress>();
+    private final Map<Integer, ZigBeeGroupAddress> networkGroups = new TreeMap<Integer, ZigBeeGroupAddress>();
 
     /**
      * The node listeners of the ZigBee network. Registered listeners will be

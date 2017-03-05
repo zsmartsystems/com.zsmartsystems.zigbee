@@ -24,9 +24,7 @@ public abstract class ZdoCommand extends Command {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("=");
-        // builder.append(sourceAddress);
-        return builder.toString();
+        // return (String.format("%04lX/0 -> %04lX/0", getSourceAddress(), getDestinationAddress()));
+        return "";
     }
 }

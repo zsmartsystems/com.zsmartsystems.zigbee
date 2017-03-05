@@ -1082,7 +1082,7 @@ public class ZclProtocolCodeGenerator {
         out.println("    public static ZclCommandType getRequest(final int clusterType, final int commandId) {");
         out.println("        for (final ZclCommandType value : values()) {");
         out.println(
-                "            if (value.received == false && value.clusterType == clusterType && value.commandId == commandId) {");
+                "            if (!value.received && value.clusterType == clusterType && value.commandId == commandId) {");
         out.println("                return value;");
         out.println("            }");
         out.println("        }");
@@ -1093,7 +1093,7 @@ public class ZclProtocolCodeGenerator {
         out.println("    public static ZclCommandType getResponse(final int clusterType, final int commandId) {");
         out.println("        for (final ZclCommandType value : values()) {");
         out.println(
-                "            if (value.received == true && value.clusterType == clusterType && value.commandId == commandId) {");
+                "            if (value.received && value.clusterType == clusterType && value.commandId == commandId) {");
         out.println("                return value;");
         out.println("            }");
         out.println("        }");
@@ -1835,16 +1835,20 @@ public class ZclProtocolCodeGenerator {
                         out.println("            return false;");
                         out.println("        }");
                         out.println();
+                        out.print("        return ");
+                        boolean first = true;
                         for (String matcher : command.responseMatchers.keySet()) {
-                            out.println(
-                                    "        if (!((" + command.nameUpperCamelCase + ") request).get" + matcher + "()");
-                            out.println("                .equals(((" + command.responseCommand + ") response).get"
-                                    + command.responseMatchers.get(matcher) + "())) {");
-                            out.println("            return false;");
-                            out.println("        }");
+                            if (first == false) {
+                                out.println();
+                                out.print("                && ");
+                            }
+                            first = false;
+                            out.println("(((" + command.nameUpperCamelCase + ") request).get" + matcher + "()");
+                            out.print("                .equals(((" + command.responseCommand + ") response).get"
+                                    + command.responseMatchers.get(matcher) + "()))");
                         }
+                        out.print(";");
                         out.println();
-                        out.println("        return true;");
                         out.println("    }");
                     }
 

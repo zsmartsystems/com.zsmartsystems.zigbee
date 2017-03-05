@@ -118,12 +118,8 @@ public class IeeeAddressRequest extends ZdoRequest implements CommandResponseMat
             return false;
         }
 
-        if (!((IeeeAddressRequest) request).getNwkAddrOfInterest()
-                .equals(((IeeeAddressResponse) response).getNwkAddrRemoteDev())) {
-            return false;
-        }
-
-        return true;
+        return (((IeeeAddressRequest) request).getNwkAddrOfInterest()
+                .equals(((IeeeAddressResponse) response).getNwkAddrRemoteDev()));
     }
 
     @Override

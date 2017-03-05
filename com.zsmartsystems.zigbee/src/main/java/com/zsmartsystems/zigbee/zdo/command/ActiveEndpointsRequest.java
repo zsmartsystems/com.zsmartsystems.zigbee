@@ -69,12 +69,8 @@ public class ActiveEndpointsRequest extends ZdoRequest implements CommandRespons
             return false;
         }
 
-        if (!((ActiveEndpointsRequest) request).getNwkAddrOfInterest()
-                .equals(((ActiveEndpointsResponse) response).getNwkAddrOfInterest())) {
-            return false;
-        }
-
-        return true;
+        return (((ActiveEndpointsRequest) request).getNwkAddrOfInterest()
+                .equals(((ActiveEndpointsResponse) response).getNwkAddrOfInterest()));
     }
 
     @Override

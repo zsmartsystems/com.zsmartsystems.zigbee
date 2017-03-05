@@ -8,24 +8,24 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoSimpleDescriptor;
+import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoManagementLqi;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 
-public class ZDO_SIMPLE_DESC_RSP extends Cc2351TestPacket {
+public class ZDO_MGMT_LQI_RSP extends Cc2351TestPacket {
 
     @Test
     public void testReceive() {
         ZToolPacket data = getPacket(
-                "FE 2E 45 84 00 00 00 00 00 28 01 04 01 00 00 00 00 10 00 00 01 00 02 00 03 00 04 00 05 00 06 00 07 00 08 00 09 00 0F 00 0A 00 0C 00 15 00 00 01 01 01 CF");
+                "FE 32 45 B1 00 00 00 02 00 02 14 D4 F1 02 00 4B 12 00 0B 88 DC 00 01 88 17 00 8F 22 15 02 01 3B 14 D4 F1 02 00 4B 12 00 EC A1 A5 01 00 8D 15 00 35 38 15 02 01 58 B5");
 
-        ZigBeeApsFrame apsFrame = ZdoSimpleDescriptor.create(data);
+        ZigBeeApsFrame apsFrame = ZdoManagementLqi.create(data);
 
         assertEquals(0x0000, apsFrame.getSourceAddress());
         assertEquals(0, apsFrame.getProfile());
         assertEquals(0, apsFrame.getDestinationEndpoint());
         assertTrue(Arrays.equals(
                 getPacketData(
-                        "00 00 00 00 28 01 04 01 00 00 00 00 10 00 00 01 00 02 00 03 00 04 00 05 00 06 00 07 00 08 00 09 00 0F 00 0A 00 0C 00 15 00 00 01 01 01"),
+                        "00 00 02 00 02 14 D4 F1 02 00 4B 12 00 0B 88 DC 00 01 88 17 00 8F 22 15 02 01 3B 14 D4 F1 02 00 4B 12 00 EC A1 A5 01 00 8D 15 00 35 38 15 02 01 58"),
                 apsFrame.getPayload()));
     }
 

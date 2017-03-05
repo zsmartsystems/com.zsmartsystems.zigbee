@@ -69,12 +69,8 @@ public class ManagementRoutingRequest extends ZdoRequest implements CommandRespo
             return false;
         }
 
-        if (!((ManagementRoutingRequest) request).getSourceAddress()
-                .equals(((ManagementRoutingResponse) response).getDestinationAddress())) {
-            return false;
-        }
-
-        return true;
+        return (((ManagementRoutingRequest) request).getDestinationAddress()
+                .equals(((ManagementRoutingResponse) response).getSourceAddress()));
     }
 
     @Override

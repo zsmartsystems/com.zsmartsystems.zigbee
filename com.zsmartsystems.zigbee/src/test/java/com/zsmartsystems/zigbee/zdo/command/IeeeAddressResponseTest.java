@@ -19,7 +19,7 @@ public class IeeeAddressResponseTest extends CommandTest {
     @Test
     public void testReceive() {
         // Short response - ie not extended
-        int[] packet = getPacketData("00 00 81 F0 F0 00 20 00 00 00 00 00 01");
+        int[] packet = getPacketData("00 00 EC A1 A5 01 00 8D 15 00 35 38 00 01 2A 2F");
 
         IeeeAddressResponse addressResponse = new IeeeAddressResponse();
 
@@ -30,7 +30,7 @@ public class IeeeAddressResponseTest extends CommandTest {
 
         System.out.println(addressResponse);
 
-        assertEquals(new IeeeAddress("0000002000F0F081"), addressResponse.getIeeeAddrRemoteDev());
+        assertEquals(new IeeeAddress("00158D0001A5A1EC"), addressResponse.getIeeeAddrRemoteDev());
         assertEquals(0x8001, (int) addressResponse.getClusterId());
         assertEquals(0, (int) addressResponse.getStatus());
     }

@@ -23,7 +23,7 @@ public class NodeDescriptor {
     private int transferSize;
     private boolean userDescriptorAvailable;
     private Set<FrequencyBandType> frequencyBands;
-    private Set<MacCapabilitiesType> macCapabilities;
+    private final Set<MacCapabilitiesType> macCapabilities = new HashSet<MacCapabilitiesType>();
 
     public enum LogicalType {
         COORDINATOR,
@@ -91,7 +91,7 @@ public class NodeDescriptor {
                 break;
         }
 
-        this.macCapabilities = new HashSet<MacCapabilitiesType>();
+        this.macCapabilities.isEmpty();
         if ((macCapabilities & 0x01) != 0) {
             this.macCapabilities.add(MacCapabilitiesType.ALTERNATIVE_PAN);
         }

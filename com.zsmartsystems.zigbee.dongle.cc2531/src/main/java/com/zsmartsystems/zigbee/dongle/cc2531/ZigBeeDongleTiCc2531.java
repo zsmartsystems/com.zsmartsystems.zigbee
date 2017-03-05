@@ -14,6 +14,8 @@ import com.zsmartsystems.zigbee.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoActiveEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoEndDeviceAnnounce;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoIeeeAddress;
+import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoManagementLqi;
+import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoManagementRouting;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoNodeDescriptor;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoPowerDescriptor;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoSimpleDescriptor;
@@ -28,9 +30,6 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST_EXT;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG;
-import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.Integers;
-import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
-import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
 import com.zsmartsystems.zigbee.zdo.SynchronousResponse;
 
 /**
@@ -189,15 +188,6 @@ public class ZigBeeDongleTiCc2531
                 // }
             }
         }
-    }
-
-    private ZToolAddress16 getZToolAddress16(int networkAddress) {
-        return new ZToolAddress16(Integers.getByteAsInteger(networkAddress, 1),
-                Integers.getByteAsInteger(networkAddress, 0));
-    }
-
-    private ZToolAddress64 getZToolAddress64(long networkAddress) {
-        return new ZToolAddress64(networkAddress);
     }
 
     /**
@@ -372,6 +362,15 @@ public class ZigBeeDongleTiCc2531
                 break;
             case ZToolCMD.ZDO_SIMPLE_DESC_RSP:
                 apsFrame = ZdoSimpleDescriptor.create(packet);
+                break;
+            case ZToolCMD.ZDO_MGMT_LQI_RSP:
+                apsFrame = ZdoManagementLqi.create(packet);
+                break;
+            case ZToolCMD.ZDO_MGMT_RTG_RSP:
+                apsFrame = ZdoManagementRouting.create(packet);
+                break;
+            default:
+                logger.debug("Unhandled ZToolPacket type {}", packet.getCMD());
                 break;
         }
 

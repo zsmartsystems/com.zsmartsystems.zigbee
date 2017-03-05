@@ -8,7 +8,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoNodeDescriptor;
+import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoPowerDescriptor;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 
 public class ZDO_POWER_DESC_RSP extends Cc2351TestPacket {
@@ -17,7 +17,7 @@ public class ZDO_POWER_DESC_RSP extends Cc2351TestPacket {
     public void testReceive() {
         ZToolPacket data = getPacket("FE 07 45 83 00 00 00 00 00 10 C1 10");
 
-        ZigBeeApsFrame apsFrame = ZdoNodeDescriptor.create(data);
+        ZigBeeApsFrame apsFrame = ZdoPowerDescriptor.create(data);
 
         assertEquals(0x0000, apsFrame.getSourceAddress());
         assertEquals(0, apsFrame.getProfile());

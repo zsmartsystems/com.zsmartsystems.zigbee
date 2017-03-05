@@ -28,7 +28,6 @@ import java.util.Arrays;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ResponseStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
-import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ByteUtils;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
@@ -45,7 +44,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author Chris Jackson
  */
-public class ZDO_MGMT_LQI_RSP extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDo */ {
+public class ZDO_MGMT_RTG_RSP extends ZToolPacket /* implements IRESPONSE_CALLBACK,IZDo */ {
     /// <name>TI.ZPI1.ZDO_MGMT_LQI_RSP.NeighborLQICount</name>
     /// <summary>Number of entries in this response.</summary>
     private int NeighborLQICount; // TODO we should remove this
@@ -68,42 +67,44 @@ public class ZDO_MGMT_LQI_RSP extends ZToolPacket /* implements IRESPONSE_CALLBA
 
     /// <name>TI.ZPI1.ZDO_MGMT_LQI_RSP</name>
     /// <summary>Constructor</summary>
-    public ZDO_MGMT_LQI_RSP() {
+    public ZDO_MGMT_RTG_RSP() {
         NeighborLqiList = new NeighborLqiListItemClass[] {};
     }
 
-    public ZDO_MGMT_LQI_RSP(int[] framedata) {
-        SrcAddress = new ZToolAddress16(framedata[1], framedata[0]);
-        Status = framedata[2];
-        if (framedata.length > 3) {
-            NeighborLQIEntries = framedata[3];
-            StartIndex = framedata[4];
-            NeighborLQICount = framedata[5];
-            NeighborLqiList = new NeighborLqiListItemClass[framedata[5]];
-
-            int NOpt1;
-            int NOpt2;
-
-            int k = 0;
-            byte[] bytes = new byte[8];
-            for (int z = 0; z < this.NeighborLqiList.length; z++) {
-                for (int j = 0; j < 8; j++) {
-                    bytes[7 - j] = (byte) framedata[6 + k + j];/// MSB><LSB?
-                }
-                final long panId = ByteUtils.convertMultiByteToLong(bytes);
-                for (int j = 0; j < 8; j++) {
-                    bytes[7 - j] = (byte) framedata[14 + k + j];/// MSB><LSB?
-                }
-                final ZToolAddress64 ieeeAddr = new ZToolAddress64(bytes);
-                final ZToolAddress16 nwkAddr = new ZToolAddress16(framedata[23 + k], framedata[22 + k]);/// MSB><LSB?
-                NOpt1 = framedata[24 + k];
-                NOpt2 = framedata[25 + k];
-                final int lqi = framedata[26 + k];
-                final int depth = framedata[27 + k];
-                NeighborLqiList[z] = new NeighborLqiListItemClass(panId, ieeeAddr, nwkAddr, NOpt1, NOpt2, lqi, depth);
-                k += 22;
-            }
-        }
+    public ZDO_MGMT_RTG_RSP(int[] framedata) {
+        /**
+         * SrcAddress = new ZToolAddress16(framedata[1], framedata[0]);
+         * Status = framedata[2];
+         * if (framedata.length > 3) {
+         * NeighborLQIEntries = framedata[3];
+         * StartIndex = framedata[4];
+         * NeighborLQICount = framedata[5];
+         * NeighborLqiList = new NeighborLqiListItemClass[framedata[5]];
+         * 
+         * int NOpt1;
+         * int NOpt2;
+         * 
+         * int k = 0;
+         * byte[] bytes = new byte[8];
+         * for (int z = 0; z < this.NeighborLqiList.length; z++) {
+         * for (int j = 0; j < 8; j++) {
+         * bytes[7 - j] = (byte) framedata[6 + k + j];/// MSB><LSB?
+         * }
+         * final long panId = ByteUtils.convertMultiByteToLong(bytes);
+         * for (int j = 0; j < 8; j++) {
+         * bytes[7 - j] = (byte) framedata[14 + k + j];/// MSB><LSB?
+         * }
+         * final ZToolAddress64 ieeeAddr = new ZToolAddress64(bytes);
+         * final ZToolAddress16 nwkAddr = new ZToolAddress16(framedata[23 + k], framedata[22 + k]);/// MSB><LSB?
+         * NOpt1 = framedata[24 + k];
+         * NOpt2 = framedata[25 + k];
+         * final int lqi = framedata[26 + k];
+         * final int depth = framedata[27 + k];
+         * NeighborLqiList[z] = new NeighborLqiListItemClass(panId, ieeeAddr, nwkAddr, NOpt1, NOpt2, lqi, depth);
+         * k += 22;
+         * }
+         * }
+         */
         super.buildPacket(new DoubleByte(ZToolCMD.ZDO_MGMT_LQI_RSP), framedata);
     }
 

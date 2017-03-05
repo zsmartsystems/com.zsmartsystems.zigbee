@@ -69,12 +69,8 @@ public class ManagementLqiRequest extends ZdoRequest implements CommandResponseM
             return false;
         }
 
-        if (!((ManagementLqiRequest) request).getSourceAddress()
-                .equals(((ManagementLqiResponse) response).getDestinationAddress())) {
-            return false;
-        }
-
-        return true;
+        return (((ManagementLqiRequest) request).getDestinationAddress()
+                .equals(((ManagementLqiResponse) response).getSourceAddress()));
     }
 
     @Override

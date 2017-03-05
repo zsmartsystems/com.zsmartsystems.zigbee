@@ -100,10 +100,8 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
             return false;
         }
         final ZigBeeDeviceAddress other = (ZigBeeDeviceAddress) obj;
-        if (other.getAddress() == getAddress() && other.getEndpoint() == getEndpoint()) {
-            return true;
-        }
-        return false;
+
+        return (other.getAddress() == getAddress() && other.getEndpoint() == getEndpoint());
     }
 
     @Override
@@ -127,7 +125,7 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
 
     @Override
     public String toString() {
-        return String.format("%04X/%d", address, endpoint);
+        return address + "/" + endpoint;
     }
 
 }

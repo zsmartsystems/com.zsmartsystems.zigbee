@@ -60,44 +60,9 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_VERSION_
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.util.UTIL_GET_DEVICE_INFO_RESPONSE;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.util.UTIL_SET_CHANNELS_RESPONSE;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.util.UTIL_SET_PANID_RESPONSE;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_BIND_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_BIND_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_END_DEVICE_ANNCE_IND;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_END_DEVICE_ANNCE_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_END_DEVICE_BIND_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_END_DEVICE_BIND_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_IEEE_ADDR_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_IEEE_ADDR_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MATCH_DESC_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MATCH_DESC_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LEAVE_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LEAVE_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LQI_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LQI_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_NWK_UPDATE_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_PERMIT_JOIN_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_PERMIT_JOIN_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MSG_CB_INCOMING;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MSG_CB_REGISTER_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_NODE_DESC_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_NODE_DESC_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_NWK_ADDR_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_NWK_ADDR_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_POWER_DESC_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_POWER_DESC_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STARTUP_FROM_APP_SRSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STATE_CHANGE_IND;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_TC_DEVICE_IND;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_USER_DESC_CONF;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_USER_DESC_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_USER_DESC_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_USER_DESC_SET_SRSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ByteUtils;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.IIntArrayInputStream;
@@ -107,6 +72,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.IIntArrayInputStream;
  *
  * @author <a href="mailto:andrew.rapp@gmail.com">Andrew Rapp</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public class ZToolPacketStream implements IIntArrayInputStream {
 
@@ -143,6 +109,7 @@ public class ZToolPacketStream implements IIntArrayInputStream {
             final int apiIdLSB = this.read("API PROFILE_ID_HOME_AUTOMATION LSB");
             final DoubleByte apiId = new DoubleByte(apiIdMSB, apiIdLSB);
             // TODO Remove generic never used
+            // generic = true;
             if (generic) {
                 // log.info("Parsing data as generic");
                 int i = 0;
@@ -152,6 +119,7 @@ public class ZToolPacketStream implements IIntArrayInputStream {
                     frameData[i] = this.read("Data " + i + "-th");
                     i++;
                 }
+
                 response = new ZToolPacket(apiId, frameData);
             } else {
                 frameData = this.readRemainingBytes();
@@ -237,81 +205,85 @@ public class ZToolPacketStream implements IIntArrayInputStream {
                 return new ZB_START_REQUEST_RSP(payload);
             case ZToolCMD.ZB_WRITE_CONFIGURATION_RSP:
                 return new ZB_WRITE_CONFIGURATION_RSP(payload);
-            case ZToolCMD.ZDO_ACTIVE_EP_REQ_SRSP:
-                return new ZDO_ACTIVE_EP_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_ACTIVE_EP_RSP:
-                return new ZDO_ACTIVE_EP_RSP(payload);
-            case ZToolCMD.ZDO_BIND_REQ_SRSP:
-                return new ZDO_BIND_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_BIND_RSP:
-                return new ZDO_BIND_RSP(payload);
-            case ZToolCMD.ZDO_END_DEVICE_ANNCE_IND:
-                return new ZDO_END_DEVICE_ANNCE_IND(payload);
-            case ZToolCMD.ZDO_END_DEVICE_ANNCE_SRSP:
-                return new ZDO_END_DEVICE_ANNCE_SRSP(payload);
-            case ZToolCMD.ZDO_END_DEVICE_BIND_REQ_SRSP:
-                return new ZDO_END_DEVICE_BIND_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_END_DEVICE_BIND_RSP:
-                return new ZDO_END_DEVICE_BIND_RSP(payload);
-            case ZToolCMD.ZDO_IEEE_ADDR_REQ_SRSP:
-                return new ZDO_IEEE_ADDR_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_IEEE_ADDR_RSP:
-                return new ZDO_IEEE_ADDR_RSP(payload);
-            case ZToolCMD.ZDO_MATCH_DESC_REQ_SRSP:
-                return new ZDO_MATCH_DESC_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_MATCH_DESC_RSP:
-                return new ZDO_MATCH_DESC_RSP(payload);
-            case ZToolCMD.ZDO_MGMT_LEAVE_REQ_SRSP:
-                return new ZDO_MGMT_LEAVE_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_MGMT_LEAVE_RSP:
-                return new ZDO_MGMT_LEAVE_RSP(payload);
-            case ZToolCMD.ZDO_MGMT_LQI_REQ_SRSP:
-                return new ZDO_MGMT_LQI_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_MGMT_LQI_RSP:
-                return new ZDO_MGMT_LQI_RSP(payload);
-            case ZToolCMD.ZDO_MGMT_NWK_UPDATE_REQ_SRSP:
-                return new ZDO_MGMT_NWK_UPDATE_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_MGMT_PERMIT_JOIN_REQ_SRSP:
-                return new ZDO_MGMT_PERMIT_JOIN_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_MGMT_PERMIT_JOIN_RSP:
-                return new ZDO_MGMT_PERMIT_JOIN_RSP(payload);
-            case ZToolCMD.ZDO_MSG_CB_REGISTER_SRSP:
-                return new ZDO_MSG_CB_REGISTER_SRSP(payload);
-            case ZToolCMD.ZDO_MSG_CB_INCOMING:
-                ZDO_MSG_CB_INCOMING incoming = new ZDO_MSG_CB_INCOMING(payload);
-                return incoming.translate();
-            case ZToolCMD.ZDO_NODE_DESC_REQ_SRSP:
-                return new ZDO_NODE_DESC_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_NODE_DESC_RSP:
-                return new ZDO_NODE_DESC_RSP(payload);
-            case ZToolCMD.ZDO_POWER_DESC_REQ_SRSP:
-                return new ZDO_POWER_DESC_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_POWER_DESC_RSP:
-                return new ZDO_POWER_DESC_RSP(payload);
-            case ZToolCMD.ZDO_NWK_ADDR_REQ_SRSP:
-                return new ZDO_NWK_ADDR_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_NWK_ADDR_RSP:
-                return new ZDO_NWK_ADDR_RSP(payload);
-            case ZToolCMD.ZDO_SIMPLE_DESC_REQ_SRSP:
-                return new ZDO_SIMPLE_DESC_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_SIMPLE_DESC_RSP:
-                return new ZDO_SIMPLE_DESC_RSP(payload);
+            /*
+             * case ZToolCMD.ZDO_ACTIVE_EP_REQ_SRSP:
+             * return new ZDO_ACTIVE_EP_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_ACTIVE_EP_RSP:
+             * return new ZDO_ACTIVE_EP_RSP(payload);
+             * case ZToolCMD.ZDO_BIND_REQ_SRSP:
+             * return new ZDO_BIND_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_BIND_RSP:
+             * return new ZDO_BIND_RSP(payload);
+             * case ZToolCMD.ZDO_END_DEVICE_ANNCE_IND:
+             * return new ZDO_END_DEVICE_ANNCE_IND(payload);
+             * case ZToolCMD.ZDO_END_DEVICE_ANNCE_SRSP:
+             * return new ZDO_END_DEVICE_ANNCE_SRSP(payload);
+             * case ZToolCMD.ZDO_END_DEVICE_BIND_REQ_SRSP:
+             * return new ZDO_END_DEVICE_BIND_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_END_DEVICE_BIND_RSP:
+             * return new ZDO_END_DEVICE_BIND_RSP(payload);
+             * case ZToolCMD.ZDO_IEEE_ADDR_REQ_SRSP:
+             * return new ZDO_IEEE_ADDR_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_IEEE_ADDR_RSP:
+             * return new ZDO_IEEE_ADDR_RSP(payload);
+             * case ZToolCMD.ZDO_MATCH_DESC_REQ_SRSP:
+             * return new ZDO_MATCH_DESC_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_MATCH_DESC_RSP:
+             * return new ZDO_MATCH_DESC_RSP(payload);
+             * case ZToolCMD.ZDO_MGMT_LEAVE_REQ_SRSP:
+             * return new ZDO_MGMT_LEAVE_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_MGMT_LEAVE_RSP:
+             * return new ZDO_MGMT_LEAVE_RSP(payload);
+             * case ZToolCMD.ZDO_MGMT_LQI_REQ_SRSP:
+             * return new ZDO_MGMT_LQI_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_MGMT_LQI_RSP:
+             * return new ZDO_MGMT_LQI_RSP(payload);
+             * case ZToolCMD.ZDO_MGMT_NWK_UPDATE_REQ_SRSP:
+             * return new ZDO_MGMT_NWK_UPDATE_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_MGMT_PERMIT_JOIN_REQ_SRSP:
+             * return new ZDO_MGMT_PERMIT_JOIN_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_MGMT_PERMIT_JOIN_RSP:
+             * return new ZDO_MGMT_PERMIT_JOIN_RSP(payload);
+             * case ZToolCMD.ZDO_MGMT_RTG_RSP:
+             * return new ZDO_MGMT_RTG_RSP(payload);
+             * case ZToolCMD.ZDO_MSG_CB_INCOMING:
+             * ZDO_MSG_CB_INCOMING incoming = new ZDO_MSG_CB_INCOMING(payload);
+             * return incoming.translate();
+             * case ZToolCMD.ZDO_NODE_DESC_REQ_SRSP:
+             * return new ZDO_NODE_DESC_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_NODE_DESC_RSP:
+             * return new ZDO_NODE_DESC_RSP(payload);
+             * case ZToolCMD.ZDO_POWER_DESC_REQ_SRSP:
+             * return new ZDO_POWER_DESC_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_POWER_DESC_RSP:
+             * return new ZDO_POWER_DESC_RSP(payload);
+             * case ZToolCMD.ZDO_NWK_ADDR_REQ_SRSP:
+             * return new ZDO_NWK_ADDR_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_NWK_ADDR_RSP:
+             * return new ZDO_NWK_ADDR_RSP(payload);
+             * case ZToolCMD.ZDO_SIMPLE_DESC_REQ_SRSP:
+             * return new ZDO_SIMPLE_DESC_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_SIMPLE_DESC_RSP:
+             * return new ZDO_SIMPLE_DESC_RSP(payload);
+             * case ZToolCMD.ZDO_TC_DEVICE_IND:
+             * return new ZDO_TC_DEVICE_IND(payload);
+             * case ZToolCMD.ZDO_UNBIND_REQ_SRSP:
+             * return new ZDO_UNBIND_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_UNBIND_RSP:
+             * return new ZDO_UNBIND_RSP(payload);
+             * case ZToolCMD.ZDO_USER_DESC_REQ_SRSP:
+             * return new ZDO_USER_DESC_REQ_SRSP(payload);
+             * case ZToolCMD.ZDO_USER_DESC_RSP:
+             * return new ZDO_USER_DESC_RSP(payload);
+             * case ZToolCMD.ZDO_USER_DESC_CONF:
+             * return new ZDO_USER_DESC_CONF(payload);
+             * case ZToolCMD.ZDO_USER_DESC_SET_SRSP:
+             * return new ZDO_USER_DESC_SET_SRSP(payload);
+             */
             case ZToolCMD.ZDO_STATE_CHANGE_IND:
                 return new ZDO_STATE_CHANGE_IND(payload);
-            case ZToolCMD.ZDO_TC_DEVICE_IND:
-                return new ZDO_TC_DEVICE_IND(payload);
-            case ZToolCMD.ZDO_UNBIND_REQ_SRSP:
-                return new ZDO_UNBIND_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_UNBIND_RSP:
-                return new ZDO_UNBIND_RSP(payload);
-            case ZToolCMD.ZDO_USER_DESC_REQ_SRSP:
-                return new ZDO_USER_DESC_REQ_SRSP(payload);
-            case ZToolCMD.ZDO_USER_DESC_RSP:
-                return new ZDO_USER_DESC_RSP(payload);
-            case ZToolCMD.ZDO_USER_DESC_CONF:
-                return new ZDO_USER_DESC_CONF(payload);
-            case ZToolCMD.ZDO_USER_DESC_SET_SRSP:
-                return new ZDO_USER_DESC_SET_SRSP(payload);
+            case ZToolCMD.ZDO_MSG_CB_REGISTER_SRSP:
+                return new ZDO_MSG_CB_REGISTER_SRSP(payload);
             case ZToolCMD.ZDO_STARTUP_FROM_APP_SRSP:
                 return new ZDO_STARTUP_FROM_APP_SRSP(payload);
             case ZToolCMD.UTIL_SET_PANID_RESPONSE:
@@ -321,7 +293,7 @@ public class ZToolPacketStream implements IIntArrayInputStream {
             case ZToolCMD.UTIL_GET_DEVICE_INFO_RESPONSE:
                 return new UTIL_GET_DEVICE_INFO_RESPONSE(payload);
             default:
-                logger.warn("Unknown command ID: 0x" + Integer.toHexString(cmdId.get16BitValue()));
+                // logger.warn("Unknown command ID: 0x" + Integer.toHexString(cmdId.get16BitValue()));
                 return new ZToolPacket(cmdId, payload);
         }
     }

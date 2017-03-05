@@ -22,7 +22,7 @@ public class ZDO_IEEE_ADDR_RSP extends Cc2351TestPacket {
         assertEquals(0x0000, apsFrame.getSourceAddress());
         assertEquals(0, apsFrame.getProfile());
         assertEquals(0, apsFrame.getDestinationEndpoint());
-        assertTrue(Arrays.equals(getPacketData("00 14 D4 F1 02 00 4B 12 00 00 00 02 00 8F 22 2A 2F"),
+        assertTrue(Arrays.equals(getPacketData("00 00 14 D4 F1 02 00 4B 12 00 00 00 02 00 8F 22 2A 2F"),
                 apsFrame.getPayload()));
     }
 

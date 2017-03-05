@@ -55,17 +55,17 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
     /**
      * Maximum number of retries to perform
      */
-    private static final int RETRIES_COUNT = 3;
+    private static final int RETRY_COUNT = 3;
 
     /**
      * Period between retries
      */
-    private static final int RETRIES_PERIOD = 1500;
+    private static final int RETRY_PERIOD = 1500;
 
     /**
      * Minimum time before information can be queried again for same network address or endpoint.
      */
-    private static final int MINIMUM_REQUERY_TIME_MILLIS = 10000;
+    private static final int MINIMUM_REQUERY_TIME_MILLIS = 60000;
 
     /**
      * The ZigBee command interface.
@@ -181,7 +181,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
         }
 
         logger.debug("Scheduling node discovery for {}", nodeNetworkAddress);
-        executorService.execute(new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 logger.debug("Starting node discovery for {}", nodeNetworkAddress);
@@ -215,16 +215,18 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
 
                     // We failed with the last request. Wait a bit then retry
                     try {
-                        Thread.sleep(RETRIES_PERIOD);
+                        Thread.sleep(RETRY_PERIOD);
                     } catch (InterruptedException e) {
                         return;
                     }
 
-                } while (retries++ < RETRIES_COUNT);
+                } while (retries++ < RETRY_COUNT);
 
                 logger.debug("Ending node discovery for {}", nodeNetworkAddress);
             }
-        });
+        };
+
+        executorService.execute(new Thread(runnable, "Discovery-Node-" + nodeNetworkAddress));
     }
 
     /**
@@ -244,23 +246,25 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
         }
 
         logger.debug("Scheduling device discovery for {}", deviceNetworkAddress);
-        executorService.execute(new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 logger.debug("Starting device discovery for {}", deviceNetworkAddress);
                 int retries = 0;
                 while (!getSimpleDescriptor(deviceNetworkAddress)) {
-                    if (retries++ > RETRIES_COUNT) {
+                    if (retries++ > RETRY_COUNT) {
                         break;
                     }
                     try {
-                        Thread.sleep(RETRIES_PERIOD);
+                        Thread.sleep(RETRY_PERIOD);
                     } catch (InterruptedException e) {
                         return;
                     }
                 }
             }
-        });
+        };
+
+        executorService.execute(new Thread(runnable, "Discovery-Device-" + deviceNetworkAddress));
     }
 
     /**
