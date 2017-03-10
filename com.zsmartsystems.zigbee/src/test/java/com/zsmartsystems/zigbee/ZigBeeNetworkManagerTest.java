@@ -41,9 +41,9 @@ public class ZigBeeNetworkManagerTest
     public void testAddRemoveNode() {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
-        ZigBeeNode node1 = new ZigBeeNode();
+        ZigBeeNode node1 = new ZigBeeNode(null);
         node1.setNetworkAddress(1234);
-        ZigBeeNode node2 = new ZigBeeNode();
+        ZigBeeNode node2 = new ZigBeeNode(null);
         node2.setNetworkAddress(5678);
 
         // Add a node and make sure it's in the list

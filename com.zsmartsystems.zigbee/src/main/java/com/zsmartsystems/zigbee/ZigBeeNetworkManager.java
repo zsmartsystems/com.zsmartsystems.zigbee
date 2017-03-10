@@ -812,20 +812,21 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Enables or disables devices to join the network.
+     * Enables or disables devices to join the whole network.
      * <p>
      * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
      * since it allows devices to join the network without the installer knowing.
      *
-     * @param enable if true joining is enabled, otherwise it is disabled
+     * @param duration sets the duration of the join enable. Setting this to 0 disables joining. Setting to a value
+     *            greater than 255 seconds will permanently enable joining.
      */
-    public void permitJoin(final boolean enable) {
+    public void permitJoin(final int duration) {
         final ManagementPermitJoiningRequest command = new ManagementPermitJoiningRequest();
 
-        if (enable) {
-            command.setPermitDuration(0xFF);
+        if (duration > 255) {
+            command.setPermitDuration(255);
         } else {
-            command.setPermitDuration(0);
+            command.setPermitDuration(duration);
         }
 
         // command.setAddressingMode(ZigBeeConstants.BROADCAST_ADDRESS);
@@ -839,6 +840,22 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             sendCommand(command);
         } catch (final ZigBeeException e) {
             throw new ZigBeeApiException("Error sending permit join command.", e);
+        }
+    }
+
+    /**
+     * Enables or disables devices to join the whole network.
+     * <p>
+     * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
+     * since it allows devices to join the network without the installer knowing.
+     *
+     * @param enable if true joining is enabled, otherwise it is disabled
+     */
+    public void permitJoin(final boolean enable) {
+        if (enable) {
+            permitJoin(0xFF);
+        } else {
+            permitJoin(0);
         }
     }
 

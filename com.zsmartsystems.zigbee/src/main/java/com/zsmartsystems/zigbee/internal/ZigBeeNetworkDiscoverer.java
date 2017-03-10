@@ -456,7 +456,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
         final boolean newDevice = networkManager.getNode(ieeeAddressResponse.getNwkAddrRemoteDev()) == null;
 
         if (newDevice) {
-            node = new ZigBeeNode();
+            node = new ZigBeeNode(networkManager);
         } else {
             node = networkManager.getNode(ieeeAddressResponse.getNwkAddrRemoteDev());
         }

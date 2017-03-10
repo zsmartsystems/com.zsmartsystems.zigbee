@@ -25,7 +25,7 @@ public class NodeDescriptorTest extends CommandTest {
 
         assertTrue(descriptor.isComplexDescriptorAvailable());
         assertTrue(descriptor.isUserDescriptorAvailable());
-        assertEquals(4444, descriptor.getTransferSize());
+        assertEquals(4444, descriptor.getIncomingTransferSize());
         assertEquals(6666, descriptor.getManufacturerCode());
         assertEquals(3333, descriptor.getBufferSize());
         assertTrue(descriptor.getFrequencyBands().contains(FrequencyBandType.FREQ_2400_MHZ));
@@ -46,8 +46,10 @@ public class NodeDescriptorTest extends CommandTest {
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         descriptor.deserialize(deserializer);
+        System.out.println(descriptor);
 
         assertEquals(0, descriptor.getManufacturerCode());
+        assertEquals(LogicalType.COORDINATOR, descriptor.getLogicalType());
     }
 
 }

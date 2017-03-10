@@ -136,6 +136,9 @@ public class ManagementLqiResponse extends ZdoResponse {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
+        // Create lists
+        neighborTableList = new ArrayList<NeighborTable>();
+
         status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (status != 0) {
             // Don't read the full response if we have an error
@@ -144,7 +147,6 @@ public class ManagementLqiResponse extends ZdoResponse {
         neighborTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         neighborTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        neighborTableList = new ArrayList<NeighborTable>();
         for (int cnt = 0; cnt < neighborTableListCount; cnt++) {
             neighborTableList.add((NeighborTable) deserializer.deserialize(ZclDataType.NEIGHBOR_TABLE));
         }

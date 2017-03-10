@@ -484,8 +484,7 @@ using the parameter supplied by Mgmt_Leave_req.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |DeviceAddress              |IEEE Address               |
-|RemoveChildren             |Boolean                    |
-|Rejoin                     |Boolean                    |
+|RemoveChildren_Rejoin      |Boolean                    |
 
 #### Management Direct Join Request [0x0035]
 
@@ -570,7 +569,7 @@ The destination addressing on this command shall be unicast.
 |Status                     |Unsigned 8-bit integer     |
 |IEEEAddrRemoteDev          |IEEE Address               |
 |NWKAddrRemoteDev           |NWK address                |
-|NumAssocDev                |Unsigned 8-bit integer     |
+|NumAssocDev[0]             |Unsigned 8-bit integer     |
 |StartIndex                 |Unsigned 8-bit integer     |
 |NWKAddrAssocDevList        |NWK Address[NumAssocDev]   | 
 

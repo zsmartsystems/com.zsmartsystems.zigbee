@@ -110,6 +110,9 @@ public class ActiveEndpointsResponse extends ZdoResponse {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
+        // Create lists
+        activeEpList = new ArrayList<Integer>();
+
         status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (status != 0) {
             // Don't read the full response if we have an error
@@ -117,7 +120,6 @@ public class ActiveEndpointsResponse extends ZdoResponse {
         }
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         activeEpCnt = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        activeEpList = new ArrayList<Integer>();
         for (int cnt = 0; cnt < activeEpCnt; cnt++) {
             activeEpList.add((Integer) deserializer.deserialize(ZclDataType.ENDPOINT));
         }

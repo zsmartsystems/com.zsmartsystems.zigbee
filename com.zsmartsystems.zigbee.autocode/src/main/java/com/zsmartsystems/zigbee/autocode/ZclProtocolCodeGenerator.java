@@ -1804,10 +1804,22 @@ public class ZclProtocolCodeGenerator {
                         out.println("    public void deserialize(final ZclFieldDeserializer deserializer) {");
                         out.println("        super.deserialize(deserializer);");
                         out.println();
+                        boolean first = true;
                         for (final Field field : fields) {
                             if (field.listSizer != null) {
+                                if (first) {
+                                    out.println("        // Create lists");
+                                    first = false;
+                                }
                                 out.println("        " + field.nameLowerCamelCase + " = new ArrayList<"
                                         + field.dataTypeClass + ">();");
+                            }
+                        }
+                        if (first == false) {
+                            out.println();
+                        }
+                        for (final Field field : fields) {
+                            if (field.listSizer != null) {
                                 out.println("        for (int cnt = 0; cnt < " + field.listSizer + "; cnt++) {");
                                 out.println("            " + field.nameLowerCamelCase + ".add((" + field.dataTypeClass
                                         + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + "));");
@@ -1815,6 +1827,11 @@ public class ZclProtocolCodeGenerator {
                             } else {
                                 out.println("        " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
                                         + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + ");");
+                                if (field.completeOnZero) {
+                                    out.println("        if (" + field.nameLowerCamelCase + " == 0) {");
+                                    out.println("            return;");
+                                    out.println("        }");
+                                }
                             }
 
                             if (field.nameLowerCamelCase.equals("status")) {

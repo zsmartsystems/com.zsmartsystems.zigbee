@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.LogicalType;
 
 /**
  *
@@ -19,17 +20,25 @@ public class NeighborTable {
 
     private Integer networkAddress;
 
-    private Integer deviceType;
+    private LogicalType deviceType;
 
     private Integer rxOnWhenIdle;
 
-    private Integer relationship;
+    private NeighborRelationship relationship;
 
     private Integer permitJoining;
 
     private Integer depth;
 
     private Integer lqi = 0;
+
+    public enum NeighborRelationship {
+        PARENT,
+        CHILD,
+        SIBLING,
+        UNKNOWN,
+        PREVIOUS_CHILD
+    }
 
     /**
      * Deserialise the contents of the structure.
@@ -43,9 +52,9 @@ public class NeighborTable {
         networkAddress = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
 
         int temp = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        deviceType = temp & 0x03;
+        setDeviceType(temp & 0x03);
         rxOnWhenIdle = (temp & 0x0c) >> 2;
-        relationship = (temp & 0x70) >> 4;
+        setRelationship((temp & 0x70) >> 4);
 
         temp = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         permitJoining = (temp & 0x03);
@@ -77,12 +86,26 @@ public class NeighborTable {
         this.networkAddress = networkAddress;
     }
 
-    public Integer getDeviceType() {
+    public LogicalType getDeviceType() {
         return deviceType;
     }
 
     public void setDeviceType(Integer deviceType) {
-        this.deviceType = deviceType;
+        switch (deviceType) {
+            case 0:
+                this.deviceType = LogicalType.COORDINATOR;
+                break;
+            case 1:
+                this.deviceType = LogicalType.ROUTER;
+                break;
+            case 2:
+                this.deviceType = LogicalType.END_DEVICE;
+                break;
+            default:
+                this.deviceType = LogicalType.UNKNOWN;
+                break;
+
+        }
     }
 
     public Integer getRxOnWhenIdle() {
@@ -93,12 +116,31 @@ public class NeighborTable {
         this.rxOnWhenIdle = rxOnWhenIdle;
     }
 
-    public Integer getRelationship() {
+    public NeighborRelationship getRelationship() {
         return relationship;
     }
 
     public void setRelationship(Integer relationship) {
-        this.relationship = relationship;
+        switch (relationship) {
+            case 0:
+                this.relationship = NeighborRelationship.PARENT;
+                break;
+            case 1:
+                this.relationship = NeighborRelationship.CHILD;
+                break;
+            case 2:
+                this.relationship = NeighborRelationship.SIBLING;
+                break;
+            case 3:
+                this.relationship = NeighborRelationship.UNKNOWN;
+                break;
+            case 4:
+                this.relationship = NeighborRelationship.PREVIOUS_CHILD;
+                break;
+            default:
+                this.relationship = NeighborRelationship.UNKNOWN;
+                break;
+        }
     }
 
     public Integer getPermitJoining() {

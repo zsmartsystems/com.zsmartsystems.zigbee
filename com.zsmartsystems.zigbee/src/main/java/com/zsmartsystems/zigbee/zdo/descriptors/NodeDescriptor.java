@@ -19,16 +19,20 @@ public class NodeDescriptor {
     private boolean complexDescriptorAvailable;
     private int manufacturerCode;
     private LogicalType logicalType;
-    private Set<ServerCapabilitiesType> serverCapabilities;
-    private int transferSize;
+    private Set<ServerCapabilitiesType> serverCapabilities = new HashSet<ServerCapabilitiesType>();
+    private int incomingTransferSize;
+    private int outgoingTransferSize;
     private boolean userDescriptorAvailable;
-    private Set<FrequencyBandType> frequencyBands;
+    private Set<FrequencyBandType> frequencyBands = new HashSet<FrequencyBandType>();
     private final Set<MacCapabilitiesType> macCapabilities = new HashSet<MacCapabilitiesType>();
+    private boolean extendedEndpointListAvailable;
+    private boolean extendedSimpleDescriptorListAvailable;
 
     public enum LogicalType {
         COORDINATOR,
         ROUTER,
-        END_DEVICE
+        END_DEVICE,
+        UNKNOWN
     }
 
     public enum FrequencyBandType {
@@ -68,30 +72,31 @@ public class NodeDescriptor {
 
     public NodeDescriptor(int apsFlags, int bufferSize, int macCapabilities, boolean complexDescriptorAvailable,
             int manufacturerCode, int logicalType, int serverMask, int transferSize, boolean userDescriptorAvailable,
-            int frequencyBand) {
+            int frequencyBands) {
 
         this.complexDescriptorAvailable = complexDescriptorAvailable;
         this.userDescriptorAvailable = userDescriptorAvailable;
         this.manufacturerCode = manufacturerCode;
         this.bufferSize = bufferSize;
-        this.transferSize = transferSize;
+        this.incomingTransferSize = transferSize;
+        setLogicalType(logicalType);
+        setMacCapabilities(macCapabilities);
+        setFrequencyBands(frequencyBands);
+        setServerCapabilities(serverMask);
 
-        switch (logicalType) {
-            case 0:
-                this.logicalType = LogicalType.COORDINATOR;
-                break;
-            case 1:
-                this.logicalType = LogicalType.ROUTER;
-                break;
-            case 2:
-                this.logicalType = LogicalType.END_DEVICE;
-                break;
-            default:
-                this.logicalType = null;
-                break;
-        }
+        this.apsFlags = apsFlags;
+    }
 
-        this.macCapabilities.isEmpty();
+    public int getApsFlags() {
+        return apsFlags;
+    }
+
+    public int getBufferSize() {
+        return bufferSize;
+    }
+
+    private void setMacCapabilities(int macCapabilities) {
+        this.macCapabilities.clear();
         if ((macCapabilities & 0x01) != 0) {
             this.macCapabilities.add(MacCapabilitiesType.ALTERNATIVE_PAN);
         }
@@ -109,19 +114,51 @@ public class NodeDescriptor {
         if ((macCapabilities & 0x40) != 0) {
             this.macCapabilities.add(MacCapabilitiesType.SECURITY_CAPABLE);
         }
+    }
 
-        this.frequencyBands = new HashSet<FrequencyBandType>();
-        if ((frequencyBand & 0x01) != 0) {
-            this.frequencyBands.add(FrequencyBandType.FREQ_868_MHZ);
-        }
-        if ((frequencyBand & 0x04) != 0) {
-            this.frequencyBands.add(FrequencyBandType.FREQ_902_MHZ);
-        }
-        if ((frequencyBand & 0x08) != 0) {
-            this.frequencyBands.add(FrequencyBandType.FREQ_2400_MHZ);
-        }
+    public Set<MacCapabilitiesType> getMacCapabilities() {
+        return macCapabilities;
+    }
 
-        this.serverCapabilities = new HashSet<ServerCapabilitiesType>();
+    public int getManufacturerCode() {
+        return manufacturerCode;
+    }
+
+    public boolean isComplexDescriptorAvailable() {
+        return complexDescriptorAvailable;
+    }
+
+    public boolean isExtendedEndpointListAvailable() {
+        return extendedEndpointListAvailable;
+    }
+
+    public boolean isExtendedSimpleDescriptorListAvailable() {
+        return extendedSimpleDescriptorListAvailable;
+    }
+
+    private void setLogicalType(int logicalType) {
+        switch (logicalType) {
+            case 0:
+                this.logicalType = LogicalType.COORDINATOR;
+                break;
+            case 1:
+                this.logicalType = LogicalType.ROUTER;
+                break;
+            case 2:
+                this.logicalType = LogicalType.END_DEVICE;
+                break;
+            default:
+                this.logicalType = LogicalType.UNKNOWN;
+                break;
+        }
+    }
+
+    public LogicalType getLogicalType() {
+        return logicalType;
+    }
+
+    private void setServerCapabilities(int serverMask) {
+        this.serverCapabilities.clear();
         if ((serverMask & 0x01) != 0) {
             this.serverCapabilities.add(ServerCapabilitiesType.PRIMARY_TRUST_CENTER);
         }
@@ -143,44 +180,35 @@ public class NodeDescriptor {
         if ((serverMask & 0x40) != 0) {
             this.serverCapabilities.add(ServerCapabilitiesType.NETWORK_MANAGER);
         }
-
-        this.apsFlags = apsFlags;
-    }
-
-    public int getApsFlags() {
-        return apsFlags;
-    }
-
-    public int getBufferSize() {
-        return bufferSize;
-    }
-
-    public Set<MacCapabilitiesType> getMacCapabilities() {
-        return macCapabilities;
-    }
-
-    public int getManufacturerCode() {
-        return manufacturerCode;
-    }
-
-    public boolean isComplexDescriptorAvailable() {
-        return complexDescriptorAvailable;
-    }
-
-    public LogicalType getLogicalType() {
-        return logicalType;
     }
 
     public Set<ServerCapabilitiesType> getServerCapabilities() {
         return serverCapabilities;
     }
 
-    public int getTransferSize() {
-        return transferSize;
+    public int getOutGoingTransferSize() {
+        return outgoingTransferSize;
+    }
+
+    public int getIncomingTransferSize() {
+        return incomingTransferSize;
     }
 
     public boolean isUserDescriptorAvailable() {
         return userDescriptorAvailable;
+    }
+
+    private void setFrequencyBands(int frequencyBands) {
+        this.frequencyBands.clear();
+        if ((frequencyBands & 0x01) != 0) {
+            this.frequencyBands.add(FrequencyBandType.FREQ_868_MHZ);
+        }
+        if ((frequencyBands & 0x04) != 0) {
+            this.frequencyBands.add(FrequencyBandType.FREQ_902_MHZ);
+        }
+        if ((frequencyBands & 0x08) != 0) {
+            this.frequencyBands.add(FrequencyBandType.FREQ_2400_MHZ);
+        }
     }
 
     public Set<FrequencyBandType> getFrequencyBands() {
@@ -215,21 +243,40 @@ public class NodeDescriptor {
         // logicalType = (LogicalType) deserializer.deserialize(ZclDataType.SIGNED_8_BIT_INTEGER);
 
         // Some flags...
-        deserializer.readZigBeeType(ZclDataType.BOOLEAN);
-        deserializer.readZigBeeType(ZclDataType.BOOLEAN);
-        deserializer.readZigBeeType(ZclDataType.BOOLEAN);
+        int value1 = (int) deserializer.readZigBeeType(ZclDataType.DATA_8_BIT);
+        int value2 = (int) deserializer.readZigBeeType(ZclDataType.DATA_8_BIT);
+        int value3 = (int) deserializer.readZigBeeType(ZclDataType.DATA_8_BIT);
+
+        setLogicalType(value1 & 0x07);
+        complexDescriptorAvailable = (value1 & 0x08) != 0;
+        userDescriptorAvailable = (value1 & 0x10) != 0;
+
+        setFrequencyBands((value2 & 0xf8) >> 3);
+        setMacCapabilities(value3);
+
         // complexDescriptorAvailable = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
         // userDescriptorAvailable = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
         manufacturerCode = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         bufferSize = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        transferSize = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        incomingTransferSize = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
 
-        deserializer.readZigBeeType(ZclDataType.SIGNED_16_BIT_INTEGER);
-        deserializer.readZigBeeType(ZclDataType.SIGNED_8_BIT_INTEGER);
+        setServerCapabilities((int) deserializer.readZigBeeType(ZclDataType.SIGNED_16_BIT_INTEGER));
+        outgoingTransferSize = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        int descriptorCapabilities = (int) deserializer.readZigBeeType(ZclDataType.SIGNED_8_BIT_INTEGER);
+
+        extendedEndpointListAvailable = (descriptorCapabilities & 0x01) != 0;
+        extendedSimpleDescriptorListAvailable = (descriptorCapabilities & 0x02) != 0;
     }
 
     @Override
     public String toString() {
-        return "Type=" + getLogicalType() + ", Bands=" + getFrequencyBands();
+        return "NodeDescriptor [apsFlags=" + apsFlags + ", bufferSize=" + bufferSize + ", complexDescriptorAvailable="
+                + complexDescriptorAvailable + ", manufacturerCode=" + manufacturerCode + ", logicalType=" + logicalType
+                + ", serverCapabilities=" + serverCapabilities + ", incomingTransferSize=" + incomingTransferSize
+                + ", outgoingTransferSize=" + outgoingTransferSize + ", userDescriptorAvailable="
+                + userDescriptorAvailable + ", frequencyBands=" + frequencyBands + ", macCapabilities="
+                + macCapabilities + ", extendedEndpointListAvailable=" + extendedEndpointListAvailable
+                + ", extendedSimpleDescriptorListAvailable=" + extendedSimpleDescriptorListAvailable + "]";
     }
+
 }

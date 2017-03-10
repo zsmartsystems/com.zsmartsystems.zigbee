@@ -71,7 +71,7 @@ public class ZigBeeNetworkMeshMonitor {
     /**
      * The main thread for the update task
      */
-    private Thread meshUpdateThread = null;
+    private Runnable meshUpdateThread = null;
 
     /**
      * Executor service to execute update threads. We use a {@link Executors.newFixedThreadPool}
@@ -102,10 +102,10 @@ public class ZigBeeNetworkMeshMonitor {
      * @param updatePeriod number of seconds between mesh updates
      */
     public void startup(final int updatePeriod) {
-        logger.debug("Starting mesh update");
+        logger.debug("Starting mesh update task with interval of {} seconds", updatePeriod);
         nodesInProgress = Collections.synchronizedSet(new HashSet<Integer>());
 
-        Runnable runnable = new Runnable() {
+        meshUpdateThread = new Runnable() {
             @Override
             public void run() {
                 // Start discovery from root node.
@@ -113,7 +113,6 @@ public class ZigBeeNetworkMeshMonitor {
             }
         };
 
-        meshUpdateThread = new Thread(runnable, "Mesh-Updater");
         futureTask = scheduler.scheduleAtFixedRate(meshUpdateThread, updatePeriod, updatePeriod, TimeUnit.SECONDS);
     }
 
@@ -124,9 +123,11 @@ public class ZigBeeNetworkMeshMonitor {
      * @param updatePeriod number of seconds between mesh updates
      */
     public void setUpdatePeriod(final int updatePeriod) {
+        logger.debug("Restarting mesh update task with interval of {} seconds", updatePeriod);
         if (futureTask != null) {
             futureTask.cancel(true);
         }
+
         futureTask = scheduler.scheduleAtFixedRate(meshUpdateThread, updatePeriod, updatePeriod, TimeUnit.SECONDS);
     }
 
@@ -134,6 +135,8 @@ public class ZigBeeNetworkMeshMonitor {
      * Shuts down ZigBee mesh update service.
      */
     public void shutdown() {
+        logger.debug("Stopping mesh update task");
+
         if (futureTask != null) {
             futureTask.cancel(true);
         }
@@ -151,6 +154,7 @@ public class ZigBeeNetworkMeshMonitor {
         // avoid loops.
         synchronized (nodesInProgress) {
             if (nodesInProgress.contains(nodeNetworkAddress)) {
+                logger.debug("Mesh update for {} already in progress", nodeNetworkAddress);
                 return;
             }
             nodesInProgress.add(nodeNetworkAddress);
@@ -159,24 +163,32 @@ public class ZigBeeNetworkMeshMonitor {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
+                logger.debug("Starting mesh update for {}", nodeNetworkAddress);
+
                 boolean updateRequired = false;
                 ZigBeeNode node = networkManager.getNode(nodeNetworkAddress);
                 if (node == null) {
                     logger.debug("ZigBee node {} not found during mesh update", nodeNetworkAddress);
+
+                    synchronized (nodesInProgress) {
+                        nodesInProgress.remove(nodeNetworkAddress);
+                    }
+
                     return;
                 }
 
                 List<NeighborTable> neighbors = null;
                 List<RoutingTable> routes = null;
 
-                logger.debug("Starting mesh update for {}", nodeNetworkAddress);
                 neighbors = getNeighborTable(nodeNetworkAddress);
 
                 // Only check the routing table for full function devices (ie routers and coordinators)
                 if (node.isFullFuntionDevice()) {
                     routes = getRoutingTable(nodeNetworkAddress);
+                } else {
+                    logger.debug("Not updating routing table for {}: type is {}", nodeNetworkAddress,
+                            node.getLogicalType());
                 }
-                logger.debug("Ending mesh update for {}", nodeNetworkAddress);
 
                 if (node.setNeighbors(neighbors)) {
                     updateRequired = true;
@@ -194,6 +206,12 @@ public class ZigBeeNetworkMeshMonitor {
                 // Set the last update time even if the data hasn't changed.
                 // This signals to the higher layer that things are still moving.
                 node.setLastUpdateTime();
+
+                synchronized (nodesInProgress) {
+                    nodesInProgress.remove(nodeNetworkAddress);
+                }
+
+                logger.debug("Ending mesh update for {}", nodeNetworkAddress);
             }
         });
     }

@@ -183,6 +183,11 @@ public class PowerDescriptor {
         return currentPowerMode;
     }
 
+    /**
+     * Sets the current power mode for the descriptor
+     * 
+     * @param currentPowerMode the {@link CurrentPowerModeType}
+     */
     public void setCurrentPowerMode(int currentPowerMode) {
         switch (currentPowerMode) {
             case 0x00:

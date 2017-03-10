@@ -12,4 +12,5 @@ public class Field {
     public String nameUpperCamelCase;
     public String nameLowerCamelCase;
     public String listSizer;
+    public boolean completeOnZero;
 }
