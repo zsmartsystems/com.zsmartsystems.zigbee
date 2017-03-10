@@ -20,7 +20,7 @@ import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable.DiscoveryState;
 public class ZigBeeNodeTest {
     @Test
     public void testSetIeeeAddress() {
-        ZigBeeNode node = new ZigBeeNode();
+        ZigBeeNode node = new ZigBeeNode(null);
         node.setIeeeAddress(new IeeeAddress("17880100dc880b"));
         assertEquals(new IeeeAddress("17880100dc880b"), node.getIeeeAddress());
     }
@@ -28,7 +28,7 @@ public class ZigBeeNodeTest {
     @Test
     public void testSetPowerDescriptor() {
         PowerDescriptor descriptor = new PowerDescriptor(1, 2, 4, 0xc);
-        ZigBeeNode node = new ZigBeeNode();
+        ZigBeeNode node = new ZigBeeNode(null);
         node.setPowerDescriptor(descriptor);
         assertEquals(CurrentPowerModeType.RECEIVER_ON_PERIODICALLY, node.getPowerDescriptor().getCurrentPowerMode());
         assertEquals(PowerSourceType.DISPOSABLE_BATTERY, node.getPowerDescriptor().getCurrentPowerSource());
@@ -37,7 +37,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testNeighborTableUpdate() {
-        ZigBeeNode node = new ZigBeeNode();
+        ZigBeeNode node = new ZigBeeNode(null);
         List<NeighborTable> neighbors;
 
         NeighborTable neighbor1 = new NeighborTable();
@@ -79,7 +79,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testRoutingTableUpdate() {
-        ZigBeeNode node = new ZigBeeNode();
+        ZigBeeNode node = new ZigBeeNode(null);
         List<RoutingTable> routes;
 
         RoutingTable route1 = new RoutingTable();

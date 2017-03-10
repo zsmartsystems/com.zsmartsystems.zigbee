@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.LogicalType;
@@ -58,6 +59,15 @@ public class ZigBeeNode {
     private final List<RoutingTable> routes = new ArrayList<RoutingTable>();
 
     /**
+     * The network manager that manages this device
+     */
+    final ZigBeeNetworkManager networkManager;
+
+    public ZigBeeNode(ZigBeeNetworkManager networkManager) {
+        this.networkManager = networkManager;
+    }
+
+    /**
      * Sets the {@link IeeeAddress} of the device
      *
      * param ieeeAddress the {@link IeeeAddress} of the device
@@ -107,6 +117,52 @@ public class ZigBeeNode {
 
     public PowerDescriptor getPowerDescriptor() {
         return powerDescriptor;
+    }
+
+    /**
+     * Enables or disables devices to join to this node.
+     * <p>
+     * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
+     * since it allows devices to join the network without the installer knowing.
+     *
+     * @param duration sets the duration of the join enable. Setting this to 0 disables joining. Setting to a value
+     *            greater than 255 seconds will permanently enable joining.
+     */
+    public void permitJoin(final int duration) {
+        final ManagementPermitJoiningRequest command = new ManagementPermitJoiningRequest();
+
+        if (duration > 255) {
+            command.setPermitDuration(255);
+        } else {
+            command.setPermitDuration(duration);
+        }
+
+        command.setTcSignificance(true);
+        command.setDestinationAddress(
+                new ZigBeeDeviceAddress(ZigBeeBroadcastDestination.BROADCAST_ROUTERS_AND_COORD.getKey()));
+        command.setSourceAddress(new ZigBeeDeviceAddress(0));
+
+        try {
+            networkManager.sendCommand(command);
+        } catch (final ZigBeeException e) {
+            throw new ZigBeeApiException("Error sending permit join command.", e);
+        }
+    }
+
+    /**
+     * Enables or disables devices to join to this node.
+     * <p>
+     * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
+     * since it allows devices to join the network without the installer knowing.
+     *
+     * @param enable if true joining is enabled, otherwise it is disabled
+     */
+    public void permitJoin(final boolean enable) {
+        if (enable) {
+            permitJoin(0xFF);
+        } else {
+            permitJoin(0);
+        }
     }
 
     /**

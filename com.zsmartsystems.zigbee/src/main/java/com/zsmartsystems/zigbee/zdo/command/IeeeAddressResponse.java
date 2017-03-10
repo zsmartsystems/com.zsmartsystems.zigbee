@@ -160,6 +160,9 @@ public class IeeeAddressResponse extends ZdoResponse {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
+        // Create lists
+        nwkAddrAssocDevList = new ArrayList<Integer>();
+
         status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (status != 0) {
             // Don't read the full response if we have an error
@@ -168,8 +171,10 @@ public class IeeeAddressResponse extends ZdoResponse {
         ieeeAddrRemoteDev = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         nwkAddrRemoteDev = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         numAssocDev = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        if (numAssocDev == 0) {
+            return;
+        }
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        nwkAddrAssocDevList = new ArrayList<Integer>();
         for (int cnt = 0; cnt < numAssocDev; cnt++) {
             nwkAddrAssocDevList.add((Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS));
         }

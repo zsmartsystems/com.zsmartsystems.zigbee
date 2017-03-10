@@ -24,14 +24,9 @@ public class ManagementLeaveRequest extends ZdoRequest {
     private IeeeAddress deviceAddress;
 
     /**
-     * RemoveChildren command message field.
+     * RemoveChildren_Rejoin command message field.
      */
-    private Boolean removeChildren;
-
-    /**
-     * Rejoin command message field.
-     */
-    private Boolean rejoin;
+    private Boolean removeChildrenRejoin;
 
     /**
      * Default constructor.
@@ -59,39 +54,21 @@ public class ManagementLeaveRequest extends ZdoRequest {
     }
 
     /**
-     * Gets RemoveChildren.
+     * Gets RemoveChildren_Rejoin.
      *
-     * @return the RemoveChildren
+     * @return the RemoveChildren_Rejoin
      */
-    public Boolean getRemoveChildren() {
-        return removeChildren;
+    public Boolean getRemoveChildrenRejoin() {
+        return removeChildrenRejoin;
     }
 
     /**
-     * Sets RemoveChildren.
+     * Sets RemoveChildren_Rejoin.
      *
-     * @param removeChildren the RemoveChildren
+     * @param removeChildrenRejoin the RemoveChildren_Rejoin
      */
-    public void setRemoveChildren(final Boolean removeChildren) {
-        this.removeChildren = removeChildren;
-    }
-
-    /**
-     * Gets Rejoin.
-     *
-     * @return the Rejoin
-     */
-    public Boolean getRejoin() {
-        return rejoin;
-    }
-
-    /**
-     * Sets Rejoin.
-     *
-     * @param rejoin the Rejoin
-     */
-    public void setRejoin(final Boolean rejoin) {
-        this.rejoin = rejoin;
+    public void setRemoveChildrenRejoin(final Boolean removeChildrenRejoin) {
+        this.removeChildrenRejoin = removeChildrenRejoin;
     }
 
     @Override
@@ -99,8 +76,7 @@ public class ManagementLeaveRequest extends ZdoRequest {
         super.serialize(serializer);
 
         serializer.serialize(deviceAddress, ZclDataType.IEEE_ADDRESS);
-        serializer.serialize(removeChildren, ZclDataType.BOOLEAN);
-        serializer.serialize(rejoin, ZclDataType.BOOLEAN);
+        serializer.serialize(removeChildrenRejoin, ZclDataType.BOOLEAN);
     }
 
     @Override
@@ -108,8 +84,7 @@ public class ManagementLeaveRequest extends ZdoRequest {
         super.deserialize(deserializer);
 
         deviceAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        removeChildren = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
-        rejoin = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
+        removeChildrenRejoin = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
     }
 
     @Override
@@ -119,10 +94,8 @@ public class ManagementLeaveRequest extends ZdoRequest {
         builder.append(super.toString());
         builder.append(", deviceAddress=");
         builder.append(deviceAddress);
-        builder.append(", removeChildren=");
-        builder.append(removeChildren);
-        builder.append(", rejoin=");
-        builder.append(rejoin);
+        builder.append(", removeChildrenRejoin=");
+        builder.append(removeChildrenRejoin);
         return builder.toString();
     }
 

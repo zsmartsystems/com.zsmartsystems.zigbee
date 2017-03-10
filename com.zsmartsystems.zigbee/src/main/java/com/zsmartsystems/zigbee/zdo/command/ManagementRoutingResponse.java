@@ -136,6 +136,9 @@ public class ManagementRoutingResponse extends ZdoResponse {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
+        // Create lists
+        routingTableList = new ArrayList<RoutingTable>();
+
         status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (status != 0) {
             // Don't read the full response if we have an error
@@ -144,7 +147,6 @@ public class ManagementRoutingResponse extends ZdoResponse {
         routingTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         routingTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        routingTableList = new ArrayList<RoutingTable>();
         for (int cnt = 0; cnt < routingTableListCount; cnt++) {
             routingTableList.add((RoutingTable) deserializer.deserialize(ZclDataType.ROUTING_TABLE));
         }

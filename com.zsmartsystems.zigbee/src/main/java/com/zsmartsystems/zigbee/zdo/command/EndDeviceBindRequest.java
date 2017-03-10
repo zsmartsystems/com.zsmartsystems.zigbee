@@ -234,17 +234,19 @@ public class EndDeviceBindRequest extends ZdoRequest {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
+        // Create lists
+        inClusterList = new ArrayList<Integer>();
+        outClusterList = new ArrayList<Integer>();
+
         bindingTarget = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         srcAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         srcEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         profileId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         inClusterCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        inClusterList = new ArrayList<Integer>();
         for (int cnt = 0; cnt < inClusterCount; cnt++) {
             inClusterList.add((Integer) deserializer.deserialize(ZclDataType.CLUSTERID));
         }
         outClusterCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        outClusterList = new ArrayList<Integer>();
         for (int cnt = 0; cnt < outClusterCount; cnt++) {
             outClusterList.add((Integer) deserializer.deserialize(ZclDataType.CLUSTERID));
         }

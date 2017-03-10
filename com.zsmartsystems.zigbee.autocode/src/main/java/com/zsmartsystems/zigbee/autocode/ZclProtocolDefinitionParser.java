@@ -206,6 +206,13 @@ public class ZclProtocolDefinitionParser {
                 field.fieldId = fieldIndex;
 
                 field.fieldLabel = columns[0].trim();
+                if (field.fieldLabel.contains("[")) {
+                    String option = field.fieldLabel.substring(field.fieldLabel.indexOf("[") + 1,
+                            field.fieldLabel.indexOf("]"));
+                    field.fieldLabel = field.fieldLabel.substring(0, field.fieldLabel.indexOf("["));
+                    field.completeOnZero = true;
+                }
+
                 field.fieldType = context.command.commandType + "_"
                         + CodeGeneratorUtil.labelToEnumerationValue(field.fieldLabel);
                 field.nameUpperCamelCase = CodeGeneratorUtil.labelToEnumerationValue(field.fieldLabel);
