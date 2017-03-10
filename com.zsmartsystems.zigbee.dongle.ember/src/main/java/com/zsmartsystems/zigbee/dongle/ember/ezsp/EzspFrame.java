@@ -14,6 +14,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetChildDataRespon
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupEui64ByNodeIdResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
@@ -71,7 +72,7 @@ public abstract class EzspFrame {
     // protected static final int FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER = 0x59;
     // protected static final int FRAME_ID_INVALID_COMMAND = 0x62;
     // protected static final int FRAME_ID_JOIN_NETWORK = 0x1F;
-    // protected static final int FRAME_ID_LEAVE_NETWORK = 0x20;
+    protected static final int FRAME_ID_LEAVE_NETWORK = 0x20;
     protected static final int FRAME_ID_LOOKUP_EUI64_BY_NODE_ID = 0x61;
     // protected static final int FRAME_ID_MAXIMUM_PAYLOAD_LENGTH = 0x33;
     protected static final int FRAME_ID_MESSAGE_SENT_HANDLER = 0x3F;
@@ -111,6 +112,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_CONFIGURATION_VALUE, EzspGetConfigurationValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_NETWORK_PARAMETERS, EzspGetNetworkParametersResponse.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_MESSAGE_HANDLER, EzspIncomingMessageHandler.class);
+        ezspHandlerMap.put(FRAME_ID_LEAVE_NETWORK, EzspLeaveNetworkResponse.class);
         ezspHandlerMap.put(FRAME_ID_LOOKUP_EUI64_BY_NODE_ID, EzspLookupEui64ByNodeIdResponse.class);
         ezspHandlerMap.put(FRAME_ID_MESSAGE_SENT_HANDLER, EzspMessageSentHandler.class);
         ezspHandlerMap.put(FRAME_ID_NETWORK_FOUND_HANDLER, EzspNetworkFoundHandler.class);

@@ -10,12 +10,13 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 
 /**
- * Class to implement the Ember EZSP command <b>getConfigurationValue</b>.
+ * Class to implement the Ember EZSP command <b>leaveNetwork</b>.
  * <p>
- * Reads a configuration value from the NCP
+ * Causes the stack to leave the current network. This generates a stackStatusHandler
+ * callback to indicate that the network is down. The radio will not be used until after sending a
+ * formNetwork or joinNetwork command.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -23,15 +24,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspGetConfigurationValueRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x52;
-
-    /**
-     * Identifies which configuration value to read
-     * <p>
-     * EZSP type is <i>EzspConfigId</i> - Java type is {@link EzspConfigId}
-     */
-    private EzspConfigId configId;
+public class EzspLeaveNetworkRequest extends EzspFrameRequest {
+    public static int FRAME_ID = 0x20;
 
     /**
      * Serialiser used to seialise to binary line data
@@ -41,29 +35,9 @@ public class EzspGetConfigurationValueRequest extends EzspFrameRequest {
     /**
      * Request constructor
      */
-    public EzspGetConfigurationValueRequest() {
+    public EzspLeaveNetworkRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
-    }
-
-    /**
-     * Identifies which configuration value to read
-     * <p>
-     * EZSP type is <i>EzspConfigId</i> - Java type is {@link EzspConfigId}
-     *
-     * @return the current configId as {@link EzspConfigId}
-     */
-    public EzspConfigId getConfigId() {
-        return configId;
-    }
-
-    /**
-     * Identifies which configuration value to read
-     *
-     * @param configId the configId to set as {@link EzspConfigId}
-     */
-    public void setConfigId(EzspConfigId configId) {
-        this.configId = configId;
     }
 
     @Override
@@ -72,15 +46,12 @@ public class EzspGetConfigurationValueRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeEzspConfigId(configId);
         return serializer.getPayload();
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspGetConfigurationValueRequest [configId=");
-        builder.append(configId);
         builder.append("]");
         return builder.toString();
     }

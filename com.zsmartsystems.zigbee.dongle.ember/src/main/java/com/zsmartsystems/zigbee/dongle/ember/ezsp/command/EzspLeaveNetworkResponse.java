@@ -12,12 +12,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
- * Class to implement the Ember EZSP command <b>setInitialSecurityState</b>.
+ * Class to implement the Ember EZSP command <b>leaveNetwork</b>.
  * <p>
- * Sets the security state that will be used by the device when it forms or joins the network. This
- * call should not be used when restoring saved network state via networkInit as this will
- * result in a loss of security data and will cause communication problems when the device
- * re-enters the network.
+ * Causes the stack to leave the current network. This generates a stackStatusHandler
+ * callback to indicate that the network is down. The radio will not be used until after sending a
+ * formNetwork or joinNetwork command.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -25,11 +24,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspSetInitialSecurityStateResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x68;
+public class EzspLeaveNetworkResponse extends EzspFrameResponse {
+    public static int FRAME_ID = 0x20;
 
     /**
-     * The success or failure code of the operation.
+     * An EmberStatus value indicating success or the reason for failure.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      */
@@ -38,7 +37,7 @@ public class EzspSetInitialSecurityStateResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspSetInitialSecurityStateResponse(int[] inputBuffer) {
+    public EzspLeaveNetworkResponse(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
@@ -47,7 +46,7 @@ public class EzspSetInitialSecurityStateResponse extends EzspFrameResponse {
     }
 
     /**
-     * The success or failure code of the operation.
+     * An EmberStatus value indicating success or the reason for failure.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      *
@@ -58,7 +57,7 @@ public class EzspSetInitialSecurityStateResponse extends EzspFrameResponse {
     }
 
     /**
-     * The success or failure code of the operation.
+     * An EmberStatus value indicating success or the reason for failure.
      *
      * @param status the status to set as {@link EmberStatus}
      */
@@ -69,7 +68,7 @@ public class EzspSetInitialSecurityStateResponse extends EzspFrameResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EzspSetInitialSecurityStateResponse [status=");
+        builder.append("EzspLeaveNetworkResponse [status=");
         builder.append(status);
         builder.append("]");
         return builder.toString();
