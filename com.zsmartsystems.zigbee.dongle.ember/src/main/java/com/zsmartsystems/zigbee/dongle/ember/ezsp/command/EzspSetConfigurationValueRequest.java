@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 
 /**
  * Class to implement the Ember EZSP command <b>setConfigurationValue</b>.
@@ -31,9 +32,9 @@ public class EzspSetConfigurationValueRequest extends EzspFrameRequest {
     /**
      * Identifies which configuration value to change.
      * <p>
-     * EZSP type is <i>EzspConfigId</i> - Java type is {@link int}
+     * EZSP type is <i>EzspConfigId</i> - Java type is {@link EzspConfigId}
      */
-    private int configId;
+    private EzspConfigId configId;
 
     /**
      * The new configuration value.
@@ -58,20 +59,20 @@ public class EzspSetConfigurationValueRequest extends EzspFrameRequest {
     /**
      * Identifies which configuration value to change.
      * <p>
-     * EZSP type is <i>EzspConfigId</i> - Java type is {@link int}
+     * EZSP type is <i>EzspConfigId</i> - Java type is {@link EzspConfigId}
      *
-     * @return the current configId as {@link int}
+     * @return the current configId as {@link EzspConfigId}
      */
-    public int getConfigId() {
+    public EzspConfigId getConfigId() {
         return configId;
     }
 
     /**
      * Identifies which configuration value to change.
      *
-     * @param configId the configId to set as {@link int}
+     * @param configId the configId to set as {@link EzspConfigId}
      */
-    public void setConfigId(int configId) {
+    public void setConfigId(EzspConfigId configId) {
         this.configId = configId;
     }
 
@@ -101,7 +102,7 @@ public class EzspSetConfigurationValueRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeUInt8(configId);
+        serializer.serializeEzspConfigId(configId);
         serializer.serializeUInt16(value);
         return serializer.getPayload();
     }

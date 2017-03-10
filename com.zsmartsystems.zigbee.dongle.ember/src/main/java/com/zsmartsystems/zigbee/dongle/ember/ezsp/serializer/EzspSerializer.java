@@ -14,7 +14,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurity
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNodeType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
@@ -132,6 +134,14 @@ public class EzspSerializer {
 
     public void serializeEzspPolicyId(EzspPolicyId policyId) {
         buffer[length++] = policyId.getKey();
+    }
+
+    public void serializeEmberNodeType(EmberNodeType nodeType) {
+        buffer[length++] = nodeType.getKey();
+    }
+
+    public void serializeEzspConfigId(EzspConfigId configId) {
+        buffer[length++] = configId.getKey();
     }
 
     public void serializeEzspDecisionId(EzspDecisionId decisionId) {

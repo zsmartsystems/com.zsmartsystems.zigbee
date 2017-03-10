@@ -20,7 +20,7 @@ public class EzspSetConfigurationValueRequestTest extends EzspFrameTest {
     public void testVersion() {
         EzspSetConfigurationValueRequest request = new EzspSetConfigurationValueRequest();
         request.setSequenceNumber(2);
-        request.setConfigId(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS.getKey());
+        request.setConfigId(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS);
         request.setValue(EmberZdoConfigurationFlags.EMBER_APP_RECEIVES_SUPPORTED_ZDO_REQUESTS.getKey());
 
         assertTrue(Arrays.equals(getPacketData("02 00 53 2A 01 00"), request.serialize()));

@@ -1314,6 +1314,46 @@
 	</command>
 
 	<command>
+		<name>joinNetwork</name>
+		<id>0x1f</id>
+		<description>: Causes the stack to associate with the network using the specified network parameters. It can take several seconds for the stack to associate with the local network. Do not send messages until the stackStatusHandler callback informs you that the stack is up.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberNodeType</data_type>
+				<name>nodeType</name>
+				<description>Specification of the role that this node will have in the network. This role must not be EMBER_COORDINATOR. To be a coordinator, use the formNetwork command.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNetworkParameters</data_type>
+				<name>parameters</name>
+				<description>Specification of the network with which the node should associate.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>leaveNetwork</name>
+		<id>0x20</id>
+		<description>Causes the stack to leave the current network. This generates a stackStatusHandler callback to indicate that the network is down. The radio will not be used until after sending a formNetwork or joinNetwork command.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>setExtendedTimeout</name>
 		<id>0x7E</id>
 		<description>Tells the stack whether or not the normal interval between retransmissions of a retried unicast message should be increased by EMBER_INDIRECT_TRANSMISSION_TIMEOUT. The interval needs to be increased when sending to a sleepy node so that the message is not retransmitted until the destination has had time to wake up and poll its parent. The stack will automatically extend the timeout: - For our own sleepy children. - When an address response is received from a parent on behalf of its child. - When an indirect transaction expiry route error is received. - When an end device announcement is received from a sleepy node.</description>
@@ -1427,7 +1467,7 @@
 		<response_parameters>
 			<parameter>
 				<data_type>EmberStatus</data_type>
-				<name>success</name>
+				<name>status</name>
 				<description>The success or failure code of the operation.</description>
 			</parameter>
 		</response_parameters>
@@ -3244,7 +3284,7 @@
 	</enum>
 
 	<enum>
-		<name>EmberInitialSecurityBitmask</name>
+		<name>EmberKeyType</name>
 		<description></description>
 		<values>
 			<value>

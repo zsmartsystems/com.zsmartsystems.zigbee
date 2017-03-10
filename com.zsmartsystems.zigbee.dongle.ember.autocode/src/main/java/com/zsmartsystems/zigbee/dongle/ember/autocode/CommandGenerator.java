@@ -657,7 +657,6 @@ public class CommandGenerator extends ClassGenerator {
             case "EzspValueId":
             case "EmberNodeId":
             case "EmberCounterType":
-            case "EzspConfigId":
             case "int8s":
             case "uint8_u":
             case "uint8_t":
@@ -722,6 +721,9 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberNodeType":
                 addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNodeType");
                 return "EmberNodeType";
+            case "EzspConfigId":
+                addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId");
+                return "EzspConfigId";
             default:
                 return dataType;
         }
@@ -735,7 +737,6 @@ public class CommandGenerator extends ClassGenerator {
         switch (dataTypeLocal) {
             case "EzspValueId":
             case "EmberCounterType":
-            case "EzspConfigId":
             case "uint8_t":
             case "uint8_u":
                 return "UInt8";

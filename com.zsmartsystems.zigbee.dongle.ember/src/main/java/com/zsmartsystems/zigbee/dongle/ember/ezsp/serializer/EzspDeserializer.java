@@ -21,6 +21,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessage
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberRouteTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberZigbeeNetwork;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 
@@ -157,6 +158,10 @@ public class EzspDeserializer {
 
     public EzspDecisionId deserializeEzspDecisionId() {
         return EzspDecisionId.getEzspDecisionId(deserializeUInt8());
+    }
+
+    public EzspConfigId deserializeEmberConfigId() {
+        return EzspConfigId.getEzspConfigId(deserializeUInt8());
     }
 
     public EmberRouteTableEntry deserializeEmberRouteTableEntry() {
