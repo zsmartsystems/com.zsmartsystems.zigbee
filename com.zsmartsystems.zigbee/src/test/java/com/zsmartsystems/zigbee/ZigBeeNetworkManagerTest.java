@@ -13,6 +13,7 @@ import java.util.concurrent.Callable;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
@@ -270,6 +271,32 @@ public class ZigBeeNetworkManagerTest
         networkManager.removeNetworkStateListener(mockedStateListener);
     }
 
+    @Test
+    public void testSetChannel() {
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+
+        assertFalse(networkManager.setZigBeeChannel(10));
+        assertFalse(networkManager.setZigBeeChannel(27));
+        assertTrue(networkManager.setZigBeeChannel(11));
+        assertEquals(11, networkManager.getZigBeeChannel());
+    }
+
+    @Test
+    public void testSetPanId() {
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+
+        assertTrue(networkManager.setZigBeePanId(10));
+        assertEquals(999, networkManager.getZigBeePanId());
+    }
+
+    @Test
+    public void testSetExtendedPanId() {
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+
+        assertTrue(networkManager.setZigBeeExtendedPanId(10));
+        assertEquals(1L, networkManager.getZigBeeExtendedPanId());
+    }
+
     private ZigBeeNetworkManager mockZigBeeNetworkManager() {
         mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
         mockedStateListener = Mockito.mock(ZigBeeNetworkStateListener.class);
@@ -295,6 +322,14 @@ public class ZigBeeNetworkManagerTest
         // Mockito.doNothing().when(mockedNodeListener).nodeRemoved(nodeNodeListenerCapture.capture());
         // Mockito.doNothing().when(mockedCommandListener).commandReceived(commandListenerCapture.capture());
         // Mockito.doNothing().when(mockedStateListener).networkStateUpdated(networkStateListenerCapture.capture());
+
+        Mockito.when(mockedTransport.setZigBeeChannel(Matchers.anyInt())).thenReturn(true);
+        Mockito.when(mockedTransport.setZigBeePanId(Matchers.anyInt())).thenReturn(true);
+        Mockito.when(mockedTransport.setZigBeeExtendedPanId(Matchers.anyLong())).thenReturn(true);
+
+        Mockito.when(mockedTransport.getZigBeePanId()).thenReturn(999);
+        Mockito.when(mockedTransport.getZigBeeChannel()).thenReturn(11);
+        Mockito.when(mockedTransport.getZigBeeExtendedPanId()).thenReturn(1L);
 
         mockedApsFrameListener = ArgumentCaptor.forClass(ZigBeeApsFrame.class);
 

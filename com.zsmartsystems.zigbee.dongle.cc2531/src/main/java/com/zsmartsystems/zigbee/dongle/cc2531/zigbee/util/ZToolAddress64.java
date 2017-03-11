@@ -26,6 +26,7 @@
 package com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Big Endian container for 64-bit XBee Address
@@ -35,6 +36,7 @@ import java.util.Arrays;
  * @author <a href="mailto:andrew.rapp@gmail.com">Andrew Rapp</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano Lenzi</a>
+ * @author Chris Jackson
  */
 public class ZToolAddress64 extends ZToolAddress {
 
@@ -65,6 +67,11 @@ public class ZToolAddress64 extends ZToolAddress {
 
     public void setAddress(byte[] address) {
         this.address = Arrays.copyOf(address, address.length);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address);
     }
 
     @Override

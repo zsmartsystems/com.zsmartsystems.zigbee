@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspSingleResponse
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
 
 /**
- * This class provides utility functions to configure the Ember stack.
+ * This class provides utility functions to configure, and read the configuration from the Ember stack.
  *
  * @author Chris Jackson
  *

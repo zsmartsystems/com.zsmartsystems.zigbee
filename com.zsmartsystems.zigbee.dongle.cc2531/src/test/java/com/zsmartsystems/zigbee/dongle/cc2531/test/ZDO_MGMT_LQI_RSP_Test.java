@@ -11,7 +11,12 @@ import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoManagementLqi;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 
-public class ZDO_MGMT_LQI_RSP extends Cc2351TestPacket {
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
+public class ZDO_MGMT_LQI_RSP_Test extends Cc2351TestPacket {
 
     @Test
     public void testReceive() {

@@ -25,6 +25,8 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util;
 
+import java.util.Objects;
+
 /**
  * Represents a double byte XBeeApi Address.
  *
@@ -80,6 +82,11 @@ public class ZToolAddress16 extends ZToolAddress {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(doubleByte);
+    }
+
+    @Override
     public boolean equals(Object o) {
 
         if (this == o) {
@@ -88,11 +95,7 @@ public class ZToolAddress16 extends ZToolAddress {
             try {
                 ZToolAddress16 addr = (ZToolAddress16) o;
 
-                if (this.getLsb() == addr.getLsb() && this.getMsb() == addr.getMsb()) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return (this.getLsb() == addr.getLsb() && this.getMsb() == addr.getMsb());
             } catch (Exception e) {
                 return false;
             }

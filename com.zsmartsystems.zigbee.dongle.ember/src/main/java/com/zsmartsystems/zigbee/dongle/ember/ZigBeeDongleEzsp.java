@@ -214,7 +214,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
                 netInitialiser.formNetwork();
                 break;
             default:
-                // Unknown response
+                // Unexpected response
+                logger.debug("Unexpected response from network initialisation: {}", networkInitResponse.getStatus());
                 break;
         }
 

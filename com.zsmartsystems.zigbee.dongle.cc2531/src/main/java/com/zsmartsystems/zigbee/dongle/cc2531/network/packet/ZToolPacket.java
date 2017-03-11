@@ -177,6 +177,6 @@ public class ZToolPacket {
     public String toString() {
         return "Packet: length=" + LEN + ", apiId=" + ByteUtils.toBase16(CMD.getMsb()) + " "
                 + ByteUtils.toBase16(CMD.getLsb()) + ", data=" + ByteUtils.toBase16(packet) + ", checksum="
-                + ByteUtils.toBase16(FCS) + ", error=" + error + (error == true ? (", errorMessage=" + errorMsg) : "");
+                + ByteUtils.toBase16(FCS) + ", error=" + error + (error ? (", errorMessage=" + errorMsg) : "");
     }
 }

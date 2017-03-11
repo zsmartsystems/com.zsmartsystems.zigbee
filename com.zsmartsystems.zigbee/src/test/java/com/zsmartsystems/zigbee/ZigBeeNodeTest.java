@@ -2,6 +2,8 @@ package com.zsmartsystems.zigbee;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ import java.util.List;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
+import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.LogicalType;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.CurrentPowerModeType;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.PowerLevelType;
@@ -23,6 +27,8 @@ public class ZigBeeNodeTest {
         ZigBeeNode node = new ZigBeeNode(null);
         node.setIeeeAddress(new IeeeAddress("17880100dc880b"));
         assertEquals(new IeeeAddress("17880100dc880b"), node.getIeeeAddress());
+
+        System.out.println(node.toString());
     }
 
     @Test
@@ -130,4 +136,45 @@ public class ZigBeeNodeTest {
         assertEquals(0, node.getRoutes().size());
     }
 
+    @Test
+    public void testDeviceTypes() {
+        ZigBeeNode node = new ZigBeeNode(null);
+        assertFalse(node.isFullFuntionDevice());
+        assertFalse(node.isReducedFuntionDevice());
+        assertFalse(node.isPrimaryTrustCenter());
+        assertFalse(node.isSecurityCapable());
+
+        NodeDescriptor nodeDescriptor = new NodeDescriptor();
+        node.setNodeDescriptor(nodeDescriptor);
+
+        assertFalse(node.isFullFuntionDevice());
+        assertFalse(node.isReducedFuntionDevice());
+        assertFalse(node.isPrimaryTrustCenter());
+        assertFalse(node.isSecurityCapable());
+
+        nodeDescriptor = new NodeDescriptor(0, 0, 0xff, false, 0, 0, 0xff, 0, false, 0);
+        node.setNodeDescriptor(nodeDescriptor);
+        assertNotNull(node.getNodeDescriptor());
+
+        assertTrue(node.isFullFuntionDevice());
+        assertFalse(node.isReducedFuntionDevice());
+        assertTrue(node.isPrimaryTrustCenter());
+        assertTrue(node.isSecurityCapable());
+
+        nodeDescriptor = new NodeDescriptor(0, 0, 0x00, false, 0, 0, 0xff, 0, false, 0);
+        node.setNodeDescriptor(nodeDescriptor);
+
+        assertFalse(node.isFullFuntionDevice());
+        assertTrue(node.isReducedFuntionDevice());
+
+        assertEquals(LogicalType.COORDINATOR, node.getLogicalType());
+    }
+
+    @Test
+    public void testLastUpdate() {
+        ZigBeeNode node = new ZigBeeNode(null);
+        assertNull(node.getLastUpdateTime());
+        node.setLastUpdateTime();
+        assertNotNull(node.getLastUpdateTime());
+    }
 }

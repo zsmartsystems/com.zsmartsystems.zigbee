@@ -8,6 +8,11 @@ import java.io.IOException;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacketStream;
 
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
 public class Cc2351TestPacket {
     protected int[] getPacketData(String stringData) {
         String split[] = stringData.split(" ");

@@ -46,6 +46,14 @@ public class ZigBeeDeviceTest {
         assertNotNull(device.getCluster(ZclLevelControlCluster.CLUSTER_ID));
         assertTrue(device.getCluster(ZclLevelControlCluster.CLUSTER_ID).isClient());
         assertFalse(device.getCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
+
+        clusterIdList = new ArrayList<Integer>();
+        clusterIdList.add(ZclAlarmsCluster.CLUSTER_ID);
+        clusterIdList.add(ZclBasicCluster.CLUSTER_ID);
+        assertTrue(device.getCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
+        assertFalse(device.getCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
+
+        System.out.println(device.toString());
     }
 
     @Test
@@ -97,11 +105,28 @@ public class ZigBeeDeviceTest {
     }
 
     @Test
+    public void testDeviceVersion() {
+        ZigBeeDevice device = getDevice();
+
+        device.setDeviceVersion(123);
+        assertEquals(123, device.getDeviceVersion());
+    }
+
+    @Test
+    public void testGetDeviceId() {
+        ZigBeeDevice device = getDevice();
+
+        device.setDeviceId(9999);
+        assertEquals(9999, device.getDeviceId());
+    }
+
+    @Test
     public void testGetSetNetworkAddress() {
         ZigBeeDevice device = getDevice();
 
         device.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
         assertEquals(new ZigBeeDeviceAddress(1234, 5), device.getDeviceAddress());
+        assertEquals(1234, device.getNetworkAddress());
     }
 
     private ZigBeeDevice getDevice() {

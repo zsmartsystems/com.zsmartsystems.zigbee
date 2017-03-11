@@ -313,6 +313,8 @@ public class ZclHeader {
             case ENTIRE_PROFILE_COMMAND:
                 frameControl |= 0b00000000;
                 break;
+            default:
+                break;
         }
 
         frameControl |= direction ? 0b00000000 : MASK_DIRECTION;

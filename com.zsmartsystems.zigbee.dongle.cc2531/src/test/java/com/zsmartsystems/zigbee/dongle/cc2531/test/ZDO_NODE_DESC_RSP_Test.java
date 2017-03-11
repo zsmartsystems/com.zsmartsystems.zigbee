@@ -8,21 +8,26 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoIeeeAddress;
+import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoNodeDescriptor;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 
-public class ZDO_IEEE_ADDR_RSP extends Cc2351TestPacket {
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
+public class ZDO_NODE_DESC_RSP_Test extends Cc2351TestPacket {
 
     @Test
     public void testReceive() {
-        ZToolPacket data = getPacket("FE 11 45 81 00 14 D4 F1 02 00 4B 12 00 00 00 00 02 8F 22 2A 2F 15");
+        ZToolPacket data = getPacket("FE 12 45 82 00 00 00 00 00 00 40 0F 00 00 50 A0 00 01 00 A0 00 00 CB");
 
-        ZigBeeApsFrame apsFrame = ZdoIeeeAddress.create(data);
+        ZigBeeApsFrame apsFrame = ZdoNodeDescriptor.create(data);
 
         assertEquals(0x0000, apsFrame.getSourceAddress());
         assertEquals(0, apsFrame.getProfile());
         assertEquals(0, apsFrame.getDestinationEndpoint());
-        assertTrue(Arrays.equals(getPacketData("00 00 14 D4 F1 02 00 4B 12 00 00 00 02 00 8F 22 2A 2F"),
+        assertTrue(Arrays.equals(getPacketData("00 00 00 00 00 40 0F 00 00 50 A0 00 01 00 A0 00 00"),
                 apsFrame.getPayload()));
     }
 

@@ -61,7 +61,7 @@ public class ZigBeeNode {
     /**
      * The network manager that manages this device
      */
-    final ZigBeeNetworkManager networkManager;
+    private final ZigBeeNetworkManager networkManager;
 
     public ZigBeeNode(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;

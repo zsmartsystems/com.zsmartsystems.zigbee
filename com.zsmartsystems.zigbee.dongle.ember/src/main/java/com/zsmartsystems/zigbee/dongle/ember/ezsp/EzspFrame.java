@@ -5,6 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
@@ -47,6 +50,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
  *
  */
 public abstract class EzspFrame {
+    private final static Logger logger = LoggerFactory.getLogger(EzspFrame.class);
+
     // protected EmberStatus emberStatus = EmberStatus.UNKNOWN;
 
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
@@ -164,18 +169,9 @@ public abstract class EzspFrame {
             ctor = ezspClass.getConstructor(int[].class);
             EzspFrameResponse ezspFrame = (EzspFrameResponse) ctor.newInstance(data.getDataBuffer());
             return ezspFrame;
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (SecurityException | NoSuchMethodException | IllegalArgumentException | InstantiationException
+                | IllegalAccessException | InvocationTargetException e) {
+            logger.debug("Error creating instance of EzspFrame", e);
         }
 
         return null;

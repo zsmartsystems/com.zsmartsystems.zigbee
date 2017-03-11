@@ -603,10 +603,8 @@ public class AshFrameHandler {
         try {
             futureResponse.get();
             return ezspTransaction;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        } catch (InterruptedException | ExecutionException e) {
+            logger.debug("Error sending EZSP transaction to listeners", e);
         }
 
         return null;

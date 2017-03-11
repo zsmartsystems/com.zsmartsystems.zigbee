@@ -18,7 +18,7 @@ public class ZclResponseMatcher implements CommandResponseMatcher {
     public boolean isMatch(Command request, Command response) {
         if (response instanceof ZclCommand && ((ZclCommand) request).getTransactionId() != null) {
             final int transactionId = ((ZclCommand) request).getTransactionId();
-            return new Integer(transactionId).equals(((ZclCommand) response).getTransactionId());
+            return Integer.valueOf(transactionId).equals(((ZclCommand) response).getTransactionId());
         } else {
             return false;
         }

@@ -11,7 +11,12 @@ import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoManagementRouting;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 
-public class ZDO_MGMT_RTG_RSP extends Cc2351TestPacket {
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
+public class ZDO_MGMT_RTG_RSP_Test extends Cc2351TestPacket {
 
     @Test
     public void testReceive() {

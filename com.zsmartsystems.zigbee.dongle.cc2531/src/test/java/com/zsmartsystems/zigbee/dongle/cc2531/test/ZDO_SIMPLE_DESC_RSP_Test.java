@@ -11,7 +11,12 @@ import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoSimpleDescriptor;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 
-public class ZDO_SIMPLE_DESC_RSP extends Cc2351TestPacket {
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
+public class ZDO_SIMPLE_DESC_RSP_Test extends Cc2351TestPacket {
 
     @Test
     public void testReceive() {

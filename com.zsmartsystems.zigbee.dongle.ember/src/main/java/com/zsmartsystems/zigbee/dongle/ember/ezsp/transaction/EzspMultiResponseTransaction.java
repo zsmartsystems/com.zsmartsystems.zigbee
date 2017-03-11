@@ -80,11 +80,14 @@ public class EzspMultiResponseTransaction implements EzspTransaction {
 
     @Override
     public synchronized EmberStatus getStatus() {
-        if (responses.isEmpty() == true) {
+        if (responses.isEmpty()) {
             return EmberStatus.UNKNOWN;
         }
 
-        // TODO: Fix the response status!
+        // TODO: Fix the response status! Needs a common response method?
+        // for(EzspFrameResponse response : responses) {
+        // }
+
         return EmberStatus.UNKNOWN;
     }
 

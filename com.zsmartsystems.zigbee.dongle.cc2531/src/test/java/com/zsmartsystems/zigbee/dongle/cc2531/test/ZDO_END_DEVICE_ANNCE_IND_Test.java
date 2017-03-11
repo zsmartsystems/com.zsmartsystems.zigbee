@@ -11,7 +11,12 @@ import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoEndDeviceAnnounce;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 
-public class ZDO_END_DEVICE_ANNCE_IND extends Cc2351TestPacket {
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
+public class ZDO_END_DEVICE_ANNCE_IND_Test extends Cc2351TestPacket {
 
     @Test
     public void testReceive() {

@@ -76,11 +76,7 @@ public class CommandResult {
         if (hasStatusCode()) {
             return getStatusCode() != 0;
         } else {
-            if (message == null) {
-                return false;
-            } else {
-                return true;
-            }
+            return (message == null);
         }
     }
 
@@ -89,7 +85,7 @@ public class CommandResult {
      *
      * @return TRUE if default response was received
      */
-    public boolean hasStatusCode() {
+    private boolean hasStatusCode() {
         if (response != null) {
             return response instanceof DefaultResponse || response instanceof ZdoResponse;
         } else {
