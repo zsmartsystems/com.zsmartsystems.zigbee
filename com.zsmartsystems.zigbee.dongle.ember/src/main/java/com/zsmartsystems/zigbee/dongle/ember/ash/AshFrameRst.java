@@ -1,15 +1,15 @@
 package com.zsmartsystems.zigbee.dongle.ember.ash;
 
 /**
- * ASH Frame Error
- * 
+ * ASH Reset Frame
+ *
  * @author Chris Jackson
  *
  */
 public class AshFrameRst extends AshFrame {
     /**
      * Constructor to create an ASH Reset frame.
-     * 
+     *
      * @param buffer
      */
     public AshFrameRst() {
@@ -20,6 +20,7 @@ public class AshFrameRst extends AshFrame {
         this();
     }
 
+    @Override
     public int[] getOutputBuffer() {
         int[] rstFrame = super.getOutputBuffer();
 

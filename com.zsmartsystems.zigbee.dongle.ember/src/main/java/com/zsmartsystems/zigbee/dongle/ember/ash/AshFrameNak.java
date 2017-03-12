@@ -1,15 +1,15 @@
 package com.zsmartsystems.zigbee.dongle.ember.ash;
 
 /**
- * ASH Frame Error
- * 
+ * ASH NAK Frame
+ *
  * @author Chris Jackson
  *
  */
 public class AshFrameNak extends AshFrame {
     /**
      * Constructor to create an ASH NAK frame.
-     * 
+     *
      * @param buffer
      */
     public AshFrameNak(int ackNum) {

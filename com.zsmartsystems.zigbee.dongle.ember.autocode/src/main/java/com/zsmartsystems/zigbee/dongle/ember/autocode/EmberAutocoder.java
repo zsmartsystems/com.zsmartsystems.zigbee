@@ -136,6 +136,14 @@ public class EmberAutocoder {
                     if (nodes.item(temp).getNodeName().equals("auto_size")) {
                         parameter.auto_size = nodes.item(temp).getTextContent();
                     }
+                    if (nodes.item(temp).getNodeName().equals("display")) {
+                        String display = nodes.item(temp).getTextContent();
+                        if (display.contains("[") && display.contains("]")) {
+                            parameter.displayType = display.substring(0, display.indexOf("["));
+                            parameter.displayLength = Integer
+                                    .parseInt(display.substring(display.indexOf("[") + 1, display.indexOf("]")));
+                        }
+                    }
                 }
                 System.out.println("Done: Parameter - " + parameter.name);
                 return parameter;

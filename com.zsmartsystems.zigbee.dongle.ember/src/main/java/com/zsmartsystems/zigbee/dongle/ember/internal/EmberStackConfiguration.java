@@ -51,6 +51,7 @@ public class EmberStackConfiguration {
         EzspSetConfigurationValueRequest configValue = new EzspSetConfigurationValueRequest();
         configValue.setConfigId(configId);
         configValue.setValue(value);
+        logger.debug(configValue.toString());
 
         EzspTransaction configTransaction = ashHandler.sendEzspTransaction(
                 new EzspSingleResponseTransaction(configValue, EzspSetConfigurationValueResponse.class));

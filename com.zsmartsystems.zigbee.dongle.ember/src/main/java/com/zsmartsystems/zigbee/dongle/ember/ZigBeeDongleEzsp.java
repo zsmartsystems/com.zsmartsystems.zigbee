@@ -23,17 +23,23 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRespons
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspPermitJoiningRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspPermitJoiningResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberZdoConfigurationFlags;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspSingleResponseTransaction;
@@ -65,6 +71,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
      */
     private AshFrameHandler ashHandler;
 
+    /**
+     * The stack configuration we need for the NCP
+     */
     private Map<EzspConfigId, Integer> stackConfiguration;
 
     /**
@@ -77,15 +86,29 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
      */
     private ZigBeeTransportReceive zigbeeTransportReceive;
 
+    /**
+     * The current network key as {@link EmberKeyData}
+     */
+    private EmberKeyData networkKey = null;
+
+    /**
+     * The current network parameters as {@link EmberNetworkParameters}
+     */
+    private EmberNetworkParameters networkParameters = new EmberNetworkParameters();
+
     public ZigBeeDongleEzsp(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
 
         stackConfiguration = new HashMap<EzspConfigId, Integer>();
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SUPPORTED_NETWORKS, 2);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SECURITY_LEVEL, 5);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_STACK_PROFILE, 2);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS,
                 EmberZdoConfigurationFlags.EMBER_APP_RECEIVES_SUPPORTED_ZDO_REQUESTS.getKey());
-        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SECURITY_LEVEL, 5);
-        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SUPPORTED_NETWORKS, 2);
-        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_STACK_PROFILE, 2);
+
+        // Use a default 'nothing' key
+        networkKey = new EmberKeyData();
+        networkKey.setContents(new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
     }
 
     @Override
@@ -93,14 +116,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
         if (!serialPort.open()) {
-            logger.error("Unable to open serial port");
+            logger.error("Unable to open Ember serial port");
             return false;
         }
 
         // final OutputStream out = serialPort.getOutputStream();
         ashHandler = new AshFrameHandler(serialPort.getInputStream(), serialPort.getOutputStream(), this);
-
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
         // Connect to the ASH handler and NCP
         ashHandler.connect();
@@ -115,22 +136,90 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
 
         // Perform any stack configuration
         EmberStackConfiguration stackConfigurer = new EmberStackConfiguration(ashHandler);
-        stackConfigurer.getConfiguration(stackConfiguration.keySet());
         stackConfigurer.setConfiguration(stackConfiguration);
-        stackConfigurer.getConfiguration(stackConfiguration.keySet());
+        Map<EzspConfigId, Integer> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
+
+        for (EzspConfigId config : configuration.keySet()) {
+            logger.debug("Configuration state {} = {}", config, configuration.get(config));
+        }
 
         // Add our endpoint(s)
         createEndpoints();
 
-        initialiseNetwork();
+        // Now initialise the network
+        EzspNetworkInitRequest networkInitRequest = new EzspNetworkInitRequest();
+        EzspTransaction networkInitTransaction = ashHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(networkInitRequest, EzspNetworkInitResponse.class));
+        EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
+        logger.debug(networkInitResponse.toString());
+        logger.debug("EZSP networkInitResponse {}", networkInitResponse.getStatus());
+
+        // Check if the network is initialised or if we're yet to join
+        if (networkInitResponse.getStatus() == EmberStatus.EMBER_NOT_JOINED) {
+            // Anything to do here?
+        }
+
+        networkParameters = getNetworkParameters();
+
+        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
         return false;
     }
 
     @Override
     public boolean startup() {
+        // Check if the network is initialised
+        EzspNetworkStateRequest networkStateRequest = new EzspNetworkStateRequest();
+        EzspTransaction networkStateTransaction = ashHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(networkStateRequest, EzspNetworkStateResponse.class));
+        EzspNetworkStateResponse networkStateResponse = (EzspNetworkStateResponse) networkStateTransaction
+                .getResponse();
+        logger.debug(networkStateResponse.toString());
+        logger.debug("EZSP networkStateResponse {}", networkStateResponse.getStatus());
+
+        // Get the current network parameters. If the channel, or PAN IDs are different than we want
+        // then re-initialise the network.
+        EmberNetworkParameters currentNetworkParameters = getNetworkParameters();
+        logger.debug("Current Network  = {}", currentNetworkParameters);
+        logger.debug("Required Network = {}", networkParameters);
+        if (networkStateResponse.getStatus() == EmberNetworkStatus.EMBER_NO_NETWORK
+                || currentNetworkParameters.getRadioChannel() != networkParameters.getRadioChannel()
+                || currentNetworkParameters.getPanId() != networkParameters.getPanId()
+                || !Arrays.equals(currentNetworkParameters.getExtendedPanId(), networkParameters.getExtendedPanId())) {
+            logger.debug("Reinitialising Ember NCP and forming network.");
+            initialiseNetwork();
+        }
+
+        permitJoin();
 
         return true;
+    }
+
+    @Override
+    public void shutdown() {
+        serialPort.close();
+    }
+
+    /**
+     * Gets the current network parameters, or an empty parameters class if there's an error
+     *
+     * @return {@link EmberNetworkParameters}
+     */
+    private EmberNetworkParameters getNetworkParameters() {
+        EzspGetNetworkParametersRequest networkParms = new EzspGetNetworkParametersRequest();
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(networkParms,
+                EzspGetNetworkParametersResponse.class);
+        ashHandler.sendEzspTransaction(transaction);
+        EzspGetNetworkParametersResponse getNetworkParametersResponse = (EzspGetNetworkParametersResponse) transaction
+                .getResponse();
+        logger.debug(getNetworkParametersResponse.toString());
+        if (getNetworkParametersResponse.getStatus() != EmberStatus.EMBER_SUCCESS
+                && getNetworkParametersResponse.getStatus() != EmberStatus.EMBER_NOT_JOINED) {
+            logger.debug("Error during retrieval of network parameters: {}", getNetworkParametersResponse);
+            return new EmberNetworkParameters();
+        }
+
+        return getNetworkParametersResponse.getParameters();
     }
 
     private void createEndpoints() {
@@ -182,42 +271,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     }
 
     private void initialiseNetwork() {
-        // Now initialise the network
-        EzspNetworkInitRequest networkInitRequest = new EzspNetworkInitRequest();
-        EzspTransaction networkInitTransaction = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(networkInitRequest, EzspNetworkInitResponse.class));
-        EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
-        logger.debug(networkInitResponse.toString());
-        logger.debug("EZSP networkInitResponse {}", networkInitResponse.getStatus());
-
-        EzspLeaveNetworkRequest leaveNetworkRequest = new EzspLeaveNetworkRequest();
-        EzspTransaction leaveNetworkTransaction = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(leaveNetworkRequest, EzspLeaveNetworkResponse.class));
-        EzspLeaveNetworkResponse leaveNetworkResponse = (EzspLeaveNetworkResponse) leaveNetworkTransaction
-                .getResponse();
-        logger.debug(leaveNetworkResponse.toString());
-
-        EzspNetworkInitRequest networkInitRequest2 = new EzspNetworkInitRequest();
-        EzspTransaction networkInitTransaction2 = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(networkInitRequest2, EzspNetworkInitResponse.class));
-        EzspNetworkInitResponse networkInitResponse2 = (EzspNetworkInitResponse) networkInitTransaction2.getResponse();
-        logger.debug(networkInitResponse2.toString());
-        logger.debug("EZSP networkInitResponse {}", networkInitResponse2.getStatus());
-
-        // Check if the network is initialised or if we're yet to join
-        switch (networkInitResponse.getStatus()) {
-            case EMBER_SUCCESS:
-                // We're done (??)
-                break;
-            case EMBER_NOT_JOINED:
-                EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(ashHandler);
-                netInitialiser.formNetwork();
-                break;
-            default:
-                // Unexpected response
-                logger.debug("Unexpected response from network initialisation: {}", networkInitResponse.getStatus());
-                break;
-        }
+        EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(ashHandler);
+        netInitialiser.formNetwork(networkParameters, networkKey);
 
         EzspGetNetworkParametersRequest networkParametersRequest = new EzspGetNetworkParametersRequest();
         EzspTransaction networkParametersTransaction = ashHandler.sendEzspTransaction(
@@ -229,9 +284,15 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
     }
 
-    @Override
-    public void shutdown() {
-        serialPort.close();
+    private void permitJoin() {
+        EzspPermitJoiningRequest request = new EzspPermitJoiningRequest();
+        request.setDuration(255);
+        EzspTransaction transaction = ashHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspPermitJoiningResponse.class));
+        EzspPermitJoiningResponse response = (EzspPermitJoiningResponse) transaction.getResponse();
+        logger.debug(response.toString());
+
+        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
     }
 
     @Override
@@ -312,16 +373,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         }
 
         /*
-         * if (response instanceof EzspLookupEui64ByNodeIdResponse) {
-         * IeeeAddressResponse zdoResponse = new IeeeAddressResponse();
-         * zdoResponse.setIeeeAddress(((EzspLookupEui64ByNodeIdResponse) response).getEui64());
-         * zigbeeTransportReceive.receiveZdoCommand(zdoResponse);
-         *
-         * return;
-         * }
-         */
-
-        /*
          * if (response instanceof EzspChildJoinHandler) {
          * // Convert to an announce
          * DeviceAnnounce zdoResponse = new DeviceAnnounce();
@@ -343,42 +394,51 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
 
     @Override
     public int getZigBeeChannel() {
-        // TODO Auto-generated method stub
-        return 0;
+        return networkParameters.getRadioChannel();
     }
 
     @Override
     public boolean setZigBeeChannel(int channel) {
-        // TODO Auto-generated method stub
+        networkParameters.setRadioChannel(channel);
         return false;
     }
 
     @Override
     public int getZigBeePanId() {
-        // TODO Auto-generated method stub
-        return 0;
+        return networkParameters.getPanId();
     }
 
     @Override
     public boolean setZigBeePanId(int panId) {
-        // TODO Auto-generated method stub
-        return false;
+        networkParameters.setPanId(panId);
+        return true;
     }
 
     @Override
     public long getZigBeeExtendedPanId() {
-        // TODO Auto-generated method stub
-        return 0;
+        long value = 0;
+        int cnt = 0;
+        for (long val : networkParameters.getExtendedPanId()) {
+            value += val << (cnt * 8);
+            cnt++;
+        }
+        return value;
     }
 
     @Override
     public boolean setZigBeeExtendedPanId(long extendedPanId) {
-        // TODO Auto-generated method stub
+        int[] panArray = new int[8];
+        for (int cnt = 0; cnt < 8; cnt++) {
+            panArray[cnt] = (int) ((extendedPanId >> (cnt * 8)) & 0xff);
+        }
+        networkParameters.setExtendedPanId(panArray);
         return false;
     }
 
     @Override
-    public boolean setZigBeeSecurityKey(byte[] networkKey) {
+    public boolean setZigBeeSecurityKey(int[] keyData) {
+        networkKey.setContents(keyData);
+
         return false;
     }
 }

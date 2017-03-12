@@ -17,6 +17,10 @@
         <level value="off"/>
     </logger>
 
+    <logger name="com.zsmartsystems.zigbee.dongle.ember.ash">
+        <level value="off"/>
+    </logger>
+
     <root>
         <priority value ="info" />
         <appender-ref ref="STDOUT" />

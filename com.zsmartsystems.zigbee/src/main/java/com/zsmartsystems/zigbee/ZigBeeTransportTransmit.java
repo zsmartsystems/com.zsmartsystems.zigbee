@@ -130,5 +130,5 @@ public interface ZigBeeTransportTransmit {
      * @param key the new security key as {@link byte}[16]
      * @return true if the PAN Id was set correctly
      */
-    boolean setZigBeeSecurityKey(byte[] key);
+    boolean setZigBeeSecurityKey(int[] key);
 }

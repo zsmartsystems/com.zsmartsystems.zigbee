@@ -5,7 +5,7 @@ import java.util.Arrays;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 
 /**
- * ASH Frame Error
+ * ASH Data Frame
  *
  * @author Chris Jackson
  *

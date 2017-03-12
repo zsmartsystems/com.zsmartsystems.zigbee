@@ -1,8 +1,8 @@
 package com.zsmartsystems.zigbee.dongle.ember.ash;
 
 /**
- * ASH Frame Error
- * 
+ * ASH Error Frame
+ *
  * @author Chris Jackson
  *
  */
@@ -12,7 +12,7 @@ public class AshFrameError extends AshFrame {
 
     /**
      * Constructor to create an ASH frame from a byte buffer.
-     * 
+     *
      * @param buffer
      */
     public AshFrameError(int[] frameBuffer) {

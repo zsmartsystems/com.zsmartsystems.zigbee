@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.zsmartsystems.zigbee.dongle.ember.autocode.xml.Parameter;
+
 /**
  *
  * @author Chris Jackson
@@ -147,5 +149,19 @@ public abstract class ClassGenerator {
         if (len != 0) {
             out.println();
         }
+    }
+
+    protected String formatParameterString(Parameter parameter) {
+        if (parameter.displayType != null) {
+            switch (parameter.displayType.toLowerCase()) {
+                case "hex":
+                    String size = "";
+                    if (parameter.displayLength != 0) {
+                        size = "0" + parameter.displayLength;
+                    }
+                    return "String.format(\"%" + size + "X\", " + parameter.name + ")";
+            }
+        }
+        return parameter.name;
     }
 }

@@ -235,10 +235,11 @@ public class CommandGenerator extends ClassGenerator {
                 out.println("            if (c > 0) {");
                 out.println("                builder.append(\" \");");
                 out.println("            }");
-                out.println("            builder.append(String.format(\"%02X\", " + parameter.name + "[c]));");
+                out.println("            builder.append(String.format(\"%02X\", " + formatParameterString(parameter)
+                        + "[c]));");
                 out.println("        }");
             } else {
-                out.println("        builder.append(" + parameter.name + ");");
+                out.println("        builder.append(" + formatParameterString(parameter) + ");");
             }
         }
         out.println("        builder.append(\"]\");");
@@ -486,12 +487,13 @@ public class CommandGenerator extends ClassGenerator {
                 out.println("                if (cnt != 0) {");
                 out.println("                    builder.append(\" \");");
                 out.println("                }");
-                out.println("                builder.append(String.format(\"%02X\", " + parameter.name + "[cnt]));");
+                out.println("                builder.append(String.format(\"%02X\", " + formatParameterString(parameter)
+                        + "[cnt]));");
                 out.println("            }");
                 out.println("        }");
                 out.println("        builder.append(\"}\");");
             } else {
-                out.println("        builder.append(" + parameter.name + ");");
+                out.println("        builder.append(" + formatParameterString(parameter) + ");");
             }
         }
         out.println("        builder.append(\"]\");");
@@ -724,6 +726,9 @@ public class CommandGenerator extends ClassGenerator {
             case "EzspConfigId":
                 addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId");
                 return "EzspConfigId";
+            case "EmberNetworkStatus":
+                addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus");
+                return "EmberNetworkStatus";
             default:
                 return dataType;
         }

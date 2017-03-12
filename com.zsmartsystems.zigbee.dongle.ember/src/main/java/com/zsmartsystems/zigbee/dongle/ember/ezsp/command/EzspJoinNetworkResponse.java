@@ -14,7 +14,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 /**
  * Class to implement the Ember EZSP command <b>joinNetwork</b>.
  * <p>
- * : Causes the stack to associate with the network using the specified network parameters. It
+ * Causes the stack to associate with the network using the specified network parameters. It
  * can take several seconds for the stack to associate with the local network. Do not send
  * messages until the stackStatusHandler callback informs you that the stack is up.
  * <p>

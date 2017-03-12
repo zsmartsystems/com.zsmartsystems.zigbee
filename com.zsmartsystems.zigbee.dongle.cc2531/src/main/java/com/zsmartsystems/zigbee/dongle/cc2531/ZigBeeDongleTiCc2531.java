@@ -109,8 +109,9 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
-    public boolean setZigBeeSecurityKey(byte[] networkKey) {
-        return networkManager.setNetworkKey(networkKey);
+    public boolean setZigBeeSecurityKey(int[] keyData) {
+        // TODO: Fix!
+        return networkManager.setNetworkKey(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });// keyData);
     }
 
     @Override

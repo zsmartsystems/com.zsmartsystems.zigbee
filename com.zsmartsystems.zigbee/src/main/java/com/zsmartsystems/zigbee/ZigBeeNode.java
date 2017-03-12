@@ -138,8 +138,7 @@ public class ZigBeeNode {
         }
 
         command.setTcSignificance(true);
-        command.setDestinationAddress(
-                new ZigBeeDeviceAddress(ZigBeeBroadcastDestination.BROADCAST_ROUTERS_AND_COORD.getKey()));
+        command.setDestinationAddress(new ZigBeeDeviceAddress(0));
         command.setSourceAddress(new ZigBeeDeviceAddress(0));
 
         try {

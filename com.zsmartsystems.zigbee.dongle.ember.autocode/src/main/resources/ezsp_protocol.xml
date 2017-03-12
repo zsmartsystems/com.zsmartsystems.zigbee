@@ -591,6 +591,21 @@
 			</parameter>
 		</response_parameters>
 	</command>
+					
+	<command>
+		<name>networkState</name>
+		<id>0x18</id>
+		<description>Returns a value indicating whether the node is joining, joined to, or leaving a network.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberNetworkStatus</data_type>
+				<name>status</name>
+				<description>An EmberNetworkStatus value indicating the current join status.</description>
+			</parameter>
+		</response_parameters>
+	</command>
 
 	<command>
 		<name>childJoinHandler</name>
@@ -1316,7 +1331,7 @@
 	<command>
 		<name>joinNetwork</name>
 		<id>0x1f</id>
-		<description>: Causes the stack to associate with the network using the specified network parameters. It can take several seconds for the stack to associate with the local network. Do not send messages until the stackStatusHandler callback informs you that the stack is up.</description>
+		<description>Causes the stack to associate with the network using the specified network parameters. It can take several seconds for the stack to associate with the local network. Do not send messages until the stackStatusHandler callback informs you that the stack is up.</description>
 		<command_parameters>
 			<parameter>
 				<data_type>EmberNodeType</data_type>
@@ -1536,6 +1551,7 @@
 				<data_type>uint32_t</data_type>
 				<name>channels</name>
 				<description>NWK channel mask. The list of preferred channels that the NWK manager has told this device to use when searching for the network. This may only be set at joining when using EMBER_USE_NWK_COMMISSIONING as the join method.</description>
+				<display>hex[8]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3542,6 +3558,38 @@
 				<name>EMBER_COUNTER_TYPE_COUNT</name>
 				<enum_value>29</enum_value>
 				<description>A placeholder giving the number of Ember counter types.</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EmberNetworkStatus</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_NO_NETWORK</name>
+				<enum_value>0</enum_value>
+				<description>The node is not associated with a network in any way.</description>
+			</value>
+			<value>
+				<name>EMBER_JOINING_NETWORK</name>
+				<enum_value>1</enum_value>
+				<description>The node is currently attempting to join a network.</description>
+			</value>
+			<value>
+				<name>EMBER_JOINED_NETWORK</name>
+				<enum_value>2</enum_value>
+				<description>The node is joined to a network.</description>
+			</value>
+			<value>
+				<name>EMBER_JOINED_NETWORK_NO_PARENT</name>
+				<enum_value>3</enum_value>
+				<description>The node is an end device joined to a network but its parent is not responding.</description>
+			</value>
+			<value>
+				<name>EMBER_LEAVING_NETWORK</name>
+				<enum_value>4</enum_value>
+				<description>The node is in the process of leaving its current network.</description>
 			</value>
 		</values>
 	</enum>

@@ -16,6 +16,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNeighborTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNodeType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberRouteTableEntry;
@@ -205,6 +206,10 @@ public class EzspDeserializer {
 
     public EmberJoinMethod deserializeEmberJoinMethod() {
         return EmberJoinMethod.getEmberJoinMethod(deserializeUInt8());
+    }
+
+    public EmberNetworkStatus deserializeEmberNetworkStatus() {
+        return EmberNetworkStatus.getEmberNetworkStatus(deserializeUInt8());
     }
 
     public EmberInitialSecurityBitmask deserializeEmberInitialSecurityBitmask() {

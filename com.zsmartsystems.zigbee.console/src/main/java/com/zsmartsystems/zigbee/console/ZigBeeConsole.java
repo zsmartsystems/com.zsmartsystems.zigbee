@@ -207,6 +207,10 @@ public final class ZigBeeConsole {
 
         print("ZigBee console ready.", System.out);
 
+        print("PAN ID          = " + networkManager.getZigBeePanId(), System.out);
+        print("Extended PAN ID = " + String.format("%08X", networkManager.getZigBeeExtendedPanId()), System.out);
+        print("Channel         = " + networkManager.getZigBeeChannel(), System.out);
+
         String inputLine;
         while (!shutdown && (inputLine = readLine()) != null) {
             processInputLine(inputLine, System.out);
@@ -308,7 +312,7 @@ public final class ZigBeeConsole {
      */
     private String getDeviceSummary(final ZigBeeDevice device) {
         return StringUtils.leftPad(Integer.toString(device.getNetworkAddress()), 10) + "/"
-                + StringUtils.rightPad(Integer.toString(device.getEndpoint()), 3) + " "
+                + StringUtils.rightPad(Integer.toString(device.getEndpoint()), 3) + " " + device.getIeeeAddress() + "  "
                 + StringUtils.rightPad(device.getLabel() != null ? device.getLabel() : "<label>", 20); // + " "
         // + ZigBeeApiConstants.getDeviceName(device.getProfileId(), device.getDeviceId());
     }
@@ -1813,7 +1817,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getSyntax() {
-            return "join [enable|disable]";
+            return "join [enable|disable|period] [node]";
         }
 
         /**
@@ -1821,24 +1825,41 @@ public final class ZigBeeConsole {
          */
         @Override
         public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 2) {
+            if (args.length < 2 | args.length > 3) {
                 return false;
             }
 
-            final boolean join;
+            final int join;
             if (args[1].toLowerCase().equals("enable")) {
-                join = true;
+                join = 255;
             } else if (args[1].toLowerCase().equals("disable")) {
-                join = false;
+                join = 0;
             } else {
-                return false;
+                join = Integer.parseInt(args[1]);
             }
 
-            zigbeeApi.permitJoin(join);
-            if (args[1].toLowerCase().equals("enable")) {
-                out.println("Permit join enable broadcast success.");
+            if (args.length == 3) {
+                // Node defined
+                int nodeAddress = Integer.parseInt(args[2]);
+
+                ZigBeeNode node = networkManager.getNode(nodeAddress);
+                if (node == null) {
+                    out.println("Unable to find node " + nodeAddress);
+                    return false;
+                }
+                node.permitJoin(join);
+                if (join != 0) {
+                    out.println("Permit join enable node " + nodeAddress + " success.");
+                } else {
+                    out.println("Permit join disable " + nodeAddress + " success.");
+                }
             } else {
-                out.println("Permit join disable broadcast success.");
+                networkManager.permitJoin(join);
+                if (join != 0) {
+                    out.println("Permit join enable broadcast success.");
+                } else {
+                    out.println("Permit join disable broadcast success.");
+                }
             }
             return true;
         }

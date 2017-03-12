@@ -303,10 +303,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Note that this method may only be called following the {@link #initialize} call, and before the {@link #startup}
      * call.
      *
-     * @param key the new security key as {@link byte}[16]
+     * @param key the new security key as {@link int}[16]
      * @return true if the key was set
      */
-    public boolean setZigBeeSecurityKey(final byte key[]) {
+    public boolean setZigBeeSecurityKey(final int key[]) {
         return transport.setZigBeeSecurityKey(key);
     }
 

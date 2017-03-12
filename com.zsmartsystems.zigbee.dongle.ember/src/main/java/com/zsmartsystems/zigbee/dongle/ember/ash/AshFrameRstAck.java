@@ -1,8 +1,8 @@
 package com.zsmartsystems.zigbee.dongle.ember.ash;
 
 /**
- * ASH Frame Error
- * 
+ * ASH Reset ACK Frame
+ *
  * @author Chris Jackson
  *
  */
@@ -13,7 +13,7 @@ public class AshFrameRstAck extends AshFrame {
 
     /**
      * Constructor to create an ASH frame from a byte buffer.
-     * 
+     *
      * @param buffer
      */
     public AshFrameRstAck(int[] frameBuffer) {

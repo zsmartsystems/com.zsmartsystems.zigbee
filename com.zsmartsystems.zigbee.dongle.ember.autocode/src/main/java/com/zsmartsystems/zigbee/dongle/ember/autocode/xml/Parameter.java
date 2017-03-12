@@ -11,4 +11,6 @@ public class Parameter {
     public String description;
     public String auto_size;
     public Boolean multiple;
+    public String displayType;
+    public int displayLength;
 }

@@ -185,6 +185,8 @@ public class AshFrameHandler {
                                                 if (response == null) {
                                                     logger.debug("No frame handler created for {}", packet);
                                                 } else if (response != null && !notifyTransactionComplete(response)) {
+                                                    logger.debug("RX EZSP frame: " + response.toString());
+
                                                     // No transactions owned this
                                                     // response, so we pass it to
                                                     // our unhandled response
@@ -377,7 +379,7 @@ public class AshFrameHandler {
      *            {@link EzspFrameRequest}
      */
     public void queueFrame(EzspFrameRequest request) {
-        // logger.debug("queue EZSP frame : " + request.toString());
+        logger.debug("TX EZSP frame: " + request.toString());
 
         // Encapsulate the EZSP frame into the ASH packet
         AshFrameData ashFrame = new AshFrameData(request);

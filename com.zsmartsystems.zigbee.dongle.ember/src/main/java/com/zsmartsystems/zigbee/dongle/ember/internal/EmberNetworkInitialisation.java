@@ -16,6 +16,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspFormNetworkRequest
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspFormNetworkResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurityStateRequest;
@@ -32,6 +34,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspMultiResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspSingleResponseTransaction;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
 
 /**
  * This class provides utility functions to establish an Ember ZigBee network
@@ -59,13 +62,18 @@ public class EmberNetworkInitialisation {
      * and emberNetworkFoundHandler to discover other networks or determine the background noise level. It then uses
      * emberFormNetwork to create a new network with a unique PAN-ID on a channel with low background noise.
      *
+     * @param networkParameters the required {@link EmberNetworkParameters}
+     * @param networkKey the {@link EmberKeyData} with the network key
      */
-    public void formNetwork() {
+    public void formNetwork(EmberNetworkParameters networkParameters, EmberKeyData networkKey) {
         int scanDuration = 1; // 6
 
-        // First we do an energy scan to find a clear channel
+        // Leave the current network so we can initialise a new network
+        doLeaveNetwork();
+
+        // Perform an energy scan to find a clear channel
         int quietestChannel = doEnergyScan(scanDuration);
-        logger.debug("Quietest channel is " + quietestChannel);
+        logger.debug("Energy scan reports quietest channel is " + quietestChannel);
 
         // Check if any current networks were found and avoid those channels, PAN ID and especially Extended PAN ID
         doActiveScan(scanDuration);
@@ -74,18 +82,45 @@ public class EmberNetworkInitialisation {
         getNetworkParameters();
 
         // Create a random PAN ID and Extended PAN ID
-        Random random = new Random();
-        int panId = random.nextInt(65535);
-        int extendedPanId[] = new int[8];
-        for (int cnt = 0; cnt < 8; cnt++) {
-            extendedPanId[cnt] = random.nextInt(256);
+        if (networkParameters.getPanId() == 0
+                || Arrays.equals(networkParameters.getExtendedPanId(), new int[] { 0, 0, 0, 0, 0, 0, 0, 0 })) {
+            Random random = new Random();
+            int panId = random.nextInt(65535);
+            networkParameters.setPanId(panId);
+            logger.debug("Created random PAN ID: {}", panId);
+
+            int extendedPanId[] = new int[8];
+            StringBuilder extendedPanIdBuilder = new StringBuilder();
+            for (int cnt = 0; cnt < 8; cnt++) {
+                extendedPanId[cnt] = random.nextInt(256);
+                extendedPanIdBuilder.append(String.format("%2X", extendedPanId[cnt]));
+            }
+
+            networkParameters.setExtendedPanId(extendedPanId);
+            logger.debug("Created random Extended PAN ID: {}", extendedPanIdBuilder.toString());
         }
 
-        EmberKeyData networkKey = new EmberKeyData();
-        networkKey.setContents(new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+        if (networkParameters.getRadioChannel() == 0) {
+            networkParameters.setRadioChannel(quietestChannel);
+        }
+
+        // Initialise security
         setSecurityState(networkKey);
 
-        doFormNetwork(panId, extendedPanId);
+        // And now form the network
+        doFormNetwork(networkParameters.getPanId(), networkParameters.getExtendedPanId(),
+                networkParameters.getRadioChannel());
+    }
+
+    private boolean doLeaveNetwork() {
+        EzspLeaveNetworkRequest leaveNetworkRequest = new EzspLeaveNetworkRequest();
+        EzspTransaction leaveNetworkTransaction = ashHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(leaveNetworkRequest, EzspLeaveNetworkResponse.class));
+        EzspLeaveNetworkResponse leaveNetworkResponse = (EzspLeaveNetworkResponse) leaveNetworkTransaction
+                .getResponse();
+        logger.debug(leaveNetworkResponse.toString());
+
+        return leaveNetworkResponse.getStatus() == EmberStatus.EMBER_SUCCESS;
     }
 
     /**
@@ -215,14 +250,15 @@ public class EmberNetworkInitialisation {
      *
      * @param panId the panId as int
      * @param extendedPanId the extended pan ID as int[8]
+     * @param channel the radio channel to use
      * @return true if the network was formed successfully
      */
-    private boolean doFormNetwork(int panId, int[] extendedPanId) {
+    private boolean doFormNetwork(int panId, int[] extendedPanId, int channel) {
         EmberNetworkParameters networkParameters = new EmberNetworkParameters();
         networkParameters.setJoinMethod(EmberJoinMethod.EMBER_USE_MAC_ASSOCIATION);
         networkParameters.setExtendedPanId(extendedPanId);
         networkParameters.setPanId(panId);
-        networkParameters.setRadioChannel(11); // energyScan.getQuietestChannel());
+        networkParameters.setRadioChannel(channel);
         EzspFormNetworkRequest formNetwork = new EzspFormNetworkRequest();
         formNetwork.setParameters(networkParameters);
         EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(formNetwork,

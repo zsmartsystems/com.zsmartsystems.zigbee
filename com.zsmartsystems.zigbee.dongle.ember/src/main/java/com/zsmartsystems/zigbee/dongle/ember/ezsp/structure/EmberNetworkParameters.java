@@ -327,7 +327,7 @@ public class EmberNetworkParameters {
         builder.append(", nwkUpdateId=");
         builder.append(nwkUpdateId);
         builder.append(", channels=");
-        builder.append(channels);
+        builder.append(String.format("%08X", channels));
         builder.append("]");
         return builder.toString();
     }
