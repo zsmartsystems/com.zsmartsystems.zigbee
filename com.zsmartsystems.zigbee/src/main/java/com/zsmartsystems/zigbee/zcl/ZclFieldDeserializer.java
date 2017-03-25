@@ -42,6 +42,15 @@ public class ZclFieldDeserializer {
     }
 
     /**
+     * Checks if there are further bytes to be read
+     * 
+     * @return true if we are at the end of the input stream
+     */
+    public boolean isEndOfStream() {
+        return deserializer.isEndOfStream();
+    }
+
+    /**
      * Deserializes a field.
      *
      * @param dataType the data type of the field.

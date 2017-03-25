@@ -36,8 +36,6 @@ public class EzspCallbackResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("]");
-        return builder.toString();
+        return "EzspCallbackResponse []";
     }
 }

@@ -10,8 +10,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingTableEnt
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberDeviceUpdate;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberIncomingMessageType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinDecision;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNeighborTableEntry;
@@ -200,8 +202,16 @@ public class EzspDeserializer {
         return new EmberZigbeeNetwork(this);
     }
 
-    public EmberCurrentSecurityBitmask deserializeEmberCurrentSecurityBitmask() {
-        return EmberCurrentSecurityBitmask.getEmberCurrentSecurityBitmask(deserializeUInt8());
+    public Set<EmberCurrentSecurityBitmask> deserializeEmberCurrentSecurityBitmask() {
+        Set<EmberCurrentSecurityBitmask> list = new HashSet<EmberCurrentSecurityBitmask>();
+        int value = deserializeUInt8();
+        for (EmberCurrentSecurityBitmask bitmask : EmberCurrentSecurityBitmask.values()) {
+            if ((value & bitmask.getKey()) != 0) {
+                list.add(bitmask);
+            }
+        }
+
+        return list;
     }
 
     public EmberJoinMethod deserializeEmberJoinMethod() {
@@ -212,7 +222,23 @@ public class EzspDeserializer {
         return EmberNetworkStatus.getEmberNetworkStatus(deserializeUInt8());
     }
 
-    public EmberInitialSecurityBitmask deserializeEmberInitialSecurityBitmask() {
-        return EmberInitialSecurityBitmask.getEmberInitialSecurityBitmask(deserializeUInt8());
+    public EmberDeviceUpdate deserializeEmberDeviceUpdate() {
+        return EmberDeviceUpdate.getEmberDeviceUpdate(deserializeUInt8());
+    }
+
+    public EmberJoinDecision deserializeEmberJoinDecision() {
+        return EmberJoinDecision.getEmberJoinDecision(deserializeUInt8());
+    }
+
+    public Set<EmberInitialSecurityBitmask> deserializeEmberInitialSecurityBitmask() {
+        Set<EmberInitialSecurityBitmask> list = new HashSet<EmberInitialSecurityBitmask>();
+        int value = deserializeUInt8();
+        for (EmberInitialSecurityBitmask bitmask : EmberInitialSecurityBitmask.values()) {
+            if ((value & bitmask.getKey()) != 0) {
+                list.add(bitmask);
+            }
+        }
+
+        return list;
     }
 }

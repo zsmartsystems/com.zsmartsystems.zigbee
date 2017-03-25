@@ -442,26 +442,26 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
     @Override
     public void setZigBeeNodeMode(NetworkMode networkMode) {
-        if (state != DriverStatus.HARDWARE_READY) {
-            throw new IllegalStateException(
-                    "Interface mode can be changed only if driver is CLOSED while it is:" + state);
-        }
+        // if (state != DriverStatus.HARDWARE_READY) {
+        // throw new IllegalStateException(
+        // "Interface mode can be changed only if driver is CLOSED while it is:" + state);
+        // }
         mode = networkMode;
     }
 
     public void setZigBeeNetworkKey(byte[] networkKey) {
-        if (state != DriverStatus.HARDWARE_READY) {
-            throw new IllegalStateException("Network key can be changed only if driver is CLOSED while it is:" + state);
-        }
+        // if (state != DriverStatus.HARDWARE_READY) {
+        // throw new IllegalStateException("Network key can be changed only if driver is CLOSED while it is:" + state);
+        // }
         this.networkKey = networkKey;
         dongleSetNetworkKey();
     }
 
     @Override
     public boolean setZigBeePanId(int panId) {
-        if (state != DriverStatus.HARDWARE_READY) {
-            throw new IllegalStateException("PAN ID can be changed only if driver is CLOSED while it is:" + state);
-        }
+        // if (state != DriverStatus.HARDWARE_READY) {
+        // throw new IllegalStateException("PAN ID can be changed only if driver is CLOSED while it is:" + state);
+        // }
         pan = panId;
 
         return dongleSetPanId();
@@ -469,9 +469,9 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
     @Override
     public boolean setZigBeeChannel(int channel) {
-        if (state != DriverStatus.HARDWARE_READY) {
-            throw new IllegalStateException("Channel can be changed only if driver is CLOSED while it is:" + state);
-        }
+        // if (state != DriverStatus.HARDWARE_READY) {
+        // throw new IllegalStateException("Channel can be changed only if driver is CLOSED while it is:" + state);
+        // }
         this.channel = channel;
 
         return dongleSetChannel();

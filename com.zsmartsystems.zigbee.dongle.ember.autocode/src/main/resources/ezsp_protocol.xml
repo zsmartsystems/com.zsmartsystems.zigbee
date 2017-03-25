@@ -1263,6 +1263,61 @@
 	</command>
 
 	<command>
+		<name>trustCenterJoinHandler</name>
+		<id>0x24</id>
+		<description>The NCP used the trust center behavior policy to decide whether to allow a new node to join the network. The Host cannot change the current decision, but it can change the policy for future decisions using the setPolicy command.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>newNodeId</name>
+				<description>The Node Id of the node whose status changed.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>newNodeEui64</name>
+				<description>The EUI64 of the node whose status changed.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberDeviceUpdate</data_type>
+				<name>status</name>
+				<description>The status of the node: Secure Join/Rejoin, Unsecure Join/Rejoin, Device left.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberJoinDecision</data_type>
+				<name>policyDecision</name>
+				<description>An EmberJoinDecision reflecting the decision made.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>parentOfNewNodeId</name>
+				<description>The parent of the node whose status has changed.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>becomeTrustCenter</name>
+		<id>0x77</id>
+		<description>This function causes a coordinator to become the Trust Center when it is operating in a network that is not using one. It will send out an updated Network Key to all devices that will indicate a transition of the network to now use a Trust Center. The Trust Center should also switch all devices to using this new network key with the appropriate API.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberKeyData</data_type>
+				<name>newNetworkKey</name>
+				<description>The key data for the Updated Network Key.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>The response status.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>setSourceRoute</name>
 		<id>0x5A</id>
 		<description>Supply a source route for the next outgoing message.</description>
@@ -1497,7 +1552,7 @@
 		<response_parameters>
 			<parameter>
 				<data_type>EmberStatus</data_type>
-				<name>success</name>
+				<name>status</name>
 				<description>The success or failure code of the operation.</description>
 			</parameter>
 			<parameter>
@@ -1677,7 +1732,7 @@
 		<description>The security data used to set the configuration for the stack, or the retrieved configuration currently in use.</description>
 		<parameters>
 			<parameter>
-				<data_type>EmberInitialSecurityBitmask</data_type>
+				<data_type multiple="true">EmberInitialSecurityBitmask</data_type>
 				<name>bitmask</name>
 				<description>A bitmask indicating the security state used to indicate what the security configuration will be when the device forms or joins the network.</description>
 			</parameter>
@@ -1783,7 +1838,7 @@
 		<description>The security options and information currently used by the stack.</description>
 		<parameters>
 			<parameter>
-				<data_type>EmberCurrentSecurityBitmask</data_type>
+				<data_type multiple="true">EmberCurrentSecurityBitmask</data_type>
 				<name>bitmask</name>
 				<description>A bitmask indicating the security options currently in use by a device joined in the network.</description>
 			</parameter>
@@ -2465,6 +2520,16 @@
 				<description>The number of packet buffers available to the stack. When set to the special value 0xFF, the NCP will allocate all remaining configuration RAM towards packet buffers, such that the resulting count will be the largest whole number of packet buffers that can fit into the available memory.</description>
 			</value>
 			<value>
+				<name>EZSP_CONFIG_BINDING_TABLE_SIZE</name>
+				<enum_value>0x04</enum_value>
+				<description>The maximum number of non-volatile bindings supported by the stack.</description>
+			</value>
+			<value>
+				<name>EZSP_CONFIG_ADDRESS_TABLE_SIZE</name>
+				<enum_value>0x05</enum_value>
+				<description>The maximum number of EUI64 to network address associations that the stack can maintain for the application. (Note, the total number of such address associations maintained by the NCP is the sum of the value of this setting and the value of ::EZSP_CONFIG_TRUST_CENTER_ADDRESS_CACHE_SIZE.). </description>
+			</value>
+			<value>
 				<name>EZSP_CONFIG_STACK_PROFILE</name>
 				<enum_value>0x0C</enum_value>
 				<description>Specifies the stack profile.</description>
@@ -2475,14 +2540,34 @@
 				<description>The security level used for security at the MAC and network layers. The supported values are 0 (no security) and 5 (payload is encrypted and a four-byte MIC is used for authentication).</description>
 			</value>
 			<value>
+				<name>EZSP_CONFIG_MAX_HOPS</name>
+				<enum_value>0x10</enum_value>
+				<description>The maximum number of hops for a message.</description>
+			</value>
+			<value>
 				<name>EZSP_CONFIG_MAX_END_DEVICE_CHILDREN</name>
 				<enum_value>0x11</enum_value>
 				<description>The maximum number of end device children that a router will support.</description>
 			</value>
 			<value>
+				<name>EZSP_CONFIG_INDIRECT_TRANSMISSION_TIMEOUT</name>
+				<enum_value>0x12</enum_value>
+				<description>The maximum amount of time that the MAC will hold a message for indirect transmission to a child.</description>
+			</value>
+			<value>
 				<name>EZSP_CONFIG_TX_POWER_MODE</name>
 				<enum_value>0x17</enum_value>
 				<description>Enables boost power mode and/or the alternate transmitter output.</description>
+			</value>
+			<value>
+				<name>EZSP_CONFIG_TRUST_CENTER_ADDRESS_CACHE_SIZE</name>
+				<enum_value>0x19</enum_value>
+				<description>The maximum number of EUI64 to network address associations that the Trust Center can maintain. These address cache entries are reserved for and reused by the Trust Center when processing device join/rejoin authentications. This cache size limits the number of overlapping joins the Trust Center can process within a narrow time window (e.g. two seconds), and thus should be set to the maximum number of near simultaneous joins the Trust Center is expected to accommodate. (Note, the total number of such address associations maintained by the NCP is the sum of the value of this setting and the value of ::EZSP_CONFIG_ADDRESS_TABLE_SIZE.) </description>
+			</value>
+			<value>
+				<name>EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE</name>
+				<enum_value>0x1A</enum_value>
+				<description>The size of the source route table.</description>
 			</value>
 			<value>
 				<name>EZSP_CONFIG_KEY_TABLE_SIZE</name>
@@ -2927,6 +3012,11 @@
 				<description>There was an attempt to form or join a network with security without calling emberSetInitialSecurityState() first</description>
 			</value>
 			<value>
+				<name>EMBER_KEY_INVALID</name>
+				<enum_value>0x00B2</enum_value>
+				<description>The passed key data is not valid. A key of all zeros or all F's are reserved values and cannot be used.</description>
+			</value>
+			<value>
 				<name>EMBER_KEY_TABLE_INVALID_ADDRESS</name>
 				<enum_value>0x00B3</enum_value>
 				<description>There was an attempt to set an entry in the key table using an invalid long address. An entry cannot be set using either the local device's or Trust Center's IEEE address. Or an entry already exists in the table with the same IEEE address. An Address of all zeros or all F's are not valid addresses in 802.15.4.</description>
@@ -3174,6 +3264,33 @@
 				<name>EMBER_APS_OPTION_FRAGMENT</name>
 				<enum_value>0x8000</enum_value>
 				<description>This message is part of a fragmented message. This option may only be set for unicasts. The groupId field gives the index of this fragment in the low-order byte. If the low-order byte is zero this is the first fragment and the high-order byte contains the number of fragments in the message.</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EmberJoinDecision</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_USE_PRECONFIGURED_KEY</name>
+				<enum_value>0x0000</enum_value>
+				<description>Allow the node to join. The joining node should have a pre-configured key. The security data sent to it will be encrypted with that key.</description>
+			</value>
+			<value>
+				<name>EMBER_SEND_KEY_IN_THE_CLEAR</name>
+				<enum_value>0x0001</enum_value>
+				<description>Allow the node to join. Send the necessary key (the Network Key in Standard Security mode, the Trust Center Master in High Security mode) in-the-clear to the joining device.</description>
+			</value>
+			<value>
+				<name>EMBER_DENY_JOIN</name>
+				<enum_value>0x0002</enum_value>
+				<description>Deny join.</description>
+			</value>
+			<value>
+				<name>EMBER_NO_ACTION</name>
+				<enum_value>0x0003</enum_value>
+				<description>Take no action.</description>
 			</value>
 		</values>
 	</enum>

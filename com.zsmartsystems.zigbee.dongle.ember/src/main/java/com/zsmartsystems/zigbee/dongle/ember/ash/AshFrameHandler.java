@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
 
 /**
  * Frame parser for the Silicon Labs Asynchronous Serial Host (ASH) protocol.
- *
+ * <p>
  * This class handles all the ASH protocol including retries, and provides
  * services to higher layers to allow sending of EZSP frames and the correlation
  * of their responds. Higher layers can simply send EZSP messages synchronously
@@ -138,7 +138,7 @@ public class AshFrameHandler {
                 while (!close) {
                     try {
                         int val = inputStream.read();
-                        // logger.debug("ASH RX: " + String.format("%02X", val));
+                        logger.trace("ASH RX: " + String.format("%02X", val));
                         if (val == ASH_CANCEL_BYTE) {
                             inputCount = 0;
                             inputError = false;
@@ -420,7 +420,7 @@ public class AshFrameHandler {
             } else if (receiveTimeout > T_RX_ACK_MAX) {
                 receiveTimeout = T_RX_ACK_MAX;
             }
-            logger.debug("ASH RX Timer: took {}ms, timer now {}ms", (System.nanoTime() - sentTime) / 1000000,
+            logger.trace("ASH RX Timer: took {}ms, timer now {}ms", (System.nanoTime() - sentTime) / 1000000,
                     receiveTimeout);
             sentTime = 0;
         }
@@ -568,39 +568,14 @@ public class AshFrameHandler {
     }
 
     /**
-     * Sends an EZSP request to the NCP and waits for the response. The response
-     * is correlated with the request and the returned {@link EzspFrame} contains the request and response data.
-     *
-     * @param ezspRequest
-     *            Request {@link EzspFrame}
-     * @return response {@link EzspFrame}
-     */
-    /*
-     * public EzspFrame sendEzspRequest(EzspFrameRequest ezspRequest) {
-     * Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspRequest);
-     * try {
-     * EzspFrame ezspResponse = futureResponse.get();
-     * return ezspResponse;
-     * } catch (InterruptedException e) {
-     * e.printStackTrace();
-     * } catch (ExecutionException e) {
-     * e.printStackTrace();
-     * }
-     *
-     * return null;
-     * }
-     */
-
-    /**
-     * Sends an EZSP request to the NCP and waits for the response. The response
-     * is correlated with the request and the returned {@link EzspFrame} contains the request and response data.
+     * Sends an EZSP request to the NCP and waits for the response. The response is correlated with the request and the
+     * returned {@link EzspFrame} contains the request and response data.
      *
      * @param ezspRequest
      *            Request {@link EzspFrame}
      * @return response {@link EzspFrame}
      */
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
-        logger.debug("Send: {}", ezspTransaction.getRequest());
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
         try {
             futureResponse.get();

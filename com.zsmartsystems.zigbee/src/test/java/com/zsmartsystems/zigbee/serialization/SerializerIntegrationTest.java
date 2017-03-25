@@ -148,6 +148,6 @@ public class SerializerIntegrationTest {
             assertEquals(objectIn, objectOut);
         }
         assertEquals(size, deserializer.getPosition());
-        assertTrue(deserializer.endOfStream());
+        assertTrue(deserializer.isEndOfStream());
     }
 }

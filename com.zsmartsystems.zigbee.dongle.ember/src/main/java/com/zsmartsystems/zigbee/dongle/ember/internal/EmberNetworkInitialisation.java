@@ -223,12 +223,22 @@ public class EmberNetworkInitialisation {
      * @return true if the security state was set successfully
      */
     private boolean setSecurityState(EmberKeyData networkKey) {
+        // Define the ZigBeeAliance09 key for HA link-key
+        // This is used to encrypt the network key when it is transferred to a newly joining device.
+        EmberKeyData linkKey = new EmberKeyData();
+        linkKey.setContents(new int[] { 0x5A, 0x69, 0x67, 0x42, 0x65, 0x65, 0x41, 0x6C, 0x6C, 0x69, 0x61, 0x6E, 0x63,
+                0x65, 0x30, 0x39 });
+
         EzspSetInitialSecurityStateRequest securityState = new EzspSetInitialSecurityStateRequest();
         EmberInitialSecurityState state = new EmberInitialSecurityState();
-        state.setBitmask(EmberInitialSecurityBitmask.EMBER_HAVE_PRECONFIGURED_KEY);
-        // state.addBitmask(EmberInitialSecurityBitmask.);
+        state.addBitmask(EmberInitialSecurityBitmask.EMBER_STANDARD_SECURITY_MODE);
+        // state.addBitmask(EmberInitialSecurityBitmask.EMBER_DISTRIBUTED_TRUST_CENTER_MODE);//
+        // EMBER_TRUST_CENTER_GLOBAL_LINK_KEY);
+        state.addBitmask(EmberInitialSecurityBitmask.EMBER_TRUST_CENTER_GLOBAL_LINK_KEY);
+        state.addBitmask(EmberInitialSecurityBitmask.EMBER_HAVE_PRECONFIGURED_KEY);
+        state.addBitmask(EmberInitialSecurityBitmask.EMBER_HAVE_NETWORK_KEY);
         state.setNetworkKey(networkKey);
-        state.setPreconfiguredKey(networkKey);
+        state.setPreconfiguredKey(linkKey);
         state.setPreconfiguredTrustCenterEui64(new IeeeAddress(0));
         securityState.setState(state);
         EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(securityState,

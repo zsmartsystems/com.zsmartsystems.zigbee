@@ -217,33 +217,38 @@ public class CommandGenerator extends ClassGenerator {
         out.println();
         out.println("    @Override");
         out.println("    public String toString() {");
-        out.println("        final StringBuilder builder = new StringBuilder();");
-        boolean first = true;
-        for (Parameter parameter : parameters) {
-            if (parameter.auto_size != null) {
-                continue;
-            }
 
-            if (first) {
-                out.println("        builder.append(\"" + className + " [" + parameter.name + "=\");");
-            } else {
-                out.println("        builder.append(\", " + parameter.name + "=\");");
+        if (parameters == null || parameters.size() == 0) {
+            out.println("        return \"" + className + " []\";");
+        } else {
+            out.println("        final StringBuilder builder = new StringBuilder();");
+            boolean first = true;
+            for (Parameter parameter : parameters) {
+                if (parameter.auto_size != null) {
+                    continue;
+                }
+
+                if (first) {
+                    out.println("        builder.append(\"" + className + " [" + parameter.name + "=\");");
+                } else {
+                    out.println("        builder.append(\", " + parameter.name + "=\");");
+                }
+                first = false;
+                if (parameter.data_type.contains("[")) {
+                    out.println("        for (int c = 0; c < " + parameter.name + ".length; c++) {");
+                    out.println("            if (c > 0) {");
+                    out.println("                builder.append(\" \");");
+                    out.println("            }");
+                    out.println("            builder.append(String.format(\"%02X\", " + formatParameterString(parameter)
+                            + "[c]));");
+                    out.println("        }");
+                } else {
+                    out.println("        builder.append(" + formatParameterString(parameter) + ");");
+                }
             }
-            first = false;
-            if (parameter.data_type.contains("[")) {
-                out.println("        for (int c = 0; c < " + parameter.name + ".length; c++) {");
-                out.println("            if (c > 0) {");
-                out.println("                builder.append(\" \");");
-                out.println("            }");
-                out.println("            builder.append(String.format(\"%02X\", " + formatParameterString(parameter)
-                        + "[c]));");
-                out.println("        }");
-            } else {
-                out.println("        builder.append(" + formatParameterString(parameter) + ");");
-            }
+            out.println("        builder.append(\"]\");");
+            out.println("        return builder.toString();");
         }
-        out.println("        builder.append(\"]\");");
-        out.println("        return builder.toString();");
         out.println("    }");
 
         out.println("}");
@@ -729,6 +734,15 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberNetworkStatus":
                 addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus");
                 return "EmberNetworkStatus";
+            case "EmberKeyData":
+                addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData");
+                return "EmberKeyData";
+            case "EmberDeviceUpdate":
+                addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberDeviceUpdate");
+                return "EmberDeviceUpdate";
+            case "EmberJoinDecision":
+                addImport("com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinDecision");
+                return "EmberJoinDecision";
             default:
                 return dataType;
         }

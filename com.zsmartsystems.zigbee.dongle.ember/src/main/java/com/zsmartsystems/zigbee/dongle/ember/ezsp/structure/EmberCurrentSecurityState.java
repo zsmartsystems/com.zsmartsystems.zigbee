@@ -11,6 +11,8 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class to implement the Ember Structure <b>EmberCurrentSecurityState</b>.
@@ -27,8 +29,9 @@ public class EmberCurrentSecurityState {
      * A bitmask indicating the security options currently in use by a device joined in the network.
      * <p>
      * EZSP type is <i>EmberCurrentSecurityBitmask</i> - Java type is {@link EmberCurrentSecurityBitmask}
+     * Parameter allows multiple options so implemented as a {@link Set}.
      */
-    private EmberCurrentSecurityBitmask bitmask;
+    private Set<EmberCurrentSecurityBitmask> bitmask = new HashSet<EmberCurrentSecurityBitmask>();
 
     /**
      * The IEEE Address of the Trust Center device.
@@ -52,19 +55,28 @@ public class EmberCurrentSecurityState {
      * <p>
      * EZSP type is <i>EmberCurrentSecurityBitmask</i> - Java type is {@link EmberCurrentSecurityBitmask}
      *
-     * @return the current bitmask as {@link EmberCurrentSecurityBitmask}
+     * @return the current bitmask as {@link Set} of {@link EmberCurrentSecurityBitmask}
      */
-    public EmberCurrentSecurityBitmask getBitmask() {
+    public Set<EmberCurrentSecurityBitmask> getBitmask() {
         return bitmask;
     }
 
     /**
      * A bitmask indicating the security options currently in use by a device joined in the network.
      *
-     * @param bitmask the bitmask to set as {@link EmberCurrentSecurityBitmask}
+     * @param bitmask the bitmask to add to the {@link Set} as {@link EmberCurrentSecurityBitmask}
      */
-    public void setBitmask(EmberCurrentSecurityBitmask bitmask) {
-        this.bitmask = bitmask;
+    public void addBitmask(EmberCurrentSecurityBitmask bitmask) {
+        this.bitmask.add(bitmask);
+    }
+
+    /**
+     * A bitmask indicating the security options currently in use by a device joined in the network.
+     *
+     * @param bitmask the bitmask to remove to the {@link Set} as {@link EmberCurrentSecurityBitmask}
+     */
+    public void removeBitmask(EmberCurrentSecurityBitmask bitmask) {
+        this.bitmask.remove(bitmask);
     }
 
     /**

@@ -37,8 +37,6 @@ public class EzspSetBindingRemoteNodeIdResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("]");
-        return builder.toString();
+        return "EzspSetBindingRemoteNodeIdResponse []";
     }
 }

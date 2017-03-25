@@ -11,6 +11,9 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class to implement the Ember Structure <b>EmberInitialSecurityState</b>.
@@ -29,8 +32,9 @@ public class EmberInitialSecurityState {
      * will be when the device forms or joins the network.
      * <p>
      * EZSP type is <i>EmberInitialSecurityBitmask</i> - Java type is {@link EmberInitialSecurityBitmask}
+     * Parameter allows multiple options so implemented as a {@link Set}.
      */
-    private EmberInitialSecurityBitmask bitmask;
+    private Set<EmberInitialSecurityBitmask> bitmask = new HashSet<EmberInitialSecurityBitmask>();
 
     /**
      * The pre-configured Key data that should be used when forming or joining the network. The
@@ -85,9 +89,9 @@ public class EmberInitialSecurityState {
      * <p>
      * EZSP type is <i>EmberInitialSecurityBitmask</i> - Java type is {@link EmberInitialSecurityBitmask}
      *
-     * @return the current bitmask as {@link EmberInitialSecurityBitmask}
+     * @return the current bitmask as {@link Set} of {@link EmberInitialSecurityBitmask}
      */
-    public EmberInitialSecurityBitmask getBitmask() {
+    public Set<EmberInitialSecurityBitmask> getBitmask() {
         return bitmask;
     }
 
@@ -95,10 +99,20 @@ public class EmberInitialSecurityState {
      * A bitmask indicating the security state used to indicate what the security configuration
      * will be when the device forms or joins the network.
      *
-     * @param bitmask the bitmask to set as {@link EmberInitialSecurityBitmask}
+     * @param bitmask the bitmask to add to the {@link Set} as {@link EmberInitialSecurityBitmask}
      */
-    public void setBitmask(EmberInitialSecurityBitmask bitmask) {
-        this.bitmask = bitmask;
+    public void addBitmask(EmberInitialSecurityBitmask bitmask) {
+        this.bitmask.add(bitmask);
+    }
+
+    /**
+     * A bitmask indicating the security state used to indicate what the security configuration
+     * will be when the device forms or joins the network.
+     *
+     * @param bitmask the bitmask to remove to the {@link Set} as {@link EmberInitialSecurityBitmask}
+     */
+    public void removeBitmask(EmberInitialSecurityBitmask bitmask) {
+        this.bitmask.remove(bitmask);
     }
 
     /**

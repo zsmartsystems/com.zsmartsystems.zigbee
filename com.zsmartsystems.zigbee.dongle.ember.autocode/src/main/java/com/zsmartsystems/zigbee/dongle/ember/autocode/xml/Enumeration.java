@@ -10,5 +10,6 @@ import java.util.List;
 public class Enumeration {
     public String name;
     public String description;
+    public String format;
     public List<Value> values;
 }

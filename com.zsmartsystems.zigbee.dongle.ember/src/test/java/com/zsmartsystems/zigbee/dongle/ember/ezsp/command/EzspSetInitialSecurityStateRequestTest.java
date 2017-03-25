@@ -31,7 +31,7 @@ public class EzspSetInitialSecurityStateRequestTest extends EzspFrameTest {
         state.setPreconfiguredKey(keyData);
         state.setPreconfiguredTrustCenterEui64(new IeeeAddress("1234567890ABCDEF"));
         state.setNetworkKeySequenceNumber(0);
-        state.setBitmask(EmberInitialSecurityBitmask.EMBER_STANDARD_SECURITY_MODE);
+        state.addBitmask(EmberInitialSecurityBitmask.EMBER_STANDARD_SECURITY_MODE);
         request.setState(state);
         request.setSequenceNumber(7);
         assertTrue(Arrays.equals(

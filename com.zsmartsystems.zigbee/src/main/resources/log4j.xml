@@ -18,7 +18,7 @@
     </logger>
 
     <logger name="com.zsmartsystems.zigbee.dongle.ember.ash">
-        <level value="off"/>
+        <level value="debug"/>
     </logger>
 
     <root>

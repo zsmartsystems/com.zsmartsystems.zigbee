@@ -231,8 +231,7 @@ public class ZigBeeDevice implements CommandListener {
         List<Integer> removeIds = new ArrayList<Integer>();
         for (ZclCluster cluster : clusters.values()) {
             if (newList.contains(cluster.getClusterId())) {
-                // The existing cluster is in the new list, so no need to remove
-                // it
+                // The existing cluster is in the new list, so no need to remove it
                 continue;
             }
             if (isInput && !cluster.isServer()) {
