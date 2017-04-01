@@ -25,7 +25,7 @@ public class RemoveNodeCache extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("RemoveNodeCache ");
+        builder.append("RemoveNodeCache");
         builder.append(super.toString());
         return builder.toString();
     }

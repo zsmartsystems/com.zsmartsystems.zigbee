@@ -90,7 +90,7 @@ public class ManagementLeaveRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementLeaveRequest ");
+        builder.append("ManagementLeaveRequest");
         builder.append(super.toString());
         builder.append(", deviceAddress=");
         builder.append(deviceAddress);

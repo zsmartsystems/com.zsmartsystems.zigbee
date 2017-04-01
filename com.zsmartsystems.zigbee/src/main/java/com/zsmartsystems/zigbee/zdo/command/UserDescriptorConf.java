@@ -22,7 +22,7 @@ public class UserDescriptorConf extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("UserDescriptorConf ");
+        builder.append("UserDescriptorConf");
         builder.append(super.toString());
         return builder.toString();
     }

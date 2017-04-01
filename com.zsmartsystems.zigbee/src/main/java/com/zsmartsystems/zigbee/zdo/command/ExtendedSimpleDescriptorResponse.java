@@ -22,7 +22,7 @@ public class ExtendedSimpleDescriptorResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ExtendedSimpleDescriptorResponse ");
+        builder.append("ExtendedSimpleDescriptorResponse");
         builder.append(super.toString());
         return builder.toString();
     }

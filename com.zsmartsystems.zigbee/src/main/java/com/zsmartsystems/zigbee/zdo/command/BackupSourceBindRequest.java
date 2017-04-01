@@ -141,7 +141,7 @@ public class BackupSourceBindRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("BackupSourceBindRequest ");
+        builder.append("BackupSourceBindRequest");
         builder.append(super.toString());
         builder.append(", sourceTableEntries=");
         builder.append(sourceTableEntries);

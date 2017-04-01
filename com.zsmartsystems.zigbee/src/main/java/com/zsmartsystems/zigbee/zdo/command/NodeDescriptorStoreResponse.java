@@ -25,7 +25,7 @@ public class NodeDescriptorStoreResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("NodeDescriptorStoreResponse ");
+        builder.append("NodeDescriptorStoreResponse");
         builder.append(super.toString());
         return builder.toString();
     }

@@ -25,7 +25,7 @@ public class RemoveNodeCacheRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("RemoveNodeCacheRequest ");
+        builder.append("RemoveNodeCacheRequest");
         builder.append(super.toString());
         return builder.toString();
     }

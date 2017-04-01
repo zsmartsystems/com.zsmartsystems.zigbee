@@ -28,7 +28,7 @@ public class FindNodeCacheRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("FindNodeCacheRequest ");
+        builder.append("FindNodeCacheRequest");
         builder.append(super.toString());
         return builder.toString();
     }

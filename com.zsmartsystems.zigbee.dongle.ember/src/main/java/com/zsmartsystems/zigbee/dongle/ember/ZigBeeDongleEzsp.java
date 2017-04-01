@@ -451,36 +451,38 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
 
         if (response instanceof EzspChildJoinHandler) {
             EzspChildJoinHandler childHandler = (EzspChildJoinHandler) response;
+            zigbeeTransportReceive.announceDevice(childHandler.getChildId());
 
-            // Convert to an announce
-            int message[] = new int[12];
-            message[0] = 0;
-            message[1] = childHandler.getChildId() & 0xff;
-            message[2] = (childHandler.getChildId() >> 8) & 0xff;
-
-            message[3] = (int) (childHandler.getChildEui64().getLong() & 0xFF);
-            message[4] = (int) ((childHandler.getChildEui64().getLong() >> 8) & 0xFF);
-            message[5] = (int) ((childHandler.getChildEui64().getLong() >> 16) & 0xFF);
-            message[6] = (int) ((childHandler.getChildEui64().getLong() >> 24) & 0xFF);
-            message[7] = (int) ((childHandler.getChildEui64().getLong() >> 32) & 0xFF);
-            message[8] = (int) ((childHandler.getChildEui64().getLong() >> 40) & 0xFF);
-            message[9] = (int) ((childHandler.getChildEui64().getLong() >> 48) & 0xFF);
-            message[10] = (int) ((childHandler.getChildEui64().getLong() >> 56) & 0xFF);
-
-            message[11] = 0;
-
-            ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
-            apsFrame.setApsCounter(0);
-            apsFrame.setCluster(0x0013);
-            apsFrame.setDestinationEndpoint(0);
-            apsFrame.setProfile(0);
-            apsFrame.setSourceEndpoint(0);
-
-            apsFrame.setSequence(0);
-            apsFrame.setSourceAddress(childHandler.getChildId());
-            apsFrame.setPayload(message);
-            zigbeeTransportReceive.receiveCommand(apsFrame);
-
+            /*
+             * // Convert to an announce
+             * int message[] = new int[12];
+             * message[0] = 0;
+             * message[1] = childHandler.getChildId() & 0xff;
+             * message[2] = (childHandler.getChildId() >> 8) & 0xff;
+             *
+             * message[3] = (int) (childHandler.getChildEui64().getLong() & 0xFF);
+             * message[4] = (int) ((childHandler.getChildEui64().getLong() >> 8) & 0xFF);
+             * message[5] = (int) ((childHandler.getChildEui64().getLong() >> 16) & 0xFF);
+             * message[6] = (int) ((childHandler.getChildEui64().getLong() >> 24) & 0xFF);
+             * message[7] = (int) ((childHandler.getChildEui64().getLong() >> 32) & 0xFF);
+             * message[8] = (int) ((childHandler.getChildEui64().getLong() >> 40) & 0xFF);
+             * message[9] = (int) ((childHandler.getChildEui64().getLong() >> 48) & 0xFF);
+             * message[10] = (int) ((childHandler.getChildEui64().getLong() >> 56) & 0xFF);
+             *
+             * message[11] = 0;
+             *
+             * ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+             * apsFrame.setApsCounter(0);
+             * apsFrame.setCluster(0x0013);
+             * apsFrame.setDestinationEndpoint(0);
+             * apsFrame.setProfile(0);
+             * apsFrame.setSourceEndpoint(0);
+             *
+             * apsFrame.setSequence(0);
+             * apsFrame.setSourceAddress(childHandler.getChildId());
+             * apsFrame.setPayload(message);
+             * zigbeeTransportReceive.receiveCommand(apsFrame);
+             */
             return;
         }
 

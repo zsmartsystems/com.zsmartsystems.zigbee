@@ -30,7 +30,7 @@ public class UserDescriptorSetRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("UserDescriptorSetRequest ");
+        builder.append("UserDescriptorSetRequest");
         builder.append(super.toString());
         return builder.toString();
     }

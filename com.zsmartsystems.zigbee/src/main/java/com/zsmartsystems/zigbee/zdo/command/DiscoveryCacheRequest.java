@@ -23,7 +23,7 @@ public class DiscoveryCacheRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("DiscoveryCacheRequest ");
+        builder.append("DiscoveryCacheRequest");
         builder.append(super.toString());
         return builder.toString();
     }

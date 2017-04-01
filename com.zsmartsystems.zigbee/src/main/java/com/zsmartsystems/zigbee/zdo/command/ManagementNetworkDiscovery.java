@@ -112,7 +112,7 @@ public class ManagementNetworkDiscovery extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementNetworkDiscovery ");
+        builder.append("ManagementNetworkDiscovery");
         builder.append(super.toString());
         builder.append(", scanChannels=");
         builder.append(scanChannels);

@@ -255,7 +255,7 @@ public class EndDeviceBindRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("EndDeviceBindRequest ");
+        builder.append("EndDeviceBindRequest");
         builder.append(super.toString());
         builder.append(", bindingTarget=");
         builder.append(bindingTarget);

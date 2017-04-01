@@ -163,7 +163,7 @@ public class NetworkUpdateRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("NetworkUpdateRequest ");
+        builder.append("NetworkUpdateRequest");
         builder.append(super.toString());
         builder.append(", scanChannels=");
         builder.append(scanChannels);

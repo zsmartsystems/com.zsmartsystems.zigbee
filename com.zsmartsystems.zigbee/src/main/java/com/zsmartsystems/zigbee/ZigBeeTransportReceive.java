@@ -37,15 +37,6 @@ public interface ZigBeeTransportReceive {
     void receiveCommand(final ZigBeeApsFrame apsFrame);
 
     /**
-     * The ZDO interface exchanges only command classes. This is different to the ZCL interface since different sticks
-     * tend to implement ZDO functionality as individual commands rather than allowing a binary ZDO packet to be sent
-     * and received.
-     *
-     * @param command the received {@link ZdoCommand}
-     */
-    // void receiveZdoCommand(final ZdoCommand command);
-
-    /**
      * Set the network state.
      * <p>
      * This is a callback from the {@link ZigBeeTransportTransmit} when the state of the transport changes
@@ -53,5 +44,12 @@ public interface ZigBeeTransportReceive {
      *
      * @param state
      */
-    void setNetworkState(ZigBeeTransportState state);
+    void setNetworkState(final ZigBeeTransportState state);
+
+    /**
+     * Announce a new device on the network
+     *
+     * @param address the network address of the new node
+     */
+    void announceDevice(final Integer address);
 }

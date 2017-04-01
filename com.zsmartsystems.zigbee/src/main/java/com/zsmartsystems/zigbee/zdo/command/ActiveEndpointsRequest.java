@@ -76,7 +76,7 @@ public class ActiveEndpointsRequest extends ZdoRequest implements CommandRespons
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ActiveEndpointsRequest ");
+        builder.append("ActiveEndpointsRequest");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);
