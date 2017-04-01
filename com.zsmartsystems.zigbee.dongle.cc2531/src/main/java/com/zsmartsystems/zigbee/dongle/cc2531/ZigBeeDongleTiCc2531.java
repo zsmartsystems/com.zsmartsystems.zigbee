@@ -101,7 +101,7 @@ public class ZigBeeDongleTiCc2531
 
     @Override
     public long getZigBeeExtendedPanId() {
-        return networkManager.getExtendedPanId();
+        return networkManager.getCurrentExtendedPanId();
     }
 
     @Override

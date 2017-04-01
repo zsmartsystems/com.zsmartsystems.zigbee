@@ -228,15 +228,19 @@ public class EmberNetworkInitialisation {
         EmberKeyData linkKey = new EmberKeyData();
         linkKey.setContents(new int[] { 0x5A, 0x69, 0x67, 0x42, 0x65, 0x65, 0x41, 0x6C, 0x6C, 0x69, 0x61, 0x6E, 0x63,
                 0x65, 0x30, 0x39 });
+        // linkKey.setContents(new int[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        // 0xFF, 0xFF, 0xFF });
 
         EzspSetInitialSecurityStateRequest securityState = new EzspSetInitialSecurityStateRequest();
         EmberInitialSecurityState state = new EmberInitialSecurityState();
-        state.addBitmask(EmberInitialSecurityBitmask.EMBER_STANDARD_SECURITY_MODE);
+        // state.addBitmask(EmberInitialSecurityBitmask.EMBER_STANDARD_SECURITY_MODE);
         // state.addBitmask(EmberInitialSecurityBitmask.EMBER_DISTRIBUTED_TRUST_CENTER_MODE);//
         // EMBER_TRUST_CENTER_GLOBAL_LINK_KEY);
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_TRUST_CENTER_GLOBAL_LINK_KEY);
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_HAVE_PRECONFIGURED_KEY);
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_HAVE_NETWORK_KEY);
+        state.addBitmask(EmberInitialSecurityBitmask.EMBER_NO_FRAME_COUNTER_RESET);
+        state.addBitmask(EmberInitialSecurityBitmask.EMBER_REQUIRE_ENCRYPTED_KEY);
         state.setNetworkKey(networkKey);
         state.setPreconfiguredKey(linkKey);
         state.setPreconfiguredTrustCenterEui64(new IeeeAddress(0));
