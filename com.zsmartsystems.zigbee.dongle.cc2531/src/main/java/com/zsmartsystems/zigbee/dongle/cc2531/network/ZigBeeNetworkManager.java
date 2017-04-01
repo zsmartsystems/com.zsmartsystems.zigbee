@@ -184,7 +184,7 @@ public interface ZigBeeNetworkManager {
      * @return The long representing the IEEE Address of coordinator of the ZigBee network in use, or -1 if and only if
      *         the method failed
      */
-    long getExtendedPanId();
+    long getCurrentExtendedPanId();
 
     /**
      * <b>WARNING</b>: This method may have to wait for the initialization of the ZigBee network
@@ -222,7 +222,7 @@ public interface ZigBeeNetworkManager {
 
     /**
      * Set the PAN ID
-     * 
+     *
      * @param panId
      * @return
      */

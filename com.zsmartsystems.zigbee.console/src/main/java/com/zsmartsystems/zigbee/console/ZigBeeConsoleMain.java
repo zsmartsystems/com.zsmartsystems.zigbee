@@ -28,7 +28,7 @@ public class ZigBeeConsoleMain {
     /**
      * The usage.
      */
-    public static final String USAGE = "Syntax: java -jar zigbee4java-serialPort.jar [EMBER|CC2531] SERIALPORT SERIALBAUD CHANNEL PAN NETWORK_KEY RESET";
+    public static final String USAGE = "Syntax: java -jar zigbee4java-serialPort.jar [EMBER|CC2531] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET";
 
     /**
      * Private constructor to disable constructing main class.
@@ -49,6 +49,7 @@ public class ZigBeeConsoleMain {
         final int serialBaud;
         final int channel;
         final int pan;
+        final long extendedPan;
         final int[] networkKey;
         boolean resetNetwork;
         try {
@@ -57,13 +58,14 @@ public class ZigBeeConsoleMain {
             serialBaud = Integer.parseInt(args[2]);
             channel = Integer.parseInt(args[3]);
             pan = parseDecimalOrHexInt(args[4]);
+            extendedPan = parseDecimalOrHexInt(args[5]);
 
-            if (args[5].equals("00000000000000000000000000000000")) {
+            if (args[6].equals("00000000000000000000000000000000")) {
                 logger.info("ZigBee network key left as default according to command argument.");
                 networkKey = null;
             } else {
                 logger.info("ZigBee network key defined by command argument.");
-                byte[] key = Hex.decode(args[5]);
+                byte[] key = Hex.decode(args[6]);
                 networkKey = new int[16];
                 int cnt = 0;
                 for (byte value : key) {
@@ -75,7 +77,7 @@ public class ZigBeeConsoleMain {
                 return;
             }
 
-            resetNetwork = args[6].equals("true");
+            resetNetwork = args[7].equals("true");
         } catch (final Throwable t) {
             t.printStackTrace();
             System.out.println(USAGE);
@@ -115,21 +117,28 @@ public class ZigBeeConsoleMain {
         System.out.println("Extended PAN ID = " + String.format("%08X", networkManager.getZigBeeExtendedPanId()));
         System.out.println("Channel         = " + networkManager.getZigBeeChannel());
 
+        // if (networkManager.getZigBeeChannel() != channel) {
+        // resetNetwork = true;
+        // }
         if (networkManager.getZigBeePanId() != pan) {
+            resetNetwork = true;
+        }
+        if (networkManager.getZigBeeExtendedPanId() != extendedPan) {
             resetNetwork = true;
         }
         if (resetNetwork == true) {
             System.out.println("*** Resetting network");
+            System.out.println("  * Channel          = " + channel);
+            System.out.println("  * PAN ID           = " + pan);
+            System.out.println("  * Extended PAN ID  = " + String.format("%016X", extendedPan));
+
             networkManager.setZigBeeChannel(channel);
             networkManager.setZigBeePanId(pan);
+            networkManager.setZigBeeExtendedPanId(extendedPan);
             if (networkKey != null) {
                 networkManager.setZigBeeSecurityKey(networkKey);
             }
         }
-
-        System.out.println("PAN ID          = " + networkManager.getZigBeePanId());
-        System.out.println("Extended PAN ID = " + String.format("%08X", networkManager.getZigBeeExtendedPanId()));
-        System.out.println("Channel         = " + networkManager.getZigBeeChannel());
 
         console.start();
     }

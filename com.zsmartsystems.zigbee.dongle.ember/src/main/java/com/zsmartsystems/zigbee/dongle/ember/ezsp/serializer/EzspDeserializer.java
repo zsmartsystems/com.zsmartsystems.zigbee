@@ -204,8 +204,12 @@ public class EzspDeserializer {
 
     public Set<EmberCurrentSecurityBitmask> deserializeEmberCurrentSecurityBitmask() {
         Set<EmberCurrentSecurityBitmask> list = new HashSet<EmberCurrentSecurityBitmask>();
-        int value = deserializeUInt8();
+        int value = deserializeUInt16();
         for (EmberCurrentSecurityBitmask bitmask : EmberCurrentSecurityBitmask.values()) {
+            // Ignore UNKNOWN
+            if (bitmask == EmberCurrentSecurityBitmask.UNKNOWN) {
+                continue;
+            }
             if ((value & bitmask.getKey()) != 0) {
                 list.add(bitmask);
             }
@@ -232,8 +236,12 @@ public class EzspDeserializer {
 
     public Set<EmberInitialSecurityBitmask> deserializeEmberInitialSecurityBitmask() {
         Set<EmberInitialSecurityBitmask> list = new HashSet<EmberInitialSecurityBitmask>();
-        int value = deserializeUInt8();
+        int value = deserializeUInt16();
         for (EmberInitialSecurityBitmask bitmask : EmberInitialSecurityBitmask.values()) {
+            // Ignore UNKNOWN
+            if (bitmask == EmberInitialSecurityBitmask.UNKNOWN) {
+                continue;
+            }
             if ((value & bitmask.getKey()) != 0) {
                 list.add(bitmask);
             }

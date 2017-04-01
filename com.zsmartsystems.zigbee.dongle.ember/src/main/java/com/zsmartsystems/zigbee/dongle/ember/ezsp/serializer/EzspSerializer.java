@@ -157,7 +157,8 @@ public class EzspSerializer {
         for (EmberCurrentSecurityBitmask bitmask : securityBitmask) {
             value |= bitmask.getKey();
         }
-        buffer[length++] = value;
+        buffer[length++] = value & 0xFF;
+        buffer[length++] = (value >> 8) & 0xFF;
     }
 
     public void serializeEmberInitialSecurityBitmask(Set<EmberInitialSecurityBitmask> securityBitmask) {
@@ -165,7 +166,8 @@ public class EzspSerializer {
         for (EmberInitialSecurityBitmask bitmask : securityBitmask) {
             value |= bitmask.getKey();
         }
-        buffer[length++] = value;
+        buffer[length++] = value & 0xFF;
+        buffer[length++] = (value >> 8) & 0xFF;
     }
 
     public void serializeEmberJoinMethod(EmberJoinMethod joinMethod) {

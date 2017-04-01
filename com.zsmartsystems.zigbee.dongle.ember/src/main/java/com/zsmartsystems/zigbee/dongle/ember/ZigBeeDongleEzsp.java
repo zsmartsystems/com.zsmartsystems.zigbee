@@ -242,6 +242,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
         }
 
+        EmberCurrentSecurityState currentSecurityState = getCurrentSecurityState();
+        logger.debug("Current Security State = {}", currentSecurityState);
+
         logger.debug("EZSP dongle startup done.");
 
         return true;
