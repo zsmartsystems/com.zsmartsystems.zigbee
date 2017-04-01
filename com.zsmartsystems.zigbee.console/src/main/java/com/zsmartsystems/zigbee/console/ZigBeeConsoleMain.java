@@ -1,11 +1,11 @@
 package com.zsmartsystems.zigbee.console;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.bouncycastle.util.encoders.Hex;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.ZigBeePort;
 import com.zsmartsystems.zigbee.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;

@@ -341,7 +341,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
                     String.format("%016X", getCurrentExtendedPanId()), String.format("%016X", extendedPanId));
         }
 
-        if (cleanStatus == false) {
+        if (!cleanStatus) {
             return true;
         }
 
