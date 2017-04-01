@@ -1,19 +1,34 @@
 package com.zsmartsystems.zigbee.console;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 import com.zsmartsystems.zigbee.ZigBeeDevice;
-import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
+import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.dao.ZigBeeDeviceDao;
+import com.zsmartsystems.zigbee.dao.ZigBeeNodeDao;
+import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.FrequencyBandType;
+import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.MacCapabilitiesType;
+import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.ServerCapabilitiesType;
+import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.PowerSourceType;
 
 /**
  * Serializes and deserializes the ZigBee network state.
@@ -29,7 +44,18 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
     /**
      * The network state file path.
      */
-    private final String networkStateFilePath = "simple-network.json";
+    private final String networkStateFilePath = "simple-network.xml";
+
+    private XStream openStream() {
+        XStream stream = new XStream(new StaxDriver());
+        stream.alias("ZigBeeNode", ZigBeeNodeDao.class);
+        stream.alias("ZigBeeDevice", ZigBeeDeviceDao.class);
+        stream.alias("MacCapabilitiesType", MacCapabilitiesType.class);
+        stream.alias("ServerCapabilitiesType", ServerCapabilitiesType.class);
+        stream.alias("PowerSourceType", PowerSourceType.class);
+        stream.alias("FrequencyBandType", FrequencyBandType.class);
+        return stream;
+    }
 
     /**
      * Serializes the network state.
@@ -39,21 +65,31 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
      */
     @Override
     public void serialize(final ZigBeeNetworkManager networkState) {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enableDefaultTyping();
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        final List<Object> destinations = new ArrayList<Object>();
-        destinations.addAll(networkState.getDevices());
-        destinations.addAll(networkState.getGroups());
+        XStream stream = openStream();
 
-        final File networkStateFile = new File(networkStateFilePath);
-        try {
-            FileUtils.writeStringToFile(networkStateFile, objectMapper.writeValueAsString(destinations), false);
-        } catch (final IOException e) {
-            logger.error("Error loading network state from file: " + networkStateFile.getAbsolutePath());
-            return;
+        final List<Object> destinations = new ArrayList<Object>();
+
+        for (ZigBeeNode node : networkState.getNodes()) {
+            ZigBeeNodeDao nodeDao = ZigBeeNodeDao.createFromZigBeeNode(node);
+            destinations.add(nodeDao);
         }
-        logger.info("ZigBeeApi saving network state done.");
+        for (ZigBeeDevice device : networkState.getDevices()) {
+            ZigBeeDeviceDao deviceDao = ZigBeeDeviceDao.createFromZigBeeDevice(device);
+            destinations.add(deviceDao);
+        }
+
+        final File file = new File(networkStateFilePath);
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+            stream.marshal(destinations, new PrettyPrintWriter(writer));
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            logger.error("Error writing network state", e);
+        }
+
+        logger.info("ZigBee saving network state done.");
     }
 
     /**
@@ -64,36 +100,29 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
      */
     @Override
     public void deserialize(final ZigBeeNetworkManager networkState) {
-        final File networkStateFile = new File(networkStateFilePath);
-        final boolean networkStateExists = networkStateFile.exists();
+        final File file = new File(networkStateFilePath);
+        boolean networkStateExists = file.exists();
         if (networkStateExists == false) {
             return;
         }
 
         logger.info("Loading network state...");
-        final String networkStateString;
-        try {
-            networkStateString = FileUtils.readFileToString(networkStateFile);
-        } catch (final IOException e) {
-            logger.error("Error loading network state from file: " + networkStateFile.getAbsolutePath());
-            return;
-        }
 
-        final ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enableDefaultTyping();
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        final List<Object> devices;
         try {
-            devices = objectMapper.readValue(networkStateString, ArrayList.class);
-        } catch (final IOException e) {
-            throw new RuntimeException("Error serializing network state.", e);
-        }
-        for (final Object destination : devices) {
-            if (destination instanceof ZigBeeGroupAddress) {
-                networkState.addGroup((ZigBeeGroupAddress) destination);
-            } else {
-                networkState.addDevice((ZigBeeDevice) destination);
+            XStream stream = openStream();
+            BufferedReader reader;
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+            final List<Object> objects = (List<Object>) stream.fromXML(reader);
+            for (final Object object : objects) {
+                if (object instanceof ZigBeeNodeDao) {
+                    networkState.addNode(ZigBeeNodeDao.createFromZigBeeDao(networkState, (ZigBeeNodeDao) object));
+                } else {
+                    networkState.addDevice(ZigBeeDeviceDao.createFromZigBeeDao(networkState, (ZigBeeDeviceDao) object));
+                }
             }
+        } catch (UnsupportedEncodingException | FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
 
         logger.info("Loading network state done.");

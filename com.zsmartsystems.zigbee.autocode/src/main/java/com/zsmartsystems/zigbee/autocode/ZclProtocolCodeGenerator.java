@@ -1819,6 +1819,12 @@ public class ZclProtocolCodeGenerator {
                             out.println();
                         }
                         for (final Field field : fields) {
+                            if (field.completeOnZero) {
+                                out.println("        if (deserializer.isEndOfStream()) {");
+                                out.println("            return;");
+                                out.println("        }");
+                            }
+
                             if (field.listSizer != null) {
                                 out.println("        for (int cnt = 0; cnt < " + field.listSizer + "; cnt++) {");
                                 out.println("            " + field.nameLowerCamelCase + ".add((" + field.dataTypeClass
@@ -1827,11 +1833,11 @@ public class ZclProtocolCodeGenerator {
                             } else {
                                 out.println("        " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
                                         + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + ");");
-                                if (field.completeOnZero) {
-                                    out.println("        if (" + field.nameLowerCamelCase + " == 0) {");
-                                    out.println("            return;");
-                                    out.println("        }");
-                                }
+                            }
+                            if (field.completeOnZero) {
+                                out.println("        if (" + field.nameLowerCamelCase + " == 0) {");
+                                out.println("            return;");
+                                out.println("        }");
                             }
 
                             if (field.nameLowerCamelCase.equals("status")) {

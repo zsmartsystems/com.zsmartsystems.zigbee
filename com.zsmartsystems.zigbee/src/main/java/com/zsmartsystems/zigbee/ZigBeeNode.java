@@ -33,12 +33,12 @@ public class ZigBeeNode {
     private Integer networkAddress;
 
     /**
-     * The {@link NodeDescriptor} for the device
+     * The {@link NodeDescriptor} for the node
      */
     private NodeDescriptor nodeDescriptor;
 
     /**
-     * The {@link PowerDescriptor} for the device
+     * The {@link PowerDescriptor} for the node
      */
     private PowerDescriptor powerDescriptor;
 
@@ -49,17 +49,22 @@ public class ZigBeeNode {
     private Date lastUpdateTime = null;
 
     /**
-     * List of neighbors for the device, specified in a {@link NeighborTable}
+     * List of associated devices for the node, specified in a {@link List} {@link Integer}
+     */
+    private final List<Integer> associatedDevices = new ArrayList<Integer>();
+
+    /**
+     * List of neighbors for the node, specified in a {@link NeighborTable}
      */
     private final List<NeighborTable> neighbors = new ArrayList<NeighborTable>();
 
     /**
-     * List of routes within the device, specified in a {@link RoutingTable}
+     * List of routes within the node, specified in a {@link RoutingTable}
      */
     private final List<RoutingTable> routes = new ArrayList<RoutingTable>();
 
     /**
-     * The network manager that manages this device
+     * The network manager that manages this node
      */
     private final ZigBeeNetworkManager networkManager;
 
@@ -68,25 +73,25 @@ public class ZigBeeNode {
     }
 
     /**
-     * Sets the {@link IeeeAddress} of the device
+     * Sets the {@link IeeeAddress} of the node
      *
-     * param ieeeAddress the {@link IeeeAddress} of the device
+     * param ieeeAddress the {@link IeeeAddress} of the node
      */
     public void setIeeeAddress(IeeeAddress ieeeAddress) {
         this.ieeeAddress = ieeeAddress;
     }
 
     /**
-     * Gets the {@link IeeeAddress} of the device
+     * Gets the {@link IeeeAddress} of the node
      *
-     * @return the {@link IeeeAddress} of the device
+     * @return the {@link IeeeAddress} of the node
      */
     public IeeeAddress getIeeeAddress() {
         return ieeeAddress;
     }
 
     /**
-     * Sets the 16 bit network address of the device.
+     * Sets the 16 bit network address of the node.
      *
      * @param networkAddress
      */
@@ -95,7 +100,7 @@ public class ZigBeeNode {
     }
 
     /**
-     * Gets the 16 bit network address of the device.
+     * Gets the 16 bit network address of the node.
      *
      * @return networkAddress
      */
@@ -103,6 +108,11 @@ public class ZigBeeNode {
         return networkAddress;
     }
 
+    /**
+     * Sets the {@link NodeDescriptor} for this node.
+     * 
+     * @param nodeDescriptor the new {@link NodeDescriptor}
+     */
     public void setNodeDescriptor(NodeDescriptor nodeDescriptor) {
         this.nodeDescriptor = nodeDescriptor;
     }
@@ -269,6 +279,55 @@ public class ZigBeeNode {
                 this.neighbors.clear();
                 if (neighbors != null) {
                     this.neighbors.addAll(neighbors);
+                }
+            }
+        }
+
+        return changes;
+    }
+
+    /**
+     * Get the list of associated devices as a {@link List} of {@link Integer}
+     *
+     * @return current list of associated devices as a {@link List} of {@link Integer}
+     */
+    public List<Integer> getAssociatedDevices() {
+        return associatedDevices;
+    }
+
+    /**
+     * Set the list of neighbors as a {@link NeighborTable}.
+     * <p>
+     * This method checks to see if there have been "significant" changes to the neighbors list so that we can avoid
+     * bothering higher layers if nothing noteworthy has changed.
+     *
+     * @param neighbors list of neighbors as a {@link NeighborTable}. Setting to null will remove all neighbors.
+     * @return true if the neighbor table was updated
+     */
+    public boolean setAssociatedDevices(List<Integer> associatedDevices) {
+        boolean changes = false;
+        synchronized (this.associatedDevices) {
+            if (associatedDevices == null) {
+                if (this.associatedDevices.size() != 0) {
+                    this.associatedDevices.clear();
+                    changes = true;
+                }
+            } else if (this.associatedDevices.size() != associatedDevices.size()) {
+                changes = true;
+            } else {
+                for (Integer neighbor : this.associatedDevices) {
+                    if (!associatedDevices.contains(neighbor)) {
+                        changes = true;
+                        break;
+                    }
+                }
+            }
+
+            // Update the list if needed
+            if (changes) {
+                this.associatedDevices.clear();
+                if (associatedDevices != null) {
+                    this.associatedDevices.addAll(associatedDevices);
                 }
             }
         }

@@ -9,7 +9,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  */
 public interface ZigBeeDeserializer {
 
-    public boolean endOfStream();
+    public boolean isEndOfStream();
 
     public Object readZigBeeType(ZclDataType type);
 

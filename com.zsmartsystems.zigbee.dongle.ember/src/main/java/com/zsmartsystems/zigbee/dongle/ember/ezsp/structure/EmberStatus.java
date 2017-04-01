@@ -495,6 +495,12 @@ public enum EmberStatus {
     EMBER_SECURITY_STATE_NOT_SET(0x00A8),
 
     /**
+     * The passed key data is not valid. A key of all zeros or all F's are reserved values and cannot be
+     * used.
+     */
+    EMBER_KEY_INVALID(0x00B2),
+
+    /**
      * There was an attempt to set an entry in the key table using an invalid long address. An entry
      * cannot be set using either the local device's or Trust Center's IEEE address. Or an entry
      * already exists in the table with the same IEEE address. An Address of all zeros or all F's are

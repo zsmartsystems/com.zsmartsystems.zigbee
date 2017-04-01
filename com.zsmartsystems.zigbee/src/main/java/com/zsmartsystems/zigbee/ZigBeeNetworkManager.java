@@ -36,6 +36,7 @@ import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandType;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
+import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 
 /**
@@ -195,6 +196,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param serializer the {@link ZigBeeSerializer} class
      * @param deserializer the {@link ZigBeeDeerializer} class
      */
+    @SuppressWarnings("unchecked")
     public void setSerializer(Class<?> serializer, Class<?> deserializer) {
         this.serializerClass = (Class<ZigBeeSerializer>) serializer;
         this.deserializerClass = (Class<ZigBeeDeserializer>) deserializer;
@@ -334,12 +336,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Shuts down ZigBee manager components.
      */
     public void shutdown() {
-        networkDiscoverer.shutdown();
-        transport.shutdown();
-
         if (networkStateSerializer != null) {
             networkStateSerializer.serialize(this);
         }
+
+        networkDiscoverer.shutdown();
+        transport.shutdown();
+
     }
 
     @Override
@@ -821,6 +824,20 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      *            greater than 255 seconds will permanently enable joining.
      */
     public void permitJoin(final int duration) {
+        permitJoin(new ZigBeeDeviceAddress(ZigBeeBroadcastDestination.BROADCAST_ROUTERS_AND_COORD.getKey()), duration);
+    }
+
+    /**
+     * Enables or disables devices to join the network.
+     * <p>
+     * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
+     * since it allows devices to join the network without the installer knowing.
+     *
+     * @param destination the {@link ZigBeeDeviceAddress} to send the join request to
+     * @param duration sets the duration of the join enable. Setting this to 0 disables joining. Setting to a value
+     *            greater than 255 seconds will permanently enable joining.
+     */
+    public void permitJoin(final ZigBeeDeviceAddress destination, final int duration) {
         final ManagementPermitJoiningRequest command = new ManagementPermitJoiningRequest();
 
         if (duration > 255) {
@@ -829,11 +846,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             command.setPermitDuration(duration);
         }
 
-        // command.setAddressingMode(ZigBeeConstants.BROADCAST_ADDRESS);
-        // command.set.setDestinationAddress(ZigBeeConstants.ZCZR_BROADCAST);
         command.setTcSignificance(true);
-        command.setDestinationAddress(
-                new ZigBeeDeviceAddress(ZigBeeBroadcastDestination.BROADCAST_ROUTERS_AND_COORD.getKey()));
+        command.setDestinationAddress(destination);
         command.setSourceAddress(new ZigBeeDeviceAddress(0));
 
         try {
@@ -849,13 +863,35 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
      * since it allows devices to join the network without the installer knowing.
      *
+     * @deprecated
      * @param enable if true joining is enabled, otherwise it is disabled
      */
+    @Deprecated
     public void permitJoin(final boolean enable) {
         if (enable) {
             permitJoin(0xFF);
         } else {
             permitJoin(0);
+        }
+    }
+
+    /**
+     * Sends a ZDO Leave Request to a device requesting that an end device leave the network.
+     *
+     * @param destination the {@link ZigBeeDeviceAddress} to send the request to
+     * @param leaveAddress the {@link IeeeAddress} of the end device we want to leave the network
+     */
+    public void leave(final ZigBeeDeviceAddress destination, final IeeeAddress leaveAddress) {
+        final ManagementLeaveRequest command = new ManagementLeaveRequest();
+
+        command.setDeviceAddress(leaveAddress);
+        command.setDestinationAddress(destination);
+        command.setSourceAddress(new ZigBeeDeviceAddress(0));
+
+        try {
+            sendCommand(command);
+        } catch (final ZigBeeException e) {
+            throw new ZigBeeApiException("Error sending permit join command.", e);
         }
     }
 
@@ -1019,6 +1055,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                     }
                 });
             }
+
+            if (networkStateSerializer != null) {
+                networkStateSerializer.serialize(this);
+            }
         }
     }
 
@@ -1034,6 +1074,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                         listener.deviceUpdated(device);
                     }
                 });
+            }
+
+            if (networkStateSerializer != null) {
+                networkStateSerializer.serialize(this);
             }
         }
     }
@@ -1059,6 +1103,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                         }
                     });
                 }
+            }
+
+            if (networkStateSerializer != null) {
+                networkStateSerializer.serialize(this);
             }
         }
     }
@@ -1178,6 +1226,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                     }
                 });
             }
+
+            if (networkStateSerializer != null) {
+                networkStateSerializer.serialize(this);
+            }
         }
     }
 
@@ -1192,7 +1244,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         synchronized (networkNodes) {
-            // Don't update if the node is already known
+            // Don't add if the node is already known
             // We especially don't want to notify listeners
             if (networkNodes.containsKey(node.getNetworkAddress())) {
                 return;
@@ -1207,6 +1259,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                         listener.nodeAdded(node);
                     }
                 });
+            }
+
+            if (networkStateSerializer != null) {
+                networkStateSerializer.serialize(this);
             }
         }
     }
@@ -1234,6 +1290,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                         listener.nodeUpdated(node);
                     }
                 });
+            }
+
+            if (networkStateSerializer != null) {
+                networkStateSerializer.serialize(this);
             }
         }
     }

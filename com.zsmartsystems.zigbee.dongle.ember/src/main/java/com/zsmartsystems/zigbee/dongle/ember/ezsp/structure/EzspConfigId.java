@@ -36,6 +36,19 @@ public enum EzspConfigId {
     EZSP_CONFIG_PACKET_BUFFER_COUNT(0x0001),
 
     /**
+     * The maximum number of non-volatile bindings supported by the stack.
+     */
+    EZSP_CONFIG_BINDING_TABLE_SIZE(0x0004),
+
+    /**
+     * The maximum number of EUI64 to network address associations that the stack can maintain for
+     * the application. (Note, the total number of such address associations maintained by the NCP
+     * is the sum of the value of this setting and the value of
+     * ::EZSP_CONFIG_TRUST_CENTER_ADDRESS_CACHE_SIZE.).
+     */
+    EZSP_CONFIG_ADDRESS_TABLE_SIZE(0x0005),
+
+    /**
      * Specifies the stack profile.
      */
     EZSP_CONFIG_STACK_PROFILE(0x000C),
@@ -47,14 +60,42 @@ public enum EzspConfigId {
     EZSP_CONFIG_SECURITY_LEVEL(0x000D),
 
     /**
+     * The maximum number of hops for a message.
+     */
+    EZSP_CONFIG_MAX_HOPS(0x0010),
+
+    /**
      * The maximum number of end device children that a router will support.
      */
     EZSP_CONFIG_MAX_END_DEVICE_CHILDREN(0x0011),
 
     /**
+     * The maximum amount of time that the MAC will hold a message for indirect transmission to a
+     * child.
+     */
+    EZSP_CONFIG_INDIRECT_TRANSMISSION_TIMEOUT(0x0012),
+
+    /**
      * Enables boost power mode and/or the alternate transmitter output.
      */
     EZSP_CONFIG_TX_POWER_MODE(0x0017),
+
+    /**
+     * The maximum number of EUI64 to network address associations that the Trust Center can
+     * maintain. These address cache entries are reserved for and reused by the Trust Center when
+     * processing device join/rejoin authentications. This cache size limits the number of
+     * overlapping joins the Trust Center can process within a narrow time window (e.g. two
+     * seconds), and thus should be set to the maximum number of near simultaneous joins the Trust
+     * Center is expected to accommodate. (Note, the total number of such address associations
+     * maintained by the NCP is the sum of the value of this setting and the value of
+     * ::EZSP_CONFIG_ADDRESS_TABLE_SIZE.)
+     */
+    EZSP_CONFIG_TRUST_CENTER_ADDRESS_CACHE_SIZE(0x0019),
+
+    /**
+     * The size of the source route table.
+     */
+    EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE(0x001A),
 
     /**
      * The size of the Key Table used for storing individual link keys (if the device is a Trust

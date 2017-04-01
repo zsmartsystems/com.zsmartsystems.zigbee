@@ -176,9 +176,11 @@ public class EmberAutocoder {
                     if (nodes.item(temp).getNodeName().equals("description")) {
                         enumeration.description = nodes.item(temp).getTextContent();
                     }
-
                     if (nodes.item(temp).getNodeName().equals("values")) {
                         enumeration.values = (List<Value>) processNode(nodes.item(temp));
+                    }
+                    if (nodes.item(temp).getNodeName().equals("format")) {
+                        enumeration.format = nodes.item(temp).getTextContent();
                     }
                 }
                 System.out.println("Done: Enum - " + enumeration.name);

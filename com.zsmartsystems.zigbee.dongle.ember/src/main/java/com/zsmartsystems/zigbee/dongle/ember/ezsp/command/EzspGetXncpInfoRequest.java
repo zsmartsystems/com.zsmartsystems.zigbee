@@ -51,8 +51,6 @@ public class EzspGetXncpInfoRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("]");
-        return builder.toString();
+        return "EzspGetXncpInfoRequest []";
     }
 }

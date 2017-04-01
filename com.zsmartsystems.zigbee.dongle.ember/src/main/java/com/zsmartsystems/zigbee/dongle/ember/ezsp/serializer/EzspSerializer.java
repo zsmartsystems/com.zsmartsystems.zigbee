@@ -152,12 +152,20 @@ public class EzspSerializer {
         buffer[length++] = bindingType.getKey();
     }
 
-    public void serializeEmberCurrentSecurityBitmask(EmberCurrentSecurityBitmask securityBitmask) {
-        buffer[length++] = securityBitmask.getKey();
+    public void serializeEmberCurrentSecurityBitmask(Set<EmberCurrentSecurityBitmask> securityBitmask) {
+        int value = 0;
+        for (EmberCurrentSecurityBitmask bitmask : securityBitmask) {
+            value |= bitmask.getKey();
+        }
+        buffer[length++] = value;
     }
 
-    public void serializeEmberInitialSecurityBitmask(EmberInitialSecurityBitmask securityBitmask) {
-        buffer[length++] = securityBitmask.getKey();
+    public void serializeEmberInitialSecurityBitmask(Set<EmberInitialSecurityBitmask> securityBitmask) {
+        int value = 0;
+        for (EmberInitialSecurityBitmask bitmask : securityBitmask) {
+            value |= bitmask.getKey();
+        }
+        buffer[length++] = value;
     }
 
     public void serializeEmberJoinMethod(EmberJoinMethod joinMethod) {

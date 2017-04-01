@@ -663,6 +663,7 @@ public final class ZigBeeConsole {
             print("Network Address  : " + node.getNetworkAddress(), out);
             print("Node Descriptor  : " + node.getNodeDescriptor().toString(), out);
             print("Power Descriptor : " + node.getPowerDescriptor().toString(), out);
+            print("Associations     : " + node.getAssociatedDevices().toString(), out);
             print("Devices:", out);
             for (ZigBeeDevice device : zigbeeApi.getNetwork().getNodeDevices(address)) {
                 print(device.toString(), out);

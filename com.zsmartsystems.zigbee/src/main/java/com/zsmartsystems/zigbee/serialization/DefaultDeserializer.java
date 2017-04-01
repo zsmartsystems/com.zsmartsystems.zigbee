@@ -26,7 +26,7 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
     }
 
     @Override
-    public boolean endOfStream() {
+    public boolean isEndOfStream() {
         return index >= payload.length;
     }
 

@@ -170,6 +170,9 @@ public class IeeeAddressResponse extends ZdoResponse {
         }
         ieeeAddrRemoteDev = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         nwkAddrRemoteDev = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        if (deserializer.isEndOfStream()) {
+            return;
+        }
         numAssocDev = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (numAssocDev == 0) {
             return;

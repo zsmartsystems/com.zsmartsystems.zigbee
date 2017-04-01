@@ -1,21 +1,22 @@
 package com.zsmartsystems.zigbee.serial;
 
-import jssc.SerialPort;
-
 import java.io.IOException;
+
+import jssc.SerialPort;
 
 /**
  * Unsigned byte serial input stream.
  *
  * @author Allan Lang
  *
- * Attribution: https://github.com/allanlang/xbee-api-jssc/
+ *         Attribution: https://github.com/allanlang/xbee-api-jssc/
  *
  */
 public class UnsignedByteSerialInputStream extends SerialInputStream {
 
     /**
-     * Constructor for setting the seria port.
+     * Constructor for setting the serial port.
+     * 
      * @param sp the serial port.
      */
     public UnsignedByteSerialInputStream(SerialPort sp) {
@@ -35,8 +36,7 @@ public class UnsignedByteSerialInputStream extends SerialInputStream {
     }
 
     @Override
-    public int blockingRead(byte[] buf, int offset, int length, int timeout)
-            throws IOException {
+    public int blockingRead(byte[] buf, int offset, int length, int timeout) throws IOException {
         int bytesRead = super.blockingRead(buf, offset, length, timeout);
         unsignArray(buf, bytesRead);
         return bytesRead;
@@ -44,6 +44,7 @@ public class UnsignedByteSerialInputStream extends SerialInputStream {
 
     /**
      * Unsign array.
+     * 
      * @param inputArray the input array
      * @param length the array length
      */
@@ -59,4 +60,3 @@ public class UnsignedByteSerialInputStream extends SerialInputStream {
     }
 
 }
-

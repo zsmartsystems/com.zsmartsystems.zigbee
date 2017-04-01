@@ -75,7 +75,8 @@ public class ZigBeeDongleTiCc2531
 
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
-        return networkManager.initializeZigBeeNetwork();
+        return true;
+        // return networkManager.initializeZigBeeNetwork();
     }
 
     @Override
@@ -120,10 +121,10 @@ public class ZigBeeDongleTiCc2531
         networkManager.addAFMessageListener(this);
         networkManager.addAsynchronousCommandListener(this);
 
-        // if (!networkManager.initializeZigBeeNetwork()) {
-        // zigbeeNetworkReceive.setNetworkState(TransportState.UNINITIALISED);
-        // return false;
-        // }
+        if (!networkManager.initializeZigBeeNetwork()) {
+            zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
+            return false;
+        }
 
         while (true) {
             if (networkManager.getDriverStatus() == DriverStatus.NETWORK_READY) {

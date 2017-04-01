@@ -308,6 +308,9 @@ public abstract class ZclCluster {
     public void handleAttributeReport(List<AttributeReport> reports) {
         for (AttributeReport report : reports) {
             ZclAttribute attribute = attributes.get(report.getAttributeIdentifier());
+            if (attribute == null) {
+                return;
+            }
             attribute.updateValue(report.getAttributeValue());
             notifyAttributeListener(attribute);
         }
