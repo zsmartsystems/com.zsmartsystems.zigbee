@@ -20,6 +20,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCurrentSecurityStateRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCurrentSecurityStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
@@ -27,14 +30,14 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRequest
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspPermitJoiningRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspPermitJoiningResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
@@ -42,6 +45,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessage
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberZdoConfigurationFlags;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspSingleResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberNetworkInitialisation;
@@ -77,6 +82,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     private Map<EzspConfigId, Integer> stackConfiguration;
 
     /**
+     * The stack policies we need for the NCP
+     */
+    private Map<EzspPolicyId, EzspDecisionId> stackPolicies;
+
+    /**
      * Keep a map of which endpoint is registered with each cluster. This is used when sending messages.
      */
     private final Map<Integer, Integer> endpointMap = new HashMap<Integer, Integer>();
@@ -89,7 +99,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     /**
      * The current network key as {@link EmberKeyData}
      */
-    private EmberKeyData networkKey = null;
+    private final EmberKeyData networkKey = new EmberKeyData();
 
     /**
      * The current network parameters as {@link EmberNetworkParameters}
@@ -100,19 +110,31 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         this.serialPort = serialPort;
 
         stackConfiguration = new HashMap<EzspConfigId, Integer>();
-        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SUPPORTED_NETWORKS, 2);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE, 2);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SECURITY_LEVEL, 5);
+        // stackConfiguration.put(EzspConfigId.EZSP_CONFIG_ADDRESS_TABLE_SIZE, 2);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_TRUST_CENTER_ADDRESS_CACHE_SIZE, 2);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_STACK_PROFILE, 2);
+        // stackConfiguration.put(EzspConfigId.EZSP_CONFIG_INDIRECT_TRANSMISSION_TIMEOUT, 0x1E00);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SUPPORTED_NETWORKS, 1);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS,
                 EmberZdoConfigurationFlags.EMBER_APP_RECEIVES_SUPPORTED_ZDO_REQUESTS.getKey());
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_STACK_PROFILE, 2);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_KEY_TABLE_SIZE, 4);
 
-        // Use a default 'nothing' key
-        networkKey = new EmberKeyData();
-        networkKey.setContents(new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+        stackPolicies = new HashMap<EzspPolicyId, EzspDecisionId>();
+        stackPolicies.put(EzspPolicyId.EZSP_TRUST_CENTER_POLICY, EzspDecisionId.EZSP_ALLOW_JOINS);
+        stackPolicies.put(EzspPolicyId.EZSP_MESSAGE_CONTENTS_IN_CALLBACK_POLICY,
+                EzspDecisionId.EZSP_MESSAGE_TAG_ONLY_IN_CALLBACK);
+        // stackPolicies.put(EzspPolicyId.EZSP_APP_KEY_REQUEST_POLICY, value)
+
+        networkKey.setContents(new int[16]);
     }
 
     @Override
     public boolean initialize() {
+        logger.debug("EZSP dongle initialize.");
+
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
         if (!serialPort.open()) {
@@ -136,11 +158,27 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
 
         // Perform any stack configuration
         EmberStackConfiguration stackConfigurer = new EmberStackConfiguration(ashHandler);
-        stackConfigurer.setConfiguration(stackConfiguration);
-        Map<EzspConfigId, Integer> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
 
+        Map<EzspConfigId, Integer> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
         for (EzspConfigId config : configuration.keySet()) {
             logger.debug("Configuration state {} = {}", config, configuration.get(config));
+        }
+
+        Map<EzspPolicyId, EzspDecisionId> policies = stackConfigurer.getPolicy(stackPolicies.keySet());
+        for (EzspPolicyId policy : policies.keySet()) {
+            logger.debug("Policy state {} = {}", policy, policies.get(policy));
+        }
+
+        stackConfigurer.setConfiguration(stackConfiguration);
+        configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
+        for (EzspConfigId config : configuration.keySet()) {
+            logger.debug("Configuration state {} = {}", config, configuration.get(config));
+        }
+
+        stackConfigurer.setPolicy(stackPolicies);
+        policies = stackConfigurer.getPolicy(stackPolicies.keySet());
+        for (EzspPolicyId policy : policies.keySet()) {
+            logger.debug("Policy state {} = {}", policy, policies.get(policy));
         }
 
         // Add our endpoint(s)
@@ -160,14 +198,19 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         }
 
         networkParameters = getNetworkParameters();
+        getCurrentSecurityState();
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
-        return false;
+        logger.debug("EZSP dongle initialize done.");
+
+        return true;
     }
 
     @Override
     public boolean startup() {
+        logger.debug("EZSP dongle startup.");
+
         // Check if the network is initialised
         EzspNetworkStateRequest networkStateRequest = new EzspNetworkStateRequest();
         EzspTransaction networkStateTransaction = ashHandler.sendEzspTransaction(
@@ -190,7 +233,19 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             initialiseNetwork();
         }
 
-        permitJoin();
+        networkStateTransaction = ashHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(networkStateRequest, EzspNetworkStateResponse.class));
+        networkStateResponse = (EzspNetworkStateResponse) networkStateTransaction.getResponse();
+        logger.debug(networkStateResponse.toString());
+        logger.debug("EZSP networkStateResponse {}", networkStateResponse.getStatus());
+        if (networkStateResponse.getStatus() == EmberNetworkStatus.EMBER_JOINED_NETWORK) {
+            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
+        }
+
+        EmberCurrentSecurityState currentSecurityState = getCurrentSecurityState();
+        logger.debug("Current Security State = {}", currentSecurityState);
+
+        logger.debug("EZSP dongle startup done.");
 
         return true;
     }
@@ -280,24 +335,41 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         EzspGetNetworkParametersResponse networkParametersResponse = (EzspGetNetworkParametersResponse) networkParametersTransaction
                 .getResponse();
         logger.debug(networkParametersResponse.toString());
-
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
     }
 
-    private void permitJoin() {
-        EzspPermitJoiningRequest request = new EzspPermitJoiningRequest();
-        request.setDuration(255);
-        EzspTransaction transaction = ashHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspPermitJoiningResponse.class));
-        EzspPermitJoiningResponse response = (EzspPermitJoiningResponse) transaction.getResponse();
-        logger.debug(response.toString());
-
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
+    /**
+     * Get the current security parameters
+     *
+     * @return the {@link EmberNetworkParameters} or null on error
+     */
+    private EmberCurrentSecurityState getCurrentSecurityState() {
+        EzspGetCurrentSecurityStateRequest networkParms = new EzspGetCurrentSecurityStateRequest();
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(networkParms,
+                EzspGetCurrentSecurityStateResponse.class);
+        ashHandler.sendEzspTransaction(transaction);
+        EzspGetCurrentSecurityStateResponse currentSecurityStateResponse = (EzspGetCurrentSecurityStateResponse) transaction
+                .getResponse();
+        logger.debug(currentSecurityStateResponse.toString());
+        if (currentSecurityStateResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error during retrieval of security parameters: {}", currentSecurityStateResponse);
+            return null;
+        }
+        return currentSecurityStateResponse.getState();
     }
+
+    // private void permitJoin() {
+    // EzspPermitJoiningRequest request = new EzspPermitJoiningRequest();
+    // request.setDuration(255);
+    // EzspTransaction transaction = ashHandler
+    // .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspPermitJoiningResponse.class));
+    // EzspPermitJoiningResponse response = (EzspPermitJoiningResponse) transaction.getResponse();
+    // logger.debug(response.toString());
+
+    // zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
+    // }
 
     @Override
     public void sendCommand(final ZigBeeApsFrame apsFrame) throws ZigBeeException {
-
         EzspFrameRequest emberCommand;
 
         EmberApsFrame emberApsFrame = new EmberApsFrame();
@@ -311,7 +383,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ADDRESS_DISCOVERY);
 
         if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE && apsFrame.getDestinationAddress() < 0xfff8) {
-
             EzspSendUnicastRequest emberUnicast = new EzspSendUnicastRequest();
             emberUnicast.setIndexOrDestination(apsFrame.getDestinationAddress());
             emberUnicast.setMessageTag(apsFrame.getSequence());
@@ -372,24 +443,56 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             return;
         }
 
-        /*
-         * if (response instanceof EzspChildJoinHandler) {
-         * // Convert to an announce
-         * DeviceAnnounce zdoResponse = new DeviceAnnounce();
-         * zdoResponse.setIeeeAddress(((EzspChildJoinHandler) response).getChildEui64().getLong());
-         * zdoResponse.setSourceAddress(((EzspChildJoinHandler) response).getChildId());
-         * zigbeeTransportReceive.receiveZdoCommand(zdoResponse);
-         *
-         * return;
-         * }
-         */
+        // TODO: Check if this should be done only after initialisation is complete?
+        if (response instanceof EzspStackStatusHandler
+                && ((EzspStackStatusHandler) response).getStatus() == EmberStatus.EMBER_NETWORK_DOWN) {
+            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        }
+
+        if (response instanceof EzspChildJoinHandler) {
+            EzspChildJoinHandler childHandler = (EzspChildJoinHandler) response;
+
+            // Convert to an announce
+            int message[] = new int[12];
+            message[0] = 0;
+            message[1] = childHandler.getChildId() & 0xff;
+            message[2] = (childHandler.getChildId() >> 8) & 0xff;
+
+            message[3] = (int) (childHandler.getChildEui64().getLong() & 0xFF);
+            message[4] = (int) ((childHandler.getChildEui64().getLong() >> 8) & 0xFF);
+            message[5] = (int) ((childHandler.getChildEui64().getLong() >> 16) & 0xFF);
+            message[6] = (int) ((childHandler.getChildEui64().getLong() >> 24) & 0xFF);
+            message[7] = (int) ((childHandler.getChildEui64().getLong() >> 32) & 0xFF);
+            message[8] = (int) ((childHandler.getChildEui64().getLong() >> 40) & 0xFF);
+            message[9] = (int) ((childHandler.getChildEui64().getLong() >> 48) & 0xFF);
+            message[10] = (int) ((childHandler.getChildEui64().getLong() >> 56) & 0xFF);
+
+            message[11] = 0;
+
+            ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+            apsFrame.setApsCounter(0);
+            apsFrame.setCluster(0x0013);
+            apsFrame.setDestinationEndpoint(0);
+            apsFrame.setProfile(0);
+            apsFrame.setSourceEndpoint(0);
+
+            apsFrame.setSequence(0);
+            apsFrame.setSourceAddress(childHandler.getChildId());
+            apsFrame.setPayload(message);
+            zigbeeTransportReceive.receiveCommand(apsFrame);
+
+            return;
+        }
 
         logger.debug("Unhandled EZSP Frame: " + response.toString());
     }
 
     @Override
     public void handleLinkStateChange(boolean linkState) {
-        // TODO: Handle link changes and notify framework or just reset link with dongle?
+        // Handle link changes and notify framework or just reset link with dongle?
+        if (!linkState) {
+            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        }
     }
 
     @Override
