@@ -7,6 +7,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 import java.util.List;
 import java.util.ArrayList;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
@@ -146,7 +147,7 @@ public class NetworkAddressResponse extends ZdoResponse {
     public void serialize(final ZclFieldSerializer serializer) {
         super.serialize(serializer);
 
-        serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(status, ZclDataType.ZDO_STATUS);
         serializer.serialize(ieeeAddrRemoteDev, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(nwkAddrRemoteDev, ZclDataType.NWK_ADDRESS);
         serializer.serialize(numAssocDev, ZclDataType.UNSIGNED_8_BIT_INTEGER);
@@ -158,8 +159,8 @@ public class NetworkAddressResponse extends ZdoResponse {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        if (status != 0) {
+        status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
+        if (status != ZdoStatus.SUCCESS) {
             // Don't read the full response if we have an error
             return;
         }

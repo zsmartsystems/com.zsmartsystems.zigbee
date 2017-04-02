@@ -21,6 +21,7 @@ import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsRequest;
 import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsResponse;
 import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
@@ -182,17 +183,17 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
         synchronized (ieeeAddressRequestTimes) {
             if (ieeeAddressRequestTimes.get(nodeNetworkAddress) != null && System.currentTimeMillis()
                     - ieeeAddressRequestTimes.get(nodeNetworkAddress) < MINIMUM_REQUERY_TIME_MILLIS) {
-                logger.debug("Node discovery already in progress for {}", nodeNetworkAddress);
+                logger.debug("{}: Node discovery already in progress", nodeNetworkAddress);
                 return;
             }
             ieeeAddressRequestTimes.put(nodeNetworkAddress, System.currentTimeMillis());
         }
 
-        logger.debug("Scheduling node discovery for {}", nodeNetworkAddress);
+        logger.debug("{}: Scheduling node discovery", nodeNetworkAddress);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                logger.debug("Starting node discovery for {}", nodeNetworkAddress);
+                logger.debug("{}: Starting node discovery", nodeNetworkAddress);
                 int retries = 0;
                 boolean success;
                 NodeDiscoveryState discoveryState = NodeDiscoveryState.IEEE_ADDRESS;
@@ -212,17 +213,21 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
                             success = getActiveEndpoints(nodeNetworkAddress);
                             break;
                         default:
-                            logger.debug("Unknown state: {}", discoveryState);
+                            logger.debug("{}: Unknown discovery state: {}", nodeNetworkAddress, discoveryState);
                             break;
                     }
 
                     if (success) {
+                        logger.debug("{}: Discovery request {} successfull. Advanced to {}.", nodeNetworkAddress,
+                                discoveryState, discoveryState.next());
                         discoveryState = discoveryState.next();
                         continue;
                     }
 
                     // We failed with the last request. Wait a bit then retry
                     try {
+                        logger.debug("{}: Discovery request {} failed. Wait before retry.", nodeNetworkAddress,
+                                discoveryState);
                         Thread.sleep(RETRY_PERIOD);
                     } catch (InterruptedException e) {
                         return;
@@ -230,7 +235,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
 
                 } while (retries++ < RETRY_COUNT);
 
-                logger.debug("Ending node discovery for {}", nodeNetworkAddress);
+                logger.debug("{}: Ending node discovery", nodeNetworkAddress);
             }
         };
 
@@ -253,11 +258,11 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
             discoveryProgress.add(deviceNetworkAddress);
         }
 
-        logger.debug("Scheduling device discovery for {}", deviceNetworkAddress);
+        logger.debug("{}: Scheduling device discovery", deviceNetworkAddress);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                logger.debug("Starting device discovery for {}", deviceNetworkAddress);
+                logger.debug("{}: Starting device discovery", deviceNetworkAddress);
                 int retries = 0;
                 while (!getSimpleDescriptor(deviceNetworkAddress)) {
                     if (retries++ > RETRY_COUNT) {
@@ -292,7 +297,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
             CommandResult response = networkManager.unicast(ieeeAddressRequest, ieeeAddressRequest).get();
 
             final IeeeAddressResponse ieeeAddressResponse = response.getResponse();
-            if (ieeeAddressResponse != null && ieeeAddressResponse.getStatus() == 0) {
+            if (ieeeAddressResponse != null && ieeeAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
                 synchronized (ieeeAddresses) {
                     ieeeAddresses.put(ieeeAddressResponse.getNwkAddrRemoteDev(), ieeeAddressResponse);
                 }
@@ -325,7 +330,11 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
             CommandResult response = networkManager.unicast(nodeDescriptorRequest, nodeDescriptorRequest).get();
 
             final NodeDescriptorResponse nodeDescriptorResponse = (NodeDescriptorResponse) response.getResponse();
-            if (nodeDescriptorResponse != null && nodeDescriptorResponse.getStatus() == 0) {
+            if (nodeDescriptorResponse == null) {
+                return false;
+            }
+
+            if (nodeDescriptorResponse.getStatus() == ZdoStatus.SUCCESS) {
                 // Create the node
                 synchronized (nodeDescriptors) {
                     nodeDescriptors.put(nodeDescriptorResponse.getNwkAddrOfInterest(), nodeDescriptorResponse);
@@ -345,7 +354,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
      * Get node power descriptor
      *
      * @param networkAddress the network address of the node
-     * @return true if the message was processed ok
+     * @return true if the message was processed ok, or if the end device does not support the power descriptor
      */
     private boolean getPowerDescriptor(final int networkAddress) {
         try {
@@ -355,16 +364,20 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
             CommandResult response = networkManager.unicast(powerDescriptorRequest, powerDescriptorRequest).get();
 
             final PowerDescriptorResponse powerDescriptorResponse = (PowerDescriptorResponse) response.getResponse();
-            if (powerDescriptorResponse != null && powerDescriptorResponse.getStatus() == 0) {
-                if (powerDescriptorResponse.getStatus() == 0) {
-                    synchronized (powerDescriptors) {
-                        powerDescriptors.put(powerDescriptorResponse.getNwkAddrOfInterest(), powerDescriptorResponse);
-                    }
+            if (powerDescriptorResponse == null) {
+                return false;
+            }
 
-                    return true;
-                } else {
-                    logger.debug("Power Descriptor for {} returned {}", networkAddress, powerDescriptorResponse);
+            if (powerDescriptorResponse.getStatus() == ZdoStatus.SUCCESS) {
+                synchronized (powerDescriptors) {
+                    powerDescriptors.put(powerDescriptorResponse.getNwkAddrOfInterest(), powerDescriptorResponse);
                 }
+
+                return true;
+            } else if (powerDescriptorResponse.getStatus() == ZdoStatus.NOT_SUPPORTED) {
+                return true;
+            } else {
+                logger.debug("Power Descriptor for {} returned {}", networkAddress, powerDescriptorResponse);
             }
         } catch (InterruptedException | ExecutionException e) {
             logger.error("Error in checkPowerDescriptorResponse", e);
@@ -387,18 +400,19 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
             CommandResult response = networkManager.unicast(activeEndpointsRequest, activeEndpointsRequest).get();
 
             final ActiveEndpointsResponse activeEndpointsResponse = (ActiveEndpointsResponse) response.getResponse();
-            if (activeEndpointsResponse != null && activeEndpointsResponse.getStatus() == 0) {
+            if (activeEndpointsResponse == null) {
+                return false;
+            }
 
-                if (activeEndpointsResponse.getStatus() == 0) {
-                    for (final int endpoint : activeEndpointsResponse.getActiveEpList()) {
-                        startDeviceDiscovery(
-                                new ZigBeeDeviceAddress(activeEndpointsResponse.getNwkAddrOfInterest(), endpoint));
-                    }
-
-                    return true;
-                } else {
-                    logger.debug("Active Endpoints for {} returned {}", networkAddress, activeEndpointsResponse);
+            if (activeEndpointsResponse.getStatus() == ZdoStatus.SUCCESS) {
+                for (final int endpoint : activeEndpointsResponse.getActiveEpList()) {
+                    startDeviceDiscovery(
+                            new ZigBeeDeviceAddress(activeEndpointsResponse.getNwkAddrOfInterest(), endpoint));
                 }
+
+                return true;
+            } else {
+                logger.debug("Active Endpoints for {} returned {}", networkAddress, activeEndpointsResponse);
             }
         } catch (InterruptedException | ExecutionException e) {
             logger.error("Error in checkActiveEndpointsResponse", e);
@@ -423,30 +437,32 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
 
             final SimpleDescriptorResponse simpleDescriptorResponse = (SimpleDescriptorResponse) response.getResponse();
 
-            if (simpleDescriptorResponse != null && simpleDescriptorResponse.getStatus() == 0) {
-                if (simpleDescriptorResponse.getStatus() == 0) {
-                    final IeeeAddressResponse ieeeAddressResponse;
-                    final NodeDescriptorResponse nodeDescriptorResponse;
+            if (simpleDescriptorResponse == null) {
+                return false;
+            }
 
-                    final int networkAddress = simpleDescriptorResponse.getNwkAddrOfInterest();
+            if (simpleDescriptorResponse.getStatus() == ZdoStatus.SUCCESS) {
+                final IeeeAddressResponse ieeeAddressResponse;
+                final NodeDescriptorResponse nodeDescriptorResponse;
 
-                    synchronized (powerDescriptors) {
-                        ieeeAddressResponse = ieeeAddresses.get(networkAddress);
-                    }
+                final int networkAddress = simpleDescriptorResponse.getNwkAddrOfInterest();
 
-                    synchronized (powerDescriptors) {
-                        nodeDescriptorResponse = nodeDescriptors.get(networkAddress);
-                    }
-
-                    // TODO: nodeDescriptorResponse is not used - does this matter?!
-                    if (ieeeAddressResponse != null && nodeDescriptorResponse != null) {
-                        addOrUpdateDevice(ieeeAddressResponse, simpleDescriptorResponse);
-
-                        return true;
-                    }
-                } else {
-                    logger.debug("Simple Descriptor for {} returned {}", deviceAddress, simpleDescriptorResponse);
+                synchronized (powerDescriptors) {
+                    ieeeAddressResponse = ieeeAddresses.get(networkAddress);
                 }
+
+                synchronized (powerDescriptors) {
+                    nodeDescriptorResponse = nodeDescriptors.get(networkAddress);
+                }
+
+                // TODO: nodeDescriptorResponse is not used - does this matter?!
+                if (ieeeAddressResponse != null && nodeDescriptorResponse != null) {
+                    addOrUpdateDevice(ieeeAddressResponse, simpleDescriptorResponse);
+
+                    return true;
+                }
+            } else {
+                logger.debug("Simple Descriptor for {} returned {}", deviceAddress, simpleDescriptorResponse);
             }
         } catch (InterruptedException | ExecutionException e) {
             logger.error("Error in checkActiveEndpointsResponse", e);
@@ -472,8 +488,12 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
         node.setNetworkAddress(ieeeAddressResponse.getNwkAddrRemoteDev());
         node.setNodeDescriptor(nodeDescriptorResponse.getNodeDescriptor());
         node.setIeeeAddress(ieeeAddressResponse.getIeeeAddrRemoteDev());
-        node.setPowerDescriptor(powerDescriptorResponse.getPowerDescriptor());
         node.setAssociatedDevices(ieeeAddressResponse.getNwkAddrAssocDevList());
+
+        // Power descriptor response is optional so may be null
+        if (powerDescriptorResponse != null) {
+            node.setPowerDescriptor(powerDescriptorResponse.getPowerDescriptor());
+        }
 
         if (newDevice) {
             networkManager.addNode(node);

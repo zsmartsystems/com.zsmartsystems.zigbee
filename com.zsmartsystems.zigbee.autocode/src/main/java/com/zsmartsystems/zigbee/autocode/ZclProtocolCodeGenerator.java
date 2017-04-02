@@ -285,6 +285,7 @@ public class ZclProtocolCodeGenerator {
         out.println("import java.util.HashMap;");
         out.println("import java.util.Map;");
         out.println("import " + packageRootPrefix + packageZclField + ".*;");
+        out.println("import " + packageRootPrefix + packageZdp + ".ZdoStatus;");
         out.println("import " + packageRootPrefix + packageZdpDescriptors + ".*;");
         out.println("import " + packageRootPrefix + "." + "IeeeAddress" + ";");
         out.println();
@@ -1638,9 +1639,6 @@ public class ZclProtocolCodeGenerator {
                     // out.println("import java.util.HashMap;");
 
                     for (final Field field : fields) {
-                        if (reservedFields.contains(field.nameLowerCamelCase)) {
-                            continue;
-                        }
 
                         String packageName;
                         if (field.dataTypeClass.endsWith("Descriptor")) {
@@ -1660,6 +1658,10 @@ public class ZclProtocolCodeGenerator {
                             typeName = field.dataTypeClass;
                         }
 
+                        // if (reservedFields.contains(field.nameLowerCamelCase)) {
+                        // continue;
+                        // }
+
                         switch (typeName) {
                             case "Integer":
                             case "Boolean":
@@ -1669,6 +1671,9 @@ public class ZclProtocolCodeGenerator {
                                 continue;
                             case "IeeeAddress":
                                 out.println("import " + packageRootPrefix + "." + typeName + ";");
+                                continue;
+                            case "ZdoStatus":
+                                out.println("import " + packageRootPrefix + packageZdp + ".ZdoStatus;");
                                 continue;
                         }
 
@@ -1841,7 +1846,7 @@ public class ZclProtocolCodeGenerator {
                             }
 
                             if (field.nameLowerCamelCase.equals("status")) {
-                                out.println("        if (status != 0) {");
+                                out.println("        if (status != ZdoStatus.SUCCESS) {");
                                 out.println("            // Don't read the full response if we have an error");
                                 out.println("            return;");
                                 out.println("        }");
@@ -1859,13 +1864,13 @@ public class ZclProtocolCodeGenerator {
                         out.println("        }");
                         out.println();
                         out.print("        return ");
-                        boolean first = true;
+                        out.println("(((" + command.nameUpperCamelCase + ") request).getDestinationAddress()");
+                        out.print("                .equals(((" + command.responseCommand
+                                + ") response).getSourceAddress()))");
+
                         for (String matcher : command.responseMatchers.keySet()) {
-                            if (first == false) {
-                                out.println();
-                                out.print("                && ");
-                            }
-                            first = false;
+                            out.println();
+                            out.print("                && ");
                             out.println("(((" + command.nameUpperCamelCase + ") request).get" + matcher + "()");
                             out.print("                .equals(((" + command.responseCommand + ") response).get"
                                     + command.responseMatchers.get(matcher) + "()))");

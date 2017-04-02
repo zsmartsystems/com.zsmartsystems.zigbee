@@ -8,6 +8,7 @@ import com.zsmartsystems.zigbee.CommandTest;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 
 /**
  *
@@ -32,7 +33,7 @@ public class IeeeAddressResponseTest extends CommandTest {
 
         assertEquals(new IeeeAddress("0022A300001732BF"), addressResponse.getIeeeAddrRemoteDev());
         assertEquals(0x8001, (int) addressResponse.getClusterId());
-        assertEquals(0, (int) addressResponse.getStatus());
+        assertEquals(ZdoStatus.SUCCESS, addressResponse.getStatus());
     }
 
     @Test
@@ -50,6 +51,6 @@ public class IeeeAddressResponseTest extends CommandTest {
 
         assertEquals(new IeeeAddress("00158D0001A5A1EC"), addressResponse.getIeeeAddrRemoteDev());
         assertEquals(0x8001, (int) addressResponse.getClusterId());
-        assertEquals(0, (int) addressResponse.getStatus());
+        assertEquals(ZdoStatus.SUCCESS, addressResponse.getStatus());
     }
 }

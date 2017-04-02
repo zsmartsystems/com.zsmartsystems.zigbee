@@ -37,6 +37,8 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupResponse;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
+import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable;
 
 /**
  * ZigBee command line console is an example usage of simple ZigBee API.
@@ -661,12 +663,20 @@ public final class ZigBeeConsole {
 
             print("IEEE Address     : " + node.getIeeeAddress(), out);
             print("Network Address  : " + node.getNetworkAddress(), out);
-            print("Node Descriptor  : " + node.getNodeDescriptor().toString(), out);
-            print("Power Descriptor : " + node.getPowerDescriptor().toString(), out);
+            print("Node Descriptor  : " + node.getNodeDescriptor(), out);
+            print("Power Descriptor : " + node.getPowerDescriptor(), out);
             print("Associations     : " + node.getAssociatedDevices().toString(), out);
             print("Devices:", out);
             for (ZigBeeDevice device : zigbeeApi.getNetwork().getNodeDevices(address)) {
                 print(device.toString(), out);
+            }
+            print("Neighbors:", out);
+            for (NeighborTable neighbor : node.getNeighbors()) {
+                print(neighbor.toString(), out);
+            }
+            print("Routes:", out);
+            for (RoutingTable route : node.getRoutes()) {
+                print(route.toString(), out);
             }
 
             return true;
@@ -1539,7 +1549,9 @@ public final class ZigBeeConsole {
 
                 final int statusCode = response.getRecords().get(0).getStatus();
                 if (statusCode == 0) {
-                    out.println("Attribute value: " + response.getRecords().get(0).getAttributeValue());
+                    out.println("Attribute " + response.getRecords().get(0).getAttributeIdentifier() + ", type "
+                            + response.getRecords().get(0).getAttributeDataType() + ", value: "
+                            + response.getRecords().get(0).getAttributeValue());
                 } else {
                     final ZclStatus status = ZclStatus.getStatus((byte) statusCode);
                     out.println("Attribute value read error: " + status);

@@ -375,6 +375,9 @@ public class ZigBeeApi {
             final int attributeId) {
         ZigBeeDevice device = networkManager.getDevice(deviceAddress);
         ZclCluster cluster = device.getCluster(clusterId);
+        if (cluster == null) {
+            return null;
+        }
         ZclAttribute attribute = cluster.getAttribute(attributeId);
         return networkManager.read(cluster, attribute);
     }

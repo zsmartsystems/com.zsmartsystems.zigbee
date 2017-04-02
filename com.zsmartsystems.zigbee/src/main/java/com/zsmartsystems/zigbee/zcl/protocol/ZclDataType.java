@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import com.zsmartsystems.zigbee.zcl.field.*;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.descriptors.*;
 import com.zsmartsystems.zigbee.IeeeAddress;
 
@@ -53,7 +54,8 @@ public enum ZclDataType {
     POWER_DESCRIPTOR("Power Descriptor", PowerDescriptor.class, 0x00, false),
     ROUTING_TABLE("Routing Table", RoutingTable.class, 0x00, false),
     SIMPLE_DESCRIPTOR("Simple Descriptor", SimpleDescriptor.class, 0x00, false),
-    USER_DESCRIPTOR("User Descriptor", UserDescriptor.class, 0x00, false);
+    USER_DESCRIPTOR("User Descriptor", UserDescriptor.class, 0x00, false),
+    ZDO_STATUS("Zdo Status", ZdoStatus.class, 0x00, false);
 
     private final String label;
     private final Class<?> dataClass;

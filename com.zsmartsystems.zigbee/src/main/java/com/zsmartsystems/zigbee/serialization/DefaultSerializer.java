@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 
 /**
  * The implementation of the {@link ZigBeeSerializer}.
@@ -124,6 +125,9 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 buffer[length++] = (uintValue >> 24) & 0xFF;
                 break;
             case UTCTIME:
+                break;
+            case ZDO_STATUS:
+                buffer[length++] = ((ZdoStatus) data).getId();
                 break;
             default:
                 throw new IllegalArgumentException("No writer defined in " + ZigBeeDeserializer.class.getSimpleName()

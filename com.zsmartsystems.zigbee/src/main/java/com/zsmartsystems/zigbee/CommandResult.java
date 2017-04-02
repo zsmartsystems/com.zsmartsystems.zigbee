@@ -32,7 +32,7 @@ public class CommandResult {
     }
 
     /**
-     * Constructor for message situations.
+     * Constructor for message situations. Setting a message indicates a failure.
      *
      * @param message the message
      */
@@ -55,7 +55,7 @@ public class CommandResult {
      * @return TRUE if command execution was successful.
      */
     public boolean isSuccess() {
-        return !isTimeout() && !isError();
+        return !(isTimeout() || isError());
     }
 
     /**
@@ -103,7 +103,7 @@ public class CommandResult {
             if (response instanceof DefaultResponse) {
                 return ((DefaultResponse) response).getStatusCode();
             } else {
-                return ((ZdoResponse) response).getStatus();
+                return ((ZdoResponse) response).getStatus().getId();
             }
         } else {
             return null;

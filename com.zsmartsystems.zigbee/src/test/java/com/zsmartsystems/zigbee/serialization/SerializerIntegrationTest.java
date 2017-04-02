@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 
 /**
  * This performs a simple set of tests to make sure the serialiser/deserializer can read back what it writes.
@@ -18,6 +19,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  */
 public class SerializerIntegrationTest {
+    @Test
+    public void testDeserialize_ZDO_STATUS() {
+        ZdoStatus valIn = ZdoStatus.NO_DESCRIPTOR;
+        testSerializer(valIn, ZclDataType.ZDO_STATUS);
+    }
+
     @Test
     public void testDeserialize_BITMAP_8_BIT() {
         int valIn = 0x91;

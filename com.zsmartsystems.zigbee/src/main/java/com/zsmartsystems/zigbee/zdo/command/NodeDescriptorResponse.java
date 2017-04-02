@@ -4,6 +4,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
 
 /**
@@ -96,7 +97,7 @@ public class NodeDescriptorResponse extends ZdoResponse {
     public void serialize(final ZclFieldSerializer serializer) {
         super.serialize(serializer);
 
-        serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(status, ZclDataType.ZDO_STATUS);
         serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
         serializer.serialize(nodeDescriptor, ZclDataType.NODE_DESCRIPTOR);
     }
@@ -105,8 +106,8 @@ public class NodeDescriptorResponse extends ZdoResponse {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        if (status != 0) {
+        status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
+        if (status != ZdoStatus.SUCCESS) {
             // Don't read the full response if we have an error
             return;
         }
