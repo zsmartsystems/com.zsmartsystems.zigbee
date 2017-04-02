@@ -119,7 +119,7 @@ public class ComplexDescriptorResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ComplexDescriptorResponse ");
+        builder.append("ComplexDescriptorResponse");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);

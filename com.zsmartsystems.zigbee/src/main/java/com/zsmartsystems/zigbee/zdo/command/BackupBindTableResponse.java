@@ -32,7 +32,7 @@ public class BackupBindTableResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("BackupBindTableResponse ");
+        builder.append("BackupBindTableResponse");
         builder.append(super.toString());
         return builder.toString();
     }

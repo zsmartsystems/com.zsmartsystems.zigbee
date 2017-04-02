@@ -1879,7 +1879,7 @@ public class ZclProtocolCodeGenerator {
                     out.println("    @Override");
                     out.println("    public String toString() {");
                     out.println("        final StringBuilder builder = new StringBuilder();");
-                    out.println("        builder.append(\"" + className + " \");");
+                    out.println("        builder.append(\"" + className + "\");");
                     out.println("        builder.append(super.toString());");
                     for (final Field field : fields) {
                         out.println("        builder.append(\", " + field.nameLowerCamelCase + "=\");");

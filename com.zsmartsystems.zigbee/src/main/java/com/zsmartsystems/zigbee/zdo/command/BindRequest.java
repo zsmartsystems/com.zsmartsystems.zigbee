@@ -193,7 +193,7 @@ public class BindRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("BindRequest ");
+        builder.append("BindRequest");
         builder.append(super.toString());
         builder.append(", srcAddress=");
         builder.append(srcAddress);

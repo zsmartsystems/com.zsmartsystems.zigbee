@@ -76,7 +76,7 @@ public class ManagementRoutingRequest extends ZdoRequest implements CommandRespo
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementRoutingRequest ");
+        builder.append("ManagementRoutingRequest");
         builder.append(super.toString());
         builder.append(", startIndex=");
         builder.append(startIndex);

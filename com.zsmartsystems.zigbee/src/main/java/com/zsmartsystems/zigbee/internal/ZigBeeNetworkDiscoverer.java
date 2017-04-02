@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.Command;
 import com.zsmartsystems.zigbee.CommandListener;
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.DeviceAnnounceListener;
 import com.zsmartsystems.zigbee.ZigBeeDevice;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -46,11 +47,11 @@ import com.zsmartsystems.zigbee.zdo.descriptors.SimpleDescriptor;
  * @author Chris Jackson
  * @author Tommi S.E. Laukkanen
  */
-public class ZigBeeNetworkDiscoverer implements CommandListener {
+public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceListener {
     /**
      * The logger.
      */
-    private final static Logger logger = LoggerFactory.getLogger(ZigBeeNetworkDiscoverer.class);
+    private final Logger logger = LoggerFactory.getLogger(ZigBeeNetworkDiscoverer.class);
 
     /**
      * Maximum number of retries to perform
@@ -131,6 +132,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
      */
     public void startup() {
         networkManager.addCommandListener(this);
+        networkManager.addDeviceAnnounceListener(this);
 
         // Start discovery from root node.
         startNodeDiscovery(0);
@@ -141,6 +143,12 @@ public class ZigBeeNetworkDiscoverer implements CommandListener {
      */
     public void shutdown() {
         networkManager.removeCommandListener(this);
+        networkManager.removeDeviceAnnounceListener(this);
+    }
+
+    @Override
+    public void deviceAnnounced(final Integer address) {
+        startNodeDiscovery(address);
     }
 
     @Override

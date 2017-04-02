@@ -26,7 +26,7 @@ public class FindNodeCacheResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("FindNodeCacheResponse ");
+        builder.append("FindNodeCacheResponse");
         builder.append(super.toString());
         return builder.toString();
     }

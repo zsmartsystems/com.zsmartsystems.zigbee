@@ -30,7 +30,7 @@ public class ExtendedActiveEndpointRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ExtendedActiveEndpointRequest ");
+        builder.append("ExtendedActiveEndpointRequest");
         builder.append(super.toString());
         return builder.toString();
     }

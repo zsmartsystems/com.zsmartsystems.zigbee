@@ -25,7 +25,7 @@ public class PowerDescriptorStoreResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("PowerDescriptorStoreResponse ");
+        builder.append("PowerDescriptorStoreResponse");
         builder.append(super.toString());
         return builder.toString();
     }

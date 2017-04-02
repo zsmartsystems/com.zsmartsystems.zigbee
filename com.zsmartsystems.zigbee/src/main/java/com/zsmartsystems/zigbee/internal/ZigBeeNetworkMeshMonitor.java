@@ -34,8 +34,8 @@ import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable;
  * <li>{@link ManagementLqiRequest}
  * <li>{@link ManagementRoutingRequest}
  * </ul>
- * It will always start from the coordinator and walk through the network requesting the data from all neighbors of each
- * node. A node will only be interrogated once per cycle and the update period can be set with the
+ * It will always start from the coordinator and walk through the network requesting the data from all neighbors
+ * of each node. A node will only be interrogated once per cycle and the update period can be set with the
  * {@link #setUpdatePeriod(int)} method.
  * <p>
  * This class is thread safe.
@@ -46,7 +46,7 @@ public class ZigBeeNetworkMeshMonitor {
     /**
      * The logger.
      */
-    private final static Logger logger = LoggerFactory.getLogger(ZigBeeNetworkMeshMonitor.class);
+    private final Logger logger = LoggerFactory.getLogger(ZigBeeNetworkMeshMonitor.class);
 
     /**
      * Maximum number of retries to perform
@@ -173,6 +173,9 @@ public class ZigBeeNetworkMeshMonitor {
                     synchronized (nodesInProgress) {
                         nodesInProgress.remove(nodeNetworkAddress);
                     }
+
+                    // Notify that this is a new node so we can try and discover it
+                    networkManager.announceDevice(nodeNetworkAddress);
 
                     return;
                 }

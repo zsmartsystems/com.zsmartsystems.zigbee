@@ -108,6 +108,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             .unmodifiableList(new ArrayList<ZigBeeNetworkDeviceListener>());
 
     /**
+     * The announce listeners are notified whenever a new device is discovered.
+     * This can be called from the transport layer, or internally by methods watching
+     * the network state.
+     */
+    private List<DeviceAnnounceListener> announceListeners = Collections
+            .unmodifiableList(new ArrayList<DeviceAnnounceListener>());
+
+    /**
      * {@link AtomicInteger} used to generate transaction sequence numbers
      */
     private final static AtomicInteger sequenceNumber = new AtomicInteger();
@@ -569,6 +577,46 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                     @Override
                     public void run() {
                         commandListener.commandReceived(command);
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * Add a {@link DeviceAnnounceListener} that will be notified whenever a new device is detected
+     * on the network.
+     *
+     * @param announceListener the new {@link DeviceAnnounceListener} to add
+     */
+    public void addDeviceAnnounceListener(DeviceAnnounceListener announceListener) {
+        final List<DeviceAnnounceListener> modifiedStateListeners = new ArrayList<DeviceAnnounceListener>(
+                announceListeners);
+        modifiedStateListeners.add(announceListener);
+        announceListeners = Collections.unmodifiableList(modifiedStateListeners);
+    }
+
+    /**
+     * Remove a {@link DeviceAnnounceListener}
+     *
+     * @param announceListener the new {@link DeviceAnnounceListener} to remove
+     */
+    public void removeDeviceAnnounceListener(DeviceAnnounceListener announceListener) {
+        final List<DeviceAnnounceListener> modifiedStateListeners = new ArrayList<DeviceAnnounceListener>(
+                announceListeners);
+        modifiedStateListeners.remove(announceListener);
+        announceListeners = Collections.unmodifiableList(modifiedStateListeners);
+    }
+
+    @Override
+    public void announceDevice(final Integer address) {
+        synchronized (this) {
+            // Notify the listeners
+            for (final DeviceAnnounceListener announceListener : announceListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        announceListener.deviceAnnounced(address);
                     }
                 });
             }

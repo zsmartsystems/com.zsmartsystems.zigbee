@@ -23,7 +23,7 @@ public class ManagementBindResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementBindResponse ");
+        builder.append("ManagementBindResponse");
         builder.append(super.toString());
         return builder.toString();
     }

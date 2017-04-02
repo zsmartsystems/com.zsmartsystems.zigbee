@@ -23,7 +23,7 @@ public class ManagementLeaveResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementLeaveResponse ");
+        builder.append("ManagementLeaveResponse");
         builder.append(super.toString());
         return builder.toString();
     }

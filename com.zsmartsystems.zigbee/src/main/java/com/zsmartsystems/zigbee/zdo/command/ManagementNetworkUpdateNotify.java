@@ -33,7 +33,7 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementNetworkUpdateNotify ");
+        builder.append("ManagementNetworkUpdateNotify");
         builder.append(super.toString());
         return builder.toString();
     }
