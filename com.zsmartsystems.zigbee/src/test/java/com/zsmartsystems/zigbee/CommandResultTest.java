@@ -26,16 +26,19 @@ public class CommandResultTest {
 
         result = new CommandResult(new Command());
         assertTrue(result.isError());
+        assertFalse(result.isSuccess());
 
         DefaultResponse response = new DefaultResponse();
         response.setStatusCode(0);
         result = new CommandResult(response);
         assertFalse(result.isError());
+        assertTrue(result.isSuccess());
 
         response = new DefaultResponse();
         response.setStatusCode(1);
         result = new CommandResult(response);
         assertTrue(result.isError());
+        assertFalse(result.isSuccess());
     }
 
     @Test

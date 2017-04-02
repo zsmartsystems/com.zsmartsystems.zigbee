@@ -23,6 +23,15 @@ import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable.DiscoveryState;
 
 public class ZigBeeNodeTest {
     @Test
+    public void testAddDescriptors() {
+        ZigBeeNode node = new ZigBeeNode(null);
+        node.setPowerDescriptor(null);
+        assertEquals(null, node.getPowerDescriptor());
+
+        System.out.println(node.toString());
+    }
+
+    @Test
     public void testSetIeeeAddress() {
         ZigBeeNode node = new ZigBeeNode(null);
         node.setIeeeAddress(new IeeeAddress("17880100dc880b"));

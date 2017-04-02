@@ -69,8 +69,8 @@ public class ComplexDescriptorRequest extends ZdoRequest implements CommandRespo
             return false;
         }
 
-        return (((ComplexDescriptorRequest) request).getNwkAddrOfInterest()
-                .equals(((ComplexDescriptorResponse) response).getNwkAddrOfInterest()));
+        return (((ComplexDescriptorRequest) request).getDestinationAddress()
+                .equals(((ComplexDescriptorResponse) response).getSourceAddress()));
     }
 
     @Override

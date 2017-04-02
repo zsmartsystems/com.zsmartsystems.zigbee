@@ -15,7 +15,7 @@ public abstract class ZdoResponse extends ZdoCommand {
     /**
      * The response status.
      */
-    protected int status;
+    protected ZdoStatus status;
 
     /**
      * Gets source address.
@@ -40,7 +40,7 @@ public abstract class ZdoResponse extends ZdoCommand {
      *
      * @return the response status
      */
-    public Integer getStatus() {
+    public ZdoStatus getStatus() {
         return status;
     }
 
@@ -49,7 +49,7 @@ public abstract class ZdoResponse extends ZdoCommand {
      *
      * @param status the response status as {@link int}
      */
-    public void setStatus(int status) {
+    public void setStatus(ZdoStatus status) {
         this.status = status;
     }
 

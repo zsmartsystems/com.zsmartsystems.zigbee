@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.zsmartsystems.zigbee.CommandTest;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.descriptors.SimpleDescriptor;
 
 /**
@@ -35,7 +36,7 @@ public class SimpleDescriptorResponseTest extends CommandTest {
         SimpleDescriptor simpleDescriptor = descriptorResponse.getSimpleDescriptor();
 
         assertNull(simpleDescriptor);
-        assertEquals(0x81, (int) descriptorResponse.getStatus());
+        assertEquals(ZdoStatus.DEVICE_NOT_FOUND, descriptorResponse.getStatus());
     }
 
     @Test
@@ -53,7 +54,7 @@ public class SimpleDescriptorResponseTest extends CommandTest {
 
         SimpleDescriptor simpleDescriptor = descriptorResponse.getSimpleDescriptor();
 
-        assertEquals(0, (int) descriptorResponse.getStatus());
+        assertEquals(ZdoStatus.SUCCESS, descriptorResponse.getStatus());
         assertEquals(0, (int) descriptorResponse.getNwkAddrOfInterest());
 
         assertEquals(1, simpleDescriptor.getEndpoint());

@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.zsmartsystems.zigbee.CommandTest;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.CurrentPowerModeType;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.PowerLevelType;
@@ -33,9 +34,28 @@ public class PowerDescriptorResponseTest extends CommandTest {
         System.out.println(descriptorResponse);
 
         PowerDescriptor powerDescriptor = descriptorResponse.getPowerDescriptor();
+        assertEquals(ZdoStatus.SUCCESS, descriptorResponse.getStatus());
 
         assertEquals(PowerLevelType.FULL, powerDescriptor.getPowerLevel());
         assertEquals(CurrentPowerModeType.RECEIVER_ON_IDLE, powerDescriptor.getCurrentPowerMode());
         assertEquals(PowerSourceType.MAINS, powerDescriptor.getCurrentPowerSource());
+    }
+
+    @Test
+    public void testReceiveNotSupported() {
+        int[] packet = getPacketData("84 84");
+
+        PowerDescriptorResponse descriptorResponse = new PowerDescriptorResponse();
+
+        DefaultDeserializer deserializer = new DefaultDeserializer(packet);
+        ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
+
+        descriptorResponse.deserialize(fieldDeserializer);
+
+        System.out.println(descriptorResponse);
+        assertEquals(ZdoStatus.NOT_SUPPORTED, descriptorResponse.getStatus());
+
+        PowerDescriptor powerDescriptor = descriptorResponse.getPowerDescriptor();
+        assertEquals(null, powerDescriptor);
     }
 }

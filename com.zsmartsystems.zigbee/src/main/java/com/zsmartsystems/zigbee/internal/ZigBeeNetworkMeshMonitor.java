@@ -19,6 +19,7 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingRequest;
@@ -239,7 +240,7 @@ public class ZigBeeNetworkMeshMonitor {
                 CommandResult response = networkManager.unicast(neighborRequest, neighborRequest).get();
 
                 final ManagementLqiResponse neighborResponse = response.getResponse();
-                if (neighborResponse != null && neighborResponse.getStatus() == 0) {
+                if (neighborResponse != null && neighborResponse.getStatus() == ZdoStatus.SUCCESS) {
                     // Save the neighbors
                     for (NeighborTable neighbor : neighborResponse.getNeighborTableList()) {
                         neighbors.add(neighbor);
@@ -290,7 +291,7 @@ public class ZigBeeNetworkMeshMonitor {
                 routeRequest.setStartIndex(startIndex);
                 CommandResult response = networkManager.unicast(routeRequest, routeRequest).get();
                 final ManagementRoutingResponse routingResponse = response.getResponse();
-                if (routingResponse != null && routingResponse.getStatus() == 0) {
+                if (routingResponse != null && routingResponse.getStatus() == ZdoStatus.SUCCESS) {
                     // Save the neighbors
                     for (RoutingTable route : routingResponse.getRoutingTableList()) {
                         routes.add(route);

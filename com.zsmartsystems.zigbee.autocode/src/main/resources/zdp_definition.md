@@ -36,7 +36,6 @@ The destination addressing on this command shall be unicast.
 
 ##### Expected Response
 Packet: IEEE Address Response
-Match: NWKAddrOfInterest == NWKAddrRemoteDev
 
 #### Node Descriptor Request [0x0002]
 
@@ -51,7 +50,6 @@ information of the remote device.
 
 ##### Expected Response
 Packet: Node Descriptor Response
-Match: NWKAddrOfInterest == NWKAddrOfInterest
 
 
 #### Power Descriptor Request [0x0003]
@@ -67,7 +65,6 @@ the discovery information of the remote device.
 
 ##### Expected Response
 Packet: Power Descriptor Response
-Match: NWKAddrOfInterest == NWKAddrOfInterest
 
 
 #### Simple Descriptor Request [0x0004]
@@ -84,7 +81,6 @@ device that contains the discovery information of the remote device.
 
 ##### Expected Response
 Packet: Simple Descriptor Response
-Match: NWKAddrOfInterest == NWKAddrOfInterest
 Match: Endpoint == SimpleDescriptor.Endpoint
 
 #### Active Endpoints Request [0x0005]
@@ -100,7 +96,6 @@ contains the discovery information of the remote device.
 
 ##### Expected Response
 Packet: Active Endpoints Response
-Match: NWKAddrOfInterest == NWKAddrOfInterest
 
 
 #### Match Descriptor Request [0x0006]
@@ -125,7 +120,6 @@ the discovery information of the remote device.
 
 ##### Expected Response
 Packet: Complex Descriptor Response
-Match: NWKAddrOfInterest == NWKAddrOfInterest
 
 
 #### User Descriptor Request [0x0011]
@@ -141,7 +135,6 @@ information of the remote device.
 
 ##### Expected Response
 Packet: User Descriptor Response
-Match: NWKAddrOfInterest == NWKAddrOfInterest
 
 
 #### Discovery Cache Request [0x0012]
@@ -443,7 +436,6 @@ the destination address must be that of a ZigBee Coordinator or ZigBee Router.
 
 ##### Expected Response
 Packet: Management LQI Response
-Match: destinationAddress == sourceAddress
 
 #### Management Routing Request [0x0032]
 
@@ -458,7 +450,6 @@ must be that of the ZigBee Router or ZigBee Coordinator.
 
 ##### Expected Response
 Packet: Management Routing Response
-Match: destinationAddress == sourceAddress
 
 
 #### Management Bind Request [0x0033]
@@ -549,7 +540,7 @@ destination addressing on this command is unicast.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
+|Status                     |Zdo Status                 |
 |IEEEAddrRemoteDev          |IEEE Address               |
 |NWKAddrRemoteDev           |NWK address                |
 |NumAssocDev                |Unsigned 8-bit integer     |
@@ -566,7 +557,7 @@ The destination addressing on this command shall be unicast.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
+|Status                     |Zdo Status                 |
 |IEEEAddrRemoteDev          |IEEE Address               |
 |NWKAddrRemoteDev           |NWK address                |
 |NumAssocDev[0]             |Unsigned 8-bit integer     |
@@ -605,7 +596,7 @@ the matching child device in the NodeDescriptor field.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
+|Status                     |Zdo Status                 |
 |NWKAddrOfInterest          |NWK address                |
 |NodeDescriptor             |Node Descriptor            |
 
@@ -617,8 +608,8 @@ the originator of the Power_Desc_req command.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
-|NWKAddrOfInterest          |NWK address         |
+|Status                     |Zdo Status                  |
+|NWKAddrOfInterest          |NWK address                |
 |PowerDescriptor            |Power Descriptor           |
 
 #### Simple Descriptor Response [0x8004]
@@ -629,7 +620,7 @@ the originator of the Simple_Desc_req command.
 
 |Field Name                     |Data Type                  |
 |-------------------------------|---------------------------|
-|Status                         |Unsigned 8-bit integer     |
+|Status                         |Zdo Status                 |
 |NWKAddrOfInterest              |NWK address                |
 |Length                         |Unsigned 8-bit integer     |
 |SimpleDescriptor               |Simple Descriptor          |
@@ -643,7 +634,7 @@ the originator of the Active_EP_req command.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
+|Status                     |Zdo Status                 |
 |NWKAddrOfInterest          |NWK address                |
 |ActiveEPCnt                |Unsigned 8-bit integer     |
 |ActiveEPList               |Endpoint[ActiveEPCnt]      |
@@ -662,8 +653,8 @@ to the originator of the Complex_Desc_req command.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
-|NWKAddrOfInterest          |NWK address         |
+|Status                     |Zdo Status                 |
+|NWKAddrOfInterest          |NWK address                |
 |Length                     |Unsigned 8-bit integer     |
 |ComplexDescriptor          |Complex Descriptor         |
 
@@ -676,8 +667,8 @@ the originator of the User_Desc_req command.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
-|NWKAddrOfInterest          |NWK address         |
+|Status                     |Zdo Status                 |
+|NWKAddrOfInterest          |NWK address                |
 |Length                     |Unsigned 8-bit integer     |
 |UserDescriptor             |User Descriptor            |
 
@@ -803,7 +794,7 @@ Status of NO_ENTRY is returned.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
+|Status                     |Zdo Status                 |
 
 
 #### Bind Register Response [0x8023]
@@ -940,7 +931,7 @@ the Remote Device shall implement the following processing.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
+|Status                     |Zdo Status                 |
 |NeighborTableEntries       |Unsigned 8-bit integer     |
 |StartIndex                 |Unsigned 8-bit integer     |
 |NeighborTableListCount     |Unsigned 8-bit integer     |
@@ -956,7 +947,7 @@ the Remote Device shall implement the following processing.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
+|Status                     |Zdo Status                 |
 |RoutingTableEntries        |Unsigned 8-bit integer     |
 |StartIndex                 |Unsigned 8-bit integer     |
 |RoutingTableListCount      |Unsigned 8-bit integer     |
@@ -998,7 +989,7 @@ NLME-PERMIT-JOINING.confirm primitive.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
+|Status                     |Zdo Status                 |
 
 
 #### Management Cache Response [0x8037]
