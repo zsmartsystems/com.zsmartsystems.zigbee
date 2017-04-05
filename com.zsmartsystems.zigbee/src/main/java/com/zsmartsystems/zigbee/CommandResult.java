@@ -75,8 +75,10 @@ public class CommandResult {
     public boolean isError() {
         if (hasStatusCode()) {
             return getStatusCode() != 0;
+        } else if (message != null) {
+            return true;
         } else {
-            return (message == null);
+            return response == null;
         }
     }
 
@@ -106,7 +108,7 @@ public class CommandResult {
                 return ((ZdoResponse) response).getStatus().getId();
             }
         } else {
-            return null;
+            return 0xffff;
         }
     }
 
@@ -144,7 +146,7 @@ public class CommandResult {
         } else {
             final ZclStatus status = ZclStatus.getStatus((byte) getStatusCode().intValue());
             return "message: " + status.name() + "(0x" + Integer.toHexString(status.getId()) + ", "
-                    + status.getDescription();
+                    + status.getDescription() + ")";
         }
     }
 }

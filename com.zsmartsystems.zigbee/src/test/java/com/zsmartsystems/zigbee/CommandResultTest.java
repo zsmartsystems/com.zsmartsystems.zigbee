@@ -21,12 +21,12 @@ public class CommandResultTest {
         assertTrue(result.isError());
 
         result = new CommandResult("Test");
-        assertFalse(result.isError());
-        assertTrue(result.isSuccess());
-
-        result = new CommandResult(new Command());
         assertTrue(result.isError());
         assertFalse(result.isSuccess());
+
+        result = new CommandResult(new Command());
+        assertFalse(result.isError());
+        assertTrue(result.isSuccess());
 
         DefaultResponse response = new DefaultResponse();
         response.setStatusCode(0);
