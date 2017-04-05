@@ -361,16 +361,14 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     private boolean createZigBeeNetwork() {
-        createCustomDevicesOnDongle();
         logger.debug("Creating CC2531 network as {}", mode.toString());
+        createCustomDevicesOnDongle();
 
         // Make sure we start clearing configuration and state
         logger.debug("Changing the CC2531 Network Mode to {}.", mode);
         if (!dongleSetNetworkMode()) {
             logger.error("Unable to set NETWORK_MODE for ZigBee Network");
             return false;
-        } else {
-            logger.trace("NETWORK_MODE set");
         }
 
         // A dongle reset is needed to put into effect the network mode.

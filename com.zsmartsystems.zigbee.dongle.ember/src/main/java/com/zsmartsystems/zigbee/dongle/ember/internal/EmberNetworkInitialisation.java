@@ -61,9 +61,13 @@ public class EmberNetworkInitialisation {
      * This utility function uses emberStartScan, emberStopScan, emberScanCompleteHandler, emberEnergyScanResultHandler,
      * and emberNetworkFoundHandler to discover other networks or determine the background noise level. It then uses
      * emberFormNetwork to create a new network with a unique PAN-ID on a channel with low background noise.
+     * <p>
+     * Setting the PAN-ID or Extended PAN-ID to 0 will set these values to a random value.
+     * <p>
+     * If channel is set to 0, the quietest channel will be used.
      *
      * @param networkParameters the required {@link EmberNetworkParameters}
-     * @param networkKey the {@link EmberKeyData} with the network key
+     * @param networkKey the {@link EmberKeyData} with the network key. This can not be set to all 00 or all FF.
      */
     public void formNetwork(EmberNetworkParameters networkParameters, EmberKeyData networkKey) {
         int scanDuration = 1; // 6

@@ -30,6 +30,7 @@ import com.zsmartsystems.zigbee.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
@@ -83,6 +84,7 @@ public final class ZigBeeConsole {
     public ZigBeeConsole(final ZigBeeNetworkManager networkManager, final ZigBeeTransportTransmit dongle) {
 
         commands.put("node", new NodeCommand());
+        commands.put("info", new InfoCommand());
 
         commands.put("devicelist", new DeviceListCommand());
         commands.put("devicelabel", new DeviceLabelCommand());
@@ -106,6 +108,7 @@ public final class ZigBeeConsole {
         commands.put("on", new OnCommand());
         commands.put("off", new OffCommand());
         commands.put("color", new ColorCommand());
+        commands.put("leave", new LeaveCommand());
         commands.put("level", new LevelCommand());
         commands.put("listen", new ListenCommand());
         commands.put("unlisten", new UnlistenCommand());
@@ -1822,7 +1825,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getDescription() {
-            return "Enable or diable network join.";
+            return "Enable or disable network join.";
         }
 
         /**
@@ -1874,6 +1877,120 @@ public final class ZigBeeConsole {
                     out.println("Permit join disable broadcast success.");
                 }
             }
+            return true;
+        }
+    }
+
+    private class LeaveCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Remove a node from the network";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "leave parent node";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
+            if (args.length != 3) {
+                return false;
+            }
+
+            int parent = Integer.parseInt(args[2]);
+            int leaver = Integer.parseInt(args[2]);
+
+            ZigBeeNode parentNode = networkManager.getNode(parent);
+            if (parentNode == null) {
+                print("Parent node not found.", out);
+                return false;
+            }
+            ZigBeeNode leaverNode = networkManager.getNode(leaver);
+            if (leaverNode == null) {
+                print("Leaver node not found.", out);
+                return false;
+            }
+
+            networkManager.leave(parentNode.getNetworkAddress(), leaverNode.getIeeeAddress());
+
+            return true;
+        }
+    }
+
+    private class InfoCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Get basic info about a device";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "info node [MANUFACTURER|APPVERSION|MODEL|APPVERSION|STKVERSION|HWVERSION|ZCLVERSION|DATE]";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
+            if (args.length != 3) {
+                return false;
+            }
+
+            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final String command = args[2].toUpperCase();
+
+            ZclBasicCluster basicCluster = (ZclBasicCluster) device.getCluster(0);
+            if (basicCluster == null) {
+                print("Can't find basic cluster for " + device.getDeviceAddress(), out);
+                return false;
+            }
+
+            String response = null;
+            switch (command) {
+                case "MANUFACTURER":
+                    response = basicCluster.getManufacturerName(Long.MAX_VALUE);
+                    break;
+                case "MODEL":
+                    response = basicCluster.getModelIdentifier(Long.MAX_VALUE);
+                    break;
+                case "APPVERSION":
+                    response = basicCluster.getApplicationVersion(Long.MAX_VALUE).toString();
+                    break;
+                case "STKVERSION":
+                    response = basicCluster.getStackVersion(Long.MAX_VALUE).toString();
+                    break;
+                case "ZCLVERSION":
+                    response = basicCluster.getZclVersion(Long.MAX_VALUE).toString();
+                    break;
+                case "HWVERSION":
+                    response = basicCluster.getHwVersion(Long.MAX_VALUE).toString();
+                    break;
+                case "DATE":
+                    response = basicCluster.getDateCode(Long.MAX_VALUE).toString();
+                    break;
+                default:
+                    print("Unknown info type: " + command, out);
+                    break;
+            }
+
+            print(command + " returned " + response, out);
             return true;
         }
     }

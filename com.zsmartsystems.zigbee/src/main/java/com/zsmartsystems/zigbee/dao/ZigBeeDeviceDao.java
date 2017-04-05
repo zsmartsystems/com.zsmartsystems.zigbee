@@ -3,6 +3,7 @@ package com.zsmartsystems.zigbee.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeDevice;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -18,6 +19,8 @@ public class ZigBeeDeviceDao {
     private Integer profileId;
 
     private String deviceAddress;
+
+    private String ieeeAddress;
 
     /**
      * Input cluster IDs
@@ -52,6 +55,14 @@ public class ZigBeeDeviceDao {
         this.deviceAddress = deviceAddress;
     }
 
+    public String getIeeeAddress() {
+        return ieeeAddress;
+    }
+
+    public void setIeeeAddress(String ieeeAddress) {
+        this.ieeeAddress = ieeeAddress;
+    }
+
     public List<Integer> getInputClusterIds() {
         return inputClusterIds;
     }
@@ -71,6 +82,7 @@ public class ZigBeeDeviceDao {
     public static ZigBeeDeviceDao createFromZigBeeDevice(ZigBeeDevice device) {
         ZigBeeDeviceDao deviceDao = new ZigBeeDeviceDao();
         deviceDao.setDeviceAddress(device.getDeviceAddress().toString());
+        deviceDao.setIeeeAddress(device.getIeeeAddress().toString());
         deviceDao.setLabel(device.getLabel());
         deviceDao.setProfileId(device.getProfileId());
         deviceDao.setInputClusterIds(device.getInputClusterIds());
@@ -81,6 +93,7 @@ public class ZigBeeDeviceDao {
     public static ZigBeeDevice createFromZigBeeDao(ZigBeeNetworkManager networkManager, ZigBeeDeviceDao deviceDao) {
         ZigBeeDevice device = new ZigBeeDevice(networkManager);
         device.setDeviceAddress(new ZigBeeDeviceAddress(deviceDao.getDeviceAddress()));
+        device.setIeeeAddress(new IeeeAddress(deviceDao.getIeeeAddress()));
         device.setLabel(deviceDao.getLabel());
         device.setProfileId(deviceDao.getProfileId());
         device.setInputClusterIds(deviceDao.getInputClusterIds());

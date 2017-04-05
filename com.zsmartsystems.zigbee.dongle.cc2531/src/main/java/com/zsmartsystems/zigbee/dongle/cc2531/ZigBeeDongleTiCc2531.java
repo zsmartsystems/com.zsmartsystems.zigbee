@@ -43,7 +43,7 @@ public class ZigBeeDongleTiCc2531
     /**
      * The {@link Logger}.
      */
-    private final static Logger logger = LoggerFactory.getLogger(ZigBeeDongleTiCc2531.class);
+    private final Logger logger = LoggerFactory.getLogger(ZigBeeDongleTiCc2531.class);
 
     /**
      * The {@link ZigBeeNetworkManagerImpl ZigBee network manager}.
@@ -67,6 +67,8 @@ public class ZigBeeDongleTiCc2531
 
     @Override
     public boolean initialize() {
+        logger.debug("CC2531 transport initialize");
+
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
         if (!networkManager.startup()) {
@@ -76,7 +78,6 @@ public class ZigBeeDongleTiCc2531
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
         return true;
-        // return networkManager.initializeZigBeeNetwork();
     }
 
     @Override
@@ -117,6 +118,8 @@ public class ZigBeeDongleTiCc2531
 
     @Override
     public boolean startup() {
+        logger.debug("CC2531 transport startup");
+
         // Add listeners for ZCL and ZDO received messages
         networkManager.addAFMessageListener(this);
         networkManager.addAsynchronousCommandListener(this);
@@ -191,105 +194,6 @@ public class ZigBeeDongleTiCc2531
             }
         }
     }
-
-    /**
-     * Sends ZDO command message.
-     *
-     * @param command the {@link ZdoCommand}
-     * @throws ZigBeeNetworkManagerException
-     */
-    /**
-     * @Override
-     *           public void sendZdoCommand(final ZdoCommand command) throws ZigBeeException {
-     *           synchronized (networkManager) {
-     *           if (command instanceof ActiveEndpointsRequest) {
-     *           final ActiveEndpointsRequest activeEndpointsRequest = (ActiveEndpointsRequest) command;
-     *           networkManager.sendCommand(new ZDO_ACTIVE_EP_REQ(
-     *           getZToolAddress16(activeEndpointsRequest.getDestinationAddress().getAddress()),
-     *           getZToolAddress16(activeEndpointsRequest.getNwkAddrOfInterest())));
-     *           }
-     *           if (command instanceof IeeeAddressRequest) {
-     *           final IeeeAddressRequest ieeeAddressRequest = (IeeeAddressRequest) command;
-     *           networkManager.sendCommand(new ZDO_IEEE_ADDR_REQ(
-     *           getZToolAddress16(ieeeAddressRequest.getDestinationAddress().getAddress()), 1, 0));
-     *           }
-     *           if (command instanceof SimpleDescriptorRequest) {
-     *           final SimpleDescriptorRequest simpleDescriptorRequest = (SimpleDescriptorRequest) command;
-     *           networkManager.sendCommand(
-     *           new ZDO_SIMPLE_DESC_REQ((short) simpleDescriptorRequest.getDestinationAddress().getAddress(),
-     *           simpleDescriptorRequest.getEndpoint().shortValue()));
-     *           }
-     *           if (command instanceof NodeDescriptorRequest) {
-     *           final NodeDescriptorRequest nodeDescriptorRequest = (NodeDescriptorRequest) command;
-     *           networkManager.sendCommand(
-     *           new ZDO_NODE_DESC_REQ(getZToolAddress16(nodeDescriptorRequest.getNwkAddrOfInterest()),
-     *           getZToolAddress16(nodeDescriptorRequest.getNwkAddrOfInterest())));
-     *           }
-     *           if (command instanceof PowerDescriptorRequest) {
-     *           final PowerDescriptorRequest powerDescriptorRequest = (PowerDescriptorRequest) command;
-     *           networkManager.sendCommand(
-     *           new ZDO_POWER_DESC_REQ((short) powerDescriptorRequest.getDestinationAddress().getAddress()));
-     *           }
-     *           if (command instanceof ManagementPermitJoiningRequest) {
-     *           final ManagementPermitJoiningRequest managementPermitJoinRequest = (ManagementPermitJoiningRequest)
-     *           command;
-     *           networkManager.sendCommand(new ZDO_MGMT_PERMIT_JOIN_REQ((byte) 2, // (byte)
-     *           // managementPermitJoinRequest.getAddressingMode(),
-     *           getZToolAddress16(managementPermitJoinRequest.getDestinationAddress().getAddress()),
-     *           managementPermitJoinRequest.getPermitDuration(),
-     *           managementPermitJoinRequest.getTcSignificance()));
-     *           }
-     *
-     *           if (command instanceof BindRequest) {
-     *           final BindRequest bindRequest = (BindRequest) command;
-     *           networkManager.sendCommand(new ZDO_BIND_REQ(
-     *           getZToolAddress16(bindRequest.getDestinationAddress().getAddress()),
-     *           getZToolAddress64(bindRequest.getSrcAddress().getLong()), bindRequest.getSrcEndpoint(),
-     *           new DoubleByte(bindRequest.getClusterId()), bindRequest.getDstAddrMode(),
-     *           getZToolAddress64(bindRequest.getDstAddress().getLong()), bindRequest.getDstEndpoint()));
-     *           }
-     *
-     *           if (command instanceof UnbindRequest) {
-     *           final UnbindRequest unbindRequest = (UnbindRequest) command;
-     *           networkManager.sendCommand(new ZDO_UNBIND_REQ(
-     *           getZToolAddress16(unbindRequest.getDestinationAddress().getAddress()),
-     *           getZToolAddress64(unbindRequest.getSrcAddress().getLong()), unbindRequest.getSrcEndpoint(),
-     *           new DoubleByte(unbindRequest.getClusterId()), unbindRequest.getDstAddrMode(),
-     *           getZToolAddress64(unbindRequest.getDstAddress().getLong()), unbindRequest.getDstEndpoint()));
-     *           }
-     *
-     *
-     *           if (command instanceof UserDescriptorSet) {
-     *           final UserDescriptorSet userDescriptorSet = (UserDescriptorSet) command;
-     *           final byte[] bytes = userDescriptorSet.getDescriptor().getBytes(Charset.forName("ASCII"));
-     *           int length = bytes.length;
-     *           if (length > 16) {
-     *           length = 16;
-     *           }
-     *           final int[] characters = new int[length];
-     *           for (int i = 0; i < characters.length; i++) {
-     *           characters[i] = bytes[i];
-     *           }
-     *           networkManager
-     *           .sendCommand(new ZDO_USER_DESC_SET(getZToolAddress16(userDescriptorSet.getDestinationAddress()),
-     *           getZToolAddress16(userDescriptorSet.getSourceAddress()), length, characters));
-     *           }
-     *
-     *           if (command instanceof UserDescriptorRequest) {
-     *           final UserDescriptorRequest userDescriptorRequest = (UserDescriptorRequest) command;
-     *           networkManager.sendCommand(
-     *           new ZDO_USER_DESC_REQ(getZToolAddress16(userDescriptorRequest.getNwkAddrOfInterest()),
-     *           getZToolAddress16(userDescriptorRequest.getNwkAddrOfInterest())));
-     *           }
-     *           if (command instanceof ManagementLqiRequest) {
-     *           final ManagementLqiRequest managementLqiRequest = (ManagementLqiRequest) command;
-     *           networkManager.sendCommand(new ZDO_MGMT_LQI_REQ(
-     *           getZToolAddress16(managementLqiRequest.getDestinationAddress().getAddress()),
-     *           managementLqiRequest.getStartIndex()));
-     *           }
-     *           }
-     *           }
-     */
 
     @Override
     public void setZigBeeTransportReceive(ZigBeeTransportReceive zigbeeTransportReceive) {
