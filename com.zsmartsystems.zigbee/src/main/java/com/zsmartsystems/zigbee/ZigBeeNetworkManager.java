@@ -926,14 +926,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Sends a ZDO Leave Request to a device requesting that an end device leave the network.
      *
-     * @param destination the {@link ZigBeeDeviceAddress} to send the request to
+     * @param integer the network address to send the request to - this is the device parent
      * @param leaveAddress the {@link IeeeAddress} of the end device we want to leave the network
      */
-    public void leave(final ZigBeeDeviceAddress destination, final IeeeAddress leaveAddress) {
+    public void leave(final Integer integer, final IeeeAddress leaveAddress) {
         final ManagementLeaveRequest command = new ManagementLeaveRequest();
 
         command.setDeviceAddress(leaveAddress);
-        command.setDestinationAddress(destination);
+        command.setDestinationAddress(new ZigBeeDeviceAddress(integer));
         command.setSourceAddress(new ZigBeeDeviceAddress(0));
 
         try {

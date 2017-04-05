@@ -17,7 +17,7 @@ public class ZdoIeeeAddress extends TiDongleReceivePacket {
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setCluster(ZdoCommandType.IEEE_ADDRESS_RESPONSE.getClusterId());
         apsFrame.setDestinationEndpoint(0);
-        apsFrame.setSourceAddress(packet.getPacket()[12] + (packet.getPacket()[13] << 8));
+        apsFrame.setSourceAddress(packet.getPacket()[13] + (packet.getPacket()[14] << 8));
         apsFrame.setSourceEndpoint(0);
         apsFrame.setProfile(0);
         int temp[] = Arrays.copyOfRange(packet.getPacket(), 3, packet.getPacket().length - 1);

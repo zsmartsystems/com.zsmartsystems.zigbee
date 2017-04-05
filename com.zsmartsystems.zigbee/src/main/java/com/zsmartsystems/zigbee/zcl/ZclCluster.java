@@ -9,6 +9,9 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -26,6 +29,7 @@ import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
  *
  */
 public abstract class ZclCluster {
+    private Logger logger = LoggerFactory.getLogger(ZclCluster.class);
 
     private final ZigBeeNetworkManager zigbeeManager;
     private final ZigBeeDeviceAddress zigbeeAddress;
@@ -73,14 +77,17 @@ public abstract class ZclCluster {
      * @return
      */
     protected Object readSync(final ZclAttribute attribute) {
+        logger.debug("readSync request: {}", attribute);
         CommandResult result;
         try {
             result = zigbeeManager.read(this, attribute).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            logger.debug("readSync interrupted", e);
             return null;
         } catch (ExecutionException e) {
             e.printStackTrace();
+            logger.debug("readSync exception", e);
             return null;
         }
 
