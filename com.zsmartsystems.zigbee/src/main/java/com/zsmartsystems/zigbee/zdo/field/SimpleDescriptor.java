@@ -26,6 +26,11 @@ public class SimpleDescriptor {
 
     private int profileId;
 
+    /**
+     * The application device identifier field of the simple descriptor is sixteen bits in length and specifies the
+     * device description supported on this endpoint. Device description identifiers shall be obtained from the ZigBee
+     * Alliance.
+     */
     private int deviceId;
 
     private int deviceVersion;
@@ -65,6 +70,13 @@ public class SimpleDescriptor {
         this.profileId = profileId;
     }
 
+    /**
+     * The application device identifier field of the simple descriptor is sixteen bits in length and specifies the
+     * device description supported on this endpoint. Device description identifiers shall be obtained from the ZigBee
+     * Alliance.
+     * 
+     * @return the deviceId
+     */
     public int getDeviceId() {
         return deviceId;
     }

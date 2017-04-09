@@ -9,7 +9,9 @@ package com.zsmartsystems.zigbee;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.zsmartsystems.zigbee.zdo.ZdoResponseMatcher;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
@@ -76,6 +78,11 @@ public class ZigBeeNode {
      * List of routes within the node, specified in a {@link RoutingTable}
      */
     private final List<RoutingTable> routes = new ArrayList<RoutingTable>();
+
+    /**
+     * List of devices this node exposes
+     */
+    private final Map<Integer, ZigBeeDevice> devices = new HashMap<Integer, ZigBeeDevice>();
 
     /**
      * The network manager that manages this node
