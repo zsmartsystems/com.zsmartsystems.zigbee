@@ -86,23 +86,23 @@ public class EmberNetworkInitialisation {
         getNetworkParameters();
 
         // Create a random PAN ID and Extended PAN ID
-        if (networkParameters.getPanId() == 0
-                || Arrays.equals(networkParameters.getExtendedPanId(), new int[] { 0, 0, 0, 0, 0, 0, 0, 0 })) {
-            Random random = new Random();
-            int panId = random.nextInt(65535);
-            networkParameters.setPanId(panId);
-            logger.debug("Created random PAN ID: {}", panId);
+        // if (networkParameters.getPanId() == 0
+        // || Arrays.equals(networkParameters.getExtendedPanId(), new int[] { 0, 0, 0, 0, 0, 0, 0, 0 })) {
+        Random random = new Random();
+        int panId = random.nextInt(65535);
+        networkParameters.setPanId(panId);
+        logger.debug("Created random PAN ID: {}", panId);
 
-            int extendedPanId[] = new int[8];
-            StringBuilder extendedPanIdBuilder = new StringBuilder();
-            for (int cnt = 0; cnt < 8; cnt++) {
-                extendedPanId[cnt] = random.nextInt(256);
-                extendedPanIdBuilder.append(String.format("%2X", extendedPanId[cnt]));
-            }
-
-            networkParameters.setExtendedPanId(extendedPanId);
-            logger.debug("Created random Extended PAN ID: {}", extendedPanIdBuilder.toString());
+        int extendedPanId[] = new int[8];
+        StringBuilder extendedPanIdBuilder = new StringBuilder();
+        for (int cnt = 0; cnt < 8; cnt++) {
+            extendedPanId[cnt] = random.nextInt(256);
+            extendedPanIdBuilder.append(String.format("%2X", extendedPanId[cnt]));
         }
+
+        networkParameters.setExtendedPanId(extendedPanId);
+        logger.debug("Created random Extended PAN ID: {}", extendedPanIdBuilder.toString());
+        // }
 
         if (networkParameters.getRadioChannel() == 0) {
             networkParameters.setRadioChannel(quietestChannel);
@@ -194,7 +194,7 @@ public class EmberNetworkInitialisation {
         logger.debug(activeScanCompleteResponse.toString());
 
         if (activeScanCompleteResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
-            logger.debug("Error during energy scan: {}", activeScanCompleteResponse);
+            logger.debug("Error during active scan: {}", activeScanCompleteResponse);
             return false;
         }
         return true;

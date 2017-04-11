@@ -1,5 +1,6 @@
 package com.zsmartsystems.zigbee;
 
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 
@@ -25,17 +26,24 @@ public interface ZigBeeTransportTransmit {
     /**
      * Initialize the transport interface. Following the call to initialize the configuration methods may be used to
      * configure the transport layer.
+     * <p>
+     * During the initialize() method, the provider must initialize the ports and perform any configuration required to
+     * get the stack ready for use. If the dongle has already joined a network, then this method will return true.
      *
-     * @return true if initialization was success.
+     * @return {@link ZigBeeInitializeResponse}
      */
-    boolean initialize();
+    ZigBeeInitializeResponse initialize();
 
     /**
      * Starts the transport interface.
+     * <p>
+     * This call will optionally reconfigure the interface if the reinitialize parameter is true.
      *
+     * @param reinitialize true if the provider is to reinitialise the network with the parameters configured since the
+     *            {@link #initialize} method was called.
      * @return true if startup was success.
      */
-    boolean startup();
+    boolean startup(boolean reinitialize);
 
     /**
      * Shuts down a transport interface.
@@ -59,16 +67,6 @@ public interface ZigBeeTransportTransmit {
      * @throws {@link ZigBeeException} if exception occurs in sending
      */
     void sendCommand(final ZigBeeApsFrame apsFrame) throws ZigBeeException;
-
-    /**
-     * The ZDO interface exchanges only command classes. This is different to the ZCL interface since different sticks
-     * tend to implement ZDO functionality as individual commands rather than allowing a binary ZDO packet to be sent
-     * and received.
-     *
-     * @param command the {@link ZdoCommand} to send
-     * @throws {@link ZigBeeException} if exception occurs in sending
-     */
-    // void sendZdoCommand(final ZdoCommand command) throws ZigBeeException;
 
     /**
      * Sets the {@link ZigBeeTransportReceive}. Set by the network so that the {@link ZigBeeTransportTransmit} can send

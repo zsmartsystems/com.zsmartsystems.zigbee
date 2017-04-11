@@ -131,6 +131,13 @@ public class ZigBeeConsoleMain {
             }
         }
 
+        if (!networkManager.startup(resetNetwork)) {
+            System.out.println("ZigBee API starting up ... [FAIL]");
+            return;
+        } else {
+            System.out.println("ZigBee API starting up ... [OK]");
+        }
+
         console.start();
     }
 

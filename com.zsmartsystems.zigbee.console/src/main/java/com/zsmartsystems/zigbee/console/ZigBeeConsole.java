@@ -203,13 +203,6 @@ public final class ZigBeeConsole {
         mainThread = Thread.currentThread();
         System.out.print("ZigBee API starting up...");
 
-        if (!networkManager.startup()) {
-            print("ZigBee API starting up ... [FAIL]", System.out);
-            return;
-        } else {
-            print("ZigBee API starting up ... [OK]", System.out);
-        }
-
         print("ZigBee console ready.", System.out);
 
         print("PAN ID          = " + networkManager.getZigBeePanId(), System.out);
