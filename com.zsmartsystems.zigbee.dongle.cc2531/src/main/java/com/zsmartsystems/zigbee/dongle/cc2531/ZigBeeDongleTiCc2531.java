@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeePort;
 import com.zsmartsystems.zigbee.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.ZigBeeTransportState;
@@ -66,18 +67,18 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
-    public boolean initialize() {
+    public ZigBeeInitializeResponse initialize() {
         logger.debug("CC2531 transport initialize");
 
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
         if (!networkManager.startup()) {
-            return false;
+            return ZigBeeInitializeResponse.FAILED;
         }
 
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
-        return true;
+        return ZigBeeInitializeResponse.JOINED;
     }
 
     @Override
@@ -117,7 +118,7 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
-    public boolean startup() {
+    public boolean startup(boolean reinitialize) {
         logger.debug("CC2531 transport startup");
 
         // Add listeners for ZCL and ZDO received messages
@@ -527,5 +528,4 @@ public class ZigBeeDongleTiCc2531
             }
         }
     }
-
 }

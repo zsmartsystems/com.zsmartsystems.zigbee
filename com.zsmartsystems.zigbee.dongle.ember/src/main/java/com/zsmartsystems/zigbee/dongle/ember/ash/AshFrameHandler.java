@@ -253,6 +253,7 @@ public class AshFrameHandler {
                             inputBuffer[inputCount++] = val;
                         }
                     } catch (final IOException e) {
+                        logger.debug("AshFrameHandler IOException: ", e);
                         // if (!close) {
                         // frameHandler.error(e);
                         // close = true;
@@ -299,6 +300,7 @@ public class AshFrameHandler {
     private void sendNextFrame() {
         // We're not allowed to send if we're not connected
         if (!stateConnected) {
+            logger.warn("Trying to send when not connected.");
             return;
         }
 
@@ -342,11 +344,7 @@ public class AshFrameHandler {
     }
 
     private synchronized void outputFrame(AshFrame ashFrame) {
-        // logger.debug("ASH TX: Set AckNum to " + ackNum);
         ashFrame.setAckNum(ackNum);
-
-        // StringBuilder result = new StringBuilder();
-        // result.append("TXD =");
 
         // Send the data
         try {
@@ -361,7 +359,7 @@ public class AshFrameHandler {
         }
 
         // logger.debug(result.toString());
-        logger.debug("--> TX ASH frame: {}", ashFrame.toString());
+        logger.debug("--> TX ASH frame: {}", ashFrame);
 
         // Only start the timer for data frames
         if (ashFrame instanceof AshFrameData) {
@@ -379,7 +377,7 @@ public class AshFrameHandler {
      *            {@link EzspFrameRequest}
      */
     public void queueFrame(EzspFrameRequest request) {
-        logger.debug("TX EZSP frame: " + request.toString());
+        logger.debug("TX EZSP frame: {}", request);
 
         // Encapsulate the EZSP frame into the ASH packet
         AshFrameData ashFrame = new AshFrameData(request);
@@ -577,11 +575,16 @@ public class AshFrameHandler {
      */
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
+        if (futureResponse == null) {
+            logger.debug("Error sending EZSP transaction: Future is null");
+            return null;
+        }
+
         try {
             futureResponse.get();
             return ezspTransaction;
         } catch (InterruptedException | ExecutionException e) {
-            logger.debug("Error sending EZSP transaction to listeners", e);
+            logger.debug("Error sending EZSP transaction to listeners: ", e);
         }
 
         return null;

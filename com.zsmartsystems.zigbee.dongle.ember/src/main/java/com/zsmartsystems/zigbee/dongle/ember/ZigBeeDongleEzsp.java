@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeePort;
 import com.zsmartsystems.zigbee.ZigBeeTransportReceive;
@@ -132,14 +133,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     }
 
     @Override
-    public boolean initialize() {
+    public ZigBeeInitializeResponse initialize() {
         logger.debug("EZSP dongle initialize.");
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
         if (!serialPort.open()) {
             logger.error("Unable to open Ember serial port");
-            return false;
+            return ZigBeeInitializeResponse.FAILED;
         }
 
         // final OutputStream out = serialPort.getOutputStream();
@@ -192,23 +193,24 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         logger.debug(networkInitResponse.toString());
         logger.debug("EZSP networkInitResponse {}", networkInitResponse.getStatus());
 
-        // Check if the network is initialised or if we're yet to join
-        if (networkInitResponse.getStatus() == EmberStatus.EMBER_NOT_JOINED) {
-            // Anything to do here?
-        }
-
         networkParameters = getNetworkParameters();
         getCurrentSecurityState();
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
-        logger.debug("EZSP dongle initialize done.");
+        logger.debug("EZSP dongle initialize done: Initialised {}",
+                networkInitResponse.getStatus() == EmberStatus.EMBER_NOT_JOINED);
 
-        return true;
+        // Check if the network is initialised or if we're yet to join
+        if (networkInitResponse.getStatus() == EmberStatus.EMBER_NOT_JOINED) {
+            return ZigBeeInitializeResponse.NOT_JOINED;
+        }
+
+        return ZigBeeInitializeResponse.JOINED;
     }
 
     @Override
-    public boolean startup() {
+    public boolean startup(boolean reinitialize) {
         logger.debug("EZSP dongle startup.");
 
         // Check if the network is initialised
@@ -220,19 +222,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         logger.debug(networkStateResponse.toString());
         logger.debug("EZSP networkStateResponse {}", networkStateResponse.getStatus());
 
-        // Get the current network parameters. If the channel, or PAN IDs are different than we want
-        // then re-initialise the network.
-        EmberNetworkParameters currentNetworkParameters = getNetworkParameters();
-        logger.debug("Current Network  = {}", currentNetworkParameters);
-        logger.debug("Required Network = {}", networkParameters);
-        if (networkStateResponse.getStatus() == EmberNetworkStatus.EMBER_NO_NETWORK
-                || currentNetworkParameters.getRadioChannel() != networkParameters.getRadioChannel()
-                || currentNetworkParameters.getPanId() != networkParameters.getPanId()
-                || !Arrays.equals(currentNetworkParameters.getExtendedPanId(), networkParameters.getExtendedPanId())) {
+        // If we want to reinitialize the network, then go...
+        if (reinitialize) {
             logger.debug("Reinitialising Ember NCP and forming network.");
             initialiseNetwork();
         }
 
+        // Check if the network is now up
         networkStateTransaction = ashHandler.sendEzspTransaction(
                 new EzspSingleResponseTransaction(networkStateRequest, EzspNetworkStateResponse.class));
         networkStateResponse = (EzspNetworkStateResponse) networkStateTransaction.getResponse();
@@ -242,6 +238,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
         }
 
+        // Get the security state - mainly for debug
         EmberCurrentSecurityState currentSecurityState = getCurrentSecurityState();
         logger.debug("Current Security State = {}", currentSecurityState);
 
@@ -444,9 +441,18 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         }
 
         // TODO: Check if this should be done only after initialisation is complete?
-        if (response instanceof EzspStackStatusHandler
-                && ((EzspStackStatusHandler) response).getStatus() == EmberStatus.EMBER_NETWORK_DOWN) {
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        if (response instanceof EzspStackStatusHandler) {
+            switch (((EzspStackStatusHandler) response).getStatus()) {
+                case EMBER_NETWORK_BUSY:
+                    break;
+                case EMBER_NETWORK_DOWN:
+                    zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+                    break;
+                case EMBER_NETWORK_UP:
+                    break;
+                default:
+                    break;
+            }
         }
 
         if (response instanceof EzspChildJoinHandler) {

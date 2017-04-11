@@ -83,6 +83,13 @@ public class EzspSerializer {
     }
 
     public void serializeEmberKeyData(EmberKeyData keyData) {
+        // If we pass in null, then send a null key.
+        // Note that ember will not accept this key, so this check is here to prevent the system
+        // throwing an NPE - the application needs to resolve this so it sends a valid key.
+        if (keyData == null || keyData.getContents() == null) {
+            serializeUInt8Array(new int[] { 0, 0, 0, 0, 0, 0, 0, 0 });
+            return;
+        }
         serializeUInt8Array(keyData.getContents());
     }
 

@@ -167,8 +167,30 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private List<ZigBeeNetworkStateListener> stateListeners = Collections
             .unmodifiableList(new ArrayList<ZigBeeNetworkStateListener>());
 
+    /**
+     * The serializer class used to serialize commands to data packets
+     */
     private Class<ZigBeeSerializer> serializerClass;
+
+    /**
+     * The deserializer class used to deserialize commands from data packets
+     */
     private Class<ZigBeeDeserializer> deserializerClass;
+
+    public enum ZigBeeInitializeResponse {
+        /**
+         * Device is initialized successfully and is currently joined to a network
+         */
+        JOINED,
+        /**
+         * Device initialization failed
+         */
+        FAILED,
+        /**
+         * Device is initialized successfully and is currently not joined to a network
+         */
+        NOT_JOINED
+    }
 
     /**
      * Constructor which configures serial port and ZigBee network.
@@ -213,6 +235,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Initializes ZigBee manager components and initializes the transport layer.
      * <p>
+     * If a network state was previously serialized, it will be deserialized here if the serializer is set with the
+     * {@link #setNetworkStateSerializer} method.
+     * <p>
      * Following a call to {@link #initialize} configuration calls can be made to configure the transport layer. This
      * includes -:
      * <ul>
@@ -226,9 +251,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * <p>
      * Once all transport initialization is complete, {@link #startup} must be called.
      *
-     * @return true if startup was successful.
+     * @return {@link ZigBeeInitializeResponse}
      */
-    public boolean initialize() {
+    public ZigBeeInitializeResponse initialize() {
+        if (networkStateSerializer != null) {
+            networkStateSerializer.deserialize(this);
+        }
+
         return transport.initialize();
     }
 
@@ -322,15 +351,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     /**
      * Starts up ZigBee manager components.
+     * <p>
      *
+     * @param reinitialize true if the provider is to reinitialise the network with the parameters configured since the
+     *            {@link #initialize} method was called.
      * @return true if startup was successful.
      */
-    public boolean startup() {
-        if (networkStateSerializer != null) {
-            networkStateSerializer.deserialize(this);
-        }
-
-        if (!transport.startup()) {
+    public boolean startup(boolean reinitialize) {
+        if (!transport.startup(reinitialize)) {
             return false;
         }
 
@@ -872,6 +900,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      *            greater than 255 seconds will permanently enable joining.
      */
     public void permitJoin(final int duration) {
+        logger.debug("Permit join for {} seconds.", duration);
         permitJoin(new ZigBeeDeviceAddress(ZigBeeBroadcastDestination.BROADCAST_ROUTERS_AND_COORD.getKey()), duration);
     }
 
