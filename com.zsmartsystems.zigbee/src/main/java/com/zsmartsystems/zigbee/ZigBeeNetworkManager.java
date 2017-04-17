@@ -935,34 +935,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Enables or disables devices to join the whole network.
-     * <p>
-     * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
-     * since it allows devices to join the network without the installer knowing.
-     *
-     * @deprecated
-     * @param enable if true joining is enabled, otherwise it is disabled
-     */
-    @Deprecated
-    public void permitJoin(final boolean enable) {
-        if (enable) {
-            permitJoin(0xFF);
-        } else {
-            permitJoin(0);
-        }
-    }
-
-    /**
      * Sends a ZDO Leave Request to a device requesting that an end device leave the network.
      *
-     * @param integer the network address to send the request to - this is the device parent
+     * @param parentAddress the network address to send the request to - this is the device parent
      * @param leaveAddress the {@link IeeeAddress} of the end device we want to leave the network
      */
-    public void leave(final Integer integer, final IeeeAddress leaveAddress) {
+    public void leave(final Integer parentAddress, final IeeeAddress leaveAddress) {
         final ManagementLeaveRequest command = new ManagementLeaveRequest();
 
         command.setDeviceAddress(leaveAddress);
-        command.setDestinationAddress(new ZigBeeDeviceAddress(integer));
+        command.setDestinationAddress(new ZigBeeDeviceAddress(parentAddress));
         command.setSourceAddress(new ZigBeeDeviceAddress(0));
 
         try {
@@ -970,6 +952,43 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         } catch (final ZigBeeException e) {
             throw new ZigBeeApiException("Error sending permit join command.", e);
         }
+    }
+
+    /**
+     * Sends a ZDO Leave Request to a device requesting that an end device leave the network.
+     * <p>
+     * This method will find the parent of the device we want to leave and will then send the leave request to that
+     * device.
+     *
+     * @param address the network address to leave
+     * @return true if the command is sent
+     */
+    public boolean leave(final Integer address) {
+        ZigBeeNode leaveNode = getNode(address);
+        if (leaveNode == null) {
+            return false;
+        }
+
+        ZigBeeNode parentNode = null;
+
+        // Loop through all nodes looking for the parent of this device
+        for (ZigBeeNode node : getNodes()) {
+            if (node.getAssociatedDevices().contains(node.getNetworkAddress())) {
+                parentNode = node;
+                break;
+            }
+        }
+
+        // If there's no parent found, then error
+        if (parentNode == null) {
+            logger.debug("No parent found for node {}: Unable to leave.", address);
+            return false;
+        }
+
+        logger.debug("Parent of node {} is {}: Requesting leave.", address, parentNode.getNetworkAddress());
+        leave(parentNode.getNetworkAddress(), leaveNode.getIeeeAddress());
+
+        return true;
     }
 
     /**

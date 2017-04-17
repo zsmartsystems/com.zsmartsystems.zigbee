@@ -33,6 +33,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
  * services to higher layers to allow sending of EZSP frames and the correlation
  * of their responds. Higher layers can simply send EZSP messages synchronously
  * and the handler will return with the completed result.
+ * <p>
+ * UG101: UART GATEWAY PROTOCOL REFERENCE: FOR THE EMBER® EZSP NETWORK CO-PROCESSOR
  *
  * @author Chris Jackson
  *
@@ -148,14 +150,6 @@ public class AshFrameHandler {
                             if (!inputError && inputCount != 0) {
                                 AshFrame responseFrame = null;
 
-                                // StringBuilder result = new StringBuilder();
-                                // result.append("RXD =");
-                                // for (int cnt = 0; cnt < inputCount; cnt++) {
-                                // result.append(" ");
-                                // result.append(String.format("%02X", inputBuffer[cnt]));
-                                // }
-                                // logger.debug(result.toString());
-
                                 final AshFrame packet = AshFrame.createFromInput(inputBuffer, inputCount);
                                 if (packet == null) {
                                     logger.error("Received a BAD PACKET {}",
@@ -182,11 +176,10 @@ public class AshFrameHandler {
                                                 // Get the EZSP frame
                                                 EzspFrameResponse response = EzspFrame
                                                         .createHandler((AshFrameData) packet);
+                                                logger.debug("RX EZSP frame: " + response);
                                                 if (response == null) {
                                                     logger.debug("No frame handler created for {}", packet);
                                                 } else if (response != null && !notifyTransactionComplete(response)) {
-                                                    logger.debug("RX EZSP frame: " + response.toString());
-
                                                     // No transactions owned this
                                                     // response, so we pass it to
                                                     // our unhandled response
@@ -198,8 +191,7 @@ public class AshFrameHandler {
                                                     }
                                                 }
 
-                                                // Update our next expected data
-                                                // frame
+                                                // Update our next expected data frame
                                                 ackNum = (ackNum + 1) & 0x07;
 
                                                 responseFrame = new AshFrameAck(ackNum);
@@ -253,7 +245,7 @@ public class AshFrameHandler {
                             inputBuffer[inputCount++] = val;
                         }
                     } catch (final IOException e) {
-                        logger.debug("AshFrameHandler IOException: ", e);
+                        logger.error("AshFrameHandler IOException: ", e);
                         // if (!close) {
                         // frameHandler.error(e);
                         // close = true;
@@ -324,8 +316,7 @@ public class AshFrameHandler {
             ((AshFrameData) ashFrame).setFrmNum(frmNum);
             frmNum = (frmNum + 1) & 0x07;
 
-            // DATA frames need to go into a sent queue so we can retry if
-            // needed
+            // DATA frames need to go into a sent queue so we can retry if needed
             sentQueue.add((AshFrameData) ashFrame);
         }
 

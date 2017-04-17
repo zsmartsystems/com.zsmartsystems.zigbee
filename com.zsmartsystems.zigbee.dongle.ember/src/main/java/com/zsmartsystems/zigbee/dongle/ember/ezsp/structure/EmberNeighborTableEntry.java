@@ -61,7 +61,7 @@ public class EmberNeighborTableEntry {
      * The number of aging periods elapsed since a link status message was last received from this
      * neighbor. The aging period is 16 seconds.
      * <p>
-     * EZSP type is <i>uint16_t</i> - Java type is {@link int}
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
     private int age;
 
@@ -176,7 +176,7 @@ public class EmberNeighborTableEntry {
      * The number of aging periods elapsed since a link status message was last received from this
      * neighbor. The aging period is 16 seconds.
      * <p>
-     * EZSP type is <i>uint16_t</i> - Java type is {@link int}
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
      * @return the current age as {@link int}
      */
@@ -225,7 +225,7 @@ public class EmberNeighborTableEntry {
         serializer.serializeUInt8(averageLqi);
         serializer.serializeUInt8(inCost);
         serializer.serializeUInt8(outCost);
-        serializer.serializeUInt16(age);
+        serializer.serializeUInt8(age);
         serializer.serializeEmberEui64(longId);
         return serializer.getPayload();
     }
@@ -241,7 +241,7 @@ public class EmberNeighborTableEntry {
         averageLqi = deserializer.deserializeUInt8();
         inCost = deserializer.deserializeUInt8();
         outCost = deserializer.deserializeUInt8();
-        age = deserializer.deserializeUInt16();
+        age = deserializer.deserializeUInt8();
         longId = deserializer.deserializeEmberEui64();
     }
 

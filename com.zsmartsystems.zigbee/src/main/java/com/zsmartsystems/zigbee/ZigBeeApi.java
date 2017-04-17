@@ -404,7 +404,7 @@ public class ZigBeeApi {
      * @param enable enable
      */
     public void permitJoin(final boolean enable) {
-        networkManager.permitJoin(enable);
+        networkManager.permitJoin(enable == true ? 255 : 0);
     }
 
     /**

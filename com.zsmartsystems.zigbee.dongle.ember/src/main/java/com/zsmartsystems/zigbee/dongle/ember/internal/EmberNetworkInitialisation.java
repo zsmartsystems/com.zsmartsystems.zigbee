@@ -19,6 +19,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParamete
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurityStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurityStateResponse;
@@ -29,6 +31,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurity
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
@@ -73,7 +76,9 @@ public class EmberNetworkInitialisation {
         int scanDuration = 1; // 6
 
         // Leave the current network so we can initialise a new network
-        doLeaveNetwork();
+        if (checkNetworkJoined()) {
+            doLeaveNetwork();
+        }
 
         // Perform an energy scan to find a clear channel
         int quietestChannel = doEnergyScan(scanDuration);
@@ -86,23 +91,23 @@ public class EmberNetworkInitialisation {
         getNetworkParameters();
 
         // Create a random PAN ID and Extended PAN ID
-        // if (networkParameters.getPanId() == 0
-        // || Arrays.equals(networkParameters.getExtendedPanId(), new int[] { 0, 0, 0, 0, 0, 0, 0, 0 })) {
-        Random random = new Random();
-        int panId = random.nextInt(65535);
-        networkParameters.setPanId(panId);
-        logger.debug("Created random PAN ID: {}", panId);
+        if (networkParameters.getPanId() == 0
+                || Arrays.equals(networkParameters.getExtendedPanId(), new int[] { 0, 0, 0, 0, 0, 0, 0, 0 })) {
+            Random random = new Random();
+            int panId = random.nextInt(65535);
+            networkParameters.setPanId(panId);
+            logger.debug("Created random PAN ID: {}", panId);
 
-        int extendedPanId[] = new int[8];
-        StringBuilder extendedPanIdBuilder = new StringBuilder();
-        for (int cnt = 0; cnt < 8; cnt++) {
-            extendedPanId[cnt] = random.nextInt(256);
-            extendedPanIdBuilder.append(String.format("%2X", extendedPanId[cnt]));
+            int extendedPanId[] = new int[8];
+            StringBuilder extendedPanIdBuilder = new StringBuilder();
+            for (int cnt = 0; cnt < 8; cnt++) {
+                extendedPanId[cnt] = random.nextInt(256);
+                extendedPanIdBuilder.append(String.format("%02X", extendedPanId[cnt]));
+            }
+
+            networkParameters.setExtendedPanId(extendedPanId);
+            logger.debug("Created random Extended PAN ID: {}", extendedPanIdBuilder.toString());
         }
-
-        networkParameters.setExtendedPanId(extendedPanId);
-        logger.debug("Created random Extended PAN ID: {}", extendedPanIdBuilder.toString());
-        // }
 
         if (networkParameters.getRadioChannel() == 0) {
             networkParameters.setRadioChannel(quietestChannel);
@@ -114,6 +119,19 @@ public class EmberNetworkInitialisation {
         // And now form the network
         doFormNetwork(networkParameters.getPanId(), networkParameters.getExtendedPanId(),
                 networkParameters.getRadioChannel());
+    }
+
+    private boolean checkNetworkJoined() {
+        // Check if the network is initialised
+        EzspNetworkStateRequest networkStateRequest = new EzspNetworkStateRequest();
+        EzspTransaction networkStateTransaction = ashHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(networkStateRequest, EzspNetworkStateResponse.class));
+        EzspNetworkStateResponse networkStateResponse = (EzspNetworkStateResponse) networkStateTransaction
+                .getResponse();
+        logger.debug(networkStateResponse.toString());
+        logger.debug("EZSP networkStateResponse {}", networkStateResponse.getStatus());
+
+        return networkStateResponse.getStatus() == EmberNetworkStatus.EMBER_JOINED_NETWORK;
     }
 
     private boolean doLeaveNetwork() {

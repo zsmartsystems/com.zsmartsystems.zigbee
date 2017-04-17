@@ -25,10 +25,11 @@
 				<data_type>uint16_t</data_type>
 				<name>stackVersion</name>
 				<description>The version number of the stack</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
-	
+
 	<command>
 		<name>getConfigurationValue</name>
 		<id>0x52</id>
@@ -726,7 +727,7 @@
 			</parameter>
 		</response_parameters>
 	</command>
-	
+
 	<command>
 		<name>getNeighbor</name>
 		<id>0x79</id>
@@ -751,7 +752,7 @@
 			</parameter>
 		</response_parameters>
 	</command>
-		
+
 	<command>
 		<name>neighborCount</name>
 		<id>0x7A</id>
@@ -766,7 +767,7 @@
 			</parameter>
 		</response_parameters>
 	</command>
-			
+
 	<command>
 		<name>getRouteTableEntry</name>
 		<id>0x7B</id>
@@ -1524,6 +1525,21 @@
 	</command>
 
 	<command>
+		<name>resetToFactoryDefaults</name>
+		<id>0xCC</id>
+		<description>Reset the NCP to factory default.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>status</name>
+				<description>An EzspStatus value indicating success or the reason for failure. </description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>setInitialSecurityState</name>
 		<id>0x68</id>
 		<description>Sets the security state that will be used by the device when it forms or joins the network. This call should not be used when restoring saved network state via networkInit as this will result in a loss of security data and will cause communication problems when the device re-enters the network.</description>
@@ -1715,7 +1731,7 @@
 				<description>The outgoing cost for this neighbor, obtained from the most recently received neighbor exchange message from the neighbor. A value of zero means that a neighbor exchange message from the neighbor has not been received recently enough, or that our id was not present in the most recently received one.</description>
 			</parameter>
 			<parameter>
-				<data_type>uint16_t</data_type>
+				<data_type>uint8_t</data_type>
 				<name>age</name>
 				<description>The number of aging periods elapsed since a link status message was last received from this neighbor. The aging period is 16 seconds.</description>
 			</parameter>

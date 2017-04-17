@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
  * is a data-link layer protocol below EZSP and above the serial device (or
  * UART) driver.
  * <p>
- * UG101: UART GATEWAY PROTOCOL REFERENCE: FOR THE EMBER® EZSP NETWORK
- * CO-PROCESSOR
+ * UG101: UART GATEWAY PROTOCOL REFERENCE: FOR THE EMBER® EZSP NETWORK CO-PROCESSOR
  *
  * @author Chris Jackson
  *
@@ -27,31 +26,11 @@ public class AshFrame {
     protected boolean nRdy;
 
     protected FrameType frameType;
-    // protected int[] frameBuffer;
     protected int[] dataBuffer;
 
     protected AshFrame() {
 
     }
-
-    /**
-     * Constructor to create an ASH frame from a byte buffer.
-     *
-     * @param buffer
-     */
-    // protected AshFrame(FrameType frameType, int[] frameBuffer) {
-    // this.frameType = frameType;
-    // this.frameBuffer = frameBuffer;
-    // }
-
-    /**
-     * Returns the data to be sent to the NCP
-     *
-     * @return integer array of data to be sent
-     */
-    // public int[] getOutputBuffer() {
-    // return getOutputBuffer(0, 0);
-    // }
 
     /**
      * Returns the data to be sent to the NCP
@@ -68,7 +47,6 @@ public class AshFrame {
      * @param ackNum
      * @return integer array of data to be sent
      */
-    // public int[] getOutputBuffer(int frmNum, int ackNum) {
     public int[] getOutputBuffer() {
         if (frmNum > 7 || frmNum < 0) {
             logger.debug("Invalid frmNum {}. Assuming 0", frmNum);
@@ -203,7 +181,7 @@ public class AshFrame {
 
         FrameType frameType = getFrameType(unstuffedData);
         if (frameType == null) {
-            logger.debug("Invalid frame type {}", String.format("%02X", unstuffedData[0]));
+            logger.debug("Invalid ASH frame type {}", String.format("%02X", unstuffedData[0]));
             return null;
         }
 
@@ -360,10 +338,6 @@ public class AshFrame {
             return key;
         }
     }
-
-    // public String frameToString() {
-    // return frameToString(frameBuffer);
-    // }
 
     public static String frameToString(int[] inputBuffer) {
         if (inputBuffer == null || inputBuffer.length == 4) {
