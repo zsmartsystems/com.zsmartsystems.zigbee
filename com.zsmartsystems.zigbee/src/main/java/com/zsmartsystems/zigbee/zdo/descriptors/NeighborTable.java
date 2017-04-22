@@ -188,10 +188,10 @@ public class NeighborTable {
 
     @Override
     public String toString() {
-        return "NeighborTable [extendedPanId=" + extendedPanId + ", extendedAddress=" + extendedAddress
-                + ", networkAddress=" + networkAddress + ", deviceType=" + deviceType + ", rxOnWhenIdle=" + rxOnWhenIdle
-                + ", relationship=" + relationship + ", permitJoining=" + permitJoining + ", depth=" + depth + ", lqi="
-                + lqi + "]";
+        return "NeighborTable [extendedPanId=" + String.format("%08X", extendedPanId) + ", extendedAddress="
+                + extendedAddress + ", networkAddress=" + networkAddress + ", deviceType=" + deviceType
+                + ", rxOnWhenIdle=" + rxOnWhenIdle + ", relationship=" + relationship + ", permitJoining="
+                + permitJoining + ", depth=" + depth + ", lqi=" + lqi + "]";
     }
 
 }

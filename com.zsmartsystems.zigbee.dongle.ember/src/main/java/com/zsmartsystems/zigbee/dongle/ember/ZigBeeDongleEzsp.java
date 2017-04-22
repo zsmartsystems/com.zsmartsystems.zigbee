@@ -183,20 +183,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         // Add our endpoint(s)
         createEndpoints();
 
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
         // Now initialise the network
         EzspNetworkInitRequest networkInitRequest = new EzspNetworkInitRequest();
         EzspTransaction networkInitTransaction = ashHandler.sendEzspTransaction(
                 new EzspSingleResponseTransaction(networkInitRequest, EzspNetworkInitResponse.class));
         EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
         logger.debug(networkInitResponse.toString());
-        logger.debug("EZSP networkInitResponse {}", networkInitResponse.getStatus());
 
         networkParameters = getNetworkParameters();
         getCurrentSecurityState();

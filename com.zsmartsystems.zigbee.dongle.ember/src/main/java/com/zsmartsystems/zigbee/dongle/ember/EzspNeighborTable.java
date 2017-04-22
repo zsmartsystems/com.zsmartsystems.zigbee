@@ -2,7 +2,6 @@ package com.zsmartsystems.zigbee.dongle.ember;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -39,8 +38,6 @@ public class EzspNeighborTable {
      * Scheduler to run the service
      */
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private ScheduledFuture<?> futureTask = null;
-    private Runnable neighborUpdateThread = null;
 
     private AshFrameHandler ashHandler;
 
@@ -52,7 +49,7 @@ public class EzspNeighborTable {
     public EzspNeighborTable(AshFrameHandler ashHandler, int updatePeriod) {
         this.ashHandler = ashHandler;
 
-        neighborUpdateThread = new Runnable() {
+        Runnable neighborUpdateThread = new Runnable() {
             @Override
             public void run() {
                 updateNeighbors();
@@ -61,7 +58,7 @@ public class EzspNeighborTable {
 
         routingEntries = getConfiguration(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE);
 
-        futureTask = scheduler.scheduleAtFixedRate(neighborUpdateThread, updatePeriod, updatePeriod, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(neighborUpdateThread, updatePeriod, updatePeriod, TimeUnit.SECONDS);
     }
 
     private void updateNeighbors() {

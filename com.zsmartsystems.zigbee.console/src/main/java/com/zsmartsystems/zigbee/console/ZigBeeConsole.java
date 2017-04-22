@@ -1888,7 +1888,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getSyntax() {
-            return "leave parent node";
+            return "leave node [parent]";
         }
 
         /**
@@ -1896,27 +1896,37 @@ public final class ZigBeeConsole {
          */
         @Override
         public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 3) {
+            if (args.length > 3) {
                 return false;
             }
 
-            int parent = Integer.parseInt(args[2]);
             int leaver = Integer.parseInt(args[2]);
-
-            ZigBeeNode parentNode = networkManager.getNode(parent);
-            if (parentNode == null) {
-                print("Parent node not found.", out);
-                return false;
-            }
             ZigBeeNode leaverNode = networkManager.getNode(leaver);
             if (leaverNode == null) {
                 print("Leaver node not found.", out);
                 return false;
             }
 
-            networkManager.leave(parentNode.getNetworkAddress(), leaverNode.getIeeeAddress());
+            if (args.length == 2) {
+                networkManager.leave(leaverNode.getNetworkAddress(), leaverNode.getIeeeAddress());
 
-            return true;
+                return true;
+            }
+
+            if (args.length == 3) {
+                int parent = Integer.parseInt(args[3]);
+
+                ZigBeeNode parentNode = networkManager.getNode(parent);
+                if (parentNode == null) {
+                    print("Parent node not found.", out);
+                    return false;
+                }
+
+                networkManager.leave(parentNode.getNetworkAddress(), leaverNode.getIeeeAddress());
+                return true;
+            }
+
+            return false;
         }
     }
 

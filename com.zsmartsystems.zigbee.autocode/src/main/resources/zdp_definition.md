@@ -477,6 +477,10 @@ using the parameter supplied by Mgmt_Leave_req.
 |DeviceAddress              |IEEE Address               |
 |RemoveChildren_Rejoin      |Boolean                    |
 
+##### Expected Response
+Packet: Management Leave Response
+
+
 #### Management Direct Join Request [0x0035]
 
 The Mgmt_Direct_Join_req is generated from a Local Device requesting that a
@@ -967,6 +971,10 @@ The Mgmt_Leave_rsp is generated in response to a Mgmt_Leave_req. If this
 management command is not supported, a status of NOT_SUPPORTED shall be
 returned. Otherwise, the Remote Device shall implement the following
 processing.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Zdo Status                 |
 
 #### Management Direct Join Response [0x8035]
 

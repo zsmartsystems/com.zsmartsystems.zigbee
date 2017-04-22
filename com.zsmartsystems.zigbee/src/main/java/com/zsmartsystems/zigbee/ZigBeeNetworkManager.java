@@ -937,58 +937,23 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Sends a ZDO Leave Request to a device requesting that an end device leave the network.
      *
-     * @param parentAddress the network address to send the request to - this is the device parent
+     * @param destinationAddress the network address to send the request to - this is the device parent or the the
+     *            device we want to leave.
      * @param leaveAddress the {@link IeeeAddress} of the end device we want to leave the network
      */
-    public void leave(final Integer parentAddress, final IeeeAddress leaveAddress) {
+    public void leave(final Integer destinationAddress, final IeeeAddress leaveAddress) {
         final ManagementLeaveRequest command = new ManagementLeaveRequest();
 
         command.setDeviceAddress(leaveAddress);
-        command.setDestinationAddress(new ZigBeeDeviceAddress(parentAddress));
+        command.setDestinationAddress(new ZigBeeDeviceAddress(destinationAddress));
         command.setSourceAddress(new ZigBeeDeviceAddress(0));
+        command.setRemoveChildrenRejoin(false);
 
         try {
             sendCommand(command);
         } catch (final ZigBeeException e) {
             throw new ZigBeeApiException("Error sending permit join command.", e);
         }
-    }
-
-    /**
-     * Sends a ZDO Leave Request to a device requesting that an end device leave the network.
-     * <p>
-     * This method will find the parent of the device we want to leave and will then send the leave request to that
-     * device.
-     *
-     * @param address the network address to leave
-     * @return true if the command is sent
-     */
-    public boolean leave(final Integer address) {
-        ZigBeeNode leaveNode = getNode(address);
-        if (leaveNode == null) {
-            return false;
-        }
-
-        ZigBeeNode parentNode = null;
-
-        // Loop through all nodes looking for the parent of this device
-        for (ZigBeeNode node : getNodes()) {
-            if (node.getAssociatedDevices().contains(node.getNetworkAddress())) {
-                parentNode = node;
-                break;
-            }
-        }
-
-        // If there's no parent found, then error
-        if (parentNode == null) {
-            logger.debug("No parent found for node {}: Unable to leave.", address);
-            return false;
-        }
-
-        logger.debug("Parent of node {} is {}: Requesting leave.", address, parentNode.getNetworkAddress());
-        leave(parentNode.getNetworkAddress(), leaveNode.getIeeeAddress());
-
-        return true;
     }
 
     /**
