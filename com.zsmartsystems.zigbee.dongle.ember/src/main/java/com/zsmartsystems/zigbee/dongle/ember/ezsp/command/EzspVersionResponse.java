@@ -128,7 +128,7 @@ public class EzspVersionResponse extends EzspFrameResponse {
         builder.append(", stackType=");
         builder.append(stackType);
         builder.append(", stackVersion=");
-        builder.append(stackVersion);
+        builder.append(String.format("%04X", stackVersion));
         builder.append("]");
         return builder.toString();
     }

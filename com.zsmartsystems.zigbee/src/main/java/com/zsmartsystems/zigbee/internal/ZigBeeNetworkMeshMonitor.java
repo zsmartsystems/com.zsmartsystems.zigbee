@@ -20,6 +20,8 @@ import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
+import com.zsmartsystems.zigbee.zdo.command.IeeeAddressRequest;
+import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingRequest;
@@ -33,7 +35,7 @@ import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable;
  * The class uses the following ZDO commands to get neighbor information and link quality information -:
  * <ul>
  * <li>{@link ManagementLqiRequest}
- * <li>{@link ManagementRoutingRequest}
+ * <li>{@link ManagementRoutingRequest} (only for ROUTER or COORDINATOR)
  * </ul>
  * It will always start from the coordinator and walk through the network requesting the data from all neighbors
  * of each node. A node will only be interrogated once per cycle and the update period can be set with the
@@ -104,11 +106,15 @@ public class ZigBeeNetworkMeshMonitor {
      */
     public void startup(final int updatePeriod) {
         logger.debug("Starting mesh update task with interval of {} seconds", updatePeriod);
-        nodesInProgress = Collections.synchronizedSet(new HashSet<Integer>());
 
         meshUpdateThread = new Runnable() {
             @Override
             public void run() {
+                // Reset the node list
+                synchronized (nodesInProgress) {
+                    nodesInProgress = Collections.synchronizedSet(new HashSet<Integer>());
+                }
+
                 // Start discovery from root node.
                 startMeshUpdate(0);
             }
@@ -145,6 +151,8 @@ public class ZigBeeNetworkMeshMonitor {
 
     /**
      * Starts a mesh update for the specified node.
+     * <p>
+     * The update will be scheduled for execution to avoid too many tasks running at once that may swamp the network.
      *
      * @param networkAddress network address of the node to update
      */
@@ -166,14 +174,9 @@ public class ZigBeeNetworkMeshMonitor {
             public void run() {
                 logger.debug("Starting mesh update for {}", nodeNetworkAddress);
 
-                boolean updateRequired = false;
                 ZigBeeNode node = networkManager.getNode(nodeNetworkAddress);
                 if (node == null) {
                     logger.debug("ZigBee node {} not found during mesh update", nodeNetworkAddress);
-
-                    synchronized (nodesInProgress) {
-                        nodesInProgress.remove(nodeNetworkAddress);
-                    }
 
                     // Notify that this is a new node so we can try and discover it
                     networkManager.announceDevice(nodeNetworkAddress);
@@ -181,9 +184,11 @@ public class ZigBeeNetworkMeshMonitor {
                     return;
                 }
 
+                List<Integer> associations = null;
                 List<NeighborTable> neighbors = null;
                 List<RoutingTable> routes = null;
 
+                associations = getAssociatedNodes(nodeNetworkAddress);
                 neighbors = getNeighborTable(nodeNetworkAddress);
 
                 // Only check the routing table for full function devices (ie routers and coordinators)
@@ -194,30 +199,54 @@ public class ZigBeeNetworkMeshMonitor {
                             node.getLogicalType());
                 }
 
-                if (node.setNeighbors(neighbors)) {
-                    updateRequired = true;
-                }
-
-                if (node.setRoutes(routes)) {
-                    updateRequired = true;
-                }
-
-                // If the data has changed, then notify everyone.
-                if (updateRequired) {
-                    networkManager.updateNode(node);
-                }
+                // Update the node tables
+                node.setNeighbors(neighbors);
+                node.setRoutes(routes);
+                node.setAssociatedDevices(associations);
 
                 // Set the last update time even if the data hasn't changed.
                 // This signals to the higher layer that things are still moving.
                 node.setLastUpdateTime();
 
-                synchronized (nodesInProgress) {
-                    nodesInProgress.remove(nodeNetworkAddress);
-                }
+                // Notify everyone.
+                networkManager.updateNode(node);
 
                 logger.debug("Ending mesh update for {}", nodeNetworkAddress);
             }
         });
+    }
+
+    /**
+     * This method returns the devices associated to a node
+     *
+     * @param networkAddress the network address of the node
+     * @return the list of addresses of associated nodes
+     */
+    private List<Integer> getAssociatedNodes(final int networkAddress) {
+        try {
+            // Request extended response, start index for associated list is 0
+            final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
+            ieeeAddressRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+            ieeeAddressRequest.setRequestType(1);
+            ieeeAddressRequest.setStartIndex(0);
+            ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
+            CommandResult response = networkManager.unicast(ieeeAddressRequest, ieeeAddressRequest).get();
+
+            final IeeeAddressResponse ieeeAddressResponse = response.getResponse();
+            if (ieeeAddressResponse != null && ieeeAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
+                // Loop over all this nodes neighbors and start an update from them
+                for (final int deviceNetworkAddress : ieeeAddressResponse.getNwkAddrAssocDevList()) {
+                    startMeshUpdate(deviceNetworkAddress);
+                }
+                return ieeeAddressResponse.getNwkAddrAssocDevList();
+            } else {
+                logger.debug("Ieee Address for {} returned {}", networkAddress, ieeeAddressResponse);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error("Error in checkIeeeAddressResponse", e);
+        }
+
+        return null;
     }
 
     /**

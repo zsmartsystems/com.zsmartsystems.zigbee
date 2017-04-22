@@ -142,8 +142,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             logger.error("Unable to open Ember serial port");
             return ZigBeeInitializeResponse.FAILED;
         }
-
-        // final OutputStream out = serialPort.getOutputStream();
         ashHandler = new AshFrameHandler(serialPort.getInputStream(), serialPort.getOutputStream(), this);
 
         // Connect to the ASH handler and NCP
@@ -191,7 +189,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
                 new EzspSingleResponseTransaction(networkInitRequest, EzspNetworkInitResponse.class));
         EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
         logger.debug(networkInitResponse.toString());
-        logger.debug("EZSP networkInitResponse {}", networkInitResponse.getStatus());
 
         networkParameters = getNetworkParameters();
         getCurrentSecurityState();
@@ -243,6 +240,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         logger.debug("Current Security State = {}", currentSecurityState);
 
         logger.debug("EZSP dongle startup done.");
+
+        // Mainly for debug we run a task to periodically download the neighbor table
+        new EzspNeighborTable(ashHandler, 31);
 
         return true;
     }
@@ -421,6 +421,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
 
     @Override
     public void handlePacket(EzspFrame response) {
+        logger.debug("RX: " + response.toString());
+
         if (response instanceof EzspIncomingMessageHandler) {
             EzspIncomingMessageHandler incomingMessage = (EzspIncomingMessageHandler) response;
             EmberApsFrame emberApsFrame = incomingMessage.getApsFrame();

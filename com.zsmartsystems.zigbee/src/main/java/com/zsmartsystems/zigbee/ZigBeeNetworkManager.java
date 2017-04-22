@@ -935,35 +935,19 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Enables or disables devices to join the whole network.
-     * <p>
-     * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
-     * since it allows devices to join the network without the installer knowing.
-     *
-     * @deprecated
-     * @param enable if true joining is enabled, otherwise it is disabled
-     */
-    @Deprecated
-    public void permitJoin(final boolean enable) {
-        if (enable) {
-            permitJoin(0xFF);
-        } else {
-            permitJoin(0);
-        }
-    }
-
-    /**
      * Sends a ZDO Leave Request to a device requesting that an end device leave the network.
      *
-     * @param integer the network address to send the request to - this is the device parent
+     * @param destinationAddress the network address to send the request to - this is the device parent or the the
+     *            device we want to leave.
      * @param leaveAddress the {@link IeeeAddress} of the end device we want to leave the network
      */
-    public void leave(final Integer integer, final IeeeAddress leaveAddress) {
+    public void leave(final Integer destinationAddress, final IeeeAddress leaveAddress) {
         final ManagementLeaveRequest command = new ManagementLeaveRequest();
 
         command.setDeviceAddress(leaveAddress);
-        command.setDestinationAddress(new ZigBeeDeviceAddress(integer));
+        command.setDestinationAddress(new ZigBeeDeviceAddress(destinationAddress));
         command.setSourceAddress(new ZigBeeDeviceAddress(0));
+        command.setRemoveChildrenRejoin(false);
 
         try {
             sendCommand(command);

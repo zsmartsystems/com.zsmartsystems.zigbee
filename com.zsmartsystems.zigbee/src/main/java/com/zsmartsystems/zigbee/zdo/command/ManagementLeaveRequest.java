@@ -4,6 +4,9 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveResponse;
 import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
@@ -17,7 +20,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class ManagementLeaveRequest extends ZdoRequest {
+public class ManagementLeaveRequest extends ZdoRequest implements CommandResponseMatcher {
     /**
      * DeviceAddress command message field.
      */
@@ -85,6 +88,16 @@ public class ManagementLeaveRequest extends ZdoRequest {
 
         deviceAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         removeChildrenRejoin = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
+    }
+
+    @Override
+    public boolean isMatch(Command request, Command response) {
+        if (!(response instanceof ManagementLeaveResponse)) {
+            return false;
+        }
+
+        return (((ManagementLeaveRequest) request).getDestinationAddress()
+                .equals(((ManagementLeaveResponse) response).getSourceAddress()));
     }
 
     @Override
