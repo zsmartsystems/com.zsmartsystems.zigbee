@@ -21,10 +21,4 @@ public abstract class ZdoCommand extends Command {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
-
-    @Override
-    public String toString() {
-        // return (String.format("%04lX/0 -> %04lX/0", getSourceAddress(), getDestinationAddress()));
-        return "";
-    }
 }

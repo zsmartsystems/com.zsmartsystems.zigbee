@@ -132,6 +132,7 @@ public class AshFrameHandler {
         parserThread = new Thread("AshFrameHandler") {
             @Override
             public void run() {
+                int exceptionCnt = 0;
                 logger.trace("AshFrameHandler thread started");
                 int[] inputBuffer = new int[ASH_MAX_LENGTH];
                 int inputCount = 0;
@@ -159,6 +160,9 @@ public class AshFrameHandler {
                                     responseFrame = new AshFrameNak(ackNum);
                                 } else {
                                     logger.debug("<-- RX ASH frame: {}", packet.toString());
+
+                                    // Reset the exception counter
+                                    exceptionCnt = 0;
 
                                     // Extract the flags for DATA/ACK/NAK frames
                                     switch (packet.getFrameType()) {
@@ -246,10 +250,13 @@ public class AshFrameHandler {
                         }
                     } catch (final IOException e) {
                         logger.error("AshFrameHandler IOException: ", e);
-                        // if (!close) {
-                        // frameHandler.error(e);
-                        // close = true;
-                        // }
+
+                        if (exceptionCnt++ > 10) {
+                            logger.error("AshFrameHandler exception count exceeded");
+                            // if (!close) {
+                            // frameHandler.error(e);
+                            close = true;
+                        }
                     }
                 }
                 logger.debug("AshFrameHandler exited.");
