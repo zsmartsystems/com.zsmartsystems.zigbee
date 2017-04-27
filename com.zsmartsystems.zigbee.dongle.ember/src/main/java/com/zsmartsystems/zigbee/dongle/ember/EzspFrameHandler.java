@@ -11,8 +11,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
  */
 public interface EzspFrameHandler {
     /**
-     * Passes received asynchronous frames from the ASH handler to the EZSP
-     * layer
+     * Passes received asynchronous frames from the ASH handler to the EZSP layer
      *
      * @param response
      *            incoming {@link EzspFrame} response frame

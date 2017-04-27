@@ -592,6 +592,36 @@
 			</parameter>
 		</response_parameters>
 	</command>
+							
+	<command>
+		<name>removeDevice</name>
+		<id>0xA8</id>
+		<description>This command sends an APS remove device using APS encryption to the destination indicating either to remove itself from the network, or one of its children.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>destShort</name>
+				<description>The node ID of the device that will receive the message</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>destLong</name>
+				<description>The long address (EUI64) of the device that will receive the message.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>targetLong</name>
+				<description>The long address (EUI64) of the device to be removed.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success, or the reason for failure</description>
+			</parameter>
+		</response_parameters>
+	</command>
 					
 	<command>
 		<name>networkState</name>

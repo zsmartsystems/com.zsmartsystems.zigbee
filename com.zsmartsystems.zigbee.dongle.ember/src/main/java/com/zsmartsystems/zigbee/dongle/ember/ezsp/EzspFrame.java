@@ -29,6 +29,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandle
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspPermitJoiningResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspRemoveDeviceResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueResponse;
@@ -97,7 +98,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_PERMIT_JOINING = 0x22;
     // protected static final int FRAME_ID_READ_AND_CLEAR_COUNTERS = 0x65;
     // protected static final int FRAME_ID_READ_COUNTERS = 0xF1;
-    // protected static final int FRAME_ID_REMOVE_DEVICE = 0xA8;
+    protected static final int FRAME_ID_REMOVE_DEVICE = 0xA8;
     protected static final int FRAME_ID_SCAN_COMPLETE_HANDLER = 0x1C;
     // protected static final int FRAME_ID_SEND_BROADCAST = 0x36;
     // protected static final int FRAME_ID_SEND_MULTICAST = 0x38;
@@ -138,6 +139,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_NETWORK_INIT, EzspNetworkInitResponse.class);
         ezspHandlerMap.put(FRAME_ID_NETWORK_STATE, EzspNetworkStateResponse.class);
         ezspHandlerMap.put(FRAME_ID_PERMIT_JOINING, EzspPermitJoiningResponse.class);
+        ezspHandlerMap.put(FRAME_ID_REMOVE_DEVICE, EzspRemoveDeviceResponse.class);
         ezspHandlerMap.put(FRAME_ID_SCAN_COMPLETE_HANDLER, EzspScanCompleteHandler.class);
         ezspHandlerMap.put(FRAME_ID_SEND_UNICAST, EzspSendUnicastResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_CONFIGURATION_VALUE, EzspSetConfigurationValueResponse.class);
