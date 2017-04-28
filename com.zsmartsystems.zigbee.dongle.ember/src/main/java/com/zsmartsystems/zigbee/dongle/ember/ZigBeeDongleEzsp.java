@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
@@ -31,6 +32,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRequest
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspRemoveDeviceRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspRemoveDeviceResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
@@ -413,6 +416,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         logger.debug(emberCommand.toString());
         ashHandler.queueFrame(emberCommand);
 
+        if (apsFrame.getCluster() == 0x34) {
+            removeDevice();
+        }
+
         // emberUnicast = (EzspSendUnicast) ashHandler.sendEzspRequestAsync(emberUnicast);
     }
 
@@ -555,5 +562,25 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         networkKey.setContents(keyData);
 
         return false;
+    }
+
+    private EmberStatus removeDevice() {
+        logger.debug("EZSP removedevice: {}, {}");
+        EzspRemoveDeviceRequest removeDeviceRequest = new EzspRemoveDeviceRequest();
+        removeDeviceRequest.setDestLong(new IeeeAddress("001FEE0000000798"));
+        removeDeviceRequest.setDestShort(37028);
+        removeDeviceRequest.setTargetLong(new IeeeAddress("001FEE0000000798"));
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(removeDeviceRequest,
+                EzspRemoveDeviceResponse.class);
+        ashHandler.sendEzspTransaction(transaction);
+        EzspRemoveDeviceResponse removeDeviceResponse = (EzspRemoveDeviceResponse) transaction.getResponse();
+        logger.debug(removeDeviceResponse.toString());
+        if (removeDeviceResponse.getStatus() != EmberStatus.EMBER_SUCCESS
+                && removeDeviceResponse.getStatus() != EmberStatus.EMBER_NOT_JOINED) {
+            logger.debug("Error during remove device: {}", removeDeviceResponse);
+            return EmberStatus.UNKNOWN;
+        }
+
+        return removeDeviceResponse.getStatus();
     }
 }
