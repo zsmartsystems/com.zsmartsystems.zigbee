@@ -24,20 +24,26 @@ public class NeighborTable {
 
     private Integer rxOnWhenIdle;
 
-    private NeighborRelationship relationship;
+    private NeighborTableRelationship relationship;
 
-    private Integer permitJoining;
+    private NeighborTableJoining permitJoining;
 
     private Integer depth;
 
     private Integer lqi = 0;
 
-    public enum NeighborRelationship {
+    public enum NeighborTableRelationship {
         PARENT,
         CHILD,
         SIBLING,
         UNKNOWN,
         PREVIOUS_CHILD
+    }
+
+    public enum NeighborTableJoining {
+        ENABLED,
+        DISABLED,
+        UNKNOWN
     }
 
     /**
@@ -57,7 +63,7 @@ public class NeighborTable {
         setRelationship((temp & 0x70) >> 4);
 
         temp = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        permitJoining = (temp & 0x03);
+        setPermitJoining(temp & 0x03);
         depth = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         lqi = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
@@ -116,39 +122,49 @@ public class NeighborTable {
         this.rxOnWhenIdle = rxOnWhenIdle;
     }
 
-    public NeighborRelationship getRelationship() {
+    public NeighborTableRelationship getRelationship() {
         return relationship;
     }
 
     public void setRelationship(Integer relationship) {
         switch (relationship) {
             case 0:
-                this.relationship = NeighborRelationship.PARENT;
+                this.relationship = NeighborTableRelationship.PARENT;
                 break;
             case 1:
-                this.relationship = NeighborRelationship.CHILD;
+                this.relationship = NeighborTableRelationship.CHILD;
                 break;
             case 2:
-                this.relationship = NeighborRelationship.SIBLING;
+                this.relationship = NeighborTableRelationship.SIBLING;
                 break;
             case 3:
-                this.relationship = NeighborRelationship.UNKNOWN;
+                this.relationship = NeighborTableRelationship.UNKNOWN;
                 break;
             case 4:
-                this.relationship = NeighborRelationship.PREVIOUS_CHILD;
+                this.relationship = NeighborTableRelationship.PREVIOUS_CHILD;
                 break;
             default:
-                this.relationship = NeighborRelationship.UNKNOWN;
+                this.relationship = NeighborTableRelationship.UNKNOWN;
                 break;
         }
     }
 
-    public Integer getPermitJoining() {
+    public NeighborTableJoining getPermitJoining() {
         return permitJoining;
     }
 
     public void setPermitJoining(Integer permitJoining) {
-        this.permitJoining = permitJoining;
+        switch (permitJoining) {
+            case 0:
+                this.permitJoining = NeighborTableJoining.DISABLED;
+                break;
+            case 1:
+                this.permitJoining = NeighborTableJoining.ENABLED;
+                break;
+            default:
+                this.permitJoining = NeighborTableJoining.UNKNOWN;
+                break;
+        }
     }
 
     public Integer getDepth() {

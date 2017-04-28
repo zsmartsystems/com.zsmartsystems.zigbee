@@ -11,7 +11,8 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
-import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable.NeighborRelationship;
+import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable.NeighborTableJoining;
+import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable.NeighborTableRelationship;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.LogicalType;
 
 /**
@@ -44,9 +45,9 @@ public class ManagementLqiResponseTest extends CommandTest {
 
         assertEquals(2, neighbors.size());
         assertEquals(59, (int) neighbors.get(0).getLqi());
-        assertEquals(2, (int) neighbors.get(0).getPermitJoining());
+        assertEquals(NeighborTableJoining.UNKNOWN, neighbors.get(0).getPermitJoining());
         assertEquals(1, (int) neighbors.get(0).getDepth());
-        assertEquals(NeighborRelationship.CHILD, neighbors.get(0).getRelationship());
+        assertEquals(NeighborTableRelationship.CHILD, neighbors.get(0).getRelationship());
         assertEquals(LogicalType.ROUTER, neighbors.get(0).getDeviceType());
         assertEquals(1, (int) neighbors.get(0).getRxOnWhenIdle());
         assertEquals(new IeeeAddress("0017880100DC880B"), neighbors.get(0).getExtendedAddress());
