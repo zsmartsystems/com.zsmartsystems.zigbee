@@ -28,6 +28,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingResponse;
 import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable;
+import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable.DiscoveryState;
 
 /**
  * {@link ZigBeeNetworkMeshMonitor} is used to walk through the network getting information about the mesh network.
@@ -323,6 +324,11 @@ public class ZigBeeNetworkMeshMonitor {
                 if (routingResponse != null && routingResponse.getStatus() == ZdoStatus.SUCCESS) {
                     // Save the neighbors
                     for (RoutingTable route : routingResponse.getRoutingTableList()) {
+                        if (route.getStatus() == DiscoveryState.ACTIVE) {
+                            startMeshUpdate(route.getNextHopAddress());
+                            startMeshUpdate(route.getDestinationAddress());
+                        }
+
                         routes.add(route);
                     }
 

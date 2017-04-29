@@ -305,6 +305,7 @@ public class AshFrameHandler {
 
         // Check how many frames are outstanding
         if (sentQueue.size() >= TX_WINDOW) {
+            logger.debug("Sent queue larger than window {} > {}.", sentQueue.size(), TX_WINDOW);
             return;
         }
 
@@ -380,6 +381,9 @@ public class AshFrameHandler {
         // Encapsulate the EZSP frame into the ASH packet
         AshFrameData ashFrame = new AshFrameData(request);
         sendQueue.add(ashFrame);
+
+        logger.debug("TX EZSP queue: {}", sendQueue.size());
+
         sendNextFrame();
     }
 
@@ -401,7 +405,8 @@ public class AshFrameHandler {
     }
 
     /**
-     * Acknowledge frames we've sent and removes the from the sent queue
+     * Acknowledge frames we've sent and removes the from the sent queue.
+     * This method is called for each DATA or ACK frame where we have the 'ack' property.
      *
      * @param ackNum
      *            the last ack from the NCP
