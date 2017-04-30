@@ -22,8 +22,9 @@ public class BindRegister extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("BindRegister");
+        builder.append("BindRegister [");
         builder.append(super.toString());
+        builder.append("]");
         return builder.toString();
     }
 

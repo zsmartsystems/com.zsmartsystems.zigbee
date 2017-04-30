@@ -96,11 +96,13 @@ public class StartWarningCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("StartWarningCommand [");
         builder.append(super.toString());
         builder.append(", header=");
         builder.append(header);
         builder.append(", warningDuration=");
         builder.append(warningDuration);
+        builder.append("]");
         return builder.toString();
     }
 

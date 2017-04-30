@@ -120,7 +120,7 @@ public class SimpleDescriptorResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("SimpleDescriptorResponse");
+        builder.append("SimpleDescriptorResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
@@ -130,6 +130,7 @@ public class SimpleDescriptorResponse extends ZdoResponse {
         builder.append(length);
         builder.append(", simpleDescriptor=");
         builder.append(simpleDescriptor);
+        builder.append("]");
         return builder.toString();
     }
 

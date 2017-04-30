@@ -89,11 +89,13 @@ public class ZoneEnrollRequestCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("ZoneEnrollRequestCommand [");
         builder.append(super.toString());
         builder.append(", zoneType=");
         builder.append(zoneType);
         builder.append(", manufacturerCode=");
         builder.append(manufacturerCode);
+        builder.append("]");
         return builder.toString();
     }
 

@@ -90,11 +90,13 @@ public class MoveColorCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("MoveColorCommand [");
         builder.append(super.toString());
         builder.append(", rateX=");
         builder.append(rateX);
         builder.append(", rateY=");
         builder.append(rateY);
+        builder.append("]");
         return builder.toString();
     }
 

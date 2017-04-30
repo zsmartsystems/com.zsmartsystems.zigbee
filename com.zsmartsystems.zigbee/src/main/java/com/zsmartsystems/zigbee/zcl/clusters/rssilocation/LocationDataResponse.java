@@ -285,6 +285,7 @@ public class LocationDataResponse extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("LocationDataResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
@@ -306,6 +307,7 @@ public class LocationDataResponse extends ZclCommand {
         builder.append(qualityMeasure);
         builder.append(", locationAge=");
         builder.append(locationAge);
+        builder.append("]");
         return builder.toString();
     }
 

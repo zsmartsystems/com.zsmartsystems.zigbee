@@ -89,11 +89,13 @@ public class MoveCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("MoveCommand [");
         builder.append(super.toString());
         builder.append(", moveMode=");
         builder.append(moveMode);
         builder.append(", rate=");
         builder.append(rate);
+        builder.append("]");
         return builder.toString();
     }
 

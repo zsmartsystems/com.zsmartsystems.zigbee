@@ -26,7 +26,9 @@ public class OnCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("OnCommand [");
         builder.append(super.toString());
+        builder.append("]");
         return builder.toString();
     }
 

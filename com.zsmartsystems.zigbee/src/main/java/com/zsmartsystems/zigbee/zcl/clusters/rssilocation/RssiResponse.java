@@ -186,6 +186,7 @@ public class RssiResponse extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("RssiResponse [");
         builder.append(super.toString());
         builder.append(", replyingDevice=");
         builder.append(replyingDevice);
@@ -199,6 +200,7 @@ public class RssiResponse extends ZclCommand {
         builder.append(rssi);
         builder.append(", numberRssiMeasurements=");
         builder.append(numberRssiMeasurements);
+        builder.append("]");
         return builder.toString();
     }
 

@@ -13,6 +13,14 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * management command is not supported, a status of NOT_SUPPORTED shall be
  * returned. Otherwise, the Remote Device shall implement the following
  * processing.
+ * <br>
+ * Upon receipt of and after support for the Mgmt_Leave_req has been verified, the
+ * Remote Device shall execute the NLME-LEAVE.request to disassociate from the
+ * currently associated network. The Mgmt_Leave_rsp shall contain the same status
+ * that was contained in the NLME-LEAVE.confirm primitive.
+ * <br>
+ * Once a device has disassociated, it may execute pre-programmed logic to perform
+ * NLME-NETWORK-DISCOVERY and NLME-JOIN to join/re-join a network.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
@@ -45,10 +53,11 @@ public class ManagementLeaveResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementLeaveResponse");
+        builder.append("ManagementLeaveResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
+        builder.append("]");
         return builder.toString();
     }
 

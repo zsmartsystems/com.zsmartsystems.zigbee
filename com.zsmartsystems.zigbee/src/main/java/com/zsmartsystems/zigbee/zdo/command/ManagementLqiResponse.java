@@ -156,7 +156,7 @@ public class ManagementLqiResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementLqiResponse");
+        builder.append("ManagementLqiResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
@@ -168,6 +168,7 @@ public class ManagementLqiResponse extends ZdoResponse {
         builder.append(neighborTableListCount);
         builder.append(", neighborTableList=");
         builder.append(neighborTableList);
+        builder.append("]");
         return builder.toString();
     }
 

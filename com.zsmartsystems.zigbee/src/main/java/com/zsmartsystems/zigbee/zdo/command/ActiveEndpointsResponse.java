@@ -129,7 +129,7 @@ public class ActiveEndpointsResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ActiveEndpointsResponse");
+        builder.append("ActiveEndpointsResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
@@ -139,6 +139,7 @@ public class ActiveEndpointsResponse extends ZdoResponse {
         builder.append(activeEpCnt);
         builder.append(", activeEpList=");
         builder.append(activeEpList);
+        builder.append("]");
         return builder.toString();
     }
 

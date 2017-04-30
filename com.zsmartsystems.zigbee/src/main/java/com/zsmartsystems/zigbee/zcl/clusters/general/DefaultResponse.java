@@ -102,11 +102,13 @@ public class DefaultResponse extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("DefaultResponse [");
         builder.append(super.toString());
         builder.append(", commandIdentifier=");
         builder.append(commandIdentifier);
         builder.append(", statusCode=");
         builder.append(statusCode);
+        builder.append("]");
         return builder.toString();
     }
 

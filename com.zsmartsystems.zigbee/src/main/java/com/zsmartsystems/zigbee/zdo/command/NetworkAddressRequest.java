@@ -114,7 +114,7 @@ public class NetworkAddressRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("NetworkAddressRequest");
+        builder.append("NetworkAddressRequest [");
         builder.append(super.toString());
         builder.append(", ieeeAddr=");
         builder.append(ieeeAddr);
@@ -122,6 +122,7 @@ public class NetworkAddressRequest extends ZdoRequest {
         builder.append(requestType);
         builder.append(", startIndex=");
         builder.append(startIndex);
+        builder.append("]");
         return builder.toString();
     }
 

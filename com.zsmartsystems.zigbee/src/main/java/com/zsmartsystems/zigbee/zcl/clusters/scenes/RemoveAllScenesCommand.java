@@ -72,9 +72,11 @@ public class RemoveAllScenesCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("RemoveAllScenesCommand [");
         builder.append(super.toString());
         builder.append(", groupId=");
         builder.append(groupId);
+        builder.append("]");
         return builder.toString();
     }
 

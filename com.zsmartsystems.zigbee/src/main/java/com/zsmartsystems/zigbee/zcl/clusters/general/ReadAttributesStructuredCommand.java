@@ -77,9 +77,11 @@ public class ReadAttributesStructuredCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("ReadAttributesStructuredCommand [");
         builder.append(super.toString());
         builder.append(", attributeSelectors=");
         builder.append(attributeSelectors);
+        builder.append("]");
         return builder.toString();
     }
 

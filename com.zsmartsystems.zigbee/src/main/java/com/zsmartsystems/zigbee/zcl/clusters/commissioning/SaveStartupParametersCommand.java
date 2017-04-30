@@ -85,11 +85,13 @@ public class SaveStartupParametersCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("SaveStartupParametersCommand [");
         builder.append(super.toString());
         builder.append(", option=");
         builder.append(option);
         builder.append(", index=");
         builder.append(index);
+        builder.append("]");
         return builder.toString();
     }
 

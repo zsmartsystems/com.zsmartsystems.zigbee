@@ -60,9 +60,11 @@ public class RestartDeviceResponseResponse extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("RestartDeviceResponseResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
+        builder.append("]");
         return builder.toString();
     }
 

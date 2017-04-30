@@ -37,7 +37,9 @@ public class GetAlarmCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("GetAlarmCommand [");
         builder.append(super.toString());
+        builder.append("]");
         return builder.toString();
     }
 

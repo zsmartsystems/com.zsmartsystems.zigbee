@@ -33,8 +33,9 @@ public class RecoverBindTableResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("RecoverBindTableResponse");
+        builder.append("RecoverBindTableResponse [");
         builder.append(super.toString());
+        builder.append("]");
         return builder.toString();
     }
 

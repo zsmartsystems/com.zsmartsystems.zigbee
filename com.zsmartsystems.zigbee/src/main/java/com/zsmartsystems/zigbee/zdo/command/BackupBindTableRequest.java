@@ -23,8 +23,9 @@ public class BackupBindTableRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("BackupBindTableRequest");
+        builder.append("BackupBindTableRequest [");
         builder.append(super.toString());
+        builder.append("]");
         return builder.toString();
     }
 

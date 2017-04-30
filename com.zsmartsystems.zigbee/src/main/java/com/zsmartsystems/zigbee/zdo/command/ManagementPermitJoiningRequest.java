@@ -93,12 +93,13 @@ public class ManagementPermitJoiningRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementPermitJoiningRequest");
+        builder.append("ManagementPermitJoiningRequest [");
         builder.append(super.toString());
         builder.append(", permitDuration=");
         builder.append(permitDuration);
         builder.append(", tcSignificance=");
         builder.append(tcSignificance);
+        builder.append("]");
         return builder.toString();
     }
 

@@ -50,10 +50,11 @@ public class ManagementPermitJoiningResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementPermitJoiningResponse");
+        builder.append("ManagementPermitJoiningResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
+        builder.append("]");
         return builder.toString();
     }
 
