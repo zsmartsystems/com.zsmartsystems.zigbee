@@ -29,7 +29,9 @@ public class FireCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("FireCommand [");
         builder.append(super.toString());
+        builder.append("]");
         return builder.toString();
     }
 

@@ -92,11 +92,13 @@ public class BypassCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("BypassCommand [");
         builder.append(super.toString());
         builder.append(", numberOfZones=");
         builder.append(numberOfZones);
         builder.append(", zoneIDs=");
         builder.append(zoneIDs);
+        builder.append("]");
         return builder.toString();
     }
 

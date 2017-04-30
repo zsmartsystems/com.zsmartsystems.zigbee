@@ -78,9 +78,11 @@ public class WriteAttributesStructuredResponse extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("WriteAttributesStructuredResponse [");
         builder.append(super.toString());
         builder.append(", records=");
         builder.append(records);
+        builder.append("]");
         return builder.toString();
     }
 

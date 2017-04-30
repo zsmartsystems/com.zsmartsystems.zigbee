@@ -25,8 +25,9 @@ public class ActiveEndpointStoreRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ActiveEndpointStoreRequest");
+        builder.append("ActiveEndpointStoreRequest [");
         builder.append(super.toString());
+        builder.append("]");
         return builder.toString();
     }
 

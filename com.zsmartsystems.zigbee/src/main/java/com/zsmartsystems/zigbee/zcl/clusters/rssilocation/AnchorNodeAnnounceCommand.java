@@ -136,6 +136,7 @@ public class AnchorNodeAnnounceCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("AnchorNodeAnnounceCommand [");
         builder.append(super.toString());
         builder.append(", anchorNodeAddress=");
         builder.append(anchorNodeAddress);
@@ -145,6 +146,7 @@ public class AnchorNodeAnnounceCommand extends ZclCommand {
         builder.append(coordinate2);
         builder.append(", coordinate3=");
         builder.append(coordinate3);
+        builder.append("]");
         return builder.toString();
     }
 

@@ -76,10 +76,11 @@ public class NodeDescriptorRequest extends ZdoRequest implements CommandResponse
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("NodeDescriptorRequest");
+        builder.append("NodeDescriptorRequest [");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);
+        builder.append("]");
         return builder.toString();
     }
 

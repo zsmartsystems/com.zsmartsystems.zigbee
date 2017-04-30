@@ -198,6 +198,7 @@ public class ViewSceneResponse extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("ViewSceneResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
@@ -211,6 +212,7 @@ public class ViewSceneResponse extends ZclCommand {
         builder.append(sceneName);
         builder.append(", extensionFieldSets=");
         builder.append(extensionFieldSets);
+        builder.append("]");
         return builder.toString();
     }
 

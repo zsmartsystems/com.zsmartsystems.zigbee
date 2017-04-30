@@ -8,6 +8,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.LogicalType;
 
 /**
+ * Class representing the ZigBee neighbor table
  *
  * @author Chris Jackson
  *
@@ -22,7 +23,7 @@ public class NeighborTable {
 
     private LogicalType deviceType;
 
-    private Integer rxOnWhenIdle;
+    private NeighborTableRxState rxOnWhenIdle;
 
     private NeighborTableRelationship relationship;
 
@@ -46,6 +47,12 @@ public class NeighborTable {
         UNKNOWN
     }
 
+    public enum NeighborTableRxState {
+        RX_OFF,
+        RX_ON,
+        UNKNOWN
+    }
+
     /**
      * Deserialise the contents of the structure.
      *
@@ -59,7 +66,7 @@ public class NeighborTable {
 
         int temp = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         setDeviceType(temp & 0x03);
-        rxOnWhenIdle = (temp & 0x0c) >> 2;
+        setRxOnWhenIdle((temp & 0x0c) >> 2);
         setRelationship((temp & 0x70) >> 4);
 
         temp = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
@@ -72,31 +79,19 @@ public class NeighborTable {
         return extendedPanId;
     }
 
-    public void setExtendedPanId(Long extendedPanId) {
-        this.extendedPanId = extendedPanId;
-    }
-
     public IeeeAddress getExtendedAddress() {
         return extendedAddress;
-    }
-
-    public void setExtendedAddress(IeeeAddress extendedAddress) {
-        this.extendedAddress = extendedAddress;
     }
 
     public Integer getNetworkAddress() {
         return networkAddress;
     }
 
-    public void setNetworkAddress(Integer networkAddress) {
-        this.networkAddress = networkAddress;
-    }
-
     public LogicalType getDeviceType() {
         return deviceType;
     }
 
-    public void setDeviceType(Integer deviceType) {
+    private void setDeviceType(Integer deviceType) {
         switch (deviceType) {
             case 0:
                 this.deviceType = LogicalType.COORDINATOR;
@@ -114,19 +109,30 @@ public class NeighborTable {
         }
     }
 
-    public Integer getRxOnWhenIdle() {
+    public NeighborTableRxState getRxOnWhenIdle() {
         return rxOnWhenIdle;
     }
 
     public void setRxOnWhenIdle(Integer rxOnWhenIdle) {
-        this.rxOnWhenIdle = rxOnWhenIdle;
+        switch (rxOnWhenIdle) {
+            case 0:
+                this.rxOnWhenIdle = NeighborTableRxState.RX_OFF;
+                break;
+            case 1:
+                this.rxOnWhenIdle = NeighborTableRxState.RX_ON;
+                break;
+            default:
+                this.rxOnWhenIdle = NeighborTableRxState.UNKNOWN;
+                break;
+
+        }
     }
 
     public NeighborTableRelationship getRelationship() {
         return relationship;
     }
 
-    public void setRelationship(Integer relationship) {
+    private void setRelationship(Integer relationship) {
         switch (relationship) {
             case 0:
                 this.relationship = NeighborTableRelationship.PARENT;
@@ -153,7 +159,7 @@ public class NeighborTable {
         return permitJoining;
     }
 
-    public void setPermitJoining(Integer permitJoining) {
+    private void setPermitJoining(Integer permitJoining) {
         switch (permitJoining) {
             case 0:
                 this.permitJoining = NeighborTableJoining.DISABLED;
@@ -171,16 +177,8 @@ public class NeighborTable {
         return depth;
     }
 
-    public void setDepth(Integer depth) {
-        this.depth = depth;
-    }
-
     public Integer getLqi() {
         return lqi;
-    }
-
-    public void setLqi(Integer lqi) {
-        this.lqi = lqi;
     }
 
     @Override

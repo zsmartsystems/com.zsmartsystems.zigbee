@@ -116,7 +116,7 @@ public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ExtendedSimpleDescriptorRequest");
+        builder.append("ExtendedSimpleDescriptorRequest [");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);
@@ -124,6 +124,7 @@ public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
         builder.append(endpoint);
         builder.append(", startIndex=");
         builder.append(startIndex);
+        builder.append("]");
         return builder.toString();
     }
 

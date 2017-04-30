@@ -115,6 +115,7 @@ public class StepSaturationCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("StepSaturationCommand [");
         builder.append(super.toString());
         builder.append(", stepMode=");
         builder.append(stepMode);
@@ -122,6 +123,7 @@ public class StepSaturationCommand extends ZclCommand {
         builder.append(stepSize);
         builder.append(", transitionTime=");
         builder.append(transitionTime);
+        builder.append("]");
         return builder.toString();
     }
 

@@ -90,11 +90,13 @@ public class MoveToSaturationCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("MoveToSaturationCommand [");
         builder.append(super.toString());
         builder.append(", saturation=");
         builder.append(saturation);
         builder.append(", transitionTime=");
         builder.append(transitionTime);
+        builder.append("]");
         return builder.toString();
     }
 

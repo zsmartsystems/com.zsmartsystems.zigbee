@@ -160,6 +160,7 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("SetDeviceConfigurationCommand [");
         builder.append(super.toString());
         builder.append(", power=");
         builder.append(power);
@@ -171,6 +172,7 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
         builder.append(numberRssiMeasurements);
         builder.append(", reportingPeriod=");
         builder.append(reportingPeriod);
+        builder.append("]");
         return builder.toString();
     }
 

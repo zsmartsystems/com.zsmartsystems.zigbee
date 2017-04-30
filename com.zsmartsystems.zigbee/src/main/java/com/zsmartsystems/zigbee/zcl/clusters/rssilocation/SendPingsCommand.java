@@ -111,6 +111,7 @@ public class SendPingsCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("SendPingsCommand [");
         builder.append(super.toString());
         builder.append(", targetAddress=");
         builder.append(targetAddress);
@@ -118,6 +119,7 @@ public class SendPingsCommand extends ZclCommand {
         builder.append(numberRssiMeasurements);
         builder.append(", calculationPeriod=");
         builder.append(calculationPeriod);
+        builder.append("]");
         return builder.toString();
     }
 

@@ -111,6 +111,7 @@ public class GetLocationDataCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("GetLocationDataCommand [");
         builder.append(super.toString());
         builder.append(", header=");
         builder.append(header);
@@ -118,6 +119,7 @@ public class GetLocationDataCommand extends ZclCommand {
         builder.append(numberResponses);
         builder.append(", targetAddress=");
         builder.append(targetAddress);
+        builder.append("]");
         return builder.toString();
     }
 

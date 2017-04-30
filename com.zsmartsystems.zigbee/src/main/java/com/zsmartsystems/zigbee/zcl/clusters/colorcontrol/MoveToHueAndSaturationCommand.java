@@ -115,6 +115,7 @@ public class MoveToHueAndSaturationCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("MoveToHueAndSaturationCommand [");
         builder.append(super.toString());
         builder.append(", hue=");
         builder.append(hue);
@@ -122,6 +123,7 @@ public class MoveToHueAndSaturationCommand extends ZclCommand {
         builder.append(saturation);
         builder.append(", transitionTime=");
         builder.append(transitionTime);
+        builder.append("]");
         return builder.toString();
     }
 

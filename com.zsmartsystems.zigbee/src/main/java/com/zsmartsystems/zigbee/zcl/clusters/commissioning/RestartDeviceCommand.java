@@ -110,6 +110,7 @@ public class RestartDeviceCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("RestartDeviceCommand [");
         builder.append(super.toString());
         builder.append(", option=");
         builder.append(option);
@@ -117,6 +118,7 @@ public class RestartDeviceCommand extends ZclCommand {
         builder.append(delay);
         builder.append(", jitter=");
         builder.append(jitter);
+        builder.append("]");
         return builder.toString();
     }
 

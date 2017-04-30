@@ -160,6 +160,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("SetAbsoluteLocationCommand [");
         builder.append(super.toString());
         builder.append(", coordinate1=");
         builder.append(coordinate1);
@@ -171,6 +172,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
         builder.append(power);
         builder.append(", pathLossExponent=");
         builder.append(pathLossExponent);
+        builder.append("]");
         return builder.toString();
     }
 

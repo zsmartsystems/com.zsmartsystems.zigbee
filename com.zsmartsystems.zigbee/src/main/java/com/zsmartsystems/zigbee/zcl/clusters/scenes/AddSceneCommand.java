@@ -175,6 +175,7 @@ public class AddSceneCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("AddSceneCommand [");
         builder.append(super.toString());
         builder.append(", groupId=");
         builder.append(groupId);
@@ -186,6 +187,7 @@ public class AddSceneCommand extends ZclCommand {
         builder.append(sceneName);
         builder.append(", extensionFieldSets=");
         builder.append(extensionFieldSets);
+        builder.append("]");
         return builder.toString();
     }
 

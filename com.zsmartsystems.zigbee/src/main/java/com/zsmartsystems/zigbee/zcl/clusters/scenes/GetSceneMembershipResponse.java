@@ -172,6 +172,7 @@ public class GetSceneMembershipResponse extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("GetSceneMembershipResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
@@ -183,6 +184,7 @@ public class GetSceneMembershipResponse extends ZclCommand {
         builder.append(sceneCount);
         builder.append(", sceneList=");
         builder.append(sceneList);
+        builder.append("]");
         return builder.toString();
     }
 

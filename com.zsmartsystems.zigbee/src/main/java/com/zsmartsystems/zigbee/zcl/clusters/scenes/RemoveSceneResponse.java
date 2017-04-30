@@ -120,6 +120,7 @@ public class RemoveSceneResponse extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("RemoveSceneResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
@@ -127,6 +128,7 @@ public class RemoveSceneResponse extends ZclCommand {
         builder.append(groupId);
         builder.append(", sceneId=");
         builder.append(sceneId);
+        builder.append("]");
         return builder.toString();
     }
 

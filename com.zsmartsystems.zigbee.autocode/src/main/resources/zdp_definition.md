@@ -972,6 +972,15 @@ management command is not supported, a status of NOT_SUPPORTED shall be
 returned. Otherwise, the Remote Device shall implement the following
 processing.
 
+Upon receipt of and after support for the Mgmt_Leave_req has been verified, the
+Remote Device shall execute the NLME-LEAVE.request to disassociate from the
+currently associated network. The Mgmt_Leave_rsp shall contain the same status
+that was contained in the NLME-LEAVE.confirm primitive.
+
+Once a device has disassociated, it may execute pre-programmed logic to perform
+NLME-NETWORK-DISCOVERY and NLME-JOIN to join/re-join a network. 
+
+
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Status                     |Zdo Status                 |

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,22 +51,45 @@ public class ZigBeeNodeTest {
         assertEquals(PowerLevelType.FULL, node.getPowerDescriptor().getPowerLevel());
     }
 
+    private NeighborTable getNeighborTable(Integer networkAddress, String ieeeAddressString, Integer lqi) {
+        NeighborTable neighbor = new NeighborTable();
+        try {
+            IeeeAddress ieeeAddress = new IeeeAddress(ieeeAddressString);
+
+            Field fieldNetworkAddress = NeighborTable.class.getDeclaredField("networkAddress");
+            fieldNetworkAddress.setAccessible(true);
+            fieldNetworkAddress.set(neighbor, networkAddress);
+
+            Field fieldExtendedAddress = NeighborTable.class.getDeclaredField("extendedAddress");
+            fieldExtendedAddress.setAccessible(true);
+            fieldExtendedAddress.set(neighbor, ieeeAddress);
+
+            Field fieldLqi = NeighborTable.class.getDeclaredField("lqi");
+            fieldLqi.setAccessible(true);
+            fieldLqi.set(neighbor, lqi);
+        } catch (IllegalAccessException | IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return neighbor;
+    }
+
     @Test
     public void testNeighborTableUpdate() {
         ZigBeeNode node = new ZigBeeNode(null);
         List<NeighborTable> neighbors;
 
-        NeighborTable neighbor1 = new NeighborTable();
-        neighbor1.setNetworkAddress(12345);
-        neighbor1.setExtendedAddress(new IeeeAddress("123456789"));
-
-        NeighborTable neighbor2 = new NeighborTable();
-        neighbor2.setNetworkAddress(12345);
-        neighbor2.setExtendedAddress(new IeeeAddress("123456789"));
-
-        NeighborTable neighbor3 = new NeighborTable();
-        neighbor3.setNetworkAddress(54321);
-        neighbor3.setExtendedAddress(new IeeeAddress("987654321"));
+        NeighborTable neighbor1 = getNeighborTable(12345, "123456789", 0);
+        NeighborTable neighbor2 = getNeighborTable(12345, "123456789", 0);
+        NeighborTable neighbor3 = getNeighborTable(54321, "987654321", 0);
 
         assertFalse(node.setNeighbors(null));
 

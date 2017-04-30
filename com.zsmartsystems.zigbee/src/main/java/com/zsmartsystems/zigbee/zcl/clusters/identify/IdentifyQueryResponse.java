@@ -70,9 +70,11 @@ public class IdentifyQueryResponse extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("IdentifyQueryResponse [");
         builder.append(super.toString());
         builder.append(", identifyTime=");
         builder.append(identifyTime);
+        builder.append("]");
         return builder.toString();
     }
 

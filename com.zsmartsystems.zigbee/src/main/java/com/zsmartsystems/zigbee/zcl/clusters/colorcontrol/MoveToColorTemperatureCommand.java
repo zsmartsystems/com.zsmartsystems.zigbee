@@ -90,11 +90,13 @@ public class MoveToColorTemperatureCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("MoveToColorTemperatureCommand [");
         builder.append(super.toString());
         builder.append(", colorTemperature=");
         builder.append(colorTemperature);
         builder.append(", transitionTime=");
         builder.append(transitionTime);
+        builder.append("]");
         return builder.toString();
     }
 

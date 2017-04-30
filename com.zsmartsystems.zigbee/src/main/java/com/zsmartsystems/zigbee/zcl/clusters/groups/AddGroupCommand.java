@@ -103,11 +103,13 @@ public class AddGroupCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("AddGroupCommand [");
         builder.append(super.toString());
         builder.append(", groupId=");
         builder.append(groupId);
         builder.append(", groupName=");
         builder.append(groupName);
+        builder.append("]");
         return builder.toString();
     }
 

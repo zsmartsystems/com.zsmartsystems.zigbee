@@ -22,8 +22,9 @@ public class CacheRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("CacheRequest");
+        builder.append("CacheRequest [");
         builder.append(super.toString());
+        builder.append("]");
         return builder.toString();
     }
 

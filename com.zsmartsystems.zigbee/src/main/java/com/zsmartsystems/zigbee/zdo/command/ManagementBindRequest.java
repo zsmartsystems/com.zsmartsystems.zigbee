@@ -64,10 +64,11 @@ public class ManagementBindRequest extends ZdoRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementBindRequest");
+        builder.append("ManagementBindRequest [");
         builder.append(super.toString());
         builder.append(", startIndex=");
         builder.append(startIndex);
+        builder.append("]");
         return builder.toString();
     }
 

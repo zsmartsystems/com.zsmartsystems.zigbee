@@ -25,8 +25,9 @@ public class DiscoveryStoreResponse extends ZdoResponse {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("DiscoveryStoreResponse");
+        builder.append("DiscoveryStoreResponse [");
         builder.append(super.toString());
+        builder.append("]");
         return builder.toString();
     }
 

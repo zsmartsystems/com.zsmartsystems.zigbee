@@ -114,6 +114,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        builder.append("ReportRssiMeasurementsCommand [");
         builder.append(super.toString());
         builder.append(", reportingAddress=");
         builder.append(reportingAddress);
@@ -121,6 +122,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
         builder.append(numberOfNeighbors);
         builder.append(", neighborsInformation=");
         builder.append(neighborsInformation);
+        builder.append("]");
         return builder.toString();
     }
 

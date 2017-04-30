@@ -76,10 +76,11 @@ public class ComplexDescriptorRequest extends ZdoRequest implements CommandRespo
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ComplexDescriptorRequest");
+        builder.append("ComplexDescriptorRequest [");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);
+        builder.append("]");
         return builder.toString();
     }
 

@@ -103,12 +103,13 @@ public class ManagementLeaveRequest extends ZdoRequest implements CommandRespons
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ManagementLeaveRequest");
+        builder.append("ManagementLeaveRequest [");
         builder.append(super.toString());
         builder.append(", deviceAddress=");
         builder.append(deviceAddress);
         builder.append(", removeChildrenRejoin=");
         builder.append(removeChildrenRejoin);
+        builder.append("]");
         return builder.toString();
     }
 
