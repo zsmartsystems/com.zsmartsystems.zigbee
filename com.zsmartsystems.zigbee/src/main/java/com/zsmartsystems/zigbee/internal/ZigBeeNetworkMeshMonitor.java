@@ -2,6 +2,7 @@ package com.zsmartsystems.zigbee.internal;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,20 +16,24 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.CommandListener;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeDeviceStatus;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
+import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
 import com.zsmartsystems.zigbee.zdo.command.IeeeAddressRequest;
 import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
+import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingResponse;
 import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable;
-import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable.DiscoveryState;
 
 /**
  * {@link ZigBeeNetworkMeshMonitor} is used to walk through the network getting information about the mesh network.
@@ -42,11 +47,15 @@ import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable.DiscoveryState;
  * of each node. A node will only be interrogated once per cycle and the update period can be set with the
  * {@link #setUpdatePeriod(int)} method.
  * <p>
+ * Routes are not traversed - only neighbours. This is to avoid erroneous destinations that may end up in the routing
+ * table when a non existant node is requested. Nodes in the neighbour table should be reliable as they actually known
+ * by the node.
+ * <p>
  * This class is thread safe.
  *
  * @author Chris Jackson
  */
-public class ZigBeeNetworkMeshMonitor {
+public class ZigBeeNetworkMeshMonitor implements CommandListener {
     /**
      * The logger.
      */
@@ -58,24 +67,19 @@ public class ZigBeeNetworkMeshMonitor {
     private static final int RETRY_COUNT = 3;
 
     /**
-     * Period between retries
-     */
-    // private static final int RETRY_PERIOD = 1500;
-
-    /**
      * The ZigBee command interface.
      */
     private ZigBeeNetworkManager networkManager;
 
     /**
-     * A map of the received IEEE addresses mapped to the network address.
+     * A map of the received node addresses that have already undergone an update in this cycle.
      */
     private Set<Integer> nodesInProgress = Collections.synchronizedSet(new HashSet<Integer>());
 
     /**
-     * The main thread for the update task
+     * Refresh period for the mesh update - in seconds
      */
-    private Runnable meshUpdateThread = null;
+    private int updatePeriod;
 
     /**
      * Executor service to execute update threads. We use a {@link Executors.newFixedThreadPool}
@@ -100,15 +104,12 @@ public class ZigBeeNetworkMeshMonitor {
         this.networkManager = networkManager;
     }
 
-    /**
-     * Starts up ZigBee mesh update service.
-     *
-     * @param updatePeriod number of seconds between mesh updates
-     */
-    public void startup(final int updatePeriod) {
-        logger.debug("Starting mesh update task with interval of {} seconds", updatePeriod);
+    private void startScheduler(int initialPeriod) {
+        if (futureTask != null) {
+            futureTask.cancel(true);
+        }
 
-        meshUpdateThread = new Runnable() {
+        Runnable meshUpdateThread = new Runnable() {
             @Override
             public void run() {
                 // Reset the node list
@@ -121,7 +122,21 @@ public class ZigBeeNetworkMeshMonitor {
             }
         };
 
-        futureTask = scheduler.scheduleAtFixedRate(meshUpdateThread, updatePeriod, updatePeriod, TimeUnit.SECONDS);
+        futureTask = scheduler.scheduleAtFixedRate(meshUpdateThread, initialPeriod, updatePeriod, TimeUnit.SECONDS);
+    }
+
+    /**
+     * Starts up ZigBee mesh update service.
+     *
+     * @param updatePeriod number of seconds between mesh updates
+     */
+    public void startup(final int updatePeriod) {
+        this.updatePeriod = updatePeriod;
+        logger.debug("Starting mesh update task with interval of {} seconds", updatePeriod);
+
+        networkManager.addCommandListener(this);
+
+        startScheduler(10);
     }
 
     /**
@@ -131,12 +146,22 @@ public class ZigBeeNetworkMeshMonitor {
      * @param updatePeriod number of seconds between mesh updates
      */
     public void setUpdatePeriod(final int updatePeriod) {
-        logger.debug("Restarting mesh update task with interval of {} seconds", updatePeriod);
-        if (futureTask != null) {
-            futureTask.cancel(true);
-        }
+        this.updatePeriod = updatePeriod;
 
-        futureTask = scheduler.scheduleAtFixedRate(meshUpdateThread, updatePeriod, updatePeriod, TimeUnit.SECONDS);
+        logger.debug("Restarting mesh update task with interval of {} seconds", updatePeriod);
+        startScheduler(updatePeriod);
+    }
+
+    /**
+     * Performs an immediate refresh of the network. Subsequent updates are performed at the current update rate, and
+     * the timer is restarted from the time of calling this method.
+     */
+    public void refresh() {
+        logger.debug("Refreshing mesh update task with interval of {} seconds", updatePeriod);
+
+        // Delay the start slightly to allow any further processing to complete.
+        // Also allows successive responses to filter through without retriggering an update.
+        startScheduler(3);
     }
 
     /**
@@ -144,6 +169,8 @@ public class ZigBeeNetworkMeshMonitor {
      */
     public void shutdown() {
         logger.debug("Stopping mesh update task");
+
+        networkManager.removeCommandListener(this);
 
         if (futureTask != null) {
             futureTask.cancel(true);
@@ -164,7 +191,6 @@ public class ZigBeeNetworkMeshMonitor {
         // avoid loops.
         synchronized (nodesInProgress) {
             if (nodesInProgress.contains(nodeNetworkAddress)) {
-                logger.debug("Mesh update for {} already in progress", nodeNetworkAddress);
                 return;
             }
             nodesInProgress.add(nodeNetworkAddress);
@@ -173,63 +199,95 @@ public class ZigBeeNetworkMeshMonitor {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                logger.debug("Starting mesh update for {}", nodeNetworkAddress);
+                logger.debug("{}: Starting mesh update", nodeNetworkAddress);
 
                 ZigBeeNode node = networkManager.getNode(nodeNetworkAddress);
                 if (node == null) {
-                    logger.debug("ZigBee node {} not found during mesh update", nodeNetworkAddress);
+                    logger.debug("{}: ZigBee node not found during mesh update", nodeNetworkAddress);
 
                     // Notify that this is a new node so we can try and discover it
-                    networkManager.announceDevice(nodeNetworkAddress);
+                    // TODO: Remove - devices should only join through the TC
+                    networkManager.deviceStatusUpdate(ZigBeeDeviceStatus.UNSECURED_JOIN, nodeNetworkAddress, null);
 
                     return;
                 }
 
-                List<Integer> associations = null;
-                List<NeighborTable> neighbors = null;
-                List<RoutingTable> routes = null;
+                try {
+                    boolean update = false;
 
-                associations = getAssociatedNodes(nodeNetworkAddress);
-                neighbors = getNeighborTable(nodeNetworkAddress);
+                    List<Integer> associations = null;
+                    List<NeighborTable> neighbors = null;
+                    List<RoutingTable> routes = null;
 
-                // Only check the routing table for full function devices (ie routers and coordinators)
-                if (node.isFullFuntionDevice()) {
-                    routes = getRoutingTable(nodeNetworkAddress);
-                } else {
-                    logger.debug("Not updating routing table for {}: type is {}", nodeNetworkAddress,
-                            node.getLogicalType());
+                    // We request the neighbor table for all devices
+                    neighbors = getNeighborTable(nodeNetworkAddress);
+                    if (neighbors == null) {
+                        logger.debug("{}: Neighbors not returned: skipping further updates.", nodeNetworkAddress);
+                    } else if (node.isReducedFuntionDevice()) {
+                        logger.debug("{}: Not updating routing table: type is {}", nodeNetworkAddress,
+                                node.getLogicalType());
+                    } else {
+                        // Only check the associations and routing table for full function devices
+                        // ie routers and coordinators.
+                        associations = getAssociatedNodes(nodeNetworkAddress);
+                        if (node.setAssociatedDevices(associations)) {
+                            update = true;
+                        }
+                        routes = getRoutingTable(nodeNetworkAddress);
+                        if (node.setRoutes(routes)) {
+                            update = true;
+                        }
+                    }
+
+                    if (node.setNeighbors(neighbors)) {
+                        update = true;
+                    }
+
+                    // Set the last update time so long as we've received at least one response.
+                    // This signals to the higher layer that things are still moving.
+                    if (neighbors != null || routes != null || associations != null) {
+                        node.setLastUpdateTime();
+
+                        // We received a response so even if there were no updates, we notify the listeners
+                        // so they know the time is updated.
+                        update = true;
+                    }
+
+                    if (update) {
+                        // Notify everyone.
+                        networkManager.updateNode(node);
+                    }
+
+                    logger.debug("{}: Ending mesh update", nodeNetworkAddress);
+                } catch (InterruptedException | ExecutionException e) {
+                    logger.debug("{}: Mesh update exception: {}", nodeNetworkAddress, e.getMessage());
                 }
-
-                // Update the node tables
-                node.setNeighbors(neighbors);
-                node.setRoutes(routes);
-                node.setAssociatedDevices(associations);
-
-                // Set the last update time even if the data hasn't changed.
-                // This signals to the higher layer that things are still moving.
-                node.setLastUpdateTime();
-
-                // Notify everyone.
-                networkManager.updateNode(node);
-
-                logger.debug("Ending mesh update for {}", nodeNetworkAddress);
             }
         });
     }
 
     /**
-     * This method returns the devices associated to a node
+     * This method returns the devices associated to a node. It uses the {@link IeeeAddressRequest} call to request the
+     * extended information which includes associated devices.
      *
      * @param networkAddress the network address of the node
      * @return the list of addresses of associated nodes
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
-    private List<Integer> getAssociatedNodes(final int networkAddress) {
-        try {
+    private List<Integer> getAssociatedNodes(final int networkAddress) throws InterruptedException, ExecutionException {
+        // Start index for the list is 0
+        int retries = 0;
+        int startIndex = 0;
+        int totalNodes = 0;
+
+        List<Integer> nodes = new ArrayList<Integer>();
+        do {
             // Request extended response, start index for associated list is 0
             final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
             ieeeAddressRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
             ieeeAddressRequest.setRequestType(1);
-            ieeeAddressRequest.setStartIndex(0);
+            ieeeAddressRequest.setStartIndex(startIndex);
             ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
             CommandResult response = networkManager.unicast(ieeeAddressRequest, ieeeAddressRequest).get();
 
@@ -239,118 +297,126 @@ public class ZigBeeNetworkMeshMonitor {
                 for (final int deviceNetworkAddress : ieeeAddressResponse.getNwkAddrAssocDevList()) {
                     startMeshUpdate(deviceNetworkAddress);
                 }
-                return ieeeAddressResponse.getNwkAddrAssocDevList();
-            } else {
-                logger.debug("Ieee Address for {} returned {}", networkAddress, ieeeAddressResponse);
-            }
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error("Error in checkIeeeAddressResponse", e);
-        }
+                nodes.addAll(ieeeAddressResponse.getNwkAddrAssocDevList());
 
-        return null;
+                // Continue with next request
+                // TODO: Differentiate between total devices, and devices in this request
+                startIndex += ieeeAddressResponse.getNumAssocDev();
+                totalNodes = ieeeAddressResponse.getNumAssocDev();
+            } else {
+                logger.debug("{}: Ieee Address request returned {}", networkAddress, ieeeAddressResponse);
+
+                if (retries++ >= RETRY_COUNT) {
+                    return null;
+                }
+                continue;
+            }
+        } while (startIndex < totalNodes);
+
+        return nodes;
     }
 
     /**
-     * Get Node IEEE address
+     * Get node neighbor table by making a {@link ManagementLqiRequest} call.
      *
      * @param networkAddress the network address of the node
      * @return list of {@link NeighborTable} if the request was processed ok, null otherwise
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
-    private List<NeighborTable> getNeighborTable(final int networkAddress) {
-        try {
-            // Start index for the list is 0
-            int retries = 0;
-            int startIndex = 0;
-            int totalNeighbors = 0;
-            List<NeighborTable> neighbors = new ArrayList<NeighborTable>();
-            do {
-                final ManagementLqiRequest neighborRequest = new ManagementLqiRequest();
-                neighborRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
-                neighborRequest.setStartIndex(startIndex);
-                CommandResult response = networkManager.unicast(neighborRequest, neighborRequest).get();
+    private List<NeighborTable> getNeighborTable(final int networkAddress)
+            throws InterruptedException, ExecutionException {
+        // Start index for the list is 0
+        int retries = 0;
+        int startIndex = 0;
+        int totalNeighbors = 0;
+        List<NeighborTable> neighbors = new ArrayList<NeighborTable>();
+        do {
+            final ManagementLqiRequest neighborRequest = new ManagementLqiRequest();
+            neighborRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+            neighborRequest.setStartIndex(startIndex);
+            CommandResult response = networkManager.unicast(neighborRequest, neighborRequest).get();
 
-                final ManagementLqiResponse neighborResponse = response.getResponse();
-                if (neighborResponse != null && neighborResponse.getStatus() == ZdoStatus.SUCCESS) {
-                    // Save the neighbors
-                    for (NeighborTable neighbor : neighborResponse.getNeighborTableList()) {
-                        neighbors.add(neighbor);
-                    }
-
-                    // Continue with next request;
-                    startIndex += neighborResponse.getNeighborTableListCount();
-                    totalNeighbors = neighborResponse.getNeighborTableEntries();
-                } else {
-                    logger.debug("ManagementLqiRequest for {} returned {}", networkAddress, neighborResponse);
-
-                    if (retries++ >= RETRY_COUNT) {
-                        return null;
-                    }
-                    continue;
+            final ManagementLqiResponse neighborResponse = response.getResponse();
+            if (neighborResponse != null && neighborResponse.getStatus() == ZdoStatus.SUCCESS) {
+                // Save the neighbors
+                for (NeighborTable neighbor : neighborResponse.getNeighborTableList()) {
+                    neighbors.add(neighbor);
                 }
-            } while (startIndex < totalNeighbors);
 
-            // Loop over all this nodes neighbors and start an update from them
-            for (NeighborTable neighbor : neighbors) {
-                startMeshUpdate(neighbor.getNetworkAddress());
+                // Continue with next request
+                startIndex += neighborResponse.getNeighborTableListCount();
+                totalNeighbors = neighborResponse.getNeighborTableEntries();
+            } else {
+                logger.debug("{}: ManagementLqiRequest returned {}", networkAddress, neighborResponse);
+
+                if (retries++ >= RETRY_COUNT) {
+                    return null;
+                }
+                continue;
             }
+        } while (startIndex < totalNeighbors);
 
-            return neighbors;
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error("Error in getNeighbourTable", e);
+        // Loop over all this nodes neighbors and start an update from them
+        for (NeighborTable neighbor : neighbors) {
+            startMeshUpdate(neighbor.getNetworkAddress());
         }
 
-        return null;
+        return neighbors;
     }
 
     /**
-     * Get node descriptor
+     * Get node routing table by making a {@link ManagementRoutingRequest} request
      *
      * @param networkAddress the network address of the node
      * @return list of {@link RoutingTable} if the request was processed ok, null otherwise
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
-    private List<RoutingTable> getRoutingTable(final int networkAddress) {
-        try {
-            // Start index for the list is 0
-            int retries = 0;
-            int startIndex = 0;
-            int totalRoutes = 0;
-            List<RoutingTable> routes = new ArrayList<RoutingTable>();
-            do {
-                final ManagementRoutingRequest routeRequest = new ManagementRoutingRequest();
-                routeRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
-                routeRequest.setStartIndex(startIndex);
-                CommandResult response = networkManager.unicast(routeRequest, routeRequest).get();
-                final ManagementRoutingResponse routingResponse = response.getResponse();
-                if (routingResponse != null && routingResponse.getStatus() == ZdoStatus.SUCCESS) {
-                    // Save the neighbors
-                    for (RoutingTable route : routingResponse.getRoutingTableList()) {
-                        if (route.getStatus() == DiscoveryState.ACTIVE) {
-                            startMeshUpdate(route.getNextHopAddress());
-                            startMeshUpdate(route.getDestinationAddress());
-                        }
+    private List<RoutingTable> getRoutingTable(final int networkAddress)
+            throws InterruptedException, ExecutionException {
+        // Start index for the list is 0
+        int retries = 0;
+        int startIndex = 0;
+        int totalRoutes = 0;
+        List<RoutingTable> routes = new ArrayList<RoutingTable>();
+        do {
+            final ManagementRoutingRequest routeRequest = new ManagementRoutingRequest();
+            routeRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+            routeRequest.setStartIndex(startIndex);
+            CommandResult response = networkManager.unicast(routeRequest, routeRequest).get();
+            final ManagementRoutingResponse routingResponse = response.getResponse();
+            if (routingResponse != null && routingResponse.getStatus() == ZdoStatus.SUCCESS) {
+                // Save the routes
+                routes.addAll(routingResponse.getRoutingTableList());
 
-                        routes.add(route);
-                    }
+                // Continue with next request
+                startIndex += routingResponse.getRoutingTableListCount();
+                totalRoutes = routingResponse.getRoutingTableEntries();
+            } else {
+                logger.debug("{}: ManagementRoutingRequest returned {}", networkAddress, routingResponse);
 
-                    // Continue with next request;
-                    startIndex += routingResponse.getRoutingTableListCount();
-                    totalRoutes = routingResponse.getRoutingTableEntries();
-                } else {
-                    logger.debug("ManagementRoutingRequest for {} returned {}", networkAddress, routingResponse);
-
-                    if (retries++ >= RETRY_COUNT) {
-                        return null;
-                    }
-                    continue;
+                if (retries++ >= RETRY_COUNT) {
+                    return null;
                 }
-            } while (startIndex < totalRoutes);
+                continue;
+            }
+        } while (startIndex < totalRoutes);
 
-            return routes;
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error("Error in getRoutingTable", e);
-        }
-
-        return null;
+        return routes;
     }
 
+    @Override
+    public void commandReceived(Command command) {
+        // Listen for specific commands that may indicate that the mesh has changed
+        if (command instanceof ManagementLeaveResponse || command instanceof DeviceAnnounce) {
+            logger.debug("Mesh related command received. Triggering mesh update.");
+            refresh();
+        }
+    }
+
+    private class NodeMeshStatus {
+        public Date lastUpdateTime;
+        public int retries;
+    }
 }

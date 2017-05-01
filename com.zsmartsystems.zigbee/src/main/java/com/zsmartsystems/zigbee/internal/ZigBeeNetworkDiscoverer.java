@@ -15,9 +15,11 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.Command;
 import com.zsmartsystems.zigbee.CommandListener;
 import com.zsmartsystems.zigbee.CommandResult;
-import com.zsmartsystems.zigbee.DeviceAnnounceListener;
+import com.zsmartsystems.zigbee.DeviceStatusListener;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeDevice;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeDeviceStatus;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -48,7 +50,7 @@ import com.zsmartsystems.zigbee.zdo.descriptors.SimpleDescriptor;
  * @author Chris Jackson
  * @author Tommi S.E. Laukkanen
  */
-public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceListener {
+public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusListener {
     /**
      * The logger.
      */
@@ -133,7 +135,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
      */
     public void startup() {
         networkManager.addCommandListener(this);
-        networkManager.addDeviceAnnounceListener(this);
+        networkManager.addDeviceStatusListener(this);
 
         // Start discovery from root node.
         startNodeDiscovery(0);
@@ -144,17 +146,27 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
      */
     public void shutdown() {
         networkManager.removeCommandListener(this);
-        networkManager.removeDeviceAnnounceListener(this);
+        networkManager.removeDeviceStatusListener(this);
     }
 
     @Override
-    public void deviceAnnounced(final Integer address) {
-        startNodeDiscovery(address);
+    public void deviceStatusUpdate(final ZigBeeDeviceStatus deviceStatus, final Integer networkAddress,
+            final IeeeAddress ieeeAddress) {
+        switch (deviceStatus) {
+            case UNSECURED_JOIN:
+            case SECURED_REJOIN:
+            case UNSECURED_REJOIN:
+                // We only care about devices that have joined or rejoined
+                startNodeDiscovery(networkAddress);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     public void commandReceived(final Command command) {
-        // 0. ZCL command received from remote node. Request IEEE address if it is not yet known.
+        // ZCL command received from remote node. Request IEEE address if it is not yet known.
         if (command instanceof ZclCommand) {
             final ZclCommand zclCommand = (ZclCommand) command;
             if (networkManager.getDevice(zclCommand.getSourceAddress()) == null) {
@@ -164,7 +176,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
             }
         }
 
-        // 0. Node has been announced.
+        // Node has been announced.
         if (command instanceof DeviceAnnounce) {
             final DeviceAnnounce address = (DeviceAnnounce) command;
             startNodeDiscovery(address.getNwkAddrOfInterest());
@@ -183,7 +195,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceAnnounceL
         synchronized (ieeeAddressRequestTimes) {
             if (ieeeAddressRequestTimes.get(nodeNetworkAddress) != null && System.currentTimeMillis()
                     - ieeeAddressRequestTimes.get(nodeNetworkAddress) < MINIMUM_REQUERY_TIME_MILLIS) {
-                logger.debug("{}: Node discovery already in progress", nodeNetworkAddress);
+                logger.trace("{}: Node discovery already in progress", nodeNetworkAddress);
                 return;
             }
             ieeeAddressRequestTimes.put(nodeNetworkAddress, System.currentTimeMillis());
