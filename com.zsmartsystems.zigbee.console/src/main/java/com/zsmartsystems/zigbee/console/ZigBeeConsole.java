@@ -282,9 +282,9 @@ public final class ZigBeeConsole {
      */
     private static void print(final String line, final PrintStream out) {
         out.println("\r" + line);
-        if (out == System.out) {
-            System.out.print("\r> ");
-        }
+        // if (out == System.out) {
+        // System.out.print("\r> ");
+        // }
     }
 
     /**
@@ -1914,7 +1914,7 @@ public final class ZigBeeConsole {
             }
 
             if (args.length == 3) {
-                int parent = Integer.parseInt(args[3]);
+                int parent = Integer.parseInt(args[2]);
 
                 ZigBeeNode parentNode = networkManager.getNode(parent);
                 if (parentNode == null) {

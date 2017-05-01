@@ -47,9 +47,15 @@ public interface ZigBeeTransportReceive {
     void setNetworkState(final ZigBeeTransportState state);
 
     /**
-     * Announce a new device on the network
+     * Announce a device has joined or left the network.
+     * <p>
+     * It should be assumed that this interface provides a authoritative statement about a devices status.
+     * This should come from higher level information provided by the coordinator/transport layer.
      *
-     * @param address the network address of the new node
+     * @param deviceStatus the {@link ZigBeeDeviceStatus} of the node
+     * @param networkAddress the network address of the new node
+     * @param ieeeAddress the {@link IeeeAddress} address of the new node
      */
-    void announceDevice(final Integer address);
+    void deviceStatusUpdate(final ZigBeeDeviceStatus deviceStatus, final Integer networkAddress,
+            final IeeeAddress ieeeAddress);
 }

@@ -8,8 +8,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.ZigBeeDeviceStatus;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
@@ -32,11 +32,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRequest
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspRemoveDeviceRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspRemoveDeviceResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTrustCenterJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
@@ -123,10 +122,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_TX_POWER_MODE, 0);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SUPPORTED_NETWORKS, 2);
 
+        // New
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_KEY_TABLE_SIZE, 4);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS, 0x01);
+
         // stackConfiguration.put(EzspConfigId.EZSP_CONFIG_MAX_END_DEVICE_CHILDREN, 2);
 
         stackPolicies = new HashMap<EzspPolicyId, EzspDecisionId>();
-        stackPolicies.put(EzspPolicyId.EZSP_TRUST_CENTER_POLICY, EzspDecisionId.EZSP_ALLOW_JOINS);
+        stackPolicies.put(EzspPolicyId.EZSP_TRUST_CENTER_POLICY, EzspDecisionId.EZSP_ALLOW_PRECONFIGURED_KEY_JOINS);
         stackPolicies.put(EzspPolicyId.EZSP_MESSAGE_CONTENTS_IN_CALLBACK_POLICY,
                 EzspDecisionId.EZSP_MESSAGE_TAG_ONLY_IN_CALLBACK);
         // stackPolicies.put(EzspPolicyId.EZSP_APP_KEY_REQUEST_POLICY, value)
@@ -247,7 +250,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         logger.debug("EZSP dongle startup done.");
 
         // Mainly for debug we run a task to periodically download the neighbor table
-        new EzspNeighborTable(ashHandler, 31);
+        // new EzspNeighborTable(ashHandler, 31);
 
         return true;
     }
@@ -416,10 +419,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         logger.debug(emberCommand.toString());
         ashHandler.queueFrame(emberCommand);
 
-        if (apsFrame.getCluster() == 0x34) {
-            removeDevice();
-        }
-
         // emberUnicast = (EzspSendUnicast) ashHandler.sendEzspRequestAsync(emberUnicast);
     }
 
@@ -466,9 +465,40 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             }
         }
 
+        if (response instanceof EzspTrustCenterJoinHandler) {
+            EzspTrustCenterJoinHandler joinHandler = (EzspTrustCenterJoinHandler) response;
+
+            ZigBeeDeviceStatus status;
+            switch (joinHandler.getStatus()) {
+                case EMBER_HIGH_SECURITY_UNSECURED_JOIN:
+                case EMBER_STANDARD_SECURITY_UNSECURED_JOIN:
+                    status = ZigBeeDeviceStatus.UNSECURED_JOIN;
+                    break;
+                case EMBER_HIGH_SECURITY_UNSECURED_REJOIN:
+                case EMBER_STANDARD_SECURITY_UNSECURED_REJOIN:
+                    status = ZigBeeDeviceStatus.UNSECURED_REJOIN;
+                    break;
+                case EMBER_HIGH_SECURITY_SECURED_REJOIN:
+                case EMBER_STANDARD_SECURITY_SECURED_REJOIN:
+                    status = ZigBeeDeviceStatus.SECURED_REJOIN;
+                    break;
+                case EMBER_DEVICE_LEFT:
+                    status = ZigBeeDeviceStatus.DEVICE_LEFT;
+                    break;
+                default:
+                    logger.debug("Unknown state in trust centre join handler {}", joinHandler.getStatus());
+                    return;
+            }
+
+            zigbeeTransportReceive.deviceStatusUpdate(status, joinHandler.getNewNodeId(),
+                    joinHandler.getNewNodeEui64());
+
+        }
+
         if (response instanceof EzspChildJoinHandler) {
-            EzspChildJoinHandler childHandler = (EzspChildJoinHandler) response;
-            zigbeeTransportReceive.announceDevice(childHandler.getChildId());
+            EzspChildJoinHandler joinHandler = (EzspChildJoinHandler) response;
+            zigbeeTransportReceive.deviceStatusUpdate(ZigBeeDeviceStatus.UNSECURED_JOIN, joinHandler.getChildId(),
+                    joinHandler.getChildEui64());
 
             /*
              * // Convert to an announce
@@ -503,7 +533,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             return;
         }
 
-        logger.debug("Unhandled EZSP Frame: " + response.toString());
+        logger.debug("Unhandled EZSP Frame: {}", response.toString());
     }
 
     @Override
@@ -564,23 +594,25 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         return false;
     }
 
-    private EmberStatus removeDevice() {
-        logger.debug("EZSP removedevice: {}, {}");
-        EzspRemoveDeviceRequest removeDeviceRequest = new EzspRemoveDeviceRequest();
-        removeDeviceRequest.setDestLong(new IeeeAddress("001FEE0000000798"));
-        removeDeviceRequest.setDestShort(37028);
-        removeDeviceRequest.setTargetLong(new IeeeAddress("001FEE0000000798"));
-        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(removeDeviceRequest,
-                EzspRemoveDeviceResponse.class);
-        ashHandler.sendEzspTransaction(transaction);
-        EzspRemoveDeviceResponse removeDeviceResponse = (EzspRemoveDeviceResponse) transaction.getResponse();
-        logger.debug(removeDeviceResponse.toString());
-        if (removeDeviceResponse.getStatus() != EmberStatus.EMBER_SUCCESS
-                && removeDeviceResponse.getStatus() != EmberStatus.EMBER_NOT_JOINED) {
-            logger.debug("Error during remove device: {}", removeDeviceResponse);
-            return EmberStatus.UNKNOWN;
-        }
-
-        return removeDeviceResponse.getStatus();
-    }
+    /*
+     * private EmberStatus removeDevice() {
+     * logger.debug("EZSP removedevice: {}, {}");
+     * EzspRemoveDeviceRequest removeDeviceRequest = new EzspRemoveDeviceRequest();
+     * removeDeviceRequest.setDestLong(new IeeeAddress("001FEE0000000798"));
+     * removeDeviceRequest.setDestShort(37028);
+     * removeDeviceRequest.setTargetLong(new IeeeAddress("001FEE0000000798"));
+     * EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(removeDeviceRequest,
+     * EzspRemoveDeviceResponse.class);
+     * ashHandler.sendEzspTransaction(transaction);
+     * EzspRemoveDeviceResponse removeDeviceResponse = (EzspRemoveDeviceResponse) transaction.getResponse();
+     * logger.debug(removeDeviceResponse.toString());
+     * if (removeDeviceResponse.getStatus() != EmberStatus.EMBER_SUCCESS
+     * && removeDeviceResponse.getStatus() != EmberStatus.EMBER_NOT_JOINED) {
+     * logger.debug("Error during remove device: {}", removeDeviceResponse);
+     * return EmberStatus.UNKNOWN;
+     * }
+     *
+     * return removeDeviceResponse.getStatus();
+     * }
+     */
 }

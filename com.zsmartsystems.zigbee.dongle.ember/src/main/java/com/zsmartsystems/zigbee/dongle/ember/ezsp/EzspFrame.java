@@ -37,12 +37,12 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurity
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTrustCenterJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 
 /**
- * The EmberZNet Serial Protocol (EZSP) is the protocol used by a host
- * application processor to interact with the EmberZNet PRO stack running on a
- * Network CoProcessor (NCP).
+ * The EmberZNet Serial Protocol (EZSP) is the protocol used by a host application processor to interact with the
+ * EmberZNet PRO stack running on a Network CoProcessor (NCP).
  * <p>
  * Reference: UG100: EZSP Reference Guide
  * <p>
@@ -109,6 +109,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_SET_POLICY = 0x55;
     protected static final int FRAME_ID_STACK_STATUS_HANDLER = 0x19;
     protected static final int FRAME_ID_START_SCAN = 0x1A;
+    protected static final int FRAME_ID_TRUST_CENTER_JOIN_HANDLER = 0x24;
     // protected static final int FRAME_ID_STOP_SCAN = 0x1D;
     protected static final int FRAME_ID_VERSION = 0x00;
 
@@ -147,6 +148,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_SET_POLICY, EzspSetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_STACK_STATUS_HANDLER, EzspStackStatusHandler.class);
         ezspHandlerMap.put(FRAME_ID_START_SCAN, EzspStartScanResponse.class);
+        ezspHandlerMap.put(FRAME_ID_TRUST_CENTER_JOIN_HANDLER, EzspTrustCenterJoinHandler.class);
         ezspHandlerMap.put(FRAME_ID_VERSION, EzspVersionResponse.class);
     }
 

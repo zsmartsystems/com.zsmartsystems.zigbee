@@ -112,8 +112,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * This can be called from the transport layer, or internally by methods watching
      * the network state.
      */
-    private List<DeviceAnnounceListener> announceListeners = Collections
-            .unmodifiableList(new ArrayList<DeviceAnnounceListener>());
+    private List<DeviceStatusListener> announceListeners = Collections
+            .unmodifiableList(new ArrayList<DeviceStatusListener>());
 
     /**
      * {@link AtomicInteger} used to generate transaction sequence numbers
@@ -362,8 +362,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             return false;
         }
 
-        networkDiscoverer.startup();
-        meshUpdater.startup(60);
+        if (networkDiscoverer != null) {
+            networkDiscoverer.startup();
+        }
+
+        if (meshUpdater != null) {
+            meshUpdater.startup(60);
+        }
 
         return true;
     }
@@ -537,7 +542,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     private Command receiveZdoCommand(final ZclFieldDeserializer fieldDeserializer, final ZigBeeApsFrame apsFrame) {
-
         ZdoCommandType commandType = ZdoCommandType.getValueById(apsFrame.getCluster());
         if (commandType == null) {
             return null;
@@ -561,7 +565,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     private Command receiveZclCommand(final ZclFieldDeserializer fieldDeserializer, final ZigBeeApsFrame apsFrame) {
-
         // Process the ZCL header
         ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
 
@@ -612,39 +615,65 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Add a {@link DeviceAnnounceListener} that will be notified whenever a new device is detected
+     * Add a {@link DeviceStatusListener} that will be notified whenever a new device is detected
      * on the network.
      *
-     * @param announceListener the new {@link DeviceAnnounceListener} to add
+     * @param statusListener the new {@link DeviceStatusListener} to add
      */
-    public void addDeviceAnnounceListener(DeviceAnnounceListener announceListener) {
-        final List<DeviceAnnounceListener> modifiedStateListeners = new ArrayList<DeviceAnnounceListener>(
+    public void addDeviceStatusListener(DeviceStatusListener statusListener) {
+        final List<DeviceStatusListener> modifiedStateListeners = new ArrayList<DeviceStatusListener>(
                 announceListeners);
-        modifiedStateListeners.add(announceListener);
+        modifiedStateListeners.add(statusListener);
         announceListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
 
     /**
-     * Remove a {@link DeviceAnnounceListener}
+     * Remove a {@link DeviceStatusListener}
      *
-     * @param announceListener the new {@link DeviceAnnounceListener} to remove
+     * @param statusListener the new {@link DeviceStatusListener} to remove
      */
-    public void removeDeviceAnnounceListener(DeviceAnnounceListener announceListener) {
-        final List<DeviceAnnounceListener> modifiedStateListeners = new ArrayList<DeviceAnnounceListener>(
+    public void removeDeviceStatusListener(DeviceStatusListener statusListener) {
+        final List<DeviceStatusListener> modifiedStateListeners = new ArrayList<DeviceStatusListener>(
                 announceListeners);
-        modifiedStateListeners.remove(announceListener);
+        modifiedStateListeners.remove(statusListener);
         announceListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
 
     @Override
-    public void announceDevice(final Integer address) {
+    public void deviceStatusUpdate(final ZigBeeDeviceStatus deviceStatus, final Integer networkAddress,
+            final IeeeAddress ieeeAddress) {
+        // This method should only be called when the transport layer has authoritative information about
+        // a devices status. Therefore, we should update the network manager view of a device as appropriate.
+        switch (deviceStatus) {
+            // Device has gone - lets remove it
+            case DEVICE_LEFT:
+                // Find the node
+                ZigBeeNode node = getNode(networkAddress);
+                if (node == null) {
+                    logger.debug("{}: Node has left, but wasn't found in the network.", networkAddress);
+                } else {
+                    // Remove the node from the network
+                    removeNode(node);
+                }
+                break;
+
+            // Leave the join/rejoin notifications for the discovery handler
+            case UNSECURED_JOIN:
+                break;
+            case SECURED_REJOIN:
+            case UNSECURED_REJOIN:
+                break;
+            default:
+                break;
+        }
+
+        // Notify the listeners
         synchronized (this) {
-            // Notify the listeners
-            for (final DeviceAnnounceListener announceListener : announceListeners) {
+            for (final DeviceStatusListener announceListener : announceListeners) {
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        announceListener.deviceAnnounced(address);
+                        announceListener.deviceStatusUpdate(deviceStatus, networkAddress, ieeeAddress);
                     }
                 });
             }
@@ -1270,9 +1299,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             return;
         }
 
+        logger.debug("{}: Node {} is removed from the network", node.getIeeeAddress(), node.getNetworkAddress());
+
         synchronized (networkNodes) {
-            // Don't update if the node is already known
-            // We especially don't want to notify listeners
+            // Don't update if the node is not known
+            // We especially don't want to notify listeners of a device we removed, that didn't exist!
             if (!networkNodes.containsKey(node.getNetworkAddress())) {
                 return;
             }
@@ -1303,6 +1334,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (node == null) {
             return;
         }
+
+        logger.debug("{}: Node {} is added to the network", node.getIeeeAddress(), node.getNetworkAddress());
 
         synchronized (networkNodes) {
             // Don't add if the node is already known
