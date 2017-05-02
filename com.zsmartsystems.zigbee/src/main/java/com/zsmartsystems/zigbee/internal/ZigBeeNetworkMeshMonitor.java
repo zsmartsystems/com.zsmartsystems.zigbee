@@ -33,6 +33,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingResponse;
 import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
+import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable.NeighborTableJoining;
 import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable;
 
 /**
@@ -340,8 +341,15 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
             final ManagementLqiResponse neighborResponse = response.getResponse();
             if (neighborResponse != null && neighborResponse.getStatus() == ZdoStatus.SUCCESS) {
                 // Save the neighbors
+                neighbors.addAll(neighborResponse.getNeighborTableList());
                 for (NeighborTable neighbor : neighborResponse.getNeighborTableList()) {
-                    neighbors.add(neighbor);
+                    if (neighbor.getPermitJoining() != NeighborTableJoining.UNKNOWN) {
+                        // Update the nodes "join enabled" flag
+                        ZigBeeNode node = networkManager.getNode(neighbor.getExtendedAddress());
+                        if (node != null) {
+                            node.setJoining(neighbor.getPermitJoining() == NeighborTableJoining.ENABLED);
+                        }
+                    }
                 }
 
                 // Continue with next request

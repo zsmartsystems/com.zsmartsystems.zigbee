@@ -253,35 +253,37 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
     @Override
     public boolean startup() {
-        if (state == DriverStatus.CLOSED) {
-            state = DriverStatus.CREATED;
-            logger.trace("Initializing hardware.");
+        // Called when the network is first started
+        if (state != DriverStatus.CLOSED) {
+            throw new IllegalStateException("Driver already opened, current status is:" + state);
 
-            // Open the hardware port
-            setState(DriverStatus.HARDWARE_INITIALIZING);
-            if (!initializeHardware()) {
+        }
+
+        state = DriverStatus.CREATED;
+        logger.trace("Initializing hardware.");
+
+        // Open the hardware port
+        setState(DriverStatus.HARDWARE_INITIALIZING);
+        if (!initializeHardware()) {
+            shutdown();
+            return false;
+        }
+
+        // Now reset the dongle
+        setState(DriverStatus.HARDWARE_OPEN);
+        if (!dongleReset()) {
+            logger.warn("Dongle reset failed. Assuming bootloader is running and sending magic byte {}.",
+                    String.format("0x%02x", BOOTLOADER_MAGIC_BYTE));
+            if (!bootloaderGetOut(BOOTLOADER_MAGIC_BYTE)) {
+                logger.warn("Attempt to get out from bootloader failed.");
                 shutdown();
                 return false;
             }
-
-            // Now reset the dongle
-            setState(DriverStatus.HARDWARE_OPEN);
-            if (!dongleReset()) {
-                logger.warn("Dongle reset failed. Assuming bootloader is running and sending magic byte {}.",
-                        String.format("0x%02x", BOOTLOADER_MAGIC_BYTE));
-                if (!bootloaderGetOut(BOOTLOADER_MAGIC_BYTE)) {
-                    logger.warn("Attempt to get out from bootloader failed.");
-                    shutdown();
-                    return false;
-                }
-            }
-
-            setState(DriverStatus.HARDWARE_READY);
-
-            return true;
-        } else {
-            throw new IllegalStateException("Driver already opened, current status is:" + state);
         }
+
+        setState(DriverStatus.HARDWARE_READY);
+
+        return true;
     }
 
     @Override
@@ -313,70 +315,32 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         return true;
     }
 
-    public boolean initializeZigBeeNetwork() {
-        logger.debug("Initializing CC2531 network.");
+    public boolean initializeZigBeeNetwork(boolean cleanStatus) {
+        logger.trace("Initializing network.");
 
         setState(DriverStatus.NETWORK_INITIALIZING);
 
-        if (!createZigBeeNetwork()) {
-            logger.error("Failed to start CC2531 zigbee network.");
+        if (cleanStatus && !configureZigBeeNetwork()) {
             shutdown();
             return false;
         }
 
-        boolean cleanStatus = false;
-
-        // if (getCurrentChannel() != channel) {
-        // cleanStatus = true;
-        // logger.debug("CC2531 channel has changed from {} to {} - network reset required.", getCurrentChannel(),
-        // channel);
+        if (!createZigBeeNetwork()) {
+            logger.error("Failed to start zigbee network.");
+            shutdown();
+            return false;
+        }
+        // if (checkZigBeeNetworkConfiguration()) {
+        // logger.error("Dongle configuration does not match the specified configuration.");
+        // shutdown();
+        // return false;
         // }
-        if (getCurrentPanId() != pan) {
-            cleanStatus = true;
-            logger.debug("CC2531 PAN has changed from {} to {} - network reset required.", getCurrentPanId(), pan);
-        }
-        if (getCurrentExtendedPanId() != extendedPanId) {
-            cleanStatus = true;
-            logger.debug("CC2531 extended PAN has changed from {} to {} - network reset required.",
-                    String.format("%016X", getCurrentExtendedPanId()), String.format("%016X", extendedPanId));
-        }
-
-        if (!cleanStatus) {
-            return true;
-        }
-
-        if (!configureZigBeeNetwork()) {
-            logger.error("Failed to configure CC2531 zigbee network.");
-            shutdown();
-            return false;
-        }
-
-        if (!createZigBeeNetwork()) {
-            logger.error("Failed to start CC2531 zigbee network.");
-            shutdown();
-            return false;
-        }
-
         return true;
     }
 
     private boolean createZigBeeNetwork() {
-        logger.debug("Creating CC2531 network as {}", mode.toString());
         createCustomDevicesOnDongle();
-
-        // Make sure we start clearing configuration and state
-        logger.debug("Changing the CC2531 Network Mode to {}.", mode);
-        if (!dongleSetNetworkMode()) {
-            logger.error("Unable to set NETWORK_MODE for ZigBee Network");
-            return false;
-        }
-
-        // A dongle reset is needed to put into effect the network mode.
-        logger.info("Resetting CC2531 dongle.");
-        if (!dongleReset()) {
-            logger.error("Unable to reset dongle");
-            return false;
-        }
+        logger.debug("Creating network as {}", mode.toString());
 
         final int ALL_CLUSTERS = 0xFFFF;
 
@@ -396,29 +360,88 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
 
         switch (response.Status) {
-            case 0:
+            case 0: {
                 logger.info("Initialized ZigBee network with existing network state.");
-                break;
-            case 1:
+                return true;
+            }
+            case 1: {
                 logger.info("Initialized ZigBee network with new or reset network state.");
-                break;
-            case 2:
+                return true;
+            }
+            case 2: {
                 logger.warn("Initializing ZigBee network failed.");
                 return false;
-
-            default:
+            }
+            default: {
                 logger.error("Unexpected response state for ZDO_STARTUP_FROM_APP {}", response.Status);
                 return false;
+            }
+        }
+    }
+
+    private boolean checkZigBeeNetworkConfiguration() {
+        int value;
+        long longValue;
+        boolean mismatch = false;
+        if ((value = getCurrentChannel()) != channel) {
+            logger.warn("The channel configuration differ from the channel configuration in use: "
+                    + "in use {}, while the configured is {}.\n"
+                    + "The ZigBee network should be reconfigured or configuration corrected.", value, channel);
+            mismatch = true;
+        }
+        // Do not check the current PAN ID if a random one is generated
+        // by the dongle.
+        if (pan != AUTO_PANID && (value = getCurrentPanId()) != pan) {
+            logger.warn("The PanId configuration differ from the PanId configuration in use: "
+                    + "in use {}, while the configured is {}.\n"
+                    + "The ZigBee network should be reconfigured or configuration corrected.", value, pan);
+            mismatch = true;
+        }
+        if (extendedPanId != 0 && (longValue = getCurrentExtendedPanId()) != extendedPanId) {
+            logger.warn(
+                    "The ExtendedPanId configuration differ from the ExtendedPanId configuration in use: "
+                            + "in use {}, while the configured is {}.\n"
+                            + "The ZigBee network should be reconfigured or configuration corrected.",
+                    longValue, extendedPanId);
+            mismatch = true;
+        }
+        if ((value = getZigBeeNodeMode()) != mode.ordinal()) {
+            logger.warn(
+                    "The NetworkMode configuration differ from the NetworkMode configuration in use: "
+                            + "in use {}, while the configured is {}.\n"
+                            + "The ZigBee network should be reconfigured or configuration corrected.",
+                    value, mode.ordinal());
+            mismatch = true;
         }
 
-        // New stuff
+        if (networkKey != null) {
+            final byte[] readNetworkKey = getZigBeeNetworkKey();
+            if (readNetworkKey == null) {
+                logger.warn("Could not read preconfigured network key.");
+                mismatch = true;
+            } else {
+                boolean networkKeyMismatch = false;
+                for (int i = 0; i < 16; i++) {
+                    if (networkKey[i] != readNetworkKey[i]) {
+                        networkKeyMismatch = true;
+                        break;
+                    }
+                }
+                if (networkKeyMismatch) {
+                    logger.debug("The NetworkKey configuration differ from the NetworkKey configuration in use.");
+                    mismatch = true;
+                }
+            }
+        }
 
-        return true;
+        return mismatch;
     }
 
     private boolean configureZigBeeNetwork() {
+        logger.debug("Resetting network stack.");
+
         // Make sure we start clearing configuration and state
-        logger.debug("Setting CC2531 into clean state.");
+        logger.info("Setting clean state.");
         if (!dongleSetStartupOption(STARTOPT_CLEAR_CONFIG | STARTOPT_CLEAR_STATE)) {
             logger.error("Unable to set clean state for dongle");
             return false;

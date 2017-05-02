@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -394,6 +395,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         int sequence = sequenceNumber.getAndIncrement() & 0xff;
         command.setTransactionId(sequence);
 
+        // Set the source address - should probably be improved!
+        // Note that the endpoint is set (currently!) in the transport layer
+        // TODO: Use only a single endpoint for HA and fix this here
+        command.setSourceAddress(new ZigBeeDeviceAddress(0));
+
         logger.debug("TX CMD: {}", command);
 
         apsFrame.setCluster(command.getClusterId());
@@ -773,7 +779,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Sends command to {@link ZigBeeAddress}.
+     * Sends {@link ZclCommand} command to {@link ZigBeeAddress}.
      *
      * @param destination
      *            the destination
@@ -792,32 +798,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Sends command.
+     * Sends ZCL command and uses the {@link CommandResponseMatcher} to match the response.
      *
      * @param command
-     *            the command
-     * @return the command result future.
-     */
-    // public Future<CommandResult> unicast(final Command command) {
-
-    // final CommandResponseMatcher responseMatcher;
-    // if (command instanceof ZclCommand) {
-    // responseMatcher = new ZclResponseMatcher();
-    // } else {
-    // responseMatcher = new ZdoResponseMatcher();
-    // }
-
-    // return unicast(command, responseMatcher);
-    // }
-
-    /**
-     * Sends ZCL command.
-     *
-     * @param command
-     *            the command
+     *            the {@link Command}
      * @param responseMatcher
-     *            the response matcher.
-     * @return the command result future.
+     *            the {@link CommandResponseMatcher}
+     * @return the command result future
      */
     public Future<CommandResult> unicast(final Command command, final CommandResponseMatcher responseMatcher) {
         synchronized (command) {
@@ -978,20 +965,35 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setSourceAddress(new ZigBeeDeviceAddress(0));
         command.setRemoveChildrenRejoin(false);
 
-        try {
-            sendCommand(command);
-        } catch (final ZigBeeException e) {
-            throw new ZigBeeApiException("Error sending permit join command.", e);
-        }
+        // Start a thread to wait for the response
+        // When we receive the response, if it's successful, we assume the device left.
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    CommandResult response = unicast(command, command).get();
+                    if (response.getStatusCode() == 0) {
+                        ZigBeeNode node = getNode(leaveAddress);
+                        if (node != null) {
+                            removeNode(node);
+                        } else {
+                            logger.debug("{}: No response receoved to leave command", leaveAddress);
+                        }
+                    }
+                } catch (InterruptedException | ExecutionException e) {
+                    throw new ZigBeeApiException("Error sending leave command.", e);
+                }
+            }
+        }.start();
     }
 
     /**
      * Binds two devices.
      *
      * @param source
-     *            the source device
+     *            the source {@link ZigBeeDevice}
      * @param destination
-     *            the destination device
+     *            the destination {@link ZigBeeDevice}
      * @param clusterId
      *            the cluster ID
      * @return TRUE if no errors occurred in sending.

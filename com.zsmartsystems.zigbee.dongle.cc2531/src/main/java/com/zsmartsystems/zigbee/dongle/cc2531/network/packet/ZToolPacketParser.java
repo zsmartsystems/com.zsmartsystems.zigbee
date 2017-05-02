@@ -44,6 +44,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.MarkableInputStream;
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:michele.girolami@isti.cnr.it">Michele Girolami</a>
  * @author <a href="mailto:tommi.s.e.laukkanen@gmail.com">Tommi S.E. Laukkanen</a>
+ * @author Chris Jackson
  */
 public class ZToolPacketParser implements Runnable {
     /**
@@ -106,7 +107,7 @@ public class ZToolPacketParser implements Runnable {
 
                     logger.trace("Response is {} -> {}", response.getClass(), response);
                     if (response.isError()) {
-                        logger.error("Received a BAD PACKET {}", response.getPacket());
+                        logger.debug("Received a BAD PACKET {}", response.getPacket());
                         inputStream.reset();
                         continue;
                     }
@@ -114,7 +115,7 @@ public class ZToolPacketParser implements Runnable {
                     packetHandler.handlePacket(response);
                 } else if (val != -1) {
                     // Log if not end of stream.
-                    logger.warn("Discarded stream: expected start byte but received this {}", ByteUtils.toBase16(val));
+                    logger.debug("Discarded stream: expected start byte but received {}", ByteUtils.toBase16(val));
                 }
             } catch (final IOException e) {
                 if (!close) {

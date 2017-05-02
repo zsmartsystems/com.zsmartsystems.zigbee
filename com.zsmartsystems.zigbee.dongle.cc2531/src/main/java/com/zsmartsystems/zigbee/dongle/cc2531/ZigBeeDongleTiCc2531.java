@@ -15,6 +15,7 @@ import com.zsmartsystems.zigbee.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoActiveEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoEndDeviceAnnounce;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoIeeeAddress;
+import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoManagementLeave;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoManagementLqi;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoManagementRouting;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoNodeDescriptor;
@@ -72,6 +73,7 @@ public class ZigBeeDongleTiCc2531
 
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
+        // This basically just initialises the hardware so we can communicate with the 2531
         if (!networkManager.startup()) {
             return ZigBeeInitializeResponse.FAILED;
         }
@@ -125,7 +127,7 @@ public class ZigBeeDongleTiCc2531
         networkManager.addAFMessageListener(this);
         networkManager.addAsynchronousCommandListener(this);
 
-        if (!networkManager.initializeZigBeeNetwork()) {
+        if (!networkManager.initializeZigBeeNetwork(reinitialize)) {
             zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
             return false;
         }
@@ -175,7 +177,7 @@ public class ZigBeeDongleTiCc2531
                 // final AF_DATA_CONFIRM response =
                 networkManager.sendCommand(new AF_DATA_REQUEST(apsFrame.getDestinationAddress(),
                         (short) apsFrame.getDestinationEndpoint(), sender, apsFrame.getCluster(),
-                        apsFrame.getSequence(), (byte) 0, (byte) 0, apsFrame.getPayload()));
+                        apsFrame.getSequence(), (byte) 0x30, (byte) apsFrame.getRadius(), apsFrame.getPayload()));
                 // if (response == null) {
                 // throw new ZigBeeException("Unable to send cluster on the ZigBee network due to general error.");
                 // }
@@ -275,6 +277,9 @@ public class ZigBeeDongleTiCc2531
                 break;
             case ZToolCMD.ZDO_MGMT_RTG_RSP:
                 apsFrame = ZdoManagementRouting.create(packet);
+                break;
+            case ZToolCMD.ZDO_MGMT_LEAVE_RSP:
+                apsFrame = ZdoManagementLeave.create(packet);
                 break;
             default:
                 logger.debug("Unhandled ZToolPacket type {}", packet.getCMD());

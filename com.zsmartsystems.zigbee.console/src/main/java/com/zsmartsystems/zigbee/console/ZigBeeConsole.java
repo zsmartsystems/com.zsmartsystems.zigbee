@@ -1896,11 +1896,11 @@ public final class ZigBeeConsole {
          */
         @Override
         public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length > 3) {
+            if (args.length > 2) {
                 return false;
             }
 
-            int leaver = Integer.parseInt(args[2]);
+            int leaver = Integer.parseInt(args[1]);
             ZigBeeNode leaverNode = networkManager.getNode(leaver);
             if (leaverNode == null) {
                 print("Leaver node not found.", out);

@@ -43,6 +43,11 @@ public class ZigBeeNode {
     private PowerDescriptor powerDescriptor;
 
     /**
+     * A flag indicating if this node is configured to allow joining
+     */
+    private boolean joiningEnabled = false;
+
+    /**
      * The time the node information was last updated. This is set from the mesh update class when it the
      * updates neighbor table, routing table etc.
      */
@@ -110,7 +115,7 @@ public class ZigBeeNode {
 
     /**
      * Sets the {@link NodeDescriptor} for this node.
-     * 
+     *
      * @param nodeDescriptor the new {@link NodeDescriptor}
      */
     public void setNodeDescriptor(NodeDescriptor nodeDescriptor) {
@@ -382,6 +387,30 @@ public class ZigBeeNode {
         }
 
         return changes;
+    }
+
+    /**
+     * Sets the joining status of this node. Note that this is not (currently) linked to the join command that is sent -
+     * it is a status point that is set from the node beacons.
+     *
+     * @return true if the joining status changed.
+     */
+    public boolean setJoining(boolean joiningEnabled) {
+        boolean changed;
+
+        changed = this.joiningEnabled != joiningEnabled;
+        this.joiningEnabled = joiningEnabled;
+        return changed;
+    }
+
+    /**
+     * Gets the joining status of this node. Note that this is not (currently) linked to the join command that is sent -
+     * it is a status point that is set from the node beacons.
+     *
+     * @return true if the node is currently configured to allow joining
+     */
+    public boolean isJoiningEnabled() {
+        return joiningEnabled;
     }
 
     /**
