@@ -21,6 +21,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParamete
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRouteTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingRouteErrorHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingRouteRecordHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupEui64ByNodeIdResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler;
@@ -82,8 +84,8 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GET_ROUTE_TABLE_ENTRY = 0x7B;
     // protected static final int FRAME_ID_ID_CONFLICT_HANDLER = 0x7C;
     protected static final int FRAME_ID_INCOMING_MESSAGE_HANDLER = 0x45;
-    // protected static final int FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER = 0x80;
-    // protected static final int FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER = 0x59;
+    protected static final int FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER = 0x80;
+    protected static final int FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER = 0x59;
     // protected static final int FRAME_ID_INVALID_COMMAND = 0x62;
     // protected static final int FRAME_ID_JOIN_NETWORK = 0x1F;
     protected static final int FRAME_ID_LEAVE_NETWORK = 0x20;
@@ -132,6 +134,8 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_POLICY, EzspGetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_ROUTE_TABLE_ENTRY, EzspGetRouteTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_MESSAGE_HANDLER, EzspIncomingMessageHandler.class);
+        ezspHandlerMap.put(FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER, EzspIncomingRouteRecordHandler.class);
+        ezspHandlerMap.put(FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER, EzspIncomingRouteErrorHandler.class);
         ezspHandlerMap.put(FRAME_ID_LEAVE_NETWORK, EzspLeaveNetworkResponse.class);
         ezspHandlerMap.put(FRAME_ID_LOOKUP_EUI64_BY_NODE_ID, EzspLookupEui64ByNodeIdResponse.class);
         ezspHandlerMap.put(FRAME_ID_MESSAGE_SENT_HANDLER, EzspMessageSentHandler.class);
