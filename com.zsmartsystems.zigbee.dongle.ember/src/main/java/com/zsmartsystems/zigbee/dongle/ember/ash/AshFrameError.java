@@ -8,7 +8,7 @@ package com.zsmartsystems.zigbee.dongle.ember.ash;
  */
 public class AshFrameError extends AshFrame {
     private final int version;
-    private final int resetCode;
+    private final int errorCode;
 
     /**
      * Constructor to create an ASH frame from a byte buffer.
@@ -20,20 +20,34 @@ public class AshFrameError extends AshFrame {
         processHeader(frameBuffer);
 
         this.version = frameBuffer[1];
-        this.resetCode = frameBuffer[2];
+        this.errorCode = frameBuffer[2];
     }
 
     public int getVersion() {
         return version;
     }
 
-    public int getResetCode() {
-        return resetCode;
+    public int getErrorCode() {
+        return errorCode;
     }
 
     @Override
     public String toString() {
-        return "AshFrameError [version=" + version + ", resetCode=" + resetCode + "]";
+        final StringBuilder builder = new StringBuilder();
+        builder.append("AshFrameError [version=");
+        builder.append(version);
+        builder.append(". errorCode=");
+        builder.append(errorCode);
+        switch (errorCode) {
+            case 0x51:
+                builder.append(", Exceeded maximum ACK timeout count");
+                break;
+            default:
+                break;
+        }
+
+        builder.append("]");
+        return builder.toString();
     }
 
 }

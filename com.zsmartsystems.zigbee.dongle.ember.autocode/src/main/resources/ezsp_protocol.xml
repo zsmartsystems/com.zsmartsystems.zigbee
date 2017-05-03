@@ -1236,6 +1236,26 @@
 			</parameter>
 		</response_parameters>
 	</command>
+		
+	<command>
+		<name>incomingRouteErrorHandler</name>
+		<id>0x80</id>
+		<description>A callback invoked when a route error message is received. The error indicates that a problem routing to or from the target node was encountered.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_SOURCE_ROUTE_FAILURE or EMBER_MANY_TO_ONE_ROUTE_FAILURE.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>target</name>
+				<description>The short id of the remote node.</description>
+			</parameter>
+		</response_parameters>
+	</command>
 
 	<command>
 		<name>incomingMessageHandler</name>
