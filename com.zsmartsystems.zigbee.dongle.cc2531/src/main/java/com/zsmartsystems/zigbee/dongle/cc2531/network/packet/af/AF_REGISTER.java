@@ -39,7 +39,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.Integers;
  * the case where the device needs to support multiple application profiles, where
  * each AF_REGISTER call would register a unique endpoint description per application
  * profile.
- * 
+ *
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
  */
@@ -83,7 +83,7 @@ public class AF_REGISTER extends ZToolPacket /* implements IREQUEST, IAF */ {
 
     /**
      * Creates the AF_REGISTER packet
-     * 
+     *
      * @param EndPoint Specifies the endpoint of this simple descriptor.
      * @param AppProfID Specifies the profile id of the application
      * @param AppDeviceId Specifies the device description id for this endpoint
@@ -140,13 +140,13 @@ public class AF_REGISTER extends ZToolPacket /* implements IREQUEST, IAF */ {
         super.buildPacket(new DoubleByte(ZToolCMD.AF_REGISTER), framedata);
     }
 
-    public AF_REGISTER(byte endPoint, int profileId, short deviceId, byte deviceVersion, int[] inputs, int[] outputs) {
+    public AF_REGISTER(int endpointId, int profileId, short deviceId, byte deviceVersion, int[] inputs, int[] outputs) {
 
         // TODO Check compatibility with other Constructor
 
         int[] framedata = new int[9 + inputs.length * 2 + outputs.length * 2];
         int j;
-        framedata[0] = 0xFF & endPoint;
+        framedata[0] = 0xFF & endpointId;
         framedata[1] = Integers.getByteAsInteger(profileId, 0);
         framedata[2] = Integers.getByteAsInteger(profileId, 1);
         framedata[3] = Integers.getByteAsInteger(deviceId, 0);
