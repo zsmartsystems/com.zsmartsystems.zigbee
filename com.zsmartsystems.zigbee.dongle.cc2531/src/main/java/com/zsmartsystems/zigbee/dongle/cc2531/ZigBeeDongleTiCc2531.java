@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.dongle.cc2531;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,6 @@ import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoPowerDescriptor;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoSimpleDescriptor;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.ApplicationFrameworkMessageListener;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.AsynchronousCommandListener;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.ApplicationFrameworkLayer;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.ZigBeeNetworkManagerImpl;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.model.DriverStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.model.NetworkMode;
@@ -32,6 +32,8 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST_EXT;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER_SRSP;
 import com.zsmartsystems.zigbee.zdo.SynchronousResponse;
 
 /**
@@ -56,6 +58,9 @@ public class ZigBeeDongleTiCc2531
      * The reference to the network
      */
     private ZigBeeTransportReceive zigbeeNetworkReceive;
+
+    private final HashMap<Integer, Integer> sender2EndPoint = new HashMap<Integer, Integer>();
+    private final HashMap<Integer, Integer> endpoint2Profile = new HashMap<Integer, Integer>();
 
     /**
      * Constructor to configure the port interface.
@@ -115,8 +120,12 @@ public class ZigBeeDongleTiCc2531
 
     @Override
     public boolean setZigBeeSecurityKey(int[] keyData) {
-        // TODO: Fix!
-        return networkManager.setNetworkKey(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });// keyData);
+        byte[] key = new byte[16];
+        int cnt = 0;
+        for (int keyVal : keyData) {
+            key[cnt] = (byte) keyVal;
+        }
+        return networkManager.setNetworkKey(key);
     }
 
     @Override
@@ -148,7 +157,7 @@ public class ZigBeeDongleTiCc2531
             }
         }
 
-        ApplicationFrameworkLayer.getAFLayer(networkManager).createDefaultSendingEndPoint();
+        createEndPoint(1, 0x104);
 
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.ONLINE);
 
@@ -167,8 +176,7 @@ public class ZigBeeDongleTiCc2531
             if (apsFrame.getProfile() == 0) {
                 sender = 0;
             } else {
-                sender = ApplicationFrameworkLayer.getAFLayer(networkManager).getSendingEndpoint(apsFrame.getProfile(),
-                        apsFrame.getCluster());
+                sender = (short) getSendingEndpoint(apsFrame.getProfile());
             }
 
             // TODO: How to differentiate group and device addressing?????
@@ -209,8 +217,7 @@ public class ZigBeeDongleTiCc2531
         apsFrame.setCluster(clusterMessage.getClusterId());
         apsFrame.setDestinationEndpoint(clusterMessage.getDstEndpoint());
         apsFrame.setSourceEndpoint(clusterMessage.getSrcEndpoint());
-        apsFrame.setProfile(ApplicationFrameworkLayer.getAFLayer(networkManager)
-                .getSenderEndpointProfileId(clusterMessage.getDstEndpoint(), clusterMessage.getClusterId()));
+        apsFrame.setProfile(getEndpointProfile(clusterMessage.getDstEndpoint()));
 
         // nwkHeader.setDestinationAddress(clusterMessage.geta);
         apsFrame.setSourceAddress(clusterMessage.getSrcAddr());
@@ -533,4 +540,51 @@ public class ZigBeeDongleTiCc2531
             }
         }
     }
+
+    private int getSendingEndpoint(int profileId) {
+        synchronized (sender2EndPoint) {
+            if (sender2EndPoint.containsKey(profileId)) {
+                return sender2EndPoint.get(profileId);
+            } else {
+                logger.info("No endpoint registered for profileId={}", profileId);
+                // final byte ep = createEndPoint( profileId);
+                return -1;
+            }
+        }
+    }
+
+    private int getEndpointProfile(int endpointId) {
+        synchronized (endpoint2Profile) {
+            if (endpoint2Profile.containsKey(endpointId)) {
+                return endpoint2Profile.get(endpointId);
+            } else {
+                logger.info("No endpoint {} registered", endpointId);
+                // final byte ep = createEndPoint( profileId);
+                return -1;
+            }
+        }
+    }
+
+    private int createEndPoint(int endpointId, int profileId) {
+        logger.trace("Registering a new endpoint {} for profile {}", endpointId, profileId);
+
+        AF_REGISTER_SRSP result;
+        result = networkManager.sendAFRegister(
+                new AF_REGISTER(endpointId, profileId, (short) 0, (byte) 0, new int[] {}, new int[] {}));
+        // FIX We should retry only when Status != 0xb8 ( Z_APS_DUPLICATE_ENTRY )
+        if (result.getStatus() != 0) {
+            // TODO We should provide a workaround for the maximum number of registered EndPoint
+            // For example, with the CC2480 we could reset the dongle
+            throw new IllegalStateException("Unable create a new Endpoint. AF_REGISTER command failed with "
+                    + result.getStatus() + ":" + result.getErrorMsg());
+        }
+
+        sender2EndPoint.put(profileId, endpointId);
+        endpoint2Profile.put(endpointId, profileId);
+
+        logger.debug("Registered endpoint {} with profile: {}", endpointId, profileId);
+
+        return endpointId;
+    }
+
 }

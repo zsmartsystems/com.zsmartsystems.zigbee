@@ -175,8 +175,27 @@ public class ZToolPacket {
 
     @Override
     public String toString() {
-        return "Packet: length=" + LEN + ", apiId=" + ByteUtils.toBase16(CMD.getMsb()) + " "
-                + ByteUtils.toBase16(CMD.getLsb()) + ", data=" + ByteUtils.toBase16(packet) + ", checksum="
-                + ByteUtils.toBase16(FCS) + ", error=" + error + (error ? (", errorMessage=" + errorMsg) : "");
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("Packet: subsystem=");
+        builder.append(subsystem);
+        builder.append(", length=");
+        builder.append(LEN);
+        builder.append(", apiId=");
+        builder.append(ByteUtils.toBase16(CMD.getMsb()));
+        builder.append(" ");
+        builder.append(ByteUtils.toBase16(CMD.getLsb()));
+        builder.append(", data=");
+        builder.append(ByteUtils.toBase16(packet));
+        builder.append(", checksum=");
+        builder.append(ByteUtils.toBase16(FCS));
+        builder.append(", error=");
+        builder.append(error);
+        if (error) {
+            builder.append(", errorMessage=");
+            builder.append(errorMsg);
+        }
+
+        return builder.toString();
     }
 }

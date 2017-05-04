@@ -527,7 +527,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 command = receiveZclCommand(fieldDeserializer, apsFrame);
                 break;
             default:
-                logger.debug("Received message unknown profile {}", String.format("%04X", apsFrame.getProfile()));
+                logger.debug("Received message with unknown profile {}", String.format("%04X", apsFrame.getProfile()));
                 break;
         }
 

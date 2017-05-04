@@ -379,69 +379,10 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
     }
 
-    private boolean checkZigBeeNetworkConfiguration() {
-        int value;
-        long longValue;
-        boolean mismatch = false;
-        if ((value = getCurrentChannel()) != channel) {
-            logger.warn("The channel configuration differ from the channel configuration in use: "
-                    + "in use {}, while the configured is {}.\n"
-                    + "The ZigBee network should be reconfigured or configuration corrected.", value, channel);
-            mismatch = true;
-        }
-        // Do not check the current PAN ID if a random one is generated
-        // by the dongle.
-        if (pan != AUTO_PANID && (value = getCurrentPanId()) != pan) {
-            logger.warn("The PanId configuration differ from the PanId configuration in use: "
-                    + "in use {}, while the configured is {}.\n"
-                    + "The ZigBee network should be reconfigured or configuration corrected.", value, pan);
-            mismatch = true;
-        }
-        if (extendedPanId != 0 && (longValue = getCurrentExtendedPanId()) != extendedPanId) {
-            logger.warn(
-                    "The ExtendedPanId configuration differ from the ExtendedPanId configuration in use: "
-                            + "in use {}, while the configured is {}.\n"
-                            + "The ZigBee network should be reconfigured or configuration corrected.",
-                    longValue, extendedPanId);
-            mismatch = true;
-        }
-        if ((value = getZigBeeNodeMode()) != mode.ordinal()) {
-            logger.warn(
-                    "The NetworkMode configuration differ from the NetworkMode configuration in use: "
-                            + "in use {}, while the configured is {}.\n"
-                            + "The ZigBee network should be reconfigured or configuration corrected.",
-                    value, mode.ordinal());
-            mismatch = true;
-        }
-
-        if (networkKey != null) {
-            final byte[] readNetworkKey = getZigBeeNetworkKey();
-            if (readNetworkKey == null) {
-                logger.warn("Could not read preconfigured network key.");
-                mismatch = true;
-            } else {
-                boolean networkKeyMismatch = false;
-                for (int i = 0; i < 16; i++) {
-                    if (networkKey[i] != readNetworkKey[i]) {
-                        networkKeyMismatch = true;
-                        break;
-                    }
-                }
-                if (networkKeyMismatch) {
-                    logger.debug("The NetworkKey configuration differ from the NetworkKey configuration in use.");
-                    mismatch = true;
-                }
-            }
-        }
-
-        return mismatch;
-    }
-
     private boolean configureZigBeeNetwork() {
         logger.debug("Resetting network stack.");
 
         // Make sure we start clearing configuration and state
-        logger.info("Setting clean state.");
         if (!dongleSetStartupOption(STARTOPT_CLEAR_CONFIG | STARTOPT_CLEAR_STATE)) {
             logger.error("Unable to set clean state for dongle");
             return false;
@@ -455,7 +396,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
         // A dongle reset is needed to put into effect
         // configuration clear and network mode.
-        logger.info("Resetting dongle.");
+        logger.debug("Resetting CC2531 dongle.");
         if (!dongleReset()) {
             logger.error("Unable to reset dongle");
             return false;
@@ -468,6 +409,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         } else {
             logger.trace("CHANNEL set");
         }
+
         logger.debug("Setting PAN to {}.", String.format("%04X", pan & 0x0000ffff));
         if (!dongleSetPanId()) {
             logger.error("Unable to set PANID for ZigBee Network");
