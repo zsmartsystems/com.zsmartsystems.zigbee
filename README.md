@@ -4,6 +4,21 @@
 
 This project aims to provide a ZigBee Cluster Library written in Java. 
 
+# Packages
+
+## ZigBee Stack
+
+## Dongles
+ 
+### Texas Instruments CC2531
+
+## Tested Hardware
+ 
+# Contributing
+
+Codacy static testing should pass.
+Contributions must be supported with tests.
+Contributions must be your own.
 
 # License
 
