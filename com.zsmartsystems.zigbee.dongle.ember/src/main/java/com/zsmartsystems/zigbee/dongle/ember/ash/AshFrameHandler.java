@@ -296,7 +296,10 @@ public class AshFrameHandler {
         return parserThread != null && parserThread.isAlive();
     }
 
-    private void sendNextFrame() {
+    // Synchronize this method so we can do the window check without interruption.
+    // Otherwise this method could be called twice from different threads that could end up with
+    // more than the TX_WINDOW number of frames sent.
+    private synchronized void sendNextFrame() {
         // We're not allowed to send if we're not connected
         if (!stateConnected) {
             logger.warn("Trying to send when not connected.");
@@ -305,7 +308,7 @@ public class AshFrameHandler {
 
         // Check how many frames are outstanding
         if (sentQueue.size() >= TX_WINDOW) {
-            logger.debug("Sent queue larger than window {} > {}.", sentQueue.size(), TX_WINDOW);
+            logger.debug("Sent queue larger than window [{} > {}].", sentQueue.size(), TX_WINDOW);
             return;
         }
 
@@ -342,6 +345,7 @@ public class AshFrameHandler {
         outputFrame(ashFrame);
     }
 
+    // Synchronize this method to ensure a packet gets sent as a block
     private synchronized void outputFrame(AshFrame ashFrame) {
         ashFrame.setAckNum(ackNum);
 
@@ -430,6 +434,7 @@ public class AshFrameHandler {
             if (sentQueue.poll() == null) {
                 logger.debug("Error: nothing to remove from sent queue [{} -- {}]", this.ackNum, ackNum);
             }
+            logger.debug("Frame acked and removed");
         }
     }
 
@@ -465,6 +470,8 @@ public class AshFrameHandler {
                 // Too many retries.
                 // TODO: We probably should alert the upper layer so they can reset the link?
                 frameHandler.handleLinkStateChange(false);
+
+                logger.debug("Error: number of retries exceeded [{}].", retries);
             }
 
             sendRetry();

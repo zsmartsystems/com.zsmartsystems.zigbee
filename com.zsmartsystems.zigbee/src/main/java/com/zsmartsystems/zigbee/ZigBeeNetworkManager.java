@@ -347,6 +347,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return true if the key was set
      */
     public boolean setZigBeeSecurityKey(final int key[]) {
+        if (key == null || key.length != 16) {
+            return false;
+        }
         return transport.setZigBeeSecurityKey(key);
     }
 
