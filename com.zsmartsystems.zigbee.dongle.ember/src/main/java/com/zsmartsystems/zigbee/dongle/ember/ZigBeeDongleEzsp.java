@@ -191,6 +191,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         // Add our endpoint(s)
         createEndpoints();
 
+        getNetworkParameters();
+
         // Now initialise the network
         EzspNetworkInitRequest networkInitRequest = new EzspNetworkInitRequest();
         EzspTransaction networkInitTransaction = ashHandler.sendEzspTransaction(
