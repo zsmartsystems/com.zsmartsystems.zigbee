@@ -1,4 +1,6 @@
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.transport;
+
+import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 
 /**
  * An enumeration of the current state of the transport layer.

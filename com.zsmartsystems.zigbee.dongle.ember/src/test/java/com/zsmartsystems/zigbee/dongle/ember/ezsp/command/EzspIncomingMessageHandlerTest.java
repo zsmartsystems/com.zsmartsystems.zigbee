@@ -10,10 +10,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberIncomingMessageType;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 
 /**
  * @author Chris Jackson

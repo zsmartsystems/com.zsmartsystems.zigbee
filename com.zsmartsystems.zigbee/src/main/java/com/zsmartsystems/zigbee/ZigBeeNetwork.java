@@ -1,5 +1,7 @@
 package com.zsmartsystems.zigbee;
 
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+
 /**
  * <p>
  * ZigBee network interface. It provides an interface for higher layers to receive information about the network and

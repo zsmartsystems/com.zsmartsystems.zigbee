@@ -22,7 +22,6 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network;
 
-import com.zsmartsystems.zigbee.ZigBeePort;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.model.DriverStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.model.NetworkMode;
@@ -46,6 +45,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_REQ;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_RSP;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi - ISTI-CNR</a>
@@ -71,9 +71,9 @@ public interface ZigBeeNetworkManager {
     /**
      * Starts up network manager.
      *
-     * @return
+     * @return the version string or null if the device didn't start
      */
-    boolean startup();
+    String startup();
 
     /**
      * Shuts down network manager.

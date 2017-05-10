@@ -1,4 +1,4 @@
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.transport;
 
 import java.io.InputStream;
 import java.io.OutputStream;
