@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.ZigBeePort;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;

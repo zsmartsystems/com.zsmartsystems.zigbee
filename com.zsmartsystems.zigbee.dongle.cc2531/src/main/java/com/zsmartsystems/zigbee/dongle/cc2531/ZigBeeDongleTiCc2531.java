@@ -9,10 +9,6 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
-import com.zsmartsystems.zigbee.ZigBeePort;
-import com.zsmartsystems.zigbee.ZigBeeTransportReceive;
-import com.zsmartsystems.zigbee.ZigBeeTransportState;
-import com.zsmartsystems.zigbee.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoActiveEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoEndDeviceAnnounce;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoIeeeAddress;
@@ -34,6 +30,10 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST_
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER_SRSP;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zdo.SynchronousResponse;
 
 /**
@@ -63,6 +63,11 @@ public class ZigBeeDongleTiCc2531
     private final HashMap<Integer, Integer> endpoint2Profile = new HashMap<Integer, Integer>();
 
     /**
+     * The Ember version used in this system. Set during initialisation and saved in case the client is interested.
+     */
+    private String versionString = "Unknown";
+
+    /**
      * Constructor to configure the port interface.
      *
      * @param serialPort
@@ -79,7 +84,8 @@ public class ZigBeeDongleTiCc2531
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
         // This basically just initialises the hardware so we can communicate with the 2531
-        if (!networkManager.startup()) {
+        versionString = networkManager.startup();
+        if (versionString == null) {
             return ZigBeeInitializeResponse.FAILED;
         }
 
@@ -167,6 +173,11 @@ public class ZigBeeDongleTiCc2531
     @Override
     public void shutdown() {
         networkManager.shutdown();
+    }
+
+    @Override
+    public String getVersionString() {
+        return versionString;
     }
 
     @Override

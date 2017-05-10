@@ -30,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ZigBeeException;
-import com.zsmartsystems.zigbee.ZigBeePort;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.ApplicationFrameworkMessageListener;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.AsynchronousCommandListener;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.CommandInterface;
@@ -98,6 +97,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.Integers;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  * The ZigBee network manager port implementation.
@@ -254,11 +254,10 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     @Override
-    public boolean startup() {
+    public String startup() {
         // Called when the network is first started
         if (state != DriverStatus.CLOSED) {
             throw new IllegalStateException("Driver already opened, current status is:" + state);
-
         }
 
         state = DriverStatus.CREATED;
@@ -268,7 +267,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         setState(DriverStatus.HARDWARE_INITIALIZING);
         if (!initializeHardware()) {
             shutdown();
-            return false;
+            return null;
         }
 
         // Now reset the dongle
@@ -279,7 +278,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
             if (!bootloaderGetOut(BOOTLOADER_MAGIC_BYTE)) {
                 logger.warn("Attempt to get out from bootloader failed.");
                 shutdown();
-                return false;
+                return null;
             }
         }
 
@@ -288,11 +287,12 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         String version = getStackVersion();
         if (version == null) {
             logger.debug("Failed to get CC2531 version");
+
         } else {
             logger.debug("CC2531 version is {}", version);
         }
 
-        return true;
+        return version;
     }
 
     @Override

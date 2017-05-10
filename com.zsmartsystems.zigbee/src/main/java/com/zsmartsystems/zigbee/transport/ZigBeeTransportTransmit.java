@@ -1,5 +1,8 @@
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.transport;
 
+import com.zsmartsystems.zigbee.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.ZigBeeException;
+import com.zsmartsystems.zigbee.ZigBeeNetwork;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
@@ -49,6 +52,11 @@ public interface ZigBeeTransportTransmit {
      * Shuts down a transport interface.
      */
     void shutdown();
+
+    /**
+     * Get the transport layer version string
+     */
+    String getVersionString();
 
     /**
      * Sends ZigBee Cluster Library command without waiting for response. Responses are provided to the framework

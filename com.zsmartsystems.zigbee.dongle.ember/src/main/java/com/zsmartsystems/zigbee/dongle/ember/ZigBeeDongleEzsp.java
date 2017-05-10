@@ -13,10 +13,6 @@ import com.zsmartsystems.zigbee.ZigBeeDeviceStatus;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
-import com.zsmartsystems.zigbee.ZigBeePort;
-import com.zsmartsystems.zigbee.ZigBeeTransportReceive;
-import com.zsmartsystems.zigbee.ZigBeeTransportState;
-import com.zsmartsystems.zigbee.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
@@ -53,6 +49,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspSingleResponse
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberNetworkInitialisation;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberStackConfiguration;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclProfileType;
 
@@ -108,6 +108,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
      */
     private EmberNetworkParameters networkParameters = new EmberNetworkParameters();
 
+    /**
+     * The Ember version used in this system. Set during initialisation and saved in case the client is interested.
+     */
+    private String versionString = "Unknown";
+
     public ZigBeeDongleEzsp(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
 
@@ -162,6 +167,15 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
                 .sendEzspTransaction(new EzspSingleResponseTransaction(version, EzspVersionResponse.class));
         EzspVersionResponse versionResponse = (EzspVersionResponse) versionTransaction.getResponse();
         logger.debug(versionResponse.toString());
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("EZSP Version=");
+        builder.append(versionResponse.getProtocolVersion());
+        builder.append(", Stack Type=");
+        builder.append(versionResponse.getStackType());
+        builder.append(", Stack Version=");
+        builder.append(String.format("%04X", versionResponse.getStackVersion()));
+        versionString = builder.toString();
 
         // Perform any stack configuration
         EmberStackConfiguration stackConfigurer = new EmberStackConfiguration(ashHandler);
@@ -594,6 +608,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         networkKey.setContents(keyData);
 
         return false;
+    }
+
+    @Override
+    public String getVersionString() {
+        return versionString;
     }
 
     /*

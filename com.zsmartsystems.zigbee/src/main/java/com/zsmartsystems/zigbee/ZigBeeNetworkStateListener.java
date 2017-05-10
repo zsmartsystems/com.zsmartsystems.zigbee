@@ -1,5 +1,7 @@
 package com.zsmartsystems.zigbee;
 
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
+
 /**
  * ZigBee network listener. Provides notifications on updates to the network state
  *

@@ -21,6 +21,9 @@ import com.zsmartsystems.zigbee.internal.ZigBeeNetworkDiscoverer;
 import com.zsmartsystems.zigbee.internal.ZigBeeNetworkMeshMonitor;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -390,6 +393,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     }
 
+    /**
+     * Get the transport layer version string
+     */
+    public String getTransportVersionString() {
+        return transport.getVersionString();
+    }
+
     @Override
     public int sendCommand(Command command) throws ZigBeeException {
         // Create the application frame
@@ -471,25 +481,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             apsFrame.setPayload(zclHeader.serialize(fieldSerializer, fieldSerializer.getPayload()));
         }
 
-        // if (payload == null) {
-        // TODO handle error
-        // }
-
         transport.sendCommand(apsFrame);
 
         return sequence;
-        // }
-
-        // if (command instanceof ZdoCommand) {
-        // logger.debug("TX ZDO: " + command);
-
-        // For ZDO commands we pass down the command class since some dongles implement ZDO commands as individual
-        // commands rather than a general "sendZDO" type command. This gives the transport implementation maximum
-        // flexibility for translating the command as it requires.
-        // transport.sendZdoCommand((ZdoCommand) command);
-        // }
-
-        // return 0;
     }
 
     @Override

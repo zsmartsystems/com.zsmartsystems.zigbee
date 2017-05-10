@@ -33,7 +33,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.ZigBeePort;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.AsynchronousCommandListener;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.CommandInterface;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.SynchronousCommandListener;
@@ -42,6 +41,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacketHandler;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacketParser;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ByteUtils;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  * ZigBeeSerialInterface is used to startup connection to ZigBee network.
