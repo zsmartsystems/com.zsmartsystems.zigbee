@@ -10,6 +10,7 @@ import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoActiveEndpoint;
+import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoCallbackIncoming;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoEndDeviceAnnounce;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoIeeeAddress;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoManagementLeave;
@@ -272,6 +273,10 @@ public class ZigBeeDongleTiCc2531
 
         ZigBeeApsFrame apsFrame = null;
         switch (packet.getCMD().get16BitValue()) {
+            case ZToolCMD.ZDO_MSG_CB_INCOMING:
+                apsFrame = ZdoCallbackIncoming.create(packet);
+                break;
+
             case ZToolCMD.ZDO_IEEE_ADDR_RSP:
                 apsFrame = ZdoIeeeAddress.create(packet);
                 break;

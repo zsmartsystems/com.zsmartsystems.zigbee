@@ -22,7 +22,6 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network;
 
-import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.model.DriverStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.model.NetworkMode;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_CONFIRM;
