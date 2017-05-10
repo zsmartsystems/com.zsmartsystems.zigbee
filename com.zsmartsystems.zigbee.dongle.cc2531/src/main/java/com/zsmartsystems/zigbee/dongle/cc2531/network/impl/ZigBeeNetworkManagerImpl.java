@@ -57,6 +57,8 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.simple.ZB_WRITE_CON
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.simple.ZB_WRITE_CONFIGURATION_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_RESET;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_RESET_RESPONSE;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_VERSION;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_VERSION_RESPONSE;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_REQ;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_REQ_SRSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_RSP;
@@ -282,6 +284,13 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
 
         setState(DriverStatus.HARDWARE_READY);
+
+        String version = getStackVersion();
+        if (version == null) {
+            logger.debug("Failed to get CC2531 version");
+        } else {
+            logger.debug("CC2531 version is {}", version);
+        }
 
         return true;
     }
@@ -891,6 +900,31 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         return response != null;
     }
 
+    private String getStackVersion() {
+        if (!waitForHardware()) {
+            logger.info("Failed to reach the {} level: getStackVerion() failed", DriverStatus.NETWORK_READY);
+            return null;
+        }
+
+        SYS_VERSION_RESPONSE response = (SYS_VERSION_RESPONSE) sendSynchrouns(commandInterface, new SYS_VERSION());
+        if (response == null) {
+            return null;
+        } else {
+            StringBuilder builder = new StringBuilder();
+            builder.append("Software=");
+            builder.append(response.MajorRel);
+            builder.append(".");
+            builder.append(response.MinorRel);
+            builder.append(" Product=");
+            builder.append(response.Product);
+            builder.append(" Hardware=");
+            builder.append(response.HwRev);
+            builder.append(" Transport=");
+            builder.append(response.TransportRev);
+            return builder.toString();
+        }
+    }
+
     private boolean dongleReset() {
         final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.SYS_RESET_RESPONSE,
                 commandInterface);
@@ -1333,7 +1367,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
 
         int[] result = getDeviceInfo(ZB_GET_DEVICE_INFO.DEV_INFO_TYPE.PAN_ID);
-
         if (result == null) {
             return -1;
         } else {
