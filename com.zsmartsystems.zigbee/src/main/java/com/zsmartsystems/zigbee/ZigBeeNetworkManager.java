@@ -538,7 +538,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setDestinationAddress(
                 new ZigBeeDeviceAddress(apsFrame.getDestinationAddress(), apsFrame.getDestinationEndpoint()));
 
-        logger.debug("RX command: {}", command);
+        logger.debug("RX CMD: {}", command);
 
         // Notify the listeners
         notifyCommandListeners(command);
