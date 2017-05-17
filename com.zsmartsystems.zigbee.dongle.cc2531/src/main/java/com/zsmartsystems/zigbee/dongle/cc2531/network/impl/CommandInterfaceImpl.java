@@ -55,7 +55,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
     /**
      * The logger.
      */
-    private static final Logger logger = LoggerFactory.getLogger(CommandInterfaceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(CommandInterfaceImpl.class);
     /**
      * The port interface.
      */
@@ -133,7 +133,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
     @Override
     public void error(final Throwable th) {
         if (th instanceof IOException) {
-            logger.error("IO exception in packet parsing.", th);
+            logger.error("IO exception in packet parsing: ", th);
         } else {
             logger.error("Unexpected exception in packet parsing: ", th);
         }
@@ -325,7 +325,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
                     try {
                         asynchronousCommandListener.receivedUnclaimedSynchronousCommandResponse(packet);
                     } catch (Throwable e) {
-                        logger.error("Error in incoming asynchronous message processing.", e);
+                        logger.error("Error in incoming asynchronous message processing: ", e);
                     }
                 }
             }
@@ -381,7 +381,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
             try {
                 listener.receivedAsynchronousCommand(packet);
             } catch (Throwable e) {
-                logger.error("Error in incoming asynchronous message processing.", e);
+                logger.error("Error in incoming asynchronous message processing: ", e);
             }
         }
     }
