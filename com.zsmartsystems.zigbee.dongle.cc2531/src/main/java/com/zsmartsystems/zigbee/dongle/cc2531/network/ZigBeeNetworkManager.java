@@ -22,29 +22,12 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network;
 
-import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.model.DriverStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.model.NetworkMode;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_CONFIRM;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_BIND_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_BIND_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_IEEE_ADDR_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_IEEE_ADDR_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LQI_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LQI_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_NODE_DESC_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_NODE_DESC_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_POWER_DESC_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_POWER_DESC_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_RSP;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
@@ -81,46 +64,6 @@ public interface ZigBeeNetworkManager {
     void shutdown();
 
     /**
-     * Sends ZDO_IEEE_ADDR_REQ.
-     *
-     * @param request the ZDO_IEEE_ADDR_REQ
-     * @return ZDO_IEEE_ADDR_RSP
-     */
-    ZDO_IEEE_ADDR_RSP sendZDOIEEEAddressRequest(ZDO_IEEE_ADDR_REQ request);
-
-    /**
-     * Sends ZDO_NODE_DESC_REQ.
-     *
-     * @param request the ZDO_NODE_DESC_REQ
-     * @return ZDO_NODE_DESC_RSP
-     */
-    ZDO_NODE_DESC_RSP sendZDONodeDescriptionRequest(ZDO_NODE_DESC_REQ request);
-
-    /**
-     * Sends ZDO_POWER_DESC_REQ.
-     *
-     * @param request the ZDO_POWER_DESC_REQ
-     * @return ZDO_POWER_DESC_RSP
-     */
-    ZDO_POWER_DESC_RSP sendZDOPowerDescriptionRequest(ZDO_POWER_DESC_REQ request);
-
-    /**
-     * Sends ZDO_ACTIVE_EP_REQ.
-     *
-     * @param request the ZDO_ACTIVE_EP_REQ
-     * @return ZDO_ACTIVE_EP_RSP
-     */
-    ZDO_ACTIVE_EP_RSP sendZDOActiveEndPointRequest(ZDO_ACTIVE_EP_REQ request);
-
-    /**
-     * Sends ZDO_SIMPLE_DESC_REQ.
-     *
-     * @param request the ZDO_SIMPLE_DESC_REQ
-     * @return ZDO_SIMPLE_DESC_RSP
-     */
-    ZDO_SIMPLE_DESC_RSP sendZDOSimpleDescriptionRequest(ZDO_SIMPLE_DESC_REQ request);
-
-    /**
      * Sends AF_REGISTER.
      *
      * @param request the AF_REGISTER
@@ -137,22 +80,6 @@ public interface ZigBeeNetworkManager {
     AF_DATA_CONFIRM sendAFDataRequest(AF_DATA_REQUEST request);
 
     /**
-     * Sends ZDO_BIND_REQ
-     *
-     * @param request the ZDO_BIND_REQ
-     * @return ZDO_BIND_RSP
-     */
-    ZDO_BIND_RSP sendZDOBind(ZDO_BIND_REQ request);
-
-    /**
-     * Sends ZDO_UNBIND_REQ.
-     *
-     * @param request the ZDO_UNBIND_REQ
-     * @return ZDO_UNBIND_RSP
-     */
-    ZDO_UNBIND_RSP sendZDOUnbind(ZDO_UNBIND_REQ request);
-
-    /**
      * Removes application framework message listener.
      *
      * @param listener the listener
@@ -167,15 +94,6 @@ public interface ZigBeeNetworkManager {
      * @return true if add was successful
      */
     boolean addAFMessageListener(ApplicationFrameworkMessageListener listener);
-
-    /**
-     * Send LQI request cluster and wait for its response
-     * <p>
-     * This method is used for the discovering of {@link ZigBeeEndpoint}
-     *
-     * @return the answer to the request or null in case of an error
-     */
-    ZDO_MGMT_LQI_RSP sendLQIRequest(ZDO_MGMT_LQI_REQ request);
 
     /**
      * <b>WARNING</b>: This method may have to wait for the initialization of the ZigBee network

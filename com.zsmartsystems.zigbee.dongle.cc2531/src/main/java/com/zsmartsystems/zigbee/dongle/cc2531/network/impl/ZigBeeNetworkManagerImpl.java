@@ -58,45 +58,13 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_RESET;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_RESET_RESPONSE;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_VERSION;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_VERSION_RESPONSE;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_BIND_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_BIND_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_BIND_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_IEEE_ADDR_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_IEEE_ADDR_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_IEEE_ADDR_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LEAVE_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LEAVE_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LEAVE_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LQI_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LQI_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LQI_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_PERMIT_JOIN_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_PERMIT_JOIN_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_PERMIT_JOIN_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MSG_CB_REGISTER;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MSG_CB_REGISTER_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_NODE_DESC_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_NODE_DESC_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_NODE_DESC_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_POWER_DESC_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_POWER_DESC_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_POWER_DESC_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STARTUP_FROM_APP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STARTUP_FROM_APP_SRSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STATE_CHANGE_IND;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.Integers;
-import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
-import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
@@ -615,205 +583,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
     }
 
-    @Override
-    public ZDO_MGMT_LQI_RSP sendLQIRequest(ZDO_MGMT_LQI_REQ request) {
-
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_MGMT_LQI_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_MGMT_LQI_RSP, commandInterface);
-
-        logger.trace("Sending ZDO_MGMT_LQI_REQ {}", request);
-        ZDO_MGMT_LQI_REQ_SRSP response = (ZDO_MGMT_LQI_REQ_SRSP) sendSynchronous(request);
-        if (response == null || response.Status != 0) {
-            logger.trace("ZDO_MGMT_LQI_REQ failed, received {}", response);
-            waiter.cleanup();
-        } else {
-            result = (ZDO_MGMT_LQI_RSP) waiter.getCommand(TIMEOUT);
-        }
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    @Override
-    public ZDO_IEEE_ADDR_RSP sendZDOIEEEAddressRequest(ZDO_IEEE_ADDR_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_IEEE_ADDR_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_IEEE_ADDR_RSP,
-                commandInterface);
-
-        logger.trace("Sending ZDO_IEEE_ADDR_REQ {}", request);
-        ZDO_IEEE_ADDR_REQ_SRSP response = (ZDO_IEEE_ADDR_REQ_SRSP) sendSynchronous(request);
-        if (response == null || response.Status != 0) {
-            logger.warn("ZDO_IEEE_ADDR_REQ failed, received {}", response);
-            waiter.cleanup();
-        } else {
-            result = (ZDO_IEEE_ADDR_RSP) waiter.getCommand(TIMEOUT);
-        }
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    @Override
-    public ZDO_NODE_DESC_RSP sendZDONodeDescriptionRequest(ZDO_NODE_DESC_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_NODE_DESC_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_NODE_DESC_RSP,
-                commandInterface);
-
-        ZDO_NODE_DESC_REQ_SRSP response = (ZDO_NODE_DESC_REQ_SRSP) sendSynchronous(request);
-        if (response == null || response.Status != 0) {
-            waiter.cleanup();
-        } else {
-            result = (ZDO_NODE_DESC_RSP) waiter.getCommand(TIMEOUT);
-        }
-
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    @Override
-    public ZDO_POWER_DESC_RSP sendZDOPowerDescriptionRequest(ZDO_POWER_DESC_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_POWER_DESC_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_POWER_DESC_RSP,
-                commandInterface);
-
-        ZDO_POWER_DESC_REQ_SRSP response = (ZDO_POWER_DESC_REQ_SRSP) sendSynchronous(request);
-        if (response == null || response.Status != 0) {
-            waiter.cleanup();
-        } else {
-            result = (ZDO_POWER_DESC_RSP) waiter.getCommand(TIMEOUT);
-        }
-
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    @Override
-    public ZDO_ACTIVE_EP_RSP sendZDOActiveEndPointRequest(ZDO_ACTIVE_EP_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_ACTIVE_EP_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_ACTIVE_EP_RSP,
-                commandInterface);
-
-        logger.trace("Sending ZDO_ACTIVE_EP_REQ {}", request);
-        ZDO_ACTIVE_EP_REQ_SRSP response = (ZDO_ACTIVE_EP_REQ_SRSP) sendSynchronous(request);
-        if (response == null || response.Status != 0) {
-            logger.trace("ZDO_ACTIVE_EP_REQ failed, received {}", response);
-            waiter.cleanup();
-        } else {
-            result = (ZDO_ACTIVE_EP_RSP) waiter.getCommand(TIMEOUT);
-        }
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    public ZDO_MGMT_PERMIT_JOIN_RSP sendPermitJoinRequest(ZDO_MGMT_PERMIT_JOIN_REQ request, boolean waitForCommand) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_MGMT_PERMIT_JOIN_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_MGMT_PERMIT_JOIN_RSP,
-                commandInterface);
-
-        logger.trace("Sending ZDO_MGMT_PERMIT_JOIN_REQ {}", request);
-        ZDO_MGMT_PERMIT_JOIN_REQ_SRSP response = (ZDO_MGMT_PERMIT_JOIN_REQ_SRSP) sendSynchronous(request);
-        if (response == null || response.Status != 0) {
-            logger.trace("ZDO_MGMT_PERMIT_JOIN_REQ failed, received {}", response);
-            waiter.cleanup();
-        } else if (!waitForCommand) {
-            result = (ZDO_MGMT_PERMIT_JOIN_RSP) waiter.getCommand(TIMEOUT);
-        }
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    public boolean sendZDOLeaveRequest(ZToolAddress16[] addresses) {
-        // ---------ZDO GET IEEE ADDR
-        logger.trace("Reset seq: Trying GETIEEEADDR");
-        ZToolAddress64[] longAddresses = new ZToolAddress64[addresses.length];
-        for (int k = 0; k < addresses.length; k++) {
-            // ZDO_IEEE_ADDR_RSP responseA4 = sendZDOIEEEAddressRequest(new
-            // ZDO_IEEE_ADDR_REQ(addresses[k],ZDO_IEEE_ADDR_REQ.REQ_TYPE.EXTENDED.getValue(),0));
-
-            ZDO_IEEE_ADDR_RSP responseA4 = null;
-            BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_IEEE_ADDR_RSP, commandInterface);
-            logger.trace("Sending ZDO_IEEE_ADDR_REQ");
-            ZDO_IEEE_ADDR_REQ_SRSP response = (ZDO_IEEE_ADDR_REQ_SRSP) sendSynchronous(
-                    new ZDO_IEEE_ADDR_REQ(addresses[k], ZDO_IEEE_ADDR_REQ.REQ_TYPE.EXTENDED.getValue(), 0));
-            if (response == null || response.Status != 0) {
-                logger.trace("ZDO_IEEE_ADDR_REQ failed, received {}", response);
-                waiter.cleanup();
-            } else {
-                responseA4 = (ZDO_IEEE_ADDR_RSP) waiter.getCommand(TIMEOUT);
-            }
-
-            if (responseA4 != null) {
-                longAddresses[k] = responseA4.getIeeeAddress();
-            } else {
-                longAddresses[k] = null;
-            }
-        }
-        // ---------ZDO MGMT LEAVE
-        logger.debug("Reset seq: Trying LEAVE");
-        long start = System.currentTimeMillis();
-        for (int k = 0; k < longAddresses.length; k++) {
-            if (longAddresses[k] != null) {
-                BlockingCommandReceiver waiter3 = new BlockingCommandReceiver(ZToolCMD.ZDO_MGMT_LEAVE_RSP,
-                        commandInterface);
-
-                ZDO_MGMT_LEAVE_REQ_SRSP response = (ZDO_MGMT_LEAVE_REQ_SRSP) sendSynchronous(
-                        new ZDO_MGMT_LEAVE_REQ(addresses[k], longAddresses[k], 0));
-                if (response == null) {
-                    logger.error("Leave request time out.");
-                    return false;
-                }
-                if (response.Status != 0) {
-                    waiter3.cleanup();
-                    logger.error("Leave SRSP error status: " + response.Status);
-                    return false;
-                }
-                ZDO_MGMT_LEAVE_RSP responseA5 = (ZDO_MGMT_LEAVE_RSP) waiter3.getCommand(TIMEOUT);
-                if (responseA5 == null) {
-                    logger.error("Leave request got no RSP.");
-                    return false;
-                }
-                if (responseA5.Status != 0) {
-                    logger.error("Leave request RSP error status: " + responseA5.Status);
-                    return false;
-                }
-            }
-            if ((System.currentTimeMillis() - start) > TIMEOUT) {
-                logger.error("Reset seq: Failed LEAVE");
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     /**
      * @param request
      */
@@ -861,27 +630,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
             logger.error("Thread {} stolen the answer of {} waited by {}",
                     new Object[] { Thread.currentThread(), clz, requestor });
         }
-    }
-
-    @Override
-    public ZDO_SIMPLE_DESC_RSP sendZDOSimpleDescriptionRequest(ZDO_SIMPLE_DESC_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_SIMPLE_DESC_RSP result = null;
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_SIMPLE_DESC_RSP,
-                commandInterface);
-
-        ZDO_SIMPLE_DESC_REQ_SRSP response = (ZDO_SIMPLE_DESC_REQ_SRSP) sendSynchronous(request);
-        if (response == null || response.Status != 0) {
-            waiter.cleanup();
-        } else {
-            result = (ZDO_SIMPLE_DESC_RSP) waiter.getCommand(TIMEOUT);
-        }
-
-        unLock3WayConversation(request);
-        return result;
     }
 
     private boolean bootloaderGetOut(int magicByte) {
@@ -1163,47 +911,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
         AF_DATA_SRSP_EXT response = (AF_DATA_SRSP_EXT) sendSynchronous(request);
         return response;
-    }
-
-    @Override
-    public ZDO_BIND_RSP sendZDOBind(ZDO_BIND_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_BIND_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_BIND_RSP, commandInterface);
-
-        ZDO_BIND_REQ_SRSP response = (ZDO_BIND_REQ_SRSP) sendSynchronous(request);
-        if (response == null || response.Status != 0) {
-            waiter.cleanup();
-        } else {
-            result = (ZDO_BIND_RSP) waiter.getCommand(TIMEOUT);
-        }
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    @Override
-    public ZDO_UNBIND_RSP sendZDOUnbind(ZDO_UNBIND_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_UNBIND_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_UNBIND_RSP, commandInterface);
-
-        ZDO_UNBIND_REQ_SRSP response = (ZDO_UNBIND_REQ_SRSP) sendSynchronous(request);
-        if (response == null || response.Status != 0) {
-            waiter.cleanup();
-        } else {
-            result = (ZDO_UNBIND_RSP) waiter.getCommand(TIMEOUT);
-        }
-
-        unLock3WayConversation(request);
-        return result;
     }
 
     /**
