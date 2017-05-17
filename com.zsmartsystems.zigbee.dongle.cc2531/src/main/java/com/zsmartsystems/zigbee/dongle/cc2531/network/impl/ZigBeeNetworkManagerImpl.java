@@ -1236,7 +1236,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         public void receivedUnclaimedSynchronousCommandResponse(ZToolPacket packet) {
             // Processing not required
         }
-
     }
 
     private static class AFMessageListenerFilter implements AsynchronousCommandListener {

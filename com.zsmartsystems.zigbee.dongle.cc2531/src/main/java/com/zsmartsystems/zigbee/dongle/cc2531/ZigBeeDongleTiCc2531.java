@@ -525,7 +525,7 @@ public class ZigBeeDongleTiCc2531
          * // final ZDO_STATE_CHANGE_IND message = (ZDO_STATE_CHANGE_IND) packet;
          * // }
          */
-        logger.debug("ZToolPacket packet not processed", packet);
+        logger.debug("ZToolPacket packet not processed: {}", packet);
 
     }
 
