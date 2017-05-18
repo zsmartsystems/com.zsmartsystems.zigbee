@@ -33,10 +33,10 @@ import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.ApplicationFrameworkMessageListener;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.AsynchronousCommandListener;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.CommandInterface;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.DriverStatus;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.NetworkMode;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.SynchronousCommandListener;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.ZigBeeNetworkManager;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.model.DriverStatus;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.model.NetworkMode;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ResponseStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
@@ -58,45 +58,13 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_RESET;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_RESET_RESPONSE;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_VERSION;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_VERSION_RESPONSE;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_ACTIVE_EP_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_BIND_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_BIND_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_BIND_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_IEEE_ADDR_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_IEEE_ADDR_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_IEEE_ADDR_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LEAVE_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LEAVE_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LEAVE_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LQI_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LQI_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_LQI_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_PERMIT_JOIN_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_PERMIT_JOIN_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MGMT_PERMIT_JOIN_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MSG_CB_REGISTER;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MSG_CB_REGISTER_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_NODE_DESC_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_NODE_DESC_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_NODE_DESC_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_POWER_DESC_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_POWER_DESC_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_POWER_DESC_RSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_SIMPLE_DESC_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STARTUP_FROM_APP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STARTUP_FROM_APP_SRSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STATE_CHANGE_IND;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_REQ;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_REQ_SRSP;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_UNBIND_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.Integers;
-import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress16;
-import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ZToolAddress64;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
@@ -354,7 +322,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         final int ALL_CLUSTERS = 0xFFFF;
 
         logger.trace("Reset seq: Trying MSG_CB_REGISTER");
-        ZDO_MSG_CB_REGISTER_SRSP responseCb = (ZDO_MSG_CB_REGISTER_SRSP) sendSynchrouns(commandInterface,
+        ZDO_MSG_CB_REGISTER_SRSP responseCb = (ZDO_MSG_CB_REGISTER_SRSP) sendSynchronous(
                 new ZDO_MSG_CB_REGISTER(new DoubleByte(ALL_CLUSTERS)));
         if (responseCb == null) {
             return false;
@@ -362,7 +330,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
         final int instantStartup = 0;
 
-        ZDO_STARTUP_FROM_APP_SRSP response = (ZDO_STARTUP_FROM_APP_SRSP) sendSynchrouns(commandInterface,
+        ZDO_STARTUP_FROM_APP_SRSP response = (ZDO_STARTUP_FROM_APP_SRSP) sendSynchronous(
                 new ZDO_STARTUP_FROM_APP(instantStartup), STARTUP_TIMEOUT);
         if (response == null) {
             return false;
@@ -584,7 +552,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         if (!waitForNetwork()) {
             return null;
         }
-        RESPONSE result = (RESPONSE) sendSynchrouns(commandInterface, request);
+        RESPONSE result = (RESPONSE) sendSynchronous(request);
         if (result == null) {
             logger.error("{} timed out waiting for synchronous local response.", request.getClass().getSimpleName());
         }
@@ -602,7 +570,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
                 commandInterface);
 
         logger.trace("Sending {}", request);
-        ZToolPacket response = sendSynchrouns(commandInterface, request);
+        ZToolPacket response = sendSynchronous(request);
         if (response == null) {
             logger.error("{} timed out waiting for synchronous local response.", request.getClass().getSimpleName());
             waiter.cleanup();
@@ -613,206 +581,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
             unLock3WayConversation(request);
             return result;
         }
-    }
-
-    @Override
-    public ZDO_MGMT_LQI_RSP sendLQIRequest(ZDO_MGMT_LQI_REQ request) {
-
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_MGMT_LQI_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_MGMT_LQI_RSP, commandInterface);
-
-        logger.trace("Sending ZDO_MGMT_LQI_REQ {}", request);
-        ZDO_MGMT_LQI_REQ_SRSP response = (ZDO_MGMT_LQI_REQ_SRSP) sendSynchrouns(commandInterface, request);
-        if (response == null || response.Status != 0) {
-            logger.trace("ZDO_MGMT_LQI_REQ failed, received {}", response);
-            waiter.cleanup();
-        } else {
-            result = (ZDO_MGMT_LQI_RSP) waiter.getCommand(TIMEOUT);
-        }
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    @Override
-    public ZDO_IEEE_ADDR_RSP sendZDOIEEEAddressRequest(ZDO_IEEE_ADDR_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_IEEE_ADDR_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_IEEE_ADDR_RSP,
-                commandInterface);
-
-        logger.trace("Sending ZDO_IEEE_ADDR_REQ {}", request);
-        ZDO_IEEE_ADDR_REQ_SRSP response = (ZDO_IEEE_ADDR_REQ_SRSP) sendSynchrouns(commandInterface, request);
-        if (response == null || response.Status != 0) {
-            logger.warn("ZDO_IEEE_ADDR_REQ failed, received {}", response);
-            waiter.cleanup();
-        } else {
-            result = (ZDO_IEEE_ADDR_RSP) waiter.getCommand(TIMEOUT);
-        }
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    @Override
-    public ZDO_NODE_DESC_RSP sendZDONodeDescriptionRequest(ZDO_NODE_DESC_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_NODE_DESC_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_NODE_DESC_RSP,
-                commandInterface);
-
-        ZDO_NODE_DESC_REQ_SRSP response = (ZDO_NODE_DESC_REQ_SRSP) sendSynchrouns(commandInterface, request);
-        if (response == null || response.Status != 0) {
-            waiter.cleanup();
-        } else {
-            result = (ZDO_NODE_DESC_RSP) waiter.getCommand(TIMEOUT);
-        }
-
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    @Override
-    public ZDO_POWER_DESC_RSP sendZDOPowerDescriptionRequest(ZDO_POWER_DESC_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_POWER_DESC_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_POWER_DESC_RSP,
-                commandInterface);
-
-        ZDO_POWER_DESC_REQ_SRSP response = (ZDO_POWER_DESC_REQ_SRSP) sendSynchrouns(commandInterface, request);
-        if (response == null || response.Status != 0) {
-            waiter.cleanup();
-        } else {
-            result = (ZDO_POWER_DESC_RSP) waiter.getCommand(TIMEOUT);
-        }
-
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    @Override
-    public ZDO_ACTIVE_EP_RSP sendZDOActiveEndPointRequest(ZDO_ACTIVE_EP_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_ACTIVE_EP_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_ACTIVE_EP_RSP,
-                commandInterface);
-
-        logger.trace("Sending ZDO_ACTIVE_EP_REQ {}", request);
-        ZDO_ACTIVE_EP_REQ_SRSP response = (ZDO_ACTIVE_EP_REQ_SRSP) sendSynchrouns(commandInterface, request);
-        if (response == null || response.Status != 0) {
-            logger.trace("ZDO_ACTIVE_EP_REQ failed, received {}", response);
-            waiter.cleanup();
-        } else {
-            result = (ZDO_ACTIVE_EP_RSP) waiter.getCommand(TIMEOUT);
-        }
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    public ZDO_MGMT_PERMIT_JOIN_RSP sendPermitJoinRequest(ZDO_MGMT_PERMIT_JOIN_REQ request, boolean waitForCommand) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_MGMT_PERMIT_JOIN_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_MGMT_PERMIT_JOIN_RSP,
-                commandInterface);
-
-        logger.trace("Sending ZDO_MGMT_PERMIT_JOIN_REQ {}", request);
-        ZDO_MGMT_PERMIT_JOIN_REQ_SRSP response = (ZDO_MGMT_PERMIT_JOIN_REQ_SRSP) sendSynchrouns(commandInterface,
-                request);
-        if (response == null || response.Status != 0) {
-            logger.trace("ZDO_MGMT_PERMIT_JOIN_REQ failed, received {}", response);
-            waiter.cleanup();
-        } else if (!waitForCommand) {
-            result = (ZDO_MGMT_PERMIT_JOIN_RSP) waiter.getCommand(TIMEOUT);
-        }
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    public boolean sendZDOLeaveRequest(ZToolAddress16[] addresses) {
-        // ---------ZDO GET IEEE ADDR
-        logger.trace("Reset seq: Trying GETIEEEADDR");
-        ZToolAddress64[] longAddresses = new ZToolAddress64[addresses.length];
-        for (int k = 0; k < addresses.length; k++) {
-            // ZDO_IEEE_ADDR_RSP responseA4 = sendZDOIEEEAddressRequest(new
-            // ZDO_IEEE_ADDR_REQ(addresses[k],ZDO_IEEE_ADDR_REQ.REQ_TYPE.EXTENDED.getValue(),0));
-
-            ZDO_IEEE_ADDR_RSP responseA4 = null;
-            BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_IEEE_ADDR_RSP, commandInterface);
-            logger.trace("Sending ZDO_IEEE_ADDR_REQ");
-            ZDO_IEEE_ADDR_REQ_SRSP response = (ZDO_IEEE_ADDR_REQ_SRSP) sendSynchrouns(commandInterface,
-                    new ZDO_IEEE_ADDR_REQ(addresses[k], ZDO_IEEE_ADDR_REQ.REQ_TYPE.EXTENDED.getValue(), 0));
-            if (response == null || response.Status != 0) {
-                logger.trace("ZDO_IEEE_ADDR_REQ failed, received {}", response);
-                waiter.cleanup();
-            } else {
-                responseA4 = (ZDO_IEEE_ADDR_RSP) waiter.getCommand(TIMEOUT);
-            }
-
-            if (responseA4 != null) {
-                longAddresses[k] = responseA4.getIeeeAddress();
-            } else {
-                longAddresses[k] = null;
-            }
-        }
-        // ---------ZDO MGMT LEAVE
-        logger.debug("Reset seq: Trying LEAVE");
-        long start = System.currentTimeMillis();
-        for (int k = 0; k < longAddresses.length; k++) {
-            if (longAddresses[k] != null) {
-                BlockingCommandReceiver waiter3 = new BlockingCommandReceiver(ZToolCMD.ZDO_MGMT_LEAVE_RSP,
-                        commandInterface);
-
-                ZDO_MGMT_LEAVE_REQ_SRSP response = (ZDO_MGMT_LEAVE_REQ_SRSP) sendSynchrouns(commandInterface,
-                        new ZDO_MGMT_LEAVE_REQ(addresses[k], longAddresses[k], 0));
-                if (response == null) {
-                    logger.error("Leave request time out.");
-                    return false;
-                }
-                if (response.Status != 0) {
-                    waiter3.cleanup();
-                    logger.error("Leave SRSP error status: " + response.Status);
-                    return false;
-                }
-                ZDO_MGMT_LEAVE_RSP responseA5 = (ZDO_MGMT_LEAVE_RSP) waiter3.getCommand(TIMEOUT);
-                if (responseA5 == null) {
-                    logger.error("Leave request got no RSP.");
-                    return false;
-                }
-                if (responseA5.Status != 0) {
-                    logger.error("Leave request RSP error status: " + responseA5.Status);
-                    return false;
-                }
-            }
-            if ((System.currentTimeMillis() - start) > TIMEOUT) {
-                logger.error("Reset seq: Failed LEAVE");
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**
@@ -864,27 +632,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
     }
 
-    @Override
-    public ZDO_SIMPLE_DESC_RSP sendZDOSimpleDescriptionRequest(ZDO_SIMPLE_DESC_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_SIMPLE_DESC_RSP result = null;
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_SIMPLE_DESC_RSP,
-                commandInterface);
-
-        ZDO_SIMPLE_DESC_REQ_SRSP response = (ZDO_SIMPLE_DESC_REQ_SRSP) sendSynchrouns(commandInterface, request);
-        if (response == null || response.Status != 0) {
-            waiter.cleanup();
-        } else {
-            result = (ZDO_SIMPLE_DESC_RSP) waiter.getCommand(TIMEOUT);
-        }
-
-        unLock3WayConversation(request);
-        return result;
-    }
-
     private boolean bootloaderGetOut(int magicByte) {
         final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.SYS_RESET_RESPONSE,
                 commandInterface);
@@ -906,7 +653,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
             return null;
         }
 
-        SYS_VERSION_RESPONSE response = (SYS_VERSION_RESPONSE) sendSynchrouns(commandInterface, new SYS_VERSION());
+        SYS_VERSION_RESPONSE response = (SYS_VERSION_RESPONSE) sendSynchronous(new SYS_VERSION());
         if (response == null) {
             return null;
         } else {
@@ -948,7 +695,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
 
         ZB_WRITE_CONFIGURATION_RSP response;
-        response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchrouns(commandInterface,
+        response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchronous(
                 new ZB_WRITE_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_STARTUP_OPTION, new int[] { mask }));
 
         if (response == null || response.Status != 0) {
@@ -975,7 +722,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
                 new Object[] { Integer.toHexString(channelMask[0]), Integer.toHexString(channelMask[1]),
                         Integer.toHexString(channelMask[2]), Integer.toHexString(channelMask[3]) });
 
-        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchrouns(commandInterface,
+        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchronous(
                 new ZB_WRITE_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_CHANLIST, channelMask));
 
         return response != null && response.Status == 0;
@@ -988,9 +735,8 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     private boolean dongleSetNetworkMode() {
-        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchrouns(commandInterface,
-                new ZB_WRITE_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_LOGICAL_TYPE,
-                        new int[] { mode.ordinal() }));
+        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchronous(new ZB_WRITE_CONFIGURATION(
+                ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_LOGICAL_TYPE, new int[] { mode.ordinal() }));
 
         return response != null && response.Status == 0;
     }
@@ -998,7 +744,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     private boolean dongleSetPanId() {
         currentPanId = -1;
 
-        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchrouns(commandInterface,
+        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchronous(
                 new ZB_WRITE_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_PANID,
                         new int[] { Integers.getByteAsInteger(pan, 0), Integers.getByteAsInteger(pan, 1) }));
 
@@ -1006,9 +752,9 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     private boolean dongleSetExtendedPanId() {
-        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchrouns(commandInterface,
-                new ZB_WRITE_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_EXTPANID, new int[] {
-                        Integers.getByteAsInteger(extendedPanId, 0), Integers.getByteAsInteger(extendedPanId, 1),
+        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchronous(new ZB_WRITE_CONFIGURATION(
+                ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_EXTPANID,
+                new int[] { Integers.getByteAsInteger(extendedPanId, 0), Integers.getByteAsInteger(extendedPanId, 1),
                         Integers.getByteAsInteger(extendedPanId, 2), Integers.getByteAsInteger(extendedPanId, 3),
                         Integers.getByteAsInteger(extendedPanId, 4), Integers.getByteAsInteger(extendedPanId, 5),
                         Integers.getByteAsInteger(extendedPanId, 6), Integers.getByteAsInteger(extendedPanId, 7), }));
@@ -1017,28 +763,25 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     private boolean dongleSetNetworkKey() {
-        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchrouns(commandInterface,
-                new ZB_WRITE_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_PRECFGKEY,
-                        new int[] { networkKey[0], networkKey[1], networkKey[2], networkKey[3], networkKey[4],
-                                networkKey[5], networkKey[6], networkKey[7], networkKey[8], networkKey[9],
-                                networkKey[10], networkKey[11], networkKey[12], networkKey[13], networkKey[14],
-                                networkKey[15] }));
+        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchronous(new ZB_WRITE_CONFIGURATION(
+                ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_PRECFGKEY,
+                new int[] { networkKey[0], networkKey[1], networkKey[2], networkKey[3], networkKey[4], networkKey[5],
+                        networkKey[6], networkKey[7], networkKey[8], networkKey[9], networkKey[10], networkKey[11],
+                        networkKey[12], networkKey[13], networkKey[14], networkKey[15] }));
 
         return response != null && response.Status == 0;
     }
 
     private boolean dongleSetDistributeNetworkKey() {
-        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchrouns(commandInterface,
-                new ZB_WRITE_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_PRECFGKEYS_ENABLE,
-                        new int[] { distributeNetworkKey ? 0 : 1 }));
+        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchronous(new ZB_WRITE_CONFIGURATION(
+                ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_PRECFGKEYS_ENABLE, new int[] { distributeNetworkKey ? 0 : 1 }));
 
         return response != null && response.Status == 0;
     }
 
     private boolean dongleSetSecurityMode() {
-        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchrouns(commandInterface,
-                new ZB_WRITE_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_SECURITY_MODE,
-                        new int[] { securityMode }));
+        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchronous(new ZB_WRITE_CONFIGURATION(
+                ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_SECURITY_MODE, new int[] { securityMode }));
 
         return response != null && response.Status == 0;
     }
@@ -1050,19 +793,14 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
      * @throws ZigBeeException
      */
     public void sendCommand(final ZToolPacket request) throws ZigBeeException {
-        try {
-            commandInterface.sendPacket(request);
-        } catch (IOException e) {
-            throw new ZigBeeException(e);
-        }
+        sendSynchronous(request);
     }
 
-    private ZToolPacket sendSynchrouns(final CommandInterface hwDriver, final ZToolPacket request) {
-        // final int RESEND_TIMEOUT = 1000;
-        return sendSynchrouns(hwDriver, request, RESEND_TIMEOUT);
+    private ZToolPacket sendSynchronous(final ZToolPacket request) {
+        return sendSynchronous(request, RESEND_TIMEOUT);
     }
 
-    private ZToolPacket sendSynchrouns(final CommandInterface hwDriver, final ZToolPacket request, int timeout) {
+    private ZToolPacket sendSynchronous(final ZToolPacket request, int timeout) {
         final ZToolPacket[] response = new ZToolPacket[] { null };
         // final int RESEND_MAX_RETRY = 3;
         int sending = 1;
@@ -1070,7 +808,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         logger.trace("{} sending as synchronous command.", request.getClass().getSimpleName());
 
         SynchronousCommandListener listener = new SynchronousCommandListener() {
-
             @Override
             public void receivedCommandResponse(ZToolPacket packet) {
                 logger.trace(" {} received as synchronous command.", packet.getClass().getSimpleName());
@@ -1085,7 +822,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         while (sending <= RESEND_MAX_RETRY) {
             try {
                 try {
-                    hwDriver.sendSynchronousCommand(request, listener, timeout);
+                    commandInterface.sendSynchronousCommand(request, listener, timeout);
                 } catch (IOException e) {
                     logger.error("Synchronous command send failed due to IO exception. ", e);
                     break;
@@ -1138,7 +875,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
             return null;
         }
 
-        AF_REGISTER_SRSP response = (AF_REGISTER_SRSP) sendSynchrouns(commandInterface, request);
+        AF_REGISTER_SRSP response = (AF_REGISTER_SRSP) sendSynchronous(request);
         return response;
     }
 
@@ -1152,7 +889,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         waitAndLock3WayConversation(request);
         final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.AF_DATA_CONFIRM, commandInterface);
 
-        AF_DATA_SRSP response = (AF_DATA_SRSP) sendSynchrouns(commandInterface, request);
+        AF_DATA_SRSP response = (AF_DATA_SRSP) sendSynchronous(request);
         if (response == null || response.Status != 0) {
             waiter.cleanup();
         } else {
@@ -1172,49 +909,8 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         if (!waitForNetwork()) {
             return null;
         }
-        AF_DATA_SRSP_EXT response = (AF_DATA_SRSP_EXT) sendSynchrouns(commandInterface, request);
+        AF_DATA_SRSP_EXT response = (AF_DATA_SRSP_EXT) sendSynchronous(request);
         return response;
-    }
-
-    @Override
-    public ZDO_BIND_RSP sendZDOBind(ZDO_BIND_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_BIND_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_BIND_RSP, commandInterface);
-
-        ZDO_BIND_REQ_SRSP response = (ZDO_BIND_REQ_SRSP) sendSynchrouns(commandInterface, request);
-        if (response == null || response.Status != 0) {
-            waiter.cleanup();
-        } else {
-            result = (ZDO_BIND_RSP) waiter.getCommand(TIMEOUT);
-        }
-        unLock3WayConversation(request);
-        return result;
-    }
-
-    @Override
-    public ZDO_UNBIND_RSP sendZDOUnbind(ZDO_UNBIND_REQ request) {
-        if (!waitForNetwork()) {
-            return null;
-        }
-        ZDO_UNBIND_RSP result = null;
-
-        waitAndLock3WayConversation(request);
-        final BlockingCommandReceiver waiter = new BlockingCommandReceiver(ZToolCMD.ZDO_UNBIND_RSP, commandInterface);
-
-        ZDO_UNBIND_REQ_SRSP response = (ZDO_UNBIND_REQ_SRSP) sendSynchrouns(commandInterface, request);
-        if (response == null || response.Status != 0) {
-            waiter.cleanup();
-        } else {
-            result = (ZDO_UNBIND_RSP) waiter.getCommand(TIMEOUT);
-        }
-
-        unLock3WayConversation(request);
-        return result;
     }
 
     /**
@@ -1396,8 +1092,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     private int[] getDeviceInfo(int type) {
-        ZB_GET_DEVICE_INFO_RSP response = (ZB_GET_DEVICE_INFO_RSP) sendSynchrouns(commandInterface,
-                new ZB_GET_DEVICE_INFO(type));
+        ZB_GET_DEVICE_INFO_RSP response = (ZB_GET_DEVICE_INFO_RSP) sendSynchronous(new ZB_GET_DEVICE_INFO(type));
 
         if (response == null) {
             logger.warn("Failed getDeviceInfo for {} due to null value", type);
@@ -1413,7 +1108,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
     @Override
     public int getZigBeeNodeMode() {
-        ZB_READ_CONFIGURATION_RSP response = (ZB_READ_CONFIGURATION_RSP) sendSynchrouns(commandInterface,
+        ZB_READ_CONFIGURATION_RSP response = (ZB_READ_CONFIGURATION_RSP) sendSynchronous(
                 new ZB_READ_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_LOGICAL_TYPE));
         if (response != null && response.Status == 0) {
             return response.Value[0];
@@ -1423,7 +1118,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     public byte[] getZigBeeNetworkKey() {
-        ZB_READ_CONFIGURATION_RSP response = (ZB_READ_CONFIGURATION_RSP) sendSynchrouns(commandInterface,
+        ZB_READ_CONFIGURATION_RSP response = (ZB_READ_CONFIGURATION_RSP) sendSynchronous(
                 new ZB_READ_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_PRECFGKEY));
         if (response != null && response.Status == 0) {
             byte[] readNetworkKey = new byte[16];
@@ -1507,7 +1202,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
     private boolean newDevice(AF_REGISTER request) {
         try {
-            AF_REGISTER_SRSP response = (AF_REGISTER_SRSP) sendSynchrouns(commandInterface, request);
+            AF_REGISTER_SRSP response = (AF_REGISTER_SRSP) sendSynchronous(request);
             if (response != null && response.Status == 0) {
                 return true;
             }
@@ -1541,7 +1236,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         public void receivedUnclaimedSynchronousCommandResponse(ZToolPacket packet) {
             // Processing not required
         }
-
     }
 
     private static class AFMessageListenerFilter implements AsynchronousCommandListener {

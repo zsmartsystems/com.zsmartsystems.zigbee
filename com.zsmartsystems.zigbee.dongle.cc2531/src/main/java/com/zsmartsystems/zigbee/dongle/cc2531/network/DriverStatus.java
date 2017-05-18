@@ -20,7 +20,7 @@
    limitations under the License.
 */
 
-package com.zsmartsystems.zigbee.dongle.cc2531.network.model;
+package com.zsmartsystems.zigbee.dongle.cc2531.network;
 
 /**
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi - ISTI-CNR

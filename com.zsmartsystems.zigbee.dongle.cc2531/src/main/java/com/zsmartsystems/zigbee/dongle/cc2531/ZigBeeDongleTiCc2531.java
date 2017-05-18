@@ -21,9 +21,9 @@ import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoPowerDescriptor;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoSimpleDescriptor;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.ApplicationFrameworkMessageListener;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.AsynchronousCommandListener;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.DriverStatus;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.NetworkMode;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.ZigBeeNetworkManagerImpl;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.model.DriverStatus;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.model.NetworkMode;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST;
@@ -530,7 +530,7 @@ public class ZigBeeDongleTiCc2531
          * // final ZDO_STATE_CHANGE_IND message = (ZDO_STATE_CHANGE_IND) packet;
          * // }
          */
-        logger.debug("ZToolPacket packet not processed", packet);
+        logger.debug("ZToolPacket packet not processed: {}", packet);
 
     }
 

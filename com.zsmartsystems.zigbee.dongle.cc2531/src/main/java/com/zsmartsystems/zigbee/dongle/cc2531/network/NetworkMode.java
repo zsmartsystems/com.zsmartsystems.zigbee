@@ -20,27 +20,14 @@
    limitations under the License.
 */
 
-package com.zsmartsystems.zigbee.dongle.cc2531.network.impl;
-
-import com.zsmartsystems.zigbee.ZigBeeException;
+package com.zsmartsystems.zigbee.dongle.cc2531.network;
 
 /**
- * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
- * @author <a href="mailto:francesco.furfari@isti.cnr.it">Francesco Furfari</a>
+ * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi - ISTI-CNR
  */
-public class ZigBeeNetworkManagerException extends ZigBeeException {
+public enum NetworkMode {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5796422580644820380L;
-
-    public ZigBeeNetworkManagerException(String msg) {
-        super(msg);
-    }
-
-    public ZigBeeNetworkManagerException(Throwable ex) {
-        super(ex);
-    }
-
+    Coordinator,
+    Router,
+    EndDevice;
 }

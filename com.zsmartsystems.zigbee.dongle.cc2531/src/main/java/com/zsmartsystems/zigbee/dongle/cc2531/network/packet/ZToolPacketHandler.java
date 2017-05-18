@@ -46,5 +46,4 @@ public interface ZToolPacketHandler {
      * @param th
      */
     public void error(Throwable th);
-
 }

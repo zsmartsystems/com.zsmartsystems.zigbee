@@ -29,7 +29,7 @@ public class BlockingCommandReceiver implements AsynchronousCommandListener {
     /**
      * The logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(BlockingCommandReceiver.class);
+    private static final Logger logger = LoggerFactory.getLogger(BlockingCommandReceiver.class);
 
     /**
      * The command interface.
@@ -54,7 +54,7 @@ public class BlockingCommandReceiver implements AsynchronousCommandListener {
     public BlockingCommandReceiver(int commandId, CommandInterface commandInterface) {
         this.commandId = commandId;
         this.commandInterface = commandInterface;
-        LOGGER.trace("Waiting for asynchronous response message {}.", commandId);
+        logger.trace("Waiting for asynchronous response message {}.", commandId);
         commandInterface.addAsynchronousCommandListener(this);
     }
 
@@ -71,12 +71,12 @@ public class BlockingCommandReceiver implements AsynchronousCommandListener {
                 try {
                     this.wait(wakeUpTime - System.currentTimeMillis());
                 } catch (InterruptedException e) {
-                    LOGGER.trace("Blocking command receive timed out.", e);
+                    logger.trace("Blocking command receive timed out.", e);
                 }
             }
         }
         if (commandPacket == null) {
-            LOGGER.trace("Timeout {} expired and no packet with {} received", timeoutMillis, commandId);
+            logger.trace("Timeout {} expired and no packet with {} received", timeoutMillis, commandId);
         }
         cleanup();
         return commandPacket;
@@ -94,18 +94,18 @@ public class BlockingCommandReceiver implements AsynchronousCommandListener {
 
     @Override
     public void receivedAsynchronousCommand(ZToolPacket packet) {
-        LOGGER.trace("Received a packet {} and waiting for {}", packet.getCMD().get16BitValue(), commandId);
-        LOGGER.trace("received {} {}", packet.getClass(), packet.toString());
+        logger.trace("Received a packet {} and waiting for {}", packet.getCMD().get16BitValue(), commandId);
+        logger.trace("received {} {}", packet.getClass(), packet.toString());
         if (packet.isError()) {
             return;
         }
         if (packet.getCMD().get16BitValue() != commandId) {
-            LOGGER.trace("Received unexpected packet: " + packet.getClass().getSimpleName());
+            logger.trace("Received unexpected packet: " + packet.getClass().getSimpleName());
             return;
         }
         synchronized (this) {
             commandPacket = packet;
-            LOGGER.trace("Received expected response: {}", packet.getClass().getSimpleName());
+            logger.trace("Received expected response: {}", packet.getClass().getSimpleName());
             cleanup();
         }
     }

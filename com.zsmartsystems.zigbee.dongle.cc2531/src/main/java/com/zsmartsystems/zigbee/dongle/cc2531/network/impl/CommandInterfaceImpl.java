@@ -260,7 +260,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
                 synchronousCommandListeners.put(id, listener);
             }
         }
-        logger.trace("Sending SynchrounsCommand {} ", packet);
+        logger.trace("Sending SynchronousCommand {} ", packet);
         sendPacket(packet);
     }
 
