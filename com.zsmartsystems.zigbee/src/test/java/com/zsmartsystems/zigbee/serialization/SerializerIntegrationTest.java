@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -75,8 +76,14 @@ public class SerializerIntegrationTest {
 
     @Test
     public void testSerialize_IEEE_ADDRESS() {
-        IeeeAddress valIn = new IeeeAddress(Long.parseLong("1234567890123456", 16));
+        IeeeAddress valIn = new IeeeAddress("1234567890123456");
         testSerializer(valIn, ZclDataType.IEEE_ADDRESS);
+    }
+
+    @Test
+    public void testSerialize_EXTENDED_PANID() {
+        ExtendedPanId valIn = new ExtendedPanId("1234567890123456");
+        testSerializer(valIn, ZclDataType.EXTENDED_PANID);
     }
 
     @Test

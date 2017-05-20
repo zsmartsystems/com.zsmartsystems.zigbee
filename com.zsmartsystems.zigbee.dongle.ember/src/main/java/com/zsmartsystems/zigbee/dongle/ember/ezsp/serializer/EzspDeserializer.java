@@ -78,10 +78,10 @@ public class EzspDeserializer {
      * @return value read from input
      */
     public IeeeAddress deserializeEmberEui64() {
-        long address = buffer[position++] + ((long) buffer[position++] << 8) + ((long) buffer[position++] << 16)
-                + ((long) buffer[position++] << 24) + ((long) buffer[position++] << 32)
-                + ((long) buffer[position++] << 40) + ((long) buffer[position++] << 48)
-                + ((long) buffer[position++] << 56);
+        int address[] = new int[8];
+        for (int cnt = 0; cnt < 8; cnt++) {
+            address[cnt] = buffer[position++];
+        }
         return new IeeeAddress(address);
     }
 

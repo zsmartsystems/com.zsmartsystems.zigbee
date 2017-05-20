@@ -7,8 +7,9 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * Future implementation for asynchronous methods.
- * 
+ *
  * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
 public class CommandResultFuture implements Future<CommandResult> {
 
@@ -21,6 +22,7 @@ public class CommandResultFuture implements Future<CommandResult> {
      * The command execution.
      */
     private CommandExecution commandExecution;
+
     /**
      * The result.
      */
@@ -70,16 +72,10 @@ public class CommandResultFuture implements Future<CommandResult> {
 
     @Override
     public CommandResult get() throws InterruptedException, ExecutionException {
-        synchronized (this) {
-            if (result != null) {
-                return result;
-            }
-            this.wait(10000);
-            if (result == null) {
-                set(new CommandResult());
-                networkManager.removeCommandExecution(commandExecution);
-            }
-            return result;
+        try {
+            return get(10000, TimeUnit.MILLISECONDS);
+        } catch (TimeoutException e) {
+            return null;
         }
     }
 

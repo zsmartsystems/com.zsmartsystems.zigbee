@@ -7,6 +7,7 @@ import com.zsmartsystems.zigbee.zcl.field.*;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.descriptors.*;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ExtendedPanId;
 
 /**
  * Code is auto-generated. Modifications may be overwritten!
@@ -42,6 +43,7 @@ public enum ZclDataType {
     UNSIGNED_32_BIT_INTEGER("Unsigned 32-bit integer", Integer.class, 0x23, true),
     UNSIGNED_8_BIT_INTEGER("Unsigned 8-bit integer", Integer.class, 0x20, true),
     UTCTIME("UTCTime", Calendar.class, 0xE2, true),
+    EXTENDED_PANID("EXTENDED_PANID", ExtendedPanId.class, 0x00, false),
     BITMAP_32_BIT("Bitmap 32-bit", Integer.class, 0x1B, false),
     CLUSTERID("ClusterId", Integer.class, 0x00, false),
     COMPLEX_DESCRIPTOR("Complex Descriptor", ComplexDescriptor.class, 0x00, false),

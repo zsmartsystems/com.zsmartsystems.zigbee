@@ -265,7 +265,7 @@ public class EmberNetworkInitialisation {
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_REQUIRE_ENCRYPTED_KEY);
         state.setNetworkKey(networkKey);
         state.setPreconfiguredKey(linkKey);
-        state.setPreconfiguredTrustCenterEui64(new IeeeAddress(0));
+        state.setPreconfiguredTrustCenterEui64(new IeeeAddress());
         securityState.setState(state);
         EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(securityState,
                 EzspSetInitialSecurityStateResponse.class);

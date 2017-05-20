@@ -1,5 +1,7 @@
 package com.zsmartsystems.zigbee;
 
+import java.math.BigInteger;
+import java.security.InvalidParameterException;
 import java.util.Objects;
 
 /**
@@ -9,15 +11,33 @@ import java.util.Objects;
  *
  */
 public class IeeeAddress {
-    private long address;
+    private int[] address;
 
     /**
-     * Create an {@link IeeeAddress} from a {@link Long}
-     *
-     * @param address the address as a {@link Long}
+     * Default constructor. Creates an address 0
      */
-    public IeeeAddress(long address) {
-        this.address = address;
+    public IeeeAddress() {
+        this.address = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+    }
+
+    /**
+     * Create an {@link IeeeAddress} from a {@link BigInteger}
+     *
+     * @param address the address as a {@link BigInteger}
+     */
+    public IeeeAddress(BigInteger address) {
+        this.address = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+        long longVal = address.longValue();
+
+        this.address[0] = (int) (longVal & 0xff);
+        this.address[1] = (int) ((longVal >> 8) & 0xff);
+        this.address[2] = (int) ((longVal >> 16) & 0xff);
+        this.address[3] = (int) ((longVal >> 24) & 0xff);
+        this.address[4] = (int) ((longVal >> 32) & 0xff);
+        this.address[5] = (int) ((longVal >> 40) & 0xff);
+        this.address[6] = (int) ((longVal >> 48) & 0xff);
+        this.address[7] = (int) ((longVal >> 56) & 0xff);
     }
 
     /**
@@ -26,16 +46,39 @@ public class IeeeAddress {
      * @param address the address as a {@link String}
      */
     public IeeeAddress(String address) {
-        this.address = Long.parseLong(address, 16);
+        this(new BigInteger(address, 16));
     }
 
-    public long getLong() {
+    /**
+     * Create an {@link IeeeAddress} from an int array
+     *
+     * @param address the address as an int array. Array length must be 8.
+     * @throws InvalidParameterException
+     */
+    public IeeeAddress(int[] address) {
+        if (address.length != 8) {
+            throw new InvalidParameterException("IeeeAddress array length must be 8");
+        }
+        this.address = address;
+    }
+
+    // public long getLong() {
+    // return address;
+    // }
+
+    /**
+     * Gets the IeeeAddress as an integer array with length 8
+     *
+     * @return int array of address
+     */
+    public int[] getValue() {
         return address;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(address);
+        return Objects.hash(address[0], address[1], address[2], address[3], address[4], address[5], address[6],
+                address[7]);
     }
 
     @Override
@@ -47,11 +90,22 @@ public class IeeeAddress {
             return false;
         }
         final IeeeAddress other = (IeeeAddress) obj;
-        return (other.getLong() == address) ? true : false;
+        for (int cnt = 0; cnt < 8; cnt++) {
+            if (other.getValue()[cnt] != address[cnt]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return String.format("%016X", address);
+        StringBuilder builder = new StringBuilder();
+
+        for (int cnt = 7; cnt >= 0; cnt--) {
+            builder.append(String.format("%02X", address[cnt]));
+        }
+
+        return builder.toString();
     }
 }

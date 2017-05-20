@@ -31,7 +31,7 @@ public class EzspGetNeighborResponseTest extends EzspFrameTest {
         assertEquals(1, neighbor.getOutCost());
         assertEquals(29342, neighbor.getShortId());
         assertEquals(29342, neighbor.getShortId());
-        assertEquals(new IeeeAddress(0x000D6F00056B43CCl), neighbor.getLongId());
+        assertEquals(new IeeeAddress("000D6F00056B43CC"), neighbor.getLongId());
         assertEquals(3, neighbor.getAge());
     }
 }
