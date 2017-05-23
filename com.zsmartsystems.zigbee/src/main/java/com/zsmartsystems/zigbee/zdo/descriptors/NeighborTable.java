@@ -2,6 +2,7 @@ package com.zsmartsystems.zigbee.zdo.descriptors;
 
 import java.util.Objects;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -15,7 +16,7 @@ import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.LogicalType;
  */
 public class NeighborTable {
 
-    private Long extendedPanId;
+    private ExtendedPanId extendedPanId;
 
     private IeeeAddress extendedAddress;
 
@@ -60,7 +61,7 @@ public class NeighborTable {
      */
     public void deserialize(ZigBeeDeserializer deserializer) {
         // Deserialize the fields
-        extendedPanId = ((IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS)).getLong();
+        extendedPanId = (ExtendedPanId) deserializer.readZigBeeType(ZclDataType.EXTENDED_PANID);
         extendedAddress = (IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
         networkAddress = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
 
@@ -75,7 +76,7 @@ public class NeighborTable {
         lqi = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
-    public Long getExtendedPanId() {
+    public ExtendedPanId getExtendedPanId() {
         return extendedPanId;
     }
 
@@ -202,10 +203,10 @@ public class NeighborTable {
 
     @Override
     public String toString() {
-        return "NeighborTable [extendedPanId=" + String.format("%08X", extendedPanId) + ", extendedAddress="
-                + extendedAddress + ", networkAddress=" + networkAddress + ", deviceType=" + deviceType
-                + ", rxOnWhenIdle=" + rxOnWhenIdle + ", relationship=" + relationship + ", permitJoining="
-                + permitJoining + ", depth=" + depth + ", lqi=" + lqi + "]";
+        return "NeighborTable [extendedPanId=" + extendedPanId + ", extendedAddress=" + extendedAddress
+                + ", networkAddress=" + networkAddress + ", deviceType=" + deviceType + ", rxOnWhenIdle=" + rxOnWhenIdle
+                + ", relationship=" + relationship + ", permitJoining=" + permitJoining + ", depth=" + depth + ", lqi="
+                + lqi + "]";
     }
 
 }

@@ -33,7 +33,7 @@ public class ZigBeeDevice implements CommandListener {
     /**
      * The IEEE address.
      */
-    private IeeeAddress ieeeAddress = new IeeeAddress(0);
+    private IeeeAddress ieeeAddress = new IeeeAddress();
     /**
      * The network address.
      */

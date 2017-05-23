@@ -81,6 +81,7 @@ public class ZclDataType {
         dataTypeMapping.put("OCTET_STRING", new DataTypeMap("String", 0x41, -1, false));
         dataTypeMapping.put("UTCTIME", new DataTypeMap("Calendar", 0xe2, 4, true, 0xffffffff));
         dataTypeMapping.put("ZDO_STATUS", new DataTypeMap("ZdoStatus", 0, 0, false));
+        dataTypeMapping.put("EXTENDED_PANID", new DataTypeMap("ExtendedPanId", 0, 0, false));
     };
 
     public static Map<String, DataTypeMap> getDataTypeMapping() {

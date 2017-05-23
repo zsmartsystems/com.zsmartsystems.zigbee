@@ -2317,7 +2317,7 @@ public final class ZigBeeConsole {
                 value = Integer.parseInt(stringValue);
                 break;
             case IEEE_ADDRESS:
-                value = new IeeeAddress(Long.parseLong(stringValue));
+                value = new IeeeAddress(stringValue);
                 break;
             // case LONG_CHARACTER_STRING:
             // value = stringValue;

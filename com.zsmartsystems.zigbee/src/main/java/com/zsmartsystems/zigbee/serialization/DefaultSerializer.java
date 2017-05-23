@@ -3,6 +3,7 @@ package com.zsmartsystems.zigbee.serialization;
 import java.util.Arrays;
 import java.util.List;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -51,16 +52,27 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 final byte byteValue = ((Number) data).byteValue();
                 buffer[length++] = byteValue & 0xFF;
                 break;
+            case EXTENDED_PANID:
+                int[] panId = ((ExtendedPanId) data).getValue();
+                buffer[length++] = panId[0];
+                buffer[length++] = panId[1];
+                buffer[length++] = panId[2];
+                buffer[length++] = panId[3];
+                buffer[length++] = panId[4];
+                buffer[length++] = panId[5];
+                buffer[length++] = panId[6];
+                buffer[length++] = panId[7];
+                break;
             case IEEE_ADDRESS:
-                long longVal = ((IeeeAddress) data).getLong();
-                buffer[length++] = (int) (longVal & 0xFF);
-                buffer[length++] = (int) ((longVal >> 8) & 0xFF);
-                buffer[length++] = (int) ((longVal >> 16) & 0xFF);
-                buffer[length++] = (int) ((longVal >> 24) & 0xFF);
-                buffer[length++] = (int) ((longVal >> 32) & 0xFF);
-                buffer[length++] = (int) ((longVal >> 40) & 0xFF);
-                buffer[length++] = (int) ((longVal >> 48) & 0xFF);
-                buffer[length++] = (int) ((longVal >> 56) & 0xFF);
+                int[] address = ((IeeeAddress) data).getValue();
+                buffer[length++] = address[0];
+                buffer[length++] = address[1];
+                buffer[length++] = address[2];
+                buffer[length++] = address[3];
+                buffer[length++] = address[4];
+                buffer[length++] = address[5];
+                buffer[length++] = address[6];
+                buffer[length++] = address[7];
                 break;
             case N_X_ATTRIBUTE_IDENTIFIER:
                 break;

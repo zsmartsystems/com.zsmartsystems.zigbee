@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -31,8 +31,15 @@ public class DefaultDeserializerTest {
     @Test
     public void testDeserialize_IEEE_ADDRESS() {
         int[] valIn = { 0x56, 0x34, 0x12, 0x90, 0x78, 0x56, 0x34, 0x12 };
-        IeeeAddress valOut = new IeeeAddress(Long.parseLong("1234567890123456", 16));
+        IeeeAddress valOut = new IeeeAddress("1234567890123456");
         testDeserialize(valIn, valOut, ZclDataType.IEEE_ADDRESS);
+    }
+
+    @Test
+    public void testDeserialize_EXTENDED_PANID() {
+        int[] valIn = { 0x56, 0x34, 0x12, 0x90, 0x78, 0x56, 0x34, 0x12 };
+        ExtendedPanId valOut = new ExtendedPanId("1234567890123456");
+        testDeserialize(valIn, valOut, ZclDataType.EXTENDED_PANID);
     }
 
     private void testDeserialize(int[] input, Object objectIn, ZclDataType type) {

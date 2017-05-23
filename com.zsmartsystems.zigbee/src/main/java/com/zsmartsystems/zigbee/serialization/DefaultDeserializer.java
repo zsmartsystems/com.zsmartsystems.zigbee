@@ -3,6 +3,7 @@ package com.zsmartsystems.zigbee.serialization;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -68,14 +69,21 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
             case ENUMERATION_8_BIT:
                 value[0] = Integer.valueOf((byte) payload[index++] & 0xFF);
                 break;
-            case IEEE_ADDRESS:
-                long result = 0;
+            case EXTENDED_PANID:
+                int[] panId = new int[8];
                 for (int i = 7; i >= 0; i--) {
-                    result <<= 8;
-                    result |= (payload[index + i] & 0xFF);
+                    panId[i] = payload[index + i];
                 }
                 index += 8;
-                value[0] = new IeeeAddress(result);
+                value[0] = new ExtendedPanId(panId);
+                break;
+            case IEEE_ADDRESS:
+                int[] address = new int[8];
+                for (int i = 7; i >= 0; i--) {
+                    address[i] = payload[index + i];
+                }
+                index += 8;
+                value[0] = new IeeeAddress(address);
                 break;
             case N_X_ATTRIBUTE_IDENTIFIER:
                 break;

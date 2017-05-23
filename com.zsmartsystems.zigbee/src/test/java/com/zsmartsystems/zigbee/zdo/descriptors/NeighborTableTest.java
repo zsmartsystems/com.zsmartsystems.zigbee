@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.CommandTest;
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable.NeighborTableJoining;
@@ -34,7 +35,7 @@ public class NeighborTableTest extends CommandTest {
 
         assertEquals(LogicalType.ROUTER, neighbor.getDeviceType());
         assertEquals(new IeeeAddress("001FEE0000000686"), neighbor.getExtendedAddress());
-        assertEquals(Long.valueOf(0x3ADE68B1), neighbor.getExtendedPanId());
+        assertEquals(new ExtendedPanId("3ADE68B1"), neighbor.getExtendedPanId());
         assertEquals(NeighborTableRelationship.SIBLING, neighbor.getRelationship());
         assertEquals(Integer.valueOf(17577), neighbor.getNetworkAddress());
         assertEquals(NeighborTableJoining.UNKNOWN, neighbor.getPermitJoining());
@@ -62,7 +63,6 @@ public class NeighborTableTest extends CommandTest {
         } catch (IllegalAccessException | IllegalArgumentException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-
         } catch (SecurityException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -87,6 +87,5 @@ public class NeighborTableTest extends CommandTest {
         assertTrue(neighbor1.equals(neighbor2));
         assertFalse(neighbor1.equals(neighbor3));
         assertFalse(neighbor3.equals(neighbor4));
-
     }
 }

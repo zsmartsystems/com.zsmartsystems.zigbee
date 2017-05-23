@@ -94,16 +94,14 @@ public class EzspSerializer {
     }
 
     public void serializeEmberEui64(IeeeAddress address) {
-        long val = address.getLong();
-
-        buffer[length++] = (int) (val & 0xFF);
-        buffer[length++] = (int) ((val >> 8) & 0xFF);
-        buffer[length++] = (int) ((val >> 16) & 0xFF);
-        buffer[length++] = (int) ((val >> 24) & 0xFF);
-        buffer[length++] = (int) ((val >> 32) & 0xFF);
-        buffer[length++] = (int) ((val >> 40) & 0xFF);
-        buffer[length++] = (int) ((val >> 48) & 0xFF);
-        buffer[length++] = (int) ((val >> 56) & 0xFF);
+        buffer[length++] = address.getValue()[0];
+        buffer[length++] = address.getValue()[1];
+        buffer[length++] = address.getValue()[2];
+        buffer[length++] = address.getValue()[3];
+        buffer[length++] = address.getValue()[4];
+        buffer[length++] = address.getValue()[5];
+        buffer[length++] = address.getValue()[6];
+        buffer[length++] = address.getValue()[7];
     }
 
     public void serializeEmberNetworkParameters(EmberNetworkParameters networkParameters) {
