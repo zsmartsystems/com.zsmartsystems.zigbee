@@ -328,6 +328,13 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
             return false;
         }
 
+        ZB_WRITE_CONFIGURATION_RSP responseCfg;
+        responseCfg = (ZB_WRITE_CONFIGURATION_RSP) sendSynchronous(
+                new ZB_WRITE_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_ZDO_DIRECT_CB, new int[] { 1 }));
+        if (responseCfg == null) {
+            return false;
+        }
+
         final int instantStartup = 0;
 
         ZDO_STARTUP_FROM_APP_SRSP response = (ZDO_STARTUP_FROM_APP_SRSP) sendSynchronous(
