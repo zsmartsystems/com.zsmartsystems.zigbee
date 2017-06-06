@@ -75,7 +75,14 @@ public class AshFrameHandler {
     private int ackNum = 0;
     private int frmNum = 0;
 
-    private final Queue<AshFrameData> sendQueue = new LinkedList<AshFrameData>();
+    /**
+     * The queue of {@link EzspFrameRequest} frames waiting to be sent
+     */
+    private final Queue<EzspFrameRequest> sendQueue = new LinkedList<EzspFrameRequest>();
+
+    /**
+     * The queue of {@link AshFrameData} frames that we have sent. These are kept in case a resend is required.
+     */
     private final Queue<AshFrameData> sentQueue = new LinkedList<AshFrameData>();
 
     private final Timer timer = new Timer();
@@ -159,7 +166,7 @@ public class AshFrameHandler {
                                     // Send a NAK
                                     responseFrame = new AshFrameNak(ackNum);
                                 } else {
-                                    logger.debug("<-- RX ASH frame: {}", packet.toString());
+                                    // logger.debug("<-- RX ASH frame: {}", packet.toString());
 
                                     // Reset the exception counter
                                     exceptionCnt = 0;
@@ -180,14 +187,12 @@ public class AshFrameHandler {
                                                 // Get the EZSP frame
                                                 EzspFrameResponse response = EzspFrame
                                                         .createHandler((AshFrameData) packet);
-                                                logger.debug("RX EZSP frame: " + response);
+                                                logger.debug("RX EZSP: " + response);
                                                 if (response == null) {
                                                     logger.debug("No frame handler created for {}", packet);
                                                 } else if (response != null && !notifyTransactionComplete(response)) {
-                                                    // No transactions owned this
-                                                    // response, so we pass it to
-                                                    // our unhandled response
-                                                    // handler
+                                                    // No transactions owned this response, so we pass it to
+                                                    // our unhandled response handler
                                                     EzspFrame ezspFrame = EzspFrame
                                                             .createHandler(((AshFrameData) packet));
                                                     if (ezspFrame != null) {
@@ -308,17 +313,21 @@ public class AshFrameHandler {
 
         // Check how many frames are outstanding
         if (sentQueue.size() >= TX_WINDOW) {
-            logger.debug("Sent queue larger than window [{} > {}].", sentQueue.size(), TX_WINDOW);
+            logger.trace("Sent queue larger than window [{} > {}].", sentQueue.size(), TX_WINDOW);
             return;
         }
 
-        AshFrame nextFrame = sendQueue.poll();
+        EzspFrameRequest nextFrame = sendQueue.poll();
         if (nextFrame == null) {
             // Nothing to send
             return;
         }
 
-        sendFrame(nextFrame);
+        // Encapsulate the EZSP frame into the ASH packet
+        logger.debug("TX EZSP: {}", nextFrame);
+        AshFrameData ashFrame = new AshFrameData(nextFrame);
+
+        sendFrame(ashFrame);
     }
 
     private void sendFrame(AshFrame ashFrame) {
@@ -362,7 +371,7 @@ public class AshFrameHandler {
         }
 
         // logger.debug(result.toString());
-        logger.debug("--> TX ASH frame: {}", ashFrame);
+        // logger.debug("--> TX ASH frame: {}", ashFrame);
 
         // Only start the timer for data frames
         if (ashFrame instanceof AshFrameData) {
@@ -380,13 +389,9 @@ public class AshFrameHandler {
      *            {@link EzspFrameRequest}
      */
     public void queueFrame(EzspFrameRequest request) {
-        logger.debug("TX EZSP frame: {}", request);
+        sendQueue.add(request);
 
-        // Encapsulate the EZSP frame into the ASH packet
-        AshFrameData ashFrame = new AshFrameData(request);
-        sendQueue.add(ashFrame);
-
-        logger.debug("TX EZSP queue: {}", sendQueue.size());
+        // logger.debug("TX EZSP queue: {}", sendQueue.size());
 
         sendNextFrame();
     }
@@ -434,7 +439,7 @@ public class AshFrameHandler {
             if (sentQueue.poll() == null) {
                 logger.debug("Error: nothing to remove from sent queue [{} -- {}]", this.ackNum, ackNum);
             }
-            logger.debug("Frame acked and removed");
+            logger.trace("Frame acked and removed");
         }
     }
 

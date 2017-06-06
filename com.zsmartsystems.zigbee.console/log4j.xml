@@ -18,25 +18,19 @@
             <param name="ConversionPattern" value="%d{HH:mm:ss.SSS}  %-5p  %m%n"/>
         </layout>
     </appender>
-
-    <appender class="org.apache.log4j.DailyRollingFileAppender" name="PacketLogFile">
-        <param name="File" value="packet.log" />
+    
+    <appender class="org.apache.log4j.DailyRollingFileAppender" name="EzspFile">
+        <param name="File" value="ezsp.log" />
         <param name="DatePattern" value="'.'yyyy-MM-dd" />
-        <param name="Threshold" value="trace" />
+        <param name="Threshold" value="debug" />
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS}%m%n"/>
+            <param name="ConversionPattern" value="%d{HH:mm:ss.SSS}  %-5p  %m%n"/>
         </layout>
     </appender>
 
-    <logger additivity="false" name="com.zsmartsystems.zigbee.network.port.PacketLogger">
-        <level value="trace"/>
-        <appender-ref ref="PacketLogFile" />
-    </logger>
-
-    <logger additivity="true" name="com.zsmartsystems.zigbee">
+    <logger additivity="true" name="com.zsmartsystems.zigbee.dongle.ember.ash">
         <level value="debug"/>
-        <appender-ref ref="StdOut" />
-        <appender-ref ref="RollingFile" />
+        <appender-ref ref="EzspFile" />
     </logger>
 
     <!-- Set the commons logging that the XML parser uses to WARN -->
