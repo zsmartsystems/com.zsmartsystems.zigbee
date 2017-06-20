@@ -26,7 +26,7 @@ public class ExtendedPanId {
      * @param panId the panId as a {@link BigInteger}
      */
     public ExtendedPanId(BigInteger panId) {
-        this.panId = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+        this.panId = new int[8];
 
         long longVal = panId.longValue();
 
@@ -56,6 +56,10 @@ public class ExtendedPanId {
      * @throws InvalidParameterException
      */
     public ExtendedPanId(int[] panId) {
+        if (panId == null) {
+            this.panId = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+            return;
+        }
         if (panId.length != 8) {
             throw new InvalidParameterException("ExtendedPanId array length must be 8");
         }
@@ -69,6 +73,31 @@ public class ExtendedPanId {
      */
     public int[] getValue() {
         return panId;
+    }
+
+    /**
+     * Check if the ExtendedPanId is valid. This checks the length of the ID, and checks
+     * it is not 0000000000000000 of FFFFFFFFFFFFFFFF.
+     *
+     * @return true if the extended PAN ID is valid
+     */
+    public boolean isValid() {
+        if (panId == null || panId.length != 8) {
+            return false;
+        }
+
+        int cnt0 = 0;
+        int cntF = 0;
+        for (int val : panId) {
+            if (val == 0x00) {
+                cnt0++;
+            }
+            if (val == 0xFF) {
+                cntF++;
+            }
+        }
+
+        return !(cnt0 == 8 || cntF == 8);
     }
 
     @Override

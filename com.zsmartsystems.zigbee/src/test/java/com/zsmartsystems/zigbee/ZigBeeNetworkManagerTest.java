@@ -295,8 +295,9 @@ public class ZigBeeNetworkManagerTest
     public void testSetExtendedPanId() {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
-        assertTrue(networkManager.setZigBeeExtendedPanId(10));
-        assertEquals(1L, networkManager.getZigBeeExtendedPanId());
+        ExtendedPanId panId = new ExtendedPanId("1");
+        assertTrue(networkManager.setZigBeeExtendedPanId(panId));
+        assertEquals(new ExtendedPanId("1"), networkManager.getZigBeeExtendedPanId());
     }
 
     private ZigBeeNetworkManager mockZigBeeNetworkManager() {
@@ -327,11 +328,11 @@ public class ZigBeeNetworkManagerTest
 
         Mockito.when(mockedTransport.setZigBeeChannel(Matchers.anyInt())).thenReturn(true);
         Mockito.when(mockedTransport.setZigBeePanId(Matchers.anyInt())).thenReturn(true);
-        Mockito.when(mockedTransport.setZigBeeExtendedPanId(Matchers.anyLong())).thenReturn(true);
+        Mockito.when(mockedTransport.setZigBeeExtendedPanId((ExtendedPanId) Matchers.anyObject())).thenReturn(true);
 
         Mockito.when(mockedTransport.getZigBeePanId()).thenReturn(999);
         Mockito.when(mockedTransport.getZigBeeChannel()).thenReturn(11);
-        Mockito.when(mockedTransport.getZigBeeExtendedPanId()).thenReturn(1L);
+        Mockito.when(mockedTransport.getZigBeeExtendedPanId()).thenReturn(new ExtendedPanId("1"));
 
         mockedApsFrameListener = ArgumentCaptor.forClass(ZigBeeApsFrame.class);
 

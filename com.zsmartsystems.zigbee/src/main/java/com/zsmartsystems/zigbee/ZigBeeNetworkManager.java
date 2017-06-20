@@ -323,7 +323,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      *
      * @return the PAN ID
      */
-    public long getZigBeeExtendedPanId() {
+    public ExtendedPanId getZigBeeExtendedPanId() {
         return transport.getZigBeeExtendedPanId();
     }
 
@@ -333,10 +333,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Note that this method may only be called following the {@link #initialize} call, and before the {@link #startup}
      * call.
      *
-     * @param panId the new PAN ID
+     * @param panId the new {@link ExtendedPanId}
      * @return true if the PAN Id was set correctly
      */
-    public boolean setZigBeeExtendedPanId(long panId) {
+    public boolean setZigBeeExtendedPanId(ExtendedPanId panId) {
         return transport.setZigBeeExtendedPanId(panId);
     }
 

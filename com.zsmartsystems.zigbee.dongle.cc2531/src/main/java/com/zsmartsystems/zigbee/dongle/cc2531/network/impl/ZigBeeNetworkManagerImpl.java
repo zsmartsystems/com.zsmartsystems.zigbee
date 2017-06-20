@@ -29,6 +29,7 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.ApplicationFrameworkMessageListener;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.AsynchronousCommandListener;
@@ -123,7 +124,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     private NetworkMode mode;
     private int pan = AUTO_PANID;
     private int channel;
-    private long extendedPanId; // do not initialize to use dongle defaults (the IEEE address)
+    private ExtendedPanId extendedPanId; // do not initialize to use dongle defaults (the IEEE address)
     private byte[] networkKey; // 16 byte network key
     private boolean distributeNetworkKey = true; // distribute network key in clear (be careful)
     private int securityMode = 1; // int for future extensibility
@@ -401,7 +402,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         } else {
             logger.trace("PANID set");
         }
-        if (extendedPanId != 0) {
+        if (extendedPanId != null) {
             logger.debug("Setting Extended PAN ID to {}.", String.format("%08X", extendedPanId));
             if (!dongleSetExtendedPanId()) {
                 logger.error("Unable to set EXT_PANID for ZigBee Network");
@@ -516,8 +517,8 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     @Override
-    public boolean setZigBeeExtendedPanId(long extendedPanId) {
-        this.extendedPanId = extendedPanId;
+    public boolean setZigBeeExtendedPanId(ExtendedPanId panId) {
+        this.extendedPanId = panId;
         return dongleSetExtendedPanId();
     }
 
@@ -759,12 +760,8 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     private boolean dongleSetExtendedPanId() {
-        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchronous(new ZB_WRITE_CONFIGURATION(
-                ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_EXTPANID,
-                new int[] { Integers.getByteAsInteger(extendedPanId, 0), Integers.getByteAsInteger(extendedPanId, 1),
-                        Integers.getByteAsInteger(extendedPanId, 2), Integers.getByteAsInteger(extendedPanId, 3),
-                        Integers.getByteAsInteger(extendedPanId, 4), Integers.getByteAsInteger(extendedPanId, 5),
-                        Integers.getByteAsInteger(extendedPanId, 6), Integers.getByteAsInteger(extendedPanId, 7), }));
+        ZB_WRITE_CONFIGURATION_RSP response = (ZB_WRITE_CONFIGURATION_RSP) sendSynchronous(
+                new ZB_WRITE_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_EXTPANID, extendedPanId.getValue()));
 
         return response != null && response.Status == 0;
     }
@@ -1011,19 +1008,19 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
      * @return the PAN ID or -1 on failure
      */
     @Override
-    public long getCurrentExtendedPanId() {
+    public ExtendedPanId getCurrentExtendedPanId() {
         if (!waitForHardware()) {
             logger.info("Failed to reach the {} level: getExtendedPanId() failed", DriverStatus.HARDWARE_READY);
-            return -1;
+            return new ExtendedPanId();
         }
 
         int[] result = getDeviceInfo(ZB_GET_DEVICE_INFO.DEV_INFO_TYPE.EXT_PAN_ID);
 
         if (result == null) {
             // luckily -1 (aka 0xffffffffffffffffL) is not a valid extended PAN ID value
-            return -1;
+            return new ExtendedPanId();
         } else {
-            return Integers.longFromInts(result, 7, 0);
+            return new ExtendedPanId(result);
         }
     }
 

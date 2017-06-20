@@ -4,6 +4,7 @@ import org.apache.log4j.xml.DOMConfigurator;
 import org.bouncycastle.util.encoders.Hex;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
@@ -49,7 +50,7 @@ public class ZigBeeConsoleMain {
         final int serialBaud;
         final int channel;
         final int pan;
-        final long extendedPan;
+        final ExtendedPanId extendedPan;
         final int[] networkKey;
         boolean resetNetwork;
         try {
@@ -58,7 +59,7 @@ public class ZigBeeConsoleMain {
             serialBaud = Integer.parseInt(args[2]);
             channel = Integer.parseInt(args[3]);
             pan = parseDecimalOrHexInt(args[4]);
-            extendedPan = parseDecimalOrHexInt(args[5]);
+            extendedPan = new ExtendedPanId(args[5]);
 
             if (args[6].equals("00000000000000000000000000000000")) {
                 logger.info("ZigBee network key left as default according to command argument.");
@@ -114,7 +115,7 @@ public class ZigBeeConsoleMain {
         networkManager.initialize();
 
         System.out.println("PAN ID          = " + networkManager.getZigBeePanId());
-        System.out.println("Extended PAN ID = " + String.format("%08X", networkManager.getZigBeeExtendedPanId()));
+        System.out.println("Extended PAN ID = " + networkManager.getZigBeeExtendedPanId());
         System.out.println("Channel         = " + networkManager.getZigBeeChannel());
 
         if (resetNetwork == true) {

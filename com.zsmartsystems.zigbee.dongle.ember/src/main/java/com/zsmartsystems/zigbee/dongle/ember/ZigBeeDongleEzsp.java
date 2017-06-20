@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeDeviceStatus;
 import com.zsmartsystems.zigbee.ZigBeeException;
@@ -583,23 +584,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     }
 
     @Override
-    public long getZigBeeExtendedPanId() {
-        long value = 0;
-        int cnt = 0;
-        for (long val : networkParameters.getExtendedPanId()) {
-            value += val << (cnt * 8);
-            cnt++;
-        }
-        return value;
+    public ExtendedPanId getZigBeeExtendedPanId() {
+        return networkParameters.getExtendedPanId();
     }
 
     @Override
-    public boolean setZigBeeExtendedPanId(long extendedPanId) {
-        int[] panArray = new int[8];
-        for (int cnt = 0; cnt < 8; cnt++) {
-            panArray[cnt] = (int) ((extendedPanId >> (cnt * 8)) & 0xff);
-        }
-        networkParameters.setExtendedPanId(panArray);
+    public boolean setZigBeeExtendedPanId(ExtendedPanId extendedPanId) {
+        networkParameters.setExtendedPanId(extendedPanId.getValue());
         return false;
     }
 
