@@ -30,6 +30,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRespons
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendMulticastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTrustCenterJoinHandler;
@@ -432,6 +433,17 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             emberBroadcast.setMessageContents(apsFrame.getPayload());
 
             emberCommand = emberBroadcast;
+        } else if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.GROUP) {
+            emberApsFrame.setGroupId(apsFrame.getGroupAddress());
+
+            EzspSendMulticastRequest emberMulticast = new EzspSendMulticastRequest();
+            emberMulticast.setApsFrame(emberApsFrame);
+            emberMulticast.setHops(apsFrame.getRadius());
+            emberMulticast.setNonmemberRadius(apsFrame.getNonMemberRadius());
+            emberMulticast.setMessageTag(apsFrame.getSequence());
+            emberMulticast.setMessageContents(apsFrame.getPayload());
+
+            emberCommand = emberMulticast;
         } else {
             logger.debug("EZSP message not sent: {}, {}", apsFrame);
             // ZigBeeGroupAddress groupAddress = (ZigBeeGroupAddress) zclCommand.getDestinationAddress();
