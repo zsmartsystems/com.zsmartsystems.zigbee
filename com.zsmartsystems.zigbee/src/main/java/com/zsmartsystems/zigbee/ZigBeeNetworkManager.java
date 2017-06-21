@@ -833,7 +833,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             try {
                 int transactionId = sendCommand(command);
                 if (command instanceof ZclCommand) {
-                    ((ZclCommand) command).setTransactionId((byte) transactionId);
+                    ((ZclCommand) command).setTransactionId(transactionId);
                 }
             } catch (final ZigBeeException e) {
                 future.set(new CommandResult(e.toString()));
