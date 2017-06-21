@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
@@ -116,12 +117,12 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
-    public long getZigBeeExtendedPanId() {
+    public ExtendedPanId getZigBeeExtendedPanId() {
         return networkManager.getCurrentExtendedPanId();
     }
 
     @Override
-    public boolean setZigBeeExtendedPanId(long panId) {
+    public boolean setZigBeeExtendedPanId(ExtendedPanId panId) {
         return networkManager.setZigBeeExtendedPanId(panId);
     }
 

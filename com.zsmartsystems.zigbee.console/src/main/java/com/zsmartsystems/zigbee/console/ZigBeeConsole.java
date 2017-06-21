@@ -206,7 +206,7 @@ public final class ZigBeeConsole {
         print("ZigBee console ready.", System.out);
 
         print("PAN ID          = " + networkManager.getZigBeePanId(), System.out);
-        print("Extended PAN ID = " + String.format("%08X", networkManager.getZigBeeExtendedPanId()), System.out);
+        print("Extended PAN ID = " + networkManager.getZigBeeExtendedPanId(), System.out);
         print("Channel         = " + networkManager.getZigBeeChannel(), System.out);
 
         String inputLine;

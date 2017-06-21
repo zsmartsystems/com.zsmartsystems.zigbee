@@ -8,6 +8,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
@@ -91,8 +92,7 @@ public class EmberNetworkInitialisation {
         getNetworkParameters();
 
         // Create a random PAN ID and Extended PAN ID
-        if (networkParameters.getPanId() == 0
-                || Arrays.equals(networkParameters.getExtendedPanId(), new int[] { 0, 0, 0, 0, 0, 0, 0, 0 })) {
+        if (networkParameters.getPanId() == 0 || networkParameters.getExtendedPanId().equals(new ExtendedPanId())) {
             Random random = new Random();
             int panId = random.nextInt(65535);
             networkParameters.setPanId(panId);
@@ -285,14 +285,14 @@ public class EmberNetworkInitialisation {
      * Forms the ZigBee network
      *
      * @param panId the panId as int
-     * @param extendedPanId the extended pan ID as int[8]
+     * @param extendedPanId the extended pan ID as {@link ExtendedPanId}
      * @param channel the radio channel to use
      * @return true if the network was formed successfully
      */
-    private boolean doFormNetwork(int panId, int[] extendedPanId, int channel) {
+    private boolean doFormNetwork(int panId, ExtendedPanId extendedPanId, int channel) {
         EmberNetworkParameters networkParameters = new EmberNetworkParameters();
         networkParameters.setJoinMethod(EmberJoinMethod.EMBER_USE_MAC_ASSOCIATION);
-        networkParameters.setExtendedPanId(extendedPanId);
+        networkParameters.setExtendedPanId(extendedPanId.getValue());
         networkParameters.setPanId(panId);
         networkParameters.setRadioChannel(channel);
         EzspFormNetworkRequest formNetwork = new EzspFormNetworkRequest();

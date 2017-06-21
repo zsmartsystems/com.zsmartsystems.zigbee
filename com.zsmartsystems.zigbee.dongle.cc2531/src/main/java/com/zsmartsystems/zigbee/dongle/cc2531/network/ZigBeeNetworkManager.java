@@ -22,6 +22,7 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_CONFIRM;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER;
@@ -100,7 +101,7 @@ public interface ZigBeeNetworkManager {
      * @return The long representing the IEEE Address of coordinator of the ZigBee network in use, or -1 if and only if
      *         the method failed
      */
-    long getCurrentExtendedPanId();
+    ExtendedPanId getCurrentExtendedPanId();
 
     /**
      * <b>WARNING</b>: This method may have to wait for the initialization of the ZigBee network
@@ -128,7 +129,7 @@ public interface ZigBeeNetworkManager {
 
     boolean setNetworkKey(byte[] networkKey);
 
-    public boolean setZigBeeExtendedPanId(long extendedPanId);
+    boolean setZigBeeExtendedPanId(ExtendedPanId panId);
 
     boolean setDistributeNetworkKey(boolean distributeNetworkKey);
 

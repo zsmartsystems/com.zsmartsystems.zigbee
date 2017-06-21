@@ -1,5 +1,6 @@
 package com.zsmartsystems.zigbee.transport;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetwork;
@@ -120,18 +121,18 @@ public interface ZigBeeTransportTransmit {
      *
      * @return the PAN ID
      */
-    long getZigBeeExtendedPanId();
+    ExtendedPanId getZigBeeExtendedPanId();
 
     /**
      * Sets the ZigBee Extended PAN ID to the specified value
      *
-     * @param panId the new PAN ID as {@link long}
+     * @param panId the new {@link ExtendedPanId}
      * @return true if the PAN Id was set correctly
      */
-    boolean setZigBeeExtendedPanId(long panId);
+    boolean setZigBeeExtendedPanId(ExtendedPanId panId);
 
     /**
-     * Sets the ZigBee Extended PAN ID to the specified value
+     * Sets the ZigBee security key to the specified value
      *
      * @param key the new security key as {@link byte}[16]
      * @return true if the PAN Id was set correctly

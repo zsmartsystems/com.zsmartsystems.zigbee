@@ -8,6 +8,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 
@@ -98,10 +99,10 @@ public class EmberNetworkParameters {
      * <p>
      * EZSP type is <i>uint8_t[8]</i> - Java type is {@link int[]}
      *
-     * @return the current extendedPanId as {@link int[]}
+     * @return the current extendedPanId as {@link extendedPanId}
      */
-    public int[] getExtendedPanId() {
-        return extendedPanId;
+    public ExtendedPanId getExtendedPanId() {
+        return new ExtendedPanId(extendedPanId);
     }
 
     /**

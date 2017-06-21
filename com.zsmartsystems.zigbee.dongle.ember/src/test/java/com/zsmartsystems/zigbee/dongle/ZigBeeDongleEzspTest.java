@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 
 /**
@@ -16,8 +17,8 @@ public class ZigBeeDongleEzspTest {
     public void setZigBeeExtendedPanId() {
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
 
-        dongle.setZigBeeExtendedPanId(0x123456789abcdefL);
-        assertEquals(0x123456789abcdefL, dongle.getZigBeeExtendedPanId());
+        dongle.setZigBeeExtendedPanId(new ExtendedPanId("123456789abcdef"));
+        assertEquals(new ExtendedPanId("123456789abcdef"), dongle.getZigBeeExtendedPanId());
     }
 
     @Test
