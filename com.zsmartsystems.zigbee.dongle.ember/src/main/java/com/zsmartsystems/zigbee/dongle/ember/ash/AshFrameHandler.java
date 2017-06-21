@@ -139,8 +139,9 @@ public class AshFrameHandler {
         parserThread = new Thread("AshFrameHandler") {
             @Override
             public void run() {
-                int exceptionCnt = 0;
                 logger.trace("AshFrameHandler thread started");
+
+                int exceptionCnt = 0;
                 int[] inputBuffer = new int[ASH_MAX_LENGTH];
                 int inputCount = 0;
                 boolean inputError = false;

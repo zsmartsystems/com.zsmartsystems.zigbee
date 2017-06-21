@@ -235,6 +235,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     public boolean startup(boolean reinitialize) {
         logger.debug("EZSP dongle startup.");
 
+        // If ashHandler is null then the serial port didn't initialise
+        if (ashHandler == null) {
+            logger.error("Initialising Ember Dongle but low level handle is not initialised.");
+            return false;
+        }
+
         // Check if the network is initialised
         EzspNetworkStateRequest networkStateRequest = new EzspNetworkStateRequest();
         EzspTransaction networkStateTransaction = ashHandler.sendEzspTransaction(
