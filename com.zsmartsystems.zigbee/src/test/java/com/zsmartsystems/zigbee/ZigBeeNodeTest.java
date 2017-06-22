@@ -210,4 +210,75 @@ public class ZigBeeNodeTest {
         node.setLastUpdateTime();
         assertNotNull(node.getLastUpdateTime());
     }
+
+    @Test
+    public void testJoiningEnabled() {
+        ZigBeeNode node = new ZigBeeNode(null);
+
+        node.setJoining(true);
+        assertTrue(node.isJoiningEnabled());
+    }
+
+    @Test
+    public void testAssociatedDevices() {
+        ZigBeeNode node = new ZigBeeNode(null);
+
+        // Check list is empty to start
+        assertNotNull(node.getAssociatedDevices());
+        assertEquals(0, node.getAssociatedDevices().size());
+
+        // Add 3 nodes
+        List<Integer> associatedDevices = new ArrayList<Integer>();
+        associatedDevices.add(1);
+        associatedDevices.add(2);
+        associatedDevices.add(3);
+        boolean changed = node.setAssociatedDevices(associatedDevices);
+        assertTrue(changed);
+        assertEquals(3, node.getAssociatedDevices().size());
+
+        // Remove 1 node
+        associatedDevices = new ArrayList<Integer>();
+        associatedDevices.add(1);
+        associatedDevices.add(3);
+        changed = node.setAssociatedDevices(associatedDevices);
+        assertTrue(changed);
+        assertEquals(2, node.getAssociatedDevices().size());
+        assertEquals(Integer.valueOf(1), node.getAssociatedDevices().get(0));
+        assertEquals(Integer.valueOf(3), node.getAssociatedDevices().get(1));
+
+        // Add the same list and make sure it shows no change
+        changed = node.setAssociatedDevices(associatedDevices);
+        assertFalse(changed);
+
+        // Add a new node
+        associatedDevices = new ArrayList<Integer>();
+        associatedDevices.add(1);
+        associatedDevices.add(3);
+        associatedDevices.add(4);
+        changed = node.setAssociatedDevices(associatedDevices);
+        assertTrue(changed);
+        assertEquals(3, node.getAssociatedDevices().size());
+        assertEquals(Integer.valueOf(1), node.getAssociatedDevices().get(0));
+        assertEquals(Integer.valueOf(3), node.getAssociatedDevices().get(1));
+        assertEquals(Integer.valueOf(4), node.getAssociatedDevices().get(2));
+
+        // Keep number the same, but change the list
+        associatedDevices = new ArrayList<Integer>();
+        associatedDevices.add(2);
+        associatedDevices.add(3);
+        associatedDevices.add(4);
+        changed = node.setAssociatedDevices(associatedDevices);
+        assertTrue(changed);
+        assertEquals(3, node.getAssociatedDevices().size());
+        assertEquals(Integer.valueOf(2), node.getAssociatedDevices().get(0));
+        assertEquals(Integer.valueOf(3), node.getAssociatedDevices().get(1));
+        assertEquals(Integer.valueOf(4), node.getAssociatedDevices().get(2));
+
+        // Set to null
+        changed = node.setAssociatedDevices(null);
+        assertTrue(changed);
+        assertNotNull(node.getAssociatedDevices());
+        assertEquals(0, node.getAssociatedDevices().size());
+    }
+
 }
