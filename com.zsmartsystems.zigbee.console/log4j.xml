@@ -28,6 +28,11 @@
         </layout>
     </appender>
 
+    <logger additivity="true" name="com.zsmartsystems.zigbee">
+        <level value="debug"/>
+        <appender-ref ref="StdOut" />
+    </logger>
+
     <logger additivity="true" name="com.zsmartsystems.zigbee.dongle.ember.ash">
         <level value="debug"/>
         <appender-ref ref="EzspFile" />
