@@ -337,12 +337,7 @@ public final class ZigBeeConsole {
                 }
             }
             final int groupId = Integer.parseInt(destinationIdentifier);
-            ZigBeeGroupAddress group = zigbeeApi.getGroup(groupId);
-            if (group == null) {
-                zigBeeApi.addMembership(groupId, Integer.toString(groupId));
-            }
-            group = zigbeeApi.getGroup(groupId);
-            return group;
+            return zigbeeApi.getGroup(groupId);
         } catch (final NumberFormatException e) {
             return null;
         }
@@ -990,7 +985,9 @@ public final class ZigBeeConsole {
             }
 
             final String label = args[2];
-            zigbeeApi.addMembership(groupId, label);
+            ZigBeeGroupAddress group = new ZigBeeGroupAddress();
+            group.setLabel(label);
+            networkManager.addGroup(group);
 
             return true;
         }
@@ -1074,7 +1071,9 @@ public final class ZigBeeConsole {
             }
 
             final ZigBeeGroupAddress group = (ZigBeeGroupAddress) destination;
-            zigbeeApi.removeMembership(group.getGroupId());
+
+            networkManager.removeGroup(group.getGroupId());
+
             return true;
         }
     }

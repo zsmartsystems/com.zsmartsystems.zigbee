@@ -748,34 +748,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Sets group label.
-     *
-     * @param groupId
-     *            the group ID
-     * @param label
-     *            the label
-     */
-    public void addMembership(final int groupId, final String label) {
-        if (getGroup(groupId) == null) {
-            addGroup(new ZigBeeGroupAddress(groupId, label));
-        } else {
-            final ZigBeeGroupAddress group = getGroup(groupId);
-            group.setLabel(label);
-            updateGroup(group);
-        }
-    }
-
-    /**
-     * Removes group label.
-     *
-     * @param groupId
-     *            the group ID
-     */
-    public void removeMembership(final int groupId) {
-        removeGroup(groupId);
-    }
-
-    /**
      * Sends {@link ZclCommand} command to {@link ZigBeeAddress}.
      *
      * @param destination
