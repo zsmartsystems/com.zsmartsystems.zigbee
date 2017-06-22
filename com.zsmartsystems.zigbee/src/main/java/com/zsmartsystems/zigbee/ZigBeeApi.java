@@ -102,25 +102,6 @@ public class ZigBeeApi {
     }
 
     /**
-     * Sets group label.
-     *
-     * @param groupId the group ID
-     * @param label the label
-     */
-    public void addMembership(final int groupId, final String label) {
-        networkManager.addMembership(groupId, label);
-    }
-
-    /**
-     * Removes group label.
-     *
-     * @param groupId the group ID
-     */
-    public void removeMembership(final int groupId) {
-        networkManager.removeMembership(groupId);
-    }
-
-    /**
      * Gets group by network address.
      *
      * @param groupId the group ID
@@ -147,7 +128,7 @@ public class ZigBeeApi {
     public void label(final ZigBeeAddress destination, final String label) {
         if (destination.isGroup()) {
             final ZigBeeGroupAddress group = (ZigBeeGroupAddress) destination;
-            this.addMembership(group.getGroupId(), label);
+            group.setLabel(label);
         } else {
             final ZigBeeDeviceAddress device = (ZigBeeDeviceAddress) destination;
             this.setDeviceLabel(device.getAddress(), device.getEndpoint(), label);
