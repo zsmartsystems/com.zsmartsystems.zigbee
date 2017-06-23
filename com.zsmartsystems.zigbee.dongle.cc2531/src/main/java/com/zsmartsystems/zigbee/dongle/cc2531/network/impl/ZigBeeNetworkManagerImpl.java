@@ -101,7 +101,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     private static final String RESEND_ONLY_EXCEPTION_KEY = "zigbee.driver.cc2531.resend.exceptionally";
 
     private static final int BOOTLOADER_MAGIC_BYTE_DEFAULT = 0xef;
-    private static final String BOOTLOADER_MAGIC_BYTE_KEY = "zigbee.driver.cc2531.bl.magic.byte";
 
     private final int TIMEOUT;
     private final int RESET_TIMEOUT;
@@ -109,7 +108,8 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     private final int RESEND_TIMEOUT;
     private final int RESEND_MAX_RETRY;
     private final boolean RESEND_ONLY_EXCEPTION;
-    private final int BOOTLOADER_MAGIC_BYTE;
+
+    private int BOOTLOADER_MAGIC_BYTE = BOOTLOADER_MAGIC_BYTE_DEFAULT;
 
     // Dongle startup options
     private final int STARTOPT_CLEAR_CONFIG = 0x00000001;
@@ -209,17 +209,21 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
         RESEND_ONLY_EXCEPTION = b;
 
-        aux = BOOTLOADER_MAGIC_BYTE_DEFAULT;
-        try {
-            aux = Integer.parseInt(System.getProperty(BOOTLOADER_MAGIC_BYTE_KEY));
-            logger.trace("Using BOOTLOADER_MAGIC_BYTE set from enviroment {}", aux);
-        } catch (NumberFormatException ex) {
-            logger.trace("Using BOOTLOADER_MAGIC_BYTE set as DEFAULT {}", aux);
-        }
-        BOOTLOADER_MAGIC_BYTE = aux;
-
         state = DriverStatus.CLOSED;
         setSerialPort(port);
+    }
+
+    /**
+     * Different hardware may use a different "Magic Number" to skip waiting in the bootloader. Otherwise
+     * the dongle may wait in the bootloader for 60 seconds after it's powered on or reset.
+     * <p>
+     * This method allows the user to change the magic number which may be required when using different
+     * sticks.
+     *
+     * @param magicNumber
+     */
+    public void setMagicNumber(int magicNumber) {
+        BOOTLOADER_MAGIC_BYTE = magicNumber;
     }
 
     @Override
