@@ -42,6 +42,7 @@
         <module>com.zsmartsystems.zigbee</module>
         <module>com.zsmartsystems.zigbee.dongle.cc2531</module>
         <module>com.zsmartsystems.zigbee.dongle.ember</module>
+        <module>com.zsmartsystems.zigbee.dongle.conbee</module>
         <module>com.zsmartsystems.zigbee.dongle.telegesis</module>
         <module>com.zsmartsystems.zigbee.console</module>
         <module>com.zsmartsystems.zigbee.serial</module>

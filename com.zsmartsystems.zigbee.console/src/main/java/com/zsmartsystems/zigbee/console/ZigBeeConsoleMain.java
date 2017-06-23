@@ -20,6 +20,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkMeshMonitor;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
+import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.serial.ZigBeeSerialPort;
@@ -46,7 +47,7 @@ public class ZigBeeConsoleMain {
     /**
      * The usage.
      */
-    public static final String USAGE = "Syntax: java -jar zigbee4java-serialPort.jar [EMBER|CC2531] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET";
+    public static final String USAGE = "Syntax: java -jar zigbee4java-serialPort.jar [EMBER|CC2531|TELEGESIS|CONBEE] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET";
 
     /**
      * Private constructor to disable constructing main class.
@@ -117,6 +118,8 @@ public class ZigBeeConsoleMain {
             dongle = new ZigBeeDongleTiCc2531(serialPort);
         } else if (dongleName.toUpperCase().equals("EMBER")) {
             dongle = new ZigBeeDongleEzsp(serialPort);
+        } else if (dongleName.toUpperCase().equals("CONBEE")) {
+            dongle = new ZigBeeDongleConBee(serialPort);
         } else if (dongleName.toUpperCase().equals("TELEGESIS")) {
             ZigBeeDongleTelegesis telegesisDongle = new ZigBeeDongleTelegesis(serialPort);
             telegesisDongle.setTelegesisPassword("password");
