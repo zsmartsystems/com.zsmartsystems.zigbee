@@ -40,6 +40,12 @@ import com.zsmartsystems.zigbee.zdo.SynchronousResponse;
 
 /**
  * ZigBee Dongle TI implementation for the CC2531 processor.
+ * <p>
+ * Implements the {@link ZigBeeTransportTransmit} interface and provides the following dongle specific methods for
+ * configuring the dongle -:
+ * <ul>
+ * <li>{@link #setMagicNumber(int)} to set the bootloader exit sequence
+ * </ul>
  *
  * @author Chris Jackson
  *
@@ -77,6 +83,19 @@ public class ZigBeeDongleTiCc2531
      */
     public ZigBeeDongleTiCc2531(final ZigBeePort serialPort) {
         networkManager = new ZigBeeNetworkManagerImpl(serialPort, NetworkMode.Coordinator, 2500L);
+    }
+
+    /**
+     * Different hardware may use a different "Magic Number" to skip waiting in the bootloader. Otherwise
+     * the dongle may wait in the bootloader for 60 seconds after it's powered on or reset.
+     * <p>
+     * This method allows the user to change the magic number which may be required when using different
+     * sticks.
+     *
+     * @param magicNumber
+     */
+    public void setMagicNumber(int magicNumber) {
+        networkManager.setMagicNumber(magicNumber);
     }
 
     @Override
