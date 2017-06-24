@@ -66,7 +66,6 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STARTUP_FRO
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STATE_CHANGE_IND;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.Integers;
-import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  * The ZigBee network manager port implementation.
@@ -80,7 +79,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  */
 public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
-    private final static Logger logger = LoggerFactory.getLogger(ZigBeeNetworkManagerImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(ZigBeeNetworkManagerImpl.class);
 
     private static final int DEFAULT_TIMEOUT = 8000;
     private static final String TIMEOUT_KEY = "zigbee.driver.cc2531.timeout";
@@ -92,10 +91,8 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     private static final String STARTUP_TIMEOUT_KEY = "zigbee.driver.cc2531.startup.timeout";
 
     private static final int RESEND_TIMEOUT_DEFAULT = 1000;
-    private static final String RESEND_TIMEOUT_KEY = "zigbee.driver.cc2531.resend.timeout";
 
-    private static final int RESEND_MAX_RESEND_DEFAULT = 3;
-    private static final String RESEND_MAX_RESEND_KEY = "zigbee.driver.cc2531.resend.max";
+    private static final int RESEND_MAX_RETRY_DEFAULT = 3;
 
     private static final boolean RESEND_ONLY_EXCEPTION_DEFAULT = true;
     private static final String RESEND_ONLY_EXCEPTION_KEY = "zigbee.driver.cc2531.resend.exceptionally";
@@ -105,11 +102,23 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     private final int TIMEOUT;
     private final int RESET_TIMEOUT;
     private final int STARTUP_TIMEOUT;
-    private final int RESEND_TIMEOUT;
-    private final int RESEND_MAX_RETRY;
     private final boolean RESEND_ONLY_EXCEPTION;
 
     private int BOOTLOADER_MAGIC_BYTE = BOOTLOADER_MAGIC_BYTE_DEFAULT;
+    private int RESEND_TIMEOUT = RESEND_TIMEOUT_DEFAULT;
+    private int RESEND_MAX_RETRY = RESEND_MAX_RETRY_DEFAULT;
+
+    private final int ZNP_DEFAULT_CHANNEL = 0x00000800;
+
+    private final int ZNP_CHANNEL_MASK0 = 0x00;
+    private final int ZNP_CHANNEL_MASK1 = 0xf8;
+    private final int ZNP_CHANNEL_MASK2 = 0xff;
+    private final int ZNP_CHANNEL_MASK3 = 0x0f;
+
+    private final int ZNP_CHANNEL_DEFAULT0 = 0x00;
+    private final int ZNP_CHANNEL_DEFAULT1 = 0x08;
+    private final int ZNP_CHANNEL_DEFAULT2 = 0x00;
+    private final int ZNP_CHANNEL_DEFAULT3 = 0x00;
 
     // Dongle startup options
     private final int STARTOPT_CLEAR_CONFIG = 0x00000001;
@@ -119,11 +128,10 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     private final short AUTO_PANID = (short) 0xffff;
 
     private CommandInterface commandInterface;
-    private ZigBeePort port;
     private DriverStatus state;
     private NetworkMode mode;
     private int pan = AUTO_PANID;
-    private int channel;
+    private int channel = ZNP_DEFAULT_CHANNEL;
     private ExtendedPanId extendedPanId; // do not initialize to use dongle defaults (the IEEE address)
     private byte[] networkKey; // 16 byte network key
     private boolean distributeNetworkKey = true; // distribute network key in clear (be careful)
@@ -152,17 +160,11 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
 
     private final HashMap<Class<?>, Thread> conversation3Way = new HashMap<Class<?>, Thread>();
 
-    public ZigBeeNetworkManagerImpl(ZigBeePort port, NetworkMode mode, long timeout) {
+    public ZigBeeNetworkManagerImpl(CommandInterface commandInterface, NetworkMode mode, long timeout) {
         this.mode = mode;
+        this.commandInterface = commandInterface;
 
-        int aux = RESEND_TIMEOUT_DEFAULT;
-        try {
-            aux = Integer.parseInt(System.getProperty(RESEND_TIMEOUT_KEY));
-            logger.trace("Using RESEND_TIMEOUT set from enviroment {}", aux);
-        } catch (NumberFormatException ex) {
-            logger.trace("Using RESEND_TIMEOUT set as DEFAULT {}", aux);
-        }
-        RESEND_TIMEOUT = aux;
+        int aux;
 
         aux = (int) Math.max(DEFAULT_TIMEOUT, timeout);
         try {
@@ -191,15 +193,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         }
         STARTUP_TIMEOUT = aux;
 
-        aux = RESEND_MAX_RESEND_DEFAULT;
-        try {
-            aux = Integer.parseInt(System.getProperty(RESEND_MAX_RESEND_KEY));
-            logger.trace("Using RESEND_MAX_RETRY set from enviroment {}", aux);
-        } catch (NumberFormatException ex) {
-            logger.trace("Using RESEND_MAX_RETRY set as DEFAULT {}", aux);
-        }
-        RESEND_MAX_RETRY = aux;
-
         boolean b = RESEND_ONLY_EXCEPTION_DEFAULT;
         try {
             b = Boolean.parseBoolean(System.getProperty(RESEND_ONLY_EXCEPTION_KEY));
@@ -210,7 +203,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         RESEND_ONLY_EXCEPTION = b;
 
         state = DriverStatus.CLOSED;
-        setSerialPort(port);
     }
 
     /**
@@ -224,6 +216,24 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
      */
     public void setMagicNumber(int magicNumber) {
         BOOTLOADER_MAGIC_BYTE = magicNumber;
+    }
+
+    /**
+     * Set timeout and retry count
+     *
+     * @param retries the maximum number of retries to perform
+     * @param timeout the maximum timeout between retries
+     */
+    public void setRetryConfiguration(int retries, int timeout) {
+        RESEND_MAX_RETRY = retries;
+        if (RESEND_MAX_RETRY < 1 || RESEND_MAX_RETRY > 5) {
+            RESEND_MAX_RETRY = RESEND_MAX_RETRY_DEFAULT;
+        }
+
+        RESEND_TIMEOUT = timeout;
+        if (RESEND_TIMEOUT < 0 || RESEND_TIMEOUT > 5000) {
+            RESEND_TIMEOUT = RESEND_TIMEOUT_DEFAULT;
+        }
     }
 
     @Override
@@ -288,9 +298,13 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
     }
 
     private boolean initializeHardware() {
-        commandInterface = new CommandInterfaceImpl(port);
+        if (commandInterface == null) {
+            logger.error("Command interface must be configured");
+            return false;
+        }
+
         if (!commandInterface.open()) {
-            logger.error("Failed to initialize the dongle on port {}.", port);
+            logger.error("Failed to open the dongle.");
             return false;
         }
 
@@ -407,7 +421,7 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
             logger.trace("PANID set");
         }
         if (extendedPanId != null) {
-            logger.debug("Setting Extended PAN ID to {}.", String.format("%08X", extendedPanId));
+            logger.debug("Setting Extended PAN ID to {}.", extendedPanId);
             if (!dongleSetExtendedPanId()) {
                 logger.error("Unable to set EXT_PANID for ZigBee Network");
                 return false;
@@ -545,14 +559,6 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         this.securityMode = securityMode;
 
         return dongleSetSecurityMode();
-    }
-
-    @Override
-    public void setSerialPort(ZigBeePort port) {
-        if (state != DriverStatus.CLOSED) {
-            throw new IllegalStateException("Serial port can be changed only if driver is CLOSED while it is:" + state);
-        }
-        this.port = port;
     }
 
     @Override
@@ -720,16 +726,47 @@ public class ZigBeeNetworkManagerImpl implements ZigBeeNetworkManager {
         return true;
     }
 
-    private static final int[] buildChannelMask(int channel) {
+    private final int[] buildChannelMask(int channel) {
+        if (channel < 11 || channel > 27) {
+            return new int[] { 0, 0, 0, 0 };
+        }
+
         int channelMask = 1 << channel;
         int[] mask = new int[4];
+
         for (int i = 0; i < mask.length; i++) {
             mask[i] = Integers.getByteAsInteger(channelMask, i);
         }
         return mask;
     }
 
+    /**
+     * Sets the ZigBee RF channel. The allowable channel range is 11 to 26.
+     * <p>
+     * This method will sanity check the channel and if the mask is invalid
+     * the default channel will be used.
+     *
+     * @param channelMask
+     * @return
+     */
     private boolean dongleSetChannel(int[] channelMask) {
+        // Error check the channels.
+        // Incorrectly setting the channel can cause the stick to hang!!
+
+        // Mask out any invalid channels
+        channelMask[0] &= ZNP_CHANNEL_MASK0;
+        channelMask[1] &= ZNP_CHANNEL_MASK1;
+        channelMask[2] &= ZNP_CHANNEL_MASK2;
+        channelMask[3] &= ZNP_CHANNEL_MASK3;
+
+        // If there's no channels set, then we go for the default
+        if (channelMask[0] == 0 && channelMask[1] == 0 && channelMask[2] == 0 && channelMask[3] == 0) {
+            channelMask[0] = ZNP_CHANNEL_DEFAULT0;
+            channelMask[1] = ZNP_CHANNEL_DEFAULT1;
+            channelMask[2] = ZNP_CHANNEL_DEFAULT2;
+            channelMask[3] = ZNP_CHANNEL_DEFAULT3;
+        }
+
         logger.trace("Setting the channel to {}{}{}{}",
                 new Object[] { Integer.toHexString(channelMask[0]), Integer.toHexString(channelMask[1]),
                         Integer.toHexString(channelMask[2]), Integer.toHexString(channelMask[3]) });

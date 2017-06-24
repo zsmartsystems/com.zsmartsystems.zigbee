@@ -1,4 +1,4 @@
-package com.zsmartsystems.zigbee.dongle.cc2531.test;
+package com.zsmartsystems.zigbee.dongle.cc2531;
 
 import static org.junit.Assert.assertFalse;
 

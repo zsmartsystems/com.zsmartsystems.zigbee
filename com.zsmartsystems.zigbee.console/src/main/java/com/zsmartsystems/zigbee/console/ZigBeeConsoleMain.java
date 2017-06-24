@@ -122,7 +122,7 @@ public class ZigBeeConsoleMain {
             System.out.println("*** Resetting network");
             System.out.println("  * Channel          = " + channel);
             System.out.println("  * PAN ID           = " + pan);
-            System.out.println("  * Extended PAN ID  = " + String.format("%016X", extendedPan));
+            System.out.println("  * Extended PAN ID  = " + extendedPan);
 
             networkManager.setZigBeeChannel(channel);
             networkManager.setZigBeePanId(pan);
