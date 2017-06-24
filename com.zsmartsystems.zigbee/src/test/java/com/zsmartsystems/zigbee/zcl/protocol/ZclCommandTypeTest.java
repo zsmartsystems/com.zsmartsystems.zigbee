@@ -1,0 +1,69 @@
+package com.zsmartsystems.zigbee.zcl.protocol;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupCommand;
+
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
+public class ZclCommandTypeTest {
+    @Test
+    public void instantiateCommand() {
+        ZclCommandType cmd = ZclCommandType.ADD_GROUP_COMMAND;
+
+        ZclCommand cmdClass = cmd.instantiateCommand();
+        assertTrue(cmdClass instanceof AddGroupCommand);
+    }
+
+    @Test
+    public void getClusterType() {
+        ZclCommandType cmd = ZclCommandType.ALARM_COMMAND;
+
+        assertEquals(0x0009, cmd.getClusterType());
+    }
+
+    @Test
+    public void getId() {
+        ZclCommandType cmd = ZclCommandType.ALARM_COMMAND;
+
+        assertEquals(0x0000, cmd.getId());
+    }
+
+    @Test
+    public void isReceived() {
+        ZclCommandType cmd = ZclCommandType.ALARM_COMMAND;
+
+        assertEquals(false, cmd.isReceived());
+    }
+
+    @Test
+    public void isGeneric() {
+        ZclCommandType cmd = ZclCommandType.ALARM_COMMAND;
+        assertEquals(false, cmd.isGeneric());
+
+        cmd = ZclCommandType.READ_ATTRIBUTES_COMMAND;
+        assertEquals(true, cmd.isGeneric());
+    }
+
+    @Test
+    public void getGeneric() {
+        assertEquals(ZclCommandType.READ_ATTRIBUTES_COMMAND, ZclCommandType.getGeneric(0));
+    }
+
+    @Test
+    public void getRequest() {
+        assertEquals(ZclCommandType.ADD_GROUP_RESPONSE, ZclCommandType.getRequest(4, 0));
+    }
+
+    @Test
+    public void getResponse() {
+        assertEquals(ZclCommandType.ADD_GROUP_COMMAND, ZclCommandType.getResponse(4, 0));
+    }
+}
