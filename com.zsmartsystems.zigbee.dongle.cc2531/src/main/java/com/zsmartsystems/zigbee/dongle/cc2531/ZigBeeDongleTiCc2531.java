@@ -24,6 +24,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.ApplicationFrameworkMessag
 import com.zsmartsystems.zigbee.dongle.cc2531.network.AsynchronousCommandListener;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.DriverStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.NetworkMode;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.CommandInterfaceImpl;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.ZigBeeNetworkManagerImpl;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
@@ -82,7 +83,8 @@ public class ZigBeeDongleTiCc2531
      *            the serial port
      */
     public ZigBeeDongleTiCc2531(final ZigBeePort serialPort) {
-        networkManager = new ZigBeeNetworkManagerImpl(serialPort, NetworkMode.Coordinator, 2500L);
+        networkManager = new ZigBeeNetworkManagerImpl(new CommandInterfaceImpl(serialPort), NetworkMode.Coordinator,
+                2500L);
     }
 
     /**

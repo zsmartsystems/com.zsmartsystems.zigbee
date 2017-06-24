@@ -286,6 +286,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public boolean setZigBeeChannel(int channel) {
         if (channel < 11 || channel > 26) {
+            logger.debug("Can't set channel to {}", channel);
             return false;
         }
         return transport.setZigBeeChannel(channel);

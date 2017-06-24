@@ -27,7 +27,6 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_CONFIRM;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER_SRSP;
-import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi - ISTI-CNR</a>
@@ -42,13 +41,6 @@ public interface ZigBeeNetworkManager {
      * @param networkMode the network mode
      */
     void setZigBeeNodeMode(NetworkMode networkMode);
-
-    /**
-     * Sets serial port.
-     *
-     * @param port the serial port.
-     */
-    void setSerialPort(ZigBeePort port);
 
     /**
      * Starts up network manager.
