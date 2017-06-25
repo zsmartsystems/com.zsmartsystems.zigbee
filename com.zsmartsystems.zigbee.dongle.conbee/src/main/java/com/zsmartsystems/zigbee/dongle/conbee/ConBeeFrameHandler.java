@@ -13,6 +13,8 @@ import java.util.concurrent.Executors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrame;
+
 /**
  * Frame parser for ConBee SLIP protocol.
  *
@@ -25,32 +27,12 @@ public class ConBeeFrameHandler {
      */
     private final Logger logger = LoggerFactory.getLogger(ConBeeFrameHandler.class);
 
-    /**
-     * The receive timeout settings - min/initial/max - defined in milliseconds
-     */
-    private final int T_RX_ACK_MIN = 400;
-    private final int T_RX_ACK_INIT = 1600;
-    private final int T_RX_ACK_MAX = 3200;
-    private int receiveTimeout = T_RX_ACK_INIT;
+    private final static int SLIP_ESC = 0xDB;
+    private final static int SLIP_ESC_END = 0xDC;
+    private final static int SLIP_ESC_ESC = 0xDD;
+    private final static int SLIP_END = 0xC0;
 
-    /**
-     * Maximum number of consecutive timeouts allowed while waiting to receive
-     * an ACK
-     */
-    private final int ACK_TIMEOUTS = 4;
-    private int retries = 0;
-
-    /**
-     * Maximum number of DATA frames we can transmit without an ACK
-     */
-    private final int TX_WINDOW = 1;
-
-    private long sentTime;
-
-    private final int ASH_CANCEL_BYTE = 0x1A;
-    private final int ASH_FLAG_BYTE = 0x7E;
-
-    private final int ASH_MAX_LENGTH = 131;
+    private final int SLIP_MAX_LENGTH = 131;
 
     /**
      * The queue of {@link EzspFrameRequest} frames waiting to be sent
@@ -97,23 +79,37 @@ public class ConBeeFrameHandler {
                 logger.trace("ConBeeFrameHandler thread started");
 
                 int exceptionCnt = 0;
-                int[] inputBuffer = new int[ASH_MAX_LENGTH];
+                int[] inputBuffer = new int[SLIP_MAX_LENGTH];
                 int inputCount = 0;
                 boolean inputError = false;
+
+                boolean escaped = false;
 
                 while (!close) {
                     try {
                         int val = inputStream.read();
                         logger.trace("CONBEE RX: " + String.format("%02X", val));
-                        if (val == ASH_CANCEL_BYTE) {
+                        if (val == SLIP_ESC) {
+                            escaped = true;
+                        } else if (val == SLIP_END) {
+                            // Frame complete
+
                             inputCount = 0;
-                            inputError = false;
-
-                            continue;
-                        } else if (val == ASH_FLAG_BYTE) {
-
+                        } else if (escaped) {
+                            escaped = false;
+                            switch (val) {
+                                case SLIP_ESC_END:
+                                    inputBuffer[inputCount++] = SLIP_END;
+                                    break;
+                                case SLIP_ESC_ESC:
+                                    inputBuffer[inputCount++] = SLIP_ESC;
+                                    break;
+                                default:
+                                    inputBuffer[inputCount++] = val;
+                                    break;
+                            }
                         } else if (val != -1) {
-                            if (inputCount >= ASH_MAX_LENGTH) {
+                            if (inputCount >= SLIP_MAX_LENGTH) {
                                 inputCount = 0;
                                 inputError = true;
                             }
@@ -128,7 +124,7 @@ public class ConBeeFrameHandler {
                         }
                     }
                 }
-                logger.debug("AshFrameHandler exited.");
+                logger.debug("ConBeeFrameHandler exited.");
             }
         };
 
@@ -166,27 +162,35 @@ public class ConBeeFrameHandler {
     }
 
     // Synchronize this method to ensure a packet gets sent as a block
-    private synchronized void outputFrame(ConBeeFrame ashFrame) {
+    private synchronized void outputFrame(ConBeeFrame frame) {
         // Send the data
         try {
-            for (int b : ashFrame.getOutputBuffer()) {
+            for (int val : frame.getOutputBuffer()) {
                 // result.append(" ");
                 // result.append(String.format("%02X", b));
                 // logger.debug("ASH TX: " + String.format("%02X", b));
-                outputStream.write(b);
+                switch (val) {
+                    case SLIP_END:
+                        outputStream.write(SLIP_ESC);
+                        outputStream.write(SLIP_ESC_END);
+                        break;
+                    case SLIP_ESC:
+                        outputStream.write(SLIP_ESC);
+                        outputStream.write(SLIP_ESC_ESC);
+                        break;
+                    default:
+                        outputStream.write(val);
+                        break;
+                }
             }
         } catch (IOException e) {
             logger.debug(e.getMessage());
         }
-
-        // logger.debug(result.toString());
-        // logger.debug("--> TX ASH frame: {}", ashFrame);
-
     }
 
     /**
-     * Add an EZSP frame to the send queue. The sendQueue is a FIFO queue.
-     * This method queues a {@link EzspFrameRequest} frame without waiting for a response and
+     * Add a frame to the send queue. The sendQueue is a FIFO queue.
+     * This method queues a {@link ConBeeFrame} frame without waiting for a response and
      * no transaction management is performed.
      *
      * @param transaction
@@ -197,10 +201,10 @@ public class ConBeeFrameHandler {
 
         // logger.debug("TX EZSP queue: {}", sendQueue.size());
 
-        sendNextFrame();
+        outputFrame(request);
     }
 
     interface ConBeeListener {
-        boolean transactionEvent(EzspFrameResponse ezspResponse);
+        boolean transactionEvent(ConBeeFrame response);
     }
 }
