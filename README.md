@@ -12,11 +12,15 @@ This project aims to provide a ZigBee Cluster Library written in Java. Packages 
   
 ### Texas Instruments CC2531
 
+The library supports the Texas Instruments ZNP protocol over a serial interface.
+
 ### Silicon Labs Ember EM35x
+
+The library supports the Silicon Labs EZSP protocol using ASH over a serial interface.
 
 ## Tested Hardware
  
-## ZigBee Dongles
+## ZigBee Dongles and Chipsets
 
 The following table provides a summary of some of the dongles / chipsets that are available on the market nd their support within the library. Receive sensitivity and transmit power are the main parameters affecting RF performance - it should be noted that regulations may reduce transmit power in some areas of the world and other factors can also impact performance. 
  
@@ -24,10 +28,15 @@ The following table provides a summary of some of the dongles / chipsets that ar
 |--------------|------------|-------------|--------------|----------|
 | Xbee XU-Z11  | No         | -90dBm      | +4.5dBm      | Internal |
 | EM358        | Yes (EZSP) | -100dBm     | +8.0dBm      | Internal |
-| EM358LR      | Yes (EZSP) | -103dBm     | **+20.0dBm** | Internal |
+| **EM358LR**  | Yes (EZSP) | -103dBm     | **+20.0dBm** | Internal |
 | MGM111       | Yes (EZSP) | -99dBm      | +10dBm       | Internal |
 | ConBee       | No         | **-105dBm** | +8.7dBm      | Internal |
-| CC2531       | Yes (ZNP)  | -97dBm      | +10.0dBm     | Internal |
+| CC2530       | Yes (ZNP)  | -97dBm      | +4.5dBm      |          |
+| CC2531       | Yes (ZNP)  | -97dBm      | +4.5dBm      |          |
+| CC2538       | Yes (ZNP)  | -97dBm      | +7.0dBm      |          |
+| CC2650       | Yes (ZNP)  | -100dBm     | +5.0dBm      |          |
+| ATSAMR21     | No         | -99dBm      | +4.0dBm      |          |
+| JN5169       | No         | -96dBm      | +10.0dBm     |          |
 
 * Receive: Defines the typical receive performance. A smaller number is best.
 * Transmit: Defines the maximum output power. A larger number is best.
