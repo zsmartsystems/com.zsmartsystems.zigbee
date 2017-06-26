@@ -1272,6 +1272,11 @@ public class ZclProtocolCodeGenerator {
                 if (className.equals("ZclScenesCluster")) {
                     System.out.println();
                 }
+
+                if (!cluster.attributes.isEmpty()) {
+                    imports.add(packageRoot + packageZclProtocol + ".ZclClusterType");
+                }
+
                 List<String> importList = new ArrayList<String>();
                 importList.addAll(imports);
                 Collections.sort(importList);
@@ -1319,10 +1324,10 @@ public class ZclProtocolCodeGenerator {
                 out.println();
                 if (cluster.attributes.size() != 0) {
                     for (final Attribute attribute : cluster.attributes.values()) {
-                        out.println("        attributeMap.put(" + attribute.enumName + ", new ZclAttribute("
-                                + attribute.attributeId + ", \"" + attribute.attributeLabel + "\", " + "ZclDataType."
-                                + attribute.dataType + ", "
-                                + "mandatory".equals(attribute.attributeImplementation.toLowerCase()) + ", "
+                        out.println("        attributeMap.put(" + attribute.enumName
+                                + ", new ZclAttribute(ZclClusterType." + cluster.clusterType + ", " + attribute.enumName
+                                + ", \"" + attribute.attributeLabel + "\", " + "ZclDataType." + attribute.dataType
+                                + ", " + "mandatory".equals(attribute.attributeImplementation.toLowerCase()) + ", "
                                 + attribute.attributeAccess.toLowerCase().contains("read") + ", "
                                 + attribute.attributeAccess.toLowerCase().contains("write") + ", "
                                 + "mandatory".equals(attribute.attributeReporting.toLowerCase()) + "));");

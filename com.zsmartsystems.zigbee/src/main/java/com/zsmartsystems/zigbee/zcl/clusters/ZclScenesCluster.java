@@ -22,6 +22,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.scenes.ViewSceneCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.ViewSceneResponse;
 import com.zsmartsystems.zigbee.zcl.field.*;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -63,12 +64,12 @@ public class ZclScenesCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(6);
 
-        attributeMap.put(ATTR_SCENECOUNT, new ZclAttribute(0, "SceneCount", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTSCENE, new ZclAttribute(1, "CurrentScene", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTGROUP, new ZclAttribute(2, "CurrentGroup", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_SCENEVALID, new ZclAttribute(3, "SceneValid", ZclDataType.BOOLEAN, true, true, false, false));
-        attributeMap.put(ATTR_NAMESUPPORT, new ZclAttribute(4, "NameSupport", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_LASTCONFIGUREDBY, new ZclAttribute(5, "LastConfiguredBy", ZclDataType.IEEE_ADDRESS, false, true, false, false));
+        attributeMap.put(ATTR_SCENECOUNT, new ZclAttribute(ZclClusterType.SCENES, ATTR_SCENECOUNT, "SceneCount", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTSCENE, new ZclAttribute(ZclClusterType.SCENES, ATTR_CURRENTSCENE, "CurrentScene", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTGROUP, new ZclAttribute(ZclClusterType.SCENES, ATTR_CURRENTGROUP, "CurrentGroup", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_SCENEVALID, new ZclAttribute(ZclClusterType.SCENES, ATTR_SCENEVALID, "SceneValid", ZclDataType.BOOLEAN, true, true, false, false));
+        attributeMap.put(ATTR_NAMESUPPORT, new ZclAttribute(ZclClusterType.SCENES, ATTR_NAMESUPPORT, "NameSupport", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_LASTCONFIGUREDBY, new ZclAttribute(ZclClusterType.SCENES, ATTR_LASTCONFIGUREDBY, "LastConfiguredBy", ZclDataType.IEEE_ADDRESS, false, true, false, false));
 
         return attributeMap;
     }

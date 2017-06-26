@@ -12,6 +12,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.alarms.GetAlarmResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.alarms.ResetAlarmCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.alarms.ResetAlarmLogCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.alarms.ResetAllAlarmsCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -50,7 +51,7 @@ public class ZclAlarmsCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(1);
 
-        attributeMap.put(ATTR_ALARMCOUNT, new ZclAttribute(0, "AlarmCount", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ALARMCOUNT, new ZclAttribute(ZclClusterType.ALARMS, ATTR_ALARMCOUNT, "AlarmCount", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
     }

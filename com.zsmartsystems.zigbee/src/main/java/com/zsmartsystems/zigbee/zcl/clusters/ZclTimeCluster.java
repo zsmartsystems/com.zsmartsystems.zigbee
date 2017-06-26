@@ -5,6 +5,7 @@ import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -37,14 +38,14 @@ public class ZclTimeCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(8);
 
-        attributeMap.put(ATTR_TIME, new ZclAttribute(0, "Time", ZclDataType.UTCTIME, true, true, true, false));
-        attributeMap.put(ATTR_TIMESTATUS, new ZclAttribute(1, "TimeStatus", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_TIMEZONE, new ZclAttribute(2, "TimeZone", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_DSTSTART, new ZclAttribute(3, "DstStart", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_DSTEND, new ZclAttribute(4, "DstEnd", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_DSTSHIFT, new ZclAttribute(5, "DstShift", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_STANDARDTIME, new ZclAttribute(6, "StandardTime", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_LOCALTIME, new ZclAttribute(7, "LocalTime", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_TIME, new ZclAttribute(ZclClusterType.TIME, ATTR_TIME, "Time", ZclDataType.UTCTIME, true, true, true, false));
+        attributeMap.put(ATTR_TIMESTATUS, new ZclAttribute(ZclClusterType.TIME, ATTR_TIMESTATUS, "TimeStatus", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_TIMEZONE, new ZclAttribute(ZclClusterType.TIME, ATTR_TIMEZONE, "TimeZone", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_DSTSTART, new ZclAttribute(ZclClusterType.TIME, ATTR_DSTSTART, "DstStart", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_DSTEND, new ZclAttribute(ZclClusterType.TIME, ATTR_DSTEND, "DstEnd", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_DSTSHIFT, new ZclAttribute(ZclClusterType.TIME, ATTR_DSTSHIFT, "DstShift", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_STANDARDTIME, new ZclAttribute(ZclClusterType.TIME, ATTR_STANDARDTIME, "StandardTime", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_LOCALTIME, new ZclAttribute(ZclClusterType.TIME, ATTR_LOCALTIME, "LocalTime", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
     }
