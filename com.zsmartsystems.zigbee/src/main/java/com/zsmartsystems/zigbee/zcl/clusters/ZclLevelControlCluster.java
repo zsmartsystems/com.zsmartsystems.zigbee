@@ -14,6 +14,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StepCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StepWithOnOffCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.Stop2Command;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StopCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -46,10 +47,10 @@ public class ZclLevelControlCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(4);
 
-        attributeMap.put(ATTR_CURRENTLEVEL, new ZclAttribute(0, "CurrentLevel", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, true));
-        attributeMap.put(ATTR_REMAININGTIME, new ZclAttribute(1, "RemainingTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_ONOFFTRANSITIONTIME, new ZclAttribute(16, "OnOffTransitionTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_ONLEVEL, new ZclAttribute(17, "OnLevel", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_CURRENTLEVEL, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_CURRENTLEVEL, "CurrentLevel", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, true));
+        attributeMap.put(ATTR_REMAININGTIME, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_REMAININGTIME, "RemainingTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ONOFFTRANSITIONTIME, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_ONOFFTRANSITIONTIME, "OnOffTransitionTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_ONLEVEL, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_ONLEVEL, "OnLevel", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
 
         return attributeMap;
     }

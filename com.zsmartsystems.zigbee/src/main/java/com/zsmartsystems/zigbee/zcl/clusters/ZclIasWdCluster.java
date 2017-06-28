@@ -9,6 +9,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.SquawkCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.StartWarningCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -42,10 +43,10 @@ public class ZclIasWdCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(4);
 
-        attributeMap.put(ATTR_MAXDURATION, new ZclAttribute(0, "MaxDuration", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
-        attributeMap.put(ATTR_ZONETYPE, new ZclAttribute(1, "ZoneType", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ZONESTATUS, new ZclAttribute(2, "ZoneStatus", ZclDataType.BITMAP_16_BIT, true, true, false, false));
-        attributeMap.put(ATTR_IAS_CIE_ADDRESS, new ZclAttribute(16, "IAS_CIE_Address", ZclDataType.IEEE_ADDRESS, true, true, true, false));
+        attributeMap.put(ATTR_MAXDURATION, new ZclAttribute(ZclClusterType.IAS_WD, ATTR_MAXDURATION, "MaxDuration", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_ZONETYPE, new ZclAttribute(ZclClusterType.IAS_WD, ATTR_ZONETYPE, "ZoneType", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_ZONESTATUS, new ZclAttribute(ZclClusterType.IAS_WD, ATTR_ZONESTATUS, "ZoneStatus", ZclDataType.BITMAP_16_BIT, true, true, false, false));
+        attributeMap.put(ATTR_IAS_CIE_ADDRESS, new ZclAttribute(ZclClusterType.IAS_WD, ATTR_IAS_CIE_ADDRESS, "IAS_CIE_Address", ZclDataType.IEEE_ADDRESS, true, true, true, false));
 
         return attributeMap;
     }

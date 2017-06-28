@@ -2,6 +2,7 @@ package com.zsmartsystems.zigbee.zcl;
 
 import java.util.Calendar;
 
+import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -11,6 +12,11 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  */
 public class ZclAttribute {
+    /**
+     *
+     */
+    private final ZclClusterType cluster;
+
     /**
      * The attribute identifier field is 16-bits in length and shall contain the
      * identifier of the attribute that the reporting configuration details
@@ -102,6 +108,7 @@ public class ZclAttribute {
     /**
      * Constructor used to set the static information
      *
+     * @param cluster
      * @param id
      * @param dataType
      * @param mandatory
@@ -109,8 +116,9 @@ public class ZclAttribute {
      * @param writeable
      * @param reportable
      */
-    public ZclAttribute(final int id, final String name, final ZclDataType dataType, final boolean mandatory,
-            final boolean readable, final boolean writeable, final boolean reportable) {
+    public ZclAttribute(final ZclClusterType cluster, final int id, final String name, final ZclDataType dataType,
+            final boolean mandatory, final boolean readable, final boolean writeable, final boolean reportable) {
+        this.cluster = cluster;
         this.id = id;
         this.name = name;
         this.dataType = dataType;
@@ -118,6 +126,15 @@ public class ZclAttribute {
         this.readable = readable;
         this.writeable = writeable;
         this.reportable = reportable;
+    }
+
+    /**
+     * Gets the {@link ZclClusterType} to which this attribute belongs
+     * 
+     * @return the {@link ZclClusterType} for this attribute
+     */
+    public ZclClusterType getCluster() {
+        return cluster;
     }
 
     /**
