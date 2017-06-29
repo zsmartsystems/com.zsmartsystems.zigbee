@@ -33,8 +33,9 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG;
 public interface ApplicationFrameworkMessageListener {
     /**
      * This method is invoked by the {@link ZigBeeNetworkManager} on all the
-     * {@link ApplicationFrameworkMessageListener}<br>
-     * when a {@link com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG} command arrive from the ZigBee NIC
+     * {@link ApplicationFrameworkMessageListener}
+     * when a {@link com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG} command arrive from the
+     * ZigBee NIC
      *
      * @param msg the {@link AF_INCOMING_MSG} arrived that has to be handled
      */
