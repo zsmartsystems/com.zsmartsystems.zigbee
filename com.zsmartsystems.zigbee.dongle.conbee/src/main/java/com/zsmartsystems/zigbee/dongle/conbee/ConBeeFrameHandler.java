@@ -32,7 +32,7 @@ public class ConBeeFrameHandler {
     private final static int SLIP_ESC_ESC = 0xDD;
     private final static int SLIP_END = 0xC0;
 
-    private final int SLIP_MAX_LENGTH = 131;
+    private final int SLIP_MAX_LENGTH = 84;
 
     /**
      * The queue of {@link EzspFrameRequest} frames waiting to be sent
@@ -69,14 +69,22 @@ public class ConBeeFrameHandler {
      * @param frameHandler
      *            the packet handler
      */
-    public ConBeeFrameHandler(final InputStream inputStream, final OutputStream outputStream) {
+    public ConBeeFrameHandler(final InputStream inputStream, final OutputStream outputStream,
+            ZigBeeDongleConBee dongle) {
         this.outputStream = outputStream;
         // this.inputStream = inputStream;
+
+        try {
+            outputStream.write(SLIP_END);
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
         parserThread = new Thread("ConBeeFrameHandler") {
             @Override
             public void run() {
-                logger.trace("ConBeeFrameHandler thread started");
+                logger.debug("ConBeeFrameHandler thread started");
 
                 int exceptionCnt = 0;
                 int[] inputBuffer = new int[SLIP_MAX_LENGTH];
@@ -88,7 +96,7 @@ public class ConBeeFrameHandler {
                 while (!close) {
                     try {
                         int val = inputStream.read();
-                        logger.trace("CONBEE RX: " + String.format("%02X", val));
+                        logger.debug("CONBEE RX: " + String.format("%02X", val));
                         if (val == SLIP_ESC) {
                             escaped = true;
                         } else if (val == SLIP_END) {
@@ -167,8 +175,8 @@ public class ConBeeFrameHandler {
         try {
             for (int val : frame.getOutputBuffer()) {
                 // result.append(" ");
-                // result.append(String.format("%02X", b));
-                // logger.debug("ASH TX: " + String.format("%02X", b));
+                // result.append(String.format("%02X", val));
+                logger.debug("CONBEE TX: " + String.format("%02X", val));
                 switch (val) {
                     case SLIP_END:
                         outputStream.write(SLIP_ESC);
@@ -183,6 +191,9 @@ public class ConBeeFrameHandler {
                         break;
                 }
             }
+
+            outputStream.write(SLIP_END);
+
         } catch (IOException e) {
             logger.debug(e.getMessage());
         }
@@ -199,7 +210,7 @@ public class ConBeeFrameHandler {
     public void queueFrame(ConBeeFrame request) {
         sendQueue.add(request);
 
-        // logger.debug("TX EZSP queue: {}", sendQueue.size());
+        logger.debug("TX CONBEE queue: {}", sendQueue.size());
 
         outputFrame(request);
     }

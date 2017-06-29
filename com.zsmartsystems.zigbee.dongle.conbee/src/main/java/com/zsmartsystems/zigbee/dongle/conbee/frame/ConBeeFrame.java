@@ -11,7 +11,7 @@ public abstract class ConBeeFrame {
 
     protected int sequence;
 
-    private int[] buffer;
+    private int[] buffer = new int[129];
     private int length;
 
     public abstract int[] getOutputBuffer();

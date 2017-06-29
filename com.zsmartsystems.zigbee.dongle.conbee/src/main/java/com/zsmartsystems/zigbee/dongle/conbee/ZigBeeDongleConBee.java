@@ -7,6 +7,8 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeNetworkParameter;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterRequest;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
@@ -30,9 +32,11 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
     private ZigBeeTransportReceive zigbeeNetworkReceive;
 
     /**
-     * The Ember version used in this system. Set during initialisation and saved in case the client is interested.
+     * The serial port used to connect to the dongle
      */
-    private String versionString = "Unknown";
+    private ZigBeePort serialPort;
+
+    ConBeeFrameHandler conbeeHandler;
 
     /**
      * Constructor to configure the port interface.
@@ -41,6 +45,8 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
      *            the serial port
      */
     public ZigBeeDongleConBee(final ZigBeePort serialPort) {
+        this.serialPort = serialPort;
+
     }
 
     @Override
@@ -48,6 +54,17 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
         logger.debug("ConBee transport initialize");
 
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
+
+        if (!serialPort.open()) {
+            logger.error("Unable to open ConBee serial port");
+            return ZigBeeInitializeResponse.FAILED;
+        }
+
+        conbeeHandler = new ConBeeFrameHandler(serialPort.getInputStream(), serialPort.getOutputStream(), this);
+
+        ConBeeReadParameterRequest readParameter = new ConBeeReadParameterRequest();
+        readParameter.setParameter(ConBeeNetworkParameter.MAC_ADDRESS);
+        conbeeHandler.queueFrame(readParameter);
 
         return ZigBeeInitializeResponse.JOINED;
     }
@@ -100,7 +117,7 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
 
     @Override
     public String getVersionString() {
-        return versionString;
+        return "";
     }
 
     @Override
