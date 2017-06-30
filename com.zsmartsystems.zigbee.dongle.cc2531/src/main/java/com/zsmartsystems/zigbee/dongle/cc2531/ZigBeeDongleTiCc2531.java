@@ -24,8 +24,8 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.ApplicationFrameworkMessag
 import com.zsmartsystems.zigbee.dongle.cc2531.network.AsynchronousCommandListener;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.DriverStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.NetworkMode;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.CommandInterfaceImpl;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.ZigBeeNetworkManagerImpl;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST;
@@ -59,9 +59,9 @@ public class ZigBeeDongleTiCc2531
     private final Logger logger = LoggerFactory.getLogger(ZigBeeDongleTiCc2531.class);
 
     /**
-     * The {@link ZigBeeNetworkManagerImpl ZigBee network manager}.
+     * The {@link ZigBeeNetworkManager ZigBee network manager}.
      */
-    private final ZigBeeNetworkManagerImpl networkManager;
+    private final ZigBeeNetworkManager networkManager;
 
     /**
      * The reference to the network
@@ -83,7 +83,7 @@ public class ZigBeeDongleTiCc2531
      *            the serial port
      */
     public ZigBeeDongleTiCc2531(final ZigBeePort serialPort) {
-        networkManager = new ZigBeeNetworkManagerImpl(new CommandInterfaceImpl(serialPort), NetworkMode.Coordinator,
+        networkManager = new ZigBeeNetworkManager(new CommandInterfaceImpl(serialPort), NetworkMode.Coordinator,
                 2500L);
     }
 

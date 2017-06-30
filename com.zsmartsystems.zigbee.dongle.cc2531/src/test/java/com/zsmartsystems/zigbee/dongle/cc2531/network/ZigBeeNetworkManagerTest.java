@@ -1,4 +1,4 @@
-package com.zsmartsystems.zigbee.dongle.cc2531.network.impl;
+package com.zsmartsystems.zigbee.dongle.cc2531.network;
 
 import static org.junit.Assert.assertTrue;
 
@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.dongle.cc2531.network.CommandInterface;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.SynchronousCommandListener;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 
 /**
@@ -20,7 +21,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
  * @author Chris Jackson
  *
  */
-public class ZigBeeNetworkManagerImplTest {
+public class ZigBeeNetworkManagerTest {
     protected ArgumentCaptor<ZToolPacket> argumentPacket;
     protected ArgumentCaptor<SynchronousCommandListener> argumentListener;
     protected ArgumentCaptor<Long> argumentTimeout;
@@ -44,12 +45,12 @@ public class ZigBeeNetworkManagerImplTest {
     @Test
     public void dongleSetChannel() {
         CommandInterface commandInterface = getCommandInterface();
-        ZigBeeNetworkManagerImpl networkManager = new ZigBeeNetworkManagerImpl(commandInterface, null, 0);
+        ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(commandInterface, null, 0);
         networkManager.setRetryConfiguration(1, 0);
 
         Method privateMethod;
         try {
-            privateMethod = ZigBeeNetworkManagerImpl.class.getDeclaredMethod("dongleSetChannel",
+            privateMethod = ZigBeeNetworkManager.class.getDeclaredMethod("dongleSetChannel",
                     new Class[] { int[].class });
             privateMethod.setAccessible(true);
 
@@ -90,12 +91,12 @@ public class ZigBeeNetworkManagerImplTest {
 
     @Test
     public void buildChannelMask() {
-        ZigBeeNetworkManagerImpl networkManager = new ZigBeeNetworkManagerImpl(null, null, 0);
+        ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(null, null, 0);
 
         int[] mask;
         Method privateMethod;
         try {
-            privateMethod = ZigBeeNetworkManagerImpl.class.getDeclaredMethod("buildChannelMask",
+            privateMethod = ZigBeeNetworkManager.class.getDeclaredMethod("buildChannelMask",
                     new Class[] { int.class });
             privateMethod.setAccessible(true);
 
