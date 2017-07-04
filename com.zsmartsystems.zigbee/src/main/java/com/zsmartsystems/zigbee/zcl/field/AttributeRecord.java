@@ -14,8 +14,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 public class AttributeRecord implements ZclListItemField {
     /**
      * The direction.
+     * <p>
+     * The direction field specifies whether values of the attribute are reported (0x00), or
+     * whether reports of the attribute are received (0x01).
+     *
      */
-    private boolean direction;
+    private int direction;
     /**
      * The attribute identifier.
      */
@@ -40,37 +44,43 @@ public class AttributeRecord implements ZclListItemField {
     }
 
     /**
-     * Is direction?
+     * Gets the direction
+     * <p>
+     * The direction field specifies whether values of the attribute are reported (0x00), or
+     * whether reports of the attribute are received (0x01).
      *
      * @return the direction
      */
-    public boolean isDirection() {
+    public int getDirection() {
         return direction;
     }
 
     /**
      * Sets direction.
+     * <p>
+     * The direction field specifies whether values of the attribute are reported (0x00), or
+     * whether reports of the attribute are received (0x01).
      *
      * @param direction the direction
      */
-    public void setDirection(boolean direction) {
+    public void setDirection(int direction) {
         this.direction = direction;
     }
 
     @Override
     public void serialize(final ZigBeeSerializer serializer) {
-        serializer.appendZigBeeType(direction, ZclDataType.BOOLEAN);
+        serializer.appendZigBeeType(direction, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.appendZigBeeType(attributeIdentifier, ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        direction = (boolean) deserializer.readZigBeeType(ZclDataType.BOOLEAN);
+        direction = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public String toString() {
-        return "Attribute Record: direction=" + direction + ", attributeIdentifier=" + attributeIdentifier;
+        return "Attribute Record[ direction=" + direction + ", attributeIdentifier=" + attributeIdentifier + "]";
     }
 }

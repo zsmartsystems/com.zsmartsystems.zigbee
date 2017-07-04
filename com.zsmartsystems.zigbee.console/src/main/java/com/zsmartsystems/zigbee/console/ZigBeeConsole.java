@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.Future;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -114,8 +115,11 @@ public final class ZigBeeConsole {
         commands.put("unlisten", new UnlistenCommand());
         commands.put("subscribe", new SubscribeCommand());
         commands.put("unsubscribe", new UnsubscribeCommand());
+
         commands.put("read", new ReadCommand());
         commands.put("write", new WriteCommand());
+        commands.put("reportcfg", new ReportConfigCommand());
+
         commands.put("join", new JoinCommand());
         commands.put("lqi", new LqiCommand());
         commands.put("warn", new WarnCommand());
@@ -1544,7 +1548,8 @@ public final class ZigBeeConsole {
 
                 final int statusCode = response.getRecords().get(0).getStatus();
                 if (statusCode == 0) {
-                    out.println("Attribute " + response.getRecords().get(0).getAttributeIdentifier() + ", type "
+                    out.println("Cluster " + response.getClusterId() + ", Attribute "
+                            + response.getRecords().get(0).getAttributeIdentifier() + ", type "
                             + response.getRecords().get(0).getAttributeDataType() + ", value: "
                             + response.getRecords().get(0).getAttributeValue());
                 } else {
@@ -1630,6 +1635,83 @@ public final class ZigBeeConsole {
                 out.println("Error executing command: " + result.getMessage());
                 return true;
             }
+        }
+    }
+
+    /**
+     * Reads an attribute from a device.
+     */
+    private class ReportConfigCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Read the report configuration of an attribute.";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "reportcfg [DEVICE] [CLUSTER] [ATTRIBUTE]";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
+            if (args.length != 4) {
+                return false;
+            }
+
+            final int clusterId;
+            try {
+                clusterId = Integer.parseInt(args[2]);
+            } catch (final NumberFormatException e) {
+                return false;
+            }
+            final int attributeId;
+            try {
+                attributeId = Integer.parseInt(args[3]);
+            } catch (final NumberFormatException e) {
+                return false;
+            }
+
+            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            if (device == null) {
+                print("Device not found.", out);
+                return false;
+            }
+            ZclCluster cluster = device.getCluster(clusterId);
+
+            ZclAttribute attribute = cluster.getAttribute(attributeId);
+
+            final Future<CommandResult> future = cluster.getReporting(attribute);
+            CommandResult result = future.get();
+
+            if (result.isSuccess()) {
+                final ReadAttributesResponse response = result.getResponse();
+
+                final int statusCode = response.getRecords().get(0).getStatus();
+                if (statusCode == 0) {
+                    out.println("Cluster " + response.getClusterId() + ", Attribute "
+                            + response.getRecords().get(0).getAttributeIdentifier() + ", type "
+                            + response.getRecords().get(0).getAttributeDataType() + ", value: "
+                            + response.getRecords().get(0).getAttributeValue());
+                } else {
+                    final ZclStatus status = ZclStatus.getStatus((byte) statusCode);
+                    out.println("Attribute value read error: " + status);
+                }
+
+                return true;
+            } else {
+                out.println("Error executing command: " + result.getMessage());
+                return true;
+            }
+
         }
     }
 

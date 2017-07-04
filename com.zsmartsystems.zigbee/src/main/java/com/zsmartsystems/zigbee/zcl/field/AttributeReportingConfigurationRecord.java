@@ -46,6 +46,21 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 public class AttributeReportingConfigurationRecord implements ZclListItemField {
     /**
      * The direction.
+     * <p>
+     * The direction field specifies whether values of the attribute are be reported, or
+     * whether reports of the attribute are to be received.
+     * <p>
+     * If this value is set to 0x00, then the attribute data type field, the minimum
+     * reporting interval field, the maximum reporting interval field and the reportable
+     * change field are included in the payload, and the timeout period field is omitted.
+     * The record is sent to a cluster server (or client) to configure how it sends reports to
+     * a client (or server) of the same cluster.
+     * <p>
+     * If this value is set to 0x01, then the timeout period field is included in the payload,
+     * and the attribute data type field, the minimum reporting interval field, the
+     * maximum reporting interval field and the reportable change field are omitted. The
+     * record is sent to a cluster client (or server) to configure how it should expect
+     * reports from a server (or client) of the same cluster.
      */
     private int direction;
     /**
@@ -101,7 +116,22 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
     private int timeoutPeriod;
 
     /**
-     * Gets direction.
+     * Gets the direction
+     * <p>
+     * The direction field specifies whether values of the attribute are be reported, or
+     * whether reports of the attribute are to be received.
+     * <p>
+     * If this value is set to 0x00, then the attribute data type field, the minimum
+     * reporting interval field, the maximum reporting interval field and the reportable
+     * change field are included in the payload, and the timeout period field is omitted.
+     * The record is sent to a cluster server (or client) to configure how it sends reports to
+     * a client (or server) of the same cluster.
+     * <p>
+     * If this value is set to 0x01, then the timeout period field is included in the payload,
+     * and the attribute data type field, the minimum reporting interval field, the
+     * maximum reporting interval field and the reportable change field are omitted. The
+     * record is sent to a cluster client (or server) to configure how it should expect
+     * reports from a server (or client) of the same cluster.
      *
      * @return the direction
      */
@@ -110,7 +140,22 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
     }
 
     /**
-     * Sets direction.
+     * Sets the direction.
+     * <p>
+     * The direction field specifies whether values of the attribute are be reported, or
+     * whether reports of the attribute are to be received.
+     * <p>
+     * If this value is set to 0x00, then the attribute data type field, the minimum
+     * reporting interval field, the maximum reporting interval field and the reportable
+     * change field are included in the payload, and the timeout period field is omitted.
+     * The record is sent to a cluster server (or client) to configure how it sends reports to
+     * a client (or server) of the same cluster.
+     * <p>
+     * If this value is set to 0x01, then the timeout period field is included in the payload,
+     * and the attribute data type field, the minimum reporting interval field, the
+     * maximum reporting interval field and the reportable change field are omitted. The
+     * record is sent to a cluster client (or server) to configure how it should expect
+     * reports from a server (or client) of the same cluster.
      *
      * @param direction the direction
      */
