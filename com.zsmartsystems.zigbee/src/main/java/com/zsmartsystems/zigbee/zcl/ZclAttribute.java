@@ -130,7 +130,7 @@ public class ZclAttribute {
 
     /**
      * Gets the {@link ZclClusterType} to which this attribute belongs
-     * 
+     *
      * @return the {@link ZclClusterType} for this attribute
      */
     public ZclClusterType getCluster() {
@@ -300,7 +300,20 @@ public class ZclAttribute {
 
     @Override
     public String toString() {
-        return "ZclAttribute [id=" + id + ", name=" + name + ", dataType=" + dataType + ", lastValue=" + lastValue
-                + "]";
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("ZclAttribute [cluster=");
+        builder.append(cluster);
+        builder.append(", id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", dataType=");
+        builder.append(dataType);
+        builder.append(", lastValue=");
+        builder.append(lastValue);
+        builder.append(']');
+
+        return builder.toString();
     }
 }

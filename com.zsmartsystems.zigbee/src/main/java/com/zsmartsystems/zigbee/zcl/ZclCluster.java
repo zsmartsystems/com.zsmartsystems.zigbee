@@ -18,6 +18,8 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
+import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
@@ -188,6 +190,24 @@ public abstract class ZclCluster {
     public Future<CommandResult> setReporting(final ZclAttribute attribute, final int minInterval,
             final int maxInterval) {
         return setReporting(attribute, minInterval, maxInterval, null);
+    }
+
+    /**
+     * Gets the reporting configuration for an attribute
+     *
+     * @param attribute the {@link ZclAttribute} on which to enable reporting
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> getReporting(final ZclAttribute attribute) {
+        final ReadReportingConfigurationCommand command = new ReadReportingConfigurationCommand();
+        command.setClusterId(clusterId);
+        AttributeRecord record = new AttributeRecord();
+        record.setAttributeIdentifier(attribute.getId());
+        record.setDirection(0);
+        command.setRecords(Collections.singletonList(record));
+        command.setDestinationAddress(zigbeeAddress);
+
+        return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
     /**
