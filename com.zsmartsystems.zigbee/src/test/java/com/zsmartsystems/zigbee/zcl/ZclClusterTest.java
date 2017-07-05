@@ -13,6 +13,7 @@ import com.zsmartsystems.zigbee.CommandResponseMatcher;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
@@ -72,5 +73,21 @@ public class ZclClusterTest {
         AttributeReportingConfigurationRecord record = cfgCommand.getRecords().get(0);
         assertEquals(0, record.getAttributeIdentifier());
         assertEquals(0, record.getDirection());
+    }
+
+    @Test
+    public void getClusterId() {
+        createNetworkManager();
+
+        ZclCluster cluster = new ZclOnOffCluster(networkManager, new ZigBeeDeviceAddress(1));
+        assertEquals(Integer.valueOf(6), cluster.getClusterId());
+    }
+
+    @Test
+    public void getClusterName() {
+        createNetworkManager();
+
+        ZclCluster cluster = new ZclLevelControlCluster(networkManager, new ZigBeeDeviceAddress(1));
+        assertEquals("Level Control", cluster.getClusterName());
     }
 }
