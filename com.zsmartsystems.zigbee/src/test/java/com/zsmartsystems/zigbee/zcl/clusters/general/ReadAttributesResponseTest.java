@@ -1,0 +1,43 @@
+package com.zsmartsystems.zigbee.zcl.clusters.general;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
+import org.junit.Test;
+
+import com.zsmartsystems.zigbee.CommandTest;
+import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
+public class ReadAttributesResponseTest extends CommandTest {
+
+    @Test
+    public void testReceive() {
+        int[] packet = getPacketData("05 00 00 42 06 4C 43 54 30 30 33 21 00 1D ");
+
+        ReadAttributesResponse response = new ReadAttributesResponse();
+
+        DefaultDeserializer deserializer = new DefaultDeserializer(packet);
+        ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
+
+        response.deserialize(fieldDeserializer);
+
+        System.out.println(response);
+
+        List<ReadAttributeStatusRecord> records = response.getRecords();
+        ReadAttributeStatusRecord record = records.get(0);
+        assertEquals(ZclDataType.CHARACTER_STRING, record.getAttributeDataType());
+        assertEquals(5, record.getAttributeIdentifier());
+        assertEquals(0, record.getStatus());
+        assertEquals("LCT003", record.getAttributeValue());
+    }
+
+}

@@ -37,6 +37,26 @@ public class IeeeAddressResponseTest extends CommandTest {
     }
 
     @Test
+    public void testReceiveVeryShort() {
+        // Short response - ie not extended. This is from the Ember response!
+        int[] packet = getPacketData("00 00 42 CC 12 00 00 24 E5 7C AD B8");
+
+        IeeeAddressResponse addressResponse = new IeeeAddressResponse();
+
+        DefaultDeserializer deserializer = new DefaultDeserializer(packet);
+        ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
+
+        addressResponse.deserialize(fieldDeserializer);
+
+        System.out.println(addressResponse);
+
+        assertEquals(ZdoStatus.SUCCESS, addressResponse.getStatus());
+        assertEquals(new IeeeAddress("7CE524000012CC42"), addressResponse.getIeeeAddrRemoteDev());
+        assertEquals(Integer.valueOf(47277), addressResponse.getNwkAddrRemoteDev());
+        assertEquals(0x8001, (int) addressResponse.getClusterId());
+    }
+
+    @Test
     public void testReceive() {
         int[] packet = getPacketData("00 00 EC A1 A5 01 00 8D 15 00 35 38 00 01 2A 2F");
 
