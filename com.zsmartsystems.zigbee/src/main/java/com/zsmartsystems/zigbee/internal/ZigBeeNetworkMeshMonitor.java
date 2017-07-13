@@ -302,8 +302,8 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
 
                 // Continue with next request
                 // TODO: Differentiate between total devices, and devices in this request
-                startIndex += ieeeAddressResponse.getNumAssocDev();
-                totalNodes = ieeeAddressResponse.getNumAssocDev();
+                startIndex += ieeeAddressResponse.getNumAssocDev() == null ? 0 : ieeeAddressResponse.getNumAssocDev();
+                totalNodes = ieeeAddressResponse.getNumAssocDev() == null ? 0 : ieeeAddressResponse.getNumAssocDev();
             } else {
                 logger.debug("{}: Ieee Address request returned {}", networkAddress, ieeeAddressResponse);
 
