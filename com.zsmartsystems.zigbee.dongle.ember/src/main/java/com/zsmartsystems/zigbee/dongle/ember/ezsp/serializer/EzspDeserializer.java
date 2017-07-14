@@ -16,6 +16,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurity
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinDecision;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMacPassthroughType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNeighborTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
@@ -218,6 +219,10 @@ public class EzspDeserializer {
         return list;
     }
 
+    public EmberMacPassthroughType deserializeEmberMacPassthroughType() {
+        return EmberMacPassthroughType.getEmberMacPassthroughType(deserializeUInt8());
+    }
+
     public EmberJoinMethod deserializeEmberJoinMethod() {
         return EmberJoinMethod.getEmberJoinMethod(deserializeUInt8());
     }
@@ -249,4 +254,5 @@ public class EzspDeserializer {
 
         return list;
     }
+
 }

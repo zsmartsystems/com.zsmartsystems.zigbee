@@ -25,6 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingRouteError
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingRouteRecordHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupEui64ByNodeIdResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMacFilterMatchMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNeighborCountResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
@@ -92,6 +93,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_LEAVE_NETWORK = 0x20;
     protected static final int FRAME_ID_LOOKUP_EUI64_BY_NODE_ID = 0x61;
     // protected static final int FRAME_ID_MAXIMUM_PAYLOAD_LENGTH = 0x33;
+    protected static final int FRAME_ID_MAC_FILTER_MATCH_MESSAGE_HANDLER = 0x46;
     protected static final int FRAME_ID_MESSAGE_SENT_HANDLER = 0x3F;
     protected static final int FRAME_ID_NEIGHBOR_COUNT = 0x7A;
     protected static final int FRAME_ID_NETWORK_FOUND_HANDLER = 0x1B;
@@ -139,6 +141,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER, EzspIncomingRouteErrorHandler.class);
         ezspHandlerMap.put(FRAME_ID_LEAVE_NETWORK, EzspLeaveNetworkResponse.class);
         ezspHandlerMap.put(FRAME_ID_LOOKUP_EUI64_BY_NODE_ID, EzspLookupEui64ByNodeIdResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MAC_FILTER_MATCH_MESSAGE_HANDLER, EzspMacFilterMatchMessageHandler.class);
         ezspHandlerMap.put(FRAME_ID_MESSAGE_SENT_HANDLER, EzspMessageSentHandler.class);
         ezspHandlerMap.put(FRAME_ID_NEIGHBOR_COUNT, EzspNeighborCountResponse.class);
         ezspHandlerMap.put(FRAME_ID_NETWORK_FOUND_HANDLER, EzspNetworkFoundHandler.class);

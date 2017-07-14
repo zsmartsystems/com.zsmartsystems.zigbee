@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
@@ -222,7 +221,6 @@ public class ZigBeeNetworkManagerTest
         assertEquals(56, apsFrame.getDestinationEndpoint());
     }
 
-    @Ignore
     @Test
     public void testReceiveZclCommand() {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
