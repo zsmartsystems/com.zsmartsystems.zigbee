@@ -69,8 +69,8 @@ public class NodeDescriptorRequest extends ZdoRequest implements CommandResponse
             return false;
         }
 
-        return (((NodeDescriptorRequest) request).getDestinationAddress()
-                .equals(((NodeDescriptorResponse) response).getSourceAddress()));
+        return (((NodeDescriptorRequest) request).getNwkAddrOfInterest()
+                .equals(((NodeDescriptorResponse) response).getNwkAddrOfInterest()));
     }
 
     @Override

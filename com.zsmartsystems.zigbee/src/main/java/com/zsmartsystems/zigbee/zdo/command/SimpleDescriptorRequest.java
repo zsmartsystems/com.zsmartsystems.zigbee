@@ -94,8 +94,8 @@ public class SimpleDescriptorRequest extends ZdoRequest implements CommandRespon
             return false;
         }
 
-        return (((SimpleDescriptorRequest) request).getDestinationAddress()
-                .equals(((SimpleDescriptorResponse) response).getSourceAddress()))
+        return (((SimpleDescriptorRequest) request).getNwkAddrOfInterest()
+                .equals(((SimpleDescriptorResponse) response).getNwkAddrOfInterest()))
                 && (((SimpleDescriptorRequest) request).getEndpoint()
                 .equals(((SimpleDescriptorResponse) response).getSimpleDescriptor().getEndpoint()));
     }
