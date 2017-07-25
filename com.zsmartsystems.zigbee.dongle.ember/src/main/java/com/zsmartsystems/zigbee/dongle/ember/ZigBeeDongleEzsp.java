@@ -128,12 +128,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_MAX_HOPS, 30);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_TX_POWER_MODE, 0);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SUPPORTED_NETWORKS, 2);
-
-        // New
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_KEY_TABLE_SIZE, 4);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS, 0x01);
-
-        // stackConfiguration.put(EzspConfigId.EZSP_CONFIG_MAX_END_DEVICE_CHILDREN, 2);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_MAX_END_DEVICE_CHILDREN, 16);
 
         stackPolicies = new HashMap<EzspPolicyId, EzspDecisionId>();
         stackPolicies.put(EzspPolicyId.EZSP_TRUST_CENTER_POLICY, EzspDecisionId.EZSP_ALLOW_PRECONFIGURED_KEY_JOINS);

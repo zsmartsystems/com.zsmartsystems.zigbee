@@ -161,13 +161,13 @@ public class AshFrameHandler {
 
                                 final AshFrame packet = AshFrame.createFromInput(inputBuffer, inputCount);
                                 if (packet == null) {
-                                    logger.error("Received a BAD PACKET {}",
+                                    logger.error("<-- RX ASH frame: BAD PACKET {}",
                                             AshFrame.frameToString(inputBuffer, inputCount));
 
                                     // Send a NAK
                                     responseFrame = new AshFrameNak(ackNum);
                                 } else {
-                                    // logger.debug("<-- RX ASH frame: {}", packet.toString());
+                                    logger.debug("<-- RX ASH frame: {}", packet.toString());
 
                                     // Reset the exception counter
                                     exceptionCnt = 0;
@@ -180,7 +180,7 @@ public class AshFrameHandler {
 
                                             // Check for out of sequence frame number
                                             if (packet.getFrmNum() != ackNum) {
-                                                // Send an NAK
+                                                // Send a NAK
                                                 responseFrame = new AshFrameNak(ackNum);
                                             } else {
                                                 // Frame was in sequence
@@ -235,15 +235,15 @@ public class AshFrameHandler {
                                         default:
                                             break;
                                     }
-
-                                    // Send an ACK
-                                    if (responseFrame != null) {
-                                        sendFrame(responseFrame);
-                                    }
-
-                                    // Send our next frame
-                                    sendNextFrame();
                                 }
+
+                                // Send the response
+                                if (responseFrame != null) {
+                                    sendFrame(responseFrame);
+                                }
+
+                                // Send the next frame
+                                sendNextFrame();
                             }
                             inputCount = 0;
                             inputError = false;
@@ -314,7 +314,7 @@ public class AshFrameHandler {
 
         // Check how many frames are outstanding
         if (sentQueue.size() >= TX_WINDOW) {
-            logger.trace("Sent queue larger than window [{} > {}].", sentQueue.size(), TX_WINDOW);
+            logger.debug("Sent queue larger than window [{} > {}].", sentQueue.size(), TX_WINDOW);
             return;
         }
 
@@ -358,6 +358,7 @@ public class AshFrameHandler {
     // Synchronize this method to ensure a packet gets sent as a block
     private synchronized void outputFrame(AshFrame ashFrame) {
         ashFrame.setAckNum(ackNum);
+        logger.debug("--> TX ASH frame: {}", ashFrame);
 
         // Send the data
         try {
@@ -372,7 +373,6 @@ public class AshFrameHandler {
         }
 
         // logger.debug(result.toString());
-        // logger.debug("--> TX ASH frame: {}", ashFrame);
 
         // Only start the timer for data frames
         if (ashFrame instanceof AshFrameData) {
@@ -392,7 +392,7 @@ public class AshFrameHandler {
     public void queueFrame(EzspFrameRequest request) {
         sendQueue.add(request);
 
-        // logger.debug("TX EZSP queue: {}", sendQueue.size());
+        logger.debug("TX EZSP queue: {}", sendQueue.size());
 
         sendNextFrame();
     }
