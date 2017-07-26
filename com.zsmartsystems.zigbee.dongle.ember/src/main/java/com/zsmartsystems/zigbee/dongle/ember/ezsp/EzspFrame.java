@@ -277,14 +277,29 @@ public abstract class EzspFrame {
         return sequenceNumber;
     }
 
+    /**
+     * Checks if this frame is a response frame
+     *
+     * @return true if this is a response
+     */
     public boolean isResponse() {
         return isResponse;
     }
 
+    /**
+     * Gets the Ember frame ID for this frame
+     *
+     * @return the Ember frame Id
+     */
     public int getFrameId() {
         return frameId;
     }
 
+    /**
+     * Creates and {@link EzspFrameResponse} from the {@link AshFrameData}.
+     *
+     * @return the {@link EzspFrameResponse} or null if the response can't be created.
+     */
     public static EzspFrameResponse createHandler(AshFrameData data) {
         Class<?> ezspClass = ezspHandlerMap.get(data.getDataBuffer()[2]);
         if (ezspClass == null) {
