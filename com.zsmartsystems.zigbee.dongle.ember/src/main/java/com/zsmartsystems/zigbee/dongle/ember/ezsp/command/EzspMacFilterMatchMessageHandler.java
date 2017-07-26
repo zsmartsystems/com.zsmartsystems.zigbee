@@ -74,7 +74,7 @@ public class EzspMacFilterMatchMessageHandler extends EzspFrameResponse {
         lastHopLqi = deserializer.deserializeUInt8();
         lastHopRssi = deserializer.deserializeInt8S();
         int messageLength = deserializer.deserializeUInt8();
-        messageContents = deserializer.deserializeUInt8Array(messageLength);
+        messageContents= deserializer.deserializeUInt8Array(messageLength);
     }
 
     /**

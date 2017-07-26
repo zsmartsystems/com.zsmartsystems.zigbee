@@ -11,9 +11,9 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 
 /**
- * Class to implement the Ember EZSP command <b>callback</b>.
+ * Class to implement the Ember EZSP command <b>noCallbacks</b>.
  * <p>
- * Allows the NCP to respond with a pending callback.
+ * Indicates that there are currently no pending callbacks.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -21,13 +21,13 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspCallbackResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x06;
+public class EzspNoCallbacksResponse extends EzspFrameResponse {
+    public static int FRAME_ID = 0x07;
 
     /**
      * Response and Handler constructor
      */
-    public EzspCallbackResponse(int[] inputBuffer) {
+    public EzspNoCallbacksResponse(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
@@ -36,6 +36,6 @@ public class EzspCallbackResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        return "EzspCallbackResponse []";
+        return "EzspNoCallbacksResponse []";
     }
 }

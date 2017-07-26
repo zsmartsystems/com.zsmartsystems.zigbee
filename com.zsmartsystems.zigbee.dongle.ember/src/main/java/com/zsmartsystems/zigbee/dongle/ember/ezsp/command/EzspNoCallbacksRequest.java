@@ -12,9 +12,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 
 /**
- * Class to implement the Ember EZSP command <b>callback</b>.
+ * Class to implement the Ember EZSP command <b>noCallbacks</b>.
  * <p>
- * Allows the NCP to respond with a pending callback.
+ * Indicates that there are currently no pending callbacks.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -22,8 +22,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspCallbackRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x06;
+public class EzspNoCallbacksRequest extends EzspFrameRequest {
+    public static int FRAME_ID = 0x07;
 
     /**
      * Serialiser used to seialise to binary line data
@@ -33,7 +33,7 @@ public class EzspCallbackRequest extends EzspFrameRequest {
     /**
      * Request constructor
      */
-    public EzspCallbackRequest() {
+    public EzspNoCallbacksRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
     }
@@ -49,6 +49,6 @@ public class EzspCallbackRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspCallbackRequest []";
+        return "EzspNoCallbacksRequest []";
     }
 }
