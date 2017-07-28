@@ -7,8 +7,12 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceStateRequest;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceStateResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeNetworkParameter;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterRequest;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterResponse;
+import com.zsmartsystems.zigbee.dongle.conbee.transaction.ConBeeSingleResponseTransaction;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
@@ -62,9 +66,20 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
 
         conbeeHandler = new ConBeeFrameHandler(serialPort.getInputStream(), serialPort.getOutputStream(), this);
 
+        // State request seems to be necessary before we do anything else
+        ConBeeDeviceStateRequest stateRequest = new ConBeeDeviceStateRequest();
+        ConBeeDeviceStateResponse stateResponse = (ConBeeDeviceStateResponse) conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(stateRequest, ConBeeDeviceStateResponse.class))
+                .getResponse();
+
+        stateRequest = new ConBeeDeviceStateRequest();
+        conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(stateRequest, ConBeeDeviceStateResponse.class));
+
         ConBeeReadParameterRequest readParameter = new ConBeeReadParameterRequest();
         readParameter.setParameter(ConBeeNetworkParameter.MAC_ADDRESS);
-        conbeeHandler.queueFrame(readParameter);
+        conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class));
 
         return ZigBeeInitializeResponse.JOINED;
     }

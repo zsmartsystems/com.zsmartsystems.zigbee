@@ -5,7 +5,7 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
  * @author Chris Jackson
  *
  */
-public class ConBeeReadParameterRequest extends ConBeeFrame {
+public class ConBeeReadParameterRequest extends ConBeeFrameRequest {
     private final int READ_PARAMETER = 0x0a;
 
     private ConBeeNetworkParameter parameter;
@@ -16,10 +16,12 @@ public class ConBeeReadParameterRequest extends ConBeeFrame {
 
     @Override
     public int[] getOutputBuffer() {
+        super.getOutputBuffer();
+
         serializeUInt8(READ_PARAMETER);
         serializeUInt8(sequence);
         serializeUInt8(0);
-        serializeUInt16(9);
+        serializeUInt16(8);
         serializeUInt16(1);
         serializeUInt8(parameter.getKey());
 

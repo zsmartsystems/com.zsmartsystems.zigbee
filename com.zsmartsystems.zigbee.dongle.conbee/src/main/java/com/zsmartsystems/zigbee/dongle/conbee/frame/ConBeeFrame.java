@@ -10,10 +10,24 @@ import java.util.Arrays;
 public abstract class ConBeeFrame {
     protected int sequence;
 
-    private int[] buffer = new int[129];
-    private int length;
+    protected final static int DEVICE_STATE = 0x07;
+    protected final static int READ_PARAMETER = 0x0a;
 
-    public abstract int[] getOutputBuffer();
+    protected final int[] buffer;
+    protected int length = 0;
+
+    public ConBeeFrame() {
+        buffer = new int[129];
+    }
+
+    public ConBeeFrame(final int[] buffer) {
+        this.buffer = buffer;
+    }
+
+    public int[] getOutputBuffer() {
+        length = 0;
+        return null;
+    };
 
     protected int[] copyOutputBuffer() {
         // Add the CRC
@@ -33,6 +47,14 @@ public abstract class ConBeeFrame {
         buffer[length++] = val & 0xFF;
     }
 
+    protected int deserializeUInt8() {
+        return buffer[length++];
+    }
+
+    protected ConBeeStatus deserializeStatus() {
+        return ConBeeStatus.values()[buffer[length++]];
+    }
+
     /**
      * Adds a uint16_t into the output stream
      *
@@ -41,6 +63,10 @@ public abstract class ConBeeFrame {
     public void serializeUInt16(int val) {
         buffer[length++] = val & 0xFF;
         buffer[length++] = (val >> 8) & 0xFF;
+    }
+
+    protected int deserializeUInt16() {
+        return buffer[length++] + (buffer[length++] << 8);
     }
 
     /**
@@ -63,12 +89,27 @@ public abstract class ConBeeFrame {
         return sequence;
     }
 
-    private int getChecksum(final int[] frame, int length) {
+    private static int getChecksum(final int[] frame, int length) {
         int crc = 0x0;
 
         for (int cnt = 0; cnt < length; cnt++) {
             crc += frame[cnt];
         }
         return (~crc + 1) & 0xffff;
+    }
+
+    public static ConBeeFrame create(final int[] buffer) {
+        // Check the checksum
+        int checksum = getChecksum(buffer, buffer.length - 2);
+        if (checksum != (buffer[buffer.length - 2] + (buffer[buffer.length - 1] << 8))) {
+            return null;
+        }
+        switch (buffer[0]) {
+            case DEVICE_STATE:
+                return new ConBeeDeviceStateResponse(buffer);
+            case READ_PARAMETER:
+                return new ConBeeReadParameterResponse(buffer);
+        }
+        return null;
     }
 }

@@ -1,23 +1,29 @@
 package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Chris Jackson
  *
  */
-public class ConBeeReadParameterResponse extends ConBeeFrame {
-    private final int READ_PARAMETER = 0x0a;
-
+public class ConBeeReadParameterResponse extends ConBeeFrameResponse {
     private ConBeeNetworkParameter parameter;
     private ConBeeStatus status;
     private int[] value;
 
     ConBeeReadParameterResponse(int[] buffer) {
-        if (buffer[0] != READ_PARAMETER) {
+        super(buffer);
+
+        if (deserializeUInt8() != READ_PARAMETER) {
             throw new IllegalArgumentException();
         }
-        sequence = buffer[1];
-        // ConBeeStatus.
+        sequence = deserializeUInt8();
+        status = deserializeStatus();
+        deserializeUInt16();
+        int size = deserializeUInt16();
+        parameter = ConBeeNetworkParameter.getParameterType(deserializeUInt8());
+        value = Arrays.copyOfRange(buffer, length, length + size);
     }
 
     public ConBeeStatus getStatus() {
@@ -46,10 +52,12 @@ public class ConBeeReadParameterResponse extends ConBeeFrame {
         builder.append("ReadParameterResponse [parameter=");
         builder.append(parameter);
         builder.append(", value=");
+        boolean first = true;
         for (int val : value) {
-            if (val != 0) {
+            if (first == false) {
                 builder.append(' ');
             }
+            first = false;
             builder.append(String.format("%02X", val));
         }
         builder.append(']');
