@@ -107,7 +107,7 @@ public class ZToolPacketParser implements Runnable {
 
                     logger.trace("Response is {} -> {}", response.getClass().getSimpleName(), response);
                     if (response.isError()) {
-                        logger.debug("Received a BAD PACKET {}", response.getPacket());
+                        logger.debug("Received a BAD PACKET {}", response.getPacketString());
                         inputStream.reset();
                         continue;
                     }
