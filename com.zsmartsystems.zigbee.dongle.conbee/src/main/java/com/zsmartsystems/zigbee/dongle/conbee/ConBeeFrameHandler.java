@@ -96,13 +96,16 @@ public class ConBeeFrameHandler {
                 while (!close) {
                     try {
                         int val = inputStream.read();
-                        logger.debug("CONBEE RX: " + String.format("%02X", val));
+                        logger.debug("CONBEE RX: " + String.format("[% 2d] %02X", inputCount, val));
                         if (val == SLIP_ESC) {
                             escaped = true;
                         } else if (val == SLIP_END) {
                             // Frame complete
+                            if (inputCount > 0) {
+                                logger.debug("CONBEE RX Frame: len=" + inputCount);
 
-                            inputCount = 0;
+                                inputCount = 0;
+                            }
                         } else if (escaped) {
                             escaped = false;
                             switch (val) {
@@ -118,6 +121,7 @@ public class ConBeeFrameHandler {
                             }
                         } else if (val != -1) {
                             if (inputCount >= SLIP_MAX_LENGTH) {
+                                logger.debug("CONBEE RX error: len=" + inputCount);
                                 inputCount = 0;
                                 inputError = true;
                             }
@@ -173,16 +177,20 @@ public class ConBeeFrameHandler {
     private synchronized void outputFrame(ConBeeFrame frame) {
         // Send the data
         try {
+            outputStream.write(SLIP_END);
+
             for (int val : frame.getOutputBuffer()) {
                 // result.append(" ");
                 // result.append(String.format("%02X", val));
                 logger.debug("CONBEE TX: " + String.format("%02X", val));
                 switch (val) {
                     case SLIP_END:
+                        logger.debug("CONBEE TX: [ESC]");
                         outputStream.write(SLIP_ESC);
                         outputStream.write(SLIP_ESC_END);
                         break;
                     case SLIP_ESC:
+                        logger.debug("CONBEE TX: [ESC]");
                         outputStream.write(SLIP_ESC);
                         outputStream.write(SLIP_ESC_ESC);
                         break;

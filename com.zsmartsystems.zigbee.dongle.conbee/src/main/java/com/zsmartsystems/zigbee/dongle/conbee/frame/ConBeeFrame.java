@@ -8,7 +8,6 @@ import java.util.Arrays;
  *
  */
 public abstract class ConBeeFrame {
-
     protected int sequence;
 
     private int[] buffer = new int[129];
@@ -17,6 +16,11 @@ public abstract class ConBeeFrame {
     public abstract int[] getOutputBuffer();
 
     protected int[] copyOutputBuffer() {
+        // Add the CRC
+        int crc = getChecksum(buffer, length);
+        buffer[length++] = crc & 0xFF;
+        buffer[length++] = (crc >> 8) & 0xFF;
+
         return Arrays.copyOfRange(buffer, 0, length);
     }
 
@@ -57,5 +61,14 @@ public abstract class ConBeeFrame {
 
     public int getSequence() {
         return sequence;
+    }
+
+    private int getChecksum(final int[] frame, int length) {
+        int crc = 0x0;
+
+        for (int cnt = 0; cnt < length; cnt++) {
+            crc += frame[cnt];
+        }
+        return (~crc + 1) & 0xffff;
     }
 }

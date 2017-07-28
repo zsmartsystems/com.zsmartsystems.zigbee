@@ -92,7 +92,8 @@ public class SerialPortImpl implements ZigBeePort, SerialPortEventListener {
         try {
             serialPort.openPort();
             serialPort.setParams(baudRate, 8, 1, 0);
-            serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_RTSCTS_OUT); // FLOWCONTROL_NONE);
+            // serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_RTSCTS_OUT); // FLOWCONTROL_NONE);
+            serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_NONE);
         } catch (SerialPortException e) {
             logger.error("Error opening serial port.", e);
             throw new RuntimeException("Failed to open serial port: " + portName, e);
