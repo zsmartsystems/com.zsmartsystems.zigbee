@@ -137,6 +137,25 @@ public class ZToolPacket {
         return packet;
     }
 
+    /**
+     * Gets a hex dump of the packet data
+     *
+     * @return {@link String} containing the packet data
+     */
+    public String getPacketString() {
+        StringBuilder builder = new StringBuilder();
+
+        boolean first = true;
+        for (int value : packet) {
+            if (!first) {
+                builder.append(' ');
+            }
+            first = false;
+            builder.append(String.format("%02X", value));
+        }
+        return builder.toString();
+    }
+
     public int getLEN() {
         return LEN;
     }

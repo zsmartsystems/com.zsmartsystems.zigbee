@@ -20,7 +20,9 @@ public class ZDO_ACTIVE_EP_RSP_Test extends Cc2351TestPacket {
 
     @Test
     public void testReceive() {
-        ZToolPacket data = getPacket("FE 08 45 85 00 00 00 00 00 02 02 01 C9");
+        String packetString = "FE 08 45 85 00 00 00 00 00 02 02 01 C9";
+        ZToolPacket data = getPacket(packetString);
+        assertEquals(packetString, data.getPacketString());
 
         ZigBeeApsFrame apsFrame = ZdoActiveEndpoint.create(data);
 
