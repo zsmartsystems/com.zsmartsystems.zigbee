@@ -5,19 +5,17 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
  * @author Chris Jackson
  *
  */
-public class ConBeeDeviceStateRequest extends ConBeeFrameRequest {
+public class ConBeeQuerySendDataRequest extends ConBeeFrameRequest {
 
     @Override
     public int[] getOutputBuffer() {
         super.getOutputBuffer();
 
-        serializeUInt8(DEVICE_STATE);
+        serializeUInt8(APS_DATA_CONFIRM);
         serializeUInt8(sequence);
         serializeUInt8(0);
-        serializeUInt16(8);
-        serializeUInt8(0);
-        serializeUInt8(0);
-        serializeUInt8(0);
+        serializeUInt16(7);
+        serializeUInt16(0);
 
         return copyOutputBuffer();
     }
@@ -25,7 +23,7 @@ public class ConBeeDeviceStateRequest extends ConBeeFrameRequest {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("DeviceStateRequest [sequence=");
+        builder.append("QuerySendDataRequest [sequence=");
         builder.append(sequence);
         builder.append(']');
         return builder.toString();

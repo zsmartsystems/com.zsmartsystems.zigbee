@@ -6,7 +6,6 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
  *
  */
 public class ConBeeWriteParameterRequest extends ConBeeFrame {
-    private final int WRITE_PARAMETER = 0x0b;
 
     private ConBeeNetworkParameter parameter;
 
@@ -20,6 +19,8 @@ public class ConBeeWriteParameterRequest extends ConBeeFrame {
 
     @Override
     public int[] getOutputBuffer() {
+        super.getOutputBuffer();
+
         serializeUInt8(WRITE_PARAMETER);
         serializeUInt8(sequence);
         serializeUInt8(0);
@@ -31,4 +32,14 @@ public class ConBeeWriteParameterRequest extends ConBeeFrame {
         return copyOutputBuffer();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("WriteParameterRequest [sequence=");
+        builder.append(sequence);
+        builder.append(", parameter=");
+        builder.append(parameter);
+        builder.append(']');
+        return builder.toString();
+    }
 }

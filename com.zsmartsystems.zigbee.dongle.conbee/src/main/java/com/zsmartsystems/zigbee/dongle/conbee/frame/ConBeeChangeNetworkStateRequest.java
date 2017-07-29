@@ -6,8 +6,6 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
  *
  */
 public class ConBeeChangeNetworkStateRequest extends ConBeeFrame {
-    private final int CHANGE_NETWORK_STATE = 0x08;
-
     private ConBeeNetworkState state;
 
     public void setState(ConBeeNetworkState state) {
@@ -16,13 +14,23 @@ public class ConBeeChangeNetworkStateRequest extends ConBeeFrame {
 
     @Override
     public int[] getOutputBuffer() {
+        super.getOutputBuffer();
+
         serializeUInt8(CHANGE_NETWORK_STATE);
         serializeUInt8(sequence);
         serializeUInt8(0);
         serializeUInt16(6);
-        serializeUInt8(0);
+        serializeUInt8(state.ordinal());
 
         return copyOutputBuffer();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ChangeNetworkStateRequest [sequence=");
+        builder.append(sequence);
+        builder.append(']');
+        return builder.toString();
+    }
 }

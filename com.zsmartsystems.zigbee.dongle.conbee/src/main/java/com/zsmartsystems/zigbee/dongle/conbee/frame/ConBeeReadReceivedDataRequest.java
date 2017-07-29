@@ -5,7 +5,7 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
  * @author Chris Jackson
  *
  */
-public class ConBeeReadParameterRequest extends ConBeeFrameRequest {
+public class ConBeeReadReceivedDataRequest extends ConBeeFrameRequest {
     private ConBeeNetworkParameter parameter;
 
     public void setParameter(ConBeeNetworkParameter parameter) {
@@ -16,12 +16,11 @@ public class ConBeeReadParameterRequest extends ConBeeFrameRequest {
     public int[] getOutputBuffer() {
         super.getOutputBuffer();
 
-        serializeUInt8(READ_PARAMETER);
+        serializeUInt8(APS_DATA_INDICATION);
         serializeUInt8(sequence);
         serializeUInt8(0);
-        serializeUInt16(8);
-        serializeUInt16(1);
-        serializeUInt8(parameter.getKey());
+        serializeUInt16(7);
+        serializeUInt16(0);
 
         return copyOutputBuffer();
     }
@@ -29,10 +28,8 @@ public class ConBeeReadParameterRequest extends ConBeeFrameRequest {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("ReadParameterRequest [sequence=");
+        builder.append("ReadReceivedDataRequest [sequence=");
         builder.append(sequence);
-        builder.append(", parameter=");
-        builder.append(parameter);
         builder.append(']');
         return builder.toString();
     }

@@ -76,8 +76,39 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
         conbeeHandler
                 .sendTransaction(new ConBeeSingleResponseTransaction(stateRequest, ConBeeDeviceStateResponse.class));
 
-        ConBeeReadParameterRequest readParameter = new ConBeeReadParameterRequest();
+        ConBeeReadParameterRequest readParameter;
+        readParameter = new ConBeeReadParameterRequest();
         readParameter.setParameter(ConBeeNetworkParameter.MAC_ADDRESS);
+        conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class));
+
+        readParameter = new ConBeeReadParameterRequest();
+        readParameter.setParameter(ConBeeNetworkParameter.DEVICE_TYPE);
+        conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class));
+
+        readParameter = new ConBeeReadParameterRequest();
+        readParameter.setParameter(ConBeeNetworkParameter.NWK_PANID);
+        conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class));
+
+        readParameter = new ConBeeReadParameterRequest();
+        readParameter.setParameter(ConBeeNetworkParameter.APS_EXTENDED_PANID);
+        conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class));
+
+        readParameter = new ConBeeReadParameterRequest();
+        readParameter.setParameter(ConBeeNetworkParameter.NWK_ADDRESS);
+        conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class));
+
+        readParameter = new ConBeeReadParameterRequest();
+        readParameter.setParameter(ConBeeNetworkParameter.NWK_EXTENDED_PANID);
+        conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class));
+
+        readParameter = new ConBeeReadParameterRequest();
+        readParameter.setParameter(ConBeeNetworkParameter.CURRENT_CHANNEL);
         conbeeHandler
                 .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class));
 

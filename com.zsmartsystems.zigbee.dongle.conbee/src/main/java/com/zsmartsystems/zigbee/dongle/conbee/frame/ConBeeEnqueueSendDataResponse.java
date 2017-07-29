@@ -5,10 +5,11 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
  * @author Chris Jackson
  *
  */
-public class ConBeeDeviceStateResponse extends ConBeeFrameResponse {
+public class ConBeeEnqueueSendDataResponse extends ConBeeFrameResponse {
+    private ConBeeNetworkParameter parameter;
     private ConBeeNetworkState state;
 
-    public ConBeeDeviceStateResponse(final int[] response) {
+    ConBeeEnqueueSendDataResponse(final int[] response) {
         super(response);
 
         if (deserializeUInt8() != DEVICE_STATE) {
@@ -21,20 +22,17 @@ public class ConBeeDeviceStateResponse extends ConBeeFrameResponse {
 
         int tmp = deserializeUInt8();
         state = ConBeeNetworkState.values()[tmp & 0x03];
+
     }
 
-    public void setParameter(ConBeeNetworkState state) {
-        this.state = state;
-    }
-
-    public ConBeeNetworkState getNetworkState() {
-        return state;
+    public ConBeeNetworkParameter getParameter() {
+        return parameter;
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("DeviceStateResponse [sequence=");
+        builder.append("EnqueueSendDataResponse [sequence=");
         builder.append(sequence);
         builder.append(", status=");
         builder.append(status);

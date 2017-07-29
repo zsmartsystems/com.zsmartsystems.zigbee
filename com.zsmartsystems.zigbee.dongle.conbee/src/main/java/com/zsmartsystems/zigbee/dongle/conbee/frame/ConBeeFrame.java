@@ -11,7 +11,12 @@ public abstract class ConBeeFrame {
     protected int sequence;
 
     protected final static int DEVICE_STATE = 0x07;
-    protected final static int READ_PARAMETER = 0x0a;
+    protected final static int READ_PARAMETER = 0x0A;
+    protected final static int WRITE_PARAMETER = 0x0B;
+    protected final static int CHANGE_NETWORK_STATE = 0x08;
+    protected final static int APS_DATA_INDICATION = 0x17;
+    protected final static int APS_DATA_REQUEST = 0x12;
+    protected final static int APS_DATA_CONFIRM = 0x04;
 
     protected final int[] buffer;
     protected int length = 0;
@@ -45,6 +50,10 @@ public abstract class ConBeeFrame {
      */
     public void serializeUInt8(int val) {
         buffer[length++] = val & 0xFF;
+    }
+
+    protected int deserializeInt8() {
+        return buffer[length++];
     }
 
     protected int deserializeUInt8() {
