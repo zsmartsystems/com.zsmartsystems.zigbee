@@ -18,21 +18,12 @@ public abstract class ConBeeFrame {
     protected final static int APS_DATA_REQUEST = 0x12;
     protected final static int APS_DATA_CONFIRM = 0x04;
 
-    protected final int[] buffer;
+    protected int[] buffer;
     protected int length = 0;
 
     public ConBeeFrame() {
         buffer = new int[129];
     }
-
-    public ConBeeFrame(final int[] buffer) {
-        this.buffer = buffer;
-    }
-
-    public int[] getOutputBuffer() {
-        length = 0;
-        return null;
-    };
 
     protected int[] copyOutputBuffer() {
         // Add the CRC
@@ -52,6 +43,12 @@ public abstract class ConBeeFrame {
         buffer[length++] = val & 0xFF;
     }
 
+    public void serializeUInt8Array(int val[]) {
+        for (int value : val) {
+            serializeUInt8(value);
+        }
+    }
+
     protected int deserializeInt8() {
         return buffer[length++];
     }
@@ -60,8 +57,25 @@ public abstract class ConBeeFrame {
         return buffer[length++];
     }
 
+    protected int[] deserializeUInt8Array(int size) {
+        length += size;
+        return Arrays.copyOfRange(buffer, length - size, length);
+    }
+
     protected ConBeeStatus deserializeStatus() {
         return ConBeeStatus.values()[buffer[length++]];
+    }
+
+    protected ConBeeDeviceState deserializeDeviceState() {
+        return new ConBeeDeviceState(buffer[length++]);
+    }
+
+    protected ConBeeAddressMode deserializeAddressMode() {
+        return ConBeeAddressMode.getMode(buffer[length++]);
+    }
+
+    protected void serializeAddressMode(ConBeeAddressMode mode) {
+        buffer[length++] = mode.getKey();
     }
 
     /**
@@ -118,6 +132,18 @@ public abstract class ConBeeFrame {
                 return new ConBeeDeviceStateResponse(buffer);
             case READ_PARAMETER:
                 return new ConBeeReadParameterResponse(buffer);
+            case WRITE_PARAMETER:
+                return new ConBeeWriteParameterResponse(buffer);
+            case CHANGE_NETWORK_STATE:
+                return new ConBeeChangeNetworkStateResponse(buffer);
+            case APS_DATA_INDICATION:
+                return new ConBeeReadReceivedDataResponse(buffer);
+            case APS_DATA_REQUEST:
+                return new ConBeeEnqueueSendDataResponse(buffer);
+            case APS_DATA_CONFIRM:
+                return new ConBeeQuerySendDataResponse(buffer);
+            default:
+                break;
         }
         return null;
     }

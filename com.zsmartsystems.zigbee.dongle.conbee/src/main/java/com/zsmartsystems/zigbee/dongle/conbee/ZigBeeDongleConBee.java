@@ -5,10 +5,14 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeException;
+import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeAddressMode;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceStateRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceStateResponse;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeEnqueueSendDataRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeNetworkParameter;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterResponse;
@@ -67,20 +71,17 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
         conbeeHandler = new ConBeeFrameHandler(serialPort.getInputStream(), serialPort.getOutputStream(), this);
 
         // State request seems to be necessary before we do anything else
-        ConBeeDeviceStateRequest stateRequest = new ConBeeDeviceStateRequest();
-        ConBeeDeviceStateResponse stateResponse = (ConBeeDeviceStateResponse) conbeeHandler
-                .sendTransaction(new ConBeeSingleResponseTransaction(stateRequest, ConBeeDeviceStateResponse.class))
-                .getResponse();
-
-        stateRequest = new ConBeeDeviceStateRequest();
-        conbeeHandler
-                .sendTransaction(new ConBeeSingleResponseTransaction(stateRequest, ConBeeDeviceStateResponse.class));
+        // ConBeeDeviceStateRequest stateRequest = new ConBeeDeviceStateRequest();
+        // ConBeeDeviceStateResponse stateResponse = (ConBeeDeviceStateResponse) conbeeHandler
+        // .sendTransaction(new ConBeeSingleResponseTransaction(stateRequest, ConBeeDeviceStateResponse.class))
+        // .getResponse();
 
         ConBeeReadParameterRequest readParameter;
         readParameter = new ConBeeReadParameterRequest();
         readParameter.setParameter(ConBeeNetworkParameter.MAC_ADDRESS);
-        conbeeHandler
-                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class));
+        ConBeeReadParameterResponse response = (ConBeeReadParameterResponse) conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class))
+                .getResponse();
 
         readParameter = new ConBeeReadParameterRequest();
         readParameter.setParameter(ConBeeNetworkParameter.DEVICE_TYPE);
@@ -117,7 +118,13 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
 
     @Override
     public int getZigBeeChannel() {
-        return 0;
+        ConBeeReadParameterRequest readParameter = new ConBeeReadParameterRequest();
+        readParameter.setParameter(ConBeeNetworkParameter.CURRENT_CHANNEL);
+        ConBeeReadParameterResponse response = (ConBeeReadParameterResponse) conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class))
+                .getResponse();
+
+        return (int) response.getValue();
     }
 
     @Override
@@ -127,21 +134,35 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
 
     @Override
     public int getZigBeePanId() {
-        return 0;
+        ConBeeReadParameterRequest readParameter = new ConBeeReadParameterRequest();
+        readParameter.setParameter(ConBeeNetworkParameter.NWK_PANID);
+        ConBeeReadParameterResponse response = (ConBeeReadParameterResponse) conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class))
+                .getResponse();
+
+        return (int) response.getValue();
     }
 
     @Override
     public boolean setZigBeePanId(int panId) {
+        // Can not set the PAN ID with the ConBee
         return false;
     }
 
     @Override
     public ExtendedPanId getZigBeeExtendedPanId() {
-        return null;
+        ConBeeReadParameterRequest readParameter = new ConBeeReadParameterRequest();
+        readParameter.setParameter(ConBeeNetworkParameter.NWK_EXTENDED_PANID);
+        ConBeeReadParameterResponse response = (ConBeeReadParameterResponse) conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class))
+                .getResponse();
+
+        return (ExtendedPanId) response.getValue();
     }
 
     @Override
     public boolean setZigBeeExtendedPanId(ExtendedPanId panId) {
+        // Can not set the Extended PAN ID with the ConBee
         return false;
     }
 
@@ -154,6 +175,13 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
     public boolean startup(boolean reinitialize) {
         logger.debug("ConBee transport startup");
 
+        ConBeeDeviceStateRequest stateRequest = new ConBeeDeviceStateRequest();
+        ConBeeDeviceStateResponse stateResponse = (ConBeeDeviceStateResponse) conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(stateRequest, ConBeeDeviceStateResponse.class))
+                .getResponse();
+
+        stateResponse.getDeviceState();
+
         return true;
     }
 
@@ -163,11 +191,37 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
 
     @Override
     public String getVersionString() {
+        // No version is available in ConBee
         return "";
     }
 
     @Override
     public void sendCommand(final ZigBeeApsFrame apsFrame) throws ZigBeeException {
+        ConBeeEnqueueSendDataRequest request = new ConBeeEnqueueSendDataRequest();
+
+        request.setRequestId(apsFrame.getSequence());
+        request.setClusterId(apsFrame.getCluster());
+        switch (apsFrame.getAddressMode()) {
+            case DEVICE:
+                request.setDestinationAddress(
+                        new ZigBeeDeviceAddress(apsFrame.getDestinationAddress(), apsFrame.getDestinationEndpoint()));
+                request.setDestinationAddressMode(ConBeeAddressMode.NWK);
+                break;
+            case GROUP:
+                request.setDestinationAddress(new ZigBeeGroupAddress(apsFrame.getDestinationAddress()));
+                request.setDestinationAddressMode(ConBeeAddressMode.GROUP);
+                break;
+            default:
+                break;
+        }
+        request.setProfileId(apsFrame.getProfile());
+        request.setRadius(apsFrame.getRadius());
+        request.setSourceEndpoint(apsFrame.getSourceEndpoint());
+        // request.setTxOptions(txOptions);
+
+        request.setAdsuData(apsFrame.getPayload());
+
+        conbeeHandler.queueFrame(request);
     }
 
     @Override

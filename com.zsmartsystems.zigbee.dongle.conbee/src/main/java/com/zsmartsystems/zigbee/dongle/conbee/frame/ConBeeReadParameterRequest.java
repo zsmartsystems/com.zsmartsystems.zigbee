@@ -1,7 +1,10 @@
 package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
 /**
- *
+ * By reading parameters the current configuration can be obtained. Be aware that this configuration might not reflect
+ * the active configuration, since changes to parameters affect the network operation only as soon as it’s stopped and
+ * started again.
+ * 
  * @author Chris Jackson
  *
  */

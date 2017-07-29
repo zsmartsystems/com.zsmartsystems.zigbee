@@ -45,6 +45,13 @@ public class ZigBeeEndpointAddressTest {
     }
 
     @Test
+    public void testArrayConstructor() {
+        ZigBeeDeviceAddress address = new ZigBeeDeviceAddress(new int[] { 0x01, 0x02 });
+        assertEquals(0x0201, address.getAddress());
+        assertEquals(0, address.getEndpoint());
+    }
+
+    @Test
     public void testStringConstructorError() {
         boolean exception = false;
         try {

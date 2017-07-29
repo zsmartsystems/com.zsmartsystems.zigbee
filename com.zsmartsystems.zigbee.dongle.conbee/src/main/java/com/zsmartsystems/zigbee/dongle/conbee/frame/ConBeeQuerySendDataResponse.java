@@ -2,17 +2,22 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
 import java.util.Arrays;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
+
 /**
  *
  * @author Chris Jackson
  *
  */
 public class ConBeeQuerySendDataResponse extends ConBeeFrameResponse {
-    private ConBeeNetworkState state;
+    private ConBeeDeviceState state;
     private int requestId;
-    private int destinationAddressMode;
-    private int destinationNetworkAddress;
-    private int[] destinationIeeeAddress;
+    private ConBeeAddressMode destinationAddressMode;
+    private ZigBeeAddress destinationAddress;
+    private IeeeAddress destinationIeeeAddress;
     private int destinationEndpoint;
 
     ConBeeQuerySendDataResponse(final int[] response) {
@@ -25,30 +30,35 @@ public class ConBeeQuerySendDataResponse extends ConBeeFrameResponse {
         sequence = deserializeUInt8();
         status = deserializeStatus();
         deserializeUInt16();
-
-        int tmp = deserializeUInt8();
-        state = ConBeeNetworkState.values()[tmp & 0x03];
+        state = deserializeDeviceState();
 
         requestId = deserializeUInt8();
 
-        destinationAddressMode = deserializeUInt8();
+        destinationAddressMode = deserializeAddressMode();
         switch (destinationAddressMode) {
-            case 0x01:
-            case 0x02:
-                destinationNetworkAddress = deserializeUInt16();
+            case GROUP:
+                destinationAddress = new ZigBeeGroupAddress(deserializeUInt16());
                 break;
-            case 0x03:
-                destinationIeeeAddress = Arrays.copyOfRange(buffer, length, length + 8);
+            case NWK:
+                destinationAddress = new ZigBeeDeviceAddress(deserializeUInt16());
+                break;
+            case IEEE:
+                destinationIeeeAddress = new IeeeAddress(Arrays.copyOfRange(buffer, length, length + 8));
+                break;
+            default:
                 break;
         }
         destinationEndpoint = deserializeUInt8();
+        if (destinationAddressMode == ConBeeAddressMode.NWK) {
+            ((ZigBeeDeviceAddress) destinationAddress).setEndpoint(destinationEndpoint);
+        }
 
     }
 
     /**
      * @return the state
      */
-    public ConBeeNetworkState getState() {
+    public ConBeeDeviceState getState() {
         return state;
     }
 
@@ -62,21 +72,21 @@ public class ConBeeQuerySendDataResponse extends ConBeeFrameResponse {
     /**
      * @return the destinationAddressMode
      */
-    public int getDestinationAddressMode() {
+    public ConBeeAddressMode getDestinationAddressMode() {
         return destinationAddressMode;
     }
 
     /**
      * @return the destinationNetworkAddress
      */
-    public int getDestinationNetworkAddress() {
-        return destinationNetworkAddress;
+    public ZigBeeAddress getDestinationNetworkAddress() {
+        return destinationAddress;
     }
 
     /**
      * @return the destinationIeeeAddress
      */
-    public int[] getDestinationIeeeAddress() {
+    public IeeeAddress getDestinationIeeeAddress() {
         return destinationIeeeAddress;
     }
 
@@ -94,8 +104,19 @@ public class ConBeeQuerySendDataResponse extends ConBeeFrameResponse {
         builder.append(sequence);
         builder.append(", status=");
         builder.append(status);
-        builder.append(", state=");
+        builder.append(", networkState=");
         builder.append(state);
+
+        builder.append(", destinationAddress=(");
+        builder.append(destinationAddressMode);
+        builder.append("=");
+        if (destinationAddressMode == ConBeeAddressMode.IEEE) {
+            builder.append(destinationIeeeAddress);
+        } else {
+            builder.append(destinationAddress);
+        }
+        builder.append(", requestId=");
+        builder.append(requestId);
         builder.append(']');
         return builder.toString();
     }

@@ -17,6 +17,11 @@ import org.junit.Test;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
 
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
 public class EzspSerializerTest {
     @Test
     public void serializeEmberInitialSecurityBitmask() {

@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
@@ -44,6 +46,10 @@ public class ConBeeFrameHandler {
     private final int SLIP_MAX_LENGTH = 84;
 
     private final static AtomicInteger callbackSequence = new AtomicInteger(1);
+
+    private int receiveTimeout = 175;
+    private final Timer timer = new Timer();
+    private TimerTask timerTask = null;
 
     /**
      * The queue of {@link ConBeeFrameRequest} frames waiting to be sent
@@ -94,13 +100,6 @@ public class ConBeeFrameHandler {
         this.outputStream = outputStream;
         // this.inputStream = inputStream;
 
-        try {
-            outputStream.write(SLIP_END);
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
         transmitThread = new Thread("ConBeeTransmitHandler") {
             @Override
             public void run() {
@@ -112,7 +111,8 @@ public class ConBeeFrameHandler {
                             logger.debug("ConBeeTransmitHandler thread WAIT");
                             // Wait until we're allowed to send
                             if (outstandingRequest != null) {
-                                transmitSync.wait();
+                                // Wait will block here until we receive the response to the last frame we sent
+                                transmitSync.wait(250);
                                 if (outstandingRequest != null) {
                                     logger.debug("ConBeeTransmitHandler thread STILL OUTSTANDING");
                                     continue;
@@ -159,8 +159,13 @@ public class ConBeeFrameHandler {
                             if (inputCount > 0) {
                                 ConBeeFrameResponse frame = (ConBeeFrameResponse) ConBeeFrame
                                         .create(Arrays.copyOfRange(inputBuffer, 0, inputCount));
-                                logger.debug("CONBEE RX Frame: {}", frame);
-                                notifyTransactionComplete(frame);
+                                if (frame != null) {
+                                    logger.debug("CONBEE RX Frame: {}", frame);
+                                    notifyTransactionComplete(frame);
+                                } else {
+                                    logger.debug("CONBEE RX Frame: ERROR: [{}] {}", inputCount,
+                                            bufferToString(inputBuffer, inputCount));
+                                }
                                 inputCount = 0;
                             }
                         } else if (escaped) {
@@ -234,7 +239,7 @@ public class ConBeeFrameHandler {
     }
 
     // Synchronize this method to ensure a packet gets sent as a block
-    private synchronized void outputFrame(ConBeeFrame frame) {
+    private synchronized void outputFrame(ConBeeFrameRequest frame) {
         // Send the data
         try {
             logger.debug("CONBEE TX: {}", frame);
@@ -263,8 +268,40 @@ public class ConBeeFrameHandler {
 
             outputStream.write(SLIP_END);
 
+            startRetryTimer();
         } catch (IOException e) {
             logger.debug(e.getMessage());
+        }
+    }
+
+    private synchronized void startRetryTimer() {
+        // Stop any existing timer
+        resetRetryTimer();
+
+        // Create the timer task
+        timerTask = new ConBeeRetryTimer();
+        timer.schedule(timerTask, receiveTimeout);
+    }
+
+    private synchronized void resetRetryTimer() {
+        // Stop any existing timer
+        if (timerTask != null) {
+            timerTask.cancel();
+            timerTask = null;
+        }
+    }
+
+    private class ConBeeRetryTimer extends TimerTask {
+        @Override
+        public void run() {
+            logger.debug("CONBEE TX: TIMEOUT");
+
+            // TODO: Retransmit?
+
+            synchronized (transmitSync) {
+                outstandingRequest = null;
+                transmitSync.notify();
+            }
         }
     }
 
@@ -276,7 +313,7 @@ public class ConBeeFrameHandler {
      * @param request
      *            {@link ConBeeFrameRequest}
      */
-    private synchronized void queueFrame(ConBeeFrameRequest request) {
+    public synchronized void queueFrame(ConBeeFrameRequest request) {
         request.setSequence(callbackSequence.getAndIncrement());
         if (request.getSequence() == 255) {
             callbackSequence.set(1);
@@ -285,8 +322,6 @@ public class ConBeeFrameHandler {
         sendQueue.add(request);
 
         logger.debug("TX CONBEE queue: {}", sendQueue.size());
-
-        // sendNextFrame();
     }
 
     /**
@@ -309,8 +344,9 @@ public class ConBeeFrameHandler {
             }
         }
 
-        if (outstandingRequest != null && outstandingRequest.getSequence() == response.getSequence()) {
-            synchronized (transmitSync) {
+        synchronized (transmitSync) {
+            if (outstandingRequest != null && outstandingRequest.getSequence() == response.getSequence()) {
+                resetRetryTimer();
                 outstandingRequest = null;
                 transmitSync.notify();
             }
@@ -419,5 +455,18 @@ public class ConBeeFrameHandler {
 
     interface ConBeeListener {
         boolean transactionEvent(ConBeeFrameResponse response);
+    }
+
+    private String bufferToString(final int[] buffer, final int length) {
+        StringBuilder builder = new StringBuilder();
+        boolean first = true;
+        for (int cnt = 0; cnt < length; cnt++) {
+            if (first == false) {
+                builder.append(' ');
+            }
+            first = false;
+            builder.append(String.format("%02X", buffer[cnt]));
+        }
+        return builder.toString();
     }
 }

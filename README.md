@@ -36,20 +36,21 @@ echo 10c4 89fb > /sys/bus/usb-serial/drivers/cp210x/new_id
 
 The following table provides a summary of some of the dongles / chipsets that are available on the market nd their support within the library. Receive sensitivity and transmit power are the main parameters affecting RF performance - it should be noted that regulations may reduce transmit power in some areas of the world and other factors can also impact performance. 
  
-| Model                 | Support         | Receive     | Transmit     | Antenna  |
-|-----------------------|-----------------|-------------|--------------|----------|
-| Xbee XU-Z11           | No              | -90dBm      | +4.5dBm      | Internal |
-| SiLabs EM358          | Yes (EZSP)      | -100dBm     | +8.0dBm      | Internal |
-| SiLabs **EM358LR**    | Yes (EZSP)      | -103dBm     | **+20.0dBm** | Internal |
-| SiLabs MGM111         | Yes (EZSP)      | -99dBm      | +10dBm       | Internal |
-| Dresden ConBee        | No              | **-105dBm** | +8.7dBm      | Internal |
-| TI CC2530             | Yes (ZNP)       | -97dBm      | +4.5dBm      |          |
-| TI CC2531             | Yes (ZNP)       | -97dBm      | +4.5dBm      |          |
-| TI CC2538             | Yes (ZNP)       | -97dBm      | +7.0dBm      |          |
-| TI CC2650             | Yes (ZNP)       | -100dBm     | +5.0dBm      |          |
-| Atmel ATSAMR21        | No              | -99dBm      | +4.0dBm      |          |
-| NXP JN5169            | No              | -96dBm      | +10.0dBm     |          |
-| HUSBZB-1              | Yes (EZSP)      |             |              | Internal |
+| Model        | Support      | Receive     | Transmit     | Antenna  |
+|--------------|--------------|-------------|--------------|----------|
+| Xbee XU-Z11  | No           | -90dBm      | +4.5dBm      | Internal |
+| EM358        | Yes (EZSP)   | -100dBm     | +8.0dBm      | Internal |
+| **EM358LR**  | Yes (EZSP)   | -103dBm     | **+20.0dBm** | Internal |
+| MGM111       | Yes (EZSP)   | -99dBm      | +10dBm       | Internal |
+| RaspBee      | Yes (CONBEE) | **-105dBm** | +8.7dBm      | Internal |
+| ConBee       | Yes (CONBEE) | **-105dBm** | +8.7dBm      | Internal |
+| CC2530       | Yes (ZNP)    | -97dBm      | +4.5dBm      |          |
+| CC2531       | Yes (ZNP)    | -97dBm      | +4.5dBm      |          |
+| CC2538       | Yes (ZNP)    | -97dBm      | +7.0dBm      |          |
+| CC2650       | Yes (ZNP)    | -100dBm     | +5.0dBm      |          |
+| ATSAMR21     | No           | -99dBm      | +4.0dBm      |          |
+| JN5169       | No           | -96dBm      | +10.0dBm     |          |
+| HUSBZB-1     | Yes (EZSP)   |             |              | Internal |
 | Telegesis ETRX3       | Yes (Telegesis) |             |              | Internal |
 | Qivicon Funkstick     | Yes (Telegesis) |             |              | Internal |
 

@@ -28,6 +28,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
 public class EzspScanTransactionTest extends EzspFrameTest {
     @Test
     public void testScanTransaction() {

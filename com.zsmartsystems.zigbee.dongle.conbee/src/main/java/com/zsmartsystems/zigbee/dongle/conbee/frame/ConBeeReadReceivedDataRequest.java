@@ -6,12 +6,6 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
  *
  */
 public class ConBeeReadReceivedDataRequest extends ConBeeFrameRequest {
-    private ConBeeNetworkParameter parameter;
-
-    public void setParameter(ConBeeNetworkParameter parameter) {
-        this.parameter = parameter;
-    }
-
     @Override
     public int[] getOutputBuffer() {
         super.getOutputBuffer();

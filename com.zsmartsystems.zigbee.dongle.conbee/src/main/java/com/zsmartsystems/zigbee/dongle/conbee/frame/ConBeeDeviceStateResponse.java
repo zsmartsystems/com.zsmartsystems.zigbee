@@ -1,12 +1,15 @@
 package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
 /**
+ * The device state determines if the device is operation in a ZigBee network and if so, various flags provide the state
+ * of incoming and outgoing command queues. The ‘Network state’ field value can be NET_OFFLINE, NET_CONNECTED,
+ * NET_JOINING and NET_LEAVING.
  *
  * @author Chris Jackson
  *
  */
 public class ConBeeDeviceStateResponse extends ConBeeFrameResponse {
-    private ConBeeNetworkState state;
+    private ConBeeDeviceState state;
 
     public ConBeeDeviceStateResponse(final int[] response) {
         super(response);
@@ -18,16 +21,10 @@ public class ConBeeDeviceStateResponse extends ConBeeFrameResponse {
         sequence = deserializeUInt8();
         status = deserializeStatus();
         deserializeUInt16();
-
-        int tmp = deserializeUInt8();
-        state = ConBeeNetworkState.values()[tmp & 0x03];
+        state = deserializeDeviceState();
     }
 
-    public void setParameter(ConBeeNetworkState state) {
-        this.state = state;
-    }
-
-    public ConBeeNetworkState getNetworkState() {
+    public ConBeeDeviceState getDeviceState() {
         return state;
     }
 

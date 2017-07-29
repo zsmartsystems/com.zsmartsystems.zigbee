@@ -16,6 +16,8 @@ public class ConBeeDeviceStateRequestTest {
     public void doRequest() {
         ConBeeDeviceStateRequest request = new ConBeeDeviceStateRequest();
         request.setSequence(0);
+        System.out.println(request);
+
         assertTrue(Arrays.equals(new int[] { 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0xF1, 0xFF },
                 request.getOutputBuffer()));
     }

@@ -1,11 +1,18 @@
 package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
 /**
+ * The following two behaviors are possible:
+ * <ol>
+ * <li>NET_OFFLINE→NET_JOINING→NET_CONNECTED
+ * <li>NET_OFFLINE→NET_JOINING→NET_OFFLINE
+ * </ol>
+ * The second transition may occur when the device can’t join a network, due to invalid parameters or because the
+ * network is not opened — which, in ZigBee terms, means no node in the network has its ‘Permit Join’ flag set.
  *
  * @author Chris Jackson
  *
  */
-public class ConBeeChangeNetworkStateRequest extends ConBeeFrame {
+public class ConBeeChangeNetworkStateRequest extends ConBeeFrameRequest {
     private ConBeeNetworkState state;
 
     public void setState(ConBeeNetworkState state) {

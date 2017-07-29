@@ -9,7 +9,7 @@ public class ConBeeFrameResponse extends ConBeeFrame {
     protected ConBeeStatus status;
 
     public ConBeeFrameResponse(int[] response) {
-        super(response);
+        this.buffer = response;
     }
 
     /**

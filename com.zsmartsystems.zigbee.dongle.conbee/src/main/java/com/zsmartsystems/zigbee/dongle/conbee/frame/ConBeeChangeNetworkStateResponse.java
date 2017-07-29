@@ -6,7 +6,7 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
  *
  */
 public class ConBeeChangeNetworkStateResponse extends ConBeeFrameResponse {
-    private ConBeeNetworkState state;
+    private ConBeeDeviceState state;
 
     public ConBeeChangeNetworkStateResponse(final int[] response) {
         super(response);
@@ -18,16 +18,10 @@ public class ConBeeChangeNetworkStateResponse extends ConBeeFrameResponse {
         sequence = deserializeUInt8();
         status = deserializeStatus();
         deserializeUInt16();
-
-        int tmp = deserializeUInt8();
-        state = ConBeeNetworkState.values()[tmp];
+        state = deserializeDeviceState();
     }
 
-    public void setParameter(ConBeeNetworkState state) {
-        this.state = state;
-    }
-
-    public ConBeeNetworkState getNetworkState() {
+    public ConBeeDeviceState getDeviceState() {
         return state;
     }
 

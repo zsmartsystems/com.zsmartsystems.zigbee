@@ -7,4 +7,8 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
  */
 public class ConBeeFrameRequest extends ConBeeFrame {
 
+    public int[] getOutputBuffer() {
+        length = 0;
+        return null;
+    };
 }
