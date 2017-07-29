@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeNetworkDiscoverer;
-import com.zsmartsystems.zigbee.internal.ZigBeeNetworkMeshMonitor;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
@@ -149,13 +148,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private final ZigBeeNetworkDiscoverer networkDiscoverer;
 
     /**
-     * The ZigBee network {@link ZigBeeNetworkMeshMonitor} update class. The updater is
-     * responsible for periodic update of information relating to the mesh health
-     * including neighbors, routes and link quality information
-     */
-    private final ZigBeeNetworkMeshMonitor meshUpdater;
-
-    /**
      * The command listener creation times. Used to timeout queued commands.
      */
     private final Set<CommandExecution> commandExecutions = new HashSet<CommandExecution>();
@@ -207,7 +199,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public ZigBeeNetworkManager(final ZigBeeTransportTransmit transport) {
         this.transport = transport;
         this.networkDiscoverer = new ZigBeeNetworkDiscoverer(this);
-        this.meshUpdater = new ZigBeeNetworkMeshMonitor(this);
 
         transport.setZigBeeTransportReceive(this);
     }
@@ -372,10 +363,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         if (networkDiscoverer != null) {
             networkDiscoverer.startup();
-        }
-
-        if (meshUpdater != null) {
-            meshUpdater.startup(60);
         }
 
         return true;
