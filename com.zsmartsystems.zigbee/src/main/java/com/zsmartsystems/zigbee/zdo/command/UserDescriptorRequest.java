@@ -69,8 +69,8 @@ public class UserDescriptorRequest extends ZdoRequest implements CommandResponse
             return false;
         }
 
-        return (((UserDescriptorRequest) request).getDestinationAddress()
-                .equals(((UserDescriptorResponse) response).getSourceAddress()));
+        return (((UserDescriptorRequest) request).getNwkAddrOfInterest()
+                .equals(((UserDescriptorResponse) response).getNwkAddrOfInterest()));
     }
 
     @Override

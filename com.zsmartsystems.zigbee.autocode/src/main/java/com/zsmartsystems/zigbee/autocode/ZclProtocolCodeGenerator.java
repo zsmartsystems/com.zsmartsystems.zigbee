@@ -1880,13 +1880,17 @@ public class ZclProtocolCodeGenerator {
                         out.println("        }");
                         out.println();
                         out.print("        return ");
-                        out.println("(((" + command.nameUpperCamelCase + ") request).getDestinationAddress()");
-                        out.print("                .equals(((" + command.responseCommand
-                                + ") response).getSourceAddress()))");
+                        // out.println("(((" + command.nameUpperCamelCase + ") request).getDestinationAddress()");
+                        // out.print(" .equals(((" + command.responseCommand
+                        // + ") response).getSourceAddress()))");
 
+                        boolean first = true;
                         for (String matcher : command.responseMatchers.keySet()) {
-                            out.println();
-                            out.print("                && ");
+                            if (first == false) {
+                                out.println();
+                                out.print("                && ");
+                            }
+                            first = false;
                             out.println("(((" + command.nameUpperCamelCase + ") request).get" + matcher + "()");
                             out.print("                .equals(((" + command.responseCommand + ") response).get"
                                     + command.responseMatchers.get(matcher) + "()))");

@@ -36,6 +36,7 @@ The destination addressing on this command shall be unicast.
 
 ##### Expected Response
 Packet: IEEE Address Response
+Match: NWKAddrOfInterest == NWKAddrRemoteDev
 
 #### Node Descriptor Request [0x0002]
 
@@ -50,6 +51,7 @@ information of the remote device.
 
 ##### Expected Response
 Packet: Node Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
 
 
 #### Power Descriptor Request [0x0003]
@@ -65,6 +67,7 @@ the discovery information of the remote device.
 
 ##### Expected Response
 Packet: Power Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
 
 
 #### Simple Descriptor Request [0x0004]
@@ -81,6 +84,7 @@ device that contains the discovery information of the remote device.
 
 ##### Expected Response
 Packet: Simple Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
 Match: Endpoint == SimpleDescriptor.Endpoint
 
 #### Active Endpoints Request [0x0005]
@@ -96,6 +100,7 @@ contains the discovery information of the remote device.
 
 ##### Expected Response
 Packet: Active Endpoints Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
 
 
 #### Match Descriptor Request [0x0006]
@@ -120,6 +125,7 @@ the discovery information of the remote device.
 
 ##### Expected Response
 Packet: Complex Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
 
 
 #### User Descriptor Request [0x0011]
@@ -135,6 +141,7 @@ information of the remote device.
 
 ##### Expected Response
 Packet: User Descriptor Response
+Match: NWKAddrOfInterest == NWKAddrOfInterest
 
 
 #### Discovery Cache Request [0x0012]
@@ -436,6 +443,7 @@ the destination address must be that of a ZigBee Coordinator or ZigBee Router.
 
 ##### Expected Response
 Packet: Management LQI Response
+Match: DestinationAddress == SourceAddress 
 
 #### Management Routing Request [0x0032]
 
@@ -450,6 +458,7 @@ must be that of the ZigBee Router or ZigBee Coordinator.
 
 ##### Expected Response
 Packet: Management Routing Response
+Match: DestinationAddress == SourceAddress 
 
 
 #### Management Bind Request [0x0033]
@@ -479,6 +488,7 @@ using the parameter supplied by Mgmt_Leave_req.
 
 ##### Expected Response
 Packet: Management Leave Response
+Match: DestinationAddress == SourceAddress 
 
 
 #### Management Direct Join Request [0x0035]

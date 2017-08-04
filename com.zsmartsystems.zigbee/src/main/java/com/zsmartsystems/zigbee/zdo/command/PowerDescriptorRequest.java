@@ -69,8 +69,8 @@ public class PowerDescriptorRequest extends ZdoRequest implements CommandRespons
             return false;
         }
 
-        return (((PowerDescriptorRequest) request).getDestinationAddress()
-                .equals(((PowerDescriptorResponse) response).getSourceAddress()));
+        return (((PowerDescriptorRequest) request).getNwkAddrOfInterest()
+                .equals(((PowerDescriptorResponse) response).getNwkAddrOfInterest()));
     }
 
     @Override

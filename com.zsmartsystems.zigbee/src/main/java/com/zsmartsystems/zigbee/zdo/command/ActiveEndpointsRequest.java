@@ -69,8 +69,8 @@ public class ActiveEndpointsRequest extends ZdoRequest implements CommandRespons
             return false;
         }
 
-        return (((ActiveEndpointsRequest) request).getDestinationAddress()
-                .equals(((ActiveEndpointsResponse) response).getSourceAddress()));
+        return (((ActiveEndpointsRequest) request).getNwkAddrOfInterest()
+                .equals(((ActiveEndpointsResponse) response).getNwkAddrOfInterest()));
     }
 
     @Override
