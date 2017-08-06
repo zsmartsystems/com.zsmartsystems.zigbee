@@ -139,7 +139,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_ID_CONFLICT_HANDLER = 0x7C;
     protected static final int FRAME_ID_INCOMING_MESSAGE_HANDLER = 0x45;
     protected static final int FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER = 0x80;
-    protected static final int FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER = 0x80;
+    protected static final int FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER = 0x59;
     protected static final int FRAME_ID_INVALID_COMMAND = 0x58;
     protected static final int FRAME_ID_JOIN_NETWORK = 0x1F;
     protected static final int FRAME_ID_LEAVE_NETWORK = 0x20;
