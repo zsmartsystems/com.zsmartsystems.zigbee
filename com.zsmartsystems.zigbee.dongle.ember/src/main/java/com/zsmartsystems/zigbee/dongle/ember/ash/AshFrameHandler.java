@@ -72,7 +72,7 @@ public class AshFrameHandler {
 
     private final int ASH_MAX_LENGTH = 131;
 
-    private int ackNum = 0;
+    private Integer ackNum = 0;
     private int frmNum = 0;
 
     /**
@@ -331,7 +331,7 @@ public class AshFrameHandler {
         sendFrame(ashFrame);
     }
 
-    private void sendFrame(AshFrame ashFrame) {
+    private synchronized void sendFrame(AshFrame ashFrame) {
         if (ashFrame.getFrameType() == FrameType.DATA) {
             // Set the frame number
             ((AshFrameData) ashFrame).setFrmNum(frmNum);
