@@ -571,9 +571,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     @Override
     public void handleLinkStateChange(boolean linkState) {
         // Handle link changes and notify framework or just reset link with dongle?
-        if (!linkState) {
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
-        }
+        zigbeeTransportReceive.setNetworkState(linkState ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
     }
 
     @Override

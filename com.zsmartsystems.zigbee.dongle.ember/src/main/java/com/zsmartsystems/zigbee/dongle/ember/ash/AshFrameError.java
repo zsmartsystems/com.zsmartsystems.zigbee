@@ -38,14 +38,8 @@ public class AshFrameError extends AshFrame {
         builder.append(version);
         builder.append(". errorCode=");
         builder.append(errorCode);
-        switch (errorCode) {
-            case 0x51:
-                builder.append(", Exceeded maximum ACK timeout count");
-                break;
-            default:
-                break;
-        }
-
+        AshErrorCode ashError = AshErrorCode.getAshErrorCode(errorCode);
+        builder.append(ashError.getDescription());
         builder.append("]");
         return builder.toString();
     }
