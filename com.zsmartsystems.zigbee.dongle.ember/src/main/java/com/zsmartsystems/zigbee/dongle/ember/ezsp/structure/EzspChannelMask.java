@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides a list of channel mask values used for channel scans. <br>
- * The 868MHz frequency band has only one channel and is used in Europe with a data rate of 20kbps. <br>
+ * Provides a list of channel mask values used for channel scans.
+ * <p>
+ * The 868MHz frequency band has only one channel and is used in Europe with a data rate of 20kbps.
+ * <p>
  * The 915MHz frequency band band has 10 channels ranging from channel-1 to channel-10. It delivers data rate of 40 Kbps
  * and used in Americas.
  * The 2.4GHz frequency band is used worldwide and has total of 16 channels from channel-11 to channel-26 delivering a
@@ -39,7 +41,7 @@ import java.util.Map;
  * <li>channel-25 2475 MHz
  * <li>channel-26 2480 MHz
  * </ol>
- * 
+ *
  * @author Chris Jackson
  *
  */

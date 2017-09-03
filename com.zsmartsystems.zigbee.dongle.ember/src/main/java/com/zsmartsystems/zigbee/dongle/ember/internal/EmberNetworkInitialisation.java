@@ -113,6 +113,11 @@ public class EmberNetworkInitialisation {
             networkParameters.setRadioChannel(quietestChannel);
         }
 
+        // If the channel set is empty, use the single channel defined above
+        if (networkParameters.getChannels() == 0) {
+            networkParameters.setChannels(1 << networkParameters.getRadioChannel());
+        }
+
         // Initialise security
         setSecurityState(networkKey);
 
