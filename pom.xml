@@ -106,7 +106,33 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <header>src/etc/header.txt</header>
+                    <failIfMissing>true</failIfMissing>
+                    <strictCheck>true</strictCheck>
+                    <includes>
+                        <include>src/**/*.java</include>
+                    </includes>
+                    <properties>
+                        <year>2017</year>
+                    </properties>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
+        
     </build>
 
     <dependencies>
