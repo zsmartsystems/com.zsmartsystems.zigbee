@@ -1,4 +1,4 @@
-package com.zsmartsystems.zigbee.dongle;
+package com.zsmartsystems.zigbee.dongle.ember;
 
 import static org.junit.Assert.assertEquals;
 
