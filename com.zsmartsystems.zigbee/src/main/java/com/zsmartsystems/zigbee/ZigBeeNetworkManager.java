@@ -876,12 +876,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
      * since it allows devices to join the network without the installer knowing.
      *
-     * @param duration sets the duration of the join enable. Setting this to 0 disables joining. Setting to a value
-     *            greater than 255 seconds will permanently enable joining.
+     * @param duration sets the duration of the join enable. Setting this to 0 disables joining. As per ZigBee 3, a
+     *            value of 255 is not permitted and will be ignored.
      */
-    public void permitJoin(final int duration) {
-        logger.debug("Permit join for {} seconds.", duration);
-        permitJoin(new ZigBeeDeviceAddress(ZigBeeBroadcastDestination.BROADCAST_ROUTERS_AND_COORD.getKey()), duration);
+    public boolean permitJoin(final int duration) {
+        return permitJoin(new ZigBeeDeviceAddress(ZigBeeBroadcastDestination.BROADCAST_ROUTERS_AND_COORD.getKey()),
+                duration);
     }
 
     /**
@@ -891,18 +891,18 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * since it allows devices to join the network without the installer knowing.
      *
      * @param destination the {@link ZigBeeDeviceAddress} to send the join request to
-     * @param duration sets the duration of the join enable. Setting this to 0 disables joining. Setting to a value
-     *            greater than 255 seconds will permanently enable joining.
+     * @param duration sets the duration of the join enable. Setting this to 0 disables joining. As per ZigBee 3, a
+     *            value of 255 is not permitted and will be ignored.
      */
-    public void permitJoin(final ZigBeeDeviceAddress destination, final int duration) {
-        final ManagementPermitJoiningRequest command = new ManagementPermitJoiningRequest();
-
-        if (duration > 255) {
-            command.setPermitDuration(255);
-        } else {
-            command.setPermitDuration(duration);
+    public boolean permitJoin(final ZigBeeDeviceAddress destination, final int duration) {
+        if (duration < 0 || duration >= 255) {
+            logger.debug("Permit join to {} invalid period of {} seconds.", destination, duration);
+            return false;
         }
+        logger.debug("Permit join to {} for {} seconds.", destination, duration);
 
+        ManagementPermitJoiningRequest command = new ManagementPermitJoiningRequest();
+        command.setPermitDuration(duration);
         command.setTcSignificance(true);
         command.setDestinationAddress(destination);
         command.setSourceAddress(new ZigBeeDeviceAddress(0));
@@ -910,8 +910,28 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         try {
             sendCommand(command);
         } catch (final ZigBeeException e) {
-            throw new ZigBeeApiException("Error sending permit join command.", e);
+            logger.debug("Error sending permit join command.", e);
+            return false;
         }
+
+        // If this is a broadcast, then we send it to our own address as well
+        // This seems to be required for some stacks (eg ZNP)
+        if (ZigBeeBroadcastDestination.getBroadcastDestination(destination.getAddress()) != null) {
+            command = new ManagementPermitJoiningRequest();
+            command.setPermitDuration(duration);
+            command.setTcSignificance(true);
+            command.setDestinationAddress(new ZigBeeDeviceAddress(0));
+            command.setSourceAddress(new ZigBeeDeviceAddress(0));
+
+            try {
+                sendCommand(command);
+            } catch (final ZigBeeException e) {
+                logger.debug("Error sending permit join command.", e);
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
