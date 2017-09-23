@@ -20,26 +20,32 @@ The library supports the Silicon Labs EZSP protocol using ASH over a serial inte
 
 It is worth noting that EM3588 devices that have an embedded USB core will likely work with any baud rate, where dongles using external USB interface (eg CP2102 used with an EM3581) will likely require a specific baud rate. This has been noted on the HUSBZB-1 which embeds an EM3581 and requires a rate of 57600.
 
+### Telegesis EMTRX35x
+
+The library supports the Telegesis AT protocol over a serial interface.
+
 ## Tested Hardware
  
 ## ZigBee Dongles and Chipsets
 
 The following table provides a summary of some of the dongles / chipsets that are available on the market nd their support within the library. Receive sensitivity and transmit power are the main parameters affecting RF performance - it should be noted that regulations may reduce transmit power in some areas of the world and other factors can also impact performance. 
  
-| Model        | Support    | Receive     | Transmit     | Antenna  |
-|--------------|------------|-------------|--------------|----------|
-| Xbee XU-Z11  | No         | -90dBm      | +4.5dBm      | Internal |
-| EM358        | Yes (EZSP) | -100dBm     | +8.0dBm      | Internal |
-| **EM358LR**  | Yes (EZSP) | -103dBm     | **+20.0dBm** | Internal |
-| MGM111       | Yes (EZSP) | -99dBm      | +10dBm       | Internal |
-| ConBee       | No         | **-105dBm** | +8.7dBm      | Internal |
-| CC2530       | Yes (ZNP)  | -97dBm      | +4.5dBm      |          |
-| CC2531       | Yes (ZNP)  | -97dBm      | +4.5dBm      |          |
-| CC2538       | Yes (ZNP)  | -97dBm      | +7.0dBm      |          |
-| CC2650       | Yes (ZNP)  | -100dBm     | +5.0dBm      |          |
-| ATSAMR21     | No         | -99dBm      | +4.0dBm      |          |
-| JN5169       | No         | -96dBm      | +10.0dBm     |          |
-| HUSBZB-1     | Yes (EZSP) |             |              | Internal |
+| Model                 | Support         | Receive     | Transmit     | Antenna  |
+|-----------------------|-----------------|-------------|--------------|----------|
+| Xbee XU-Z11           | No              | -90dBm      | +4.5dBm      | Internal |
+| SiLabs EM358          | Yes (EZSP)      | -100dBm     | +8.0dBm      | Internal |
+| SiLabs **EM358LR**    | Yes (EZSP)      | -103dBm     | **+20.0dBm** | Internal |
+| SiLabs MGM111         | Yes (EZSP)      | -99dBm      | +10dBm       | Internal |
+| Dresden ConBee        | No              | **-105dBm** | +8.7dBm      | Internal |
+| TI CC2530             | Yes (ZNP)       | -97dBm      | +4.5dBm      |          |
+| TI CC2531             | Yes (ZNP)       | -97dBm      | +4.5dBm      |          |
+| TI CC2538             | Yes (ZNP)       | -97dBm      | +7.0dBm      |          |
+| TI CC2650             | Yes (ZNP)       | -100dBm     | +5.0dBm      |          |
+| Atmel ATSAMR21        | No              | -99dBm      | +4.0dBm      |          |
+| NXP JN5169            | No              | -96dBm      | +10.0dBm     |          |
+| HUSBZB-1              | Yes (EZSP)      |             |              | Internal |
+| Telegesis EMTRX35x    | Yes             |             |              | Internal |
+| Qivicon Funkstick     | Yes (Telegesis) |             |              | Internal |
 
 * Receive: Defines the typical receive performance. A smaller number is best.
 * Transmit: Defines the maximum output power. A larger number is best.

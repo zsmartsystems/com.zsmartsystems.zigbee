@@ -17,6 +17,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
+import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.serial.SerialPortImpl;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
@@ -93,7 +94,12 @@ public class ZigBeeConsoleMain {
             return;
         }
 
-        final ZigBeePort serialPort = new SerialPortImpl(serialPortName, serialBaud);
+        boolean flowControl = false;
+        if (dongleName.toUpperCase().equals("EMBER")) {
+            flowControl = true;
+        }
+
+        final ZigBeePort serialPort = new SerialPortImpl(serialPortName, serialBaud, flowControl);
 
         System.out.println("Initialising console...");
 
@@ -102,6 +108,11 @@ public class ZigBeeConsoleMain {
             dongle = new ZigBeeDongleTiCc2531(serialPort);
         } else if (dongleName.toUpperCase().equals("EMBER")) {
             dongle = new ZigBeeDongleEzsp(serialPort);
+        } else if (dongleName.toUpperCase().equals("TELEGESIS")) {
+            ZigBeeDongleTelegesis telegesisDongle = new ZigBeeDongleTelegesis(serialPort);
+            telegesisDongle.setTelegesisPassword("password");
+            dongle = telegesisDongle;
+
         } else {
             dongle = null;
         }

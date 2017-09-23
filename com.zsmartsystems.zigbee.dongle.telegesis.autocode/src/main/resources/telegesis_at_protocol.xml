@@ -1,0 +1,1347 @@
+<protocol>
+	<command>
+		<name>Ack Message</name>
+		<description>Acknowledgement for message XX was received</description>
+		<response_parameters>
+			<prompt>ACK</prompt>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>message ID</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Nack Message</name>
+		<description>Acknowledgement for message XX was not received
+		</description>
+		<response_parameters>
+			<prompt>NACK</prompt>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>message ID</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Receive Broadcast</name>
+		<description>A Broadcast with XX characters has been received
+		</description>
+		<response_parameters>
+			<prompt>BCAST</prompt>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>remote Address</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>message Data</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>UInt8</data_type>
+				<name>rssi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>lqi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Receive Multicast</name>
+		<description>A Multicast with XX characters has been received
+		</description>
+		<response_parameters>
+			<prompt>MCAST</prompt>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>remote Address</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>message Data</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>UInt8</data_type>
+				<name>rssi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>lqi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Receive Unicast</name>
+		<description>A Unicast with XX characters has been received</description>
+		<response_parameters>
+			<prompt>UCAST</prompt>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Remote Address</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>message Data</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>UInt8</data_type>
+				<name>rssi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>lqi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Route Record Message</name>
+		<description>Route Record Message received</description>
+		<response_parameters>
+			<prompt>SR</prompt>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>hops</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>remote Address</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>network route</name>
+				<description></description>
+				<multiple>true</multiple>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Network Left</name>
+		<description>Local Node has left the PAN</description>
+		<response_parameters>
+			<prompt>LeftPAN</prompt>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Network Lost</name>
+		<description>End Device has lost contact with Parent</description>
+		<response_parameters>
+			<prompt>LostPAN</prompt>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Network Joined</name>
+		<description>Local Node has joined PAN with given parameters</description>
+		<response_parameters>
+			<prompt>JPAN</prompt>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>channel</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>Pan ID</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>EPan ID</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Leave Network</name>
+		<description>Disassociate Local Device From PAN</description>
+		<command_parameters>
+			<prompt>AT+DASSL</prompt>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Device Left Network</name>
+		<description>A device has left the PAN</description>
+		<response_parameters>
+			<prompt>NODELEFT</prompt>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>network address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Device Joined Network</name>
+		<description>New node has been given permission to join the PAN. NB joining is not complete until an “FFD” prompt or similar is received</description>
+		<response_parameters>
+			<prompt>NEWNODE</prompt>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>network address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>parent address</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Bootload Start</name>
+		<description>Passthrough bootloading has been initiated from another node</description>
+		<response_parameters>
+			<prompt>ENTERING BLOAD</prompt>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Router Announce</name>
+		<description>A router announcing itself</description>
+		<response_parameters>
+			<prompt>FFD</prompt>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>network address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>UInt8</data_type>
+				<name>rssi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>lqi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Sleepy Device Announce</name>
+		<description>A sleepy end device announcing itself</description>
+		<response_parameters>
+			<prompt>SED</prompt>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>network address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>UInt8</data_type>
+				<name>rssi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>lqi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Mobile Device Announce</name>
+		<description>A mobile sleepy end device announcing itself</description>
+		<response_parameters>
+			<prompt>MED</prompt>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>network address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>UInt8</data_type>
+				<name>rssi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>lqi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>End Device Announce</name>
+		<description>An end device announcing itself</description>
+		<response_parameters>
+			<prompt>ZED</prompt>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>network address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>UInt8</data_type>
+				<name>rssi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>lqi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Display Product Identification</name>
+		<description></description>
+		<command_parameters>
+			<prompt>ATI</prompt>
+		</command_parameters>	
+		<response_parameters>
+			<prompt>Telegesis *</prompt>
+			<parameter>
+				<data_type>String</data_type>
+				<name>Device Name</name>
+				<description>The order code of the device</description>
+			</parameter>
+		</response_parameters>
+		<response_parameters>
+			<prompt>R*</prompt>
+			<parameter>
+				<data_type>String</data_type>
+				<name>Firmware Revision</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+		<response_parameters>
+			<prompt></prompt>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>ieee address</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Software Reset</name>
+		<description></description>
+		<command_parameters>
+			<prompt>ATZ</prompt>
+		</command_parameters>	
+		<response_parameters>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Bootload</name>
+		<description>Enter The Bootloader Menu</description>
+		<command_parameters>
+			<prompt>AT+BLOAD</prompt>
+		</command_parameters>	
+		<response_parameters>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>send Unicast</name>
+		<description>Send A Raw Binary ZCL/ZDO Unicast</description>
+		<command_parameters>
+			<prompt>AT+SENDUCASTB</prompt>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>length</name>
+				<auto_size>message Data</auto_size>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>source EP</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>dest EP</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>profile ID</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>cluster ID</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>message Data</name>
+				<terminator>\r</terminator>
+				<description></description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<prompt>SEQ</prompt>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>message ID</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>send multicast</name>
+		<description>Send A Raw ZCL/ZDO Multicast or Broadcast</description>
+		<command_parameters>
+			<prompt>AT+SENDMCASTB</prompt>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>length</name>
+				<auto_size>message Data</auto_size>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>radius</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>ZigBeeGroupAddress</data_type>
+				<name>group Id</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>source EP</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>dest EP</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>profile ID</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>cluster ID</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>message Data</name>
+				<description></description>
+				<terminator>\r</terminator>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Set Channel Mask</name>
+		<description>Sets the channel mask</description>
+		<command_parameters>
+			<prompt>ATS00=</prompt>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>channel mask</name>
+				<description></description>
+				<display>hex[04]</display>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Get Channel Mask</name>
+		<description>Gets the channel mask</description>
+		<command_parameters>
+			<prompt>ATS00?</prompt>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>channel mask</name>
+				<description></description>
+				<display>hex[04]</display>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Set Pan ID</name>
+		<description>Sets the preferred  PAN ID</description>
+		<command_parameters>
+			<prompt>ATS02=</prompt>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>pan ID</name>
+				<description></description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Get Pan ID</name>
+		<description>Gets the preferred PAN ID</description>
+		<command_parameters>
+			<prompt>ATS02?</prompt>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>pan ID</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Set EPan ID</name>
+		<description>Sets the preferred Extended PAN ID</description>
+		<command_parameters>
+			<prompt>ATS03=</prompt>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>epan ID</name>
+				<description></description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Get EPan ID</name>
+		<description>Gets the preferred Extended PAN ID</description>
+		<command_parameters>
+			<prompt>ATS03?</prompt>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>epan ID</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Set Ieee Address</name>
+		<description>Sets the local node’s unique EUI64 identifier.</description>
+		<command_parameters>
+			<prompt>ATS04=</prompt>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>ieee address</name>
+				<description></description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Get Ieee Address</name>
+		<description>Gets the local node’s unique EUI64 identifier</description>
+		<command_parameters>
+			<prompt>ATS04?</prompt>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>ieee address</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Set Network Key</name>
+		<description>The network key which can be written using the password. The default password for R3xx is “password”.</description>
+		<command_parameters>
+			<prompt>ATS08=</prompt>
+			<parameter>
+				<data_type>ZigBeeKey</data_type>
+				<name>network key</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>String</data_type>
+				<name>password</name>
+				<description></description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Get Network Key</name>
+		<description>The network key which can be written using the password. The default password for R3xx is “password”.</description>
+		<command_parameters>
+			<prompt>ATS08?</prompt>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>ZigBeeKey</data_type>
+				<name>network key</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Set Trust Centre Link Key</name>
+		<description>The link key which can be written using the password. The default password for R3xx is “password”.</description>
+		<command_parameters>
+			<prompt>ATS09=</prompt>
+			<parameter>
+				<data_type>ZigBeeKey</data_type>
+				<name>link key</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>String</data_type>
+				<name>password</name>
+				<description></description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Get Trust Centre Link Key</name>
+		<description>The link key which can be written using the password. The default password for R3xx is “password”.</description>
+		<command_parameters>
+			<prompt>ATS09?</prompt>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>ZigBeeKey</data_type>
+				<name>link key</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+
+	<command>
+		<name>Set Main Function</name>
+		<description>Sets the Main Function configuration</description>
+		<command_parameters>
+			<prompt>ATS0A=</prompt>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>configuration</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>String</data_type>
+				<name>password</name>
+				<description></description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Get Main Function</name>
+		<description>Gets the Extended Main configuration</description>
+		<command_parameters>
+			<prompt>ATS0A?</prompt>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>configuration</name>
+				<description></description>
+				<display>hex[04]</display>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Set Prompt Enable 1</name>
+		<description>Sets the Prompt Enable 1 configuration</description>
+		<command_parameters>
+			<prompt>ATS0E=</prompt>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>configuration</name>
+				<description></description>
+				<display>hex[04]</display>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Get Prompt Enable 1</name>
+		<description>Gets the Prompt Enable 1 configuration</description>
+		<command_parameters>
+			<prompt>ATS0E?</prompt>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>configuration</name>
+				<description></description>
+				<display>hex[04]</display>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Set Prompt Enable 2</name>
+		<description>Sets the Prompt Enable 2 configuration</description>
+		<command_parameters>
+			<prompt>ATS0F=</prompt>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>configuration</name>
+				<description></description>
+				<display>hex[04]</display>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Get Prompt Enable 2</name>
+		<description>Gets the Prompt Enable 2 configuration</description>
+		<command_parameters>
+			<prompt>ATS0F?</prompt>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>configuration</name>
+				<description></description>
+				<display>hex[04]</display>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Set Extended Function</name>
+		<description>Sets the Extended Function configuration</description>
+		<command_parameters>
+			<prompt>ATS10=</prompt>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>configuration</name>
+				<description></description>
+				<display>hex[04]</display>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Get Extended Function</name>
+		<description>Gets the Extended Function configuration</description>
+		<command_parameters>
+			<prompt>ATS10?</prompt>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>configuration</name>
+				<description></description>
+				<display>hex[04]</display>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Energy Scan</name>
+		<description>Scan The Energy Of All Channels</description>
+		<command_parameters>
+			<prompt>AT+ESCAN</prompt>
+		</command_parameters>
+		<response_parameters>
+			<prompt>AT+ESCAN</prompt>
+			<required>true</required>
+		</response_parameters>		
+		<response_parameters>
+			<multiple>true</multiple>
+			<name>Scan Result</name>
+			<parameter>
+				<data_type>Dec8</data_type>
+				<name>channel</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>rssi</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Create PAN</name>
+		<description>Establish Personal Area Network</description>
+		<command_parameters>
+			<prompt>AT+EN</prompt>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Active Scan</name>
+		<description>Scan For Active PANs</description>
+		<command_parameters>
+			<prompt>AT+PANSCAN</prompt>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>channel mask</name>
+				<description></description>
+			</parameter>
+		</command_parameters>	
+		<response_parameters>
+			<prompt>+PANSCAN</prompt>
+			<multiple>true</multiple>
+				<name>scan result</name>
+			<parameter>
+				<data_type>Dec8</data_type>
+				<name>channel</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>pan id</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>EPan id</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>profile id</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>joining enabled</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>UInt8</data_type>
+				<name>rssi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>lqi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Join Network</name>
+		<description>Join Network</description>
+		<command_parameters>
+			<prompt>AT+JN</prompt>
+		</command_parameters>	
+		<response_parameters>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Display Network Information</name>
+		<description>Display Network Information</description>
+		<command_parameters>
+			<prompt>AT+N?</prompt>
+		</command_parameters>	
+		<response_parameters>
+			<prompt>+N=</prompt>
+			<parameter>
+				<data_type>TelegesisDeviceType</data_type>
+				<name>device</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Integer</data_type>
+				<name>channel</name>
+				<conditional>device!=TelegesisDeviceType.NOPAN</conditional>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Integer</data_type>
+				<name>power</name>
+				<conditional>device!=TelegesisDeviceType.NOPAN</conditional>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>Pan ID</name>
+				<conditional>device!=TelegesisDeviceType.NOPAN</conditional>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>EPan id</name>
+				<conditional>device!=TelegesisDeviceType.NOPAN</conditional>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Update Network Key</name>
+		<description>Updates the Network Key with a new key. If the value in S08 is non-zero and is not the current key, it will be used for the updated key. If S08 is zero or the current key, a random value will be generated.</description>
+		<command_parameters>
+			<prompt>AT+KEYUPD</prompt>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Become Trust Centre</name>
+		<description>Local Device takes over the Trust Centre. Can only be used if no other device in the network is Trust Centre (i.e. the network has been started in distributed Trust Centre mode). Notes. Can only be used if Network has been started in distributed Trust Centre mode (bit 9 of S0A set). AT+BECOMETC causes the network key to be updated.</description>
+		<command_parameters>
+			<prompt>AT+BECOMETC</prompt>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Become Network Manager</name>
+		<description>Local Device takes over role of Network Manager. By default the COO is the Network Manager, but any other router in the network can take over this responsibility. The Network Manager can change the radio channel and the PAN ID.</description>
+		<command_parameters>
+			<prompt>AT+BECOMENM</prompt>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Change Channel</name>
+		<description>Ask all nodes in the network to change their channel. If no channel is specified a random channel out of the channels masked in S00 is picked which wasn’t previously blacklisted because of excessive packet loss (NM:ES REPORT WARNING prompt). Note. The New channel needs to be masked in in S00 for all nodes on the network. Ideally S00 should be identical for all nodes on a network.</description>
+		<command_parameters>
+			<prompt>AT+CCHANGE</prompt>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>channel</name>
+				<description></description>
+				<optional>true</optional>
+				<minimum>0x0B</minimum>
+				<maximum>0x1A</maximum>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<enum>
+		<name>TelegesisStatusCode</name>
+		<description></description>
+		<values>
+			<value>
+				<name>success</name>
+				<enum_value>0x00</enum_value>
+				<description>Everything OK - Success</description>
+			</value>
+			<value>
+				<name>timeout</name>
+				<enum_value>0x01</enum_value>
+				<description>Couldn’t poll Parent because of Timeout</description>
+			</value>
+			<value>
+				<name>unknown command</name>
+				<enum_value>0x02</enum_value>
+				<description>Unknown command</description>
+			</value>
+			<value>
+				<name>invalid s register</name>
+				<enum_value>0x04</enum_value>
+				<description>Invalid S-Register</description>
+			</value>
+			<value>
+				<name>Invalid parameter</name>
+				<enum_value>0x05</enum_value>
+				<description>Invalid parameter</description>
+			</value>
+			<value>
+				<name>Recipient unreachable</name>
+				<enum_value>0x06</enum_value>
+				<description>Recipient could not be reached</description>
+			</value>
+			<value>
+				<name>MESSAGE_NAK</name>
+				<enum_value>0x07</enum_value>
+				<description>Message was not acknowledged</description>
+			</value>
+			<value>
+				<name>Unknown sink</name>
+				<enum_value>0x08</enum_value>
+				<description>No sink known</description>
+			</value>
+			<value>
+				<name>Address table in use</name>
+				<enum_value>0x09</enum_value>
+				<description>Address Table entry is in use and cannot be modified
+				</description>
+			</value>
+			<value>
+				<name>Message not sent</name>
+				<enum_value>0x0A</enum_value>
+				<description>Message could not be sent</description>
+			</value>
+			<value>
+				<name>Node not sink</name>
+				<enum_value>0x0B</enum_value>
+				<description>Local node is not sink</description>
+			</value>
+			<value>
+				<name>Input too long</name>
+				<enum_value>0x0C</enum_value>
+				<description>Too many characters</description>
+			</value>
+			<value>
+				<name>Scan in progress</name>
+				<enum_value>0x0E</enum_value>
+				<description>Background Scan in Progress (Please wait and try again)
+				</description>
+			</value>
+			<value>
+				<name>Fatal error during initialisation</name>
+				<enum_value>0x0F</enum_value>
+				<description>Fatal error during network init</description>
+			</value>
+			<value>
+				<name>Bootload error</name>
+				<enum_value>0x10</enum_value>
+				<description>Error bootloading</description>
+			</value>
+			<value>
+				<name>Fatal error during stack init</name>
+				<enum_value>0x12</enum_value>
+				<description>Fatal error initialising the stack</description>
+			</value>
+			<value>
+				<name>No buffers</name>
+				<enum_value>0x18</enum_value>
+				<description>Node has run out of Buffers</description>
+			</value>
+			<value>
+				<name>Error eriting to read only register</name>
+				<enum_value>0x19</enum_value>
+				<description>Trying to write read-only register</description>
+			</value>
+			<value>
+				<name>Data mode refused</name>
+				<enum_value>0x1A</enum_value>
+				<description>Data Mode Refused by Remote Node</description>
+			</value>
+			<value>
+				<name>Data mode connection lost</name>
+				<enum_value>0x1B</enum_value>
+				<description>Connection Lost in Data Mode</description>
+			</value>
+			<value>
+				<name>Data mode already set</name>
+				<enum_value>0x1C</enum_value>
+				<description>Remote node is already in Data Mode</description>
+			</value>
+			<value>
+				<name>Invalid password</name>
+				<enum_value>0x20</enum_value>
+				<description>Invalid password</description>
+			</value>
+			<value>
+				<name>Cannot form network</name>
+				<enum_value>0x25</enum_value>
+				<description>Cannot form network</description>
+			</value>
+			<value>
+				<name>No network found</name>
+				<enum_value>0x27</enum_value>
+				<description>No network found</description>
+			</value>
+			<value>
+				<name>Not allowed when PAN joined</name>
+				<enum_value>0x28</enum_value>
+				<description>Operation cannot be completed if node is part of a PAN
+				</description>
+			</value>
+			<value>
+				<name>Error leaving PAN</name>
+				<enum_value>0x2C</enum_value>
+				<description>Error leaving the PAN</description>
+			</value>
+			<value>
+				<name>Error scanning for PAN</name>
+				<enum_value>0x2D</enum_value>
+				<description>Error scanning for PANs</description>
+			</value>
+			<value>
+				<name>No response from bootloader</name>
+				<enum_value>0x33</enum_value>
+				<description>No response from the remote bootloader</description>
+			</value>
+			<value>
+				<name>No response during cloning</name>
+				<enum_value>0x34</enum_value>
+				<description>Target did not respond during cloning</description>
+			</value>
+			<value>
+				<name>Timeout during send</name>
+				<enum_value>0x35</enum_value>
+				<description>Timeout occurred during xCASTB</description>
+			</value>
+			<value>
+				<name>MAC queue full</name>
+				<enum_value>0x39</enum_value>
+				<description>MAC Transmit Queue is Full</description>
+			</value>
+			<value>
+				<name>Invalid Binding Index</name>
+				<enum_value>0x6C</enum_value>
+				<description>Invalid Binding Index</description>
+			</value>
+			<value>
+				<name>Invalid Operation</name>
+				<enum_value>0x70</enum_value>
+				<description>Invalid Operation</description>
+			</value>
+			<value>
+				<name>Too many unicast</name>
+				<enum_value>0x72</enum_value>
+				<description>More than 10 unicast messages were in flight at the
+					same time</description>
+			</value>
+			<value>
+				<name>Message too long</name>
+				<enum_value>0x74</enum_value>
+				<description>Message too long</description>
+			</value>
+			<value>
+				<name>ZDP Invalid Request Type</name>
+				<enum_value>0x80</enum_value>
+				<description>ZDP Invalid Request Type</description>
+			</value>
+			<value>
+				<name>ZDP Device not Found</name>
+				<enum_value>0x81</enum_value>
+				<description>ZDP Device not Found</description>
+			</value>
+			<value>
+				<name>ZDP Invalid Endpoint</name>
+				<enum_value>0x82</enum_value>
+				<description>ZDP Invalid Endpoint</description>
+			</value>
+			<value>
+				<name>ZDP Not Active</name>
+				<enum_value>0x83</enum_value>
+				<description>ZDP Not Active</description>
+			</value>
+			<value>
+				<name>ZDP Not Supported</name>
+				<enum_value>0x84</enum_value>
+				<description>ZDP Not Supported</description>
+			</value>
+			<value>
+				<name>ZDP Timeout</name>
+				<enum_value>0x85</enum_value>
+				<description>ZDP Timeout</description>
+			</value>
+			<value>
+				<name>ZDP No Match</name>
+				<enum_value>0x86</enum_value>
+				<description>ZDP No Match</description>
+			</value>
+			<value>
+				<name>ZDP Table Full</name>
+				<enum_value>0x87</enum_value>
+				<description>ZDP Table Full</description>
+			</value>
+			<value>
+				<name>ZDP No Entry</name>
+				<enum_value>0x88</enum_value>
+				<description>ZDP No Entry</description>
+			</value>
+			<value>
+				<name>ZDP No Descriptor</name>
+				<enum_value>0x89</enum_value>
+				<description>ZDP No Descriptor</description>
+			</value>
+			<value>
+				<name>Not connected to network</name>
+				<enum_value>0x91</enum_value>
+				<description>Operation only possible if connected to a PAN
+				</description>
+			</value>
+			<value>
+				<name>Node not part of Network</name>
+				<enum_value>0x93</enum_value>
+				<description>Node is not part of a Network</description>
+			</value>
+			<value>
+				<name>Cannot join network</name>
+				<enum_value>0x94</enum_value>
+				<description>Cannot join network</description>
+			</value>
+			<value>
+				<name>Mobile device move failed</name>
+				<enum_value>0x96</enum_value>
+				<description>Mobile End Device Move to new Parent Failed
+				</description>
+			</value>
+			<value>
+				<name>Cannot join as router</name>
+				<enum_value>0x98</enum_value>
+				<description>Cannot join ZigBee 2006 Network as Router</description>
+			</value>
+			<value>
+				<name>Too many broadcasts</name>
+				<enum_value>0xA1</enum_value>
+				<description>More than 8 broadcasts were sent within 8 seconds
+				</description>
+			</value>
+			<value>
+				<name>No beacons heard</name>
+				<enum_value>0xAB</enum_value>
+				<description>Trying to join, but no beacons could be heard
+				</description>
+			</value>
+			<value>
+				<name>Network key was sent clear</name>
+				<enum_value>0xAC</enum_value>
+				<description>Network key was sent in the clear when trying to join
+					secured</description>
+			</value>
+			<value>
+				<name>Network key not received</name>
+				<enum_value>0xAD</enum_value>
+				<description>Did not receive Network Key</description>
+			</value>
+			<value>
+				<name>No Link Key received</name>
+				<enum_value>0xAE</enum_value>
+				<description>No Link Key received</description>
+			</value>
+			<value>
+				<name>Preconfigured Key Required</name>
+				<enum_value>0xAF</enum_value>
+				<description>Preconfigured Key Required</description>
+			</value>
+			<value>
+				<name>NWK Already Present</name>
+				<enum_value>0xC5</enum_value>
+				<description>NWK Already Present</description>
+			</value>
+			<value>
+				<name>NWK Table Full</name>
+				<enum_value>0xC8</enum_value>
+				<description>NWK Table Full</description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>TelegesisDeviceType</name>
+		<description></description>
+		<values>
+			<value>
+				<name>NoPAN</name>
+				<description></description>
+			</value>
+			<value>
+				<name>FFD</name>
+				<description></description>
+			</value>
+			<value>
+				<name>COO</name>
+				<description></description>
+			</value>
+			<value>
+				<name>ZED</name>
+				<description></description>
+			</value>
+			<value>
+				<name>SED</name>
+				<description></description>
+			</value>
+			<value>
+				<name>MED</name>
+				<description></description>
+			</value>
+		</values>
+	</enum>
+
+</protocol>
