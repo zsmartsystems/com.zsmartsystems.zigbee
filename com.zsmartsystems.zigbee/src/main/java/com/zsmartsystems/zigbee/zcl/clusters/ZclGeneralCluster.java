@@ -13,6 +13,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
@@ -303,10 +304,10 @@ public class ZclGeneralCluster extends ZclCluster {
      * is set to 0.
      *
      * @param commandIdentifier {@link Integer} Command identifier
-     * @param statusCode {@link Integer} Status code
+     * @param statusCode {@link ZclStatus} Status code
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> defaultResponse(Integer commandIdentifier, Integer statusCode) {
+    public Future<CommandResult> defaultResponse(Integer commandIdentifier, ZclStatus statusCode) {
         DefaultResponse command = new DefaultResponse();
 
         // Set the fields

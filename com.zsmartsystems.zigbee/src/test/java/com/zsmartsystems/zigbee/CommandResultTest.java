@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 
 /**
@@ -36,13 +37,13 @@ public class CommandResultTest {
         assertTrue(result.isSuccess());
 
         DefaultResponse response = new DefaultResponse();
-        response.setStatusCode(0);
+        response.setStatusCode(ZclStatus.SUCCESS);
         result = new CommandResult(response);
         assertFalse(result.isError());
         assertTrue(result.isSuccess());
 
         response = new DefaultResponse();
-        response.setStatusCode(1);
+        response.setStatusCode(ZclStatus.FAILURE);
         result = new CommandResult(response);
         assertTrue(result.isError());
         assertFalse(result.isSuccess());

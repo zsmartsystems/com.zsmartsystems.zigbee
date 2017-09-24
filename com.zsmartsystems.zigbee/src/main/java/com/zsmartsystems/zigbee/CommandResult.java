@@ -110,7 +110,7 @@ public class CommandResult {
     public Integer getStatusCode() {
         if (hasStatusCode()) {
             if (response instanceof DefaultResponse) {
-                return ((DefaultResponse) response).getStatusCode();
+                return ((DefaultResponse) response).getStatusCode().getId();
             } else {
                 return ((ZdoResponse) response).getStatus().getId();
             }

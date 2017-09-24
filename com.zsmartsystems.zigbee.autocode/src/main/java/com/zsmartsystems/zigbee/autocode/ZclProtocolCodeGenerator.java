@@ -286,6 +286,14 @@ public class ZclProtocolCodeGenerator {
 
         final PrintWriter out = getClassOut(packageFile, className);
 
+        out.println("/**");
+        out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+        out.println(" * All rights reserved. This program and the accompanying materials");
+        out.println(" * are made available under the terms of the Eclipse Public License v1.0");
+        out.println(" * which accompanies this distribution, and is available at");
+        out.println(" * http://www.eclipse.org/legal/epl-v10.html");
+        out.println(" */");
+
         out.println("package " + packageRoot + ";");
 
         out.println();
@@ -293,6 +301,7 @@ public class ZclProtocolCodeGenerator {
         out.println("import java.util.HashMap;");
         out.println("import java.util.Map;");
         out.println("import " + packageRootPrefix + packageZclField + ".*;");
+        out.println("import " + packageRootPrefix + packageZcl + ".ZclStatus;");
         out.println("import " + packageRootPrefix + packageZdp + ".ZdoStatus;");
         out.println("import " + packageRootPrefix + packageZdpDescriptors + ".*;");
         out.println("import " + packageRootPrefix + "." + "IeeeAddress" + ";");
@@ -379,6 +388,14 @@ public class ZclProtocolCodeGenerator {
 
         final PrintWriter out = getClassOut(packageFile, className);
 
+        out.println("/**");
+        out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+        out.println(" * All rights reserved. This program and the accompanying materials");
+        out.println(" * are made available under the terms of the Eclipse Public License v1.0");
+        out.println(" * which accompanies this distribution, and is available at");
+        out.println(" * http://www.eclipse.org/legal/epl-v10.html");
+        out.println(" */");
+
         out.println("package " + packageRoot + ";");
         out.println();
         outputClassJavaDoc(out);
@@ -418,6 +435,14 @@ public class ZclProtocolCodeGenerator {
         final File packageFile = getPackageFile(packagePath);
 
         final PrintWriter out = getClassOut(packageFile, className);
+
+        out.println("/**");
+        out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+        out.println(" * All rights reserved. This program and the accompanying materials");
+        out.println(" * are made available under the terms of the Eclipse Public License v1.0");
+        out.println(" * which accompanies this distribution, and is available at");
+        out.println(" * http://www.eclipse.org/legal/epl-v10.html");
+        out.println(" */");
 
         out.println("package " + packageRoot + ";");
         out.println();
@@ -579,6 +604,14 @@ public class ZclProtocolCodeGenerator {
 
         final PrintWriter out = getClassOut(packageFile, className);
 
+        out.println("/**");
+        out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+        out.println(" * All rights reserved. This program and the accompanying materials");
+        out.println(" * are made available under the terms of the Eclipse Public License v1.0");
+        out.println(" * which accompanies this distribution, and is available at");
+        out.println(" * http://www.eclipse.org/legal/epl-v10.html");
+        out.println(" */");
+
         out.println("package " + packageRoot + ";");
         out.println();
         outputClassJavaDoc(out);
@@ -640,6 +673,14 @@ public class ZclProtocolCodeGenerator {
         final File packageFile = getPackageFile(packagePath);
 
         final PrintWriter out = getClassOut(packageFile, className);
+
+        out.println("/**");
+        out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+        out.println(" * All rights reserved. This program and the accompanying materials");
+        out.println(" * are made available under the terms of the Eclipse Public License v1.0");
+        out.println(" * which accompanies this distribution, and is available at");
+        out.println(" * http://www.eclipse.org/legal/epl-v10.html");
+        out.println(" */");
 
         out.println("package " + packageRoot + ";");
         out.println();
@@ -723,6 +764,14 @@ public class ZclProtocolCodeGenerator {
                         }
                     }
 
+                    out.println("/**");
+                    out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+                    out.println(" * All rights reserved. This program and the accompanying materials");
+                    out.println(" * are made available under the terms of the Eclipse Public License v1.0");
+                    out.println(" * which accompanies this distribution, and is available at");
+                    out.println(" * http://www.eclipse.org/legal/epl-v10.html");
+                    out.println(" */");
+
                     out.println("package " + packageRoot + ";");
                     out.println();
                     // out.println("import " + packageRootPrefix + packageZcl + ".ZclCommandMessage;");
@@ -776,6 +825,9 @@ public class ZclProtocolCodeGenerator {
                                 continue;
                             case "IeeeAddress":
                                 out.println("import " + packageRootPrefix + "." + typeName + ";");
+                                continue;
+                            case "ZclStatus":
+                                out.println("import " + packageRootPrefix + packageZcl + ".ZclStatus;");
                                 continue;
                         }
 
@@ -994,6 +1046,14 @@ public class ZclProtocolCodeGenerator {
 
         final PrintWriter out = getClassOut(packageFile, className);
 
+        out.println("/**");
+        out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+        out.println(" * All rights reserved. This program and the accompanying materials");
+        out.println(" * are made available under the terms of the Eclipse Public License v1.0");
+        out.println(" * which accompanies this distribution, and is available at");
+        out.println(" * http://www.eclipse.org/legal/epl-v10.html");
+        out.println(" */");
+
         out.println("package " + packageRoot + ";");
         out.println();
 
@@ -1158,6 +1218,14 @@ public class ZclProtocolCodeGenerator {
                 commands.addAll(cluster.received.values());
                 commands.addAll(cluster.generated.values());
 
+                out.println("/**");
+                out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+                out.println(" * All rights reserved. This program and the accompanying materials");
+                out.println(" * are made available under the terms of the Eclipse Public License v1.0");
+                out.println(" * which accompanies this distribution, and is available at");
+                out.println(" * http://www.eclipse.org/legal/epl-v10.html");
+                out.println(" */");
+
                 out.println("package " + packageRoot + packageZclCluster + ";");
                 out.println();
 
@@ -1197,6 +1265,9 @@ public class ZclProtocolCodeGenerator {
                             case "IeeeAddress":
                                 imports.add(packageRootPrefix + "." + typeName);
                                 System.out.println("Adding " + typeName);
+                                continue;
+                            case "ZclStatus":
+                                imports.add(packageRootPrefix + packageZcl + ".ZclStatus");
                                 continue;
                         }
 
@@ -1621,6 +1692,14 @@ public class ZclProtocolCodeGenerator {
                         }
                     }
 
+                    out.println("/**");
+                    out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+                    out.println(" * All rights reserved. This program and the accompanying materials");
+                    out.println(" * are made available under the terms of the Eclipse Public License v1.0");
+                    out.println(" * which accompanies this distribution, and is available at");
+                    out.println(" * http://www.eclipse.org/legal/epl-v10.html");
+                    out.println(" */");
+
                     out.println("package " + packageRoot + ";");
                     out.println();
                     // out.println("import " + packageRootPrefix + packageZcl + ".ZclCommandMessage;");
@@ -1942,6 +2021,14 @@ public class ZclProtocolCodeGenerator {
         final File packageFile = getPackageFile(packagePath);
 
         final PrintWriter out = getClassOut(packageFile, className);
+
+        out.println("/**");
+        out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+        out.println(" * All rights reserved. This program and the accompanying materials");
+        out.println(" * are made available under the terms of the Eclipse Public License v1.0");
+        out.println(" * which accompanies this distribution, and is available at");
+        out.println(" * http://www.eclipse.org/legal/epl-v10.html");
+        out.println(" */");
 
         out.println("package " + packageRoot + ";");
         out.println();
