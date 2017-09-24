@@ -84,10 +84,6 @@ public enum ZigBeeBroadcastDestination {
             initMapping();
         }
 
-        if (codeMapping.get(i) == null) {
-            return BROADCAST_ALL_DEVICES;
-        }
-
         return codeMapping.get(i);
     }
 

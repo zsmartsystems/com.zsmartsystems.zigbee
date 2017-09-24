@@ -16,7 +16,7 @@ public class ZigBeeBroadcastDestinationTest {
     @Test
     public void getDestination() {
         ZigBeeBroadcastDestination destination = ZigBeeBroadcastDestination.getBroadcastDestination(0);
-        assertEquals(ZigBeeBroadcastDestination.BROADCAST_ALL_DEVICES, destination);
+        assertEquals(null, destination);
 
         destination = ZigBeeBroadcastDestination.getBroadcastDestination(0xFFFC);
         assertEquals(ZigBeeBroadcastDestination.BROADCAST_ROUTERS_AND_COORD, destination);
