@@ -35,10 +35,10 @@ public class ZclCustomResponseMatcherTest {
 
         zclCommand.setTransactionId(22);
         zclResponse.setTransactionId(22);
-        zclResponse.setStatusCode(0);
+        zclResponse.setStatusCode(ZclStatus.SUCCESS);
         assertFalse(matcher.isMatch(zclCommand, zclResponse));
 
-        zclResponse.setStatusCode(1);
+        zclResponse.setStatusCode(ZclStatus.FAILURE);
         assertTrue(matcher.isMatch(zclCommand, zclResponse));
 
         zclResponse.setTransactionId(222);

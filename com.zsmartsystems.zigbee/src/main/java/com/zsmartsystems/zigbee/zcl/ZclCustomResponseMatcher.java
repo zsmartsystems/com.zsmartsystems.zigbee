@@ -28,7 +28,7 @@ public class ZclCustomResponseMatcher implements CommandResponseMatcher {
             final int transactionId = ((ZclCommand) request).getTransactionId();
             if (Integer.valueOf(transactionId).equals(((ZclCommand) response).getTransactionId())) {
                 if (response instanceof DefaultResponse) {
-                    return (((DefaultResponse) response).getStatusCode() == 0) ? false : true;
+                    return (((DefaultResponse) response).getStatusCode().getId() == 0) ? false : true;
                 } else {
                     return true; // This is the actual response, return this one.
                 }

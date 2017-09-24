@@ -140,7 +140,7 @@ is set to 0.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Command identifier         |Unsigned 8-bit integer     |
-|Status code                |8-bit enumeration          |
+|Status code                |Zcl Status                 |
 
 #### Discover Attributes Command [0x0c]
 
