@@ -97,14 +97,14 @@ public class ManagementDirectJoinRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(104);
         builder.append("ManagementDirectJoinRequest [");
         builder.append(super.toString());
         builder.append(", deviceAddress=");
         builder.append(deviceAddress);
         builder.append(", capabilityInformation=");
         builder.append(capabilityInformation);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -850,7 +850,7 @@ command shall be unicast to the requesting device.
 |Status                     |Zdo Status                 |
 |BindingTableEntries        |Unsigned 16-bit integer    |
 |BindingTableListCount      |Unsigned 16-bit integer    |
-|BindingTableList           |N x                  |
+|BindingTableList           |N x Binding Table[BindingTableListCount] |
 
 #### Replace Device Response [0x8024]
 

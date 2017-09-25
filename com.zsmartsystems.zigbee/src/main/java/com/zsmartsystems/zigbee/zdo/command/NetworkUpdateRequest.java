@@ -169,7 +169,7 @@ public class NetworkUpdateRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(181);
         builder.append("NetworkUpdateRequest [");
         builder.append(super.toString());
         builder.append(", scanChannels=");
@@ -182,7 +182,7 @@ public class NetworkUpdateRequest extends ZdoRequest {
         builder.append(nwkUpdateId);
         builder.append(", nwkManagerAddr=");
         builder.append(nwkManagerAddr);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

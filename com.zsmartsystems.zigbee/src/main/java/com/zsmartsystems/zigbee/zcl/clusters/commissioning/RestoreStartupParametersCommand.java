@@ -91,14 +91,14 @@ public class RestoreStartupParametersCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(85);
         builder.append("RestoreStartupParametersCommand [");
         builder.append(super.toString());
         builder.append(", option=");
         builder.append(option);
         builder.append(", index=");
         builder.append(index);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

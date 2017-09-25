@@ -95,14 +95,14 @@ public class ZoneEnrollResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(85);
         builder.append("ZoneEnrollResponse [");
         builder.append(super.toString());
         builder.append(", enrollResponseCode=");
         builder.append(enrollResponseCode);
         builder.append(", zoneId=");
         builder.append(zoneId);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

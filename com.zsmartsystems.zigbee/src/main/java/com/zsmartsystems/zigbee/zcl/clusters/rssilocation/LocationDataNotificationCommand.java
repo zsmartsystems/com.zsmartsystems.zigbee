@@ -266,7 +266,7 @@ public class LocationDataNotificationCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(319);
         builder.append("LocationDataNotificationCommand [");
         builder.append(super.toString());
         builder.append(", locationType=");
@@ -287,7 +287,7 @@ public class LocationDataNotificationCommand extends ZclCommand {
         builder.append(qualityMeasure);
         builder.append(", locationAge=");
         builder.append(locationAge);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

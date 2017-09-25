@@ -41,10 +41,10 @@ public class ManagementNetworkDiscoveryResponse extends ZdoResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(37);
         builder.append("ManagementNetworkDiscoveryResponse [");
         builder.append(super.toString());
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -107,14 +107,14 @@ public class DiscoverAttributesCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(119);
         builder.append("DiscoverAttributesCommand [");
         builder.append(super.toString());
         builder.append(", startAttributeIdentifier=");
         builder.append(startAttributeIdentifier);
         builder.append(", maximumAttributeIdentifiers=");
         builder.append(maximumAttributeIdentifiers);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -84,12 +84,12 @@ public class ConfigureReportingResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(56);
         builder.append("ConfigureReportingResponse [");
         builder.append(super.toString());
         builder.append(", records=");
         builder.append(records);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

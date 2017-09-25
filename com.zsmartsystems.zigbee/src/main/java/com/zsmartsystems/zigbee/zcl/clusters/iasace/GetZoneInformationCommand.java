@@ -71,12 +71,12 @@ public class GetZoneInformationCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(54);
         builder.append("GetZoneInformationCommand [");
         builder.append(super.toString());
         builder.append(", zoneId=");
         builder.append(zoneId);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

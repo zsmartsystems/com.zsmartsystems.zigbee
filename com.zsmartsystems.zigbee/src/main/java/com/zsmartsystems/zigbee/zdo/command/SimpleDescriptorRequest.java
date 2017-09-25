@@ -109,14 +109,14 @@ public class SimpleDescriptorRequest extends ZdoRequest implements CommandRespon
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(91);
         builder.append("SimpleDescriptorRequest [");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);
         builder.append(", endpoint=");
         builder.append(endpoint);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

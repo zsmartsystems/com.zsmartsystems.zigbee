@@ -134,7 +134,7 @@ public class ViewGroupResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(102);
         builder.append("ViewGroupResponse [");
         builder.append(super.toString());
         builder.append(", status=");
@@ -143,7 +143,7 @@ public class ViewGroupResponse extends ZclCommand {
         builder.append(groupId);
         builder.append(", groupName=");
         builder.append(groupName);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

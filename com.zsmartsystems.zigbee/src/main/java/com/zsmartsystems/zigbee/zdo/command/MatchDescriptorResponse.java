@@ -135,7 +135,7 @@ public class MatchDescriptorResponse extends ZdoResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(149);
         builder.append("MatchDescriptorResponse [");
         builder.append(super.toString());
         builder.append(", status=");
@@ -146,7 +146,7 @@ public class MatchDescriptorResponse extends ZdoResponse {
         builder.append(matchLength);
         builder.append(", matchList=");
         builder.append(matchList);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

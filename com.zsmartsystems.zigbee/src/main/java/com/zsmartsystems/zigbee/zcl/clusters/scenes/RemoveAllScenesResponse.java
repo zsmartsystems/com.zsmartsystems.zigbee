@@ -101,14 +101,14 @@ public class RemoveAllScenesResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(79);
         builder.append("RemoveAllScenesResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
         builder.append(", groupId=");
         builder.append(groupId);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -109,14 +109,14 @@ public class RemoveGroupResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(75);
         builder.append("RemoveGroupResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
         builder.append(", groupId=");
         builder.append(groupId);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -205,6 +205,7 @@ optional and mandatory commands the cluster to which this command is sent can pr
 |Start command identifier     |Unsigned 8-bit integer     |
 |Maximum command identifiers  |Unsigned 8-bit integer     |
 
+
 #### Discover Commands Received Response [0x12]
 
 The Discover Commands Received Response is generated in response to a Discover Commands Received
@@ -213,7 +214,8 @@ command.
 |Field Name                   |Data Type                  |
 |-----------------------------|---------------------------|
 |Discovery complete           |Unsigned 8-bit integer     |
-|Command identifiers          |N x Unsigned 8-bit integer |
+|Command identifiers          |N X Unsigned 8-bit integer |
+
 
 #### Discover Commands Generated [0x13]
 
@@ -233,7 +235,8 @@ command.
 |Field Name                   |Data Type                  |
 |-----------------------------|---------------------------|
 |Discovery complete           |Unsigned 8-bit integer     |
-|Command identifiers          |N x Unsigned 8-bit integer |
+|Command identifiers          |N X Unsigned 8-bit integer |
+
 
 #### Discover Attributes Extended [0x15]
 
@@ -254,8 +257,8 @@ Extended command.
 
 |Field Name                   |Data Type                   |
 |-----------------------------|----------------------------|
-|Discovery complete           |Unsigned 8-bit integer      |
-|Command identifiers          |N x Extended Attribute Info |
+|Discovery complete           |Unsigned 8-bit integer             |
+|Command identifiers          |N x Extended Attribute Information |
 
 
 

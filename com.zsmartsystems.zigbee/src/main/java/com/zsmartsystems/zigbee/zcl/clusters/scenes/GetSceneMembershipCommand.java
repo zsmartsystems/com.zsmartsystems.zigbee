@@ -81,12 +81,12 @@ public class GetSceneMembershipCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(55);
         builder.append("GetSceneMembershipCommand [");
         builder.append(super.toString());
         builder.append(", groupId=");
         builder.append(groupId);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

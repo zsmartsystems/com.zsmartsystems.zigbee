@@ -154,7 +154,7 @@ public class GetAlarmResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(140);
         builder.append("GetAlarmResponse [");
         builder.append(super.toString());
         builder.append(", status=");
@@ -165,7 +165,7 @@ public class GetAlarmResponse extends ZclCommand {
         builder.append(clusterIdentifier);
         builder.append(", timestamp=");
         builder.append(timestamp);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

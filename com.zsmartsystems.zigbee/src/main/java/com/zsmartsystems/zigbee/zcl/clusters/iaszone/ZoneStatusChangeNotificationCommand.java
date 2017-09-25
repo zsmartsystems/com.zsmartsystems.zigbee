@@ -95,14 +95,14 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(102);
         builder.append("ZoneStatusChangeNotificationCommand [");
         builder.append(super.toString());
         builder.append(", zoneStatus=");
         builder.append(zoneStatus);
         builder.append(", extendedStatus=");
         builder.append(extendedStatus);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

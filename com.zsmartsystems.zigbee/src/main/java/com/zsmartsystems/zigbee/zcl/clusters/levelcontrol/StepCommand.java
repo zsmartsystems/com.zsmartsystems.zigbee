@@ -120,7 +120,7 @@ public class StepCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(104);
         builder.append("StepCommand [");
         builder.append(super.toString());
         builder.append(", stepMode=");
@@ -129,7 +129,7 @@ public class StepCommand extends ZclCommand {
         builder.append(stepSize);
         builder.append(", transitionTime=");
         builder.append(transitionTime);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -180,7 +180,7 @@ public class NetworkAddressResponse extends ZdoResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(224);
         builder.append("NetworkAddressResponse [");
         builder.append(super.toString());
         builder.append(", status=");
@@ -195,7 +195,7 @@ public class NetworkAddressResponse extends ZdoResponse {
         builder.append(startIndex);
         builder.append(", nwkAddrAssocDevList=");
         builder.append(nwkAddrAssocDevList);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

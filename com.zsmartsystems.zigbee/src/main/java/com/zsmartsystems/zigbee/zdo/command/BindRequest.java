@@ -199,7 +199,7 @@ public class BindRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(196);
         builder.append("BindRequest [");
         builder.append(super.toString());
         builder.append(", srcAddress=");
@@ -214,7 +214,7 @@ public class BindRequest extends ZdoRequest {
         builder.append(dstAddress);
         builder.append(", dstEndpoint=");
         builder.append(dstEndpoint);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

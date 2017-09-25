@@ -131,7 +131,7 @@ public class IeeeAddressRequest extends ZdoRequest implements CommandResponseMat
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(119);
         builder.append("IeeeAddressRequest [");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
@@ -140,7 +140,7 @@ public class IeeeAddressRequest extends ZdoRequest implements CommandResponseMat
         builder.append(requestType);
         builder.append(", startIndex=");
         builder.append(startIndex);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

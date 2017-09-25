@@ -124,7 +124,7 @@ public class NodeDescriptorResponse extends ZdoResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(122);
         builder.append("NodeDescriptorResponse [");
         builder.append(super.toString());
         builder.append(", status=");
@@ -133,7 +133,7 @@ public class NodeDescriptorResponse extends ZdoResponse {
         builder.append(nwkAddrOfInterest);
         builder.append(", nodeDescriptor=");
         builder.append(nodeDescriptor);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -121,7 +121,7 @@ public class MoveToHueCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(105);
         builder.append("MoveToHueCommand [");
         builder.append(super.toString());
         builder.append(", hue=");
@@ -130,7 +130,7 @@ public class MoveToHueCommand extends ZclCommand {
         builder.append(direction);
         builder.append(", transitionTime=");
         builder.append(transitionTime);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

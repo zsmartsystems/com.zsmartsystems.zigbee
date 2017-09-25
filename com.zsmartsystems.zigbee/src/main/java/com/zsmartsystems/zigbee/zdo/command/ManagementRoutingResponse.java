@@ -162,7 +162,7 @@ public class ManagementRoutingResponse extends ZdoResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(200);
         builder.append("ManagementRoutingResponse [");
         builder.append(super.toString());
         builder.append(", status=");
@@ -175,7 +175,7 @@ public class ManagementRoutingResponse extends ZdoResponse {
         builder.append(routingTableListCount);
         builder.append(", routingTableList=");
         builder.append(routingTableList);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

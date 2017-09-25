@@ -30,10 +30,10 @@ public class StoreBackupBindEntryRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(30);
         builder.append("StoreBackupBindEntryRequest [");
         builder.append(super.toString());
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 
