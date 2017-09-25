@@ -19,11 +19,11 @@ import java.util.concurrent.Executors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.CommandListener;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAnnounceListener;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -54,7 +54,7 @@ import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
  *
  * @author Chris Jackson
  */
-public class ZigBeeNetworkDiscoverer implements CommandListener, ZigBeeAnnounceListener {
+public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnnounceListener {
     /**
      * The logger.
      */

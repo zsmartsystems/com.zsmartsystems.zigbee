@@ -55,7 +55,7 @@ import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
  *
  * @author Chris Jackson
  */
-public class ZigBeeNetworkMeshMonitor implements CommandListener {
+public class ZigBeeNetworkMeshMonitor implements ZigBeeCommandListener {
     /**
      * The logger.
      */

@@ -57,11 +57,13 @@ public class ZclProtocolCodeGenerator {
     public static void main(final String[] args) {
         final String definitionFilePathZcl;
         final String definitionFilePathZdp;
+        final String definitionFilePathOta;
         // if (args.length != 0) {
         // definitionFilePathZcl = args[0];
         // } else {
         definitionFilePathZcl = "./src/main/resources/zcl_definition.md";
         definitionFilePathZdp = "./src/main/resources/zdp_definition.md";
+        definitionFilePathOta = "./src/main/resources/ota_definition.md";
         // }
 
         final String sourceRootPath;
@@ -90,11 +92,13 @@ public class ZclProtocolCodeGenerator {
 
         final Context contextZcl = new Context();
         final File definitionFileZcl = new File(definitionFilePathZcl);
-        if (!definitionFileZcl.exists()) {
+        final File definitionFileOta = new File(definitionFilePathOta);
+        if (!(definitionFileZcl.exists() && definitionFileOta.exists())) {
             System.out.println("Definition file does not exist: " + definitionFilePathZcl);
         } else {
             try {
                 contextZcl.lines = new ArrayList<String>(FileUtils.readLines(definitionFileZcl, "UTF-8"));
+                contextZcl.lines.addAll(new ArrayList<String>(FileUtils.readLines(definitionFileOta, "UTF-8")));
                 generateZclCode(contextZcl, sourceRootFile, packageRoot);
             } catch (final IOException e) {
                 System.out.println(
@@ -998,12 +1002,29 @@ public class ZclProtocolCodeGenerator {
                         out.println("    @Override");
                         out.println("    public void serialize(final ZclFieldSerializer serializer) {");
                         for (final Field field : fields) {
+                            // Rules...
+                            // if listSizer == null, then just output the field
+                            // if listSizer != null and contains && then check the param bit
+
                             if (field.listSizer != null) {
-                                out.println("        for (int cnt = 0; cnt < " + field.nameLowerCamelCase
-                                        + ".size(); cnt++) {");
-                                out.println("            serializer.serialize(" + field.nameLowerCamelCase
-                                        + ".get(cnt), ZclDataType." + field.dataType + ");");
-                                out.println("        }");
+                                if (field.conditionOperator != null) {
+                                    if (field.conditionOperator == "&&") {
+                                        out.println("        if ((" + field.listSizer + " & " + field.condition
+                                                + ") != 0) {");
+                                    } else {
+                                        out.println("        if (" + field.listSizer + " " + field.conditionOperator
+                                                + " " + field.condition + ") {");
+                                    }
+                                    out.println("            serializer.serialize(" + field.nameLowerCamelCase
+                                            + ", ZclDataType." + field.dataType + ");");
+                                    out.println("        }");
+                                } else {
+                                    out.println("        for (int cnt = 0; cnt < " + field.nameLowerCamelCase
+                                            + ".size(); cnt++) {");
+                                    out.println("            serializer.serialize(" + field.nameLowerCamelCase
+                                            + ".get(cnt), ZclDataType." + field.dataType + ");");
+                                    out.println("        }");
+                                }
                             } else {
                                 out.println("        serializer.serialize(" + field.nameLowerCamelCase
                                         + ", ZclDataType." + field.dataType + ");");

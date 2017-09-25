@@ -78,6 +78,16 @@ import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestoreStartupParamet
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestoreStartupParametersResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.ResetStartupParametersCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.ResetStartupParametersResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImagePageRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.UnlockDoorCommand;
@@ -415,6 +425,30 @@ public enum ZclCommandType {
      */
     IDENTIFY_QUERY_RESPONSE(0x0003, 0, IdentifyQueryResponse.class, false),
     /**
+     * IMAGE_BLOCK_REQUEST_COMMAND: Image Block Request Command
+     * <p>
+     * See {@link ImageBlockRequestCommand}
+     */
+    IMAGE_BLOCK_REQUEST_COMMAND(0x0019, 3, ImageBlockRequestCommand.class, true),
+    /**
+     * IMAGE_BLOCK_RESPONSE: Image Block Response
+     * <p>
+     * See {@link ImageBlockResponse}
+     */
+    IMAGE_BLOCK_RESPONSE(0x0019, 5, ImageBlockResponse.class, false),
+    /**
+     * IMAGE_NOTIFY_COMMAND: Image Notify Command
+     * <p>
+     * See {@link ImageNotifyCommand}
+     */
+    IMAGE_NOTIFY_COMMAND(0x0019, 0, ImageNotifyCommand.class, true),
+    /**
+     * IMAGE_PAGE_REQUEST_COMMAND: Image Page Request Command
+     * <p>
+     * See {@link ImagePageRequestCommand}
+     */
+    IMAGE_PAGE_REQUEST_COMMAND(0x0019, 4, ImagePageRequestCommand.class, true),
+    /**
      * LOCATION_DATA_NOTIFICATION_COMMAND: Location Data Notification Command
      * <p>
      * See {@link LocationDataNotificationCommand}
@@ -528,6 +562,30 @@ public enum ZclCommandType {
      * See {@link PanicCommand}
      */
     PANIC_COMMAND(0x0501, 4, PanicCommand.class, true),
+    /**
+     * QUERY_NEXT_IMAGE_REQUEST_COMMAND: Query Next Image Request Command
+     * <p>
+     * See {@link QueryNextImageRequestCommand}
+     */
+    QUERY_NEXT_IMAGE_REQUEST_COMMAND(0x0019, 1, QueryNextImageRequestCommand.class, true),
+    /**
+     * QUERY_NEXT_IMAGE_RESPONSE: Query Next Image Response
+     * <p>
+     * See {@link QueryNextImageResponse}
+     */
+    QUERY_NEXT_IMAGE_RESPONSE(0x0019, 2, QueryNextImageResponse.class, false),
+    /**
+     * QUERY_SPECIFIC_FILE_REQUEST_COMMAND: Query Specific File Request Command
+     * <p>
+     * See {@link QuerySpecificFileRequestCommand}
+     */
+    QUERY_SPECIFIC_FILE_REQUEST_COMMAND(0x0019, 8, QuerySpecificFileRequestCommand.class, true),
+    /**
+     * QUERY_SPECIFIC_FILE_RESPONSE: Query Specific File Response
+     * <p>
+     * See {@link QuerySpecificFileResponse}
+     */
+    QUERY_SPECIFIC_FILE_RESPONSE(0x0019, 9, QuerySpecificFileResponse.class, false),
     /**
      * READ_ATTRIBUTES_COMMAND: Read Attributes Command
      * <p>
@@ -828,6 +886,18 @@ public enum ZclCommandType {
      * See {@link UnlockDoorResponse}
      */
     UNLOCK_DOOR_RESPONSE(0x0101, 1, UnlockDoorResponse.class, false),
+    /**
+     * UPGRADE_END_REQUEST_COMMAND: Upgrade End Request Command
+     * <p>
+     * See {@link UpgradeEndRequestCommand}
+     */
+    UPGRADE_END_REQUEST_COMMAND(0x0019, 6, UpgradeEndRequestCommand.class, true),
+    /**
+     * UPGRADE_END_RESPONSE: Upgrade End Response
+     * <p>
+     * See {@link UpgradeEndResponse}
+     */
+    UPGRADE_END_RESPONSE(0x0019, 7, UpgradeEndResponse.class, false),
     /**
      * VIEW_GROUP_COMMAND: View Group Command
      * <p>

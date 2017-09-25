@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
  *
  * @author Chris Jackson
  */
-public class ZigBeeEndpoint implements CommandListener {
+public class ZigBeeEndpoint implements ZigBeeCommandListener {
     /**
      * The {@link Logger}.
      */

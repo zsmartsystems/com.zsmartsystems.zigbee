@@ -13,4 +13,6 @@ public class Field {
     public String nameLowerCamelCase;
     public String listSizer;
     public boolean completeOnZero;
+    public String condition;
+    public String conditionOperator;
 }

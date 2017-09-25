@@ -28,14 +28,14 @@ public interface ZigBeeNetwork {
     /**
      * Adds ZigBee library command listener.
      *
-     * @param commandListener the {@link CommandListener}
+     * @param commandListener the {@link ZigBeeCommandListener}
      */
-    void addCommandListener(final CommandListener commandListener);
+    void addCommandListener(final ZigBeeCommandListener commandListener);
 
     /**
      * Removes ZigBee library command listener.
      *
-     * @param commandListener the {@link CommandListener}
+     * @param commandListener the {@link ZigBeeCommandListener}
      */
-    void removeCommandListener(final CommandListener commandListener);
+    void removeCommandListener(final ZigBeeCommandListener commandListener);
 }

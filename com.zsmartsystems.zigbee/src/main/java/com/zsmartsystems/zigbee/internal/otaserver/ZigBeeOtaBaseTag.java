@@ -5,19 +5,13 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.internal.otaserver;
 
 /**
- * Command listener.
  *
- * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
+ *
  */
-public interface CommandListener {
+public class ZigBeeOtaBaseTag {
 
-    /**
-     * Called when a command has been received.
-     *
-     * @param command the received {@link ZigBeeCommand}
-     */
-    void commandReceived(final ZigBeeCommand command);
 }

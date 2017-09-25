@@ -473,12 +473,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     @Override
-    public void addCommandListener(CommandListener commandListener) {
+    public void addCommandListener(ZigBeeCommandListener commandListener) {
         commandNotifier.addCommandListener(commandListener);
     }
 
     @Override
-    public void removeCommandListener(CommandListener commandListener) {
+    public void removeCommandListener(ZigBeeCommandListener commandListener) {
         commandNotifier.removeCommandListener(commandListener);
     }
 
@@ -713,7 +713,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             final CommandResultFuture future = new CommandResultFuture(this);
             final CommandExecution commandExecution = new CommandExecution(System.currentTimeMillis(), command, future);
             future.setCommandExecution(commandExecution);
-            final CommandListener commandListener = new CommandListener() {
+            final ZigBeeCommandListener commandListener = new ZigBeeCommandListener() {
                 @Override
                 public void commandReceived(ZigBeeCommand receivedCommand) {
                     // Ensure that received command is not processed before
