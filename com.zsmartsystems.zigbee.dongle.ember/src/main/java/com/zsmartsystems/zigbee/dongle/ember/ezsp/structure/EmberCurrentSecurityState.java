@@ -123,12 +123,12 @@ public class EmberCurrentSecurityState {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(78);
         builder.append("EmberCurrentSecurityState [bitmask=");
         builder.append(bitmask);
         builder.append(", trustCenterLongAddress=");
         builder.append(trustCenterLongAddress);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

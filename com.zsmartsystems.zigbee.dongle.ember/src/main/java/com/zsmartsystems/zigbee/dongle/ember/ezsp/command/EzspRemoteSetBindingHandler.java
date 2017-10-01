@@ -123,14 +123,14 @@ public class EzspRemoteSetBindingHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(105);
         builder.append("EzspRemoteSetBindingHandler [entry=");
         builder.append(entry);
         builder.append(", index=");
         builder.append(index);
         builder.append(", policyDecision=");
         builder.append(policyDecision);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

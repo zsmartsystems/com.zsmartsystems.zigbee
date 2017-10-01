@@ -96,7 +96,7 @@ public class EzspGetValueResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(98);
         builder.append("EzspGetValueResponse [status=");
         builder.append(status);
         builder.append(", value=");
@@ -106,7 +106,7 @@ public class EzspGetValueResponse extends EzspFrameResponse {
             }
             builder.append(String.format("%02X", value[c]));
         }
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

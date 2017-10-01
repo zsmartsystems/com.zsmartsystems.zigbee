@@ -67,10 +67,10 @@ public class EzspSetPolicyResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(49);
         builder.append("EzspSetPolicyResponse [status=");
         builder.append(status);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

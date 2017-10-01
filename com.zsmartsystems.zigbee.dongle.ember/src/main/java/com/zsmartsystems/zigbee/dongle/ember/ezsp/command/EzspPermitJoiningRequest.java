@@ -80,10 +80,10 @@ public class EzspPermitJoiningRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(52);
         builder.append("EzspPermitJoiningRequest [duration=");
         builder.append(duration);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

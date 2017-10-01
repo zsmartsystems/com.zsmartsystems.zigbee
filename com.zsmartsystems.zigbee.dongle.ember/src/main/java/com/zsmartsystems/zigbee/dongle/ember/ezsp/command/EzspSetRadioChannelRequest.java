@@ -81,10 +81,10 @@ public class EzspSetRadioChannelRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(54);
         builder.append("EzspSetRadioChannelRequest [channel=");
         builder.append(channel);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

@@ -63,10 +63,10 @@ public class EzspCounterRolloverHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(54);
         builder.append("EzspCounterRolloverHandler [type=");
         builder.append(type);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

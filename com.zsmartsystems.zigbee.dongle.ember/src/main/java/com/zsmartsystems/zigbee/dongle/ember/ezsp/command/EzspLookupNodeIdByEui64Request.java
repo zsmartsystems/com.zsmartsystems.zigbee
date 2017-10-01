@@ -78,10 +78,10 @@ public class EzspLookupNodeIdByEui64Request extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(58);
         builder.append("EzspLookupNodeIdByEui64Request [eui64=");
         builder.append(eui64);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

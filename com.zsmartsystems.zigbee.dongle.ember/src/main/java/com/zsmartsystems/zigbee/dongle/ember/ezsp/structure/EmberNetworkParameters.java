@@ -300,7 +300,7 @@ public class EmberNetworkParameters {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(225);
         builder.append("EmberNetworkParameters [extendedPanId=");
         builder.append("{");
         if (extendedPanId == null) {
@@ -328,7 +328,7 @@ public class EmberNetworkParameters {
         builder.append(nwkUpdateId);
         builder.append(", channels=");
         builder.append(String.format("%08X", channels));
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

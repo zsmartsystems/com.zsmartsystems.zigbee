@@ -121,14 +121,14 @@ public class EzspVersionResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(97);
         builder.append("EzspVersionResponse [protocolVersion=");
         builder.append(protocolVersion);
         builder.append(", stackType=");
         builder.append(stackType);
         builder.append(", stackVersion=");
         builder.append(String.format("%04X", stackVersion));
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

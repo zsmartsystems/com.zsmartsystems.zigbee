@@ -221,7 +221,7 @@ public class EzspAddEndpointRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(225);
         builder.append("EzspAddEndpointRequest [endpoint=");
         builder.append(endpoint);
         builder.append(", profileId=");
@@ -244,7 +244,7 @@ public class EzspAddEndpointRequest extends EzspFrameRequest {
             }
             builder.append(String.format("%02X", outputClusterList[c]));
         }
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

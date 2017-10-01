@@ -157,14 +157,14 @@ public class EzspStartScanRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(98);
         builder.append("EzspStartScanRequest [scanType=");
         builder.append(scanType);
         builder.append(", channelMask=");
         builder.append(channelMask);
         builder.append(", duration=");
         builder.append(duration);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

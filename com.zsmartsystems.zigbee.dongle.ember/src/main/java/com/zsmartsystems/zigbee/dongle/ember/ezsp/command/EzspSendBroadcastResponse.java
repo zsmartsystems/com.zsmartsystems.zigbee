@@ -92,12 +92,12 @@ public class EzspSendBroadcastResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(78);
         builder.append("EzspSendBroadcastResponse [status=");
         builder.append(status);
         builder.append(", sequence=");
         builder.append(sequence);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

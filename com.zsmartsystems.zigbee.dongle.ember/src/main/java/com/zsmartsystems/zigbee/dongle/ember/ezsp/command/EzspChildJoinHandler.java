@@ -177,7 +177,7 @@ public class EzspChildJoinHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(148);
         builder.append("EzspChildJoinHandler [index=");
         builder.append(index);
         builder.append(", joining=");
@@ -188,7 +188,7 @@ public class EzspChildJoinHandler extends EzspFrameResponse {
         builder.append(childEui64);
         builder.append(", childType=");
         builder.append(childType);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

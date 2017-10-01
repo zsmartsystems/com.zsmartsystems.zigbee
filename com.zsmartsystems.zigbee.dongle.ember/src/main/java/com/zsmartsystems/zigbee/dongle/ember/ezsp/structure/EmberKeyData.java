@@ -81,7 +81,7 @@ public class EmberKeyData {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(40);
         builder.append("EmberKeyData [contents=");
         builder.append("{");
         if (contents == null) {
@@ -95,7 +95,7 @@ public class EmberKeyData {
             }
         }
         builder.append("}");
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

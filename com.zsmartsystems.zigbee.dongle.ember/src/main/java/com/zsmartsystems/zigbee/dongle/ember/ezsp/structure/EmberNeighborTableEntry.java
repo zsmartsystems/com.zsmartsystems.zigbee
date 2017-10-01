@@ -246,7 +246,7 @@ public class EmberNeighborTableEntry {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(176);
         builder.append("EmberNeighborTableEntry [shortId=");
         builder.append(shortId);
         builder.append(", averageLqi=");
@@ -259,7 +259,7 @@ public class EmberNeighborTableEntry {
         builder.append(age);
         builder.append(", longId=");
         builder.append(longId);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

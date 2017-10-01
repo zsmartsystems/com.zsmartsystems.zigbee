@@ -66,10 +66,10 @@ public class EzspEnergyScanRequestResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(57);
         builder.append("EzspEnergyScanRequestResponse [status=");
         builder.append(status);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

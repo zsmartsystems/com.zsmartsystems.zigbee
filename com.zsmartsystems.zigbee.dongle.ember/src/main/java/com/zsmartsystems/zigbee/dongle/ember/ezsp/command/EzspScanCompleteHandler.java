@@ -97,12 +97,12 @@ public class EzspScanCompleteHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(76);
         builder.append("EzspScanCompleteHandler [channel=");
         builder.append(channel);
         builder.append(", status=");
         builder.append(status);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }
