@@ -7,14 +7,23 @@
  */
 package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
+import static org.junit.Assert.assertFalse;
+
+import org.junit.Test;
+
+import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
+
 /**
  *
  * @author Chris Jackson
  *
  */
-public enum ConBeeNetworkState {
-    NET_OFFLINE,
-    NET_JOINING,
-    NET_CONNECTED,
-    NET_LEAVING;
+public class ZigBeeDongleConBeeTest {
+
+    @Test
+    public void setZigBeePanId() {
+        ZigBeeDongleConBee dongle = new ZigBeeDongleConBee(null);
+
+        assertFalse(dongle.setZigBeePanId(0));
+    }
 }

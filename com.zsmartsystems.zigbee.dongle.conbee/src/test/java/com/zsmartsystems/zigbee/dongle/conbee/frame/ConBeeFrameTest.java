@@ -1,8 +1,14 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -33,14 +39,6 @@ public class ConBeeFrameTest {
         assertNotNull(frame);
         assertTrue(frame instanceof ConBeeEnqueueSendDataResponse);
         assertEquals(13, frame.getSequence());
-    }
-
-    @Test
-    public void testCreateUnknownResponse() {
-        // This appears to be a valid frame, but undocumented command type!
-        ConBeeFrame frame = ConBeeFrame.create(new int[] { 0x0E, 0x0E, 0x00, 0x07, 0x00, 0xA6, 0x00, 0x37, 0xFF });
-
-        assertNull(frame);
     }
 
 }

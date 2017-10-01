@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.dongle.conbee;
 
 import org.slf4j.Logger;
@@ -8,6 +15,7 @@ import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
+import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeAddressMode;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceStateRequest;
@@ -167,7 +175,14 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
     }
 
     @Override
-    public boolean setZigBeeSecurityKey(int[] keyData) {
+    public boolean setZigBeeNetworkKey(ZigBeeKey key) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean setZigBeeLinkKey(ZigBeeKey key) {
+        // TODO Auto-generated method stub
         return false;
     }
 

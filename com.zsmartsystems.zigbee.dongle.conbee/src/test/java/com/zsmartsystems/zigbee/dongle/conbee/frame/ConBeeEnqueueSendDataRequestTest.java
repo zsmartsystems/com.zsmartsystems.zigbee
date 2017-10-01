@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
 import static org.junit.Assert.assertTrue;
@@ -24,6 +31,7 @@ public class ConBeeEnqueueSendDataRequestTest {
         request.setDestinationAddress(new ZigBeeDeviceAddress(0x9876, 0x54));
         request.setDestinationAddressMode(ConBeeAddressMode.NWK);
         request.setProfileId(0x4444);
+        request.setClusterId(0x0000);
         request.setRadius(0x1F);
         request.setSourceEndpoint(0x33);
         request.setAdsuData(new int[] { 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF });

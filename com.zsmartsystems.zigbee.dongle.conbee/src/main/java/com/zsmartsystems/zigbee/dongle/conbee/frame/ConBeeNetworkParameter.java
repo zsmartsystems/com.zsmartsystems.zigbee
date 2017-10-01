@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2014-2017 by the respective copyright holders.
- *
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -23,14 +22,14 @@ public enum ConBeeNetworkParameter {
     NWK_PANID(5),
     NWK_ADDRESS(7),
     NWK_EXTENDED_PANID(8),
+    DEVICE_TYPE(9),
     CHANNEL_MASK(10),
     APS_EXTENDED_PANID(11),
     TRUST_CENTRE_ADDRESS(14),
     SECURITY_MODE(16),
     NETWORK_KEY(24),
     CURRENT_CHANNEL(28),
-    NWK_UPDATE_ID(36),
-    DEVICE_TYPE(37);
+    NWK_UPDATE_ID(36);
 
     /**
      * A mapping between the integer code and its corresponding type to

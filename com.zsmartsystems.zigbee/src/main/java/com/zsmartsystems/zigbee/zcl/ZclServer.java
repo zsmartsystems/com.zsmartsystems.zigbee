@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl;
 
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 
 /**
@@ -23,13 +24,14 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
 public interface ZclServer {
 
     /**
-     * Starts a server. The server should perform any initialisation. This gets called when
-     * the server is registered.
+     * Starts a server. The server should perform any initialisation. This gets called by the {@link ZigBeeNode} when
+     * the server is registered with the node.
      *
-     * @param cluster The {@link ZclCluster} which is the client we are serving
+     * @param networkManager The {@link ZigBeeNetworkManager} to which this node belongs
+     * @param zigbeeNode The {@link ZigBeeNode}
      * @return true if the server started successfully
      */
-    public boolean serverStartup(final ZclCluster cluster);
+    public boolean serverStartup(final ZigBeeNetworkManager networkManager, final ZigBeeNode zigbeeNode);
 
     /**
      * Shuts down a server. The server should perform any shutdown and cleanup as required.

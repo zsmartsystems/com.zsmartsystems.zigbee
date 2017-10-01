@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.dongle.conbee;
 
 import java.io.IOException;
@@ -21,9 +28,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceState;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrame;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrameRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrameResponse;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadReceivedDataRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.transaction.ConBeeTransaction;
 
 /**
@@ -108,7 +117,7 @@ public class ConBeeFrameHandler {
                 while (!close) {
                     try {
                         synchronized (transmitSync) {
-                            logger.debug("ConBeeTransmitHandler thread WAIT");
+                            // logger.debug("ConBeeTransmitHandler thread WAIT");
                             // Wait until we're allowed to send
                             if (outstandingRequest != null) {
                                 // Wait will block here until we receive the response to the last frame we sent
@@ -118,12 +127,12 @@ public class ConBeeFrameHandler {
                                     continue;
                                 }
                             }
-                            logger.debug("ConBeeTransmitHandler thread GOOD TO GO");
+                            // logger.debug("ConBeeTransmitHandler thread GOOD TO GO");
 
                             // Now wait until there's something to send
                             ConBeeFrameRequest request = sendQueue.poll(250, TimeUnit.MILLISECONDS);
                             if (request != null) {
-                                logger.debug("ConBeeTransmitHandler thread WE'RE OFF");
+                                // logger.debug("ConBeeTransmitHandler thread WE'RE OFF");
                                 outstandingRequest = request;
                                 outputFrame(request);
                             }
@@ -151,7 +160,7 @@ public class ConBeeFrameHandler {
                 while (!close) {
                     try {
                         int val = inputStream.read();
-                        logger.debug("CONBEE RX: " + String.format("[% 2d] %02X", inputCount, val));
+                        // logger.debug("CONBEE RX: " + String.format("[% 2d] %02X", inputCount, val));
                         if (val == SLIP_ESC) {
                             escaped = true;
                         } else if (val == SLIP_END) {
@@ -162,6 +171,10 @@ public class ConBeeFrameHandler {
                                 if (frame != null) {
                                     logger.debug("CONBEE RX Frame: {}", frame);
                                     notifyTransactionComplete(frame);
+
+                                    // Check the device state
+                                    handleConBeeState(frame.getDeviceState());
+
                                 } else {
                                     logger.debug("CONBEE RX Frame: ERROR: [{}] {}", inputCount,
                                             bufferToString(inputBuffer, inputCount));
@@ -210,6 +223,21 @@ public class ConBeeFrameHandler {
     }
 
     /**
+     * Process a received device state update
+     * <p>
+     * This method will perform any polling etc as required to fulfill any device requests
+     *
+     * @param deviceState the latest {@link ConBeeDeviceState}
+     */
+    protected void handleConBeeState(ConBeeDeviceState deviceState) {
+        if (deviceState.isDataIndication()) {
+            // There is data available to be read
+            ConBeeReadReceivedDataRequest readRequest = new ConBeeReadReceivedDataRequest();
+            outputFrame(readRequest);
+        }
+    }
+
+    /**
      * Set the close flag to true.
      */
     public void setClosing() {
@@ -248,7 +276,7 @@ public class ConBeeFrameHandler {
             for (int val : frame.getOutputBuffer()) {
                 // result.append(" ");
                 // result.append(String.format("%02X", val));
-                logger.debug("CONBEE TX: {}", String.format("%02X", val));
+                // logger.debug("CONBEE TX: {}", String.format("%02X", val));
                 switch (val) {
                     case SLIP_END:
                         logger.debug("CONBEE TX: [ESC]");

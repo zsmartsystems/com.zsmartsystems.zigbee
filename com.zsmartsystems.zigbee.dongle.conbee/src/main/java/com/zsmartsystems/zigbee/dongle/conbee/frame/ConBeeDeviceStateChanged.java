@@ -8,38 +8,40 @@
 package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
 /**
+ * When the device receives a data frame an unsolicited DEVICE_STATE_CHANGED command will be send to the application.
  *
  * @author Chris Jackson
  *
  */
-public class ConBeeWriteParameterResponse extends ConBeeFrameResponse {
-    private ConBeeNetworkParameter parameter;
+public class ConBeeDeviceStateChanged extends ConBeeFrameResponse {
+    private ConBeeDeviceState state;
 
-    ConBeeWriteParameterResponse(final int[] response) {
+    public ConBeeDeviceStateChanged(final int[] response) {
         super(response);
 
-        if (deserializeUInt8() != WRITE_PARAMETER) {
+        if (deserializeUInt8() != DEVICE_STATE_CHANGED) {
             throw new IllegalArgumentException();
         }
+
         sequence = deserializeUInt8();
         status = deserializeStatus();
         deserializeUInt16();
-        deserializeUInt16();
-        parameter = ConBeeNetworkParameter.getParameterType(deserializeUInt8());
+        state = deserializeDeviceState();
     }
 
-    /**
-     * @return the parameter
-     */
-    public ConBeeNetworkParameter getParameter() {
-        return parameter;
+    public ConBeeDeviceState getDeviceState() {
+        return state;
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("WriteParameterResponse [parameter=");
-        builder.append(parameter);
+        builder.append("DeviceStateChanged [sequence=");
+        builder.append(sequence);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", state=");
+        builder.append(state);
         builder.append(']');
         return builder.toString();
     }

@@ -18,17 +18,17 @@ import org.junit.Test;
  * @author Chris Jackson
  *
  */
-public class ConBeeDeviceStateResponseTest {
+public class ConBeeDeviceStateChangedTest {
     @Test
     public void doRequest() {
-        ConBeeDeviceStateResponse response = new ConBeeDeviceStateResponse(
-                new int[] { 0x07, 0x00, 0x00, 0x08, 0x00, 0xA2, 0x00, 0x00, 0x4F, 0xFF });
+        ConBeeDeviceStateChanged response = new ConBeeDeviceStateChanged(
+                new int[] { 0x0E, 0x11, 0x00, 0x07, 0x00, 0xA6, 0x00, 0x34, 0xFF });
         System.out.print(response);
 
-        assertEquals(0, response.getSequence());
+        assertEquals(17, response.getSequence());
         assertEquals(ConBeeStatus.SUCCESS, response.getStatus());
         assertEquals(ConBeeNetworkState.NET_CONNECTED, response.getDeviceState().getNetworkState());
-        assertFalse(response.getDeviceState().isDataConfirm());
+        assertTrue(response.getDeviceState().isDataConfirm());
         assertFalse(response.getDeviceState().isDataIndication());
         assertTrue(response.getDeviceState().isDataRequest());
         assertFalse(response.getDeviceState().isConfigChanged());

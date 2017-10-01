@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
 import java.util.Arrays;
@@ -11,6 +18,7 @@ public abstract class ConBeeFrame {
     protected int sequence;
 
     protected final static int DEVICE_STATE = 0x07;
+    protected final static int DEVICE_STATE_CHANGED = 0x0E;
     protected final static int READ_PARAMETER = 0x0A;
     protected final static int WRITE_PARAMETER = 0x0B;
     protected final static int CHANGE_NETWORK_STATE = 0x08;
@@ -130,6 +138,8 @@ public abstract class ConBeeFrame {
         switch (buffer[0]) {
             case DEVICE_STATE:
                 return new ConBeeDeviceStateResponse(buffer);
+            case DEVICE_STATE_CHANGED:
+                return new ConBeeDeviceStateChanged(buffer);
             case READ_PARAMETER:
                 return new ConBeeReadParameterResponse(buffer);
             case WRITE_PARAMETER:
