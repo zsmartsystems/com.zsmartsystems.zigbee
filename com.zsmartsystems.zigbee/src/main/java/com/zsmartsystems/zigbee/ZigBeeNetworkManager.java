@@ -340,19 +340,29 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Set the current security key in use by the system.
+     * Set the current network key in use by the system.
      * <p>
      * Note that this method may only be called following the {@link #initialize} call, and before the {@link #startup}
      * call.
      *
-     * @param key the new security key as {@link int}[16]
+     * @param key the new network key as {@link ZigBeeKey}
      * @return true if the key was set
      */
-    public boolean setZigBeeSecurityKey(final int key[]) {
-        if (key == null || key.length != 16) {
-            return false;
-        }
-        return transport.setZigBeeSecurityKey(key);
+    public boolean setZigBeeNetworkKey(final ZigBeeKey key) {
+        return transport.setZigBeeNetworkKey(key);
+    }
+
+    /**
+     * Set the current link key in use by the system.
+     * <p>
+     * Note that this method may only be called following the {@link #initialize} call, and before the {@link #startup}
+     * call.
+     *
+     * @param key the new link key as {@link ZigBeeKey}
+     * @return true if the key was set
+     */
+    public boolean setZigBeeLinkKey(final ZigBeeKey key) {
+        return transport.setZigBeeLinkKey(key);
     }
 
     /**

@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.transport;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
+import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetwork;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
@@ -126,7 +127,7 @@ public interface ZigBeeTransportTransmit {
     /**
      * Gets the ZigBee Extended PAN ID currently in use by the transport
      *
-     * @return the PAN ID
+     * @return the EPAN ID
      */
     ExtendedPanId getZigBeeExtendedPanId();
 
@@ -134,15 +135,23 @@ public interface ZigBeeTransportTransmit {
      * Sets the ZigBee Extended PAN ID to the specified value
      *
      * @param panId the new {@link ExtendedPanId}
-     * @return true if the PAN Id was set correctly
+     * @return true if the EPAN Id was set correctly
      */
     boolean setZigBeeExtendedPanId(ExtendedPanId panId);
 
     /**
-     * Sets the ZigBee security key to the specified value
+     * Sets the ZigBee network security key to the specified value
      *
-     * @param key the new security key as {@link byte}[16]
-     * @return true if the PAN Id was set correctly
+     * @param key the new network key as {@link ZigBeeKey}
+     * @return true if the key was set correctly
      */
-    boolean setZigBeeSecurityKey(int[] key);
+    boolean setZigBeeNetworkKey(ZigBeeKey key);
+
+    /**
+     * Sets the ZigBee link security key to the specified value
+     *
+     * @param key the new link key as {@link ZigBeeKey}
+     * @return true if the key was set correctly
+     */
+    boolean setZigBeeLinkKey(ZigBeeKey key);
 }

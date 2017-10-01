@@ -7,55 +7,73 @@
  */
 package com.zsmartsystems.zigbee;
 
-import java.security.InvalidParameterException;
 import java.util.Arrays;
 
 /**
- * Represents a 128 bit ZigBee network key
+ * Represents a 128 bit ZigBee key
  *
  * @author Chris Jackson
  *
  */
-public class NetworkKey {
+public class ZigBeeKey {
     private int[] key;
 
     /**
      * Default constructor. Creates a network key of 0
      */
-    public NetworkKey() {
+    public ZigBeeKey() {
         this.key = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     }
 
     /**
-     * Create an {@link NetworkKey} from a {@link String}
+     * Create an {@link ZigBeeKey} from a {@link String}. The string must contain 32 hexadecimal numbers
+     * to make up a 16 byte key. Numbers can be formatted in various ways -:
+     * <ul>
+     * <li>1234ABCD ...
+     * <li>12 34 AB CD ...
+     * <li>12,34,AB,CD ...
+     * <li>0x12 0x34 0xAB 0xCD ...
+     * <li>0x12,0x34,0xAB,0xCD ...
+     * </ul>
      *
      * @param key the key as a {@link String}
+     * @throws IllegalArgumentException
      */
-    public NetworkKey(String key) {
-        if (key.length() != 32) {
-            throw new InvalidParameterException("NetworkKey array length must be 16 hex bytes");
+    public ZigBeeKey(String keyString) {
+        if (keyString == null) {
+            throw new IllegalArgumentException("Key string must not be null");
+        }
+
+        String hexString = keyString.replace("0x", "");
+        hexString = hexString.replace(",", "");
+        hexString = hexString.replace(" ", "");
+
+        if (hexString.length() != 32) {
+            throw new IllegalArgumentException("Key string must contain an array of 32 hexadecimal numbers");
         }
 
         this.key = new int[16];
-
-        for (int cnt = 0; cnt < 16; cnt++) {
-            this.key[cnt] = Integer.parseInt(key.substring(cnt * 2, (cnt * 2) + 2), 16);
+        char enc[] = hexString.toCharArray();
+        for (int i = 0; i < enc.length; i += 2) {
+            StringBuilder curr = new StringBuilder(2);
+            curr.append(enc[i]).append(enc[i + 1]);
+            this.key[i / 2] = Integer.parseInt(curr.toString(), 16);
         }
     }
 
     /**
-     * Create a {@link NetworkKey} from an int array
+     * Create a {@link ZigBeeKey} from an int array
      *
      * @param key the key as an int array. Array length must be 16.
-     * @throws InvalidParameterException
+     * @throws IllegalArgumentException
      */
-    public NetworkKey(int[] key) {
+    public ZigBeeKey(int[] key) {
         if (key == null) {
             this.key = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             return;
         }
         if (key.length != 16) {
-            throw new InvalidParameterException("NetworkKey array length must be 16 hex bytes");
+            throw new IllegalArgumentException("NetworkKey array length must be 16 hex bytes");
         }
         this.key = key;
     }
@@ -109,7 +127,7 @@ public class NetworkKey {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        NetworkKey other = (NetworkKey) obj;
+        ZigBeeKey other = (ZigBeeKey) obj;
         return Arrays.equals(key, other.key);
     }
 

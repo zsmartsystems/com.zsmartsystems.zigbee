@@ -12,6 +12,7 @@ import org.bouncycastle.util.encoders.Hex;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
+import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
@@ -135,7 +136,7 @@ public class ZigBeeConsoleMain {
             networkManager.setZigBeePanId(pan);
             networkManager.setZigBeeExtendedPanId(extendedPan);
             if (networkKey != null) {
-                networkManager.setZigBeeSecurityKey(networkKey);
+                networkManager.setZigBeeNetworkKey(new ZigBeeKey(networkKey));
             }
         }
 
