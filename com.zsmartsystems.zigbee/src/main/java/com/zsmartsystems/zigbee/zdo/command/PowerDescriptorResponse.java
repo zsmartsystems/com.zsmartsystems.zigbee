@@ -101,7 +101,7 @@ public class PowerDescriptorResponse extends ZdoResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(124);
         builder.append("PowerDescriptorResponse [");
         builder.append(super.toString());
         builder.append(", status=");
@@ -110,7 +110,7 @@ public class PowerDescriptorResponse extends ZdoResponse {
         builder.append(nwkAddrOfInterest);
         builder.append(", powerDescriptor=");
         builder.append(powerDescriptor);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

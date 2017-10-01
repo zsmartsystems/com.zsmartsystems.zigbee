@@ -35,10 +35,10 @@ public class GetZoneIdMapCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(22);
         builder.append("GetZoneIdMapCommand [");
         builder.append(super.toString());
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -84,12 +84,12 @@ public class ViewGroupCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(46);
         builder.append("ViewGroupCommand [");
         builder.append(super.toString());
         builder.append(", groupId=");
         builder.append(groupId);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

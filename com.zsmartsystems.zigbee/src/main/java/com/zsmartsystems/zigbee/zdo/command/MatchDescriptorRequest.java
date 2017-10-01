@@ -211,7 +211,7 @@ public class MatchDescriptorRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(227);
         builder.append("MatchDescriptorRequest [");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
@@ -226,7 +226,7 @@ public class MatchDescriptorRequest extends ZdoRequest {
         builder.append(outClusterCount);
         builder.append(", outClusterList=");
         builder.append(outClusterList);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

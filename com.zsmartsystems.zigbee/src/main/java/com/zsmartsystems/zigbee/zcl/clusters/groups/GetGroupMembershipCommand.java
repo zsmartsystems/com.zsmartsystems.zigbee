@@ -111,14 +111,14 @@ public class GetGroupMembershipCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(87);
         builder.append("GetGroupMembershipCommand [");
         builder.append(super.toString());
         builder.append(", groupCount=");
         builder.append(groupCount);
         builder.append(", groupList=");
         builder.append(groupList);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

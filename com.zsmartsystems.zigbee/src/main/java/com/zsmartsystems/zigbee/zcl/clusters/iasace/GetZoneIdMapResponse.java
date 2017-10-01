@@ -446,7 +446,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(621);
         builder.append("GetZoneIdMapResponse [");
         builder.append(super.toString());
         builder.append(", zoneIdMapSection0=");
@@ -481,7 +481,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
         builder.append(zoneIdMapSection14);
         builder.append(", zoneIdMapSection15=");
         builder.append(zoneIdMapSection15);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

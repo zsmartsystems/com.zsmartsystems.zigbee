@@ -3,6 +3,11 @@ package com.zsmartsystems.zigbee.autocode.zcl;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
 public class ZclDataType {
 
     public static class DataTypeMap {
@@ -64,6 +69,8 @@ public class ZclDataType {
         dataTypeMapping.put("N_X_ATTRIBUTE_REPORT", new DataTypeMap("List<AttributeReport>", 0, 0, false));
         dataTypeMapping.put("N_X_ATTRIBUTE_INFORMATION", new DataTypeMap("List<AttributeInformation>", 0, 0, false));
         dataTypeMapping.put("N_X_ATTRIBUTE_SELECTOR", new DataTypeMap("Object", 0, 0, false));
+        dataTypeMapping.put("N_X_EXTENDED_ATTRIBUTE_INFORMATION",
+                new DataTypeMap("List<ExtendedAttributeInformation>", 0, 0, false));
         dataTypeMapping.put("BOOLEAN", new DataTypeMap("Boolean", 0x10, 1, false, 0xff));
         dataTypeMapping.put("SIGNED_8_BIT_INTEGER", new DataTypeMap("Integer", 0x28, 1, true, 0x80));
         dataTypeMapping.put("SIGNED_16_BIT_INTEGER", new DataTypeMap("Integer", 0x29, 2, true, 0x8000));
@@ -83,6 +90,8 @@ public class ZclDataType {
         dataTypeMapping.put("ZDO_STATUS", new DataTypeMap("ZdoStatus", 0, 0, false));
         dataTypeMapping.put("ZCL_STATUS", new DataTypeMap("ZclStatus", 0, 0, false));
         dataTypeMapping.put("EXTENDED_PANID", new DataTypeMap("ExtendedPanId", 0, 0, false));
+        dataTypeMapping.put("BINDING_TABLE", new DataTypeMap("BindingTable", 0, 0, false));
+        dataTypeMapping.put("N_X_BINDING_TABLE", new DataTypeMap("List<BindingTable>", 0, 0, false));
     };
 
     public static Map<String, DataTypeMap> getDataTypeMapping() {

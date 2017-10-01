@@ -261,7 +261,7 @@ public class EndDeviceBindRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(282);
         builder.append("EndDeviceBindRequest [");
         builder.append(super.toString());
         builder.append(", bindingTarget=");
@@ -280,7 +280,7 @@ public class EndDeviceBindRequest extends ZdoRequest {
         builder.append(outClusterCount);
         builder.append(", outClusterList=");
         builder.append(outClusterList);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

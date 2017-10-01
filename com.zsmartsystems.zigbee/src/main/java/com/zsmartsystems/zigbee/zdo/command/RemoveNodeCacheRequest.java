@@ -31,10 +31,10 @@ public class RemoveNodeCacheRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(25);
         builder.append("RemoveNodeCacheRequest [");
         builder.append(super.toString());
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -136,7 +136,7 @@ public class GetGroupMembershipResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(116);
         builder.append("GetGroupMembershipResponse [");
         builder.append(super.toString());
         builder.append(", capacity=");
@@ -145,7 +145,7 @@ public class GetGroupMembershipResponse extends ZclCommand {
         builder.append(groupCount);
         builder.append(", groupList=");
         builder.append(groupList);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

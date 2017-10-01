@@ -802,6 +802,11 @@ an End_Device_Bind_req and contains the status of the request. This command
 shall be unicast to each device involved in the bind attempt, using the
 acknowledged data service.
 
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Zdo Status                 |
+
+
 #### Bind Response [0x8021]
 
 The Bind_rsp is generated in response to a Bind_req. If the Bind_req is processed
@@ -812,6 +817,10 @@ endpoint shall be checked to determine whether it falls within the specified ran
 If it does not, a Status of INVALID_EP shall be returned. If the Remote Device is
 the Primary binding table cache or SrcAddress but does not have Binding Table
 resources for the request, a Status of TABLE_FULL is returned.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Zdo Status                 |
 
 #### Unbind Response [0x8022]
 
@@ -836,6 +845,13 @@ The Bind_Register_rsp is generated from a primary binding table cache device in
 response to a Bind_Register_req and contains the status of the request. This
 command shall be unicast to the requesting device.
 
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Zdo Status                 |
+|BindingTableEntries        |Unsigned 16-bit integer    |
+|BindingTableListCount      |Unsigned 16-bit integer    |
+|BindingTableList           |N x Binding Table[BindingTableListCount] |
+
 #### Replace Device Response [0x8024]
 
 The Replace_Device_rsp is generated from a primary binding table cache device
@@ -847,7 +863,11 @@ binding table for entries whose source address and source endpoint, or whose
 destination address and destination endpoint match OldAddress and OldEndpoint,
 as described in the text for Replace_Device_req. It shall change these entries to
 have NewAddress and possibly NewEndpoint. It shall then return a response of
-SUCCESS. 
+SUCCESS.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Zdo Status                 |
 
 #### Store Backup Bind Entry Response [0x8025]
 
@@ -861,6 +881,10 @@ INV_REQUESTTYPE. Otherwise, the backup binding table cache shall add the
 binding entry to its binding table and return a status of SUCCESS. If there is no
 room, it shall return a status of TABLE_FULL.
 
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Zdo Status                 |
+
 #### Remove Backup Bind Entry Response [0x8026]
 
 The Remove_Bkup_Bind_Entry_rsp is generated from a backup binding table
@@ -871,7 +895,12 @@ cache, it shall return a status of NOT_SUPPORTED. If the originator of the
 request is not recognized as a primary binding table cache, it shall return a status
 of INV_REQUESTTYPE. Otherwise, the backup binding table cache shall delete
 the binding entry from its binding table and return a status of SUCCESS. If the
-entry is not found, it shall return a status of NO_ENTRY. 
+entry is not found, it shall return a status of NO_ENTRY.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Zdo Status                 |
+|EntryCount                 |Unsigned 16-bit integer    |
 
 #### Backup Bind Table Response [0x8027]
 
@@ -887,7 +916,11 @@ continuing for BindingTableListCount entries. If this exceeds its table size, it
 fill in as many entries as possible and return a status of TABLE_FULL and the
 EntryCount parameter will be the number of entries in the table. Otherwise, it
 shall return a status of SUCCESS and EntryCount will be equal to StartIndex +
-BindingTableListCount from Backup_Bind_Table_req. 
+BindingTableListCount from Backup_Bind_Table_req.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Zdo Status                 |
 
 #### Recover Bind Table Response [0x8028]
 
@@ -994,6 +1027,14 @@ management command is not supported, a status of NOT_SUPPORTED shall be
 returned and all parameter fields after the Status field shall be omitted. Otherwise,
 the Remote Device shall implement the following processing.
 
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Zdo Status                 |
+|BindingTableEntries        |Unsigned 8-bit integer     |
+|StartIndex                 |Unsigned 8-bit integer     |
+|BindingTableListCount      |Unsigned 8-bit integer     |
+|BindingTableList           |Binding Table[BindingTableListCount]|
+
 #### Management Leave Response [0x8034]
 
 The Mgmt_Leave_rsp is generated in response to a Mgmt_Leave_req. If this
@@ -1020,6 +1061,10 @@ The Mgmt_Direct_Join_rsp is generated in response to a Mgmt_Direct_Join_req.
 If this management command is not supported, a status of NOT_SUPPORTED
 shall be returned. Otherwise, the Remote Device shall implement the following
 processing.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Zdo Status                 |
 
 #### Management Permit Joining Response [0x8036]
 
@@ -1071,4 +1116,13 @@ A Status of NOT_SUPPORTED indicates that the request was directed to a device
 which was not the ZigBee Coordinator or that the ZigBee Coordinator does not
 support End Device Binding. Otherwise, End_Device_Bind_req processing is
 performed as described below, including transmission of the
-End_Device_Bind_rsp. 
+End_Device_Bind_rsp.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Status                     |Zdo Status                 |
+|ScannedChannels            |Unsigned 32-bit integer    |
+|TotalTransmissions         |Unsigned 16-bit integer    |
+|TransmissionFailures       |Unsigned 16-bit integer    |
+|ScannedChannelsListCount   |Unsigned 8-bit integer     |
+|EnergyValues               |Unsigned 8-bit integer[ScannedChannelsListCount] |

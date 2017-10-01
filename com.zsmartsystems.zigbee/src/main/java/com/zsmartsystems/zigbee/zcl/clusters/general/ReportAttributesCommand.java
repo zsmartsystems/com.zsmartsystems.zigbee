@@ -86,12 +86,12 @@ public class ReportAttributesCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(53);
         builder.append("ReportAttributesCommand [");
         builder.append(super.toString());
         builder.append(", reports=");
         builder.append(reports);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

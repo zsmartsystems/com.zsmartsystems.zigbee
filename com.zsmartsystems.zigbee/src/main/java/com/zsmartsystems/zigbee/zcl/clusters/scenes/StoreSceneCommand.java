@@ -103,14 +103,14 @@ public class StoreSceneCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(74);
         builder.append("StoreSceneCommand [");
         builder.append(super.toString());
         builder.append(", groupId=");
         builder.append(groupId);
         builder.append(", sceneId=");
         builder.append(sceneId);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

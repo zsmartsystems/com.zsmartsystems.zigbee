@@ -66,12 +66,12 @@ public class LockDoorResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(45);
         builder.append("LockDoorResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

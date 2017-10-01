@@ -120,7 +120,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(145);
         builder.append("ReportRssiMeasurementsCommand [");
         builder.append(super.toString());
         builder.append(", reportingAddress=");
@@ -129,7 +129,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
         builder.append(numberOfNeighbors);
         builder.append(", neighborsInformation=");
         builder.append(neighborsInformation);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

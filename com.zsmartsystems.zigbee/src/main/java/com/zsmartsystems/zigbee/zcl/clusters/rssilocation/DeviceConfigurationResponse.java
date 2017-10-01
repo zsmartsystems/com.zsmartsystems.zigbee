@@ -191,7 +191,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(231);
         builder.append("DeviceConfigurationResponse [");
         builder.append(super.toString());
         builder.append(", status=");
@@ -206,7 +206,7 @@ public class DeviceConfigurationResponse extends ZclCommand {
         builder.append(numberRssiMeasurements);
         builder.append(", reportingPeriod=");
         builder.append(reportingPeriod);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

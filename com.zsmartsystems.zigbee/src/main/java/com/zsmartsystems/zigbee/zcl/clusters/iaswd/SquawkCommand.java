@@ -71,12 +71,12 @@ public class SquawkCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(42);
         builder.append("SquawkCommand [");
         builder.append(super.toString());
         builder.append(", header=");
         builder.append(header);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

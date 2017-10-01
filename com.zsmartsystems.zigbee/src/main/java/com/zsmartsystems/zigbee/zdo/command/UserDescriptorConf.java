@@ -28,10 +28,10 @@ public class UserDescriptorConf extends ZdoResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(21);
         builder.append("UserDescriptorConf [");
         builder.append(super.toString());
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

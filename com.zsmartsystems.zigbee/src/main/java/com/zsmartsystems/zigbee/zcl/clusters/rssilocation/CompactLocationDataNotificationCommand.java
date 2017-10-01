@@ -30,10 +30,10 @@ public class CompactLocationDataNotificationCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(41);
         builder.append("CompactLocationDataNotificationCommand [");
         builder.append(super.toString());
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

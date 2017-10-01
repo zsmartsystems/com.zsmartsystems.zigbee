@@ -66,12 +66,12 @@ public class UnlockDoorCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(47);
         builder.append("UnlockDoorCommand [");
         builder.append(super.toString());
         builder.append(", pinCode=");
         builder.append(pinCode);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

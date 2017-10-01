@@ -30,10 +30,10 @@ public class NodeDescriptorStoreRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(29);
         builder.append("NodeDescriptorStoreRequest [");
         builder.append(super.toString());
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

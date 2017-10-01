@@ -40,10 +40,10 @@ public class ManagementCacheResponse extends ZdoResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(26);
         builder.append("ManagementCacheResponse [");
         builder.append(super.toString());
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

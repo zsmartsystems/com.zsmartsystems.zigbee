@@ -69,12 +69,12 @@ public class RecoverSourceBindRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(57);
         builder.append("RecoverSourceBindRequest [");
         builder.append(super.toString());
         builder.append(", startIndex=");
         builder.append(startIndex);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -196,7 +196,7 @@ public class UnbindRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(198);
         builder.append("UnbindRequest [");
         builder.append(super.toString());
         builder.append(", srcAddress=");
@@ -211,7 +211,7 @@ public class UnbindRequest extends ZdoRequest {
         builder.append(dstAddress);
         builder.append(", dstEndpoint=");
         builder.append(dstEndpoint);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -1005,17 +1005,24 @@ public class ZclProtocolCodeGenerator {
                         out.println("    }");
                     }
 
+                    int fieldLen = 0;
+                    for (final Field field : fields) {
+                        fieldLen += field.nameLowerCamelCase.length() + 20;
+                    }
+
                     out.println();
                     out.println("    @Override");
                     out.println("    public String toString() {");
-                    out.println("        final StringBuilder builder = new StringBuilder();");
+                    out.println("        final StringBuilder builder = new StringBuilder("
+                            + (className.length() + 3 + fieldLen) + ");");
+
                     out.println("        builder.append(\"" + className + " [\");");
                     out.println("        builder.append(super.toString());");
                     for (final Field field : fields) {
                         out.println("        builder.append(\", " + field.nameLowerCamelCase + "=\");");
                         out.println("        builder.append(" + field.nameLowerCamelCase + ");");
                     }
-                    out.println("        builder.append(\"]\");");
+                    out.println("        builder.append(\']\');");
                     out.println("        return builder.toString();");
                     out.println("    }");
 
@@ -1770,6 +1777,9 @@ public class ZclProtocolCodeGenerator {
                             case "ZdoStatus":
                                 out.println("import " + packageRootPrefix + packageZdp + ".ZdoStatus;");
                                 continue;
+                            case "BindingTable":
+                                out.println("import " + packageRootPrefix + packageZclField + ".BindingTable;");
+                                continue;
                         }
 
                         out.println("import " + packageRootPrefix + packageName + "." + typeName + ";");
@@ -1979,17 +1989,23 @@ public class ZclProtocolCodeGenerator {
                         out.println("    }");
                     }
 
+                    int fieldLen = 0;
+                    for (final Field field : fields) {
+                        fieldLen += field.nameLowerCamelCase.length() + 20;
+                    }
+
                     out.println();
                     out.println("    @Override");
                     out.println("    public String toString() {");
-                    out.println("        final StringBuilder builder = new StringBuilder();");
+                    out.println("        final StringBuilder builder = new StringBuilder("
+                            + (className.length() + 3 + fieldLen) + ");");
                     out.println("        builder.append(\"" + className + " [\");");
                     out.println("        builder.append(super.toString());");
                     for (final Field field : fields) {
                         out.println("        builder.append(\", " + field.nameLowerCamelCase + "=\");");
                         out.println("        builder.append(" + field.nameLowerCamelCase + ");");
                     }
-                    out.println("        builder.append(\"]\");");
+                    out.println("        builder.append(\']\');");
                     out.println("        return builder.toString();");
                     out.println("    }");
 

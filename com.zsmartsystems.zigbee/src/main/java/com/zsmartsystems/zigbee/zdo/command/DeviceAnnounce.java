@@ -124,7 +124,7 @@ public class DeviceAnnounce extends ZdoResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(112);
         builder.append("DeviceAnnounce [");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
@@ -133,7 +133,7 @@ public class DeviceAnnounce extends ZdoResponse {
         builder.append(ieeeAddr);
         builder.append(", capability=");
         builder.append(capability);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

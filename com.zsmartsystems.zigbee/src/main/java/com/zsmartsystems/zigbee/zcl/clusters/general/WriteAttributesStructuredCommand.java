@@ -83,12 +83,12 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(73);
         builder.append("WriteAttributesStructuredCommand [");
         builder.append(super.toString());
         builder.append(", attributeSelectors=");
         builder.append(attributeSelectors);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

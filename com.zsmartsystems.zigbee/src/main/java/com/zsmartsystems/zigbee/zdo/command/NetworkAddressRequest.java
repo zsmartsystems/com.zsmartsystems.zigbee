@@ -120,7 +120,7 @@ public class NetworkAddressRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(113);
         builder.append("NetworkAddressRequest [");
         builder.append(super.toString());
         builder.append(", ieeeAddr=");
@@ -129,7 +129,7 @@ public class NetworkAddressRequest extends ZdoRequest {
         builder.append(requestType);
         builder.append(", startIndex=");
         builder.append(startIndex);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

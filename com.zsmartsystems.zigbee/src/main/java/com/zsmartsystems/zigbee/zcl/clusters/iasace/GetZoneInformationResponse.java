@@ -122,7 +122,7 @@ public class GetZoneInformationResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(114);
         builder.append("GetZoneInformationResponse [");
         builder.append(super.toString());
         builder.append(", zoneId=");
@@ -131,7 +131,7 @@ public class GetZoneInformationResponse extends ZclCommand {
         builder.append(zoneType);
         builder.append(", ieeeAddress=");
         builder.append(ieeeAddress);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

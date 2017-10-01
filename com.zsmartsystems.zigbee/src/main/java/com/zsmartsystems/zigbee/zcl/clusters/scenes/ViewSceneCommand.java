@@ -103,14 +103,14 @@ public class ViewSceneCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(73);
         builder.append("ViewSceneCommand [");
         builder.append(super.toString());
         builder.append(", groupId=");
         builder.append(groupId);
         builder.append(", sceneId=");
         builder.append(sceneId);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 
