@@ -64,7 +64,7 @@ public class EzspReadAndClearCountersResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(60);
         builder.append("EzspReadAndClearCountersResponse [values=");
         for (int c = 0; c < values.length; c++) {
             if (c > 0) {
@@ -72,7 +72,7 @@ public class EzspReadAndClearCountersResponse extends EzspFrameResponse {
             }
             builder.append(String.format("%02X", values[c]));
         }
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

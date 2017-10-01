@@ -93,12 +93,12 @@ public class EzspGetBindingResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(75);
         builder.append("EzspGetBindingResponse [status=");
         builder.append(status);
         builder.append(", value=");
         builder.append(value);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

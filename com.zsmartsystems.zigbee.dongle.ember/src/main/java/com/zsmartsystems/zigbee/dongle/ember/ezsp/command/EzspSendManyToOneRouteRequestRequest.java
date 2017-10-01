@@ -143,12 +143,12 @@ public class EzspSendManyToOneRouteRequestRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(89);
         builder.append("EzspSendManyToOneRouteRequestRequest [concentratorType=");
         builder.append(concentratorType);
         builder.append(", radius=");
         builder.append(radius);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

@@ -77,10 +77,10 @@ public class EzspFormNetworkRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(50);
         builder.append("EzspFormNetworkRequest [parameters=");
         builder.append(parameters);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

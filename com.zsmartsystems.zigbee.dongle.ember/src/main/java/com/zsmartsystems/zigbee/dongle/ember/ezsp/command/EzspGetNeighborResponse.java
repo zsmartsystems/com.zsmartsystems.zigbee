@@ -97,12 +97,12 @@ public class EzspGetNeighborResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(76);
         builder.append("EzspGetNeighborResponse [status=");
         builder.append(status);
         builder.append(", value=");
         builder.append(value);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

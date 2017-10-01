@@ -94,12 +94,12 @@ public class EzspRemoteDeleteBindingHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(83);
         builder.append("EzspRemoteDeleteBindingHandler [index=");
         builder.append(index);
         builder.append(", policyDecision=");
         builder.append(policyDecision);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

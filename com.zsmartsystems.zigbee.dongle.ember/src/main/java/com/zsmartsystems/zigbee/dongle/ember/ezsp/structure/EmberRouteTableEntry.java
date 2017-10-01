@@ -238,7 +238,7 @@ public class EmberRouteTableEntry {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(173);
         builder.append("EmberRouteTableEntry [destination=");
         builder.append(destination);
         builder.append(", nextHop=");
@@ -251,7 +251,7 @@ public class EmberRouteTableEntry {
         builder.append(concentratorType);
         builder.append(", routeRecordState=");
         builder.append(routeRecordState);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

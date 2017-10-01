@@ -226,7 +226,7 @@ public class EmberZigbeeNetwork {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(171);
         builder.append("EmberZigbeeNetwork [channel=");
         builder.append(channel);
         builder.append(", panId=");
@@ -250,7 +250,7 @@ public class EmberZigbeeNetwork {
         builder.append(stackProfile);
         builder.append(", nwkUpdateId=");
         builder.append(nwkUpdateId);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

@@ -64,10 +64,10 @@ public class EzspGetEui64Response extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(48);
         builder.append("EzspGetEui64Response [eui64=");
         builder.append(eui64);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

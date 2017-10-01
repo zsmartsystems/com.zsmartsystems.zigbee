@@ -76,10 +76,10 @@ public class EzspSetConfigurationValueResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(61);
         builder.append("EzspSetConfigurationValueResponse [status=");
         builder.append(status);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

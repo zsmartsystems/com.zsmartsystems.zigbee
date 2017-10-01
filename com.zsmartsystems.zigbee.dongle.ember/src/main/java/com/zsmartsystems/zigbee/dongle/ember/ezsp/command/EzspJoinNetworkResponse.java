@@ -66,10 +66,10 @@ public class EzspJoinNetworkResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(51);
         builder.append("EzspJoinNetworkResponse [status=");
         builder.append(status);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

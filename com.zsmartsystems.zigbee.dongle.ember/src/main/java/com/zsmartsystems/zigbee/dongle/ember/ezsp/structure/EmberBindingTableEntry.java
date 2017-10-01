@@ -242,7 +242,7 @@ public class EmberBindingTableEntry {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(175);
         builder.append("EmberBindingTableEntry [type=");
         builder.append(type);
         builder.append(", local=");
@@ -255,7 +255,7 @@ public class EmberBindingTableEntry {
         builder.append(identifier);
         builder.append(", uint8_t=");
         builder.append(uint8_t);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

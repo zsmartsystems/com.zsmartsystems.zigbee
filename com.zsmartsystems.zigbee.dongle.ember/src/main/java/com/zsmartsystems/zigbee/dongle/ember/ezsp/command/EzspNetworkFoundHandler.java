@@ -121,14 +121,14 @@ public class EzspNetworkFoundHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(101);
         builder.append("EzspNetworkFoundHandler [networkFound=");
         builder.append(networkFound);
         builder.append(", lastHopLqi=");
         builder.append(lastHopLqi);
         builder.append(", lastHopRssi=");
         builder.append(lastHopRssi);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

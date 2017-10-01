@@ -178,7 +178,7 @@ public class EzspMacFilterMatchMessageHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(185);
         builder.append("EzspMacFilterMatchMessageHandler [filterIndexMatch=");
         builder.append(filterIndexMatch);
         builder.append(", legacyPassthroughType=");
@@ -194,7 +194,7 @@ public class EzspMacFilterMatchMessageHandler extends EzspFrameResponse {
             }
             builder.append(String.format("%02X", messageContents[c]));
         }
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

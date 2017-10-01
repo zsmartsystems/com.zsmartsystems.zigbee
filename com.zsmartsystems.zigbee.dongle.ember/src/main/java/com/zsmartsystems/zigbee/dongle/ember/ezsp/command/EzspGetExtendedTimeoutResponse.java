@@ -67,10 +67,10 @@ public class EzspGetExtendedTimeoutResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(58);
         builder.append("EzspGetExtendedTimeoutResponse [extendedTimeout=");
         builder.append(extendedTimeout);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

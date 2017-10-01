@@ -93,12 +93,12 @@ public class EzspIncomingRouteErrorHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(82);
         builder.append("EzspIncomingRouteErrorHandler [status=");
         builder.append(status);
         builder.append(", target=");
         builder.append(target);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

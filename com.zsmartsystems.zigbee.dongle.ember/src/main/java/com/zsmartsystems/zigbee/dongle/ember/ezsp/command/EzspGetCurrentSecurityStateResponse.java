@@ -93,12 +93,12 @@ public class EzspGetCurrentSecurityStateResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(88);
         builder.append("EzspGetCurrentSecurityStateResponse [status=");
         builder.append(status);
         builder.append(", state=");
         builder.append(state);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

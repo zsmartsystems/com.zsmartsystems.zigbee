@@ -150,7 +150,7 @@ public class EzspGetChildDataResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(127);
         builder.append("EzspGetChildDataResponse [status=");
         builder.append(status);
         builder.append(", childId=");
@@ -159,7 +159,7 @@ public class EzspGetChildDataResponse extends EzspFrameResponse {
         builder.append(childEui64);
         builder.append(", childType=");
         builder.append(childType);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

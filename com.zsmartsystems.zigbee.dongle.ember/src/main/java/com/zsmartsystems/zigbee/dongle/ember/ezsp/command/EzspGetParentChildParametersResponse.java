@@ -126,14 +126,14 @@ public class EzspGetParentChildParametersResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(114);
         builder.append("EzspGetParentChildParametersResponse [childCount=");
         builder.append(childCount);
         builder.append(", parentEui64=");
         builder.append(parentEui64);
         builder.append(", parentNodeId=");
         builder.append(parentNodeId);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

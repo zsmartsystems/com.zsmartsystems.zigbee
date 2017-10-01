@@ -76,10 +76,10 @@ public class EzspDeleteBindingRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(52);
         builder.append("EzspDeleteBindingRequest [index=");
         builder.append(index);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }
