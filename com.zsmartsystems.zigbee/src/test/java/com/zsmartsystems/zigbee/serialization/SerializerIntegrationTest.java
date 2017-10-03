@@ -186,6 +186,12 @@ public class SerializerIntegrationTest {
         testSerializer(valIn, ZclDataType.CHARACTER_STRING);
     }
 
+    @Test
+    public void testSerialize_BYTE_ARRAY() {
+        byte[] valIn = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+        testSerializer(valIn, ZclDataType.BYTE_ARRAY);
+    }
+
     private void testSerializer(Object objectIn, ZclDataType type) {
         DefaultSerializer serializer = new DefaultSerializer();
         serializer.appendZigBeeType(objectIn, type);
@@ -194,8 +200,8 @@ public class SerializerIntegrationTest {
         DefaultDeserializer deserializer = new DefaultDeserializer(buffer);
         assertEquals(size, deserializer.getSize());
         Object objectOut = deserializer.readZigBeeType(type);
-        if (objectIn instanceof int[]) {
-            assertTrue(Arrays.equals((int[]) objectIn, (int[]) objectOut));
+        if (objectIn instanceof Integer[]) {
+            assertTrue(Arrays.equals((Integer[]) objectIn, (Integer[]) objectOut));
         } else {
             assertEquals(objectIn, objectOut);
         }

@@ -166,8 +166,12 @@ public class DefaultSerializer implements ZigBeeSerializer {
             case ZDO_STATUS:
                 buffer[length++] = ((ZdoStatus) data).getId();
                 break;
-            case ZIGBEE_DATA_TYPE:
-                buffer[length++] = ((ZclDataType) data).getId();
+      case BYTE_ARRAY:
+                final byte[] byteArray = (byte[]) data;
+                buffer[length++] = ((byte) (byteArray.length & (0xFF)));
+                for (byte valByte : byteArray) {
+                    buffer[length++] = valByte;
+                }
                 break;
             default:
                 throw new IllegalArgumentException("No writer defined in " + ZigBeeDeserializer.class.getSimpleName()

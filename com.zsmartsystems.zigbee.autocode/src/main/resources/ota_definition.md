@@ -308,10 +308,7 @@ client shall be smaller than 100 bytes.
 |Image type                 |Unsigned 16-bit integer    |
 |File Version               |Unsigned 32-bit integer    |
 |File offset                |Unsigned 32-bit integer    |
-|Data Size                  |Unsigned 8-bit integer     |
-|Image Data                 |N x Unsigned 8-bit integer[Data Size] |
-
-
+|Image Data                 |Byte array                 |
 
 
 

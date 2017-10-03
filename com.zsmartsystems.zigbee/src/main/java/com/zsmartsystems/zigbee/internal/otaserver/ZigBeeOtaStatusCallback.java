@@ -7,8 +7,6 @@
  */
 package com.zsmartsystems.zigbee.internal.otaserver;
 
-import com.zsmartsystems.zigbee.zcl.ZclStatus;
-
 /**
  * This interface defines status callback updates for Over The Air update progress
  *
@@ -17,13 +15,10 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
 interface ZigBeeOtaStatusCallback {
 
     /**
-     * Provides a callback following the statuc change of an OTA update
+     * Provides a callback following the status change of the OTA server
+     * 
+     * @param status the updated {@link ZigBeeOtaServerStatus}
      */
-    void otaStatus(ZclStatus status);
-
-    /**
-     * Provides a callback with the progress of an OTA update (ie percentage complete
-     */
-    void otaProgress(int percentComplete);
+    void otaStatus(ZigBeeOtaServerStatus status);
 
 }

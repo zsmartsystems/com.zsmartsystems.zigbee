@@ -25,10 +25,10 @@ import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileRequest
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndRequestCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -947,11 +947,10 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param imageType {@link Integer} Image type
      * @param fileVersion {@link Integer} File Version
      * @param fileOffset {@link Integer} File offset
-     * @param dataSize {@link Integer} Data Size
-     * @param imageData {@link List<Integer>} Image Data
+     * @param imageData {@link ByteArray} Image Data
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> imageBlockResponse(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, Integer dataSize, List<Integer> imageData) {
+    public Future<CommandResult> imageBlockResponse(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, ByteArray imageData) {
         ImageBlockResponse command = new ImageBlockResponse();
 
         // Set the fields
@@ -960,7 +959,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setImageType(imageType);
         command.setFileVersion(fileVersion);
         command.setFileOffset(fileOffset);
-        command.setDataSize(dataSize);
         command.setImageData(imageData);
 
         return send(command);

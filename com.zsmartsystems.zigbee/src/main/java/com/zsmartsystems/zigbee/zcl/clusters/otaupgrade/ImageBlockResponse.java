@@ -11,9 +11,8 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-
-import java.util.List;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 
 /**
  * Image Block Response value object class.
@@ -69,14 +68,9 @@ public class ImageBlockResponse extends ZclCommand {
     private Integer fileOffset;
 
     /**
-     * Data Size command message field.
-     */
-    private Integer dataSize;
-
-    /**
      * Image Data command message field.
      */
-    private List<Integer> imageData;
+    private ByteArray imageData;
 
     /**
      * Default constructor.
@@ -179,29 +173,11 @@ public class ImageBlockResponse extends ZclCommand {
     }
 
     /**
-     * Gets Data Size.
-     *
-     * @return the Data Size
-     */
-    public Integer getDataSize() {
-        return dataSize;
-    }
-
-    /**
-     * Sets Data Size.
-     *
-     * @param dataSize the Data Size
-     */
-    public void setDataSize(final Integer dataSize) {
-        this.dataSize = dataSize;
-    }
-
-    /**
      * Gets Image Data.
      *
      * @return the Image Data
      */
-    public List<Integer> getImageData() {
+    public ByteArray getImageData() {
         return imageData;
     }
 
@@ -210,7 +186,7 @@ public class ImageBlockResponse extends ZclCommand {
      *
      * @param imageData the Image Data
      */
-    public void setImageData(final List<Integer> imageData) {
+    public void setImageData(final ByteArray imageData) {
         this.imageData = imageData;
     }
 
@@ -221,10 +197,7 @@ public class ImageBlockResponse extends ZclCommand {
         serializer.serialize(imageType, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(fileVersion, ZclDataType.UNSIGNED_32_BIT_INTEGER);
         serializer.serialize(fileOffset, ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        serializer.serialize(dataSize, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        for (int cnt = 0; cnt < imageData.size(); cnt++) {
-            serializer.serialize(imageData.get(cnt), ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
-        }
+        serializer.serialize(imageData, ZclDataType.BYTE_ARRAY);
     }
 
     @Override
@@ -234,13 +207,12 @@ public class ImageBlockResponse extends ZclCommand {
         imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         fileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
         fileOffset = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        dataSize = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        imageData = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        imageData = (ByteArray) deserializer.deserialize(ZclDataType.BYTE_ARRAY);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(230);
+        final StringBuilder builder = new StringBuilder(202);
         builder.append("ImageBlockResponse [");
         builder.append(super.toString());
         builder.append(", status=");
@@ -253,8 +225,6 @@ public class ImageBlockResponse extends ZclCommand {
         builder.append(fileVersion);
         builder.append(", fileOffset=");
         builder.append(fileOffset);
-        builder.append(", dataSize=");
-        builder.append(dataSize);
         builder.append(", imageData=");
         builder.append(imageData);
         builder.append(']');
