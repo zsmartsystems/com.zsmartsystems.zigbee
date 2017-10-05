@@ -134,6 +134,7 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 break;
             case N_X_WRITE_ATTRIBUTE_STATUS_RECORD:
                 break;
+            case CLUSTERID:
             case NWK_ADDRESS:
             case BITMAP_16_BIT:
             case ENUMERATION_16_BIT:
