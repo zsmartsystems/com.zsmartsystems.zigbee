@@ -150,6 +150,12 @@ public class SerializerIntegrationTest {
     }
 
     @Test
+    public void testSerialize_CLUSTERID() {
+        int valIn = 0x1234;
+        testSerializer(valIn, ZclDataType.CLUSTERID);
+    }
+
+    @Test
     public void testSerialize_CHARACTER_STRING() {
         String valIn = "Hello World";
         testSerializer(valIn, ZclDataType.CHARACTER_STRING);

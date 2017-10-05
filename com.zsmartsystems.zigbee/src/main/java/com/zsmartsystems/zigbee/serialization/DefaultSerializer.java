@@ -46,6 +46,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
             case SIGNED_16_BIT_INTEGER:
             case UNSIGNED_16_BIT_INTEGER:
             case ENUMERATION_16_BIT:
+            case CLUSTERID:
                 final short shortValue = ((Number) data).shortValue();
                 buffer[length++] = shortValue & 0xFF;
                 buffer[length++] = (shortValue >> 8) & 0xFF;
