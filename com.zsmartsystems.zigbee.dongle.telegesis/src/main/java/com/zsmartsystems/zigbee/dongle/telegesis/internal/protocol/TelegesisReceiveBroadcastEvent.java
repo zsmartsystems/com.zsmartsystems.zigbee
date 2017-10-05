@@ -112,7 +112,7 @@ public class TelegesisReceiveBroadcastEvent extends TelegesisFrame implements Te
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(480);
         builder.append("TelegesisReceiveBroadcastEvent [remoteAddress=");
         builder.append(remoteAddress);
         builder.append(", messageData=");

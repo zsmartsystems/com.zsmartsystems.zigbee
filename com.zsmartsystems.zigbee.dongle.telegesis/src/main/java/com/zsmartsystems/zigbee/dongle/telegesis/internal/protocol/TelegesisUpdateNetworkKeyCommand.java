@@ -33,7 +33,7 @@ public class TelegesisUpdateNetworkKeyCommand extends TelegesisFrame implements 
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -45,7 +45,7 @@ public class TelegesisUpdateNetworkKeyCommand extends TelegesisFrame implements 
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(122);
         builder.append("TelegesisUpdateNetworkKeyCommand [");
         if (status != null) {
             builder.append("status=");

@@ -14,14 +14,98 @@
 
 	<command>
 		<name>Nack Message</name>
-		<description>Acknowledgement for message XX was not received
-		</description>
+		<description>Acknowledgement for message XX was not received</description>
 		<response_parameters>
 			<prompt>NACK</prompt>
 			<parameter>
 				<data_type>Int8</data_type>
 				<name>message ID</name>
 				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>Address Response</name>
+		<description>Response  to  an  address  request  (also  triggered when finding source routes)</description>
+		<response_parameters>
+			<prompt>AddrResp</prompt>
+			<parameter>
+				<data_type>TelegesisStatusCode</data_type>
+				<name>status</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>ieee Address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>network Address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>associated devices</name>
+				<multiple>true</multiple>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Receive Message</name>
+		<description>An incoming message not addressed to the AT command endpoint.  EUI64 is only shown if included in network frame header</description>
+		<response_parameters>
+			<prompt>RX</prompt>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>ieee Address</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>network Address</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>profile Id</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>destination Ep</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>source Ep</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>cluster Id</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>message Data</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>UInt8</data_type>
+				<name>rssi</name>
+				<description></description>
+				<optional>true</optional>
+			</parameter>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>lqi</name>
+				<description></description>
+				<optional>true</optional>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -486,8 +570,8 @@
 				<description></description>
 			</parameter>
 			<parameter>
-				<data_type>ZigBeeGroupAddress</data_type>
-				<name>group Id</name>
+				<data_type>Int16</data_type>
+				<name>address</name>
 				<description></description>
 			</parameter>
 			<parameter>

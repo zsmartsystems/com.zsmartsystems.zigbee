@@ -25,9 +25,6 @@ public class TelegesisNetworkLeftEvent extends TelegesisFrame implements Teleges
     public void deserialize(int[] data) {
         initialiseDeserializer(data);
 
-        // Deserialize the fields for the "LeftPAN" response
-        if (testPrompt(data, "LeftPAN")) {
-        }
     }
 
     @Override

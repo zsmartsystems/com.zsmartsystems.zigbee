@@ -98,7 +98,7 @@ public class TelegesisDisplayNetworkInformationCommand extends TelegesisFrame im
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -135,7 +135,7 @@ public class TelegesisDisplayNetworkInformationCommand extends TelegesisFrame im
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(581);
         builder.append("TelegesisDisplayNetworkInformationCommand [device=");
         builder.append(device);
         builder.append(", channel=");

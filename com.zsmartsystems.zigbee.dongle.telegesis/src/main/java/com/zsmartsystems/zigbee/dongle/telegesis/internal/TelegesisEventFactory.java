@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.dongle.telegesis.internal;
 
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisAckMessageEvent;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisAddressResponseEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBootloadStartEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceJoinedNetworkEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceLeftNetworkEvent;
@@ -19,6 +20,7 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetw
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLeftEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLostEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisReceiveBroadcastEvent;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisReceiveMessageEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisReceiveMulticastEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisReceiveUnicastEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisRouteRecordMessageEvent;
@@ -26,8 +28,8 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisRout
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSleepyDeviceAnnounceEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,35 +44,41 @@ import org.slf4j.LoggerFactory;
 public class TelegesisEventFactory {
     private final static Logger logger = LoggerFactory.getLogger(TelegesisEventFactory.class);
 
-    private static Map<Integer, Class<?>> events = new HashMap<Integer, Class<?>>();
+    private static Map<Integer, Class<?>> events = new ConcurrentHashMap<Integer, Class<?>>();
 
     static {
-        events.put(165, TelegesisRouteRecordMessageEvent.class);
-        events.put(207, TelegesisAckMessageEvent.class);
-        events.put(208, TelegesisRouterAnnounceEvent.class);
-        events.put(214, TelegesisMobileDeviceAnnounceEvent.class);
-        events.put(220, TelegesisSleepyDeviceAnnounceEvent.class);
-        events.put(227, TelegesisEndDeviceAnnounceEvent.class);
-        events.put(285, TelegesisNackMessageEvent.class);
-        events.put(297, TelegesisNetworkJoinedEvent.class);
-        events.put(365, TelegesisReceiveBroadcastEvent.class);
-        events.put(376, TelegesisReceiveMulticastEvent.class);
-        events.put(384, TelegesisReceiveUnicastEvent.class);
-        events.put(528, TelegesisDeviceJoinedNetworkEvent.class);
-        events.put(593, TelegesisDeviceLeftNetworkEvent.class);
-        events.put(618, TelegesisNetworkLeftEvent.class);
-        events.put(641, TelegesisNetworkLostEvent.class);
-        events.put(990, TelegesisBootloadStartEvent.class);
+        events.put(0x91AEACF6, TelegesisNetworkLeftEvent.class);
+        events.put(0x91AEDEF9, TelegesisNetworkLostEvent.class);
+        events.put(0xBA9587C2, TelegesisDeviceJoinedNetworkEvent.class);
+        events.put(0xE70293DF, TelegesisAddressResponseEvent.class);
+        events.put(0x00000A41, TelegesisRouteRecordMessageEvent.class);
+        events.put(0x00000AFA, TelegesisReceiveMessageEvent.class);
+        events.put(0x000107EC, TelegesisMobileDeviceAnnounceEvent.class);
+        events.put(0x000107F2, TelegesisSleepyDeviceAnnounceEvent.class);
+        events.put(0x000107F9, TelegesisEndDeviceAnnounceEvent.class);
+        events.put(0x00010804, TelegesisRouterAnnounceEvent.class);
+        events.put(0x000121E9, TelegesisAckMessageEvent.class);
+        events.put(0x00231B85, TelegesisNackMessageEvent.class);
+        events.put(0x002472ED, TelegesisNetworkJoinedEvent.class);
+        events.put(0x04C66D81, TelegesisReceiveBroadcastEvent.class);
+        events.put(0x04C66D8C, TelegesisReceiveMulticastEvent.class);
+        events.put(0x04C66D94, TelegesisReceiveUnicastEvent.class);
+        events.put(0x06E4B0D7, TelegesisDeviceLeftNetworkEvent.class);
+        events.put(0x1431C7AE, TelegesisBootloadStartEvent.class);
     }
 
     public static TelegesisEvent getTelegesisFrame(int[] data) {
         // Create the hash of the prompt
         int hash = 0;
+        int multiplier = 1;
         for (int value : data) {
             if (value == '\n' || value == ':' || value == '=') {
                 break;
             }
-            hash += value;
+
+            hash += (value & 0xff) * multiplier;
+            int shifted = multiplier << 5;
+            multiplier = shifted - multiplier;
         }
 
         Class<?> telegesisClass = events.get(hash);

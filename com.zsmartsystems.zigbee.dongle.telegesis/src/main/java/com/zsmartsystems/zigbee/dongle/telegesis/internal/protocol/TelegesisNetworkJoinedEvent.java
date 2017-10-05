@@ -84,7 +84,7 @@ public class TelegesisNetworkJoinedEvent extends TelegesisFrame implements Teleg
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(387);
         builder.append("TelegesisNetworkJoinedEvent [channel=");
         builder.append(channel);
         builder.append(", panId=");

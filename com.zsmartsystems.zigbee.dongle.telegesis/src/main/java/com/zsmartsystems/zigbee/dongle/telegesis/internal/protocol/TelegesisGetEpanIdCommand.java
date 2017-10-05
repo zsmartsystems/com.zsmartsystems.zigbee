@@ -45,7 +45,7 @@ public class TelegesisGetEpanIdCommand extends TelegesisFrame implements Teleges
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -61,7 +61,7 @@ public class TelegesisGetEpanIdCommand extends TelegesisFrame implements Teleges
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(205);
         builder.append("TelegesisGetEpanIdCommand [epanId=");
         builder.append(epanId);
         if (status != null) {

@@ -20,9 +20,9 @@ The library supports the Silicon Labs EZSP protocol using ASH over a serial inte
 
 It is worth noting that EM3588 devices that have an embedded USB core will likely work with any baud rate, where dongles using external USB interface (eg CP2102 used with an EM3581) will likely require a specific baud rate. This has been noted on the HUSBZB-1 which embeds an EM3581 and requires a rate of 57600.
 
-### Telegesis EMTRX35x
+### Telegesis ETRX3
 
-The library supports the Telegesis AT protocol over a serial interface.
+The library supports the Telegesis AT protocol over a serial interface. Currently implemented against R309.
 
 ## Tested Hardware
  
@@ -44,7 +44,7 @@ The following table provides a summary of some of the dongles / chipsets that ar
 | Atmel ATSAMR21        | No              | -99dBm      | +4.0dBm      |          |
 | NXP JN5169            | No              | -96dBm      | +10.0dBm     |          |
 | HUSBZB-1              | Yes (EZSP)      |             |              | Internal |
-| Telegesis EMTRX35x    | Yes             |             |              | Internal |
+| Telegesis ETRX3       | Yes             |             |              | Internal |
 | Qivicon Funkstick     | Yes (Telegesis) |             |              | Internal |
 
 * Receive: Defines the typical receive performance. A smaller number is best.

@@ -44,7 +44,7 @@ public class TelegesisGetPromptEnable1Command extends TelegesisFrame implements 
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -60,7 +60,7 @@ public class TelegesisGetPromptEnable1Command extends TelegesisFrame implements 
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(212);
         builder.append("TelegesisGetPromptEnable1Command [configuration=");
         builder.append(String.format("%04X", configuration));
         if (status != null) {

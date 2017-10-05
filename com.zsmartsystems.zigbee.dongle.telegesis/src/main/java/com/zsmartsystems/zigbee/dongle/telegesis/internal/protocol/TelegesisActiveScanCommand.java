@@ -62,7 +62,7 @@ public class TelegesisActiveScanCommand extends TelegesisFrame implements Telege
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -79,7 +79,7 @@ public class TelegesisActiveScanCommand extends TelegesisFrame implements Telege
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(836);
         // First present the command parameters...
         // Then the responses later if they are available
         builder.append("TelegesisActiveScanCommand [channelMask=");
@@ -224,7 +224,7 @@ public class TelegesisActiveScanCommand extends TelegesisFrame implements Telege
 
         @Override
         public String toString() {
-            final StringBuilder builder = new StringBuilder();
+            final StringBuilder builder = new StringBuilder(254);
             builder.append("ScanResult [channel=");
             builder.append(channel);
             builder.append(", panId=");

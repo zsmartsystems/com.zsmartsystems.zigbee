@@ -98,7 +98,7 @@ public class TelegesisRouteRecordMessageEvent extends TelegesisFrame implements 
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(392);
         builder.append("TelegesisRouteRecordMessageEvent [hops=");
         builder.append(hops);
         builder.append(", remoteAddress=");

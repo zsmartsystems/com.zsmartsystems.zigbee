@@ -49,7 +49,7 @@ public class TelegesisAckMessageEvent extends TelegesisFrame implements Telegesi
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(204);
         builder.append("TelegesisAckMessageEvent [messageId=");
         builder.append(messageId);
         builder.append(']');

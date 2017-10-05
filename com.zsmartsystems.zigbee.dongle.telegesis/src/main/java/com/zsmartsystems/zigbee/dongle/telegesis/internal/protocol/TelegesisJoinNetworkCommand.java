@@ -31,20 +31,19 @@ public class TelegesisJoinNetworkCommand extends TelegesisFrame implements Teleg
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
         initialiseDeserializer(data);
 
-        // Deserialize the fields for the response
 
         return false;
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(117);
         builder.append("TelegesisJoinNetworkCommand [");
         if (status != null) {
             builder.append("status=");

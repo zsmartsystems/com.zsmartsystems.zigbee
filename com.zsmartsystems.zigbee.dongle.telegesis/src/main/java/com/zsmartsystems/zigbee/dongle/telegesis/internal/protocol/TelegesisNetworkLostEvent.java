@@ -25,9 +25,6 @@ public class TelegesisNetworkLostEvent extends TelegesisFrame implements Teleges
     public void deserialize(int[] data) {
         initialiseDeserializer(data);
 
-        // Deserialize the fields for the "LostPAN" response
-        if (testPrompt(data, "LostPAN")) {
-        }
     }
 
     @Override

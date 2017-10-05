@@ -44,7 +44,7 @@ public class TelegesisGetMainFunctionCommand extends TelegesisFrame implements T
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -60,7 +60,7 @@ public class TelegesisGetMainFunctionCommand extends TelegesisFrame implements T
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(211);
         builder.append("TelegesisGetMainFunctionCommand [configuration=");
         builder.append(String.format("%04X", configuration));
         if (status != null) {

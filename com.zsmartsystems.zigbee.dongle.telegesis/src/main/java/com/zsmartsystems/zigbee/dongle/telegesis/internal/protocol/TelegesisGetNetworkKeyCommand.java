@@ -46,7 +46,7 @@ public class TelegesisGetNetworkKeyCommand extends TelegesisFrame implements Tel
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -62,7 +62,7 @@ public class TelegesisGetNetworkKeyCommand extends TelegesisFrame implements Tel
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(209);
         builder.append("TelegesisGetNetworkKeyCommand [networkKey=");
         builder.append(networkKey);
         if (status != null) {

@@ -33,7 +33,7 @@ public class TelegesisBecomeNetworkManagerCommand extends TelegesisFrame impleme
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -45,7 +45,7 @@ public class TelegesisBecomeNetworkManagerCommand extends TelegesisFrame impleme
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(126);
         builder.append("TelegesisBecomeNetworkManagerCommand [");
         if (status != null) {
             builder.append("status=");

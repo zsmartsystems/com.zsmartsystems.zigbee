@@ -11,8 +11,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
-
 /**
  *
  * @author Chris Jackson
@@ -21,10 +19,8 @@ import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 public class TelegesisSendMulticastCommandTest extends TelegesisFrameBaseTest {
     @Test
     public void test() {
-        ZigBeeGroupAddress address = new ZigBeeGroupAddress(1234);
-
         TelegesisSendMulticastCommand command = new TelegesisSendMulticastCommand();
-        command.setGroupId(address);
+        command.setAddress(1234);
         command.setDestEp(0x38);
         command.setSourceEp(1);
         command.setProfileId(0x104);
@@ -32,6 +28,6 @@ public class TelegesisSendMulticastCommandTest extends TelegesisFrameBaseTest {
         command.setRadius(4);
         command.setMessageData(stringToIntArray("HELLO"));
         System.out.println(command);
-        assertEquals("AT+SENDMCASTB:05,04,04D2,01,38,0104,1204,HELLO\r\n", intArrayToString(command.serialize()));
+        assertEquals("AT+SENDMCASTB:05,04,04D2,01,38,0104,1204\rHELLO\r\n", intArrayToString(command.serialize()));
     }
 }

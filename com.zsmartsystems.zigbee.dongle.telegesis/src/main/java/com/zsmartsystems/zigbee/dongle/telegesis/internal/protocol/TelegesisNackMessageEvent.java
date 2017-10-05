@@ -12,7 +12,6 @@ package com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol;
  * Class to implement the Telegesis command <b>Nack Message</b>.
  * <p>
  * Acknowledgement for message XX was not received
-		
  * <p>
  * This class provides methods for processing Telegesis AT API commands.
  * <p>
@@ -50,7 +49,7 @@ public class TelegesisNackMessageEvent extends TelegesisFrame implements Teleges
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(205);
         builder.append("TelegesisNackMessageEvent [messageId=");
         builder.append(messageId);
         builder.append(']');

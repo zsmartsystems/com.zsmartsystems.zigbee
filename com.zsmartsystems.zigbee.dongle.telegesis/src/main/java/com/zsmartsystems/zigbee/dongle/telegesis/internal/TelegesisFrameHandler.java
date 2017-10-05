@@ -83,7 +83,7 @@ public class TelegesisFrameHandler {
     /**
      * Flag reflecting that parser has been closed and parser parserThread should exit.
      */
-    private boolean close = false;
+    private boolean closeHandler = false;
 
     enum RxStateMachine {
         WAITING,
@@ -96,12 +96,8 @@ public class TelegesisFrameHandler {
      * Construct which sets input stream where the packet is read from the and
      * handler which further processes the received packet.
      *
-     * @param inputStream
-     *            the input stream
-     * @param outputStream
-     *            the output stream
-     * @param frameHandler
-     *            the packet handler
+     * @param inputStream the {@link InputStream}
+     * @param outputStream the {@link OutputStream}
      */
     public void start(final InputStream inputStream, final OutputStream outputStream) {
 
@@ -114,10 +110,18 @@ public class TelegesisFrameHandler {
 
                 int exceptionCnt = 0;
 
-                while (!close) {
+                while (!closeHandler) {
                     try {
                         // Get a packet from the serial port
                         int[] responseData = getPacket(inputStream);
+                        if (responseData != null) {
+                            StringBuilder builder = new StringBuilder();
+                            builder.append("Data");
+                            for (int value : responseData) {
+                                builder.append(String.format(" %02X", value));
+                            }
+                            logger.debug("TELEGESIS RX: {}", builder.toString());
+                        }
 
                         // Use the Event Factory to get an event
                         TelegesisEvent event = TelegesisEventFactory.getTelegesisFrame(responseData);
@@ -128,13 +132,11 @@ public class TelegesisFrameHandler {
 
                         // If we're sending a command, then we need to process any responses
                         synchronized (commandLock) {
-                            if (sentCommand != null) {
-                                if (sentCommand.deserialize(responseData) == true) {
-                                    // Command completed
-                                    notifyTransactionComplete(sentCommand);
-                                    sentCommand = null;
-                                    sendNextFrame();
-                                }
+                            if (sentCommand != null && sentCommand.deserialize(responseData)) {
+                                // Command completed
+                                notifyTransactionComplete(sentCommand);
+                                sentCommand = null;
+                                sendNextFrame();
                             }
                         }
 
@@ -147,7 +149,7 @@ public class TelegesisFrameHandler {
                             logger.debug("TelegesisFrameHandler exception count exceeded");
                             // if (!close) {
                             // frameHandler.error(e);
-                            close = true;
+                            closeHandler = true;
                         }
                     }
                 }
@@ -167,7 +169,7 @@ public class TelegesisFrameHandler {
         int binaryLength = 0;
 
         logger.trace("TELEGESIS: Get Packet");
-        while (!close) {
+        while (!closeHandler) {
             int val = inputStream.read();
             logger.trace("TELEGESIS RX: {}", String.format("%02X %c", val, val));
 
@@ -211,7 +213,7 @@ public class TelegesisFrameHandler {
                     // Handle switching to binary mode...
                     // This detects the = sign, and then gets the previous numbers which should
                     // be the length of binary data
-                    if (val == '=') {
+                    if ((val == '=' || val == ':') && inputBufferLength > 2) {
                         char[] chars = new char[2];
                         chars[0] = (char) inputBuffer[inputBufferLength - 3];
                         chars[1] = (char) inputBuffer[inputBufferLength - 2];
@@ -243,7 +245,7 @@ public class TelegesisFrameHandler {
      * Set the close flag to true.
      */
     public void setClosing() {
-        this.close = true;
+        this.closeHandler = true;
     }
 
     /**
@@ -360,7 +362,7 @@ public class TelegesisFrameHandler {
      */
     private void notifyEventReceived(final TelegesisEvent event) {
         logger.debug("Telegesis event received: {}", event);
-        synchronized (transactionListeners) {
+        synchronized (eventListeners) {
             for (TelegesisEventListener listener : eventListeners) {
                 listener.telegesisEventReceived(event);
             }
@@ -422,7 +424,7 @@ public class TelegesisFrameHandler {
             @Override
             public boolean transactionEvent(TelegesisCommand response) {
                 // Check if this response completes our transaction
-                if (command != response) {
+                if (!command.equals(response)) {
                     return false;
                 }
 

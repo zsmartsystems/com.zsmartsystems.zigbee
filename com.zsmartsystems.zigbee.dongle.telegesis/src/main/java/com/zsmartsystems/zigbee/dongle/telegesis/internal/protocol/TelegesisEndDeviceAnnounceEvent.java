@@ -106,7 +106,7 @@ public class TelegesisEndDeviceAnnounceEvent extends TelegesisFrame implements T
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(481);
         builder.append("TelegesisEndDeviceAnnounceEvent [ieeeAddress=");
         builder.append(ieeeAddress);
         builder.append(", networkAddress=");

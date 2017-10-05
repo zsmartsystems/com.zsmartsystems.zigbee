@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol;
 
-import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 
 /**
  * Class to implement the Telegesis command <b>send multicast</b>.
@@ -29,7 +28,7 @@ public class TelegesisSendMulticastCommand extends TelegesisFrame implements Tel
     /**
      * Command field
      */
-    private ZigBeeGroupAddress groupId;
+    private Integer address;
 
     /**
      * Command field
@@ -58,14 +57,6 @@ public class TelegesisSendMulticastCommand extends TelegesisFrame implements Tel
 
     /**
      *
-     * @param length the length to set as {@link Integer}
-     */
-    public void setLength(Integer length) {
-        this.length = length;
-    }
-
-    /**
-     *
      * @param radius the radius to set as {@link Integer}
      */
     public void setRadius(Integer radius) {
@@ -74,10 +65,10 @@ public class TelegesisSendMulticastCommand extends TelegesisFrame implements Tel
 
     /**
      *
-     * @param groupId the groupId to set as {@link ZigBeeGroupAddress}
+     * @param address the address to set as {@link Integer}
      */
-    public void setGroupId(ZigBeeGroupAddress groupId) {
-        this.groupId = groupId;
+    public void setAddress(Integer address) {
+        this.address = address;
     }
 
     /**
@@ -129,7 +120,7 @@ public class TelegesisSendMulticastCommand extends TelegesisFrame implements Tel
         serializeDelimiter();
         serializeInt8(radius);
         serializeDelimiter();
-        serializeZigBeeGroupAddress(groupId);
+        serializeInt16(address);
         serializeDelimiter();
         serializeInt8(sourceEp);
         serializeDelimiter();
@@ -147,26 +138,25 @@ public class TelegesisSendMulticastCommand extends TelegesisFrame implements Tel
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
         initialiseDeserializer(data);
 
-        // Deserialize the fields for the response
 
         return false;
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(839);
         // First present the command parameters...
         // Then the responses later if they are available
         builder.append("TelegesisSendMulticastCommand [radius=");
         builder.append(radius);
-        builder.append(", groupId=");
-        builder.append(groupId);
+        builder.append(", address=");
+        builder.append(address);
         builder.append(", sourceEp=");
         builder.append(sourceEp);
         builder.append(", destEp=");

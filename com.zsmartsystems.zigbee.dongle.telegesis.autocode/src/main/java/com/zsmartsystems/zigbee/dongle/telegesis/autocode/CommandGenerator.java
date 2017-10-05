@@ -264,7 +264,7 @@ public class CommandGenerator extends ClassGenerator {
 
         if (className.endsWith("Command")) {
             out.println("        // Handle standard status responses (ie. OK / ERROR)");
-            out.println("        if (handleIncomingStatus(data) == true) {");
+            out.println("        if (handleIncomingStatus(data)) {");
             if (className.endsWith("Command")) {
                 out.println("            return true;");
             } else {
@@ -278,6 +278,10 @@ public class CommandGenerator extends ClassGenerator {
         out.println();
 
         for (ParameterGroup group : responseParameterGroup) {
+            if (group.parameters.size() == 0 && group.required == false) {
+                continue;
+            }
+
             String indent;
             if (group.prompt == null || group.prompt.length() == 0) {
                 out.println("        // Deserialize the fields for the response");
@@ -358,7 +362,8 @@ public class CommandGenerator extends ClassGenerator {
         if (parameterCount == 0 && !className.endsWith("Command")) {
             out.println("        return \"" + className + " []\";");
         } else {
-            out.println("        final StringBuilder builder = new StringBuilder();");
+            out.println("        final StringBuilder builder = new StringBuilder("
+                    + (className.length() + 3 * ((parameterCount + 1) * 30)) + ");");
 
             boolean first = true;
             if (className.endsWith("Command") && commandParameterGroup != null && commandParameterGroup.size() > 0
@@ -460,7 +465,8 @@ public class CommandGenerator extends ClassGenerator {
             if (group.parameters == null || group.parameters.size() == 0) {
                 out.println("            return \"" + className + " []\";");
             } else {
-                out.println("            final StringBuilder builder = new StringBuilder();");
+                out.println("            final StringBuilder builder = new StringBuilder("
+                        + (group.name.length() + 3 + ((group.parameters.size() + 1) * 30)) + ");");
 
                 createToString(out, "            ", true, stringToUpperCamelCase(group.name), group);
 
@@ -514,6 +520,10 @@ public class CommandGenerator extends ClassGenerator {
 
     private void createParameterGetter(PrintWriter out, String indent, List<Parameter> parameters) {
         for (Parameter parameter : parameters) {
+            if (parameter.auto_size != null) {
+                continue;
+            }
+
             out.println(indent + "/**");
             if (parameter.description != null && parameter.description.length() != 0) {
                 outputWithLinebreak(out, indent, parameter.description);
@@ -543,6 +553,10 @@ public class CommandGenerator extends ClassGenerator {
 
     private void createParameterSetter(PrintWriter out, String indent, List<Parameter> parameters) {
         for (Parameter parameter : parameters) {
+            if (parameter.auto_size != null) {
+                continue;
+            }
+
             out.println(indent + "/**");
             if (parameter.description != null && parameter.description.length() != 0) {
                 outputWithLinebreak(out, "    ", parameter.description);
@@ -582,23 +596,23 @@ public class CommandGenerator extends ClassGenerator {
                 if (parameter.minimum != null && parameter.maximum != null) {
                     out.println(indent + "    if (" + stringToLowerCamelCase(parameter.name) + " < " + parameter.minimum
                             + " || " + stringToLowerCamelCase(parameter.name) + " > " + parameter.maximum + ") {");
-                    out.println(
-                            indent + "        throw(new IllegalArgumentException(\"Illegal value passed for channel. Range is "
-                                    + parameter.minimum + " to " + parameter.maximum + ".\"));");
+                    out.println(indent
+                            + "        throw(new IllegalArgumentException(\"Illegal value passed for channel. Range is "
+                            + parameter.minimum + " to " + parameter.maximum + ".\"));");
                     out.println(indent + "    }");
                 } else if (parameter.minimum != null) {
                     out.println(indent + "    if (" + stringToLowerCamelCase(parameter.name) + " < " + parameter.minimum
                             + " || " + stringToLowerCamelCase(parameter.name) + " > " + parameter.maximum + ") {");
-                    out.println(
-                            indent + "        throw(new IllegalArgumentException(\"Illegal value passed for channel. Value must be greater than "
-                                    + parameter.minimum + ".\"));");
+                    out.println(indent
+                            + "        throw(new IllegalArgumentException(\"Illegal value passed for channel. Value must be greater than "
+                            + parameter.minimum + ".\"));");
                     out.println(indent + "    }");
                 } else if (parameter.maximum != null) {
                     out.println(indent + "    if (" + stringToLowerCamelCase(parameter.name) + " < " + parameter.minimum
                             + " || " + stringToLowerCamelCase(parameter.name) + " > " + parameter.maximum + ") {");
-                    out.println(
-                            indent + "        throw(new IllegalArgumentException(\"Illegal value passed for channel. Value must be less than "
-                                    + parameter.maximum + ".\"));");
+                    out.println(indent
+                            + "        throw(new IllegalArgumentException(\"Illegal value passed for channel. Value must be less than "
+                            + parameter.maximum + ".\"));");
                     out.println(indent + "    }");
                 }
 
@@ -895,9 +909,13 @@ public class CommandGenerator extends ClassGenerator {
 
     private int hashString(String in) {
         int hash = 0;
+        int multiplier = 1;
         for (byte val : in.getBytes()) {
-            hash += val & 0xff;
+            hash += (val & 0xff) * multiplier;
+            int shifted = multiplier << 5;
+            multiplier = shifted - multiplier;
         }
+
         return hash;
     }
 
@@ -922,7 +940,7 @@ public class CommandGenerator extends ClassGenerator {
         addImport("org.slf4j.LoggerFactory");
         addImport("java.lang.reflect.InvocationTargetException");
         addImport("java.util.Map");
-        addImport("java.util.HashMap");
+        addImport("java.util.concurrent.ConcurrentHashMap");
 
         for (String event : events.values()) {
             addImport(commandPackage + "." + event);
@@ -941,7 +959,7 @@ public class CommandGenerator extends ClassGenerator {
         out.println("    private final static Logger logger = LoggerFactory.getLogger(TelegesisEventFactory.class);");
         out.println();
 
-        out.println("    private static Map<Integer, Class<?>> events = new HashMap<Integer, Class<?>>();");
+        out.println("    private static Map<Integer, Class<?>> events = new ConcurrentHashMap<Integer, Class<?>>();");
         out.println();
 
         Map<Integer, String> sortedEvents = new TreeMap<Integer, String>();
@@ -955,7 +973,8 @@ public class CommandGenerator extends ClassGenerator {
 
         out.println("    static {");
         for (Integer event : sortedEvents.keySet()) {
-            out.println("        events.put(" + event + ", " + sortedEvents.get(event) + ".class);");
+            out.println("        events.put(" + String.format("0x%08X", event) + ", " + sortedEvents.get(event)
+                    + ".class);");
         }
         out.println("    }");
         out.println();
@@ -964,11 +983,17 @@ public class CommandGenerator extends ClassGenerator {
 
         out.println("        // Create the hash of the prompt");
         out.println("        int hash = 0;");
+        out.println("        int multiplier = 1;");
         out.println("        for (int value : data) {");
         out.println("            if (value == '\\n' || value == ':' || value == '=') {");
         out.println("                break;");
         out.println("            }");
-        out.println("            hash += value;");
+        out.println();
+
+        out.println("            hash += (value & 0xff) * multiplier;");
+        out.println("            int shifted = multiplier << 5;");
+        out.println("            multiplier = shifted - multiplier;");
+
         out.println("        }");
         out.println();
 

@@ -106,7 +106,7 @@ public class TelegesisRouterAnnounceEvent extends TelegesisFrame implements Tele
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(478);
         builder.append("TelegesisRouterAnnounceEvent [ieeeAddress=");
         builder.append(ieeeAddress);
         builder.append(", networkAddress=");

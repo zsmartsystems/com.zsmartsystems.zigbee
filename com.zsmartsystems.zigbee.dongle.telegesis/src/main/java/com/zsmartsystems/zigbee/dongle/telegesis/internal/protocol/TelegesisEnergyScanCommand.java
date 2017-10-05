@@ -51,7 +51,7 @@ public class TelegesisEnergyScanCommand extends TelegesisFrame implements Telege
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -73,7 +73,7 @@ public class TelegesisEnergyScanCommand extends TelegesisFrame implements Telege
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(296);
         builder.append("TelegesisEnergyScanCommand [scanResults=");
         builder.append(scanResults);
         if (status != null) {
@@ -128,7 +128,7 @@ public class TelegesisEnergyScanCommand extends TelegesisFrame implements Telege
 
         @Override
         public String toString() {
-            final StringBuilder builder = new StringBuilder();
+            final StringBuilder builder = new StringBuilder(104);
             builder.append("ScanResult [channel=");
             builder.append(channel);
             builder.append(", rssi=");

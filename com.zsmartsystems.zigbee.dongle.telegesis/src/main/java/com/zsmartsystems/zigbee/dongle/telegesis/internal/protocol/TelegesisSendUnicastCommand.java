@@ -57,14 +57,6 @@ public class TelegesisSendUnicastCommand extends TelegesisFrame implements Teleg
 
     /**
      *
-     * @param length the length to set as {@link Integer}
-     */
-    public void setLength(Integer length) {
-        this.length = length;
-    }
-
-    /**
-     *
      * @param address the address to set as {@link Integer}
      */
     public void setAddress(Integer address) {
@@ -144,7 +136,7 @@ public class TelegesisSendUnicastCommand extends TelegesisFrame implements Teleg
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -164,7 +156,7 @@ public class TelegesisSendUnicastCommand extends TelegesisFrame implements Teleg
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(837);
         // First present the command parameters...
         // Then the responses later if they are available
         builder.append("TelegesisSendUnicastCommand [address=");

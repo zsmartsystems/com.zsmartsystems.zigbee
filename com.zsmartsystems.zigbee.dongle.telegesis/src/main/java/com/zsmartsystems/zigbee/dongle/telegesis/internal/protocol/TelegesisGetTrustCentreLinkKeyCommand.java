@@ -46,7 +46,7 @@ public class TelegesisGetTrustCentreLinkKeyCommand extends TelegesisFrame implem
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -62,7 +62,7 @@ public class TelegesisGetTrustCentreLinkKeyCommand extends TelegesisFrame implem
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(217);
         builder.append("TelegesisGetTrustCentreLinkKeyCommand [linkKey=");
         builder.append(linkKey);
         if (status != null) {

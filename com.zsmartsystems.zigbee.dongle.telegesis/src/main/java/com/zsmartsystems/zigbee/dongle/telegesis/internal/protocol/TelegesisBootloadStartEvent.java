@@ -25,9 +25,6 @@ public class TelegesisBootloadStartEvent extends TelegesisFrame implements Teleg
     public void deserialize(int[] data) {
         initialiseDeserializer(data);
 
-        // Deserialize the fields for the "ENTERING BLOAD" response
-        if (testPrompt(data, "ENTERING BLOAD")) {
-        }
     }
 
     @Override

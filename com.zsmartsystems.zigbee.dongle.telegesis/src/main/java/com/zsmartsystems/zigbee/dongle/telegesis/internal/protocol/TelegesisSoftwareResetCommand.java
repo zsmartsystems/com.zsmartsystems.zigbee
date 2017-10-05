@@ -29,20 +29,19 @@ public class TelegesisSoftwareResetCommand extends TelegesisFrame implements Tel
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
         initialiseDeserializer(data);
 
-        // Deserialize the fields for the response
 
         return false;
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(119);
         builder.append("TelegesisSoftwareResetCommand [");
         if (status != null) {
             builder.append("status=");

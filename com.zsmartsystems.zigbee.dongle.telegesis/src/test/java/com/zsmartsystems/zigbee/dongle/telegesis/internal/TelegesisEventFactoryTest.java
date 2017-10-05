@@ -7,6 +7,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis.internal;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -24,10 +25,26 @@ public class TelegesisEventFactoryTest extends TelegesisFrameBaseTest {
 
     @Test
     public void testGetEvent() {
-
         TelegesisEvent event = TelegesisEventFactory
                 .getTelegesisFrame(stringToIntArray("NODELEFT:1234,1234567890ABCDEF"));
 
         assertTrue(event instanceof TelegesisDeviceLeftNetworkEvent);
     }
+
+    @Test
+    public void testGetUnknownEvent() {
+        TelegesisEvent event = TelegesisEventFactory
+                .getTelegesisFrame(stringToIntArray("UNKNOWN:1234,1234567890ABCDEF"));
+
+        assertNull(event);
+    }
+
+    @Test
+    public void testEventHash() {
+        TelegesisEvent event = TelegesisEventFactory
+                .getTelegesisFrame(stringToIntArray("LEFTNODE:1234,1234567890ABCDEF"));
+
+        assertNull(event);
+    }
+
 }

@@ -106,7 +106,7 @@ public class TelegesisMobileDeviceAnnounceEvent extends TelegesisFrame implement
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(484);
         builder.append("TelegesisMobileDeviceAnnounceEvent [ieeeAddress=");
         builder.append(ieeeAddress);
         builder.append(", networkAddress=");

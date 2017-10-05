@@ -67,7 +67,7 @@ public class TelegesisDeviceLeftNetworkEvent extends TelegesisFrame implements T
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(301);
         builder.append("TelegesisDeviceLeftNetworkEvent [networkAddress=");
         builder.append(networkAddress);
         builder.append(", ieeeAddress=");

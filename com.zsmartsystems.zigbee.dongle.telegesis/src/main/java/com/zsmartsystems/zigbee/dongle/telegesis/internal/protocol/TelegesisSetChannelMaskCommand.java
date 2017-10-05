@@ -45,7 +45,7 @@ public class TelegesisSetChannelMaskCommand extends TelegesisFrame implements Te
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -57,7 +57,7 @@ public class TelegesisSetChannelMaskCommand extends TelegesisFrame implements Te
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(210);
         // First present the command parameters...
         // Then the responses later if they are available
         builder.append("TelegesisSetChannelMaskCommand [channelMask=");

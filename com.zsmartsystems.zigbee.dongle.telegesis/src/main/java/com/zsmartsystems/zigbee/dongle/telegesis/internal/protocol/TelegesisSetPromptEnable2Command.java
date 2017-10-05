@@ -45,7 +45,7 @@ public class TelegesisSetPromptEnable2Command extends TelegesisFrame implements 
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -57,7 +57,7 @@ public class TelegesisSetPromptEnable2Command extends TelegesisFrame implements 
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(212);
         // First present the command parameters...
         // Then the responses later if they are available
         builder.append("TelegesisSetPromptEnable2Command [configuration=");

@@ -111,7 +111,7 @@ public class TelegesisReceiveUnicastEvent extends TelegesisFrame implements Tele
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(478);
         builder.append("TelegesisReceiveUnicastEvent [remoteAddress=");
         builder.append(remoteAddress);
         builder.append(", messageData=");

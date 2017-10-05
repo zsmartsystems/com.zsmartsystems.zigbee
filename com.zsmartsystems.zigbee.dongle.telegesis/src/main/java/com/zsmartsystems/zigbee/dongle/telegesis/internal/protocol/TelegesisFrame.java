@@ -11,7 +11,6 @@ import java.util.Arrays;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 
 /**
@@ -292,15 +291,6 @@ public class TelegesisFrame {
     }
 
     /**
-     * Serializes a {@link ZigBeeGroupAddress}
-     *
-     * @param address the {@link ZigBeeGroupAddress}
-     */
-    protected void serializeZigBeeGroupAddress(ZigBeeGroupAddress address) {
-        serializeInt16(address.getAddress());
-    }
-
-    /**
      * Serializes a {@link ExtendedPanId}
      *
      * @param address the {@link ExtendedPanId}
@@ -340,9 +330,10 @@ public class TelegesisFrame {
      */
     protected int[] deserializeData() {
         int length = deserializeInt8();
-        if (buffer[position++] != '=') {
+        if (buffer[position] != '=' && buffer[position] != ':') {
             return null;
         }
+        position++;
 
         int[] data = new int[length];
         for (int cnt = 0; cnt < length; cnt++) {
@@ -385,7 +376,7 @@ public class TelegesisFrame {
 
     /**
      * Serializes a specified delimiter between two fields.
-     * 
+     *
      * @param the delimiter to serialize
      */
     protected void serializeDelimiter(int delimiter) {
@@ -506,6 +497,10 @@ public class TelegesisFrame {
         }
 
         return false;
+    }
+
+    protected TelegesisStatusCode deserializeTelegesisStatusCode() {
+        return TelegesisStatusCode.getTelegesisStatusCode(deserializeInt8());
     }
 
     private boolean isHex(int value) {

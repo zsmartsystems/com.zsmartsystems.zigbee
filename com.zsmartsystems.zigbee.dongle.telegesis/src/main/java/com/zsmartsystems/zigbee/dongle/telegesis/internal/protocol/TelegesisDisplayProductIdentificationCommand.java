@@ -71,7 +71,7 @@ public class TelegesisDisplayProductIdentificationCommand extends TelegesisFrame
     @Override
     public boolean deserialize(int[] data) {
         // Handle standard status responses (ie. OK / ERROR)
-        if (handleIncomingStatus(data) == true) {
+        if (handleIncomingStatus(data)) {
             return true;
         }
 
@@ -103,7 +103,7 @@ public class TelegesisDisplayProductIdentificationCommand extends TelegesisFrame
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(404);
         builder.append("TelegesisDisplayProductIdentificationCommand [deviceName=");
         builder.append(deviceName);
         builder.append(", firmwareRevision=");

@@ -85,7 +85,7 @@ public class TelegesisDeviceJoinedNetworkEvent extends TelegesisFrame implements
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(393);
         builder.append("TelegesisDeviceJoinedNetworkEvent [networkAddress=");
         builder.append(networkAddress);
         builder.append(", ieeeAddress=");

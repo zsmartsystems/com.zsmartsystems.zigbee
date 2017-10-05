@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisp
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisLeaveNetworkCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLeftEvent;
-import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisReceiveUnicastEvent;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisReceiveMessageEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendMulticastCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendUnicastCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetEpanIdCommand;
@@ -70,7 +70,7 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
     /**
      * The dongle password
      */
-    String telegesisPassword = "";
+    private String telegesisPassword = "";
 
     /**
      * The reference to the receive interface
@@ -432,7 +432,7 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
             TelegesisSendUnicastCommand unicastCommand = new TelegesisSendUnicastCommand();
             unicastCommand.setAddress(apsFrame.getDestinationAddress());
             unicastCommand.setDestEp(apsFrame.getDestinationEndpoint());
-            unicastCommand.setSourceEp(1);
+            unicastCommand.setSourceEp(0);
             unicastCommand.setProfileId(apsFrame.getProfile());
             unicastCommand.setClusterId(apsFrame.getCluster());
             unicastCommand.setMessageData(apsFrame.getPayload());
@@ -441,6 +441,13 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
                 && apsFrame.getDestinationAddress() >= 0xfff8) {
             // Broadcast command
             TelegesisSendMulticastCommand multicastCommand = new TelegesisSendMulticastCommand();
+            multicastCommand.setAddress(apsFrame.getDestinationAddress());
+            multicastCommand.setDestEp(apsFrame.getDestinationEndpoint());
+            multicastCommand.setProfileId(apsFrame.getProfile());
+            multicastCommand.setClusterId(apsFrame.getCluster());
+            multicastCommand.setRadius(apsFrame.getRadius());
+            multicastCommand.setMessageData(apsFrame.getPayload());
+            multicastCommand.setSourceEp(apsFrame.getSourceEndpoint());
             command = multicastCommand;
         } else if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.GROUP) {
             // Multicast command
@@ -463,9 +470,19 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
     @Override
     public void telegesisEventReceived(TelegesisEvent event) {
         logger.debug("Telegesis RX: " + event.toString());
-        if (event instanceof TelegesisReceiveUnicastEvent) {
-            TelegesisReceiveUnicastEvent unicast = (TelegesisReceiveUnicastEvent) event;
-            // unicast.get
+        if (event instanceof TelegesisReceiveMessageEvent) {
+            TelegesisReceiveMessageEvent rxMessage = (TelegesisReceiveMessageEvent) event;
+
+            ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+            // apsFrame.setApsCounter(emberApsFrame.getSequence());
+            apsFrame.setCluster(rxMessage.getClusterId());
+            apsFrame.setDestinationEndpoint(rxMessage.getDestinationEp());
+            apsFrame.setProfile(rxMessage.getProfileId());
+            apsFrame.setSourceEndpoint(rxMessage.getSourceEp());
+
+            apsFrame.setSourceAddress(rxMessage.getNetworkAddress());
+            apsFrame.setPayload(rxMessage.getMessageData());
+            zigbeeTransportReceive.receiveCommand(apsFrame);
         }
 
         // Handle link changes and notify framework or just reset link with dongle?

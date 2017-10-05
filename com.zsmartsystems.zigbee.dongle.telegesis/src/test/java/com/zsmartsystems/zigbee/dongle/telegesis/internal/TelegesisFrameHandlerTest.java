@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
@@ -113,6 +114,7 @@ public class TelegesisFrameHandlerTest {
         assertEquals('A', response[0]);
     }
 
+    @Ignore
     @Test
     public void testEventWait() {
         final TelegesisFrameHandler frameHandler = new TelegesisFrameHandler();
@@ -150,7 +152,7 @@ public class TelegesisFrameHandlerTest {
             }
 
             synchronized (eventCapture) {
-                eventCapture.wait(10000);
+                eventCapture.wait(1000);
             }
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
