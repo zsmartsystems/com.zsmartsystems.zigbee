@@ -45,10 +45,22 @@ public enum EmberOutgoingMessageType {
     EMBER_OUTGOING_MULTICAST(0x0003),
 
     /**
+     * Aliased multicast message.  This value is passed to emberMessageSentHandler() only. It may
+     * not be passed to emberSendUnicast().
+     */
+    EMBER_OUTGOING_MULTICAST_WITH_ALIAS(0x0004),
+
+    /**
+     * Aliased broadcast message.  This value is passed to emberMessageSentHandler() only. It may
+     * not be passed to emberSendUnicast().
+     */
+    EMBER_OUTGOING_BROADCAST_WITH_ALIAS(0x0005),
+
+    /**
      * Broadcast message. This value is passed to emberMessageSentHandler() only. It may not be
      * passed to emberSendUnicast().
      */
-    EMBER_OUTGOING_BROADCAST(0x0004);
+    EMBER_OUTGOING_BROADCAST(0x0006);
 
     /**
      * A mapping between the integer code and its corresponding type to
