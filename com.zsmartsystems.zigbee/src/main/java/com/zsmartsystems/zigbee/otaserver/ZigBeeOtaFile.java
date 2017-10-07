@@ -5,14 +5,13 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.internal.otaserver;
+package com.zsmartsystems.zigbee.otaserver;
 
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.math.BigInteger;
+import java.io.InputStream;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
@@ -43,6 +42,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  *
  */
 public class ZigBeeOtaFile {
+
     /**
      * The logger.
      */
@@ -54,7 +54,7 @@ public class ZigBeeOtaFile {
      * without having to examine the whole file content. This helps distinguishing the file from other file
      * types on disk. The value is defined to be “0x0BEEF11E”.
      */
-    private BigInteger fileIdentifier;
+    private Integer fileIdentifier;
 
     /**
      * The value enumerates the version of the header and provides compatibility information. The value is
@@ -171,6 +171,8 @@ public class ZigBeeOtaFile {
     private final int FIELD_CTL_DEVICE_SPECIFIC = 0x02;
     private final int FIELD_CTL_HARDWARE_VERSIONS = 0x04;
 
+    private final int FILE_SIGNATURE = 0x0BEEF11E;
+
     /**
      * Byte buffer holding the data from a {@link ZigBeeOtaTagType#UPGRADE_IMAGE} tag
      */
@@ -187,7 +189,7 @@ public class ZigBeeOtaFile {
             throw new IllegalArgumentException("ZigBeeOtaFile can not be null.");
         }
 
-        DataInputStream input = new DataInputStream(new FileInputStream(file));
+        FileInputStream input = new FileInputStream(file);
         readOtaFile(input);
     }
 
@@ -196,7 +198,7 @@ public class ZigBeeOtaFile {
      *
      * @param file the {@link File} containing the OTA file format
      */
-    public void readOtaFile(DataInputStream input) {
+    public void readOtaFile(InputStream input) {
         if (input == null) {
             throw new IllegalArgumentException("ZigBeeOtaFile input can not be null.");
         }
@@ -206,57 +208,67 @@ public class ZigBeeOtaFile {
             // Read the file header
 
             // Unsigned 32-bit integer, OTA upgrade file identifier
-            fileIdentifier = BigInteger.valueOf(input.readLong());
+            // All files must start with this signature, otherwise it's invalid.
+            fileIdentifier = readUnsigned32(input);
+            if (fileIdentifier != FILE_SIGNATURE) {
+                throw new IllegalArgumentException("ZigBee OTA file is not a valid format");
+            }
 
             // Unsigned 16-bit integer, OTA Header version
-            headerVersion = input.readInt();
+            headerVersion = readUnsigned16(input);
 
             // Unsigned 16-bit integer, OTA Header length
-            headerLength = input.readInt();
+            headerLength = readUnsigned16(input);
 
             // Unsigned 16-bit integer, OTA Header Field control
-            headerFieldControl = input.readInt();
+            headerFieldControl = readUnsigned16(input);
 
             // Unsigned 16-bit integer, Manufacturer code
-            manufacturerCode = input.readInt();
+            manufacturerCode = readUnsigned16(input);
 
             // Unsigned 16-bit integer, Image type
-            imageType = input.readInt();
+            imageType = readUnsigned16(input);
 
             // Unsigned 32-bit integer, File version
-            fileVersion = Integer.valueOf((int) input.readLong());
+            fileVersion = readUnsigned32(input);
 
             // Unsigned 16-bit integer, ZigBee Stack version
-            stackVersion = ZigBeeStackType.getStackType(input.readInt());
+            stackVersion = ZigBeeStackType.getStackType(readUnsigned16(input));
 
             // Character string [32], OTA Header string
             byte[] stringBytes = new byte[32];
             input.read(stringBytes);
+            for (int cnt = 0; cnt < 32; cnt++) {
+                if (stringBytes[cnt] == 0) {
+                    stringBytes = Arrays.copyOfRange(stringBytes, 0, cnt);
+                    break;
+                }
+            }
             headerString = new String(stringBytes);
 
             // Unsigned 32-bit integer, Total Image size (including header)
-            imageSize = Integer.valueOf((int) input.readLong());
+            imageSize = readUnsigned32(input);
 
             if ((headerFieldControl & FIELD_CTL_SECURITY_CREDENTIAL) != 0) {
                 // Unsigned 8-bit integer, Security credential version [optional]
-                securityCredentialVersion = Integer.valueOf(input.readByte());
+                securityCredentialVersion = Integer.valueOf(input.read());
             }
 
             if ((headerFieldControl & FIELD_CTL_DEVICE_SPECIFIC) != 0) {
                 // IEEE Address, Upgrade file destination [optional]
                 int[] addressBytes = new int[8];
                 for (int cnt = 0; cnt < 8; cnt++) {
-                    addressBytes[cnt] = input.readUnsignedByte();
+                    addressBytes[cnt] = readUnsigned16(input);
                 }
                 destination = new IeeeAddress(addressBytes);
             }
 
             if ((headerFieldControl & FIELD_CTL_HARDWARE_VERSIONS) != 0) {
                 // Unsigned 16-bit integer, Minimum hardware version [optional]
-                minimumHardware = input.readInt();
+                minimumHardware = readUnsigned16(input);
 
                 // Unsigned 16-bit integer, Maximum hardware version [optional]
-                maximumHardware = input.readInt();
+                maximumHardware = readUnsigned16(input);
             }
 
             //
@@ -264,11 +276,12 @@ public class ZigBeeOtaFile {
             while (input.available() >= 6) {
                 // Tag Header -:
                 // The tag identifier denotes the type and format of the data contained within the sub-element.
-                ZigBeeOtaTagType tagId = ZigBeeOtaTagType.getTagType(input.readInt());
+                int tagId = readUnsigned16(input);
+                ZigBeeOtaTagType tagType = ZigBeeOtaTagType.getTagType(tagId);
 
                 // The length dictates the length of the rest of the data within the sub-element in bytes. It does not
                 // include the size of the Tag ID or the Length Fields.
-                long tagLength = input.readLong();
+                long tagLength = readUnsigned32(input);
 
                 // The length of the data in the sub-element must be equal to the value of the Length Field in bytes.
                 // The type and format of the data contained in the sub-element is specific to the Tag.
@@ -276,12 +289,13 @@ public class ZigBeeOtaFile {
                 input.read(tagData);
 
                 // Read the data
-                switch (tagId) {
+                switch (tagType) {
                     case UPGRADE_IMAGE:
                         imageData = tagData;
                         break;
                     default:
-                        logger.debug("Unsupported OTA image tag {} ({} bytes long)", tagId, tagLength);
+                        logger.debug("Unsupported OTA image tag {}[{}] ({} bytes long)", tagType,
+                                String.format("%04X", tagId), tagLength);
                         break;
                 }
             }
@@ -291,13 +305,6 @@ public class ZigBeeOtaFile {
         } catch (IOException e) {
             logger.debug("Exception reading OTA file: ", e);
         }
-    }
-
-    /**
-     * @return the fileIdentifier
-     */
-    public BigInteger getFileIdentifier() {
-        return fileIdentifier;
     }
 
     /**
@@ -350,7 +357,9 @@ public class ZigBeeOtaFile {
     }
 
     /**
-     * @return the imageSize
+     * Gets the overall size of the image including the data and header.
+     *
+     * @return the imageSize including the data and header
      */
     public Integer getImageSize() {
         return imageSize;
@@ -414,4 +423,52 @@ public class ZigBeeOtaFile {
 
         return new ByteArray(Arrays.copyOfRange(imageData, fileOffset, fileOffset + length));
     }
+
+    /**
+     * Gets the overall size of the image data
+     *
+     * @return the image data size
+     */
+    public Integer getImageDataSize() {
+        return imageData.length;
+    }
+
+    private Integer readUnsigned16(InputStream input) throws IOException {
+        byte payload[] = new byte[2];
+        input.read(payload);
+        return Integer.valueOf((payload[0] & 0xff) + ((payload[1] & 0xff) << 8));
+    }
+
+    private Integer readUnsigned32(InputStream input) throws IOException {
+        byte payload[] = new byte[4];
+        input.read(payload);
+        return Integer.valueOf((payload[0] & 0xff) + ((payload[1] & 0xff) << 8) + ((payload[2] & 0xff) << 16)
+                + ((payload[3] & 0xff) << 24));
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ZigBeeOtaFile [manufacturerCode=");
+        builder.append(manufacturerCode);
+        builder.append(", imageType=");
+        builder.append(String.format("%04X", imageType));
+        builder.append(", fileVersion=");
+        builder.append(String.format("%08X", fileVersion));
+        builder.append(", stackVersion=");
+        builder.append(stackVersion);
+        builder.append(", headerString=");
+        builder.append(headerString);
+        builder.append(", imageSize=");
+        builder.append(imageSize);
+        if ((headerFieldControl & FIELD_CTL_HARDWARE_VERSIONS) != 0) {
+            builder.append(", minimumHardware=");
+            builder.append(minimumHardware);
+            builder.append(", maximumHardware=");
+            builder.append(maximumHardware);
+        }
+        builder.append(']');
+        return builder.toString();
+    }
+
 }

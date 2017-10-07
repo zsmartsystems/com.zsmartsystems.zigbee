@@ -11,40 +11,28 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
- * Upgrade End Request Command value object class.
+ * Query Specific File Command value object class.
  * <p>
- * Upon reception all the image data, the client should verify the image to ensure its integrity and validity.
- * If the device requires signed images it shall examine the image and verify the signature as described in
- * section 6.3.9.2. Clients may perform additional manufacturer specific integrity checks to validate the
- * image, for example, CRC check on the actual file data.
- * <br>
- * If the image fails any integrity checks, the client shall send an Upgrade End Request command to the
- * upgrade server with a status of INVALID_IMAGE. In this case, the client may reinitiate the upgrade
- * process in order to obtain a valid OTA upgrade image. The client shall not upgrade to the bad image
- * and shall discard the downloaded image data.
- * <br>
- * If the image passes all integrity checks and the client does not require additional OTA upgrade image
- * file, it shall send back an Upgrade End Request with a status of SUCCESS. However, if the client
- * requires multiple OTA upgrade image files before performing an upgrade, it shall send an Upgrade End
- * Request command with status REQUIRE_MORE_IMAGE. This shall indicate to the server that it
- * cannot yet upgrade the image it received.
- * <br>
- * If the client decides to cancel the download process for any other reasons, it has the option of sending
- * Upgrade End Request with status of ABORT at anytime during the download process. The client shall
- * then try to reinitiate the download process again at a later time.
+ * Client devices shall send a Query Specific File Request command to the server to request for a file that
+ * is specific and unique to it. Such file could contain non-firmware data such as security credential
+ * (needed for upgrading from Smart Energy 1.1 to Smart Energy 2.0), configuration or log. When the
+ * device decides to send the Query Specific File Request command is manufacturer specific. However,
+ * one example is during upgrading from SE 1.1 to 2.0 where the client may have already obtained new
+ * SE 2.0 image and now needs new SE 2.0 security credential data.
  * <p>
  * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class UpgradeEndRequestCommand extends ZclCommand {
+public class QuerySpecificFileCommand extends ZclCommand {
     /**
-     * Status command message field.
+     * Request node address command message field.
      */
-    private Integer status;
+    private IeeeAddress requestNodeAddress;
 
     /**
      * Manufacturer code command message field.
@@ -62,31 +50,36 @@ public class UpgradeEndRequestCommand extends ZclCommand {
     private Integer fileVersion;
 
     /**
+     * Zigbee Stack Version command message field.
+     */
+    private Integer zigbeeStackVersion;
+
+    /**
      * Default constructor.
      */
-    public UpgradeEndRequestCommand() {
+    public QuerySpecificFileCommand() {
         genericCommand = false;
         clusterId = 25;
-        commandId = 6;
+        commandId = 8;
         commandDirection = true;
     }
 
     /**
-     * Gets Status.
+     * Gets Request node address.
      *
-     * @return the Status
+     * @return the Request node address
      */
-    public Integer getStatus() {
-        return status;
+    public IeeeAddress getRequestNodeAddress() {
+        return requestNodeAddress;
     }
 
     /**
-     * Sets Status.
+     * Sets Request node address.
      *
-     * @param status the Status
+     * @param requestNodeAddress the Request node address
      */
-    public void setStatus(final Integer status) {
-        this.status = status;
+    public void setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
+        this.requestNodeAddress = requestNodeAddress;
     }
 
     /**
@@ -143,35 +136,57 @@ public class UpgradeEndRequestCommand extends ZclCommand {
         this.fileVersion = fileVersion;
     }
 
+    /**
+     * Gets Zigbee Stack Version.
+     *
+     * @return the Zigbee Stack Version
+     */
+    public Integer getZigbeeStackVersion() {
+        return zigbeeStackVersion;
+    }
+
+    /**
+     * Sets Zigbee Stack Version.
+     *
+     * @param zigbeeStackVersion the Zigbee Stack Version
+     */
+    public void setZigbeeStackVersion(final Integer zigbeeStackVersion) {
+        this.zigbeeStackVersion = zigbeeStackVersion;
+    }
+
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(requestNodeAddress, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(manufacturerCode, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(imageType, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(fileVersion, ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        serializer.serialize(zigbeeStackVersion, ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        requestNodeAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         fileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        zigbeeStackVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(149);
-        builder.append("UpgradeEndRequestCommand [");
+        final StringBuilder builder = new StringBuilder(199);
+        builder.append("QuerySpecificFileCommand [");
         builder.append(super.toString());
-        builder.append(", status=");
-        builder.append(status);
+        builder.append(", requestNodeAddress=");
+        builder.append(requestNodeAddress);
         builder.append(", manufacturerCode=");
         builder.append(manufacturerCode);
         builder.append(", imageType=");
         builder.append(imageType);
         builder.append(", fileVersion=");
         builder.append(fileVersion);
+        builder.append(", zigbeeStackVersion=");
+        builder.append(zigbeeStackVersion);
         builder.append(']');
         return builder.toString();
     }

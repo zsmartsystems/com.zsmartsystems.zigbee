@@ -14,30 +14,29 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
- * Image Page Request Command value object class.
+ * Image Block Command value object class.
  * <p>
- * The support for the command is optional. The client device may choose to request OTA upgrade data
- * in one page size at a time from upgrade server. Using Image Page Request reduces the numbers of
- * requests sent from the client to the upgrade server, compared to using Image Block Request command.
- * In order to conserve battery life a device may use the Image Page Request command. Using the Image
- * Page Request command eliminates the need for the client device to send Image Block Request
- * command for every data block it needs; possibly saving the transmission of hundreds or thousands of
- * messages depending on the image size.
+ * The client device requests the image data at its leisure by sending Image Block Request command to
+ * the upgrade server. The client knows the total number of request commands it needs to send from the
+ * image size value received in Query Next Image Response command.
  * <br>
- * The client keeps track of how much data it has received by keeping a cumulative count of each data
- * size it has received in each Image Block Response. Once the count has reach the value of the page size
- * requested, it shall repeat Image Page Requests until it has successfully obtained all pages. Note that the
- * client may choose to switch between using Image Block Request and Image Page Request during the
- * upgrade process. For example, if the client does not receive all data requested in one Image Page
- * Request, the client may choose to request the missing block of data using Image Block Request
- * command, instead of requesting the whole page again.
+ * The client repeats Image Block Requests until it has successfully obtained all data. Manufacturer code,
+ * image type and file version are included in all further queries regarding that image. The information
+ * eliminates the need for the server to remember which OTA Upgrade Image is being used for each
+ * download process.
+ * <br>
+ * If the client supports the BlockRequestDelay attribute it shall include the value of the attribute as the
+ * BlockRequestDelay field of the Image Block Request message. The client shall ensure that it delays at
+ * least BlockRequestDelay milliseconds after the previous Image Block Request was sent before sending
+ * the next Image Block Request message. A client may delay its next Image Block Requests longer than
+ * its BlockRequestDelay attribute.
  * <p>
  * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class ImagePageRequestCommand extends ZclCommand {
+public class ImageBlockCommand extends ZclCommand {
     /**
      * Field control command message field.
      */
@@ -69,27 +68,22 @@ public class ImagePageRequestCommand extends ZclCommand {
     private Integer maximumDataSize;
 
     /**
-     * Page size command message field.
-     */
-    private Integer pageSize;
-
-    /**
-     * Response spacing command message field.
-     */
-    private Integer responseSpacing;
-
-    /**
      * Request node address command message field.
      */
     private IeeeAddress requestNodeAddress;
 
     /**
+     * BlockRequestDelay command message field.
+     */
+    private Integer blockRequestDelay;
+
+    /**
      * Default constructor.
      */
-    public ImagePageRequestCommand() {
+    public ImageBlockCommand() {
         genericCommand = false;
         clusterId = 25;
-        commandId = 4;
+        commandId = 3;
         commandDirection = true;
     }
 
@@ -202,42 +196,6 @@ public class ImagePageRequestCommand extends ZclCommand {
     }
 
     /**
-     * Gets Page size.
-     *
-     * @return the Page size
-     */
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    /**
-     * Sets Page size.
-     *
-     * @param pageSize the Page size
-     */
-    public void setPageSize(final Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    /**
-     * Gets Response spacing.
-     *
-     * @return the Response spacing
-     */
-    public Integer getResponseSpacing() {
-        return responseSpacing;
-    }
-
-    /**
-     * Sets Response spacing.
-     *
-     * @param responseSpacing the Response spacing
-     */
-    public void setResponseSpacing(final Integer responseSpacing) {
-        this.responseSpacing = responseSpacing;
-    }
-
-    /**
      * Gets Request node address.
      *
      * @return the Request node address
@@ -255,6 +213,24 @@ public class ImagePageRequestCommand extends ZclCommand {
         this.requestNodeAddress = requestNodeAddress;
     }
 
+    /**
+     * Gets BlockRequestDelay.
+     *
+     * @return the BlockRequestDelay
+     */
+    public Integer getBlockRequestDelay() {
+        return blockRequestDelay;
+    }
+
+    /**
+     * Sets BlockRequestDelay.
+     *
+     * @param blockRequestDelay the BlockRequestDelay
+     */
+    public void setBlockRequestDelay(final Integer blockRequestDelay) {
+        this.blockRequestDelay = blockRequestDelay;
+    }
+
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(fieldControl, ZclDataType.BITMAP_8_BIT);
@@ -263,10 +239,11 @@ public class ImagePageRequestCommand extends ZclCommand {
         serializer.serialize(fileVersion, ZclDataType.UNSIGNED_32_BIT_INTEGER);
         serializer.serialize(fileOffset, ZclDataType.UNSIGNED_32_BIT_INTEGER);
         serializer.serialize(maximumDataSize, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(pageSize, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.serialize(responseSpacing, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         if ((fieldControl & 0x01) != 0) {
             serializer.serialize(requestNodeAddress, ZclDataType.IEEE_ADDRESS);
+        }
+        if ((fieldControl & 0x02) != 0) {
+            serializer.serialize(blockRequestDelay, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
     }
 
@@ -278,15 +255,14 @@ public class ImagePageRequestCommand extends ZclCommand {
         fileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
         fileOffset = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
         maximumDataSize = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        pageSize = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        responseSpacing = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         requestNodeAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        blockRequestDelay = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(320);
-        builder.append("ImagePageRequestCommand [");
+        final StringBuilder builder = new StringBuilder(288);
+        builder.append("ImageBlockCommand [");
         builder.append(super.toString());
         builder.append(", fieldControl=");
         builder.append(fieldControl);
@@ -300,12 +276,10 @@ public class ImagePageRequestCommand extends ZclCommand {
         builder.append(fileOffset);
         builder.append(", maximumDataSize=");
         builder.append(maximumDataSize);
-        builder.append(", pageSize=");
-        builder.append(pageSize);
-        builder.append(", responseSpacing=");
-        builder.append(responseSpacing);
         builder.append(", requestNodeAddress=");
         builder.append(requestNodeAddress);
+        builder.append(", blockRequestDelay=");
+        builder.append(blockRequestDelay);
         builder.append(']');
         return builder.toString();
     }

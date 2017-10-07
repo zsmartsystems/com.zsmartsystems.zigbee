@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.internal.otaserver;
+package com.zsmartsystems.zigbee.otaserver;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -24,6 +24,9 @@ import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaFile;
+import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServer;
+import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaStatusCallback;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 

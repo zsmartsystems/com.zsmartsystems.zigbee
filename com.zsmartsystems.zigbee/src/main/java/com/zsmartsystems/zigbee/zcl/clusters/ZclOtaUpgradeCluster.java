@@ -15,15 +15,15 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImagePageRequestCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImagePageCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
@@ -685,7 +685,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     }
 
     /**
-     * The Query Next Image Request Command
+     * The Query Next Image Command
      * <p>
      * Client devices shall send a Query Next Image Request command to the server to see if there is new
      * OTA upgrade image available. ZR devices may send the command after receiving Image Notify
@@ -708,8 +708,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param hardwareVersion {@link Integer} Hardware version
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> queryNextImageRequestCommand(Integer fieldControl, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer hardwareVersion) {
-        QueryNextImageRequestCommand command = new QueryNextImageRequestCommand();
+    public Future<CommandResult> queryNextImageCommand(Integer fieldControl, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer hardwareVersion) {
+        QueryNextImageCommand command = new QueryNextImageCommand();
 
         // Set the fields
         command.setFieldControl(fieldControl);
@@ -722,7 +722,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     }
 
     /**
-     * The Image Block Request Command
+     * The Image Block Command
      * <p>
      * The client device requests the image data at its leisure by sending Image Block Request command to
      * the upgrade server. The client knows the total number of request commands it needs to send from the
@@ -749,8 +749,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param blockRequestDelay {@link Integer} BlockRequestDelay
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> imageBlockRequestCommand(Integer fieldControl, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, Integer maximumDataSize, IeeeAddress requestNodeAddress, Integer blockRequestDelay) {
-        ImageBlockRequestCommand command = new ImageBlockRequestCommand();
+    public Future<CommandResult> imageBlockCommand(Integer fieldControl, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, Integer maximumDataSize, IeeeAddress requestNodeAddress, Integer blockRequestDelay) {
+        ImageBlockCommand command = new ImageBlockCommand();
 
         // Set the fields
         command.setFieldControl(fieldControl);
@@ -766,7 +766,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     }
 
     /**
-     * The Image Page Request Command
+     * The Image Page Command
      * <p>
      * The support for the command is optional. The client device may choose to request OTA upgrade data
      * in one page size at a time from upgrade server. Using Image Page Request reduces the numbers of
@@ -795,8 +795,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param requestNodeAddress {@link IeeeAddress} Request node address
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> imagePageRequestCommand(Integer fieldControl, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, Integer maximumDataSize, Integer pageSize, Integer responseSpacing, IeeeAddress requestNodeAddress) {
-        ImagePageRequestCommand command = new ImagePageRequestCommand();
+    public Future<CommandResult> imagePageCommand(Integer fieldControl, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, Integer maximumDataSize, Integer pageSize, Integer responseSpacing, IeeeAddress requestNodeAddress) {
+        ImagePageCommand command = new ImagePageCommand();
 
         // Set the fields
         command.setFieldControl(fieldControl);
@@ -813,7 +813,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     }
 
     /**
-     * The Upgrade End Request Command
+     * The Upgrade End Command
      * <p>
      * Upon reception all the image data, the client should verify the image to ensure its integrity and validity.
      * If the device requires signed images it shall examine the image and verify the signature as described in
@@ -841,8 +841,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param fileVersion {@link Integer} File Version
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> upgradeEndRequestCommand(Integer status, Integer manufacturerCode, Integer imageType, Integer fileVersion) {
-        UpgradeEndRequestCommand command = new UpgradeEndRequestCommand();
+    public Future<CommandResult> upgradeEndCommand(Integer status, Integer manufacturerCode, Integer imageType, Integer fileVersion) {
+        UpgradeEndCommand command = new UpgradeEndCommand();
 
         // Set the fields
         command.setStatus(status);
@@ -854,7 +854,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     }
 
     /**
-     * The Query Specific File Request Command
+     * The Query Specific File Command
      * <p>
      * Client devices shall send a Query Specific File Request command to the server to request for a file that
      * is specific and unique to it. Such file could contain non-firmware data such as security credential
@@ -870,8 +870,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param zigbeeStackVersion {@link Integer} Zigbee Stack Version
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> querySpecificFileRequestCommand(IeeeAddress requestNodeAddress, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer zigbeeStackVersion) {
-        QuerySpecificFileRequestCommand command = new QuerySpecificFileRequestCommand();
+    public Future<CommandResult> querySpecificFileCommand(IeeeAddress requestNodeAddress, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer zigbeeStackVersion) {
+        QuerySpecificFileCommand command = new QuerySpecificFileCommand();
 
         // Set the fields
         command.setRequestNodeAddress(requestNodeAddress);
@@ -1047,16 +1047,16 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         switch (commandId) {
             case 0: // IMAGE_NOTIFY_COMMAND
                 return new ImageNotifyCommand();
-            case 1: // QUERY_NEXT_IMAGE_REQUEST_COMMAND
-                return new QueryNextImageRequestCommand();
-            case 3: // IMAGE_BLOCK_REQUEST_COMMAND
-                return new ImageBlockRequestCommand();
-            case 4: // IMAGE_PAGE_REQUEST_COMMAND
-                return new ImagePageRequestCommand();
-            case 6: // UPGRADE_END_REQUEST_COMMAND
-                return new UpgradeEndRequestCommand();
-            case 8: // QUERY_SPECIFIC_FILE_REQUEST_COMMAND
-                return new QuerySpecificFileRequestCommand();
+            case 1: // QUERY_NEXT_IMAGE_COMMAND
+                return new QueryNextImageCommand();
+            case 3: // IMAGE_BLOCK_COMMAND
+                return new ImageBlockCommand();
+            case 4: // IMAGE_PAGE_COMMAND
+                return new ImagePageCommand();
+            case 6: // UPGRADE_END_COMMAND
+                return new UpgradeEndCommand();
+            case 8: // QUERY_SPECIFIC_FILE_COMMAND
+                return new QuerySpecificFileCommand();
             default:
                 return null;
         }

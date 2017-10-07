@@ -5,18 +5,18 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.internal.otaserver;
+package com.zsmartsystems.zigbee.otaserver;
 
 /**
  * This interface defines status callback updates for Over The Air update progress
  *
  * @author Chris Jackson
  */
-interface ZigBeeOtaStatusCallback {
+public interface ZigBeeOtaStatusCallback {
 
     /**
      * Provides a callback following the status change of the OTA server
-     * 
+     *
      * @param status the updated {@link ZigBeeOtaServerStatus}
      */
     void otaStatus(ZigBeeOtaServerStatus status);

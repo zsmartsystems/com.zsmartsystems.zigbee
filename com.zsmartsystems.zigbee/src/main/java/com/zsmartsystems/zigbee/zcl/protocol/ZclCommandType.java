@@ -79,14 +79,14 @@ import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestoreStartupParamet
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.ResetStartupParametersCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.ResetStartupParametersResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockRequestCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImagePageRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImagePageCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorResponse;
@@ -425,11 +425,11 @@ public enum ZclCommandType {
      */
     IDENTIFY_QUERY_RESPONSE(0x0003, 0, IdentifyQueryResponse.class, false),
     /**
-     * IMAGE_BLOCK_REQUEST_COMMAND: Image Block Request Command
+     * IMAGE_BLOCK_COMMAND: Image Block Command
      * <p>
-     * See {@link ImageBlockRequestCommand}
+     * See {@link ImageBlockCommand}
      */
-    IMAGE_BLOCK_REQUEST_COMMAND(0x0019, 3, ImageBlockRequestCommand.class, true),
+    IMAGE_BLOCK_COMMAND(0x0019, 3, ImageBlockCommand.class, true),
     /**
      * IMAGE_BLOCK_RESPONSE: Image Block Response
      * <p>
@@ -443,11 +443,11 @@ public enum ZclCommandType {
      */
     IMAGE_NOTIFY_COMMAND(0x0019, 0, ImageNotifyCommand.class, true),
     /**
-     * IMAGE_PAGE_REQUEST_COMMAND: Image Page Request Command
+     * IMAGE_PAGE_COMMAND: Image Page Command
      * <p>
-     * See {@link ImagePageRequestCommand}
+     * See {@link ImagePageCommand}
      */
-    IMAGE_PAGE_REQUEST_COMMAND(0x0019, 4, ImagePageRequestCommand.class, true),
+    IMAGE_PAGE_COMMAND(0x0019, 4, ImagePageCommand.class, true),
     /**
      * LOCATION_DATA_NOTIFICATION_COMMAND: Location Data Notification Command
      * <p>
@@ -563,11 +563,11 @@ public enum ZclCommandType {
      */
     PANIC_COMMAND(0x0501, 4, PanicCommand.class, true),
     /**
-     * QUERY_NEXT_IMAGE_REQUEST_COMMAND: Query Next Image Request Command
+     * QUERY_NEXT_IMAGE_COMMAND: Query Next Image Command
      * <p>
-     * See {@link QueryNextImageRequestCommand}
+     * See {@link QueryNextImageCommand}
      */
-    QUERY_NEXT_IMAGE_REQUEST_COMMAND(0x0019, 1, QueryNextImageRequestCommand.class, true),
+    QUERY_NEXT_IMAGE_COMMAND(0x0019, 1, QueryNextImageCommand.class, true),
     /**
      * QUERY_NEXT_IMAGE_RESPONSE: Query Next Image Response
      * <p>
@@ -575,11 +575,11 @@ public enum ZclCommandType {
      */
     QUERY_NEXT_IMAGE_RESPONSE(0x0019, 2, QueryNextImageResponse.class, false),
     /**
-     * QUERY_SPECIFIC_FILE_REQUEST_COMMAND: Query Specific File Request Command
+     * QUERY_SPECIFIC_FILE_COMMAND: Query Specific File Command
      * <p>
-     * See {@link QuerySpecificFileRequestCommand}
+     * See {@link QuerySpecificFileCommand}
      */
-    QUERY_SPECIFIC_FILE_REQUEST_COMMAND(0x0019, 8, QuerySpecificFileRequestCommand.class, true),
+    QUERY_SPECIFIC_FILE_COMMAND(0x0019, 8, QuerySpecificFileCommand.class, true),
     /**
      * QUERY_SPECIFIC_FILE_RESPONSE: Query Specific File Response
      * <p>
@@ -887,11 +887,11 @@ public enum ZclCommandType {
      */
     UNLOCK_DOOR_RESPONSE(0x0101, 1, UnlockDoorResponse.class, false),
     /**
-     * UPGRADE_END_REQUEST_COMMAND: Upgrade End Request Command
+     * UPGRADE_END_COMMAND: Upgrade End Command
      * <p>
-     * See {@link UpgradeEndRequestCommand}
+     * See {@link UpgradeEndCommand}
      */
-    UPGRADE_END_REQUEST_COMMAND(0x0019, 6, UpgradeEndRequestCommand.class, true),
+    UPGRADE_END_COMMAND(0x0019, 6, UpgradeEndCommand.class, true),
     /**
      * UPGRADE_END_RESPONSE: Upgrade End Response
      * <p>

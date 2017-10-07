@@ -13,32 +13,38 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Query Next Image Request Command value object class.
+ * Upgrade End Command value object class.
  * <p>
- * Client devices shall send a Query Next Image Request command to the server to see if there is new
- * OTA upgrade image available. ZR devices may send the command after receiving Image Notify
- * command. ZED device shall periodically wake up and send the command to the upgrade server. Client
- * devices query what the next image is, based on their own information.
+ * Upon reception all the image data, the client should verify the image to ensure its integrity and validity.
+ * If the device requires signed images it shall examine the image and verify the signature as described in
+ * section 6.3.9.2. Clients may perform additional manufacturer specific integrity checks to validate the
+ * image, for example, CRC check on the actual file data.
  * <br>
- * The server takes the client’s information in the command and determines whether it has a suitable
- * image for the particular client. The decision should be based on specific policy that is specific to the
- * upgrade server and outside the scope of this document.. However, a recommended default policy is for
- * the server to send back a response that indicates the availability of an image that matches the
- * manufacturer code, image type, and the highest available file version of that image on the
- * server. However, the server may choose to upgrade, downgrade, or reinstall clients’ image, as its
- * policy dictates. If client’s hardware version is included in the command, the server shall examine the
- * value against the minimum and maximum hardware versions included in the OTA file header.
+ * If the image fails any integrity checks, the client shall send an Upgrade End Request command to the
+ * upgrade server with a status of INVALID_IMAGE. In this case, the client may reinitiate the upgrade
+ * process in order to obtain a valid OTA upgrade image. The client shall not upgrade to the bad image
+ * and shall discard the downloaded image data.
+ * <br>
+ * If the image passes all integrity checks and the client does not require additional OTA upgrade image
+ * file, it shall send back an Upgrade End Request with a status of SUCCESS. However, if the client
+ * requires multiple OTA upgrade image files before performing an upgrade, it shall send an Upgrade End
+ * Request command with status REQUIRE_MORE_IMAGE. This shall indicate to the server that it
+ * cannot yet upgrade the image it received.
+ * <br>
+ * If the client decides to cancel the download process for any other reasons, it has the option of sending
+ * Upgrade End Request with status of ABORT at anytime during the download process. The client shall
+ * then try to reinitiate the download process again at a later time.
  * <p>
  * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class QueryNextImageRequestCommand extends ZclCommand {
+public class UpgradeEndCommand extends ZclCommand {
     /**
-     * Field control command message field.
+     * Status command message field.
      */
-    private Integer fieldControl;
+    private Integer status;
 
     /**
      * Manufacturer code command message field.
@@ -51,41 +57,36 @@ public class QueryNextImageRequestCommand extends ZclCommand {
     private Integer imageType;
 
     /**
-     * File version command message field.
+     * File Version command message field.
      */
     private Integer fileVersion;
 
     /**
-     * Hardware version command message field.
-     */
-    private Integer hardwareVersion;
-
-    /**
      * Default constructor.
      */
-    public QueryNextImageRequestCommand() {
+    public UpgradeEndCommand() {
         genericCommand = false;
         clusterId = 25;
-        commandId = 1;
+        commandId = 6;
         commandDirection = true;
     }
 
     /**
-     * Gets Field control.
+     * Gets Status.
      *
-     * @return the Field control
+     * @return the Status
      */
-    public Integer getFieldControl() {
-        return fieldControl;
+    public Integer getStatus() {
+        return status;
     }
 
     /**
-     * Sets Field control.
+     * Sets Status.
      *
-     * @param fieldControl the Field control
+     * @param status the Status
      */
-    public void setFieldControl(final Integer fieldControl) {
-        this.fieldControl = fieldControl;
+    public void setStatus(final Integer status) {
+        this.status = status;
     }
 
     /**
@@ -125,76 +126,52 @@ public class QueryNextImageRequestCommand extends ZclCommand {
     }
 
     /**
-     * Gets File version.
+     * Gets File Version.
      *
-     * @return the File version
+     * @return the File Version
      */
     public Integer getFileVersion() {
         return fileVersion;
     }
 
     /**
-     * Sets File version.
+     * Sets File Version.
      *
-     * @param fileVersion the File version
+     * @param fileVersion the File Version
      */
     public void setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
     }
 
-    /**
-     * Gets Hardware version.
-     *
-     * @return the Hardware version
-     */
-    public Integer getHardwareVersion() {
-        return hardwareVersion;
-    }
-
-    /**
-     * Sets Hardware version.
-     *
-     * @param hardwareVersion the Hardware version
-     */
-    public void setHardwareVersion(final Integer hardwareVersion) {
-        this.hardwareVersion = hardwareVersion;
-    }
-
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(fieldControl, ZclDataType.BITMAP_8_BIT);
+        serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(manufacturerCode, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(imageType, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(fileVersion, ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        if ((fieldControl & 0x01) != 0) {
-            serializer.serialize(hardwareVersion, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        }
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        fieldControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         fileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        hardwareVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(194);
-        builder.append("QueryNextImageRequestCommand [");
+        final StringBuilder builder = new StringBuilder(142);
+        builder.append("UpgradeEndCommand [");
         builder.append(super.toString());
-        builder.append(", fieldControl=");
-        builder.append(fieldControl);
+        builder.append(", status=");
+        builder.append(status);
         builder.append(", manufacturerCode=");
         builder.append(manufacturerCode);
         builder.append(", imageType=");
         builder.append(imageType);
         builder.append(", fileVersion=");
         builder.append(fileVersion);
-        builder.append(", hardwareVersion=");
-        builder.append(hardwareVersion);
         builder.append(']');
         return builder.toString();
     }

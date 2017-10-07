@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.internal.otaserver;
+package com.zsmartsystems.zigbee.otaserver;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ public enum ZigBeeOtaTagType {
     UNKNOWN(0xFFFF),
 
     /**
-     * Upgrade Image6
+     * Upgrade Image
      */
     UPGRADE_IMAGE(0x0000),
     /**

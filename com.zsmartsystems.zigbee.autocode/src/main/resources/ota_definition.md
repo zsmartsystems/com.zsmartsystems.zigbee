@@ -114,7 +114,7 @@ to protect the server from being flooded with clients’ queries for next image.
 |New File Version           |Unsigned 32-bit integer[Payload type>=3]  |
 
 
-#### Query Next Image Request Command [0x01]
+#### Query Next Image Command [0x01]
 
 Client devices shall send a Query Next Image Request command to the server to see if there is new
 OTA upgrade image available. ZR devices may send the command after receiving Image Notify
@@ -139,7 +139,7 @@ value against the minimum and maximum hardware versions included in the OTA file
 |Hardware version           |Unsigned 16-bit integer[Field control&&0x01] |
 
 
-#### Image Block Request Command [0x03]
+#### Image Block Command [0x03]
 
 The client device requests the image data at its leisure by sending Image Block Request command to 
 the upgrade server. The client knows the total number of request commands it needs to send from the
@@ -168,7 +168,7 @@ its BlockRequestDelay attribute.
 |BlockRequestDelay          |Unsigned 16-bit integer[Field control&&0x02] |
 
 
-#### Image Page Request Command [0x04]
+#### Image Page Command [0x04]
 
 The support for the command is optional. The client device may choose to request OTA upgrade data
 in one page size at a time from upgrade server. Using Image Page Request reduces the numbers of
@@ -200,7 +200,7 @@ command, instead of requesting the whole page again.
 
 
 
-#### Upgrade End Request Command [0x06]
+#### Upgrade End Command [0x06]
 
 Upon reception all the image data, the client should verify the image to ensure its integrity and validity.
 If the device requires signed images it shall examine the image and verify the signature as described in
@@ -231,7 +231,7 @@ then try to reinitiate the download process again at a later time.
 |File Version               |Unsigned 32-bit integer    |
 
 
-#### Query Specific File Request Command [0x08]
+#### Query Specific File Command [0x08]
 
 Client devices shall send a Query Specific File Request command to the server to request for a file that
 is specific and unique to it. Such file could contain non-firmware data such as security credential

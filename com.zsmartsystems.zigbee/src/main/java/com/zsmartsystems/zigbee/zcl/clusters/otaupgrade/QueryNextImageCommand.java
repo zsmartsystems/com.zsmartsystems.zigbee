@@ -11,28 +11,34 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
- * Query Specific File Request Command value object class.
+ * Query Next Image Command value object class.
  * <p>
- * Client devices shall send a Query Specific File Request command to the server to request for a file that
- * is specific and unique to it. Such file could contain non-firmware data such as security credential
- * (needed for upgrading from Smart Energy 1.1 to Smart Energy 2.0), configuration or log. When the
- * device decides to send the Query Specific File Request command is manufacturer specific. However,
- * one example is during upgrading from SE 1.1 to 2.0 where the client may have already obtained new
- * SE 2.0 image and now needs new SE 2.0 security credential data.
+ * Client devices shall send a Query Next Image Request command to the server to see if there is new
+ * OTA upgrade image available. ZR devices may send the command after receiving Image Notify
+ * command. ZED device shall periodically wake up and send the command to the upgrade server. Client
+ * devices query what the next image is, based on their own information.
+ * <br>
+ * The server takes the client’s information in the command and determines whether it has a suitable
+ * image for the particular client. The decision should be based on specific policy that is specific to the
+ * upgrade server and outside the scope of this document.. However, a recommended default policy is for
+ * the server to send back a response that indicates the availability of an image that matches the
+ * manufacturer code, image type, and the highest available file version of that image on the
+ * server. However, the server may choose to upgrade, downgrade, or reinstall clients’ image, as its
+ * policy dictates. If client’s hardware version is included in the command, the server shall examine the
+ * value against the minimum and maximum hardware versions included in the OTA file header.
  * <p>
  * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class QuerySpecificFileRequestCommand extends ZclCommand {
+public class QueryNextImageCommand extends ZclCommand {
     /**
-     * Request node address command message field.
+     * Field control command message field.
      */
-    private IeeeAddress requestNodeAddress;
+    private Integer fieldControl;
 
     /**
      * Manufacturer code command message field.
@@ -45,41 +51,41 @@ public class QuerySpecificFileRequestCommand extends ZclCommand {
     private Integer imageType;
 
     /**
-     * File Version command message field.
+     * File version command message field.
      */
     private Integer fileVersion;
 
     /**
-     * Zigbee Stack Version command message field.
+     * Hardware version command message field.
      */
-    private Integer zigbeeStackVersion;
+    private Integer hardwareVersion;
 
     /**
      * Default constructor.
      */
-    public QuerySpecificFileRequestCommand() {
+    public QueryNextImageCommand() {
         genericCommand = false;
         clusterId = 25;
-        commandId = 8;
+        commandId = 1;
         commandDirection = true;
     }
 
     /**
-     * Gets Request node address.
+     * Gets Field control.
      *
-     * @return the Request node address
+     * @return the Field control
      */
-    public IeeeAddress getRequestNodeAddress() {
-        return requestNodeAddress;
+    public Integer getFieldControl() {
+        return fieldControl;
     }
 
     /**
-     * Sets Request node address.
+     * Sets Field control.
      *
-     * @param requestNodeAddress the Request node address
+     * @param fieldControl the Field control
      */
-    public void setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
-        this.requestNodeAddress = requestNodeAddress;
+    public void setFieldControl(final Integer fieldControl) {
+        this.fieldControl = fieldControl;
     }
 
     /**
@@ -119,74 +125,76 @@ public class QuerySpecificFileRequestCommand extends ZclCommand {
     }
 
     /**
-     * Gets File Version.
+     * Gets File version.
      *
-     * @return the File Version
+     * @return the File version
      */
     public Integer getFileVersion() {
         return fileVersion;
     }
 
     /**
-     * Sets File Version.
+     * Sets File version.
      *
-     * @param fileVersion the File Version
+     * @param fileVersion the File version
      */
     public void setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
     }
 
     /**
-     * Gets Zigbee Stack Version.
+     * Gets Hardware version.
      *
-     * @return the Zigbee Stack Version
+     * @return the Hardware version
      */
-    public Integer getZigbeeStackVersion() {
-        return zigbeeStackVersion;
+    public Integer getHardwareVersion() {
+        return hardwareVersion;
     }
 
     /**
-     * Sets Zigbee Stack Version.
+     * Sets Hardware version.
      *
-     * @param zigbeeStackVersion the Zigbee Stack Version
+     * @param hardwareVersion the Hardware version
      */
-    public void setZigbeeStackVersion(final Integer zigbeeStackVersion) {
-        this.zigbeeStackVersion = zigbeeStackVersion;
+    public void setHardwareVersion(final Integer hardwareVersion) {
+        this.hardwareVersion = hardwareVersion;
     }
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(requestNodeAddress, ZclDataType.IEEE_ADDRESS);
+        serializer.serialize(fieldControl, ZclDataType.BITMAP_8_BIT);
         serializer.serialize(manufacturerCode, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(imageType, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(fileVersion, ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        serializer.serialize(zigbeeStackVersion, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        if ((fieldControl & 0x01) != 0) {
+            serializer.serialize(hardwareVersion, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        }
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        requestNodeAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        fieldControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
         manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         fileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        zigbeeStackVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        hardwareVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(206);
-        builder.append("QuerySpecificFileRequestCommand [");
+        final StringBuilder builder = new StringBuilder(187);
+        builder.append("QueryNextImageCommand [");
         builder.append(super.toString());
-        builder.append(", requestNodeAddress=");
-        builder.append(requestNodeAddress);
+        builder.append(", fieldControl=");
+        builder.append(fieldControl);
         builder.append(", manufacturerCode=");
         builder.append(manufacturerCode);
         builder.append(", imageType=");
         builder.append(imageType);
         builder.append(", fileVersion=");
         builder.append(fileVersion);
-        builder.append(", zigbeeStackVersion=");
-        builder.append(zigbeeStackVersion);
+        builder.append(", hardwareVersion=");
+        builder.append(hardwareVersion);
         builder.append(']');
         return builder.toString();
     }

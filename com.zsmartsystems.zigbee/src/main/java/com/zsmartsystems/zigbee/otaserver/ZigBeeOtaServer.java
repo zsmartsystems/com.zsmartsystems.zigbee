@@ -5,8 +5,11 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.internal.otaserver;
+package com.zsmartsystems.zigbee.otaserver;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -22,18 +25,18 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImagePageRequestCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImagePageCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
-import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 
 /**
  * This class implements the logic to implement the Over The Air (OTA) server for a ZigBee node.
@@ -60,7 +63,10 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
  * command.
  * </ul>
  * <p>
- * Server lifecycle overview -:
+ * Users can register with {@link #addListener} to receive {@link ZigBeeOtaStatusCallback} calls when the status
+ * changes.
+ * <p>
+ * Upgrade lifecycle overview -:
  * <ul>
  * <li>Server instantiated. Status set to {@link ZigBeeOtaServerStatus#OTA_UNINITIALISED}.
  * <li>{@link #setFirmware(ZigBeeOtaFile)} is called to set the firmware. Status set to
@@ -85,7 +91,7 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
  *
  * @author Chris Jackson
  */
-public class ZigBeeOtaServer implements ZigBeeCommandListener {
+public class ZigBeeOtaServer implements ZigBeeServer, ZigBeeCommandListener {
     /**
      * A static Thread pool is used here to ensure that we don't end up with large numbers of page requests
      * spawning multiple threads. This should ensure a level of pacing if we had a lot of devices on the network that
@@ -139,11 +145,6 @@ public class ZigBeeOtaServer implements ZigBeeCommandListener {
     private final ZigBeeEndpoint device;
 
     /**
-     * The node descriptor for this device
-     */
-    private NodeDescriptor nodeDescriptor;
-
-    /**
      * Callback to receive status updates on the progress of a transfer
      */
     private final ZigBeeOtaStatusCallback callback;
@@ -166,6 +167,12 @@ public class ZigBeeOtaServer implements ZigBeeCommandListener {
     private ScheduledFuture<?> scheduledPageTask;
 
     /**
+     * A list of listeners to receive status callbacks
+     */
+    private List<ZigBeeOtaStatusCallback> statusListeners = Collections
+            .unmodifiableList(new ArrayList<ZigBeeOtaStatusCallback>());
+
+    /**
      * Constructor taking the {@link ZigBeeNode} that is to be updated.
      *
      * @param networkManager the {@link ZigBeeNetworkManager}
@@ -176,7 +183,6 @@ public class ZigBeeOtaServer implements ZigBeeCommandListener {
             final ZigBeeOtaStatusCallback callback) {
         this.networkManager = networkManager;
         this.device = device;
-        this.callback = callback;
 
         status = ZigBeeOtaServerStatus.OTA_UNINITIALISED;
 
@@ -185,6 +191,45 @@ public class ZigBeeOtaServer implements ZigBeeCommandListener {
 
         // Register a listener with the node to receive cluster messages
         networkManager.addCommandListener(this);
+    }
+
+    @Override
+    public void serverStartup() {
+    }
+
+    @Override
+    public void serverShutdown() {
+    }
+
+    /**
+     * Add a listener to receive status callbacks on the OTA server status.
+     *
+     * @param listener the {@link ZigBeeOtaStatusCallback} to receive the status
+     */
+    public void addListener(final ZigBeeOtaStatusCallback listener) {
+        if (listener == null) {
+            return;
+        }
+        synchronized (this) {
+            final List<ZigBeeOtaStatusCallback> modifiedListeners = new ArrayList<ZigBeeOtaStatusCallback>(
+                    statusListeners);
+            modifiedListeners.add(listener);
+            statusListeners = Collections.unmodifiableList(modifiedListeners);
+        }
+    }
+
+    /**
+     * Remove a listener from receiving status callbacks on the OTA server status.
+     *
+     * @param listener the {@link ZigBeeOtaStatusCallback} to stop receiving status callbacks
+     */
+    public void removeListener(final ZigBeeOtaStatusCallback listener) {
+        synchronized (this) {
+            final List<ZigBeeOtaStatusCallback> modifiedListeners = new ArrayList<ZigBeeOtaStatusCallback>(
+                    statusListeners);
+            modifiedListeners.remove(listener);
+            statusListeners = Collections.unmodifiableList(modifiedListeners);
+        }
     }
 
     /**
@@ -277,11 +322,19 @@ public class ZigBeeOtaServer implements ZigBeeCommandListener {
         return false;
     }
 
-    private void updateStatus(ZigBeeOtaServerStatus updatedStatus) {
-        status = updatedStatus;
-        if (callback != null) {
-            callback.otaStatus(status);
+    private void updateStatus(final ZigBeeOtaServerStatus updatedStatus) {
+        synchronized (this) {
+            // Notify the listeners
+            for (final ZigBeeOtaStatusCallback statusListener : statusListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        statusListener.otaStatus(updatedStatus);
+                    }
+                });
+            }
         }
+
     }
 
     /**
@@ -331,7 +384,7 @@ public class ZigBeeOtaServer implements ZigBeeCommandListener {
     }
 
     /**
-     * Handles the sending of {@link ImageBlockResponse} following a {@link ImagePageRequestCommand}
+     * Handles the sending of {@link ImageBlockResponse} following a {@link ImagePageCommand}
      *
      * @param pageOffset the starting offset for the page
      * @param pageLength the length of the page
@@ -392,12 +445,12 @@ public class ZigBeeOtaServer implements ZigBeeCommandListener {
     }
 
     /**
-     * Handle a received {@link QueryNextImageRequestCommand} command.
+     * Handle a received {@link QueryNextImageCommand} command.
      * This sends information on the firmware that is currently set in this server.
      *
-     * @param command the received {@link QueryNextImageRequestCommand}
+     * @param command the received {@link QueryNextImageCommand}
      */
-    private void handleQueryNextImage(QueryNextImageRequestCommand command) {
+    private void handleQueryNextImage(QueryNextImageCommand command) {
         // Check that the file attributes are consistent with the file we have
         if (otaFile == null || command.getManufacturerCode() != otaFile.getManufacturerCode()
                 || command.getImageType() != otaFile.getImageType()) {
@@ -435,12 +488,12 @@ public class ZigBeeOtaServer implements ZigBeeCommandListener {
     }
 
     /**
-     * Handle a received {@link ImagePageRequestCommand} command.
+     * Handle a received {@link ImagePageCommand} command.
      * This will respond with a whole page (potentially a number of image blocks)
      *
-     * @param command the received {@link ImagePageRequestCommand}
+     * @param command the received {@link ImagePageCommand}
      */
-    private void handleImagePageRequest(ImagePageRequestCommand command) {
+    private void handleImagePageRequest(ImagePageCommand command) {
         // No current support for device specific requests
         if (command.getFieldControl() != 0) {
             logger.debug("{} OTA Error: No file is set.", device.getDeviceAddress());
@@ -470,12 +523,12 @@ public class ZigBeeOtaServer implements ZigBeeCommandListener {
     }
 
     /**
-     * Handle a received {@link ImageBlockRequestCommand} command.
+     * Handle a received {@link ImageBlockCommand} command.
      * This will respond with a single image block.
      *
-     * @param command the received {@link ImageBlockRequestCommand}
+     * @param command the received {@link ImageBlockCommand}
      */
-    private void handleImageBlockRequest(ImageBlockRequestCommand command) {
+    private void handleImageBlockRequest(ImageBlockCommand command) {
         // No current support for device specific requests
         if (command.getFieldControl() != 0) {
             logger.debug("{} OTA Error: No file is set.", device.getDeviceAddress());
@@ -505,12 +558,12 @@ public class ZigBeeOtaServer implements ZigBeeCommandListener {
     }
 
     /**
-     * Handle a received {@link UpgradeEndRequestCommand} command.
+     * Handle a received {@link UpgradeEndCommand} command.
      * If autoUpgrade is set, then we immediately send the {@link UpgradeEndResponse}
      *
-     * @param command the received {@link UpgradeEndRequestCommand}
+     * @param command the received {@link UpgradeEndCommand}
      */
-    private void handleUpgradeEndRequest(UpgradeEndRequestCommand command) {
+    private void handleUpgradeEndRequest(UpgradeEndCommand command) {
         // Check that the file attributes are consistent with the file we have
         if (otaFile == null || command.getManufacturerCode() != otaFile.getManufacturerCode()
                 || command.getFileVersion() != otaFile.getFileVersion()
@@ -534,24 +587,28 @@ public class ZigBeeOtaServer implements ZigBeeCommandListener {
             return;
         }
 
-        if (command instanceof QueryNextImageRequestCommand) {
-            handleQueryNextImage((QueryNextImageRequestCommand) command);
+        if (command instanceof QueryNextImageCommand) {
+            handleQueryNextImage((QueryNextImageCommand) command);
             return;
         }
 
-        if (command instanceof ImageBlockRequestCommand) {
-            handleImageBlockRequest((ImageBlockRequestCommand) command);
+        if (command instanceof ImageBlockCommand) {
+            handleImageBlockRequest((ImageBlockCommand) command);
             return;
         }
 
-        if (command instanceof ImagePageRequestCommand) {
-            handleImagePageRequest((ImagePageRequestCommand) command);
+        if (command instanceof ImagePageCommand) {
+            handleImagePageRequest((ImagePageCommand) command);
             return;
         }
 
-        if (command instanceof UpgradeEndRequestCommand) {
-            handleUpgradeEndRequest((UpgradeEndRequestCommand) command);
+        if (command instanceof UpgradeEndCommand) {
+            handleUpgradeEndRequest((UpgradeEndCommand) command);
             return;
+        }
+
+        if (command instanceof MatchDescriptorRequest) {
+
         }
     }
 

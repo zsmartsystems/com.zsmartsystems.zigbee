@@ -7,6 +7,8 @@
  */
 package com.zsmartsystems.zigbee.zcl.field;
 
+import java.util.Arrays;
+
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclListItemField;
@@ -41,7 +43,7 @@ public class ByteArray implements ZclListItemField {
 
     /**
      * Get the length of the underlying byte array
-     * 
+     *
      * @return the length of the data in the array
      */
     public int size() {
@@ -68,6 +70,32 @@ public class ByteArray implements ZclListItemField {
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
         value = (byte[]) deserializer.readZigBeeType(ZclDataType.BYTE_ARRAY);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(value);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        ByteArray other = (ByteArray) obj;
+        if (!Arrays.equals(value, other.value)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
