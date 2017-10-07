@@ -50,9 +50,9 @@ public class ZigBeeNetworkManagerTest
     public void testAddRemoveNode() {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
-        ZigBeeNode node1 = new ZigBeeNode(null);
+        ZigBeeNode node1 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         node1.setNetworkAddress(1234);
-        ZigBeeNode node2 = new ZigBeeNode(null);
+        ZigBeeNode node2 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         node2.setNetworkAddress(5678);
 
         // Add a node and make sure it's in the list
