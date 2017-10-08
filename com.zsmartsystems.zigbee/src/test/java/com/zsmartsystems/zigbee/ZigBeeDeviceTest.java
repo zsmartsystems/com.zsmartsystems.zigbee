@@ -35,7 +35,7 @@ public class ZigBeeDeviceTest {
     @Test
     public void testOutputClusterIds() {
         ZigBeeDevice device = getDevice();
-        device.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
+        // device.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
 
         List<Integer> clusterIdList = new ArrayList<Integer>();
         clusterIdList.add(ZclAlarmsCluster.CLUSTER_ID);
@@ -67,7 +67,7 @@ public class ZigBeeDeviceTest {
     @Test
     public void testInputClusterIds() {
         ZigBeeDevice device = getDevice();
-        device.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
+        // device.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
 
         List<Integer> clusterIdList = new ArrayList<Integer>();
         clusterIdList.add(ZclAlarmsCluster.CLUSTER_ID);
@@ -86,14 +86,6 @@ public class ZigBeeDeviceTest {
         assertNotNull(device.getCluster(ZclLevelControlCluster.CLUSTER_ID));
         assertFalse(device.getCluster(ZclLevelControlCluster.CLUSTER_ID).isClient());
         assertTrue(device.getCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
-    }
-
-    @Test
-    public void testIeeeAddress() {
-        ZigBeeDevice device = getDevice();
-
-        device.setIeeeAddress(new IeeeAddress("1234567890ABCDEF"));
-        assertEquals(new IeeeAddress("1234567890ABCDEF"), device.getIeeeAddress());
     }
 
     @Test
@@ -128,19 +120,11 @@ public class ZigBeeDeviceTest {
         assertEquals(9999, device.getDeviceId());
     }
 
-    @Test
-    public void testGetSetNetworkAddress() {
-        ZigBeeDevice device = getDevice();
-
-        device.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
-        assertEquals(new ZigBeeDeviceAddress(1234, 5), device.getDeviceAddress());
-        assertEquals(1234, device.getNetworkAddress());
-    }
-
     private ZigBeeDevice getDevice() {
         ZigBeeTransportTransmit mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
-        return new ZigBeeDevice(networkManager);
+        ZigBeeNode node = new ZigBeeNode(networkManager);
+        return new ZigBeeDevice(networkManager, node, 1);
     }
 
 }

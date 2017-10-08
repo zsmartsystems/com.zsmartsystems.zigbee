@@ -22,9 +22,8 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 /**
- * Value object for ZigBee device.
+ * ZigBee device.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
 public class ZigBeeDevice implements CommandListener {
@@ -37,45 +36,73 @@ public class ZigBeeDevice implements CommandListener {
      * Link to the network manager
      */
     private final ZigBeeNetworkManager networkManager;
+
+    /**
+     * Link to the parent node to which this device belongs
+     */
+    private final ZigBeeNode node;
+
     /**
      * The IEEE address.
      */
-    private IeeeAddress ieeeAddress = new IeeeAddress();
+    // private IeeeAddress ieeeAddress = new IeeeAddress();
+
     /**
      * The network address.
      */
-    private ZigBeeDeviceAddress networkAddress = null;
+    // private ZigBeeDeviceAddress networkAddress = null;
+
+    /**
+     * The endpoint number for this device
+     */
+    private int endpoint;
+
     /**
      * The profile ID.
      */
     private int profileId;
+
     /**
      * The device ID.
      */
     private int deviceId;
+
     /**
      * The device version.
      */
     private int deviceVersion;
+
     /**
      * Clusters
      */
     private final Map<Integer, ZclCluster> clusters = new HashMap<Integer, ZclCluster>();
+
     /**
      * Input cluster IDs
      */
     private final List<Integer> inputClusterIds = new ArrayList<Integer>();
+
     /**
      * Output cluster IDs
      */
     private final List<Integer> outputClusterIds = new ArrayList<Integer>();
+
     /**
      * Label.
      */
     private String label;
 
-    public ZigBeeDevice(ZigBeeNetworkManager networkManager) {
+    /**
+     * Constructor
+     *
+     * @param networkManager the {@link ZigBeeNetworkManager} to which the device belongs
+     * @param node the parent {@link ZigBeeNode}
+     * @param endpoint the endpoint number within the {@link ZigBeeNode}
+     */
+    public ZigBeeDevice(ZigBeeNetworkManager networkManager, ZigBeeNode node, int endpoint) {
         this.networkManager = networkManager;
+        this.node = node;
+        this.endpoint = endpoint;
         networkManager.addCommandListener(this);
     }
 
@@ -128,7 +155,7 @@ public class ZigBeeDevice implements CommandListener {
      * @return the end point
      */
     public int getEndpoint() {
-        return networkAddress.getEndpoint();
+        return endpoint;
     }
 
     /**
@@ -136,9 +163,9 @@ public class ZigBeeDevice implements CommandListener {
      *
      * @return the IEEE address
      */
-    public IeeeAddress getIeeeAddress() {
-        return ieeeAddress;
-    }
+    // public IeeeAddress getIeeeAddress() {
+    // return ieeeAddress;
+    // }
 
     /**
      * Sets IEEE Address.
@@ -146,9 +173,9 @@ public class ZigBeeDevice implements CommandListener {
      * @param ieeeAddress
      *            the IEEE address
      */
-    public void setIeeeAddress(IeeeAddress ieeeAddress) {
-        this.ieeeAddress = ieeeAddress;
-    }
+    // public void setIeeeAddress(IeeeAddress ieeeAddress) {
+    // this.ieeeAddress = ieeeAddress;
+    // }
 
     /**
      * Gets input cluster IDs. This lists the IDs of all clusters the device
@@ -181,23 +208,23 @@ public class ZigBeeDevice implements CommandListener {
         this.inputClusterIds.clear();
         this.inputClusterIds.addAll(inputClusterIds);
 
-        logger.debug("{}: Setting input clusters {}", networkAddress, inputClusterIds);
+        logger.debug("{}: Setting input clusters {}", getDeviceAddress(), inputClusterIds);
 
         updateClusters(inputClusterIds, true);
     }
 
-    public void setDeviceAddress(ZigBeeDeviceAddress networkAddress) {
-        this.networkAddress = networkAddress;
-    }
+    // public void setDeviceAddress(ZigBeeDeviceAddress networkAddress) {
+    // this.networkAddress = networkAddress;
+    // }
 
     /**
      * Gets network address.
      *
      * @return the network address
      */
-    public int getNetworkAddress() {
-        return networkAddress.getAddress();
-    }
+    // public int getNetworkAddress() {
+    // return networkAddress.getAddress();
+    // }
 
     /**
      * Gets the device address
@@ -205,7 +232,7 @@ public class ZigBeeDevice implements CommandListener {
      * @return the {@link ZigBeeDeviceAddress}
      */
     public ZigBeeDeviceAddress getDeviceAddress() {
-        return networkAddress;
+        return new ZigBeeDeviceAddress(node.getNetworkAddress(), endpoint);
     }
 
     /**
@@ -228,7 +255,7 @@ public class ZigBeeDevice implements CommandListener {
         this.outputClusterIds.clear();
         this.outputClusterIds.addAll(outputClusterIds);
 
-        logger.debug("{}: Setting output clusters {}", networkAddress, outputClusterIds);
+        logger.debug("{}: Setting output clusters {}", getDeviceAddress(), outputClusterIds);
 
         updateClusters(outputClusterIds, false);
     }
@@ -256,7 +283,7 @@ public class ZigBeeDevice implements CommandListener {
 
         // Remove clusters no longer in use
         for (int id : removeIds) {
-            logger.debug("{}: Removing cluster {}", networkAddress, id);
+            logger.debug("{}: Removing cluster {}", getDeviceAddress(), id);
             clusters.remove(id);
         }
 
@@ -268,7 +295,7 @@ public class ZigBeeDevice implements CommandListener {
                 ZclCluster clusterClass = null;
                 if (clusterType == null) {
                     // Unsupported cluster
-                    logger.debug("{}: Unsupported cluster {}", networkAddress, id);
+                    logger.debug("{}: Unsupported cluster {}", getDeviceAddress(), id);
                     continue;
                 }
 
@@ -276,16 +303,16 @@ public class ZigBeeDevice implements CommandListener {
                 Constructor<? extends ZclCluster> constructor;
                 try {
                     constructor = clusterType.getClusterClass().getConstructor(ZigBeeNetworkManager.class,
-                            ZigBeeDevice.class);
-                    clusterClass = constructor.newInstance(networkManager, this);
+                            ZigBeeDeviceAddress.class);
+                    clusterClass = constructor.newInstance(networkManager, networkAddress);
                 } catch (Exception e) {
-                    logger.debug("{}: Error instantiating cluster {}", networkAddress, clusterType);
+                    logger.debug("{}: Error instantiating cluster {}", getDeviceAddress(), clusterType);
                 }
                 if (isInput) {
-                    logger.debug("{}: Setting cluster {} as server", networkAddress, clusterType);
+                    logger.debug("{}: Setting cluster {} as server", getDeviceAddress(), clusterType);
                     clusterClass.setServer(true);
                 } else {
-                    logger.debug("{}: Setting cluster {} as client", networkAddress, clusterType);
+                    logger.debug("{}: Setting cluster {} as client", getDeviceAddress(), clusterType);
                     clusterClass.setClient(true);
                 }
 
@@ -336,13 +363,13 @@ public class ZigBeeDevice implements CommandListener {
     @Override
     public void commandReceived(Command command) {
         if (command instanceof ReportAttributesCommand
-                && ((ReportAttributesCommand) command).getSourceAddress().equals(networkAddress)) {
+                && ((ReportAttributesCommand) command).getSourceAddress().equals(getDeviceAddress())) {
             ReportAttributesCommand attributeCommand = (ReportAttributesCommand) command;
 
             // Get the cluster
             ZclCluster cluster = getCluster(attributeCommand.getClusterId());
             if (cluster == null) {
-                logger.debug("{}: Cluster {} not found for attribute report", networkAddress,
+                logger.debug("{}: Cluster {} not found for attribute report", getDeviceAddress(),
                         attributeCommand.getClusterId());
                 return;
             }
@@ -351,13 +378,13 @@ public class ZigBeeDevice implements CommandListener {
             cluster.handleAttributeReport(attributeCommand.getReports());
         }
         if (command instanceof ReadAttributesResponse
-                && ((ReadAttributesResponse) command).getSourceAddress().equals(networkAddress)) {
+                && ((ReadAttributesResponse) command).getSourceAddress().equals(getDeviceAddress())) {
             ReadAttributesResponse attributeCommand = (ReadAttributesResponse) command;
 
             // Get the cluster
             ZclCluster cluster = getCluster(attributeCommand.getClusterId());
             if (cluster == null) {
-                logger.debug("{}: Cluster {} not found for attribute report", networkAddress,
+                logger.debug("{}: Cluster {} not found for attribute report", getDeviceAddress(),
                         attributeCommand.getClusterId());
                 return;
             }
@@ -370,9 +397,8 @@ public class ZigBeeDevice implements CommandListener {
 
     @Override
     public String toString() {
-        return "label=" + label + ", networkAddress=" + networkAddress.toString() + ", ieeeAddress="
-                + ieeeAddress.toString() + ", profileId=" + profileId + ", deviceId=" + deviceId + ", deviceVersion="
-                + deviceVersion + ", inputClusterIds=" + getInputClusterIds().toString() + ", outputClusterIds="
-                + getOutputClusterIds().toString();
+        return "label=" + label + ", networkAddress=" + getDeviceAddress().toString() + ", profileId=" + profileId
+                + ", deviceId=" + deviceId + ", deviceVersion=" + deviceVersion + ", inputClusterIds="
+                + getInputClusterIds().toString() + ", outputClusterIds=" + getOutputClusterIds().toString();
     }
 }

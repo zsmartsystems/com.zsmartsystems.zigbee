@@ -10,9 +10,7 @@ package com.zsmartsystems.zigbee.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeDevice;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 
 /**
@@ -89,7 +87,7 @@ public class ZigBeeDeviceDao {
     public static ZigBeeDeviceDao createFromZigBeeDevice(ZigBeeDevice device) {
         ZigBeeDeviceDao deviceDao = new ZigBeeDeviceDao();
         deviceDao.setDeviceAddress(device.getDeviceAddress().toString());
-        deviceDao.setIeeeAddress(device.getIeeeAddress().toString());
+        // deviceDao.setIeeeAddress(device.getIeeeAddress().toString());
         deviceDao.setLabel(device.getLabel());
         deviceDao.setProfileId(device.getProfileId());
         deviceDao.setInputClusterIds(device.getInputClusterIds());
@@ -98,14 +96,15 @@ public class ZigBeeDeviceDao {
     }
 
     public static ZigBeeDevice createFromZigBeeDao(ZigBeeNetworkManager networkManager, ZigBeeDeviceDao deviceDao) {
-        ZigBeeDevice device = new ZigBeeDevice(networkManager);
-        device.setDeviceAddress(new ZigBeeDeviceAddress(deviceDao.getDeviceAddress()));
-        device.setIeeeAddress(new IeeeAddress(deviceDao.getIeeeAddress()));
-        device.setLabel(deviceDao.getLabel());
-        device.setProfileId(deviceDao.getProfileId());
-        device.setInputClusterIds(deviceDao.getInputClusterIds());
-        device.setOutputClusterIds(deviceDao.getOutputClusterIds());
-        return device;
+        /// ZigBeeNode node = networkManager.getNode(ieeeAddress)
+        // ZigBeeDevice device = new ZigBeeDevice(networkManager);
+        // device.setDeviceAddress(new ZigBeeDeviceAddress(deviceDao.getDeviceAddress()));
+        // device.setIeeeAddress(new IeeeAddress(deviceDao.getIeeeAddress()));
+        // device.setLabel(deviceDao.getLabel());
+        // device.setProfileId(deviceDao.getProfileId());
+        // device.setInputClusterIds(deviceDao.getInputClusterIds());
+        // device.setOutputClusterIds(deviceDao.getOutputClusterIds());
+        return null;// device;
     }
 
 }

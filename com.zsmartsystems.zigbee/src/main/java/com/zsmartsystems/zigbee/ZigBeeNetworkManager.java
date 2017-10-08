@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 /**
  * Implements functions for managing the ZigBee interfaces.
  * <p>
- * The ZigBee lifecycle is as follows -:
+ * The ZigBeeNetworkManager lifecycle is as follows -:
  * <ul>
  * <li>Instantiate a {@link ZigBeeTransportTransmit} class
  * <li>Instantiate a {@link ZigBeeNetworkManager} class passing the previously created {@link ZigBeeTransportTransmit}
@@ -86,12 +86,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private final Map<Integer, ZigBeeNode> networkNodes = new TreeMap<Integer, ZigBeeNode>();
 
     /**
-     * Map of devices in the ZigBee network - maps {@link ZigBeeDeviceAddress} to
-     * {@link ZigBeeDevice}
-     */
-    private final Map<ZigBeeDeviceAddress, ZigBeeDevice> networkDevices = new TreeMap<ZigBeeDeviceAddress, ZigBeeDevice>();
-
-    /**
      * The groups in the ZigBee network.
      */
     private final Map<Integer, ZigBeeGroupAddress> networkGroups = new TreeMap<Integer, ZigBeeGroupAddress>();
@@ -102,13 +96,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     private List<ZigBeeNetworkNodeListener> nodeListeners = Collections
             .unmodifiableList(new ArrayList<ZigBeeNetworkNodeListener>());
-
-    /**
-     * The device listeners of the ZigBee network. Registered listeners will be
-     * notified of additions, deletions and changes to {@link ZigBeeDevice}s.
-     */
-    private List<ZigBeeNetworkDeviceListener> deviceListeners = Collections
-            .unmodifiableList(new ArrayList<ZigBeeNetworkDeviceListener>());
 
     /**
      * The announce listeners are notified whenever a new device is discovered.
@@ -711,41 +698,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Gets a set of ZigBee devices associated with a node
-     *
-     * @param networkAddress
-     *            {@link Integer} defining the address of the node
-     * @return a {@link Set} of {@link ZigBeeDevice}
-     */
-    public Set<ZigBeeDevice> getNodeDevices(Integer networkAddress) {
-        Set<ZigBeeDevice> devices = new HashSet<ZigBeeDevice>();
-        for (ZigBeeDevice device : getDevices()) {
-            if (device.getDeviceAddress().getAddress() == networkAddress) {
-                devices.add(device);
-            }
-        }
-
-        return devices;
-    }
-
-    /**
-     * Gets a set of ZigBee devices associated with a node
-     *
-     * @param ieeeAddress
-     *            {@link IeeeAddress} defining the address of the node
-     * @return a {@link Set} of {@link ZigBeeDevice}
-     */
-    public Set<ZigBeeDevice> getNodeDevices(IeeeAddress ieeeAddress) {
-        Set<ZigBeeDevice> devices = new HashSet<ZigBeeDevice>();
-        for (ZigBeeDevice device : getDevices()) {
-            if (device.getIeeeAddress().equals(ieeeAddress)) {
-                devices.add(device);
-            }
-        }
-        return devices;
-    }
-
-    /**
      * Sends {@link ZclCommand} command to {@link ZigBeeAddress}.
      *
      * @param destination
@@ -1004,102 +956,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
-    /**
-     * Gets a device given the {@link ZigBeeAddress} address.
-     *
-     * @param networkAddress the {@link ZigBeeAddress}
-     * @return the {@link ZigBeeDevice}
-     */
-    public ZigBeeDevice getDevice(final ZigBeeAddress networkAddress) {
-        if (networkAddress == null || networkAddress.isGroup()) {
-            return null;
-        }
-
-        synchronized (networkDevices) {
-            return networkDevices.get(networkAddress);
-        }
-    }
-
-    public void addDevice(final ZigBeeDevice device) {
-        synchronized (networkDevices) {
-            networkDevices.put(device.getDeviceAddress(), device);
-        }
-        synchronized (this) {
-            for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
-                NotificationService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        listener.deviceAdded(device);
-                    }
-                });
-            }
-
-            if (networkStateSerializer != null) {
-                networkStateSerializer.serialize(this);
-            }
-        }
-    }
-
-    public void updateDevice(final ZigBeeDevice device) {
-        synchronized (networkDevices) {
-            networkDevices.put(device.getDeviceAddress(), device);
-        }
-        synchronized (this) {
-            for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
-                NotificationService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        listener.deviceUpdated(device);
-                    }
-                });
-            }
-
-            if (networkStateSerializer != null) {
-                networkStateSerializer.serialize(this);
-            }
-        }
-    }
-
-    /**
-     * Removes device(s) by network address.
-     *
-     * @param networkAddress
-     *            the network address
-     */
-    public void removeDevice(final ZigBeeAddress networkAddress) {
-        final ZigBeeDevice device;
-        synchronized (networkDevices) {
-            device = networkDevices.remove(networkAddress);
-        }
-        synchronized (this) {
-            if (device != null) {
-                for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
-                    NotificationService.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.deviceRemoved(device);
-                        }
-                    });
-                }
-            }
-
-            if (networkStateSerializer != null) {
-                networkStateSerializer.serialize(this);
-            }
-        }
-    }
-
-    /**
-     * Return a {@link List} of {@link ZigBeeDevice}s known by the network
-     *
-     * @return {@link List} of {@link ZigBeeDevice}s
-     */
-    public List<ZigBeeDevice> getDevices() {
-        synchronized (networkDevices) {
-            return new ArrayList<ZigBeeDevice>(networkDevices.values());
-        }
-    }
-
     public void addNetworkNodeListener(final ZigBeeNetworkNodeListener networkNodeListener) {
         if (networkNodeListener == null) {
             return;
@@ -1121,31 +977,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
-    public void addNetworkDeviceListener(final ZigBeeNetworkDeviceListener networkDeviceListener) {
-        synchronized (this) {
-            final List<ZigBeeNetworkDeviceListener> modifiedListeners = new ArrayList<ZigBeeNetworkDeviceListener>(
-                    deviceListeners);
-            modifiedListeners.add(networkDeviceListener);
-            deviceListeners = Collections.unmodifiableList(modifiedListeners);
-        }
-    }
-
-    public void removeNetworkDeviceListener(final ZigBeeNetworkDeviceListener networkDeviceListener) {
-        synchronized (this) {
-            final List<ZigBeeNetworkDeviceListener> modifiedListeners = new ArrayList<ZigBeeNetworkDeviceListener>(
-                    deviceListeners);
-            modifiedListeners.remove(networkDeviceListener);
-            deviceListeners = Collections.unmodifiableList(modifiedListeners);
-        }
-    }
-
     /**
      * Gets a {@link Set} of {@link ZigBeeNode}s known by the network
      *
      * @return {@link Set} of {@link ZigBeeNode}s
      */
     public Set<ZigBeeNode> getNodes() {
-        synchronized (networkDevices) {
+        synchronized (networkNodes) {
             return new HashSet<ZigBeeNode>(networkNodes.values());
         }
     }

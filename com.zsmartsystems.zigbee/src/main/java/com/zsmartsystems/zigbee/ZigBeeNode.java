@@ -8,13 +8,12 @@
 package com.zsmartsystems.zigbee;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.zsmartsystems.zigbee.zdo.ZdoResponseMatcher;
-import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
@@ -83,6 +82,13 @@ public class ZigBeeNode {
      * List of devices this node exposes
      */
     private final Map<Integer, ZigBeeDevice> devices = new HashMap<Integer, ZigBeeDevice>();
+
+    /**
+     * The device listeners of the ZigBee network. Registered listeners will be
+     * notified of additions, deletions and changes to {@link ZigBeeDevice}s.
+     */
+    private List<ZigBeeNetworkDeviceListener> deviceListeners = Collections
+            .unmodifiableList(new ArrayList<ZigBeeNetworkDeviceListener>());
 
     /**
      * The network manager that manages this node
@@ -258,6 +264,7 @@ public class ZigBeeNode {
         return nodeDescriptor.getLogicalType();
     }
 
+
     /**
      * Request an update of the binding table for this node
      * TODO: This needs to handle the response and further requests if required to complete the table
@@ -267,6 +274,108 @@ public class ZigBeeNode {
         bindingRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
         bindingRequest.setStartIndex(0);
         networkManager.unicast(bindingRequest, new ZdoResponseMatcher());
+    }
+
+    /**
+     * Gets a device given the {@link ZigBeeAddress} address.
+     *
+     * @param networkAddress the {@link ZigBeeAddress}
+     * @return the {@link ZigBeeDevice}
+     */
+    public ZigBeeDevice getDevice(final ZigBeeAddress networkAddress) {
+        if (networkAddress == null || networkAddress.isGroup()) {
+            return null;
+        }
+
+        synchronized (devices) {
+            return devices.get(networkAddress);
+        }
+    }
+
+    public void addDevice(final ZigBeeDevice device) {
+        synchronized (devices) {
+            devices.put(device.getDeviceAddress().getAddress(), device);
+        }
+        synchronized (this) {
+            for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.deviceAdded(device);
+                    }
+                });
+            }
+        }
+    }
+
+    public void updateDevice(final ZigBeeDevice device) {
+        synchronized (devices) {
+            devices.put(device.getDeviceAddress().getAddress(), device);
+        }
+        synchronized (this) {
+            for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.deviceUpdated(device);
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * Removes device(s) by network address.
+     *
+     * @param networkAddress
+     *            the network address
+     */
+    public void removeDevice(final ZigBeeAddress networkAddress) {
+        final ZigBeeDevice device;
+        synchronized (devices) {
+            device = devices.remove(networkAddress);
+        }
+        synchronized (this) {
+            if (device != null) {
+                for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
+                    NotificationService.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.deviceRemoved(device);
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    public void addNetworkDeviceListener(final ZigBeeNetworkDeviceListener networkDeviceListener) {
+        synchronized (this) {
+            final List<ZigBeeNetworkDeviceListener> modifiedListeners = new ArrayList<ZigBeeNetworkDeviceListener>(
+                    deviceListeners);
+            modifiedListeners.add(networkDeviceListener);
+            deviceListeners = Collections.unmodifiableList(modifiedListeners);
+        }
+    }
+
+    public void removeNetworkDeviceListener(final ZigBeeNetworkDeviceListener networkDeviceListener) {
+        synchronized (this) {
+            final List<ZigBeeNetworkDeviceListener> modifiedListeners = new ArrayList<ZigBeeNetworkDeviceListener>(
+                    deviceListeners);
+            modifiedListeners.remove(networkDeviceListener);
+            deviceListeners = Collections.unmodifiableList(modifiedListeners);
+        }
+    }
+
+    /**
+     * Return a {@link List} of {@link ZigBeeDevice}s known by the network
+     *
+     * @return {@link List} of {@link ZigBeeDevice}s
+     */
+    public List<ZigBeeDevice> getDevices() {
+        synchronized (devices) {
+            return new ArrayList<ZigBeeDevice>(devices.values());
+        }
     }
 
     /**
@@ -328,7 +437,7 @@ public class ZigBeeNode {
     }
 
     /**
-     * Set the list of neighbors as a {@link NeighborTable}.
+     * Set the list of associated devices.
      * <p>
      * This method checks to see if there have been "significant" changes to the neighbors list so that we can avoid
      * bothering higher layers if nothing noteworthy has changed.

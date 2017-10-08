@@ -288,4 +288,58 @@ public class ZigBeeNodeTest {
         assertEquals(0, node.getAssociatedDevices().size());
     }
 
+    /**
+     * @Test
+     *       public void testAddRemoveDevice() {
+     *       ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+     * 
+     *       ZigBeeDevice device1 = new ZigBeeDevice(networkManager);
+     *       device1.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
+     *       networkManager.addDevice(device1);
+     *       assertEquals(1, networkManager.getDevices().size());
+     * 
+     *       ZigBeeDevice device2 = new ZigBeeDevice(networkManager);
+     *       device2.setDeviceAddress(new ZigBeeDeviceAddress(6789, 0));
+     *       networkManager.addDevice(device2);
+     *       assertEquals(2, networkManager.getDevices().size());
+     * 
+     *       device2 = new ZigBeeDevice(networkManager);
+     *       device2.setDeviceAddress(new ZigBeeDeviceAddress(1234, 1));
+     *       device2.setIeeeAddress(new IeeeAddress("1234567890ABCDEF"));
+     *       networkManager.addDevice(device2);
+     *       device2 = new ZigBeeDevice(networkManager);
+     *       device2.setDeviceAddress(new ZigBeeDeviceAddress(1234, 2));
+     *       device2.setIeeeAddress(new IeeeAddress("1234567890ABCDEF"));
+     *       networkManager.addDevice(device2);
+     *       device2 = new ZigBeeDevice(networkManager);
+     *       device2.setDeviceAddress(new ZigBeeDeviceAddress(1234, 3));
+     *       device2.setIeeeAddress(new IeeeAddress("1234567890ABCDEF"));
+     *       networkManager.addDevice(device2);
+     *       device2 = new ZigBeeDevice(networkManager);
+     *       device2.setDeviceAddress(new ZigBeeDeviceAddress(1234, 4));
+     *       device2.setIeeeAddress(new IeeeAddress("1234567890ABCDEF"));
+     *       networkManager.addDevice(device2);
+     * 
+     *       // We should now have 6 devices, 5 of then in node 1234, and 4 of them have IEEE address
+     *       assertEquals(6, networkManager.getDevices().size());
+     *       assertEquals(5, networkManager.getNodeDevices(1234).size());
+     *       assertEquals(4, networkManager.getNodeDevices(new IeeeAddress("1234567890ABCDEF")).size());
+     * 
+     *       device2 = networkManager.getDevice(new ZigBeeDeviceAddress(6789, 0));
+     *       device2.setLabel("Device Label");
+     *       networkManager.updateDevice(device2);
+     *       assertEquals(6, networkManager.getDevices().size());
+     *       assertEquals("Device Label", networkManager.getDevice(new ZigBeeDeviceAddress(6789, 0)).getLabel());
+     * 
+     *       networkManager.removeDevice(new ZigBeeDeviceAddress(6789, 0));
+     *       assertEquals(5, networkManager.getDevices().size());
+     * 
+     *       assertNull(networkManager.getDevice(null));
+     *       assertNull(networkManager.getDevice(new ZigBeeGroupAddress(1)));
+     * 
+     *       networkManager.addNetworkDeviceListener(null);
+     *       networkManager.removeNetworkDeviceListener(null);
+     *       networkManager.removeNetworkDeviceListener(mockedDeviceListener);
+     *       }
+     */
 }
