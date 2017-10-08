@@ -18,6 +18,7 @@ import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
+import com.zsmartsystems.zigbee.ZigBeeTcLinkMode;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisEventListener;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFirmwareUpdateHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFrameHandler;
@@ -27,6 +28,8 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBoot
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCreatePanCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceType;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisallowTcJoinCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisallowUnsecuredRejoinCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisplayNetworkInformationCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisplayProductIdentificationCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
@@ -147,7 +150,7 @@ public class ZigBeeDongleTelegesis
      * <br>
      * - Bit 9: Set: Don’t use central Trust Centre (distributed TC Mode)
      * <br>
-     * - Bit 8: Set: Use Pre-Configured Trust Centre Link Key when joining
+     * + Bit 8: Set: Use Pre-Configured Trust Centre Link Key when joining
      * <br>
      * - Bit 7: Set: Trust centre uses hashed link key
      * <br>
@@ -165,7 +168,7 @@ public class ZigBeeDongleTelegesis
      * <br>
      * - Bit 0: Set: Do not allow other nodes to join the network via this node
      */
-    private final int defaultS0A = 0x0056;
+    private final int defaultS0A = 0x0156;
 
     /**
      * S0E – Prompt Enable 1
@@ -595,13 +598,6 @@ public class ZigBeeDongleTelegesis
     }
 
     @Override
-    public boolean setZigBeeLinkKey(final ZigBeeKey key) {
-        linkKey = key;
-
-        return false;
-    }
-
-    @Override
     public String getVersionString() {
         return versionString;
     }
@@ -671,6 +667,43 @@ public class ZigBeeDongleTelegesis
         }
         bootloadHandler.cancelUpdate();
         return true;
+    }
+
+    @Override
+    public boolean setTcLinkKey(ZigBeeKey key) {
+        linkKey = key;
+
+        return false;
+    }
+
+    @Override
+    public boolean setTcLinkMode(ZigBeeTcLinkMode linkMode) {
+        logger.debug("Setting Telegesis trust centre link mode: {}", linkMode);
+
+        TelegesisDisallowTcJoinCommand disallowJoinCommand = new TelegesisDisallowTcJoinCommand();
+        switch (linkMode) {
+            case TC_JOIN_DENY:
+                disallowJoinCommand.setJoin(true);
+                disallowJoinCommand.setPassword(telegesisPassword);
+                frameHandler.sendRequest(disallowJoinCommand);
+                break;
+            case TC_JOIN_SECURE:
+            case TC_JOIN_INSECURE:
+                disallowJoinCommand.setJoin(false);
+                disallowJoinCommand.setPassword(telegesisPassword);
+                frameHandler.sendRequest(disallowJoinCommand);
+
+                TelegesisDisallowUnsecuredRejoinCommand unsecuredRejoinCommand = new TelegesisDisallowUnsecuredRejoinCommand();
+                unsecuredRejoinCommand.setRejoin(linkMode == ZigBeeTcLinkMode.TC_JOIN_SECURE ? true : false);
+                unsecuredRejoinCommand.setPassword(telegesisPassword);
+                frameHandler.sendRequest(unsecuredRejoinCommand);
+                break;
+            default:
+                logger.info("Unknown trust centre link mode: {}", linkMode);
+                break;
+        }
+
+        return false;
     }
 
 }

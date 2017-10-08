@@ -812,6 +812,59 @@
 		</response_parameters>
 	</command>
 
+	<command>
+		<name>Disallow Unsecured Rejoin</name>
+		<description>Set: Do not allow nodes to re-join unsecured</description>
+		<command_parameters>
+			<prompt>ATS0A3=</prompt>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>rejoin</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>String</data_type>
+				<name>password</name>
+				<description></description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Disallow TC Join</name>
+		<description>Set: Don’t allow nodes to join(TC setting)</description>
+		<command_parameters>
+			<prompt>ATS0A5=</prompt>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>join</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>String</data_type>
+				<name>password</name>
+				<description></description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Use TC Link Key</name>
+		<description>Set: Use Pre-Configured Trust Centre Link Key when joining</description>
+		<command_parameters>
+			<prompt>ATS0A8=</prompt>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>use Key</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>String</data_type>
+				<name>password</name>
+				<description></description>
+			</parameter>
+		</command_parameters>
+	</command>
 
 	<command>
 		<name>Set Main Function</name>

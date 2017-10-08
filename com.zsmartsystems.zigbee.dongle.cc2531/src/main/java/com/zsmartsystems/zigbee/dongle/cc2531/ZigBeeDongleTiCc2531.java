@@ -18,6 +18,7 @@ import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
+import com.zsmartsystems.zigbee.ZigBeeTcLinkMode;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoActiveEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoCallbackIncoming;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoEndDeviceAnnounce;
@@ -165,7 +166,12 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
-    public boolean setZigBeeLinkKey(ZigBeeKey key) {
+    public boolean setTcLinkKey(ZigBeeKey key) {
+        return false;
+    }
+
+    @Override
+    public boolean setTcLinkMode(ZigBeeTcLinkMode linkMode) {
         return false;
     }
 

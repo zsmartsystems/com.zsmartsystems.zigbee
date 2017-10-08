@@ -13,6 +13,7 @@ import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetwork;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
+import com.zsmartsystems.zigbee.ZigBeeTcLinkMode;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 
@@ -148,10 +149,18 @@ public interface ZigBeeTransportTransmit {
     boolean setZigBeeNetworkKey(ZigBeeKey key);
 
     /**
-     * Sets the ZigBee link security key to the specified value
+     * Sets the Trust Center link security key to the specified value
      *
      * @param key the new link key as {@link ZigBeeKey}
      * @return true if the key was set correctly
      */
-    boolean setZigBeeLinkKey(ZigBeeKey key);
+    boolean setTcLinkKey(ZigBeeKey key);
+
+    /**
+     * Sets the Trust Center link mode
+     *
+     * @param linkMode the {@link ZigBeeTcLinkMode} defining the Trust Center link mode
+     * @return true if the trust center link mode was updated
+     */
+    boolean setTcLinkMode(ZigBeeTcLinkMode linkMode);
 }

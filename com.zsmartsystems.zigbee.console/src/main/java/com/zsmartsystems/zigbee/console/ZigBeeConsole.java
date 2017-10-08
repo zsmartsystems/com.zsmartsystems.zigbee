@@ -37,6 +37,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeTcLinkMode;
 import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServer;
 import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServerStatus;
@@ -160,6 +161,8 @@ public final class ZigBeeConsole {
         commands.put("enroll", new EnrollCommand());
 
         commands.put("firmware", new FirmwareCommand());
+
+        commands.put("trustcentre", new TrustCentreCommand());
 
         this.networkManager = networkManager;
         zigBeeApi = new ZigBeeApi(networkManager);
@@ -2608,6 +2611,42 @@ public final class ZigBeeConsole {
                 out.println("Error executing command: " + result.getMessage());
                 return true;
             }
+        }
+    }
+
+    /**
+     * Trust centre configuration.
+     */
+    private class TrustCentreCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Configures the trust centre.";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "trustcentre [LINKMODE] [MODE]";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
+            if (args.length != 3) {
+                return false;
+            }
+
+            ZigBeeTcLinkMode linkMode = ZigBeeTcLinkMode.valueOf(args[2].toUpperCase());
+
+            dongle.setTcLinkMode(linkMode);
+            return true;
         }
     }
 

@@ -342,7 +342,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return true if the key was set
      */
     public boolean setZigBeeLinkKey(final ZigBeeKey key) {
-        return transport.setZigBeeLinkKey(key);
+        return transport.setTcLinkKey(key);
     }
 
     /**
@@ -379,6 +379,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     /**
      * Get the transport layer version string
+     *
+     * @return {@link String} containing the transport layer version
      */
     public String getTransportVersionString() {
         return transport.getVersionString();
@@ -1102,6 +1104,15 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 networkStateSerializer.serialize(this);
             }
         }
+    }
+
+    /**
+     * Sets the Trust Center link mode
+     *
+     * @param linkMode the {@link ZigBeeTcLinkMode} defining the Trust Center link mode
+     */
+    public boolean setTcLinkMode(ZigBeeTcLinkMode linkMode) {
+        return transport.setTcLinkMode(linkMode);
     }
 
 }
