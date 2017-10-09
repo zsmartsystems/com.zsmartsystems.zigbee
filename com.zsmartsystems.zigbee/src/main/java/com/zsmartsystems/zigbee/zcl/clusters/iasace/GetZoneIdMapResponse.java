@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.zcl.clusters.iasace;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -439,7 +446,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(621);
         builder.append("GetZoneIdMapResponse [");
         builder.append(super.toString());
         builder.append(", zoneIdMapSection0=");
@@ -474,7 +481,7 @@ public class GetZoneIdMapResponse extends ZclCommand {
         builder.append(zoneIdMapSection14);
         builder.append(", zoneIdMapSection15=");
         builder.append(zoneIdMapSection15);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.dongle.cc2531;
 
 import java.lang.reflect.Field;
@@ -9,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
+import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoActiveEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoCallbackIncoming;
@@ -83,8 +91,7 @@ public class ZigBeeDongleTiCc2531
      *            the serial port
      */
     public ZigBeeDongleTiCc2531(final ZigBeePort serialPort) {
-        networkManager = new ZigBeeNetworkManager(new CommandInterfaceImpl(serialPort), NetworkMode.Coordinator,
-                2500L);
+        networkManager = new ZigBeeNetworkManager(new CommandInterfaceImpl(serialPort), NetworkMode.Coordinator, 2500L);
     }
 
     /**
@@ -148,13 +155,18 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
-    public boolean setZigBeeSecurityKey(int[] keyData) {
-        byte[] key = new byte[16];
+    public boolean setZigBeeNetworkKey(ZigBeeKey key) {
+        byte[] keyData = new byte[16];
         int cnt = 0;
-        for (int keyVal : keyData) {
-            key[cnt] = (byte) keyVal;
+        for (int keyVal : key.getValue()) {
+            keyData[cnt] = (byte) keyVal;
         }
-        return networkManager.setNetworkKey(key);
+        return networkManager.setNetworkKey(keyData);
+    }
+
+    @Override
+    public boolean setZigBeeLinkKey(ZigBeeKey key) {
+        return false;
     }
 
     @Override

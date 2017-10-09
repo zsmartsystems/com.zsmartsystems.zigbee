@@ -1,9 +1,17 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.zcl.protocol;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import com.zsmartsystems.zigbee.zcl.field.*;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.descriptors.*;
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -28,6 +36,7 @@ public enum ZclDataType {
     N_X_ATTRIBUTE_REPORTING_CONFIGURATION_RECORD("N X Attribute reporting configuration record", AttributeReportingConfigurationRecord.class, 0x00, false),
     N_X_ATTRIBUTE_SELECTOR("N X Attribute selector", Object.class, 0x00, false),
     N_X_ATTRIBUTE_STATUS_RECORD("N X Attribute status record", AttributeStatusRecord.class, 0x00, false),
+    N_X_EXTENDED_ATTRIBUTE_INFORMATION("N x Extended Attribute Information", ExtendedAttributeInformation.class, 0x00, false),
     N_X_EXTENSION_FIELD_SET("N X Extension field set", ExtensionFieldSet.class, 0x00, false),
     N_X_NEIGHBORS_INFORMATION("N X Neighbors information", NeighborInformation.class, 0x00, false),
     N_X_READ_ATTRIBUTE_STATUS_RECORD("N X Read attribute status record", ReadAttributeStatusRecord.class, 0x00, false),
@@ -43,7 +52,9 @@ public enum ZclDataType {
     UNSIGNED_32_BIT_INTEGER("Unsigned 32-bit integer", Integer.class, 0x23, true),
     UNSIGNED_8_BIT_INTEGER("Unsigned 8-bit integer", Integer.class, 0x20, true),
     UTCTIME("UTCTime", Calendar.class, 0xE2, true),
+    ZCL_STATUS("Zcl Status", ZclStatus.class, 0x00, false),
     EXTENDED_PANID("EXTENDED_PANID", ExtendedPanId.class, 0x00, false),
+    BINDING_TABLE("Binding Table", BindingTable.class, 0x00, false),
     BITMAP_32_BIT("Bitmap 32-bit", Integer.class, 0x1B, false),
     CLUSTERID("ClusterId", Integer.class, 0x00, false),
     COMPLEX_DESCRIPTOR("Complex Descriptor", ComplexDescriptor.class, 0x00, false),
@@ -51,6 +62,7 @@ public enum ZclDataType {
     NEIGHBOR_TABLE("Neighbor Table", NeighborTable.class, 0x00, false),
     NODE_DESCRIPTOR("Node Descriptor", NodeDescriptor.class, 0x00, false),
     NWK_ADDRESS("NWK address", Integer.class, 0x00, false),
+    N_X_BINDING_TABLE("N x Binding Table", BindingTable.class, 0x00, false),
     N_X_IEEE_ADDRESS("N X IEEE Address", Long.class, 0x00, false),
     N_X_NWK_ADDRESS("N X NWK Address", Integer.class, 0x00, false),
     POWER_DESCRIPTOR("Power Descriptor", PowerDescriptor.class, 0x00, false),

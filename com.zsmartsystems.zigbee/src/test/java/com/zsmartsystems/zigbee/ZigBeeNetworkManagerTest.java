@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee;
 
 import static org.junit.Assert.assertEquals;
@@ -10,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
@@ -214,7 +220,6 @@ public class ZigBeeNetworkManagerTest
         ZigBeeApsFrame apsFrame = mockedApsFrameListener.getValue();
         assertEquals(ZigBeeNwkAddressMode.DEVICE, apsFrame.getAddressMode());
         assertEquals(1234, apsFrame.getDestinationAddress());
-        assertEquals(0, apsFrame.getSequence());
         assertEquals(0, apsFrame.getSourceAddress());
 
         assertEquals(0x104, apsFrame.getProfile());
@@ -222,7 +227,6 @@ public class ZigBeeNetworkManagerTest
         assertEquals(56, apsFrame.getDestinationEndpoint());
     }
 
-    @Ignore
     @Test
     public void testReceiveZclCommand() {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
@@ -298,6 +302,26 @@ public class ZigBeeNetworkManagerTest
         ExtendedPanId panId = new ExtendedPanId("1");
         assertTrue(networkManager.setZigBeeExtendedPanId(panId));
         assertEquals(new ExtendedPanId("1"), networkManager.getZigBeeExtendedPanId());
+    }
+
+    @Test
+    public void testPermitJoin() {
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+        networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
+
+        assertTrue(networkManager.permitJoin(0));
+        assertTrue(networkManager.permitJoin(254));
+        assertFalse(networkManager.permitJoin(255));
+
+        // Check that the unicast sends 1 frame
+        int start = mockedApsFrameListener.getAllValues().size();
+        networkManager.permitJoin(new ZigBeeDeviceAddress(1), 1);
+        assertEquals(1, mockedApsFrameListener.getAllValues().size() - start);
+
+        // Check that the broadcast sends 2 frames
+        start = mockedApsFrameListener.getAllValues().size();
+        networkManager.permitJoin(1);
+        assertEquals(2, mockedApsFrameListener.getAllValues().size() - start);
     }
 
     private ZigBeeNetworkManager mockZigBeeNetworkManager() {

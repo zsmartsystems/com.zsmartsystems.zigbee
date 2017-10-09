@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.zcl.protocol;
 
 import java.lang.reflect.Constructor;
@@ -119,6 +126,12 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesStructuredCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesStructuredCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesStructuredResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsReceived;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsReceivedResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsGenerated;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsGeneratedResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtended;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtendedResponse;
 
 
 /**
@@ -222,11 +235,47 @@ public enum ZclCommandType {
      */
     DISCOVER_ATTRIBUTES_COMMAND(0xFFFF, 12, DiscoverAttributesCommand.class, true),
     /**
+     * DISCOVER_ATTRIBUTES_EXTENDED: Discover Attributes Extended
+     * <p>
+     * See {@link DiscoverAttributesExtended}
+     */
+    DISCOVER_ATTRIBUTES_EXTENDED(0xFFFF, 21, DiscoverAttributesExtended.class, true),
+    /**
+     * DISCOVER_ATTRIBUTES_EXTENDED_RESPONSE: Discover Attributes Extended Response
+     * <p>
+     * See {@link DiscoverAttributesExtendedResponse}
+     */
+    DISCOVER_ATTRIBUTES_EXTENDED_RESPONSE(0xFFFF, 22, DiscoverAttributesExtendedResponse.class, true),
+    /**
      * DISCOVER_ATTRIBUTES_RESPONSE: Discover Attributes Response
      * <p>
      * See {@link DiscoverAttributesResponse}
      */
     DISCOVER_ATTRIBUTES_RESPONSE(0xFFFF, 13, DiscoverAttributesResponse.class, true),
+    /**
+     * DISCOVER_COMMANDS_GENERATED: Discover Commands Generated
+     * <p>
+     * See {@link DiscoverCommandsGenerated}
+     */
+    DISCOVER_COMMANDS_GENERATED(0xFFFF, 19, DiscoverCommandsGenerated.class, true),
+    /**
+     * DISCOVER_COMMANDS_GENERATED_RESPONSE: Discover Commands Generated Response
+     * <p>
+     * See {@link DiscoverCommandsGeneratedResponse}
+     */
+    DISCOVER_COMMANDS_GENERATED_RESPONSE(0xFFFF, 20, DiscoverCommandsGeneratedResponse.class, true),
+    /**
+     * DISCOVER_COMMANDS_RECEIVED: Discover Commands Received
+     * <p>
+     * See {@link DiscoverCommandsReceived}
+     */
+    DISCOVER_COMMANDS_RECEIVED(0xFFFF, 17, DiscoverCommandsReceived.class, true),
+    /**
+     * DISCOVER_COMMANDS_RECEIVED_RESPONSE: Discover Commands Received Response
+     * <p>
+     * See {@link DiscoverCommandsReceivedResponse}
+     */
+    DISCOVER_COMMANDS_RECEIVED_RESPONSE(0xFFFF, 18, DiscoverCommandsReceivedResponse.class, true),
     /**
      * EMERGENCY_COMMAND: Emergency Command
      * <p>

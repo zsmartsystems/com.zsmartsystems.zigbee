@@ -1,9 +1,17 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 
 /**
  * Default Response value object class.
@@ -27,7 +35,7 @@ public class DefaultResponse extends ZclCommand {
     /**
      * Status code command message field.
      */
-    private Integer statusCode;
+    private ZclStatus statusCode;
 
     /**
      * Default constructor.
@@ -74,7 +82,7 @@ public class DefaultResponse extends ZclCommand {
      *
      * @return the Status code
      */
-    public Integer getStatusCode() {
+    public ZclStatus getStatusCode() {
         return statusCode;
     }
 
@@ -83,32 +91,32 @@ public class DefaultResponse extends ZclCommand {
      *
      * @param statusCode the Status code
      */
-    public void setStatusCode(final Integer statusCode) {
+    public void setStatusCode(final ZclStatus statusCode) {
         this.statusCode = statusCode;
     }
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(commandIdentifier, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(statusCode, ZclDataType.ENUMERATION_8_BIT);
+        serializer.serialize(statusCode, ZclDataType.ZCL_STATUS);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         commandIdentifier = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        statusCode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        statusCode = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(85);
         builder.append("DefaultResponse [");
         builder.append(super.toString());
         builder.append(", commandIdentifier=");
         builder.append(commandIdentifier);
         builder.append(", statusCode=");
         builder.append(statusCode);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.dongle.ember;
 
 import java.util.Arrays;
@@ -12,6 +19,7 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeDeviceStatus;
 import com.zsmartsystems.zigbee.ZigBeeException;
+import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
@@ -128,12 +136,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_MAX_HOPS, 30);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_TX_POWER_MODE, 0);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SUPPORTED_NETWORKS, 2);
-
-        // New
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_KEY_TABLE_SIZE, 4);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS, 0x01);
-
-        // stackConfiguration.put(EzspConfigId.EZSP_CONFIG_MAX_END_DEVICE_CHILDREN, 2);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_MAX_END_DEVICE_CHILDREN, 16);
 
         stackPolicies = new HashMap<EzspPolicyId, EzspDecisionId>();
         stackPolicies.put(EzspPolicyId.EZSP_TRUST_CENTER_POLICY, EzspDecisionId.EZSP_ALLOW_PRECONFIGURED_KEY_JOINS);
@@ -574,9 +579,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     @Override
     public void handleLinkStateChange(boolean linkState) {
         // Handle link changes and notify framework or just reset link with dongle?
-        if (!linkState) {
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
-        }
+        zigbeeTransportReceive.setNetworkState(linkState ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
     }
 
     @Override
@@ -613,9 +616,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     }
 
     @Override
-    public boolean setZigBeeSecurityKey(int[] keyData) {
-        networkKey.setContents(keyData);
+    public boolean setZigBeeNetworkKey(final ZigBeeKey key) {
+        networkKey.setContents(key.getValue());
 
+        return false;
+    }
+
+    @Override
+    public boolean setZigBeeLinkKey(ZigBeeKey key) {
         return false;
     }
 
@@ -624,25 +632,4 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         return versionString;
     }
 
-    /*
-     * private EmberStatus removeDevice() {
-     * logger.debug("EZSP removedevice: {}, {}");
-     * EzspRemoveDeviceRequest removeDeviceRequest = new EzspRemoveDeviceRequest();
-     * removeDeviceRequest.setDestLong(new IeeeAddress("001FEE0000000798"));
-     * removeDeviceRequest.setDestShort(37028);
-     * removeDeviceRequest.setTargetLong(new IeeeAddress("001FEE0000000798"));
-     * EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(removeDeviceRequest,
-     * EzspRemoveDeviceResponse.class);
-     * ashHandler.sendEzspTransaction(transaction);
-     * EzspRemoveDeviceResponse removeDeviceResponse = (EzspRemoveDeviceResponse) transaction.getResponse();
-     * logger.debug(removeDeviceResponse.toString());
-     * if (removeDeviceResponse.getStatus() != EmberStatus.EMBER_SUCCESS
-     * && removeDeviceResponse.getStatus() != EmberStatus.EMBER_NOT_JOINED) {
-     * logger.debug("Error during remove device: {}", removeDeviceResponse);
-     * return EmberStatus.UNKNOWN;
-     * }
-     *
-     * return removeDeviceResponse.getStatus();
-     * }
-     */
 }

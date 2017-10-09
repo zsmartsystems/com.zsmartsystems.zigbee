@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 /*
    Copyright 2008-2013 Andrew Rapp, http://code.google.com/p/xbee-api/
 
@@ -135,6 +142,25 @@ public class ZToolPacket {
 
     public int[] getPacket() {
         return packet;
+    }
+
+    /**
+     * Gets a hex dump of the packet data
+     *
+     * @return {@link String} containing the packet data
+     */
+    public String getPacketString() {
+        StringBuilder builder = new StringBuilder();
+
+        boolean first = true;
+        for (int value : packet) {
+            if (!first) {
+                builder.append(' ');
+            }
+            first = false;
+            builder.append(String.format("%02X", value));
+        }
+        return builder.toString();
     }
 
     public int getLEN() {

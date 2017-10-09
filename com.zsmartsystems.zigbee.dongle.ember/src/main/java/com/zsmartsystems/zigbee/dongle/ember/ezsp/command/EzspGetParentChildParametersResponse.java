@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2014-2017 by the respective copyright holders.
- *
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -127,14 +126,14 @@ public class EzspGetParentChildParametersResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(114);
         builder.append("EzspGetParentChildParametersResponse [childCount=");
         builder.append(childCount);
         builder.append(", parentEui64=");
         builder.append(parentEui64);
         builder.append(", parentNodeId=");
         builder.append(parentNodeId);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

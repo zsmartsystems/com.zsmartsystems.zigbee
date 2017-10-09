@@ -1,8 +1,13 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.dongle.ember.ash;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -284,59 +289,6 @@ public class AshFrame {
         RST,
         RSTACK,
         ERROR
-    }
-
-    enum ErrorCode {
-        UNKNOWN(0x00),
-        EXTERNAL(0x01),
-        POWER_ON(0x02),
-        WATCHDOG(0x03),
-        ASSERT(0x06),
-        BOOTLOADER(0x09),
-        SOFTWARE(0x0B),
-        ERR_ACK_TIMEOUT(0x51);
-
-        /**
-         * A mapping between the integer code and its corresponding error type
-         * to facilitate lookup by code.
-         */
-        private static Map<Integer, ErrorCode> codeMapping;
-
-        private int key;
-
-        private ErrorCode(int key) {
-            this.key = key;
-        }
-
-        private static void initMapping() {
-            codeMapping = new HashMap<Integer, ErrorCode>();
-            for (ErrorCode s : values()) {
-                codeMapping.put(s.key, s);
-            }
-        }
-
-        /**
-         * Lookup function based on the error type code. Returns null if the
-         * code does not exist.
-         *
-         * @param i
-         *            the code to lookup
-         * @return enumeration value of the error type.
-         */
-        public static ErrorCode getErrorCode(int i) {
-            if (codeMapping == null) {
-                initMapping();
-            }
-
-            return codeMapping.get(i);
-        }
-
-        /**
-         * @return the key
-         */
-        public int getKey() {
-            return key;
-        }
     }
 
     public static String frameToString(int[] inputBuffer) {

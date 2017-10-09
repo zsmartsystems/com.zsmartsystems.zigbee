@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
 import com.zsmartsystems.zigbee.CommandResult;
@@ -6,11 +13,18 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtended;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtendedResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsGenerated;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsGeneratedResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsReceived;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsReceivedResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesStructuredCommand;
@@ -30,6 +44,7 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.field.ExtendedAttributeInformation;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
@@ -296,10 +311,10 @@ public class ZclGeneralCluster extends ZclCluster {
      * is set to 0.
      *
      * @param commandIdentifier {@link Integer} Command identifier
-     * @param statusCode {@link Integer} Status code
+     * @param statusCode {@link ZclStatus} Status code
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> defaultResponse(Integer commandIdentifier, Integer statusCode) {
+    public Future<CommandResult> defaultResponse(Integer commandIdentifier, ZclStatus statusCode) {
         DefaultResponse command = new DefaultResponse();
 
         // Set the fields
@@ -408,6 +423,127 @@ public class ZclGeneralCluster extends ZclCluster {
         return send(command);
     }
 
+    /**
+     * The Discover Commands Received
+     * <p>
+     * The Discover Commands Received command is generated when a remote device wishes to discover the
+     * optional and mandatory commands the cluster to which this command is sent can process.
+     *
+     * @param startCommandIdentifier {@link Integer} Start command identifier
+     * @param maximumCommandIdentifiers {@link Integer} Maximum command identifiers
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> discoverCommandsReceived(Integer startCommandIdentifier, Integer maximumCommandIdentifiers) {
+        DiscoverCommandsReceived command = new DiscoverCommandsReceived();
+
+        // Set the fields
+        command.setStartCommandIdentifier(startCommandIdentifier);
+        command.setMaximumCommandIdentifiers(maximumCommandIdentifiers);
+
+        return send(command);
+    }
+
+    /**
+     * The Discover Commands Received Response
+     * <p>
+     * The Discover Commands Received Response is generated in response to a Discover Commands Received
+     * command.
+     *
+     * @param discoveryComplete {@link Integer} Discovery complete
+     * @param commandIdentifiers {@link List<Integer>} Command identifiers
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> discoverCommandsReceivedResponse(Integer discoveryComplete, List<Integer> commandIdentifiers) {
+        DiscoverCommandsReceivedResponse command = new DiscoverCommandsReceivedResponse();
+
+        // Set the fields
+        command.setDiscoveryComplete(discoveryComplete);
+        command.setCommandIdentifiers(commandIdentifiers);
+
+        return send(command);
+    }
+
+    /**
+     * The Discover Commands Generated
+     * <p>
+     * The Discover Commands Generated command is generated when a remote device wishes to discover the
+     * commands that a cluster may generate on the device to which this command is directed.
+     *
+     * @param startCommandIdentifier {@link Integer} Start command identifier
+     * @param maximumCommandIdentifiers {@link Integer} Maximum command identifiers
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> discoverCommandsGenerated(Integer startCommandIdentifier, Integer maximumCommandIdentifiers) {
+        DiscoverCommandsGenerated command = new DiscoverCommandsGenerated();
+
+        // Set the fields
+        command.setStartCommandIdentifier(startCommandIdentifier);
+        command.setMaximumCommandIdentifiers(maximumCommandIdentifiers);
+
+        return send(command);
+    }
+
+    /**
+     * The Discover Commands Generated Response
+     * <p>
+     * The Discover Commands Generated Response is generated in response to a Discover Commands Generated
+     * command.
+     *
+     * @param discoveryComplete {@link Integer} Discovery complete
+     * @param commandIdentifiers {@link List<Integer>} Command identifiers
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> discoverCommandsGeneratedResponse(Integer discoveryComplete, List<Integer> commandIdentifiers) {
+        DiscoverCommandsGeneratedResponse command = new DiscoverCommandsGeneratedResponse();
+
+        // Set the fields
+        command.setDiscoveryComplete(discoveryComplete);
+        command.setCommandIdentifiers(commandIdentifiers);
+
+        return send(command);
+    }
+
+    /**
+     * The Discover Attributes Extended
+     * <p>
+     * The Discover Attributes Extended command is generated when a remote device wishes to discover the
+     * identifiers and types of the attributes on a device which are supported within the cluster to which this
+     * command is directed, including whether the attribute is readable, writeable or reportable.
+     *
+     * @param startAttributeIdentifier {@link Integer} Start attribute identifier
+     * @param maximumAttributeIdentifiers {@link Integer} Maximum attribute identifiers
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> discoverAttributesExtended(Integer startAttributeIdentifier, Integer maximumAttributeIdentifiers) {
+        DiscoverAttributesExtended command = new DiscoverAttributesExtended();
+
+        // Set the fields
+        command.setStartAttributeIdentifier(startAttributeIdentifier);
+        command.setMaximumAttributeIdentifiers(maximumAttributeIdentifiers);
+
+        return send(command);
+    }
+
+    /**
+     * The Discover Attributes Extended Response
+     * <p>
+     * The Discover Attributes Extended Response command is generated in response to a Discover Attributes
+     * Extended command.
+     *
+     * @param discoveryComplete {@link Integer} Discovery complete
+     * @param commandIdentifiers {@link List<ExtendedAttributeInformation>} Command identifiers
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> discoverAttributesExtendedResponse(Integer discoveryComplete, List<ExtendedAttributeInformation> commandIdentifiers) {
+        DiscoverAttributesExtendedResponse command = new DiscoverAttributesExtendedResponse();
+
+        // Set the fields
+        command.setDiscoveryComplete(discoveryComplete);
+        command.setCommandIdentifiers(commandIdentifiers);
+
+        return send(command);
+    }
+
     @Override
     public ZclCommand getCommandFromId(int commandId) {
         switch (commandId) {
@@ -445,6 +581,18 @@ public class ZclGeneralCluster extends ZclCluster {
                 return new WriteAttributesStructuredCommand();
             case 16: // WRITE_ATTRIBUTES_STRUCTURED_RESPONSE
                 return new WriteAttributesStructuredResponse();
+            case 17: // DISCOVER_COMMANDS_RECEIVED
+                return new DiscoverCommandsReceived();
+            case 18: // DISCOVER_COMMANDS_RECEIVED_RESPONSE
+                return new DiscoverCommandsReceivedResponse();
+            case 19: // DISCOVER_COMMANDS_GENERATED
+                return new DiscoverCommandsGenerated();
+            case 20: // DISCOVER_COMMANDS_GENERATED_RESPONSE
+                return new DiscoverCommandsGeneratedResponse();
+            case 21: // DISCOVER_ATTRIBUTES_EXTENDED
+                return new DiscoverAttributesExtended();
+            case 22: // DISCOVER_ATTRIBUTES_EXTENDED_RESPONSE
+                return new DiscoverAttributesExtendedResponse();
             default:
                 return null;
         }

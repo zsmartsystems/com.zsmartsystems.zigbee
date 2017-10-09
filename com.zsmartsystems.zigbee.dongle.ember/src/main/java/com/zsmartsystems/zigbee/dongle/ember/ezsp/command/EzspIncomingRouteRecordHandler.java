@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2014-2017 by the respective copyright holders.
- *
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,14 +7,13 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
  * Class to implement the Ember EZSP command <b>incomingRouteRecordHandler</b>.
  * <p>
- * A callback invoked when a route error message is received. The error indicates that a problem
- * routing to or from the target node was encountered.
+ * Reports the arrival of a route record command frame.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -24,21 +22,43 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspIncomingRouteRecordHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0x80;
+    public static int FRAME_ID = 0x59;
 
     /**
-     * EMBER_SOURCE_ROUTE_FAILURE or EMBER_MANY_TO_ONE_ROUTE_FAILURE.
-     * <p>
-     * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
-     */
-    private EmberStatus status;
-
-    /**
-     * The short id of the remote node.
+     * The source of the route record.
      * <p>
      * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
      */
-    private int target;
+    private int source;
+
+    /**
+     * The EUI64 of the source.
+     * <p>
+     * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
+     */
+    private IeeeAddress sourceEui;
+
+    /**
+     * The link quality from the node that last relayed the route record.
+     * <p>
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     */
+    private int lastHopLqi;
+
+    /**
+     * The energy level (in units of dBm) observed during the reception.
+     * <p>
+     * EZSP type is <i>int8s</i> - Java type is {@link int}
+     */
+    private int lastHopRssi;
+
+    /**
+     * The route record. Each relay in the list is an uint16_t node ID. The list is passed as uint8_t *
+     * to avoid alignment problems.
+     * <p>
+     * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
+     */
+    private int[] relayList;
 
     /**
      * Response and Handler constructor
@@ -48,58 +68,135 @@ public class EzspIncomingRouteRecordHandler extends EzspFrameResponse {
         super(inputBuffer);
 
         // Deserialize the fields
-        status = deserializer.deserializeEmberStatus();
-        target = deserializer.deserializeUInt16();
+        source = deserializer.deserializeUInt16();
+        sourceEui = deserializer.deserializeEmberEui64();
+        lastHopLqi = deserializer.deserializeUInt8();
+        lastHopRssi = deserializer.deserializeInt8S();
+        int relayCount = deserializer.deserializeUInt8();
+        relayList= deserializer.deserializeUInt8Array(relayCount);
     }
 
     /**
-     * EMBER_SOURCE_ROUTE_FAILURE or EMBER_MANY_TO_ONE_ROUTE_FAILURE.
-     * <p>
-     * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
-     *
-     * @return the current status as {@link EmberStatus}
-     */
-    public EmberStatus getStatus() {
-        return status;
-    }
-
-    /**
-     * EMBER_SOURCE_ROUTE_FAILURE or EMBER_MANY_TO_ONE_ROUTE_FAILURE.
-     *
-     * @param status the status to set as {@link EmberStatus}
-     */
-    public void setStatus(EmberStatus status) {
-        this.status = status;
-    }
-
-    /**
-     * The short id of the remote node.
+     * The source of the route record.
      * <p>
      * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
      *
-     * @return the current target as {@link int}
+     * @return the current source as {@link int}
      */
-    public int getTarget() {
-        return target;
+    public int getSource() {
+        return source;
     }
 
     /**
-     * The short id of the remote node.
+     * The source of the route record.
      *
-     * @param target the target to set as {@link int}
+     * @param source the source to set as {@link int}
      */
-    public void setTarget(int target) {
-        this.target = target;
+    public void setSource(int source) {
+        this.source = source;
+    }
+
+    /**
+     * The EUI64 of the source.
+     * <p>
+     * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
+     *
+     * @return the current sourceEui as {@link IeeeAddress}
+     */
+    public IeeeAddress getSourceEui() {
+        return sourceEui;
+    }
+
+    /**
+     * The EUI64 of the source.
+     *
+     * @param sourceEui the sourceEui to set as {@link IeeeAddress}
+     */
+    public void setSourceEui(IeeeAddress sourceEui) {
+        this.sourceEui = sourceEui;
+    }
+
+    /**
+     * The link quality from the node that last relayed the route record.
+     * <p>
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     *
+     * @return the current lastHopLqi as {@link int}
+     */
+    public int getLastHopLqi() {
+        return lastHopLqi;
+    }
+
+    /**
+     * The link quality from the node that last relayed the route record.
+     *
+     * @param lastHopLqi the lastHopLqi to set as {@link int}
+     */
+    public void setLastHopLqi(int lastHopLqi) {
+        this.lastHopLqi = lastHopLqi;
+    }
+
+    /**
+     * The energy level (in units of dBm) observed during the reception.
+     * <p>
+     * EZSP type is <i>int8s</i> - Java type is {@link int}
+     *
+     * @return the current lastHopRssi as {@link int}
+     */
+    public int getLastHopRssi() {
+        return lastHopRssi;
+    }
+
+    /**
+     * The energy level (in units of dBm) observed during the reception.
+     *
+     * @param lastHopRssi the lastHopRssi to set as {@link int}
+     */
+    public void setLastHopRssi(int lastHopRssi) {
+        this.lastHopRssi = lastHopRssi;
+    }
+
+    /**
+     * The route record. Each relay in the list is an uint16_t node ID. The list is passed as uint8_t *
+     * to avoid alignment problems.
+     * <p>
+     * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
+     *
+     * @return the current relayList as {@link int[]}
+     */
+    public int[] getRelayList() {
+        return relayList;
+    }
+
+    /**
+     * The route record. Each relay in the list is an uint16_t node ID. The list is passed as uint8_t *
+     * to avoid alignment problems.
+     *
+     * @param relayList the relayList to set as {@link int[]}
+     */
+    public void setRelayList(int[] relayList) {
+        this.relayList = relayList;
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("EzspIncomingRouteRecordHandler [status=");
-        builder.append(status);
-        builder.append(", target=");
-        builder.append(target);
-        builder.append("]");
+        final StringBuilder builder = new StringBuilder(183);
+        builder.append("EzspIncomingRouteRecordHandler [source=");
+        builder.append(source);
+        builder.append(", sourceEui=");
+        builder.append(sourceEui);
+        builder.append(", lastHopLqi=");
+        builder.append(lastHopLqi);
+        builder.append(", lastHopRssi=");
+        builder.append(lastHopRssi);
+        builder.append(", relayList=");
+        for (int c = 0; c < relayList.length; c++) {
+            if (c > 0) {
+                builder.append(" ");
+            }
+            builder.append(String.format("%02X", relayList[c]));
+        }
+        builder.append(']');
         return builder.toString();
     }
 }

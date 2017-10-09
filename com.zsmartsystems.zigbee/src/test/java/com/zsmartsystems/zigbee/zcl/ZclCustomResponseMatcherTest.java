@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.zcl;
 
 import static org.junit.Assert.assertFalse;
@@ -28,10 +35,10 @@ public class ZclCustomResponseMatcherTest {
 
         zclCommand.setTransactionId(22);
         zclResponse.setTransactionId(22);
-        zclResponse.setStatusCode(0);
+        zclResponse.setStatusCode(ZclStatus.SUCCESS);
         assertFalse(matcher.isMatch(zclCommand, zclResponse));
 
-        zclResponse.setStatusCode(1);
+        zclResponse.setStatusCode(ZclStatus.FAILURE);
         assertTrue(matcher.isMatch(zclCommand, zclResponse));
 
         zclResponse.setTransactionId(222);

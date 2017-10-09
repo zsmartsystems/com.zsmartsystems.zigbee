@@ -1,6 +1,17 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.zdo.command;
 
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 
 /**
  * Management Direct Join Response value object class.
@@ -21,11 +32,31 @@ public class ManagementDirectJoinResponse extends ZdoResponse {
     }
 
     @Override
+    public void serialize(final ZclFieldSerializer serializer) {
+        super.serialize(serializer);
+
+        serializer.serialize(status, ZclDataType.ZDO_STATUS);
+    }
+
+    @Override
+    public void deserialize(final ZclFieldDeserializer deserializer) {
+        super.deserialize(deserializer);
+
+        status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
+        if (status != ZdoStatus.SUCCESS) {
+            // Don't read the full response if we have an error
+            return;
+        }
+    }
+
+    @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(57);
         builder.append("ManagementDirectJoinResponse [");
         builder.append(super.toString());
-        builder.append("]");
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(']');
         return builder.toString();
     }
 

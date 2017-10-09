@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.zcl.clusters.rssilocation;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -159,7 +166,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(183);
         builder.append("SetAbsoluteLocationCommand [");
         builder.append(super.toString());
         builder.append(", coordinate1=");
@@ -172,7 +179,7 @@ public class SetAbsoluteLocationCommand extends ZclCommand {
         builder.append(power);
         builder.append(", pathLossExponent=");
         builder.append(pathLossExponent);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

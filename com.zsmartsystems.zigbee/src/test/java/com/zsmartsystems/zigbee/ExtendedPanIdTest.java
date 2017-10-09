@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee;
 
 import static org.junit.Assert.assertEquals;
@@ -5,6 +12,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
+import java.security.InvalidParameterException;
 
 import org.junit.Test;
 
@@ -25,6 +33,11 @@ public class ExtendedPanIdTest {
     public void testConstructorArray() {
         ExtendedPanId address = new ExtendedPanId(new int[] { 0x0b, 0x88, 0xdc, 0x00, 0x01, 0x88, 0x17, 0x00 });
         assertEquals("0017880100DC880B", address.toString());
+    }
+
+    @Test(expected = InvalidParameterException.class)
+    public void testConstructorArrayShort() {
+        new ExtendedPanId(new int[] { 0x0b, 0x88, 0xdc, 0x00, 0x01, 0x88, 0x17 });
     }
 
     @Test

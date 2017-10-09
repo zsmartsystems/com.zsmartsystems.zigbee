@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 /*
    Copyright 2008-2013 Andrew Rapp, http://code.google.com/p/xbee-api/
 
@@ -107,7 +114,7 @@ public class ZToolPacketParser implements Runnable {
 
                     logger.trace("Response is {} -> {}", response.getClass().getSimpleName(), response);
                     if (response.isError()) {
-                        logger.debug("Received a BAD PACKET {}", response.getPacket());
+                        logger.debug("Received a BAD PACKET {}", response.getPacketString());
                         inputStream.reset();
                         continue;
                     }

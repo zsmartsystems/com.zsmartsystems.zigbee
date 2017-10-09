@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.dongle.ember.ash;
 
 import java.io.IOException;
@@ -19,7 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.dongle.ember.EzspFrameHandler;
-import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrame.ErrorCode;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrame.FrameType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
@@ -72,7 +78,7 @@ public class AshFrameHandler {
 
     private final int ASH_MAX_LENGTH = 131;
 
-    private int ackNum = 0;
+    private Integer ackNum = 0;
     private int frmNum = 0;
 
     /**
@@ -161,13 +167,13 @@ public class AshFrameHandler {
 
                                 final AshFrame packet = AshFrame.createFromInput(inputBuffer, inputCount);
                                 if (packet == null) {
-                                    logger.error("Received a BAD PACKET {}",
+                                    logger.error("<-- RX ASH frame: BAD PACKET {}",
                                             AshFrame.frameToString(inputBuffer, inputCount));
 
                                     // Send a NAK
                                     responseFrame = new AshFrameNak(ackNum);
                                 } else {
-                                    // logger.debug("<-- RX ASH frame: {}", packet.toString());
+                                    logger.debug("<-- RX ASH frame: {}", packet.toString());
 
                                     // Reset the exception counter
                                     exceptionCnt = 0;
@@ -180,7 +186,7 @@ public class AshFrameHandler {
 
                                             // Check for out of sequence frame number
                                             if (packet.getFrmNum() != ackNum) {
-                                                // Send an NAK
+                                                // Send a NAK
                                                 responseFrame = new AshFrameNak(ackNum);
                                             } else {
                                                 // Frame was in sequence
@@ -214,10 +220,18 @@ public class AshFrameHandler {
                                             sendRetry();
                                             break;
                                         case RSTACK:
+                                            // Stack has been reset!
                                             AshFrameRstAck rstAck = (AshFrameRstAck) packet;
+
+                                            // If we are already connected, we need to reconnect
+                                            if (stateConnected) {
+                                                reconnect();
+                                                break;
+                                            }
+
                                             // Make sure this is a software reset.
                                             // This avoids us reacting to a HW reset before our SW ack
-                                            if (rstAck.getResetType() != ErrorCode.SOFTWARE) {
+                                            if (rstAck.getResetType() != AshErrorCode.RESET_SOFTWARE) {
                                                 break;
                                             }
 
@@ -228,6 +242,7 @@ public class AshFrameHandler {
                                                 frmNum = 0;
                                                 sentQueue.clear();
                                                 logger.debug("ASH: Connected");
+                                                frameHandler.handleLinkStateChange(false);
                                             } else {
                                                 logger.debug("Invalid ASH version");
                                             }
@@ -235,15 +250,15 @@ public class AshFrameHandler {
                                         default:
                                             break;
                                     }
-
-                                    // Send an ACK
-                                    if (responseFrame != null) {
-                                        sendFrame(responseFrame);
-                                    }
-
-                                    // Send our next frame
-                                    sendNextFrame();
                                 }
+
+                                // Send the response
+                                if (responseFrame != null) {
+                                    sendFrame(responseFrame);
+                                }
+
+                                // Send the next frame
+                                sendNextFrame();
                             }
                             inputCount = 0;
                             inputError = false;
@@ -314,7 +329,7 @@ public class AshFrameHandler {
 
         // Check how many frames are outstanding
         if (sentQueue.size() >= TX_WINDOW) {
-            logger.trace("Sent queue larger than window [{} > {}].", sentQueue.size(), TX_WINDOW);
+            logger.debug("Sent queue larger than window [{} > {}].", sentQueue.size(), TX_WINDOW);
             return;
         }
 
@@ -331,7 +346,7 @@ public class AshFrameHandler {
         sendFrame(ashFrame);
     }
 
-    private void sendFrame(AshFrame ashFrame) {
+    private synchronized void sendFrame(AshFrame ashFrame) {
         if (ashFrame.getFrameType() == FrameType.DATA) {
             // Set the frame number
             ((AshFrameData) ashFrame).setFrmNum(frmNum);
@@ -358,6 +373,7 @@ public class AshFrameHandler {
     // Synchronize this method to ensure a packet gets sent as a block
     private synchronized void outputFrame(AshFrame ashFrame) {
         ashFrame.setAckNum(ackNum);
+        logger.debug("--> TX ASH frame: {}", ashFrame);
 
         // Send the data
         try {
@@ -372,7 +388,6 @@ public class AshFrameHandler {
         }
 
         // logger.debug(result.toString());
-        // logger.debug("--> TX ASH frame: {}", ashFrame);
 
         // Only start the timer for data frames
         if (ashFrame instanceof AshFrameData) {
@@ -392,7 +407,7 @@ public class AshFrameHandler {
     public void queueFrame(EzspFrameRequest request) {
         sendQueue.add(request);
 
-        // logger.debug("TX EZSP queue: {}", sendQueue.size());
+        logger.debug("TX EZSP queue: {}", sendQueue.size());
 
         sendNextFrame();
     }
@@ -412,6 +427,12 @@ public class AshFrameHandler {
         receiveTimeout = T_RX_ACK_INIT;
 
         sendFrame(reset);
+    }
+
+    private void reconnect() {
+        frameHandler.handleLinkStateChange(false);
+
+        connect();
     }
 
     /**
@@ -474,7 +495,7 @@ public class AshFrameHandler {
 
             if (retries++ > ACK_TIMEOUTS) {
                 // Too many retries.
-                // TODO: We probably should alert the upper layer so they can reset the link?
+                // We should alert the upper layer so they can reset the link?
                 frameHandler.handleLinkStateChange(false);
 
                 logger.debug("Error: number of retries exceeded [{}].", retries);

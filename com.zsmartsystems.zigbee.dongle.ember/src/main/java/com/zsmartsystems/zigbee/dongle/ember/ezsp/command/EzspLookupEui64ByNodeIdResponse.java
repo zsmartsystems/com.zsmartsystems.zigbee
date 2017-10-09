@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2014-2017 by the respective copyright holders.
- *
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -95,12 +94,12 @@ public class EzspLookupEui64ByNodeIdResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(84);
         builder.append("EzspLookupEui64ByNodeIdResponse [status=");
         builder.append(status);
         builder.append(", eui64=");
         builder.append(eui64);
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

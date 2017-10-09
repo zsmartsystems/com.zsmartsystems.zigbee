@@ -1,8 +1,15 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee;
 
 import java.math.BigInteger;
 import java.security.InvalidParameterException;
-import java.util.Objects;
+import java.util.Arrays;
 
 /**
  * Represents a 64 bit extended PAN Id
@@ -77,7 +84,7 @@ public class ExtendedPanId {
 
     /**
      * Check if the ExtendedPanId is valid. This checks the length of the ID, and checks
-     * it is not 0000000000000000 of FFFFFFFFFFFFFFFF.
+     * it is not 0000000000000000 or FFFFFFFFFFFFFFFF.
      *
      * @return true if the extended PAN ID is valid
      */
@@ -102,24 +109,25 @@ public class ExtendedPanId {
 
     @Override
     public int hashCode() {
-        return Objects.hash(panId[0], panId[1], panId[2], panId[3], panId[4], panId[5], panId[6], panId[7]);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(panId);
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
         if (obj == null) {
             return false;
         }
-        if (!ExtendedPanId.class.isAssignableFrom(obj.getClass())) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        final ExtendedPanId other = (ExtendedPanId) obj;
-        for (int cnt = 0; cnt < 8; cnt++) {
-            if (other.getValue()[cnt] != panId[cnt]) {
-                return false;
-            }
-        }
-        return true;
+        ExtendedPanId other = (ExtendedPanId) obj;
+        return Arrays.equals(panId, other.panId);
     }
 
     @Override

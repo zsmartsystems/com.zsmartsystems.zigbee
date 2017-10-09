@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2014-2017 by the respective copyright holders.
- *
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,7 +13,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 /**
  * Class to implement the Ember EZSP command <b>callback</b>.
  * <p>
- *  Indicates that there are currently no pending callbacks.
+ * Allows the NCP to respond with a pending callback.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -23,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspCallbackRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x07;
+    public static int FRAME_ID = 0x06;
 
     /**
      * Serialiser used to seialise to binary line data

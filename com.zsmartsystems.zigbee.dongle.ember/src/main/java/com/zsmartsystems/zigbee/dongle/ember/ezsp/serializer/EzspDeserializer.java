@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer;
 
 import java.util.HashSet;
@@ -16,6 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurity
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinDecision;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMacPassthroughType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNeighborTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
@@ -218,6 +226,10 @@ public class EzspDeserializer {
         return list;
     }
 
+    public EmberMacPassthroughType deserializeEmberMacPassthroughType() {
+        return EmberMacPassthroughType.getEmberMacPassthroughType(deserializeUInt8());
+    }
+
     public EmberJoinMethod deserializeEmberJoinMethod() {
         return EmberJoinMethod.getEmberJoinMethod(deserializeUInt8());
     }
@@ -249,4 +261,5 @@ public class EzspDeserializer {
 
         return list;
     }
+
 }

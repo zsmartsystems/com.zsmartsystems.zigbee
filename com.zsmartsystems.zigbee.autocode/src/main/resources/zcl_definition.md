@@ -140,7 +140,7 @@ is set to 0.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Command identifier         |Unsigned 8-bit integer     |
-|Status code                |8-bit enumeration          |
+|Status code                |Zcl Status                 |
 
 #### Discover Attributes Command [0x0c]
 
@@ -193,6 +193,74 @@ write attributes structured command.
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Records                    |N X Write attribute status record |
+
+
+#### Discover Commands Received [0x11]
+
+The Discover Commands Received command is generated when a remote device wishes to discover the
+optional and mandatory commands the cluster to which this command is sent can process.
+
+|Field Name                   |Data Type                  |
+|-----------------------------|---------------------------|
+|Start command identifier     |Unsigned 8-bit integer     |
+|Maximum command identifiers  |Unsigned 8-bit integer     |
+
+
+#### Discover Commands Received Response [0x12]
+
+The Discover Commands Received Response is generated in response to a Discover Commands Received
+command. 
+
+|Field Name                   |Data Type                  |
+|-----------------------------|---------------------------|
+|Discovery complete           |Unsigned 8-bit integer     |
+|Command identifiers          |N X Unsigned 8-bit integer |
+
+
+#### Discover Commands Generated [0x13]
+
+The Discover Commands Generated command is generated when a remote device wishes to discover the
+commands that a cluster may generate on the device to which this command is directed.
+
+|Field Name                   |Data Type                  |
+|-----------------------------|---------------------------|
+|Start command identifier     |Unsigned 8-bit integer     |
+|Maximum command identifiers  |Unsigned 8-bit integer     |
+
+#### Discover Commands Generated Response [0x14]
+
+The Discover Commands Generated Response is generated in response to a Discover Commands Generated
+command.
+
+|Field Name                   |Data Type                  |
+|-----------------------------|---------------------------|
+|Discovery complete           |Unsigned 8-bit integer     |
+|Command identifiers          |N X Unsigned 8-bit integer |
+
+
+#### Discover Attributes Extended [0x15]
+
+The Discover Attributes Extended command is generated when a remote device wishes to discover the
+identifiers and types of the attributes on a device which are supported within the cluster to which this
+command is directed, including whether the attribute is readable, writeable or reportable.
+
+|Field Name                   |Data Type                  |
+|-----------------------------|---------------------------|
+|Start attribute identifier   |Unsigned 16-bit integer    |
+|Maximum attribute identifiers|Unsigned 8-bit integer     |
+
+
+#### Discover Attributes Extended Response [0x16]
+
+The Discover Attributes Extended Response command is generated in response to a Discover Attributes
+Extended command. 
+
+|Field Name                   |Data Type                   |
+|-----------------------------|----------------------------|
+|Discovery complete           |Unsigned 8-bit integer             |
+|Command identifiers          |N x Extended Attribute Information |
+
+
 
 ## Basic [0x0000]
 
