@@ -176,9 +176,4 @@ public class ZclOnOffCluster extends ZclCluster {
                 return null;
         }
     }
-    
-    @Override
-    public void handleCommand(ZclCommand command) {
-        
-    }
 }
