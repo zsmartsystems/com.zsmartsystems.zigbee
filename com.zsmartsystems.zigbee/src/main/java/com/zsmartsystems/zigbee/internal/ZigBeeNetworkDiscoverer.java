@@ -217,10 +217,10 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusLis
                             break;
                         case NODE_DESCRIPTOR:
                             success = getNodeDescriptor(nodeNetworkAddress);
-                            break;
+                            break;  
                         case POWER_DESCRIPTOR:
-                            success = getPowerDescriptor(nodeNetworkAddress);
-                            break;
+                           success = getPowerDescriptor(nodeNetworkAddress);
+                           break;
                         case ACTIVE_ENDPOINTS:
                             success = getActiveEndpoints(nodeNetworkAddress);
                             break;
@@ -240,6 +240,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusLis
                     try {
                         logger.debug("{}: Discovery request {} failed. Wait before retry.", nodeNetworkAddress,
                                 discoveryState);
+                        logger.info("{} retries left for {} discovery state.", RETRY_COUNT-retries, discoveryState.name());
                         Thread.sleep(RETRY_PERIOD);
                     } catch (InterruptedException e) {
                         return;
@@ -313,6 +314,8 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusLis
                 synchronized (ieeeAddresses) {
                     ieeeAddresses.put(ieeeAddressResponse.getNwkAddrRemoteDev(), ieeeAddressResponse);
                 }
+                logger.info("Node {} found in {} network.", ieeeAddressResponse.getIeeeAddrRemoteDev().toString(), networkAddress);
+                
                 // Start discovery for any associated nodes
                 for (final int deviceNetworkAddress : ieeeAddressResponse.getNwkAddrAssocDevList()) {
                     startNodeDiscovery(deviceNetworkAddress);
@@ -345,6 +348,8 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusLis
             if (nodeDescriptorResponse == null) {
                 return false;
             }
+            
+            logger.info("Found a {} type node in {} network.", nodeDescriptorResponse.getNodeDescriptor().getLogicalType().name(), networkAddress);
 
             if (nodeDescriptorResponse.getStatus() == ZdoStatus.SUCCESS) {
                 // Create the node
@@ -469,6 +474,8 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusLis
 
                 // TODO: nodeDescriptorResponse is not used - does this matter?!
                 if (ieeeAddressResponse != null && nodeDescriptorResponse != null) {
+                    logger.debug("Adding device {} with simple descriptor.", ieeeAddressResponse.getIeeeAddrRemoteDev().toString());
+                    //logger.debug("Calling addOrUpdateDevice for {} device", ieeeAddressResponse.getIeeeAddrRemoteDev().getValue());
                     addOrUpdateDevice(ieeeAddressResponse, simpleDescriptorResponse);
 
                     return true;
@@ -508,8 +515,10 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusLis
         }
 
         if (newDevice) {
+            logger.debug("Device: {} has been added.", ieeeAddressResponse.getIeeeAddrRemoteDev().toString());
             networkManager.addNode(node);
         } else {
+            logger.debug("Device: {} has been updated.", ieeeAddressResponse.getIeeeAddrRemoteDev().toString());
             networkManager.updateNode(node);
         }
     }

@@ -42,7 +42,9 @@ public abstract class ZclCluster {
     private boolean isServer = false;
 
     private final List<ZclAttributeListener> attributeListeners = new ArrayList<ZclAttributeListener>();
-
+    
+    private final List<CommandListener> commandListeners = new ArrayList<CommandListener>();
+    
     protected Map<Integer, ZclAttribute> attributes = initializeAttributes();
 
     protected abstract Map<Integer, ZclAttribute> initializeAttributes();
@@ -310,7 +312,19 @@ public abstract class ZclCluster {
         }
         attributeListeners.add(listener);
     }
+    
+    public void addCommandListenerr(CommandListener listiner) {
+        // Don't add more than once.
+        if (CommandListener.contains(listener)) {
+            return;
+        }
+        CommandListener.add(listener);
+    }
 
+    public void removeCommandListenerrr(final CommandListener listener) {
+        attributeListeners.remove(listener);
+    }
+    
     public void removeAttributeListener(final ZclAttributeListener listener) {
         attributeListeners.remove(listener);
     }
@@ -321,6 +335,17 @@ public abstract class ZclCluster {
                 @Override
                 public void run() {
                     listener.attributeUpdated(attribute);
+                }
+            });
+        }
+    }
+    
+    private void notifyCommandListener(final ZclCommand command) {
+        for (final CommandListener listener : commandListeners) {
+            NotificationService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    listener.commandReceived(command);
                 }
             });
         }
@@ -355,7 +380,7 @@ public abstract class ZclCluster {
             attribute.updateValue(record.getAttributeValue());
             notifyAttributeListener(attribute);
         }
-    }
+    }  
 
     /**
      * Gets a command from the command ID (ie a command from client to server). If no command with the requested id is
@@ -377,5 +402,15 @@ public abstract class ZclCluster {
      */
     public ZclCommand getResponseFromId(int commandId) {
         return null;
+    }
+    
+    /**
+     * @handleCommand - handles the recieved command from the thing,
+     * 
+     * @param command - ZclCommand command
+     * @return - none
+     */
+    public void handleCommand(ZclCommand command) {
+        notifyCommandListener(command);
     }
 }

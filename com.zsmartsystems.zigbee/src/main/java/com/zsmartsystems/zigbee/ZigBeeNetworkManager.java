@@ -1105,6 +1105,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     public void addDevice(final ZigBeeDevice device) {
+        logger.debug("Adding device: {}", device.getDeviceAddress().getAddress());
         synchronized (networkDevices) {
             networkDevices.put(device.getDeviceAddress(), device);
         }

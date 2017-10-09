@@ -65,7 +65,7 @@ public class ZigBeeDevice implements CommandListener {
     /**
      * Label.
      */
-    private String label;
+    private String label; 
 
     public ZigBeeDevice(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
@@ -325,7 +325,7 @@ public class ZigBeeDevice implements CommandListener {
     public void setLabel(String label) {
         this.label = label;
     }
-
+    
     @Override
     public void commandReceived(Command command) {
         if (command instanceof ReportAttributesCommand
@@ -343,7 +343,7 @@ public class ZigBeeDevice implements CommandListener {
             // Pass the reports to the cluster
             cluster.handleAttributeReport(attributeCommand.getReports());
         }
-        if (command instanceof ReadAttributesResponse
+        else if (command instanceof ReadAttributesResponse
                 && ((ReadAttributesResponse) command).getSourceAddress().equals(networkAddress)) {
             ReadAttributesResponse attributeCommand = (ReadAttributesResponse) command;
 
@@ -359,8 +359,30 @@ public class ZigBeeDevice implements CommandListener {
             // Pass the reports to the cluster
             cluster.handleAttributeStatus(attributeCommand.getRecords());
         }
+        
+        //If the command is not a report or a response to an atribute read, add it to the recieved
+        //command list for the server to read on a later time
+        else if (command instanceof ZclCommand 
+                    && command.getSourceAddress().equals(networkAddress)
+                    && command.isGenericCommand() == true) {
+             
+             ZclCommand zclCommand = (ZclCommand) command; 
+             
+             //get the cluster handler
+             ZclCluster cluster = getCluster(zclCommand.getClusterId());
+             
+             if (cluster == null) {
+                 logger.debug("{}: Cluster {} not found for {} command", networkAddress,
+                         zclCommand.getClusterId(), zclCommand.toString());
+                return;
+             }
+             
+             //pass the command to an appropriate cluster
+             cluster.handleCommand(command);
+             return;
+        }
     }
-
+    
     @Override
     public String toString() {
         return "label=" + label + ", networkAddress=" + networkAddress.toString() + ", ieeeAddress="
