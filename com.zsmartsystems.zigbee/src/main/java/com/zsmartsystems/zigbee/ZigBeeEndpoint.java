@@ -359,5 +359,4 @@ public class ZigBeeEndpoint implements CommandListener {
                 + ", inputClusterIds=" + getInputClusterIds().toString() + ", outputClusterIds="
                 + getOutputClusterIds().toString() + "]";
     }
-
 }

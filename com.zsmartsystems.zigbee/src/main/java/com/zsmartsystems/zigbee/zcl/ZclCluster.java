@@ -338,7 +338,7 @@ public abstract class ZclCluster {
     /**
      * Adds a binding from the cluster to the destination {@link ZigBeeDevice}.
      *
-     * @param destination the destination {@link ZigBeeDevice}
+     * @param destination the destination {@link ZigBeeEndpoint}
      * @return Command future
      */
     public Future<CommandResult> bind(final ZigBeeEndpoint destination) {
