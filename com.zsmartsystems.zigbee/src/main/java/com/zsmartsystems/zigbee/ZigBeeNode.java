@@ -289,45 +289,51 @@ public class ZigBeeNode {
     /**
      * Gets an endpoint given the {@link ZigBeeAddress} address.
      *
-     * @param networkAddress the {@link ZigBeeAddress}
+     * @param endpointId the endpoint ID to get
      * @return the {@link ZigBeeEndpoint}
      */
-    public ZigBeeEndpoint getEndpoint(final ZigBeeAddress networkAddress) {
-        if (networkAddress == null || networkAddress.isGroup()) {
-            return null;
-        }
-
+    public ZigBeeEndpoint getEndpoint(final int endpointId) {
         synchronized (endpoints) {
-            return endpoints.get(networkAddress);
+            return endpoints.get(endpointId);
         }
     }
 
-    public void addEndpoint(final ZigBeeEndpoint device) {
+    /**
+     * Adds an endpoint to the node
+     *
+     * @param endpoint the {@link ZigBeeEndpoint} to add
+     */
+    public void addEndpoint(final ZigBeeEndpoint endpoint) {
         synchronized (endpoints) {
-            endpoints.put(device.getDeviceAddress().getAddress(), device);
+            endpoints.put(endpoint.getEndpoint(), endpoint);
         }
         synchronized (this) {
             for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        listener.deviceAdded(device);
+                        listener.deviceAdded(endpoint);
                     }
                 });
             }
         }
     }
 
-    public void updateEndpoint(final ZigBeeEndpoint device) {
+    /**
+     * Updates an endpoint information in the node
+     *
+     * @param endpoint the {@link ZigBeeEndpoint} to update
+     */
+    public void updateEndpoint(final ZigBeeEndpoint endpoint) {
         synchronized (endpoints) {
-            endpoints.put(device.getDeviceAddress().getAddress(), device);
+            endpoints.put(endpoint.getEndpoint(), endpoint);
         }
         synchronized (this) {
             for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        listener.deviceUpdated(device);
+                        listener.deviceUpdated(endpoint);
                     }
                 });
             }

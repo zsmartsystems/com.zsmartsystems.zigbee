@@ -27,9 +27,9 @@ import com.zsmartsystems.zigbee.DeviceStatusListener;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
-import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsRequest;
@@ -499,7 +499,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusLis
             return;
         }
 
-        final ZigBeeEndpoint device = node.getEndpoint(deviceAddress);
+        final ZigBeeEndpoint device = node.getEndpoint(deviceAddress.getEndpoint());
 
         device.setProfileId(simpleDescriptor.getProfileId());
         device.setDeviceId(simpleDescriptor.getDeviceId());

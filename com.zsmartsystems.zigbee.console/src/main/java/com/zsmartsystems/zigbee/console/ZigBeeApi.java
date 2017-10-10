@@ -155,11 +155,16 @@ public class ZigBeeApi {
      * @return the command result future.
      */
     public Future<CommandResult> on(final ZigBeeAddress destination) {
-        ZigBeeEndpoint device = networkManager.getNode(destination.getAddress()).getEndpoint(destination);
-        if (device == null) {
+        if (!(destination instanceof ZigBeeEndpointAddress)) {
             return null;
         }
-        ZclOnOffCluster cluster = (ZclOnOffCluster) device.getCluster(ZclOnOffCluster.CLUSTER_ID);
+        ZigBeeEndpointAddress endpointAddress = (ZigBeeEndpointAddress) destination;
+        ZigBeeEndpoint endpoint = networkManager.getNode(endpointAddress.getAddress())
+                .getEndpoint(endpointAddress.getEndpoint());
+        if (endpoint == null) {
+            return null;
+        }
+        ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint.getCluster(ZclOnOffCluster.CLUSTER_ID);
         return cluster.onCommand();
     }
 
@@ -313,7 +318,8 @@ public class ZigBeeApi {
      */
     public Future<CommandResult> write(final ZigBeeEndpointAddress deviceAddress, final int clusterId,
             final int attributeId, final Object value) {
-        ZigBeeEndpoint device = networkManager.getNode(deviceAddress.getAddress()).getEndpoint(deviceAddress);
+        ZigBeeEndpoint device = networkManager.getNode(deviceAddress.getAddress())
+                .getEndpoint(deviceAddress.getEndpoint());
         ZclCluster cluster = device.getCluster(clusterId);
         ZclAttribute attribute = cluster.getAttribute(attributeId);
         return cluster.write(attribute, value);
@@ -329,7 +335,8 @@ public class ZigBeeApi {
      */
     public Future<CommandResult> read(final ZigBeeEndpointAddress deviceAddress, final int clusterId,
             final int attributeId) {
-        ZigBeeEndpoint device = networkManager.getNode(deviceAddress.getAddress()).getEndpoint(deviceAddress);
+        ZigBeeEndpoint device = networkManager.getNode(deviceAddress.getAddress())
+                .getEndpoint(deviceAddress.getEndpoint());
         ZclCluster cluster = device.getCluster(clusterId);
         if (cluster == null) {
             return null;
