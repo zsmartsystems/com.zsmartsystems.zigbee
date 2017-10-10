@@ -17,8 +17,7 @@ import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.Command;
 import com.zsmartsystems.zigbee.CommandResponseMatcher;
-import com.zsmartsystems.zigbee.ZigBeeDevice;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;

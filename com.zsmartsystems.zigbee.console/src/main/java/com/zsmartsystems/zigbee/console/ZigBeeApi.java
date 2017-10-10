@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeDevice;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpoint;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
@@ -43,7 +43,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
  *
  * @deprecated
  *             This interface will be removed in (near) future. Users should use the {@link ZigBeeNetworkManager} and
- *             interfaces in the {@link ZclCluster}, {@link ZigBeeDevice}, {@link ZigBeeNode} (etc) classes as it
+ *             interfaces in the {@link ZclCluster}, {@link ZigBeeEndpoint}, {@link ZigBeeNode} (etc) classes as it
  *             provides a more object oriented interface.
  *
  * @author Tommi S.E. Laukkanen
@@ -86,34 +86,22 @@ public class ZigBeeApi {
     }
 
     /**
-     * Sets device label.
-     *
-     * @param networkAddress the network address
-     * @param endPointId the end point ID
-     * @param label the label
-     */
-    public void setDeviceLabel(final int networkAddress, final int endPointId, final String label) {
-        ZigBeeDevice device = networkManager.getDevice(new ZigBeeDeviceAddress(networkAddress, endPointId));
-        device.setLabel(label);
-    }
-
-    /**
      * Removes device(s) by network address.
      *
      * @param address the network address
      */
-    public void removeDevice(final ZigBeeDeviceAddress address) {
-        networkManager.removeDevice(address);
-    }
+    // public void removeDevice(final ZigBeeEndpointAddress address) {
+    // networkManager.removeDevice(address);
+    // }
 
     /**
      * Gets ZigBee devices.
      *
      * @return list of ZigBee devices
      */
-    public List<ZigBeeDevice> getDevices() {
-        return networkManager.getDevices();
-    }
+    // public List<ZigBeeEndpoint> getDevices() {
+    // return networkManager.getDevices();
+    // }
 
     /**
      * Gets group by network address.
@@ -135,34 +123,6 @@ public class ZigBeeApi {
     }
 
     /**
-     * Labels destination.
-     *
-     * @param destination the {@link ZigBeeAddress}
-     */
-    public void label(final ZigBeeAddress destination, final String label) {
-        if (destination.isGroup()) {
-            final ZigBeeGroupAddress group = (ZigBeeGroupAddress) destination;
-            group.setLabel(label);
-        } else {
-            final ZigBeeDeviceAddress device = (ZigBeeDeviceAddress) destination;
-            this.setDeviceLabel(device.getAddress(), device.getEndpoint(), label);
-        }
-    }
-
-    /**
-     * Sets user descriptor.
-     *
-     * @param device the device
-     * @param descriptor the descriptor
-     * @return TRUE if no errors occurred in sending.
-     */
-    // public Future<CommandResult> describe(final ZigBeeDevice device, final String descriptor) {
-    // final UserDescriptorSet command = new UserDescriptorSet(device.getNetworkAddress(), device.getNetworkAddress(),
-    // descriptor);
-    // return networkManager.unicast(command);
-    // }
-
-    /**
      * Binds two devices.
      *
      * @param source the source device
@@ -170,9 +130,8 @@ public class ZigBeeApi {
      * @param clusterId the cluster ID
      * @return TRUE if no errors occurred in sending.
      */
-    public Future<CommandResult> bind(final ZigBeeDevice source, final ZigBeeDevice destination, final int clusterId) {
-        ZclCluster cluster = source.getCluster(clusterId);
-        return cluster.bind(destination);
+    public Future<CommandResult> bind(final ZigBeeEndpoint source, final ZigBeeEndpoint destination, final int clusterId) {
+        return networkManager.bind(source, destination, clusterId);
     }
 
     /**
@@ -183,7 +142,7 @@ public class ZigBeeApi {
      * @param clusterId the cluster ID
      * @return TRUE if no errors occurred in sending.
      */
-    public Future<CommandResult> unbind(final ZigBeeDevice source, final ZigBeeDevice destination,
+    public Future<CommandResult> unbind(final ZigBeeEndpoint source, final ZigBeeEndpoint destination,
             final int clusterId) {
         ZclCluster cluster = source.getCluster(clusterId);
         return cluster.unbind(destination);
@@ -196,7 +155,7 @@ public class ZigBeeApi {
      * @return the command result future.
      */
     public Future<CommandResult> on(final ZigBeeAddress destination) {
-        ZigBeeDevice device = networkManager.getDevice(destination);
+        ZigBeeEndpoint device = networkManager.getNode(destination.getAddress()).getEndpoint(destination);
         if (device == null) {
             return null;
         }
@@ -352,9 +311,9 @@ public class ZigBeeApi {
      * @param value the value
      * @return the command result future
      */
-    public Future<CommandResult> write(final ZigBeeDeviceAddress deviceAddress, final int clusterId,
+    public Future<CommandResult> write(final ZigBeeEndpointAddress deviceAddress, final int clusterId,
             final int attributeId, final Object value) {
-        ZigBeeDevice device = networkManager.getDevice(deviceAddress);
+        ZigBeeEndpoint device = networkManager.getNode(deviceAddress.getAddress()).getEndpoint(deviceAddress);
         ZclCluster cluster = device.getCluster(clusterId);
         ZclAttribute attribute = cluster.getAttribute(attributeId);
         return cluster.write(attribute, value);
@@ -368,9 +327,9 @@ public class ZigBeeApi {
      * @param attributeId the attribute ID
      * @return the command result future
      */
-    public Future<CommandResult> read(final ZigBeeDeviceAddress deviceAddress, final int clusterId,
+    public Future<CommandResult> read(final ZigBeeEndpointAddress deviceAddress, final int clusterId,
             final int attributeId) {
-        ZigBeeDevice device = networkManager.getDevice(deviceAddress);
+        ZigBeeEndpoint device = networkManager.getNode(deviceAddress.getAddress()).getEndpoint(deviceAddress);
         ZclCluster cluster = device.getCluster(clusterId);
         if (cluster == null) {
             return null;
@@ -412,7 +371,7 @@ public class ZigBeeApi {
      * @param groupName the group name
      * @return the command result future
      */
-    public Future<CommandResult> addMembership(final ZigBeeDevice device, final int groupId, final String groupName) {
+    public Future<CommandResult> addMembership(final ZigBeeEndpoint device, final int groupId, final String groupName) {
         final AddGroupCommand command = new AddGroupCommand();
         command.setGroupId(groupId);
         command.setGroupName(groupName);
@@ -428,7 +387,7 @@ public class ZigBeeApi {
      * @param device the device
      * @return the command result future
      */
-    public Future<CommandResult> getGroupMemberships(final ZigBeeDevice device) {
+    public Future<CommandResult> getGroupMemberships(final ZigBeeEndpoint device) {
         final GetGroupMembershipCommand command = new GetGroupMembershipCommand();
 
         command.setGroupCount(0);
@@ -445,7 +404,7 @@ public class ZigBeeApi {
      * @param groupId the group ID
      * @return the command result future
      */
-    public Future<CommandResult> viewMembership(final ZigBeeDevice device, final int groupId) {
+    public Future<CommandResult> viewMembership(final ZigBeeEndpoint device, final int groupId) {
         final ViewGroupCommand command = new ViewGroupCommand();
         command.setGroupId(groupId);
 
@@ -461,7 +420,7 @@ public class ZigBeeApi {
      * @param groupId the group ID
      * @return the command result future
      */
-    public Future<CommandResult> removeMembership(final ZigBeeDevice device, final int groupId) {
+    public Future<CommandResult> removeMembership(final ZigBeeEndpoint device, final int groupId) {
         final RemoveGroupCommand command = new RemoveGroupCommand();
         command.setGroupId(groupId);
 

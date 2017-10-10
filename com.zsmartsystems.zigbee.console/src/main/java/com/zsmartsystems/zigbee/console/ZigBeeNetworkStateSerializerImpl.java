@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
-import com.zsmartsystems.zigbee.ZigBeeDevice;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.ZigBeeNode;
@@ -80,10 +79,10 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
             ZigBeeNodeDao nodeDao = ZigBeeNodeDao.createFromZigBeeNode(node);
             destinations.add(nodeDao);
         }
-        for (ZigBeeDevice device : networkState.getDevices()) {
-            ZigBeeDeviceDao deviceDao = ZigBeeDeviceDao.createFromZigBeeDevice(device);
-            destinations.add(deviceDao);
-        }
+        // for (ZigBeeEndpoint device : networkState.getDevices()) {
+        // ZigBeeDeviceDao deviceDao = ZigBeeDeviceDao.createFromZigBeeDevice(device);
+        // destinations.add(deviceDao);
+        // }
 
         final File file = new File(networkStateFilePath);
 
@@ -123,8 +122,9 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
             for (final Object object : objects) {
                 if (object instanceof ZigBeeNodeDao) {
                     networkState.addNode(ZigBeeNodeDao.createFromZigBeeDao(networkState, (ZigBeeNodeDao) object));
-                } else {
-                    networkState.addDevice(ZigBeeDeviceDao.createFromZigBeeDao(networkState, (ZigBeeDeviceDao) object));
+                    // } else {
+                    // networkState.addEndpoint(ZigBeeDeviceDao.createFromZigBeeDao(networkState, (ZigBeeDeviceDao)
+                    // object));
                 }
             }
         } catch (UnsupportedEncodingException | FileNotFoundException e) {

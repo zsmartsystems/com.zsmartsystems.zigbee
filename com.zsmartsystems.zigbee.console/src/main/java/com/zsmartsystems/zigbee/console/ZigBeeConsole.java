@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.Future;
 
@@ -25,9 +26,8 @@ import com.zsmartsystems.zigbee.CommandListener;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeDevice;
+import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
-import com.zsmartsystems.zigbee.ZigBeeNetworkDeviceListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
@@ -98,8 +98,6 @@ public final class ZigBeeConsole {
         commands.put("info", new InfoCommand());
 
         commands.put("devicelist", new DeviceListCommand());
-        commands.put("devicelabel", new DeviceLabelCommand());
-        commands.put("deviceremove", new DeviceRemoveCommand());
 
         commands.put("groupadd", new GroupAddCommand());
         commands.put("groupremove", new GroupRemoveCommand());
@@ -151,22 +149,25 @@ public final class ZigBeeConsole {
             }
         });
 
-        zigBeeApi.getNetwork().addNetworkDeviceListener(new ZigBeeNetworkDeviceListener() {
-            @Override
-            public void deviceAdded(ZigBeeDevice device) {
-                print("Device added:\n" + getDeviceSummary(device), System.out);
-            }
-
-            @Override
-            public void deviceUpdated(ZigBeeDevice device) {
-                // print("Device updated:\n" + getDeviceSummary(device), System.out);
-            }
-
-            @Override
-            public void deviceRemoved(ZigBeeDevice device) {
-                print("Device removed\n" + getDeviceSummary(device), System.out);
-            }
-        });
+        /*
+         * zigBeeApi.getNetwork().addNetworkEndpointListener(new ZigBeeNetworkEndpointListener() {
+         *
+         * @Override
+         * public void deviceAdded(ZigBeeEndpoint device) {
+         * print("Device added:\n" + getDeviceSummary(device), System.out);
+         * }
+         *
+         * @Override
+         * public void deviceUpdated(ZigBeeEndpoint device) {
+         * // print("Device updated:\n" + getDeviceSummary(device), System.out);
+         * }
+         *
+         * @Override
+         * public void deviceRemoved(ZigBeeEndpoint device) {
+         * print("Device removed\n" + getDeviceSummary(device), System.out);
+         * }
+         * });
+         */
 
         zigBeeApi.getNetwork().addNetworkNodeListener(new ZigBeeNetworkNodeListener() {
             @Override
@@ -325,12 +326,12 @@ public final class ZigBeeConsole {
      * @param device the device
      * @return the summary
      */
-    private String getDeviceSummary(final ZigBeeDevice device) {
-        return StringUtils.leftPad(Integer.toString(device.getNetworkAddress()), 10) + "/"
-                + StringUtils.rightPad(Integer.toString(device.getEndpoint()), 3) + " " + device.getIeeeAddress() + "  "
-                + StringUtils.rightPad(device.getLabel() != null ? device.getLabel() : "<label>", 20); // + " "
-        // + ZigBeeApiConstants.getDeviceName(device.getProfileId(), device.getDeviceId());
-    }
+    // private String getDeviceSummary(final ZigBeeEndpoint device) {
+    // return StringUtils.leftPad(Integer.toString(device.getEndpoint()), 10) + "/"
+    // + StringUtils.rightPad(Integer.toString(device.getEndpoint()), 3) + " " + device.getIeeeAddress()
+    // ; // + " "
+    // + ZigBeeApiConstants.getDeviceName(device.getProfileId(), device.getDeviceId());
+    // }
 
     /**
      * Gets destination by device identifier or group ID.
@@ -341,7 +342,7 @@ public final class ZigBeeConsole {
      */
     private ZigBeeAddress getDestination(final ZigBeeApi zigbeeApi, final String destinationIdentifier,
             final PrintStream out) {
-        final ZigBeeDevice device = getDevice(zigbeeApi, destinationIdentifier);
+        final ZigBeeEndpoint device = getDevice(zigbeeApi, destinationIdentifier);
 
         if (device != null) {
             return device.getDeviceAddress();
@@ -367,13 +368,12 @@ public final class ZigBeeConsole {
      * @param deviceIdentifier the device identifier
      * @return the device
      */
-    private ZigBeeDevice getDevice(ZigBeeApi zigbeeApi, final String deviceIdentifier) {
-        for (final ZigBeeDevice zigBeeDevice : zigbeeApi.getNetwork().getDevices()) {
-            if (deviceIdentifier.equals(zigBeeDevice.getNetworkAddress() + "/" + zigBeeDevice.getEndpoint())) {
-                return zigBeeDevice;
-            }
-            if (deviceIdentifier.equals(zigBeeDevice.getLabel())) {
-                return zigBeeDevice;
+    private ZigBeeEndpoint getDevice(ZigBeeApi zigbeeApi, final String deviceIdentifier) {
+        for (final ZigBeeNode node : zigbeeApi.getNetwork().getNodes()) {
+            for (final ZigBeeEndpoint endpoint : node.getEndpoints()) {
+                if (deviceIdentifier.equals(node.getNetworkAddress() + "/" + endpoint.getEndpoint())) {
+                    return endpoint;
+                }
             }
         }
         return null;
@@ -513,9 +513,12 @@ public final class ZigBeeConsole {
          */
         @Override
         public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) {
-            final List<ZigBeeDevice> devices = zigbeeApi.getDevices();
-            for (final ZigBeeDevice device : devices) {
-                print(getDeviceSummary(device), out);
+            final Set<ZigBeeNode> nodes = zigbeeApi.getNetwork().getNodes();
+            for (ZigBeeNode node : nodes) {
+                print("Node: " + String.format("% 6d", node.getNetworkAddress()) + "  " + node.getIeeeAddress(), out);
+                for (final ZigBeeEndpoint endpoint : node.getEndpoints()) {
+                    print("    Endpoint: " + String.format("% 3d", endpoint.getEndpoint()), out);
+                }
             }
             return true;
         }
@@ -583,14 +586,14 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
 
             if (device == null) {
                 return false;
             }
 
-            print("IEEE Address     : " + device.getIeeeAddress(), out);
-            print("Network Address  : " + device.getNetworkAddress(), out);
+            print("IEEE Address     : " + device.getParentNode().getIeeeAddress(), out);
+            print("Network Address  : " + device.getParentNode().getNetworkAddress(), out);
             print("Endpoint         : " + device.getEndpoint(), out);
             // print("Device Profile : " + ZigBeeApiConstants.getProfileName(device.getProfileId())
             // + String.format(" (0x%04X)", device.getProfileId()), out);
@@ -615,7 +618,7 @@ public final class ZigBeeConsole {
          * @param list the cluster IDs
          * @param out the output print stream
          */
-        private void printClusters(final ZigBeeDevice device, final List<Integer> list, PrintStream out) {
+        private void printClusters(final ZigBeeEndpoint device, final List<Integer> list, PrintStream out) {
             for (int clusterId : list) {
                 ZclCluster cluster = device.getCluster(clusterId);
                 if (cluster != null) {
@@ -674,9 +677,9 @@ public final class ZigBeeConsole {
             print("Node Descriptor  : " + node.getNodeDescriptor(), out);
             print("Power Descriptor : " + node.getPowerDescriptor(), out);
             print("Associations     : " + node.getAssociatedDevices().toString(), out);
-            print("Devices:", out);
-            for (ZigBeeDevice device : zigbeeApi.getNetwork().getNodeDevices(address)) {
-                print(device.toString(), out);
+            print("Endpoints:", out);
+            for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
+                print(endpoint.toString(), out);
             }
             print("Neighbors:", out);
             for (NeighborTable neighbor : node.getNeighbors()) {
@@ -719,11 +722,11 @@ public final class ZigBeeConsole {
             if (args.length != 4) {
                 return false;
             }
-            final ZigBeeDevice source = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint source = getDevice(zigbeeApi, args[1]);
             if (source == null) {
                 return false;
             }
-            final ZigBeeDevice destination = getDevice(zigbeeApi, args[2]);
+            final ZigBeeEndpoint destination = getDevice(zigbeeApi, args[2]);
             if (destination == null) {
                 return false;
             }
@@ -766,11 +769,11 @@ public final class ZigBeeConsole {
             if (args.length != 4) {
                 return false;
             }
-            final ZigBeeDevice source = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint source = getDevice(zigbeeApi, args[1]);
             if (source == null) {
                 return false;
             }
-            final ZigBeeDevice destination = getDevice(zigbeeApi, args[2]);
+            final ZigBeeEndpoint destination = getDevice(zigbeeApi, args[2]);
             if (destination == null) {
                 return false;
             }
@@ -925,47 +928,6 @@ public final class ZigBeeConsole {
     }
 
     /**
-     * Sets device label.
-     */
-    private class DeviceLabelCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Sets device label.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "devicelabel DEVICEID DEVICELABEL";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 3) {
-                return false;
-            }
-
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
-            if (device == null) {
-                return false;
-            }
-
-            final String label = args[2];
-            device.setLabel(label);
-            zigbeeApi.setDeviceLabel(device.getNetworkAddress(), device.getEndpoint(), label);
-            return true;
-        }
-    }
-
-    /**
      * Adds group to gateway network state. Does not affect actual ZigBee network.
      */
     private class GroupAddCommand implements ConsoleCommand {
@@ -1006,46 +968,6 @@ public final class ZigBeeConsole {
             group.setLabel(label);
             networkManager.addGroup(group);
 
-            return true;
-        }
-    }
-
-    /**
-     * Removes device from network state but does not affect actual ZigBeet network.
-     * Device will be eventually rediscovered if it is still in the network.
-     */
-    private class DeviceRemoveCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Removes device from gateway network state.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "deviceremove DEVICE";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 2) {
-                return false;
-            }
-
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
-            if (device == null) {
-                return false;
-            }
-
-            zigbeeApi.removeDevice(device.getDeviceAddress());
             return true;
         }
     }
@@ -1124,7 +1046,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             if (device == null) {
                 return false;
             }
@@ -1368,7 +1290,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             if (device == null) {
                 print("Device not found.", out);
                 return false;
@@ -1460,7 +1382,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             final int clusterId;
             try {
                 clusterId = Integer.parseInt(args[2]);
@@ -1548,7 +1470,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             if (device == null) {
                 print("Device not found.", out);
                 return false;
@@ -1621,7 +1543,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             if (device == null) {
                 print("Device not found.", out);
                 return false;
@@ -1693,7 +1615,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             if (device == null) {
                 print("Device not found.", out);
                 return false;
@@ -2196,7 +2118,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             final String command = args[2].toUpperCase();
 
             ZclBasicCluster basicCluster = (ZclBasicCluster) device.getCluster(0);
@@ -2269,7 +2191,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             if (device == null) {
                 return false;
             }
@@ -2307,7 +2229,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             if (device == null) {
                 print("Device not found.", out);
                 return false;
@@ -2358,7 +2280,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             if (device == null) {
                 print("Device not found.", out);
                 return false;
@@ -2406,7 +2328,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             if (device == null) {
                 print("Device not found.", out);
                 return false;
@@ -2467,7 +2389,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             if (device == null) {
                 print("Device not found.", out);
                 return false;

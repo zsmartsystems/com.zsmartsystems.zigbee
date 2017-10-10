@@ -30,11 +30,11 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
  * @author Chris Jackson
  *
  */
-public class ZigBeeDeviceTest {
+public class ZigBeeEndpointTest {
 
     @Test
     public void testOutputClusterIds() {
-        ZigBeeDevice device = getDevice();
+        ZigBeeEndpoint device = getDevice();
         // device.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
 
         List<Integer> clusterIdList = new ArrayList<Integer>();
@@ -66,7 +66,7 @@ public class ZigBeeDeviceTest {
 
     @Test
     public void testInputClusterIds() {
-        ZigBeeDevice device = getDevice();
+        ZigBeeEndpoint device = getDevice();
         // device.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
 
         List<Integer> clusterIdList = new ArrayList<Integer>();
@@ -90,23 +90,15 @@ public class ZigBeeDeviceTest {
 
     @Test
     public void testProfileId() {
-        ZigBeeDevice device = getDevice();
+        ZigBeeEndpoint device = getDevice();
 
         device.setProfileId(0x104);
         assertEquals(0x104, device.getProfileId());
     }
 
     @Test
-    public void testLabel() {
-        ZigBeeDevice device = getDevice();
-
-        device.setLabel("Test Label");
-        assertEquals("Test Label", device.getLabel());
-    }
-
-    @Test
     public void testDeviceVersion() {
-        ZigBeeDevice device = getDevice();
+        ZigBeeEndpoint device = getDevice();
 
         device.setDeviceVersion(123);
         assertEquals(123, device.getDeviceVersion());
@@ -114,17 +106,17 @@ public class ZigBeeDeviceTest {
 
     @Test
     public void testGetDeviceId() {
-        ZigBeeDevice device = getDevice();
+        ZigBeeEndpoint device = getDevice();
 
         device.setDeviceId(9999);
         assertEquals(9999, device.getDeviceId());
     }
 
-    private ZigBeeDevice getDevice() {
+    private ZigBeeEndpoint getDevice() {
         ZigBeeTransportTransmit mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
         ZigBeeNode node = new ZigBeeNode(networkManager);
-        return new ZigBeeDevice(networkManager, node, 1);
+        return new ZigBeeEndpoint(networkManager, node, 1);
     }
 
 }

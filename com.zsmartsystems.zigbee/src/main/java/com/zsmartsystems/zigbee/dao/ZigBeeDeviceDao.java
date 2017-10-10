@@ -10,7 +10,7 @@ package com.zsmartsystems.zigbee.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zsmartsystems.zigbee.ZigBeeDevice;
+import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 
 /**
@@ -84,18 +84,17 @@ public class ZigBeeDeviceDao {
         this.outputClusterIds.addAll(outputClusterIds);
     }
 
-    public static ZigBeeDeviceDao createFromZigBeeDevice(ZigBeeDevice device) {
+    public static ZigBeeDeviceDao createFromZigBeeDevice(ZigBeeEndpoint device) {
         ZigBeeDeviceDao deviceDao = new ZigBeeDeviceDao();
         deviceDao.setDeviceAddress(device.getDeviceAddress().toString());
         // deviceDao.setIeeeAddress(device.getIeeeAddress().toString());
-        deviceDao.setLabel(device.getLabel());
         deviceDao.setProfileId(device.getProfileId());
         deviceDao.setInputClusterIds(device.getInputClusterIds());
         deviceDao.setOutputClusterIds(device.getOutputClusterIds());
         return deviceDao;
     }
 
-    public static ZigBeeDevice createFromZigBeeDao(ZigBeeNetworkManager networkManager, ZigBeeDeviceDao deviceDao) {
+    public static ZigBeeEndpoint createFromZigBeeDao(ZigBeeNetworkManager networkManager, ZigBeeDeviceDao deviceDao) {
         /// ZigBeeNode node = networkManager.getNode(ieeeAddress)
         // ZigBeeDevice device = new ZigBeeDevice(networkManager);
         // device.setDeviceAddress(new ZigBeeDeviceAddress(deviceDao.getDeviceAddress()));

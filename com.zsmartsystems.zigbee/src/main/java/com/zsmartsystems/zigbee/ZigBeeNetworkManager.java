@@ -396,7 +396,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         // Set the source address - should probably be improved!
         // Note that the endpoint is set (currently!) in the transport layer
         // TODO: Use only a single endpoint for HA and fix this here
-        command.setSourceAddress(new ZigBeeDeviceAddress(0));
+        command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
         logger.debug("TX CMD: {}", command);
 
@@ -409,10 +409,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         apsFrame.setSequence(sequence);
         apsFrame.setRadius(31);
 
-        if (command.getDestinationAddress() instanceof ZigBeeDeviceAddress) {
+        if (command.getDestinationAddress() instanceof ZigBeeEndpointAddress) {
             apsFrame.setAddressMode(ZigBeeNwkAddressMode.DEVICE);
-            apsFrame.setDestinationAddress(((ZigBeeDeviceAddress) command.getDestinationAddress()).getAddress());
-            apsFrame.setDestinationEndpoint(((ZigBeeDeviceAddress) command.getDestinationAddress()).getEndpoint());
+            apsFrame.setDestinationAddress(((ZigBeeEndpointAddress) command.getDestinationAddress()).getAddress());
+            apsFrame.setDestinationEndpoint(((ZigBeeEndpointAddress) command.getDestinationAddress()).getEndpoint());
         } else {
             apsFrame.setAddressMode(ZigBeeNwkAddressMode.GROUP);
             // TODO: Handle multicast
@@ -519,9 +519,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         // Create an address from the sourceAddress and endpoint
-        command.setSourceAddress(new ZigBeeDeviceAddress(apsFrame.getSourceAddress(), apsFrame.getSourceEndpoint()));
+        command.setSourceAddress(new ZigBeeEndpointAddress(apsFrame.getSourceAddress(), apsFrame.getSourceEndpoint()));
         command.setDestinationAddress(
-                new ZigBeeDeviceAddress(apsFrame.getDestinationAddress(), apsFrame.getDestinationEndpoint()));
+                new ZigBeeEndpointAddress(apsFrame.getDestinationAddress(), apsFrame.getDestinationEndpoint()));
 
         logger.debug("RX CMD: {}", command);
 
@@ -628,7 +628,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     @Override
-    public void deviceStatusUpdate(final ZigBeeDeviceStatus deviceStatus, final Integer networkAddress,
+    public void deviceStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
             final IeeeAddress ieeeAddress) {
         // This method should only be called when the transport layer has authoritative information about
         // a devices status. Therefore, we should update the network manager view of a device as appropriate.
@@ -835,7 +835,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      *            value of 255 is not permitted and will be ignored.
      */
     public boolean permitJoin(final int duration) {
-        return permitJoin(new ZigBeeDeviceAddress(ZigBeeBroadcastDestination.BROADCAST_ROUTERS_AND_COORD.getKey()),
+        return permitJoin(new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_ROUTERS_AND_COORD.getKey()),
                 duration);
     }
 
@@ -845,11 +845,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
      * since it allows devices to join the network without the installer knowing.
      *
-     * @param destination the {@link ZigBeeDeviceAddress} to send the join request to
+     * @param destination the {@link ZigBeeEndpointAddress} to send the join request to
      * @param duration sets the duration of the join enable. Setting this to 0 disables joining. As per ZigBee 3, a
      *            value of 255 is not permitted and will be ignored.
      */
-    public boolean permitJoin(final ZigBeeDeviceAddress destination, final int duration) {
+    public boolean permitJoin(final ZigBeeEndpointAddress destination, final int duration) {
         if (duration < 0 || duration >= 255) {
             logger.debug("Permit join to {} invalid period of {} seconds.", destination, duration);
             return false;
@@ -860,7 +860,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setPermitDuration(duration);
         command.setTcSignificance(true);
         command.setDestinationAddress(destination);
-        command.setSourceAddress(new ZigBeeDeviceAddress(0));
+        command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
         try {
             sendCommand(command);
@@ -875,8 +875,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             command = new ManagementPermitJoiningRequest();
             command.setPermitDuration(duration);
             command.setTcSignificance(true);
-            command.setDestinationAddress(new ZigBeeDeviceAddress(0));
-            command.setSourceAddress(new ZigBeeDeviceAddress(0));
+            command.setDestinationAddress(new ZigBeeEndpointAddress(0));
+            command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
             try {
                 sendCommand(command);
@@ -900,8 +900,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         final ManagementLeaveRequest command = new ManagementLeaveRequest();
 
         command.setDeviceAddress(leaveAddress);
-        command.setDestinationAddress(new ZigBeeDeviceAddress(destinationAddress));
-        command.setSourceAddress(new ZigBeeDeviceAddress(0));
+        command.setDestinationAddress(new ZigBeeEndpointAddress(destinationAddress));
+        command.setSourceAddress(new ZigBeeEndpointAddress(0));
         command.setRemoveChildrenRejoin(false);
 
         // Start a thread to wait for the response

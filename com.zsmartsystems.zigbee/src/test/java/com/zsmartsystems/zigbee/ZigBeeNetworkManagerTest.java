@@ -33,11 +33,11 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 
 public class ZigBeeNetworkManagerTest
-        implements ZigBeeNetworkNodeListener, ZigBeeNetworkStateListener, ZigBeeNetworkDeviceListener, CommandListener {
+        implements ZigBeeNetworkNodeListener, ZigBeeNetworkStateListener, ZigBeeNetworkEndpointListener, CommandListener {
     private ZigBeeNetworkNodeListener mockedNodeListener;
     private List<ZigBeeNode> nodeNodeListenerCapture;
-    private ZigBeeNetworkDeviceListener mockedDeviceListener;
-    private List<ZigBeeDevice> nodeDeviceListenerCapture;
+    private ZigBeeNetworkEndpointListener mockedDeviceListener;
+    private List<ZigBeeEndpoint> nodeDeviceListenerCapture;
     private ArgumentCaptor<ZigBeeApsFrame> mockedApsFrameListener;
     private List<ZigBeeTransportState> networkStateListenerCapture;
 
@@ -149,7 +149,7 @@ public class ZigBeeNetworkManagerTest
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
 
-        ZigBeeDeviceAddress deviceAddress = new ZigBeeDeviceAddress(1234, 56);
+        ZigBeeEndpointAddress deviceAddress = new ZigBeeEndpointAddress(1234, 56);
         OnCommand cmd = new OnCommand();
         cmd.setClusterId(6);
         cmd.setDestinationAddress(deviceAddress);
@@ -207,7 +207,7 @@ public class ZigBeeNetworkManagerTest
         assertEquals(6, (int) response.getClusterId());
         assertEquals(0, (int) response.getCommandId());
         assertEquals(1, (int) response.getTransactionId());
-        assertEquals(new ZigBeeDeviceAddress(1234, 5), response.getSourceAddress());
+        assertEquals(new ZigBeeEndpointAddress(1234, 5), response.getSourceAddress());
     }
 
     @Test
@@ -262,7 +262,7 @@ public class ZigBeeNetworkManagerTest
 
         // Check that the unicast sends 1 frame
         int start = mockedApsFrameListener.getAllValues().size();
-        networkManager.permitJoin(new ZigBeeDeviceAddress(1), 1);
+        networkManager.permitJoin(new ZigBeeEndpointAddress(1), 1);
         assertEquals(1, mockedApsFrameListener.getAllValues().size() - start);
 
         // Check that the broadcast sends 2 frames
@@ -276,7 +276,7 @@ public class ZigBeeNetworkManagerTest
         mockedStateListener = Mockito.mock(ZigBeeNetworkStateListener.class);
         mockedNodeListener = Mockito.mock(ZigBeeNetworkNodeListener.class);
         nodeNodeListenerCapture = new ArrayList<ZigBeeNode>();
-        mockedDeviceListener = Mockito.mock(ZigBeeNetworkDeviceListener.class);
+        mockedDeviceListener = Mockito.mock(ZigBeeNetworkEndpointListener.class);
         // nodeDeviceListenerCapture = ArgumentCaptor.forClass(ZigBeeDevice.class);
         // networkStateListenerCapture = ArgumentCaptor.forClass(ZigBeeTransportState.class);
         networkStateListenerCapture = new ArrayList<ZigBeeTransportState>();
@@ -322,19 +322,19 @@ public class ZigBeeNetworkManagerTest
     }
 
     @Override
-    public void deviceAdded(ZigBeeDevice device) {
+    public void deviceAdded(ZigBeeEndpoint device) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void deviceUpdated(ZigBeeDevice device) {
+    public void deviceUpdated(ZigBeeEndpoint device) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void deviceRemoved(ZigBeeDevice device) {
+    public void deviceRemoved(ZigBeeEndpoint device) {
         // TODO Auto-generated method stub
 
     }

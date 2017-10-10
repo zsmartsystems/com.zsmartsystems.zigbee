@@ -1339,13 +1339,12 @@ public class ZclProtocolCodeGenerator {
                 // imports.add(packageRoot + packageZcl + ".ZclCommandMessage");
 
                 // imports.add(packageRoot + ".ZigBeeDestination");
-                imports.add(packageRoot + ".ZigBeeDevice");
-                // imports.add(packageRoot + ".ZigBeeDeviceAddress");
+                imports.add(packageRoot + ".ZigBeeEndpointAddress");
                 imports.add(packageRoot + ".ZigBeeNetworkManager");
                 if (!cluster.attributes.isEmpty() | !commands.isEmpty()) {
                     imports.add(packageRoot + ".CommandResult");
                 }
-                // imports.add(packageRoot + ".ZigBeeDevice");
+                // imports.add(packageRoot + ".ZigBeeEndpoint");
                 imports.add(packageRoot + packageZcl + ".ZclAttribute");
                 imports.add("java.util.Map");
                 imports.add("java.util.concurrent.ConcurrentHashMap");
@@ -1443,8 +1442,8 @@ public class ZclProtocolCodeGenerator {
                 out.println("     * @param zigbeeEndpoint the {@link ZigBeeDevice}");
                 out.println("     */");
                 out.println("    public " + className
-                        + "(final ZigBeeNetworkManager zigbeeManager, final ZigBeeDevice zigbeeEndpoint) {");
-                out.println("        super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);");
+                        + "(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpointAddress zigbeeAddress) {");
+                out.println("        super(zigbeeManager, zigbeeAddress, CLUSTER_ID, CLUSTER_NAME);");
                 out.println("    }");
                 out.println();
 

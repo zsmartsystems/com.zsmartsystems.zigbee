@@ -208,7 +208,7 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
 
                     // Notify that this is a new node so we can try and discover it
                     // TODO: Remove - devices should only join through the TC
-                    networkManager.deviceStatusUpdate(ZigBeeDeviceStatus.UNSECURED_JOIN, nodeNetworkAddress, null);
+                    networkManager.deviceStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN, nodeNetworkAddress, null);
 
                     return;
                 }
@@ -286,7 +286,7 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
         do {
             // Request extended response, start index for associated list is 0
             final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
-            ieeeAddressRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+            ieeeAddressRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
             ieeeAddressRequest.setRequestType(1);
             ieeeAddressRequest.setStartIndex(startIndex);
             ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
@@ -334,7 +334,7 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
         List<NeighborTable> neighbors = new ArrayList<NeighborTable>();
         do {
             final ManagementLqiRequest neighborRequest = new ManagementLqiRequest();
-            neighborRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+            neighborRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
             neighborRequest.setStartIndex(startIndex);
             CommandResult response = networkManager.unicast(neighborRequest, neighborRequest).get();
 
@@ -390,7 +390,7 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
         List<RoutingTable> routes = new ArrayList<RoutingTable>();
         do {
             final ManagementRoutingRequest routeRequest = new ManagementRoutingRequest();
-            routeRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+            routeRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
             routeRequest.setStartIndex(startIndex);
             CommandResult response = networkManager.unicast(routeRequest, routeRequest).get();
             final ManagementRoutingResponse routingResponse = response.getResponse();

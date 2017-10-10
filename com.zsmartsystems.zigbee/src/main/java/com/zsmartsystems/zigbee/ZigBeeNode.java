@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.ServerCapabilitiesType;
 
 /**
  * Defines a ZigBee Node. A node is a physical entity on the network and will
- * contain one or more {@link ZigBeeDevice}s.
+ * contain one or more {@link ZigBeeEndpoint}s.
  * <p>
  *
  * @author Chris Jackson
@@ -79,16 +80,16 @@ public class ZigBeeNode {
     private final List<RoutingTable> routes = new ArrayList<RoutingTable>();
 
     /**
-     * List of devices this node exposes
+     * List of endpoints this node exposes
      */
-    private final Map<Integer, ZigBeeDevice> devices = new HashMap<Integer, ZigBeeDevice>();
+    private final Map<Integer, ZigBeeEndpoint> endpoints = new HashMap<Integer, ZigBeeEndpoint>();
 
     /**
-     * The device listeners of the ZigBee network. Registered listeners will be
-     * notified of additions, deletions and changes to {@link ZigBeeDevice}s.
+     * The endpoint listeners of the ZigBee network. Registered listeners will be
+     * notified of additions, deletions and changes to {@link ZigBeeEndpoint}s.
      */
-    private List<ZigBeeNetworkDeviceListener> deviceListeners = Collections
-            .unmodifiableList(new ArrayList<ZigBeeNetworkDeviceListener>());
+    private List<ZigBeeNetworkEndpointListener> endpointListeners = Collections
+            .unmodifiableList(new ArrayList<ZigBeeNetworkEndpointListener>());
 
     /**
      * The network manager that manages this node
@@ -157,10 +158,10 @@ public class ZigBeeNode {
     }
 
     /**
-     * Enables or disables devices to join to this node.
+     * Enables or disables nodes to join to this node.
      * <p>
-     * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
-     * since it allows devices to join the network without the installer knowing.
+     * Nodes can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
+     * since it allows nodes to join the network without the installer knowing.
      *
      * @param duration sets the duration of the join enable. Setting this to 0 disables joining. Setting to a value
      *            greater than 255 seconds will permanently enable joining.
@@ -175,8 +176,8 @@ public class ZigBeeNode {
         }
 
         command.setTcSignificance(true);
-        command.setDestinationAddress(new ZigBeeDeviceAddress(0));
-        command.setSourceAddress(new ZigBeeDeviceAddress(0));
+        command.setDestinationAddress(new ZigBeeEndpointAddress(0));
+        command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
         try {
             networkManager.sendCommand(command);
@@ -186,10 +187,10 @@ public class ZigBeeNode {
     }
 
     /**
-     * Enables or disables devices to join to this node.
+     * Enables or disables nodes to join to this node.
      * <p>
-     * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
-     * since it allows devices to join the network without the installer knowing.
+     * Nodes can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
+     * since it allows nodes to join the network without the installer knowing.
      *
      * @param enable if true joining is enabled, otherwise it is disabled
      */
@@ -202,7 +203,7 @@ public class ZigBeeNode {
     }
 
     /**
-     * Returns true if the device is a Full Function Device. Returns false if not an FFD or logical type is unknown.
+     * Returns true if the node is a Full Function Device. Returns false if not an FFD or logical type is unknown.
      * <p>
      * A FFD (Full Function Device) is a device that has full levels of functionality.
      * It can be used for sending and receiving data, but it can also route data from other nodes.
@@ -218,7 +219,7 @@ public class ZigBeeNode {
     }
 
     /**
-     * Returns true if the device is a Reduced Function Device. Returns false if not an RFD or logical type is unknown.
+     * Returns true if the node is a Reduced Function Device. Returns false if not an RFD or logical type is unknown.
      * <p>
      * An RFD (Reduced Function Device) is a device that has a reduced level of functionality.
      * Typically it is an end node which may be typically a sensor or switch. RFDs can only talk to FFDs
@@ -249,7 +250,7 @@ public class ZigBeeNode {
     }
 
     /**
-     * Gets the {@link LogicalType} of the device.
+     * Gets the {@link LogicalType} of the node.
      * <p>
      * Possible types are -:
      * <ul>
@@ -258,7 +259,7 @@ public class ZigBeeNode {
      * <li>{@link LogicalType#END_DEVICE}
      * <ul>
      *
-     * @return the {@link LogicalType} of the device
+     * @return the {@link LogicalType} of the node
      */
     public LogicalType getLogicalType() {
         return nodeDescriptor.getLogicalType();
@@ -277,27 +278,36 @@ public class ZigBeeNode {
     }
 
     /**
-     * Gets a device given the {@link ZigBeeAddress} address.
+     * Gets the a {@link Collection} of {@link ZigBeeEndpoint}s this node provides
+     *
+     * @return {@link Collection} of {@link ZigBeeEndpoint}s supported by the node
+     */
+    public Collection<ZigBeeEndpoint> getEndpoints() {
+        return endpoints.values();
+    }
+
+    /**
+     * Gets an endpoint given the {@link ZigBeeAddress} address.
      *
      * @param networkAddress the {@link ZigBeeAddress}
-     * @return the {@link ZigBeeDevice}
+     * @return the {@link ZigBeeEndpoint}
      */
-    public ZigBeeDevice getDevice(final ZigBeeAddress networkAddress) {
+    public ZigBeeEndpoint getEndpoint(final ZigBeeAddress networkAddress) {
         if (networkAddress == null || networkAddress.isGroup()) {
             return null;
         }
 
-        synchronized (devices) {
-            return devices.get(networkAddress);
+        synchronized (endpoints) {
+            return endpoints.get(networkAddress);
         }
     }
 
-    public void addDevice(final ZigBeeDevice device) {
-        synchronized (devices) {
-            devices.put(device.getDeviceAddress().getAddress(), device);
+    public void addEndpoint(final ZigBeeEndpoint device) {
+        synchronized (endpoints) {
+            endpoints.put(device.getDeviceAddress().getAddress(), device);
         }
         synchronized (this) {
-            for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
+            for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -308,12 +318,12 @@ public class ZigBeeNode {
         }
     }
 
-    public void updateDevice(final ZigBeeDevice device) {
-        synchronized (devices) {
-            devices.put(device.getDeviceAddress().getAddress(), device);
+    public void updateEndpoint(final ZigBeeEndpoint device) {
+        synchronized (endpoints) {
+            endpoints.put(device.getDeviceAddress().getAddress(), device);
         }
         synchronized (this) {
-            for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
+            for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -325,23 +335,22 @@ public class ZigBeeNode {
     }
 
     /**
-     * Removes device(s) by network address.
+     * Removes endpoint by network address.
      *
-     * @param networkAddress
-     *            the network address
+     * @param networkAddress the network address
      */
     public void removeDevice(final ZigBeeAddress networkAddress) {
-        final ZigBeeDevice device;
-        synchronized (devices) {
-            device = devices.remove(networkAddress);
+        final ZigBeeEndpoint endpoint;
+        synchronized (endpoints) {
+            endpoint = endpoints.remove(networkAddress);
         }
         synchronized (this) {
-            if (device != null) {
-                for (final ZigBeeNetworkDeviceListener listener : deviceListeners) {
+            if (endpoint != null) {
+                for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
                     NotificationService.execute(new Runnable() {
                         @Override
                         public void run() {
-                            listener.deviceRemoved(device);
+                            listener.deviceRemoved(endpoint);
                         }
                     });
                 }
@@ -349,32 +358,32 @@ public class ZigBeeNode {
         }
     }
 
-    public void addNetworkDeviceListener(final ZigBeeNetworkDeviceListener networkDeviceListener) {
+    public void addNetworkEndpointListener(final ZigBeeNetworkEndpointListener networkDeviceListener) {
         synchronized (this) {
-            final List<ZigBeeNetworkDeviceListener> modifiedListeners = new ArrayList<ZigBeeNetworkDeviceListener>(
-                    deviceListeners);
+            final List<ZigBeeNetworkEndpointListener> modifiedListeners = new ArrayList<ZigBeeNetworkEndpointListener>(
+                    endpointListeners);
             modifiedListeners.add(networkDeviceListener);
-            deviceListeners = Collections.unmodifiableList(modifiedListeners);
+            endpointListeners = Collections.unmodifiableList(modifiedListeners);
         }
     }
 
-    public void removeNetworkDeviceListener(final ZigBeeNetworkDeviceListener networkDeviceListener) {
+    public void removeNetworkEndpointListener(final ZigBeeNetworkEndpointListener networkDeviceListener) {
         synchronized (this) {
-            final List<ZigBeeNetworkDeviceListener> modifiedListeners = new ArrayList<ZigBeeNetworkDeviceListener>(
-                    deviceListeners);
+            final List<ZigBeeNetworkEndpointListener> modifiedListeners = new ArrayList<ZigBeeNetworkEndpointListener>(
+                    endpointListeners);
             modifiedListeners.remove(networkDeviceListener);
-            deviceListeners = Collections.unmodifiableList(modifiedListeners);
+            endpointListeners = Collections.unmodifiableList(modifiedListeners);
         }
     }
 
     /**
-     * Return a {@link List} of {@link ZigBeeDevice}s known by the network
+     * Return a {@link List} of {@link ZigBeeEndpoint}s known on this node
      *
-     * @return {@link List} of {@link ZigBeeDevice}s
+     * @return {@link List} of {@link ZigBeeEndpoint}s
      */
-    public List<ZigBeeDevice> getDevices() {
-        synchronized (devices) {
-            return new ArrayList<ZigBeeDevice>(devices.values());
+    public List<ZigBeeEndpoint> getDevices() {
+        synchronized (endpoints) {
+            return new ArrayList<ZigBeeEndpoint>(endpoints.values());
         }
     }
 
@@ -570,9 +579,10 @@ public class ZigBeeNode {
     @Override
     public String toString() {
         if (nodeDescriptor == null) {
-            return "IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress);
+            return "ZigBeeNode [IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + "]";
         }
-        return "IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + ", Type="
-                + nodeDescriptor.getLogicalType();
+
+        return "ZigBeeNode [IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + ", Type="
+                + nodeDescriptor.getLogicalType() + "]";
     }
 }

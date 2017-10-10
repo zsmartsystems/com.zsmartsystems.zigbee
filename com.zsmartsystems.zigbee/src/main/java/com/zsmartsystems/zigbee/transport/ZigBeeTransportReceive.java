@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.transport;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.ZigBeeDeviceStatus;
+import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 
@@ -62,10 +62,10 @@ public interface ZigBeeTransportReceive {
      * It should be assumed that this interface provides a authoritative statement about a devices status.
      * This should come from higher level information provided by the coordinator/transport layer.
      *
-     * @param deviceStatus the {@link ZigBeeDeviceStatus} of the node
+     * @param deviceStatus the {@link ZigBeeNodeStatus} of the node
      * @param networkAddress the network address of the new node
      * @param ieeeAddress the {@link IeeeAddress} address of the new node
      */
-    void deviceStatusUpdate(final ZigBeeDeviceStatus deviceStatus, final Integer networkAddress,
+    void deviceStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
             final IeeeAddress ieeeAddress);
 }

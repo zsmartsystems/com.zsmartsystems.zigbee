@@ -22,6 +22,6 @@ public interface DeviceStatusListener {
      *
      * @param address the network address of the newly announced device
      */
-    void deviceStatusUpdate(final ZigBeeDeviceStatus deviceStatus, final Integer networkAddress,
+    void deviceStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
             final IeeeAddress ieeeAddress);
 }

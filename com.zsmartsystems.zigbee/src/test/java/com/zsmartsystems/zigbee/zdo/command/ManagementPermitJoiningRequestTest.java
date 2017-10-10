@@ -14,7 +14,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.CommandTest;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 
@@ -31,7 +31,7 @@ public class ManagementPermitJoiningRequestTest extends CommandTest {
         int[] packet = getPacketData("00 FF 01");
 
         ManagementPermitJoiningRequest request = new ManagementPermitJoiningRequest();
-        request.setDestinationAddress(new ZigBeeDeviceAddress(0));
+        request.setDestinationAddress(new ZigBeeEndpointAddress(0));
         request.setTcSignificance(true);
         request.setPermitDuration(255);
 

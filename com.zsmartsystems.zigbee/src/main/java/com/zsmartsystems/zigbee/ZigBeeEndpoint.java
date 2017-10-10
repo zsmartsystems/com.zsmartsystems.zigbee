@@ -22,38 +22,30 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 /**
- * ZigBee device.
+ * ZigBee endpoint. An endpoint is a virtual entity contained within a {@link ZigBeeNode}. The {@link ZigBeeNode} is the
+ * physical device and can contain up to 254 endpoints.
  *
  * @author Chris Jackson
  */
-public class ZigBeeDevice implements CommandListener {
+public class ZigBeeEndpoint implements CommandListener {
     /**
      * The {@link Logger}.
      */
-    private final static Logger logger = LoggerFactory.getLogger(ZigBeeDevice.class);
+    private final static Logger logger = LoggerFactory.getLogger(ZigBeeEndpoint.class);
 
     /**
-     * Link to the network manager
+     * Link to the {@link ZigBeeNetworkManager} to which the node belongs
      */
     private final ZigBeeNetworkManager networkManager;
 
     /**
-     * Link to the parent node to which this device belongs
+     * Link to the parent {@link ZigBeeNode} to which this device belongs
      */
     private final ZigBeeNode node;
 
     /**
-     * The IEEE address.
-     */
-    // private IeeeAddress ieeeAddress = new IeeeAddress();
-
-    /**
-     * The network address.
-     */
-    // private ZigBeeDeviceAddress networkAddress = null;
-
-    /**
-     * The endpoint number for this device
+     * The endpoint number for this endpoint. Applications shall only use endpoints 1-254. Endpoints 241-254 shall be
+     * used only with the approval of the ZigBee Alliance.
      */
     private int endpoint;
 
@@ -63,7 +55,8 @@ public class ZigBeeDevice implements CommandListener {
     private int profileId;
 
     /**
-     * The device ID.
+     * The device ID. Specifies the device description supported on this endpoint. Device description identifiers shall
+     * be obtained from the ZigBee Alliance.
      */
     private int deviceId;
 
@@ -73,7 +66,7 @@ public class ZigBeeDevice implements CommandListener {
     private int deviceVersion;
 
     /**
-     * Clusters
+     * Total list of clusters supported by the endpoint
      */
     private final Map<Integer, ZclCluster> clusters = new HashMap<Integer, ZclCluster>();
 
@@ -88,18 +81,13 @@ public class ZigBeeDevice implements CommandListener {
     private final List<Integer> outputClusterIds = new ArrayList<Integer>();
 
     /**
-     * Label.
-     */
-    private String label;
-
-    /**
      * Constructor
      *
      * @param networkManager the {@link ZigBeeNetworkManager} to which the device belongs
      * @param node the parent {@link ZigBeeNode}
      * @param endpoint the endpoint number within the {@link ZigBeeNode}
      */
-    public ZigBeeDevice(ZigBeeNetworkManager networkManager, ZigBeeNode node, int endpoint) {
+    public ZigBeeEndpoint(ZigBeeNetworkManager networkManager, ZigBeeNode node, int endpoint) {
         this.networkManager = networkManager;
         this.node = node;
         this.endpoint = endpoint;
@@ -123,8 +111,7 @@ public class ZigBeeDevice implements CommandListener {
     /**
      * Sets the device ID.
      *
-     * @param deviceId
-     *            the device ID.
+     * @param deviceId the device ID.
      */
     public void setDeviceId(int deviceId) {
         this.deviceId = deviceId;
@@ -142,8 +129,7 @@ public class ZigBeeDevice implements CommandListener {
     /**
      * Sets device version.
      *
-     * @param deviceVersion
-     *            the device version
+     * @param deviceVersion the device version
      */
     public void setDeviceVersion(int deviceVersion) {
         this.deviceVersion = deviceVersion;
@@ -157,25 +143,6 @@ public class ZigBeeDevice implements CommandListener {
     public int getEndpoint() {
         return endpoint;
     }
-
-    /**
-     * Gets IEEE Address.
-     *
-     * @return the IEEE address
-     */
-    // public IeeeAddress getIeeeAddress() {
-    // return ieeeAddress;
-    // }
-
-    /**
-     * Sets IEEE Address.
-     *
-     * @param ieeeAddress
-     *            the IEEE address
-     */
-    // public void setIeeeAddress(IeeeAddress ieeeAddress) {
-    // this.ieeeAddress = ieeeAddress;
-    // }
 
     /**
      * Gets input cluster IDs. This lists the IDs of all clusters the device
@@ -213,26 +180,13 @@ public class ZigBeeDevice implements CommandListener {
         updateClusters(inputClusterIds, true);
     }
 
-    // public void setDeviceAddress(ZigBeeDeviceAddress networkAddress) {
-    // this.networkAddress = networkAddress;
-    // }
-
-    /**
-     * Gets network address.
-     *
-     * @return the network address
-     */
-    // public int getNetworkAddress() {
-    // return networkAddress.getAddress();
-    // }
-
     /**
      * Gets the device address
      *
-     * @return the {@link ZigBeeDeviceAddress}
+     * @return the {@link ZigBeeEndpointAddress}
      */
-    public ZigBeeDeviceAddress getDeviceAddress() {
-        return new ZigBeeDeviceAddress(node.getNetworkAddress(), endpoint);
+    public ZigBeeEndpointAddress getDeviceAddress() {
+        return new ZigBeeEndpointAddress(node.getNetworkAddress(), endpoint);
     }
 
     /**
@@ -303,8 +257,8 @@ public class ZigBeeDevice implements CommandListener {
                 Constructor<? extends ZclCluster> constructor;
                 try {
                     constructor = clusterType.getClusterClass().getConstructor(ZigBeeNetworkManager.class,
-                            ZigBeeDeviceAddress.class);
-                    clusterClass = constructor.newInstance(networkManager, networkAddress);
+                            ZigBeeEndpointAddress.class);
+                    clusterClass = constructor.newInstance(networkManager, getDeviceAddress());
                 } catch (Exception e) {
                     logger.debug("{}: Error instantiating cluster {}", getDeviceAddress(), clusterType);
                 }
@@ -332,38 +286,30 @@ public class ZigBeeDevice implements CommandListener {
     }
 
     /**
-     * Sets profile ID
+     * Sets the profile ID
      *
-     * @param profileId
-     *            the profile ID
+     * @param profileId the profile ID
      */
     public void setProfileId(int profileId) {
         this.profileId = profileId;
     }
 
     /**
-     * Gets label.
-     *
-     * @return the label
+     * Gets the parent {@link ZigBeeNode} in which this endpoint is situated
+     * 
+     * @return the parent {@link ZigBeeNode}
      */
-    public String getLabel() {
-        return label;
-    }
-
-    /**
-     * Sets label.
-     *
-     * @param label
-     *            the label
-     */
-    public void setLabel(String label) {
-        this.label = label;
+    public ZigBeeNode getParentNode() {
+        return node;
     }
 
     @Override
     public void commandReceived(Command command) {
-        if (command instanceof ReportAttributesCommand
-                && ((ReportAttributesCommand) command).getSourceAddress().equals(getDeviceAddress())) {
+        if (!command.getSourceAddress().equals(getDeviceAddress())) {
+            return;
+        }
+
+        if (command instanceof ReportAttributesCommand) {
             ReportAttributesCommand attributeCommand = (ReportAttributesCommand) command;
 
             // Get the cluster
@@ -376,9 +322,10 @@ public class ZigBeeDevice implements CommandListener {
 
             // Pass the reports to the cluster
             cluster.handleAttributeReport(attributeCommand.getReports());
+            return;
         }
-        if (command instanceof ReadAttributesResponse
-                && ((ReadAttributesResponse) command).getSourceAddress().equals(getDeviceAddress())) {
+
+        if (command instanceof ReadAttributesResponse) {
             ReadAttributesResponse attributeCommand = (ReadAttributesResponse) command;
 
             // Get the cluster
@@ -392,13 +339,14 @@ public class ZigBeeDevice implements CommandListener {
             attributeCommand.getRecords();
             // Pass the reports to the cluster
             cluster.handleAttributeStatus(attributeCommand.getRecords());
+            return;
         }
     }
 
     @Override
     public String toString() {
-        return "label=" + label + ", networkAddress=" + getDeviceAddress().toString() + ", profileId=" + profileId
+        return "ZigBeeDevice [networkAddress=" + getDeviceAddress().toString() + ", profileId=" + profileId
                 + ", deviceId=" + deviceId + ", deviceVersion=" + deviceVersion + ", inputClusterIds="
-                + getInputClusterIds().toString() + ", outputClusterIds=" + getOutputClusterIds().toString();
+                + getInputClusterIds().toString() + ", outputClusterIds=" + getOutputClusterIds().toString() + "]";
     }
 }
