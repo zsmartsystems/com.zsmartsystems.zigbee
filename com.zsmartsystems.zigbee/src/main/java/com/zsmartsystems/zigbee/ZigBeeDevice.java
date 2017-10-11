@@ -20,6 +20,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
 /**
  * Value object for ZigBee device.
@@ -371,7 +372,7 @@ public class ZigBeeDevice implements CommandListener {
         //command list for the server to read on a later time
         else if (command instanceof ZclCommand 
                     && command.getSourceAddress().equals(networkAddress)
-                    && command.isGenericCommand() == true) {
+                    && ((ZclCommand) command).isGenericCommand() == true) {
              
              ZclCommand zclCommand = (ZclCommand) command; 
              
@@ -385,7 +386,7 @@ public class ZigBeeDevice implements CommandListener {
              }
              
              //pass the command to an appropriate cluster
-             cluster.handleCommand(command);
+             cluster.handleCommand(zclCommand);
              return;
         }
     }

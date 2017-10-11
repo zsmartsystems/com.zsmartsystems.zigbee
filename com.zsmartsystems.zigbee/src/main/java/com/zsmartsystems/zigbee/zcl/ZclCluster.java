@@ -30,6 +30,8 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
+import com.zsmartsystems.zigbee.CommandListener;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
 /**
  * Base class for the ZCL Cluster
@@ -320,12 +322,12 @@ public abstract class ZclCluster {
         attributeListeners.add(listener);
     }
     
-    public void addCommandListenerr(CommandListener listiner) {
+    public void addCommandListenerr(CommandListener listener) {
         // Don't add more than once.
-        if (CommandListener.contains(listener)) {
+        if (commandListeners.contains(listener)) {
             return;
         }
-        CommandListener.add(listener);
+        commandListeners.add(listener);
     }
 
     public void removeCommandListenerrr(final CommandListener listener) {
