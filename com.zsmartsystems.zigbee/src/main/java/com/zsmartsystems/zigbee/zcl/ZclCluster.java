@@ -322,7 +322,7 @@ public abstract class ZclCluster {
         attributeListeners.add(listener);
     }
     
-    public void addCommandListenerr(CommandListener listener) {
+    public void addCommandListener(CommandListener listener) {
         // Don't add more than once.
         if (commandListeners.contains(listener)) {
             return;
@@ -330,7 +330,7 @@ public abstract class ZclCluster {
         commandListeners.add(listener);
     }
 
-    public void removeCommandListenerrr(final CommandListener listener) {
+    public void removeCommandListener(final CommandListener listener) {
         attributeListeners.remove(listener);
     }
     
