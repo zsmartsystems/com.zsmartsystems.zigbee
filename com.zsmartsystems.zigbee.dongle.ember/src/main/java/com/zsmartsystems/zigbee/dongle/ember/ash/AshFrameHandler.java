@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -75,6 +76,10 @@ public class AshFrameHandler {
 
     private final int ASH_CANCEL_BYTE = 0x1A;
     private final int ASH_FLAG_BYTE = 0x7E;
+    private final int ASH_SUBSTITUTE_BYTE = 0x18;
+    private final int ASH_XON_BYTE = 0x11;
+    private final int ASH_OFF_BYTE = 0x13;
+    private final int ASH_TIMEOUT = -1;
 
     private final int ASH_MAX_LENGTH = 131;
 
@@ -112,7 +117,7 @@ public class AshFrameHandler {
     /**
      * The output stream.
      */
-    private final OutputStream outputStream;
+    private OutputStream outputStream;
 
     /**
      * The parser parserThread.
@@ -126,21 +131,24 @@ public class AshFrameHandler {
     private boolean close = false;
 
     /**
-     * Construct which sets input stream where the packet is read from the and
-     * handler which further processes the received packet.
+     * Construct the handler and provide the {@link EzspFrameHandler}
      *
-     * @param inputStream
-     *            the input stream
-     * @param outputStream
-     *            the output stream
      * @param frameHandler
      *            the packet handler
      */
-    public AshFrameHandler(final InputStream inputStream, final OutputStream outputStream,
-            final EzspFrameHandler frameHandler) {
-        this.outputStream = outputStream;
-        // this.inputStream = inputStream;
+    public AshFrameHandler(final EzspFrameHandler frameHandler) {
         this.frameHandler = frameHandler;
+    }
+
+    /**
+     * Starts the handler. Sets input stream where the packet is read from the and
+     * handler which further processes the received packet.
+     *
+     * @param inputStream the {@link InputStream}
+     * @param outputStream the {@link OutputStream}
+     */
+    public void start(final InputStream inputStream, final OutputStream outputStream) {
+        this.outputStream = outputStream;
 
         parserThread = new Thread("AshFrameHandler") {
             @Override
@@ -148,127 +156,84 @@ public class AshFrameHandler {
                 logger.trace("AshFrameHandler thread started");
 
                 int exceptionCnt = 0;
-                int[] inputBuffer = new int[ASH_MAX_LENGTH];
-                int inputCount = 0;
-                boolean inputError = false;
 
                 while (!close) {
                     try {
-                        int val = inputStream.read();
-                        logger.trace("ASH RX: " + String.format("%02X", val));
-                        if (val == ASH_CANCEL_BYTE) {
-                            inputCount = 0;
-                            inputError = false;
-
+                        int[] packetData = getPacket(inputStream);
+                        if (packetData == null) {
                             continue;
-                        } else if (val == ASH_FLAG_BYTE) {
-                            if (!inputError && inputCount != 0) {
-                                AshFrame responseFrame = null;
-
-                                final AshFrame packet = AshFrame.createFromInput(inputBuffer, inputCount);
-                                if (packet == null) {
-                                    logger.error("<-- RX ASH frame: BAD PACKET {}",
-                                            AshFrame.frameToString(inputBuffer, inputCount));
-
-                                    // Send a NAK
-                                    responseFrame = new AshFrameNak(ackNum);
-                                } else {
-                                    logger.debug("<-- RX ASH frame: {}", packet.toString());
-
-                                    // Reset the exception counter
-                                    exceptionCnt = 0;
-
-                                    // Extract the flags for DATA/ACK/NAK frames
-                                    switch (packet.getFrameType()) {
-                                        case DATA:
-                                            // Always use the ackNum - even if this frame is discarded
-                                            ackSentQueue(packet.getAckNum());
-
-                                            // Check for out of sequence frame number
-                                            if (packet.getFrmNum() != ackNum) {
-                                                // Send a NAK
-                                                responseFrame = new AshFrameNak(ackNum);
-                                            } else {
-                                                // Frame was in sequence
-
-                                                // Get the EZSP frame
-                                                EzspFrameResponse response = EzspFrame
-                                                        .createHandler((AshFrameData) packet);
-                                                logger.debug("RX EZSP: " + response);
-                                                if (response == null) {
-                                                    logger.debug("No frame handler created for {}", packet);
-                                                } else if (response != null && !notifyTransactionComplete(response)) {
-                                                    // No transactions owned this response, so we pass it to
-                                                    // our unhandled response handler
-                                                    EzspFrame ezspFrame = EzspFrame
-                                                            .createHandler(((AshFrameData) packet));
-                                                    if (ezspFrame != null) {
-                                                        frameHandler.handlePacket(ezspFrame);
-                                                    }
-                                                }
-
-                                                // Update our next expected data frame
-                                                ackNum = (ackNum + 1) & 0x07;
-
-                                                responseFrame = new AshFrameAck(ackNum);
-                                            }
-                                            break;
-                                        case ACK:
-                                            ackSentQueue(packet.getAckNum());
-                                            break;
-                                        case NAK:
-                                            sendRetry();
-                                            break;
-                                        case RSTACK:
-                                            // Stack has been reset!
-                                            AshFrameRstAck rstAck = (AshFrameRstAck) packet;
-
-                                            // If we are already connected, we need to reconnect
-                                            if (stateConnected) {
-                                                reconnect();
-                                                break;
-                                            }
-
-                                            // Make sure this is a software reset.
-                                            // This avoids us reacting to a HW reset before our SW ack
-                                            if (rstAck.getResetType() != AshErrorCode.RESET_SOFTWARE) {
-                                                break;
-                                            }
-
-                                            // Check the version
-                                            if (rstAck.getVersion() == 2) {
-                                                stateConnected = true;
-                                                ackNum = 0;
-                                                frmNum = 0;
-                                                sentQueue.clear();
-                                                logger.debug("ASH: Connected");
-                                                frameHandler.handleLinkStateChange(false);
-                                            } else {
-                                                logger.debug("Invalid ASH version");
-                                            }
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }
-
-                                // Send the response
-                                if (responseFrame != null) {
-                                    sendFrame(responseFrame);
-                                }
-
-                                // Send the next frame
-                                sendNextFrame();
-                            }
-                            inputCount = 0;
-                            inputError = false;
-                        } else if (val != -1) {
-                            if (inputCount >= ASH_MAX_LENGTH) {
-                                inputCount = 0;
-                                inputError = true;
-                            }
-                            inputBuffer[inputCount++] = val;
                         }
+
+                        final AshFrame packet = AshFrame.createFromInput(packetData);
+                        AshFrame responseFrame = null;
+                        if (packet == null) {
+                            logger.error("<-- RX ASH frame: BAD PACKET {}", AshFrame.frameToString(packetData));
+
+                            // Send a NAK
+                            responseFrame = new AshFrameNak(ackNum);
+                        } else {
+                            logger.debug("<-- RX ASH frame: {}", packet.toString());
+
+                            // Reset the exception counter
+                            exceptionCnt = 0;
+
+                            // Extract the flags for DATA/ACK/NAK frames
+                            switch (packet.getFrameType()) {
+                                case DATA:
+                                    // Always use the ackNum - even if this frame is discarded
+                                    ackSentQueue(packet.getAckNum());
+
+                                    // Check for out of sequence frame number
+                                    if (packet.getFrmNum() != ackNum) {
+                                        // Send a NAK
+                                        responseFrame = new AshFrameNak(ackNum);
+                                    } else {
+                                        // Frame was in sequence
+
+                                        // Get the EZSP frame
+                                        EzspFrameResponse response = EzspFrame.createHandler((AshFrameData) packet);
+                                        logger.debug("RX EZSP: " + response);
+                                        if (response == null) {
+                                            logger.debug("No frame handler created for {}", packet);
+                                        } else if (response != null && !notifyTransactionComplete(response)) {
+                                            // No transactions owned this response, so we pass it to
+                                            // our unhandled response handler
+                                            EzspFrame ezspFrame = EzspFrame.createHandler(((AshFrameData) packet));
+                                            if (ezspFrame != null) {
+                                                frameHandler.handlePacket(ezspFrame);
+                                            }
+                                        }
+
+                                        // Update our next expected data frame
+                                        ackNum = (ackNum + 1) & 0x07;
+
+                                        responseFrame = new AshFrameAck(ackNum);
+                                    }
+                                    break;
+                                case ACK:
+                                    ackSentQueue(packet.getAckNum());
+                                    break;
+                                case NAK:
+                                    sendRetry();
+                                    break;
+                                case RSTACK:
+                                    // Stack has been reset!
+                                    handleReset((AshFrameRstAck) packet);
+
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+                        // Send the response
+                        if (responseFrame != null) {
+                            sendFrame(responseFrame);
+                        }
+
+                        // Send the next frame
+                        sendNextFrame();
+
                     } catch (final IOException e) {
                         logger.error("AshFrameHandler IOException: ", e);
 
@@ -286,6 +251,84 @@ public class AshFrameHandler {
 
         parserThread.setDaemon(true);
         parserThread.start();
+    }
+
+    private int[] getPacket(InputStream inputStream) throws IOException {
+        int[] inputBuffer = new int[ASH_MAX_LENGTH];
+        int inputCount = 0;
+        boolean inputError = false;
+
+        while (!close) {
+            int val = inputStream.read();
+            logger.trace("ASH RX: " + String.format("%02X", val));
+            switch (val) {
+                case ASH_CANCEL_BYTE:
+                    // Cancel Byte: Terminates a frame in progress. A Cancel Byte causes all data received since the
+                    // previous Flag Byte to be ignored. Note that as a special case, RST and RSTACK frames are preceded
+                    // by Cancel Bytes to ignore any link startup noise.
+                    inputCount = 0;
+                    inputError = false;
+                    break;
+                case ASH_FLAG_BYTE:
+                    // Flag Byte: Marks the end of a frame.When a Flag Byte is received, the data received since the
+                    // last Flag Byte or Cancel Byte is tested to see whether it is a valid frame.
+                    if (!inputError && inputCount != 0) {
+                        return Arrays.copyOfRange(inputBuffer, 0, inputCount);
+                    }
+                    inputCount = 0;
+                    inputError = false;
+                    break;
+                case ASH_SUBSTITUTE_BYTE:
+                    // Substitute Byte: Replaces a byte received with a low-level communication error (e.g., framing
+                    // error) from the UART.When a Substitute Byte is processed, the data between the previous and the
+                    // next Flag Bytes is ignored.
+                    inputError = true;
+                    break;
+                case ASH_XON_BYTE:
+                    // XON: Resume transmissionUsed in XON/XOFF flow control. Always ignored if received by the NCP.
+                    break;
+                case ASH_OFF_BYTE:
+                    // XOFF: Stop transmissionUsed in XON/XOFF flow control. Always ignored if received by the NCP.
+                    break;
+                case ASH_TIMEOUT:
+                    break;
+                default:
+                    if (inputCount >= ASH_MAX_LENGTH) {
+                        inputCount = 0;
+                        inputError = true;
+                    }
+                    inputBuffer[inputCount++] = val;
+                    break;
+            }
+        }
+
+        return null;
+    }
+
+    private void handleReset(AshFrameRstAck rstAck) {
+        // If we are already connected, we need to reconnect
+        if (stateConnected) {
+            reconnect();
+            return;
+        }
+
+        // Make sure this is a software reset.
+        // This avoids us reacting to a HW reset before our SW ack
+        if (rstAck.getResetType() != AshErrorCode.RESET_SOFTWARE) {
+            return;
+        }
+
+        // Check the version
+        if (rstAck.getVersion() == 2) {
+            stateConnected = true;
+            ackNum = 0;
+            frmNum = 0;
+            sentQueue.clear();
+            logger.debug("ASH: Connected");
+            frameHandler.handleLinkStateChange(false);
+        } else {
+            logger.debug("Invalid ASH version");
+        }
     }
 
     /**
