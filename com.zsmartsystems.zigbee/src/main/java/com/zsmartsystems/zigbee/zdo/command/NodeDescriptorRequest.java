@@ -11,7 +11,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
-import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.CommandResponseMatcher;
 import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorResponse;
 
@@ -71,7 +71,7 @@ public class NodeDescriptorRequest extends ZdoRequest implements CommandResponse
     }
 
     @Override
-    public boolean isMatch(Command request, Command response) {
+    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {
         if (!(response instanceof NodeDescriptorResponse)) {
             return false;
         }

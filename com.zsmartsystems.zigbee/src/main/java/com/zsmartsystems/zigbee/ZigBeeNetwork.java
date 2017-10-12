@@ -23,7 +23,7 @@ public interface ZigBeeNetwork {
      * @return transactionId an {@link int} specifying the transaction ID for this transaction
      * @throws ZigBeeException if exception occurs in sending
      */
-    int sendCommand(final Command command) throws ZigBeeException;
+    int sendCommand(final ZigBeeCommand command) throws ZigBeeException;
 
     /**
      * Adds ZigBee library command listener.

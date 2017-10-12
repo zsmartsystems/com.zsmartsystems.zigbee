@@ -17,7 +17,7 @@ public interface CommandListener {
     /**
      * Called when a command has been received.
      *
-     * @param command the received {@link Command}
+     * @param command the received {@link ZigBeeCommand}
      */
-    void commandReceived(final Command command);
+    void commandReceived(final ZigBeeCommand command);
 }

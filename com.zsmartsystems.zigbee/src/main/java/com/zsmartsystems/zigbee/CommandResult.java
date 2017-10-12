@@ -22,7 +22,7 @@ public class CommandResult {
     /**
      * The response command.
      */
-    private final Command response;
+    private final ZigBeeCommand response;
     /**
      * The message.
      */
@@ -33,7 +33,7 @@ public class CommandResult {
      *
      * @param response the response command.
      */
-    public CommandResult(final Command response) {
+    public CommandResult(final ZigBeeCommand response) {
         this.response = response;
         this.message = null;
     }
@@ -122,9 +122,9 @@ public class CommandResult {
     /**
      * Gets the received response.
      *
-     * @return the received response
+     * @return the received response {@link ZigBeeCommand}
      */
-    public <C extends Command> C getResponse() {
+    public <C extends ZigBeeCommand> C getResponse() {
         return (C) response;
     }
 

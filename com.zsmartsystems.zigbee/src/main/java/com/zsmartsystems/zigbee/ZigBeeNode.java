@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
@@ -27,12 +28,16 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.ServerCapabilitiesType;
 /**
  * Defines a ZigBee Node. A node is a physical entity on the network and will
  * contain one or more {@link ZigBeeEndpoint}s.
- * <p>
  *
  * @author Chris Jackson
  *
  */
 public class ZigBeeNode {
+    /**
+     * The {@link Logger}.
+     */
+    private final static Logger logger = LoggerFactory.getLogger(ZigBeeNode.class);
+
     /**
      * The extended {@link IeeeAddress} for the node
      */
@@ -92,10 +97,15 @@ public class ZigBeeNode {
             .unmodifiableList(new ArrayList<ZigBeeNetworkEndpointListener>());
 
     /**
-     * The network manager that manages this node
+     * The {@link ZigBeeNetworkManager} that manages this node
      */
     private final ZigBeeNetworkManager networkManager;
 
+    /**
+     * Constructor
+     *
+     * @param networkManager the {@link ZigBeeNetworkManager}
+     */
     public ZigBeeNode(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
     }
@@ -145,14 +155,29 @@ public class ZigBeeNode {
         this.nodeDescriptor = nodeDescriptor;
     }
 
+    /**
+     * Gets the {@link NodeDescriptor} for this node.
+     *
+     * @return nodeDescriptor the new {@link NodeDescriptor}
+     */
     public NodeDescriptor getNodeDescriptor() {
         return nodeDescriptor;
     }
 
+    /**
+     * Sets the nodes {@link PowerDescriptor}
+     *
+     * @param powerDescriptor the {@link PowerDescriptor}
+     */
     public void setPowerDescriptor(PowerDescriptor powerDescriptor) {
         this.powerDescriptor = powerDescriptor;
     }
 
+    /**
+     * Gets the nodes {@link PowerDescriptor}
+     *
+     * @return the {@link PowerDescriptor} or null if not set
+     */
     public PowerDescriptor getPowerDescriptor() {
         return powerDescriptor;
     }
@@ -182,7 +207,7 @@ public class ZigBeeNode {
         try {
             networkManager.sendCommand(command);
         } catch (final ZigBeeException e) {
-            throw new ZigBeeApiException("Error sending permit join command.", e);
+            logger.debug("Error sending permit join command.", e);
         }
     }
 
@@ -343,12 +368,12 @@ public class ZigBeeNode {
     /**
      * Removes endpoint by network address.
      *
-     * @param networkAddress the network address
+     * @param endpointId the network address
      */
-    public void removeDevice(final ZigBeeAddress networkAddress) {
+    public void removeEndpoint(final int endpointId) {
         final ZigBeeEndpoint endpoint;
         synchronized (endpoints) {
-            endpoint = endpoints.remove(networkAddress);
+            endpoint = endpoints.remove(endpointId);
         }
         synchronized (this) {
             if (endpoint != null) {

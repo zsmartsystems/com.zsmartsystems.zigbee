@@ -30,17 +30,17 @@
 package com.zsmartsystems.zigbee;
 
 /**
- * Root exception for all the code related to ZigBee<br>
- * the BaseDriver should use ZibeeBasedriverException by including<br>
- * communication exception as nested Throwable<br>
- * <p/>
- * The ZCL bundle should use ZigBeeClusterException<br>
- * and HA Drive should use ZigBeeDeviceException.
+ * Root exception for all the code related to ZigBee
  *
  * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
  * @author <a href="mailto:francesco.furfari@isti.cnr.it">Francesco Furfari</a>
  */
 public class ZigBeeException extends Exception {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6952890405262050409L;
 
     public ZigBeeException(String msg) {
         super(msg);

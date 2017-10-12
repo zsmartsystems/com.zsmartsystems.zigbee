@@ -34,7 +34,7 @@ public class ZigBeeEndpoint implements CommandListener {
     private final static Logger logger = LoggerFactory.getLogger(ZigBeeEndpoint.class);
 
     /**
-     * Link to the {@link ZigBeeNetworkManager} to which the node belongs
+     * The {@link ZigBeeNetworkManager} that manages this node
      */
     private final ZigBeeNetworkManager networkManager;
 
@@ -296,7 +296,7 @@ public class ZigBeeEndpoint implements CommandListener {
 
     /**
      * Gets the parent {@link ZigBeeNode} in which this endpoint is situated
-     * 
+     *
      * @return the parent {@link ZigBeeNode}
      */
     public ZigBeeNode getParentNode() {
@@ -304,7 +304,7 @@ public class ZigBeeEndpoint implements CommandListener {
     }
 
     @Override
-    public void commandReceived(Command command) {
+    public void commandReceived(ZigBeeCommand command) {
         if (!command.getSourceAddress().equals(getDeviceAddress())) {
             return;
         }

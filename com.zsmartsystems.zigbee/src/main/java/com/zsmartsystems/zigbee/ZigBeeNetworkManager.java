@@ -386,7 +386,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     @Override
-    public int sendCommand(Command command) throws ZigBeeException {
+    public int sendCommand(ZigBeeCommand command) throws ZigBeeException {
         // Create the application frame
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
 
@@ -500,7 +500,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
 
-        Command command = null;
+        ZigBeeCommand command = null;
         switch (apsFrame.getProfile()) {
             case 0x0000:
                 command = receiveZdoCommand(fieldDeserializer, apsFrame);
@@ -529,13 +529,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         notifyCommandListeners(command);
     }
 
-    private Command receiveZdoCommand(final ZclFieldDeserializer fieldDeserializer, final ZigBeeApsFrame apsFrame) {
+    private ZigBeeCommand receiveZdoCommand(final ZclFieldDeserializer fieldDeserializer,
+            final ZigBeeApsFrame apsFrame) {
         ZdoCommandType commandType = ZdoCommandType.getValueById(apsFrame.getCluster());
         if (commandType == null) {
             return null;
         }
 
-        Command command;
+        ZigBeeCommand command;
         try {
             Class<? extends ZdoCommand> commandClass = commandType.getCommandClass();
             Constructor<? extends ZdoCommand> constructor;
@@ -552,7 +553,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         return command;
     }
 
-    private Command receiveZclCommand(final ZclFieldDeserializer fieldDeserializer, final ZigBeeApsFrame apsFrame) {
+    private ZigBeeCommand receiveZclCommand(final ZclFieldDeserializer fieldDeserializer,
+            final ZigBeeApsFrame apsFrame) {
         // Process the ZCL header
         ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
 
@@ -588,7 +590,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         return command;
     }
 
-    private void notifyCommandListeners(final Command command) {
+    private void notifyCommandListeners(final ZigBeeCommand command) {
         synchronized (this) {
             // Notify the listeners
             for (final CommandListener commandListener : commandListeners) {
@@ -720,19 +722,19 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Sends ZCL command and uses the {@link CommandResponseMatcher} to match the response.
      *
      * @param command
-     *            the {@link Command}
+     *            the {@link ZigBeeCommand}
      * @param responseMatcher
      *            the {@link CommandResponseMatcher}
      * @return the command result future
      */
-    public Future<CommandResult> unicast(final Command command, final CommandResponseMatcher responseMatcher) {
+    public Future<CommandResult> unicast(final ZigBeeCommand command, final CommandResponseMatcher responseMatcher) {
         synchronized (command) {
             final CommandResultFuture future = new CommandResultFuture(this);
             final CommandExecution commandExecution = new CommandExecution(System.currentTimeMillis(), command, future);
             future.setCommandExecution(commandExecution);
             final CommandListener commandListener = new CommandListener() {
                 @Override
-                public void commandReceived(Command receivedCommand) {
+                public void commandReceived(ZigBeeCommand receivedCommand) {
                     // Ensure that received command is not processed before
                     // command is sent and hence transaction ID for the command
                     // set.
@@ -773,7 +775,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      *            the command
      * @return the command result future.
      */
-    private Future<CommandResult> broadcast(final Command command) {
+    private Future<CommandResult> broadcast(final ZigBeeCommand command) {
         synchronized (command) {
             final CommandResultFuture future = new CommandResultFuture(this);
 
@@ -920,7 +922,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                         }
                     }
                 } catch (InterruptedException | ExecutionException e) {
-                    throw new ZigBeeApiException("Error sending leave command.", e);
+                    logger.debug("Error sending leave command.", e);
                 }
             }
         }.start();

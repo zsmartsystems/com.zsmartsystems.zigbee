@@ -22,7 +22,7 @@ public class CommandExecution {
     /**
      * The command.
      */
-    private Command command;
+    private ZigBeeCommand command;
     /**
      * The future.
      */
@@ -39,7 +39,7 @@ public class CommandExecution {
      * @param command the command
      * @param future the future
      */
-    public CommandExecution(long startTime, Command command, Future<CommandResult> future) {
+    public CommandExecution(long startTime, ZigBeeCommand command, Future<CommandResult> future) {
         this.startTime = startTime;
         this.command = command;
         this.future = future;
@@ -59,7 +59,7 @@ public class CommandExecution {
      *
      * @return
      */
-    public Command getCommand() {
+    public ZigBeeCommand getCommand() {
         return command;
     }
 

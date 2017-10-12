@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.zdo;
 
-import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.CommandResponseMatcher;
 
 /**
@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.CommandResponseMatcher;
 public class ZdoResponseMatcher implements CommandResponseMatcher {
 
     @Override
-    public boolean isMatch(Command request, Command response) {
+    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {
         if (response instanceof ZdoResponse) {
             return ((ZdoRequest) request).getDestinationAddress().equals(((ZdoResponse) response).getSourceAddress());
         } else {

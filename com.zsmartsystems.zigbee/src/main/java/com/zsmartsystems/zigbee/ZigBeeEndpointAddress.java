@@ -112,7 +112,7 @@ public class ZigBeeEndpointAddress extends ZigBeeAddress {
     }
 
     @Override
-    public int compareTo(Object that) {
+    public int compareTo(ZigBeeAddress that) {
         if (this == that) {
             return 0;
         }

@@ -44,7 +44,7 @@ public class ZigBeeNetworkManagerTest
     private ZigBeeTransportTransmit mockedTransport;
     private CommandListener mockedCommandListener;
     private ZigBeeNetworkStateListener mockedStateListener;
-    private List<Command> commandListenerCapture;
+    private List<ZigBeeCommand> commandListenerCapture;
 
     @Test
     public void testAddRemoveNode() {
@@ -378,7 +378,7 @@ public class ZigBeeNetworkManagerTest
     }
 
     @Override
-    public void commandReceived(Command command) {
+    public void commandReceived(ZigBeeCommand command) {
         commandListenerCapture.add(command);
     }
 

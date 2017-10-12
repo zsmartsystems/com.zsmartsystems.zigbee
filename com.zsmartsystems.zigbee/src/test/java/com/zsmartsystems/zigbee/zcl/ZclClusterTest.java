@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.CommandResponseMatcher;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -35,13 +35,13 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 public class ZclClusterTest {
     ZigBeeTransportTransmit mockedTransport;
     ZigBeeNetworkManager networkManager;
-    ArgumentCaptor<Command> commandCapture;
+    ArgumentCaptor<ZigBeeCommand> commandCapture;
     ArgumentCaptor<CommandResponseMatcher> matcherCapture;
 
     private void createNetworkManager() {
         mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
         networkManager = Mockito.mock(ZigBeeNetworkManager.class);
-        commandCapture = ArgumentCaptor.forClass(Command.class);
+        commandCapture = ArgumentCaptor.forClass(ZigBeeCommand.class);
         matcherCapture = ArgumentCaptor.forClass(CommandResponseMatcher.class);
         Mockito.when(networkManager.unicast(commandCapture.capture(), matcherCapture.capture())).thenReturn(null);
     }
@@ -56,7 +56,7 @@ public class ZclClusterTest {
         ZclAttribute attribute = cluster.getAttribute(0);
         cluster.getReporting(attribute);
         assertEquals(1, commandCapture.getAllValues().size());
-        Command command = commandCapture.getValue();
+        ZigBeeCommand command = commandCapture.getValue();
         assertNotNull(command);
         assertTrue(command instanceof ReadReportingConfigurationCommand);
         ReadReportingConfigurationCommand cfgCommand = (ReadReportingConfigurationCommand) command;
@@ -76,7 +76,7 @@ public class ZclClusterTest {
         ZclAttribute attribute = cluster.getAttribute(0);
         cluster.setReporting(attribute, 22, 33);
         assertEquals(1, commandCapture.getAllValues().size());
-        Command command = commandCapture.getValue();
+        ZigBeeCommand command = commandCapture.getValue();
         assertNotNull(command);
         assertTrue(command instanceof ConfigureReportingCommand);
         ConfigureReportingCommand cfgCommand = (ConfigureReportingCommand) command;

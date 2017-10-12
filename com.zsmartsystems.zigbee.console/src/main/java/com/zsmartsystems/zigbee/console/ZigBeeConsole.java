@@ -21,7 +21,7 @@ import java.util.concurrent.Future;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.CommandListener;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -188,7 +188,7 @@ public final class ZigBeeConsole {
 
         zigBeeApi.getNetwork().addCommandListener(new CommandListener() {
             @Override
-            public void commandReceived(Command command) {
+            public void commandReceived(ZigBeeCommand command) {
                 if (printAttributeReports && command instanceof ReportAttributesCommand) {
                     print("Received: " + command.toString(), System.out);
                 }

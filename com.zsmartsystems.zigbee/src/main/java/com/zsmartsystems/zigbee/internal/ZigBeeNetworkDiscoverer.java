@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.CommandListener;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.DeviceStatusListener;
@@ -156,7 +156,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusLis
     }
 
     @Override
-    public void commandReceived(final Command command) {
+    public void commandReceived(final ZigBeeCommand command) {
         // ZCL command received from remote node. Request IEEE address if it is not yet known.
         if (command instanceof ZclCommand) {
             final ZclCommand zclCommand = (ZclCommand) command;

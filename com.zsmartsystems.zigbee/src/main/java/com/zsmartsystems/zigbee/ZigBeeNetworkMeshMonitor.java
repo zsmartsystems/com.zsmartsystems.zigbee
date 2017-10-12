@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -415,7 +414,7 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
     }
 
     @Override
-    public void commandReceived(Command command) {
+    public void commandReceived(ZigBeeCommand command) {
         // Listen for specific commands that may indicate that the mesh has changed
         if (command instanceof ManagementLeaveResponse || command instanceof DeviceAnnounce) {
             logger.debug("Mesh related command received. Triggering mesh update.");
@@ -423,8 +422,4 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
         }
     }
 
-    private class NodeMeshStatus {
-        public Date lastUpdateTime;
-        public int retries;
-    }
 }

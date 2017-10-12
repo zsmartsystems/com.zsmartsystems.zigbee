@@ -32,7 +32,7 @@ public class CommandResultTest {
         assertTrue(result.isError());
         assertFalse(result.isSuccess());
 
-        result = new CommandResult(new Command());
+        result = new CommandResult(new ZigBeeCommand());
         assertFalse(result.isError());
         assertTrue(result.isSuccess());
 

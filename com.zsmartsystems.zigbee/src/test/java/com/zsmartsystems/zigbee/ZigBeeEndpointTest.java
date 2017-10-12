@@ -35,7 +35,6 @@ public class ZigBeeEndpointTest {
     @Test
     public void testOutputClusterIds() {
         ZigBeeEndpoint device = getDevice();
-        // device.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
 
         List<Integer> clusterIdList = new ArrayList<Integer>();
         clusterIdList.add(ZclAlarmsCluster.CLUSTER_ID);
@@ -66,8 +65,7 @@ public class ZigBeeEndpointTest {
 
     @Test
     public void testInputClusterIds() {
-        ZigBeeEndpoint device = getDevice();
-        // device.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
+        ZigBeeEndpoint endpoint = getDevice();
 
         List<Integer> clusterIdList = new ArrayList<Integer>();
         clusterIdList.add(ZclAlarmsCluster.CLUSTER_ID);
@@ -75,17 +73,17 @@ public class ZigBeeEndpointTest {
         clusterIdList.add(ZclColorControlCluster.CLUSTER_ID);
         clusterIdList.add(ZclDoorLockCluster.CLUSTER_ID);
         clusterIdList.add(ZclLevelControlCluster.CLUSTER_ID);
-        device.setInputClusterIds(clusterIdList);
+        endpoint.setInputClusterIds(clusterIdList);
 
-        assertEquals(5, device.getInputClusterIds().size());
+        assertEquals(5, endpoint.getInputClusterIds().size());
 
-        assertNotNull(device.getCluster(ZclAlarmsCluster.CLUSTER_ID));
-        assertFalse(device.getCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
-        assertTrue(device.getCluster(ZclAlarmsCluster.CLUSTER_ID).isServer());
+        assertNotNull(endpoint.getCluster(ZclAlarmsCluster.CLUSTER_ID));
+        assertFalse(endpoint.getCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
+        assertTrue(endpoint.getCluster(ZclAlarmsCluster.CLUSTER_ID).isServer());
 
-        assertNotNull(device.getCluster(ZclLevelControlCluster.CLUSTER_ID));
-        assertFalse(device.getCluster(ZclLevelControlCluster.CLUSTER_ID).isClient());
-        assertTrue(device.getCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
+        assertNotNull(endpoint.getCluster(ZclLevelControlCluster.CLUSTER_ID));
+        assertFalse(endpoint.getCluster(ZclLevelControlCluster.CLUSTER_ID).isClient());
+        assertTrue(endpoint.getCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
     }
 
     @Test
@@ -116,7 +114,8 @@ public class ZigBeeEndpointTest {
         ZigBeeTransportTransmit mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
         ZigBeeNode node = new ZigBeeNode(networkManager);
-        return new ZigBeeEndpoint(networkManager, node, 1);
+        node.setNetworkAddress(1234);
+        return new ZigBeeEndpoint(networkManager, node, 5);
     }
 
 }

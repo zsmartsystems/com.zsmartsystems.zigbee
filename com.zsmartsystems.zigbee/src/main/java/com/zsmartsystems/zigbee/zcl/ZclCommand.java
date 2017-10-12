@@ -7,16 +7,16 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
-import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 /**
- * Base class for value object classes holding ZCL commands, extended from {@link Command}.
+ * Base class for value object classes holding ZCL commands, extended from {@link ZigBeeCommand}.
  *
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
-public abstract class ZclCommand extends Command {
+public abstract class ZclCommand extends ZigBeeCommand {
 
     /**
      *

@@ -11,14 +11,14 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 
 /**
- * Base class for all commands.
+ * Base class for all ZigBee commands.
  * <p>
  * The base class contains methods that are not part of the application layer (eg ZCL or ZDO).
  * These members may be part of other layers but are provide in the command for convenience.
  *
  * @author Chris Jackson
  */
-public class Command {
+public class ZigBeeCommand {
     /**
      * The source address.
      */
