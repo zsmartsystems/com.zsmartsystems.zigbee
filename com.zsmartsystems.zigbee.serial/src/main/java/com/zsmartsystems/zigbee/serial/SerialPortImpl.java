@@ -53,14 +53,26 @@ public class SerialPortImpl implements ZigBeePort, SerialPortEventListener {
     private final int baudRate;
 
     /**
+     * True to enable RTS / CTS flow control
+     */
+    private final boolean flowControl;
+
+    /**
      * Constructor setting port name and baud rate.
-     * 
+     *
      * @param portName the port name
      * @param baudRate the baud rate
      */
     public SerialPortImpl(final String portName, final int baudRate) {
         this.portName = portName;
         this.baudRate = baudRate;
+        this.flowControl = false;
+    }
+
+    public SerialPortImpl(String portName, int baudRate, boolean flowControl) {
+        this.portName = portName;
+        this.baudRate = baudRate;
+        this.flowControl = flowControl;
     }
 
     @Override
@@ -77,7 +89,7 @@ public class SerialPortImpl implements ZigBeePort, SerialPortEventListener {
 
     /**
      * Opens serial port.
-     * 
+     *
      * @param portName the port name
      * @param baudRate the baud rate
      */
@@ -90,7 +102,11 @@ public class SerialPortImpl implements ZigBeePort, SerialPortEventListener {
         try {
             serialPort.openPort();
             serialPort.setParams(baudRate, 8, 1, 0);
-            serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_RTSCTS_OUT); // FLOWCONTROL_NONE);
+            if (flowControl) {
+                serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_RTSCTS_OUT);
+            } else {
+                serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_NONE);
+            }
         } catch (SerialPortException e) {
             logger.error("Error opening serial port.", e);
             throw new RuntimeException("Failed to open serial port: " + portName, e);

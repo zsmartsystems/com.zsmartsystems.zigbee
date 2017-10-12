@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
@@ -184,6 +185,9 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 SimpleDescriptor simpleDescriptor = new SimpleDescriptor();
                 simpleDescriptor.deserialize(this);
                 value[0] = simpleDescriptor;
+                break;
+            case ZCL_STATUS:
+                value[0] = ZclStatus.getStatus(payload[index++]);
                 break;
             case ZDO_STATUS:
                 value[0] = ZdoStatus.getStatus(payload[index++]);
