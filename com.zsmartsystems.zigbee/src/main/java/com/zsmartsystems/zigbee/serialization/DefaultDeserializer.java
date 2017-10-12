@@ -14,6 +14,7 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
@@ -188,6 +189,8 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
             case ZDO_STATUS:
                 value[0] = ZdoStatus.getStatus(payload[index++]);
                 break;
+            case ZCL_STATUS: 
+                value[0] = ZclStatus.getStatus(payload[index++]);
             default:
                 throw new IllegalArgumentException("No reader defined in " + ZigBeeDeserializer.class.getSimpleName()
                         + " for " + type.toString() + " (" + type.getId() + ")");
