@@ -162,9 +162,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             logger.error("Unable to open Ember serial port");
             return ZigBeeInitializeResponse.FAILED;
         }
-        ashHandler = new AshFrameHandler(serialPort.getInputStream(), serialPort.getOutputStream(), this);
+        ashHandler = new AshFrameHandler(this);
 
         // Connect to the ASH handler and NCP
+        ashHandler.start(serialPort.getInputStream(), serialPort.getOutputStream());
         ashHandler.connect();
 
         // We MUST send the version command first.

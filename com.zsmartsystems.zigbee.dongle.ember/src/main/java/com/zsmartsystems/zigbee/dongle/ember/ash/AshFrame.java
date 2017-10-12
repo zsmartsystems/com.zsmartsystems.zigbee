@@ -152,9 +152,9 @@ public class AshFrame {
         }
     }
 
-    public static AshFrame createFromInput(int[] buffer, int length) {
+    public static AshFrame createFromInput(int[] buffer) {
         // A frame must be at least 3 bytes long
-        if (length < 3) {
+        if (buffer.length < 3) {
             return null;
         }
 
@@ -162,8 +162,7 @@ public class AshFrame {
         int[] unstuffedData = new int[131];
         int outLength = 0;
         boolean escape = false;
-        for (int cnt = 0; cnt < length; cnt++) {
-            int data = buffer[cnt];
+        for (int data : buffer) {
             if (escape) {
                 escape = false;
                 if ((data & 0x20) == 0) {
