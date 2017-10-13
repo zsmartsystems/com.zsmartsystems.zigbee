@@ -1284,7 +1284,7 @@ public class ZclProtocolCodeGenerator {
 
                 if (useList) {
                     imports.add("java.util.List");
-                    imports.add(packageRootPrefix + packageZclField + ".*");
+                    // imports.add(packageRootPrefix + packageZclField + ".*");
                 }
 
                 boolean addAttributeTypes = false;
@@ -1322,7 +1322,8 @@ public class ZclProtocolCodeGenerator {
                 // imports.add(packageRoot + packageZcl + ".ZclCommandMessage");
 
                 // imports.add(packageRoot + ".ZigBeeDestination");
-                imports.add(packageRoot + ".ZigBeeDeviceAddress");
+                imports.add(packageRoot + ".ZigBeeDevice");
+                // imports.add(packageRoot + ".ZigBeeDeviceAddress");
                 imports.add(packageRoot + ".ZigBeeNetworkManager");
                 if (!cluster.attributes.isEmpty() | !commands.isEmpty()) {
                     imports.add(packageRoot + ".CommandResult");
@@ -1400,8 +1401,9 @@ public class ZclProtocolCodeGenerator {
                 out.println(
                         "        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>("
                                 + cluster.attributes.size() + ");");
-                out.println();
+
                 if (cluster.attributes.size() != 0) {
+                    out.println();
                     for (final Attribute attribute : cluster.attributes.values()) {
                         out.println("        attributeMap.put(" + attribute.enumName
                                 + ", new ZclAttribute(ZclClusterType." + cluster.clusterType + ", " + attribute.enumName
@@ -1418,11 +1420,14 @@ public class ZclProtocolCodeGenerator {
                 out.println();
 
                 out.println("    /**");
-                out.println("     * Default constructor.");
+                out.println("     * Default constructor to create a " + cluster.clusterName + " cluster.");
+                out.println("     *");
+                out.println("     * @param zigbeeManager {@link ZigBeeNetworkManager}");
+                out.println("     * @param zigbeeEndpoint the {@link ZigBeeDevice}");
                 out.println("     */");
                 out.println("    public " + className
-                        + "(final ZigBeeNetworkManager zigbeeManager, final ZigBeeDeviceAddress zigbeeAddress) {");
-                out.println("        super(zigbeeManager, zigbeeAddress, CLUSTER_ID, CLUSTER_NAME);");
+                        + "(final ZigBeeNetworkManager zigbeeManager, final ZigBeeDevice zigbeeEndpoint) {");
+                out.println("        super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);");
                 out.println("    }");
                 out.println();
 
