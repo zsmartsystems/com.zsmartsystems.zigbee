@@ -15,10 +15,10 @@ import com.zsmartsystems.zigbee.CommandTest;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
-import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
-import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.CurrentPowerModeType;
-import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.PowerLevelType;
-import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.PowerSourceType;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.CurrentPowerModeType;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.PowerLevelType;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.PowerSourceType;
 
 /**
  *

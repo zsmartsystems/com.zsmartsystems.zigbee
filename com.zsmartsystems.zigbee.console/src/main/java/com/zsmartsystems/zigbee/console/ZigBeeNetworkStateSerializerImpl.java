@@ -32,10 +32,10 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.dao.ZigBeeDeviceDao;
 import com.zsmartsystems.zigbee.dao.ZigBeeNodeDao;
-import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.FrequencyBandType;
-import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.MacCapabilitiesType;
-import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.ServerCapabilitiesType;
-import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor.PowerSourceType;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.FrequencyBandType;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.ServerCapabilitiesType;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.PowerSourceType;
 
 /**
  * Serializes and deserializes the ZigBee network state.

@@ -15,7 +15,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 import java.util.List;
 import java.util.ArrayList;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
-import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 
 /**
  * Management Routing Response value object class.

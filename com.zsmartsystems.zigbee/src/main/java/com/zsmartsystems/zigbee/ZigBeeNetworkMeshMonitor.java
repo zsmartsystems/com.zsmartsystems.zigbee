@@ -32,9 +32,9 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingResponse;
-import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
-import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable.NeighborTableJoining;
-import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable;
+import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
+import com.zsmartsystems.zigbee.zdo.field.NeighborTable.NeighborTableJoining;
 
 /**
  * {@link ZigBeeNetworkMeshMonitor} is used to walk through the network getting information about the mesh network.

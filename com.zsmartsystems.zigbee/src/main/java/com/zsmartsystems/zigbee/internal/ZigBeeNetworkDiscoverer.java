@@ -42,7 +42,7 @@ import com.zsmartsystems.zigbee.zdo.command.PowerDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.PowerDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
-import com.zsmartsystems.zigbee.zdo.descriptors.SimpleDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
 
 /**
  * {@link ZigBeeNetworkDiscoverer} is used to discover devices in the network.

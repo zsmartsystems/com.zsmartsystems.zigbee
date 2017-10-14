@@ -12,7 +12,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
-import com.zsmartsystems.zigbee.zdo.descriptors.UserDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.UserDescriptor;
 
 /**
  * User Descriptor Response value object class.

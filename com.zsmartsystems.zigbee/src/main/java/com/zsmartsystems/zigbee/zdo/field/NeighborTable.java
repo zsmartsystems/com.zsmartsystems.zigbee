@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.zdo.descriptors;
+package com.zsmartsystems.zigbee.zdo.field;
 
 import java.util.Objects;
 
@@ -13,7 +13,7 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.LogicalType;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
 
 /**
  * Class representing the ZigBee neighbor table
