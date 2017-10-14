@@ -25,9 +25,9 @@ import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetZoneInformationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetZoneInformationResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.PanicCommand;
 import com.zsmartsystems.zigbee.zcl.field.*;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
 /**
@@ -49,7 +49,7 @@ public class ZclIasAceCluster extends ZclCluster {
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(0);
 
 
         return attributeMap;
