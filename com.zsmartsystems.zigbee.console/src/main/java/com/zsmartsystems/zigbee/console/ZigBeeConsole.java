@@ -21,11 +21,11 @@ import java.util.concurrent.Future;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.CommandListener;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -1686,7 +1686,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             if (device == null) {
                 print("Device not found.", out);
                 return false;
@@ -1765,7 +1765,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
             if (device == null) {
                 print("Device not found.", out);
                 return false;

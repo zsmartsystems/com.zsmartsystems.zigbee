@@ -15,15 +15,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.zsmartsystems.zigbee.internal.NotificationService;
+import com.zsmartsystems.zigbee.zdo.ZdoResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.ServerCapabilitiesType;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 
 /**
  * Defines a ZigBee Node. A node is a physical entity on the network and will
@@ -36,7 +41,7 @@ public class ZigBeeNode {
     /**
      * The {@link Logger}.
      */
-    private final static Logger logger = LoggerFactory.getLogger(ZigBeeNode.class);
+    private final Logger logger = LoggerFactory.getLogger(ZigBeeNode.class);
 
     /**
      * The extended {@link IeeeAddress} for the node
@@ -290,14 +295,13 @@ public class ZigBeeNode {
         return nodeDescriptor.getLogicalType();
     }
 
-
     /**
      * Request an update of the binding table for this node
      * TODO: This needs to handle the response and further requests if required to complete the table
      */
     public void updateBindingTable() {
         ManagementBindRequest bindingRequest = new ManagementBindRequest();
-        bindingRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+        bindingRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
         bindingRequest.setStartIndex(0);
         networkManager.unicast(bindingRequest, new ZdoResponseMatcher());
     }

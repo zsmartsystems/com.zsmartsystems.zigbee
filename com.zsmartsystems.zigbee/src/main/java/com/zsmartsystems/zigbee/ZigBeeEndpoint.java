@@ -349,4 +349,13 @@ public class ZigBeeEndpoint implements CommandListener {
                 + ", deviceId=" + deviceId + ", deviceVersion=" + deviceVersion + ", inputClusterIds="
                 + getInputClusterIds().toString() + ", outputClusterIds=" + getOutputClusterIds().toString() + "]";
     }
+
+    /**
+     * Gets the {@link IeeeAddress} for this endpoint from it's parant {@link ZigBeeNode}
+     *
+     * @return the node {@link IeeeAddress}
+     */
+    public IeeeAddress getIeeeAddress() {
+        return node.getIeeeAddress();
+    }
 }

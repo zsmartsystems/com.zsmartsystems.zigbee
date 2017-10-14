@@ -1339,7 +1339,7 @@ public class ZclProtocolCodeGenerator {
                 // imports.add(packageRoot + packageZcl + ".ZclCommandMessage");
 
                 // imports.add(packageRoot + ".ZigBeeDestination");
-                imports.add(packageRoot + ".ZigBeeEndpointAddress");
+                imports.add(packageRoot + ".ZigBeeEndpoint");
                 imports.add(packageRoot + ".ZigBeeNetworkManager");
                 if (!cluster.attributes.isEmpty() | !commands.isEmpty()) {
                     imports.add(packageRoot + ".CommandResult");
@@ -1442,8 +1442,8 @@ public class ZclProtocolCodeGenerator {
                 out.println("     * @param zigbeeEndpoint the {@link ZigBeeDevice}");
                 out.println("     */");
                 out.println("    public " + className
-                        + "(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpointAddress zigbeeAddress) {");
-                out.println("        super(zigbeeManager, zigbeeAddress, CLUSTER_ID, CLUSTER_NAME);");
+                        + "(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {");
+                out.println("        super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);");
                 out.println("    }");
                 out.println();
 
@@ -1747,7 +1747,7 @@ public class ZclProtocolCodeGenerator {
                     }
 
                     if (command.responseCommand != null && command.responseCommand.length() != 0) {
-                        out.println("import " + packageRootPrefix + ".Command;");
+                        out.println("import " + packageRootPrefix + ".ZigBeeCommand;");
                         out.println("import " + packageRootPrefix + ".CommandResponseMatcher;");
                         out.println("import " + packageRootPrefix + packageZdpCommand + "." + command.responseCommand
                                 + ";");
@@ -1988,7 +1988,7 @@ public class ZclProtocolCodeGenerator {
                     if (command.responseCommand != null && command.responseCommand.length() != 0) {
                         out.println();
                         out.println("    @Override");
-                        out.println("    public boolean isMatch(Command request, Command response) {");
+                        out.println("    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {");
                         out.println("        if (!(response instanceof " + command.responseCommand + ")) {");
                         out.println("            return false;");
                         out.println("        }");

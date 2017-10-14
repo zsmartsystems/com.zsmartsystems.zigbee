@@ -11,9 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
@@ -51,11 +48,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
  */
 @Deprecated
 public class ZigBeeApi {
-    /**
-     * The {@link Logger}.
-     */
-    private final static Logger logger = LoggerFactory.getLogger(ZigBeeApi.class);
-
     /**
      * The ZigBee Network Manager
      */
@@ -130,8 +122,10 @@ public class ZigBeeApi {
      * @param clusterId the cluster ID
      * @return TRUE if no errors occurred in sending.
      */
-    public Future<CommandResult> bind(final ZigBeeEndpoint source, final ZigBeeEndpoint destination, final int clusterId) {
-        return networkManager.bind(source, destination, clusterId);
+    public Future<CommandResult> bind(final ZigBeeEndpoint source, final ZigBeeEndpoint destination,
+            final int clusterId) {
+        ZclCluster cluster = source.getCluster(clusterId);
+        return cluster.bind(destination);
     }
 
     /**

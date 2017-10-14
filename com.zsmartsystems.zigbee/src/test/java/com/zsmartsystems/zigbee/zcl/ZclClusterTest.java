@@ -15,10 +15,11 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.CommandResponseMatcher;
-import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
@@ -50,8 +51,9 @@ public class ZclClusterTest {
     public void getReporting() {
         createNetworkManager();
 
-        ZigBeeDevice device = new ZigBeeDevice(networkManager);
-        device.setDeviceAddress(new ZigBeeDeviceAddress(1));
+        ZigBeeNode node = new ZigBeeNode(networkManager);
+        node.setNetworkAddress(1234);
+        ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
         ZclCluster cluster = new ZclOnOffCluster(networkManager, device);
         ZclAttribute attribute = cluster.getAttribute(0);
         cluster.getReporting(attribute);
@@ -70,8 +72,9 @@ public class ZclClusterTest {
     public void setReporting() {
         createNetworkManager();
 
-        ZigBeeDevice device = new ZigBeeDevice(networkManager);
-        device.setDeviceAddress(new ZigBeeDeviceAddress(1));
+        ZigBeeNode node = new ZigBeeNode(networkManager);
+        node.setNetworkAddress(1234);
+        ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
         ZclCluster cluster = new ZclOnOffCluster(networkManager, device);
         ZclAttribute attribute = cluster.getAttribute(0);
         cluster.setReporting(attribute, 22, 33);
@@ -90,8 +93,9 @@ public class ZclClusterTest {
     public void getClusterId() {
         createNetworkManager();
 
-        ZigBeeDevice device = new ZigBeeDevice(networkManager);
-        device.setDeviceAddress(new ZigBeeDeviceAddress(1));
+        ZigBeeNode node = new ZigBeeNode(networkManager);
+        node.setNetworkAddress(1234);
+        ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
         ZclCluster cluster = new ZclOnOffCluster(networkManager, device);
         assertEquals(Integer.valueOf(6), cluster.getClusterId());
     }
@@ -100,8 +104,9 @@ public class ZclClusterTest {
     public void getClusterName() {
         createNetworkManager();
 
-        ZigBeeDevice device = new ZigBeeDevice(networkManager);
-        device.setDeviceAddress(new ZigBeeDeviceAddress(1));
+        ZigBeeNode node = new ZigBeeNode(networkManager);
+        node.setNetworkAddress(1234);
+        ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
         ZclCluster cluster = new ZclLevelControlCluster(networkManager, device);
         assertEquals("Level Control", cluster.getClusterName());
     }
