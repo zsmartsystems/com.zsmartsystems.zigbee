@@ -30,19 +30,12 @@ import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
-import com.zsmartsystems.zigbee.zcl.ZclAttribute;
-import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclCustomResponseMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
 import com.zsmartsystems.zigbee.zcl.ZclResponseMatcher;
-import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesCommand;
-import com.zsmartsystems.zigbee.zcl.field.AttributeIdentifier;
-import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandType;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
@@ -979,107 +972,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 }
             }
         }.start();
-    }
-
-    /**
-     * Binds two devices.
-     *
-     * @param source
-     *            the source {@link ZigBeeDevice}
-     * @param destination
-     *            the destination {@link ZigBeeDevice}
-     * @param clusterId
-     *            the cluster ID
-     * @return TRUE if no errors occurred in sending.
-     */
-    public Future<CommandResult> bind(final ZigBeeDevice source, final ZigBeeDevice destination, final int clusterId) {
-        /*
-         * final int destinationAddress = source.getNetworkAddress();
-         * final IeeeAddress bindSourceAddress = source.getIeeeAddress();
-         * final int bindSourceEndpoint = source.getEndpoint();
-         * final int bindCluster = clusterId;
-         * final int bindDestinationAddressingMode = 3; // 64 bit addressing
-         * final IeeeAddress bindDestinationAddress = destination.getIeeeAddress();
-         * final int bindDestinationEndpoint = destination.getEndpoint();
-         * final BindRequest command = new BindRequest();
-         * command.setDstAddress(destinationAddress);
-         * command.setSrcAddress(bindSourceAddress.getLong());
-         * command.setSrcEndpoint(bindSourceEndpoint);
-         * command.setClusterId(bindCluster);
-         * command.setDstAddrMode(bindDestinationAddressingMode);
-         * command.setDstAddress(bindDestinationAddress.getLong());
-         * command.setDstEndpoint(bindDestinationEndpoint);
-         * return unicast(command);
-         */
-        return null;
-    }
-
-    /**
-     * Unbinds two devices.
-     *
-     * @param source the source {@link ZigBeeDevice}
-     * @param destination the destination {@link ZigBeeDevice}
-     * @param clusterId the cluster ID
-     * @return true if no errors occurred in sending.
-     */
-    public Future<CommandResult> unbind(final ZigBeeDevice source, final ZigBeeDevice destination,
-            final int clusterId) {
-        /*
-         * final int destinationAddress = source.getNetworkAddress();
-         * final IeeeAddress bindSourceAddress = source.getIeeeAddress();
-         * final int bindSourceEndpoint = source.getEndpoint();
-         * final int bindCluster = clusterId;
-         * final int bindDestinationAddressingMode = 3; // 64 bit addressing
-         * final IeeeAddress bindDestinationAddress = destination.getIeeeAddress();
-         * final int bindDestinationEndpoint = destination.getEndpoint();
-         * final UnbindRequest command = new UnbindRequest(destinationAddress, bindSourceAddress.getLong(),
-         * bindSourceEndpoint, bindCluster, bindDestinationAddressingMode, bindDestinationAddress.getLong(),
-         * bindDestinationEndpoint);
-         * return unicast(command);
-         */
-        return null;
-    }
-
-    /**
-     * Writes attribute to device.
-     *
-     * @param cluster the {@link ZclCluster}
-     * @param attributeId the {@link ZclAttribute} to write to
-     * @param value the value to set (as {@link Object})
-     * @return the command result future
-     */
-    public Future<CommandResult> write(final ZclCluster cluster, final ZclAttribute attribute, final Object value) {
-        final WriteAttributesCommand command = new WriteAttributesCommand();
-
-        command.setClusterId(cluster.getClusterId());
-        final WriteAttributeRecord attributeIdentifier = new WriteAttributeRecord();
-        attributeIdentifier.setAttributeIdentifier(attribute.getId());
-        attributeIdentifier.setAttributeDataType(attribute.getDataType());
-        attributeIdentifier.setAttributeValue(value);
-        command.setRecords(Collections.singletonList(attributeIdentifier));
-        command.setDestinationAddress(cluster.getZigBeeAddress());
-
-        return unicast(command, new ZclCustomResponseMatcher());
-    }
-
-    /**
-     * Reads an attribute from device.
-     *
-     * @param zigbeeAddress the device {@link ZigBeeDeviceAddress}
-     * @param clusterId the cluster ID
-     * @param attributeId the attribute ID
-     * @return the command result future
-     */
-    public Future<CommandResult> read(final ZclCluster cluster, final ZclAttribute attribute) {
-        final ReadAttributesCommand command = new ReadAttributesCommand();
-
-        command.setClusterId(cluster.getClusterId());
-        final AttributeIdentifier attributeIdentifier = new AttributeIdentifier();
-        attributeIdentifier.setAttributeIdentifier(attribute.getId());
-        command.setIdentifiers(Collections.singletonList(attributeIdentifier));
-        command.setDestinationAddress(cluster.getZigBeeAddress());
-
-        return unicast(command, new ZclCustomResponseMatcher());
     }
 
     public void addGroup(final ZigBeeGroupAddress group) {

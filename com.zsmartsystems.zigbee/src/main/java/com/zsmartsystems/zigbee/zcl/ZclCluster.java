@@ -20,16 +20,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeDevice;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.field.AttributeIdentifier;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
+import com.zsmartsystems.zigbee.zdo.command.BindRequest;
+import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
 
 /**
  * Base class for the ZCL Cluster
@@ -41,7 +47,7 @@ public abstract class ZclCluster {
     private Logger logger = LoggerFactory.getLogger(ZclCluster.class);
 
     private final ZigBeeNetworkManager zigbeeManager;
-    private final ZigBeeDeviceAddress zigbeeAddress;
+    private final ZigBeeDevice zigbeeEndpoint;
     protected final int clusterId;
     protected final String clusterName;
 
@@ -54,16 +60,16 @@ public abstract class ZclCluster {
 
     protected abstract Map<Integer, ZclAttribute> initializeAttributes();
 
-    public ZclCluster(ZigBeeNetworkManager zigbeeManager, ZigBeeDeviceAddress zigbeeAddress, int clusterId,
+    public ZclCluster(ZigBeeNetworkManager zigbeeManager, ZigBeeDevice zigbeeEndpoint, int clusterId,
             String clusterName) {
         this.zigbeeManager = zigbeeManager;
-        this.zigbeeAddress = zigbeeAddress;
+        this.zigbeeEndpoint = zigbeeEndpoint;
         this.clusterId = clusterId;
         this.clusterName = clusterName;
     }
 
     protected Future<CommandResult> send(ZclCommand command) {
-        command.setDestinationAddress(zigbeeAddress);
+        command.setDestinationAddress(zigbeeEndpoint.getDeviceAddress());
         // command.setDestinationEndpoint(zigbeeDevice.getEndpoint());
 
         return zigbeeManager.unicast(command, new ZclResponseMatcher());
@@ -75,8 +81,37 @@ public abstract class ZclCluster {
      * @param attribute the {@link ZclAttribute} to read
      * @return command future
      */
-    protected Future<CommandResult> read(final ZclAttribute attribute) {
-        return zigbeeManager.read(this, attribute);
+    public Future<CommandResult> read(final ZclAttribute attribute) {
+        final ReadAttributesCommand command = new ReadAttributesCommand();
+
+        command.setClusterId(clusterId);
+        final AttributeIdentifier attributeIdentifier = new AttributeIdentifier();
+        attributeIdentifier.setAttributeIdentifier(attribute.getId());
+        command.setIdentifiers(Collections.singletonList(attributeIdentifier));
+        command.setDestinationAddress(zigbeeEndpoint.getDeviceAddress());
+
+        return zigbeeManager.unicast(command, new ZclCustomResponseMatcher());
+    }
+
+    /**
+     * Write an attribute
+     *
+     * @param attribute the {@link ZclAttribute} to write
+     * @param value the value to set (as {@link Object})
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> write(final ZclAttribute attribute, final Object value) {
+        final WriteAttributesCommand command = new WriteAttributesCommand();
+
+        command.setClusterId(clusterId);
+        final WriteAttributeRecord attributeIdentifier = new WriteAttributeRecord();
+        attributeIdentifier.setAttributeIdentifier(attribute.getId());
+        attributeIdentifier.setAttributeDataType(attribute.getDataType());
+        attributeIdentifier.setAttributeValue(value);
+        command.setRecords(Collections.singletonList(attributeIdentifier));
+        command.setDestinationAddress(zigbeeEndpoint.getDeviceAddress());
+
+        return zigbeeManager.unicast(command, new ZclCustomResponseMatcher());
     }
 
     /**
@@ -89,7 +124,7 @@ public abstract class ZclCluster {
         logger.debug("readSync request: {}", attribute);
         CommandResult result;
         try {
-            result = zigbeeManager.read(this, attribute).get();
+            result = read(attribute).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
             logger.debug("readSync interrupted", e);
@@ -110,17 +145,6 @@ public abstract class ZclCluster {
         }
 
         return null;
-    }
-
-    /**
-     * Write an attribute
-     *
-     * @param attribute the {@link ZclAttribute} to write
-     * @param value the value to set (as {@link Object})
-     * @return command future {@link CommandResult}
-     */
-    protected Future<CommandResult> write(final ZclAttribute attribute, final Object value) {
-        return zigbeeManager.write(this, attribute, value);
     }
 
     /**
@@ -167,7 +191,7 @@ public abstract class ZclCluster {
         record.setReportableChange(reportableChange);
         record.setTimeoutPeriod(0);
         command.setRecords(Collections.singletonList(record));
-        command.setDestinationAddress(zigbeeAddress);
+        command.setDestinationAddress(zigbeeEndpoint.getDeviceAddress());
 
         return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
@@ -212,7 +236,7 @@ public abstract class ZclCluster {
         record.setAttributeIdentifier(attribute.getId());
         record.setDirection(0);
         command.setRecords(Collections.singletonList(record));
-        command.setDestinationAddress(zigbeeAddress);
+        command.setDestinationAddress(zigbeeEndpoint.getDeviceAddress());
 
         return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
@@ -260,15 +284,6 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Returns the ZigBee address of this cluster
-     *
-     * @return the {@link ZigBeeDeviceAddress} of the cluster
-     */
-    public ZigBeeDeviceAddress getZigBeeAddress() {
-        return zigbeeAddress;
-    }
-
-    /**
      * Sets the server flag for this cluster. This means the cluster is listed
      * in the devices input cluster list
      *
@@ -308,6 +323,40 @@ public abstract class ZclCluster {
      */
     public boolean isClient() {
         return isClient;
+    }
+
+    /**
+     * Adds a binding from the cluster to the destination {@link ZigBeeDevice}.
+     *
+     * @param destination the destination {@link ZigBeeDevice}
+     * @return true if the command was sent correctly
+     */
+    public Future<CommandResult> bind(final ZigBeeDevice destination) {
+        final BindRequest command = new BindRequest();
+        command.setSrcAddress(zigbeeEndpoint.getIeeeAddress());
+        command.setSrcEndpoint(zigbeeEndpoint.getEndpoint());
+        command.setClusterId(clusterId);
+        command.setDstAddrMode(3); // 64 bit addressing
+        command.setDstAddress(destination.getIeeeAddress());
+        command.setDstEndpoint(destination.getEndpoint());
+        return zigbeeManager.unicast(command, new ZclResponseMatcher());
+    }
+
+    /**
+     * Removes a binding from the cluster to the destination {@link ZigBeeDevice}.
+     *
+     * @param destination the destination {@link ZigBeeDevice}
+     * @return true if the command was sent correctly
+     */
+    public Future<CommandResult> unbind(final ZigBeeDevice destination) {
+        final UnbindRequest command = new UnbindRequest();
+        command.setSrcAddress(zigbeeEndpoint.getIeeeAddress());
+        command.setSrcEndpoint(zigbeeEndpoint.getEndpoint());
+        command.setClusterId(clusterId);
+        command.setDstAddrMode(3); // 64 bit addressing
+        command.setDstAddress(destination.getIeeeAddress());
+        command.setDstEndpoint(destination.getEndpoint());
+        return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
     public void addAttributeListener(ZclAttributeListener listener) {

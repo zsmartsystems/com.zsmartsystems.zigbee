@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.zsmartsystems.zigbee.zdo.ZdoResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
@@ -247,6 +249,17 @@ public class ZigBeeNode {
      */
     public LogicalType getLogicalType() {
         return nodeDescriptor.getLogicalType();
+    }
+
+    /**
+     * Request an update of the binding table for this node
+     * TODO: This needs to handle the response and further requests if required to complete the table
+     */
+    public void updateBindingTable() {
+        ManagementBindRequest bindingRequest = new ManagementBindRequest();
+        bindingRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+        bindingRequest.setStartIndex(0);
+        networkManager.unicast(bindingRequest, new ZdoResponseMatcher());
     }
 
     /**

@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.zcl.clusters;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeDevice;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
@@ -29,7 +29,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.RssiResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SendPingsCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SetAbsoluteLocationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SetDeviceConfigurationCommand;
-import com.zsmartsystems.zigbee.zcl.field.*;
 import com.zsmartsystems.zigbee.zcl.field.NeighborInformation;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -88,10 +87,13 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Default constructor.
+     * Default constructor to create a RSSI Location cluster.
+     *
+     * @param zigbeeManager {@link ZigBeeNetworkManager}
+     * @param zigbeeEndpoint the {@link ZigBeeDevice}
      */
-    public ZclRssiLocationCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeDeviceAddress zigbeeAddress) {
-        super(zigbeeManager, zigbeeAddress, CLUSTER_ID, CLUSTER_NAME);
+    public ZclRssiLocationCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeDevice zigbeeEndpoint) {
+        super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
 

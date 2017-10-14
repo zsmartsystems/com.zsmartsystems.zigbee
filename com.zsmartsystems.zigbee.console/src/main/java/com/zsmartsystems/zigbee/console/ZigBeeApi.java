@@ -171,7 +171,8 @@ public class ZigBeeApi {
      * @return TRUE if no errors occurred in sending.
      */
     public Future<CommandResult> bind(final ZigBeeDevice source, final ZigBeeDevice destination, final int clusterId) {
-        return networkManager.bind(source, destination, clusterId);
+        ZclCluster cluster = source.getCluster(clusterId);
+        return cluster.bind(destination);
     }
 
     /**
@@ -184,7 +185,8 @@ public class ZigBeeApi {
      */
     public Future<CommandResult> unbind(final ZigBeeDevice source, final ZigBeeDevice destination,
             final int clusterId) {
-        return networkManager.unbind(source, destination, clusterId);
+        ZclCluster cluster = source.getCluster(clusterId);
+        return cluster.unbind(destination);
     }
 
     /**
@@ -355,7 +357,7 @@ public class ZigBeeApi {
         ZigBeeDevice device = networkManager.getDevice(deviceAddress);
         ZclCluster cluster = device.getCluster(clusterId);
         ZclAttribute attribute = cluster.getAttribute(attributeId);
-        return networkManager.write(cluster, attribute, value);
+        return cluster.write(attribute, value);
     }
 
     /**
@@ -374,7 +376,7 @@ public class ZigBeeApi {
             return null;
         }
         ZclAttribute attribute = cluster.getAttribute(attributeId);
-        return networkManager.read(cluster, attribute);
+        return cluster.read(attribute);
     }
 
     /**

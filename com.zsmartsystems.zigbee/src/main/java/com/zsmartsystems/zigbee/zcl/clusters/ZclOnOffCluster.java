@@ -8,7 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters;
 
 import com.zsmartsystems.zigbee.CommandResult;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeDevice;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
@@ -50,10 +50,13 @@ public class ZclOnOffCluster extends ZclCluster {
     }
 
     /**
-     * Default constructor.
+     * Default constructor to create a On/Off cluster.
+     *
+     * @param zigbeeManager {@link ZigBeeNetworkManager}
+     * @param zigbeeEndpoint the {@link ZigBeeDevice}
      */
-    public ZclOnOffCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeDeviceAddress zigbeeAddress) {
-        super(zigbeeManager, zigbeeAddress, CLUSTER_ID, CLUSTER_NAME);
+    public ZclOnOffCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeDevice zigbeeEndpoint) {
+        super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
 

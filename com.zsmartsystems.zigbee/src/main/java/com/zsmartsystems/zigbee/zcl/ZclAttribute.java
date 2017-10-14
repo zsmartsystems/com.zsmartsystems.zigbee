@@ -307,7 +307,7 @@ public class ZclAttribute {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(80);
 
         builder.append("ZclAttribute [cluster=");
         builder.append(cluster);

@@ -276,8 +276,8 @@ public class ZigBeeDevice implements CommandListener {
                 Constructor<? extends ZclCluster> constructor;
                 try {
                     constructor = clusterType.getClusterClass().getConstructor(ZigBeeNetworkManager.class,
-                            ZigBeeDeviceAddress.class);
-                    clusterClass = constructor.newInstance(networkManager, networkAddress);
+                            ZigBeeDevice.class);
+                    clusterClass = constructor.newInstance(networkManager, this);
                 } catch (Exception e) {
                     logger.debug("{}: Error instantiating cluster {}", networkAddress, clusterType);
                 }
