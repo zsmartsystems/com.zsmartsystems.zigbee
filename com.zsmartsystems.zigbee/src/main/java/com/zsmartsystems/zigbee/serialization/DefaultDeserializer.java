@@ -15,11 +15,11 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
-import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
-import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
-import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
-import com.zsmartsystems.zigbee.zdo.descriptors.RoutingTable;
-import com.zsmartsystems.zigbee.zdo.descriptors.SimpleDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
+import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
 
 /**
  * The default implementation of the {@link ZigBeeDeserializer}

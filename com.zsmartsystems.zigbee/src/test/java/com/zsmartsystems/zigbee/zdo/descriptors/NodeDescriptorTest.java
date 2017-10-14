@@ -14,10 +14,11 @@ import org.junit.Test;
 
 import com.zsmartsystems.zigbee.CommandTest;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
-import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.FrequencyBandType;
-import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.LogicalType;
-import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.MacCapabilitiesType;
-import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.ServerCapabilitiesType;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.FrequencyBandType;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.ServerCapabilitiesType;
 
 /**
  *

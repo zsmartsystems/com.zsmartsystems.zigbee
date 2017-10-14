@@ -17,7 +17,7 @@ import com.zsmartsystems.zigbee.CommandTest;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
-import com.zsmartsystems.zigbee.zdo.descriptors.SimpleDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
 
 /**
  *

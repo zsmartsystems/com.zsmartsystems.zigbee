@@ -20,10 +20,11 @@ import com.zsmartsystems.zigbee.CommandTest;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
-import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable.NeighborTableJoining;
-import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable.NeighborTableRelationship;
-import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable.NeighborTableRxState;
-import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor.LogicalType;
+import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
+import com.zsmartsystems.zigbee.zdo.field.NeighborTable.NeighborTableJoining;
+import com.zsmartsystems.zigbee.zdo.field.NeighborTable.NeighborTableRelationship;
+import com.zsmartsystems.zigbee.zdo.field.NeighborTable.NeighborTableRxState;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
 
 /**
  *

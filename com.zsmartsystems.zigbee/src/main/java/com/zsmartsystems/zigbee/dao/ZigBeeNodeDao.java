@@ -10,8 +10,8 @@ package com.zsmartsystems.zigbee.dao;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.zdo.descriptors.NodeDescriptor;
-import com.zsmartsystems.zigbee.zdo.descriptors.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
 
 /**
  *

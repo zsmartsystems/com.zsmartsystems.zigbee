@@ -43,9 +43,10 @@ public class ZclProtocolCodeGenerator {
     static String packageZclProtocolCommand = packageZclCluster;
 
     static String packageZdp = ".zdo";
+    static String packageZdpField = packageZdp + ".field";
     static String packageZdpCommand = packageZdp + ".command";
     static String packageZdpTransaction = packageZdp + ".transaction";
-    static String packageZdpDescriptors = packageZdp + ".descriptors";
+    static String packageZdpDescriptors = packageZdpField;
 
     /**
      * The main method for running the code generator.
@@ -1784,7 +1785,10 @@ public class ZclProtocolCodeGenerator {
                                 out.println("import " + packageRootPrefix + packageZdp + ".ZdoStatus;");
                                 continue;
                             case "BindingTable":
-                                out.println("import " + packageRootPrefix + packageZclField + ".BindingTable;");
+                                out.println("import " + packageRootPrefix + packageZdpField + ".BindingTable;");
+                                continue;
+                            case "NeighborTable":
+                                out.println("import " + packageRootPrefix + packageZdpField + ".NeighborTable;");
                                 continue;
                         }
 

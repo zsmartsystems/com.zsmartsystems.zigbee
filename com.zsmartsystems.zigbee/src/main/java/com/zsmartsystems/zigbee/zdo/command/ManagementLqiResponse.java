@@ -15,7 +15,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 import java.util.List;
 import java.util.ArrayList;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
-import com.zsmartsystems.zigbee.zdo.descriptors.NeighborTable;
+import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 
 /**
  * Management LQI Response value object class.
