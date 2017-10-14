@@ -24,8 +24,8 @@ import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StopCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
 /**
@@ -52,7 +52,7 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(4);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(4);
 
         attributeMap.put(ATTR_CURRENTLEVEL, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_CURRENTLEVEL, "CurrentLevel", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, true));
         attributeMap.put(ATTR_REMAININGTIME, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_REMAININGTIME, "RemainingTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));

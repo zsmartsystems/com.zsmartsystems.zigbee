@@ -15,8 +15,8 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
 /**
@@ -44,7 +44,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(5);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(5);
 
         attributeMap.put(ATTR_MEASUREDVALUE, new ZclAttribute(ZclClusterType.ILLUMINANCE_MEASUREMENT, ATTR_MEASUREDVALUE, "MeasuredValue", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
         attributeMap.put(ATTR_MINMEASUREDVALUE, new ZclAttribute(ZclClusterType.ILLUMINANCE_MEASUREMENT, ATTR_MINMEASUREDVALUE, "MinMeasuredValue", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));

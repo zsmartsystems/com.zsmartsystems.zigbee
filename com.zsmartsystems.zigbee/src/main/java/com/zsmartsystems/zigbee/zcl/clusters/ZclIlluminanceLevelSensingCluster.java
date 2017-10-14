@@ -15,8 +15,8 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
 /**
@@ -41,7 +41,7 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(2);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(2);
 
         attributeMap.put(ATTR_LEVELSTATUS, new ZclAttribute(ZclClusterType.ILLUMINANCE_LEVEL_SENSING, ATTR_LEVELSTATUS, "LevelStatus", ZclDataType.ENUMERATION_8_BIT, true, true, false, true));
         attributeMap.put(ATTR_LIGHTSENSORTYPE, new ZclAttribute(ZclClusterType.ILLUMINANCE_LEVEL_SENSING, ATTR_LIGHTSENSORTYPE, "LightSensorType", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));

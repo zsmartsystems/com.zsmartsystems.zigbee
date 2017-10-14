@@ -21,8 +21,8 @@ import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestoreStartupParamet
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestoreStartupParametersResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.SaveStartupParametersCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.SaveStartupParametersResponse;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
 /**
@@ -39,7 +39,7 @@ public class ZclCommissioningCluster extends ZclCluster {
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(0);
 
 
         return attributeMap;

@@ -1330,7 +1330,7 @@ public class ZclProtocolCodeGenerator {
                 // imports.add(packageRoot + ".ZigBeeDevice");
                 imports.add(packageRoot + packageZcl + ".ZclAttribute");
                 imports.add("java.util.Map");
-                imports.add("java.util.HashMap");
+                imports.add("java.util.concurrent.ConcurrentHashMap");
 
                 if (!cluster.attributes.isEmpty() | !commands.isEmpty()) {
                     imports.add("java.util.concurrent.Future");
@@ -1397,8 +1397,9 @@ public class ZclProtocolCodeGenerator {
 
                 out.println("    // Attribute initialisation");
                 out.println("    protected Map<Integer, ZclAttribute> initializeAttributes() {");
-                out.println("        Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>("
-                        + cluster.attributes.size() + ");");
+                out.println(
+                        "        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>("
+                                + cluster.attributes.size() + ");");
                 out.println();
                 if (cluster.attributes.size() != 0) {
                     for (final Attribute attribute : cluster.attributes.values()) {

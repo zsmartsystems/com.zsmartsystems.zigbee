@@ -32,9 +32,9 @@ import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
 /**
@@ -69,7 +69,7 @@ public class ZclScenesCluster extends ZclCluster {
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(6);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(6);
 
         attributeMap.put(ATTR_SCENECOUNT, new ZclAttribute(ZclClusterType.SCENES, ATTR_SCENECOUNT, "SceneCount", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_CURRENTSCENE, new ZclAttribute(ZclClusterType.SCENES, ATTR_CURRENTSCENE, "CurrentScene", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));

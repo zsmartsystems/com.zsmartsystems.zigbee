@@ -17,8 +17,8 @@ import com.zsmartsystems.zigbee.zcl.clusters.basic.ResetToFactoryDefaultsCommand
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
 /**
@@ -50,7 +50,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(13);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(13);
 
         attributeMap.put(ATTR_ZCLVERSION, new ZclAttribute(ZclClusterType.BASIC, ATTR_ZCLVERSION, "ZCLVersion", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_APPLICATIONVERSION, new ZclAttribute(ZclClusterType.BASIC, ATTR_APPLICATIONVERSION, "ApplicationVersion", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));

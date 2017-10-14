@@ -19,8 +19,8 @@ import com.zsmartsystems.zigbee.zcl.clusters.identify.IdentifyQueryResponse;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
 /**
@@ -47,7 +47,7 @@ public class ZclIdentifyCluster extends ZclCluster {
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(1);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(1);
 
         attributeMap.put(ATTR_IDENTIFYTIME, new ZclAttribute(ZclClusterType.IDENTIFY, ATTR_IDENTIFYTIME, "IdentifyTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
 

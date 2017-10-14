@@ -24,9 +24,9 @@ import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupResponse;
 import com.zsmartsystems.zigbee.zcl.field.*;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
 /**
@@ -61,7 +61,7 @@ public class ZclGroupsCluster extends ZclCluster {
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(0);
 
 
         return attributeMap;

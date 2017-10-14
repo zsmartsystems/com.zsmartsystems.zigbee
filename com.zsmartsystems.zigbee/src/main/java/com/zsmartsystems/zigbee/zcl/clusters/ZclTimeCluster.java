@@ -15,8 +15,8 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
 /**
@@ -43,7 +43,7 @@ public class ZclTimeCluster extends ZclCluster {
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new HashMap<Integer, ZclAttribute>(8);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(8);
 
         attributeMap.put(ATTR_TIME, new ZclAttribute(ZclClusterType.TIME, ATTR_TIME, "Time", ZclDataType.UTCTIME, true, true, true, false));
         attributeMap.put(ATTR_TIMESTATUS, new ZclAttribute(ZclClusterType.TIME, ATTR_TIMESTATUS, "TimeStatus", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
