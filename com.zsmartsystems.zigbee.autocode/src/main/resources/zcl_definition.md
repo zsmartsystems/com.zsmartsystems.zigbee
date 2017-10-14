@@ -1495,17 +1495,159 @@ No cluster specific commands.
 
 ## Thermostat [0x0201]
 
+### Attributes
+
+|Id     |Name                       |Type                       |Access     |Implement |Reporting |
+|-------|---------------------------|---------------------------|-----------|----------|----------|
+|0x0000 |LocalTemperature           |Unsigned 16-bit integer    |Read       |Mandatory |Mandatory |
+|0x0001 |OutdoorTemperature         |Unsigned 16-bit integer    |Read       |Optional  |          |
+|0x0002 |Occupancy                  |Bitmap 8-bit               |Read       |Optional  |          |
+|0x0003 |AbsMinHeatSetpointLimit    |Unsigned 16-bit integer    |Read       |Optional  |          |
+|0x0004 |AbsMaxHeatSetpointLimit    |Unsigned 16-bit integer    |Read       |Optional  |          |
+|0x0005 |AbsMinCoolSetpointLimit    |Unsigned 16-bit integer    |Read       |Optional  |          |
+|0x0006 |AbsMaxCoolSetpointLimit    |Unsigned 16-bit integer    |Read       |Optional  |          |
+|0x0007 |PICoolingDemand            |Unsigned 8-bit integer     |Read       |Optional  |Mandatory |
+|0x0008 |PIHeatingDemand            |Unsigned 8-bit integer     |Read       |Optional  |Mandatory |
+|0x0009 |HVACSystemTypeConfiguration|Bitmap 8-bit               |Read       |Optional  |          |
+|0x0010 |LocalTemperatureCalibration|Unsigned 8-bit integer     |Read       |Optional  |          |
+|0x0011 |OccupiedCoolingSetpoint    |Unsigned 16-bit integer    |Read       |Mandatory |          |
+|0x0012 |OccupiedHeatingSetpoint    |Unsigned 16-bit integer    |Read       |Mandatory |          |
+|0x0013 |UnoccupiedCoolingSetpoint  |Unsigned 16-bit integer    |Read       |Optional  |          |
+|0x0014 |UnoccupiedHeatingSetpoint  |Unsigned 16-bit integer    |Read       |Optional  |          |
+|0x0015 |MinHeatSetpointLimit       |Unsigned 16-bit integer    |Read       |Optional  |          |
+|0x0016 |MaxHeatSetpointLimit       |Unsigned 16-bit integer    |Read       |Optional  |          |
+|0x0017 |MinCoolSetpointLimit       |Unsigned 16-bit integer    |Read       |Optional  |          |
+|0x0018 |MaxCoolSetpointLimit       |Unsigned 16-bit integer    |Read       |Optional  |          |
+|0x0019 |MinSetpointDeadBand        |Unsigned 8-bit integer     |Read       |Optional  |          |
+|0x001A |RemoteSensing              |Bitmap 8-bit               |Read       |Optional  |          |
+|0x001B |ControlSequenceOfOperation |Enumeration 8-bit          |Read       |Mandatory |          |
+|0x001C |SystemMode                 |Enumeration 8-bit          |Read       |Mandatory |          |
+|0x001D |AlarmMask                  |Enumeration 8-bit          |Read       |Optional  |          |
+|0x001E |ThermostatRunningMode      |Enumeration 8-bit          |Read       |Optional  |          |
+
+#### LocalTemperature Attribute
+LocalTemperature represents the temperature in degrees Celsius, as measured locally.
+
+#### OutdoorTemperature Attribute
+OutdoorTemperature represents the temperature in degrees Celsius, as measured locally.
+
+#### Occupancy Attribute
+Occupancy specifies whether the heated/cooled space is occupied or not
+
+#### AbsMinHeatSetpointLimit Attribute
+The MinHeatSetpointLimit attribute specifies the absolute minimum level that the heating setpoint MAY be
+set to. This is a limitation imposed by the manufacturer. 
+
+#### AbsMaxHeatSetpointLimit Attribute
+The MaxHeatSetpointLimit attribute specifies the absolute maximum level that the heating setpoint MAY be 
+set to. This is a limitation imposed by the manufacturer. 
+
+#### AbsMinCoolSetpointLimit Attribute
+The MinCoolSetpointLimit attribute specifies the absolute minimum level that the cooling setpoint MAY be
+set to. This is a limitation imposed by the manufacturer. 
+
+#### AbsMaxCoolSetpointLimit Attribute
+The MaxCoolSetpointLimit attribute specifies the absolute maximum level that the cooling setpoint MAY be
+set to. This is a limitation imposed by the manufacturer. 
+
+#### PICoolingDemand Attribute
+The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling demanded by the PI
+(proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
+thermostat is in “off” or “heating” mode.
+
+#### PIHeatingDemand Attribute
+The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating demanded by the PI
+(proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
+thermostat is in “off” or “cooling” mode.
+
+#### ACErrorCode Attribute
+This indicates the type of errors encountered within the Mini Split AC. Error values are reported with four bytes
+values. Each bit within the four bytes indicates the unique error.
+
 ### Received
 
 #### Setpoint Raise/Lower Command [0x00]
+
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Mode                       |8-bit enumeration          |
 |Amount                     |Signed 8-bit integer       |
 
+#### Set Weekly Schedule [0x01]
+
+The set weekly schedule command is used to update the thermostat weekly set point schedule from a management system.
+If the thermostat already has a weekly set point schedule programmed then it SHOULD replace each daily set point set
+as it receives the updates from the management system. For example if the thermostat has 4 set points for every day of
+the week and is sent a Set Weekly Schedule command with one set point for Saturday then the thermostat SHOULD remove
+all 4 set points for Saturday and replace those with the updated set point but leave all other days unchanged.
+
+If the schedule is larger than what fits in one ZigBee frame or contains more than 10 transitions, the schedule SHALL
+then be sent using multipleSet Weekly Schedule Commands.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Number of Transitions      |Enumeration 8-bit          |
+|Day of Week                |Enumeration 8-bit          |
+|Mode                       |Enumeration 8-bit          |
+|Transition                 |Unsigned 16-bit integer    |
+|Heat Set                   |Unsigned 16-bit integer    |
+|Cool Set                   |Unsigned 16-bit integer    |
+
+
+#### Get Weekly Schedule [0x02]
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Days To Return             |Bitmap 8-bit               |
+|Mode To Return             |Bitmap 8-bit               |
+
+
+#### Clear Weekly Schedule [0x03]
+
+#### Get Relay Status Log [0x04]
+
+The Get Relay Status Log command is used to query the thermostat internal relay status log. This command has no payload.
+
+The log storing order is First in First Out (FIFO) when the log is generated and stored into the Queue.
+
+The first record in the log (i.e., the oldest) one, is the first to be replaced when there is a new record and there is
+no more space in the log. Thus, the newest record will overwrite the oldest one if there is no space left.
+
+The log storing order is Last In First Out (LIFO) when the log is being retrieved from the Queue by a client device.
+Once the "Get Relay Status Log Response" frame is sent by the Server, the "Unread Entries" attribute
+SHOULD be decremented to indicate the number of unread records that remain in the queue.
+
+If the "Unread Entries"attribute reaches zero and the Client sends a new "Get Relay Status Log Request", the Server
+MAY send one of the following items as a response:
+
+i) resend the last Get Relay Status Log Response
+or
+ii) generate new log record at the time of request and send Get Relay Status Log Response with the new data
+
 ### Generated
 
-No cluster specific commands.
+#### Get Weekly Schedule Response [0x00]
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Number of Transitions      |8-bit Enumeration          |
+|Day of Week                |Enumeration 8-bit          |
+|Mode                       |Enumeration 8-bit          |
+|Transition                 |Unsigned 16-bit integer    |
+|Heat Set                   |Unsigned 16-bit integer    |
+|Cool Set                   |Unsigned 16-bit integer    |
+
+#### Get Relay Status Log Response [0x01]
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Time of day                |Unsigned 16-bit integer    |
+|Relay Status               |Bitmap 8-bit               |
+|Local Temperature          |Unsigned 16-bit integer    |
+|Humidity                   |Unsigned 8-bit integer     |
+|Setpoint                   |Unsigned 16-bit integer    |
+|Unread Entries             |Unsigned 16-bit integer    |
+
 
 ## Fan Control [0x0202]
 
