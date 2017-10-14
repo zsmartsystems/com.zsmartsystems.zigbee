@@ -79,16 +79,16 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 break;
             case EXTENDED_PANID:
                 int[] panId = new int[8];
-                for (int i = 7; i >= 0; i--) {
-                    panId[i] = payload[index + i];
+                for (int iCnt = 7; iCnt >= 0; iCnt--) {
+                    panId[iCnt] = payload[index + iCnt];
                 }
                 index += 8;
                 value[0] = new ExtendedPanId(panId);
                 break;
             case IEEE_ADDRESS:
                 int[] address = new int[8];
-                for (int i = 7; i >= 0; i--) {
-                    address[i] = payload[index + i];
+                for (int iCnt = 7; iCnt >= 0; iCnt--) {
+                    address[iCnt] = payload[index + iCnt];
                 }
                 index += 8;
                 value[0] = new IeeeAddress(address);

@@ -371,7 +371,7 @@ public final class ZigBeeConsole {
     private ZigBeeEndpoint getDevice(ZigBeeApi zigbeeApi, final String deviceIdentifier) {
         for (final ZigBeeNode node : zigbeeApi.getNetwork().getNodes()) {
             for (final ZigBeeEndpoint endpoint : node.getEndpoints()) {
-                if (deviceIdentifier.equals(node.getNetworkAddress() + "/" + endpoint.getEndpoint())) {
+                if (deviceIdentifier.equals(node.getNetworkAddress() + "/" + endpoint.getEndpointId())) {
                     return endpoint;
                 }
             }
@@ -517,7 +517,7 @@ public final class ZigBeeConsole {
             for (ZigBeeNode node : nodes) {
                 print("Node: " + String.format("% 6d", node.getNetworkAddress()) + "  " + node.getIeeeAddress(), out);
                 for (final ZigBeeEndpoint endpoint : node.getEndpoints()) {
-                    print("    Endpoint: " + String.format("% 3d", endpoint.getEndpoint()), out);
+                    print("    Endpoint: " + String.format("% 3d", endpoint.getEndpointId()), out);
                 }
             }
             return true;
@@ -594,7 +594,7 @@ public final class ZigBeeConsole {
 
             print("IEEE Address     : " + device.getParentNode().getIeeeAddress(), out);
             print("Network Address  : " + device.getParentNode().getNetworkAddress(), out);
-            print("Endpoint         : " + device.getEndpoint(), out);
+            print("Endpoint         : " + device.getEndpointId(), out);
             // print("Device Profile : " + ZigBeeApiConstants.getProfileName(device.getProfileId())
             // + String.format(" (0x%04X)", device.getProfileId()), out);
             // print("Device Category : "

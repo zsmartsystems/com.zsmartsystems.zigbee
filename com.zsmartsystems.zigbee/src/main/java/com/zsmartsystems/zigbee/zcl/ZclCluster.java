@@ -344,11 +344,11 @@ public abstract class ZclCluster {
     public Future<CommandResult> bind(final ZigBeeEndpoint destination) {
         final BindRequest command = new BindRequest();
         command.setSrcAddress(zigbeeEndpoint.getIeeeAddress());
-        command.setSrcEndpoint(zigbeeEndpoint.getEndpoint());
+        command.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
         command.setClusterId(clusterId);
         command.setDstAddrMode(3); // 64 bit addressing
         command.setDstAddress(destination.getIeeeAddress());
-        command.setDstEndpoint(destination.getEndpoint());
+        command.setDstEndpoint(destination.getEndpointId());
         return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
@@ -361,11 +361,11 @@ public abstract class ZclCluster {
     public Future<CommandResult> unbind(final ZigBeeEndpoint destination) {
         final UnbindRequest command = new UnbindRequest();
         command.setSrcAddress(zigbeeEndpoint.getIeeeAddress());
-        command.setSrcEndpoint(zigbeeEndpoint.getEndpoint());
+        command.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
         command.setClusterId(clusterId);
         command.setDstAddrMode(3); // 64 bit addressing
         command.setDstAddress(destination.getIeeeAddress());
-        command.setDstEndpoint(destination.getEndpoint());
+        command.setDstEndpoint(destination.getEndpointId());
         return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 

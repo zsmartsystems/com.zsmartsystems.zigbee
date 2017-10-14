@@ -12,20 +12,20 @@ import java.util.List;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNode;
 
 /**
+ * This class provides a clean class to hold a data object for serialisation of a {@link ZigBeeEndpoint}
  *
  * @author Chris Jackson
  *
  */
-public class ZigBeeDeviceDao {
+public class ZigBeeEndpointDao {
     private String label;
 
     private Integer profileId;
 
-    private String deviceAddress;
-
-    private String ieeeAddress;
+    private int endpointId;
 
     /**
      * Input cluster IDs
@@ -52,20 +52,12 @@ public class ZigBeeDeviceDao {
         this.profileId = profileId;
     }
 
-    public String getDeviceAddress() {
-        return deviceAddress;
+    public int getEndpointId() {
+        return endpointId;
     }
 
-    public void setDeviceAddress(String deviceAddress) {
-        this.deviceAddress = deviceAddress;
-    }
-
-    public String getIeeeAddress() {
-        return ieeeAddress;
-    }
-
-    public void setIeeeAddress(String ieeeAddress) {
-        this.ieeeAddress = ieeeAddress;
+    public void setEndpointId(int endpointId) {
+        this.endpointId = endpointId;
     }
 
     public List<Integer> getInputClusterIds() {
@@ -84,26 +76,22 @@ public class ZigBeeDeviceDao {
         this.outputClusterIds.addAll(outputClusterIds);
     }
 
-    public static ZigBeeDeviceDao createFromZigBeeDevice(ZigBeeEndpoint device) {
-        ZigBeeDeviceDao deviceDao = new ZigBeeDeviceDao();
-        deviceDao.setDeviceAddress(device.getDeviceAddress().toString());
-        // deviceDao.setIeeeAddress(device.getIeeeAddress().toString());
-        deviceDao.setProfileId(device.getProfileId());
-        deviceDao.setInputClusterIds(device.getInputClusterIds());
-        deviceDao.setOutputClusterIds(device.getOutputClusterIds());
+    public static ZigBeeEndpointDao createFromZigBeeDevice(ZigBeeEndpoint endpoint) {
+        ZigBeeEndpointDao deviceDao = new ZigBeeEndpointDao();
+        deviceDao.setEndpointId(endpoint.getEndpointId());
+        deviceDao.setProfileId(endpoint.getProfileId());
+        deviceDao.setInputClusterIds(endpoint.getInputClusterIds());
+        deviceDao.setOutputClusterIds(endpoint.getOutputClusterIds());
         return deviceDao;
     }
 
-    public static ZigBeeEndpoint createFromZigBeeDao(ZigBeeNetworkManager networkManager, ZigBeeDeviceDao deviceDao) {
-        /// ZigBeeNode node = networkManager.getNode(ieeeAddress)
-        // ZigBeeDevice device = new ZigBeeDevice(networkManager);
-        // device.setDeviceAddress(new ZigBeeDeviceAddress(deviceDao.getDeviceAddress()));
-        // device.setIeeeAddress(new IeeeAddress(deviceDao.getIeeeAddress()));
-        // device.setLabel(deviceDao.getLabel());
-        // device.setProfileId(deviceDao.getProfileId());
-        // device.setInputClusterIds(deviceDao.getInputClusterIds());
-        // device.setOutputClusterIds(deviceDao.getOutputClusterIds());
-        return null;// device;
+    public static ZigBeeEndpoint createFromZigBeeDao(ZigBeeNetworkManager networkManager, ZigBeeNode node,
+            ZigBeeEndpointDao deviceDao) {
+        ZigBeeEndpoint endpoint = new ZigBeeEndpoint(networkManager, node, deviceDao.endpointId);
+        endpoint.setProfileId(deviceDao.getProfileId());
+        endpoint.setInputClusterIds(deviceDao.getInputClusterIds());
+        endpoint.setOutputClusterIds(deviceDao.getOutputClusterIds());
+        return endpoint;
     }
 
 }

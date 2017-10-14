@@ -47,7 +47,7 @@ public class ZigBeeEndpoint implements CommandListener {
      * The endpoint number for this endpoint. Applications shall only use endpoints 1-254. Endpoints 241-254 shall be
      * used only with the approval of the ZigBee Alliance.
      */
-    private int endpoint;
+    private int endpointId;
 
     /**
      * The profile ID.
@@ -90,7 +90,7 @@ public class ZigBeeEndpoint implements CommandListener {
     public ZigBeeEndpoint(ZigBeeNetworkManager networkManager, ZigBeeNode node, int endpoint) {
         this.networkManager = networkManager;
         this.node = node;
-        this.endpoint = endpoint;
+        this.endpointId = endpoint;
         networkManager.addCommandListener(this);
     }
 
@@ -140,8 +140,8 @@ public class ZigBeeEndpoint implements CommandListener {
      *
      * @return the end point
      */
-    public int getEndpoint() {
-        return endpoint;
+    public int getEndpointId() {
+        return endpointId;
     }
 
     /**
@@ -181,12 +181,21 @@ public class ZigBeeEndpoint implements CommandListener {
     }
 
     /**
+     * Gets the {@link IeeeAddress} for this endpoint from it's parant {@link ZigBeeNode}
+     *
+     * @return the node {@link IeeeAddress}
+     */
+    public IeeeAddress getIeeeAddress() {
+        return node.getIeeeAddress();
+    }
+
+    /**
      * Gets the device address
      *
      * @return the {@link ZigBeeEndpointAddress}
      */
     public ZigBeeEndpointAddress getDeviceAddress() {
-        return new ZigBeeEndpointAddress(node.getNetworkAddress(), endpoint);
+        return new ZigBeeEndpointAddress(node.getNetworkAddress(), endpointId);
     }
 
     /**
@@ -257,8 +266,8 @@ public class ZigBeeEndpoint implements CommandListener {
                 Constructor<? extends ZclCluster> constructor;
                 try {
                     constructor = clusterType.getClusterClass().getConstructor(ZigBeeNetworkManager.class,
-                            ZigBeeEndpointAddress.class);
-                    clusterClass = constructor.newInstance(networkManager, getDeviceAddress());
+                            ZigBeeEndpoint.class);
+                    clusterClass = constructor.newInstance(networkManager, this);
                 } catch (Exception e) {
                     logger.debug("{}: Error instantiating cluster {}", getDeviceAddress(), clusterType);
                 }
@@ -345,17 +354,10 @@ public class ZigBeeEndpoint implements CommandListener {
 
     @Override
     public String toString() {
-        return "ZigBeeDevice [networkAddress=" + getDeviceAddress().toString() + ", profileId=" + profileId
-                + ", deviceId=" + deviceId + ", deviceVersion=" + deviceVersion + ", inputClusterIds="
-                + getInputClusterIds().toString() + ", outputClusterIds=" + getOutputClusterIds().toString() + "]";
+        return "ZigBeeDevice [networkAddress=" + getDeviceAddress().toString() + ", profileId="
+                + String.format("%04X", profileId) + ", deviceId=" + deviceId + ", deviceVersion=" + deviceVersion
+                + ", inputClusterIds=" + getInputClusterIds().toString() + ", outputClusterIds="
+                + getOutputClusterIds().toString() + "]";
     }
 
-    /**
-     * Gets the {@link IeeeAddress} for this endpoint from it's parant {@link ZigBeeNode}
-     *
-     * @return the node {@link IeeeAddress}
-     */
-    public IeeeAddress getIeeeAddress() {
-        return node.getIeeeAddress();
-    }
 }

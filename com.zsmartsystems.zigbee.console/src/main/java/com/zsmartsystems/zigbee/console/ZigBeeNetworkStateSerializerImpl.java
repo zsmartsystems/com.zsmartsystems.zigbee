@@ -29,7 +29,7 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.dao.ZigBeeDeviceDao;
+import com.zsmartsystems.zigbee.dao.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.dao.ZigBeeNodeDao;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.FrequencyBandType;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
@@ -55,7 +55,7 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
     private XStream openStream() {
         XStream stream = new XStream(new StaxDriver());
         stream.alias("ZigBeeNode", ZigBeeNodeDao.class);
-        stream.alias("ZigBeeDevice", ZigBeeDeviceDao.class);
+        stream.alias("ZigBeeDevice", ZigBeeEndpointDao.class);
         stream.alias("MacCapabilitiesType", MacCapabilitiesType.class);
         stream.alias("ServerCapabilitiesType", ServerCapabilitiesType.class);
         stream.alias("PowerSourceType", PowerSourceType.class);

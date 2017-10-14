@@ -8,7 +8,6 @@
 package com.zsmartsystems.zigbee.internal;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -20,11 +19,11 @@ import java.util.concurrent.Executors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.CommandListener;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.DeviceStatusListener;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -89,7 +88,8 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusLis
     /**
      * Map of node discovery times.
      */
-    private final Map<Integer, Long> discoveryStartTime = Collections.synchronizedMap(new HashMap<Integer, Long>());
+    private final Map<Integer, Long> discoveryStartTime = Collections
+            .synchronizedMap(new ConcurrentHashMap<Integer, Long>());
 
     /**
      * List of devices being discovered so we know when to notify of node updates

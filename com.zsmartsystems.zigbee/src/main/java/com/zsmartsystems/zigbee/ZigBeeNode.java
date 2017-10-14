@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,7 +92,7 @@ public class ZigBeeNode {
     /**
      * List of endpoints this node exposes
      */
-    private final Map<Integer, ZigBeeEndpoint> endpoints = new HashMap<Integer, ZigBeeEndpoint>();
+    private final Map<Integer, ZigBeeEndpoint> endpoints = new ConcurrentHashMap<Integer, ZigBeeEndpoint>();
 
     /**
      * The endpoint listeners of the ZigBee network. Registered listeners will be
@@ -334,7 +334,7 @@ public class ZigBeeNode {
      */
     public void addEndpoint(final ZigBeeEndpoint endpoint) {
         synchronized (endpoints) {
-            endpoints.put(endpoint.getEndpoint(), endpoint);
+            endpoints.put(endpoint.getEndpointId(), endpoint);
         }
         synchronized (this) {
             for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
@@ -355,7 +355,7 @@ public class ZigBeeNode {
      */
     public void updateEndpoint(final ZigBeeEndpoint endpoint) {
         synchronized (endpoints) {
-            endpoints.put(endpoint.getEndpoint(), endpoint);
+            endpoints.put(endpoint.getEndpointId(), endpoint);
         }
         synchronized (this) {
             for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
@@ -408,17 +408,6 @@ public class ZigBeeNode {
                     endpointListeners);
             modifiedListeners.remove(networkDeviceListener);
             endpointListeners = Collections.unmodifiableList(modifiedListeners);
-        }
-    }
-
-    /**
-     * Return a {@link List} of {@link ZigBeeEndpoint}s known on this node
-     *
-     * @return {@link List} of {@link ZigBeeEndpoint}s
-     */
-    public List<ZigBeeEndpoint> getDevices() {
-        synchronized (endpoints) {
-            return new ArrayList<ZigBeeEndpoint>(endpoints.values());
         }
     }
 

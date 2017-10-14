@@ -22,7 +22,7 @@ It is worth noting that EM3588 devices that have an embedded USB core will likel
 
 ### Telegesis ETRX3
 
-The library supports the Telegesis AT protocol over a serial interface. Currently implemented against R309.
+The library supports the Telegesis AT protocol over a serial interface. Currently implemented against R309. Note that some dongles such as the Qivicon Funkstick may use PID/VID codes that require special drivers or they will not be detected as a serial port.
 
 ## Tested Hardware
  
@@ -44,7 +44,7 @@ The following table provides a summary of some of the dongles / chipsets that ar
 | Atmel ATSAMR21        | No              | -99dBm      | +4.0dBm      |          |
 | NXP JN5169            | No              | -96dBm      | +10.0dBm     |          |
 | HUSBZB-1              | Yes (EZSP)      |             |              | Internal |
-| Telegesis ETRX3       | Yes             |             |              | Internal |
+| Telegesis ETRX3       | Yes (Telegesis) |             |              | Internal |
 | Qivicon Funkstick     | Yes (Telegesis) |             |              | Internal |
 
 * Receive: Defines the typical receive performance. A smaller number is best.
@@ -56,6 +56,12 @@ The following table provides a summary of some of the dongles / chipsets that ar
 * Codacy static testing should pass.
 * Contributions must be supported with tests.
 * Contributions must be your own and you must agree with the license.
+ 
+## Maven goals
+ 
+* To build: ```mvn clean install```
+* To bump the version: ```mvn release:update-versions```
+* To format the license header: ```mvn license:format```
 
 # License
 
