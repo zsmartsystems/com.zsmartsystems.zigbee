@@ -483,6 +483,7 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
             apsFrame.setSourceAddress(rxMessage.getNetworkAddress());
             apsFrame.setPayload(rxMessage.getMessageData());
             zigbeeTransportReceive.receiveCommand(apsFrame);
+            return;
         }
 
         // Handle link changes and notify framework or just reset link with dongle?
