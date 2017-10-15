@@ -181,10 +181,18 @@ public class QueryNextImageResponse extends ZclCommand {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
-        manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        fileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        imageSize = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        if (status == ZclStatus.SUCCESS) {
+            manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        }
+        if (status == ZclStatus.SUCCESS) {
+            imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        }
+        if (status == ZclStatus.SUCCESS) {
+            fileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        }
+        if (status == ZclStatus.SUCCESS) {
+            imageSize = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        }
     }
 
     @Override

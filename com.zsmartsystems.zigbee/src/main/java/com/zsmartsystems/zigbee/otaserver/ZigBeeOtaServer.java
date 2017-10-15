@@ -91,7 +91,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
  *
  * @author Chris Jackson
  */
-public class ZigBeeOtaServer implements ZigBeeServer, ZigBeeCommandListener {
+public class ZigBeeOtaServer implements ZigBeeServer {
     /**
      * A static Thread pool is used here to ensure that we don't end up with large numbers of page requests
      * spawning multiple threads. This should ensure a level of pacing if we had a lot of devices on the network that
@@ -137,7 +137,7 @@ public class ZigBeeOtaServer implements ZigBeeServer, ZigBeeCommandListener {
     /**
      * The {@link ZigBeeNetworkManager}
      */
-    private final ZigBeeNetworkManager networkManager;
+    private ZigBeeNetworkManager networkManager;
 
     /**
      * The {@link ZigBeeEndpoint} to which this server process belongs
@@ -179,8 +179,7 @@ public class ZigBeeOtaServer implements ZigBeeServer, ZigBeeCommandListener {
      * @param node the {@link ZigBeeNode} to be updated
      * @param callback A (@link ZigBeeOtaStatusCallback} to receive status and progress updates
      */
-    public ZigBeeOtaServer(final ZigBeeNetworkManager networkManager, final ZigBeeEndpoint device,
-            final ZigBeeOtaStatusCallback callback) {
+    public ZigBeeOtaServer(final ZigBeeNetworkManager networkManager, final ZigBeeEndpoint device) {
         this.networkManager = networkManager;
         this.device = device;
 
@@ -188,17 +187,35 @@ public class ZigBeeOtaServer implements ZigBeeServer, ZigBeeCommandListener {
 
         // queryJitter needs to be a random value between 1 and 100
         this.queryJitter = new Random().nextInt(100);
-
-        // Register a listener with the node to receive cluster messages
-        networkManager.addCommandListener(this);
     }
 
     @Override
-    public void serverStartup() {
+    public boolean serverStartup(final ZigBeeNetworkManager networkManager, final ZigBeeNode zigbeeNode) {
+        this.networkManager = networkManager;
+        this.zigbeeNode = zigbeeNode;
+
+        // Find the endpoint that contains the OTA cluster
+        this.device = null;
+        for (ZigBeeDevice device : networkManager.getNodeDevices(zigbeeNode.getIeeeAddress())) {
+            if (device.getOutputClusterIds().contains(ZclOtaUpgradeCluster.CLUSTER_ID)) {
+                this.device = device;
+            }
+        }
+        if (this.device == null) {
+            // No endpoint supporting the OTA client was found on this node
+            return false;
+        }
+
+        return true;
     }
 
     @Override
     public void serverShutdown() {
+    }
+
+    @Override
+    public int getClusterId() {
+        return ZclOtaUpgradeCluster.CLUSTER_ID;
     }
 
     /**
@@ -264,7 +281,9 @@ public class ZigBeeOtaServer implements ZigBeeServer, ZigBeeCommandListener {
         notifyCommand.setQueryJitter(queryJitter);
         notifyCommand.setDestinationAddress(device.getDeviceAddress());
         notifyCommand.setManufacturerCode(otaFile.getManufacturerCode());
-        notifyCommand.setImageType(0xffff);
+        notifyCommand.setImageType(otaFile.getImageType());
+        notifyCommand.setNewFileVersion(otaFile.getFileVersion());
+        notifyCommand.setPayloadType(0);
 
         try {
             networkManager.sendCommand(notifyCommand);
@@ -329,7 +348,7 @@ public class ZigBeeOtaServer implements ZigBeeServer, ZigBeeCommandListener {
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        statusListener.otaStatus(updatedStatus);
+                        statusListener.otaStatusUpdate(updatedStatus);
                     }
                 });
             }

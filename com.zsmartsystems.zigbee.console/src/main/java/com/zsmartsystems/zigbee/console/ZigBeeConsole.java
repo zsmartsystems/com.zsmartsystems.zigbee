@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -32,12 +33,15 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaFile;
+import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServer;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsGeneratedResponse;
@@ -126,6 +130,7 @@ public final class ZigBeeConsole {
         commands.put("unlisten", new UnlistenCommand());
         commands.put("subscribe", new SubscribeCommand());
         commands.put("unsubscribe", new UnsubscribeCommand());
+        commands.put("ota", new OtaCommand());
 
         commands.put("read", new ReadCommand());
         commands.put("write", new WriteCommand());
@@ -1425,6 +1430,60 @@ public final class ZigBeeConsole {
                 return true;
             }
 
+        }
+    }
+
+    /**
+     * Support for OTA server.
+     */
+    private class OtaCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Upgrade the firmware of a node using the OTA server.";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "ota [NODE] [FILE]";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
+            if (args.length != 3) {
+                return false;
+            }
+
+            final ZigBeeNode node = networkManager.getNode(Integer.parseInt(args[1]));
+            if (node == null) {
+                print("Node not found.", out);
+                return false;
+            }
+
+            // Check if the OTA server is already set
+            ZigBeeOtaServer otaServer = (ZigBeeOtaServer) node.getServer(ZclOtaUpgradeCluster.CLUSTER_ID);
+            if (otaServer == null) {
+                // Create and add the server
+                otaServer = new ZigBeeOtaServer();
+
+                node.addServer(otaServer);
+            }
+
+            File file = new File(args[2]);
+            ZigBeeOtaFile otaFile = new ZigBeeOtaFile(file);
+            print("OTA File: " + otaFile, out);
+
+            otaServer.setFirmware(otaFile);
+
+            return true;
         }
     }
 

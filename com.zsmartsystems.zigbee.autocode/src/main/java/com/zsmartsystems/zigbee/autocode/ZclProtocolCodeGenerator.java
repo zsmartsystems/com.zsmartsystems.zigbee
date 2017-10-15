@@ -1036,8 +1036,29 @@ public class ZclProtocolCodeGenerator {
                         out.println("    @Override");
                         out.println("    public void deserialize(final ZclFieldDeserializer deserializer) {");
                         for (final Field field : fields) {
-                            out.println("        " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
-                                    + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + ");");
+                            if (field.listSizer != null) {
+                                if (field.conditionOperator != null) {
+                                    if (field.conditionOperator == "&&") {
+                                        out.println("        if ((" + field.listSizer + " & " + field.condition
+                                                + ") != 0) {");
+                                    } else {
+                                        out.println("        if (" + field.listSizer + " " + field.conditionOperator
+                                                + " " + field.condition + ") {");
+                                    }
+                                    out.println("            " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
+                                            + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + ");");
+                                    out.println("        }");
+                                } else {
+                                    out.println("        for (int cnt = 0; cnt < " + field.nameLowerCamelCase
+                                            + ".size(); cnt++) {");
+                                    out.println("            " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
+                                            + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + ");");
+                                    out.println("        }");
+                                }
+                            } else {
+                                out.println("        " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
+                                        + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + ");");
+                            }
                         }
                         out.println("    }");
                     }

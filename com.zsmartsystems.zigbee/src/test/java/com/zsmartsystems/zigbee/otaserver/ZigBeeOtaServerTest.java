@@ -10,6 +10,12 @@ package com.zsmartsystems.zigbee.otaserver;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.Callable;
+
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
@@ -24,9 +30,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaFile;
-import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServer;
-import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaStatusCallback;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 
@@ -35,7 +39,9 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
  * @author Chris Jackson
  *
  */
-public class ZigBeeOtaServerTest {
+public class ZigBeeOtaServerTest implements ZigBeeOtaStatusCallback {
+    private List<ZigBeeOtaServerStatus> otaStatusCapture;
+
     @Test
     public void testNotify() {
         ArgumentCaptor<ZigBeeCommand> mockedCommandCaptor = ArgumentCaptor.forClass(ZigBeeCommand.class);
@@ -45,13 +51,20 @@ public class ZigBeeOtaServerTest {
         ZigBeeEndpointAddress networkAddress = new ZigBeeEndpointAddress(1234, 56);
         ZigBeeNetworkManager mockedNetworkManager = Mockito.mock(ZigBeeNetworkManager.class);
         ZigBeeNode node = new ZigBeeNode(mockedNetworkManager);
+        ZigBeeDevice endpoint = new ZigBeeDevice(mockedNetworkManager);
         node.setIeeeAddress(ieeeAddress);
         node.setNodeDescriptor(nodeDescriptor);
-        ZigBeeEndpoint device = new ZigBeeEndpoint(mockedNetworkManager, node, 56);
+        ZigBeeEndpoint device = new ZigBeeEndpoint(mockedNetworkManager);
+        device.setDeviceAddress(networkAddress);
+        device.setIeeeAddress(ieeeAddress);
         ZigBeeOtaStatusCallback mockedCallback = Mockito.mock(ZigBeeOtaStatusCallback.class);
+        otaStatusCapture = new ArrayList<ZigBeeOtaServerStatus>();
+
+        Set<ZigBeeDevice> devices = new HashSet<ZigBeeDevice>();
+        devices.add(device);
 
         Mockito.when(mockedNetworkManager.getNode((IeeeAddress) Matchers.anyObject())).thenReturn(node);
-        // Mockito.when(mockedNetworkManager.getDevice((ZigBeeAddress) Matchers.anyObject())).thenReturn(device);
+        Mockito.when(mockedNetworkManager.getDevice((ZigBeeAddress) Matchers.anyObject())).thenReturn(device);
 
         try {
             Mockito.doAnswer(new Answer<Integer>() {
@@ -64,7 +77,10 @@ public class ZigBeeOtaServerTest {
             e.printStackTrace();
         }
 
-        ZigBeeOtaServer server = new ZigBeeOtaServer(mockedNetworkManager, device, mockedCallback);
+        ZigBeeOtaServer server = new ZigBeeOtaServer();
+        assertTrue(server.serverStartup(mockedNetworkManager, node));
+        server.addListener(this);
+
         ZigBeeOtaFile otaFile = Mockito.mock(ZigBeeOtaFile.class);
 
         // Set the firmware and send notification
@@ -72,7 +88,13 @@ public class ZigBeeOtaServerTest {
 
         assertEquals(1, mockedCommandCaptor.getAllValues().size());
 
-        ZigBeeCommand command = mockedCommandCaptor.getValue();
+        org.awaitility.Awaitility.await().until(otaListenerUpdated(), org.hamcrest.Matchers.equalTo(1));
+
+        assertEquals(1, otaStatusCapture.size());
+        ZigBeeOtaServerStatus status = otaStatusCapture.get(0);
+        assertEquals(ZigBeeOtaServerStatus.OTA_WAITING, status);
+
+        Command command = mockedCommandCaptor.getValue();
 
         assertEquals(Integer.valueOf(0x19), command.getClusterId());
         assertTrue(command instanceof ImageNotifyCommand);
@@ -80,6 +102,20 @@ public class ZigBeeOtaServerTest {
         ImageNotifyCommand notifyCommand = (ImageNotifyCommand) command;
         assertEquals(new ZigBeeEndpointAddress(1234, 56), notifyCommand.getDestinationAddress());
         assertTrue(notifyCommand.getQueryJitter() >= 1 && notifyCommand.getQueryJitter() <= 100);
+    }
+
+    @Override
+    public void otaStatusUpdate(ZigBeeOtaServerStatus status) {
+        otaStatusCapture.add(status);
+    }
+
+    private Callable<Integer> otaListenerUpdated() {
+        return new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return otaStatusCapture.size(); // The condition that must be fulfilled
+            }
+        };
     }
 
 }

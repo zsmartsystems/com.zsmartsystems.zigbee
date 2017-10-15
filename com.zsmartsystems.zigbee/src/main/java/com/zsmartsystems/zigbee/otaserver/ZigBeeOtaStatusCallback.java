@@ -19,6 +19,6 @@ public interface ZigBeeOtaStatusCallback {
      *
      * @param status the updated {@link ZigBeeOtaServerStatus}
      */
-    void otaStatus(ZigBeeOtaServerStatus status);
+    void otaStatusUpdate(ZigBeeOtaServerStatus status);
 
 }

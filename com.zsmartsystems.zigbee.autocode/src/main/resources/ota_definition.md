@@ -105,9 +105,9 @@ notify all clients disregard of their manufacturers, image types or file version
 to protect the server from being flooded with clients’ queries for next image.
 
 
-|Field Name                 |Data Type                  |
-|---------------------------|---------------------------|
-|Payload type               |8-bit Enumeration          |
+|Field Name                 |Data Type                                 |
+|---------------------------|------------------------------------------|
+|Payload type               |8-bit Enumeration                         |
 |Query jitter               |Unsigned 8-bit integer[Payload type>=0]   |
 |Manufacturer code          |Unsigned 16-bit integer[Payload type>=1]  |
 |Image type                 |Unsigned 16-bit integer[Payload type>=2]  |
@@ -130,8 +130,8 @@ server. However, the server may choose to upgrade, downgrade, or reinstall clien
 policy dictates. If client’s hardware version is included in the command, the server shall examine the
 value against the minimum and maximum hardware versions included in the OTA file header.
 
-|Field Name                 |Data Type                  |
-|---------------------------|---------------------------|
+|Field Name                 |Data Type                                    |
+|---------------------------|---------------------------------------------|
 |Field control              |Bitmap 8-bit                                 |
 |Manufacturer code          |Unsigned 16-bit integer                      |
 |Image type                 |Unsigned 16-bit integer                      |
@@ -156,8 +156,8 @@ least BlockRequestDelay milliseconds after the previous Image Block Request was 
 the next Image Block Request message. A client may delay its next Image Block Requests longer than
 its BlockRequestDelay attribute.
 
-|Field Name                 |Data Type                  |
-|---------------------------|---------------------------|
+|Field Name                 |Data Type                                    |
+|---------------------------|---------------------------------------------|
 |Field control              |Bitmap 8-bit                                 |
 |Manufacturer code          |Unsigned 16-bit integer                      |
 |Image type                 |Unsigned 16-bit integer                      |
@@ -186,8 +186,8 @@ upgrade process. For example, if the client does not receive all data requested 
 Request, the client may choose to request the missing block of data using Image Block Request
 command, instead of requesting the whole page again.
 
-|Field Name                 |Data Type                  |
-|---------------------------|---------------------------|
+|Field Name                 |Data Type                                    |
+|---------------------------|---------------------------------------------|
 |Field control              |Bitmap 8-bit                                 |
 |Manufacturer code          |Unsigned 16-bit integer                      |
 |Image type                 |Unsigned 16-bit integer                      |
@@ -269,9 +269,9 @@ case, the client may perform discovery again to find another upgrade server. The
 an intelligence to avoid querying the same unauthorized server.
 
 
-|Field Name                 |Data Type                  |
-|---------------------------|---------------------------|
-|Status                     |Zcl Status                               |
+|Field Name                 |Data Type                                          |
+|---------------------------|---------------------------------------------------|
+|Status                     |Zcl Status                                         |
 |Manufacturer code          |Unsigned 16-bit integer[Status==ZclStatus.SUCCESS] |
 |Image type                 |Unsigned 16-bit integer[Status==ZclStatus.SUCCESS] |
 |File Version               |Unsigned 32-bit integer[Status==ZclStatus.SUCCESS] |
@@ -349,9 +349,9 @@ A status of NO_IMAGE_AVAILABLE indicates that the server currently does not have
 specific file available for the client. A status of NOT_AUTHORIZED indicates the server is not
 authorized to send the file to the client.
 
-|Field Name                 |Data Type                  |
-|---------------------------|---------------------------|
-|Status                     |Zcl Status                 |
+|Field Name                 |Data Type                                          |
+|---------------------------|---------------------------------------------------|
+|Status                     |Zcl Status                                         |
 |Manufacturer code          |Unsigned 16-bit integer[Status==ZclStatus.SUCCESS] |
 |Image type                 |Unsigned 16-bit integer[Status==ZclStatus.SUCCESS] |
 |File Version               |Unsigned 32-bit integer[Status==ZclStatus.SUCCESS] |

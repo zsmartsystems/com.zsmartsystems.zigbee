@@ -19,7 +19,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 public abstract class ZclCommand extends ZigBeeCommand {
 
     /**
-     *
+     * True if this is a generic command
      */
     protected boolean genericCommand;
 
@@ -29,18 +29,14 @@ public abstract class ZclCommand extends ZigBeeCommand {
     protected int commandId;
 
     /**
-     * <p>
      * The command direction for this command.
-     * </p>
      * <p>
      * If this command is to be sent <b>to</b> the server, this will return <i>true</i>.
      * If this command is to be sent <b>from</b> the server, this will return <i>false</i>.
-     * </p>
      */
     protected boolean commandDirection;
 
     /**
-     * <p>
      * Sets the cluster ID for <i>generic</i> commands.
      * <p>
      * For commands that are not <i>generic</i>, this method will do nothing as the cluster ID is fixed.
@@ -72,14 +68,12 @@ public abstract class ZclCommand extends ZigBeeCommand {
     }
 
     /**
-     * <p>
      * Gets the command direction for this command.
-     * </p>
      * <p>
      * If this command is to be sent <b>to</b> the server, this will return <i>true</i>.
      * If this command is to be sent <b>from</b> the server, this will return <i>false</i>.
-     * </p>
      *
+     * 
      * @return true if this is sent to the server, false if this is a response from the server.
      */
     public boolean getCommandDirection() {

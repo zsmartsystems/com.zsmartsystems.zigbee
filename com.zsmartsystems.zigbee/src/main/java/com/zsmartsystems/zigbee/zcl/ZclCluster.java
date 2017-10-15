@@ -47,8 +47,14 @@ import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
  *
  */
 public abstract class ZclCluster {
+    /**
+     * The logger
+     */
     private Logger logger = LoggerFactory.getLogger(ZclCluster.class);
 
+    /**
+     * The {@link ZigBeeNetworkManager} to which this device belongs
+     */
     private final ZigBeeNetworkManager zigbeeManager;
     private final ZigBeeEndpoint zigbeeEndpoint;
     protected final int clusterId;

@@ -181,10 +181,18 @@ public class ImageNotifyCommand extends ZclCommand {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         payloadType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        queryJitter = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        newFileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        if (payloadType >= 0) {
+            queryJitter = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        }
+        if (payloadType >= 1) {
+            manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        }
+        if (payloadType >= 2) {
+            imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        }
+        if (payloadType >= 3) {
+            newFileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        }
     }
 
     @Override
