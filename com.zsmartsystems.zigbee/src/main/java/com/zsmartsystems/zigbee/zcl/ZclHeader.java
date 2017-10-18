@@ -51,9 +51,13 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  */
 public class ZclHeader {
+    private final int MASK_FRAME_TYPE = 0b00000011;
     private final int MASK_MANUFACTURER_SPECIFIC = 0b00000100;
     private final int MASK_DIRECTION = 0b00001000;
     private final int MASK_DEFAULT_RESPONSE = 0b00010000;
+
+    private final int FRAME_TYPE_ENTIRE_PROFILE = 0x00;
+    private final int FRAME_TYPE_CLUSTER_SPECIFIC = 0x01;
 
     /**
      * The frame type sub-field.
@@ -130,14 +134,20 @@ public class ZclHeader {
     public ZclHeader(ZclFieldDeserializer fieldDeserializer) {
         int frameControl = (int) fieldDeserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
 
-        if ((frameControl & MASK_MANUFACTURER_SPECIFIC) == 0b00) {
-            frameType = ZclFrameType.ENTIRE_PROFILE_COMMAND;
-        } else if ((frameControl & MASK_MANUFACTURER_SPECIFIC) == 0b01) {
-            frameType = ZclFrameType.CLUSTER_SPECIFIC_COMMAND;
+        switch (frameControl & MASK_FRAME_TYPE) {
+            case FRAME_TYPE_CLUSTER_SPECIFIC:
+                frameType = ZclFrameType.CLUSTER_SPECIFIC_COMMAND;
+                break;
+            case FRAME_TYPE_ENTIRE_PROFILE:
+                frameType = ZclFrameType.ENTIRE_PROFILE_COMMAND;
+                break;
+            default:
+                break;
         }
 
         disableDefaultResponse = (frameControl & MASK_DEFAULT_RESPONSE) != 0;
-        direction = (frameControl & MASK_DIRECTION) != 0;
+        direction = (frameControl & MASK_DIRECTION) == 0;
+        manufacturerSpecific = (frameControl & MASK_MANUFACTURER_SPECIFIC) != 0;
 
         // If manufacturerSpecific is set then get the manufacturer code
         if (manufacturerSpecific) {
@@ -315,10 +325,10 @@ public class ZclHeader {
         int frameControl = 0;
         switch (frameType) {
             case CLUSTER_SPECIFIC_COMMAND:
-                frameControl |= 0b00000001;
+                frameControl |= FRAME_TYPE_CLUSTER_SPECIFIC;
                 break;
             case ENTIRE_PROFILE_COMMAND:
-                frameControl |= 0b00000000;
+                frameControl |= FRAME_TYPE_ENTIRE_PROFILE;
                 break;
             default:
                 break;
