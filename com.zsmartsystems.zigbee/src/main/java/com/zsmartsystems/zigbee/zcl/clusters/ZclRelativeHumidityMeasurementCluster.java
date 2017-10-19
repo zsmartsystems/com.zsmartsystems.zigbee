@@ -57,7 +57,7 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * Default constructor to create a Relative humidity measurement cluster.
      *
      * @param zigbeeManager {@link ZigBeeNetworkManager}
-     * @param zigbeeEndpoint the {@link ZigBeeDevice}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
      */
     public ZclRelativeHumidityMeasurementCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);

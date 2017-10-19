@@ -37,7 +37,7 @@ public class ZclFanControlCluster extends ZclCluster {
      * Default constructor to create a Fan Control cluster.
      *
      * @param zigbeeManager {@link ZigBeeNetworkManager}
-     * @param zigbeeEndpoint the {@link ZigBeeDevice}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
      */
     public ZclFanControlCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);

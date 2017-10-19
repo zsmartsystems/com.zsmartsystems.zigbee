@@ -1439,7 +1439,7 @@ public class ZclProtocolCodeGenerator {
                 out.println("     * Default constructor to create a " + cluster.clusterName + " cluster.");
                 out.println("     *");
                 out.println("     * @param zigbeeManager {@link ZigBeeNetworkManager}");
-                out.println("     * @param zigbeeEndpoint the {@link ZigBeeDevice}");
+                out.println("     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}");
                 out.println("     */");
                 out.println("    public " + className
                         + "(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {");

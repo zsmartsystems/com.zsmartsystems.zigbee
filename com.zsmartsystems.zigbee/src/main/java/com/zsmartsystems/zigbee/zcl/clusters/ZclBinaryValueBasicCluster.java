@@ -37,7 +37,7 @@ public class ZclBinaryValueBasicCluster extends ZclCluster {
      * Default constructor to create a Binary Value (Basic) cluster.
      *
      * @param zigbeeManager {@link ZigBeeNetworkManager}
-     * @param zigbeeEndpoint the {@link ZigBeeDevice}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
      */
     public ZclBinaryValueBasicCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);

@@ -53,7 +53,7 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * Default constructor to create a Temperature measurement cluster.
      *
      * @param zigbeeManager {@link ZigBeeNetworkManager}
-     * @param zigbeeEndpoint the {@link ZigBeeDevice}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
      */
     public ZclTemperatureMeasurementCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);

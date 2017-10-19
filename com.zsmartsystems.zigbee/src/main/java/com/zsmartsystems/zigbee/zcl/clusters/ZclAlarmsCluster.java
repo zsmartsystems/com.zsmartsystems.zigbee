@@ -67,7 +67,7 @@ public class ZclAlarmsCluster extends ZclCluster {
      * Default constructor to create a Alarms cluster.
      *
      * @param zigbeeManager {@link ZigBeeNetworkManager}
-     * @param zigbeeEndpoint the {@link ZigBeeDevice}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
      */
     public ZclAlarmsCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);

@@ -37,7 +37,7 @@ public class ZclAnalogInputBaCnetExtendedCluster extends ZclCluster {
      * Default constructor to create a Analog Input (BACnet Extended) cluster.
      *
      * @param zigbeeManager {@link ZigBeeNetworkManager}
-     * @param zigbeeEndpoint the {@link ZigBeeDevice}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
      */
     public ZclAnalogInputBaCnetExtendedCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);

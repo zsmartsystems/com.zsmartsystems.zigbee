@@ -37,7 +37,7 @@ public class ZclBinaryOutputBaCnetExtendedCluster extends ZclCluster {
      * Default constructor to create a Binary Output (BACnet Extended) cluster.
      *
      * @param zigbeeManager {@link ZigBeeNetworkManager}
-     * @param zigbeeEndpoint the {@link ZigBeeDevice}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
      */
     public ZclBinaryOutputBaCnetExtendedCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
