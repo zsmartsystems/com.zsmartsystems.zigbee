@@ -18,21 +18,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
+import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
+import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.CurrentPowerModeType;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.PowerLevelType;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.PowerSourceType;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.RoutingTable.DiscoveryState;
 
 public class ZigBeeNodeTest {
     @Test
     public void testAddDescriptors() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         node.setPowerDescriptor(null);
         assertEquals(null, node.getPowerDescriptor());
 
@@ -41,7 +47,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testSetIeeeAddress() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         node.setIeeeAddress(new IeeeAddress("17880100dc880b"));
         assertEquals(new IeeeAddress("17880100dc880b"), node.getIeeeAddress());
 
@@ -51,7 +57,7 @@ public class ZigBeeNodeTest {
     @Test
     public void testSetPowerDescriptor() {
         PowerDescriptor descriptor = new PowerDescriptor(1, 2, 4, 0xc);
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         node.setPowerDescriptor(descriptor);
         assertEquals(CurrentPowerModeType.RECEIVER_ON_PERIODICALLY, node.getPowerDescriptor().getCurrentPowerMode());
         assertEquals(PowerSourceType.DISPOSABLE_BATTERY, node.getPowerDescriptor().getCurrentPowerSource());
@@ -91,7 +97,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testNeighborTableUpdate() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         List<NeighborTable> neighbors;
 
         NeighborTable neighbor1 = getNeighborTable(12345, "123456789", 0);
@@ -125,7 +131,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testRoutingTableUpdate() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         List<RoutingTable> routes;
 
         RoutingTable route1 = new RoutingTable();
@@ -178,7 +184,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testDeviceTypes() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         assertFalse(node.isFullFuntionDevice());
         assertFalse(node.isReducedFuntionDevice());
         assertFalse(node.isPrimaryTrustCenter());
@@ -212,7 +218,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testLastUpdate() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         assertNull(node.getLastUpdateTime());
         node.setLastUpdateTime();
         assertNotNull(node.getLastUpdateTime());
@@ -220,15 +226,79 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testJoiningEnabled() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
 
         node.setJoining(true);
         assertTrue(node.isJoiningEnabled());
     }
 
     @Test
+    public void testAddServer() {
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
+
+        ZigBeeServer server = Mockito.mock(ZigBeeServer.class);
+        Mockito.when(server.getClusterId()).thenReturn(123);
+
+        assertNull(node.getServer(123));
+        node.addServer(server);
+        assertEquals(server, node.getServer(123));
+    }
+
+    @Test
+    public void testMatchDescriptor() {
+        ZigBeeNetworkManager mockedNetworkManager = Mockito.mock(ZigBeeNetworkManager.class);
+
+        ZigBeeNode node = new ZigBeeNode(mockedNetworkManager);
+        ZigBeeAddress sourceAddress = new ZigBeeDeviceAddress(1234, 56);
+        node.setNetworkAddress(sourceAddress.getAddress());
+
+        ArgumentCaptor<Command> mockedCommandCaptor = ArgumentCaptor.forClass(Command.class);
+        ArgumentCaptor<Command> mockedServerCommandCaptor = ArgumentCaptor.forClass(Command.class);
+
+        try {
+            Mockito.doAnswer(new Answer<Integer>() {
+                @Override
+                public Integer answer(InvocationOnMock invocation) {
+                    return 0;
+                }
+            }).when(mockedNetworkManager).sendCommand(mockedCommandCaptor.capture());
+        } catch (ZigBeeException e) {
+            e.printStackTrace();
+        }
+
+        ZigBeeServer server = Mockito.mock(ZigBeeServer.class);
+        Mockito.when(server.getClusterId()).thenReturn(123);
+        node.addServer(server);
+
+        Mockito.doNothing().when(server).commandReceived(mockedServerCommandCaptor.capture());
+
+        List<Integer> outClusterList = new ArrayList<Integer>();
+        outClusterList.add(123);
+        MatchDescriptorRequest matchDescriptor = new MatchDescriptorRequest();
+        matchDescriptor.setSourceAddress(sourceAddress);
+        matchDescriptor.setProfileId(0x104);
+        matchDescriptor.setOutClusterList(outClusterList);
+        node.commandReceived(matchDescriptor);
+
+        assertEquals(1, mockedCommandCaptor.getAllValues().size());
+
+        Command command = mockedCommandCaptor.getValue();
+
+        assertEquals(Integer.valueOf(32774), command.getClusterId());
+        assertTrue(command instanceof MatchDescriptorResponse);
+
+        MatchDescriptorResponse response = (MatchDescriptorResponse) command;
+        assertEquals(new ZigBeeDeviceAddress(1234, 56), response.getDestinationAddress());
+        assertEquals(1, response.getMatchList().size());
+        assertEquals(Integer.valueOf(1), response.getMatchList().get(0));
+
+        // Make sure the command was passed to the server
+        assertEquals(1, mockedServerCommandCaptor.getAllValues().size());
+    }
+
+    @Test
     public void testAssociatedDevices() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
 
         // Check list is empty to start
         assertNotNull(node.getAssociatedDevices());

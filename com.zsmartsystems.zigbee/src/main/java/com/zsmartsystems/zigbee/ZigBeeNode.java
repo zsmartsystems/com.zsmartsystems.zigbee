@@ -10,17 +10,25 @@ package com.zsmartsystems.zigbee;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.zdo.ZdoResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
+import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
+import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.ServerCapabilitiesType;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 
 /**
  * Defines a ZigBee Node. A node is a physical entity on the network and will
@@ -30,7 +38,12 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.ServerCapabilitiesType;
  * @author Chris Jackson
  *
  */
-public class ZigBeeNode {
+public class ZigBeeNode implements CommandListener {
+    /**
+     * The logger.
+     */
+    private final Logger logger = LoggerFactory.getLogger(ZigBeeNode.class);
+
     /**
      * The extended {@link IeeeAddress} for the node
      */
@@ -78,12 +91,26 @@ public class ZigBeeNode {
     private final List<RoutingTable> routes = new ArrayList<RoutingTable>();
 
     /**
+     * Map of {@link ZigBeeServer}s that are available to this node. Servers are added
+     * with the {@link #addServer(ZigBeeServer server)} method and can be retrieved with the
+     * {@link #getServer(int clusterId)} method.
+     */
+    private final Map<Integer, ZigBeeServer> servers = new ConcurrentHashMap<Integer, ZigBeeServer>();
+
+    /**
      * The network manager that manages this node
      */
     private final ZigBeeNetworkManager networkManager;
 
+    /**
+     * Constructor for a {@link ZigBeeNode}
+     *
+     * @param networkManager the {@link ZigBeeNetworkManager} this node belongs to
+     */
     public ZigBeeNode(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
+
+        networkManager.addCommandListener(this);
     }
 
     /**
@@ -449,6 +476,80 @@ public class ZigBeeNode {
      */
     public Date getLastUpdateTime() {
         return lastUpdateTime;
+    }
+
+    /**
+     * Adds a server and makes it available to this node. Calls {@link ZigBeeServer#serverStartup()) to start the
+     * server.
+     *
+     * @param server the new {@link ZigBeeServer}
+     */
+    public void addServer(ZigBeeServer server) {
+        servers.put(server.getClusterId(), server);
+        server.serverStartup(networkManager);
+    }
+
+    /**
+     * Gets the server associated with the clusterId. Returns null if there is no server linked to the requested cluster
+     *
+     * @param clusterId
+     * @return the {@link ZigBeeServer}
+     */
+    public ZigBeeServer getServer(int clusterId) {
+        return servers.get(clusterId);
+    }
+
+    @Override
+    public void commandReceived(Command command) {
+        // This gets called for all received commands
+        // Check if it's our address
+        if (command.getSourceAddress().getAddress() != networkAddress) {
+            return;
+        }
+
+        // Pass all commands received from this device to the server
+        synchronized (servers) {
+            for (ZigBeeServer server : servers.values()) {
+                server.commandReceived(command);
+            }
+        }
+
+        // If we have local servers matching the request, then we need to respond
+        if (command instanceof MatchDescriptorRequest) {
+            MatchDescriptorRequest matchRequest = (MatchDescriptorRequest) command;
+            if (matchRequest.getProfileId() != 0x104) {
+                // TODO: Remove this constant ?
+                return;
+            }
+
+            // We want to match any of our local servers (ie our input clusters) with any
+            // requested clusters in the requests cluster list
+            boolean matched = false;
+            for (int clusterId : matchRequest.getOutClusterList()) {
+                ZigBeeServer server = servers.get(clusterId);
+                if (server != null) {
+                    matched = true;
+                    break;
+                }
+            }
+
+            if (!matched) {
+                return;
+            }
+
+            MatchDescriptorResponse matchResponse = new MatchDescriptorResponse();
+            matchResponse.setStatus(ZdoStatus.SUCCESS);
+            List<Integer> matchList = new ArrayList<Integer>();
+            matchList.add(1);
+            matchResponse.setMatchList(matchList);
+
+            matchResponse.setDestinationAddress(command.getSourceAddress());
+            try {
+                networkManager.sendCommand(matchResponse);
+            } catch (ZigBeeException e) {
+                logger.debug("Error sending MatchDescriptorResponse ", e);
+            }
+        }
     }
 
     @Override
