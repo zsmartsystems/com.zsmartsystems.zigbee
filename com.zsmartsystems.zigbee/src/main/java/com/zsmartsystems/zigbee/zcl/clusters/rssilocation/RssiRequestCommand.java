@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.rssilocation;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * RSSI Request Command value object class.
@@ -25,7 +26,7 @@ public class RssiRequestCommand extends ZclCommand {
         genericCommand = false;
         clusterId = 11;
         commandId = 5;
-        commandDirection = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     @Override

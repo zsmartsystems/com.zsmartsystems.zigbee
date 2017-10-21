@@ -23,13 +23,14 @@ public class CommandResult {
      * The response command.
      */
     private final ZigBeeCommand response;
+
     /**
      * The message.
      */
     private final String message;
 
     /**
-     * Constructor which sets the received response command or null if timeout occurs..
+     * Constructor which sets the received response command or null if timeout occurs.
      *
      * @param response the response command.
      */
@@ -124,8 +125,8 @@ public class CommandResult {
      *
      * @return the received response {@link ZigBeeCommand}
      */
-    public <C extends ZigBeeCommand> C getResponse() {
-        return (C) response;
+    public <ZigBeeCommand> ZigBeeCommand getResponse() {
+        return (ZigBeeCommand) response;
     }
 
     /**

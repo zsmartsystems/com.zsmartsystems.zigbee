@@ -46,19 +46,19 @@ public class ZigBeeEndpointTest {
 
         assertEquals(5, device.getOutputClusterIds().size());
 
-        assertNotNull(device.getCluster(ZclAlarmsCluster.CLUSTER_ID));
-        assertTrue(device.getCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
-        assertFalse(device.getCluster(ZclAlarmsCluster.CLUSTER_ID).isServer());
+        assertNotNull(device.getOutputCluster(ZclAlarmsCluster.CLUSTER_ID));
+        assertTrue(device.getOutputCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
+        assertFalse(device.getOutputCluster(ZclAlarmsCluster.CLUSTER_ID).isServer());
 
-        assertNotNull(device.getCluster(ZclLevelControlCluster.CLUSTER_ID));
-        assertTrue(device.getCluster(ZclLevelControlCluster.CLUSTER_ID).isClient());
-        assertFalse(device.getCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
+        assertNotNull(device.getOutputCluster(ZclLevelControlCluster.CLUSTER_ID));
+        assertTrue(device.getOutputCluster(ZclLevelControlCluster.CLUSTER_ID).isClient());
+        assertFalse(device.getOutputCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
 
         clusterIdList = new ArrayList<Integer>();
         clusterIdList.add(ZclAlarmsCluster.CLUSTER_ID);
         clusterIdList.add(ZclBasicCluster.CLUSTER_ID);
-        assertTrue(device.getCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
-        assertFalse(device.getCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
+        assertTrue(device.getOutputCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
+        assertFalse(device.getOutputCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
 
         System.out.println(device.toString());
     }
@@ -77,13 +77,13 @@ public class ZigBeeEndpointTest {
 
         assertEquals(5, endpoint.getInputClusterIds().size());
 
-        assertNotNull(endpoint.getCluster(ZclAlarmsCluster.CLUSTER_ID));
-        assertFalse(endpoint.getCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
-        assertTrue(endpoint.getCluster(ZclAlarmsCluster.CLUSTER_ID).isServer());
+        assertNotNull(endpoint.getInputCluster(ZclAlarmsCluster.CLUSTER_ID));
+        assertFalse(endpoint.getInputCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
+        assertTrue(endpoint.getInputCluster(ZclAlarmsCluster.CLUSTER_ID).isServer());
 
-        assertNotNull(endpoint.getCluster(ZclLevelControlCluster.CLUSTER_ID));
-        assertFalse(endpoint.getCluster(ZclLevelControlCluster.CLUSTER_ID).isClient());
-        assertTrue(endpoint.getCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
+        assertNotNull(endpoint.getInputCluster(ZclLevelControlCluster.CLUSTER_ID));
+        assertFalse(endpoint.getInputCluster(ZclLevelControlCluster.CLUSTER_ID).isClient());
+        assertTrue(endpoint.getInputCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
     }
 
     @Test

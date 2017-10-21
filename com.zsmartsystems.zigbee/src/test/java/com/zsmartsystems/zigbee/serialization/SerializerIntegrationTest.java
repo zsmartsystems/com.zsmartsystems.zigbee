@@ -202,6 +202,10 @@ public class SerializerIntegrationTest {
         Object objectOut = deserializer.readZigBeeType(type);
         if (objectIn instanceof Integer[]) {
             assertTrue(Arrays.equals((Integer[]) objectIn, (Integer[]) objectOut));
+        } else if (objectIn instanceof int[]) {
+            assertTrue(Arrays.equals((int[]) objectIn, (int[]) objectOut));
+        } else if (objectIn instanceof byte[]) {
+            assertTrue(Arrays.equals((byte[]) objectIn, (byte[]) objectOut));
         } else {
             assertEquals(objectIn, objectOut);
         }

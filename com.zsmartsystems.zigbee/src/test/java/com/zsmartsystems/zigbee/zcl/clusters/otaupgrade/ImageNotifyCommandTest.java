@@ -14,7 +14,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.CommandTest;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
@@ -29,8 +29,8 @@ public class ImageNotifyCommandTest extends CommandTest {
     @Test
     public void testSend() {
         ImageNotifyCommand command = new ImageNotifyCommand();
-        command.setSourceAddress(new ZigBeeDeviceAddress(0, 1));
-        command.setDestinationAddress(new ZigBeeDeviceAddress(57337, 3));
+        command.setSourceAddress(new ZigBeeEndpointAddress(0, 1));
+        command.setDestinationAddress(new ZigBeeEndpointAddress(57337, 3));
         command.setImageType(6);
         command.setQueryJitter(72);
         command.setManufacturerCode(4364);

@@ -20,23 +20,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ZigBeeCommand;
-import com.zsmartsystems.zigbee.ZigBeeCommandListener;
-import com.zsmartsystems.zigbee.ZigBeeEndpoint;
-import com.zsmartsystems.zigbee.ZigBeeException;
-import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
-import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.internal.NotificationService;
+import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.ZclServer;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImagePageCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 
 /**
  * This class implements the logic to implement the Over The Air (OTA) server for a ZigBee node.
@@ -91,7 +86,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
  *
  * @author Chris Jackson
  */
-public class ZigBeeOtaServer implements ZigBeeServer {
+public class ZigBeeOtaServer implements ZclServer {
     /**
      * A static Thread pool is used here to ensure that we don't end up with large numbers of page requests
      * spawning multiple threads. This should ensure a level of pacing if we had a lot of devices on the network that
@@ -135,19 +130,9 @@ public class ZigBeeOtaServer implements ZigBeeServer {
     private Integer dataSize = 0xff;
 
     /**
-     * The {@link ZigBeeNetworkManager}
+     * The {@link ZclCluster} to which this server process belongs
      */
-    private ZigBeeNetworkManager networkManager;
-
-    /**
-     * The {@link ZigBeeEndpoint} to which this server process belongs
-     */
-    private final ZigBeeEndpoint device;
-
-    /**
-     * Callback to receive status updates on the progress of a transfer
-     */
-    private final ZigBeeOtaStatusCallback callback;
+    private ZclOtaUpgradeCluster cluster;
 
     /**
      * The current firmware for this node.
@@ -173,16 +158,9 @@ public class ZigBeeOtaServer implements ZigBeeServer {
             .unmodifiableList(new ArrayList<ZigBeeOtaStatusCallback>());
 
     /**
-     * Constructor taking the {@link ZigBeeNode} that is to be updated.
-     *
-     * @param networkManager the {@link ZigBeeNetworkManager}
-     * @param node the {@link ZigBeeNode} to be updated
-     * @param callback A (@link ZigBeeOtaStatusCallback} to receive status and progress updates
+     * Constructor
      */
-    public ZigBeeOtaServer(final ZigBeeNetworkManager networkManager, final ZigBeeEndpoint device) {
-        this.networkManager = networkManager;
-        this.device = device;
-
+    public ZigBeeOtaServer() {
         status = ZigBeeOtaServerStatus.OTA_UNINITIALISED;
 
         // queryJitter needs to be a random value between 1 and 100
@@ -190,21 +168,8 @@ public class ZigBeeOtaServer implements ZigBeeServer {
     }
 
     @Override
-    public boolean serverStartup(final ZigBeeNetworkManager networkManager, final ZigBeeNode zigbeeNode) {
-        this.networkManager = networkManager;
-        this.zigbeeNode = zigbeeNode;
-
-        // Find the endpoint that contains the OTA cluster
-        this.device = null;
-        for (ZigBeeDevice device : networkManager.getNodeDevices(zigbeeNode.getIeeeAddress())) {
-            if (device.getOutputClusterIds().contains(ZclOtaUpgradeCluster.CLUSTER_ID)) {
-                this.device = device;
-            }
-        }
-        if (this.device == null) {
-            // No endpoint supporting the OTA client was found on this node
-            return false;
-        }
+    public boolean serverStartup(final ZclCluster cluster) {
+        this.cluster = (ZclOtaUpgradeCluster) cluster;
 
         return true;
     }
@@ -277,19 +242,8 @@ public class ZigBeeOtaServer implements ZigBeeServer {
             return;
         }
 
-        ImageNotifyCommand notifyCommand = new ImageNotifyCommand();
-        notifyCommand.setQueryJitter(queryJitter);
-        notifyCommand.setDestinationAddress(device.getDeviceAddress());
-        notifyCommand.setManufacturerCode(otaFile.getManufacturerCode());
-        notifyCommand.setImageType(otaFile.getImageType());
-        notifyCommand.setNewFileVersion(otaFile.getFileVersion());
-        notifyCommand.setPayloadType(0);
-
-        try {
-            networkManager.sendCommand(notifyCommand);
-        } catch (ZigBeeException e) {
-            logger.debug("Exception sending OTA notify client message: ", e);
-        }
+        cluster.imageNotifyCommand(0, queryJitter, otaFile.getManufacturerCode(), otaFile.getImageType(),
+                otaFile.getFileVersion());
     }
 
     /**
@@ -326,17 +280,8 @@ public class ZigBeeOtaServer implements ZigBeeServer {
             return false;
         }
 
-        UpgradeEndResponse upgradeEndResponse = new UpgradeEndResponse();
-        upgradeEndResponse.setDestinationAddress(device.getDeviceAddress());
-        upgradeEndResponse.setImageType(otaFile.getImageType());
-        upgradeEndResponse.setManufacturerCode(otaFile.getManufacturerCode());
-        upgradeEndResponse.setFileVersion(otaFile.getFileVersion());
-
-        try {
-            networkManager.sendCommand(upgradeEndResponse);
-        } catch (ZigBeeException e) {
-            logger.debug("Exception sending OTA upgrade end message: ", e);
-        }
+        cluster.upgradeEndResponse(otaFile.getManufacturerCode(), otaFile.getImageType(), otaFile.getFileVersion(), 0,
+                0);
 
         return false;
     }
@@ -357,24 +302,6 @@ public class ZigBeeOtaServer implements ZigBeeServer {
     }
 
     /**
-     * Sends a default response to the client
-     *
-     * @param status the {@link ZclStatus} to send in the response
-     */
-    private void sendDefaultResponse(ZclStatus status) {
-        DefaultResponse defaultResponse = new DefaultResponse();
-        defaultResponse.setDestinationAddress(device.getDeviceAddress());
-        defaultResponse.setClusterId(ZclOtaUpgradeCluster.CLUSTER_ID);
-        defaultResponse.setStatusCode(status);
-
-        try {
-            networkManager.sendCommand(defaultResponse);
-        } catch (ZigBeeException e) {
-            logger.debug("Exception sending OTA default response message: ", e);
-        }
-    }
-
-    /**
      * Sends an image block to the client
      *
      * @param fileOffset the offset into the {@link ZigBeeOtaFile} to send the block
@@ -382,24 +309,12 @@ public class ZigBeeOtaServer implements ZigBeeServer {
      * @return the number of bytes sent
      */
     private int sendImageBlock(int fileOffset, int maximumDataSize) {
-        ImageBlockResponse imageBlockResponse = new ImageBlockResponse();
-        imageBlockResponse.setDestinationAddress(device.getDeviceAddress());
-        imageBlockResponse.setImageType(otaFile.getImageType());
-        imageBlockResponse.setManufacturerCode(otaFile.getManufacturerCode());
-        imageBlockResponse.setFileVersion(otaFile.getFileVersion());
-        imageBlockResponse.setFileOffset(fileOffset);
-        imageBlockResponse.setImageData(otaFile.getImageData(fileOffset, Math.min(dataSize, maximumDataSize)));
+        ByteArray imageData = otaFile.getImageData(fileOffset, Math.min(dataSize, maximumDataSize));
+        logger.debug("{} OTA Data: Sending {} bytes at offset {}", cluster.getZigBeeAddress(), imageData.size());
+        cluster.imageBlockResponse(ZclStatus.SUCCESS, otaFile.getManufacturerCode(), otaFile.getImageType(),
+                otaFile.getFileVersion(), fileOffset, imageData);
 
-        logger.debug("{} OTA Data: Sending {} bytes at offset {}", device.getDeviceAddress(),
-                imageBlockResponse.getImageData().size());
-
-        try {
-            networkManager.sendCommand(imageBlockResponse);
-            return imageBlockResponse.getImageData().size();
-        } catch (ZigBeeException e) {
-            logger.debug("Exception sending OTA image block message: ", e);
-            return 0;
-        }
+        return imageData.size();
     }
 
     /**
@@ -431,7 +346,7 @@ public class ZigBeeOtaServer implements ZigBeeServer {
                 int dataSent = sendImageBlock(pagePosition, maximumDataSize);
 
                 // If dataSent is 0, then we either reached the end of file, or there was an error
-                // Either way, let's abort
+                // Either way, let's abort!
                 if (dataSent == 0) {
                     pagePosition = Integer.MAX_VALUE;
                 } else {
@@ -473,8 +388,8 @@ public class ZigBeeOtaServer implements ZigBeeServer {
         // Check that the file attributes are consistent with the file we have
         if (otaFile == null || command.getManufacturerCode() != otaFile.getManufacturerCode()
                 || command.getImageType() != otaFile.getImageType()) {
-            logger.debug("{} OTA Error: Request is inconsistent with OTA file.", device.getDeviceAddress());
-            sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
+            logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
+            cluster.sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
             return;
         }
 
@@ -484,7 +399,7 @@ public class ZigBeeOtaServer implements ZigBeeServer {
                 && otaFile.getMaximumHardware() != null) {
             if (command.getHardwareVersion() < otaFile.getMinimumHardware()
                     || command.getHardwareVersion() > otaFile.getMaximumHardware()) {
-                sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
+                cluster.sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
                 return;
             }
         }
@@ -492,18 +407,8 @@ public class ZigBeeOtaServer implements ZigBeeServer {
         // Update the state as we're starting
         updateStatus(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS);
 
-        QueryNextImageResponse nextImageResponse = new QueryNextImageResponse();
-        nextImageResponse.setDestinationAddress(device.getDeviceAddress());
-        nextImageResponse.setImageSize(otaFile.getImageSize());
-        nextImageResponse.setImageType(otaFile.getImageType());
-        nextImageResponse.setManufacturerCode(otaFile.getManufacturerCode());
-        nextImageResponse.setFileVersion(otaFile.getFileVersion());
-
-        try {
-            networkManager.sendCommand(nextImageResponse);
-        } catch (ZigBeeException e) {
-            logger.debug("Exception sending OTA next image response message: ", e);
-        }
+        cluster.queryNextImageResponse(ZclStatus.SUCCESS, otaFile.getManufacturerCode(), otaFile.getImageType(),
+                otaFile.getFileVersion(), otaFile.getImageSize());
     }
 
     /**
@@ -515,8 +420,8 @@ public class ZigBeeOtaServer implements ZigBeeServer {
     private void handleImagePageRequest(ImagePageCommand command) {
         // No current support for device specific requests
         if (command.getFieldControl() != 0) {
-            logger.debug("{} OTA Error: No file is set.", device.getDeviceAddress());
-            sendDefaultResponse(ZclStatus.UNSUP_CLUSTER_COMMAND);
+            logger.debug("{} OTA Error: No file is set.", cluster.getZigBeeAddress());
+            cluster.sendDefaultResponse(ZclStatus.UNSUP_CLUSTER_COMMAND);
             return;
         }
 
@@ -524,16 +429,16 @@ public class ZigBeeOtaServer implements ZigBeeServer {
         if (otaFile == null || command.getManufacturerCode() != otaFile.getManufacturerCode()
                 || command.getFileVersion() != otaFile.getFileVersion()
                 || command.getImageType() != otaFile.getImageType()) {
-            logger.debug("{} OTA Error: Request is inconsistent with OTA file.", device.getDeviceAddress());
-            sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
+            logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
+            cluster.sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
             return;
         }
 
         // Check that the offset is within bounds of the image data
         if (command.getFileOffset() > otaFile.getImageSize()) {
-            logger.debug("{} OTA Error: Requested offset is larger than file ({}>{})", device.getDeviceAddress(),
+            logger.debug("{} OTA Error: Requested offset is larger than file ({}>{})", cluster.getZigBeeAddress(),
                     command.getFileOffset(), otaFile.getImageSize());
-            sendDefaultResponse(ZclStatus.MALFORMED_COMMAND);
+            cluster.sendDefaultResponse(ZclStatus.MALFORMED_COMMAND);
             return;
         }
 
@@ -550,8 +455,8 @@ public class ZigBeeOtaServer implements ZigBeeServer {
     private void handleImageBlockRequest(ImageBlockCommand command) {
         // No current support for device specific requests
         if (command.getFieldControl() != 0) {
-            logger.debug("{} OTA Error: No file is set.", device.getDeviceAddress());
-            sendDefaultResponse(ZclStatus.UNSUP_CLUSTER_COMMAND);
+            logger.debug("{} OTA Error: No file is set.", cluster.getZigBeeAddress());
+            cluster.sendDefaultResponse(ZclStatus.UNSUP_CLUSTER_COMMAND);
             return;
         }
 
@@ -559,16 +464,16 @@ public class ZigBeeOtaServer implements ZigBeeServer {
         if (otaFile == null || command.getManufacturerCode() != otaFile.getManufacturerCode()
                 || command.getFileVersion() != otaFile.getFileVersion()
                 || command.getImageType() != otaFile.getImageType()) {
-            logger.debug("{} OTA Error: Request is inconsistent with OTA file.", device.getDeviceAddress());
-            sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
+            logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
+            cluster.sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
             return;
         }
 
         // Check that the offset is within bounds of the image data
         if (command.getFileOffset() > otaFile.getImageSize()) {
-            logger.debug("{} OTA Error: Requested offset is larger than file ({}>{})", device.getDeviceAddress(),
+            logger.debug("{} OTA Error: Requested offset is larger than file ({}>{})", cluster.getZigBeeAddress(),
                     command.getFileOffset(), otaFile.getImageSize());
-            sendDefaultResponse(ZclStatus.MALFORMED_COMMAND);
+            cluster.sendDefaultResponse(ZclStatus.MALFORMED_COMMAND);
             return;
         }
 
@@ -587,8 +492,8 @@ public class ZigBeeOtaServer implements ZigBeeServer {
         if (otaFile == null || command.getManufacturerCode() != otaFile.getManufacturerCode()
                 || command.getFileVersion() != otaFile.getFileVersion()
                 || command.getImageType() != otaFile.getImageType()) {
-            logger.debug("{} OTA Error: Request is inconsistent with OTA file.", device.getDeviceAddress());
-            sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
+            logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
+            cluster.sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
             return;
         }
 
@@ -598,14 +503,12 @@ public class ZigBeeOtaServer implements ZigBeeServer {
         }
     }
 
+    // public x() {
+    // cluster.ge
+    // }
+
     @Override
     public void commandReceived(final ZigBeeCommand command) {
-        // This gets called for all received commands
-        // Check if it's our address
-        if (command.getSourceAddress() != device.getDeviceAddress()) {
-            return;
-        }
-
         if (command instanceof QueryNextImageCommand) {
             handleQueryNextImage((QueryNextImageCommand) command);
             return;
@@ -624,10 +527,6 @@ public class ZigBeeOtaServer implements ZigBeeServer {
         if (command instanceof UpgradeEndCommand) {
             handleUpgradeEndRequest((UpgradeEndCommand) command);
             return;
-        }
-
-        if (command instanceof MatchDescriptorRequest) {
-
         }
     }
 

@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
@@ -64,16 +65,16 @@ public class ZigBeeEndpointDao {
         return inputClusterIds;
     }
 
-    public void setInputClusterIds(List<Integer> inputClusterIds) {
-        this.inputClusterIds.addAll(inputClusterIds);
+    public void setInputClusterIds(Collection<Integer> collection) {
+        this.inputClusterIds.addAll(collection);
     }
 
     public List<Integer> getOutputClusterIds() {
         return outputClusterIds;
     }
 
-    public void setOutputClusterIds(List<Integer> outputClusterIds) {
-        this.outputClusterIds.addAll(outputClusterIds);
+    public void setOutputClusterIds(Collection<Integer> collection) {
+        this.outputClusterIds.addAll(collection);
     }
 
     public static ZigBeeEndpointDao createFromZigBeeDevice(ZigBeeEndpoint endpoint) {

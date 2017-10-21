@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.identify;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Identify Query Command value object class.
@@ -32,7 +33,7 @@ public class IdentifyQueryCommand extends ZclCommand {
         genericCommand = false;
         clusterId = 3;
         commandId = 1;
-        commandDirection = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     @Override

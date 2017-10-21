@@ -91,7 +91,11 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementNetworkUpdateNotify;
 
 
 /**
+ * Defines the ZDO commands
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
+ *
+ * @author Chris Jackson
  */
 public enum ZdoCommandType {
     /**

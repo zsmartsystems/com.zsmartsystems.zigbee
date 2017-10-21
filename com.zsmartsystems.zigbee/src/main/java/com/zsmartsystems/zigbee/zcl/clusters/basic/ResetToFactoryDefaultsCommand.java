@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.basic;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Reset to Factory Defaults Command value object class.
@@ -25,7 +26,7 @@ public class ResetToFactoryDefaultsCommand extends ZclCommand {
         genericCommand = false;
         clusterId = 0;
         commandId = 0;
-        commandDirection = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     @Override

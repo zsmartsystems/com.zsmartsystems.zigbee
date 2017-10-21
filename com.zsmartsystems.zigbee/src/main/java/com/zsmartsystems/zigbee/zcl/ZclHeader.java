@@ -7,6 +7,7 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -80,7 +81,7 @@ public class ZclHeader {
      * command is being sent from the server side of a cluster to the client side of a cluster. If this value is set to
      * 0, the command is being sent from the client side of a cluster to the server side of a cluster.
      */
-    private boolean direction;
+    private ZclCommandDirection direction;
 
     /**
      * The disable default response sub-field is 1 bit in length. If it is set to 0, the Default response command will
@@ -146,7 +147,8 @@ public class ZclHeader {
         }
 
         disableDefaultResponse = (frameControl & MASK_DEFAULT_RESPONSE) != 0;
-        direction = (frameControl & MASK_DIRECTION) == 0;
+        direction = (frameControl & MASK_DIRECTION) == 0 ? ZclCommandDirection.CLIENT_TO_SERVER
+                : ZclCommandDirection.SERVER_TO_CLIENT;
         manufacturerSpecific = (frameControl & MASK_MANUFACTURER_SPECIFIC) != 0;
 
         // If manufacturerSpecific is set then get the manufacturer code
@@ -216,9 +218,9 @@ public class ZclHeader {
      * command is being sent from the server side of a cluster to the client side of a cluster. If this value is set to
      * 0, the command is being sent from the client side of a cluster to the server side of a cluster.
      *
-     * @return true if the command is sent from the server
+     * @return the {@link ZclCommandDirection}
      */
-    public boolean isDirectionServer() {
+    public ZclCommandDirection getDirection() {
         return direction;
     }
 
@@ -227,10 +229,10 @@ public class ZclHeader {
      * command is being sent from the server side of a cluster to the client side of a cluster. If this value is set to
      * 0, the command is being sent from the client side of a cluster to the server side of a cluster.
      *
-     * @param direction true if the command is sent from the server
+     * @param zclCommandDirection true if the command is sent from the server
      */
-    public void setDirectionServer(boolean direction) {
-        this.direction = direction;
+    public void setDirection(ZclCommandDirection zclCommandDirection) {
+        this.direction = zclCommandDirection;
     }
 
     /**
@@ -334,7 +336,7 @@ public class ZclHeader {
                 break;
         }
 
-        frameControl |= direction ? 0b00000000 : MASK_DIRECTION;
+        frameControl |= direction == ZclCommandDirection.SERVER_TO_CLIENT ? MASK_DIRECTION : 0b00000000;
         frameControl |= disableDefaultResponse ? MASK_DEFAULT_RESPONSE : 0b00000000;
 
         int[] zclFrame = new int[payload.length + 3];

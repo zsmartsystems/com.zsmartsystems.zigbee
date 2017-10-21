@@ -152,9 +152,6 @@ public class ZigBeeConsoleMain {
             }
         }
 
-        ZigBeeNetworkMeshMonitor meshMonitor = new ZigBeeNetworkMeshMonitor(networkManager);
-        meshMonitor.startup(45);
-
         if (!networkManager.startup(resetNetwork)) {
             System.out.println("ZigBee API starting up ... [FAIL]");
             return;

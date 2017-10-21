@@ -44,10 +44,10 @@ public class ZclCommandTypeTest {
     }
 
     @Test
-    public void isReceived() {
+    public void getDirection() {
         ZclCommandType cmd = ZclCommandType.ALARM_COMMAND;
 
-        assertEquals(false, cmd.isReceived());
+        assertEquals(ZclCommandDirection.SERVER_TO_CLIENT, cmd.getDirection());
     }
 
     @Test
@@ -65,12 +65,8 @@ public class ZclCommandTypeTest {
     }
 
     @Test
-    public void getRequest() {
-        assertEquals(ZclCommandType.ADD_GROUP_RESPONSE, ZclCommandType.getRequest(4, 0));
-    }
-
-    @Test
     public void getResponse() {
-        assertEquals(ZclCommandType.ADD_GROUP_COMMAND, ZclCommandType.getResponse(4, 0));
+        assertEquals(ZclCommandType.ADD_GROUP_COMMAND,
+                ZclCommandType.getCommandType(4, 0, ZclCommandDirection.CLIENT_TO_SERVER));
     }
 }

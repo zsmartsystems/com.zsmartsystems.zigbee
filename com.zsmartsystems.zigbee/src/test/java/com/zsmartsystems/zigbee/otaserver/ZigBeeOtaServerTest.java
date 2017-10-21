@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -23,6 +24,8 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
@@ -51,20 +54,32 @@ public class ZigBeeOtaServerTest implements ZigBeeOtaStatusCallback {
         ZigBeeEndpointAddress networkAddress = new ZigBeeEndpointAddress(1234, 56);
         ZigBeeNetworkManager mockedNetworkManager = Mockito.mock(ZigBeeNetworkManager.class);
         ZigBeeNode node = new ZigBeeNode(mockedNetworkManager);
-        ZigBeeDevice endpoint = new ZigBeeDevice(mockedNetworkManager);
+        node.setNetworkAddress(networkAddress.getAddress());
         node.setIeeeAddress(ieeeAddress);
         node.setNodeDescriptor(nodeDescriptor);
-        ZigBeeEndpoint device = new ZigBeeEndpoint(mockedNetworkManager);
-        device.setDeviceAddress(networkAddress);
-        device.setIeeeAddress(ieeeAddress);
+        ZigBeeEndpoint endpoint = new ZigBeeEndpoint(mockedNetworkManager, node, networkAddress.getEndpoint());
+        // device.setIeeeAddress(ieeeAddress);
+        List<Integer> outClusters = new ArrayList<Integer>();
+        outClusters.add(ZclOtaUpgradeCluster.CLUSTER_ID);
+        endpoint.setOutputClusterIds(outClusters);
         ZigBeeOtaStatusCallback mockedCallback = Mockito.mock(ZigBeeOtaStatusCallback.class);
         otaStatusCapture = new ArrayList<ZigBeeOtaServerStatus>();
 
-        Set<ZigBeeDevice> devices = new HashSet<ZigBeeDevice>();
-        devices.add(device);
+        Set<ZigBeeEndpoint> devices = new HashSet<ZigBeeEndpoint>();
+        devices.add(endpoint);
 
         Mockito.when(mockedNetworkManager.getNode((IeeeAddress) Matchers.anyObject())).thenReturn(node);
-        Mockito.when(mockedNetworkManager.getDevice((ZigBeeAddress) Matchers.anyObject())).thenReturn(device);
+        // Mockito.when(mockedNetworkManager.getDevice((ZigBeeAddress) Matchers.anyObject())).thenReturn(endpoint);
+        // Mockito.when(mockedNetworkManager.getNodeDevices((IeeeAddress) Matchers.anyObject())).thenReturn(devices);
+
+        // ZigBeeTransportTransmit mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
+        // ArgumentCaptor<ZigBeeApsFrame> mockedApsFrameListener = ArgumentCaptor.forClass(ZigBeeApsFrame.class);
+
+        // try {
+        // Mockito.doNothing().when(mockedTransport).sendCommand(mockedApsFrameListener.capture());
+        // } catch (ZigBeeException e) {
+        // e.printStackTrace();
+        // }
 
         try {
             Mockito.doAnswer(new Answer<Integer>() {
@@ -77,8 +92,18 @@ public class ZigBeeOtaServerTest implements ZigBeeOtaStatusCallback {
             e.printStackTrace();
         }
 
+        Mockito.doAnswer(new Answer<Future<CommandResult>>() {
+            @Override
+            public Future<CommandResult> answer(InvocationOnMock invocation) {
+                return null;
+            }
+        }).when(mockedNetworkManager).unicast(mockedCommandCaptor.capture(),
+                (CommandResponseMatcher) Matchers.anyObject());
+
+        ZclOtaUpgradeCluster cluster = new ZclOtaUpgradeCluster(mockedNetworkManager, endpoint);
+
         ZigBeeOtaServer server = new ZigBeeOtaServer();
-        assertTrue(server.serverStartup(mockedNetworkManager, node));
+        assertTrue(server.serverStartup(cluster));
         server.addListener(this);
 
         ZigBeeOtaFile otaFile = Mockito.mock(ZigBeeOtaFile.class);
@@ -94,7 +119,7 @@ public class ZigBeeOtaServerTest implements ZigBeeOtaStatusCallback {
         ZigBeeOtaServerStatus status = otaStatusCapture.get(0);
         assertEquals(ZigBeeOtaServerStatus.OTA_WAITING, status);
 
-        Command command = mockedCommandCaptor.getValue();
+        ZigBeeCommand command = mockedCommandCaptor.getValue();
 
         assertEquals(Integer.valueOf(0x19), command.getClusterId());
         assertTrue(command instanceof ImageNotifyCommand);

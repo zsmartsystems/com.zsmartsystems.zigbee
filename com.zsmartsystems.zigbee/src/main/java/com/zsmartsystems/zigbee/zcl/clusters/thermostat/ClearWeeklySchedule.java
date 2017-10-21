@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.thermostat;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Clear Weekly Schedule value object class.
@@ -25,7 +26,7 @@ public class ClearWeeklySchedule extends ZclCommand {
         genericCommand = false;
         clusterId = 513;
         commandId = 3;
-        commandDirection = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     @Override

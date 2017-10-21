@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.zcl;
 
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Base class for value object classes holding ZCL commands, extended from {@link ZigBeeCommand}.
@@ -34,7 +35,7 @@ public abstract class ZclCommand extends ZigBeeCommand {
      * If this command is to be sent <b>to</b> the server, this will return <i>true</i>.
      * If this command is to be sent <b>from</b> the server, this will return <i>false</i>.
      */
-    protected boolean commandDirection;
+    protected ZclCommandDirection commandDirection;
 
     /**
      * Sets the cluster ID for <i>generic</i> commands.
@@ -69,15 +70,20 @@ public abstract class ZclCommand extends ZigBeeCommand {
 
     /**
      * Gets the command direction for this command.
-     * <p>
-     * If this command is to be sent <b>to</b> the server, this will return <i>true</i>.
-     * If this command is to be sent <b>from</b> the server, this will return <i>false</i>.
      *
-     * 
-     * @return true if this is sent to the server, false if this is a response from the server.
+     * @return {@link ZclCommandDirection} with the command direction.
      */
-    public boolean getCommandDirection() {
+    public ZclCommandDirection getCommandDirection() {
         return commandDirection;
+    }
+
+    /**
+     * Sets the command direction for this command.
+     *
+     * @param commandDirection the {@link ZclCommandDirection}
+     */
+    public void setCommandDirection(ZclCommandDirection commandDirection) {
+        this.commandDirection = commandDirection;
     }
 
     @Override

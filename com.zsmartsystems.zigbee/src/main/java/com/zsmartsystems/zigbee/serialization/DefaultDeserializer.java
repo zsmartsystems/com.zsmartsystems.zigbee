@@ -213,10 +213,10 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
             case ZDO_STATUS:
                 value[0] = ZdoStatus.getStatus(payload[index++]);
                 break;
-          case ZIGBEE_DATA_TYPE:
+            case ZIGBEE_DATA_TYPE:
                 value[0] = ZclDataType.getType(payload[index++]);
                 break;
-          case BYTE_ARRAY:
+            case BYTE_ARRAY:
                 int cntB8 = Integer.valueOf((byte) payload[index++] & 0xFF);
                 byte[] arrayB8 = new byte[cntB8];
                 for (int arrayIndex = 0; arrayIndex < cntB8; arrayIndex++) {

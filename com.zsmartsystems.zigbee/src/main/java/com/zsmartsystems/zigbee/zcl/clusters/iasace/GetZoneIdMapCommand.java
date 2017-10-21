@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.iasace;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Get Zone ID Map Command value object class.
@@ -30,7 +31,7 @@ public class GetZoneIdMapCommand extends ZclCommand {
         genericCommand = false;
         clusterId = 1281;
         commandId = 5;
-        commandDirection = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     @Override

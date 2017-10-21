@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -620,11 +621,11 @@ public final class ZigBeeConsole {
          * Prints out clusters.
          *
          * @param device the device
-         * @param list the cluster IDs
+         * @param collection the cluster IDs
          * @param out the output print stream
          */
-        private void printClusters(final ZigBeeEndpoint device, final List<Integer> list, PrintStream out) {
-            for (int clusterId : list) {
+        private void printClusters(final ZigBeeEndpoint device, final Collection<Integer> collection, PrintStream out) {
+            for (int clusterId : collection) {
                 ZclCluster cluster = device.getCluster(clusterId);
                 if (cluster != null) {
                     print("                 : " + clusterId + " " + cluster.getClusterName(), out);
@@ -1450,7 +1451,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getSyntax() {
-            return "ota [NODE] [FILE]";
+            return "ota [ENDPOINT] [FILE]";
         }
 
         /**
@@ -1462,19 +1463,19 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeNode node = networkManager.getNode(Integer.parseInt(args[1]));
-            if (node == null) {
-                print("Node not found.", out);
+            final ZigBeeEndpoint endpoint = getDevice(zigbeeApi, args[1]);
+            if (endpoint == null) {
+                print("Endpoint not found.", out);
                 return false;
             }
 
             // Check if the OTA server is already set
-            ZigBeeOtaServer otaServer = (ZigBeeOtaServer) node.getServer(ZclOtaUpgradeCluster.CLUSTER_ID);
+            ZigBeeOtaServer otaServer = (ZigBeeOtaServer) endpoint.getServer(ZclOtaUpgradeCluster.CLUSTER_ID);
             if (otaServer == null) {
                 // Create and add the server
                 otaServer = new ZigBeeOtaServer();
 
-                node.addServer(otaServer);
+                endpoint.addServer(otaServer);
             }
 
             File file = new File(args[2]);
@@ -1529,14 +1530,34 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
-            if (device == null) {
-                print("Device not found.", out);
+            final ZigBeeEndpoint endpoint = getDevice(zigbeeApi, args[1]);
+            if (endpoint == null) {
+                print("Endpoint not found.", out);
                 return false;
             }
 
-            final CommandResult result = zigbeeApi.read(device.getDeviceAddress(), clusterId, attributeId).get();
+            ZclCluster cluster = endpoint.getInputCluster(clusterId);
+            if (cluster != null) {
+                print("Using input cluster", out);
+            } else {
+                cluster = endpoint.getOutputCluster(clusterId);
+                if (cluster != null) {
+                    print("Using output cluster", out);
+                } else {
+                    print("Cluster not found", out);
+                    return false;
+                }
 
+            }
+            ZclAttribute attribute = cluster.getAttribute(attributeId);
+            if (attribute == null) {
+                print("Attribute not found", out);
+                return false;
+            }
+
+            print("Reading " + cluster.getClusterName() + ", " + attribute.getName(), out);
+
+            final CommandResult result = cluster.read(attribute).get();
             if (result.isSuccess()) {
                 final ReadAttributesResponse response = result.getResponse();
 

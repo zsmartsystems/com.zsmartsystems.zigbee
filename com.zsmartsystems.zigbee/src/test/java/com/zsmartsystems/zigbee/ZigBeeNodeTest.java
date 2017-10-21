@@ -18,21 +18,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.CurrentPowerModeType;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.PowerLevelType;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.PowerSourceType;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.RoutingTable.DiscoveryState;
 
 public class ZigBeeNodeTest {
     @Test
     public void testAddDescriptors() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         node.setPowerDescriptor(null);
         assertEquals(null, node.getPowerDescriptor());
 
@@ -41,7 +42,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testSetIeeeAddress() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         node.setIeeeAddress(new IeeeAddress("17880100dc880b"));
         assertEquals(new IeeeAddress("17880100dc880b"), node.getIeeeAddress());
 
@@ -51,7 +52,7 @@ public class ZigBeeNodeTest {
     @Test
     public void testSetPowerDescriptor() {
         PowerDescriptor descriptor = new PowerDescriptor(1, 2, 4, 0xc);
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         node.setPowerDescriptor(descriptor);
         assertEquals(CurrentPowerModeType.RECEIVER_ON_PERIODICALLY, node.getPowerDescriptor().getCurrentPowerMode());
         assertEquals(PowerSourceType.DISPOSABLE_BATTERY, node.getPowerDescriptor().getCurrentPowerSource());
@@ -91,7 +92,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testNeighborTableUpdate() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         List<NeighborTable> neighbors;
 
         NeighborTable neighbor1 = getNeighborTable(12345, "123456789", 0);
@@ -125,7 +126,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testRoutingTableUpdate() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         List<RoutingTable> routes;
 
         RoutingTable route1 = new RoutingTable();
@@ -178,7 +179,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testDeviceTypes() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         assertFalse(node.isFullFuntionDevice());
         assertFalse(node.isReducedFuntionDevice());
         assertFalse(node.isPrimaryTrustCenter());
@@ -212,7 +213,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testLastUpdate() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         assertNull(node.getLastUpdateTime());
         node.setLastUpdateTime();
         assertNotNull(node.getLastUpdateTime());
@@ -220,7 +221,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testJoiningEnabled() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
 
         node.setJoining(true);
         assertTrue(node.isJoiningEnabled());
@@ -228,7 +229,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testAssociatedDevices() {
-        ZigBeeNode node = new ZigBeeNode(null);
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
 
         // Check list is empty to start
         assertNotNull(node.getAssociatedDevices());
@@ -292,17 +293,17 @@ public class ZigBeeNodeTest {
      * @Test
      *       public void testAddRemoveDevice() {
      *       ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
-     * 
+     *
      *       ZigBeeDevice device1 = new ZigBeeDevice(networkManager);
      *       device1.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
      *       networkManager.addDevice(device1);
      *       assertEquals(1, networkManager.getDevices().size());
-     * 
+     *
      *       ZigBeeDevice device2 = new ZigBeeDevice(networkManager);
      *       device2.setDeviceAddress(new ZigBeeDeviceAddress(6789, 0));
      *       networkManager.addDevice(device2);
      *       assertEquals(2, networkManager.getDevices().size());
-     * 
+     *
      *       device2 = new ZigBeeDevice(networkManager);
      *       device2.setDeviceAddress(new ZigBeeDeviceAddress(1234, 1));
      *       device2.setIeeeAddress(new IeeeAddress("1234567890ABCDEF"));
@@ -319,24 +320,24 @@ public class ZigBeeNodeTest {
      *       device2.setDeviceAddress(new ZigBeeDeviceAddress(1234, 4));
      *       device2.setIeeeAddress(new IeeeAddress("1234567890ABCDEF"));
      *       networkManager.addDevice(device2);
-     * 
+     *
      *       // We should now have 6 devices, 5 of then in node 1234, and 4 of them have IEEE address
      *       assertEquals(6, networkManager.getDevices().size());
      *       assertEquals(5, networkManager.getNodeDevices(1234).size());
      *       assertEquals(4, networkManager.getNodeDevices(new IeeeAddress("1234567890ABCDEF")).size());
-     * 
+     *
      *       device2 = networkManager.getDevice(new ZigBeeDeviceAddress(6789, 0));
      *       device2.setLabel("Device Label");
      *       networkManager.updateDevice(device2);
      *       assertEquals(6, networkManager.getDevices().size());
      *       assertEquals("Device Label", networkManager.getDevice(new ZigBeeDeviceAddress(6789, 0)).getLabel());
-     * 
+     *
      *       networkManager.removeDevice(new ZigBeeDeviceAddress(6789, 0));
      *       assertEquals(5, networkManager.getDevices().size());
-     * 
+     *
      *       assertNull(networkManager.getDevice(null));
      *       assertNull(networkManager.getDevice(new ZigBeeGroupAddress(1)));
-     * 
+     *
      *       networkManager.addNetworkDeviceListener(null);
      *       networkManager.removeNetworkDeviceListener(null);
      *       networkManager.removeNetworkDeviceListener(mockedDeviceListener);

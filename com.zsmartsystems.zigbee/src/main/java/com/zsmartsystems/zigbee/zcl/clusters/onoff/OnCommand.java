@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.onoff;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * On Command value object class.
@@ -27,7 +28,7 @@ public class OnCommand extends ZclCommand {
         genericCommand = false;
         clusterId = 6;
         commandId = 1;
-        commandDirection = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     @Override

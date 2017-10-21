@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.groups;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Remove All Groups Command value object class.
@@ -43,7 +44,7 @@ public class RemoveAllGroupsCommand extends ZclCommand {
         genericCommand = false;
         clusterId = 4;
         commandId = 4;
-        commandDirection = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     @Override
