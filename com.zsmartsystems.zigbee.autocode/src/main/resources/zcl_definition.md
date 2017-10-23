@@ -163,7 +163,7 @@ attributes command.
 |Command identifier         |Boolean                    |
 |Information                |N X Attribute information  |
 
-#### Read Attributes Structured Command [0x0e]boolean
+#### Read Attributes Structured Command [0x0e]
 
 The read attributes command is generated when a device wishes to determine the
 values of one or more attributes, or elements of attributes, located on another
@@ -211,10 +211,10 @@ optional and mandatory commands the cluster to which this command is sent can pr
 The Discover Commands Received Response is generated in response to a Discover Commands Received
 command. 
 
-|Field Name                   |Data Type                  |
-|-----------------------------|---------------------------|
-|Discovery complete           |Unsigned 8-bit integer     |
-|Command identifiers          |N X Unsigned 8-bit integer |
+|Field Name                   |Data Type                    |
+|-----------------------------|-----------------------------|
+|Discovery complete           |Unsigned 8-bit integer       |
+|Command identifiers          |X Unsigned 8-bit integer     |
 
 
 #### Discover Commands Generated [0x13]
@@ -232,10 +232,10 @@ commands that a cluster may generate on the device to which this command is dire
 The Discover Commands Generated Response is generated in response to a Discover Commands Generated
 command.
 
-|Field Name                   |Data Type                  |
-|-----------------------------|---------------------------|
-|Discovery complete           |Unsigned 8-bit integer     |
-|Command identifiers          |N X Unsigned 8-bit integer |
+|Field Name                   |Data Type                    |
+|-----------------------------|-----------------------------|
+|Discovery complete           |Unsigned 8-bit integer       |
+|Command identifiers          |X Unsigned 8-bit integer     |
 
 
 #### Discover Attributes Extended [0x15]

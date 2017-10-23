@@ -1729,7 +1729,7 @@ public final class ZigBeeConsole {
     }
 
     /**
-     * Reads an attribute from a device.
+     * Reads the list of supported commands in a specific cluster of a device.
      */
     private class CmdSupportedCommand implements ConsoleCommand {
         /**
@@ -1862,8 +1862,8 @@ public final class ZigBeeConsole {
                 final DiscoverAttributesResponse response = result.getResponse();
 
                 for (AttributeInformation info : response.getInformation()) {
-                    out.println("Cluster " + response.getClusterId() + ", Attribute=" + info.getAttributeIdentifier()
-                            + ",  Type=" + ZclDataType.getType(info.getAttributeDataType()));
+                    out.println("Cluster " + response.getClusterId() + ", Attribute=" + info.getIdentifier()
+                            + ",  Type=" + info.getDataType());
                 }
 
                 return true;

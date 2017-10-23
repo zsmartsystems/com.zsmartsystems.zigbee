@@ -130,6 +130,22 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 }
                 value[0] = arrayN8;
                 break;
+            case X_UNSIGNED_8_BIT_INTEGER:
+                int cntX8 = payload.length - index;
+                List<Integer> arrayX8 = new ArrayList<Integer>(cntX8);
+                for (int arrayIndex = 0; arrayIndex < cntX8; arrayIndex++) {
+                    arrayX8.add(Integer.valueOf(payload[index++]));
+                }
+                value[0] = arrayX8;
+                break;
+            case UNSIGNED_8_BIT_INTEGER_ARRAY:
+                int cnt8Array = payload.length - index;
+                int[] intarray8 = new int[cnt8Array];
+                for (int arrayIndex = 0; arrayIndex < cnt8Array; arrayIndex++) {
+                    intarray8[arrayIndex] = payload[index++];
+                }
+                value[0] = intarray8;
+                break;
             case N_X_WRITE_ATTRIBUTE_RECORD:
                 break;
             case N_X_WRITE_ATTRIBUTE_STATUS_RECORD:
@@ -190,6 +206,9 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 break;
             case ZDO_STATUS:
                 value[0] = ZdoStatus.getStatus(payload[index++]);
+                break;
+            case ZIGBEE_DATA_TYPE:
+                value[0] = ZclDataType.getType(payload[index++]);
                 break;
             default:
                 throw new IllegalArgumentException("No reader defined in " + ZigBeeDeserializer.class.getSimpleName()

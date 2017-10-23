@@ -49,6 +49,13 @@ public class DefaultDeserializerTest {
         testDeserialize(valIn, valOut, ZclDataType.EXTENDED_PANID);
     }
 
+    @Test
+    public void testDeserialize_ZIGBEE_DATA_TYPE() {
+        int[] valIn = { 33 };
+        ZclDataType valOut = ZclDataType.getType(valIn[0]);
+        testDeserialize(valIn, valOut, ZclDataType.ZIGBEE_DATA_TYPE);
+    }
+
     private void testDeserialize(int[] input, Object objectIn, ZclDataType type) {
         DefaultDeserializer deserializer = new DefaultDeserializer(input);
         Object objectOut = deserializer.readZigBeeType(type);

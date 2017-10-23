@@ -97,13 +97,13 @@ public class DiscoverCommandsReceivedResponse extends ZclCommand {
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(discoveryComplete, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(commandIdentifiers, ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(commandIdentifiers, ZclDataType.X_UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         discoveryComplete = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        commandIdentifiers = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        commandIdentifiers = (List<Integer>) deserializer.deserialize(ZclDataType.X_UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

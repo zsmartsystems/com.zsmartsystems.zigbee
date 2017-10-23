@@ -7,17 +7,14 @@
  */
 package com.zsmartsystems.zigbee.zcl.field;
 
-import java.util.Arrays;
-
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclListItemField;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Attribute Identifier field.
+ * Scene Extension Field.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
 public class ExtensionFieldSet implements ZclListItemField {
@@ -29,12 +26,12 @@ public class ExtensionFieldSet implements ZclListItemField {
     /**
      * The data length.
      */
-    private int length;
+    // private int length;
 
     /**
-     * The data.
+     * The extension data.
      */
-    private byte[] data;
+    private int[] data;
 
     /**
      * Gets cluster ID
@@ -59,7 +56,7 @@ public class ExtensionFieldSet implements ZclListItemField {
      *
      * @return the data
      */
-    public byte[] getData() {
+    public int[] getData() {
         return data;
     }
 
@@ -68,49 +65,32 @@ public class ExtensionFieldSet implements ZclListItemField {
      *
      * @param data the data
      */
-    public void setData(byte[] data) {
+    public void setData(int[] data) {
         this.data = data;
-    }
-
-    /**
-     * Gets data length.
-     *
-     * @return the data length
-     */
-    public int getLength() {
-        return length;
-    }
-
-    /**
-     * Sets data length.
-     *
-     * @param length the data length
-     */
-    public void setLength(int length) {
-        this.length = length;
     }
 
     @Override
     public void serialize(final ZigBeeSerializer serializer) {
         serializer.appendZigBeeType(clusterId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.appendZigBeeType(length, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        for (int i = 0; i < length; i++) {
-            serializer.appendZigBeeType(data[i], ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        }
+        serializer.appendZigBeeType(data, ZclDataType.UNSIGNED_8_BIT_INTEGER_ARRAY);
     }
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
         clusterId = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        length = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        data = new byte[length];
-        for (int i = 0; i < length; i++) {
-            data[i] = ((Number) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER)).byteValue();
-        }
+        data = (int[]) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER_ARRAY);
     }
 
     @Override
     public String toString() {
-        return "Extension Field Set: clusterId=" + clusterId + ", length=" + length + ", data=" + Arrays.toString(data);
+        StringBuilder builder = new StringBuilder(100);
+        builder.append("ExtensionFieldSet [clusterId=");
+        builder.append(clusterId);
+        builder.append(", data=");
+        for (int value : data) {
+            builder.append(String.format("%02X ", value));
+        }
+        builder.append(']');
+        return builder.toString();
     }
 }

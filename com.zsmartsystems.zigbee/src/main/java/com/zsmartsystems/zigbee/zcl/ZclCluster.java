@@ -31,7 +31,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesCommand;
-import com.zsmartsystems.zigbee.zcl.field.AttributeIdentifier;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
@@ -88,9 +87,7 @@ public abstract class ZclCluster {
         final ReadAttributesCommand command = new ReadAttributesCommand();
 
         command.setClusterId(clusterId);
-        final AttributeIdentifier attributeIdentifier = new AttributeIdentifier();
-        attributeIdentifier.setAttributeIdentifier(attribute.getId());
-        command.setIdentifiers(Collections.singletonList(attributeIdentifier));
+        command.setIdentifiers(Collections.singletonList(attribute.getId()));
         command.setDestinationAddress(zigbeeEndpoint.getDeviceAddress());
 
         return zigbeeManager.unicast(command, new ZclCustomResponseMatcher());
@@ -421,7 +418,7 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Remove an attribute listener to the cluster.
+     * Remove an attribute listener from the cluster.
      *
      * @param listener callback listener implementing {@link ZclAttributeListener} to remove
      */
@@ -429,6 +426,11 @@ public abstract class ZclCluster {
         attributeListeners.remove(listener);
     }
 
+    /**
+     * Notify attribute listeners of an updated {@link ZclAttribute}
+     *
+     * @param attribute the {@link ZclAttribute} to notify
+     */
     private void notifyAttributeListener(final ZclAttribute attribute) {
         for (final ZclAttributeListener listener : attributeListeners) {
             NotificationService.execute(new Runnable() {
