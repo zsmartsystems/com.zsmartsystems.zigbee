@@ -39,11 +39,15 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsGeneratedResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsReceivedResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupResponse;
+import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
@@ -100,6 +104,9 @@ public final class ZigBeeConsole {
         commands.put("groupadd", new GroupAddCommand());
         commands.put("groupremove", new GroupRemoveCommand());
         commands.put("grouplist", new GroupListCommand());
+
+        commands.put("attsupported", new AttSupportedCommand());
+        commands.put("cmdsupported", new CmdSupportedCommand());
 
         commands.put("membershipadd", new MembershipAddCommand());
         commands.put("membershipremove", new MembershipRemoveCommand());
@@ -1718,6 +1725,152 @@ public final class ZigBeeConsole {
                 return true;
             }
 
+        }
+    }
+
+    /**
+     * Reads the list of supported commands in a specific cluster of a device.
+     */
+    private class CmdSupportedCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Check what commands are supported.";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "cmdsupported [DEVICE] [CLUSTER]";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
+            if (args.length != 3) {
+                return false;
+            }
+
+            final int clusterId;
+            try {
+                clusterId = Integer.parseInt(args[2]);
+            } catch (final NumberFormatException e) {
+                return false;
+            }
+
+            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            if (device == null) {
+                print("Device not found.", out);
+                return false;
+            }
+
+            ZclCluster cluster = device.getCluster(clusterId);
+            if (cluster == null) {
+                print("Cluster not found.", out);
+                return false;
+            }
+
+            Future<CommandResult> future = cluster.discoverCommandsReceived();
+            CommandResult result = future.get();
+
+            if (result.isSuccess()) {
+                final DiscoverCommandsReceivedResponse response = result.getResponse();
+
+                for (Integer cmd : response.getCommandIdentifiers()) {
+                    out.println("Cluster " + response.getClusterId() + ", Command=" + cmd);
+                }
+            } else {
+                out.println("Error executing command: " + result.getMessage());
+            }
+
+            future = cluster.discoverCommandsGenerated();
+            result = future.get();
+
+            if (result.isSuccess()) {
+                final DiscoverCommandsGeneratedResponse response = result.getResponse();
+
+                for (Integer cmd : response.getCommandIdentifiers()) {
+                    out.println("Cluster " + response.getClusterId() + ", Command=" + cmd);
+                }
+
+            } else {
+                out.println("Error executing command: " + result.getMessage());
+            }
+
+            return true;
+        }
+    }
+
+    /**
+     * Reads the list of supported attributes from a device.
+     */
+    private class AttSupportedCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Check what attributes are supported.";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "attsupported [DEVICE] [CLUSTER]";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
+            if (args.length != 3) {
+                return false;
+            }
+
+            final int clusterId;
+            try {
+                clusterId = Integer.parseInt(args[2]);
+            } catch (final NumberFormatException e) {
+                return false;
+            }
+
+            final ZigBeeDevice device = getDevice(zigbeeApi, args[1]);
+            if (device == null) {
+                print("Device not found.", out);
+                return false;
+            }
+
+            ZclCluster cluster = device.getCluster(clusterId);
+            if (cluster == null) {
+                print("Cluster not found.", out);
+                return false;
+            }
+
+            final Future<CommandResult> future = cluster.discoverAttributes();
+            CommandResult result = future.get();
+
+            if (result.isSuccess()) {
+                final DiscoverAttributesResponse response = result.getResponse();
+
+                for (AttributeInformation info : response.getInformation()) {
+                    out.println("Cluster " + response.getClusterId() + ", Attribute=" + info.getIdentifier()
+                            + ",  Type=" + info.getDataType());
+                }
+
+                return true;
+            } else {
+                out.println("Error executing command: " + result.getMessage());
+                return true;
+            }
         }
     }
 

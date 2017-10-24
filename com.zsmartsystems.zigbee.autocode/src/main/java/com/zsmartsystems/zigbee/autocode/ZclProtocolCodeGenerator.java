@@ -311,6 +311,20 @@ public class ZclProtocolCodeGenerator {
         outputClassJavaDoc(out);
         out.println("public enum " + className + " {");
 
+        DataType newDataType = new DataType();
+
+        newDataType = new DataType();
+        newDataType.dataTypeName = "Unsigned 8 bit Integer Array";
+        newDataType.dataTypeType = "UNSIGNED_8_BIT_INTEGER_ARRAY";
+        newDataType.dataTypeClass = ZclDataType.getDataTypeMapping().get("UNSIGNED_8_BIT_INTEGER_ARRAY").dataClass;
+        dataTypes.add(newDataType);
+
+        newDataType = new DataType();
+        newDataType.dataTypeName = "ZigBee Data Type";
+        newDataType.dataTypeType = "ZIGBEE_DATA_TYPE";
+        newDataType.dataTypeClass = ZclDataType.getDataTypeMapping().get("ZIGBEE_DATA_TYPE").dataClass;
+        dataTypes.add(newDataType);
+
         // final LinkedList<DataType> dataTypes = new LinkedList<DataType>(context.dataTypes.values());
         for (final DataType dataType : dataTypes) {
             DataTypeMap zclDataType = ZclDataType.getDataTypeMapping().get(dataType.dataTypeType);
@@ -823,6 +837,7 @@ public class ZclProtocolCodeGenerator {
                             case "Object":
                             case "Long":
                             case "String":
+                            case "int[]":
                                 continue;
                             case "IeeeAddress":
                                 out.println("import " + packageRootPrefix + "." + typeName + ";");
@@ -1269,6 +1284,7 @@ public class ZclProtocolCodeGenerator {
                             case "Object":
                             case "Long":
                             case "String":
+                            case "int[]":
                                 continue;
                             case "IeeeAddress":
                                 imports.add(packageRootPrefix + "." + typeName);

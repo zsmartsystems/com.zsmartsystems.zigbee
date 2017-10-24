@@ -13,7 +13,6 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 import java.util.List;
-import com.zsmartsystems.zigbee.zcl.field.AttributeIdentifier;
 
 /**
  * Read Attributes Command value object class.
@@ -31,7 +30,7 @@ public class ReadAttributesCommand extends ZclCommand {
     /**
      * Identifiers command message field.
      */
-    private List<AttributeIdentifier> identifiers;
+    private List<Integer> identifiers;
 
     /**
      * Default constructor.
@@ -60,7 +59,7 @@ public class ReadAttributesCommand extends ZclCommand {
      *
      * @return the Identifiers
      */
-    public List<AttributeIdentifier> getIdentifiers() {
+    public List<Integer> getIdentifiers() {
         return identifiers;
     }
 
@@ -69,7 +68,7 @@ public class ReadAttributesCommand extends ZclCommand {
      *
      * @param identifiers the Identifiers
      */
-    public void setIdentifiers(final List<AttributeIdentifier> identifiers) {
+    public void setIdentifiers(final List<Integer> identifiers) {
         this.identifiers = identifiers;
     }
 
@@ -80,7 +79,7 @@ public class ReadAttributesCommand extends ZclCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        identifiers = (List<AttributeIdentifier>) deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_IDENTIFIER);
+        identifiers = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_IDENTIFIER);
     }
 
     @Override

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNetworkMeshMonitor;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
@@ -150,6 +151,9 @@ public class ZigBeeConsoleMain {
                 networkManager.setZigBeeNetworkKey(new ZigBeeKey(networkKey));
             }
         }
+
+        ZigBeeNetworkMeshMonitor meshMonitor = new ZigBeeNetworkMeshMonitor(networkManager);
+        meshMonitor.startup(45);
 
         if (!networkManager.startup(resetNetwork)) {
             System.out.println("ZigBee API starting up ... [FAIL]");

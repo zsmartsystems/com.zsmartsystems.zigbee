@@ -15,35 +15,35 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Attribute Information field.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
 public class AttributeInformation implements ZclListItemField {
     /**
-     * The attribute identifier.
+     * The ZigBee attribute data type.
      */
-    private int attributeIdentifier;
+    private ZclDataType dataType;
+
     /**
-     * The attribute data type.
+     * The ZigBee attribute identifier number within the cluster.
      */
-    private int attributeDataType;
+    private int identifier;
 
     /**
      * Gets attribute data type.
      *
-     * @return the attribute data type
+     * @return the attribute {@link ZclDataType}
      */
-    public int getAttributeDataType() {
-        return attributeDataType;
+    public ZclDataType getDataType() {
+        return dataType;
     }
 
     /**
      * Sets attribute data type.
      *
-     * @param attributeDataType the attribute data type
+     * @param dataType the attribute data type
      */
-    public void setAttributeDataType(int attributeDataType) {
-        this.attributeDataType = attributeDataType;
+    public void setDataType(ZclDataType dataType) {
+        this.dataType = dataType;
     }
 
     /**
@@ -51,34 +51,33 @@ public class AttributeInformation implements ZclListItemField {
      *
      * @return the attribute identifier
      */
-    public int getAttributeIdentifier() {
-        return attributeIdentifier;
+    public int getIdentifier() {
+        return identifier;
     }
 
     /**
      * Sets attribute identifier
      *
-     * @param attributeIdentifier the attribute
+     * @param identifier the attribute
      */
-    public void setAttributeIdentifier(int attributeIdentifier) {
-        this.attributeIdentifier = attributeIdentifier;
+    public void setIdentifier(int identifier) {
+        this.identifier = identifier;
     }
 
     @Override
     public void serialize(final ZigBeeSerializer serializer) {
-        serializer.appendZigBeeType(attributeIdentifier, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.appendZigBeeType(attributeDataType, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.appendZigBeeType(identifier, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        serializer.appendZigBeeType(dataType, ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        attributeDataType = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        identifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        dataType = (ZclDataType) deserializer.readZigBeeType(ZclDataType.ZIGBEE_DATA_TYPE);
     }
 
     @Override
     public String toString() {
-        return "Attribute Information: attributeDataType=" + attributeDataType + ", attributeIdentifier="
-                + attributeIdentifier;
+        return "Attribute Information [dataType=" + dataType + ", identifier=" + identifier + "]";
     }
 }

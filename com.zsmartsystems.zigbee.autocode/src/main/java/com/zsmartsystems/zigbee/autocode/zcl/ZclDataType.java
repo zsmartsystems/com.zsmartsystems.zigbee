@@ -55,8 +55,10 @@ public class ZclDataType {
         dataTypeMapping.put("N_X_EXTENSION_FIELD_SET", new DataTypeMap("List<ExtensionFieldSet>", 0, 0, false));
         dataTypeMapping.put("N_X_NEIGHBORS_INFORMATION", new DataTypeMap("List<NeighborInformation>", 0, 0, false));
         dataTypeMapping.put("N_X_UNSIGNED_16_BIT_INTEGER", new DataTypeMap("List<Integer>", 0, 0, false));
+        dataTypeMapping.put("UNSIGNED_8_BIT_INTEGER_ARRAY", new DataTypeMap("int[]", 0, 0, false));
+        dataTypeMapping.put("X_UNSIGNED_8_BIT_INTEGER", new DataTypeMap("List<Integer>", 0, 0, false));
         dataTypeMapping.put("N_X_UNSIGNED_8_BIT_INTEGER", new DataTypeMap("List<Integer>", 0, 0, false));
-        dataTypeMapping.put("N_X_ATTRIBUTE_IDENTIFIER", new DataTypeMap("List<AttributeIdentifier>", 0, 0, false));
+        dataTypeMapping.put("N_X_ATTRIBUTE_IDENTIFIER", new DataTypeMap("List<Integer>", 0, 0, false));
         dataTypeMapping.put("N_X_READ_ATTRIBUTE_STATUS_RECORD",
                 new DataTypeMap("List<ReadAttributeStatusRecord>", 0, 0, false));
         dataTypeMapping.put("N_X_WRITE_ATTRIBUTE_RECORD", new DataTypeMap("List<WriteAttributeRecord>", 0, 0, false));
@@ -89,6 +91,7 @@ public class ZclDataType {
         dataTypeMapping.put("UTCTIME", new DataTypeMap("Calendar", 0xe2, 4, true, 0xffffffff));
         dataTypeMapping.put("ZDO_STATUS", new DataTypeMap("ZdoStatus", 0, 0, false));
         dataTypeMapping.put("ZCL_STATUS", new DataTypeMap("ZclStatus", 0, 0, false));
+        dataTypeMapping.put("ZIGBEE_DATA_TYPE", new DataTypeMap("ZclDataType", 0, 0, false));
         dataTypeMapping.put("EXTENDED_PANID", new DataTypeMap("ExtendedPanId", 0, 0, false));
         dataTypeMapping.put("BINDING_TABLE", new DataTypeMap("BindingTable", 0, 0, false));
         dataTypeMapping.put("N_X_BINDING_TABLE", new DataTypeMap("List<BindingTable>", 0, 0, false));

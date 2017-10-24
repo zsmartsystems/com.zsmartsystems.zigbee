@@ -9,7 +9,9 @@ package com.zsmartsystems.zigbee.serialization;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -61,6 +63,18 @@ public class DefaultSerializerTest {
         ExtendedPanId valIn = new ExtendedPanId("1234567890123456");
         int[] valOut = { 0x56, 0x34, 0x12, 0x90, 0x78, 0x56, 0x34, 0x12 };
         testSerializedData(valIn, valOut, ZclDataType.EXTENDED_PANID);
+    }
+
+    @Test
+    public void testSerialize_X_UNSIGNED_8_BIT_INTEGER() {
+        List<Integer> valIn = new ArrayList<Integer>();
+        valIn.add(1);
+        valIn.add(2);
+        valIn.add(3);
+        valIn.add(4);
+        valIn.add(5);
+        int[] valOut = new int[] { 1, 2, 3, 4, 5 };
+        testSerializedData(valIn, valOut, ZclDataType.X_UNSIGNED_8_BIT_INTEGER);
     }
 
     private void testSerializedData(Object object, int[] output, ZclDataType type) {

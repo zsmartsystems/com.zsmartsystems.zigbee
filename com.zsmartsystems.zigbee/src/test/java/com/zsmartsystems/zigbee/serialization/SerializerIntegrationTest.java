@@ -41,8 +41,20 @@ public class SerializerIntegrationTest {
 
     @Test
     public void testDeserialize_N_X_UNSIGNED_8_BIT_INTEGER() {
-        List<Integer> valIn = Arrays.asList(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 });
+        List<Integer> valIn = Arrays.asList(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 192 });
         testSerializer(valIn, ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Test
+    public void testDeserialize_UNSIGNED_8_BIT_INTEGER_ARRAY() {
+        int[] valIn = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 192 };
+        testSerializer(valIn, ZclDataType.UNSIGNED_8_BIT_INTEGER_ARRAY);
+    }
+
+    @Test
+    public void testDeserialize_X_UNSIGNED_8_BIT_INTEGER() {
+        List<Integer> valIn = Arrays.asList(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 192 });
+        testSerializer(valIn, ZclDataType.X_UNSIGNED_8_BIT_INTEGER);
     }
 
     @Test
@@ -157,6 +169,12 @@ public class SerializerIntegrationTest {
     }
 
     @Test
+    public void testSerialize_ZIGBEE_DATA_TYPE() {
+        ZclDataType valIn = ZclDataType.BITMAP_16_BIT;
+        testSerializer(valIn, ZclDataType.ZIGBEE_DATA_TYPE);
+    }
+
+    @Test
     public void testSerialize_CHARACTER_STRING() {
         String valIn = "Hello World";
         testSerializer(valIn, ZclDataType.CHARACTER_STRING);
@@ -170,8 +188,8 @@ public class SerializerIntegrationTest {
         DefaultDeserializer deserializer = new DefaultDeserializer(buffer);
         assertEquals(size, deserializer.getSize());
         Object objectOut = deserializer.readZigBeeType(type);
-        if (objectIn instanceof Integer[]) {
-            assertTrue(Arrays.equals((Integer[]) objectIn, (Integer[]) objectOut));
+        if (objectIn instanceof int[]) {
+            assertTrue(Arrays.equals((int[]) objectIn, (int[]) objectOut));
         } else {
             assertEquals(objectIn, objectOut);
         }
