@@ -27,7 +27,9 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisp
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisplayProductIdentificationCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisLeaveNetworkCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkJoinedEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLeftEvent;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLostEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisReceiveMessageEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendMulticastCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendUnicastCommand;
@@ -325,6 +327,8 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
             return ZigBeeInitializeResponse.NOT_JOINED;
         }
 
+        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
+
         return ZigBeeInitializeResponse.JOINED;
     }
 
@@ -335,6 +339,7 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
         // If frameHandler is null then the serial port didn't initialise
         if (frameHandler == null) {
             logger.error("Initialising Telegesis Dongle but low level handler is not initialised.");
+            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
             return false;
         }
 
@@ -347,17 +352,22 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
         // Check if the network is now up
         TelegesisDisplayNetworkInformationCommand networkInfo = new TelegesisDisplayNetworkInformationCommand();
         if (frameHandler.sendRequest(networkInfo) == null || networkInfo.getStatus() != TelegesisStatusCode.SUCCESS) {
+            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
             return false;
         }
         if (networkInfo.getDevice() != TelegesisDeviceType.COO) {
             logger.debug("Telegesis dongle is not the coordinator.");
+            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
             return false;
         }
+
+        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
         return true;
     }
 
     @Override
     public void shutdown() {
+        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
         serialPort.close();
     }
 
@@ -487,8 +497,14 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
         }
 
         // Handle link changes and notify framework or just reset link with dongle?
-        // zigbeeTransportReceive.setNetworkState(linkState ? ZigBeeTransportState.ONLINE :
-        // ZigBeeTransportState.OFFLINE);
+        if (event instanceof TelegesisNetworkLeftEvent | event instanceof TelegesisNetworkLostEvent) {
+            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+            return;
+        }
+        if (event instanceof TelegesisNetworkJoinedEvent) {
+            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
+            return;
+        }
 
         logger.debug("Unhandled Telegesis Frame: {}", event.toString());
     }
