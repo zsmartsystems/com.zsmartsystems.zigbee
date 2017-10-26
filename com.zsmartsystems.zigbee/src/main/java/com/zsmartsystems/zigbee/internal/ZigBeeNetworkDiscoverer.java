@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandListener;
 import com.zsmartsystems.zigbee.CommandResult;
-import com.zsmartsystems.zigbee.DeviceStatusListener;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeAnnounceListener;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
@@ -54,7 +54,7 @@ import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
  *
  * @author Chris Jackson
  */
-public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusListener {
+public class ZigBeeNetworkDiscoverer implements CommandListener, ZigBeeAnnounceListener {
     /**
      * The logger.
      */
@@ -126,7 +126,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusLis
      */
     public void startup() {
         networkManager.addCommandListener(this);
-        networkManager.addDeviceStatusListener(this);
+        networkManager.addAnnounceListener(this);
 
         // Start discovery from root node.
         startNodeDiscovery(0);
@@ -137,7 +137,7 @@ public class ZigBeeNetworkDiscoverer implements CommandListener, DeviceStatusLis
      */
     public void shutdown() {
         networkManager.removeCommandListener(this);
-        networkManager.removeDeviceStatusListener(this);
+        networkManager.removeAnnounceListener(this);
     }
 
     @Override

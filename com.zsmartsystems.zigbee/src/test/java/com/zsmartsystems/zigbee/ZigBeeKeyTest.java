@@ -67,6 +67,12 @@ public class ZigBeeKeyTest {
     }
 
     @Test
+    public void testRandom() {
+        ZigBeeKey key = ZigBeeKey.createRandom();
+        assertTrue(key.isValid());
+    }
+
+    @Test
     public void testHash() {
         ZigBeeKey key1 = new ZigBeeKey("11223344556677889900AABBCCDDEEFF");
         ZigBeeKey key2 = new ZigBeeKey("11223344556677889900AABBCCDDEEFF");

@@ -102,8 +102,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * This can be called from the transport layer, or internally by methods watching
      * the network state.
      */
-    private List<DeviceStatusListener> announceListeners = Collections
-            .unmodifiableList(new ArrayList<DeviceStatusListener>());
+    private List<ZigBeeAnnounceListener> announceListeners = Collections
+            .unmodifiableList(new ArrayList<ZigBeeAnnounceListener>());
 
     /**
      * {@link AtomicInteger} used to generate transaction sequence numbers
@@ -605,32 +605,32 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Add a {@link DeviceStatusListener} that will be notified whenever a new device is detected
+     * Add a {@link ZigBeeAnnounceListener} that will be notified whenever a new device is detected
      * on the network.
      *
-     * @param statusListener the new {@link DeviceStatusListener} to add
+     * @param statusListener the new {@link ZigBeeAnnounceListener} to add
      */
-    public void addDeviceStatusListener(DeviceStatusListener statusListener) {
-        final List<DeviceStatusListener> modifiedStateListeners = new ArrayList<DeviceStatusListener>(
+    public void addAnnounceListener(ZigBeeAnnounceListener statusListener) {
+        final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<ZigBeeAnnounceListener>(
                 announceListeners);
         modifiedStateListeners.add(statusListener);
         announceListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
 
     /**
-     * Remove a {@link DeviceStatusListener}
+     * Remove a {@link ZigBeeAnnounceListener}
      *
-     * @param statusListener the new {@link DeviceStatusListener} to remove
+     * @param statusListener the new {@link ZigBeeAnnounceListener} to remove
      */
-    public void removeDeviceStatusListener(DeviceStatusListener statusListener) {
-        final List<DeviceStatusListener> modifiedStateListeners = new ArrayList<DeviceStatusListener>(
+    public void removeAnnounceListener(ZigBeeAnnounceListener statusListener) {
+        final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<ZigBeeAnnounceListener>(
                 announceListeners);
         modifiedStateListeners.remove(statusListener);
         announceListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
 
     @Override
-    public void deviceStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
+    public void nodeStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
             final IeeeAddress ieeeAddress) {
         // This method should only be called when the transport layer has authoritative information about
         // a devices status. Therefore, we should update the network manager view of a device as appropriate.
@@ -659,7 +659,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         // Notify the listeners
         synchronized (this) {
-            for (final DeviceStatusListener announceListener : announceListeners) {
+            for (final ZigBeeAnnounceListener announceListener : announceListeners) {
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -702,10 +702,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Sends {@link ZclCommand} command to {@link ZigBeeAddress}.
      *
-     * @param destination
-     *            the destination
-     * @param command
-     *            the command
+     * @param destination the destination
+     * @param command the {@link ZclCommand}
      * @return the command result future
      */
     public Future<CommandResult> send(ZigBeeAddress destination, ZclCommand command) {

@@ -14,7 +14,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.CommandTest;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 
@@ -31,7 +31,7 @@ public class ReadAttributesCommandTest extends CommandTest {
 
         ReadAttributesCommand command = new ReadAttributesCommand();
         command.setClusterId(0);
-        command.setDestinationAddress(new ZigBeeDeviceAddress(57337, 3));
+        command.setDestinationAddress(new ZigBeeEndpointAddress(57337, 3));
         command.setIdentifiers(Arrays.asList(4));
         command.setTransactionId(1);
         DefaultSerializer serializer = new DefaultSerializer();

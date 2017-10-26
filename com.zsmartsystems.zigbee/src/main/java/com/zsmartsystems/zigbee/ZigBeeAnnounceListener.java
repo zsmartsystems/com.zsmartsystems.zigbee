@@ -15,7 +15,7 @@ package com.zsmartsystems.zigbee;
  *
  * @author Chris Jackson
  */
-public interface DeviceStatusListener {
+public interface ZigBeeAnnounceListener {
 
     /**
      * Called when a new device is heard on the network.

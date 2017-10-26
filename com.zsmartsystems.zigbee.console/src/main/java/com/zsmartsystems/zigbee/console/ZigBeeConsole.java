@@ -1481,6 +1481,11 @@ public final class ZigBeeConsole {
             if (result.isSuccess()) {
                 final ReadAttributesResponse response = result.getResponse();
 
+                if (response.getRecords().size() == 0) {
+                    out.println("No records returned");
+                    return true;
+                }
+
                 final int statusCode = response.getRecords().get(0).getStatus();
                 if (statusCode == 0) {
                     out.println("Cluster " + response.getClusterId() + ", Attribute "

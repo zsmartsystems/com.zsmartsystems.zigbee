@@ -32,8 +32,8 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingResponse;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
-import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable.NeighborTableJoining;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 
 /**
  * {@link ZigBeeNetworkMeshMonitor} is used to walk through the network getting information about the mesh network.
@@ -207,7 +207,7 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
 
                     // Notify that this is a new node so we can try and discover it
                     // TODO: Remove - devices should only join through the TC
-                    networkManager.deviceStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN, nodeNetworkAddress, null);
+                    networkManager.nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN, nodeNetworkAddress, null);
 
                     return;
                 }
