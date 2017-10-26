@@ -171,11 +171,10 @@ public class TelegesisFrameHandler {
         logger.trace("TELEGESIS: Get Packet");
         while (!closeHandler) {
             int val = inputStream.read();
-            logger.trace("TELEGESIS RX: {}", String.format("%02X %c", val, val));
-
             if (val == -1) {
                 continue;
             }
+            logger.trace("TELEGESIS RX: {}", String.format("%02X %c", val, val));
 
             switch (rxState) {
                 case WAITING:
