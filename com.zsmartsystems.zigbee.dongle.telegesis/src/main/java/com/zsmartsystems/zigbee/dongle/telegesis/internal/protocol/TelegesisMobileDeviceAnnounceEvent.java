@@ -92,7 +92,7 @@ public class TelegesisMobileDeviceAnnounceEvent extends TelegesisFrame implement
 
             // Deserialize field "rssi" [optional]
             pushDeserializer();
-            rssi = deserializeUInt8();
+            rssi = deserializeSInt8();
             if (rssi == null) {
                 popDeserializer();
             } else {

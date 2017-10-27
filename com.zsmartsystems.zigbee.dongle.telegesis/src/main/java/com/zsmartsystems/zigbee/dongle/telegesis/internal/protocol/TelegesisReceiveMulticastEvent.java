@@ -98,7 +98,7 @@ public class TelegesisReceiveMulticastEvent extends TelegesisFrame implements Te
 
             // Deserialize field "rssi" [optional]
             pushDeserializer();
-            rssi = deserializeUInt8();
+            rssi = deserializeSInt8();
             if (rssi == null) {
                 popDeserializer();
             } else {

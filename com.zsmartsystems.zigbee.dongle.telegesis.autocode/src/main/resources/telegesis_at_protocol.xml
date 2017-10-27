@@ -96,7 +96,7 @@
 				<description></description>
 			</parameter>
 			<parameter>
-				<data_type>UInt8</data_type>
+				<data_type>SInt8</data_type>
 				<name>rssi</name>
 				<description></description>
 				<optional>true</optional>
@@ -128,7 +128,7 @@
 				<description></description>
 			</parameter>
 			<parameter>
-				<data_type>UInt8</data_type>
+				<data_type>SInt8</data_type>
 				<name>rssi</name>
 				<description></description>
 				<optional>true</optional>
@@ -160,7 +160,7 @@
 				<description></description>
 			</parameter>
 			<parameter>
-				<data_type>UInt8</data_type>
+				<data_type>SInt8</data_type>
 				<name>rssi</name>
 				<description></description>
 				<optional>true</optional>
@@ -191,7 +191,7 @@
 				<description></description>
 			</parameter>
 			<parameter>
-				<data_type>UInt8</data_type>
+				<data_type>SInt8</data_type>
 				<name>rssi</name>
 				<description></description>
 				<optional>true</optional>
@@ -344,7 +344,7 @@
 				<description></description>
 			</parameter>
 			<parameter>
-				<data_type>UInt8</data_type>
+				<data_type>SInt8</data_type>
 				<name>rssi</name>
 				<description></description>
 				<optional>true</optional>
@@ -374,7 +374,7 @@
 				<description></description>
 			</parameter>
 			<parameter>
-				<data_type>UInt8</data_type>
+				<data_type>SInt8</data_type>
 				<name>rssi</name>
 				<description></description>
 				<optional>true</optional>
@@ -404,7 +404,7 @@
 				<description></description>
 			</parameter>
 			<parameter>
-				<data_type>UInt8</data_type>
+				<data_type>SInt8</data_type>
 				<name>rssi</name>
 				<description></description>
 				<optional>true</optional>
@@ -434,7 +434,7 @@
 				<description></description>
 			</parameter>
 			<parameter>
-				<data_type>UInt8</data_type>
+				<data_type>SInt8</data_type>
 				<name>rssi</name>
 				<description></description>
 				<optional>true</optional>
@@ -987,7 +987,7 @@
 				<description></description>
 			</parameter>
 			<parameter>
-				<data_type>UInt8</data_type>
+				<data_type>SInt8</data_type>
 				<name>rssi</name>
 				<description></description>
 				<optional>true</optional>

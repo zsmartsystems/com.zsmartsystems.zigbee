@@ -1048,7 +1048,7 @@ public class CommandGenerator extends ClassGenerator {
                 return "int[]";
             case "Dec8":
             case "Int8":
-            case "UInt8":
+            case "SInt8":
             case "Int16":
             case "Integer":
                 return "Integer";
