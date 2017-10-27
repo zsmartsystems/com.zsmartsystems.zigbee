@@ -40,6 +40,12 @@ public class SerializerIntegrationTest {
     }
 
     @Test
+    public void testDeserialize_N_X_ATTRIBUTE_IDENTIFIER() {
+        List<Integer> valIn = Arrays.asList(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 192 });
+        testSerializer(valIn, ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Test
     public void testDeserialize_N_X_UNSIGNED_8_BIT_INTEGER() {
         List<Integer> valIn = Arrays.asList(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 192 });
         testSerializer(valIn, ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
