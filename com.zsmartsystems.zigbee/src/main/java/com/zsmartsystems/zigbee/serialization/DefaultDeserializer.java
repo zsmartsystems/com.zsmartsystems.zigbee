@@ -93,8 +93,6 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 index += 8;
                 value[0] = new IeeeAddress(address);
                 break;
-            case N_X_ATTRIBUTE_IDENTIFIER:
-                break;
             case N_X_ATTRIBUTE_INFORMATION:
                 break;
             case N_X_ATTRIBUTE_RECORD:
@@ -137,6 +135,14 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                     arrayX8.add(Integer.valueOf(payload[index++]));
                 }
                 value[0] = arrayX8;
+                break;
+            case N_X_ATTRIBUTE_IDENTIFIER:
+                int cntX16 = (payload.length - index) / 2;
+                List<Integer> arrayX16 = new ArrayList<Integer>(cntX16);
+                for (int arrayIndex = 0; arrayIndex < cntX16; arrayIndex++) {
+                    arrayX16.add(Integer.valueOf(payload[index++]));
+                }
+                value[0] = arrayX16;
                 break;
             case UNSIGNED_8_BIT_INTEGER_ARRAY:
                 int cnt8Array = payload.length - index;
