@@ -21,11 +21,6 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 public class ZigBeeDongleTelegesisTest {
 
     @Test
-    public void test() {
-        ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
-    }
-
-    @Test
     public void setZigBeeExtendedPanId() {
         ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
 

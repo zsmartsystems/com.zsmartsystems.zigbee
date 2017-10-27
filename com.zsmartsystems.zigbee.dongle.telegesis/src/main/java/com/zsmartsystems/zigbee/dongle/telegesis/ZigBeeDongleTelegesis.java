@@ -361,6 +361,10 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
             return false;
         }
 
+        radioChannel = networkInfo.getChannel();
+        panId = networkInfo.getPanId();
+        extendedPanId = networkInfo.getEpanId();
+
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
         return true;
     }
