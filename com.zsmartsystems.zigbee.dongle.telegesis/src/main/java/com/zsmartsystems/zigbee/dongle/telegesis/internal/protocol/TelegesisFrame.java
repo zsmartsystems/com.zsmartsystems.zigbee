@@ -190,20 +190,26 @@ public class TelegesisFrame {
     }
 
     /**
-     * Deserializes an 8 bit unsigned integer in hexadecimal
+     * Deserializes an 8 bit signed integer in hexadecimal
      *
      * @return the deserialized value
      */
-    protected Integer deserializeUInt8() {
+    protected Integer deserializeSInt8() {
         if (buffer.length < position + 2) {
             return null;
         }
 
+        boolean negate = false;
         StringBuilder builder = new StringBuilder();
+        if ((char) buffer[position] == '-') {
+            negate = true;
+            position++;
+        }
         builder.append((char) buffer[position++]);
         builder.append((char) buffer[position++]);
         try {
-            return Integer.parseInt(builder.toString(), 16) - 256;
+            Integer value = Integer.parseInt(builder.toString(), 16);
+            return negate ? (value * -1) : value;
         } catch (NumberFormatException e) {
             // Eat the exception
             return null;

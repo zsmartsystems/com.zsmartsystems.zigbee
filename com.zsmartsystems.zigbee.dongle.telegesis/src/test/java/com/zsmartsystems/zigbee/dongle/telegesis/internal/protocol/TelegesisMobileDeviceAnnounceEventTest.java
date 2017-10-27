@@ -34,11 +34,11 @@ public class TelegesisMobileDeviceAnnounceEventTest extends TelegesisFrameBaseTe
     @Test
     public void testExtended() {
         TelegesisMobileDeviceAnnounceEvent event = new TelegesisMobileDeviceAnnounceEvent();
-        event.deserialize(stringToIntArray("MED:1234567890ABCDEF,9876,44,AA"));
+        event.deserialize(stringToIntArray("MED:1234567890ABCDEF,9876,-44,AA"));
         System.out.println(event);
         assertEquals(new IeeeAddress("1234567890ABCDEF"), event.getIeeeAddress());
         assertEquals(Integer.valueOf(0x9876), event.getNetworkAddress());
-        assertEquals(Integer.valueOf(-188), event.getRssi());
+        assertEquals(Integer.valueOf(-68), event.getRssi());
         assertEquals(Integer.valueOf(0xAA), event.getLqi());
     }
 }

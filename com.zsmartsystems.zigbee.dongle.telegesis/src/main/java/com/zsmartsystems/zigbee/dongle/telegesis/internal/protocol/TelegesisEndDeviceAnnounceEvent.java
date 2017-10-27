@@ -92,7 +92,7 @@ public class TelegesisEndDeviceAnnounceEvent extends TelegesisFrame implements T
 
             // Deserialize field "rssi" [optional]
             pushDeserializer();
-            rssi = deserializeUInt8();
+            rssi = deserializeSInt8();
             if (rssi == null) {
                 popDeserializer();
             } else {

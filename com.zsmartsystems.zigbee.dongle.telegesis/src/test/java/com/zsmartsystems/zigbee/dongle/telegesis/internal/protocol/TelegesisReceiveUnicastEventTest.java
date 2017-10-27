@@ -38,7 +38,7 @@ public class TelegesisReceiveUnicastEventTest extends TelegesisFrameBaseTest {
         System.out.println(event);
         assertEquals(new IeeeAddress("000D6F000005A666"), event.getRemoteAddress());
         assertTrue(Arrays.equals(stringToIntArray("test"), event.getMessageData()));
-        assertEquals(Integer.valueOf(-96), event.getRssi());
+        assertEquals(Integer.valueOf(160), event.getRssi());
         assertEquals(Integer.valueOf(69), event.getLqi());
     }
 
@@ -58,7 +58,7 @@ public class TelegesisReceiveUnicastEventTest extends TelegesisFrameBaseTest {
         System.out.println(event);
         assertEquals(null, event.getRemoteAddress());
         assertTrue(Arrays.equals(stringToIntArray("test"), event.getMessageData()));
-        assertEquals(Integer.valueOf(-96), event.getRssi());
+        assertEquals(Integer.valueOf(160), event.getRssi());
         assertEquals(Integer.valueOf(69), event.getLqi());
     }
 }

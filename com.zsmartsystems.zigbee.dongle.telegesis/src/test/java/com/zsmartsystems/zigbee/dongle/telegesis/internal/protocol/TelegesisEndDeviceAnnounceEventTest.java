@@ -38,7 +38,7 @@ public class TelegesisEndDeviceAnnounceEventTest extends TelegesisFrameBaseTest 
         System.out.println(event);
         assertEquals(new IeeeAddress("1234567890ABCDEF"), event.getIeeeAddress());
         assertEquals(Integer.valueOf(0x9876), event.getNetworkAddress());
-        assertEquals(Integer.valueOf(-188), event.getRssi());
+        assertEquals(Integer.valueOf(68), event.getRssi());
         assertEquals(Integer.valueOf(0xAA), event.getLqi());
     }
 }
