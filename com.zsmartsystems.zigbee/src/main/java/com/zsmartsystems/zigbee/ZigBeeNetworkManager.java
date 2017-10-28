@@ -435,6 +435,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             // apsHeader.setSourceEndpoint(sourceEndpoint);
 
             apsFrame.setProfile(0);
+            apsFrame.setSourceEndpoint(0);
+            apsFrame.setDestinationEndpoint(0);
             command.serialize(fieldSerializer);
 
             // Serialise the ZCL header and add the payload
@@ -446,8 +448,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             // The ZCL packet is serialised here.
             ZclCommand zclCommand = (ZclCommand) command;
 
-            // Source endpoint is (currently) set by the dongle since it registers the clusters into an endpoint
-            // apsHeader.setSourceEndpoint(sourceEndpoint);
+            apsFrame.setSourceEndpoint(1);
 
             // TODO set the profile properly
             apsFrame.setProfile(0x104);
