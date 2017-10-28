@@ -32,6 +32,7 @@ import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceState;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrame;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrameRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrameResponse;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeQuerySendDataRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadReceivedDataRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.transaction.ConBeeTransaction;
 
@@ -160,7 +161,7 @@ public class ConBeeFrameHandler {
                 while (!close) {
                     try {
                         int val = inputStream.read();
-                        // logger.debug("CONBEE RX: " + String.format("[% 2d] %02X", inputCount, val));
+                        logger.debug("CONBEE RX: " + String.format("[% 2d] %02X", inputCount, val));
                         if (val == SLIP_ESC) {
                             escaped = true;
                         } else if (val == SLIP_END) {
@@ -233,7 +234,13 @@ public class ConBeeFrameHandler {
         if (deviceState.isDataIndication()) {
             // There is data available to be read
             ConBeeReadReceivedDataRequest readRequest = new ConBeeReadReceivedDataRequest();
+            readRequest.setSequence(callbackSequence.getAndIncrement());
             outputFrame(readRequest);
+        } else if (deviceState.isDataConfirm()) {
+            // Check the state
+            ConBeeQuerySendDataRequest queryRequest = new ConBeeQuerySendDataRequest();
+            queryRequest.setSequence(callbackSequence.getAndIncrement());
+            outputFrame(queryRequest);
         }
     }
 
@@ -268,14 +275,14 @@ public class ConBeeFrameHandler {
 
     // Synchronize this method to ensure a packet gets sent as a block
     private synchronized void outputFrame(ConBeeFrameRequest frame) {
+        StringBuilder result = new StringBuilder();
         // Send the data
         try {
             logger.debug("CONBEE TX: {}", frame);
             outputStream.write(SLIP_END);
 
             for (int val : frame.getOutputBuffer()) {
-                // result.append(" ");
-                // result.append(String.format("%02X", val));
+                result.append(String.format(" %02X", val));
                 // logger.debug("CONBEE TX: {}", String.format("%02X", val));
                 switch (val) {
                     case SLIP_END:
@@ -293,6 +300,8 @@ public class ConBeeFrameHandler {
                         break;
                 }
             }
+
+            logger.debug("CONBEE TX:{}", result.toString());
 
             outputStream.write(SLIP_END);
 
