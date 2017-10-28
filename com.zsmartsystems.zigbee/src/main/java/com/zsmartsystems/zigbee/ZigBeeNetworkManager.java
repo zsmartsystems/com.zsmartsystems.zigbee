@@ -140,9 +140,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private final Set<CommandExecution> commandExecutions = new HashSet<CommandExecution>();
 
     /**
-     * The command listeners.
+     * The command notifier.
      */
-    private List<CommandListener> commandListeners = new ArrayList<CommandListener>();
+    private final ZigBeeCommandNotifier commandNotifier = new ZigBeeCommandNotifier();
 
     /**
      * The listeners of the ZigBee network.
@@ -474,16 +474,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     @Override
     public void addCommandListener(CommandListener commandListener) {
-        final List<CommandListener> modifiedCommandListeners = new ArrayList<CommandListener>(commandListeners);
-        modifiedCommandListeners.add(commandListener);
-        commandListeners = Collections.unmodifiableList(modifiedCommandListeners);
+        commandNotifier.addCommandListener(commandListener);
     }
 
     @Override
     public void removeCommandListener(CommandListener commandListener) {
-        final List<CommandListener> modifiedCommandListeners = new ArrayList<CommandListener>(commandListeners);
-        modifiedCommandListeners.remove(commandListener);
-        commandListeners = Collections.unmodifiableList(modifiedCommandListeners);
+        commandNotifier.removeCommandListener(commandListener);
     }
 
     @Override
@@ -527,7 +523,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         logger.debug("RX CMD: {}", command);
 
         // Notify the listeners
-        notifyCommandListeners(command);
+        commandNotifier.notifyCommandListeners(command);
     }
 
     private ZigBeeCommand receiveZdoCommand(final ZclFieldDeserializer fieldDeserializer,
@@ -589,20 +585,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setTransactionId(zclHeader.getSequenceNumber());
 
         return command;
-    }
-
-    private void notifyCommandListeners(final ZigBeeCommand command) {
-        synchronized (this) {
-            // Notify the listeners
-            for (final CommandListener commandListener : commandListeners) {
-                NotificationService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        commandListener.commandReceived(command);
-                    }
-                });
-            }
-        }
     }
 
     /**
