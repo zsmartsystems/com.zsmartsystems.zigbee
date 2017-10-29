@@ -335,6 +335,11 @@ public class ZigBeeOtaFile {
         return imageType;
     }
 
+    // TODO: Remove! For testing only!!!
+    public void setImageType(int imageType) {
+        this.imageType = imageType;
+    }
+
     /**
      * @return the fileVersion
      */
@@ -449,7 +454,9 @@ public class ZigBeeOtaFile {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("ZigBeeOtaFile [manufacturerCode=");
+        builder.append("ZigBeeOtaFile [headerVersion=");
+        builder.append(headerVersion);
+        builder.append(", manufacturerCode=");
         builder.append(manufacturerCode);
         builder.append(", imageType=");
         builder.append(String.format("%04X", imageType));

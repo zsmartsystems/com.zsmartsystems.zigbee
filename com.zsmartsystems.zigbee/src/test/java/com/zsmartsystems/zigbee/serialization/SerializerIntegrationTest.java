@@ -17,6 +17,8 @@ import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 
@@ -31,6 +33,18 @@ public class SerializerIntegrationTest {
     public void testDeserialize_ZDO_STATUS() {
         ZdoStatus valIn = ZdoStatus.NO_DESCRIPTOR;
         testSerializer(valIn, ZclDataType.ZDO_STATUS);
+    }
+
+    @Test
+    public void testDeserialize_ZCL_STATUS() {
+        ZclStatus valIn = ZclStatus.CALIBRATION_ERROR;
+        testSerializer(valIn, ZclDataType.ZCL_STATUS);
+    }
+
+    @Test
+    public void testDeserialize_BYTE_ARRAY() {
+        ByteArray valIn = new ByteArray(new byte[] { 1, 2, 3, 4, 5 });
+        testSerializer(valIn, ZclDataType.BYTE_ARRAY);
     }
 
     @Test
@@ -139,57 +153,51 @@ public class SerializerIntegrationTest {
     }
 
     @Test
-    public void testSerialize_SIGNED_16_BIT_INTEGER() {
+    public void testDeserialize_SIGNED_16_BIT_INTEGER() {
         int valIn = -23456;
         testSerializer(valIn, ZclDataType.SIGNED_16_BIT_INTEGER);
     }
 
     @Test
-    public void testSerialize_UNSIGNED_16_BIT_INTEGER() {
+    public void testDeserialize_UNSIGNED_16_BIT_INTEGER() {
         int valIn = 0x9971;
         testSerializer(valIn, ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Test
-    public void testSerialize_SIGNED_32_BIT_INTEGER() {
+    public void testDeserialize_SIGNED_32_BIT_INTEGER() {
         int valIn = -2345;
         testSerializer(valIn, ZclDataType.SIGNED_32_BIT_INTEGER);
     }
 
     @Test
-    public void testSerialize_UNSIGNED_32_BIT_INTEGER() {
+    public void testDeserialize_UNSIGNED_32_BIT_INTEGER() {
         int valIn = 0xE3970456;
         testSerializer(valIn, ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Test
-    public void testSerialize_ENDPOINT() {
+    public void testDeserialize_ENDPOINT() {
         int valIn = 0x34;
         testSerializer(valIn, ZclDataType.ENDPOINT);
     }
 
     @Test
-    public void testSerialize_CLUSTERID() {
+    public void testDeserialize_CLUSTERID() {
         int valIn = 0x1234;
         testSerializer(valIn, ZclDataType.CLUSTERID);
     }
 
     @Test
-    public void testSerialize_ZIGBEE_DATA_TYPE() {
+    public void testDeserialize_ZIGBEE_DATA_TYPE() {
         ZclDataType valIn = ZclDataType.BITMAP_16_BIT;
         testSerializer(valIn, ZclDataType.ZIGBEE_DATA_TYPE);
     }
 
     @Test
-    public void testSerialize_CHARACTER_STRING() {
+    public void testDeserialize_CHARACTER_STRING() {
         String valIn = "Hello World";
         testSerializer(valIn, ZclDataType.CHARACTER_STRING);
-    }
-
-    @Test
-    public void testSerialize_BYTE_ARRAY() {
-        byte[] valIn = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
-        testSerializer(valIn, ZclDataType.BYTE_ARRAY);
     }
 
     private void testSerializer(Object objectIn, ZclDataType type) {

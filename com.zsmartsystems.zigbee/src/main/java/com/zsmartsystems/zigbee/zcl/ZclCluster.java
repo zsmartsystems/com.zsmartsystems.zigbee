@@ -389,10 +389,12 @@ public abstract class ZclCluster {
     /**
      * Sends a default response to the client
      *
+     * @param commandIdentifier the command identifier to which this is a response
      * @param status the {@link ZclStatus} to send in the response
      */
-    public void sendDefaultResponse(ZclStatus status) {
+    public void sendDefaultResponse(Integer commandIdentifier, ZclStatus status) {
         DefaultResponse defaultResponse = new DefaultResponse();
+        defaultResponse.setCommandIdentifier(commandIdentifier);
         defaultResponse.setDestinationAddress(zigbeeEndpoint.getDeviceAddress());
         defaultResponse.setClusterId(ZclOtaUpgradeCluster.CLUSTER_ID);
         defaultResponse.setStatusCode(status);

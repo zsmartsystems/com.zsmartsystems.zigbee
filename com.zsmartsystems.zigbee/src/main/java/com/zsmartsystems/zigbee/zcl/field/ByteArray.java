@@ -9,17 +9,12 @@ package com.zsmartsystems.zigbee.zcl.field;
 
 import java.util.Arrays;
 
-import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
-import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclListItemField;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-
 /**
  * Byte Array field.
  *
  * @author Chris Jackson
  */
-public class ByteArray implements ZclListItemField {
+public class ByteArray {
     /**
      * The base byte array.
      */
@@ -60,16 +55,6 @@ public class ByteArray implements ZclListItemField {
      */
     public void set(byte[] value) {
         this.value = value;
-    }
-
-    @Override
-    public void serialize(final ZigBeeSerializer serializer) {
-        serializer.appendZigBeeType(value, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-    }
-
-    @Override
-    public void deserialize(final ZigBeeDeserializer deserializer) {
-        value = (byte[]) deserializer.readZigBeeType(ZclDataType.BYTE_ARRAY);
     }
 
     @Override

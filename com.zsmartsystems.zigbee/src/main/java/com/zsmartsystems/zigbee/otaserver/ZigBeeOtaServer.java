@@ -152,6 +152,18 @@ public class ZigBeeOtaServer implements ZclServer {
     private ScheduledFuture<?> scheduledPageTask;
 
     /**
+     * Field control value of 0x01 (bit 0 set) means that the client’s IEEE address is included in the payload. This
+     * indicates that the client is requesting a device specific file such as security credential, log or configuration;
+     * hence, the need to include the device’s IEEE address in the image request command.
+     */
+    private final int IMAGE_BLOCK_FIELD_IEEE_ADDRESS = 0x01;
+
+    /**
+     * Specifies that the minimum block period field is present
+     */
+    private final int IMAGE_BLOCK_FIELD_MINIMUM_BLOCK_PERIOD = 0x02;
+
+    /**
      * A list of listeners to receive status callbacks
      */
     private List<ZigBeeOtaStatusCallback> statusListeners = Collections
@@ -386,12 +398,13 @@ public class ZigBeeOtaServer implements ZclServer {
      */
     private void handleQueryNextImage(QueryNextImageCommand command) {
         // Check that the file attributes are consistent with the file we have
-        if (otaFile == null || command.getManufacturerCode() != otaFile.getManufacturerCode()
-                || command.getImageType() != otaFile.getImageType()) {
-            logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
-            return;
-        }
+        // if (otaFile == null || command.getManufacturerCode() != otaFile.getManufacturerCode()
+        // || command.getImageType() != otaFile.getImageType()) {
+        // logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
+        // cluster.sendDefaultResponse(command.getCommandId(), ZclStatus.NO_IMAGE_AVAILABLE);
+        // return;
+        // }
+        otaFile.setImageType(command.getImageType());
 
         // If the request contains a hardware version, and the OTA file also has the hardware restriction
         // then perform a check
@@ -399,7 +412,7 @@ public class ZigBeeOtaServer implements ZclServer {
                 && otaFile.getMaximumHardware() != null) {
             if (command.getHardwareVersion() < otaFile.getMinimumHardware()
                     || command.getHardwareVersion() > otaFile.getMaximumHardware()) {
-                cluster.sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
+                cluster.sendDefaultResponse(command.getCommandId(), ZclStatus.NO_IMAGE_AVAILABLE);
                 return;
             }
         }
@@ -419,18 +432,18 @@ public class ZigBeeOtaServer implements ZclServer {
      */
     private void handleImagePageRequest(ImagePageCommand command) {
         // No current support for device specific requests
-        if (command.getFieldControl() != 0) {
+        if ((command.getFieldControl() & IMAGE_BLOCK_FIELD_IEEE_ADDRESS) != 0) {
             logger.debug("{} OTA Error: No file is set.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(ZclStatus.UNSUP_CLUSTER_COMMAND);
+            cluster.sendDefaultResponse(command.getCommandId(), ZclStatus.UNSUP_CLUSTER_COMMAND);
             return;
         }
 
         // Check that the file attributes are consistent with the file we have
-        if (otaFile == null || command.getManufacturerCode() != otaFile.getManufacturerCode()
-                || command.getFileVersion() != otaFile.getFileVersion()
-                || command.getImageType() != otaFile.getImageType()) {
+        if (otaFile == null || !command.getManufacturerCode().equals(otaFile.getManufacturerCode())
+                || !command.getFileVersion().equals(otaFile.getFileVersion())
+                || !command.getImageType().equals(otaFile.getImageType())) {
             logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
+            cluster.sendDefaultResponse(command.getCommandId(), ZclStatus.NO_IMAGE_AVAILABLE);
             return;
         }
 
@@ -438,7 +451,7 @@ public class ZigBeeOtaServer implements ZclServer {
         if (command.getFileOffset() > otaFile.getImageSize()) {
             logger.debug("{} OTA Error: Requested offset is larger than file ({}>{})", cluster.getZigBeeAddress(),
                     command.getFileOffset(), otaFile.getImageSize());
-            cluster.sendDefaultResponse(ZclStatus.MALFORMED_COMMAND);
+            cluster.sendDefaultResponse(command.getCommandId(), ZclStatus.MALFORMED_COMMAND);
             return;
         }
 
@@ -454,18 +467,18 @@ public class ZigBeeOtaServer implements ZclServer {
      */
     private void handleImageBlockRequest(ImageBlockCommand command) {
         // No current support for device specific requests
-        if (command.getFieldControl() != 0) {
+        if ((command.getFieldControl() & IMAGE_BLOCK_FIELD_IEEE_ADDRESS) != 0) {
             logger.debug("{} OTA Error: No file is set.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(ZclStatus.UNSUP_CLUSTER_COMMAND);
+            cluster.sendDefaultResponse(command.getCommandId(), ZclStatus.UNSUP_CLUSTER_COMMAND);
             return;
         }
 
         // Check that the file attributes are consistent with the file we have
-        if (otaFile == null || command.getManufacturerCode() != otaFile.getManufacturerCode()
-                || command.getFileVersion() != otaFile.getFileVersion()
-                || command.getImageType() != otaFile.getImageType()) {
+        if (otaFile == null || !command.getManufacturerCode().equals(otaFile.getManufacturerCode())
+                || !command.getFileVersion().equals(otaFile.getFileVersion())
+                || !command.getImageType().equals(otaFile.getImageType())) {
             logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
+            cluster.sendDefaultResponse(command.getCommandId(), ZclStatus.NO_IMAGE_AVAILABLE);
             return;
         }
 
@@ -473,7 +486,7 @@ public class ZigBeeOtaServer implements ZclServer {
         if (command.getFileOffset() > otaFile.getImageSize()) {
             logger.debug("{} OTA Error: Requested offset is larger than file ({}>{})", cluster.getZigBeeAddress(),
                     command.getFileOffset(), otaFile.getImageSize());
-            cluster.sendDefaultResponse(ZclStatus.MALFORMED_COMMAND);
+            cluster.sendDefaultResponse(command.getCommandId(), ZclStatus.MALFORMED_COMMAND);
             return;
         }
 
@@ -489,11 +502,11 @@ public class ZigBeeOtaServer implements ZclServer {
      */
     private void handleUpgradeEndRequest(UpgradeEndCommand command) {
         // Check that the file attributes are consistent with the file we have
-        if (otaFile == null || command.getManufacturerCode() != otaFile.getManufacturerCode()
-                || command.getFileVersion() != otaFile.getFileVersion()
-                || command.getImageType() != otaFile.getImageType()) {
+        if (otaFile == null || !command.getManufacturerCode().equals(otaFile.getManufacturerCode())
+                || !command.getFileVersion().equals(otaFile.getFileVersion())
+                || !command.getImageType().equals(otaFile.getImageType())) {
             logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(ZclStatus.NO_IMAGE_AVAILABLE);
+            cluster.sendDefaultResponse(command.getCommandId(), ZclStatus.NO_IMAGE_AVAILABLE);
             return;
         }
 
@@ -502,10 +515,6 @@ public class ZigBeeOtaServer implements ZclServer {
             completeUpgrade();
         }
     }
-
-    // public x() {
-    // cluster.ge
-    // }
 
     @Override
     public void commandReceived(final ZigBeeCommand command) {

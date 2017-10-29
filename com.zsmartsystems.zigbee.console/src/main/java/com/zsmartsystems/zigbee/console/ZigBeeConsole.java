@@ -1777,10 +1777,13 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            ZclCluster cluster = device.getCluster(clusterId);
+            ZclCluster cluster = device.getInputCluster(clusterId);
             if (cluster == null) {
-                print("Cluster not found.", out);
-                return false;
+                cluster = device.getOutputCluster(clusterId);
+                if (cluster == null) {
+                    print("Cluster not found.", out);
+                    return false;
+                }
             }
 
             Future<CommandResult> future = cluster.discoverCommandsReceived();
@@ -1856,10 +1859,13 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            ZclCluster cluster = device.getCluster(clusterId);
+            ZclCluster cluster = device.getInputCluster(clusterId);
             if (cluster == null) {
-                print("Cluster not found.", out);
-                return false;
+                cluster = device.getOutputCluster(clusterId);
+                if (cluster == null) {
+                    print("Cluster not found.", out);
+                    return false;
+                }
             }
 
             final Future<CommandResult> future = cluster.discoverAttributes();
@@ -1869,8 +1875,13 @@ public final class ZigBeeConsole {
                 final DiscoverAttributesResponse response = result.getResponse();
 
                 for (AttributeInformation info : response.getInformation()) {
+                    ZclAttribute attribute = cluster.getAttribute(info.getIdentifier());
+                    String name = "unknown";
+                    if (attribute != null) {
+                        name = attribute.getName();
+                    }
                     out.println("Cluster " + response.getClusterId() + ", Attribute=" + info.getIdentifier()
-                            + ",  Type=" + info.getDataType());
+                            + ",  Type=" + info.getDataType() + ", " + name);
                 }
 
                 return true;
