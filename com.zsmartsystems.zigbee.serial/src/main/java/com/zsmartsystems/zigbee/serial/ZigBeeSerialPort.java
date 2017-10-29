@@ -82,6 +82,11 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
 
     @Override
     public boolean open() {
+        return open(baudRate);
+    }
+
+    @Override
+    public boolean open(int baudRate) {
         try {
             openSerialPort(portName, baudRate);
 

@@ -7,6 +7,8 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis;
 
+import java.io.File;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,9 +19,11 @@ import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisEventListener;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFirmwareUpdateHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFrameHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBecomeNetworkManagerCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBecomeTrustCentreCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBootloadCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCreatePanCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceType;
@@ -43,6 +47,9 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetP
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetTrustCentreLinkKeyCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisStatusCode;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
@@ -53,7 +60,8 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
  * @author Chris Jackson
  *
  */
-public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, TelegesisEventListener {
+public class ZigBeeDongleTelegesis
+        implements ZigBeeTransportTransmit, ZigBeeTransportFirmwareUpdate, TelegesisEventListener {
     /**
      * The {@link Logger}.
      */
@@ -68,6 +76,11 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
      * The Telegesis protocol handler used to send and receive packets
      */
     private TelegesisFrameHandler frameHandler;
+
+    /**
+     * The Telegesis bootload handler
+     */
+    private TelegesisFirmwareUpdateHandler bootloadHandler;
 
     /**
      * The dongle password
@@ -271,6 +284,8 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
     @Override
     public ZigBeeInitializeResponse initialize() {
         logger.debug("Telegesis dongle initialize.");
+
+        bootloadHandler = null;
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
@@ -577,6 +592,28 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
      */
     public void setTelegesisPassword(String telegesisPassword) {
         this.telegesisPassword = telegesisPassword;
+    }
+
+    @Override
+    public boolean updateFirmware(final File firmwareFile, final ZigBeeTransportFirmwareCallback callback) {
+        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);
+
+        TelegesisBootloadCommand bootloadCommand = new TelegesisBootloadCommand();
+        if (frameHandler.sendRequest(bootloadCommand) == null) {
+            logger.debug("Error setting Telegesis into BOOTLOAD mode");
+            callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
+            return false;
+        }
+
+        // Stop the handler and close the serial port
+        frameHandler.close();
+        frameHandler = null;
+        serialPort.close();
+
+        bootloadHandler = new TelegesisFirmwareUpdateHandler(firmwareFile, serialPort, callback);
+
+        return true;
     }
 
 }

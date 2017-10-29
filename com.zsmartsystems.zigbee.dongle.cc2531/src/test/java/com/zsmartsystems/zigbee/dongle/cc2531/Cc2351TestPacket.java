@@ -93,5 +93,10 @@ public class Cc2351TestPacket {
                 return -1;
             }
         }
+
+        @Override
+        public boolean open(int baudRate) {
+            return false;
+        }
     }
 }

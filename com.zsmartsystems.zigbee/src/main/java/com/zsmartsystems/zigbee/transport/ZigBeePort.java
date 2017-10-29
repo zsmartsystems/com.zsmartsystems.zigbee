@@ -24,6 +24,17 @@ public interface ZigBeePort {
     boolean open();
 
     /**
+     * Open the port with the specified baud rate.
+     * <p>
+     * This method allows the transport to override the baud rate if required - for example
+     * when entering a bootloader that may operate at a different speed to the coordinator.
+     *
+     * @param baudRate the speed to use when opening the port
+     * @return true if port was opened successfully.
+     */
+    boolean open(int baudRate);
+
+    /**
      * Close the port. Closing the port should abort any read and write operations to allow a clean closure of the port.
      */
     void close();
