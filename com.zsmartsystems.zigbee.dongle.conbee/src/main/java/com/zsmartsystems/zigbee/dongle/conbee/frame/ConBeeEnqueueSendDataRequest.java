@@ -32,7 +32,7 @@ public class ConBeeEnqueueSendDataRequest extends ConBeeFrameRequest {
     public int[] getOutputBuffer() {
         super.getOutputBuffer();
 
-        int payloadLen = adsuData.length + 11; // Should this be 12?????
+        int payloadLen = adsuData.length + 12; // Should this be 12?????
 
         // Account for the address size
         payloadLen += destinationAddressMode == ConBeeAddressMode.IEEE ? 8 : 2;
@@ -68,7 +68,7 @@ public class ConBeeEnqueueSendDataRequest extends ConBeeFrameRequest {
         serializeUInt16(clusterId);
         serializeUInt8(sourceEndpoint);
 
-        serializeUInt8(adsuData.length);
+        serializeUInt16(adsuData.length);
         serializeUInt8Array(adsuData);
 
         serializeUInt8(txOptions);

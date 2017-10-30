@@ -10,9 +10,6 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
 import java.util.Arrays;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
-import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 
 /**
  *
@@ -21,11 +18,11 @@ import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
  */
 public class ConBeeReadReceivedDataResponse extends ConBeeFrameResponse {
     private ConBeeAddressMode destinationAddressMode;
-    private ZigBeeAddress destinationAddress;
+    private int destinationNetworkAddress;
     private IeeeAddress destinationIeeeAddress;
     private int destinationEndpoint;
     private ConBeeAddressMode sourceAddressMode;
-    private ZigBeeAddress sourceAddress;
+    private int sourceNetworkAddress;
     private IeeeAddress sourceIeeeAddress;
     private int sourceEndpoint;
     private int profileId;
@@ -43,16 +40,21 @@ public class ConBeeReadReceivedDataResponse extends ConBeeFrameResponse {
         }
         sequence = deserializeUInt8();
         status = deserializeStatus();
-        deserializeUInt16();
+        deserializeUInt16(); // Frame length
+        int plLength = deserializeUInt16(); // Payload length
         state = deserializeDeviceState();
+
+        if (plLength == 1) {
+            return;
+        }
 
         destinationAddressMode = deserializeAddressMode();
         switch (destinationAddressMode) {
             case GROUP:
-                destinationAddress = new ZigBeeGroupAddress(deserializeUInt16());
+                destinationNetworkAddress = deserializeUInt16();
                 break;
             case NWK:
-                destinationAddress = new ZigBeeDeviceAddress(deserializeUInt16());
+                destinationNetworkAddress = deserializeUInt16();
                 break;
             case IEEE:
                 destinationIeeeAddress = new IeeeAddress(Arrays.copyOfRange(buffer, length, length + 8));
@@ -61,35 +63,36 @@ public class ConBeeReadReceivedDataResponse extends ConBeeFrameResponse {
                 break;
         }
         destinationEndpoint = deserializeUInt8();
-        if (destinationAddressMode == ConBeeAddressMode.NWK) {
-            ((ZigBeeDeviceAddress) destinationAddress).setEndpoint(destinationEndpoint);
-        }
+        // if (destinationAddressMode == ConBeeAddressMode.NWK) {
+        // ((ZigBeeDeviceAddress) destinationAddress).setEndpoint(destinationEndpoint);
+        // }
 
         sourceAddressMode = deserializeAddressMode();
         switch (sourceAddressMode) {
             case GROUP:
-                sourceAddress = new ZigBeeGroupAddress(deserializeUInt16());
+                sourceNetworkAddress = deserializeUInt16();
                 break;
             case NWK:
-                sourceAddress = new ZigBeeDeviceAddress(deserializeUInt16());
+                sourceNetworkAddress = deserializeUInt16();
                 break;
             case IEEE:
-                sourceIeeeAddress = new IeeeAddress(Arrays.copyOfRange(buffer, length, length + 8));
+                sourceIeeeAddress = deserializeIeeeAddress();
                 break;
             default:
                 break;
         }
         sourceEndpoint = deserializeUInt8();
-        if (sourceAddressMode == ConBeeAddressMode.NWK) {
-            ((ZigBeeDeviceAddress) sourceAddress).setEndpoint(sourceEndpoint);
-        }
+        // if (sourceAddressMode == ConBeeAddressMode.NWK) {
+        // ((ZigBeeDeviceAddress) sourceAddress).setEndpoint(sourceEndpoint);
+        // }
 
         profileId = deserializeUInt16();
         clusterId = deserializeUInt16();
 
         adsuLength = deserializeUInt16();
 
-        adsuData = Arrays.copyOfRange(buffer, length, adsuLength);
+        adsuData = Arrays.copyOfRange(buffer, length, length + adsuLength);
+        length += adsuLength;
 
         deserializeUInt8(); // Reserved
         deserializeUInt8(); // Reserved
@@ -114,8 +117,8 @@ public class ConBeeReadReceivedDataResponse extends ConBeeFrameResponse {
     /**
      * @return the destinationNetworkAddress
      */
-    public ZigBeeAddress getDestinationAddress() {
-        return destinationAddress;
+    public int getDestinationNetworkAddress() {
+        return destinationNetworkAddress;
     }
 
     /**
@@ -142,8 +145,8 @@ public class ConBeeReadReceivedDataResponse extends ConBeeFrameResponse {
     /**
      * @return the sourceNetworkAddress
      */
-    public ZigBeeAddress getSourceAddress() {
-        return sourceAddress;
+    public int getSourceNetworkAddress() {
+        return sourceNetworkAddress;
     }
 
     /**
@@ -217,7 +220,7 @@ public class ConBeeReadReceivedDataResponse extends ConBeeFrameResponse {
         if (sourceAddressMode == ConBeeAddressMode.IEEE) {
             builder.append(sourceIeeeAddress);
         } else {
-            builder.append(sourceAddress);
+            builder.append(sourceNetworkAddress);
         }
         builder.append("), destinationAddress=");
         builder.append(destinationAddressMode);
@@ -225,7 +228,7 @@ public class ConBeeReadReceivedDataResponse extends ConBeeFrameResponse {
         if (destinationAddressMode == ConBeeAddressMode.IEEE) {
             builder.append(destinationIeeeAddress);
         } else {
-            builder.append(destinationAddress);
+            builder.append(destinationNetworkAddress);
         }
 
         builder.append("), profileId=");
@@ -238,15 +241,18 @@ public class ConBeeReadReceivedDataResponse extends ConBeeFrameResponse {
         builder.append(rssi);
 
         builder.append(", data=");
-        boolean first = true;
-        for (int val : adsuData) {
-            if (first == false) {
-                builder.append(' ');
+        if (adsuData == null) {
+            builder.append("null");
+        } else {
+            boolean first = true;
+            for (int val : adsuData) {
+                if (first == false) {
+                    builder.append(' ');
+                }
+                first = false;
+                builder.append(String.format("%02X", val));
             }
-            first = false;
-            builder.append(String.format("%02X", val));
         }
-
         builder.append(']');
         return builder.toString();
     }

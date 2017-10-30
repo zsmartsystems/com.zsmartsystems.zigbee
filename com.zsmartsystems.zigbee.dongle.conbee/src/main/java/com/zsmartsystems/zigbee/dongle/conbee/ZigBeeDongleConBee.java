@@ -21,9 +21,11 @@ import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeAddressMode;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceStateRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceStateResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeEnqueueSendDataRequest;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrame;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeNetworkParameter;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterResponse;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadReceivedDataResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.transaction.ConBeeSingleResponseTransaction;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
@@ -242,6 +244,30 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
     @Override
     public void setZigBeeTransportReceive(ZigBeeTransportReceive zigbeeTransportReceive) {
         this.zigbeeNetworkReceive = zigbeeTransportReceive;
+    }
+
+    /**
+     *
+     * @param frame the received {@link ConBeeFrame}
+     */
+    public void receiveIncomingFrame(ConBeeFrame frame) {
+        if (frame instanceof ConBeeReadReceivedDataResponse) {
+            ConBeeReadReceivedDataResponse receivedData = (ConBeeReadReceivedDataResponse) frame;
+
+            ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+            // apsFrame.setApsCounter(emberApsFrame.getSequence());
+            apsFrame.setCluster(receivedData.getClusterId());
+            apsFrame.setDestinationEndpoint(receivedData.getDestinationEndpoint());
+            apsFrame.setProfile(receivedData.getProfileId());
+            apsFrame.setSourceEndpoint(receivedData.getSourceEndpoint());
+
+            // receivedData.getSourceAddressMode()
+            // apsFrame.sets
+            apsFrame.setSourceAddress(receivedData.getSourceNetworkAddress());
+            apsFrame.setPayload(receivedData.getAdsuData());
+            zigbeeNetworkReceive.receiveCommand(apsFrame);
+            return;
+        }
     }
 
 }

@@ -9,6 +9,8 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
 import java.util.Arrays;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
+
 /**
  *
  * @author Chris Jackson
@@ -98,6 +100,11 @@ public abstract class ConBeeFrame {
 
     protected int deserializeUInt16() {
         return buffer[length++] + (buffer[length++] << 8);
+    }
+
+    protected IeeeAddress deserializeIeeeAddress() {
+        length = length + 8;
+        return new IeeeAddress(Arrays.copyOfRange(buffer, length - 8, length));
     }
 
     /**

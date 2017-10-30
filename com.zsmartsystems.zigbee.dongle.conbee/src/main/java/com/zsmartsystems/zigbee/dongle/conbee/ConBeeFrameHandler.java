@@ -106,7 +106,7 @@ public class ConBeeFrameHandler {
      *            the packet handler
      */
     public ConBeeFrameHandler(final InputStream inputStream, final OutputStream outputStream,
-            ZigBeeDongleConBee dongle) {
+            final ZigBeeDongleConBee dongle) {
         this.outputStream = outputStream;
         // this.inputStream = inputStream;
 
@@ -171,11 +171,11 @@ public class ConBeeFrameHandler {
                                         .create(Arrays.copyOfRange(inputBuffer, 0, inputCount));
                                 if (frame != null) {
                                     logger.debug("CONBEE RX Frame: {}", frame);
+                                    dongle.receiveIncomingFrame(frame);
                                     notifyTransactionComplete(frame);
 
                                     // Check the device state
                                     handleConBeeState(frame.getDeviceState());
-
                                 } else {
                                     logger.debug("CONBEE RX Frame: ERROR: [{}] {}", inputCount,
                                             bufferToString(inputBuffer, inputCount));
