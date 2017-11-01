@@ -278,7 +278,7 @@ public class CommandGenerator extends ClassGenerator {
         out.println();
 
         for (ParameterGroup group : responseParameterGroup) {
-            if (group.parameters.size() == 0 && group.required == false) {
+            if (group.parameters.size() == 0 && group.required == false && group.complete == false) {
                 continue;
             }
 
@@ -294,10 +294,12 @@ public class CommandGenerator extends ClassGenerator {
                 } else if (group.parameters.size() > 0 && group.prompt.endsWith("=") == false) {
                     out.println("        if (testPrompt(data, \"" + group.prompt + ":\")) {");
                 } else {
-
                     out.println("        if (testPrompt(data, \"" + group.prompt + "\")) {");
                 }
 
+                if (group.complete) {
+                    out.println("            return true;");
+                }
                 if (group.required) {
                     out.println("            received" + stringToUpperCamelCase(group.prompt) + " = true;");
                 }
@@ -322,7 +324,7 @@ public class CommandGenerator extends ClassGenerator {
             }
 
             if (!(group.prompt == null || group.prompt.length() == 0)) {
-                if (className.endsWith("Command")) {
+                if (className.endsWith("Command") && group.complete == false) {
                     out.println("            return false;");
                 }
                 out.println("        }");

@@ -60,4 +60,9 @@ public interface ZigBeePort {
      * @return the data byte (integer) read from the port
      */
     int read(int timeout);
+
+    /**
+     * Purge all data currently in the receive buffer
+     */
+    void purgeRxBuffer();
 }

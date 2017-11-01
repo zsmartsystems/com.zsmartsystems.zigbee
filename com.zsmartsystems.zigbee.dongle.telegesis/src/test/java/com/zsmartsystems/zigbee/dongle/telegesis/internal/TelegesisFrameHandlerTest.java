@@ -211,5 +211,9 @@ public class TelegesisFrameHandlerTest {
         public boolean open(int baudRate) {
             return false;
         }
+
+        @Override
+        public void purgeRxBuffer() {
+        }
     }
 }

@@ -458,6 +458,11 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public void sendCommand(final ZigBeeApsFrame apsFrame) throws ZigBeeException {
+        if (frameHandler == null) {
+            logger.debug("Telegesis frame handler not set for send.");
+            return;
+        }
+
         TelegesisCommand command;
         if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE && apsFrame.getDestinationAddress() < 0xfff8) {
             // Unicast command
@@ -596,22 +601,31 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public boolean updateFirmware(final File firmwareFile, final ZigBeeTransportFirmwareCallback callback) {
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
-        callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);
-
-        TelegesisBootloadCommand bootloadCommand = new TelegesisBootloadCommand();
-        if (frameHandler.sendRequest(bootloadCommand) == null) {
-            logger.debug("Error setting Telegesis into BOOTLOAD mode");
-            callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
+        if (frameHandler == null) {
+            logger.debug("frameHandler is uninitialised in updateFirmware");
             return false;
         }
 
-        // Stop the handler and close the serial port
-        frameHandler.close();
-        frameHandler = null;
-        serialPort.close();
+        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);
 
         bootloadHandler = new TelegesisFirmwareUpdateHandler(firmwareFile, serialPort, callback);
+        TelegesisBootloadCommand bootloadCommand = new TelegesisBootloadCommand();
+        if (frameHandler.sendRequest(bootloadCommand) == null) {
+            // logger.debug("Error setting Telegesis into BOOTLOAD mode");
+            // callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
+            // return false;
+        }
+
+        // Stop the handler and close the serial port
+        logger.debug("Telegesis closing frame handler");
+        frameHandler.setClosing();
+        serialPort.close();
+        frameHandler.close();
+        frameHandler = null;
+
+        bootloadHandler = new TelegesisFirmwareUpdateHandler(firmwareFile, serialPort, callback);
+        bootloadHandler.startBootload();
 
         return true;
     }

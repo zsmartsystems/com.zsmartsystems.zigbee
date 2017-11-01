@@ -68,6 +68,16 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
     private int maxLength = 512;
 
     /**
+     * Synchronisation object for RX wait
+     */
+    private Object rxSynchronisationObject = new Object();
+
+    /**
+     * Synchronisation object for buffer queue manipulation
+     */
+    private Object bufferSynchronisationObject = new Object();
+
+    /**
      * Constructor setting port name and baud rate.
      *
      * @param portName the port name
@@ -165,17 +175,19 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
 
         try {
             while (System.currentTimeMillis() < endTime) {
-                synchronized (this) {
-                    if (serialPort == null) {
-                        return -1;
-                    }
-
+                synchronized (bufferSynchronisationObject) {
                     if (start != end) {
                         int value = buffer[start++];
                         if (start >= maxLength) {
                             start = 0;
                         }
                         return value;
+                    }
+                }
+
+                synchronized (this) {
+                    if (serialPort == null) {
+                        return -1;
                     }
 
                     logger.debug("READ sleep");
@@ -199,19 +211,29 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
                     return;
                 }
 
-                synchronized (this) {
+                synchronized (bufferSynchronisationObject) {
                     for (int recv : input) {
                         buffer[end++] = recv;
                         if (end >= maxLength) {
                             end = 0;
                         }
                     }
+                }
 
+                synchronized (this) {
                     this.notify();
                 }
             } catch (SerialPortException e) {
                 logger.error("Error while handling serial event.", e);
             }
+        }
+    }
+
+    @Override
+    public void purgeRxBuffer() {
+        synchronized (bufferSynchronisationObject) {
+            start = 0;
+            end = 0;
         }
     }
 }

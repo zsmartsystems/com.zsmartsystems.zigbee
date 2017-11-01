@@ -150,5 +150,9 @@ public class AshFrameHandlerTest {
         public boolean open(int baudRate) {
             return false;
         }
+
+        @Override
+        public void purgeRxBuffer() {
+        }
     }
 }

@@ -321,14 +321,6 @@
 	</command>
 
 	<command>
-		<name>Bootload Start</name>
-		<description>Passthrough bootloading has been initiated from another node</description>
-		<response_parameters>
-			<prompt>ENTERING BLOAD</prompt>
-		</response_parameters>
-	</command>
-
-	<command>
 		<name>Router Announce</name>
 		<description>A router announcing itself</description>
 		<response_parameters>
@@ -497,6 +489,8 @@
 			<prompt>AT+BLOAD</prompt>
 		</command_parameters>	
 		<response_parameters>
+			<prompt>ENTERING BLOAD</prompt>
+			<complete>true</complete>
 		</response_parameters>
 	</command>
 

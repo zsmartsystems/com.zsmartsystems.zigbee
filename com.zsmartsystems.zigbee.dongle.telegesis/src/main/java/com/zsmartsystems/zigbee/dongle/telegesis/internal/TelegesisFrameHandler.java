@@ -158,7 +158,7 @@ public class TelegesisFrameHandler {
             if (val == -1) {
                 continue;
             }
-            logger.trace("TELEGESIS RX: {}", String.format("%02X %c", val, val));
+            logger.debug("TELEGESIS RX: {}", String.format("%02X %c", val, val));
 
             switch (rxState) {
                 case WAITING:

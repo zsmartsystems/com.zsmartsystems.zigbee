@@ -13,4 +13,5 @@ public class ParameterGroup {
     public List<Parameter> parameters;
     public String name;
     public Boolean required;
+    public Boolean complete;
 }

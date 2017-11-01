@@ -36,7 +36,9 @@ public class TelegesisFirmwareUpdateHandler {
     private final ZigBeeTransportFirmwareCallback callback;
 
     private final int TIMEOUT = 10000;
-    private final int MAX_RETRIES = 10;
+    private final int MENU_MAX_RETRIES = 3;
+    private final int XMODEM_MAX_RETRIES = 10;
+    private final int XMODEL_CRC_POLYNOMIAL = 0x1021;
 
     private final int CR = '\n';
     private final int SOH = 0x01;
@@ -56,52 +58,51 @@ public class TelegesisFirmwareUpdateHandler {
         this.callback = callback;
     }
 
+    /**
+     * Starts the bootload.
+     * The routine will open the serial port at 115200bd. It will send a CR up to 3 times waiting for the bootloader
+     * prompt. It will then select the upload option, transfer the file, then run. The serial port will then be closed.
+     */
     public void startBootload() {
         Thread firmwareThread = new Thread("TelegesisFirmwareUpdateHandler") {
             @Override
             public void run() {
-                logger.debug("Telegesis bootloader: Starting");
+                logger.debug("Telegesis bootloader: Starting.");
                 if (serialPort.open(115200) == false) {
-                    logger.debug("Telegesis bootloader: Failed to open serial port");
+                    logger.debug("Telegesis bootloader: Failed to open serial port.");
                     callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
                     return;
                 }
 
-                int retryCount = 0;
-                while (retryCount++ < 3) {
-                    // Send CR to wake up the bootloader
-                    serialPort.write(CR);
+                logger.debug("Telegesis bootloader: Serial port opened.");
 
-                    // Then wait for the prompt
-                    if (getBlPrompt() == false) {
-                        // continue;
-                    }
-                }
-                if (retryCount >= 3) {
-                    callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
+                // Wait for the bootload menu prompt
+                if (getBlPrompt() == false) {
                     return;
                 }
+                logger.debug("Telegesis bootloader: Got bootloader prompt.");
 
                 // Select option 1 to upload the file
                 serialPort.write('1');
 
+                // Short delay here to allow all bootloader menu data to be received so there's no confusion with acks.
+                try {
+                    sleep(1500);
+                } catch (InterruptedException e) {
+                    // Eat me!
+                }
+
                 transferFile();
 
-                // File transfer complete wait for the prompt
-                retryCount = 0;
-                while (retryCount++ < 3) {
-                    // Send CR to wake up the bootloader
-                    serialPort.write(CR);
+                logger.debug("Telegesis bootloader: Waiting for menu.");
 
-                    // Then wait for the prompt
-                    if (getBlPrompt() == false) {
-                        // continue;
-                    }
-                }
-                if (retryCount >= 3) {
-                    callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
+                // Wait for the bootload menu prompt
+                if (getBlPrompt() == false) {
                     return;
                 }
+                logger.debug("Telegesis bootloader: Got bootloader prompt.");
+
+                logger.debug("Telegesis bootloader: Running firmware.");
 
                 // Select 2 to run
                 serialPort.write('2');
@@ -109,6 +110,7 @@ public class TelegesisFirmwareUpdateHandler {
                 // We're done
                 callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_COMPLETE);
 
+                logger.debug("Telegesis bootloader: Closing serial port. Done.");
                 serialPort.close();
             }
         };
@@ -116,50 +118,89 @@ public class TelegesisFirmwareUpdateHandler {
         firmwareThread.start();
     }
 
+    /**
+     * Waits for the Telegesis bootloader "BL >" response
+     *
+     * @return true if the prompt is found
+     */
     private boolean getBlPrompt() {
         int[] matcher = new int[] { 'B', 'L', ' ', '>' };
         int matcherCount = 0;
 
-        while (!closeHandler) {
-            int val = serialPort.read();
-            if (val == -1) {
-                continue;
-            }
-            if (val != matcher[matcherCount]) {
-                matcherCount = 0;
-                continue;
+        int retryCount = 0;
+        while (!closeHandler && retryCount < MENU_MAX_RETRIES) {
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                // Eat me!
             }
 
-            matcherCount++;
-            if (matcherCount == matcher.length) {
-                return true;
+            // Send CR to wake up the bootloader
+            serialPort.write(CR);
+
+            while (!closeHandler) {
+                int val = serialPort.read();
+                if (val == -1) {
+                    continue;
+                }
+                if (val != matcher[matcherCount]) {
+                    matcherCount = 0;
+                    continue;
+                }
+
+                matcherCount++;
+                if (matcherCount == matcher.length) {
+                    return true;
+                }
             }
+
+            if (retryCount >= 3) {
+                logger.debug("Telegesis bootloader: Unable to get bootloader prompt.");
+                callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
+                return false;
+            }
+
+            retryCount++;
         }
 
         return false;
     }
 
+    /**
+     * Transfers the file using the XModem protocol
+     *
+     * @return true if the transfer completed successfully
+     */
     private boolean transferFile() {
         int retries;
+        int response;
         int frame = 1;
         boolean done;
 
-        InputStream fileStream = null;
+        // Clear all input in the input stream before starting the transfer
         try {
+            InputStream fileStream;
             fileStream = new FileInputStream(file);
 
+            logger.debug("Telegesis bootloader: Clearing input stream...");
+            serialPort.purgeRxBuffer();
+
+            logger.debug("Telegesis bootloader: Starting transfer.");
             while (!closeHandler) {
-                // Send SOH
-                serialPort.write(SOH);
-
-                // Send frame count
-                serialPort.write(frame);
-                serialPort.write(255 - frame);
-
                 retries = 0;
+
                 do {
+                    logger.debug("Telegesis bootloader: Transfer frame {}, attempt {}.", frame, retries);
+
+                    // Send SOH
+                    serialPort.write(SOH);
+
+                    // Send frame count
+                    serialPort.write(frame);
+                    serialPort.write(255 - frame);
+
                     // Allow 10 retries
-                    if (retries > MAX_RETRIES) {
+                    if (retries++ > XMODEM_MAX_RETRIES) {
                         fileStream.close();
                         return false;
                     }
@@ -167,17 +208,32 @@ public class TelegesisFirmwareUpdateHandler {
                     // Output 128 bytes
                     byte[] data = new byte[128];
                     done = (fileStream.read(data) != 128);
-                    int csum = 0;
+                    int crc = 0;
                     for (int value : data) {
-                        csum += value;
                         serialPort.write(value);
+                        for (int i = 0; i < 8; i++) {
+                            boolean bit = ((value >> (7 - i) & 1) == 1);
+                            boolean c15 = ((crc >> 15 & 1) == 1);
+                            crc <<= 1;
+                            // If coefficient of bit and remainder polynomial = 1 xor crc with polynomial
+                            if (c15 ^ bit) {
+                                crc ^= XMODEL_CRC_POLYNOMIAL;
+                            }
+                        }
                     }
-                    serialPort.write(csum & 0xff);
+                    crc &= 0xffff;
+                    serialPort.write((crc >> 8) & 0xff);
+                    serialPort.write(crc & 0xff);
 
                     // Wait for the acknowledgment
-                } while (getTransferResponse() != ACK);
+                    response = getTransferResponse();
+                    if (response != ACK) {
+                        logger.debug("Telegesis bootloader: Response {}.", response);
+                    }
+                } while (response != ACK);
 
                 if (done) {
+                    logger.debug("Telegesis bootloader: Transfer complete.");
                     serialPort.write(EOT);
                     fileStream.close();
                     return true;
@@ -185,19 +241,20 @@ public class TelegesisFirmwareUpdateHandler {
 
                 frame = (frame + 1) & 0xff;
             }
+            fileStream.close();
         } catch (IOException e) {
-            logger.debug("Error reading Telegesis dongle firmware file:", e);
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        if (fileStream != null) {
-            try {
-                fileStream.close();
-            } catch (IOException e) {
-                logger.debug("Error closing Telegesis dongle firmware file:", e);
-            }
-        }
+
         return false;
     }
 
+    /**
+     * Waits for a single byte response as part of the XModem protocol
+     *
+     * @return the value of the received data, or NAK on timeout
+     */
     private int getTransferResponse() {
         long start = System.currentTimeMillis();
         while (!closeHandler) {
