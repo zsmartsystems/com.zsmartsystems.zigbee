@@ -13,7 +13,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ import org.junit.Test;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLostEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSleepyDeviceAnnounceEvent;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  *
@@ -40,15 +44,20 @@ public class TelegesisFrameHandlerTest {
         TelegesisFrameHandler frameHandler = new TelegesisFrameHandler();
         ByteArrayInputStream stream = new ByteArrayInputStream(packet.getBytes());
 
+        ZigBeePort port = new TestPort(stream, null);
+
         Method privateMethod;
         try {
-            privateMethod = TelegesisFrameHandler.class.getDeclaredMethod("getPacket",
-                    new Class[] { InputStream.class });
+            Field field = frameHandler.getClass().getDeclaredField("serialPort");
+            field.setAccessible(true);
+            field.set(frameHandler, port);
+
+            privateMethod = TelegesisFrameHandler.class.getDeclaredMethod("getPacket");
             privateMethod.setAccessible(true);
 
-            return (int[]) privateMethod.invoke(frameHandler, stream);
+            return (int[]) privateMethod.invoke(frameHandler);
         } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
-                | InvocationTargetException e) {
+                | InvocationTargetException | NoSuchFieldException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -99,7 +108,7 @@ public class TelegesisFrameHandlerTest {
     @Test
     public void testRunning() {
         TelegesisFrameHandler frameHandler = new TelegesisFrameHandler();
-        frameHandler.start(null, null);
+        frameHandler.start(null);
 
         assertTrue(frameHandler.isAlive());
         frameHandler.close();
@@ -160,5 +169,42 @@ public class TelegesisFrameHandlerTest {
         }
 
         assertEquals(1, eventCapture.size());
+    }
+
+    class TestPort implements ZigBeePort {
+        InputStream input;
+        OutputStream output;
+
+        TestPort(InputStream input, OutputStream output) {
+            this.input = input;
+            this.output = output;
+        }
+
+        @Override
+        public boolean open() {
+            return true;
+        }
+
+        @Override
+        public void close() {
+        }
+
+        @Override
+        public void write(int value) {
+        }
+
+        @Override
+        public int read(int timeout) {
+            return read();
+        }
+
+        @Override
+        public int read() {
+            try {
+                return input.read();
+            } catch (IOException e) {
+                return -1;
+            }
+        }
     }
 }

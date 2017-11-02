@@ -29,7 +29,6 @@
 package com.zsmartsystems.zigbee.dongle.cc2531.network.impl;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -108,7 +107,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
         if (!port.open()) {
             return false;
         }
-        parser = new ZToolPacketParser(port.getInputStream(), this);
+        parser = new ZToolPacketParser(port, this);
         return true;
     }
 
@@ -296,15 +295,9 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
     @Override
     public void sendRaw(int[] packet) throws IOException {
         synchronized (port) {
-            final OutputStream out = port.getOutputStream();
-            if (out == null) {
-                // Socket has not been opened or is already closed.
-                return;
-            }
             for (int i = 0; i < packet.length; i++) {
-                out.write(packet[i]);
+                port.write(packet[i]);
             }
-            out.flush();
         }
     }
 

@@ -11,9 +11,12 @@ import static org.junit.Assert.assertFalse;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacketStream;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  *
@@ -42,15 +45,53 @@ public class Cc2351TestPacket {
         }
 
         ByteArrayInputStream stream = new ByteArrayInputStream(byteArray);
+        ZigBeePort port = new TestPort(stream, null);
 
         try {
-            ZToolPacket ztoolPacket = new ZToolPacketStream(stream).parsePacket();
+            ZToolPacket ztoolPacket = new ZToolPacketStream(port).parsePacket();
 
             assertFalse(ztoolPacket.isError());
 
             return ztoolPacket;
         } catch (IOException e) {
             return null;
+        }
+    }
+
+    class TestPort implements ZigBeePort {
+        InputStream input;
+        OutputStream output;
+
+        TestPort(InputStream input, OutputStream output) {
+            this.input = input;
+            this.output = output;
+        }
+
+        @Override
+        public boolean open() {
+            return true;
+        }
+
+        @Override
+        public void close() {
+        }
+
+        @Override
+        public void write(int value) {
+        }
+
+        @Override
+        public int read(int timeout) {
+            return read();
+        }
+
+        @Override
+        public int read() {
+            try {
+                return input.read();
+            } catch (IOException e) {
+                return -1;
+            }
         }
     }
 }
