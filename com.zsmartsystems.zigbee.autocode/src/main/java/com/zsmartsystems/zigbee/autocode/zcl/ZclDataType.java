@@ -96,6 +96,7 @@ public class ZclDataType {
         dataTypeMapping.put("BINDING_TABLE", new DataTypeMap("BindingTable", 0, 0, false));
         dataTypeMapping.put("N_X_BINDING_TABLE", new DataTypeMap("List<BindingTable>", 0, 0, false));
         dataTypeMapping.put("BYTE_ARRAY", new DataTypeMap("ByteArray", 0, 0, false));
+        dataTypeMapping.put("IMAGE_UPGRADE_STATUS", new DataTypeMap("ImageUpgradeStatus", 0, 0, false));
     };
 
     public static Map<String, DataTypeMap> getDataTypeMapping() {

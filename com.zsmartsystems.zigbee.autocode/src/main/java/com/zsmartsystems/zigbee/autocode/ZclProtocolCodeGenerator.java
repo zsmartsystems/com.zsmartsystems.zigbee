@@ -854,6 +854,9 @@ public class ZclProtocolCodeGenerator {
                             case "ZclStatus":
                                 out.println("import " + packageRootPrefix + packageZcl + ".ZclStatus;");
                                 continue;
+                            case "ImageUpgradeStatus":
+                                out.println("import " + packageRootPrefix + packageZclField + ".ImageUpgradeStatus;");
+                                continue;
                         }
 
                         out.println("import " + packageRootPrefix + packageName + "." + typeName + ";");
@@ -1333,6 +1336,9 @@ public class ZclProtocolCodeGenerator {
                             case "ZclStatus":
                                 imports.add(packageRootPrefix + packageZcl + ".ZclStatus");
                                 continue;
+                            case "ImageUpgradeStatus":
+                                imports.add(packageRootPrefix + packageZclField + ".ImageUpgradeStatus");
+                                continue;
                         }
 
                         imports.add(packageRootPrefix + packageName + "." + typeName);
@@ -1361,6 +1367,9 @@ public class ZclProtocolCodeGenerator {
                     }
                     if ("IeeeAddress".equals(attribute.dataTypeClass)) {
                         imports.add("com.zsmartsystems.zigbee.IeeeAddress");
+                    }
+                    if ("ImageUpgradeStatus".equals(attribute.dataTypeClass)) {
+                        imports.add(packageRootPrefix + packageZclField + ".ImageUpgradeStatus");
                     }
                 }
 
@@ -1402,10 +1411,6 @@ public class ZclProtocolCodeGenerator {
 
                 for (final Command command : commands) {
                     imports.add(getZclClusterCommandPackage(packageRoot, cluster) + "." + command.nameUpperCamelCase);
-                }
-
-                if (className.equals("ZclScenesCluster")) {
-                    System.out.println();
                 }
 
                 if (!cluster.attributes.isEmpty()) {

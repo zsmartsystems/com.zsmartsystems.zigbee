@@ -12,14 +12,14 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 
 /**
  * Upgrade End Command value object class.
  * <p>
  * Upon reception all the image data, the client should verify the image to ensure its integrity and validity.
- * If the device requires signed images it shall examine the image and verify the signature as described in
- * section 6.3.9.2. Clients may perform additional manufacturer specific integrity checks to validate the
- * image, for example, CRC check on the actual file data.
+ * If the device requires signed images it shall examine the image and verify the signature. Clients may perform
+ * additional manufacturer specific integrity checks to validate the image, for example, CRC check on the actual file data.
  * <br>
  * If the image fails any integrity checks, the client shall send an Upgrade End Request command to the
  * upgrade server with a status of INVALID_IMAGE. In this case, the client may reinitiate the upgrade
@@ -45,7 +45,7 @@ public class UpgradeEndCommand extends ZclCommand {
     /**
      * Status command message field.
      */
-    private Integer status;
+    private ZclStatus status;
 
     /**
      * Manufacturer code command message field.
@@ -77,7 +77,7 @@ public class UpgradeEndCommand extends ZclCommand {
      *
      * @return the Status
      */
-    public Integer getStatus() {
+    public ZclStatus getStatus() {
         return status;
     }
 
@@ -86,7 +86,7 @@ public class UpgradeEndCommand extends ZclCommand {
      *
      * @param status the Status
      */
-    public void setStatus(final Integer status) {
+    public void setStatus(final ZclStatus status) {
         this.status = status;
     }
 
@@ -146,7 +146,7 @@ public class UpgradeEndCommand extends ZclCommand {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(status, ZclDataType.ZCL_STATUS);
         serializer.serialize(manufacturerCode, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(imageType, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(fileVersion, ZclDataType.UNSIGNED_32_BIT_INTEGER);
@@ -154,7 +154,7 @@ public class UpgradeEndCommand extends ZclCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
         manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         fileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);

@@ -11,10 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The upgrade status of the client device. The status indicates where the client device is at in terms of the download
- * and upgrade process. The status helps to indicate whether the client has completed the download process and whether
- * it is ready to upgrade to the new image. The status MAY be queried by the server via ZCL read attribute command.
- * Hence, the server MAY not be able to reliably query the status of ZED client since the device MAY have its radio off.
+ * The upgrade status of the client device.
+ * <p>
+ * The status indicates where the client device is at in terms of the download and upgrade process. The status helps
+ * to indicate whether the client has completed the download process and whether it is ready to upgrade to the new
+ * image. The status MAY be queried by the server via ZCL read attribute command. Hence, the server MAY not be able
+ * to reliably query the status of ZED client since the device MAY have its radio off.
  *
  * @author Chris Jackson
  */

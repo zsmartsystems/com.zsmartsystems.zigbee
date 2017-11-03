@@ -12,7 +12,7 @@
 |0x0003 |CurrentZigBeeStackVersion    |Unsigned 16-bit integer    |Read Only  |Optional  |          |
 |0x0004 |DownloadedFileVersion        |Unsigned 32-bit integer    |Read Only  |Optional  |          |
 |0x0005 |DownloadedZigBeeStackVersion |Unsigned 16-bit integer    |Read Only  |Optional  |          |
-|0x0006 |ImageUpgradeStatus           |8-bit enumeration          |Read Only  |Optional  |          |
+|0x0006 |ImageUpgradeStatus           |Unsigned 8-bit integer     |Read Only  |Optional  |          |
 |0x0007 |ManufacturerID               |Unsigned 16-bit integer    |Read Only  |Optional  |          |
 |0x0008 |ImageTypeID                  |Unsigned 16-bit integer    |Read Only  |Optional  |          |
 |0x0009 |MinimumBlockRequestDelay     |Unsigned 16-bit integer    |Read Only  |Optional  |          |
@@ -203,9 +203,8 @@ command, instead of requesting the whole page again.
 #### Upgrade End Command [0x06]
 
 Upon reception all the image data, the client should verify the image to ensure its integrity and validity.
-If the device requires signed images it shall examine the image and verify the signature as described in
-section 6.3.9.2. Clients may perform additional manufacturer specific integrity checks to validate the
-image, for example, CRC check on the actual file data.
+If the device requires signed images it shall examine the image and verify the signature. Clients may perform
+additional manufacturer specific integrity checks to validate the image, for example, CRC check on the actual file data.
 
 If the image fails any integrity checks, the client shall send an Upgrade End Request command to the
 upgrade server with a status of INVALID_IMAGE. In this case, the client may reinitiate the upgrade
@@ -225,7 +224,7 @@ then try to reinitiate the download process again at a later time.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Status                     |Unsigned 8-bit integer     |
+|Status                     |Zcl Status                 |
 |Manufacturer code          |Unsigned 16-bit integer    |
 |Image type                 |Unsigned 16-bit integer    |
 |File Version               |Unsigned 32-bit integer    |

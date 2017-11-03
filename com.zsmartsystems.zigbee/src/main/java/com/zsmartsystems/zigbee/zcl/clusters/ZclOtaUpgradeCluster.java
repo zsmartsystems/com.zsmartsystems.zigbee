@@ -68,7 +68,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         attributeMap.put(ATTR_CURRENTZIGBEESTACKVERSION, new ZclAttribute(ZclClusterType.OTA_UPGRADE, ATTR_CURRENTZIGBEESTACKVERSION, "CurrentZigBeeStackVersion", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_DOWNLOADEDFILEVERSION, new ZclAttribute(ZclClusterType.OTA_UPGRADE, ATTR_DOWNLOADEDFILEVERSION, "DownloadedFileVersion", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_DOWNLOADEDZIGBEESTACKVERSION, new ZclAttribute(ZclClusterType.OTA_UPGRADE, ATTR_DOWNLOADEDZIGBEESTACKVERSION, "DownloadedZigBeeStackVersion", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_IMAGEUPGRADESTATUS, new ZclAttribute(ZclClusterType.OTA_UPGRADE, ATTR_IMAGEUPGRADESTATUS, "ImageUpgradeStatus", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_IMAGEUPGRADESTATUS, new ZclAttribute(ZclClusterType.OTA_UPGRADE, ATTR_IMAGEUPGRADESTATUS, "ImageUpgradeStatus", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_MANUFACTURERID, new ZclAttribute(ZclClusterType.OTA_UPGRADE, ATTR_MANUFACTURERID, "ManufacturerID", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_IMAGETYPEID, new ZclAttribute(ZclClusterType.OTA_UPGRADE, ATTR_IMAGETYPEID, "ImageTypeID", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_MINIMUMBLOCKREQUESTDELAY, new ZclAttribute(ZclClusterType.OTA_UPGRADE, ATTR_MINIMUMBLOCKREQUESTDELAY, "MinimumBlockRequestDelay", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
@@ -816,9 +816,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * The Upgrade End Command
      * <p>
      * Upon reception all the image data, the client should verify the image to ensure its integrity and validity.
-     * If the device requires signed images it shall examine the image and verify the signature as described in
-     * section 6.3.9.2. Clients may perform additional manufacturer specific integrity checks to validate the
-     * image, for example, CRC check on the actual file data.
+     * If the device requires signed images it shall examine the image and verify the signature. Clients may perform
+     * additional manufacturer specific integrity checks to validate the image, for example, CRC check on the actual file data.
      * <br>
      * If the image fails any integrity checks, the client shall send an Upgrade End Request command to the
      * upgrade server with a status of INVALID_IMAGE. In this case, the client may reinitiate the upgrade
@@ -835,13 +834,13 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Upgrade End Request with status of ABORT at anytime during the download process. The client shall
      * then try to reinitiate the download process again at a later time.
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param manufacturerCode {@link Integer} Manufacturer code
      * @param imageType {@link Integer} Image type
      * @param fileVersion {@link Integer} File Version
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> upgradeEndCommand(Integer status, Integer manufacturerCode, Integer imageType, Integer fileVersion) {
+    public Future<CommandResult> upgradeEndCommand(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion) {
         UpgradeEndCommand command = new UpgradeEndCommand();
 
         // Set the fields

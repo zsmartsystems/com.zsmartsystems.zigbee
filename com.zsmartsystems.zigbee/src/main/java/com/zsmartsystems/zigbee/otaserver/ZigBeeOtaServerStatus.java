@@ -33,6 +33,10 @@ public enum ZigBeeOtaServerStatus {
      */
     OTA_TRANSFER_COMPLETE,
     /**
+     * The transfer is complete, and the server has told the client to execute the upgrade with a delay
+     */
+    OTA_UPGRADE_WAITING,
+    /**
      * The OTA upgrade is complete.
      */
     OTA_UPGRADE_COMPLETE,

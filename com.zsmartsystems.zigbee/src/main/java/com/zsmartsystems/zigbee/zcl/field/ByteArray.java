@@ -77,14 +77,21 @@ public class ByteArray {
             return false;
         }
         ByteArray other = (ByteArray) obj;
-        if (!Arrays.equals(value, other.value)) {
-            return false;
-        }
-        return true;
+        return Arrays.equals(value, other.value);
     }
 
     @Override
     public String toString() {
-        return "Unsigned 16 Bit Integer: value=" + value;
+        StringBuilder builder = new StringBuilder(120);
+        builder.append("ByteArray: value=");
+        boolean first = true;
+        for (byte val : value) {
+            if (!first) {
+                builder.append(' ');
+            }
+            builder.append(String.format("%02X", val & 0xFF));
+        }
+
+        return builder.toString();
     }
 }

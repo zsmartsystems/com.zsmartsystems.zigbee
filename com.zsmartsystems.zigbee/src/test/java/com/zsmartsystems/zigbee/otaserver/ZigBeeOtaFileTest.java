@@ -15,7 +15,6 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ZigBeeStackType;
-import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 
 /**
@@ -26,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 public class ZigBeeOtaFileTest {
     @Test
     public void testOpenFile() throws IOException {
-        File file = new File("./src/test/resource/test_ota_file.zigbee");
+        File file = new File("./src/test/resource/test_ota_file.test");
         ZigBeeOtaFile otaFile = new ZigBeeOtaFile(file);
 
         System.out.println(otaFile);
@@ -36,9 +35,10 @@ public class ZigBeeOtaFileTest {
         assertEquals(Integer.valueOf(0x12345678), otaFile.getFileVersion());
         assertEquals(ZigBeeStackType.ZIGBEE_PRO, otaFile.getStackVersion());
         assertEquals("A.String", otaFile.getHeaderString());
-        assertEquals(Integer.valueOf(72), otaFile.getImageSize());
-        assertEquals(Integer.valueOf(16), otaFile.getImageDataSize());
-        assertEquals(new ByteArray(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 }),
-                otaFile.getImageData(0, 16));
+        assertEquals(Integer.valueOf(78), otaFile.getImageSize());
+        assertEquals(new ByteArray(new byte[] { 0x1E, (byte) 0xF1, (byte) 0xEE, 0x0B }), otaFile.getImageData(0, 4));
+        assertEquals(new ByteArray(new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04 }), otaFile.getImageData(62, 5));
+
+        otaFile.close();
     }
 }
