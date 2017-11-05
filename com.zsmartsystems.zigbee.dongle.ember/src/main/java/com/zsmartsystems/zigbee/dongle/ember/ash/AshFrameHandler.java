@@ -32,6 +32,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  * Frame parser for the Silicon Labs Asynchronous Serial Host (ASH) protocol.
@@ -115,9 +116,9 @@ public class AshFrameHandler {
     // private final InputStream inputStream;
 
     /**
-     * The output stream.
+     * The port.
      */
-    private OutputStream outputStream;
+    private ZigBeePort port;
 
     /**
      * The parser parserThread.
@@ -147,8 +148,8 @@ public class AshFrameHandler {
      * @param inputStream the {@link InputStream}
      * @param outputStream the {@link OutputStream}
      */
-    public void start(final InputStream inputStream, final OutputStream outputStream) {
-        this.outputStream = outputStream;
+    public void start(final ZigBeePort port) {
+        this.port = port;
 
         parserThread = new Thread("AshFrameHandler") {
             @Override
@@ -159,7 +160,7 @@ public class AshFrameHandler {
 
                 while (!close) {
                     try {
-                        int[] packetData = getPacket(inputStream);
+                        int[] packetData = getPacket();
                         if (packetData == null) {
                             continue;
                         }
@@ -253,13 +254,13 @@ public class AshFrameHandler {
         parserThread.start();
     }
 
-    private int[] getPacket(InputStream inputStream) throws IOException {
+    private int[] getPacket() throws IOException {
         int[] inputBuffer = new int[ASH_MAX_LENGTH];
         int inputCount = 0;
         boolean inputError = false;
 
         while (!close) {
-            int val = inputStream.read();
+            int val = port.read();
             logger.trace("ASH RX: " + String.format("%02X", val));
             switch (val) {
                 case ASH_CANCEL_BYTE:
@@ -419,15 +420,11 @@ public class AshFrameHandler {
         logger.debug("--> TX ASH frame: {}", ashFrame);
 
         // Send the data
-        try {
-            for (int b : ashFrame.getOutputBuffer()) {
-                // result.append(" ");
-                // result.append(String.format("%02X", b));
-                // logger.debug("ASH TX: " + String.format("%02X", b));
-                outputStream.write(b);
-            }
-        } catch (IOException e) {
-            logger.debug(e.getMessage());
+        for (int b : ashFrame.getOutputBuffer()) {
+            // result.append(" ");
+            // result.append(String.format("%02X", b));
+            // logger.debug("ASH TX: " + String.format("%02X", b));
+            port.write(b);
         }
 
         // logger.debug(result.toString());

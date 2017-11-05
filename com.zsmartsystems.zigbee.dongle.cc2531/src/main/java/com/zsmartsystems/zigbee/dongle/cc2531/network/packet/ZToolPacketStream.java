@@ -33,7 +33,6 @@
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +72,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STATE_CHANG
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ByteUtils;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.IIntArrayInputStream;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  * Reads a packet from the input stream, verifies checksum and creates an XBeeResponse object
@@ -95,10 +95,10 @@ public class ZToolPacketStream implements IIntArrayInputStream {
 
     private boolean generic = false;
 
-    private final InputStream in;
+    private final ZigBeePort port;
 
-    public ZToolPacketStream(InputStream in) {
-        this.in = in;
+    public ZToolPacketStream(ZigBeePort port) {
+        this.port = port;
     }
 
     public ZToolPacket parsePacket() throws IOException {
@@ -321,7 +321,7 @@ public class ZToolPacketStream implements IIntArrayInputStream {
     @Override
     public int read() throws IOException {
 
-        int b = in.read();
+        int b = port.read();
 
         if (b == -1) {
             throw new ZToolParseException("Read -1 from input stream while reading packet!");

@@ -37,13 +37,12 @@
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.ByteUtils;
-import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.MarkableInputStream;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  * @author <a href="mailto:andrew.rapp@gmail.com">Andrew Rapp</a>
@@ -63,9 +62,9 @@ public class ZToolPacketParser implements Runnable {
      */
     private ZToolPacketHandler packetHandler;
     /**
-     * The input stream.
+     * The input port.
      */
-    private final InputStream inputStream;
+    private final ZigBeePort port;
     /**
      * The parser parserThread.
      */
@@ -79,18 +78,13 @@ public class ZToolPacketParser implements Runnable {
      * Construct which sets input stream where the packet is read from the and handler
      * which further processes the received packet.
      *
-     * @param inputStream the input stream
+     * @param port the {@link ZigBeePort}
      * @param packetHandler the packet handler
      */
-    public ZToolPacketParser(final InputStream inputStream, final ZToolPacketHandler packetHandler) {
+    public ZToolPacketParser(final ZigBeePort port, final ZToolPacketHandler packetHandler) {
         logger.trace("Creating ZToolPacketParser");
-        if (inputStream.markSupported()) {
-            this.inputStream = inputStream;
-        } else {
-            logger.trace("Provided InputStream {} doesn't provide the mark()/reset() feature, "
-                    + "wrapping it up as BufferedInputStream", inputStream.getClass());
-            this.inputStream = new MarkableInputStream(inputStream);
-        }
+
+        this.port = port;
         this.packetHandler = packetHandler;
 
         parserThread = new Thread(this, "ZToolPacketParser");
@@ -106,16 +100,16 @@ public class ZToolPacketParser implements Runnable {
         logger.trace("ZToolPacketParser parserThread started");
         while (!close) {
             try {
-                int val = inputStream.read();
+                int val = port.read();
                 if (val == ZToolPacket.START_BYTE) {
-                    inputStream.mark(256);
-                    final ZToolPacketStream packetStream = new ZToolPacketStream(inputStream);
+                    // inputStream.mark(256);
+                    final ZToolPacketStream packetStream = new ZToolPacketStream(port);
                     final ZToolPacket response = packetStream.parsePacket();
 
                     logger.trace("Response is {} -> {}", response.getClass().getSimpleName(), response);
                     if (response.isError()) {
                         logger.debug("Received a BAD PACKET {}", response.getPacketString());
-                        inputStream.reset();
+                        // inputStream.reset();
                         continue;
                     }
 

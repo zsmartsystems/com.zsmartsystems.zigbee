@@ -281,7 +281,7 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
 
         // Create and start the frame handler
         frameHandler = new TelegesisFrameHandler();
-        frameHandler.start(serialPort.getInputStream(), serialPort.getOutputStream());
+        frameHandler.start(serialPort);
         frameHandler.addEventListener(this);
 
         // Get the product information
@@ -371,8 +371,11 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
 
     @Override
     public void shutdown() {
+        frameHandler.setClosing();
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
         serialPort.close();
+        frameHandler.close();
+        logger.debug("Telegesis dongle shutdown.");
     }
 
     private void initialiseNetwork() {

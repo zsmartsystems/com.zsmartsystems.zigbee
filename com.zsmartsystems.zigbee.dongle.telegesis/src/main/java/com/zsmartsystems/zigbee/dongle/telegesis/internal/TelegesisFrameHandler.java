@@ -7,9 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis.internal;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -30,6 +27,7 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisComm
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisFrame;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisStatusCode;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  * Frame parser for the Telegesis AT command protocol.
@@ -61,9 +59,9 @@ public class TelegesisFrameHandler {
     private final List<TelegesisEventListener> eventListeners = new ArrayList<TelegesisEventListener>();
 
     /**
-     * The output stream.
+     * The port.
      */
-    private OutputStream outputStream;
+    private ZigBeePort serialPort;
 
     /**
      * The parser parserThread.
@@ -96,64 +94,50 @@ public class TelegesisFrameHandler {
      * Construct which sets input stream where the packet is read from the and
      * handler which further processes the received packet.
      *
-     * @param inputStream the {@link InputStream}
-     * @param outputStream the {@link OutputStream}
+     * @param serialPort the {@link ZigBeePort}
      */
-    public void start(final InputStream inputStream, final OutputStream outputStream) {
+    public void start(final ZigBeePort serialPort) {
 
-        this.outputStream = outputStream;
+        this.serialPort = serialPort;
 
         parserThread = new Thread("TelegesisFrameHandler") {
             @Override
             public void run() {
                 logger.debug("TelegesisFrameHandler thread started");
 
-                int exceptionCnt = 0;
-
                 while (!closeHandler) {
-                    try {
-                        // Get a packet from the serial port
-                        int[] responseData = getPacket(inputStream);
-                        if (responseData != null) {
-                            StringBuilder builder = new StringBuilder();
-                            builder.append("Data");
-                            for (int value : responseData) {
-                                builder.append(String.format(" %02X", value));
-                            }
-                            logger.debug("TELEGESIS RX: {}", builder.toString());
-                        }
+                    // Get a packet from the serial port
+                    int[] responseData = getPacket();
+                    if (responseData == null) {
+                        continue;
+                    }
 
-                        // Use the Event Factory to get an event
-                        TelegesisEvent event = TelegesisEventFactory.getTelegesisFrame(responseData);
-                        if (event != null) {
-                            notifyEventReceived(event);
-                            continue;
-                        }
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("Data");
+                    for (int value : responseData) {
+                        builder.append(String.format(" %02X", value));
+                    }
+                    logger.debug("TELEGESIS RX: {}", builder.toString());
 
-                        // If we're sending a command, then we need to process any responses
-                        synchronized (commandLock) {
-                            if (sentCommand != null && sentCommand.deserialize(responseData)) {
-                                // Command completed
-                                notifyTransactionComplete(sentCommand);
-                                sentCommand = null;
-                                sendNextFrame();
-                            }
-                        }
+                    // Use the Event Factory to get an event
+                    TelegesisEvent event = TelegesisEventFactory.getTelegesisFrame(responseData);
+                    if (event != null) {
+                        notifyEventReceived(event);
+                        continue;
+                    }
 
-                        // logger.debug("TELEGESIS RX: " + response);
-
-                    } catch (final IOException e) {
-                        logger.error("TelegesisFrameHandler IOException: ", e);
-
-                        if (exceptionCnt++ > 10) {
-                            logger.debug("TelegesisFrameHandler exception count exceeded");
-                            // if (!close) {
-                            // frameHandler.error(e);
-                            closeHandler = true;
+                    // If we're sending a command, then we need to process any responses
+                    synchronized (commandLock) {
+                        if (sentCommand != null && sentCommand.deserialize(responseData)) {
+                            // Command completed
+                            notifyTransactionComplete(sentCommand);
+                            sentCommand = null;
+                            sendNextFrame();
                         }
                     }
+
                 }
-                logger.debug("TelegesisFrameHandler exited.");
+                logger.debug("TelegesisFrameHandler thread exited.");
             }
 
         };
@@ -162,15 +146,15 @@ public class TelegesisFrameHandler {
         parserThread.start();
     }
 
-    private int[] getPacket(InputStream inputStream) throws IOException {
+    private int[] getPacket() {
         int[] inputBuffer = new int[120];
         int inputBufferLength = 0;
         RxStateMachine rxState = RxStateMachine.WAITING;
         int binaryLength = 0;
 
-        logger.trace("TELEGESIS: Get Packet");
+        logger.debug("TELEGESIS: Get Packet");
         while (!closeHandler) {
-            int val = inputStream.read();
+            int val = serialPort.read();
             if (val == -1) {
                 continue;
             }
@@ -258,6 +242,7 @@ public class TelegesisFrameHandler {
         } catch (InterruptedException e) {
             logger.warn("Interrupted in packet parser thread shutdown join.");
         }
+        logger.debug("TelegesisFrameHandler closed.");
     }
 
     /**
@@ -291,13 +276,9 @@ public class TelegesisFrameHandler {
             sentCommand = nextFrame;
 
             // Send the data
-            try {
-                for (int sendByte : nextFrame.serialize()) {
-                    logger.trace("TX Telegesis: {}", String.format("%02X  %c", sendByte, sendByte));
-                    outputStream.write(sendByte);
-                }
-            } catch (IOException e) {
-                logger.debug(e.getMessage());
+            for (int sendByte : nextFrame.serialize()) {
+                logger.trace("TX Telegesis: {}", String.format("%02X  %c", sendByte, sendByte));
+                serialPort.write(sendByte);
             }
         }
     }
@@ -312,6 +293,10 @@ public class TelegesisFrameHandler {
         sendQueue.add(request);
 
         logger.debug("TX Telegesis queue: {}", sendQueue.size());
+
+        if (sendQueue.size() > 2) {
+            sentCommand = null;
+        }
 
         sendNextFrame();
     }
