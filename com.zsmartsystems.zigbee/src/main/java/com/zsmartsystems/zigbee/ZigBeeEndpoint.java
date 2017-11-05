@@ -10,7 +10,6 @@ package com.zsmartsystems.zigbee;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -72,12 +71,12 @@ public class ZigBeeEndpoint implements ZigBeeCommandListener {
     /**
      * List of input clusters supported by the endpoint
      */
-    private final Map<Integer, ZclCluster> inputClusters = new HashMap<Integer, ZclCluster>();
+    private final Map<Integer, ZclCluster> inputClusters = new ConcurrentHashMap<Integer, ZclCluster>();
 
     /**
      * List of output clusters supported by the endpoint
      */
-    private final Map<Integer, ZclCluster> outputClusters = new HashMap<Integer, ZclCluster>();
+    private final Map<Integer, ZclCluster> outputClusters = new ConcurrentHashMap<Integer, ZclCluster>();
 
     /**
      * Map of {@link ZigBeeServer}s that are available to this endpoint. Servers are added

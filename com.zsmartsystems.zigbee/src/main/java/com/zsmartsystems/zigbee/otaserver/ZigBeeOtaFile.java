@@ -49,14 +49,6 @@ public class ZigBeeOtaFile {
     private final Logger logger = LoggerFactory.getLogger(ZigBeeOtaFile.class);
 
     /**
-     * The value is a unique 4-byte value that is included at the beginning of all ZigBee OTA upgrade image
-     * files in order to quickly identify and distinguish the file as being a ZigBee OTA cluster upgrade file,
-     * without having to examine the whole file content. This helps distinguishing the file from other file
-     * types on disk. The value is defined to be “0x0BEEF11E”.
-     */
-    private Integer fileIdentifier;
-
-    /**
      * The value enumerates the version of the header and provides compatibility information. The value is
      * composed of a major and minor version number (one byte each). The high byte (or the most significant
      * byte) represents the major version and the low byte (or the least significant byte) represents the minor
@@ -213,9 +205,11 @@ public class ZigBeeOtaFile {
         // Read the file header
 
         // Unsigned 32-bit integer, OTA upgrade file identifier
-        // All files must start with this signature, otherwise it's invalid.
-        fileIdentifier = readUnsigned32(inputFile);
-        if (fileIdentifier != FILE_SIGNATURE) {
+        // The value is a unique 4-byte value that is included at the beginning of all ZigBee OTA upgrade image
+        // files in order to quickly identify and distinguish the file as being a ZigBee OTA cluster upgrade file,
+        // without having to examine the whole file content. This helps distinguishing the file from other file
+        // types on disk. The value is defined to be “0x0BEEF11E”.
+        if (readUnsigned32(inputFile) != FILE_SIGNATURE) {
             throw new IllegalArgumentException("ZigBee OTA file is not a valid format");
         }
 

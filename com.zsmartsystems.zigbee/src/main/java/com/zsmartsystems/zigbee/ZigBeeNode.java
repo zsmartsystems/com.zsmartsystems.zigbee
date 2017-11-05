@@ -628,9 +628,12 @@ public class ZigBeeNode implements ZigBeeCommandListener {
                 for (int clusterId : matchRequest.getInClusterList()) {
                     if (endpoint.getServer(clusterId) != null) {
                         matched = true;
+                        break;
                     }
                 }
-                break;
+                if (matched) {
+                    break;
+                }
             }
 
             if (!matched) {

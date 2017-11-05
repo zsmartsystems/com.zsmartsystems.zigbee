@@ -199,6 +199,15 @@ public class ZigBeeOtaServer implements ZclServer {
     }
 
     /**
+     * Gets the current status of the server
+     * 
+     * @return the {@link ZigBeeOtaServerStatus}
+     */
+    public ZigBeeOtaServerStatus getStatus() {
+        return status;
+    }
+
+    /**
      * Add a listener to receive status callbacks on the OTA server status.
      *
      * @param listener the {@link ZigBeeOtaStatusCallback} to receive the status
@@ -350,6 +359,8 @@ public class ZigBeeOtaServer implements ZclServer {
      * @param updatedStatus the new {@link ZigBeeOtaServerStatus}
      */
     private void updateStatus(final ZigBeeOtaServerStatus updatedStatus) {
+        status = updatedStatus;
+
         synchronized (this) {
             // Notify the listeners
             for (final ZigBeeOtaStatusCallback statusListener : statusListeners) {
@@ -599,5 +610,4 @@ public class ZigBeeOtaServer implements ZclServer {
             return;
         }
     }
-
 }
