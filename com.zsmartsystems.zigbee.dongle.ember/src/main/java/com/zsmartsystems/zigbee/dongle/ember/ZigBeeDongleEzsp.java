@@ -165,7 +165,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         ashHandler = new AshFrameHandler(this);
 
         // Connect to the ASH handler and NCP
-        ashHandler.start(serialPort.getInputStream(), serialPort.getOutputStream());
+        ashHandler.start(serialPort);
         ashHandler.connect();
 
         // We MUST send the version command first.
