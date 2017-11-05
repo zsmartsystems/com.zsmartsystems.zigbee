@@ -15,13 +15,13 @@ package com.zsmartsystems.zigbee;
  *
  * @author Chris Jackson
  */
-public interface DeviceStatusListener {
+public interface ZigBeeAnnounceListener {
 
     /**
      * Called when a new device is heard on the network.
      *
      * @param address the network address of the newly announced device
      */
-    void deviceStatusUpdate(final ZigBeeDeviceStatus deviceStatus, final Integer networkAddress,
+    void deviceStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
             final IeeeAddress ieeeAddress);
 }

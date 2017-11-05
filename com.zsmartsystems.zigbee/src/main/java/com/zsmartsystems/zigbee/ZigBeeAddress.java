@@ -16,7 +16,7 @@ package com.zsmartsystems.zigbee;
  * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
-public abstract class ZigBeeAddress implements java.lang.Comparable {
+public abstract class ZigBeeAddress implements Comparable<ZigBeeAddress> {
     /**
      * Gets the network address for this address.
      *
@@ -26,7 +26,7 @@ public abstract class ZigBeeAddress implements java.lang.Comparable {
 
     /**
      * Sets the network address for this address
-     * 
+     *
      * @param address the network address as {@link int}
      */
     public abstract void setAddress(final int address);

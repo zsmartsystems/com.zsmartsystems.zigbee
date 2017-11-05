@@ -13,29 +13,29 @@ package com.zsmartsystems.zigbee;
  *
  * @author Chris Jackson
  */
-public interface ZigBeeNetworkDeviceListener {
+public interface ZigBeeNetworkEndpointListener {
 
     /**
      * Device was added to network.
      *
      * @param device
-     *            the {@link ZigBeeDevice}
+     *            the {@link ZigBeeEndpoint}
      */
-    void deviceAdded(final ZigBeeDevice device);
+    void deviceAdded(final ZigBeeEndpoint device);
 
     /**
      * Device was updated.
      *
      * @param device
-     *            the {@link ZigBeeDevice}
+     *            the {@link ZigBeeEndpoint}
      */
-    void deviceUpdated(final ZigBeeDevice device);
+    void deviceUpdated(final ZigBeeEndpoint device);
 
     /**
      * Device was removed from network.
      *
      * @param device
-     *            the {@link ZigBeeDevice}
+     *            the {@link ZigBeeEndpoint}
      */
-    void deviceRemoved(final ZigBeeDevice device);
+    void deviceRemoved(final ZigBeeEndpoint device);
 }

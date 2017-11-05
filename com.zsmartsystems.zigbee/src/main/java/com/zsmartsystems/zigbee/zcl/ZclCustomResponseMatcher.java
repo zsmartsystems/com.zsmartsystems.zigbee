@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
-import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.CommandResponseMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 
@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
  */
 public class ZclCustomResponseMatcher implements CommandResponseMatcher {
     @Override
-    public boolean isMatch(Command request, Command response) {
+    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {
         if (response instanceof ZclCommand && ((ZclCommand) request).getTransactionId() != null) {
             final int transactionId = ((ZclCommand) request).getTransactionId();
             if (Integer.valueOf(transactionId).equals(((ZclCommand) response).getTransactionId())) {

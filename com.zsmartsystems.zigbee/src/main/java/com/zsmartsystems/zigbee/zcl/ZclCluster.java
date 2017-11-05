@@ -20,7 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
-import com.zsmartsystems.zigbee.ZigBeeDevice;
+import com.zsmartsystems.zigbee.ZigBeeEndpoint;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
@@ -49,7 +50,7 @@ public abstract class ZclCluster {
     private Logger logger = LoggerFactory.getLogger(ZclCluster.class);
 
     private final ZigBeeNetworkManager zigbeeManager;
-    private final ZigBeeDevice zigbeeEndpoint;
+    private final ZigBeeEndpoint zigbeeEndpoint;
     protected final int clusterId;
     protected final String clusterName;
 
@@ -62,7 +63,7 @@ public abstract class ZclCluster {
 
     protected abstract Map<Integer, ZclAttribute> initializeAttributes();
 
-    public ZclCluster(ZigBeeNetworkManager zigbeeManager, ZigBeeDevice zigbeeEndpoint, int clusterId,
+    public ZclCluster(ZigBeeNetworkManager zigbeeManager, ZigBeeEndpoint zigbeeEndpoint, int clusterId,
             String clusterName) {
         this.zigbeeManager = zigbeeManager;
         this.zigbeeEndpoint = zigbeeEndpoint;
@@ -284,6 +285,15 @@ public abstract class ZclCluster {
     }
 
     /**
+     * Returns the ZigBee address of this cluster
+     *
+     * @return the {@link ZigBeeEndpointAddress} of the cluster
+     */
+    public ZigBeeEndpointAddress getZigBeeAddress() {
+        return zigbeeEndpoint.getDeviceAddress();
+    }
+
+    /**
      * Sets the server flag for this cluster. This means the cluster is listed
      * in the devices input cluster list
      *
@@ -331,14 +341,14 @@ public abstract class ZclCluster {
      * @param destination the destination {@link ZigBeeDevice}
      * @return Command future
      */
-    public Future<CommandResult> bind(final ZigBeeDevice destination) {
+    public Future<CommandResult> bind(final ZigBeeEndpoint destination) {
         final BindRequest command = new BindRequest();
         command.setSrcAddress(zigbeeEndpoint.getIeeeAddress());
-        command.setSrcEndpoint(zigbeeEndpoint.getEndpoint());
+        command.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
         command.setClusterId(clusterId);
         command.setDstAddrMode(3); // 64 bit addressing
         command.setDstAddress(destination.getIeeeAddress());
-        command.setDstEndpoint(destination.getEndpoint());
+        command.setDstEndpoint(destination.getEndpointId());
         return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
@@ -348,14 +358,14 @@ public abstract class ZclCluster {
      * @param destination the destination {@link ZigBeeDevice}
      * @return Command future
      */
-    public Future<CommandResult> unbind(final ZigBeeDevice destination) {
+    public Future<CommandResult> unbind(final ZigBeeEndpoint destination) {
         final UnbindRequest command = new UnbindRequest();
         command.setSrcAddress(zigbeeEndpoint.getIeeeAddress());
-        command.setSrcEndpoint(zigbeeEndpoint.getEndpoint());
+        command.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
         command.setClusterId(clusterId);
         command.setDstAddrMode(3); // 64 bit addressing
         command.setDstAddress(destination.getIeeeAddress());
-        command.setDstEndpoint(destination.getEndpoint());
+        command.setDstEndpoint(destination.getEndpointId());
         return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 

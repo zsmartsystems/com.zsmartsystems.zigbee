@@ -8,12 +8,12 @@
 package com.zsmartsystems.zigbee;
 
 /**
- * Enum defining the state of a device when joining or leaving
+ * Enumeration defining the state of a node when joining or leaving
  *
  * @author Chris Jackson
  *
  */
-public enum ZigBeeDeviceStatus {
+public enum ZigBeeNodeStatus {
 
     /**
      * A device has joined the network without security

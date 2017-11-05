@@ -12,12 +12,12 @@ import java.util.Objects;
 /**
  * Defines a unicast ZigBee device address - extends {@link ZigBeeAddress}.
  * <p>
- * The {@link ZigBeeDeviceAddress} is defined by the 16 bit network address
+ * The {@link ZigBeeEndpointAddress} is defined by the 16 bit network address
  * and the endpoint Id
  *
  * @author Chris Jackson
  */
-public class ZigBeeDeviceAddress extends ZigBeeAddress {
+public class ZigBeeEndpointAddress extends ZigBeeAddress {
     private int address;
     private int endpoint;
 
@@ -28,7 +28,7 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
      *            the network address
      *
      */
-    public ZigBeeDeviceAddress(int address) {
+    public ZigBeeEndpointAddress(int address) {
         this.address = address;
         this.endpoint = 0;
     }
@@ -41,12 +41,12 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
      * @param endpoint
      *            the endpoint number
      */
-    public ZigBeeDeviceAddress(int address, int endpoint) {
+    public ZigBeeEndpointAddress(int address, int endpoint) {
         this.address = address;
         this.endpoint = endpoint;
     }
 
-    public ZigBeeDeviceAddress(String address) {
+    public ZigBeeEndpointAddress(String address) {
         if (address.contains("/")) {
             String[] splits = address.split("/");
             if (splits.length > 2) {
@@ -103,21 +103,21 @@ public class ZigBeeDeviceAddress extends ZigBeeAddress {
         if (obj == null) {
             return false;
         }
-        if (!ZigBeeDeviceAddress.class.isAssignableFrom(obj.getClass())) {
+        if (!ZigBeeEndpointAddress.class.isAssignableFrom(obj.getClass())) {
             return false;
         }
-        final ZigBeeDeviceAddress other = (ZigBeeDeviceAddress) obj;
+        final ZigBeeEndpointAddress other = (ZigBeeEndpointAddress) obj;
 
         return (other.getAddress() == getAddress() && other.getEndpoint() == getEndpoint());
     }
 
     @Override
-    public int compareTo(Object that) {
+    public int compareTo(ZigBeeAddress that) {
         if (this == that) {
             return 0;
         }
 
-        ZigBeeDeviceAddress thatAddr = (ZigBeeDeviceAddress) that;
+        ZigBeeEndpointAddress thatAddr = (ZigBeeEndpointAddress) that;
 
         if (thatAddr.getAddress() == getAddress() && thatAddr.getEndpoint() == getEndpoint()) {
             return 0;

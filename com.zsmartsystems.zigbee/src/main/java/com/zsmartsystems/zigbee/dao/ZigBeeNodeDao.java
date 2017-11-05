@@ -7,13 +7,19 @@
  */
 package com.zsmartsystems.zigbee.dao;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
 
 /**
+ * This class provides a clean class to hold a data object for serialisation of a {@link ZigBeeNode}
  *
  * @author Chris Jackson
  *
@@ -38,6 +44,11 @@ public class ZigBeeNodeDao {
      * The {@link PowerDescriptor} for the node
      */
     private PowerDescriptor powerDescriptor;
+
+    /**
+     * The list of endpoints for this node
+     */
+    private List<ZigBeeEndpointDao> endpoints;
 
     public String getIeeeAddress() {
         return ieeeAddress;
@@ -71,12 +82,21 @@ public class ZigBeeNodeDao {
         this.powerDescriptor = powerDescriptor;
     }
 
+    private void setEndpoints(Collection<ZigBeeEndpoint> endpoints) {
+        this.endpoints = new ArrayList<ZigBeeEndpointDao>();
+
+        for (ZigBeeEndpoint endpoint : endpoints) {
+            this.endpoints.add(ZigBeeEndpointDao.createFromZigBeeDevice(endpoint));
+        }
+    }
+
     public static ZigBeeNodeDao createFromZigBeeNode(ZigBeeNode node) {
         ZigBeeNodeDao nodeDao = new ZigBeeNodeDao();
         nodeDao.setIeeeAddress(node.getIeeeAddress().toString());
         nodeDao.setNetworkAddress(node.getNetworkAddress());
         nodeDao.setNodeDescriptor(node.getNodeDescriptor());
         nodeDao.setPowerDescriptor(node.getPowerDescriptor());
+        nodeDao.setEndpoints(node.getEndpoints());
 
         return nodeDao;
     }
@@ -87,6 +107,11 @@ public class ZigBeeNodeDao {
         node.setNetworkAddress(nodeDao.getNetworkAddress());
         node.setNodeDescriptor(nodeDao.getNodeDescriptor());
         node.setPowerDescriptor(nodeDao.getPowerDescriptor());
+        if (nodeDao.endpoints != null) {
+            for (ZigBeeEndpointDao endpoint : nodeDao.endpoints) {
+                node.addEndpoint(ZigBeeEndpointDao.createFromZigBeeDao(networkManager, node, endpoint));
+            }
+        }
 
         return node;
     }

@@ -69,10 +69,6 @@ public class IeeeAddress {
         this.address = address;
     }
 
-    // public long getLong() {
-    // return address;
-    // }
-
     /**
      * Gets the IeeeAddress as an integer array with length 8
      *

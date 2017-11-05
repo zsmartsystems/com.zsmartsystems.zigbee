@@ -141,4 +141,19 @@ public class ZigBeeKey {
 
         return builder.toString();
     }
+
+    /**
+     * Create a random key
+     *
+     * @return {@link ZigBeeKey} containing a random 128 bit key
+     */
+    public static ZigBeeKey createRandom() {
+        int key[] = new int[16];
+        for (int cnt = 0; cnt < 16; cnt++) {
+            key[cnt] = (int) Math.floor((Math.random() * 255));
+        }
+
+        return new ZigBeeKey(key);
+    }
+
 }

@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.ZigBeeDeviceStatus;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
+import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
@@ -509,36 +509,35 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         if (response instanceof EzspTrustCenterJoinHandler) {
             EzspTrustCenterJoinHandler joinHandler = (EzspTrustCenterJoinHandler) response;
 
-            ZigBeeDeviceStatus status;
+            ZigBeeNodeStatus status;
             switch (joinHandler.getStatus()) {
                 case EMBER_HIGH_SECURITY_UNSECURED_JOIN:
                 case EMBER_STANDARD_SECURITY_UNSECURED_JOIN:
-                    status = ZigBeeDeviceStatus.UNSECURED_JOIN;
+                    status = ZigBeeNodeStatus.UNSECURED_JOIN;
                     break;
                 case EMBER_HIGH_SECURITY_UNSECURED_REJOIN:
                 case EMBER_STANDARD_SECURITY_UNSECURED_REJOIN:
-                    status = ZigBeeDeviceStatus.UNSECURED_REJOIN;
+                    status = ZigBeeNodeStatus.UNSECURED_REJOIN;
                     break;
                 case EMBER_HIGH_SECURITY_SECURED_REJOIN:
                 case EMBER_STANDARD_SECURITY_SECURED_REJOIN:
-                    status = ZigBeeDeviceStatus.SECURED_REJOIN;
+                    status = ZigBeeNodeStatus.SECURED_REJOIN;
                     break;
                 case EMBER_DEVICE_LEFT:
-                    status = ZigBeeDeviceStatus.DEVICE_LEFT;
+                    status = ZigBeeNodeStatus.DEVICE_LEFT;
                     break;
                 default:
                     logger.debug("Unknown state in trust centre join handler {}", joinHandler.getStatus());
                     return;
             }
 
-            zigbeeTransportReceive.deviceStatusUpdate(status, joinHandler.getNewNodeId(),
-                    joinHandler.getNewNodeEui64());
+            zigbeeTransportReceive.nodeStatusUpdate(status, joinHandler.getNewNodeId(), joinHandler.getNewNodeEui64());
 
         }
 
         if (response instanceof EzspChildJoinHandler) {
             EzspChildJoinHandler joinHandler = (EzspChildJoinHandler) response;
-            zigbeeTransportReceive.deviceStatusUpdate(ZigBeeDeviceStatus.UNSECURED_JOIN, joinHandler.getChildId(),
+            zigbeeTransportReceive.nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN, joinHandler.getChildId(),
                     joinHandler.getChildEui64());
 
             /*

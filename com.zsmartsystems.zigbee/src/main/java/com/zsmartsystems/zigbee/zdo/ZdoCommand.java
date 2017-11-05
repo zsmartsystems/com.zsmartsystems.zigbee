@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.zdo;
 
-import com.zsmartsystems.zigbee.Command;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -17,7 +17,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  * @author Chris Jackson
  */
-public abstract class ZdoCommand extends Command {
+public abstract class ZdoCommand extends ZigBeeCommand {
 
     @Override
     public void serialize(ZclFieldSerializer serializer) {

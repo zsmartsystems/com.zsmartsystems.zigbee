@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
@@ -30,8 +30,8 @@ public class EzspSendBroadcastTest extends EzspFrameTest {
     public void testSendPermitJoining() {
         ManagementPermitJoiningRequest permitJoining = new ManagementPermitJoiningRequest();
 
-        permitJoining.setDestinationAddress(new ZigBeeDeviceAddress(0xFFFC));
-        permitJoining.setSourceAddress(new ZigBeeDeviceAddress(0));
+        permitJoining.setDestinationAddress(new ZigBeeEndpointAddress(0xFFFC));
+        permitJoining.setSourceAddress(new ZigBeeEndpointAddress(0));
         permitJoining.setTcSignificance(true);
         permitJoining.setPermitDuration(255);
 

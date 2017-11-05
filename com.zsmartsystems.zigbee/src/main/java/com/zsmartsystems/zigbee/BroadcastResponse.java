@@ -12,6 +12,6 @@ package com.zsmartsystems.zigbee;
  * 
  * @author Tommi S.E. Laukkanen
  */
-public class BroadcastResponse extends Command {
+public class BroadcastResponse extends ZigBeeCommand {
 
 }

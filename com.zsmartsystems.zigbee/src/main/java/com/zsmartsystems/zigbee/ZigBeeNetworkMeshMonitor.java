@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,8 +32,8 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementRoutingResponse;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
-import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable.NeighborTableJoining;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 
 /**
  * {@link ZigBeeNetworkMeshMonitor} is used to walk through the network getting information about the mesh network.
@@ -208,7 +207,7 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
 
                     // Notify that this is a new node so we can try and discover it
                     // TODO: Remove - devices should only join through the TC
-                    networkManager.deviceStatusUpdate(ZigBeeDeviceStatus.UNSECURED_JOIN, nodeNetworkAddress, null);
+                    networkManager.nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN, nodeNetworkAddress, null);
 
                     return;
                 }
@@ -286,7 +285,7 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
         do {
             // Request extended response, start index for associated list is 0
             final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
-            ieeeAddressRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+            ieeeAddressRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
             ieeeAddressRequest.setRequestType(1);
             ieeeAddressRequest.setStartIndex(startIndex);
             ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
@@ -334,7 +333,7 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
         List<NeighborTable> neighbors = new ArrayList<NeighborTable>();
         do {
             final ManagementLqiRequest neighborRequest = new ManagementLqiRequest();
-            neighborRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+            neighborRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
             neighborRequest.setStartIndex(startIndex);
             CommandResult response = networkManager.unicast(neighborRequest, neighborRequest).get();
 
@@ -390,7 +389,7 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
         List<RoutingTable> routes = new ArrayList<RoutingTable>();
         do {
             final ManagementRoutingRequest routeRequest = new ManagementRoutingRequest();
-            routeRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+            routeRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
             routeRequest.setStartIndex(startIndex);
             CommandResult response = networkManager.unicast(routeRequest, routeRequest).get();
             final ManagementRoutingResponse routingResponse = response.getResponse();
@@ -415,7 +414,7 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
     }
 
     @Override
-    public void commandReceived(Command command) {
+    public void commandReceived(ZigBeeCommand command) {
         // Listen for specific commands that may indicate that the mesh has changed
         if (command instanceof ManagementLeaveResponse || command instanceof DeviceAnnounce) {
             logger.debug("Mesh related command received. Triggering mesh update.");
@@ -423,8 +422,4 @@ public class ZigBeeNetworkMeshMonitor implements CommandListener {
         }
     }
 
-    private class NodeMeshStatus {
-        public Date lastUpdateTime;
-        public int retries;
-    }
 }

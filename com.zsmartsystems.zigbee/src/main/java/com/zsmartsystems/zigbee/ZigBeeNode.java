@@ -8,29 +8,41 @@
 package com.zsmartsystems.zigbee;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zdo.ZdoResponseMatcher;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.ServerCapabilitiesType;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 
 /**
  * Defines a ZigBee Node. A node is a physical entity on the network and will
- * contain one or more {@link ZigBeeDevice}s.
- * <p>
+ * contain one or more {@link ZigBeeEndpoint}s.
  *
  * @author Chris Jackson
  *
  */
 public class ZigBeeNode {
+    /**
+     * The {@link Logger}.
+     */
+    private final Logger logger = LoggerFactory.getLogger(ZigBeeNode.class);
+
     /**
      * The extended {@link IeeeAddress} for the node
      */
@@ -78,10 +90,27 @@ public class ZigBeeNode {
     private final List<RoutingTable> routes = new ArrayList<RoutingTable>();
 
     /**
-     * The network manager that manages this node
+     * List of endpoints this node exposes
+     */
+    private final Map<Integer, ZigBeeEndpoint> endpoints = new ConcurrentHashMap<Integer, ZigBeeEndpoint>();
+
+    /**
+     * The endpoint listeners of the ZigBee network. Registered listeners will be
+     * notified of additions, deletions and changes to {@link ZigBeeEndpoint}s.
+     */
+    private List<ZigBeeNetworkEndpointListener> endpointListeners = Collections
+            .unmodifiableList(new ArrayList<ZigBeeNetworkEndpointListener>());
+
+    /**
+     * The {@link ZigBeeNetworkManager} that manages this node
      */
     private final ZigBeeNetworkManager networkManager;
 
+    /**
+     * Constructor
+     *
+     * @param networkManager the {@link ZigBeeNetworkManager}
+     */
     public ZigBeeNode(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
     }
@@ -131,23 +160,38 @@ public class ZigBeeNode {
         this.nodeDescriptor = nodeDescriptor;
     }
 
+    /**
+     * Gets the {@link NodeDescriptor} for this node.
+     *
+     * @return nodeDescriptor the new {@link NodeDescriptor}
+     */
     public NodeDescriptor getNodeDescriptor() {
         return nodeDescriptor;
     }
 
+    /**
+     * Sets the nodes {@link PowerDescriptor}
+     *
+     * @param powerDescriptor the {@link PowerDescriptor}
+     */
     public void setPowerDescriptor(PowerDescriptor powerDescriptor) {
         this.powerDescriptor = powerDescriptor;
     }
 
+    /**
+     * Gets the nodes {@link PowerDescriptor}
+     *
+     * @return the {@link PowerDescriptor} or null if not set
+     */
     public PowerDescriptor getPowerDescriptor() {
         return powerDescriptor;
     }
 
     /**
-     * Enables or disables devices to join to this node.
+     * Enables or disables nodes to join to this node.
      * <p>
-     * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
-     * since it allows devices to join the network without the installer knowing.
+     * Nodes can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
+     * since it allows nodes to join the network without the installer knowing.
      *
      * @param duration sets the duration of the join enable. Setting this to 0 disables joining. Setting to a value
      *            greater than 255 seconds will permanently enable joining.
@@ -162,21 +206,21 @@ public class ZigBeeNode {
         }
 
         command.setTcSignificance(true);
-        command.setDestinationAddress(new ZigBeeDeviceAddress(0));
-        command.setSourceAddress(new ZigBeeDeviceAddress(0));
+        command.setDestinationAddress(new ZigBeeEndpointAddress(0));
+        command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
         try {
             networkManager.sendCommand(command);
         } catch (final ZigBeeException e) {
-            throw new ZigBeeApiException("Error sending permit join command.", e);
+            logger.debug("Error sending permit join command.", e);
         }
     }
 
     /**
-     * Enables or disables devices to join to this node.
+     * Enables or disables nodes to join to this node.
      * <p>
-     * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
-     * since it allows devices to join the network without the installer knowing.
+     * Nodes can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
+     * since it allows nodes to join the network without the installer knowing.
      *
      * @param enable if true joining is enabled, otherwise it is disabled
      */
@@ -189,7 +233,7 @@ public class ZigBeeNode {
     }
 
     /**
-     * Returns true if the device is a Full Function Device. Returns false if not an FFD or logical type is unknown.
+     * Returns true if the node is a Full Function Device. Returns false if not an FFD or logical type is unknown.
      * <p>
      * A FFD (Full Function Device) is a device that has full levels of functionality.
      * It can be used for sending and receiving data, but it can also route data from other nodes.
@@ -205,7 +249,7 @@ public class ZigBeeNode {
     }
 
     /**
-     * Returns true if the device is a Reduced Function Device. Returns false if not an RFD or logical type is unknown.
+     * Returns true if the node is a Reduced Function Device. Returns false if not an RFD or logical type is unknown.
      * <p>
      * An RFD (Reduced Function Device) is a device that has a reduced level of functionality.
      * Typically it is an end node which may be typically a sensor or switch. RFDs can only talk to FFDs
@@ -236,7 +280,7 @@ public class ZigBeeNode {
     }
 
     /**
-     * Gets the {@link LogicalType} of the device.
+     * Gets the {@link LogicalType} of the node.
      * <p>
      * Possible types are -:
      * <ul>
@@ -245,7 +289,7 @@ public class ZigBeeNode {
      * <li>{@link LogicalType#END_DEVICE}
      * <ul>
      *
-     * @return the {@link LogicalType} of the device
+     * @return the {@link LogicalType} of the node
      */
     public LogicalType getLogicalType() {
         return nodeDescriptor.getLogicalType();
@@ -257,9 +301,114 @@ public class ZigBeeNode {
      */
     public void updateBindingTable() {
         ManagementBindRequest bindingRequest = new ManagementBindRequest();
-        bindingRequest.setDestinationAddress(new ZigBeeDeviceAddress(networkAddress));
+        bindingRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
         bindingRequest.setStartIndex(0);
         networkManager.unicast(bindingRequest, new ZdoResponseMatcher());
+    }
+
+    /**
+     * Gets the a {@link Collection} of {@link ZigBeeEndpoint}s this node provides
+     *
+     * @return {@link Collection} of {@link ZigBeeEndpoint}s supported by the node
+     */
+    public Collection<ZigBeeEndpoint> getEndpoints() {
+        return endpoints.values();
+    }
+
+    /**
+     * Gets an endpoint given the {@link ZigBeeAddress} address.
+     *
+     * @param endpointId the endpoint ID to get
+     * @return the {@link ZigBeeEndpoint}
+     */
+    public ZigBeeEndpoint getEndpoint(final int endpointId) {
+        synchronized (endpoints) {
+            return endpoints.get(endpointId);
+        }
+    }
+
+    /**
+     * Adds an endpoint to the node
+     *
+     * @param endpoint the {@link ZigBeeEndpoint} to add
+     */
+    public void addEndpoint(final ZigBeeEndpoint endpoint) {
+        synchronized (endpoints) {
+            endpoints.put(endpoint.getEndpointId(), endpoint);
+        }
+        synchronized (this) {
+            for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.deviceAdded(endpoint);
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * Updates an endpoint information in the node
+     *
+     * @param endpoint the {@link ZigBeeEndpoint} to update
+     */
+    public void updateEndpoint(final ZigBeeEndpoint endpoint) {
+        synchronized (endpoints) {
+            endpoints.put(endpoint.getEndpointId(), endpoint);
+        }
+        synchronized (this) {
+            for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.deviceUpdated(endpoint);
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * Removes endpoint by network address.
+     *
+     * @param endpointId the network address
+     */
+    public void removeEndpoint(final int endpointId) {
+        final ZigBeeEndpoint endpoint;
+        synchronized (endpoints) {
+            endpoint = endpoints.remove(endpointId);
+        }
+        synchronized (this) {
+            if (endpoint != null) {
+                for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
+                    NotificationService.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.deviceRemoved(endpoint);
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    public void addNetworkEndpointListener(final ZigBeeNetworkEndpointListener networkDeviceListener) {
+        synchronized (this) {
+            final List<ZigBeeNetworkEndpointListener> modifiedListeners = new ArrayList<ZigBeeNetworkEndpointListener>(
+                    endpointListeners);
+            modifiedListeners.add(networkDeviceListener);
+            endpointListeners = Collections.unmodifiableList(modifiedListeners);
+        }
+    }
+
+    public void removeNetworkEndpointListener(final ZigBeeNetworkEndpointListener networkDeviceListener) {
+        synchronized (this) {
+            final List<ZigBeeNetworkEndpointListener> modifiedListeners = new ArrayList<ZigBeeNetworkEndpointListener>(
+                    endpointListeners);
+            modifiedListeners.remove(networkDeviceListener);
+            endpointListeners = Collections.unmodifiableList(modifiedListeners);
+        }
     }
 
     /**
@@ -321,7 +470,7 @@ public class ZigBeeNode {
     }
 
     /**
-     * Set the list of neighbors as a {@link NeighborTable}.
+     * Set the list of associated devices.
      * <p>
      * This method checks to see if there have been "significant" changes to the neighbors list so that we can avoid
      * bothering higher layers if nothing noteworthy has changed.
@@ -454,9 +603,10 @@ public class ZigBeeNode {
     @Override
     public String toString() {
         if (nodeDescriptor == null) {
-            return "IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress);
+            return "ZigBeeNode [IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + "]";
         }
-        return "IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + ", Type="
-                + nodeDescriptor.getLogicalType();
+
+        return "ZigBeeNode [IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + ", Type="
+                + nodeDescriptor.getLogicalType() + "]";
     }
 }

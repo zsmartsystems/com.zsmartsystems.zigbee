@@ -16,9 +16,9 @@ public interface CommandResponseMatcher {
     /**
      * Matches request and response.
      *
-     * @param request the request {@link Command}
-     * @param response the response {@link Command}
+     * @param request the request {@link ZigBeeCommand}
+     * @param response the response {@link ZigBeeCommand}
      * @return true if request matches response
      */
-    boolean isMatch(Command request, Command response);
+    boolean isMatch(ZigBeeCommand request, ZigBeeCommand response);
 }
