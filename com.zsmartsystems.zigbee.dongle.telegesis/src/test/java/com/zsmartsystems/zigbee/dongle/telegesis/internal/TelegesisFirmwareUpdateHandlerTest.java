@@ -123,13 +123,13 @@ public class TelegesisFirmwareUpdateHandlerTest {
         assertEquals(SOH, sentData[0]);
         assertEquals(1, sentData[1]);
         assertEquals(254, sentData[2] & 0xff);
-        assertEquals(34, sentData[131]);
-        assertEquals(34, sentData[132]);
+        assertEquals(113, sentData[131]);
+        assertEquals(15, sentData[132]);
         assertEquals(SOH, sentData[133]);
         assertEquals(2, sentData[134]);
         assertEquals(253, sentData[135] & 0xff);
-        assertEquals(34, sentData[264]);
-        assertEquals(34, sentData[265]);
+        assertEquals(113, sentData[264]);
+        assertEquals(15, sentData[265]);
         assertEquals(SOH, sentData[266]);
         assertEquals(3, sentData[267]);
         assertEquals(252, sentData[268] & 0xff);

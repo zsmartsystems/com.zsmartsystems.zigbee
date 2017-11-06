@@ -161,7 +161,7 @@ public class ZigBeeConsoleMain {
 
         // Start the mesh monitor
         ZigBeeNetworkMeshMonitor meshMonitor = new ZigBeeNetworkMeshMonitor(networkManager);
-        // meshMonitor.startup(60);
+        meshMonitor.startup(60);
 
         console.start();
 
