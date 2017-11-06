@@ -270,7 +270,7 @@ public class TelegesisFrameHandler {
                 return;
             }
 
-            logger.debug("TX Telegesis: {}", nextFrame);
+            logger.trace("TX Telegesis: {}", nextFrame);
 
             // Remember the command we're processing
             sentCommand = nextFrame;

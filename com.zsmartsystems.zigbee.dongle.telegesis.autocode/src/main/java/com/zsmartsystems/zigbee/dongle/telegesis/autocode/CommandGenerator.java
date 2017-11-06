@@ -745,13 +745,17 @@ public class CommandGenerator extends ClassGenerator {
             }
             first = false;
             if (parameter.data_type.equals("Data")) {
-                out.println(
-                        indent + "for (int c = 0; c < " + stringToLowerCamelCase(parameter.name) + ".length; c++) {");
-                out.println(indent + "    if (c > 0) {");
-                out.println(indent + "        builder.append(' ');");
+                out.println(indent + "if (" + stringToLowerCamelCase(parameter.name) + " == null) {");
+                out.println(indent + "    builder.append(\"null\");");
+                out.println(indent + "} else {");
+                out.println(indent + "    for (int cnt = 0; cnt < " + stringToLowerCamelCase(parameter.name)
+                        + ".length; cnt++) {");
+                out.println(indent + "        if (cnt > 0) {");
+                out.println(indent + "            builder.append(' ');");
+                out.println(indent + "        }");
+                out.println(indent + "        builder.append(String.format(\"%02X\", "
+                        + formatParameterString(parameter) + "[cnt]));");
                 out.println(indent + "    }");
-                out.println(indent + "    builder.append(String.format(\"%02X\", " + formatParameterString(parameter)
-                        + "[c]));");
                 out.println(indent + "}");
             } else {
                 out.println(indent + "builder.append(" + formatParameterString(parameter) + ");");
