@@ -7,9 +7,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -25,8 +23,6 @@ import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCurrentSecurityStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCurrentSecurityStateResponse;
@@ -63,8 +59,6 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclProfileType;
 
 /**
  * Implementation of the Silabs Ember NCP (Network Co Processor) EZSP dongle implementation.
@@ -97,11 +91,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
      * The stack policies we need for the NCP
      */
     private Map<EzspPolicyId, EzspDecisionId> stackPolicies;
-
-    /**
-     * Keep a map of which endpoint is registered with each cluster. This is used when sending messages.
-     */
-    private final Map<Integer, Integer> endpointMap = new HashMap<Integer, Integer>();
 
     /**
      * The reference to the receive interface
@@ -210,9 +199,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             logger.debug("Policy state {} = {}", policy, policies.get(policy));
         }
 
-        // Add our endpoint(s)
-        createEndpoints();
-
         getNetworkParameters();
 
         // Now initialise the network
@@ -310,54 +296,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         }
 
         return getNetworkParametersResponse.getParameters();
-    }
-
-    private void createEndpoints() {
-        // Create a list of all the clusters we want to register
-        final List<Integer> clusterSet = Arrays.asList(ZclClusterType.BASIC.getId(),
-                ZclClusterType.POWER_CONFIGURATION.getId(), ZclClusterType.ON_OFF.getId());
-
-        EzspAddEndpointRequest addEndpoint;
-
-        int startIndex = 0;
-        int endIndex = 0;
-
-        final int MAX_CLUSTERS_PER_AF_REGISTER = 16;
-        int endpoint = 1;
-        while (endIndex < clusterSet.size()) {
-            endIndex = clusterSet.size();
-
-            if ((endIndex - startIndex) > MAX_CLUSTERS_PER_AF_REGISTER) {
-                endIndex = startIndex + MAX_CLUSTERS_PER_AF_REGISTER;
-            }
-
-            final int[] clusters = new int[endIndex - startIndex];
-
-            int index = 0;
-            for (final Integer cluster : clusterSet.subList(startIndex, endIndex)) {
-                endpointMap.put(cluster, endpoint);
-                clusters[index] = cluster;
-                index++;
-            }
-            startIndex = endIndex;
-
-            addEndpoint = new EzspAddEndpointRequest();
-            addEndpoint.setEndpoint(endpoint);
-            addEndpoint.setDeviceId(0);
-            addEndpoint.setProfileId(ZclProfileType.HOME_AUTOMATION.getId());
-            addEndpoint.setInputClusterList(clusters);
-            addEndpoint.setOutputClusterList(clusters);
-            // addEndpoint = (EzspAddEndpointRequest) ashHandler.sendEzspRequest(addEndpoint);
-            logger.debug(addEndpoint.toString());
-
-            EzspTransaction addEndpointTransaction = ashHandler
-                    .sendEzspTransaction(new EzspSingleResponseTransaction(addEndpoint, EzspAddEndpointResponse.class));
-            EzspAddEndpointResponse addEndpointResponse = (EzspAddEndpointResponse) addEndpointTransaction
-                    .getResponse();
-            logger.debug(addEndpointResponse.toString());
-
-            endpoint++;
-        }
     }
 
     private void initialiseNetwork() {
