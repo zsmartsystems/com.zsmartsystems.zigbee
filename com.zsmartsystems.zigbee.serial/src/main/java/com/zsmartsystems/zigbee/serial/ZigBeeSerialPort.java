@@ -190,9 +190,7 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
                         return -1;
                     }
 
-                    logger.debug("READ sleep");
                     wait(endTime - System.currentTimeMillis());
-                    logger.debug("READ awake");
                 }
             }
             return -1;
