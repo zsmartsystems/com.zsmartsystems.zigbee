@@ -276,10 +276,12 @@ public class TelegesisFrameHandler {
             sentCommand = nextFrame;
 
             // Send the data
+            StringBuilder builder = new StringBuilder();
             for (int sendByte : nextFrame.serialize()) {
-                logger.trace("TX Telegesis: {}", String.format("%02X  %c", sendByte, sendByte));
+                builder.append(String.format(" %02X", sendByte));
                 serialPort.write(sendByte);
             }
+            logger.debug("TELEGESIS TX: Data{}", builder.toString());
         }
     }
 
