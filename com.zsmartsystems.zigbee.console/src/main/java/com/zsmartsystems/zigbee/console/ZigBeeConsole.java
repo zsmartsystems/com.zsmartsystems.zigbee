@@ -2442,7 +2442,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getSyntax() {
-            return "firmware [FILE]";
+            return "firmware [VERSION | FILE]";
         }
 
         /**
@@ -2458,8 +2458,14 @@ public final class ZigBeeConsole {
                 print("Dongle does not implement firmware updates.", out);
                 return false;
             }
-
             ZigBeeTransportFirmwareUpdate firmwareUpdate = (ZigBeeTransportFirmwareUpdate) dongle;
+
+            if (args[1].toLowerCase().equals("version")) {
+                print("Dongle firmware version is currently " + firmwareUpdate.getFirmwareVersion(), out);
+                return true;
+            }
+
+            dongle.shutdown();
 
             File firmwareFile = new File(args[1]);
             firmwareUpdate.updateFirmware(firmwareFile, new ZigBeeTransportFirmwareCallback() {

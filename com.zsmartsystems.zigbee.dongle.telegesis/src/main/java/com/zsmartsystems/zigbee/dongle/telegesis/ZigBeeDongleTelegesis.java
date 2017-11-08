@@ -119,6 +119,11 @@ public class ZigBeeDongleTelegesis
     private ExtendedPanId extendedPanId;
 
     /**
+     * The Telegesis version used in this system.
+     */
+    private String versionString = "Unknown";
+
+    /**
      * S0A – Main Function
      * <p>
      * - Bit E-F: Device Selection
@@ -271,11 +276,6 @@ public class ZigBeeDongleTelegesis
      * + Bit 0: Set: Don’t attach EUI64 to NWK frame when sending a message.
      */
     private final int defaultS10 = 0x56A9;
-
-    /**
-     * The Telegesis version used in this system.
-     */
-    private String versionString = "Unknown";
 
     public ZigBeeDongleTelegesis(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
@@ -606,10 +606,14 @@ public class ZigBeeDongleTelegesis
             return false;
         }
 
+        if (!serialPort.open()) {
+            logger.error("Unable to open Telegesis serial port");
+            return false;
+        }
+
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
         callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);
 
-        bootloadHandler = new TelegesisFirmwareUpdateHandler(firmwareFile, serialPort, callback);
         TelegesisBootloadCommand bootloadCommand = new TelegesisBootloadCommand();
         if (frameHandler.sendRequest(bootloadCommand) == null) {
             // logger.debug("Error setting Telegesis into BOOTLOAD mode");
@@ -628,6 +632,15 @@ public class ZigBeeDongleTelegesis
         bootloadHandler.startBootload();
 
         return true;
+    }
+
+    @Override
+    public String getFirmwareVersion() {
+        int versionIndex = versionString.indexOf("Version=");
+        if (versionIndex == -1) {
+            return "";
+        }
+        return versionString.substring(versionIndex + 8);
     }
 
 }

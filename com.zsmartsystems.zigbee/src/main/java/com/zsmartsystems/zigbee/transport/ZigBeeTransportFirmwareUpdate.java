@@ -19,12 +19,24 @@ import java.io.File;
 public interface ZigBeeTransportFirmwareUpdate {
 
     /**
-     * Implements the dongle firmware update. When the firmware is updated, the {@link ZigBeeTransportFirmwareCallback} is
-     * called to notify the caller.
-     * 
+     * Implements the dongle firmware update. When the firmware is updated, the {@link ZigBeeTransportFirmwareCallback}
+     * is called to notify the caller of updates.
+     * <p>
+     * Entry conditions are that the port should be closed. This means that any previous use of the transport interfaces
+     * should first be stopped.
+     *
      * @param firmwareFile the device specific {@link File} containing the dongle firmware
      * @param callback the {@link ZigBeeTransportFirmwareCallback} to be called when the update is complete
-     * @return
+     * @return true if the firmware update was started.
      */
     public boolean updateFirmware(File firmwareFile, ZigBeeTransportFirmwareCallback callback);
+
+    /**
+     * Gets the current firmware version as a String. The format is not defined and can be implementation specific
+     * so long as it is a constant format within an implementation.
+     *
+     * @return {@link String} defining the firmware version. If firmware version is not known, and empty string should
+     *         be returned.
+     */
+    public String getFirmwareVersion();
 }
