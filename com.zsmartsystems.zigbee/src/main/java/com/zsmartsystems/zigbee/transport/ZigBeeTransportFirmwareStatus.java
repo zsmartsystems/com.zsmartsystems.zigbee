@@ -16,15 +16,27 @@ package com.zsmartsystems.zigbee.transport;
  */
 public enum ZigBeeTransportFirmwareStatus {
     /**
-     * The update has started
+     * The update has started and the dongle is being initialised for the firmware update
      */
     FIRMWARE_UPDATE_STARTED,
     /**
-     * The update failed
+     * The firmware is being transferred to the dongle
      */
-    FIRMWARE_UPDATE_FAILED,
+    FIRMWARE_TRANSFER_STARTED,
+    /**
+     * The firmware has been transferred to the dongle and the final steps to execute the update are being implemented
+     */
+    FIRMWARE_TRANSFER_COMPLETE,
     /**
      * The update has completed
      */
-    FIRMWARE_UPDATE_COMPLETE;
+    FIRMWARE_UPDATE_COMPLETE,
+    /**
+     * The update has been cancelled following a user request
+     */
+    FIRMWARE_UPDATE_CANCELLED,
+    /**
+     * The update failed
+     */
+    FIRMWARE_UPDATE_FAILED;
 }

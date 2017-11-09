@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis;
 
-import java.io.File;
+import java.io.InputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -316,21 +316,25 @@ public class ZigBeeDongleTelegesis
         mainFunction.setPassword(telegesisPassword);
         if (frameHandler.sendRequest(mainFunction) == null) {
             logger.debug("Error setting Telegesis Main Function register");
+            return ZigBeeInitializeResponse.FAILED;
         }
         TelegesisSetExtendedFunctionCommand extendedFunction = new TelegesisSetExtendedFunctionCommand();
         extendedFunction.setConfiguration(defaultS10);
         if (frameHandler.sendRequest(extendedFunction) == null) {
             logger.debug("Error setting Telegesis Extended Function register");
+            return ZigBeeInitializeResponse.FAILED;
         }
         TelegesisSetPromptEnable1Command prompt1Function = new TelegesisSetPromptEnable1Command();
         prompt1Function.setConfiguration(defaultS0E);
         if (frameHandler.sendRequest(prompt1Function) == null) {
             logger.debug("Error setting Telegesis Prompt 1 register");
+            return ZigBeeInitializeResponse.FAILED;
         }
         TelegesisSetPromptEnable2Command prompt2Function = new TelegesisSetPromptEnable2Command();
         prompt2Function.setConfiguration(defaultS0F);
         if (frameHandler.sendRequest(prompt2Function) == null) {
             logger.debug("Error setting Telegesis Prompt 2 register");
+            return ZigBeeInitializeResponse.FAILED;
         }
 
         // Get network information
@@ -386,6 +390,9 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public void shutdown() {
+        if (frameHandler == null) {
+            return;
+        }
         frameHandler.setClosing();
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
         serialPort.close();
@@ -600,7 +607,7 @@ public class ZigBeeDongleTelegesis
     }
 
     @Override
-    public boolean updateFirmware(final File firmwareFile, final ZigBeeTransportFirmwareCallback callback) {
+    public boolean updateFirmware(final InputStream firmware, final ZigBeeTransportFirmwareCallback callback) {
         if (frameHandler == null) {
             logger.debug("frameHandler is uninitialised in updateFirmware");
             return false;
@@ -614,12 +621,10 @@ public class ZigBeeDongleTelegesis
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
         callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);
 
+        // Send the bootload command, but ignore the response since there doesn't seem to be one
+        // despite what the documentation seems to indicate
         TelegesisBootloadCommand bootloadCommand = new TelegesisBootloadCommand();
-        if (frameHandler.sendRequest(bootloadCommand) == null) {
-            // logger.debug("Error setting Telegesis into BOOTLOAD mode");
-            // callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
-            // return false;
-        }
+        frameHandler.sendRequest(bootloadCommand);
 
         // Stop the handler and close the serial port
         logger.debug("Telegesis closing frame handler");
@@ -628,10 +633,15 @@ public class ZigBeeDongleTelegesis
         frameHandler.close();
         frameHandler = null;
 
-        bootloadHandler = new TelegesisFirmwareUpdateHandler(firmwareFile, serialPort, callback);
+        bootloadHandler = new TelegesisFirmwareUpdateHandler(this, firmware, serialPort, callback);
         bootloadHandler.startBootload();
 
         return true;
+    }
+
+    // Callback from the bootload handler when the transfer is completed/aborted/failed
+    public void bootloadComplete() {
+        bootloadHandler = null;
     }
 
     @Override
@@ -641,6 +651,15 @@ public class ZigBeeDongleTelegesis
             return "";
         }
         return versionString.substring(versionIndex + 8);
+    }
+
+    @Override
+    public boolean cancelUpdateFirmware() {
+        if (bootloadHandler == null) {
+            return false;
+        }
+        bootloadHandler.cancelUpdate();
+        return true;
     }
 
 }

@@ -8,10 +8,13 @@
 package com.zsmartsystems.zigbee.dongle.telegesis.internal;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -41,7 +44,7 @@ public class TelegesisFirmwareUpdateHandlerTest {
     private boolean getBlPrompt(String packet) {
         ByteArrayInputStream stream = new ByteArrayInputStream(packet.getBytes());
         ZigBeePort port = new TestPort(stream);
-        TelegesisFirmwareUpdateHandler firmwareHandler = new TelegesisFirmwareUpdateHandler(null, port, null);
+        TelegesisFirmwareUpdateHandler firmwareHandler = new TelegesisFirmwareUpdateHandler(null, null, port, null);
 
         Method privateMethod;
         try {
@@ -61,7 +64,7 @@ public class TelegesisFirmwareUpdateHandlerTest {
     private int getTransferResponse(String packet) {
         ByteArrayInputStream stream = new ByteArrayInputStream(packet.getBytes());
         ZigBeePort port = new TestPort(stream);
-        TelegesisFirmwareUpdateHandler firmwareHandler = new TelegesisFirmwareUpdateHandler(null, port, null);
+        TelegesisFirmwareUpdateHandler firmwareHandler = new TelegesisFirmwareUpdateHandler(null, null, port, null);
 
         Method privateMethod;
         try {
@@ -95,11 +98,20 @@ public class TelegesisFirmwareUpdateHandlerTest {
     @Test
     public void testTransfer() {
         File file = new File("./src/test/resource/xmodem.txt");
+        InputStream firmwareStream;
+        try {
+            firmwareStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            firmwareStream = null;
+        }
 
+        assertNotNull(firmwareStream);
         ByteArrayInputStream inStream = new ByteArrayInputStream(new byte[] { ACK, ACK, ACK, ACK });
 
         TestPort port = new TestPort(inStream);
-        TelegesisFirmwareUpdateHandler firmwareHandler = new TelegesisFirmwareUpdateHandler(file, port, null);
+        TelegesisFirmwareUpdateHandler firmwareHandler = new TelegesisFirmwareUpdateHandler(null, firmwareStream, port,
+                null);
 
         boolean returnVal = false;
         Method privateMethod;

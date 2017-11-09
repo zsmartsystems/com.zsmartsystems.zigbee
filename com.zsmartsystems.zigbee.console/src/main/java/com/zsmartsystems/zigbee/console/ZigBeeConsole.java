@@ -9,7 +9,10 @@ package com.zsmartsystems.zigbee.console;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -2442,7 +2445,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getSyntax() {
-            return "firmware [VERSION | FILE]";
+            return "firmware [VERSION | CANCEL | FILE]";
         }
 
         /**
@@ -2465,10 +2468,24 @@ public final class ZigBeeConsole {
                 return true;
             }
 
+            if (args[1].toLowerCase().equals("cancel")) {
+                print("Cancelling dongle firmware update!", out);
+                firmwareUpdate.cancelUpdateFirmware();
+                return true;
+            }
+
             dongle.shutdown();
 
             File firmwareFile = new File(args[1]);
-            firmwareUpdate.updateFirmware(firmwareFile, new ZigBeeTransportFirmwareCallback() {
+            InputStream firmwareStream;
+            try {
+                firmwareStream = new FileInputStream(firmwareFile);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            firmwareUpdate.updateFirmware(firmwareStream, new ZigBeeTransportFirmwareCallback() {
                 @Override
                 public void firmwareUpdateCallback(ZigBeeTransportFirmwareStatus status) {
                     print("Dongle firmware status: " + status + ".", out);
