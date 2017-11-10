@@ -125,7 +125,7 @@ public class ZigBeeApi {
     public Future<CommandResult> bind(final ZigBeeEndpoint source, final ZigBeeEndpoint destination,
             final int clusterId) {
         ZclCluster cluster = source.getCluster(clusterId);
-        return cluster.bind(destination);
+        return cluster.bind(destination.getIeeeAddress(), destination.getEndpointId());
     }
 
     /**
@@ -139,7 +139,7 @@ public class ZigBeeApi {
     public Future<CommandResult> unbind(final ZigBeeEndpoint source, final ZigBeeEndpoint destination,
             final int clusterId) {
         ZclCluster cluster = source.getCluster(clusterId);
-        return cluster.unbind(destination);
+        return cluster.unbind(destination.getIeeeAddress(), destination.getEndpointId());
     }
 
     /**
@@ -377,7 +377,7 @@ public class ZigBeeApi {
         command.setGroupId(groupId);
         command.setGroupName(groupName);
 
-        command.setDestinationAddress(device.getDeviceAddress());
+        command.setDestinationAddress(device.getEndpointAddress());
 
         return networkManager.unicast(command, new ZclCustomResponseMatcher());
     }
@@ -393,7 +393,7 @@ public class ZigBeeApi {
 
         command.setGroupCount(0);
         command.setGroupList(Collections.<Integer> emptyList());
-        command.setDestinationAddress(device.getDeviceAddress());
+        command.setDestinationAddress(device.getEndpointAddress());
 
         return networkManager.unicast(command, new ZclCustomResponseMatcher());
     }
@@ -409,7 +409,7 @@ public class ZigBeeApi {
         final ViewGroupCommand command = new ViewGroupCommand();
         command.setGroupId(groupId);
 
-        command.setDestinationAddress(device.getDeviceAddress());
+        command.setDestinationAddress(device.getEndpointAddress());
 
         return networkManager.unicast(command, new ZclCustomResponseMatcher());
     }
@@ -425,7 +425,7 @@ public class ZigBeeApi {
         final RemoveGroupCommand command = new RemoveGroupCommand();
         command.setGroupId(groupId);
 
-        command.setDestinationAddress(device.getDeviceAddress());
+        command.setDestinationAddress(device.getEndpointAddress());
 
         return networkManager.unicast(command, new ZclCustomResponseMatcher());
     }

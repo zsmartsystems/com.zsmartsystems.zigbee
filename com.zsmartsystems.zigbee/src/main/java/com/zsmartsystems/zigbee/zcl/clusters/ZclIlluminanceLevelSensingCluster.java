@@ -172,13 +172,4 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_LIGHTSENSORTYPE));
     }
-
-    /**
-     * Add a binding for this cluster to the local node
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> bind() {
-        return bind();
-    }
 }

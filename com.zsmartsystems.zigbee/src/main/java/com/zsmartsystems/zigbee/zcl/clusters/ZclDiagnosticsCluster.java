@@ -1371,13 +1371,4 @@ public class ZclDiagnosticsCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_LASTMESSAGERSSI));
     }
-
-    /**
-     * Add a binding for this cluster to the local node
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> bind() {
-        return bind();
-    }
 }
