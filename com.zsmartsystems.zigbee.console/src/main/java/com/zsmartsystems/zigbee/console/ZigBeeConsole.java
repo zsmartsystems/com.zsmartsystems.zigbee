@@ -356,7 +356,7 @@ public final class ZigBeeConsole {
         final ZigBeeEndpoint device = getDevice(zigbeeApi, destinationIdentifier);
 
         if (device != null) {
-            return device.getDeviceAddress();
+            return device.getEndpointAddress();
         }
 
         try {
@@ -1487,7 +1487,7 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final CommandResult result = zigbeeApi.read(device.getDeviceAddress(), clusterId, attributeId).get();
+            final CommandResult result = zigbeeApi.read(device.getEndpointAddress(), clusterId, attributeId).get();
 
             if (result.isSuccess()) {
                 final ReadAttributesResponse response = result.getResponse();
@@ -1570,7 +1570,7 @@ public final class ZigBeeConsole {
 
             final Object value = parseValue(args[4], attribute.getDataType());
 
-            final CommandResult result = zigbeeApi.write(device.getDeviceAddress(), clusterId, attributeId, value)
+            final CommandResult result = zigbeeApi.write(device.getEndpointAddress(), clusterId, attributeId, value)
                     .get();
             if (result.isSuccess()) {
                 final WriteAttributesResponse response = result.getResponse();
@@ -2139,7 +2139,7 @@ public final class ZigBeeConsole {
 
             ZclBasicCluster basicCluster = (ZclBasicCluster) device.getCluster(0);
             if (basicCluster == null) {
-                print("Can't find basic cluster for " + device.getDeviceAddress(), out);
+                print("Can't find basic cluster for " + device.getEndpointAddress(), out);
                 return false;
             }
 

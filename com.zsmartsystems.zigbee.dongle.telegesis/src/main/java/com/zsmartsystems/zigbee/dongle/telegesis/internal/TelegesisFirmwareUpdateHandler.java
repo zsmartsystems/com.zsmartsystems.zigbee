@@ -88,7 +88,6 @@ public class TelegesisFirmwareUpdateHandler {
                     transferComplete(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
                     return;
                 }
-                callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);
 
                 logger.debug("Telegesis bootloader: Serial port opened.");
 

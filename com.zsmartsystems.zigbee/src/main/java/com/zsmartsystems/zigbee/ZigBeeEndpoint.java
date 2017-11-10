@@ -175,7 +175,7 @@ public class ZigBeeEndpoint implements CommandListener {
         this.inputClusterIds.clear();
         this.inputClusterIds.addAll(inputClusterIds);
 
-        logger.debug("{}: Setting input clusters {}", getDeviceAddress(), inputClusterIds);
+        logger.debug("{}: Setting input clusters {}", getEndpointAddress(), inputClusterIds);
 
         updateClusters(inputClusterIds, true);
     }
@@ -194,7 +194,7 @@ public class ZigBeeEndpoint implements CommandListener {
      *
      * @return the {@link ZigBeeEndpointAddress}
      */
-    public ZigBeeEndpointAddress getDeviceAddress() {
+    public ZigBeeEndpointAddress getEndpointAddress() {
         return new ZigBeeEndpointAddress(node.getNetworkAddress(), endpointId);
     }
 
@@ -218,7 +218,7 @@ public class ZigBeeEndpoint implements CommandListener {
         this.outputClusterIds.clear();
         this.outputClusterIds.addAll(outputClusterIds);
 
-        logger.debug("{}: Setting output clusters {}", getDeviceAddress(), outputClusterIds);
+        logger.debug("{}: Setting output clusters {}", getEndpointAddress(), outputClusterIds);
 
         updateClusters(outputClusterIds, false);
     }
@@ -246,7 +246,7 @@ public class ZigBeeEndpoint implements CommandListener {
 
         // Remove clusters no longer in use
         for (int id : removeIds) {
-            logger.debug("{}: Removing cluster {}", getDeviceAddress(), id);
+            logger.debug("{}: Removing cluster {}", getEndpointAddress(), id);
             clusters.remove(id);
         }
 
@@ -258,7 +258,7 @@ public class ZigBeeEndpoint implements CommandListener {
                 ZclCluster clusterClass = null;
                 if (clusterType == null) {
                     // Unsupported cluster
-                    logger.debug("{}: Unsupported cluster {}", getDeviceAddress(), id);
+                    logger.debug("{}: Unsupported cluster {}", getEndpointAddress(), id);
                     continue;
                 }
 
@@ -269,13 +269,13 @@ public class ZigBeeEndpoint implements CommandListener {
                             ZigBeeEndpoint.class);
                     clusterClass = constructor.newInstance(networkManager, this);
                 } catch (Exception e) {
-                    logger.debug("{}: Error instantiating cluster {}", getDeviceAddress(), clusterType);
+                    logger.debug("{}: Error instantiating cluster {}", getEndpointAddress(), clusterType);
                 }
                 if (isInput) {
-                    logger.debug("{}: Setting cluster {} as server", getDeviceAddress(), clusterType);
+                    logger.debug("{}: Setting cluster {} as server", getEndpointAddress(), clusterType);
                     clusterClass.setServer(true);
                 } else {
-                    logger.debug("{}: Setting cluster {} as client", getDeviceAddress(), clusterType);
+                    logger.debug("{}: Setting cluster {} as client", getEndpointAddress(), clusterType);
                     clusterClass.setClient(true);
                 }
 
@@ -314,7 +314,7 @@ public class ZigBeeEndpoint implements CommandListener {
 
     @Override
     public void commandReceived(ZigBeeCommand command) {
-        if (!command.getSourceAddress().equals(getDeviceAddress())) {
+        if (!command.getSourceAddress().equals(getEndpointAddress())) {
             return;
         }
 
@@ -324,7 +324,7 @@ public class ZigBeeEndpoint implements CommandListener {
             // Get the cluster
             ZclCluster cluster = getCluster(attributeCommand.getClusterId());
             if (cluster == null) {
-                logger.debug("{}: Cluster {} not found for attribute report", getDeviceAddress(),
+                logger.debug("{}: Cluster {} not found for attribute report", getEndpointAddress(),
                         attributeCommand.getClusterId());
                 return;
             }
@@ -340,7 +340,7 @@ public class ZigBeeEndpoint implements CommandListener {
             // Get the cluster
             ZclCluster cluster = getCluster(attributeCommand.getClusterId());
             if (cluster == null) {
-                logger.debug("{}: Cluster {} not found for attribute report", getDeviceAddress(),
+                logger.debug("{}: Cluster {} not found for attribute report", getEndpointAddress(),
                         attributeCommand.getClusterId());
                 return;
             }
@@ -354,7 +354,7 @@ public class ZigBeeEndpoint implements CommandListener {
 
     @Override
     public String toString() {
-        return "ZigBeeDevice [networkAddress=" + getDeviceAddress().toString() + ", profileId="
+        return "ZigBeeDevice [networkAddress=" + getEndpointAddress().toString() + ", profileId="
                 + String.format("%04X", profileId) + ", deviceId=" + deviceId + ", deviceVersion=" + deviceVersion
                 + ", inputClusterIds=" + getInputClusterIds().toString() + ", outputClusterIds="
                 + getOutputClusterIds().toString() + "]";

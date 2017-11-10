@@ -345,13 +345,4 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
     public Future<CommandResult> setToleranceReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(attributes.get(ATTR_TOLERANCE), minInterval, maxInterval, reportableChange);
     }
-
-    /**
-     * Add a binding for this cluster to the local node
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> bind() {
-        return bind();
-    }
 }

@@ -649,13 +649,4 @@ public class ZclTimeCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_LOCALTIME));
     }
-
-    /**
-     * Add a binding for this cluster to the local node
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> bind() {
-        return bind();
-    }
 }

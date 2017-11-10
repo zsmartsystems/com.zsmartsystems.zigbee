@@ -1551,17 +1551,17 @@ public class ZclProtocolCodeGenerator {
                     out.println("    }");
                 }
 
-                if (readAttributes) {
-                    out.println();
-                    out.println("    /**");
-                    out.println("     * Add a binding for this cluster to the local node");
-                    out.println("     *");
-                    out.println("     * @return the {@link Future<CommandResult>} command result future");
-                    out.println("     */");
-                    out.println("    public Future<CommandResult> bind() {");
-                    out.println("        return bind();");
-                    out.println("    }");
-                }
+                // if (readAttributes) {
+                // out.println();
+                // out.println(" /**");
+                // out.println(" * Add a binding for this cluster to the local node");
+                // out.println(" *");
+                // out.println(" * @return the {@link Future<CommandResult>} command result future");
+                // out.println(" */");
+                // out.println(" public Future<CommandResult> bind() {");
+                // out.println(" return bind();");
+                // out.println(" }");
+                // }
 
                 if (cluster.received.size() > 0) {
                     out.println();
