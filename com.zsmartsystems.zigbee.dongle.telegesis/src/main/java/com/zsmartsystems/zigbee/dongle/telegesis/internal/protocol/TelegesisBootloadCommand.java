@@ -37,6 +37,10 @@ public class TelegesisBootloadCommand extends TelegesisFrame implements Telegesi
 
         initialiseDeserializer(data);
 
+        // Deserialize the fields for the "ENTERING BLOAD" response
+        if (testPrompt(data, "ENTERING BLOAD")) {
+            return true;
+        }
 
         return false;
     }

@@ -152,7 +152,7 @@ public class TelegesisFrameHandler {
         RxStateMachine rxState = RxStateMachine.WAITING;
         int binaryLength = 0;
 
-        logger.debug("TELEGESIS: Get Packet");
+        logger.trace("TELEGESIS: Get Packet");
         while (!closeHandler) {
             int val = serialPort.read();
             if (val == -1) {

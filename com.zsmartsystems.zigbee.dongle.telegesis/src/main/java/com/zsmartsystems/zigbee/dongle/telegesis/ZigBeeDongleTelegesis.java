@@ -7,6 +7,8 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis;
 
+import java.io.InputStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,9 +19,11 @@ import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisEventListener;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFirmwareUpdateHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFrameHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBecomeNetworkManagerCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBecomeTrustCentreCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBootloadCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCreatePanCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceType;
@@ -43,6 +47,9 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetP
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetTrustCentreLinkKeyCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisStatusCode;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
@@ -53,7 +60,8 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
  * @author Chris Jackson
  *
  */
-public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, TelegesisEventListener {
+public class ZigBeeDongleTelegesis
+        implements ZigBeeTransportTransmit, ZigBeeTransportFirmwareUpdate, TelegesisEventListener {
     /**
      * The {@link Logger}.
      */
@@ -68,6 +76,11 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
      * The Telegesis protocol handler used to send and receive packets
      */
     private TelegesisFrameHandler frameHandler;
+
+    /**
+     * The Telegesis bootload handler
+     */
+    private TelegesisFirmwareUpdateHandler bootloadHandler;
 
     /**
      * The dongle password
@@ -104,6 +117,11 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
      * The current extended pan ID
      */
     private ExtendedPanId extendedPanId;
+
+    /**
+     * The Telegesis version used in this system.
+     */
+    private String versionString = "Unknown";
 
     /**
      * S0A – Main Function
@@ -259,11 +277,6 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
      */
     private final int defaultS10 = 0x56A9;
 
-    /**
-     * The Telegesis version used in this system.
-     */
-    private String versionString = "Unknown";
-
     public ZigBeeDongleTelegesis(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
     }
@@ -271,6 +284,8 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
     @Override
     public ZigBeeInitializeResponse initialize() {
         logger.debug("Telegesis dongle initialize.");
+
+        bootloadHandler = null;
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
@@ -301,21 +316,25 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
         mainFunction.setPassword(telegesisPassword);
         if (frameHandler.sendRequest(mainFunction) == null) {
             logger.debug("Error setting Telegesis Main Function register");
+            return ZigBeeInitializeResponse.FAILED;
         }
         TelegesisSetExtendedFunctionCommand extendedFunction = new TelegesisSetExtendedFunctionCommand();
         extendedFunction.setConfiguration(defaultS10);
         if (frameHandler.sendRequest(extendedFunction) == null) {
             logger.debug("Error setting Telegesis Extended Function register");
+            return ZigBeeInitializeResponse.FAILED;
         }
         TelegesisSetPromptEnable1Command prompt1Function = new TelegesisSetPromptEnable1Command();
         prompt1Function.setConfiguration(defaultS0E);
         if (frameHandler.sendRequest(prompt1Function) == null) {
             logger.debug("Error setting Telegesis Prompt 1 register");
+            return ZigBeeInitializeResponse.FAILED;
         }
         TelegesisSetPromptEnable2Command prompt2Function = new TelegesisSetPromptEnable2Command();
         prompt2Function.setConfiguration(defaultS0F);
         if (frameHandler.sendRequest(prompt2Function) == null) {
             logger.debug("Error setting Telegesis Prompt 2 register");
+            return ZigBeeInitializeResponse.FAILED;
         }
 
         // Get network information
@@ -371,6 +390,9 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
 
     @Override
     public void shutdown() {
+        if (frameHandler == null) {
+            return;
+        }
         frameHandler.setClosing();
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
         serialPort.close();
@@ -443,6 +465,11 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
 
     @Override
     public void sendCommand(final ZigBeeApsFrame apsFrame) throws ZigBeeException {
+        if (frameHandler == null) {
+            logger.debug("Telegesis frame handler not set for send.");
+            return;
+        }
+
         TelegesisCommand command;
         if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE && apsFrame.getDestinationAddress() < 0xfff8) {
             // Unicast command
@@ -577,6 +604,62 @@ public class ZigBeeDongleTelegesis implements ZigBeeTransportTransmit, Telegesis
      */
     public void setTelegesisPassword(String telegesisPassword) {
         this.telegesisPassword = telegesisPassword;
+    }
+
+    @Override
+    public boolean updateFirmware(final InputStream firmware, final ZigBeeTransportFirmwareCallback callback) {
+        if (frameHandler == null) {
+            logger.debug("frameHandler is uninitialised in updateFirmware");
+            return false;
+        }
+
+        if (!serialPort.open()) {
+            logger.error("Unable to open Telegesis serial port");
+            return false;
+        }
+
+        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);
+
+        // Send the bootload command, but ignore the response since there doesn't seem to be one
+        // despite what the documentation seems to indicate
+        TelegesisBootloadCommand bootloadCommand = new TelegesisBootloadCommand();
+        frameHandler.sendRequest(bootloadCommand);
+
+        // Stop the handler and close the serial port
+        logger.debug("Telegesis closing frame handler");
+        frameHandler.setClosing();
+        serialPort.close();
+        frameHandler.close();
+        frameHandler = null;
+
+        bootloadHandler = new TelegesisFirmwareUpdateHandler(this, firmware, serialPort, callback);
+        bootloadHandler.startBootload();
+
+        return true;
+    }
+
+    // Callback from the bootload handler when the transfer is completed/aborted/failed
+    public void bootloadComplete() {
+        bootloadHandler = null;
+    }
+
+    @Override
+    public String getFirmwareVersion() {
+        int versionIndex = versionString.indexOf("Version=");
+        if (versionIndex == -1) {
+            return "";
+        }
+        return versionString.substring(versionIndex + 8);
+    }
+
+    @Override
+    public boolean cancelUpdateFirmware() {
+        if (bootloadHandler == null) {
+            return false;
+        }
+        bootloadHandler.cancelUpdate();
+        return true;
     }
 
 }

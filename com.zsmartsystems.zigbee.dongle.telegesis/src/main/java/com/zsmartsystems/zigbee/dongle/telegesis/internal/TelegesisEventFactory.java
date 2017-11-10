@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee.dongle.telegesis.internal;
 
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisAckMessageEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisAddressResponseEvent;
-import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBootloadStartEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceJoinedNetworkEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceLeftNetworkEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEndDeviceAnnounceEvent;
@@ -64,7 +63,6 @@ public class TelegesisEventFactory {
         events.put(0x04C66D8C, TelegesisReceiveMulticastEvent.class);
         events.put(0x04C66D94, TelegesisReceiveUnicastEvent.class);
         events.put(0x06E4B0D7, TelegesisDeviceLeftNetworkEvent.class);
-        events.put(0x1431C7AE, TelegesisBootloadStartEvent.class);
     }
 
     public static TelegesisEvent getTelegesisFrame(int[] data) {
