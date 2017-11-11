@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorType;
 
 /**
  * Class to implement the Ember EZSP command <b>sendManyToOneRouteRequest</b>.
@@ -53,9 +54,9 @@ public class EzspSendManyToOneRouteRequestRequest extends EzspFrameRequest {
      * outbound source routes. In that case, route records are sent to the concentrator prior to
      * every inbound APS unicast.
      * <p>
-     * EZSP type is <i>uint16_t</i> - Java type is {@link int}
+     * EZSP type is <i>EmberConcentratorType</i> - Java type is {@link EmberConcentratorType}
      */
-    private int concentratorType;
+    private EmberConcentratorType concentratorType;
 
     /**
      * The maximum number of hops the route request will be relayed. A radius of zero is converted to
@@ -86,11 +87,11 @@ public class EzspSendManyToOneRouteRequestRequest extends EzspFrameRequest {
      * outbound source routes. In that case, route records are sent to the concentrator prior to
      * every inbound APS unicast.
      * <p>
-     * EZSP type is <i>uint16_t</i> - Java type is {@link int}
+     * EZSP type is <i>EmberConcentratorType</i> - Java type is {@link EmberConcentratorType}
      *
-     * @return the current concentratorType as {@link int}
+     * @return the current concentratorType as {@link EmberConcentratorType}
      */
-    public int getConcentratorType() {
+    public EmberConcentratorType getConcentratorType() {
         return concentratorType;
     }
 
@@ -102,9 +103,9 @@ public class EzspSendManyToOneRouteRequestRequest extends EzspFrameRequest {
      * outbound source routes. In that case, route records are sent to the concentrator prior to
      * every inbound APS unicast.
      *
-     * @param concentratorType the concentratorType to set as {@link int}
+     * @param concentratorType the concentratorType to set as {@link EmberConcentratorType}
      */
-    public void setConcentratorType(int concentratorType) {
+    public void setConcentratorType(EmberConcentratorType concentratorType) {
         this.concentratorType = concentratorType;
     }
 
@@ -136,7 +137,7 @@ public class EzspSendManyToOneRouteRequestRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeUInt16(concentratorType);
+        serializer.serializeEmberConcentratorType(concentratorType);
         serializer.serializeUInt8(radius);
         return serializer.getPayload();
     }

@@ -699,20 +699,20 @@ public enum EmberStatus {
      * Lookup function based on the EmberStatus type code. Returns null if the
      * code does not exist.
      *
-     * @param i
+     * @param code
      *            the code to lookup
      * @return enumeration value of the alarm type.
      */
-    public static EmberStatus getEmberStatus(int i) {
+    public static EmberStatus getEmberStatus(int code) {
         if (codeMapping == null) {
             initMapping();
         }
 
-        if (codeMapping.get(i) == null) {
+        if (codeMapping.get(code) == null) {
             return UNKNOWN;
         }
 
-        return codeMapping.get(i);
+        return codeMapping.get(code);
     }
 
     /**

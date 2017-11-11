@@ -15,6 +15,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberDeviceUpdate;
@@ -141,6 +142,10 @@ public class EzspDeserializer {
 
     public EmberStatus deserializeEmberStatus() {
         return EmberStatus.getEmberStatus(deserializeUInt8());
+    }
+
+    public EmberConcentratorType deserializeEmberConcentratorType() {
+        return EmberConcentratorType.getEmberConcentratorType(deserializeUInt16());
     }
 
     public EmberNodeType deserializeEmberNodeType() {
