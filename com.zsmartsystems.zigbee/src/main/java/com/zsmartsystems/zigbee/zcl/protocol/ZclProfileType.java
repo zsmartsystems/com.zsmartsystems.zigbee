@@ -8,7 +8,11 @@
 package com.zsmartsystems.zigbee.zcl.protocol;
 
 /**
+ * Enumeration of ZigBee profile types
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
+ *
+ * @author Chris Jackson
  */
 public enum ZclProfileType {
     HOME_AUTOMATION(260, "Home Automation");

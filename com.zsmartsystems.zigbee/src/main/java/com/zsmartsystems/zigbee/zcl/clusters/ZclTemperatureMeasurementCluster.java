@@ -162,7 +162,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * Get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
-     * <p>
      * that is capable of being measured. A MinMeasuredValue of 0x8000 indicates that
      * the minimum value is unknown.
      * <p>
@@ -181,7 +180,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * Synchronously get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
-     * <p>
      * that is capable of being measured. A MinMeasuredValue of 0x8000 indicates that
      * the minimum value is unknown.
      * <p>
@@ -214,7 +212,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * Get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
-     * <p>
      * that is capable of being measured.
      * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
@@ -238,7 +235,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * Synchronously get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
-     * <p>
      * that is capable of being measured.
      * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
@@ -276,7 +272,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * Get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The Tolerance attribute indicates the magnitude of the possible error that is
-     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>
@@ -295,7 +290,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The Tolerance attribute indicates the magnitude of the possible error that is
-     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>
@@ -329,7 +323,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
      * Set reporting for the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The Tolerance attribute indicates the magnitude of the possible error that is
-     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>

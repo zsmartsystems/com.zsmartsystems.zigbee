@@ -18,7 +18,11 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 
 /**
+ * Enumeration of the ZCL data types
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
+ *
+ * @author Chris Jackson
  */
 public enum ZclDataType {
     BITMAP_16_BIT("16-bit Bitmap", Integer.class, 0x19, false),

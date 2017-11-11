@@ -213,6 +213,14 @@ public class ZclProtocolCodeGenerator {
         // }
 
         try {
+            generateFieldEnumeration(context, packageRoot, sourceRootPath);
+        } catch (final IOException e) {
+            System.out.println("Failed to generate field enum classes.");
+            e.printStackTrace();
+            return;
+        }
+
+        try {
             generateZclCommandClasses(context, packageRoot, sourceRootPath);
         } catch (final IOException e) {
             System.out.println("Failed to generate profile message classes.");
@@ -259,9 +267,13 @@ public class ZclProtocolCodeGenerator {
         // }
     }
 
-    private static void outputClassJavaDoc(final PrintWriter out) {
+    private static void outputClassJavaDoc(final PrintWriter out, String description) {
         out.println("/**");
+        out.println(" * " + description);
+        out.println(" * <p>");
         out.println(" * Code is auto-generated. Modifications may be overwritten!");
+        out.println(" *");
+        out.println(" * @author Chris Jackson");
         out.println(" */");
     }
 
@@ -308,7 +320,7 @@ public class ZclProtocolCodeGenerator {
         out.println("import " + packageRootPrefix + "." + "IeeeAddress" + ";");
         out.println("import " + packageRootPrefix + "." + "ExtendedPanId" + ";");
         out.println();
-        outputClassJavaDoc(out);
+        outputClassJavaDoc(out, "Enumeration of the ZCL data types");
         out.println("public enum " + className + " {");
 
         DataType newDataType = new DataType();
@@ -413,7 +425,7 @@ public class ZclProtocolCodeGenerator {
 
         out.println("package " + packageRoot + ";");
         out.println();
-        outputClassJavaDoc(out);
+        outputClassJavaDoc(out, "Enumeration of ZigBee profile types");
         out.println("public enum " + className + " {");
 
         final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
@@ -468,7 +480,7 @@ public class ZclProtocolCodeGenerator {
         out.println("import java.util.Map;");
 
         out.println();
-        outputClassJavaDoc(out);
+        outputClassJavaDoc(out, "Enumeration of ZigBee Clusters");
         out.println("public enum " + className + " {");
 
         final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
@@ -548,7 +560,7 @@ public class ZclProtocolCodeGenerator {
 
         out.println("package " + packageRoot + ";");
         out.println();
-        outputClassJavaDoc(out);
+        outputClassJavaDoc(out, "Enumeration of ZCL commands");
         out.println("public enum " + className + " {");
 
         final LinkedList<String> valueRows = new LinkedList<String>();
@@ -629,7 +641,7 @@ public class ZclProtocolCodeGenerator {
 
         out.println("package " + packageRoot + ";");
         out.println();
-        outputClassJavaDoc(out);
+        outputClassJavaDoc(out, "Enumeration of ZigBee attributes");
         out.println("public enum " + className + " {");
 
         boolean first = true;
@@ -699,7 +711,7 @@ public class ZclProtocolCodeGenerator {
 
         out.println("package " + packageRoot + ";");
         out.println();
-        outputClassJavaDoc(out);
+        outputClassJavaDoc(out, "Enumeration of ZCL fields");
         out.println("public enum " + className + " {");
 
         final LinkedList<String> valueRows = new LinkedList<String>();
@@ -1113,7 +1125,7 @@ public class ZclProtocolCodeGenerator {
         out.println();
 
         out.println();
-        outputClassJavaDoc(out);
+        outputClassJavaDoc(out, "Enumeration of ZigBee Cluster Library commands");
         out.println("public enum " + className + " {");
         boolean first = true;
         for (String command : commandEnum.keySet()) {
@@ -1597,6 +1609,106 @@ public class ZclProtocolCodeGenerator {
 
                 out.flush();
                 out.close();
+            }
+        }
+    }
+
+    private static void generateFieldEnumeration(Context context, String packageRootPrefix, File sourceRootPath)
+            throws IOException {
+
+        final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
+        for (final Profile profile : profiles) {
+            final LinkedList<Cluster> clusters = new LinkedList<Cluster>(profile.clusters.values());
+            for (final Cluster cluster : clusters) {
+                final String packageRoot = packageRootPrefix + packageZclProtocolCommand + "."
+                        + cluster.clusterType.replace("_", "").toLowerCase();
+                final String packagePath = getPackagePath(sourceRootPath, packageRoot);
+                final File packageFile = getPackageFile(packagePath);
+
+                // final String packageRoot = packageRootPrefix + "." + packageZclCluster;
+                // final String packagePath = getPackagePath(sourceRootPath, packageRoot);
+                // final File packageFile = getPackageFile(packagePath + (packageZclCluster).replace('.', '/'));
+
+                if (cluster.attributes.size() != 0) {
+                    for (final Attribute attribute : cluster.attributes.values()) {
+                        if (attribute.valueMap.isEmpty()) {
+                            continue;
+                        }
+
+                        final String className = attribute.nameUpperCamelCase + "Enum";
+                        final PrintWriter out = getClassOut(packageFile, className);
+
+                        out.println("/**");
+                        out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+                        out.println(" * All rights reserved. This program and the accompanying materials");
+                        out.println(" * are made available under the terms of the Eclipse Public License v1.0");
+                        out.println(" * which accompanies this distribution, and is available at");
+                        out.println(" * http://www.eclipse.org/legal/epl-v10.html");
+                        out.println(" */");
+
+                        out.println("package " + packageRoot + ";");
+
+                        out.println();
+                        out.println("import java.util.HashMap;");
+                        out.println("import java.util.Map;");
+
+                        out.println();
+                        outputClassJavaDoc(out, "Enumeration of " + cluster.clusterName + " attribute "
+                                + attribute.attributeLabel + " options.");
+                        out.println("public enum " + className + " {");
+                        boolean first = true;
+                        for (final Integer key : attribute.valueMap.keySet()) {
+                            String value = attribute.valueMap.get(key);
+
+                            if (!first) {
+                                out.println(",");
+                            }
+                            first = false;
+                            // out.println(" /**");
+                            // out.println(" * " + cmd.commandLabel);
+                            // out.println(" * <p>");
+                            // out.println(" * See {@link " + cmd.nameUpperCamelCase + "}");
+                            // out.println(" */");
+                            out.print("    " + CodeGeneratorUtil.labelToEnumerationValue(value)
+                                    + String.format("(0x%04X)", key));
+                        }
+                        out.println(";");
+                        out.println();
+
+                        out.println("    /**");
+                        out.println("     * A mapping between the integer code and its corresponding " + className
+                                + " type to facilitate lookup by value.");
+                        out.println("     */");
+                        out.println("    private static Map<Integer, " + className + "> idMap;");
+
+                        out.println();
+                        out.println("    private final int key;");
+                        out.println();
+                        out.println("    " + className + "(final int key) {");
+                        out.println("        this.key = key;");
+                        // out.println(" this.label = label;");
+                        out.println("    }");
+                        out.println();
+
+                        out.println("    public int getKey() {");
+                        out.println("        return key;");
+                        out.println("    }");
+                        out.println();
+                        out.println("    public static " + className + " getByValue(final int value) {");
+                        out.println("        if (idMap == null) {");
+                        out.println("            idMap = new HashMap<Integer, " + className + ">();");
+                        out.println("            for (" + className + " enumValue : values()) {");
+                        out.println("                idMap.put(enumValue.key, enumValue);");
+                        out.println("            }");
+                        out.println("        }");
+                        out.println("        return idMap.get(value);");
+                        out.println("    }");
+                        out.println("}");
+
+                        out.flush();
+                        out.close();
+                    }
+                }
             }
         }
     }
@@ -2095,7 +2207,7 @@ public class ZclProtocolCodeGenerator {
         out.println();
 
         out.println();
-        outputClassJavaDoc(out);
+        outputClassJavaDoc(out, "Enumeration of ZDP commands");
         out.println("public enum " + className + " {");
         boolean first = true;
         for (String command : commandEnum.keySet()) {

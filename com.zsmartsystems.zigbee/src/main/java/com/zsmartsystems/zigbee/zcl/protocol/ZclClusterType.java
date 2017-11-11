@@ -14,7 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Enumeration of ZigBee Clusters
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
+ *
+ * @author Chris Jackson
  */
 public enum ZclClusterType {
     BASIC(0x0000, ZclProfileType.HOME_AUTOMATION, ZclBasicCluster.class, "Basic"),

@@ -162,7 +162,6 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * Get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
-     * <p>
      * that can be measured. A value of 0xffff indicates that this attribute is not defined.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -180,7 +179,6 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * Synchronously get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
-     * <p>
      * that can be measured. A value of 0xffff indicates that this attribute is not defined.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -212,7 +210,6 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * Get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
-     * <p>
      * that can be measured. A value of 0xffff indicates that this attribute is not defined.
      * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
@@ -234,7 +231,6 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * Synchronously get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
-     * <p>
      * that can be measured. A value of 0xffff indicates that this attribute is not defined.
      * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
@@ -270,7 +266,6 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * Get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The Tolerance attribute indicates the magnitude of the possible error that is
-     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>
@@ -289,7 +284,6 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The Tolerance attribute indicates the magnitude of the possible error that is
-     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>
@@ -323,7 +317,6 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * Set reporting for the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The Tolerance attribute indicates the magnitude of the possible error that is
-     * <p>
      * associated with MeasuredValue . The true value is located in the range
      * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
      * <p>
