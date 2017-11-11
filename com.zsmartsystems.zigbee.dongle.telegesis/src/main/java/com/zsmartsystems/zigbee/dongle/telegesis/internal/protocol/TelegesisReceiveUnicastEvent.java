@@ -115,11 +115,15 @@ public class TelegesisReceiveUnicastEvent extends TelegesisFrame implements Tele
         builder.append("TelegesisReceiveUnicastEvent [remoteAddress=");
         builder.append(remoteAddress);
         builder.append(", messageData=");
-        for (int c = 0; c < messageData.length; c++) {
-            if (c > 0) {
-                builder.append(' ');
+        if (messageData == null) {
+            builder.append("null");
+        } else {
+            for (int cnt = 0; cnt < messageData.length; cnt++) {
+                if (cnt > 0) {
+                    builder.append(' ');
+                }
+                builder.append(String.format("%02X", messageData[cnt]));
             }
-            builder.append(String.format("%02X", messageData[c]));
         }
         builder.append(", rssi=");
         builder.append(rssi);

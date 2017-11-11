@@ -2461,3 +2461,94 @@ command that is still current.
 ## Multistate Value (BACnet Extended) [0x0613] 
 ### Received 
 ### Generated
+
+# Smart Energy
+
+## Price [0x0700]
+### Received
+### Generated
+
+## Demand Response and Load Control [0x0701] 
+### Received 
+### Generated
+
+## Metering [0x0702]
+### Received 
+### Generated
+
+## Messaging [0x0703]
+### Received 
+### Generated
+
+## Tunneling [0x0704] 
+### Received
+### Generated
+
+## Key Establishment [0x0800]
+### Received
+### Generated
+
+# Appliances
+## Appliance Control [0x001B]
+### Received
+### Generated
+
+## Appliance Identification [0x0B00]
+### Received
+### Generated
+
+## Appliance Events and Alerts [0x0B02]
+### Received
+### Generated
+
+## Appliance Statistics [0x0B03]
+### Received
+### Generated
+
+## Electrical Measurement [0x0B04]
+### Received
+### Generated
+
+## Diagnostics [0x0B05]
+
+### Attributes
+
+|Id     |Name                             |Type                       |Access     |Implement |Reporting |
+|-------|---------------------------------|---------------------------|-----------|----------|----------|
+|0x0100 |MacRxBcast                       |Unsigned 32-bit Integer    |Read only  |Mandatory |          |
+|0x0101 |MacTxBcast                       |Unsigned 32-bit Integer    |Read only  |Mandatory |          |
+|0x0102 |MacRxUcast                       |Unsigned 32-bit Integer    |Read only  |Mandatory |          |
+|0x0103 |MacTxUcast                       |Unsigned 32-bit Integer    |Read only  |Mandatory |          |
+|0x0104 |MacTxUcastRetry                  |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0105 |MacTxUcastFail                   |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0106 |APSRxBcast                       |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0107 |APSTxBcast                       |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0108 |APSRxUcast                       |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0109 |APSTxUcastSuccess                |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x010A |APSTxUcastRetry                  |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x010B |APSTxUcastFail                   |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x010C |RouteDiscInitiated               |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x010D |NeighborAdded                    |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x010E |NeighborRemoved                  |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x010F |NeighborStale                    |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0110 |JoinIndication                   |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0111 |ChildMoved                       |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0112 |NWKFCFailure                     |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0113 |APSFCFailure                     |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0114 |APSUnauthorizedKey               |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0115 |NWKDecryptFailures               |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0116 |APSDecryptFailures               |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0117 |PacketBufferAllocateFailures     |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0118 |RelayedUcast                     |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0119 |PhytoMACqueuelimitreached        |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x011A |PacketValidatedropcount          |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x011B |AverageMACRetryPerAPSMessageSent |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x011C |LastMessageLQI                   |Unsigned 8-bit Integer     |Read only  |Mandatory |          |
+|0x011D |LastMessageRSSI                  |Signed 8-bit Integer       |Read only  |Mandatory |          |
+
+### Received
+### Generated
+
+## Touchlink [0x1000]
+### Received
+### Generated

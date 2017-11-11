@@ -475,15 +475,6 @@ public class ZclLevelControlCluster extends ZclCluster {
         return send(command);
     }
 
-    /**
-     * Add a binding for this cluster to the local node
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> bind() {
-        return bind();
-    }
-
     @Override
     public ZclCommand getCommandFromId(int commandId) {
         switch (commandId) {

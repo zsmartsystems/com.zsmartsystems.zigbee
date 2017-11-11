@@ -44,6 +44,7 @@ public enum ZclClusterType {
     MULTISTATE_VALUE__BASIC(0x0014, ZclProfileType.HOME_AUTOMATION, ZclMultistateValueBasicCluster.class, "Multistate Value (Basic)"),
     COMMISSIONING(0x0015, ZclProfileType.HOME_AUTOMATION, ZclCommissioningCluster.class, "Commissioning"),
     OTA_UPGRADE(0x0019, ZclProfileType.HOME_AUTOMATION, ZclOtaUpgradeCluster.class, "OTA Upgrade"),
+    APPLIANCE_CONTROL(0x001B, ZclProfileType.HOME_AUTOMATION, ZclApplianceControlCluster.class, "Appliance Control"),
     SHADE_CONFIGURATION(0x0100, ZclProfileType.HOME_AUTOMATION, ZclShadeConfigurationCluster.class, "Shade Configuration"),
     DOOR_LOCK(0x0101, ZclProfileType.HOME_AUTOMATION, ZclDoorLockCluster.class, "Door Lock"),
     PUMP_CONFIGURATION_AND_CONTROL(0x0200, ZclProfileType.HOME_AUTOMATION, ZclPumpConfigurationAndControlCluster.class, "Pump Configuration and Control"),
@@ -83,6 +84,18 @@ public enum ZclClusterType {
     MULTISTATE_OUTPUT__BACNET_EXTENDED(0x0611, ZclProfileType.HOME_AUTOMATION, ZclMultistateOutputBaCnetExtendedCluster.class, "Multistate Output (BACnet Extended)"),
     MULTISTATE_VALUE__BACNET_REGULAR(0x0612, ZclProfileType.HOME_AUTOMATION, ZclMultistateValueBaCnetRegularCluster.class, "Multistate Value (BACnet Regular)"),
     MULTISTATE_VALUE__BACNET_EXTENDED(0x0613, ZclProfileType.HOME_AUTOMATION, ZclMultistateValueBaCnetExtendedCluster.class, "Multistate Value (BACnet Extended)"),
+    PRICE(0x0700, ZclProfileType.HOME_AUTOMATION, ZclPriceCluster.class, "Price"),
+    DEMAND_RESPONSE_AND_LOAD_CONTROL(0x0701, ZclProfileType.HOME_AUTOMATION, ZclDemandResponseAndLoadControlCluster.class, "Demand Response and Load Control"),
+    METERING(0x0702, ZclProfileType.HOME_AUTOMATION, ZclMeteringCluster.class, "Metering"),
+    MESSAGING(0x0703, ZclProfileType.HOME_AUTOMATION, ZclMessagingCluster.class, "Messaging"),
+    TUNNELING(0x0704, ZclProfileType.HOME_AUTOMATION, ZclTunnelingCluster.class, "Tunneling"),
+    KEY_ESTABLISHMENT(0x0800, ZclProfileType.HOME_AUTOMATION, ZclKeyEstablishmentCluster.class, "Key Establishment"),
+    APPLIANCE_IDENTIFICATION(0x0B00, ZclProfileType.HOME_AUTOMATION, ZclApplianceIdentificationCluster.class, "Appliance Identification"),
+    APPLIANCE_EVENTS_AND_ALERTS(0x0B02, ZclProfileType.HOME_AUTOMATION, ZclApplianceEventsAndAlertsCluster.class, "Appliance Events and Alerts"),
+    APPLIANCE_STATISTICS(0x0B03, ZclProfileType.HOME_AUTOMATION, ZclApplianceStatisticsCluster.class, "Appliance Statistics"),
+    ELECTRICAL_MEASUREMENT(0x0B04, ZclProfileType.HOME_AUTOMATION, ZclElectricalMeasurementCluster.class, "Electrical Measurement"),
+    DIAGNOSTICS(0x0B05, ZclProfileType.HOME_AUTOMATION, ZclDiagnosticsCluster.class, "Diagnostics"),
+    TOUCHLINK(0x1000, ZclProfileType.HOME_AUTOMATION, ZclTouchlinkCluster.class, "Touchlink"),
     GENERAL(0xFFFF, ZclProfileType.HOME_AUTOMATION, ZclGeneralCluster.class, "General");
 
     private static final Map<Integer, ZclClusterType> idValueMap = new HashMap<Integer, ZclClusterType>();

@@ -278,7 +278,7 @@ public class CommandGenerator extends ClassGenerator {
         out.println();
 
         for (ParameterGroup group : responseParameterGroup) {
-            if (group.parameters.size() == 0 && group.required == false) {
+            if (group.parameters.size() == 0 && group.required == false && group.complete == false) {
                 continue;
             }
 
@@ -294,10 +294,12 @@ public class CommandGenerator extends ClassGenerator {
                 } else if (group.parameters.size() > 0 && group.prompt.endsWith("=") == false) {
                     out.println("        if (testPrompt(data, \"" + group.prompt + ":\")) {");
                 } else {
-
                     out.println("        if (testPrompt(data, \"" + group.prompt + "\")) {");
                 }
 
+                if (group.complete) {
+                    out.println("            return true;");
+                }
                 if (group.required) {
                     out.println("            received" + stringToUpperCamelCase(group.prompt) + " = true;");
                 }
@@ -322,7 +324,7 @@ public class CommandGenerator extends ClassGenerator {
             }
 
             if (!(group.prompt == null || group.prompt.length() == 0)) {
-                if (className.endsWith("Command")) {
+                if (className.endsWith("Command") && group.complete == false) {
                     out.println("            return false;");
                 }
                 out.println("        }");
@@ -745,13 +747,17 @@ public class CommandGenerator extends ClassGenerator {
             }
             first = false;
             if (parameter.data_type.equals("Data")) {
-                out.println(
-                        indent + "for (int c = 0; c < " + stringToLowerCamelCase(parameter.name) + ".length; c++) {");
-                out.println(indent + "    if (c > 0) {");
-                out.println(indent + "        builder.append(' ');");
+                out.println(indent + "if (" + stringToLowerCamelCase(parameter.name) + " == null) {");
+                out.println(indent + "    builder.append(\"null\");");
+                out.println(indent + "} else {");
+                out.println(indent + "    for (int cnt = 0; cnt < " + stringToLowerCamelCase(parameter.name)
+                        + ".length; cnt++) {");
+                out.println(indent + "        if (cnt > 0) {");
+                out.println(indent + "            builder.append(' ');");
+                out.println(indent + "        }");
+                out.println(indent + "        builder.append(String.format(\"%02X\", "
+                        + formatParameterString(parameter) + "[cnt]));");
                 out.println(indent + "    }");
-                out.println(indent + "    builder.append(String.format(\"%02X\", " + formatParameterString(parameter)
-                        + "[c]));");
                 out.println(indent + "}");
             } else {
                 out.println(indent + "builder.append(" + formatParameterString(parameter) + ");");

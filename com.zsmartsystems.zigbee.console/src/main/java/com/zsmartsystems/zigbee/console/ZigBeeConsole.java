@@ -9,7 +9,10 @@ package com.zsmartsystems.zigbee.console;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -38,6 +41,9 @@ import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServer;
 import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServerStatus;
 import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaStatusCallback;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
@@ -93,6 +99,7 @@ public final class ZigBeeConsole {
     private ZigBeeApi zigBeeApi;
 
     private ZigBeeNetworkManager networkManager;
+    private final ZigBeeTransportTransmit dongle;
 
     /**
      * Constructor which configures ZigBee API and constructs commands.
@@ -100,6 +107,7 @@ public final class ZigBeeConsole {
      * @param dongle the dongle
      */
     public ZigBeeConsole(final ZigBeeNetworkManager networkManager, final ZigBeeTransportTransmit dongle) {
+        this.dongle = dongle;
 
         commands.put("node", new NodeCommand());
         commands.put("info", new InfoCommand());
@@ -147,6 +155,8 @@ public final class ZigBeeConsole {
         commands.put("lock", new DoorLockCommand());
         commands.put("unlock", new DoorUnlockCommand());
         commands.put("enroll", new EnrollCommand());
+
+        commands.put("firmware", new FirmwareCommand());
 
         this.networkManager = networkManager;
         zigBeeApi = new ZigBeeApi(networkManager);
@@ -354,7 +364,7 @@ public final class ZigBeeConsole {
         final ZigBeeEndpoint device = getDevice(zigbeeApi, destinationIdentifier);
 
         if (device != null) {
-            return device.getDeviceAddress();
+            return device.getEndpointAddress();
         }
 
         try {
@@ -1688,7 +1698,7 @@ public final class ZigBeeConsole {
 
             final Object value = parseValue(args[4], attribute.getDataType());
 
-            final CommandResult result = zigbeeApi.write(device.getDeviceAddress(), clusterId, attributeId, value)
+            final CommandResult result = zigbeeApi.write(device.getEndpointAddress(), clusterId, attributeId, value)
                     .get();
             if (result.isSuccess()) {
                 final WriteAttributesResponse response = result.getResponse();
@@ -2268,7 +2278,7 @@ public final class ZigBeeConsole {
 
             ZclBasicCluster basicCluster = (ZclBasicCluster) device.getCluster(0);
             if (basicCluster == null) {
-                print("Can't find basic cluster for " + device.getDeviceAddress(), out);
+                print("Can't find basic cluster for " + device.getEndpointAddress(), out);
                 return false;
             }
 
@@ -2554,6 +2564,75 @@ public final class ZigBeeConsole {
                 out.println("Error executing command: " + result.getMessage());
                 return true;
             }
+        }
+    }
+
+    /**
+     * Dongle firmware update command.
+     */
+    private class FirmwareCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Updates the dongle firmware";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "firmware [VERSION | CANCEL | FILE]";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
+            if (args.length != 2) {
+                return false;
+            }
+
+            if (!(dongle instanceof ZigBeeTransportFirmwareUpdate)) {
+                print("Dongle does not implement firmware updates.", out);
+                return false;
+            }
+            ZigBeeTransportFirmwareUpdate firmwareUpdate = (ZigBeeTransportFirmwareUpdate) dongle;
+
+            if (args[1].toLowerCase().equals("version")) {
+                print("Dongle firmware version is currently " + firmwareUpdate.getFirmwareVersion(), out);
+                return true;
+            }
+
+            if (args[1].toLowerCase().equals("cancel")) {
+                print("Cancelling dongle firmware update!", out);
+                firmwareUpdate.cancelUpdateFirmware();
+                return true;
+            }
+
+            dongle.shutdown();
+
+            File firmwareFile = new File(args[1]);
+            InputStream firmwareStream;
+            try {
+                firmwareStream = new FileInputStream(firmwareFile);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            firmwareUpdate.updateFirmware(firmwareStream, new ZigBeeTransportFirmwareCallback() {
+                @Override
+                public void firmwareUpdateCallback(ZigBeeTransportFirmwareStatus status) {
+                    print("Dongle firmware status: " + status + ".", out);
+                }
+            });
+
+            out.println("Starting dongle firmware update...");
+            return true;
         }
     }
 

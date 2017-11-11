@@ -152,7 +152,7 @@ public class TelegesisFrameHandler {
         RxStateMachine rxState = RxStateMachine.WAITING;
         int binaryLength = 0;
 
-        logger.debug("TELEGESIS: Get Packet");
+        logger.trace("TELEGESIS: Get Packet");
         while (!closeHandler) {
             int val = serialPort.read();
             if (val == -1) {
@@ -270,16 +270,18 @@ public class TelegesisFrameHandler {
                 return;
             }
 
-            logger.debug("TX Telegesis: {}", nextFrame);
+            logger.trace("TX Telegesis: {}", nextFrame);
 
             // Remember the command we're processing
             sentCommand = nextFrame;
 
             // Send the data
+            StringBuilder builder = new StringBuilder();
             for (int sendByte : nextFrame.serialize()) {
-                logger.trace("TX Telegesis: {}", String.format("%02X  %c", sendByte, sendByte));
+                builder.append(String.format(" %02X", sendByte));
                 serialPort.write(sendByte);
             }
+            logger.debug("TELEGESIS TX: Data{}", builder.toString());
         }
     }
 

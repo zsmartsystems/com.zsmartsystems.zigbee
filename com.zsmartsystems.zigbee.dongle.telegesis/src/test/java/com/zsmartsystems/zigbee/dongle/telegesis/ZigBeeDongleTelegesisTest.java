@@ -42,4 +42,11 @@ public class ZigBeeDongleTelegesisTest {
 
         assertEquals("Unknown", dongle.getVersionString());
     }
+
+    @Test
+    public void getFirmwareVersion() {
+        ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
+
+        assertEquals("", dongle.getFirmwareVersion());
+    }
 }

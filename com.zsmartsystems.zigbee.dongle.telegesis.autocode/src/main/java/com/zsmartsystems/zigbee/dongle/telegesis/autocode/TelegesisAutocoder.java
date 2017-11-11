@@ -121,10 +121,14 @@ public class TelegesisAutocoder {
             case "response_parameters":
                 ParameterGroup parameterGroup = new ParameterGroup();
                 parameterGroup.parameters = new ArrayList<Parameter>();
+                parameterGroup.complete = false;
                 parameterGroup.multiple = false;
                 parameterGroup.required = false;
 
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
+                    if (nodes.item(temp).getNodeName().equals("complete")) {
+                        parameterGroup.complete = Boolean.valueOf(nodes.item(temp).getTextContent());
+                    }
                     if (nodes.item(temp).getNodeName().equals("required")) {
                         parameterGroup.required = Boolean.valueOf(nodes.item(temp).getTextContent());
                     }
