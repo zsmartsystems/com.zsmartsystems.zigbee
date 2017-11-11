@@ -189,7 +189,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Get the <i>LocationAge</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The LocationAge attribute indicates the amount of time, measured in seconds, that
-     * <p>
      * has transpired since the location information was last calculated. This attribute is
      * not valid if the Absolute bit of the LocationType attribute is set to one.
      * <p>
@@ -208,7 +207,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Synchronously get the <i>LocationAge</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The LocationAge attribute indicates the amount of time, measured in seconds, that
-     * <p>
      * has transpired since the location information was last calculated. This attribute is
      * not valid if the Absolute bit of the LocationType attribute is set to one.
      * <p>
@@ -241,7 +239,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Get the <i>QualityMeasure</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The QualityMeasure attribute is a measure of confidence in the corresponding
-     * <p>
      * location information. The higher the value, the more confident the transmitting
      * device is in the location information. A value of 0x64 indicates complete (100%)
      * confidence and a value of 0x00 indicates zero confidence. (Note: no fixed
@@ -265,7 +262,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Synchronously get the <i>QualityMeasure</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The QualityMeasure attribute is a measure of confidence in the corresponding
-     * <p>
      * location information. The higher the value, the more confident the transmitting
      * device is in the location information. A value of 0x64 indicates complete (100%)
      * confidence and a value of 0x00 indicates zero confidence. (Note: no fixed
@@ -303,7 +299,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Get the <i>NumberOfDevices</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The NumberOfDevices attribute is the number of devices whose location data
-     * <p>
      * were used to calculate the last location value. This attribute is related to the
      * QualityMeasure attribute.
      * <p>
@@ -322,7 +317,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Synchronously get the <i>NumberOfDevices</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The NumberOfDevices attribute is the number of devices whose location data
-     * <p>
      * were used to calculate the last location value. This attribute is related to the
      * QualityMeasure attribute.
      * <p>
@@ -356,7 +350,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Set the <i>Coordinate1</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
@@ -380,7 +373,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Get the <i>Coordinate1</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
@@ -404,7 +396,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Synchronously get the <i>Coordinate1</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
@@ -443,7 +434,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Set the <i>Coordinate2</i> attribute [attribute ID <b>17</b>].
      * <p>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
@@ -467,7 +457,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Get the <i>Coordinate2</i> attribute [attribute ID <b>17</b>].
      * <p>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
@@ -491,7 +480,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Synchronously get the <i>Coordinate2</i> attribute [attribute ID <b>17</b>].
      * <p>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
@@ -530,7 +518,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Set the <i>Coordinate3</i> attribute [attribute ID <b>18</b>].
      * <p>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
@@ -554,7 +541,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Get the <i>Coordinate3</i> attribute [attribute ID <b>18</b>].
      * <p>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
@@ -578,7 +564,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Synchronously get the <i>Coordinate3</i> attribute [attribute ID <b>18</b>].
      * <p>
      * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * <p>
      * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
@@ -617,7 +602,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Set the <i>Power</i> attribute [attribute ID <b>19</b>].
      * <p>
      * The Power attribute specifies the value of the average power P0, measured in
-     * <p>
      * dBm, received at a reference distance of one meter from the transmitter.
      * <p>
      * P0 = Power / 100
@@ -639,7 +623,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Get the <i>Power</i> attribute [attribute ID <b>19</b>].
      * <p>
      * The Power attribute specifies the value of the average power P0, measured in
-     * <p>
      * dBm, received at a reference distance of one meter from the transmitter.
      * <p>
      * P0 = Power / 100
@@ -661,7 +644,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Synchronously get the <i>Power</i> attribute [attribute ID <b>19</b>].
      * <p>
      * The Power attribute specifies the value of the average power P0, measured in
-     * <p>
      * dBm, received at a reference distance of one meter from the transmitter.
      * <p>
      * P0 = Power / 100
@@ -698,7 +680,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Set the <i>PathLossExponent</i> attribute [attribute ID <b>20</b>].
      * <p>
      * The PathLossExponent attribute specifies the value of the Path Loss Exponent n,
-     * <p>
      * an exponent that describes the rate at which the signal power decays with
      * increasing distance from the transmitter.
      * <p>
@@ -721,7 +702,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Get the <i>PathLossExponent</i> attribute [attribute ID <b>20</b>].
      * <p>
      * The PathLossExponent attribute specifies the value of the Path Loss Exponent n,
-     * <p>
      * an exponent that describes the rate at which the signal power decays with
      * increasing distance from the transmitter.
      * <p>
@@ -744,7 +724,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Synchronously get the <i>PathLossExponent</i> attribute [attribute ID <b>20</b>].
      * <p>
      * The PathLossExponent attribute specifies the value of the Path Loss Exponent n,
-     * <p>
      * an exponent that describes the rate at which the signal power decays with
      * increasing distance from the transmitter.
      * <p>
@@ -782,7 +761,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Set the <i>ReportingPeriod</i> attribute [attribute ID <b>21</b>].
      * <p>
      * The ReportingPeriod attribute specifies the time in seconds between successive
-     * <p>
      * reports of the device's location by means of the Location Data Notification
      * command. The minimum value this attribute can take is specified by the profile in
      * use. If ReportingPeriod is zero, the device does not automatically report its
@@ -803,7 +781,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Get the <i>ReportingPeriod</i> attribute [attribute ID <b>21</b>].
      * <p>
      * The ReportingPeriod attribute specifies the time in seconds between successive
-     * <p>
      * reports of the device's location by means of the Location Data Notification
      * command. The minimum value this attribute can take is specified by the profile in
      * use. If ReportingPeriod is zero, the device does not automatically report its
@@ -824,7 +801,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Synchronously get the <i>ReportingPeriod</i> attribute [attribute ID <b>21</b>].
      * <p>
      * The ReportingPeriod attribute specifies the time in seconds between successive
-     * <p>
      * reports of the device's location by means of the Location Data Notification
      * command. The minimum value this attribute can take is specified by the profile in
      * use. If ReportingPeriod is zero, the device does not automatically report its
@@ -860,7 +836,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Set the <i>CalculationPeriod</i> attribute [attribute ID <b>22</b>].
      * <p>
      * The CalculationPeriod attribute specifies the time in seconds between successive
-     * <p>
      * calculations of the device's location. If CalculationPeriod is less than the
      * physically possible minimum period that the calculation can be performed, the
      * calculation will be repeated as frequently as possible.
@@ -880,7 +855,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Get the <i>CalculationPeriod</i> attribute [attribute ID <b>22</b>].
      * <p>
      * The CalculationPeriod attribute specifies the time in seconds between successive
-     * <p>
      * calculations of the device's location. If CalculationPeriod is less than the
      * physically possible minimum period that the calculation can be performed, the
      * calculation will be repeated as frequently as possible.
@@ -900,7 +874,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Synchronously get the <i>CalculationPeriod</i> attribute [attribute ID <b>22</b>].
      * <p>
      * The CalculationPeriod attribute specifies the time in seconds between successive
-     * <p>
      * calculations of the device's location. If CalculationPeriod is less than the
      * physically possible minimum period that the calculation can be performed, the
      * calculation will be repeated as frequently as possible.
@@ -935,7 +908,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Set the <i>NumberRSSIMeasurements</i> attribute [attribute ID <b>23</b>].
      * <p>
      * The NumberRSSIMeasurements attribute specifies the number of RSSI
-     * <p>
      * measurements to be used to generate one location estimate. The measurements are
      * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
      * equal to 1.
@@ -955,7 +927,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Get the <i>NumberRSSIMeasurements</i> attribute [attribute ID <b>23</b>].
      * <p>
      * The NumberRSSIMeasurements attribute specifies the number of RSSI
-     * <p>
      * measurements to be used to generate one location estimate. The measurements are
      * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
      * equal to 1.
@@ -975,7 +946,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * Synchronously get the <i>NumberRSSIMeasurements</i> attribute [attribute ID <b>23</b>].
      * <p>
      * The NumberRSSIMeasurements attribute specifies the number of RSSI
-     * <p>
      * measurements to be used to generate one location estimate. The measurements are
      * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
      * equal to 1.

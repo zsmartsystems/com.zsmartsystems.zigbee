@@ -217,7 +217,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Set the <i>TimeZone</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The TimeZone attribute indicates the local time zone, as a signed offset in seconds
-     * <p>
      * from the Time attribute value. The value 0xffffffff indicates an invalid time zone.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -235,7 +234,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Get the <i>TimeZone</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The TimeZone attribute indicates the local time zone, as a signed offset in seconds
-     * <p>
      * from the Time attribute value. The value 0xffffffff indicates an invalid time zone.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -253,7 +251,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Synchronously get the <i>TimeZone</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The TimeZone attribute indicates the local time zone, as a signed offset in seconds
-     * <p>
      * from the Time attribute value. The value 0xffffffff indicates an invalid time zone.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -286,7 +283,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Set the <i>DstStart</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
-     * <p>
      * indicates an invalid DST start time.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -304,7 +300,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Get the <i>DstStart</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
-     * <p>
      * indicates an invalid DST start time.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -322,7 +317,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Synchronously get the <i>DstStart</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
-     * <p>
      * indicates an invalid DST start time.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -355,7 +349,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Set the <i>DstEnd</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
-     * <p>
      * indicates an invalid DST end time.
      * <p>
      * Note that the three attributes DstStart, DstEnd and DstShift are optional, but if any
@@ -364,7 +357,6 @@ public class ZclTimeCluster extends ZclCluster {
      * <p>
      * Note that this attribute should be set to a new value once every year, and should be
      * written synchronously with the DstStart attribute.
-     * <p>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
      * indicates an invalid DST end time.
      * <p>
@@ -386,7 +378,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Get the <i>DstEnd</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
-     * <p>
      * indicates an invalid DST end time.
      * <p>
      * Note that the three attributes DstStart, DstEnd and DstShift are optional, but if any
@@ -395,7 +386,6 @@ public class ZclTimeCluster extends ZclCluster {
      * <p>
      * Note that this attribute should be set to a new value once every year, and should be
      * written synchronously with the DstStart attribute.
-     * <p>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
      * indicates an invalid DST end time.
      * <p>
@@ -417,7 +407,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Synchronously get the <i>DstEnd</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
-     * <p>
      * indicates an invalid DST end time.
      * <p>
      * Note that the three attributes DstStart, DstEnd and DstShift are optional, but if any
@@ -426,7 +415,6 @@ public class ZclTimeCluster extends ZclCluster {
      * <p>
      * Note that this attribute should be set to a new value once every year, and should be
      * written synchronously with the DstStart attribute.
-     * <p>
      * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
      * indicates an invalid DST end time.
      * <p>
@@ -463,7 +451,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Set the <i>DstShift</i> attribute [attribute ID <b>5</b>].
      * <p>
      * The DstShift attribute represents a signed offset in seconds from the standard time,
-     * <p>
      * to be applied between the times DstStart and DstEnd to calculate the Local Time.
      * The value 0xffffffff indicates an invalid DST shift.
      * <p>
@@ -486,7 +473,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Get the <i>DstShift</i> attribute [attribute ID <b>5</b>].
      * <p>
      * The DstShift attribute represents a signed offset in seconds from the standard time,
-     * <p>
      * to be applied between the times DstStart and DstEnd to calculate the Local Time.
      * The value 0xffffffff indicates an invalid DST shift.
      * <p>
@@ -509,7 +495,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Synchronously get the <i>DstShift</i> attribute [attribute ID <b>5</b>].
      * <p>
      * The DstShift attribute represents a signed offset in seconds from the standard time,
-     * <p>
      * to be applied between the times DstStart and DstEnd to calculate the Local Time.
      * The value 0xffffffff indicates an invalid DST shift.
      * <p>
@@ -546,7 +531,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Get the <i>StandardTime</i> attribute [attribute ID <b>6</b>].
      * <p>
      * A device may derive the time by reading the Time and TimeZone attributes
-     * <p>
      * and adding them together. If implemented however, the optional StandardTime
      * attribute indicates this time directly. The value 0xffffffff indicates an invalid
      * Standard Time.
@@ -566,7 +550,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Synchronously get the <i>StandardTime</i> attribute [attribute ID <b>6</b>].
      * <p>
      * A device may derive the time by reading the Time and TimeZone attributes
-     * <p>
      * and adding them together. If implemented however, the optional StandardTime
      * attribute indicates this time directly. The value 0xffffffff indicates an invalid
      * Standard Time.
@@ -600,7 +583,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Get the <i>LocalTime</i> attribute [attribute ID <b>7</b>].
      * <p>
      * A device may derive the time by reading the Time, TimeZone, DstStart, DstEnd
-     * <p>
      * and DstShift attributes and performing the calculation. If implemented however,
      * the optional LocalTime attribute indicates this time directly. The value 0xffffffff
      * indicates an invalid Local Time.
@@ -620,7 +602,6 @@ public class ZclTimeCluster extends ZclCluster {
      * Synchronously get the <i>LocalTime</i> attribute [attribute ID <b>7</b>].
      * <p>
      * A device may derive the time by reading the Time, TimeZone, DstStart, DstEnd
-     * <p>
      * and DstShift attributes and performing the calculation. If implemented however,
      * the optional LocalTime attribute indicates this time directly. The value 0xffffffff
      * indicates an invalid Local Time.
