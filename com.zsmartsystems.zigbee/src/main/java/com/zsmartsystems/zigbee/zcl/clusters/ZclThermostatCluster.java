@@ -271,7 +271,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Get the <i>AbsMinHeatSetpointLimit</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The MinHeatSetpointLimit attribute specifies the absolute minimum level that the heating setpoint MAY be
-     * <p>
      * set to. This is a limitation imposed by the manufacturer.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -289,7 +288,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Synchronously get the <i>AbsMinHeatSetpointLimit</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The MinHeatSetpointLimit attribute specifies the absolute minimum level that the heating setpoint MAY be
-     * <p>
      * set to. This is a limitation imposed by the manufacturer.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -321,7 +319,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Get the <i>AbsMaxHeatSetpointLimit</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The MaxHeatSetpointLimit attribute specifies the absolute maximum level that the heating setpoint MAY be
-     * <p>
      * set to. This is a limitation imposed by the manufacturer.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -339,7 +336,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Synchronously get the <i>AbsMaxHeatSetpointLimit</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The MaxHeatSetpointLimit attribute specifies the absolute maximum level that the heating setpoint MAY be
-     * <p>
      * set to. This is a limitation imposed by the manufacturer.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -371,7 +367,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Get the <i>AbsMinCoolSetpointLimit</i> attribute [attribute ID <b>5</b>].
      * <p>
      * The MinCoolSetpointLimit attribute specifies the absolute minimum level that the cooling setpoint MAY be
-     * <p>
      * set to. This is a limitation imposed by the manufacturer.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -389,7 +384,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Synchronously get the <i>AbsMinCoolSetpointLimit</i> attribute [attribute ID <b>5</b>].
      * <p>
      * The MinCoolSetpointLimit attribute specifies the absolute minimum level that the cooling setpoint MAY be
-     * <p>
      * set to. This is a limitation imposed by the manufacturer.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -421,7 +415,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Get the <i>AbsMaxCoolSetpointLimit</i> attribute [attribute ID <b>6</b>].
      * <p>
      * The MaxCoolSetpointLimit attribute specifies the absolute maximum level that the cooling setpoint MAY be
-     * <p>
      * set to. This is a limitation imposed by the manufacturer.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -439,7 +432,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Synchronously get the <i>AbsMaxCoolSetpointLimit</i> attribute [attribute ID <b>6</b>].
      * <p>
      * The MaxCoolSetpointLimit attribute specifies the absolute maximum level that the cooling setpoint MAY be
-     * <p>
      * set to. This is a limitation imposed by the manufacturer.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -471,7 +463,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Get the <i>PICoolingDemand</i> attribute [attribute ID <b>7</b>].
      * <p>
      * The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling demanded by the PI
-     * <p>
      * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
      * thermostat is in “off” or “heating” mode.
      * <p>
@@ -490,7 +481,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Synchronously get the <i>PICoolingDemand</i> attribute [attribute ID <b>7</b>].
      * <p>
      * The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling demanded by the PI
-     * <p>
      * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
      * thermostat is in “off” or “heating” mode.
      * <p>
@@ -524,7 +514,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Set reporting for the <i>PICoolingDemand</i> attribute [attribute ID <b>7</b>].
      * <p>
      * The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling demanded by the PI
-     * <p>
      * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
      * thermostat is in “off” or “heating” mode.
      * <p>
@@ -545,7 +534,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Get the <i>PIHeatingDemand</i> attribute [attribute ID <b>8</b>].
      * <p>
      * The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating demanded by the PI
-     * <p>
      * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
      * thermostat is in “off” or “cooling” mode.
      * <p>
@@ -564,7 +552,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Synchronously get the <i>PIHeatingDemand</i> attribute [attribute ID <b>8</b>].
      * <p>
      * The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating demanded by the PI
-     * <p>
      * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
      * thermostat is in “off” or “cooling” mode.
      * <p>
@@ -598,7 +585,6 @@ public class ZclThermostatCluster extends ZclCluster {
      * Set reporting for the <i>PIHeatingDemand</i> attribute [attribute ID <b>8</b>].
      * <p>
      * The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating demanded by the PI
-     * <p>
      * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
      * thermostat is in “off” or “cooling” mode.
      * <p>

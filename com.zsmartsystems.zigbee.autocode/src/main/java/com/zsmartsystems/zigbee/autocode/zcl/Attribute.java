@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.autocode.zcl;
 
 import java.util.List;
+import java.util.Map;
 
 public class Attribute {
     public String attributeLabel;
@@ -10,9 +11,10 @@ public class Attribute {
     public String dataTypeClass;
     public String nameUpperCamelCase;
     public String nameLowerCamelCase;
-	public String attributeAccess;
-	public String attributeReporting;
-	public String enumName;
-	public Integer attributeId;
-	public String attributeImplementation;
+    public String attributeAccess;
+    public String attributeReporting;
+    public String enumName;
+    public Integer attributeId;
+    public String attributeImplementation;
+    public Map<Integer, String> valueMap;
 }

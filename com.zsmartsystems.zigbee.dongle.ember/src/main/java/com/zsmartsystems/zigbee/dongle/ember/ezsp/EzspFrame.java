@@ -17,11 +17,13 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKeyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspBecomeTrustCenterResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspBindingIsActiveResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCallbackResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearBindingTableResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearTransientLinkKeysResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCounterRolloverHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspDeleteBindingResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanRequestResponse;
@@ -75,6 +77,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendReplyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetBindingRemoteNodeIdResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetBindingResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConcentratorResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurityStateResponse;
@@ -86,6 +89,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStopScanResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTrustCenterJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspZigbeeKeyEstablishmentHandler;
 
 /**
  * The EmberZNet Serial Protocol (EZSP) is the protocol used by a host application processor to interact with the
@@ -109,11 +113,13 @@ public abstract class EzspFrame {
     private final static Logger logger = LoggerFactory.getLogger(EzspFrame.class);
 
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
+    protected static final int FRAME_ID_ADD_TRANSIENT_LINK_KEY = 0xAF;
     protected static final int FRAME_ID_BECOME_TRUST_CENTER = 0x77;
     protected static final int FRAME_ID_BINDING_IS_ACTIVE = 0x2E;
     protected static final int FRAME_ID_CALLBACK = 0x06;
     protected static final int FRAME_ID_CHILD_JOIN_HANDLER = 0x23;
     protected static final int FRAME_ID_CLEAR_BINDING_TABLE = 0x2A;
+    protected static final int FRAME_ID_CLEAR_TRANSIENT_LINK_KEYS = 0x6B;
     protected static final int FRAME_ID_COUNTER_ROLLOVER_HANDLER = 0xF2;
     protected static final int FRAME_ID_DELETE_BINDING = 0x2D;
     protected static final int FRAME_ID_ENERGY_SCAN_REQUEST = 0x9C;
@@ -167,6 +173,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_SEND_UNICAST = 0x34;
     protected static final int FRAME_ID_SET_BINDING = 0x2B;
     protected static final int FRAME_ID_SET_BINDING_REMOTE_NODE_ID = 0x30;
+    protected static final int FRAME_ID_SET_CONCENTRATOR = 0x10;
     protected static final int FRAME_ID_SET_CONFIGURATION_VALUE = 0x53;
     protected static final int FRAME_ID_SET_EXTENDED_TIMEOUT = 0x7E;
     protected static final int FRAME_ID_SET_INITIAL_SECURITY_STATE = 0x68;
@@ -178,6 +185,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_STOP_SCAN = 0x1D;
     protected static final int FRAME_ID_TRUST_CENTER_JOIN_HANDLER = 0x24;
     protected static final int FRAME_ID_VERSION = 0x00;
+    protected static final int FRAME_ID_ZIGBEE_KEY_ESTABLISHMENT_HANDLER = 0x9B;
 
     protected int sequenceNumber;
     protected int frameControl;
@@ -187,11 +195,13 @@ public abstract class EzspFrame {
     private static Map<Integer, Class<?>> ezspHandlerMap = new HashMap<Integer, Class<?>>();
     static {
         ezspHandlerMap.put(FRAME_ID_ADD_ENDPOINT, EzspAddEndpointResponse.class);
+        ezspHandlerMap.put(FRAME_ID_ADD_TRANSIENT_LINK_KEY, EzspAddTransientLinkKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_BECOME_TRUST_CENTER, EzspBecomeTrustCenterResponse.class);
         ezspHandlerMap.put(FRAME_ID_BINDING_IS_ACTIVE, EzspBindingIsActiveResponse.class);
         ezspHandlerMap.put(FRAME_ID_CALLBACK, EzspCallbackResponse.class);
         ezspHandlerMap.put(FRAME_ID_CHILD_JOIN_HANDLER, EzspChildJoinHandler.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_BINDING_TABLE, EzspClearBindingTableResponse.class);
+        ezspHandlerMap.put(FRAME_ID_CLEAR_TRANSIENT_LINK_KEYS, EzspClearTransientLinkKeysResponse.class);
         ezspHandlerMap.put(FRAME_ID_COUNTER_ROLLOVER_HANDLER, EzspCounterRolloverHandler.class);
         ezspHandlerMap.put(FRAME_ID_DELETE_BINDING, EzspDeleteBindingResponse.class);
         ezspHandlerMap.put(FRAME_ID_ENERGY_SCAN_REQUEST, EzspEnergyScanRequestResponse.class);
@@ -245,6 +255,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_SEND_UNICAST, EzspSendUnicastResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_BINDING, EzspSetBindingResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_BINDING_REMOTE_NODE_ID, EzspSetBindingRemoteNodeIdResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SET_CONCENTRATOR, EzspSetConcentratorResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_CONFIGURATION_VALUE, EzspSetConfigurationValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_EXTENDED_TIMEOUT, EzspSetExtendedTimeoutResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_INITIAL_SECURITY_STATE, EzspSetInitialSecurityStateResponse.class);
@@ -256,6 +267,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_STOP_SCAN, EzspStopScanResponse.class);
         ezspHandlerMap.put(FRAME_ID_TRUST_CENTER_JOIN_HANDLER, EzspTrustCenterJoinHandler.class);
         ezspHandlerMap.put(FRAME_ID_VERSION, EzspVersionResponse.class);
+        ezspHandlerMap.put(FRAME_ID_ZIGBEE_KEY_ESTABLISHMENT_HANDLER, EzspZigbeeKeyEstablishmentHandler.class);
     }
 
     /**

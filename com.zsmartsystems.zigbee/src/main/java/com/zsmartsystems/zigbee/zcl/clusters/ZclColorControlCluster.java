@@ -177,7 +177,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Get the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The CurrentSaturation attribute holds the current saturation value of the light. It is
-     * <p>
      * updated as fast as practical during commands that change the saturation.
      * The saturation shall be related to the CurrentSaturation attribute by the
      * relationship
@@ -200,7 +199,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Synchronously get the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The CurrentSaturation attribute holds the current saturation value of the light. It is
-     * <p>
      * updated as fast as practical during commands that change the saturation.
      * The saturation shall be related to the CurrentSaturation attribute by the
      * relationship
@@ -238,7 +236,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Set reporting for the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The CurrentSaturation attribute holds the current saturation value of the light. It is
-     * <p>
      * updated as fast as practical during commands that change the saturation.
      * The saturation shall be related to the CurrentSaturation attribute by the
      * relationship
@@ -263,7 +260,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Get the <i>RemainingTime</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
-     * <p>
      * until the currently active command will be complete.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -281,7 +277,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Synchronously get the <i>RemainingTime</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
-     * <p>
      * until the currently active command will be complete.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -313,7 +308,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Get the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The CurrentX attribute contains the current value of the normalized chromaticity
-     * <p>
      * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical
      * during commands that change the color.
      * <p>
@@ -336,7 +330,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Synchronously get the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The CurrentX attribute contains the current value of the normalized chromaticity
-     * <p>
      * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical
      * during commands that change the color.
      * <p>
@@ -374,7 +367,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Set reporting for the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The CurrentX attribute contains the current value of the normalized chromaticity
-     * <p>
      * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical
      * during commands that change the color.
      * <p>
@@ -399,7 +391,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Get the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The CurrentY attribute contains the current value of the normalized chromaticity
-     * <p>
      * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical
      * during commands that change the color.
      * <p>
@@ -422,7 +413,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Synchronously get the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The CurrentY attribute contains the current value of the normalized chromaticity
-     * <p>
      * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical
      * during commands that change the color.
      * <p>
@@ -460,7 +450,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Set reporting for the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The CurrentY attribute contains the current value of the normalized chromaticity
-     * <p>
      * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical
      * during commands that change the color.
      * <p>
@@ -485,7 +474,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Get the <i>DriftCompensation</i> attribute [attribute ID <b>5</b>].
      * <p>
      * The DriftCompensation attribute indicates what mechanism, if any, is in use for
-     * <p>
      * compensation for color/intensity drift over time.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -503,7 +491,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Synchronously get the <i>DriftCompensation</i> attribute [attribute ID <b>5</b>].
      * <p>
      * The DriftCompensation attribute indicates what mechanism, if any, is in use for
-     * <p>
      * compensation for color/intensity drift over time.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -535,7 +522,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Get the <i>CompensationText</i> attribute [attribute ID <b>6</b>].
      * <p>
      * The CompensationText attribute holds a textual indication of what mechanism, if
-     * <p>
      * any, is in use to compensate for color/intensity drift over time.
      * <p>
      * The attribute is of type {@link String}.
@@ -553,7 +539,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Synchronously get the <i>CompensationText</i> attribute [attribute ID <b>6</b>].
      * <p>
      * The CompensationText attribute holds a textual indication of what mechanism, if
-     * <p>
      * any, is in use to compensate for color/intensity drift over time.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -585,7 +570,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Get the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
      * <p>
      * The ColorTemperature attribute contains a scaled inverse of the current value of
-     * <p>
      * the color temperature. It is updated as fast as practical during commands that
      * change the color.
      * <p>
@@ -614,7 +598,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Synchronously get the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
      * <p>
      * The ColorTemperature attribute contains a scaled inverse of the current value of
-     * <p>
      * the color temperature. It is updated as fast as practical during commands that
      * change the color.
      * <p>
@@ -658,7 +641,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Set reporting for the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
      * <p>
      * The ColorTemperature attribute contains a scaled inverse of the current value of
-     * <p>
      * the color temperature. It is updated as fast as practical during commands that
      * change the color.
      * <p>
@@ -689,7 +671,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Get the <i>ColorMode</i> attribute [attribute ID <b>8</b>].
      * <p>
      * The ColorMode attribute indicates which attributes are currently determining the
-     * <p>
      * color of the device
      * <p>
      * The attribute is of type {@link Integer}.
@@ -707,7 +688,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * Synchronously get the <i>ColorMode</i> attribute [attribute ID <b>8</b>].
      * <p>
      * The ColorMode attribute indicates which attributes are currently determining the
-     * <p>
      * color of the device
      * <p>
      * This method can return cached data if the attribute has already been received.

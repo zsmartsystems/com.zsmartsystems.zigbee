@@ -145,7 +145,6 @@ public class ZclLevelControlCluster extends ZclCluster {
      * Get the <i>RemainingTime</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The RemainingTime attribute represents the time remaining until the current
-     * <p>
      * command is complete - it is specified in 1/10ths of a second.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -163,7 +162,6 @@ public class ZclLevelControlCluster extends ZclCluster {
      * Synchronously get the <i>RemainingTime</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The RemainingTime attribute represents the time remaining until the current
-     * <p>
      * command is complete - it is specified in 1/10ths of a second.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -196,7 +194,6 @@ public class ZclLevelControlCluster extends ZclCluster {
      * Set the <i>OnOffTransitionTime</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The OnOffTransitionTime attribute represents the time taken to move to or from
-     * <p>
      * the target level when On of Off commands are received by an On/Off cluster on
      * the same endpoint. It is specified in 1/10ths of a second.
      * <p>
@@ -219,7 +216,6 @@ public class ZclLevelControlCluster extends ZclCluster {
      * Get the <i>OnOffTransitionTime</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The OnOffTransitionTime attribute represents the time taken to move to or from
-     * <p>
      * the target level when On of Off commands are received by an On/Off cluster on
      * the same endpoint. It is specified in 1/10ths of a second.
      * <p>
@@ -242,7 +238,6 @@ public class ZclLevelControlCluster extends ZclCluster {
      * Synchronously get the <i>OnOffTransitionTime</i> attribute [attribute ID <b>16</b>].
      * <p>
      * The OnOffTransitionTime attribute represents the time taken to move to or from
-     * <p>
      * the target level when On of Off commands are received by an On/Off cluster on
      * the same endpoint. It is specified in 1/10ths of a second.
      * <p>
@@ -280,7 +275,6 @@ public class ZclLevelControlCluster extends ZclCluster {
      * Set the <i>OnLevel</i> attribute [attribute ID <b>17</b>].
      * <p>
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
-     * <p>
      * when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
      * the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.
      * <p>
@@ -299,7 +293,6 @@ public class ZclLevelControlCluster extends ZclCluster {
      * Get the <i>OnLevel</i> attribute [attribute ID <b>17</b>].
      * <p>
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
-     * <p>
      * when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
      * the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.
      * <p>
@@ -318,7 +311,6 @@ public class ZclLevelControlCluster extends ZclCluster {
      * Synchronously get the <i>OnLevel</i> attribute [attribute ID <b>17</b>].
      * <p>
      * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
-     * <p>
      * when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
      * the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.
      * <p>

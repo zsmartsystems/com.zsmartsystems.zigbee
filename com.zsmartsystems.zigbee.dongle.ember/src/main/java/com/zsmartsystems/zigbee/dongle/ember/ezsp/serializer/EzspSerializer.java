@@ -15,6 +15,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityState;
@@ -142,6 +143,10 @@ public class EzspSerializer {
 
     public void serializeEmberOutgoingMessageType(EmberOutgoingMessageType messageType) {
         buffer[length++] = messageType.getKey();
+    }
+
+    public void serializeEmberConcentratorType(EmberConcentratorType concentratorType) {
+        serializeUInt16(concentratorType.getKey());
     }
 
     public void serializeEzspPolicyId(EzspPolicyId policyId) {

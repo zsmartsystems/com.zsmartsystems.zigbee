@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Defines the ZigBee Clusters
+ * Enumeration of ZigBee Clusters
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  *

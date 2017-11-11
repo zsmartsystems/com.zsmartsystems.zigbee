@@ -189,7 +189,6 @@ public class ZclScenesCluster extends ZclCluster {
      * Get the <i>CurrentGroup</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
-     * <p>
      * 0x0000 if the scene last invoked is not associated with a group.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -207,7 +206,6 @@ public class ZclScenesCluster extends ZclCluster {
      * Synchronously get the <i>CurrentGroup</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
-     * <p>
      * 0x0000 if the scene last invoked is not associated with a group.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -239,7 +237,6 @@ public class ZclScenesCluster extends ZclCluster {
      * Get the <i>SceneValid</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The SceneValid attribute indicates whether the state of the device corresponds to
-     * <p>
      * that associated with the CurrentScene and CurrentGroup attributes. TRUE
      * indicates that these attributes are valid, FALSE indicates that they are not valid.
      * <p>
@@ -263,7 +260,6 @@ public class ZclScenesCluster extends ZclCluster {
      * Synchronously get the <i>SceneValid</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The SceneValid attribute indicates whether the state of the device corresponds to
-     * <p>
      * that associated with the CurrentScene and CurrentGroup attributes. TRUE
      * indicates that these attributes are valid, FALSE indicates that they are not valid.
      * <p>
@@ -301,7 +297,6 @@ public class ZclScenesCluster extends ZclCluster {
      * Get the <i>NameSupport</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The most significant bit of the NameSupport attribute indicates whether or not
-     * <p>
      * scene names are supported. A value of 1 indicates that they are supported, and a
      * value of 0 indicates that they are not supported.
      * <p>
@@ -320,7 +315,6 @@ public class ZclScenesCluster extends ZclCluster {
      * Synchronously get the <i>NameSupport</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The most significant bit of the NameSupport attribute indicates whether or not
-     * <p>
      * scene names are supported. A value of 1 indicates that they are supported, and a
      * value of 0 indicates that they are not supported.
      * <p>
@@ -353,7 +347,6 @@ public class ZclScenesCluster extends ZclCluster {
      * Get the <i>LastConfiguredBy</i> attribute [attribute ID <b>5</b>].
      * <p>
      * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address
-     * <p>
      * of the device that last configured the scene table.
      * <p>
      * The value 0xffffffffffffffff indicates that the device has not been configured, or
@@ -374,7 +367,6 @@ public class ZclScenesCluster extends ZclCluster {
      * Synchronously get the <i>LastConfiguredBy</i> attribute [attribute ID <b>5</b>].
      * <p>
      * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address
-     * <p>
      * of the device that last configured the scene table.
      * <p>
      * The value 0xffffffffffffffff indicates that the device has not been configured, or

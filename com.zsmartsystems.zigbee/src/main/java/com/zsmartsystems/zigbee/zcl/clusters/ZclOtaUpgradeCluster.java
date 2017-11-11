@@ -144,7 +144,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Get the <i>FileOffset</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The parameter indicates the current location in the OTA upgrade image. It is essentially the (start of
-     * <p>
      * the) address of the image data that is being transferred from the OTA server to the client. The attribute
      * is optional on the client and is made available in a case where the server wants to track the upgrade
      * process of a particular client.
@@ -164,7 +163,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Synchronously get the <i>FileOffset</i> attribute [attribute ID <b>1</b>].
      * <p>
      * The parameter indicates the current location in the OTA upgrade image. It is essentially the (start of
-     * <p>
      * the) address of the image data that is being transferred from the OTA server to the client. The attribute
      * is optional on the client and is made available in a case where the server wants to track the upgrade
      * process of a particular client.
@@ -198,7 +196,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Get the <i>CurrentFileVersion</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The file version of the running firmware image on the device. The information is available for the
-     * <p>
      * server to query via ZCL read attribute command. The attribute is optional on the client.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -216,7 +213,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Synchronously get the <i>CurrentFileVersion</i> attribute [attribute ID <b>2</b>].
      * <p>
      * The file version of the running firmware image on the device. The information is available for the
-     * <p>
      * server to query via ZCL read attribute command. The attribute is optional on the client.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -248,7 +244,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Get the <i>CurrentZigBeeStackVersion</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The ZigBee stack version of the running image on the device. The information is available for the
-     * <p>
      * server to query via ZCL read attribute command. The attribute is optional on the client.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -266,7 +261,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Synchronously get the <i>CurrentZigBeeStackVersion</i> attribute [attribute ID <b>3</b>].
      * <p>
      * The ZigBee stack version of the running image on the device. The information is available for the
-     * <p>
      * server to query via ZCL read attribute command. The attribute is optional on the client.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -298,7 +292,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Get the <i>DownloadedFileVersion</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The file version of the downloaded image on additional memory space on the device. The information
-     * <p>
      * is available for the server to query via ZCL read attribute command. The information is useful for the
      * OTA upgrade management, so the server shall ensure that each client has downloaded the correct file
      * version before initiate the upgrade. The attribute is optional on the client.
@@ -318,7 +311,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Synchronously get the <i>DownloadedFileVersion</i> attribute [attribute ID <b>4</b>].
      * <p>
      * The file version of the downloaded image on additional memory space on the device. The information
-     * <p>
      * is available for the server to query via ZCL read attribute command. The information is useful for the
      * OTA upgrade management, so the server shall ensure that each client has downloaded the correct file
      * version before initiate the upgrade. The attribute is optional on the client.
@@ -352,7 +344,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Get the <i>DownloadedZigBeeStackVersion</i> attribute [attribute ID <b>5</b>].
      * <p>
      * The ZigBee stack version of the downloaded image on additional memory space on the device. The
-     * <p>
      * information is available for the server to query via ZCL read attribute command. The information is
      * useful for the OTA upgrade management, so the server shall ensure that each client has downloaded the
      * correct ZigBee stack version before initiate the upgrade. The attribute is optional on the client.
@@ -372,7 +363,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Synchronously get the <i>DownloadedZigBeeStackVersion</i> attribute [attribute ID <b>5</b>].
      * <p>
      * The ZigBee stack version of the downloaded image on additional memory space on the device. The
-     * <p>
      * information is available for the server to query via ZCL read attribute command. The information is
      * useful for the OTA upgrade management, so the server shall ensure that each client has downloaded the
      * correct ZigBee stack version before initiate the upgrade. The attribute is optional on the client.
@@ -406,7 +396,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Get the <i>ImageUpgradeStatus</i> attribute [attribute ID <b>6</b>].
      * <p>
      * The upgrade status of the client device. The status indicates where the client device is at in terms of the
-     * <p>
      * download and upgrade process. The status helps to indicate whether the client has completed the
      * download process and whether it is ready to upgrade to the new image. The status may be queried by
      * the server via ZCL read attribute command. Hence, the server may not be able to reliably query the
@@ -427,7 +416,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Synchronously get the <i>ImageUpgradeStatus</i> attribute [attribute ID <b>6</b>].
      * <p>
      * The upgrade status of the client device. The status indicates where the client device is at in terms of the
-     * <p>
      * download and upgrade process. The status helps to indicate whether the client has completed the
      * download process and whether it is ready to upgrade to the new image. The status may be queried by
      * the server via ZCL read attribute command. Hence, the server may not be able to reliably query the
@@ -546,7 +534,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Get the <i>MinimumBlockRequestDelay</i> attribute [attribute ID <b>9</b>].
      * <p>
      * This attribute acts as a rate limiting feature for the server to slow down the client download and prevent
-     * <p>
      * saturating the network with block requests. The attribute lives on the client but can be changed during
      * a download if rate limiting is supported by both devices.
      * This attribute shall reflect the minimum delay between Image Block Request commands generated by
@@ -570,7 +557,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * Synchronously get the <i>MinimumBlockRequestDelay</i> attribute [attribute ID <b>9</b>].
      * <p>
      * This attribute acts as a rate limiting feature for the server to slow down the client download and prevent
-     * <p>
      * saturating the network with block requests. The attribute lives on the client but can be changed during
      * a download if rate limiting is supported by both devices.
      * This attribute shall reflect the minimum delay between Image Block Request commands generated by
@@ -1030,15 +1016,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setImageSize(imageSize);
 
         return send(command);
-    }
-
-    /**
-     * Add a binding for this cluster to the local node
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> bind() {
-        return bind();
     }
 
     @Override

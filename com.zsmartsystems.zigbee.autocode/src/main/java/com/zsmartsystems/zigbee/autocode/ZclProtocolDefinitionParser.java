@@ -2,6 +2,7 @@ package com.zsmartsystems.zigbee.autocode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -358,7 +359,6 @@ public class ZclProtocolDefinitionParser {
 
     private static void parseAttributes(Context context) {
         Attribute attribute = null;
-        boolean addBreak = false;
         while (context.lines.size() > 0) {
             final String line = context.lines.remove(0);
 
@@ -369,7 +369,7 @@ public class ZclProtocolDefinitionParser {
             }
 
             if (line.startsWith("|") && !line.startsWith("|Id") && !line.startsWith("|-")) {
-                parseAttribute(context, line);
+                parseAttributeTable(context, line);
             }
 
             if (line.startsWith("#### ")) {
@@ -382,28 +382,22 @@ public class ZclProtocolDefinitionParser {
                     }
                 }
 
+                if (attribute == null) {
+                    System.out.println("***** Attribute not found: " + line);
+                    continue;
+                }
+                parseAttribute(context, attribute);
                 continue;
             }
 
-            if (attribute == null || (attribute.attributeDescription.size() == 0 && line.trim().length() == 0)) {
-                continue;
-            }
-            if (line.trim().length() == 0) {
-                addBreak = true;
-                continue;
-            }
-            if (addBreak && attribute.attributeDescription.size() > 0) {
-                attribute.attributeDescription.add("<p>");
-                addBreak = false;
-            }
-            attribute.attributeDescription.add(line.trim());
         }
     }
 
-    private static void parseAttribute(Context context, String line) {
+    private static void parseAttributeTable(Context context, String line) {
         final String row = line.trim().substring(1, line.length() - 1);
         final String[] columns = row.split("\\|");
         final Attribute attribute = new Attribute();
+        attribute.valueMap = new TreeMap<Integer, String>();
         attribute.attributeId = Integer.parseInt(columns[0].trim().substring(2), 16);
         attribute.attributeLabel = columns[1].trim();
         attribute.attributeDescription = new ArrayList<String>();
@@ -428,6 +422,47 @@ public class ZclProtocolDefinitionParser {
 
         context.dataTypes.put(attribute.dataType, dataType);
         context.cluster.attributes.put(attribute.attributeId, attribute);
+    }
+
+    private static void parseAttribute(Context context, Attribute attribute) {
+        boolean addBreak = false;
+        while (context.lines.size() > 0) {
+            final String line = context.lines.remove(0);
+
+            // Returning to previous level.
+            if (line.startsWith("# ") || line.startsWith("## ") || line.startsWith("### ")
+                    || line.startsWith("#### ")) {
+                context.lines.add(0, line);
+                return;
+            }
+
+            if (line.startsWith("|") && !line.startsWith("|Id") && !line.startsWith("|-")) {
+                final String row = line.trim().substring(1, line.length() - 1);
+                final String[] columns = row.split("\\|");
+                int value = Integer.parseInt(columns[0].trim().substring(2), 16);
+                String label = columns[1].trim();
+
+                attribute.valueMap.put(value, label);
+                continue;
+            }
+
+            if (line.startsWith("|Id") || line.startsWith("|-")) {
+                continue;
+            }
+
+            if ((attribute.attributeDescription.size() == 0 && line.trim().length() == 0)) {
+                continue;
+            }
+            if (line.trim().length() == 0 && attribute.attributeDescription.size() > 0) {
+                addBreak = true;
+                continue;
+            }
+            if (addBreak && attribute.attributeDescription.size() > 0) {
+                attribute.attributeDescription.add("<p>");
+                addBreak = false;
+            }
+            attribute.attributeDescription.add(line.trim());
+        }
     }
 
 }

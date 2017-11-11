@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 
 /**
- * Defines the ZigBee data types used in the library
+ * Enumeration of the ZCL data types
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  *
@@ -53,9 +53,9 @@ public enum ZclDataType {
     SIGNED_16_BIT_INTEGER("Signed 16-bit integer", Integer.class, 0x29, true),
     SIGNED_32_BIT_INTEGER("Signed 32-bit integer", Integer.class, 0x2B, true),
     SIGNED_8_BIT_INTEGER("Signed 8-bit Integer", Integer.class, 0x28, true),
-    UNSIGNED_16_BIT_INTEGER("Unsigned 16-bit Integer", Integer.class, 0x21, true),
-    UNSIGNED_32_BIT_INTEGER("Unsigned 32-bit Integer", Integer.class, 0x23, true),
-    UNSIGNED_8_BIT_INTEGER("Unsigned 8-bit Integer", Integer.class, 0x20, true),
+    UNSIGNED_16_BIT_INTEGER("Unsigned 16-bit integer", Integer.class, 0x21, true),
+    UNSIGNED_32_BIT_INTEGER("Unsigned 32-bit integer", Integer.class, 0x23, true),
+    UNSIGNED_8_BIT_INTEGER("Unsigned 8-bit integer", Integer.class, 0x20, true),
     UTCTIME("UTCTime", Calendar.class, 0xE2, true),
     X_UNSIGNED_8_BIT_INTEGER("X Unsigned 8-bit integer", Integer.class, 0x00, false),
     ZCL_STATUS("Zcl Status", ZclStatus.class, 0x00, false),

@@ -152,7 +152,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtendedR
 
 
 /**
- * Defines the ZigBee Cluster Library Commands
+ * Enumeration of ZigBee Cluster Library commands
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  *

@@ -307,7 +307,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * Set the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>32</b>].
      * <p>
      * The UltraSonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
-     * <p>
      * seconds, before the ultrasonic sensor changes to its occupied state when the
      * sensed area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter'
@@ -328,7 +327,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * Get the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>32</b>].
      * <p>
      * The UltraSonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
-     * <p>
      * seconds, before the ultrasonic sensor changes to its occupied state when the
      * sensed area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter'
@@ -349,7 +347,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * Synchronously get the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>32</b>].
      * <p>
      * The UltraSonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
-     * <p>
      * seconds, before the ultrasonic sensor changes to its occupied state when the
      * sensed area becomes unoccupied. This attribute, along with
      * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter'
@@ -385,7 +382,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * Set the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>33</b>].
      * <p>
      * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
-     * <p>
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the
      * sensed area becomes occupied.
      * <p>
@@ -404,7 +400,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * Get the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>33</b>].
      * <p>
      * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
-     * <p>
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the
      * sensed area becomes occupied.
      * <p>
@@ -423,7 +418,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * Synchronously get the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>33</b>].
      * <p>
      * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
-     * <p>
      * seconds, before the ultrasonic sensor changes to its unoccupied state when the
      * sensed area becomes occupied.
      * <p>

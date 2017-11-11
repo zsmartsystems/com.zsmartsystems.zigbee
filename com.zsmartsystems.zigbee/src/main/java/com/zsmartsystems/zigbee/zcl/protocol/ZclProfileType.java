@@ -8,7 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.protocol;
 
 /**
- * Defines the ZigBee profiles
+ * Enumeration of ZigBee profile types
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  *
