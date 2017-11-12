@@ -11,21 +11,22 @@ import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 
 /**
- * ZclField class for non primitive field types.
+ * ZclSerializableField class for non primitive field types.
  *
  * @author Tommi S.E Laukkanen
+ * @author Chris Jackson
  */
 public interface ZclListItemField {
     /**
      * Serializes the field.
-     * 
+     *
      * @param serializer the serializer
      */
     void serialize(ZigBeeSerializer serializer);
 
     /**
      * Deserializes the field.
-     * 
+     *
      * @param deserializer the deserializer.
      */
     void deserialize(ZigBeeDeserializer deserializer);

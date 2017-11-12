@@ -130,8 +130,6 @@ public final class ZigBeeConsole {
         commands.put("help", new HelpCommand());
         commands.put("desc", new DescribeCommand());
         commands.put("descriptor", new SetDescriptorCommand());
-        commands.put("bind", new BindCommand());
-        commands.put("unbind", new UnbindCommand());
         commands.put("on", new OnCommand());
         commands.put("off", new OffCommand());
         commands.put("color", new ColorCommand());
@@ -141,6 +139,11 @@ public final class ZigBeeConsole {
         commands.put("unlisten", new UnlistenCommand());
         commands.put("subscribe", new SubscribeCommand());
         commands.put("unsubscribe", new UnsubscribeCommand());
+
+        commands.put("bind", new BindCommand());
+        commands.put("unbind", new UnbindCommand());
+        commands.put("bindtable", new BindTableCommand());
+
         commands.put("ota", new OtaCommand());
         commands.put("otafile", new OtaFileCommand());
 
@@ -804,6 +807,47 @@ public final class ZigBeeConsole {
             }
             final CommandResult response = zigBeeApi.unbind(source, destination, clusterId).get();
             return defaultResponseProcessing(response, out);
+        }
+    }
+
+    /**
+     * Reads the binding table for a node
+     */
+    private class BindTableCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Reads the binding table from a node.";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "bindtable [NODE]";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
+            if (args.length != 2) {
+                return false;
+            }
+
+            ZigBeeNode node = networkManager.getNode(Integer.parseInt(args[1]));
+            if (node == null) {
+                print("Can't find node " + args[1], out);
+                return false;
+            }
+
+            node.updateBindingTable();
+
+            return true;
         }
     }
 

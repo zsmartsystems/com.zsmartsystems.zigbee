@@ -16,6 +16,7 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
+import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
@@ -202,6 +203,11 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 PowerDescriptor powerDescriptor = new PowerDescriptor();
                 powerDescriptor.deserialize(this);
                 value[0] = powerDescriptor;
+                break;
+            case BINDING_TABLE:
+                BindingTable bindingTable = new BindingTable();
+                bindingTable.deserialize(this);
+                value[0] = bindingTable;
                 break;
             case SIMPLE_DESCRIPTOR:
                 SimpleDescriptor simpleDescriptor = new SimpleDescriptor();

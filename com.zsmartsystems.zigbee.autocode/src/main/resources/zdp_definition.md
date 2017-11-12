@@ -330,7 +330,7 @@ NOT_SUPPORTED status to the Bind_req if not supported.
 |---------------------------|---------------------------|
 |SrcAddress                 |IEEE address               |
 |SrcEndpoint                |Unsigned 8-bit integer     |
-|ClusterID                  |Unsigned 16-bit integer    |
+|BindCluster                |Unsigned 16-bit integer    |
 |DstAddrMode                |Unsigned 8-bit integer     |
 |DstAddress                 |IEEE address               |
 |DstEndpoint                |Unsigned 8-bit integer     |
@@ -1027,13 +1027,13 @@ management command is not supported, a status of NOT_SUPPORTED shall be
 returned and all parameter fields after the Status field shall be omitted. Otherwise,
 the Remote Device shall implement the following processing.
 
-|Field Name                 |Data Type                  |
-|---------------------------|---------------------------|
-|Status                     |Zdo Status                 |
-|BindingTableEntries        |Unsigned 8-bit integer     |
-|StartIndex                 |Unsigned 8-bit integer     |
-|BindingTableListCount      |Unsigned 8-bit integer     |
-|BindingTableList           |Binding Table[BindingTableListCount]|
+|Field Name                 |Data Type                              |
+|---------------------------|---------------------------------------|
+|Status                     |Zdo Status                             |
+|BindingTableEntries        |Unsigned 8-bit integer                 |
+|StartIndex                 |Unsigned 8-bit integer                 |
+|BindingTableListCount      |Unsigned 8-bit integer                 |
+|BindingTableList           |Binding Table[BindingTableListCount]   |
 
 #### Management Leave Response [0x8034]
 
