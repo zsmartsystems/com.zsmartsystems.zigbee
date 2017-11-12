@@ -11,6 +11,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
@@ -49,7 +50,7 @@ public class GetZoneInformationResponse extends ZclCommand {
         genericCommand = false;
         clusterId = 1281;
         commandId = 2;
-        commandDirection = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     /**

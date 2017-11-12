@@ -11,6 +11,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Discover Commands Received value object class.
@@ -40,7 +41,7 @@ public class DiscoverCommandsReceived extends ZclCommand {
     public DiscoverCommandsReceived() {
         genericCommand = true;
         commandId = 17;
-        commandDirection = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**

@@ -458,13 +458,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                     : ZclFrameType.CLUSTER_SPECIFIC_COMMAND);
             zclHeader.setCommandId(zclCommand.getCommandId());
             zclHeader.setSequenceNumber(sequence);
-            zclHeader.setDirectionServer(zclCommand.getCommandDirection());
+            zclHeader.setDirection(zclCommand.getCommandDirection());
 
             command.serialize(fieldSerializer);
 
             // Serialise the ZCL header and add the payload
             apsFrame.setPayload(zclHeader.serialize(fieldSerializer, fieldSerializer.getPayload()));
+
+            logger.debug("TX ZCL: {}", zclHeader);
         }
+        logger.debug("TX APS: {}", apsFrame);
 
         transport.sendCommand(apsFrame);
 
@@ -472,17 +475,19 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     @Override
-    public void addCommandListener(CommandListener commandListener) {
+    public void addCommandListener(ZigBeeCommandListener commandListener) {
         commandNotifier.addCommandListener(commandListener);
     }
 
     @Override
-    public void removeCommandListener(CommandListener commandListener) {
+    public void removeCommandListener(ZigBeeCommandListener commandListener) {
         commandNotifier.removeCommandListener(commandListener);
     }
 
     @Override
     public void receiveCommand(final ZigBeeApsFrame apsFrame) {
+        logger.debug("RX APS: {}", apsFrame);
+
         // Create the deserialiser
         Constructor<? extends ZigBeeDeserializer> constructor;
         ZigBeeDeserializer deserializer;
@@ -553,22 +558,20 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             final ZigBeeApsFrame apsFrame) {
         // Process the ZCL header
         ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
+        logger.debug("RX ZCL: {}", zclHeader);
 
         // Get the command type
         ZclCommandType commandType = null;
         if (zclHeader.getFrameType() == ZclFrameType.ENTIRE_PROFILE_COMMAND) {
             commandType = ZclCommandType.getGeneric(zclHeader.getCommandId());
         } else {
-            if (zclHeader.isDirectionServer()) {
-                commandType = ZclCommandType.getRequest(apsFrame.getCluster(), zclHeader.getCommandId());
-            } else {
-                commandType = ZclCommandType.getResponse(apsFrame.getCluster(), zclHeader.getCommandId());
-            }
+            commandType = ZclCommandType.getCommandType(apsFrame.getCluster(), zclHeader.getCommandId(),
+                    zclHeader.getDirection());
         }
 
         if (commandType == null) {
             logger.debug("No command type found for {}, cluster={}, command={}, direction={}", zclHeader.getFrameType(),
-                    apsFrame.getCluster(), zclHeader.getCommandId(), zclHeader.isDirectionServer());
+                    apsFrame.getCluster(), zclHeader.getCommandId(), zclHeader.getDirection());
             return null;
         }
 
@@ -579,6 +582,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             return null;
         }
 
+        command.setCommandDirection(zclHeader.getDirection());
         command.deserialize(fieldDeserializer);
         command.setClusterId(apsFrame.getCluster());
         command.setTransactionId(zclHeader.getSequenceNumber());
@@ -712,7 +716,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             final CommandResultFuture future = new CommandResultFuture(this);
             final CommandExecution commandExecution = new CommandExecution(System.currentTimeMillis(), command, future);
             future.setCommandExecution(commandExecution);
-            final CommandListener commandListener = new CommandListener() {
+            final ZigBeeCommandListener commandListener = new ZigBeeCommandListener() {
                 @Override
                 public void commandReceived(ZigBeeCommand receivedCommand) {
                     // Ensure that received command is not processed before

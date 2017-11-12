@@ -33,6 +33,6 @@ public class ZclStatusTest {
     @Test
     public void getStatus() {
         assertEquals(ZclStatus.SUCCESS, ZclStatus.getStatus(0));
-        assertEquals(ZclStatus.RESERVED, ZclStatus.getStatus(999));
+        assertEquals(ZclStatus.UNKNOWN, ZclStatus.getStatus(999));
     }
 }

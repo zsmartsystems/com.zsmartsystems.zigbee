@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.levelcontrol;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Stop 2 Command value object class.
@@ -29,7 +30,7 @@ public class Stop2Command extends ZclCommand {
         genericCommand = false;
         clusterId = 8;
         commandId = 7;
-        commandDirection = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     @Override

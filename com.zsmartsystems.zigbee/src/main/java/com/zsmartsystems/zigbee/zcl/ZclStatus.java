@@ -33,15 +33,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Defines the ZigBee Cluster Library status values and textual descriptions
+ * Defines the ZigBee Cluster Library status values and descriptions
  *
- * @author <a href="mailto:stefano.lenzi@isti.cnr.it">Stefano "Kismet" Lenzi</a>
- * @author <a href="mailto:francesco.furfari@isti.cnr.it">Francesco Furfari</a>
  * @author Chris Jackson
  */
 public enum ZclStatus {
 
-    RESERVED(0xFF, "Reserved"),
+    UNKNOWN(0xFF, "Unknown"),
     SUCCESS(0x00, "Operation was successful."),
     FAILURE(0x01, "Operation was not successful."),
     NOT_AUTHORIZED(0x7e, "The sender of the command does not have authorization to carry out this command."),
@@ -78,38 +76,59 @@ public enum ZclStatus {
     NOT_FOUND(0x8b, "The requested information (e.g. table entry) could not be found."),
     UNREPORTABLE_ATTRIBUTE(0x8c, "Periodic reports cannot be issued for this attribute."),
     INVALID_DATA_TYPE(0x8d, "The data type given for an attribute is incorrect. Command not carried out."),
-    RESERVED_02(0x8e, "Value is reserved"),
+    RESERVED_02(0x8e, "Value is reserved."),
+    ABORT(0x95, "Failed case when a client or a server decides to abort the upgrade process."),
+    INVALID_IMAGE(0x96, "Invalid OTA upgrade image."),
+    WAIT_FOR_DATA(0x97, "Server does not have data block available yet"),
+    NO_IMAGE_AVAILABLE(0x98, "No OTA upgrade image available for a particular client"),
+    REQUIRE_MORE_IMAGE(0x99, "The client requires more OTA upgrade image files in order to successfully upgrade."),
     HARDWARE_FAILURE(0xc0, "An operation was unsuccessful due to a hardware failure."),
     SOFTWARE_FAILURE(0xc1, "An operation was unsuccessful due to a software failure."),
     CALIBRATION_ERROR(0xc2, "An error occurred during calibration.");
 
-    private final int id;
+    private final int statusId;
     private final String description;
     private static Map<Integer, ZclStatus> map = null;
 
-    private ZclStatus(int id, String description) {
-        this.id = id;
+    private ZclStatus(int statusId, String description) {
+        this.statusId = statusId;
         this.description = description;
     }
 
-    public static ZclStatus getStatus(int b) {
+    /**
+     * Get a {@link ZclStatus} given an integer value
+     *
+     * @param statusValue the integer status value
+     * @return {@link ZclStatus} or {@link #UNKNOWN}
+     */
+    public static ZclStatus getStatus(int statusValue) {
         if (map == null) {
             map = new HashMap<Integer, ZclStatus>();
-            for (ZclStatus s : values()) {
-                map.put(s.id, s);
+            for (ZclStatus status : values()) {
+                map.put(status.statusId, status);
             }
 
         }
-        if (map.get(b) == null) {
-            return RESERVED;
+        if (map.get(statusValue) == null) {
+            return UNKNOWN;
         }
-        return map.get(b);
+        return map.get(statusValue);
     }
 
+    /**
+     * Gets the integer status ID for this code
+     *
+     * @return integer Id for the status code as per the ZCL standard
+     */
     public int getId() {
-        return id;
+        return statusId;
     }
 
+    /**
+     * Get a human readable description of the status value
+     *
+     * @return {@link String} containing the human readable description
+     */
     public String getDescription() {
         return description;
     }

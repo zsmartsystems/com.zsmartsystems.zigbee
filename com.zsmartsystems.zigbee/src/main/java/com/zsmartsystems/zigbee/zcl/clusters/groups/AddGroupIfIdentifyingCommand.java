@@ -11,6 +11,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Add Group If Identifying Command value object class.
@@ -56,7 +57,7 @@ public class AddGroupIfIdentifyingCommand extends ZclCommand {
         genericCommand = false;
         clusterId = 4;
         commandId = 5;
-        commandDirection = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**

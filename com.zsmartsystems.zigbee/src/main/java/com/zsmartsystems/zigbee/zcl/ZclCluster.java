@@ -23,9 +23,11 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsGenerated;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsReceived;
@@ -38,6 +40,7 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zdo.command.BindRequest;
 import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
 
@@ -48,15 +51,25 @@ import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
  *
  */
 public abstract class ZclCluster {
+    /**
+     * The logger
+     */
     private Logger logger = LoggerFactory.getLogger(ZclCluster.class);
 
+    /**
+     * The {@link ZigBeeNetworkManager} to which this device belongs
+     */
     private final ZigBeeNetworkManager zigbeeManager;
     private final ZigBeeEndpoint zigbeeEndpoint;
     protected final int clusterId;
     protected final String clusterName;
 
+    /**
+     * Defines if the remote is a client (true) or server (false)
+     * The definition of the direction is based on the remote being the server. If it is really
+     * a server, then we need to reverse direction
+     */
     private boolean isClient = false;
-    private boolean isServer = false;
 
     private final List<ZclAttributeListener> attributeListeners = new ArrayList<ZclAttributeListener>();
 
@@ -74,6 +87,9 @@ public abstract class ZclCluster {
 
     protected Future<CommandResult> send(ZclCommand command) {
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
+        if (isClient()) {
+            command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
+        }
 
         return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
@@ -91,7 +107,8 @@ public abstract class ZclCluster {
         command.setIdentifiers(Collections.singletonList(attribute.getId()));
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
-        return zigbeeManager.unicast(command, new ZclCustomResponseMatcher());
+        return send(command);
+        // return zigbeeManager.unicast(command, new ZclCustomResponseMatcher());
     }
 
     /**
@@ -112,7 +129,8 @@ public abstract class ZclCluster {
         command.setRecords(Collections.singletonList(attributeIdentifier));
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
-        return zigbeeManager.unicast(command, new ZclCustomResponseMatcher());
+        return send(command);
+        // return zigbeeManager.unicast(command, new ZclCustomResponseMatcher());
     }
 
     /**
@@ -194,7 +212,8 @@ public abstract class ZclCluster {
         command.setRecords(Collections.singletonList(record));
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
-        return zigbeeManager.unicast(command, new ZclResponseMatcher());
+        return send(command);
+        // return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
     /**
@@ -239,7 +258,8 @@ public abstract class ZclCluster {
         command.setRecords(Collections.singletonList(record));
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
-        return zigbeeManager.unicast(command, new ZclResponseMatcher());
+        return send(command);
+        // return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
     /**
@@ -297,11 +317,9 @@ public abstract class ZclCluster {
      * Sets the server flag for this cluster. This means the cluster is listed
      * in the devices input cluster list
      *
-     * @param isServer
-     *            true if this is a server
      */
-    public void setServer(boolean isServer) {
-        this.isServer = isServer;
+    public void setServer() {
+        isClient = false;
     }
 
     /**
@@ -311,18 +329,16 @@ public abstract class ZclCluster {
      * @return true if the cluster can act as a server
      */
     public boolean isServer() {
-        return isServer;
+        return !isClient;
     }
 
     /**
      * Sets the client flag for this cluster. This means the cluster is listed
      * in the devices output cluster list
      *
-     * @param isServer
-     *            true if this is a client
      */
-    public void setClient(boolean isClient) {
-        this.isClient = isClient;
+    public void setClient() {
+        isClient = true;
     }
 
     /**
@@ -390,6 +406,26 @@ public abstract class ZclCluster {
     }
 
     /**
+     * Sends a default response to the client
+     *
+     * @param commandIdentifier the command identifier to which this is a response
+     * @param status the {@link ZclStatus} to send in the response
+     */
+    public void sendDefaultResponse(Integer commandIdentifier, ZclStatus status) {
+        DefaultResponse defaultResponse = new DefaultResponse();
+        defaultResponse.setCommandIdentifier(commandIdentifier);
+        defaultResponse.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
+        defaultResponse.setClusterId(clusterId);
+        defaultResponse.setStatusCode(status);
+
+        try {
+            zigbeeManager.sendCommand(defaultResponse);
+        } catch (ZigBeeException e) {
+            logger.debug("Exception sending default response message: ", e);
+        }
+    }
+
+    /**
      * Discovers the list of attributes support by the cluster
      *
      * @return Command future
@@ -401,7 +437,8 @@ public abstract class ZclCluster {
         // TODO: Handle multiple requests
         command.setStartAttributeIdentifier(0);
         command.setMaximumAttributeIdentifiers(40);
-        return zigbeeManager.unicast(command, new ZclResponseMatcher());
+        return send(command);
+        // return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
     /**
@@ -416,7 +453,8 @@ public abstract class ZclCluster {
         // TODO: Handle multiple requests
         command.setStartCommandIdentifier(0);
         command.setMaximumCommandIdentifiers(40);
-        return zigbeeManager.unicast(command, new ZclResponseMatcher());
+        return send(command);
+        // return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
     /**
@@ -431,14 +469,10 @@ public abstract class ZclCluster {
         // TODO: Handle multiple requests
         command.setStartCommandIdentifier(0);
         command.setMaximumCommandIdentifiers(40);
-        return zigbeeManager.unicast(command, new ZclResponseMatcher());
+        return send(command);
+        // return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
-    /**
-     * Adds an attribute listener to the cluster. The listener will be notified when an attribute is updated.
-     *
-     * @param listener callback listener implementing {@link ZclAttributeListener} to add
-     */
     public void addAttributeListener(ZclAttributeListener listener) {
         // Don't add more than once.
         if (attributeListeners.contains(listener)) {

@@ -11,6 +11,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Restart Device Response Response value object class.
@@ -33,7 +34,7 @@ public class RestartDeviceResponseResponse extends ZclCommand {
         genericCommand = false;
         clusterId = 21;
         commandId = 0;
-        commandDirection = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     /**

@@ -30,7 +30,7 @@ public class CommandExecution {
     /**
      * The command response listener.
      */
-    private CommandListener commandListener;
+    private ZigBeeCommandListener commandListener;
 
     /**
      * Constructor which sets future and command listener.
@@ -77,7 +77,7 @@ public class CommandExecution {
      *
      * @param commandListener the command listener
      */
-    public void setCommandListener(CommandListener commandListener) {
+    public void setCommandListener(ZigBeeCommandListener commandListener) {
         this.commandListener = commandListener;
     }
 
@@ -86,7 +86,7 @@ public class CommandExecution {
      *
      * @return the command listener
      */
-    public CommandListener getCommandListener() {
+    public ZigBeeCommandListener getCommandListener() {
         return commandListener;
     }
 }

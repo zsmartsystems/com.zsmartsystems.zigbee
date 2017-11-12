@@ -24,15 +24,16 @@ public class ZigBeeCommandNotifier {
     /**
      * The command listeners.
      */
-    private List<CommandListener> commandListeners = new ArrayList<CommandListener>();
+    private List<ZigBeeCommandListener> commandListeners = new ArrayList<ZigBeeCommandListener>();
 
     /**
      * Adds a command listener
      *
      * @param commandListener the {@link CommandListener} to add
      */
-    public void addCommandListener(CommandListener commandListener) {
-        final List<CommandListener> modifiedCommandListeners = new ArrayList<CommandListener>(commandListeners);
+    public void addCommandListener(ZigBeeCommandListener commandListener) {
+        final List<ZigBeeCommandListener> modifiedCommandListeners = new ArrayList<ZigBeeCommandListener>(
+                commandListeners);
         modifiedCommandListeners.add(commandListener);
         commandListeners = Collections.unmodifiableList(modifiedCommandListeners);
     }
@@ -42,8 +43,9 @@ public class ZigBeeCommandNotifier {
      *
      * @param commandListener the {@link CommandListener} to remove
      */
-    public void removeCommandListener(CommandListener commandListener) {
-        final List<CommandListener> modifiedCommandListeners = new ArrayList<CommandListener>(commandListeners);
+    public void removeCommandListener(ZigBeeCommandListener commandListener) {
+        final List<ZigBeeCommandListener> modifiedCommandListeners = new ArrayList<ZigBeeCommandListener>(
+                commandListeners);
         modifiedCommandListeners.remove(commandListener);
         commandListeners = Collections.unmodifiableList(modifiedCommandListeners);
     }
@@ -56,7 +58,7 @@ public class ZigBeeCommandNotifier {
     public void notifyCommandListeners(final ZigBeeCommand command) {
         synchronized (this) {
             // Notify the listeners
-            for (final CommandListener commandListener : commandListeners) {
+            for (final ZigBeeCommandListener commandListener : commandListeners) {
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {

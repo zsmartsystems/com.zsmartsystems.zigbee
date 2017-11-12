@@ -43,6 +43,7 @@ public enum ZclClusterType {
     MULTISTATE_OUTPUT__BASIC(0x0013, ZclProfileType.HOME_AUTOMATION, ZclMultistateOutputBasicCluster.class, "Multistate Output (Basic)"),
     MULTISTATE_VALUE__BASIC(0x0014, ZclProfileType.HOME_AUTOMATION, ZclMultistateValueBasicCluster.class, "Multistate Value (Basic)"),
     COMMISSIONING(0x0015, ZclProfileType.HOME_AUTOMATION, ZclCommissioningCluster.class, "Commissioning"),
+    OTA_UPGRADE(0x0019, ZclProfileType.HOME_AUTOMATION, ZclOtaUpgradeCluster.class, "OTA Upgrade"),
     APPLIANCE_CONTROL(0x001B, ZclProfileType.HOME_AUTOMATION, ZclApplianceControlCluster.class, "Appliance Control"),
     SHADE_CONFIGURATION(0x0100, ZclProfileType.HOME_AUTOMATION, ZclShadeConfigurationCluster.class, "Shade Configuration"),
     DOOR_LOCK(0x0101, ZclProfileType.HOME_AUTOMATION, ZclDoorLockCluster.class, "Door Lock"),

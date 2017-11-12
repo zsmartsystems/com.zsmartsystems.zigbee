@@ -41,6 +41,10 @@ public class CodeGeneratorUtil {
     }
 
     public static String upperCamelCaseToLowerCamelCase(String value) {
+        if (value.length() == 0) {
+            return "";
+        }
+
         return value.substring(0, 1).toLowerCase() + value.substring(1);
     }
 

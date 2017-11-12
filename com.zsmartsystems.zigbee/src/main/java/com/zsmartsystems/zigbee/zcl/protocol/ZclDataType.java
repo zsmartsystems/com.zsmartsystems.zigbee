@@ -26,8 +26,9 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
  */
 public enum ZclDataType {
     BITMAP_16_BIT("16-bit Bitmap", Integer.class, 0x19, false),
-    BITMAP_8_BIT("8-bit Bitmap", Integer.class, 0x18, false),
+    BITMAP_8_BIT("Bitmap 8-bit", Integer.class, 0x18, false),
     BOOLEAN("Boolean", Boolean.class, 0x10, false),
+    BYTE_ARRAY("Byte array", ByteArray.class, 0x00, false),
     CHARACTER_STRING("Character string", String.class, 0x42, false),
     DATA_8_BIT("8-bit data", Integer.class, 0x08, false),
     ENUMERATION_16_BIT("16-bit Enumeration", Integer.class, 0x31, false),
@@ -52,9 +53,9 @@ public enum ZclDataType {
     SIGNED_16_BIT_INTEGER("Signed 16-bit integer", Integer.class, 0x29, true),
     SIGNED_32_BIT_INTEGER("Signed 32-bit integer", Integer.class, 0x2B, true),
     SIGNED_8_BIT_INTEGER("Signed 8-bit Integer", Integer.class, 0x28, true),
-    UNSIGNED_16_BIT_INTEGER("Unsigned 16-bit Integer", Integer.class, 0x21, true),
-    UNSIGNED_32_BIT_INTEGER("Unsigned 32-bit Integer", Integer.class, 0x23, true),
-    UNSIGNED_8_BIT_INTEGER("Unsigned 8-bit Integer", Integer.class, 0x20, true),
+    UNSIGNED_16_BIT_INTEGER("Unsigned 16-bit integer", Integer.class, 0x21, true),
+    UNSIGNED_32_BIT_INTEGER("Unsigned 32-bit integer", Integer.class, 0x23, true),
+    UNSIGNED_8_BIT_INTEGER("Unsigned 8-bit integer", Integer.class, 0x20, true),
     UTCTIME("UTCTime", Calendar.class, 0xE2, true),
     X_UNSIGNED_8_BIT_INTEGER("X Unsigned 8-bit integer", Integer.class, 0x00, false),
     ZCL_STATUS("Zcl Status", ZclStatus.class, 0x00, false),

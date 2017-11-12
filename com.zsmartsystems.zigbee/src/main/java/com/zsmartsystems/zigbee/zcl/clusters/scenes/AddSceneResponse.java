@@ -11,6 +11,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Add Scene Response value object class.
@@ -53,7 +54,7 @@ public class AddSceneResponse extends ZclCommand {
         genericCommand = false;
         clusterId = 5;
         commandId = 0;
-        commandDirection = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     /**

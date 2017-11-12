@@ -12,6 +12,8 @@ import java.util.List;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 
@@ -165,6 +167,16 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 break;
             case ZDO_STATUS:
                 buffer[length++] = ((ZdoStatus) data).getId();
+                break;
+            case ZCL_STATUS:
+                buffer[length++] = ((ZclStatus) data).getId();
+                break;
+            case BYTE_ARRAY:
+                final ByteArray byteArray = (ByteArray) data;
+                buffer[length++] = byteArray.size();
+                for (byte valByte : byteArray.get()) {
+                    buffer[length++] = valByte & 0xff;
+                }
                 break;
             case ZIGBEE_DATA_TYPE:
                 buffer[length++] = ((ZclDataType) data).getId();

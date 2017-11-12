@@ -9,17 +9,20 @@ package com.zsmartsystems.zigbee;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.ZclServer;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * ZigBee endpoint. An endpoint is a virtual entity contained within a {@link ZigBeeNode}. The {@link ZigBeeNode} is the
@@ -27,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
  *
  * @author Chris Jackson
  */
-public class ZigBeeEndpoint implements CommandListener {
+public class ZigBeeEndpoint implements ZigBeeCommandListener {
     /**
      * The {@link Logger}.
      */
@@ -66,19 +69,21 @@ public class ZigBeeEndpoint implements CommandListener {
     private int deviceVersion;
 
     /**
-     * Total list of clusters supported by the endpoint
+     * List of input clusters supported by the endpoint
      */
-    private final Map<Integer, ZclCluster> clusters = new HashMap<Integer, ZclCluster>();
+    private final Map<Integer, ZclCluster> inputClusters = new ConcurrentHashMap<Integer, ZclCluster>();
 
     /**
-     * Input cluster IDs
+     * List of output clusters supported by the endpoint
      */
-    private final List<Integer> inputClusterIds = new ArrayList<Integer>();
+    private final Map<Integer, ZclCluster> outputClusters = new ConcurrentHashMap<Integer, ZclCluster>();
 
     /**
-     * Output cluster IDs
+     * Map of {@link ZigBeeServer}s that are available to this endpoint. Servers are added
+     * with the {@link #addServer(ZigBeeServer server)} method and can be retrieved with the
+     * {@link #getServer(int clusterId)} method.
      */
-    private final List<Integer> outputClusterIds = new ArrayList<Integer>();
+    private final Map<Integer, ZclServer> servers = new ConcurrentHashMap<Integer, ZclServer>();
 
     /**
      * Constructor
@@ -148,21 +153,43 @@ public class ZigBeeEndpoint implements CommandListener {
      * Gets input cluster IDs. This lists the IDs of all clusters the device
      * supports as a server.
      *
-     * @return the input cluster IDs
+     * @return the {@link Collection} of input cluster IDs
      */
-    public List<Integer> getInputClusterIds() {
-        return inputClusterIds;
+    public Collection<Integer> getInputClusterIds() {
+        return inputClusters.keySet();
     }
 
     /**
      * Gets an input cluster
      *
+     * @deprecated Use {@link #getInputCluster}
      * @param clusterId
      *            the cluster number
      * @return the cluster or null if cluster is not found
      */
+    @Deprecated
     public ZclCluster getCluster(int clusterId) {
-        return clusters.get(clusterId);
+        return getInputCluster(clusterId);
+    }
+
+    /**
+     * Gets an input cluster
+     *
+     * @param clusterId the cluster number
+     * @return the {@link ZclCluster} or null if cluster is not found
+     */
+    public ZclCluster getInputCluster(int clusterId) {
+        return inputClusters.get(clusterId);
+    }
+
+    /**
+     * Gets an output cluster
+     *
+     * @param clusterId the cluster number
+     * @return the {@link ZclCluster} or null if cluster is not found
+     */
+    public ZclCluster getOutputCluster(int clusterId) {
+        return outputClusters.get(clusterId);
     }
 
     /**
@@ -172,16 +199,15 @@ public class ZigBeeEndpoint implements CommandListener {
      *            the input cluster IDs
      */
     public void setInputClusterIds(List<Integer> inputClusterIds) {
-        this.inputClusterIds.clear();
-        this.inputClusterIds.addAll(inputClusterIds);
+        this.inputClusters.clear();
 
         logger.debug("{}: Setting input clusters {}", getEndpointAddress(), inputClusterIds);
 
-        updateClusters(inputClusterIds, true);
+        updateClusters(inputClusters, inputClusterIds, true);
     }
 
     /**
-     * Gets the {@link IeeeAddress} for this endpoint from it's parant {@link ZigBeeNode}
+     * Gets the {@link IeeeAddress} for this endpoint from it's parent {@link ZigBeeNode}
      *
      * @return the node {@link IeeeAddress}
      */
@@ -202,10 +228,10 @@ public class ZigBeeEndpoint implements CommandListener {
      * Gets output cluster IDs. This provides the IDs of all clusters the device
      * supports as a client.
      *
-     * @return the output cluster IDs
+     * @return the {@link Collection} of output cluster IDs
      */
-    public List<Integer> getOutputClusterIds() {
-        return outputClusterIds;
+    public Collection<Integer> getOutputClusterIds() {
+        return outputClusters.keySet();
     }
 
     /**
@@ -215,15 +241,35 @@ public class ZigBeeEndpoint implements CommandListener {
      *            the output cluster IDs
      */
     public void setOutputClusterIds(List<Integer> outputClusterIds) {
-        this.outputClusterIds.clear();
-        this.outputClusterIds.addAll(outputClusterIds);
+        this.outputClusters.clear();
 
         logger.debug("{}: Setting output clusters {}", getEndpointAddress(), outputClusterIds);
 
-        updateClusters(outputClusterIds, false);
+        updateClusters(outputClusters, outputClusterIds, false);
     }
 
-    private void updateClusters(List<Integer> newList, boolean isInput) {
+    /**
+     * Gets a cluster from the input or output cluster list depending on the command {@link ZclCommandDirection} for a
+     * received command.
+     * <p>
+     * If commandDirection is {@link ZclCommandDirection#CLIENT_TO_SERVER} then the cluster comes from the output
+     * cluster list.
+     * If commandDirection is {@link ZclCommandDirection#SERVER_TO_CLIENT} then the cluster comes from the input
+     * cluster list.
+     *
+     * @param clusterId the cluster ID to get
+     * @param direction the {@link ZclCommandDirection}
+     * @return the {@link ZclCluster} or null if the cluster is not known
+     */
+    private ZclCluster getReceiveCluster(int clusterId, ZclCommandDirection direction) {
+        if (direction == ZclCommandDirection.CLIENT_TO_SERVER) {
+            return getOutputCluster(clusterId);
+        } else {
+            return getInputCluster(clusterId);
+        }
+    }
+
+    private void updateClusters(Map<Integer, ZclCluster> clusters, List<Integer> newList, boolean isInput) {
         // Get a list any clusters that are no longer in the list
         List<Integer> removeIds = new ArrayList<Integer>();
         for (ZclCluster cluster : clusters.values()) {
@@ -231,17 +277,8 @@ public class ZigBeeEndpoint implements CommandListener {
                 // The existing cluster is in the new list, so no need to remove it
                 continue;
             }
-            if (isInput && !cluster.isServer()) {
-                cluster.setServer(false);
-            }
-            if (isInput && !cluster.isClient()) {
-                cluster.setClient(false);
-            }
 
-            // If the cluster is not a server or client, then remove it
-            if (!cluster.isClient() && !cluster.isServer()) {
-                removeIds.add(cluster.getClusterId());
-            }
+            removeIds.add(cluster.getClusterId());
         }
 
         // Remove clusters no longer in use
@@ -273,10 +310,10 @@ public class ZigBeeEndpoint implements CommandListener {
                 }
                 if (isInput) {
                     logger.debug("{}: Setting cluster {} as server", getEndpointAddress(), clusterType);
-                    clusterClass.setServer(true);
+                    clusterClass.setServer();
                 } else {
                     logger.debug("{}: Setting cluster {} as client", getEndpointAddress(), clusterType);
-                    clusterClass.setClient(true);
+                    clusterClass.setClient();
                 }
 
                 // Add to our list of clusters
@@ -312,17 +349,47 @@ public class ZigBeeEndpoint implements CommandListener {
         return node;
     }
 
+    /**
+     * Adds a server and makes it available to this endpoint.
+     * The cluster used by the server must be in the output clusters list and this will be passed to the
+     * {@link ZigBeeServer#serverStartup()) method to start the server.
+     *
+     * @param server the new {@link ZigBeeServer}
+     */
+    public void addServer(ZclServer server) {
+        servers.put(server.getClusterId(), server);
+        server.serverStartup(outputClusters.get(server.getClusterId()));
+    }
+
+    /**
+     * Gets the server associated with the clusterId. Returns null if there is no server linked to the requested cluster
+     *
+     * @param clusterId
+     * @return the {@link ZigBeeServer}
+     */
+    public ZclServer getServer(int clusterId) {
+        return servers.get(clusterId);
+    }
+
     @Override
     public void commandReceived(ZigBeeCommand command) {
         if (!command.getSourceAddress().equals(getEndpointAddress())) {
             return;
         }
 
+        // Pass all commands received from this device to any registered servers
+        synchronized (servers) {
+            for (ZclServer server : servers.values()) {
+                server.commandReceived(command);
+            }
+        }
+
         if (command instanceof ReportAttributesCommand) {
             ReportAttributesCommand attributeCommand = (ReportAttributesCommand) command;
 
             // Get the cluster
-            ZclCluster cluster = getCluster(attributeCommand.getClusterId());
+            ZclCluster cluster = getReceiveCluster(attributeCommand.getClusterId(),
+                    attributeCommand.getCommandDirection());
             if (cluster == null) {
                 logger.debug("{}: Cluster {} not found for attribute report", getEndpointAddress(),
                         attributeCommand.getClusterId());
@@ -338,9 +405,10 @@ public class ZigBeeEndpoint implements CommandListener {
             ReadAttributesResponse attributeCommand = (ReadAttributesResponse) command;
 
             // Get the cluster
-            ZclCluster cluster = getCluster(attributeCommand.getClusterId());
+            ZclCluster cluster = getReceiveCluster(attributeCommand.getClusterId(),
+                    attributeCommand.getCommandDirection());
             if (cluster == null) {
-                logger.debug("{}: Cluster {} not found for attribute report", getEndpointAddress(),
+                logger.debug("{}: Cluster {} not found for attribute response", getEndpointAddress(),
                         attributeCommand.getClusterId());
                 return;
             }
@@ -359,5 +427,4 @@ public class ZigBeeEndpoint implements CommandListener {
                 + ", inputClusterIds=" + getInputClusterIds().toString() + ", outputClusterIds="
                 + getOutputClusterIds().toString() + "]";
     }
-
 }

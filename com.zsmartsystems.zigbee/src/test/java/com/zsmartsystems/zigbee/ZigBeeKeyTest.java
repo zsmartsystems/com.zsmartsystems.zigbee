@@ -54,7 +54,7 @@ public class ZigBeeKeyTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorStringShort() {
-        ZigBeeKey key = new ZigBeeKey("11223344556677889900AABBCCDDEE");
+        new ZigBeeKey("11223344556677889900AABBCCDDEE");
     }
 
     @Test

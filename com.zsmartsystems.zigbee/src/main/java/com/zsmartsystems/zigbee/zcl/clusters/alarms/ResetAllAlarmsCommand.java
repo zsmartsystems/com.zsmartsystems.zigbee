@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.alarms;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Reset All Alarms Command value object class.
@@ -38,7 +39,7 @@ public class ResetAllAlarmsCommand extends ZclCommand {
         genericCommand = false;
         clusterId = 9;
         commandId = 1;
-        commandDirection = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     @Override

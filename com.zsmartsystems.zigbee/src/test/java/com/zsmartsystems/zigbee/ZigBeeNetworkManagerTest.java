@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 
 public class ZigBeeNetworkManagerTest
-        implements ZigBeeNetworkNodeListener, ZigBeeNetworkStateListener, ZigBeeNetworkEndpointListener, CommandListener {
+        implements ZigBeeNetworkNodeListener, ZigBeeNetworkStateListener, ZigBeeNetworkEndpointListener, ZigBeeCommandListener {
     private ZigBeeNetworkNodeListener mockedNodeListener;
     private List<ZigBeeNode> nodeNodeListenerCapture;
     private ZigBeeNetworkEndpointListener mockedDeviceListener;
@@ -42,7 +42,7 @@ public class ZigBeeNetworkManagerTest
     private List<ZigBeeTransportState> networkStateListenerCapture;
 
     private ZigBeeTransportTransmit mockedTransport;
-    private CommandListener mockedCommandListener;
+    private ZigBeeCommandListener mockedCommandListener;
     private ZigBeeNetworkStateListener mockedStateListener;
     private List<ZigBeeCommand> commandListenerCapture;
 
@@ -50,9 +50,9 @@ public class ZigBeeNetworkManagerTest
     public void testAddRemoveNode() {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
-        ZigBeeNode node1 = new ZigBeeNode(null);
+        ZigBeeNode node1 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         node1.setNetworkAddress(1234);
-        ZigBeeNode node2 = new ZigBeeNode(null);
+        ZigBeeNode node2 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
         node2.setNetworkAddress(5678);
 
         // Add a node and make sure it's in the list
@@ -283,7 +283,7 @@ public class ZigBeeNetworkManagerTest
 
         final ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
 
-        mockedCommandListener = Mockito.mock(CommandListener.class);
+        mockedCommandListener = Mockito.mock(ZigBeeCommandListener.class);
         commandListenerCapture = new ArrayList<>();
 
         networkManager.addNetworkNodeListener(this);

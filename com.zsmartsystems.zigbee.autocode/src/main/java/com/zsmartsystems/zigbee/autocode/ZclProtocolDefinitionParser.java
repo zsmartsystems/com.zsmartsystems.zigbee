@@ -200,7 +200,7 @@ public class ZclProtocolDefinitionParser {
                 return;
             }
 
-            if (line.startsWith("|") && !line.startsWith("|Field") && !line.startsWith("|-")) {
+            if (line.startsWith("|") && !line.startsWith("|Field Name") && !line.startsWith("|-")) {
                 final String row = line.trim().substring(1, line.length() - 1);
                 final String[] columns = row.split("\\|");
                 final Field field = new Field();
@@ -222,10 +222,36 @@ public class ZclProtocolDefinitionParser {
 
                 String dataTypeName = columns[1].trim();
                 if (dataTypeName.contains("[")) {
-                    field.listSizer = dataTypeName.substring(dataTypeName.indexOf("[") + 1, dataTypeName.indexOf("]"));
-                    field.listSizer = CodeGeneratorUtil.labelToUpperCamelCase(field.listSizer);
-                    field.listSizer = CodeGeneratorUtil.upperCamelCaseToLowerCamelCase(field.listSizer);
-                    dataTypeName = dataTypeName.substring(0, dataTypeName.indexOf("["));
+                    String fieldString = dataTypeName.substring(dataTypeName.indexOf("[") + 1,
+                            dataTypeName.indexOf("]"));
+                    if (fieldString.length() != 0) {
+                        String conditionOperator = "";
+                        String condition = "";
+                        if (fieldString.contains("&&")) {
+                            conditionOperator = "&&";
+                        }
+                        if (fieldString.contains(">=")) {
+                            conditionOperator = ">=";
+                        }
+                        if (fieldString.contains("==")) {
+                            conditionOperator = "==";
+                        }
+
+                        if (conditionOperator.length() != 0) {
+                            field.listSizer = fieldString.substring(0, fieldString.indexOf(conditionOperator));
+                            condition = fieldString
+                                    .substring(fieldString.indexOf(conditionOperator) + conditionOperator.length());
+
+                            field.condition = condition;
+                            field.conditionOperator = conditionOperator;
+                        } else {
+                            field.listSizer = fieldString;
+                        }
+                        field.listSizer = CodeGeneratorUtil.labelToUpperCamelCase(field.listSizer);
+                        field.listSizer = CodeGeneratorUtil.upperCamelCaseToLowerCamelCase(field.listSizer);
+
+                        dataTypeName = dataTypeName.substring(0, dataTypeName.indexOf("["));
+                    }
                 }
                 field.dataType = CodeGeneratorUtil.labelToEnumerationValue(dataTypeName);
 

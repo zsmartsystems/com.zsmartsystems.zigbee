@@ -11,6 +11,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Save Startup Parameters Response value object class.
@@ -33,7 +34,7 @@ public class SaveStartupParametersResponse extends ZclCommand {
         genericCommand = false;
         clusterId = 21;
         commandId = 1;
-        commandDirection = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     /**

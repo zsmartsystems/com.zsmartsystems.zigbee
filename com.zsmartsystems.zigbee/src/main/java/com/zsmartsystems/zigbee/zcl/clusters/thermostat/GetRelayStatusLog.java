@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.thermostat;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Get Relay Status Log value object class.
@@ -43,7 +44,7 @@ public class GetRelayStatusLog extends ZclCommand {
         genericCommand = false;
         clusterId = 513;
         commandId = 4;
-        commandDirection = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     @Override

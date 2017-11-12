@@ -11,6 +11,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Zone Enroll Request Command value object class.
@@ -42,7 +43,7 @@ public class ZoneEnrollRequestCommand extends ZclCommand {
         genericCommand = false;
         clusterId = 1280;
         commandId = 1;
-        commandDirection = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     /**

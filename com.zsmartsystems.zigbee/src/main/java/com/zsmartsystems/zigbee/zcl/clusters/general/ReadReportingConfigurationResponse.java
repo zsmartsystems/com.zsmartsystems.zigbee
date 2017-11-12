@@ -11,6 +11,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 import java.util.List;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
@@ -38,7 +39,7 @@ public class ReadReportingConfigurationResponse extends ZclCommand {
     public ReadReportingConfigurationResponse() {
         genericCommand = true;
         commandId = 9;
-        commandDirection = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
