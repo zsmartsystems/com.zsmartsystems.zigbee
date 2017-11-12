@@ -39,9 +39,9 @@ public class BindRequest extends ZdoRequest {
     private Integer srcEndpoint;
 
     /**
-     * ClusterID command message field.
+     * BindCluster command message field.
      */
-    private Integer clusterId;
+    private Integer bindCluster;
 
     /**
      * DstAddrMode command message field.
@@ -102,21 +102,21 @@ public class BindRequest extends ZdoRequest {
     }
 
     /**
-     * Gets ClusterID.
+     * Gets BindCluster.
      *
-     * @return the ClusterID
+     * @return the BindCluster
      */
-    public Integer getClusterId() {
-        return clusterId;
+    public Integer getBindCluster() {
+        return bindCluster;
     }
 
     /**
-     * Sets ClusterID.
+     * Sets BindCluster.
      *
-     * @param clusterId the ClusterID
+     * @param bindCluster the BindCluster
      */
-    public void setClusterId(final Integer clusterId) {
-        this.clusterId = clusterId;
+    public void setBindCluster(final Integer bindCluster) {
+        this.bindCluster = bindCluster;
     }
 
     /**
@@ -179,7 +179,7 @@ public class BindRequest extends ZdoRequest {
 
         serializer.serialize(srcAddress, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(srcEndpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(clusterId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        serializer.serialize(bindCluster, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(dstAddrMode, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(dstAddress, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(dstEndpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
@@ -191,7 +191,7 @@ public class BindRequest extends ZdoRequest {
 
         srcAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         srcEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        clusterId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        bindCluster = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         dstAddrMode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         dstAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         dstEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
@@ -199,15 +199,15 @@ public class BindRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(196);
+        final StringBuilder builder = new StringBuilder(198);
         builder.append("BindRequest [");
         builder.append(super.toString());
         builder.append(", srcAddress=");
         builder.append(srcAddress);
         builder.append(", srcEndpoint=");
         builder.append(srcEndpoint);
-        builder.append(", clusterId=");
-        builder.append(clusterId);
+        builder.append(", bindCluster=");
+        builder.append(bindCluster);
         builder.append(", dstAddrMode=");
         builder.append(dstAddrMode);
         builder.append(", dstAddress=");

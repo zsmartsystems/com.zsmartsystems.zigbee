@@ -7,53 +7,156 @@
  */
 package com.zsmartsystems.zigbee.zdo.field;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclListItemField;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Attribute Identifier field.
+ * Binding Table field.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
-public class BindingTable implements ZclListItemField {
+public class BindingTable {
     /**
-     * The attribute identifier.
+     * The source IEEE address for the binding entry.
      */
-    private int attributeIdentifier;
+    private IeeeAddress srcAddr;
 
     /**
-     * Gets attribute identifier.
-     *
-     * @return the attribute identifier
+     * The source endpoint for the binding entry.
      */
-    public int getAttributeIdentifier() {
-        return attributeIdentifier;
+    private int srcEndpoint;
+
+    /**
+     * The identifier of the cluster on the source device that is bound to the destination device.
+     */
+    private int clusterId;
+
+    /**
+     * Destination address mode
+     * <p>
+     * <ul>
+     * <li>0x01 - Group address
+     * <li>0x03 - IEEE address
+     * </ul>
+     */
+    private int dstAddrMode;
+
+    /**
+     * Destination address if the address mode is group addressing
+     */
+    private int dstGroupAddr;
+
+    /**
+     * Destination address if the address mode is a node address
+     */
+    private IeeeAddress dstNodeAddr;
+
+    /**
+     * Destination endpoint if the address mode is a node address
+     */
+    private int dstNodeEndpoint;
+
+    /**
+     * @return the srcAddr
+     */
+    public IeeeAddress getSrcAddr() {
+        return srcAddr;
     }
 
     /**
-     * Sets attribute.
-     *
-     * @param attributeIdentifier the attribute identifier
+     * @return the srcEndpoint
      */
-    public void setAttributeIdentifier(int attributeIdentifier) {
-        this.attributeIdentifier = attributeIdentifier;
+    public int getSrcEndpoint() {
+        return srcEndpoint;
     }
 
-    @Override
+    /**
+     * @return the clusterId
+     */
+    public int getClusterId() {
+        return clusterId;
+    }
+
+    /**
+     * @return the dstAddrMode
+     */
+    public int getDstAddrMode() {
+        return dstAddrMode;
+    }
+
+    /**
+     * @return the dstGroupAddr
+     */
+    public int getDstGroupAddr() {
+        return dstGroupAddr;
+    }
+
+    /**
+     * @return the dstNodeAddr
+     */
+    public IeeeAddress getDstNodeAddr() {
+        return dstNodeAddr;
+    }
+
+    /**
+     * @return the dstNodeEndpoint
+     */
+    public int getDstNodeEndpoint() {
+        return dstNodeEndpoint;
+    }
+
     public void serialize(final ZigBeeSerializer serializer) {
-        serializer.appendZigBeeType(attributeIdentifier, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        serializer.appendZigBeeType(srcAddr, ZclDataType.IEEE_ADDRESS);
+        serializer.appendZigBeeType(srcEndpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.appendZigBeeType(clusterId, ZclDataType.CLUSTERID);
+        serializer.appendZigBeeType(dstAddrMode, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        if (dstAddrMode == 1) {
+            serializer.appendZigBeeType(dstGroupAddr, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        } else if (dstAddrMode == 3) {
+            serializer.appendZigBeeType(dstNodeAddr, ZclDataType.IEEE_ADDRESS);
+            serializer.appendZigBeeType(dstNodeEndpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        }
     }
 
-    @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        srcAddr = (IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
+        srcEndpoint = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        clusterId = (int) deserializer.readZigBeeType(ZclDataType.CLUSTERID);
+        dstAddrMode = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        if (dstAddrMode == 1) {
+            dstGroupAddr = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        } else if (dstAddrMode == 3) {
+            dstNodeAddr = (IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
+            dstNodeEndpoint = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        }
     }
 
     @Override
     public String toString() {
-        return "Attribute Identifier: attributeIdentifier=" + attributeIdentifier;
+        StringBuilder builder = new StringBuilder(120);
+        builder.append("BindingTable [srcAddr=");
+        builder.append(srcAddr);
+        builder.append('/');
+        builder.append(srcEndpoint);
+        builder.append(", dstAddr=");
+        switch (dstAddrMode) {
+            case 1:
+                builder.append(dstGroupAddr);
+                break;
+            case 3:
+                builder.append(dstNodeAddr);
+                builder.append('/');
+                builder.append(dstNodeEndpoint);
+                break;
+            default:
+                builder.append(", Unknown destination mode");
+                break;
+        }
+        builder.append(", clusterId=");
+        builder.append(clusterId);
+        builder.append(']');
+        return builder.toString();
     }
 }

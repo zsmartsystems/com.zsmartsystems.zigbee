@@ -360,9 +360,10 @@ public abstract class ZclCluster {
      */
     public Future<CommandResult> bind(IeeeAddress address, int endpointId) {
         final BindRequest command = new BindRequest();
+        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
         command.setSrcAddress(zigbeeEndpoint.getIeeeAddress());
         command.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
-        command.setClusterId(clusterId);
+        command.setBindCluster(clusterId);
         command.setDstAddrMode(3); // 64 bit addressing
         command.setDstAddress(address);
         command.setDstEndpoint(endpointId);
