@@ -156,7 +156,7 @@ public class ZigBeeDongleTelegesis
      * <br>
      * + Bit 4: Set: Send Network key encrypted with the link key to nodes joining
      * <br>
-     * Bit 3: Set: Do not allow nodes to re-join unsecured
+     * - Bit 3: Set: Do not allow nodes to re-join unsecured
      * <br>
      * + Bit 2: Set: Send Network key encrypted with the link key to nodes re-joining unsecured
      * <br>

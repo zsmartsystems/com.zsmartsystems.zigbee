@@ -156,8 +156,16 @@ public class TelegesisFrameHandler {
         while (!closeHandler) {
             int val = serialPort.read();
             if (val == -1) {
+                // Timeout
                 continue;
             }
+            if (inputBufferLength >= inputBuffer.length) {
+                // If we overrun the buffer, reset and go to WAITING mode
+                inputBufferLength = 0;
+                rxState = RxStateMachine.WAITING;
+                logger.debug("TELEGESIS RX buffer overrun - resetting!");
+            }
+
             logger.trace("TELEGESIS RX: {}", String.format("%02X %c", val, val));
 
             switch (rxState) {
