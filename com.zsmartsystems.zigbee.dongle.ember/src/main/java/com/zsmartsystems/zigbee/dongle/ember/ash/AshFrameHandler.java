@@ -145,8 +145,7 @@ public class AshFrameHandler {
      * Starts the handler. Sets input stream where the packet is read from the and
      * handler which further processes the received packet.
      *
-     * @param inputStream the {@link InputStream}
-     * @param outputStream the {@link OutputStream}
+     * @param port the {@link ZigBeePort}
      */
     public void start(final ZigBeePort port) {
         this.port = port;
@@ -374,6 +373,10 @@ public class AshFrameHandler {
         // Check how many frames are outstanding
         if (sentQueue.size() >= TX_WINDOW) {
             logger.debug("Sent queue larger than window [{} > {}].", sentQueue.size(), TX_WINDOW);
+            // check timer task
+            if(timerTask == null) {
+                startRetryTimer();
+            }
             return;
         }
 
@@ -441,7 +444,7 @@ public class AshFrameHandler {
      * This method queues a {@link EzspFrameRequest} frame without waiting for a response and
      * no transaction management is performed.
      *
-     * @param transaction
+     * @param request
      *            {@link EzspFrameRequest}
      */
     public void queueFrame(EzspFrameRequest request) {
@@ -520,6 +523,7 @@ public class AshFrameHandler {
             timerTask.cancel();
             timerTask = null;
         }
+        retries = 0;
     }
 
     private class AshRetryTimer extends TimerTask {
@@ -539,9 +543,16 @@ public class AshFrameHandler {
                 frameHandler.handleLinkStateChange(false);
 
                 logger.debug("Error: number of retries exceeded [{}].", retries);
+                // drop message from queue
+                sentQueue.poll();
+                retries = 0;
             }
 
-            sendRetry();
+            try {
+                sendRetry();
+            } catch (Exception e) {
+                logger.warn("Caught exception while attempting to retry message in AshRetryTimer", e);
+            }
         }
     }
 
@@ -646,7 +657,7 @@ public class AshFrameHandler {
      * Sends an EZSP request to the NCP and waits for the response. The response is correlated with the request and the
      * returned {@link EzspFrame} contains the request and response data.
      *
-     * @param ezspRequest
+     * @param ezspTransaction
      *            Request {@link EzspFrame}
      * @return response {@link EzspFrame}
      */
