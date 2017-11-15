@@ -44,6 +44,7 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetN
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetPanIdCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetPromptEnable1Command;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetPromptEnable2Command;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetRegisterBitCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetTrustCentreLinkKeyCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisStatusCode;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
@@ -308,6 +309,16 @@ public class ZigBeeDongleTelegesis
             builder.append("Version=R");
             builder.append(productInfo.getFirmwareRevision());
             versionString = builder.toString();
+        }
+
+        // Disable echo on the serial port
+        TelegesisSetRegisterBitCommand setRegister = new TelegesisSetRegisterBitCommand();
+        setRegister.setRegister(0x12);
+        setRegister.setBit(4);
+        setRegister.setState(true);
+        if (frameHandler.sendRequest(setRegister) == null) {
+            logger.debug("Error setting Telegesis port echo");
+            return ZigBeeInitializeResponse.FAILED;
         }
 
         // Configure the dongle
