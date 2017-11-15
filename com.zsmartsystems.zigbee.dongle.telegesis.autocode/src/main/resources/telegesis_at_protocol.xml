@@ -600,6 +600,39 @@
 	</command>
 
 	<command>
+		<name>Set Register Bit</name>
+		<description>Sets a bit in an S register</description>
+		<command_parameters>
+			<prompt>ATS</prompt>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>register</name>
+				<terminator></terminator>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int4</data_type>
+				<name>bit</name>
+				<description></description>
+				<terminator></terminator>
+			</parameter>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>state</name>
+				<terminator>=</terminator>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>String</data_type>
+				<name>password</name>
+				<description></description>
+				<terminator>:</terminator>
+				<optional>true</optional>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
 		<name>Set Channel Mask</name>
 		<description>Sets the channel mask</description>
 		<command_parameters>

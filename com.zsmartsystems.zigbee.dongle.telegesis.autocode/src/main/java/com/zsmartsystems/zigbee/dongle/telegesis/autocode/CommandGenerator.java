@@ -223,8 +223,10 @@ public class CommandGenerator extends ClassGenerator {
 
                         }
                         if (first == false || (!group.prompt.endsWith("="))) {
-                            if (parameter.terminator != null && parameter.terminator.length() != 0) {
-                                out.println(indent + "serializeDelimiter('" + parameter.terminator + "');");
+                            if (parameter.terminator != null) {
+                                if (parameter.terminator.length() != 0) {
+                                    out.println(indent + "serializeDelimiter('" + parameter.terminator + "');");
+                                }
                             } else {
                                 out.println(indent + "serializeDelimiter();");
                             }
@@ -1053,6 +1055,7 @@ public class CommandGenerator extends ClassGenerator {
             case "Data":
                 return "int[]";
             case "Dec8":
+            case "Int4":
             case "Int8":
             case "SInt8":
             case "Int16":

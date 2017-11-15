@@ -88,6 +88,15 @@ public class TelegesisFrame {
     }
 
     /**
+     * Serializes an 4 bit integer in hexadecimal (1 character long)
+     *
+     * @param value the value to serialize
+     */
+    protected void serializeInt4(Integer value) {
+        serializeUpperCaseString(Integer.toHexString(value));
+    }
+
+    /**
      * Serializes an 8 bit integer in hexadecimal (2 characters long)
      *
      * @param value the value to serialize
@@ -214,6 +223,10 @@ public class TelegesisFrame {
             // Eat the exception
             return null;
         }
+    }
+
+    protected void serializeBoolean(boolean value) {
+        buffer[length++] = value ? '1' : '0';
     }
 
     protected Boolean deserializeBoolean() {
