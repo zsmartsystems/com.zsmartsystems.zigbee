@@ -41,6 +41,7 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zdo.ZdoResponseMatcher;
 import com.zsmartsystems.zigbee.zdo.command.BindRequest;
 import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
 
@@ -367,7 +368,7 @@ public abstract class ZclCluster {
         command.setDstAddrMode(3); // 64 bit addressing
         command.setDstAddress(address);
         command.setDstEndpoint(endpointId);
-        return zigbeeManager.unicast(command, new ZclResponseMatcher());
+        return zigbeeManager.unicast(command, new ZdoResponseMatcher());
     }
 
     /**
@@ -394,7 +395,7 @@ public abstract class ZclCluster {
         command.setDstAddrMode(3); // 64 bit addressing
         command.setDstAddress(address);
         command.setDstEndpoint(endpointId);
-        return zigbeeManager.unicast(command, new ZclResponseMatcher());
+        return zigbeeManager.unicast(command, new ZdoResponseMatcher());
     }
 
     /**
