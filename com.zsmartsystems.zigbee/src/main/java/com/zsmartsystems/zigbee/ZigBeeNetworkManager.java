@@ -1106,13 +1106,4 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
-    /**
-     * Sets the Trust Center link mode
-     *
-     * @param linkMode the {@link ZigBeeTcLinkMode} defining the Trust Center link mode
-     */
-    public boolean setTcLinkMode(ZigBeeTcLinkMode linkMode) {
-        return transport.setTcLinkMode(linkMode);
-    }
-
 }

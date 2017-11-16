@@ -18,7 +18,6 @@ import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
-import com.zsmartsystems.zigbee.ZigBeeTcLinkMode;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisEventListener;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFirmwareUpdateHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFrameHandler;
@@ -50,6 +49,10 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetP
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetRegisterBitCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetTrustCentreLinkKeyCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisStatusCode;
+import com.zsmartsystems.zigbee.transport.TransportConfig;
+import com.zsmartsystems.zigbee.transport.TransportConfigOption;
+import com.zsmartsystems.zigbee.transport.TransportConfigResult;
+import com.zsmartsystems.zigbee.transport.TrustCentreLinkMode;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
@@ -677,7 +680,26 @@ public class ZigBeeDongleTelegesis
     }
 
     @Override
-    public boolean setTcLinkMode(ZigBeeTcLinkMode linkMode) {
+    public void updateTransportConfig(TransportConfig configuration) {
+        for (TransportConfigOption option : configuration.getOptions()) {
+            try {
+                switch (option) {
+                    case TRUST_CENTRE_JOIN_MODE:
+                        configuration.setResult(option,
+                                setTcJoinMode((TrustCentreLinkMode) configuration.getValue(option)));
+                        break;
+                    default:
+                        configuration.setResult(option, TransportConfigResult.ERROR_UNSUPPORTED);
+                        logger.debug("Unsupported configuration option \"{}\" in Telegesis dongle", option);
+                        break;
+                }
+            } catch (ClassCastException e) {
+                configuration.setResult(option, TransportConfigResult.ERROR_INVALID_VALUE);
+            }
+        }
+    }
+
+    private TransportConfigResult setTcJoinMode(TrustCentreLinkMode linkMode) {
         logger.debug("Setting Telegesis trust centre link mode: {}", linkMode);
 
         TelegesisDisallowTcJoinCommand disallowJoinCommand = new TelegesisDisallowTcJoinCommand();
@@ -694,16 +716,16 @@ public class ZigBeeDongleTelegesis
                 frameHandler.sendRequest(disallowJoinCommand);
 
                 TelegesisDisallowUnsecuredRejoinCommand unsecuredRejoinCommand = new TelegesisDisallowUnsecuredRejoinCommand();
-                unsecuredRejoinCommand.setRejoin(linkMode == ZigBeeTcLinkMode.TC_JOIN_SECURE ? true : false);
+                unsecuredRejoinCommand.setRejoin(linkMode == TrustCentreLinkMode.TC_JOIN_SECURE ? true : false);
                 unsecuredRejoinCommand.setPassword(telegesisPassword);
                 frameHandler.sendRequest(unsecuredRejoinCommand);
                 break;
             default:
                 logger.info("Unknown trust centre link mode: {}", linkMode);
-                break;
+                return TransportConfigResult.ERROR_INVALID_VALUE;
         }
 
-        return false;
+        return TransportConfigResult.SUCCESS;
     }
 
 }

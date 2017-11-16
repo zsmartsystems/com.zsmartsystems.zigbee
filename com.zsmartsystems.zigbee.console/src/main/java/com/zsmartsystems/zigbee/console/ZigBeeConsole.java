@@ -37,11 +37,13 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.ZigBeeTcLinkMode;
 import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServer;
 import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServerStatus;
 import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaStatusCallback;
+import com.zsmartsystems.zigbee.transport.TransportConfig;
+import com.zsmartsystems.zigbee.transport.TransportConfigOption;
+import com.zsmartsystems.zigbee.transport.TrustCentreLinkMode;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
@@ -2643,9 +2645,12 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            ZigBeeTcLinkMode linkMode = ZigBeeTcLinkMode.valueOf(args[2].toUpperCase());
+            TransportConfig config = new TransportConfig(TransportConfigOption.TRUST_CENTRE_JOIN_MODE,
+                    TrustCentreLinkMode.valueOf(args[2].toUpperCase()));
 
-            dongle.setTcLinkMode(linkMode);
+            dongle.updateTransportConfig(config);
+            print("Trust Centre configuration returned "
+                    + config.getResult(TransportConfigOption.TRUST_CENTRE_JOIN_MODE), out);
             return true;
         }
     }

@@ -20,7 +20,6 @@ import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
-import com.zsmartsystems.zigbee.ZigBeeTcLinkMode;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
@@ -56,6 +55,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspSingleResponse
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberNetworkInitialisation;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberStackConfiguration;
+import com.zsmartsystems.zigbee.transport.TransportConfig;
+import com.zsmartsystems.zigbee.transport.TransportConfigOption;
+import com.zsmartsystems.zigbee.transport.TransportConfigResult;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
@@ -569,8 +571,19 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
     }
 
     @Override
-    public boolean setTcLinkMode(ZigBeeTcLinkMode linkMode) {
-        return false;
+    public void updateTransportConfig(TransportConfig configuration) {
+        for (TransportConfigOption option : configuration.getOptions()) {
+            try {
+                switch (option) {
+                    default:
+                        configuration.setResult(option, TransportConfigResult.ERROR_UNSUPPORTED);
+                        logger.debug("Unsupported configuration option \"{}\" in Telegesis dongle", option);
+                        break;
+                }
+            } catch (ClassCastException e) {
+                configuration.setResult(option, TransportConfigResult.ERROR_INVALID_VALUE);
+            }
+        }
     }
 
     @Override

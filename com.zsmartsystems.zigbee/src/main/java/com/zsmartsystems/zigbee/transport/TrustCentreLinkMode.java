@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.transport;
 
 /**
  * An enumeration with the Trust Center link mode
@@ -13,7 +13,7 @@ package com.zsmartsystems.zigbee;
  * @author Chris Jackson
  *
  */
-public enum ZigBeeTcLinkMode {
+public enum TrustCentreLinkMode {
     /**
      * The TC should deny joins
      */

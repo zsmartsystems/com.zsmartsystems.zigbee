@@ -7,13 +7,14 @@
  */
 package com.zsmartsystems.zigbee.transport;
 
+import java.util.Map;
+
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetwork;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
-import com.zsmartsystems.zigbee.ZigBeeTcLinkMode;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 
@@ -151,16 +152,29 @@ public interface ZigBeeTransportTransmit {
     /**
      * Sets the Trust Center link security key to the specified value
      *
+     * @deprecated use {@link updateTransportConfiguration}
      * @param key the new link key as {@link ZigBeeKey}
      * @return true if the key was set correctly
      */
+    @Deprecated
     boolean setTcLinkKey(ZigBeeKey key);
 
     /**
-     * Sets the Trust Center link mode
+     * Sets the transport configuration.
+     * <p>
+     * This method passes a {@link Map} of {@link TransportConfigOption}s to the transport layer. Each option
+     * must be defined as a {link Object} as defined by the option (see the documentation for
+     * {@link TransportConfigOption}. The transport layer should update its configuration as appropriate - if this will
+     * take any appreciable time to complete, the implementation should perform error checking and then return
+     * {@link TransportConfigResult#SUCCESS}.
+     * <p>
+     * This method returns the result of each configuration in the calling {@link TransportConfig}.
+     * If configuration options are invalid, {@link TransportConfigResult#ERROR_INVALID_VALUE} is returned.
+     * If the transport is not in a mode where it can accept a specific configuration change
+     * {@link TransportConfigResult#ERROR_INVALID_VALUE} is returned in the value status
      *
-     * @param linkMode the {@link ZigBeeTcLinkMode} defining the Trust Center link mode
-     * @return true if the trust center link mode was updated
+     * @param configuration {@link TransportConfig} containing the configuration items
+     * @return {@link Map} of {@link TransportConfigOption} and {@link TransportConfigResult} values with the result
      */
-    boolean setTcLinkMode(ZigBeeTcLinkMode linkMode);
+    void updateTransportConfig(TransportConfig configuration);
 }
