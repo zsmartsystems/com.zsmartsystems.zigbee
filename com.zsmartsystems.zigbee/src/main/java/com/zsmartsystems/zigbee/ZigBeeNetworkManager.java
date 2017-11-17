@@ -43,7 +43,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
-import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
+import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
 
 /**
  * Implements functions for managing the ZigBee interfaces.
@@ -169,6 +169,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * The deserializer class used to deserialize commands from data packets
      */
     private Class<ZigBeeDeserializer> deserializerClass;
+
+    /**
+     * A ClusterMatcher used to respond to the {@link MatchDescriptorRequest} command.
+     */
+    private ClusterMatcher clusterMatcher = null;
 
     public enum ZigBeeInitializeResponse {
         /**
@@ -1135,6 +1140,21 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 networkStateSerializer.serialize(this);
             }
         }
+    }
+
+    /**
+     * Adds a cluster to the list of clusters we will respond to with the {@link MatchDescriptorRequest}. Adding a
+     * cluster here is only required in order to respond to this request. Typically the application should provide
+     * further support for such clusters.
+     *
+     * @param int cluster
+     */
+    public void addSupportedCluster(int cluster) {
+        if (clusterMatcher == null) {
+            clusterMatcher = new ClusterMatcher(this);
+        }
+
+        clusterMatcher.addCluster(cluster);
     }
 
 }
