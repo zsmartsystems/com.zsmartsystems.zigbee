@@ -337,6 +337,41 @@ public enum EzspStatus {
     EZSP_ASH_ACK_SENT(0x007E),
 
     /**
+     * Received ASH Nak
+     */
+    EZSP_ASH_NAK_RECEIVED(0x007F),
+
+    /**
+     * Sent ASH Nak
+     */
+    EZSP_ASH_NAK_SENT(0x0080),
+
+    /**
+     * Received ASH RST
+     */
+    EZSP_ASH_RST_RECEIVED(0x0081),
+
+    /**
+     * Sent ASH RST
+     */
+    EZSP_ASH_RST_SENT(0x0082),
+
+    /**
+     * ASH Status
+     */
+    EZSP_ASH_STATUS(0x0083),
+
+    /**
+     * ASH TX
+     */
+    EZSP_ASH_TX(0x0084),
+
+    /**
+     * ASH RX
+     */
+    EZSP_ASH_RX(0x0085),
+
+    /**
      * No reset or error
      */
     EZSP_NO_ERROR(0x00FF);

@@ -67,7 +67,14 @@ public enum EzspPolicyId {
     /**
      * Controls whether the stack will process ZLL messages.
      */
-    EZSP_ZLL_POLICY(0x0008);
+    EZSP_ZLL_POLICY(0x0008),
+
+    /**
+     * Controls whether Trust Center (insecure) rejoins for devices using the well-known link key
+     * are accepted. If rejoining using the well-known key is allowed, it is disabled again after
+     * emAllowTcRejoinsUsingWellKnownKeyTimeoutSec seconds.
+     */
+    EZSP_TC_REJOINS_USING_WELL_KNOWN_KEY_POLICY(0x0009);
 
     /**
      * A mapping between the integer code and its corresponding type to
