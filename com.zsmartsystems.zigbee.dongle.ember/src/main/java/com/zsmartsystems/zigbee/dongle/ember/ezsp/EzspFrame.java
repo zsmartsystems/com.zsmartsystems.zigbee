@@ -43,6 +43,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNodeIdResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRouteTableEntryResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIdConflictHandler;
@@ -51,6 +52,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingRouteError
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingRouteRecordHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspInvalidCommandResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspJoinNetworkResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupEui64ByNodeIdResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupNodeIdByEui64Response;
@@ -139,6 +141,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GET_PARENT_CHILD_PARAMETERS = 0x29;
     protected static final int FRAME_ID_GET_POLICY = 0x56;
     protected static final int FRAME_ID_GET_ROUTE_TABLE_ENTRY = 0x7B;
+    protected static final int FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY = 0x91;
     protected static final int FRAME_ID_GET_VALUE = 0xAA;
     protected static final int FRAME_ID_GET_XNCP_INFO = 0x13;
     protected static final int FRAME_ID_ID_CONFLICT_HANDLER = 0x7C;
@@ -147,6 +150,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER = 0x59;
     protected static final int FRAME_ID_INVALID_COMMAND = 0x58;
     protected static final int FRAME_ID_JOIN_NETWORK = 0x1F;
+    protected static final int FRAME_ID_LAUNCH_STANDALONE_BOOTLOADER = 0x8F;
     protected static final int FRAME_ID_LEAVE_NETWORK = 0x20;
     protected static final int FRAME_ID_LOOKUP_EUI64_BY_NODE_ID = 0x61;
     protected static final int FRAME_ID_LOOKUP_NODE_ID_BY_EUI64 = 0x60;
@@ -221,6 +225,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_PARENT_CHILD_PARAMETERS, EzspGetParentChildParametersResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_POLICY, EzspGetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_ROUTE_TABLE_ENTRY, EzspGetRouteTableEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY, EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_VALUE, EzspGetValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_XNCP_INFO, EzspGetXncpInfoResponse.class);
         ezspHandlerMap.put(FRAME_ID_ID_CONFLICT_HANDLER, EzspIdConflictHandler.class);
@@ -229,6 +234,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER, EzspIncomingRouteRecordHandler.class);
         ezspHandlerMap.put(FRAME_ID_INVALID_COMMAND, EzspInvalidCommandResponse.class);
         ezspHandlerMap.put(FRAME_ID_JOIN_NETWORK, EzspJoinNetworkResponse.class);
+        ezspHandlerMap.put(FRAME_ID_LAUNCH_STANDALONE_BOOTLOADER, EzspLaunchStandaloneBootloaderResponse.class);
         ezspHandlerMap.put(FRAME_ID_LEAVE_NETWORK, EzspLeaveNetworkResponse.class);
         ezspHandlerMap.put(FRAME_ID_LOOKUP_EUI64_BY_NODE_ID, EzspLookupEui64ByNodeIdResponse.class);
         ezspHandlerMap.put(FRAME_ID_LOOKUP_NODE_ID_BY_EUI64, EzspLookupNodeIdByEui64Response.class);

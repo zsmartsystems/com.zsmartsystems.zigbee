@@ -114,7 +114,21 @@ public enum EzspConfigId {
     /**
      * The number of supported networks.
      */
-    EZSP_CONFIG_SUPPORTED_NETWORKS(0x002D);
+    EZSP_CONFIG_SUPPORTED_NETWORKS(0x002D),
+
+    /**
+     * The number of passive acknowledgements to record from neighbors before we stop
+     * re-transmitting broadcasts.
+     */
+    EZSP_CONFIG_BROADCAST_MIN_ACKS_NEEDED(0x0037),
+
+    /**
+     * The length of time, in seconds, that a trust center will allow a Trust Center (insecure)
+     * rejoin for a device that is using the well-known link key. This timeout takes effect once
+     * rejoins using the well-known key has been allowed. This command updates the
+     * emAllowTcRejoinsUsingWellKnownKeyTimeoutSec value.
+     */
+    EZSP_CONFIG_TC_REJOINS_USING_WELL_KNOWN_KEY_TIMEOUT_S(0x0038);
 
     /**
      * A mapping between the integer code and its corresponding type to
