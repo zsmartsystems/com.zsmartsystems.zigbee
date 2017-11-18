@@ -8,8 +8,6 @@
 package com.zsmartsystems.zigbee.dongle.ember.ash;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -343,6 +341,8 @@ public class AshFrameHandler {
      */
     public void close() {
         this.close = true;
+        stopRetryTimer();
+
         try {
             parserThread.interrupt();
             parserThread.join();
@@ -374,7 +374,7 @@ public class AshFrameHandler {
         if (sentQueue.size() >= TX_WINDOW) {
             logger.debug("Sent queue larger than window [{} > {}].", sentQueue.size(), TX_WINDOW);
             // check timer task
-            if(timerTask == null) {
+            if (timerTask == null) {
                 startRetryTimer();
             }
             return;
@@ -488,7 +488,7 @@ public class AshFrameHandler {
     private void ackSentQueue(int ackNum) {
         // Handle the timer if it's running
         if (sentTime != 0) {
-            resetRetryTimer();
+            stopRetryTimer();
             receiveTimeout = (int) ((receiveTimeout * 7 / 8) + ((System.nanoTime() - sentTime) / 2000000));
             if (receiveTimeout < T_RX_ACK_MIN) {
                 receiveTimeout = T_RX_ACK_MIN;
@@ -510,14 +510,14 @@ public class AshFrameHandler {
 
     private synchronized void startRetryTimer() {
         // Stop any existing timer
-        resetRetryTimer();
+        stopRetryTimer();
 
         // Create the timer task
         timerTask = new AshRetryTimer();
         timer.schedule(timerTask, receiveTimeout);
     }
 
-    private synchronized void resetRetryTimer() {
+    private synchronized void stopRetryTimer() {
         // Stop any existing timer
         if (timerTask != null) {
             timerTask.cancel();
