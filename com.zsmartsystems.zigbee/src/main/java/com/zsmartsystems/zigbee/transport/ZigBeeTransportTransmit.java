@@ -7,6 +7,8 @@
  */
 package com.zsmartsystems.zigbee.transport;
 
+import java.util.Map;
+
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
@@ -148,10 +150,31 @@ public interface ZigBeeTransportTransmit {
     boolean setZigBeeNetworkKey(ZigBeeKey key);
 
     /**
-     * Sets the ZigBee link security key to the specified value
+     * Sets the Trust Center link security key to the specified value
      *
+     * @deprecated use {@link updateTransportConfiguration}
      * @param key the new link key as {@link ZigBeeKey}
      * @return true if the key was set correctly
      */
-    boolean setZigBeeLinkKey(ZigBeeKey key);
+    @Deprecated
+    boolean setTcLinkKey(ZigBeeKey key);
+
+    /**
+     * Sets the transport configuration.
+     * <p>
+     * This method passes a {@link Map} of {@link TransportConfigOption}s to the transport layer. Each option
+     * must be defined as a {link Object} as defined by the option (see the documentation for
+     * {@link TransportConfigOption}. The transport layer should update its configuration as appropriate - if this will
+     * take any appreciable time to complete, the implementation should perform error checking and then return
+     * {@link TransportConfigResult#SUCCESS}.
+     * <p>
+     * This method returns the result of each configuration in the calling {@link TransportConfig}.
+     * If configuration options are invalid, {@link TransportConfigResult#ERROR_INVALID_VALUE} is returned.
+     * If the transport is not in a mode where it can accept a specific configuration change
+     * {@link TransportConfigResult#ERROR_INVALID_VALUE} is returned in the value status
+     *
+     * @param configuration {@link TransportConfig} containing the configuration items
+     * @return {@link Map} of {@link TransportConfigOption} and {@link TransportConfigResult} values with the result
+     */
+    void updateTransportConfig(TransportConfig configuration);
 }

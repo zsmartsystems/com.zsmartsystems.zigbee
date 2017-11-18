@@ -41,6 +41,9 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST_
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER_SRSP;
+import com.zsmartsystems.zigbee.transport.TransportConfig;
+import com.zsmartsystems.zigbee.transport.TransportConfigOption;
+import com.zsmartsystems.zigbee.transport.TransportConfigResult;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
@@ -165,8 +168,24 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
-    public boolean setZigBeeLinkKey(ZigBeeKey key) {
+    public boolean setTcLinkKey(ZigBeeKey key) {
         return false;
+    }
+
+    @Override
+    public void updateTransportConfig(TransportConfig configuration) {
+        for (TransportConfigOption option : configuration.getOptions()) {
+            try {
+                switch (option) {
+                    default:
+                        configuration.setResult(option, TransportConfigResult.ERROR_UNSUPPORTED);
+                        logger.debug("Unsupported configuration option \"{}\" in Telegesis dongle", option);
+                        break;
+                }
+            } catch (ClassCastException e) {
+                configuration.setResult(option, TransportConfigResult.ERROR_INVALID_VALUE);
+            }
+        }
     }
 
     @Override
