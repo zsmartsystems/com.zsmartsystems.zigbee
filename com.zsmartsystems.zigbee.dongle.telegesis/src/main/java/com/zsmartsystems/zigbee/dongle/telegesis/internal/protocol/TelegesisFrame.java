@@ -238,6 +238,15 @@ public class TelegesisFrame {
     }
 
     /**
+     * Serializes an integer
+     *
+     * @param value the value to serialize
+     */
+    protected void serializeInteger(Integer value) {
+        serializeUpperCaseString(Integer.toString(value));
+    }
+
+    /**
      * Deserializes an unsigned integer in decimal
      *
      * @return the deserialized value

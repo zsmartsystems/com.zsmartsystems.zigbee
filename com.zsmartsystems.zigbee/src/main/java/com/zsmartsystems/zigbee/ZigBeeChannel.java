@@ -119,21 +119,20 @@ public enum ZigBeeChannel {
 
     /**
      * Lookup function based on the ZigBeeChannel channel number. Returns null
-     * if the code does not exist.
+     * if the channel does not exist.
      *
-     * @param i
-     *            the code to lookup
+     * @param channel the channel to lookup
      * @return enumeration value of the {@link ZigBeeChannel}.
      */
-    public static ZigBeeChannel create(int i) {
+    public static ZigBeeChannel create(int channel) {
         if (codeMapping == null) {
             initMapping();
         }
 
-        if (codeMapping.get(i) == null) {
+        if (codeMapping.get(channel) == null) {
             return UNKNOWN;
         }
 
-        return codeMapping.get(i);
+        return codeMapping.get(channel);
     }
 }

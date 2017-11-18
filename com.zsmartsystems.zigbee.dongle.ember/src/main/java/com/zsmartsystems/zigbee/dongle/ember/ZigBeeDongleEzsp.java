@@ -21,6 +21,7 @@ import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
+import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
@@ -72,7 +73,6 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclProfileType;
 
 /**
  * Implementation of the Silabs Ember NCP (Network Co Processor) EZSP dongle implementation.
@@ -235,7 +235,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         EzspAddEndpointRequest addEndpoint = new EzspAddEndpointRequest();
         addEndpoint.setEndpoint(1);
         addEndpoint.setDeviceId(0);
-        addEndpoint.setProfileId(ZclProfileType.HOME_AUTOMATION.getId());
+        addEndpoint.setProfileId(ZigBeeProfileType.HOME_AUTOMATION.getId());
         addEndpoint.setInputClusterList(new int[] { 0 });
         addEndpoint.setOutputClusterList(new int[] { 0 });
         logger.debug(addEndpoint.toString());
