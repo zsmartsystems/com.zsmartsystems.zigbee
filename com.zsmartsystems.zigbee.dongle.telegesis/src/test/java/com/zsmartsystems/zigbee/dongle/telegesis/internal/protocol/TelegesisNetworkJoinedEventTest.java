@@ -24,7 +24,7 @@ public class TelegesisNetworkJoinedEventTest extends TelegesisFrameBaseTest {
         TelegesisNetworkJoinedEvent event = new TelegesisNetworkJoinedEvent();
         event.deserialize(stringToIntArray("JPAN:18,9876,0793E14FFB220A38"));
         System.out.println(event);
-        assertEquals(Integer.valueOf(24), event.getChannel());
+        assertEquals(Integer.valueOf(18), event.getChannel());
         assertEquals(Integer.valueOf(0x9876), event.getPanId());
         assertEquals(new ExtendedPanId("0793E14FFB220A38"), event.getEpanId());
     }
