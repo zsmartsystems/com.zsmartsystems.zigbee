@@ -21,6 +21,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ash.v2.AshFrameHandlerV2;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
@@ -154,7 +155,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
             logger.error("Unable to open Ember serial port");
             return ZigBeeInitializeResponse.FAILED;
         }
-        ashHandler = new AshFrameHandler(this);
+        ashHandler = new AshFrameHandlerV2(this);
 
         // Connect to the ASH handler and NCP
         ashHandler.start(serialPort);

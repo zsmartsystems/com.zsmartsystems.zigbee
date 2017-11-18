@@ -5,7 +5,10 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.dongle.ember.ash;
+package com.zsmartsystems.zigbee.dongle.ember.ash.v2;
+
+import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrame.FrameType;
+import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameNak;
 
 /**
  * ASH NAK Frame
@@ -13,14 +16,15 @@ package com.zsmartsystems.zigbee.dongle.ember.ash;
  * @author Chris Jackson
  *
  */
-public abstract class AshFrameNak extends AshFrame {
-    public AshFrameNak() {
-        this.frameType = FrameType.NAK;
-    }
+public class AshFrameNakV2 extends AshFrameNak {
 
-    public AshFrameNak(int[] frameBuffer) {
+    public AshFrameNakV2(int[] frameBuffer) {
         this.frameType = FrameType.NAK;
         processHeader(frameBuffer);
     }
 
+    @Override
+    public String toString() {
+        return "AshFrameNakV2 [ackNum=" + ackNum + "]";
+    }
 }

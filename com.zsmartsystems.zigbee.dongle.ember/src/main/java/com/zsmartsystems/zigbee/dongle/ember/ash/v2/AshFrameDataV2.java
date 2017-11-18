@@ -5,10 +5,12 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.dongle.ember.ash;
+package com.zsmartsystems.zigbee.dongle.ember.ash.v2;
 
 import java.util.Arrays;
 
+import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrame.FrameType;
+import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 
 /**
@@ -17,14 +19,15 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
  * @author Chris Jackson
  *
  */
-public abstract class AshFrameData extends AshFrame {
+public class AshFrameDataV2 extends AshFrameData {
     /**
      * Constructor to create an ASH Data frame for sending.
      *
      * @param buffer
      */
-    public AshFrameData() {
+    public AshFrameDataV2(EzspFrameRequest ezspRequestFrame) {
         frameType = FrameType.DATA;
+        dataBuffer = ezspRequestFrame.serialize();
     }
 
     /**
@@ -32,20 +35,11 @@ public abstract class AshFrameData extends AshFrame {
      *
      * @param frameBuffer
      */
-    public AshFrameData(int[] frameBuffer) {
+    public AshFrameDataV2(int[] frameBuffer) {
         frameType = FrameType.DATA;
 
         processHeader(frameBuffer);
         dataBuffer = Arrays.copyOfRange(frameBuffer, 1, frameBuffer.length - 2);
-    }
-
-    /**
-     * Set the {@link EzspFrameRequest} data to send
-     *
-     * @param ezspRequestFrame the {@link EzspFrameRequest} data frame to send
-     */
-    public void setData(EzspFrameRequest ezspRequestFrame) {
-        dataBuffer = ezspRequestFrame.serialize();
     }
 
     public void setReTx() {
@@ -56,7 +50,6 @@ public abstract class AshFrameData extends AshFrame {
         return reTx;
     }
 
-    @Override
     public int[] getDataBuffer() {
         return dataBuffer;
     }
@@ -82,5 +75,4 @@ public abstract class AshFrameData extends AshFrame {
 
         return result.toString();
     }
-
 }

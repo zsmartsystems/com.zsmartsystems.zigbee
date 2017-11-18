@@ -5,7 +5,9 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.dongle.ember.ash;
+package com.zsmartsystems.zigbee.dongle.ember.ash.v2;
+
+import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameRst;
 
 /**
  * ASH Reset Frame
@@ -13,17 +15,22 @@ package com.zsmartsystems.zigbee.dongle.ember.ash;
  * @author Chris Jackson
  *
  */
-public abstract class AshFrameRst extends AshFrame {
+public class AshFrameRstV2 extends AshFrameRst {
     /**
      * Constructor to create an ASH Reset frame.
      *
+     * @param buffer
      */
-    public AshFrameRst() {
+    public AshFrameRstV2() {
         this.frameType = FrameType.RST;
     }
 
-    public AshFrameRst(int[] frameBuffer) {
+    public AshFrameRstV2(int[] frameBuffer) {
         this();
     }
 
+    @Override
+    public String toString() {
+        return "AshFrameRstV2 []";
+    }
 }

@@ -14,10 +14,18 @@ package com.zsmartsystems.zigbee.dongle.ember.ash;
  * @author Chris Jackson
  *
  */
-public class AshFrameRstAck extends AshFrame {
-    private final int version;
-    private final int resetCode;
-    private final AshErrorCode errorCode;
+public abstract class AshFrameRstAck extends AshFrame {
+    protected int version;
+    protected int resetCode;
+    protected AshErrorCode errorCode;
+
+    /**
+     * Constructor to create an ASH Reset frame.
+     *
+     */
+    public AshFrameRstAck() {
+        this.frameType = FrameType.RSTACK;
+    }
 
     /**
      * Constructor to create an ASH frame from a byte buffer.
@@ -32,28 +40,10 @@ public class AshFrameRstAck extends AshFrame {
         this.errorCode = AshErrorCode.getAshErrorCode(this.resetCode);
     }
 
-    public int getVersion() {
-        return version;
-    }
+    public abstract int getVersion();
 
-    public int getResetCode() {
-        return resetCode;
-    }
+    public abstract int getResetCode();
 
-    public AshErrorCode getResetType() {
-        return errorCode;
-    }
+    public abstract AshErrorCode getResetType();
 
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("AshFrameRstAck [version=");
-        builder.append(version);
-        builder.append(". resetCode=");
-        builder.append(resetCode);
-        AshErrorCode ashError = AshErrorCode.getAshErrorCode(resetCode);
-        builder.append(ashError.getDescription());
-        builder.append("]");
-        return builder.toString();
-    }
 }

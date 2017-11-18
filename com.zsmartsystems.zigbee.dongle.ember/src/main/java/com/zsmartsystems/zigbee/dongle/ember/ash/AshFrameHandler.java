@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ash;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -45,7 +44,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  * @author Chris Jackson
  *
  */
-public class AshFrameHandler {
+public abstract class AshFrameHandler {
     /**
      * The logger.
      */
@@ -60,8 +59,7 @@ public class AshFrameHandler {
     private int receiveTimeout = T_RX_ACK_INIT;
 
     /**
-     * Maximum number of consecutive timeouts allowed while waiting to receive
-     * an ACK
+     * Maximum number of consecutive timeouts allowed while waiting to receive an ACK
      */
     private final int ACK_TIMEOUTS = 4;
     private int retries = 0;
@@ -72,15 +70,6 @@ public class AshFrameHandler {
     private final int TX_WINDOW = 1;
 
     private long sentTime;
-
-    private final int ASH_CANCEL_BYTE = 0x1A;
-    private final int ASH_FLAG_BYTE = 0x7E;
-    private final int ASH_SUBSTITUTE_BYTE = 0x18;
-    private final int ASH_XON_BYTE = 0x11;
-    private final int ASH_OFF_BYTE = 0x13;
-    private final int ASH_TIMEOUT = -1;
-
-    private final int ASH_MAX_LENGTH = 131;
 
     private Integer ackNum = 0;
     private int frmNum = 0;
@@ -106,17 +95,12 @@ public class AshFrameHandler {
     /**
      * The packet handler.
      */
-    private final EzspFrameHandler frameHandler;
-
-    /**
-     * The input stream.
-     */
-    // private final InputStream inputStream;
+    protected final EzspFrameHandler frameHandler;
 
     /**
      * The port.
      */
-    private ZigBeePort port;
+    protected ZigBeePort port;
 
     /**
      * The parser parserThread.
@@ -124,16 +108,14 @@ public class AshFrameHandler {
     private Thread parserThread = null;
 
     /**
-     * Flag reflecting that parser has been closed and parser parserThread
-     * should exit.
+     * Flag reflecting that parser has been closed and parser parserThread should exit.
      */
-    private boolean close = false;
+    protected boolean close = false;
 
     /**
      * Construct the handler and provide the {@link EzspFrameHandler}
      *
-     * @param frameHandler
-     *            the packet handler
+     * @param frameHandler the packet handler
      */
     public AshFrameHandler(final EzspFrameHandler frameHandler) {
         this.frameHandler = frameHandler;
@@ -162,13 +144,15 @@ public class AshFrameHandler {
                             continue;
                         }
 
-                        final AshFrame packet = AshFrame.createFromInput(packetData);
+                        final AshFrame packet = createAshFrame(packetData);
                         AshFrame responseFrame = null;
                         if (packet == null) {
                             logger.error("<-- RX ASH frame: BAD PACKET {}", AshFrame.frameToString(packetData));
 
                             // Send a NAK
-                            responseFrame = new AshFrameNak(ackNum);
+                            AshFrameNak nakFrame = (AshFrameNak) getAshFrame(FrameType.NAK);
+                            nakFrame.setAckNum(ackNum);
+                            responseFrame = nakFrame;
                         } else {
                             logger.debug("<-- RX ASH frame: {}", packet.toString());
 
@@ -184,7 +168,9 @@ public class AshFrameHandler {
                                     // Check for out of sequence frame number
                                     if (packet.getFrmNum() != ackNum) {
                                         // Send a NAK
-                                        responseFrame = new AshFrameNak(ackNum);
+                                        AshFrameNak nakFrame = (AshFrameNak) getAshFrame(FrameType.NAK);
+                                        nakFrame.setAckNum(ackNum);
+                                        responseFrame = nakFrame;
                                     } else {
                                         // Frame was in sequence
 
@@ -192,7 +178,7 @@ public class AshFrameHandler {
                                         EzspFrameResponse response = EzspFrame.createHandler((AshFrameData) packet);
                                         logger.debug("RX EZSP: " + response);
                                         if (response == null) {
-                                            logger.debug("No frame handler created for {}", packet);
+                                            logger.debug("No EZSP frame handler created for {}", packet);
                                         } else if (response != null && !notifyTransactionComplete(response)) {
                                             // No transactions owned this response, so we pass it to
                                             // our unhandled response handler
@@ -205,7 +191,9 @@ public class AshFrameHandler {
                                         // Update our next expected data frame
                                         ackNum = (ackNum + 1) & 0x07;
 
-                                        responseFrame = new AshFrameAck(ackNum);
+                                        AshFrameAck ackFrame = (AshFrameAck) getAshFrame(FrameType.ACK);
+                                        ackFrame.setAckNum(ackNum);
+                                        responseFrame = ackFrame;
                                     }
                                     break;
                                 case ACK:
@@ -249,58 +237,6 @@ public class AshFrameHandler {
 
         parserThread.setDaemon(true);
         parserThread.start();
-    }
-
-    private int[] getPacket() throws IOException {
-        int[] inputBuffer = new int[ASH_MAX_LENGTH];
-        int inputCount = 0;
-        boolean inputError = false;
-
-        while (!close) {
-            int val = port.read();
-            logger.trace("ASH RX: " + String.format("%02X", val));
-            switch (val) {
-                case ASH_CANCEL_BYTE:
-                    // Cancel Byte: Terminates a frame in progress. A Cancel Byte causes all data received since the
-                    // previous Flag Byte to be ignored. Note that as a special case, RST and RSTACK frames are preceded
-                    // by Cancel Bytes to ignore any link startup noise.
-                    inputCount = 0;
-                    inputError = false;
-                    break;
-                case ASH_FLAG_BYTE:
-                    // Flag Byte: Marks the end of a frame.When a Flag Byte is received, the data received since the
-                    // last Flag Byte or Cancel Byte is tested to see whether it is a valid frame.
-                    if (!inputError && inputCount != 0) {
-                        return Arrays.copyOfRange(inputBuffer, 0, inputCount);
-                    }
-                    inputCount = 0;
-                    inputError = false;
-                    break;
-                case ASH_SUBSTITUTE_BYTE:
-                    // Substitute Byte: Replaces a byte received with a low-level communication error (e.g., framing
-                    // error) from the UART.When a Substitute Byte is processed, the data between the previous and the
-                    // next Flag Bytes is ignored.
-                    inputError = true;
-                    break;
-                case ASH_XON_BYTE:
-                    // XON: Resume transmissionUsed in XON/XOFF flow control. Always ignored if received by the NCP.
-                    break;
-                case ASH_OFF_BYTE:
-                    // XOFF: Stop transmissionUsed in XON/XOFF flow control. Always ignored if received by the NCP.
-                    break;
-                case ASH_TIMEOUT:
-                    break;
-                default:
-                    if (inputCount >= ASH_MAX_LENGTH) {
-                        inputCount = 0;
-                        inputError = true;
-                    }
-                    inputBuffer[inputCount++] = val;
-                    break;
-            }
-        }
-
-        return null;
     }
 
     private void handleReset(AshFrameRstAck rstAck) {
@@ -388,7 +324,10 @@ public class AshFrameHandler {
 
         // Encapsulate the EZSP frame into the ASH packet
         logger.debug("TX EZSP: {}", nextFrame);
-        AshFrameData ashFrame = new AshFrameData(nextFrame);
+
+        AshFrameData ashFrame = (AshFrameData) getAshFrame(FrameType.DATA);
+        ashFrame.setAckNum(ackNum);
+        ashFrame.setData(nextFrame);
 
         sendFrame(ashFrame);
     }
@@ -423,7 +362,7 @@ public class AshFrameHandler {
         logger.debug("--> TX ASH frame: {}", ashFrame);
 
         // Send the data
-        for (int b : ashFrame.getOutputBuffer()) {
+        for (int b : getOutputBuffer(ashFrame)) {
             // result.append(" ");
             // result.append(String.format("%02X", b));
             // logger.debug("ASH TX: " + String.format("%02X", b));
@@ -460,7 +399,7 @@ public class AshFrameHandler {
      */
     public void connect() {
         stateConnected = false;
-        AshFrame reset = new AshFrameRst();
+        AshFrame reset = getAshFrame(FrameType.RST);
 
         ackNum = 0;
         frmNum = 0;
@@ -677,6 +616,40 @@ public class AshFrameHandler {
 
         return null;
     }
+
+    protected int checkCRC(int[] buffer, int length) {
+        int crc = 0xFFFF; // initial value
+        int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)
+
+        for (int cnt = 0; cnt < length; cnt++) {
+            for (int i = 0; i < 8; i++) {
+                boolean bit = ((buffer[cnt] >> (7 - i) & 1) == 1);
+                boolean c15 = ((crc >> 15 & 1) == 1);
+                crc <<= 1;
+                if (c15 ^ bit) {
+                    crc ^= polynomial;
+                }
+            }
+        }
+
+        crc &= 0xffff;
+
+        return crc;
+    }
+
+    /**
+     * Factory method to create the required frame type for the appropriate version of ASH
+     *
+     * @param frameType the {@link FrameType} of the frame to create
+     * @return the {@link AshFrame}
+     */
+    protected abstract AshFrame getAshFrame(FrameType frameType);
+
+    protected abstract AshFrame createAshFrame(int[] buffer);
+
+    protected abstract int[] getOutputBuffer(AshFrame frame);
+
+    protected abstract int[] getPacket() throws IOException;
 
     interface AshListener {
         boolean transactionEvent(EzspFrameResponse ezspResponse);

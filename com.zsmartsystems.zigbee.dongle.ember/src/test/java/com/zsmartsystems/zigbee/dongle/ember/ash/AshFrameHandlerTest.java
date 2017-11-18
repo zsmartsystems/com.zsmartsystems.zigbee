@@ -23,8 +23,6 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrame.FrameType;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
@@ -35,7 +33,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
 public class AshFrameHandlerTest {
 
     private int[] getPacket(int[] data) {
-        AshFrameHandler frameHandler = new AshFrameHandler(null);
+        AshFrameHandler frameHandler = new AshFrameHandlerV2(null);
         byte[] bytedata = new byte[data.length];
         int cnt = 0;
         for (int value : data) {
@@ -46,7 +44,7 @@ public class AshFrameHandlerTest {
 
         Method privateMethod;
         try {
-            Field field = frameHandler.getClass().getDeclaredField("port");
+            Field field = frameHandler.getClass().getSuperclass().getDeclaredField("port");
             field.setAccessible(true);
             field.set(frameHandler, port);
 
@@ -105,7 +103,7 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testRunning() {
-        AshFrameHandler frameHandler = new AshFrameHandler(null);
+        AshFrameHandler frameHandler = new AshFrameHandlerV2(null);
         frameHandler.start(null);
 
         assertTrue(frameHandler.isAlive());
