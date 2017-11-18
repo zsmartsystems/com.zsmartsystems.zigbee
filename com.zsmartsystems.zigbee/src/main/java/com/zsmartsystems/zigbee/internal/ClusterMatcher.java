@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.internal;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +15,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeCommandListener;
+import com.zsmartsystems.zigbee.ZigBeeException;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorResponse;
@@ -46,7 +51,7 @@ public class ClusterMatcher implements ZigBeeCommandListener {
      *
      * @param networkManager the {@link ZigBeeNetworkManager} to which this matcher is linked
      */
-    ClusterMatcher(ZigBeeNetworkManager networkManager) {
+    public ClusterMatcher(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
     }
 

@@ -582,7 +582,6 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
             // Remove this device from the progress list
             discoveryProgress.remove(deviceAddress);
         }
-
         updateNode(node);
     }
 
@@ -594,7 +593,6 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
      */
     private void updateNode(final ZigBeeNode node) {
         synchronized (discoveryProgress) {
-
             // Check the progress list to see if there are still devices to be discovered on this node
             for (ZigBeeEndpointAddress address : discoveryProgress) {
                 if (address.getAddress() == node.getNetworkAddress()) {

@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
@@ -41,6 +42,7 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetw
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisReceiveMessageEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendMulticastCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendUnicastCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetChannelMaskCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetEpanIdCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetExtendedFunctionCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetInputClustersCommand;
@@ -119,6 +121,11 @@ public class ZigBeeDongleTelegesis
      * The current radio channel
      */
     private int radioChannel;
+
+    /**
+     * The channel mask - ie the allowable channels the dongle can use
+     */
+    private ZigBeeChannelMask channelMask = new ZigBeeChannelMask();
 
     /**
      * The current pan ID
@@ -391,6 +398,14 @@ public class ZigBeeDongleTelegesis
             initialiseNetwork();
         }
 
+        TelegesisSetChannelMaskCommand channelMaskCommand = new TelegesisSetChannelMaskCommand();
+        channelMaskCommand.setChannelMask(channelMask.getChannelMask());
+        if (frameHandler.sendRequest(channelMaskCommand) == null
+                || channelMaskCommand.getStatus() != TelegesisStatusCode.SUCCESS) {
+            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+            return false;
+        }
+
         // Check if the network is now up
         TelegesisDisplayNetworkInformationCommand networkInfo = new TelegesisDisplayNetworkInformationCommand();
         if (frameHandler.sendRequest(networkInfo) == null || networkInfo.getStatus() != TelegesisStatusCode.SUCCESS) {
@@ -578,6 +593,8 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public boolean setZigBeeChannel(int channel) {
+        channelMask = new ZigBeeChannelMask();
+        channelMask.addChannel(channel);
         this.radioChannel = channel;
         return false;
     }

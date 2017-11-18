@@ -20,25 +20,25 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
  * @author Chris Jackson
  *
  */
-public class MatchDescriptorResponseTest extends CommandTest {
+public class MatchDescriptorRequestTest extends CommandTest {
 
     @Test
     public void testReceive() {
         int[] packet = getPacketData("2E FD FF 04 01 00 01 00 05");
 
-        MatchDescriptorRequest response = new MatchDescriptorRequest();
+        MatchDescriptorRequest request = new MatchDescriptorRequest();
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
 
-        response.deserialize(fieldDeserializer);
+        request.deserialize(fieldDeserializer);
 
-        System.out.println(response);
+        System.out.println(request);
 
-        assertEquals(Integer.valueOf(65533), response.getNwkAddrOfInterest());
-        assertEquals(Integer.valueOf(260), response.getProfileId());
-        assertEquals(Integer.valueOf(0), response.getInClusterCount());
-        assertEquals(Integer.valueOf(1), response.getOutClusterCount());
-        assertEquals(Integer.valueOf(1280), response.getOutClusterList().get(0));
+        assertEquals(Integer.valueOf(65533), request.getNwkAddrOfInterest());
+        assertEquals(Integer.valueOf(260), request.getProfileId());
+        assertEquals(Integer.valueOf(0), request.getInClusterCount());
+        assertEquals(Integer.valueOf(1), request.getOutClusterCount());
+        assertEquals(Integer.valueOf(1280), request.getOutClusterList().get(0));
     }
 }

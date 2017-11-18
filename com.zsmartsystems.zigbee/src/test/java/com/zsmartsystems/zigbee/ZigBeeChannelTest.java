@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
+package com.zsmartsystems.zigbee;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,9 +16,11 @@ import org.junit.Test;
  * @author Chris Jackson
  *
  */
-public class EzspChannelMaskTest {
+public class ZigBeeChannelTest {
     @Test
-    public void testMask() {
-        assertEquals(EzspChannelMask.EZSP_CHANNEL_MASK_CHAN18, EzspChannelMask.getEzspChannelMask(1 << 18));
+    public void testChannel() {
+        assertEquals(1 << 1, ZigBeeChannel.create(1).getMask());
+        assertEquals(ZigBeeChannel.CHANNEL_11, ZigBeeChannel.create(11));
+        assertEquals(1 << 11, ZigBeeChannel.create(11).getMask());
     }
 }
