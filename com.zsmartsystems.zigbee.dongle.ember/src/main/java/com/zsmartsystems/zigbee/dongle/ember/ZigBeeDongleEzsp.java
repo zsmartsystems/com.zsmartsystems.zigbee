@@ -279,6 +279,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         ashHandler.setClosing();
         serialPort.close();
         ashHandler.close();
+        ashHandler = null;
     }
 
     /**
@@ -348,6 +349,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
 
     @Override
     public void sendCommand(final ZigBeeApsFrame apsFrame) throws ZigBeeException {
+        if (ashHandler == null) {
+            return;
+        }
         EzspFrameRequest emberCommand;
 
         EmberApsFrame emberApsFrame = new EmberApsFrame();
