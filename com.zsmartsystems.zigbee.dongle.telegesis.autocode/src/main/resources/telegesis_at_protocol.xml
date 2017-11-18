@@ -252,7 +252,7 @@
 		<response_parameters>
 			<prompt>JPAN</prompt>
 			<parameter>
-				<data_type>Int8</data_type>
+				<data_type>Integer</data_type>
 				<name>channel</name>
 				<description></description>
 			</parameter>

@@ -70,7 +70,7 @@ public class TelegesisNetworkJoinedEvent extends TelegesisFrame implements Teleg
             setDeserializer(5);
 
             // Deserialize field "channel"
-            channel = deserializeInt8();
+            channel = deserializeInteger();
             stepDeserializer();
 
             // Deserialize field "Pan ID"
