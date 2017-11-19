@@ -16,7 +16,12 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.dongle.ember.EzspFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrame.FrameType;
+import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameAck;
+import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameData;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameNak;
+import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameRst;
+import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameRstAck;
 
 /**
  * Implements the ASHv2 protocol defined in the document
@@ -275,41 +280,54 @@ public class AshFrameHandlerV2 extends AshFrameHandler {
 
         switch (frameType) {
             case ACK:
-                return new AshFrameAckV2(frameBuffer);
+                AshFrameAck ackFrame = new AshFrameAck();
+                ackFrame.setAckNum((unstuffedData[0] & 0x07));
+                return ackFrame;
             case DATA:
                 dataRandomise(frameBuffer, 1, frameBuffer.length);
-                return new AshFrameDataV2(frameBuffer);
+                AshFrameData dataFrame = new AshFrameData();
+                dataFrame.setAckNum(unstuffedData[0] & 0x07);
+                dataFrame.setFrmNum((unstuffedData[0] & 0x70) >> 4);
+                if ((unstuffedData[0] & 0x08) != 0) {
+                    dataFrame.setReTx();
+                }
+                dataFrame.setData(Arrays.copyOfRange(frameBuffer, 1, frameBuffer.length - 2));
+                return dataFrame;
             case NAK:
-                return new AshFrameNakV2(unstuffedData);
+                AshFrameNak nakFrame = new AshFrameNak();
+                nakFrame.setAckNum((unstuffedData[0] & 0x07));
+                return nakFrame;
             case RST:
-                return new AshFrameRstV2();
+                return new AshFrameRst();
             case RSTACK:
-                return new AshFrameRstAckV2(frameBuffer);
+                AshFrameRstAck rstAckFrame = new AshFrameRstAck();
+                rstAckFrame.setVersion(unstuffedData[1]);
+                rstAckFrame.setResetCode(unstuffedData[2]);
+                return rstAckFrame;
             default:
                 break;
         }
         return null;
     }
 
-    @Override
-    protected AshFrame getAshFrame(FrameType frameType) {
-        switch (frameType) {
-            case ACK:
-                return new AshFrameAckV2();
-            case DATA:
-                return new AshFrameDataV2();
-            case NAK:
-                return new AshFrameNakV2();
-            case RST:
-                return new AshFrameRstV2();
-            case RSTACK:
-                return new AshFrameRstAckV2();
-            default:
-                logger.debug("Attempt to create unsupported ASHv2 frame {}", frameType);
-                break;
+    private int checkCRC(int[] buffer, int length) {
+        int crc = 0xFFFF; // initial value
+        int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)
+
+        for (int cnt = 0; cnt < length; cnt++) {
+            for (int i = 0; i < 8; i++) {
+                boolean bit = ((buffer[cnt] >> (7 - i) & 1) == 1);
+                boolean c15 = ((crc >> 15 & 1) == 1);
+                crc <<= 1;
+                if (c15 ^ bit) {
+                    crc ^= polynomial;
+                }
+            }
         }
 
-        return null;
+        crc &= 0xffff;
+
+        return crc;
     }
 
 }

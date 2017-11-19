@@ -7,11 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ash;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,9 +15,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.junit.Test;
-
-import com.zsmartsystems.zigbee.dongle.ember.ash.v2.AshFrameHandlerV2;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
@@ -32,8 +24,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  */
 public class AshFrameHandlerTest {
 
-    private int[] getPacket(int[] data) {
-        AshFrameHandler frameHandler = new AshFrameHandlerV2(null);
+    protected int[] getPacket(AshFrameHandler frameHandler, int[] data) {
         byte[] bytedata = new byte[data.length];
         int cnt = 0;
         for (int value : data) {
@@ -61,54 +52,36 @@ public class AshFrameHandlerTest {
         return null;
     }
 
-    @Test
-    public void testReceivePacket() {
-        int[] response = getPacket(new int[] { 0x01, 0x02, 0x03, 0x04, 0x7E });
-        assertNotNull(response);
-        assertEquals(4, response.length);
-        assertEquals(0x01, response[0]);
+    protected int[] getOutputBuffer(AshFrameHandler handler, AshFrame frame) {
+        Method privateMethod;
+        try {
+            privateMethod = AshFrameHandler.class.getDeclaredMethod("getOutputBuffer", AshFrame.class);
+            privateMethod.setAccessible(true);
+
+            return (int[]) privateMethod.invoke(handler, frame);
+        } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
+                | InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
-    @Test
-    public void testReceivePacket_FlagStart() {
-        int[] response = getPacket(new int[] { 0x7E, 0x01, 0x02, 0x03, 0x04, 0x7E });
-        assertNotNull(response);
-        assertEquals(4, response.length);
-        assertEquals(0x01, response[0]);
-    }
+    protected AshFrame createAshFrame(AshFrameHandler handler, int[] data) {
+        Method privateMethod;
+        try {
+            privateMethod = AshFrameHandler.class.getDeclaredMethod("createAshFrame", int[].class);
+            privateMethod.setAccessible(true);
 
-    @Test
-    public void testReceivePacket_IgnoreXonXoff() {
-        int[] response = getPacket(new int[] { 0x7E, 0x01, 0x02, 0x11, 0x03, 0x13, 0x04, 0x7E });
-        assertNotNull(response);
-        assertEquals(4, response.length);
-        assertEquals(0x01, response[0]);
-    }
+            return (AshFrame) privateMethod.invoke(handler, data);
+        } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
+                | InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-    @Test
-    public void testReceivePacket_Cancel() {
-        int[] response = getPacket(new int[] { 0x7E, 0x01, 0x02, 0x1A, 0x03, 0x04, 0x05, 0x06, 0x07, 0x7E });
-        assertNotNull(response);
-        assertEquals(5, response.length);
-        assertEquals(0x03, response[0]);
-    }
-
-    @Test
-    public void testReceivePacket_Substitute() {
-        int[] response = getPacket(new int[] { 0x7E, 0x01, 0x02, 0x18, 0x03, 0x04, 0x7E, 0x05, 0x06, 0x07, 0x7E });
-        assertNotNull(response);
-        assertEquals(3, response.length);
-        assertEquals(0x05, response[0]);
-    }
-
-    @Test
-    public void testRunning() {
-        AshFrameHandler frameHandler = new AshFrameHandlerV2(null);
-        frameHandler.start(null);
-
-        assertTrue(frameHandler.isAlive());
-        frameHandler.close();
-        assertFalse(frameHandler.isAlive());
+        return null;
     }
 
     class TestPort implements ZigBeePort {

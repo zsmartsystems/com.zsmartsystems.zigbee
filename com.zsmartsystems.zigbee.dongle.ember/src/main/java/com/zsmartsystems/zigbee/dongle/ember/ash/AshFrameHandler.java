@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.dongle.ember.ash;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -144,13 +145,15 @@ public abstract class AshFrameHandler {
                             continue;
                         }
 
+                        logger.debug("<-- RX ASH frame: RAW {}", Arrays.toString(packetData));
+
                         final AshFrame packet = createAshFrame(packetData);
                         AshFrame responseFrame = null;
                         if (packet == null) {
                             logger.error("<-- RX ASH frame: BAD PACKET {}", AshFrame.frameToString(packetData));
 
                             // Send a NAK
-                            AshFrameNak nakFrame = (AshFrameNak) getAshFrame(FrameType.NAK);
+                            AshFrameNak nakFrame = new AshFrameNak();
                             nakFrame.setAckNum(ackNum);
                             responseFrame = nakFrame;
                         } else {
@@ -168,7 +171,7 @@ public abstract class AshFrameHandler {
                                     // Check for out of sequence frame number
                                     if (packet.getFrmNum() != ackNum) {
                                         // Send a NAK
-                                        AshFrameNak nakFrame = (AshFrameNak) getAshFrame(FrameType.NAK);
+                                        AshFrameNak nakFrame = new AshFrameNak();
                                         nakFrame.setAckNum(ackNum);
                                         responseFrame = nakFrame;
                                     } else {
@@ -191,7 +194,7 @@ public abstract class AshFrameHandler {
                                         // Update our next expected data frame
                                         ackNum = (ackNum + 1) & 0x07;
 
-                                        AshFrameAck ackFrame = (AshFrameAck) getAshFrame(FrameType.ACK);
+                                        AshFrameAck ackFrame = new AshFrameAck();
                                         ackFrame.setAckNum(ackNum);
                                         responseFrame = ackFrame;
                                     }
@@ -325,7 +328,7 @@ public abstract class AshFrameHandler {
         // Encapsulate the EZSP frame into the ASH packet
         logger.debug("TX EZSP: {}", nextFrame);
 
-        AshFrameData ashFrame = (AshFrameData) getAshFrame(FrameType.DATA);
+        AshFrameData ashFrame = new AshFrameData();
         ashFrame.setAckNum(ackNum);
         ashFrame.setData(nextFrame);
 
@@ -399,7 +402,7 @@ public abstract class AshFrameHandler {
      */
     public void connect() {
         stateConnected = false;
-        AshFrame reset = getAshFrame(FrameType.RST);
+        AshFrame reset = new AshFrameRst();
 
         ackNum = 0;
         frmNum = 0;
@@ -616,34 +619,6 @@ public abstract class AshFrameHandler {
 
         return null;
     }
-
-    protected int checkCRC(int[] buffer, int length) {
-        int crc = 0xFFFF; // initial value
-        int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)
-
-        for (int cnt = 0; cnt < length; cnt++) {
-            for (int i = 0; i < 8; i++) {
-                boolean bit = ((buffer[cnt] >> (7 - i) & 1) == 1);
-                boolean c15 = ((crc >> 15 & 1) == 1);
-                crc <<= 1;
-                if (c15 ^ bit) {
-                    crc ^= polynomial;
-                }
-            }
-        }
-
-        crc &= 0xffff;
-
-        return crc;
-    }
-
-    /**
-     * Factory method to create the required frame type for the appropriate version of ASH
-     *
-     * @param frameType the {@link FrameType} of the frame to create
-     * @return the {@link AshFrame}
-     */
-    protected abstract AshFrame getAshFrame(FrameType frameType);
 
     protected abstract AshFrame createAshFrame(int[] buffer);
 

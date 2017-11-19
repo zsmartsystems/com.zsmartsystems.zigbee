@@ -13,13 +13,17 @@ package com.zsmartsystems.zigbee.dongle.ember.ash;
  * @author Chris Jackson
  *
  */
-public abstract class AshFrameAck extends AshFrame {
+public class AshFrameAck extends AshFrame {
+    /**
+     * Constructor to create an ASH ACK frame.
+     *
+     */
     public AshFrameAck() {
         this.frameType = FrameType.ACK;
     }
 
-    public AshFrameAck(int[] frameBuffer) {
-        this.frameType = FrameType.ACK;
-        processHeader(frameBuffer);
+    @Override
+    public String toString() {
+        return "AshFrameAck [ackNum=" + ackNum + "]";
     }
 }

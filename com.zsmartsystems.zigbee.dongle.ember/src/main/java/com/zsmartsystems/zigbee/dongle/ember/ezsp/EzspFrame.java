@@ -225,7 +225,8 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_PARENT_CHILD_PARAMETERS, EzspGetParentChildParametersResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_POLICY, EzspGetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_ROUTE_TABLE_ENTRY, EzspGetRouteTableEntryResponse.class);
-        ezspHandlerMap.put(FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY, EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY,
+                EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_VALUE, EzspGetValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_XNCP_INFO, EzspGetXncpInfoResponse.class);
         ezspHandlerMap.put(FRAME_ID_ID_CONFLICT_HANDLER, EzspIdConflictHandler.class);
@@ -318,6 +319,9 @@ public abstract class EzspFrame {
      * @return the {@link EzspFrameResponse} or null if the response can't be created.
      */
     public static EzspFrameResponse createHandler(AshFrameData data) {
+        if (data.getDataBuffer() == null) {
+            return null;
+        }
         Class<?> ezspClass = ezspHandlerMap.get(data.getDataBuffer()[2]);
         if (ezspClass == null) {
             return null;

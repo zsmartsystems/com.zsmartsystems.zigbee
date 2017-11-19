@@ -14,36 +14,47 @@ package com.zsmartsystems.zigbee.dongle.ember.ash;
  * @author Chris Jackson
  *
  */
-public abstract class AshFrameRstAck extends AshFrame {
-    protected int version;
-    protected int resetCode;
-    protected AshErrorCode errorCode;
+public class AshFrameRstAck extends AshFrame {
+    private int version;
+    private int resetCode;
+    private AshErrorCode errorCode;
 
-    /**
-     * Constructor to create an ASH Reset frame.
-     *
-     */
     public AshFrameRstAck() {
         this.frameType = FrameType.RSTACK;
     }
 
-    /**
-     * Constructor to create an ASH frame from a byte buffer.
-     *
-     * @param buffer
-     */
-    public AshFrameRstAck(int[] frameBuffer) {
-        this.frameType = FrameType.RSTACK;
-
-        this.version = frameBuffer[1];
-        this.resetCode = frameBuffer[2];
-        this.errorCode = AshErrorCode.getAshErrorCode(this.resetCode);
+    public void setVersion(int version) {
+        this.version = version;
     }
 
-    public abstract int getVersion();
+    public int getVersion() {
+        return version;
+    }
 
-    public abstract int getResetCode();
+    public void setResetCode(int resetCode) {
+        this.resetCode = resetCode;
+        errorCode = AshErrorCode.getAshErrorCode(resetCode);
+    }
 
-    public abstract AshErrorCode getResetType();
+    public int getResetCode() {
+        return resetCode;
+    }
 
+    public AshErrorCode getResetType() {
+        return errorCode;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("AshFrameRstAck [version=");
+        builder.append(version);
+        builder.append(", resetCode=");
+        builder.append(resetCode);
+        AshErrorCode ashError = AshErrorCode.getAshErrorCode(resetCode);
+        builder.append(": ");
+        builder.append(ashError.getDescription());
+        builder.append(']');
+        return builder.toString();
+    }
 }

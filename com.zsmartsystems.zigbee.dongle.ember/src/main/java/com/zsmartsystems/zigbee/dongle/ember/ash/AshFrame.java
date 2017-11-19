@@ -11,8 +11,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ash;
  * ASH Frame Handling: Asynchronous Serial Host (ASH) protocol. The ASH protocol
  * is a data-link layer protocol below EZSP and above the serial device (or
  * UART) driver.
- * <p>
- * UG101: UART GATEWAY PROTOCOL REFERENCE: FOR THE EMBER® EZSP NETWORK CO-PROCESSOR
  *
  * @author Chris Jackson
  *
@@ -25,23 +23,6 @@ public class AshFrame {
 
     protected FrameType frameType;
     protected int[] dataBuffer;
-
-    protected void processHeader(int[] inputBuffer) {
-        switch (frameType) {
-            case DATA:
-                ackNum = (inputBuffer[0] & 0x07);
-                frmNum = (inputBuffer[0] & 0x70) >> 4;
-                reTx = (inputBuffer[0] & 0x08) != 0;
-                break;
-            case ACK:
-            case NAK:
-                nRdy = (inputBuffer[0] & 0x08) != 0;
-                ackNum = (inputBuffer[0] & 0x07);
-                break;
-            default:
-                break;
-        }
-    }
 
     public int getFrmNum() {
         return frmNum;

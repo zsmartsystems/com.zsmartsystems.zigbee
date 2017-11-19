@@ -13,14 +13,13 @@ package com.zsmartsystems.zigbee.dongle.ember.ash;
  * @author Chris Jackson
  *
  */
-public abstract class AshFrameNak extends AshFrame {
+public class AshFrameNak extends AshFrame {
     public AshFrameNak() {
         this.frameType = FrameType.NAK;
     }
 
-    public AshFrameNak(int[] frameBuffer) {
-        this.frameType = FrameType.NAK;
-        processHeader(frameBuffer);
+    @Override
+    public String toString() {
+        return "AshFrameNak [ackNum=" + ackNum + "]";
     }
-
 }

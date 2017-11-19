@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.dongle.ember.ash.v2;
+package com.zsmartsystems.zigbee.dongle.ember.ash.v3;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -27,6 +27,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandlerTest;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameNak;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameRst;
+import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameRstAck;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
@@ -35,69 +36,39 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  * @author Chris Jackson
  *
  */
-public class AshFrameHandlerV2Test extends AshFrameHandlerTest {
-    @Test
-    public void testPacketDataStuffed() {
-        int[] buffer = new int[] { 0x7d, 0x3a, 0x43, 0xa1, 0xfa, 0x54, 0x0a, 0x15, 0xc9, 0x89 };
-
-        AshFrameHandlerV2 frameHandler = new AshFrameHandlerV2(null);
-        final AshFrame packet = createAshFrame(frameHandler, buffer);
-        // final AshFrame packet = AshFrame.createFromInput(buffer);
-        assertNotNull(packet);
-        assertTrue(packet instanceof AshFrameData);
-
-        AshFrameData dataPacket = (AshFrameData) packet;
-        assertEquals(1, dataPacket.getFrmNum());
-        assertEquals(2, dataPacket.getAckNum());
-        assertEquals(true, dataPacket.getReTx());
-    }
+public class AshFrameHandlerV3Test extends AshFrameHandlerTest {
 
     @Test
     public void testReceivePacket() {
-        int[] response = getPacket(new AshFrameHandlerV2(null), new int[] { 0x01, 0x02, 0x03, 0x04, 0x7E });
+        int[] response = getPacket(new AshFrameHandlerV3(null), new int[] { 0x11, 0x7E, 0x01, 0x02, 0x03, 0x04, 0x7E });
         assertNotNull(response);
-        assertEquals(4, response.length);
-        assertEquals(0x01, response[0]);
+        assertEquals(5, response.length);
+        assertEquals(0x7E, response[0]);
+        assertEquals(0x01, response[1]);
     }
 
     @Test
     public void testReceivePacketFlagStart() {
-        int[] response = getPacket(new AshFrameHandlerV2(null), new int[] { 0x7E, 0x01, 0x02, 0x03, 0x04, 0x7E });
+        int[] response = getPacket(new AshFrameHandlerV3(null), new int[] { 0x7E, 0x01, 0x02, 0x03, 0x04, 0x7E });
         assertNotNull(response);
-        assertEquals(4, response.length);
-        assertEquals(0x01, response[0]);
+        assertEquals(5, response.length);
+        assertEquals(0x7E, response[0]);
+        assertEquals(0x01, response[1]);
     }
 
     @Test
     public void testReceivePacketIgnoreXonXoff() {
-        int[] response = getPacket(new AshFrameHandlerV2(null),
+        int[] response = getPacket(new AshFrameHandlerV3(null),
                 new int[] { 0x7E, 0x01, 0x02, 0x11, 0x03, 0x13, 0x04, 0x7E });
         assertNotNull(response);
-        assertEquals(4, response.length);
-        assertEquals(0x01, response[0]);
-    }
-
-    @Test
-    public void testReceivePacketCancel() {
-        int[] response = getPacket(new AshFrameHandlerV2(null),
-                new int[] { 0x7E, 0x01, 0x02, 0x1A, 0x03, 0x04, 0x05, 0x06, 0x07, 0x7E });
-        assertNotNull(response);
         assertEquals(5, response.length);
-        assertEquals(0x03, response[0]);
-    }
-
-    @Test
-    public void testReceivePacketSubstitute() {
-        int[] response = getPacket(new AshFrameHandlerV2(null),
-                new int[] { 0x7E, 0x01, 0x02, 0x18, 0x03, 0x04, 0x7E, 0x05, 0x06, 0x07, 0x7E });
-        assertNotNull(response);
-        assertEquals(3, response.length);
-        assertEquals(0x05, response[0]);
+        assertEquals(0x7E, response[0]);
+        assertEquals(0x01, response[1]);
     }
 
     @Test
     public void testRunning() {
-        AshFrameHandler frameHandler = new AshFrameHandlerV2(null);
+        AshFrameHandler frameHandler = new AshFrameHandlerV3(null);
         frameHandler.start(null);
 
         assertTrue(frameHandler.isAlive());
@@ -107,54 +78,74 @@ public class AshFrameHandlerV2Test extends AshFrameHandlerTest {
 
     @Test
     public void testAshFrameAck() {
-        AshFrameHandler handler = new AshFrameHandlerV2(null);
+        AshFrameHandler handler = new AshFrameHandlerV3(null);
         AshFrameAck frame;
         AshFrame inFrame;
 
         frame = new AshFrameAck();
         frame.setAckNum(4);
         System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 132, 48, 252, 126 }, getOutputBuffer(handler, frame)));
+        assertTrue(Arrays.equals(new int[] { 126, 0, 132, 0, 39, 99, 192 }, getOutputBuffer(handler, frame)));
 
-        inFrame = createAshFrame(handler, new int[] { 132, 48, 252 });
+        inFrame = createAshFrame(handler, new int[] { 126, 0, 132, 0, 39, 99, 192 });
         assertTrue(inFrame instanceof AshFrameAck);
         assertEquals(4, inFrame.getAckNum());
 
         frame = new AshFrameAck();
         frame.setAckNum(7);
         System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 135, 0, 159, 126 }, getOutputBuffer(handler, frame)));
+        assertTrue(Arrays.equals(new int[] { 126, 0, 135, 0, 98, 32, 0 }, getOutputBuffer(handler, frame)));
 
-        inFrame = createAshFrame(handler, new int[] { 135, 0, 159 });
+        inFrame = createAshFrame(handler, new int[] { 126, 0, 135, 0, 98, 32, 0 });
         assertTrue(inFrame instanceof AshFrameAck);
         assertEquals(7, inFrame.getAckNum());
     }
 
     @Test
     public void testAshFrameNak() {
-        AshFrameHandler handler = new AshFrameHandlerV2(null);
+        AshFrameHandler handler = new AshFrameHandlerV3(null);
         AshFrameNak frame;
+        AshFrame inFrame;
+
         frame = new AshFrameNak();
         frame.setAckNum(0);
         System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 255, 255, 126 }, getOutputBuffer(handler, frame)));
+        assertTrue(Arrays.equals(new int[] { 126, 0, 192, 0, 230, 107, 192 }, getOutputBuffer(handler, frame)));
+
+        inFrame = createAshFrame(handler, new int[] { 126, 0, 192, 0, 230, 107, 192 });
+        assertTrue(inFrame instanceof AshFrameNak);
+        assertEquals(0, inFrame.getAckNum());
     }
 
     @Test
     public void testAshFrameRst() {
-        AshFrameHandler handler = new AshFrameHandlerV2(null);
+        AshFrameHandler handler = new AshFrameHandlerV3(null);
         AshFrameRst frame;
         frame = new AshFrameRst();
         System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 26, 192, 56, 188, 126 }, getOutputBuffer(handler, frame)));
+        assertTrue(
+                Arrays.equals(new int[] { 0x7E, 0x00, 0x08, 0x00, 0x69, 0x86, 0x00 }, getOutputBuffer(handler, frame)));
 
-        AshFrame inFrame = createAshFrame(handler, new int[] { 192, 56, 188 });
+        AshFrame inFrame = createAshFrame(handler, new int[] { 0x7E, 0x00, 0x08, 0x00, 0x69, 0x86, 0x00 });
         assertTrue(inFrame instanceof AshFrameRst);
     }
 
     @Test
+    public void testAshFrameRstAck() {
+        AshFrameHandler handler = new AshFrameHandlerV3(null);
+        AshFrameRstAck frame;
+        frame = new AshFrameRstAck();
+        System.out.println(frame);
+        assertTrue(
+                Arrays.equals(new int[] { 0x7E, 0x00, 0x49, 0x00, 0x47, 0x6B, 0xC0 }, getOutputBuffer(handler, frame)));
+
+        AshFrame inFrame = createAshFrame(handler, new int[] { 0x7E, 0x00, 0x49, 0x00, 0x47, 0x6B, 0xC0 });
+        assertTrue(inFrame instanceof AshFrameRstAck);
+    }
+
+    @Test
     public void testAshFrameData() {
-        AshFrameHandler handler = new AshFrameHandlerV2(null);
+        AshFrameHandler handler = new AshFrameHandlerV3(null);
         AshFrameData frame;
         EzspVersionRequest request = new EzspVersionRequest();
         request.setSequenceNumber(1);
@@ -162,7 +153,7 @@ public class AshFrameHandlerV2Test extends AshFrameHandlerTest {
         frame = new AshFrameData();
         frame.setData(request);
         System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 0, 67, 33, 168, 80, 155, 152, 126 }, getOutputBuffer(handler, frame)));
+        assertTrue(Arrays.equals(new int[] { 126, 0, 128, 4, 1, 0, 0, 4, 69, 11, 0 }, getOutputBuffer(handler, frame)));
 
         request = new EzspVersionRequest();
         request.setSequenceNumber(2);
@@ -172,26 +163,14 @@ public class AshFrameHandlerV2Test extends AshFrameHandlerTest {
         frame.setAckNum(3);
         frame.setFrmNum(4);
         System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 67, 64, 33, 168, 80, 255, 254, 126 }, getOutputBuffer(handler, frame)));
+        assertTrue(
+                Arrays.equals(new int[] { 126, 0, 163, 4, 2, 0, 0, 4, 37, 47, 64 }, getOutputBuffer(handler, frame)));
 
-        request = new EzspVersionRequest();
-        request.setSequenceNumber(3);
-        request.setDesiredProtocolVersion(4);
-        frame = new AshFrameData();
-        frame.setData(request);
-        frame.setAckNum(6);
-        frame.setFrmNum(2);
-        frame.setReTx();
-        System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 46, 65, 33, 168, 80, 177, 236, 126 }, getOutputBuffer(handler, frame)));
-
-        AshFrame inFrame = createAshFrame(handler, new int[] { 1, 67, 161, 168, 80, 40, 5, 234, 6, 143 });
-        System.out.println(inFrame);
+        AshFrame inFrame = createAshFrame(handler, new int[] { 126, 0, 150, 4, 3, 0, 0, 4, 47, 6, 128 });
         assertTrue(inFrame instanceof AshFrameData);
-        assertEquals(1, inFrame.getAckNum());
-        assertEquals(0, inFrame.getFrmNum());
+        assertEquals(6, inFrame.getAckNum());
+        assertEquals(2, inFrame.getFrmNum());
         assertEquals(FrameType.DATA, inFrame.getFrameType());
-        assertTrue(Arrays.equals(new int[] { 0x01, 0x80, 0x00, 0x04, 0x02, 0x10, 0x58 }, inFrame.getDataBuffer()));
     }
 
     class TestPort implements ZigBeePort {
