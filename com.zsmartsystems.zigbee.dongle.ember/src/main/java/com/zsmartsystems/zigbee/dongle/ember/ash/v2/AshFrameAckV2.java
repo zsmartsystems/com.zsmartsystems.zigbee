@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ash.v2;
 
-import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrame.FrameType;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameAck;
 
 /**
@@ -22,9 +21,8 @@ public class AshFrameAckV2 extends AshFrameAck {
      *
      * @param buffer
      */
-    public AshFrameAckV2(int ackNum) {
+    public AshFrameAckV2() {
         this.frameType = FrameType.ACK;
-        this.ackNum = ackNum;
     }
 
     public AshFrameAckV2(int[] frameBuffer) {

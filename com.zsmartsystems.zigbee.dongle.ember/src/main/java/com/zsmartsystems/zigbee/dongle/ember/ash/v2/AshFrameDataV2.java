@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ash.v2;
 
 import java.util.Arrays;
 
-import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrame.FrameType;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 
@@ -20,6 +19,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
  *
  */
 public class AshFrameDataV2 extends AshFrameData {
+    public AshFrameDataV2() {
+        frameType = FrameType.DATA;
+    }
+
     /**
      * Constructor to create an ASH Data frame for sending.
      *
@@ -42,14 +45,17 @@ public class AshFrameDataV2 extends AshFrameData {
         dataBuffer = Arrays.copyOfRange(frameBuffer, 1, frameBuffer.length - 2);
     }
 
+    @Override
     public void setReTx() {
         reTx = true;
     }
 
+    @Override
     public boolean getReTx() {
         return reTx;
     }
 
+    @Override
     public int[] getDataBuffer() {
         return dataBuffer;
     }

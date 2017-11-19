@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ash.v2;
 
-import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrame.FrameType;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameNak;
 
 /**
@@ -17,6 +16,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameNak;
  *
  */
 public class AshFrameNakV2 extends AshFrameNak {
+    public AshFrameNakV2() {
+        this.frameType = FrameType.NAK;
+    }
 
     public AshFrameNakV2(int[] frameBuffer) {
         this.frameType = FrameType.NAK;

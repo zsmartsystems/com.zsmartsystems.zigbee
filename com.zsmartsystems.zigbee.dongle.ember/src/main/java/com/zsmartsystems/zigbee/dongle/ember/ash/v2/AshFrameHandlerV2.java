@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2016-2017 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.dongle.ember.ash.v2;
 
 import java.io.IOException;
@@ -146,11 +153,6 @@ public class AshFrameHandlerV2 extends AshFrameHandler {
                 break;
             case RST:
                 outputData[outputPos++] = 0xC0;
-                // int[] outFrame = new int[rstFrame.length + 1];
-                // outFrame[0] = 0x1A;
-                // for (int cnt = 0; cnt < rstFrame.length; cnt++) {
-                // outFrame[cnt + 1] = rstFrame[cnt];
-                // }
                 break;
             case RSTACK:
                 break;
@@ -205,6 +207,16 @@ public class AshFrameHandlerV2 extends AshFrameHandler {
             }
         }
         stuffedOutputData[stuffedOutputPos++] = 0x7E;
+
+        if (frame.getFrameType() == FrameType.RST) {
+            // When sending a reset we add a clear buffer command
+            int[] outFrame = new int[stuffedOutputPos + 1];
+            outFrame[0] = 0x1A;
+            for (int cnt = 0; cnt < stuffedOutputPos; cnt++) {
+                outFrame[cnt + 1] = stuffedOutputData[cnt];
+            }
+            return outFrame;
+        }
 
         return Arrays.copyOfRange(stuffedOutputData, 0, stuffedOutputPos);
     }
@@ -283,15 +295,15 @@ public class AshFrameHandlerV2 extends AshFrameHandler {
     protected AshFrame getAshFrame(FrameType frameType) {
         switch (frameType) {
             case ACK:
-                break;
+                return new AshFrameAckV2();
             case DATA:
-                break;
+                return new AshFrameDataV2();
             case NAK:
-                break;
+                return new AshFrameNakV2();
             case RST:
-                break;
+                return new AshFrameRstV2();
             case RSTACK:
-                break;
+                return new AshFrameRstAckV2();
             default:
                 logger.debug("Attempt to create unsupported ASHv2 frame {}", frameType);
                 break;

@@ -18,6 +18,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameRstAck;
  *
  */
 public class AshFrameRstAckV2 extends AshFrameRstAck {
+    public AshFrameRstAckV2() {
+        this.frameType = FrameType.RSTACK;
+    }
 
     /**
      * Constructor to create an ASH frame from a byte buffer.
