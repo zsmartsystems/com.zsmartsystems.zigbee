@@ -70,7 +70,6 @@ public enum ZclDataType {
     NWK_ADDRESS("NWK address", Integer.class, 0x00, false),
     N_X_BINDING_TABLE("N x Binding Table", BindingTable.class, 0x00, false),
     N_X_IEEE_ADDRESS("N X IEEE Address", Long.class, 0x00, false),
-    N_X_NWK_ADDRESS("N X NWK Address", Integer.class, 0x00, false),
     POWER_DESCRIPTOR("Power Descriptor", PowerDescriptor.class, 0x00, false),
     ROUTING_TABLE("Routing Table", RoutingTable.class, 0x00, false),
     SIMPLE_DESCRIPTOR("Simple Descriptor", SimpleDescriptor.class, 0x00, false),

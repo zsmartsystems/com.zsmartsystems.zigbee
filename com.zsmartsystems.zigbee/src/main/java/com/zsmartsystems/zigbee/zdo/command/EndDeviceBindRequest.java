@@ -250,12 +250,16 @@ public class EndDeviceBindRequest extends ZdoRequest {
         srcEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         profileId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         inClusterCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        for (int cnt = 0; cnt < inClusterCount; cnt++) {
-            inClusterList.add((Integer) deserializer.deserialize(ZclDataType.CLUSTERID));
+        if (inClusterCount != null) {
+            for (int cnt = 0; cnt < inClusterCount; cnt++) {
+                inClusterList.add((Integer) deserializer.deserialize(ZclDataType.CLUSTERID));
+            }
         }
         outClusterCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        for (int cnt = 0; cnt < outClusterCount; cnt++) {
-            outClusterList.add((Integer) deserializer.deserialize(ZclDataType.CLUSTERID));
+        if (outClusterCount != null) {
+            for (int cnt = 0; cnt < outClusterCount; cnt++) {
+                outClusterList.add((Integer) deserializer.deserialize(ZclDataType.CLUSTERID));
+            }
         }
     }
 

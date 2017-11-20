@@ -166,6 +166,8 @@ public final class ZigBeeConsole {
 
         commands.put("trustcentre", new TrustCentreCommand());
 
+        commands.put("rediscover", new RediscoverCommand());
+
         this.networkManager = networkManager;
         zigBeeApi = new ZigBeeApi(networkManager);
 
@@ -2720,6 +2722,43 @@ public final class ZigBeeConsole {
             });
 
             out.println("Starting dongle firmware update...");
+            return true;
+        }
+    }
+
+    /**
+     * Rediscover a node from its IEEE address.
+     */
+    private class RediscoverCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Rediscover a node from its IEEE address.";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "rediscover IEEEADDRESS";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
+            if (args.length != 2) {
+                return false;
+            }
+
+            IeeeAddress address = new IeeeAddress(args[1]);
+
+            print("Sending rediscovery request for address " + address, out);
+            networkManager.rediscoverNode(address);
             return true;
         }
     }

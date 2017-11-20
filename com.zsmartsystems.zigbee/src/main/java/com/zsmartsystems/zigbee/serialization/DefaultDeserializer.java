@@ -62,6 +62,10 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
      * {@inheritDoc}
      */
     public Object readZigBeeType(ZclDataType type) {
+        if (index == payload.length) {
+            return null;
+        }
+
         Object[] value = new Object[1];
         switch (type) {
             case BOOLEAN:
@@ -113,7 +117,6 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 break;
             case N_X_READ_ATTRIBUTE_STATUS_RECORD:
                 break;
-            case N_X_NWK_ADDRESS:
             case N_X_UNSIGNED_16_BIT_INTEGER:
                 int cntN16 = Integer.valueOf((byte) payload[index++] & 0xFF);
                 List<Integer> arrayN16 = new ArrayList<Integer>(cntN16);

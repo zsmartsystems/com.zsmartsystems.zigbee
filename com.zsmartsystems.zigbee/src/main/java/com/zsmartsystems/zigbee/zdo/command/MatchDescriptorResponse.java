@@ -128,8 +128,10 @@ public class MatchDescriptorResponse extends ZdoResponse {
         }
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         matchLength = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        for (int cnt = 0; cnt < matchLength; cnt++) {
-            matchList.add((Integer) deserializer.deserialize(ZclDataType.ENDPOINT));
+        if (matchLength != null) {
+            for (int cnt = 0; cnt < matchLength; cnt++) {
+                matchList.add((Integer) deserializer.deserialize(ZclDataType.ENDPOINT));
+            }
         }
     }
 

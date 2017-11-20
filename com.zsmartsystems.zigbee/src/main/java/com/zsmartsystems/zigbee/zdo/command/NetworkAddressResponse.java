@@ -159,12 +159,17 @@ public class NetworkAddressResponse extends ZdoResponse {
         serializer.serialize(nwkAddrRemoteDev, ZclDataType.NWK_ADDRESS);
         serializer.serialize(numAssocDev, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(startIndex, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(nwkAddrAssocDevList, ZclDataType.N_X_NWK_ADDRESS);
+        for (int cnt = 0; cnt < nwkAddrAssocDevList.size(); cnt++) {
+            serializer.serialize(nwkAddrAssocDevList.get(cnt), ZclDataType.NWK_ADDRESS);
+        }
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
+
+        // Create lists
+        nwkAddrAssocDevList = new ArrayList<Integer>();
 
         status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
         if (status != ZdoStatus.SUCCESS) {
@@ -175,7 +180,11 @@ public class NetworkAddressResponse extends ZdoResponse {
         nwkAddrRemoteDev = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         numAssocDev = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        nwkAddrAssocDevList = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_NWK_ADDRESS);
+        if (numAssocDev != null) {
+            for (int cnt = 0; cnt < numAssocDev; cnt++) {
+                nwkAddrAssocDevList.add((Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS));
+            }
+        }
     }
 
     @Override
