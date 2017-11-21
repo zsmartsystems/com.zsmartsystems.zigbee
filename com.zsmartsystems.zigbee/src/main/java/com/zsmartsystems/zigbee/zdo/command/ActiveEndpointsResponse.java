@@ -128,8 +128,10 @@ public class ActiveEndpointsResponse extends ZdoResponse {
         }
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         activeEpCnt = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        for (int cnt = 0; cnt < activeEpCnt; cnt++) {
-            activeEpList.add((Integer) deserializer.deserialize(ZclDataType.ENDPOINT));
+        if (activeEpCnt != null) {
+            for (int cnt = 0; cnt < activeEpCnt; cnt++) {
+                activeEpList.add((Integer) deserializer.deserialize(ZclDataType.ENDPOINT));
+            }
         }
     }
 

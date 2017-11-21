@@ -155,8 +155,10 @@ public class ManagementRoutingResponse extends ZdoResponse {
         routingTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         routingTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        for (int cnt = 0; cnt < routingTableListCount; cnt++) {
-            routingTableList.add((RoutingTable) deserializer.deserialize(ZclDataType.ROUTING_TABLE));
+        if (routingTableListCount != null) {
+            for (int cnt = 0; cnt < routingTableListCount; cnt++) {
+                routingTableList.add((RoutingTable) deserializer.deserialize(ZclDataType.ROUTING_TABLE));
+            }
         }
     }
 

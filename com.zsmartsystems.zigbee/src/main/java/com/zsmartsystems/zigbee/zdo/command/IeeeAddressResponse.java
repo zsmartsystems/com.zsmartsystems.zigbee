@@ -186,8 +186,10 @@ public class IeeeAddressResponse extends ZdoResponse {
             return;
         }
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        for (int cnt = 0; cnt < numAssocDev; cnt++) {
-            nwkAddrAssocDevList.add((Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS));
+        if (numAssocDev != null) {
+            for (int cnt = 0; cnt < numAssocDev; cnt++) {
+                nwkAddrAssocDevList.add((Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS));
+            }
         }
     }
 

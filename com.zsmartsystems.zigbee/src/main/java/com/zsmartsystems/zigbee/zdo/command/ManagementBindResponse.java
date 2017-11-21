@@ -155,8 +155,10 @@ public class ManagementBindResponse extends ZdoResponse {
         bindingTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         bindingTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        for (int cnt = 0; cnt < bindingTableListCount; cnt++) {
-            bindingTableList.add((BindingTable) deserializer.deserialize(ZclDataType.BINDING_TABLE));
+        if (bindingTableListCount != null) {
+            for (int cnt = 0; cnt < bindingTableListCount; cnt++) {
+                bindingTableList.add((BindingTable) deserializer.deserialize(ZclDataType.BINDING_TABLE));
+            }
         }
     }
 

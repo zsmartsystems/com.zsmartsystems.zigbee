@@ -96,13 +96,6 @@ public class SerializerIntegrationTest {
     }
 
     @Test
-    public void testDeserialize_N_X_NWK_ADDRESS() {
-        List<Integer> valIn = Arrays
-                .asList(new Integer[] { 1111, 2222, 3333, 4444, 5555, 6666, 7777, 8888, 9999, 0x8888 });
-        testSerializer(valIn, ZclDataType.N_X_NWK_ADDRESS);
-    }
-
-    @Test
     public void testDeserialize_ENUMERATION_8_BIT() {
         int valIn = 0x91;
         testSerializer(valIn, ZclDataType.ENUMERATION_8_BIT);

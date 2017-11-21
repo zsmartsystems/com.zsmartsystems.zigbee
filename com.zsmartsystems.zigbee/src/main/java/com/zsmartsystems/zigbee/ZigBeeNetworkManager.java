@@ -41,6 +41,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
+import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
 
 /**
  * Implements functions for managing the ZigBee interfaces.
@@ -963,6 +964,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             modifiedListeners.remove(networkNodeListener);
             nodeListeners = Collections.unmodifiableList(modifiedListeners);
         }
+    }
+
+    /**
+     * Starts a rediscovery on a node. This will send a {@link NetworkAddressRequest} as a broadcast and will receive
+     * the response to trigger a full discovery.
+     *
+     * @param ieeeAddress the {@link IeeeAddress} of the node to rediscover
+     */
+    public void rediscoverNode(IeeeAddress address) {
+        networkDiscoverer.rediscoverNode(address);
     }
 
     /**

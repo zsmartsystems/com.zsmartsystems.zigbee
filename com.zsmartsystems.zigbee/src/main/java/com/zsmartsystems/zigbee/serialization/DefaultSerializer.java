@@ -102,7 +102,6 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 break;
             case N_X_READ_ATTRIBUTE_STATUS_RECORD:
                 break;
-            case N_X_NWK_ADDRESS:
             case N_X_UNSIGNED_16_BIT_INTEGER:
                 List<Integer> intArray16 = (List<Integer>) data;
                 buffer[length++] = intArray16.size();

@@ -189,8 +189,10 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
         totalTransmissions = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         transmissionFailures = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         scannedChannelsListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        for (int cnt = 0; cnt < scannedChannelsListCount; cnt++) {
-            energyValues.add((Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER));
+        if (scannedChannelsListCount != null) {
+            for (int cnt = 0; cnt < scannedChannelsListCount; cnt++) {
+                energyValues.add((Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER));
+            }
         }
     }
 

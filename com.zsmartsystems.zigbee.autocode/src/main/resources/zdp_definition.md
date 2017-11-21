@@ -569,7 +569,7 @@ destination addressing on this command is unicast.
 |NWKAddrRemoteDev           |NWK address                |
 |NumAssocDev                |Unsigned 8-bit integer     |
 |StartIndex                 |Unsigned 8-bit integer     |
-|NWKAddrAssocDevList        |N X NWK Address            | 
+|NWKAddrAssocDevList        |NWK Address[NumAssocDev]   | 
 
 
 #### IEEE Address Response [0x8001]

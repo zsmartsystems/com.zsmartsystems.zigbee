@@ -129,8 +129,10 @@ public class BindRegisterResponse extends ZdoResponse {
         }
         bindingTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         bindingTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        for (int cnt = 0; cnt < bindingTableListCount; cnt++) {
-            bindingTableList.add((List<BindingTable>) deserializer.deserialize(ZclDataType.N_X_BINDING_TABLE));
+        if (bindingTableListCount != null) {
+            for (int cnt = 0; cnt < bindingTableListCount; cnt++) {
+                bindingTableList.add((List<BindingTable>) deserializer.deserialize(ZclDataType.N_X_BINDING_TABLE));
+            }
         }
     }
 

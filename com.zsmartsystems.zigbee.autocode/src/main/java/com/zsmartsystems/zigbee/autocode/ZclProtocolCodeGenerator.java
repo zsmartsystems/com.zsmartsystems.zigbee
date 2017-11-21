@@ -2110,9 +2110,12 @@ public class ZclProtocolCodeGenerator {
                             }
 
                             if (field.listSizer != null) {
-                                out.println("        for (int cnt = 0; cnt < " + field.listSizer + "; cnt++) {");
-                                out.println("            " + field.nameLowerCamelCase + ".add((" + field.dataTypeClass
-                                        + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + "));");
+                                out.println("        if (" + field.listSizer + " != null) {");
+                                out.println("            for (int cnt = 0; cnt < " + field.listSizer + "; cnt++) {");
+                                out.println("                " + field.nameLowerCamelCase + ".add(("
+                                        + field.dataTypeClass + ") deserializer.deserialize(" + "ZclDataType."
+                                        + field.dataType + "));");
+                                out.println("            }");
                                 out.println("        }");
                             } else {
                                 out.println("        " + field.nameLowerCamelCase + " = (" + field.dataTypeClass

@@ -155,8 +155,10 @@ public class ManagementLqiResponse extends ZdoResponse {
         neighborTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         neighborTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        for (int cnt = 0; cnt < neighborTableListCount; cnt++) {
-            neighborTableList.add((NeighborTable) deserializer.deserialize(ZclDataType.NEIGHBOR_TABLE));
+        if (neighborTableListCount != null) {
+            for (int cnt = 0; cnt < neighborTableListCount; cnt++) {
+                neighborTableList.add((NeighborTable) deserializer.deserialize(ZclDataType.NEIGHBOR_TABLE));
+            }
         }
     }
 
