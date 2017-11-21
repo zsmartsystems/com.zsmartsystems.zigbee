@@ -306,15 +306,12 @@ public class ZigBeeDongleTelegesis
         frameHandler.start(serialPort);
         frameHandler.addEventListener(this);
 
-        // Get the product information
-        TelegesisDisplayProductIdentificationCommand productInfo = new TelegesisDisplayProductIdentificationCommand();
-        if (frameHandler.sendRequest(productInfo) != null) {
-            StringBuilder builder = new StringBuilder();
-            builder.append("Device=");
-            builder.append(productInfo.getDeviceName());
-            builder.append("Version=R");
-            builder.append(productInfo.getFirmwareRevision());
-            versionString = builder.toString();
+        // Configure the dongle
+        TelegesisSetPromptEnable1Command prompt1Function = new TelegesisSetPromptEnable1Command();
+        prompt1Function.setConfiguration(defaultS0E);
+        if (frameHandler.sendRequest(prompt1Function) == null) {
+            logger.debug("Error setting Telegesis Prompt 1 register");
+            return ZigBeeInitializeResponse.FAILED;
         }
 
         // Disable echo on the serial port
@@ -327,7 +324,6 @@ public class ZigBeeDongleTelegesis
             return ZigBeeInitializeResponse.FAILED;
         }
 
-        // Configure the dongle
         TelegesisSetMainFunctionCommand mainFunction = new TelegesisSetMainFunctionCommand();
         mainFunction.setConfiguration(defaultS0A);
         mainFunction.setPassword(telegesisPassword);
@@ -341,17 +337,22 @@ public class ZigBeeDongleTelegesis
             logger.debug("Error setting Telegesis Extended Function register");
             return ZigBeeInitializeResponse.FAILED;
         }
-        TelegesisSetPromptEnable1Command prompt1Function = new TelegesisSetPromptEnable1Command();
-        prompt1Function.setConfiguration(defaultS0E);
-        if (frameHandler.sendRequest(prompt1Function) == null) {
-            logger.debug("Error setting Telegesis Prompt 1 register");
-            return ZigBeeInitializeResponse.FAILED;
-        }
         TelegesisSetPromptEnable2Command prompt2Function = new TelegesisSetPromptEnable2Command();
         prompt2Function.setConfiguration(defaultS0F);
         if (frameHandler.sendRequest(prompt2Function) == null) {
             logger.debug("Error setting Telegesis Prompt 2 register");
             return ZigBeeInitializeResponse.FAILED;
+        }
+
+        // Get the product information
+        TelegesisDisplayProductIdentificationCommand productInfo = new TelegesisDisplayProductIdentificationCommand();
+        if (frameHandler.sendRequest(productInfo) != null) {
+            StringBuilder builder = new StringBuilder();
+            builder.append("Device=");
+            builder.append(productInfo.getDeviceName());
+            builder.append("Version=R");
+            builder.append(productInfo.getFirmwareRevision());
+            versionString = builder.toString();
         }
 
         // Get network information
