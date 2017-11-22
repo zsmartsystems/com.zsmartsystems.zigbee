@@ -482,7 +482,9 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * @return current list of neighbors as a {@link NeighborTable}
      */
     public List<NeighborTable> getNeighbors() {
-        return neighbors;
+        synchronized (neighbors) {
+            return new ArrayList<NeighborTable>(neighbors);
+        }
     }
 
     /**
@@ -531,7 +533,9 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * @return current list of associated devices as a {@link List} of {@link Integer}
      */
     public List<Integer> getAssociatedDevices() {
-        return associatedDevices;
+        synchronized (associatedDevices) {
+            return new ArrayList<Integer>(associatedDevices);
+        }
     }
 
     /**
@@ -580,7 +584,9 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * @return list of routes as a {@link RoutingTable}
      */
     public List<RoutingTable> getRoutes() {
-        return routes;
+        synchronized (routes) {
+            return new ArrayList<RoutingTable>(routes);
+        }
     }
 
     /**
