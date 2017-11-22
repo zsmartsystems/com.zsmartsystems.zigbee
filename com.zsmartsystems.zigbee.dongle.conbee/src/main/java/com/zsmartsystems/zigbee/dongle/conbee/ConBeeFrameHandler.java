@@ -7,9 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.conbee;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +32,7 @@ import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrameResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeQuerySendDataRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadReceivedDataRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.transaction.ConBeeTransaction;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  * Frame parser for ConBee SLIP protocol.
@@ -70,9 +68,9 @@ public class ConBeeFrameHandler {
     private final List<ConBeeListener> transactionListeners = new ArrayList<ConBeeListener>();
 
     /**
-     * The output stream.
+     * The port.
      */
-    private final OutputStream outputStream;
+    private ZigBeePort serialPort;
 
     /**
      * The receive thread.
@@ -98,17 +96,11 @@ public class ConBeeFrameHandler {
      * Construct which sets input stream where the packet is read from the and
      * handler which further processes the received packet.
      *
-     * @param inputStream
-     *            the input stream
-     * @param outputStream
-     *            the output stream
-     * @param frameHandler
-     *            the packet handler
+     * @param serialPort the {@link ZigBeePort}
+     * @param frameHandler the packet handler
      */
-    public ConBeeFrameHandler(final InputStream inputStream, final OutputStream outputStream,
-            final ZigBeeDongleConBee dongle) {
-        this.outputStream = outputStream;
-        // this.inputStream = inputStream;
+    public ConBeeFrameHandler(final ZigBeePort serialPort, final ZigBeeDongleConBee dongle) {
+        this.serialPort = serialPort;
 
         transmitThread = new Thread("ConBeeTransmitHandler") {
             @Override
@@ -151,7 +143,6 @@ public class ConBeeFrameHandler {
             public void run() {
                 logger.debug("ConBeeReceiveHandler thread started");
 
-                int exceptionCnt = 0;
                 int[] inputBuffer = new int[SLIP_MAX_LENGTH];
                 int inputCount = 0;
                 boolean inputError = false;
@@ -159,57 +150,49 @@ public class ConBeeFrameHandler {
                 boolean escaped = false;
 
                 while (!close) {
-                    try {
-                        int val = inputStream.read();
-                        logger.debug("CONBEE RX: " + String.format("[% 2d] %02X", inputCount, val));
-                        if (val == SLIP_ESC) {
-                            escaped = true;
-                        } else if (val == SLIP_END) {
-                            // Frame complete
-                            if (inputCount > 0) {
-                                ConBeeFrameResponse frame = (ConBeeFrameResponse) ConBeeFrame
-                                        .create(Arrays.copyOfRange(inputBuffer, 0, inputCount));
-                                if (frame != null) {
-                                    logger.debug("CONBEE RX Frame: {}", frame);
-                                    dongle.receiveIncomingFrame(frame);
-                                    notifyTransactionComplete(frame);
+                    int val = serialPort.read();
+                    // logger.debug("CONBEE RX: " + String.format("[% 2d] %02X", inputCount, val));
+                    if (val == SLIP_ESC) {
+                        escaped = true;
+                    } else if (val == SLIP_END) {
+                        // Frame complete
+                        if (inputCount > 0) {
+                            ConBeeFrameResponse frame = (ConBeeFrameResponse) ConBeeFrame
+                                    .create(Arrays.copyOfRange(inputBuffer, 0, inputCount));
+                            if (frame != null) {
+                                logger.debug("CONBEE RX Frame: {}", frame);
+                                dongle.receiveIncomingFrame(frame);
+                                notifyTransactionComplete(frame);
+                                resetRetryTimer();
 
-                                    // Check the device state
-                                    handleConBeeState(frame.getDeviceState());
-                                } else {
-                                    logger.debug("CONBEE RX Frame: ERROR: [{}] {}", inputCount,
-                                            bufferToString(inputBuffer, inputCount));
-                                }
-                                inputCount = 0;
+                                // Check the device state
+                                handleConBeeState(frame.getDeviceState());
+                            } else {
+                                logger.debug("CONBEE RX Frame: ERROR: [{}] {}", inputCount,
+                                        bufferToString(inputBuffer, inputCount));
                             }
-                        } else if (escaped) {
-                            escaped = false;
-                            switch (val) {
-                                case SLIP_ESC_END:
-                                    inputBuffer[inputCount++] = SLIP_END;
-                                    break;
-                                case SLIP_ESC_ESC:
-                                    inputBuffer[inputCount++] = SLIP_ESC;
-                                    break;
-                                default:
-                                    inputBuffer[inputCount++] = val;
-                                    break;
-                            }
-                        } else if (val != -1) {
-                            if (inputCount >= SLIP_MAX_LENGTH) {
-                                logger.debug("CONBEE RX error: len=" + inputCount);
-                                inputCount = 0;
-                                inputError = true;
-                            }
-                            inputBuffer[inputCount++] = val;
+                            inputCount = 0;
                         }
-                    } catch (final IOException e) {
-                        logger.error("ConBeeFrameHandler IOException: ", e);
-
-                        if (exceptionCnt++ > 10) {
-                            logger.error("ConBeeFrameHandler exception count exceeded");
-                            close = true;
+                    } else if (escaped) {
+                        escaped = false;
+                        switch (val) {
+                            case SLIP_ESC_END:
+                                inputBuffer[inputCount++] = SLIP_END;
+                                break;
+                            case SLIP_ESC_ESC:
+                                inputBuffer[inputCount++] = SLIP_ESC;
+                                break;
+                            default:
+                                inputBuffer[inputCount++] = val;
+                                break;
                         }
+                    } else if (val != -1) {
+                        if (inputCount >= SLIP_MAX_LENGTH) {
+                            logger.debug("CONBEE RX error: len=" + inputCount);
+                            inputCount = 0;
+                            inputError = true;
+                        }
+                        inputBuffer[inputCount++] = val;
                     }
                 }
                 logger.debug("ConBeeFrameHandler exited.");
@@ -277,38 +260,34 @@ public class ConBeeFrameHandler {
     private synchronized void outputFrame(ConBeeFrameRequest frame) {
         StringBuilder result = new StringBuilder();
         // Send the data
-        try {
-            logger.debug("CONBEE TX: {}", frame);
-            outputStream.write(SLIP_END);
+        logger.debug("CONBEE TX: {}", frame);
+        serialPort.write(SLIP_END);
 
-            for (int val : frame.getOutputBuffer()) {
-                result.append(String.format(" %02X", val));
-                // logger.debug("CONBEE TX: {}", String.format("%02X", val));
-                switch (val) {
-                    case SLIP_END:
-                        logger.debug("CONBEE TX: [ESC]");
-                        outputStream.write(SLIP_ESC);
-                        outputStream.write(SLIP_ESC_END);
-                        break;
-                    case SLIP_ESC:
-                        logger.debug("CONBEE TX: [ESC]");
-                        outputStream.write(SLIP_ESC);
-                        outputStream.write(SLIP_ESC_ESC);
-                        break;
-                    default:
-                        outputStream.write(val);
-                        break;
-                }
+        for (int val : frame.getOutputBuffer()) {
+            result.append(String.format(" %02X", val));
+            // logger.debug("CONBEE TX: {}", String.format("%02X", val));
+            switch (val) {
+                case SLIP_END:
+                    logger.debug("CONBEE TX: [ESC]");
+                    serialPort.write(SLIP_ESC);
+                    serialPort.write(SLIP_ESC_END);
+                    break;
+                case SLIP_ESC:
+                    logger.debug("CONBEE TX: [ESC]");
+                    serialPort.write(SLIP_ESC);
+                    serialPort.write(SLIP_ESC_ESC);
+                    break;
+                default:
+                    serialPort.write(val);
+                    break;
             }
-
-            logger.debug("CONBEE TX:{}", result.toString());
-
-            outputStream.write(SLIP_END);
-
-            startRetryTimer();
-        } catch (IOException e) {
-            logger.debug(e.getMessage());
         }
+
+        logger.debug("CONBEE TX:{}", result.toString());
+
+        serialPort.write(SLIP_END);
+
+        startRetryTimer();
     }
 
     private synchronized void startRetryTimer() {

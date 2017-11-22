@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeKey;
@@ -26,7 +26,11 @@ import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeNetworkParameter;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadReceivedDataResponse;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeStatus;
 import com.zsmartsystems.zigbee.dongle.conbee.transaction.ConBeeSingleResponseTransaction;
+import com.zsmartsystems.zigbee.transport.TransportConfig;
+import com.zsmartsystems.zigbee.transport.TransportConfigOption;
+import com.zsmartsystems.zigbee.transport.TransportConfigResult;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
@@ -78,7 +82,7 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
             return ZigBeeInitializeResponse.FAILED;
         }
 
-        conbeeHandler = new ConBeeFrameHandler(serialPort.getInputStream(), serialPort.getOutputStream(), this);
+        conbeeHandler = new ConBeeFrameHandler(serialPort, this);
 
         // State request seems to be necessary before we do anything else
         // ConBeeDeviceStateRequest stateRequest = new ConBeeDeviceStateRequest();
@@ -183,7 +187,23 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
     }
 
     @Override
-    public boolean setZigBeeLinkKey(ZigBeeKey key) {
+    public void updateTransportConfig(TransportConfig configuration) {
+        for (TransportConfigOption option : configuration.getOptions()) {
+            try {
+                switch (option) {
+                    default:
+                        configuration.setResult(option, TransportConfigResult.ERROR_UNSUPPORTED);
+                        logger.debug("Unsupported configuration option \"{}\" in Telegesis dongle", option);
+                        break;
+                }
+            } catch (ClassCastException e) {
+                configuration.setResult(option, TransportConfigResult.ERROR_INVALID_VALUE);
+            }
+        }
+    }
+
+    @Override
+    public boolean setTcLinkKey(ZigBeeKey key) {
         // TODO Auto-generated method stub
         return false;
     }
@@ -221,7 +241,7 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
         switch (apsFrame.getAddressMode()) {
             case DEVICE:
                 request.setDestinationAddress(
-                        new ZigBeeDeviceAddress(apsFrame.getDestinationAddress(), apsFrame.getDestinationEndpoint()));
+                        new ZigBeeEndpointAddress(apsFrame.getDestinationAddress(), apsFrame.getDestinationEndpoint()));
                 request.setDestinationAddressMode(ConBeeAddressMode.NWK);
                 break;
             case GROUP:
@@ -253,6 +273,10 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
     public void receiveIncomingFrame(ConBeeFrame frame) {
         if (frame instanceof ConBeeReadReceivedDataResponse) {
             ConBeeReadReceivedDataResponse receivedData = (ConBeeReadReceivedDataResponse) frame;
+
+            if (receivedData.getStatus() != ConBeeStatus.SUCCESS) {
+                return;
+            }
 
             ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
             // apsFrame.setApsCounter(emberApsFrame.getSequence());

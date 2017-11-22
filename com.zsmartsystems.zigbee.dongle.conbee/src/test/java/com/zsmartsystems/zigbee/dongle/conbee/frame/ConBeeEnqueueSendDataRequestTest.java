@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 
 /**
  *
@@ -28,7 +28,7 @@ public class ConBeeEnqueueSendDataRequestTest {
 
         request.setSequence(0x11);
         request.setRequestId(0x22);
-        request.setDestinationAddress(new ZigBeeDeviceAddress(0x9876, 0x54));
+        request.setDestinationAddress(new ZigBeeEndpointAddress(0x9876, 0x54));
         request.setDestinationAddressMode(ConBeeAddressMode.NWK);
         request.setProfileId(0x4444);
         request.setClusterId(0x0000);

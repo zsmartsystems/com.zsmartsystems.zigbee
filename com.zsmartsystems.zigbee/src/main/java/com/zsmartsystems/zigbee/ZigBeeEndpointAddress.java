@@ -60,10 +60,6 @@ public class ZigBeeEndpointAddress extends ZigBeeAddress {
         }
     }
 
-    public ZigBeeDeviceAddress(int[] value) {
-        this.address = value[0] + (value[1] << 8);
-    }
-
     @Override
     public int getAddress() {
         return address;

@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
 
 /**
  * If the response status is SUCCESS the parameter data is included in the response according to its definition in Table
@@ -55,7 +54,9 @@ public class ConBeeReadParameterResponse extends ConBeeFrameResponse {
             case NETWORK_KEY:
                 break;
             case NWK_ADDRESS:
-                return new ZigBeeDeviceAddress(value);
+                // int address = value
+                // return new ZigBeeEndpointAddress(value[0]);
+                break;
             case NWK_PANID:
                 return value[0] + (value[1] << 8);
             case NWK_UPDATE_ID:

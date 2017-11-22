@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 
 /**
  *
@@ -58,7 +58,7 @@ public class ConBeeEnqueueSendDataRequest extends ConBeeFrameRequest {
                 break;
             case NWK:
                 serializeUInt16(destinationAddress.getAddress());
-                serializeUInt8(((ZigBeeDeviceAddress) destinationAddress).getEndpoint());
+                serializeUInt8(((ZigBeeEndpointAddress) destinationAddress).getEndpoint());
                 break;
             default:
                 break;

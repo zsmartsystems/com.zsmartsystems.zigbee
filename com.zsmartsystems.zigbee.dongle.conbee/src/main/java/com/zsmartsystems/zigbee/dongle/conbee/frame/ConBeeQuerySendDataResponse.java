@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 
 /**
@@ -46,7 +46,7 @@ public class ConBeeQuerySendDataResponse extends ConBeeFrameResponse {
                 destinationAddress = new ZigBeeGroupAddress(deserializeUInt16());
                 break;
             case NWK:
-                destinationAddress = new ZigBeeDeviceAddress(deserializeUInt16());
+                destinationAddress = new ZigBeeEndpointAddress(deserializeUInt16());
                 break;
             case IEEE:
                 destinationIeeeAddress = new IeeeAddress(Arrays.copyOfRange(buffer, length, length + 8));
@@ -56,7 +56,7 @@ public class ConBeeQuerySendDataResponse extends ConBeeFrameResponse {
         }
         destinationEndpoint = deserializeUInt8();
         if (destinationAddressMode == ConBeeAddressMode.NWK) {
-            ((ZigBeeDeviceAddress) destinationAddress).setEndpoint(destinationEndpoint);
+            ((ZigBeeEndpointAddress) destinationAddress).setEndpoint(destinationEndpoint);
         }
 
     }

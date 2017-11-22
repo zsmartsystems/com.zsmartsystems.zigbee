@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeDeviceAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 
 /**
  *
@@ -74,7 +74,7 @@ public class ConBeeReadParameterResponseTest {
         assertEquals(6, readParameter.getSequence());
         assertEquals(ConBeeStatus.SUCCESS, readParameter.getStatus());
         assertEquals(ConBeeNetworkParameter.NWK_ADDRESS, readParameter.getParameter());
-        assertEquals(new ZigBeeDeviceAddress("0/0"), readParameter.getValue());
+        assertEquals(new ZigBeeEndpointAddress("0/0"), readParameter.getValue());
     }
 
     @Test
