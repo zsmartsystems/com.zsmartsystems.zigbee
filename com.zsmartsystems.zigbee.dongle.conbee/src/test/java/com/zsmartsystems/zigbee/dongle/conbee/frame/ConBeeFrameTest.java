@@ -41,4 +41,18 @@ public class ConBeeFrameTest {
         assertEquals(13, frame.getSequence());
     }
 
+    @Test
+    public void testCreateQuerySendDataStateResponse() {
+        ConBeeFrame frame = ConBeeFrame.create(new int[] { 0x04, 0x00, 0x00, 0x13, 0x00, 0x0C, 0x00, 0x22, 0x21, 0x02,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x98, 0xFF });
+        System.out.println(frame);
+
+        assertNotNull(frame);
+        assertTrue(frame instanceof ConBeeQuerySendDataResponse);
+        ConBeeQuerySendDataResponse sendDataResponse = (ConBeeQuerySendDataResponse) frame;
+        assertEquals(0, sendDataResponse.getSequence());
+        assertEquals(33, sendDataResponse.getRequestId());
+        assertEquals(ConBeeNetworkState.NET_CONNECTED, sendDataResponse.getDeviceState().getNetworkState());
+    }
+
 }

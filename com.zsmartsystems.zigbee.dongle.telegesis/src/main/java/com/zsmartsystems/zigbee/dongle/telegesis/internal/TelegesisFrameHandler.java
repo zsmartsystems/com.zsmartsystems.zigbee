@@ -139,7 +139,6 @@ public class TelegesisFrameHandler {
                 }
                 logger.debug("TelegesisFrameHandler thread exited.");
             }
-
         };
 
         parserThread.setDaemon(true);
@@ -248,7 +247,7 @@ public class TelegesisFrameHandler {
             parserThread.interrupt();
             parserThread.join();
         } catch (InterruptedException e) {
-            logger.warn("Interrupted in packet parser thread shutdown join.");
+            logger.debug("Interrupted in packet parser thread shutdown join.");
         }
         logger.debug("TelegesisFrameHandler closed.");
     }

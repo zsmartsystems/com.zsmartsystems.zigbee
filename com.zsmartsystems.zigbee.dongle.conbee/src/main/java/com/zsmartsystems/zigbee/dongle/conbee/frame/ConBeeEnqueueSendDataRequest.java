@@ -54,7 +54,7 @@ public class ConBeeEnqueueSendDataRequest extends ConBeeFrameRequest {
                 break;
             case IEEE:
                 serializeUInt8Array(destinationIeeeAddress.getValue());
-                // Endpoint???
+                serializeUInt8(((ZigBeeEndpointAddress) destinationAddress).getEndpoint());
                 break;
             case NWK:
                 serializeUInt16(destinationAddress.getAddress());
@@ -159,10 +159,19 @@ public class ConBeeEnqueueSendDataRequest extends ConBeeFrameRequest {
         builder.append(", destinationAddress=");
         builder.append(destinationAddressMode);
         builder.append("(");
-        if (destinationAddressMode == ConBeeAddressMode.IEEE) {
-            builder.append(destinationIeeeAddress);
-        } else {
-            builder.append(destinationAddress);
+        switch (destinationAddressMode) {
+            case IEEE:
+                builder.append(destinationIeeeAddress);
+                break;
+            case GROUP:
+                builder.append(destinationAddress.getAddress());
+                break;
+            case NWK:
+                builder.append(destinationAddress);
+                break;
+            default:
+                builder.append("unknown");
+                break;
         }
 
         builder.append("), txOptions=");

@@ -19,13 +19,13 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceState;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceStateRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrame;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrameRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrameResponse;
@@ -59,10 +59,12 @@ public class ConBeeFrameHandler {
     private final Timer timer = new Timer();
     private TimerTask timerTask = null;
 
+    private ConBeeFrameRequest sentFrame = null;
+
     /**
      * The queue of {@link ConBeeFrameRequest} frames waiting to be sent
      */
-    private final BlockingQueue<ConBeeFrameRequest> sendQueue = new ArrayBlockingQueue<ConBeeFrameRequest>(10);
+    private final BlockingQueue<ConBeeFrameRequest> sendQueue = new ArrayBlockingQueue<ConBeeFrameRequest>(20);
 
     private ExecutorService executor = Executors.newCachedThreadPool();
     private final List<ConBeeListener> transactionListeners = new ArrayList<ConBeeListener>();
@@ -77,20 +79,13 @@ public class ConBeeFrameHandler {
      */
     private Thread receiveThread = null;
 
-    /**
-     * The transmit thread.
-     */
-    private Thread transmitThread = null;
-
-    private ConBeeFrameRequest outstandingRequest = null;
-
     private Object transmitSync = new Object();
 
     /**
      * Flag reflecting that parser has been closed and parser parserThread
      * should exit.
      */
-    private boolean close = false;
+    private boolean closeHandler = false;
 
     /**
      * Construct which sets input stream where the packet is read from the and
@@ -102,108 +97,93 @@ public class ConBeeFrameHandler {
     public ConBeeFrameHandler(final ZigBeePort serialPort, final ZigBeeDongleConBee dongle) {
         this.serialPort = serialPort;
 
-        transmitThread = new Thread("ConBeeTransmitHandler") {
-            @Override
-            public void run() {
-                logger.debug("ConBeeTransmitHandler thread started");
-
-                while (!close) {
-                    try {
-                        synchronized (transmitSync) {
-                            // logger.debug("ConBeeTransmitHandler thread WAIT");
-                            // Wait until we're allowed to send
-                            if (outstandingRequest != null) {
-                                // Wait will block here until we receive the response to the last frame we sent
-                                transmitSync.wait(250);
-                                if (outstandingRequest != null) {
-                                    logger.debug("ConBeeTransmitHandler thread STILL OUTSTANDING");
-                                    continue;
-                                }
-                            }
-                            // logger.debug("ConBeeTransmitHandler thread GOOD TO GO");
-
-                            // Now wait until there's something to send
-                            ConBeeFrameRequest request = sendQueue.poll(250, TimeUnit.MILLISECONDS);
-                            if (request != null) {
-                                // logger.debug("ConBeeTransmitHandler thread WE'RE OFF");
-                                outstandingRequest = request;
-                                outputFrame(request);
-                            }
-                        }
-                    } catch (InterruptedException e) {
-                        logger.debug("Transmit thread interrupted: ", e);
-                    }
-                }
-                logger.debug("ConBeeTransmitHandler exited.");
-            }
-        };
-
         receiveThread = new Thread("ConBeeReceiveHandler") {
             @Override
             public void run() {
                 logger.debug("ConBeeReceiveHandler thread started");
 
-                int[] inputBuffer = new int[SLIP_MAX_LENGTH];
-                int inputCount = 0;
-                boolean inputError = false;
+                while (!closeHandler) {
+                    // Get a packet from the serial port
+                    int[] responseData = getPacket();
+                    if (responseData == null) {
+                        continue;
+                    }
 
-                boolean escaped = false;
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("Data");
+                    for (int value : responseData) {
+                        builder.append(String.format(" %02X", value));
+                    }
+                    logger.debug("CONBEE RX: {}", builder.toString());
 
-                while (!close) {
-                    int val = serialPort.read();
-                    // logger.debug("CONBEE RX: " + String.format("[% 2d] %02X", inputCount, val));
-                    if (val == SLIP_ESC) {
-                        escaped = true;
-                    } else if (val == SLIP_END) {
-                        // Frame complete
-                        if (inputCount > 0) {
-                            ConBeeFrameResponse frame = (ConBeeFrameResponse) ConBeeFrame
-                                    .create(Arrays.copyOfRange(inputBuffer, 0, inputCount));
-                            if (frame != null) {
-                                logger.debug("CONBEE RX Frame: {}", frame);
-                                dongle.receiveIncomingFrame(frame);
-                                notifyTransactionComplete(frame);
-                                resetRetryTimer();
+                    ConBeeFrameResponse frame = (ConBeeFrameResponse) ConBeeFrame.create(responseData);
+                    if (frame != null) {
+                        logger.debug("CONBEE RX Frame: {}", frame);
 
-                                // Check the device state
-                                handleConBeeState(frame.getDeviceState());
-                            } else {
-                                logger.debug("CONBEE RX Frame: ERROR: [{}] {}", inputCount,
-                                        bufferToString(inputBuffer, inputCount));
-                            }
-                            inputCount = 0;
+                        if (sentFrame == null) {
+                            logger.debug("CONBEE RX Frame but sentFrame is null: {}", frame);
+                        } else if (sentFrame.getSequence() != frame.getSequence()) {
+                            logger.debug("CONBEE RX Frame has inconsistent sequece: RX{} // TX{}", frame.getSequence(),
+                                    sentFrame.getSequence());
+                        } else {
+                            sentFrame = null;
                         }
-                    } else if (escaped) {
-                        escaped = false;
-                        switch (val) {
-                            case SLIP_ESC_END:
-                                inputBuffer[inputCount++] = SLIP_END;
-                                break;
-                            case SLIP_ESC_ESC:
-                                inputBuffer[inputCount++] = SLIP_ESC;
-                                break;
-                            default:
-                                inputBuffer[inputCount++] = val;
-                                break;
-                        }
-                    } else if (val != -1) {
-                        if (inputCount >= SLIP_MAX_LENGTH) {
-                            logger.debug("CONBEE RX error: len=" + inputCount);
-                            inputCount = 0;
-                            inputError = true;
-                        }
-                        inputBuffer[inputCount++] = val;
+
+                        dongle.receiveIncomingFrame(frame);
+                        notifyTransactionComplete(frame);
+                        resetRetryTimer();
+
+                        // Check the device state
+                        handleConBeeState(frame.getDeviceState());
                     }
                 }
-                logger.debug("ConBeeFrameHandler exited.");
+                logger.debug("ConBeeReceiveHandler thread exited.");
             }
         };
 
         receiveThread.setDaemon(true);
         receiveThread.start();
+    }
 
-        transmitThread.setDaemon(true);
-        transmitThread.start();
+    private int[] getPacket() {
+        int[] inputBuffer = new int[SLIP_MAX_LENGTH];
+        int inputCount = 0;
+
+        boolean escaped = false;
+
+        while (!closeHandler) {
+            int val = serialPort.read();
+            // logger.debug("CONBEE RX: " + String.format("[% 2d] %02X", inputCount, val));
+            if (val == SLIP_ESC) {
+                escaped = true;
+            } else if (val == SLIP_END) {
+                // Frame complete
+                if (inputCount > 0) {
+                    return Arrays.copyOfRange(inputBuffer, 0, inputCount);
+                }
+            } else if (escaped) {
+                escaped = false;
+                switch (val) {
+                    case SLIP_ESC_END:
+                        inputBuffer[inputCount++] = SLIP_END;
+                        break;
+                    case SLIP_ESC_ESC:
+                        inputBuffer[inputCount++] = SLIP_ESC;
+                        break;
+                    default:
+                        inputBuffer[inputCount++] = val;
+                        break;
+                }
+            } else if (val != -1) {
+                if (inputCount >= SLIP_MAX_LENGTH) {
+                    logger.debug("CONBEE RX error: len={}", inputCount);
+                    inputCount = 0;
+                }
+                inputBuffer[inputCount++] = val;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -214,16 +194,39 @@ public class ConBeeFrameHandler {
      * @param deviceState the latest {@link ConBeeDeviceState}
      */
     protected void handleConBeeState(ConBeeDeviceState deviceState) {
-        if (deviceState.isDataIndication()) {
-            // There is data available to be read
-            ConBeeReadReceivedDataRequest readRequest = new ConBeeReadReceivedDataRequest();
-            readRequest.setSequence(callbackSequence.getAndIncrement());
-            outputFrame(readRequest);
-        } else if (deviceState.isDataConfirm()) {
-            // Check the state
-            ConBeeQuerySendDataRequest queryRequest = new ConBeeQuerySendDataRequest();
-            queryRequest.setSequence(callbackSequence.getAndIncrement());
-            outputFrame(queryRequest);
+        logger.debug("ConBeeDeviceState={}", deviceState);
+        synchronized (transmitSync) {
+            if (sentFrame != null) {
+                logger.debug("ConBeeDeviceState sendFrame!=null");
+                return;
+            }
+
+            if (deviceState.isDataIndication()) {
+                logger.debug("ConBeeDeviceState READ");
+                // There is data available to be read - read the next frame
+                ConBeeReadReceivedDataRequest readRequest = new ConBeeReadReceivedDataRequest();
+                // readRequest.setSequence(callbackSequence.getAndIncrement());
+                outputFrame(readRequest);
+            } else if (deviceState.isDataRequest() && !sendQueue.isEmpty()) {
+                logger.debug("ConBeeDeviceState SEND");
+                // Data can be sent
+                try {
+                    outputFrame(sendQueue.take());
+                } catch (InterruptedException e) {
+                    logger.debug("Interrupted getting frame to send");
+                }
+            } else if (deviceState.isDataConfirm()) {
+                logger.debug("ConBeeDeviceState STATE");
+                // Check the state of a sent frame
+                ConBeeQuerySendDataRequest queryRequest = new ConBeeQuerySendDataRequest();
+                // queryRequest.setSequence(callbackSequence.getAndIncrement());
+                outputFrame(queryRequest);
+            } else if (deviceState.isConfigChanged()) {
+                logger.debug("ConBeeDeviceState CONFIG");
+                // The configuration has changed
+            } else {
+                logger.debug("ConBeeDeviceState NONE");
+            }
         }
     }
 
@@ -231,19 +234,19 @@ public class ConBeeFrameHandler {
      * Set the close flag to true.
      */
     public void setClosing() {
-        this.close = true;
+        this.closeHandler = true;
     }
 
     /**
      * Requests parser thread to shutdown.
      */
     public void close() {
-        this.close = true;
+        this.closeHandler = true;
         try {
             receiveThread.interrupt();
             receiveThread.join();
         } catch (InterruptedException e) {
-            logger.warn("Interrupted in packet parser thread shutdown join.");
+            logger.debug("Interrupted in packet parser thread shutdown join.");
         }
     }
 
@@ -258,6 +261,12 @@ public class ConBeeFrameHandler {
 
     // Synchronize this method to ensure a packet gets sent as a block
     private synchronized void outputFrame(ConBeeFrameRequest frame) {
+        frame.setSequence(callbackSequence.getAndIncrement());
+        if (frame.getSequence() == 255) {
+            callbackSequence.set(0);
+        }
+        sentFrame = frame;
+
         StringBuilder result = new StringBuilder();
         // Send the data
         logger.debug("CONBEE TX: {}", frame);
@@ -268,12 +277,12 @@ public class ConBeeFrameHandler {
             // logger.debug("CONBEE TX: {}", String.format("%02X", val));
             switch (val) {
                 case SLIP_END:
-                    logger.debug("CONBEE TX: [ESC]");
+                    // logger.debug("CONBEE TX: [ESC]");
                     serialPort.write(SLIP_ESC);
                     serialPort.write(SLIP_ESC_END);
                     break;
                 case SLIP_ESC:
-                    logger.debug("CONBEE TX: [ESC]");
+                    // logger.debug("CONBEE TX: [ESC]");
                     serialPort.write(SLIP_ESC);
                     serialPort.write(SLIP_ESC_ESC);
                     break;
@@ -315,7 +324,6 @@ public class ConBeeFrameHandler {
             // TODO: Retransmit?
 
             synchronized (transmitSync) {
-                outstandingRequest = null;
                 transmitSync.notify();
             }
         }
@@ -326,25 +334,24 @@ public class ConBeeFrameHandler {
      * This method queues a {@link ConBeeFrame} frame without waiting for a response and
      * no transaction management is performed.
      *
-     * @param request
-     *            {@link ConBeeFrameRequest}
+     * @param request {@link ConBeeFrameRequest}
      */
     public synchronized void queueFrame(ConBeeFrameRequest request) {
-        request.setSequence(callbackSequence.getAndIncrement());
-        if (request.getSequence() == 255) {
-            callbackSequence.set(1);
-        }
-
         sendQueue.add(request);
 
         logger.debug("TX CONBEE queue: {}", sendQueue.size());
+
+        synchronized (transmitSync) {
+            if (sentFrame == null) {
+                outputFrame(new ConBeeDeviceStateRequest());
+            }
+        }
     }
 
     /**
      * Notify any transaction listeners when we receive a response.
      *
-     * @param response
-     *            the response data received
+     * @param response the response data received
      * @return true if the response was processed
      */
     private boolean notifyTransactionComplete(final ConBeeFrameResponse response) {
@@ -357,14 +364,6 @@ public class ConBeeFrameHandler {
                 if (listener.transactionEvent(response)) {
                     processed = true;
                 }
-            }
-        }
-
-        synchronized (transmitSync) {
-            if (outstandingRequest != null && outstandingRequest.getSequence() == response.getSequence()) {
-                resetRetryTimer();
-                outstandingRequest = null;
-                transmitSync.notify();
             }
         }
 

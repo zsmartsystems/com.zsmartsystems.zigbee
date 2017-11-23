@@ -34,7 +34,8 @@ public class ConBeeQuerySendDataResponse extends ConBeeFrameResponse {
         }
 
         sequence = deserializeUInt8();
-        status = deserializeStatus();
+        deserializeUInt8();
+        deserializeUInt16();
         deserializeUInt16();
         state = deserializeDeviceState();
 
@@ -99,10 +100,8 @@ public class ConBeeQuerySendDataResponse extends ConBeeFrameResponse {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("EnqueueSendDataResponse [sequence=");
+        builder.append("QuerySendDataResponse [sequence=");
         builder.append(sequence);
-        builder.append(", status=");
-        builder.append(status);
         builder.append(", networkState=");
         builder.append(state);
 
@@ -114,7 +113,7 @@ public class ConBeeQuerySendDataResponse extends ConBeeFrameResponse {
         } else {
             builder.append(destinationAddress);
         }
-        builder.append(", requestId=");
+        builder.append("), requestId=");
         builder.append(requestId);
         builder.append(']');
         return builder.toString();
