@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
+import com.zsmartsystems.zigbee.transport.ZigBeePort.FlowControl;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 
@@ -83,7 +84,7 @@ public class TelegesisFirmwareUpdateHandler {
             @Override
             public void run() {
                 logger.debug("Telegesis bootloader: Starting.");
-                if (!serialPort.open(BOOTLOAD_BAUD_RATE)) {
+                if (!serialPort.open(BOOTLOAD_BAUD_RATE, FlowControl.FLOWCONTROL_OUT_NONE)) {
                     logger.debug("Telegesis bootloader: Failed to open serial port.");
                     transferComplete(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
                     return;
