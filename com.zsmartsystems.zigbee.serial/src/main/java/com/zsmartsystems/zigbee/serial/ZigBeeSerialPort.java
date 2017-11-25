@@ -45,7 +45,7 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
     /**
      * True to enable RTS / CTS flow control
      */
-    private final boolean flowControl;
+    private final FlowControl flowControl;
 
     /**
      * The circular fifo queue for receive data
@@ -68,11 +68,6 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
     private int maxLength = 512;
 
     /**
-     * Synchronisation object for RX wait
-     */
-    private Object rxSynchronisationObject = new Object();
-
-    /**
      * Synchronisation object for buffer queue manipulation
      */
     private Object bufferSynchronisationObject = new Object();
@@ -84,7 +79,7 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
      * @param baudRate the baud rate
      * @param flowControl to use flow control
      */
-    public ZigBeeSerialPort(String portName, int baudRate, boolean flowControl) {
+    public ZigBeeSerialPort(String portName, int baudRate, FlowControl flowControl) {
         this.portName = portName;
         this.baudRate = baudRate;
         this.flowControl = flowControl;
@@ -98,7 +93,19 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
     @Override
     public boolean open(int baudRate) {
         try {
-            openSerialPort(portName, baudRate);
+            openSerialPort(portName, baudRate, flowControl);
+
+            return true;
+        } catch (Exception e) {
+            logger.warn("Unable to open serial port: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean open(int baudRate, FlowControl flowControl) {
+        try {
+            openSerialPort(portName, baudRate, flowControl);
 
             return true;
         } catch (Exception e) {
@@ -112,20 +119,31 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
      *
      * @param portName the port name
      * @param baudRate the baud rate
+     * @param flowControl the flow control option
      */
-    private void openSerialPort(String portName, int baudRate) {
+    private void openSerialPort(String portName, int baudRate, FlowControl flowControl) {
         if (serialPort != null) {
             throw new RuntimeException("Serial port already open.");
         }
+
+        logger.debug("Opening port {} at {} baud with {}.", baudRate, baudRate, flowControl);
 
         serialPort = new jssc.SerialPort(portName);
         try {
             serialPort.openPort();
             serialPort.setParams(baudRate, 8, 1, 0);
-            if (flowControl) {
-                serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_RTSCTS_OUT);
-            } else {
-                serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_NONE);
+            switch (flowControl) {
+                case FLOWCONTROL_OUT_NONE:
+                    serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_NONE);
+                    break;
+                case FLOWCONTROL_OUT_RTSCTS:
+                    serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_RTSCTS_OUT);
+                    break;
+                case FLOWCONTROL_OUT_XONOFF:
+                    serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_XONXOFF_OUT);
+                    break;
+                default:
+                    break;
             }
             serialPort.addEventListener(this);
         } catch (SerialPortException e) {

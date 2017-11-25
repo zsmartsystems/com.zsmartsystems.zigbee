@@ -35,6 +35,18 @@ public interface ZigBeePort {
     boolean open(int baudRate);
 
     /**
+     * Open the port with the specified baud rate and flow control.
+     * <p>
+     * This method allows the transport to override the baud rate if required - for example
+     * when entering a bootloader that may operate at a different speed to the coordinator.
+     *
+     * @param baudRate the speed to use when opening the port
+     * @param flowControl the {@link FlowControl} to use when opening the port
+     * @return true if port was opened successfully.
+     */
+    boolean open(int baudRate, FlowControl flowControl);
+
+    /**
      * Close the port. Closing the port should abort any read and write operations to allow a clean closure of the port.
      */
     void close();
@@ -65,4 +77,22 @@ public interface ZigBeePort {
      * Purge all data currently in the receive buffer
      */
     void purgeRxBuffer();
+
+    /**
+     * Enumeration of flow control options
+     */
+    public enum FlowControl {
+        /**
+         * No flow control
+         */
+        FLOWCONTROL_OUT_NONE,
+        /**
+         * XOn / XOff (software) flow control
+         */
+        FLOWCONTROL_OUT_XONOFF,
+        /**
+         * RTS / CTS (hardware) flow control
+         */
+        FLOWCONTROL_OUT_RTSCTS
+    }
 }

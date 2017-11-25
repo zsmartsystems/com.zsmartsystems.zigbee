@@ -23,6 +23,7 @@ import com.zsmartsystems.zigbee.serial.ZigBeeSerialPort;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
+import com.zsmartsystems.zigbee.transport.ZigBeePort.FlowControl;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 
 /**
@@ -95,9 +96,9 @@ public class ZigBeeConsoleMain {
             return;
         }
 
-        boolean flowControl = false;
+        FlowControl flowControl = FlowControl.FLOWCONTROL_OUT_NONE;
         if (dongleName.toUpperCase().equals("EMBER")) {
-            flowControl = true;
+            flowControl = FlowControl.FLOWCONTROL_OUT_RTSCTS;
         }
 
         final ZigBeePort serialPort = new ZigBeeSerialPort(serialPortName, serialBaud, flowControl);

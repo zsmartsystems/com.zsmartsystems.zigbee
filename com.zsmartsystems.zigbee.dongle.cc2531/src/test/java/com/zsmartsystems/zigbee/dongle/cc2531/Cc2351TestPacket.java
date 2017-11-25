@@ -100,6 +100,11 @@ public class Cc2351TestPacket {
         }
 
         @Override
+        public boolean open(int baudRate, FlowControl flowControl) {
+            return false;
+        }
+
+        @Override
         public void purgeRxBuffer() {
         }
     }
