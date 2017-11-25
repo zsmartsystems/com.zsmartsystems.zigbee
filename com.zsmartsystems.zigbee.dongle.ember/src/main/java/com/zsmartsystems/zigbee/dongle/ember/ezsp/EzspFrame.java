@@ -99,10 +99,20 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspZigbeeKeyEstablish
  * <p>
  * Reference: UG100: EZSP Reference Guide
  * <p>
- * An EZSP Frame is made up as follows -:
+ * An EZSP V4 Frame is made up as follows -:
  * <ul>
  * <li>Sequence : 1 byte sequence number
  * <li>Frame Control: 1 byte
+ * <li>Frame ID : 1 byte
+ * <li>Parameters : variable length
+ * </ul>
+ * <p>
+ * An EZSP V5 Frame is made up as follows -:
+ * <ul>
+ * <li>Sequence : 1 byte sequence number
+ * <li>Frame Control: 1 byte
+ * <li>Legacy Frame ID : 1 byte
+ * <li>Extended Frame Control : 1 byte
  * <li>Frame ID : 1 byte
  * <li>Parameters : variable length
  * </ul>
@@ -112,7 +122,15 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspZigbeeKeyEstablish
  * @author Chris Jackson
  */
 public abstract class EzspFrame {
+    /**
+     * The logger
+     */
     private final static Logger logger = LoggerFactory.getLogger(EzspFrame.class);
+
+    /**
+     * Flag to indicate if we are using EZSP V5 (true) or EZSP V4 (false)
+     */
+    protected static boolean ezspV5 = false;
 
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
     protected static final int FRAME_ID_ADD_TRANSIENT_LINK_KEY = 0xAF;
@@ -322,7 +340,13 @@ public abstract class EzspFrame {
         if (data.getDataBuffer() == null) {
             return null;
         }
-        Class<?> ezspClass = ezspHandlerMap.get(data.getDataBuffer()[2]);
+        Class<?> ezspClass;
+        if (data.getDataBuffer()[2] != 0xFF) {
+            ezspClass = ezspHandlerMap.get(data.getDataBuffer()[2]);
+        } else {
+            ezspClass = ezspHandlerMap.get(data.getDataBuffer()[4]);
+        }
+
         if (ezspClass == null) {
             return null;
         }
@@ -338,5 +362,24 @@ public abstract class EzspFrame {
         }
 
         return null;
+    }
+
+    /**
+     * Set the EZSP version to use
+     *
+     * @param version the EZSP protocol version
+     * @return true if the version is supported
+     */
+    public static boolean setEzspVersion(int version) {
+        if (version == 4) {
+            ezspV5 = false;
+            return true;
+        }
+        if (version == 5) {
+            ezspV5 = true;
+            return true;
+        }
+
+        return false;
     }
 }

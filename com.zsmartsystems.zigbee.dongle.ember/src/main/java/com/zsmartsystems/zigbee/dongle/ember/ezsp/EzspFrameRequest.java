@@ -53,6 +53,11 @@ public abstract class EzspFrameRequest extends EzspFrame {
         // Output Frame Control Byte
         serializer.serializeUInt8(0);
 
+        if (ezspV5) {
+            serializer.serializeUInt8(0xFF);
+            serializer.serializeUInt8(0x00);
+        }
+
         // Output Frame ID
         serializer.serializeUInt8(frameId);
     }

@@ -111,7 +111,7 @@ public abstract class AshFrameHandler {
     /**
      * Flag reflecting that parser has been closed and parser parserThread should exit.
      */
-    protected boolean close = false;
+    protected boolean closeHandler = false;
 
     /**
      * Construct the handler and provide the {@link EzspFrameHandler}
@@ -138,7 +138,7 @@ public abstract class AshFrameHandler {
 
                 int exceptionCnt = 0;
 
-                while (!close) {
+                while (!closeHandler) {
                     try {
                         int[] packetData = getPacket();
                         if (packetData == null) {
@@ -230,7 +230,7 @@ public abstract class AshFrameHandler {
                             logger.error("AshFrameHandler exception count exceeded");
                             // if (!close) {
                             // frameHandler.error(e);
-                            close = true;
+                            closeHandler = true;
                         }
                     }
                 }
@@ -272,14 +272,14 @@ public abstract class AshFrameHandler {
      * Set the close flag to true.
      */
     public void setClosing() {
-        this.close = true;
+        this.closeHandler = true;
     }
 
     /**
      * Requests parser thread to shutdown.
      */
     public void close() {
-        this.close = true;
+        this.closeHandler = true;
         stopRetryTimer();
 
         try {

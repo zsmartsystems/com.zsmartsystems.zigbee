@@ -60,7 +60,7 @@ public class AshFrameHandlerV3 extends AshFrameHandler {
         int inputCount = 0;
         boolean inputError = false;
 
-        while (!close) {
+        while (!closeHandler) {
             int val = port.read();
             logger.trace("ASH RX: " + String.format("%02X", val));
             switch (val) {
@@ -153,6 +153,8 @@ public class AshFrameHandlerV3 extends AshFrameHandler {
                 } else {
                     frame = new AshFrameData();
                 }
+                break;
+            default:
                 break;
         }
 

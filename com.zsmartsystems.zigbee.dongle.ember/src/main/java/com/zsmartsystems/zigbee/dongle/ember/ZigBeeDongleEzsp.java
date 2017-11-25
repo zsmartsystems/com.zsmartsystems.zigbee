@@ -162,12 +162,23 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, EzspFrameHandl
         ashHandler.connect();
 
         // We MUST send the version command first.
+        // Try version 4, and if the response is V5, then send again...
         EzspVersionRequest version = new EzspVersionRequest();
         version.setDesiredProtocolVersion(4);
         EzspTransaction versionTransaction = ashHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(version, EzspVersionResponse.class));
         EzspVersionResponse versionResponse = (EzspVersionResponse) versionTransaction.getResponse();
         logger.debug(versionResponse.toString());
+        if (versionResponse.getProtocolVersion() == 5) {
+            EzspFrame.setEzspVersion(5);
+
+            version = new EzspVersionRequest();
+            version.setDesiredProtocolVersion(5);
+            versionTransaction = ashHandler
+                    .sendEzspTransaction(new EzspSingleResponseTransaction(version, EzspVersionResponse.class));
+            versionResponse = (EzspVersionResponse) versionTransaction.getResponse();
+            logger.debug(versionResponse.toString());
+        }
 
         StringBuilder builder = new StringBuilder();
         builder.append("EZSP Version=");

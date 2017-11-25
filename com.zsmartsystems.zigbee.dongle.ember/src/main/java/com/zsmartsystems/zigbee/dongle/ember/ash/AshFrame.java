@@ -71,7 +71,7 @@ public class AshFrame {
         return result.toString();
     }
 
-    public boolean getReTransmit() {
+    public boolean isReTransmit() {
         return reTx;
     }
 

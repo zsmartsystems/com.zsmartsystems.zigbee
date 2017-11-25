@@ -55,7 +55,7 @@ public class AshFrameHandlerV2 extends AshFrameHandler {
         int inputCount = 0;
         boolean inputError = false;
 
-        while (!close) {
+        while (!closeHandler) {
             int val = port.read();
             logger.trace("ASH RX: " + String.format("%02X", val));
             switch (val) {
@@ -152,7 +152,7 @@ public class AshFrameHandlerV2 extends AshFrameHandler {
                 outputData[outputPos++] = 0x80 + ackNum;
                 break;
             case DATA:
-                outputData[outputPos++] = (frmNum << 4) + ackNum + (frame.getReTransmit() ? 0x08 : 0x00);
+                outputData[outputPos++] = (frmNum << 4) + ackNum + (frame.isReTransmit() ? 0x08 : 0x00);
                 break;
             case NAK:
                 break;

@@ -7,6 +7,13 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp;
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
+
 /**
  *
  * @author Chris Jackson
@@ -23,5 +30,23 @@ public class EzspFrameTest {
         }
 
         return response;
+    }
+
+    @Test
+    public void testCreateHandlerV4() {
+        AshFrameData data = new AshFrameData();
+        data.setData(new int[] { 0x01, 0x80, 0x00, 0x04, 0x02, 0x00, 0x59 });
+        EzspFrameResponse frame = EzspFrame.createHandler(data);
+        System.out.println(frame);
+        assertTrue(frame instanceof EzspVersionResponse);
+    }
+
+    @Test
+    public void testCreateHandlerV5() {
+        AshFrameData data = new AshFrameData();
+        data.setData(new int[] { 0x01, 0x80, 0xFF, 0x00, 0x00, 0x05, 0x02, 0x10, 0x5A });
+        EzspFrameResponse frame = EzspFrame.createHandler(data);
+        System.out.println(frame);
+        assertTrue(frame instanceof EzspVersionResponse);
     }
 }
