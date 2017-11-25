@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.dongle.telegesis.internal;
+package com.zsmartsystems.zigbee.dongle.ember.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +13,7 @@ import java.io.InputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
+import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeePort.FlowControl;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
@@ -25,11 +25,11 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
  * @author Chris Jackson
  *
  */
-public class TelegesisFirmwareUpdateHandler {
+public class EmberFirmwareUpdateHandler {
     /**
      * The logger.
      */
-    private final Logger logger = LoggerFactory.getLogger(TelegesisFirmwareUpdateHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(EmberFirmwareUpdateHandler.class);
 
     private final InputStream firmware;
     private final ZigBeePort serialPort;
@@ -56,17 +56,17 @@ public class TelegesisFirmwareUpdateHandler {
     /**
      * Reference to our master
      */
-    private final ZigBeeDongleTelegesis dongle;
+    private final ZigBeeDongleEzsp dongle;
 
     /**
      * Constructor for the firmware handler
      *
-     * @param dongle the {@link ZigBeeDongleTelegesis} to receive the completion notification
+     * @param dongle the {@link ZigBeeDongleEzsp} to receive the completion notification
      * @param firmware {@link InputStream} containing the data
      * @param serialPort {@link ZigBeePort} to communicate on
      * @param callback {@link ZigBeeTransportFirmwareCallback} to provide status updates
      */
-    public TelegesisFirmwareUpdateHandler(ZigBeeDongleTelegesis dongle, InputStream firmware, ZigBeePort serialPort,
+    public EmberFirmwareUpdateHandler(ZigBeeDongleEzsp dongle, InputStream firmware, ZigBeePort serialPort,
             ZigBeeTransportFirmwareCallback callback) {
         this.dongle = dongle;
         this.firmware = firmware;
@@ -203,6 +203,7 @@ public class TelegesisFirmwareUpdateHandler {
                 if (val == -1) {
                     break;
                 }
+                logger.trace("GET PROMPT: {}", String.format("%02X %c", val, val));
                 if (val != matcher[matcherCount]) {
                     matcherCount = 0;
                     continue;
