@@ -8,9 +8,6 @@
 package com.zsmartsystems.zigbee.otaserver;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
@@ -166,39 +163,37 @@ public class ZigBeeOtaFile {
     private final int FILE_SIGNATURE = 0x0BEEF11E;
 
     /**
-     * The file object once the file is open
+     * The file data
      */
-    private RandomAccessFile inputFile = null;
+    private byte[] fileData = null;
 
     /**
-     * Create a {@link ZigBeeOtaFile} from a {@link File}
-     *
-     * @param file the {@link File} containing the OTA file format
-     * @throws FileNotFoundException
+     * The file pointer
      */
-    public ZigBeeOtaFile(File file) throws FileNotFoundException {
-        if (file == null) {
-            throw new IllegalArgumentException("ZigBeeOtaFile can not be null.");
+    private int filePointer = 0;
+
+    /**
+     * Create a {@link ZigBeeOtaFile} from a {@link byte[]}
+     *
+     * @param fileData the byte array containing the OTA file data
+     */
+    public ZigBeeOtaFile(byte[] fileData) {
+        if (fileData == null) {
+            throw new IllegalArgumentException("ZigBeeOtaFile data can not be null.");
         }
 
-        try {
-            inputFile = new RandomAccessFile(file, "r");
-            readOtaFile();
-            inputFile.seek(0);
-        } catch (IOException e) {
-            logger.debug("Exception reading OTA file: ", e);
-        }
+        this.fileData = fileData;
+
+        readOtaFile();
     }
 
     /**
      * Create a {@link ZigBeeOtaFile} from a {@link File}. This reads the file and gets all the header items we need to
      * use for the transfer.
-     *
-     * @throws IOException
      */
-    private void readOtaFile() throws IOException {
-        if (inputFile == null) {
-            throw new IllegalArgumentException("ZigBeeOtaFile input can not be null.");
+    private void readOtaFile() {
+        if (fileData == null) {
+            throw new IllegalArgumentException("ZigBeeOtaFile data can not be null.");
         }
 
         //
@@ -209,34 +204,35 @@ public class ZigBeeOtaFile {
         // files in order to quickly identify and distinguish the file as being a ZigBee OTA cluster upgrade file,
         // without having to examine the whole file content. This helps distinguishing the file from other file
         // types on disk. The value is defined to be “0x0BEEF11E”.
-        if (readUnsigned32(inputFile) != FILE_SIGNATURE) {
+        if (readUnsigned32() != FILE_SIGNATURE) {
             throw new IllegalArgumentException("ZigBee OTA file is not a valid format");
         }
 
         // Unsigned 16-bit integer, OTA Header version
-        headerVersion = readUnsigned16(inputFile);
+        headerVersion = readUnsigned16();
 
         // Unsigned 16-bit integer, OTA Header length
-        headerLength = readUnsigned16(inputFile);
+        headerLength = readUnsigned16();
 
         // Unsigned 16-bit integer, OTA Header Field control
-        headerFieldControl = readUnsigned16(inputFile);
+        headerFieldControl = readUnsigned16();
 
         // Unsigned 16-bit integer, Manufacturer code
-        manufacturerCode = readUnsigned16(inputFile);
+        manufacturerCode = readUnsigned16();
 
         // Unsigned 16-bit integer, Image type
-        imageType = readUnsigned16(inputFile);
+        imageType = readUnsigned16();
 
         // Unsigned 32-bit integer, File version
-        fileVersion = readUnsigned32(inputFile);
+        fileVersion = readUnsigned32();
 
         // Unsigned 16-bit integer, ZigBee Stack version
-        stackVersion = ZigBeeStackType.getStackType(readUnsigned16(inputFile));
+        stackVersion = ZigBeeStackType.getStackType(readUnsigned16());
 
         // Character string [32], OTA Header string
         byte[] stringBytes = new byte[32];
-        inputFile.read(stringBytes);
+        stringBytes = Arrays.copyOfRange(fileData, filePointer, filePointer + 32);
+        filePointer += 32;
         for (int cnt = 0; cnt < 32; cnt++) {
             if (stringBytes[cnt] == 0) {
                 stringBytes = Arrays.copyOfRange(stringBytes, 0, cnt);
@@ -246,64 +242,49 @@ public class ZigBeeOtaFile {
         headerString = new String(stringBytes);
 
         // Unsigned 32-bit integer, Total Image size (including header)
-        imageSize = readUnsigned32(inputFile);
+        imageSize = readUnsigned32();
 
         if ((headerFieldControl & FIELD_CTL_SECURITY_CREDENTIAL) != 0) {
             // Unsigned 8-bit integer, Security credential version [optional]
-            securityCredentialVersion = Integer.valueOf(inputFile.read());
+            securityCredentialVersion = readUnsigned8();
         }
 
         if ((headerFieldControl & FIELD_CTL_DEVICE_SPECIFIC) != 0) {
             // IEEE Address, Upgrade file destination [optional]
             int[] addressBytes = new int[8];
             for (int cnt = 0; cnt < 8; cnt++) {
-                addressBytes[cnt] = readUnsigned16(inputFile);
+                addressBytes[cnt] = readUnsigned16();
             }
             destination = new IeeeAddress(addressBytes);
         }
 
         if ((headerFieldControl & FIELD_CTL_HARDWARE_VERSIONS) != 0) {
             // Unsigned 16-bit integer, Minimum hardware version [optional]
-            minimumHardware = readUnsigned16(inputFile);
+            minimumHardware = readUnsigned16();
 
             // Unsigned 16-bit integer, Maximum hardware version [optional]
-            maximumHardware = readUnsigned16(inputFile);
+            maximumHardware = readUnsigned16();
         }
 
         //
         // Read the tags
-        while ((inputFile.length() - inputFile.getFilePointer()) >= 6) {
+        while ((fileData.length - filePointer) >= 6) {
             // Tag Header -:
             // The tag identifier denotes the type and format of the data contained within the sub-element.
-            int tagId = readUnsigned16(inputFile);
+            int tagId = readUnsigned16();
             ZigBeeOtaTagType tagType = ZigBeeOtaTagType.getTagType(tagId);
 
             // The length dictates the length of the rest of the data within the sub-element in bytes. It does not
             // include the size of the Tag ID or the Length Fields.
-            long tagLength = readUnsigned32(inputFile);
+            long tagLength = readUnsigned32();
 
             // Skip over the tag data
-            inputFile.seek(inputFile.getFilePointer() + tagLength);
+            filePointer += tagLength;
 
             logger.debug("Reading OTA image tag {}[{}] ({} bytes long)", tagType, String.format("%04X", tagId),
                     tagLength);
         }
 
-    }
-
-    /**
-     * Close the OTA file and free any resources. Once the file is closed it must not be accessed.
-     */
-    public void close() {
-        if (inputFile != null) {
-            try {
-                inputFile.close();
-            } catch (IOException e) {
-                logger.debug("Exception closing OTA file: ", e);
-            }
-
-            inputFile = null;
-        }
     }
 
     /**
@@ -419,28 +400,26 @@ public class ZigBeeOtaFile {
         }
 
         int length = Math.min(dataSize, imageSize - fileOffset);
-        byte[] byteBuffer = new byte[length];
-
-        try {
-            inputFile.seek(fileOffset);
-            inputFile.read(byteBuffer, 0, length);
-        } catch (IOException e) {
-            logger.debug("Error reading from OTA file: ", e);
-        }
-        return new ByteArray(byteBuffer);
+        return new ByteArray(Arrays.copyOfRange(fileData, fileOffset, fileOffset + length));
     }
 
-    private Integer readUnsigned16(RandomAccessFile input) throws IOException {
-        byte payload[] = new byte[2];
-        input.read(payload);
-        return Integer.valueOf((payload[0] & 0xff) + ((payload[1] & 0xff) << 8));
+    private Integer readUnsigned8() {
+        Integer value = Integer.valueOf(fileData[filePointer] & 0xff);
+        filePointer += 1;
+        return value;
     }
 
-    private Integer readUnsigned32(RandomAccessFile input) throws IOException {
-        byte payload[] = new byte[4];
-        input.read(payload);
-        return Integer.valueOf((payload[0] & 0xff) + ((payload[1] & 0xff) << 8) + ((payload[2] & 0xff) << 16)
-                + ((payload[3] & 0xff) << 24));
+    private Integer readUnsigned16() {
+        Integer value = Integer.valueOf((fileData[filePointer] & 0xff) + ((fileData[filePointer + 1] & 0xff) << 8));
+        filePointer += 2;
+        return value;
+    }
+
+    private Integer readUnsigned32() {
+        Integer value = Integer.valueOf((fileData[filePointer] & 0xff) + ((fileData[filePointer + 1] & 0xff) << 8)
+                + ((fileData[filePointer + 2] & 0xff) << 16) + ((fileData[filePointer + 3] & 0xff) << 24));
+        filePointer += 4;
+        return value;
     }
 
     @Override

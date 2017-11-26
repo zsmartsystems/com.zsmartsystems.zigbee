@@ -9,8 +9,10 @@ package com.zsmartsystems.zigbee.otaserver;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.Test;
 
@@ -25,8 +27,9 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 public class ZigBeeOtaFileTest {
     @Test
     public void testOpenFile() throws IOException {
-        File file = new File("./src/test/resource/test_ota_file.test");
-        ZigBeeOtaFile otaFile = new ZigBeeOtaFile(file);
+        Path file = FileSystems.getDefault().getPath("./src/test/resource/", "test_ota_file.test");
+        byte[] fileData = Files.readAllBytes(file);
+        ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
 
         System.out.println(otaFile);
 
@@ -38,7 +41,5 @@ public class ZigBeeOtaFileTest {
         assertEquals(Integer.valueOf(78), otaFile.getImageSize());
         assertEquals(new ByteArray(new byte[] { 0x1E, (byte) 0xF1, (byte) 0xEE, 0x0B }), otaFile.getImageData(0, 4));
         assertEquals(new ByteArray(new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04 }), otaFile.getImageData(62, 5));
-
-        otaFile.close();
     }
 }
