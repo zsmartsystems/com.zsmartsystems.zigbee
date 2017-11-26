@@ -732,8 +732,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                                 synchronized (future) {
                                     future.notify();
                                 }
-                                removeCommandExecution(commandExecution);
                             }
+                            removeCommandExecution(commandExecution);
                         }
                     }
                 }
@@ -780,8 +780,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Adds command listener and removes expired command listeners.
      *
-     * @param commandExecution
-     *            the command execution
+     * @param commandExecution the command execution
      */
     private void addCommandExecution(final CommandExecution commandExecution) {
         synchronized (commandExecutions) {
@@ -803,14 +802,15 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Removes command execution.
      *
-     * @param expiredCommandExecution
-     *            the command execution
+     * @param expiredCommandExecution the command execution
      */
     protected void removeCommandExecution(CommandExecution expiredCommandExecution) {
-        commandExecutions.remove(expiredCommandExecution);
-        removeCommandListener(expiredCommandExecution.getCommandListener());
-        synchronized (expiredCommandExecution.getFuture()) {
-            expiredCommandExecution.getFuture().notify();
+        synchronized (commandExecutions) {
+            commandExecutions.remove(expiredCommandExecution);
+            removeCommandListener(expiredCommandExecution.getCommandListener());
+            synchronized (expiredCommandExecution.getFuture()) {
+                expiredCommandExecution.getFuture().notify();
+            }
         }
     }
 

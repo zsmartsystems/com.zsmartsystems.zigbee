@@ -294,6 +294,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void shutdown() {
+        if (ashHandler == null) {
+            return;
+        }
+
         ashHandler.setClosing();
         serialPort.close();
         ashHandler.close();
