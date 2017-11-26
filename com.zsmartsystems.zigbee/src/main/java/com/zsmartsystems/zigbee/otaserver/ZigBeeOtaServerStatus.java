@@ -7,10 +7,8 @@
  */
 package com.zsmartsystems.zigbee.otaserver;
 
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
-
 /**
- * An enumeration defining the {@link ZigBeeOtaServer} status provided by the {@link ZigBeeStatusCallback}
+ * An enumeration defining the {@link ZigBeeOtaServer} status provided to the {@link ZigBeeStatusCallback}
  *
  * @author Chris Jackson
  *
@@ -20,29 +18,46 @@ public enum ZigBeeOtaServerStatus {
      * The OTA server is uninitialized. No firmware is currently set.
      */
     OTA_UNINITIALISED,
+
     /**
      * The OTA server is waiting for the client to request an update
      */
     OTA_WAITING,
+
     /**
      * The OTA server is currently progressing a transfer
      */
     OTA_TRANSFER_IN_PROGRESS,
+
     /**
      * The OTA transfer is complete. The firmware has not been executed.
      */
     OTA_TRANSFER_COMPLETE,
+
     /**
      * The transfer is complete, and the server has told the client to execute the upgrade with a delay
      */
     OTA_UPGRADE_WAITING,
+
     /**
-     * The OTA upgrade is complete.
+     * The OTA upgrade is complete, and the device firmware is restarting.
+     */
+    OTA_UPGRADE_FIRMWARE_RESTARTING,
+
+    /**
+     * The OTA upgrade is complete and an acknowledgement was received from the device to confirm the firmware version
+     * is consistent with the new file.
      */
     OTA_UPGRADE_COMPLETE,
+
     /**
-     * The OTA upgrade failed. This is caused when the {@link UpgradeEndResponse} is not acked.
+     * The OTA upgrade was cancelled by user request. A new transfer can be started by setting a new OTA firmware
+     */
+    OTA_CANCELLED,
+
+    /**
+     * The OTA upgrade failed. This may be caused due to a timeout or unexpected response, or the firmware version was
+     * inconsistent on completion.
      */
     OTA_UPGRADE_FAILED;
-
 }
