@@ -11,6 +11,9 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.NetworkAddressResponse;
 import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
@@ -23,7 +26,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class NetworkAddressRequest extends ZdoRequest {
+public class NetworkAddressRequest extends ZdoRequest implements CommandResponseMatcher {
     /**
      * IEEEAddr command message field.
      */
@@ -31,6 +34,10 @@ public class NetworkAddressRequest extends ZdoRequest {
 
     /**
      * RequestType command message field.
+     * Request type for this command:
+     * 0x00 – Single device response
+     * 0x01 – Extended response
+     * 0x02-0xFF – reserved
      */
     private Integer requestType;
 
@@ -66,6 +73,11 @@ public class NetworkAddressRequest extends ZdoRequest {
 
     /**
      * Gets RequestType.
+     * <p>
+     * Request type for this command:
+     * 0x00 – Single device response
+     * 0x01 – Extended response
+     * 0x02-0xFF – reserved
      *
      * @return the RequestType
      */
@@ -75,6 +87,11 @@ public class NetworkAddressRequest extends ZdoRequest {
 
     /**
      * Sets RequestType.
+     * <p>
+     * Request type for this command:
+     * 0x00 – Single device response
+     * 0x01 – Extended response
+     * 0x02-0xFF – reserved
      *
      * @param requestType the RequestType
      */
@@ -116,6 +133,16 @@ public class NetworkAddressRequest extends ZdoRequest {
         ieeeAddr = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         requestType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Override
+    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {
+        if (!(response instanceof NetworkAddressResponse)) {
+            return false;
+        }
+
+        return (((NetworkAddressRequest) request).getIeeeAddr()
+                .equals(((NetworkAddressResponse) response).getIeeeAddrRemoteDev()));
     }
 
     @Override

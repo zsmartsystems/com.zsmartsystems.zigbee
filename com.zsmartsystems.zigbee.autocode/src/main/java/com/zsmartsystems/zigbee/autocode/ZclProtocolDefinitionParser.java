@@ -137,6 +137,8 @@ public class ZclProtocolDefinitionParser {
     }
 
     private static void parseCommands(Context context) {
+        boolean addBreak = false;
+        Field field = null;
         while (context.lines.size() > 0) {
             final String line = context.lines.remove(0);
 
@@ -148,6 +150,22 @@ public class ZclProtocolDefinitionParser {
 
             if (line.startsWith("##### Expected Response")) {
                 parseExpectedResponse(context);
+                continue;
+            }
+
+            if (line.startsWith("##### ")) {
+                addBreak = false;
+
+                for (Field fieldLoop : context.command.fields.values()) {
+                    if (fieldLoop.fieldLabel.equals(line.trim().substring(6))) {
+                        field = fieldLoop;
+                        break;
+                    }
+                }
+                if (field == null) {
+                    System.out.println("Error finding field \"" + line.trim().substring(6) + "\"");
+                }
+                continue;
             }
 
             if (line.startsWith("#### ")) {
@@ -184,8 +202,27 @@ public class ZclProtocolDefinitionParser {
                         + context.command.commandLabel);
 
                 parseField(context);
+                continue;
             }
+
+            if (field == null) {
+                continue;
+            }
+
+            if (field.description.size() == 0 && line.trim().length() == 0) {
+                continue;
+            }
+            if (line.trim().length() == 0) {
+                addBreak = true;
+                continue;
+            }
+            if (addBreak && field.description.size() > 0) {
+                field.description.add("<p>");
+                addBreak = false;
+            }
+            field.description.add(line.trim());
         }
+
     }
 
     private static void parseField(Context context) {
@@ -204,6 +241,7 @@ public class ZclProtocolDefinitionParser {
                 final String row = line.trim().substring(1, line.length() - 1);
                 final String[] columns = row.split("\\|");
                 final Field field = new Field();
+                field.description = new ArrayList<String>();
                 field.fieldId = fieldIndex;
 
                 field.fieldLabel = columns[0].trim();

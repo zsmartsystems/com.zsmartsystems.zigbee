@@ -1,5 +1,7 @@
 package com.zsmartsystems.zigbee.autocode.zcl;
 
+import java.util.List;
+
 /**
  * Created by tlaukkan on 4/10/2016.
  */
@@ -15,4 +17,5 @@ public class Field {
     public boolean completeOnZero;
     public String condition;
     public String conditionOperator;
+    public List<String> description;
 }

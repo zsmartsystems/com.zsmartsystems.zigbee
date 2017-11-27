@@ -21,6 +21,16 @@ devices for which macRxOnWhenIdle = TRUE.
 |RequestType                |Unsigned 8-bit integer     |
 |StartIndex                 |Unsigned 8-bit integer     |
 
+##### RequestType
+Request type for this command:
+0x00 – Single device response
+0x01 – Extended response
+0x02-0xFF – reserved
+
+##### Expected Response
+Packet: Network Address Response
+Match: IEEEAddr == IEEEAddrRemoteDev
+
 
 #### IEEE Address Request [0x0001]
 
