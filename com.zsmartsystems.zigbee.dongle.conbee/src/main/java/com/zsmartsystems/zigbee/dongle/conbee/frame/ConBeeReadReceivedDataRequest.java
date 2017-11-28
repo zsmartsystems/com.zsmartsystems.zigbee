@@ -20,8 +20,9 @@ public class ConBeeReadReceivedDataRequest extends ConBeeFrameRequest {
         serializeUInt8(APS_DATA_INDICATION);
         serializeUInt8(sequence);
         serializeUInt8(0);
-        serializeUInt16(7);
-        serializeUInt16(0);
+        serializeUInt16(8);
+        serializeUInt16(1);
+        serializeUInt8(0);
 
         return copyOutputBuffer();
     }

@@ -242,11 +242,7 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
             case DEVICE:
                 request.setDestinationAddress(
                         new ZigBeeEndpointAddress(apsFrame.getDestinationAddress(), apsFrame.getDestinationEndpoint()));
-                if (apsFrame.getDestinationAddress() >= 0xfff8) {
-                    request.setDestinationAddressMode(ConBeeAddressMode.GROUP);
-                } else {
-                    request.setDestinationAddressMode(ConBeeAddressMode.NWK);
-                }
+                request.setDestinationAddressMode(ConBeeAddressMode.NWK);
                 break;
             case GROUP:
                 request.setDestinationAddress(new ZigBeeGroupAddress(apsFrame.getDestinationAddress()));
