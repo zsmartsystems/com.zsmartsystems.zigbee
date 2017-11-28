@@ -249,8 +249,24 @@ public class ZigBeeOtaServer implements ZclServer {
      *
      * @return the {@link ZigBeeOtaServerStatus}
      */
-    public ZigBeeOtaServerStatus getStatus() {
+    public ZigBeeOtaServerStatus getServerStatus() {
         return status;
+    }
+
+    /**
+     * Cancels any upgrade transfers that are in progress and removes the current file. If a transfer is currently in
+     * progress, then the listeners are notified.
+     */
+    public void cancelUpgrade() {
+        otaFile = null;
+
+        ZigBeeOtaServerStatus localStatus = status;
+        status = ZigBeeOtaServerStatus.OTA_UNINITIALISED;
+
+        if (localStatus != ZigBeeOtaServerStatus.OTA_WAITING && localStatus != ZigBeeOtaServerStatus.OTA_UNINITIALISED
+                && localStatus != ZigBeeOtaServerStatus.OTA_UPGRADE_COMPLETE) {
+            updateStatus(ZigBeeOtaServerStatus.OTA_CANCELLED);
+        }
     }
 
     /**
@@ -287,7 +303,7 @@ public class ZigBeeOtaServer implements ZclServer {
     /**
      * Sets the firmware file for this node and send a notification to the device.
      * <p>
-     * The file must confirm to the standard file format containing the OTA Header, upgrade image, signer certificate,
+     * The file must conform to the standard file format containing the OTA Header, upgrade image, signer certificate,
      * signature.
      *
      * @param otaFile the current firmware version for this node
@@ -778,4 +794,10 @@ public class ZigBeeOtaServer implements ZclServer {
             return;
         }
     }
+
+    @Override
+    public String toString() {
+        return "ZigBeeOtaServer [status=" + status + ", cluster=" + cluster + ", otaFile=" + otaFile + "]";
+    }
+
 }

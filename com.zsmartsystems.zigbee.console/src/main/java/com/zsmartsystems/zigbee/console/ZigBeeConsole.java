@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -1552,8 +1555,9 @@ public final class ZigBeeConsole {
             if (args[2].toLowerCase().equals("complete")) {
                 otaServer.completeUpgrade();
             } else {
-                File file = new File(args[2]);
-                ZigBeeOtaFile otaFile = new ZigBeeOtaFile(file);
+                Path file = FileSystems.getDefault().getPath("./", args[2]);
+                byte[] fileData = Files.readAllBytes(file);
+                ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
                 print("OTA File: " + otaFile, out);
 
                 otaServer.setFirmware(otaFile);
@@ -1591,8 +1595,10 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            File file = new File(args[2]);
-            ZigBeeOtaFile otaFile = new ZigBeeOtaFile(file);
+            Path file = FileSystems.getDefault().getPath("./", args[1]);
+            byte[] fileData = Files.readAllBytes(file);
+
+            ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
             print("OTA File: " + otaFile, out);
             return true;
         }
