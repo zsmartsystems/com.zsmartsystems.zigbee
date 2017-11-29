@@ -27,6 +27,8 @@ import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadReceivedDataResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeStatus;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeVersionRequest;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeVersionResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.transaction.ConBeeSingleResponseTransaction;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
@@ -58,7 +60,15 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
      */
     private ZigBeePort serialPort;
 
+    /**
+     * The handler that processes the low level communication with the ConBee
+     */
     ConBeeFrameHandler conbeeHandler;
+
+    /**
+     * The firmware version in the ConBee
+     */
+    private String firmwareVersion;
 
     /**
      * Constructor to configure the port interface.
@@ -68,7 +78,6 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
      */
     public ZigBeeDongleConBee(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
-
     }
 
     @Override
@@ -84,11 +93,11 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
 
         conbeeHandler = new ConBeeFrameHandler(serialPort, this);
 
-        // State request seems to be necessary before we do anything else
-        // ConBeeDeviceStateRequest stateRequest = new ConBeeDeviceStateRequest();
-        // ConBeeDeviceStateResponse stateResponse = (ConBeeDeviceStateResponse) conbeeHandler
-        // .sendTransaction(new ConBeeSingleResponseTransaction(stateRequest, ConBeeDeviceStateResponse.class))
-        // .getResponse();
+        ConBeeVersionRequest versionRequest = new ConBeeVersionRequest();
+        ConBeeVersionResponse versionResponse = (ConBeeVersionResponse) conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(versionRequest, ConBeeVersionResponse.class))
+                .getResponse();
+        firmwareVersion = String.format("%08X", versionResponse.getVersion());
 
         ConBeeReadParameterRequest readParameter;
         readParameter = new ConBeeReadParameterRequest();
@@ -228,8 +237,7 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
 
     @Override
     public String getVersionString() {
-        // No version is available in ConBee
-        return "";
+        return firmwareVersion;
     }
 
     @Override
@@ -243,6 +251,10 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
                 request.setDestinationAddress(
                         new ZigBeeEndpointAddress(apsFrame.getDestinationAddress(), apsFrame.getDestinationEndpoint()));
                 request.setDestinationAddressMode(ConBeeAddressMode.NWK);
+                if (apsFrame.getDestinationAddress() > 0xfff8) {
+                    //
+                    request.setTxOptions(0);
+                }
                 break;
             case GROUP:
                 request.setDestinationAddress(new ZigBeeGroupAddress(apsFrame.getDestinationAddress()));

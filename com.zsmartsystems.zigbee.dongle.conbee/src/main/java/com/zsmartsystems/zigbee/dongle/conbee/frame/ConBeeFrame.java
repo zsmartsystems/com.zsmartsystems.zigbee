@@ -27,6 +27,7 @@ public abstract class ConBeeFrame {
     protected final static int APS_DATA_INDICATION = 0x17;
     protected final static int APS_DATA_REQUEST = 0x12;
     protected final static int APS_DATA_CONFIRM = 0x04;
+    protected final static int VERSION = 0x0D;
 
     protected int[] buffer;
     protected int length = 0;
@@ -119,6 +120,10 @@ public abstract class ConBeeFrame {
         buffer[length++] = (val >> 24) & 0xFF;
     }
 
+    protected int deserializeUInt32() {
+        return buffer[length++] + (buffer[length++] << 8) + (buffer[length++] << 16) + (buffer[length++] << 24);
+    }
+
     public void setSequence(int sequence) {
         this.sequence = sequence;
     }
@@ -159,6 +164,8 @@ public abstract class ConBeeFrame {
                 return new ConBeeEnqueueSendDataResponse(buffer);
             case APS_DATA_CONFIRM:
                 return new ConBeeQuerySendDataResponse(buffer);
+            case VERSION:
+                return new ConBeeVersionResponse(buffer);
             default:
                 break;
         }
