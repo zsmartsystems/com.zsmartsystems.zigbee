@@ -7,6 +7,9 @@
  */
 package com.zsmartsystems.zigbee.console;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.log4j.xml.DOMConfigurator;
 import org.bouncycastle.util.encoders.Hex;
 import org.slf4j.LoggerFactory;
@@ -22,9 +25,12 @@ import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.serial.ZigBeeSerialPort;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
+import com.zsmartsystems.zigbee.transport.TransportConfig;
+import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeePort.FlowControl;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 
 /**
  * The ZigBee gateway console. Simple console used as an example and test application.
@@ -63,6 +69,7 @@ public class ZigBeeConsoleMain {
         final int pan;
         final ExtendedPanId extendedPan;
         final int[] networkKey;
+        final TransportConfig transportOptions = new TransportConfig();
         boolean resetNetwork;
         try {
             dongleName = args[0];
@@ -115,6 +122,9 @@ public class ZigBeeConsoleMain {
             telegesisDongle.setTelegesisPassword("password");
             dongle = telegesisDongle;
 
+            Set<Integer> clusters = new HashSet<Integer>();
+            clusters.add(ZclIasZoneCluster.CLUSTER_ID);
+            transportOptions.addOption(TransportConfigOption.SUPPORTED_OUTPUT_CLUSTERS, clusters);
         } else {
             dongle = null;
         }
@@ -152,6 +162,8 @@ public class ZigBeeConsoleMain {
                 networkManager.setZigBeeNetworkKey(new ZigBeeKey(networkKey));
             }
         }
+
+        dongle.updateTransportConfig(transportOptions);
 
         if (!networkManager.startup(resetNetwork)) {
             System.out.println("ZigBee API starting up ... [FAIL]");

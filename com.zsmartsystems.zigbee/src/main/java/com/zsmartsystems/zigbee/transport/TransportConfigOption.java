@@ -7,6 +7,8 @@
  */
 package com.zsmartsystems.zigbee.transport;
 
+import java.util.Collection;
+
 import com.zsmartsystems.zigbee.ZigBeeKey;
 
 /**
@@ -18,17 +20,39 @@ import com.zsmartsystems.zigbee.ZigBeeKey;
  */
 public enum TransportConfigOption {
     /**
-     * Defines the concentrator type based on {@link ConcentratorType}.
+     * Defines the concentrator type.
+     * <p>
+     * Value must be one of {@link ConcentratorType}.
      */
     CONCENTRATOR_TYPE,
 
     /**
-     * Configures the trust centre join mode. Value must be a {@link TrustCentreLinkMode} enumeration.
+     * Configures the trust centre join mode.
+     * <p>
+     * Value must be one of {@link TrustCentreLinkMode} enumeration.
      */
     TRUST_CENTRE_JOIN_MODE,
 
     /**
-     * Sets the trust centre link key. Value must be a {@link ZigBeeKey}.
+     * Sets the trust centre link key.
+     * <p>
+     * Value must be a {@link ZigBeeKey}.
      */
-    TRUST_CENTRE_LINK_KEY
+    TRUST_CENTRE_LINK_KEY,
+
+    /**
+     * Sets a list of supported input clusters. This is primarily intended to allow the application to configure
+     * clusters that are matched in the MatchDescriptorRequest.
+     * <p>
+     * Value must be a {@link Collection} of Integer defining the input clusters
+     */
+    SUPPORTED_INPUT_CLUSTERS,
+
+    /**
+     * Sets a list of supported output clusters. This is primarily intended to allow the application to configure
+     * clusters that are matched in the MatchDescriptorRequest.
+     * <p>
+     * Value must be a {@link Collection} of Integer defining the output clusters
+     */
+    SUPPORTED_OUTPUT_CLUSTERS
 }

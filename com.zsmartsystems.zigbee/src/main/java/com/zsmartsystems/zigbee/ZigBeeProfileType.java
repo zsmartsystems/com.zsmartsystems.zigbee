@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.zcl.protocol;
+package com.zsmartsystems.zigbee;
 
 /**
  * Enumeration of ZigBee profile types
@@ -14,19 +14,27 @@ package com.zsmartsystems.zigbee.zcl.protocol;
  *
  * @author Chris Jackson
  */
-public enum ZclProfileType {
-    HOME_AUTOMATION(260, "Home Automation");
+public enum ZigBeeProfileType {
+    HOME_AUTOMATION(0x0104, "Home Automation");
 
-    private final int id;
+    private final int profileId;
     private final String label;
 
-    ZclProfileType(final int id, final String label) {
-        this.id = id;
+    ZigBeeProfileType(final int profileId, final String label) {
+        this.profileId = profileId;
         this.label = label;
     }
 
-    public int getId() { return id; }
-    public String getLabel() { return label; }
-    public String toString() { return label; }
+    public int getId() {
+        return profileId;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String toString() {
+        return label;
+    }
 
 }

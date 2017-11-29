@@ -216,6 +216,7 @@ public class CommandGenerator extends ClassGenerator {
                     out.println("        serializeCommand(\"" + group.prompt + "\");");
 
                     for (Parameter parameter : group.parameters) {
+                        String valueName = stringToLowerCamelCase(parameter.name);
                         String indent = "        ";
                         if (parameter.optional != null && parameter.optional) {
                             out.println(indent + "if (" + stringToLowerCamelCase(parameter.name) + " != null) {");
@@ -233,15 +234,25 @@ public class CommandGenerator extends ClassGenerator {
                         }
                         first = false;
 
-                        if (parameter.auto_size != null) {
+                        if (parameter.multiple) {
+                            out.println(indent + "boolean first" + stringToUpperCamelCase(parameter.name) + " = true;");
+                            out.println(indent + "for (" + getTypeClass(parameter.data_type) + " value : "
+                                    + stringToLowerCamelCase(parameter.name) + ") {");
+                            out.println(indent + "    if (!first" + stringToUpperCamelCase(parameter.name) + ") {");
+                            out.println(indent + "        serializeDelimiter(',');");
+                            out.println(indent + "    }");
+                            out.println(indent + "    first" + stringToUpperCamelCase(parameter.name) + " = false;");
+                            valueName = "value";
+                            indent = "            ";
+                        } else if (parameter.auto_size != null) {
                             out.println(indent + "serialize" + getTypeSerializer(parameter.data_type) + "("
                                     + stringToLowerCamelCase(parameter.auto_size) + ".length);");
                             continue;
                         }
-                        out.println(indent + "serialize" + getTypeSerializer(parameter.data_type) + "("
-                                + stringToLowerCamelCase(parameter.name) + ");");
+                        out.println(
+                                indent + "serialize" + getTypeSerializer(parameter.data_type) + "(" + valueName + ");");
 
-                        if (parameter.optional != null && parameter.optional) {
+                        if (parameter.multiple || (parameter.optional != null && parameter.optional)) {
                             out.println("        }");
                         }
                     }
@@ -567,6 +578,7 @@ public class CommandGenerator extends ClassGenerator {
             }
             out.println(indent + " *");
             if (parameter.multiple) {
+                addImport("java.util.Collection");
                 out.println(indent + " * @param " + parameter.name + " the " + stringToLowerCamelCase(parameter.name)
                         + " to add to the {@link Set} as {@link " + getTypeClass(parameter.data_type) + "}");
                 out.println(indent + " */");
@@ -585,10 +597,25 @@ public class CommandGenerator extends ClassGenerator {
                         + stringToLowerCamelCase(parameter.name) + " to remove to the {@link Set} as {@link "
                         + getTypeClass(parameter.data_type) + "}");
                 out.println(indent + " */");
-                out.println(indent + "public void remove" + upperCaseFirstCharacter(parameter.name) + "("
+                out.println(indent + "public void remove" + stringToUpperCamelCase(parameter.name) + "("
                         + getTypeClass(parameter.data_type) + " " + stringToLowerCamelCase(parameter.name) + ") {");
-                out.println(indent + "    this." + parameter.name + ".remove(" + stringToLowerCamelCase(parameter.name)
-                        + ");");
+                out.println(indent + "    this." + stringToLowerCamelCase(parameter.name) + ".remove("
+                        + stringToLowerCamelCase(parameter.name) + ");");
+                out.println(indent + "}");
+                out.println();
+                out.println(indent + "/**");
+                if (parameter.description != null && parameter.description.length() != 0) {
+                    outputWithLinebreak(out, "    ", parameter.description);
+                }
+                out.println(indent + " *");
+                out.println(indent + " * @param " + stringToLowerCamelCase(parameter.name) + " the "
+                        + stringToLowerCamelCase(parameter.name) + " to set to the {@link Set} as {@link "
+                        + getTypeClass(parameter.data_type) + "}");
+                out.println(indent + " */");
+                out.println(indent + "public void set" + stringToUpperCamelCase(parameter.name) + "(Collection<"
+                        + getTypeClass(parameter.data_type) + "> " + stringToLowerCamelCase(parameter.name) + ") {");
+                out.println(indent + "    this." + stringToLowerCamelCase(parameter.name) + ".addAll("
+                        + stringToLowerCamelCase(parameter.name) + ");");
             } else {
                 out.println(indent + " * @param " + stringToLowerCamelCase(parameter.name) + " the "
                         + stringToLowerCamelCase(parameter.name) + " to set as {@link "

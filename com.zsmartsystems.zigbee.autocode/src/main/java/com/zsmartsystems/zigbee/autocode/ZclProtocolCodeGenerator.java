@@ -411,10 +411,10 @@ public class ZclProtocolCodeGenerator {
 
     private static void generateZclProfileTypeEnumeration(Context context, String packageRootPrefix,
             File sourceRootPath) throws IOException {
-        final String className = "ZclProfileType";
+        final String className = "ZigBeeProfileType";
 
-        final String packageRoot = packageRootPrefix + packageZclProtocol;
-        final String packagePath = getPackagePath(sourceRootPath, packageZclProtocol);
+        final String packageRoot = packageRootPrefix;
+        final String packagePath = getPackagePath(sourceRootPath, "");
         final File packageFile = getPackageFile(packagePath);
 
         final PrintWriter out = getClassOut(packageFile, className);
@@ -434,22 +434,31 @@ public class ZclProtocolCodeGenerator {
 
         final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
         for (final Profile profile : profiles) {
-            out.print("    " + profile.profileType + "(" + profile.profileId + ", \"" + profile.profileName + "\")");
+            out.print("    " + profile.profileType + "(" + String.format("0x%04x", profile.profileId) + ", \""
+                    + profile.profileName + "\")");
             out.println(profiles.getLast().equals(profile) ? ';' : ',');
         }
 
         out.println();
-        out.println("    private final int id;");
+        out.println("    private final int profileId;");
         out.println("    private final String label;");
         out.println();
-        out.println("    " + className + "(final int id, final String label) {");
-        out.println("        this.id = id;");
+        out.println("    " + className + "(final int profileId, final String label) {");
+        out.println("        this.profileId = profileId;");
         out.println("        this.label = label;");
         out.println("    }");
         out.println();
-        out.println("    public int getId() { return id; }");
-        out.println("    public String getLabel() { return label; }");
-        out.println("    public String toString() { return label; }");
+        out.println("    public int getId() {");
+        out.println("        return profileId;");
+        out.println("    }");
+        out.println();
+        out.println("    public String getLabel() {");
+        out.println("        return label;");
+        out.println("    }");
+        out.println();
+        out.println("    public String toString() {");
+        out.println("        return label;");
+        out.println("    }");
         out.println();
         out.println("}");
 
@@ -477,6 +486,7 @@ public class ZclProtocolCodeGenerator {
 
         out.println("package " + packageRoot + ";");
         out.println();
+        out.println("import " + packageRootPrefix + ".ZigBeeProfileType;");
         out.println("import " + packageRootPrefix + packageZcl + ".ZclCluster;");
         out.println("import " + packageRootPrefix + packageZclCluster + ".*;");
         out.println();
@@ -492,7 +502,7 @@ public class ZclProtocolCodeGenerator {
             final LinkedList<Cluster> clusters = new LinkedList<Cluster>(profile.clusters.values());
             for (final Cluster cluster : clusters) {
                 out.print("    " + cluster.clusterType + "(" + String.format("0x%04X", cluster.clusterId)
-                        + ", ZclProfileType." + profile.profileType + ", Zcl" + cluster.nameUpperCamelCase
+                        + ", ZigBeeProfileType." + profile.profileType + ", Zcl" + cluster.nameUpperCamelCase
                         + "Cluster.class, \"" + cluster.clusterName + "\")");
                 out.println(clusters.getLast().equals(cluster) ? ';' : ',');
             }
@@ -502,14 +512,14 @@ public class ZclProtocolCodeGenerator {
         out.println(
                 "    private static final Map<Integer, ZclClusterType> idValueMap = new HashMap<Integer, ZclClusterType>();");
         out.println();
-        out.println("    private final int id;");
-        out.println("    private final ZclProfileType profileType;");
+        out.println("    private final int clusterId;");
+        out.println("    private final ZigBeeProfileType profileType;");
         out.println("    private final String label;");
         out.println("    private final Class<? extends ZclCluster> clusterClass;");
         out.println();
         out.println("    " + className
-                + "(final int id, final ZclProfileType profileType, final Class<? extends ZclCluster>clusterClass, final String label) {");
-        out.println("        this.id = id;");
+                + "(final int clusterId, final ZigBeeProfileType profileType, final Class<? extends ZclCluster>clusterClass, final String label) {");
+        out.println("        this.clusterId = clusterId;");
         out.println("        this.profileType = profileType;");
         out.println("        this.clusterClass = clusterClass;");
         out.println("        this.label = label;");
@@ -517,15 +527,15 @@ public class ZclProtocolCodeGenerator {
         out.println();
         out.println("    static {");
         out.println("        for (final ZclClusterType value : values()) {");
-        out.println("            idValueMap.put(value.id, value);");
+        out.println("            idValueMap.put(value.clusterId, value);");
         out.println("        }");
         out.println("    }");
         out.println();
         out.println("    public int getId() {");
-        out.println("        return id;");
+        out.println("        return clusterId;");
         out.println("    }");
         out.println();
-        out.println("    public ZclProfileType getProfileType() {");
+        out.println("    public ZigBeeProfileType getProfileType() {");
         out.println("        return profileType;");
         out.println("    }");
         out.println();
@@ -541,8 +551,8 @@ public class ZclProtocolCodeGenerator {
         out.println("        return clusterClass;");
         out.println("    }");
         out.println();
-        out.println("    public static ZclClusterType getValueById(final int id) {");
-        out.println("        return idValueMap.get(id);");
+        out.println("    public static ZclClusterType getValueById(final int clusterId) {");
+        out.println("        return idValueMap.get(clusterId);");
         out.println("    }");
         out.println();
         out.println("}");
