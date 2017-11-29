@@ -600,6 +600,33 @@
 	</command>
 
 	<command>
+		<name>Set Register</name>
+		<description>Sets an S register</description>
+		<command_parameters>
+			<prompt>ATS</prompt>
+			<parameter>
+				<data_type>Int8</data_type>
+				<name>register</name>
+				<terminator></terminator>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>value</name>
+				<terminator>=</terminator>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>String</data_type>
+				<name>password</name>
+				<description></description>
+				<terminator>:</terminator>
+				<optional>true</optional>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
 		<name>Set Register Bit</name>
 		<description>Sets a bit in an S register</description>
 		<command_parameters>
@@ -628,6 +655,34 @@
 				<description></description>
 				<terminator>:</terminator>
 				<optional>true</optional>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Set Input Clusters</name>
+		<description>Sets the list of input clusters supported by endpoint 2. Up to 12 clusters can be set</description>
+		<command_parameters>
+			<prompt>ATS4B=</prompt>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>cluster list</name>
+				<multiple>true</multiple>
+				<description></description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Set Output Clusters</name>
+		<description>Sets the list of output clusters supported by endpoint 2. Up to 12 clusters can be set</description>
+		<command_parameters>
+			<prompt>ATS4C=</prompt>
+			<parameter>
+				<data_type>Int16</data_type>
+				<name>cluster list</name>
+				<multiple>true</multiple>
+				<description></description>
 			</parameter>
 		</command_parameters>
 	</command>

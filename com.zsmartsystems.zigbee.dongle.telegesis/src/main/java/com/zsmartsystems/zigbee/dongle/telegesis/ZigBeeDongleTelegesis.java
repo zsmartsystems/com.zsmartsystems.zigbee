@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.dongle.telegesis;
 
 import java.io.InputStream;
+import java.util.Collection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
+import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisEventListener;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFirmwareUpdateHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFrameHandler;
@@ -41,12 +43,15 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSend
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendUnicastCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetEpanIdCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetExtendedFunctionCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetInputClustersCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetMainFunctionCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetNetworkKeyCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetOutputClustersCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetPanIdCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetPromptEnable1Command;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetPromptEnable2Command;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetRegisterBitCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetRegisterCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetTrustCentreLinkKeyCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisStatusCode;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
@@ -462,8 +467,13 @@ public class ZigBeeDongleTelegesis
             logger.debug("Error setting Telegesis EPAN ID");
         }
 
-        // TelegesisSetChannelMaskCommand channelMaskCommand = new TelegesisSetChannelMaskCommand();
-        // channelMaskCommand.setChannelMask(channelMask);
+        // Set the profile to HA
+        TelegesisSetRegisterCommand setRegister = new TelegesisSetRegisterCommand();
+        setRegister.setRegister(0x48);
+        setRegister.setValue(ZigBeeProfileType.HOME_AUTOMATION.getId());
+        if (frameHandler.sendRequest(setRegister) == null) {
+            logger.debug("Error setting Telegesis profile ID");
+        }
 
         TelegesisCreatePanCommand createNetwork = new TelegesisCreatePanCommand();
         if (frameHandler.sendRequest(createNetwork) == null) {
@@ -680,15 +690,27 @@ public class ZigBeeDongleTelegesis
         return false;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void updateTransportConfig(TransportConfig configuration) {
         for (TransportConfigOption option : configuration.getOptions()) {
             try {
                 switch (option) {
+                    case SUPPORTED_INPUT_CLUSTERS:
+                        configuration.setResult(option,
+                                setSupportedInputClusters((Collection<Integer>) configuration.getValue(option)));
+                        break;
+
+                    case SUPPORTED_OUTPUT_CLUSTERS:
+                        configuration.setResult(option,
+                                setSupportedOutputClusters((Collection<Integer>) configuration.getValue(option)));
+                        break;
+
                     case TRUST_CENTRE_JOIN_MODE:
                         configuration.setResult(option,
                                 setTcJoinMode((TrustCentreLinkMode) configuration.getValue(option)));
                         break;
+
                     default:
                         configuration.setResult(option, TransportConfigResult.ERROR_UNSUPPORTED);
                         logger.debug("Unsupported configuration option \"{}\" in Telegesis dongle", option);
@@ -698,6 +720,28 @@ public class ZigBeeDongleTelegesis
                 configuration.setResult(option, TransportConfigResult.ERROR_INVALID_VALUE);
             }
         }
+    }
+
+    private TransportConfigResult setSupportedInputClusters(Collection<Integer> supportedClusters) {
+        TelegesisSetInputClustersCommand inputClusters = new TelegesisSetInputClustersCommand();
+        inputClusters.setClusterList(supportedClusters);
+        if (frameHandler.sendRequest(inputClusters) == null) {
+            logger.debug("Error setting Telegesis input clusters");
+            return TransportConfigResult.ERROR_INVALID_VALUE;
+        }
+
+        return TransportConfigResult.SUCCESS;
+    }
+
+    private TransportConfigResult setSupportedOutputClusters(Collection<Integer> supportedClusters) {
+        TelegesisSetOutputClustersCommand outputClusters = new TelegesisSetOutputClustersCommand();
+        outputClusters.setClusterList(supportedClusters);
+        if (frameHandler.sendRequest(outputClusters) == null) {
+            logger.debug("Error setting Telegesis output clusters");
+            return TransportConfigResult.ERROR_INVALID_VALUE;
+        }
+
+        return TransportConfigResult.SUCCESS;
     }
 
     private TransportConfigResult setTcJoinMode(TrustCentreLinkMode linkMode) {
