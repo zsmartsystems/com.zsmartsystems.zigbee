@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -80,13 +79,6 @@ public class ZigBeeNetworkMeshMonitor implements ZigBeeCommandListener {
      * Refresh period for the mesh update - in seconds
      */
     private int updatePeriod;
-
-    /**
-     * Executor service to execute update threads. We use a {@link Executors.newFixedThreadPool}
-     * to provide a fixed number of threads as otherwise this could result in a large number of
-     * simultaneous threads in large networks.
-     */
-    private static ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     /**
      * Scheduler to run the service
@@ -196,7 +188,7 @@ public class ZigBeeNetworkMeshMonitor implements ZigBeeCommandListener {
             nodesInProgress.add(nodeNetworkAddress);
         }
 
-        executorService.execute(new Runnable() {
+        networkManager.executeTask(new Runnable() {
             @Override
             public void run() {
                 logger.debug("{}: Starting mesh update", nodeNetworkAddress);

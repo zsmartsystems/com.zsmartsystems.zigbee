@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -120,6 +122,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * The network state serializer
      */
     private ZigBeeNetworkStateSerializer networkStateSerializer;
+
+    /**
+     * Executor service to execute update threads for discovery or mesh updates etc.
+     * We use a {@link Executors.newFixedThreadPool} to provide a fixed number of threads as otherwise this could result
+     * in a large number of simultaneous threads in large networks.
+     */
+    private final ExecutorService executorService = Executors.newFixedThreadPool(6);
 
     /**
      * The {@link ZigBeeTransportTransmit} implementation. This provides the interface
@@ -370,12 +379,23 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Shuts down ZigBee manager components.
      */
     public void shutdown() {
+        executorService.shutdownNow();
+
         if (networkStateSerializer != null) {
             networkStateSerializer.serialize(this);
         }
 
         networkDiscoverer.shutdown();
         transport.shutdown();
+    }
+
+    /**
+     * Schedules a runnable task for execution. This uses a fixed size scheduler to limit thread execution.
+     * 
+     * @param runnableTask
+     */
+    public void executeTask(Runnable runnableTask) {
+        executorService.execute(runnableTask);
     }
 
     /**

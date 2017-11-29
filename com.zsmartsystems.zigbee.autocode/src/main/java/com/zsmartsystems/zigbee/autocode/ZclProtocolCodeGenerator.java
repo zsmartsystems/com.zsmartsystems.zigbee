@@ -1912,7 +1912,6 @@ public class ZclProtocolCodeGenerator {
                     // out.println("import java.util.HashMap;");
 
                     for (final Field field : fields) {
-
                         String packageName;
                         if (field.dataTypeClass.endsWith("Descriptor")) {
                             packageName = packageZdpDescriptors;
@@ -1999,6 +1998,11 @@ public class ZclProtocolCodeGenerator {
 
                         out.println("    /**");
                         out.println("     * " + field.fieldLabel + " command message field.");
+                        if (field.description.size() != 0) {
+                            for (String line : field.description) {
+                                out.println("     * " + line);
+                            }
+                        }
                         out.println("     */");
                         out.println("    private " + getFieldType(field) + " " + field.nameLowerCamelCase + ";");
                         out.println();
@@ -2034,6 +2038,12 @@ public class ZclProtocolCodeGenerator {
                         out.println();
                         out.println("    /**");
                         out.println("     * Gets " + field.fieldLabel + ".");
+                        if (field.description.size() != 0) {
+                            out.println("     * <p>");
+                            for (String line : field.description) {
+                                out.println("     * " + line);
+                            }
+                        }
                         out.println("     *");
                         out.println("     * @return the " + field.fieldLabel);
                         out.println("     */");
@@ -2043,6 +2053,12 @@ public class ZclProtocolCodeGenerator {
                         out.println();
                         out.println("    /**");
                         out.println("     * Sets " + field.fieldLabel + ".");
+                        if (field.description.size() != 0) {
+                            out.println("     * <p>");
+                            for (String line : field.description) {
+                                out.println("     * " + line);
+                            }
+                        }
                         out.println("     *");
                         out.println("     * @param " + field.nameLowerCamelCase + " the " + field.fieldLabel);
                         out.println("     */");
