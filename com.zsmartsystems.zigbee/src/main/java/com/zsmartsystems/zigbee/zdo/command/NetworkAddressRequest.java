@@ -34,6 +34,7 @@ public class NetworkAddressRequest extends ZdoRequest implements CommandResponse
 
     /**
      * RequestType command message field.
+     *
      * Request type for this command:
      * 0x00 – Single device response
      * 0x01 – Extended response

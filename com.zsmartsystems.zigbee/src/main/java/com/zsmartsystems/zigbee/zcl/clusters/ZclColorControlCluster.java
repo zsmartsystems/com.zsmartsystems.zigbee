@@ -670,8 +670,14 @@ public class ZclColorControlCluster extends ZclCluster {
     /**
      * Get the <i>ColorMode</i> attribute [attribute ID <b>8</b>].
      * <p>
-     * The ColorMode attribute indicates which attributes are currently determining the
-     * color of the device
+     * The ColorMode attribute indicates which attributes are currently determining the color of the device.
+     * If either the CurrentHue or CurrentSaturation attribute is implemented, this attribute SHALL also be
+     * implemented, otherwise it is optional. The value of the ColorMode attribute cannot be written directly
+     * - it is set upon reception of another command in to the appropriate mode for that command.
+     * <p>
+     * 0x00 CurrentHue and CurrentSaturation
+     * 0x01 CurrentX and CurrentY
+     * 0x02 ColorTemperatureMireds
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -687,8 +693,14 @@ public class ZclColorControlCluster extends ZclCluster {
     /**
      * Synchronously get the <i>ColorMode</i> attribute [attribute ID <b>8</b>].
      * <p>
-     * The ColorMode attribute indicates which attributes are currently determining the
-     * color of the device
+     * The ColorMode attribute indicates which attributes are currently determining the color of the device.
+     * If either the CurrentHue or CurrentSaturation attribute is implemented, this attribute SHALL also be
+     * implemented, otherwise it is optional. The value of the ColorMode attribute cannot be written directly
+     * - it is set upon reception of another command in to the appropriate mode for that command.
+     * <p>
+     * 0x00 CurrentHue and CurrentSaturation
+     * 0x01 CurrentX and CurrentY
+     * 0x02 ColorTemperatureMireds
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
