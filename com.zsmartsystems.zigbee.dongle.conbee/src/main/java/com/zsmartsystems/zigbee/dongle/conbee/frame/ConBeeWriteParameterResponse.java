@@ -37,7 +37,7 @@ public class ConBeeWriteParameterResponse extends ConBeeFrameResponse {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(40);
         builder.append("WriteParameterResponse [parameter=");
         builder.append(parameter);
         builder.append(']');

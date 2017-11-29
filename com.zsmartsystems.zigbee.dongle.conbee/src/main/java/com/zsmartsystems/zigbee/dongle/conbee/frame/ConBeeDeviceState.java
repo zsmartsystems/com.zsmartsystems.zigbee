@@ -64,7 +64,7 @@ public class ConBeeDeviceState {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(120);
         builder.append("DeviceState [networkState=");
         builder.append(networkState);
         builder.append(", dataConfirm=");

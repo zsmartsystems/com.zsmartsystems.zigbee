@@ -32,7 +32,7 @@ public class ConBeeEnqueueSendDataResponse extends ConBeeFrameResponse {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(120);
         builder.append("EnqueueSendDataResponse [sequence=");
         builder.append(sequence);
         builder.append(", status=");

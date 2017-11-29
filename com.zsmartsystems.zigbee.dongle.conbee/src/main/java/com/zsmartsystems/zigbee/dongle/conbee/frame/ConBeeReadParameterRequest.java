@@ -11,7 +11,7 @@ package com.zsmartsystems.zigbee.dongle.conbee.frame;
  * By reading parameters the current configuration can be obtained. Be aware that this configuration might not reflect
  * the active configuration, since changes to parameters affect the network operation only as soon as it’s stopped and
  * started again.
- * 
+ *
  * @author Chris Jackson
  *
  */
@@ -38,7 +38,7 @@ public class ConBeeReadParameterRequest extends ConBeeFrameRequest {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(50);
         builder.append("ReadParameterRequest [sequence=");
         builder.append(sequence);
         builder.append(", parameter=");

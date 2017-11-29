@@ -58,16 +58,16 @@ public enum ConBeeNetworkParameter {
      *            the code to lookup
      * @return enumeration value of the alarm type.
      */
-    public static ConBeeNetworkParameter getParameterType(int i) {
+    public static ConBeeNetworkParameter getParameterType(int param) {
         if (codeMapping == null) {
             initMapping();
         }
 
-        if (codeMapping.get(i) == null) {
+        if (codeMapping.get(param) == null) {
             return UNKNOWN;
         }
 
-        return codeMapping.get(i);
+        return codeMapping.get(param);
     }
 
     /**

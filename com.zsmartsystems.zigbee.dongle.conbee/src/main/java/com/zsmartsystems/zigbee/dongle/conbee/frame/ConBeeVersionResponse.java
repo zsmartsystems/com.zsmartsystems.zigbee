@@ -37,7 +37,7 @@ public class ConBeeVersionResponse extends ConBeeFrameResponse {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(55);
         builder.append("QueryVersionResponse [sequence=");
         builder.append(sequence);
         builder.append(", version=");

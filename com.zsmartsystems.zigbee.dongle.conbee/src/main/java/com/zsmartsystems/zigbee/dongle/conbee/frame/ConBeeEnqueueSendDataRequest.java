@@ -149,7 +149,7 @@ public class ConBeeEnqueueSendDataRequest extends ConBeeFrameRequest {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(210);
         builder.append("EnqueueSendDataRequest [sequence=");
         builder.append(sequence);
 
@@ -158,7 +158,7 @@ public class ConBeeEnqueueSendDataRequest extends ConBeeFrameRequest {
 
         builder.append(", destinationAddress=");
         builder.append(destinationAddressMode);
-        builder.append("(");
+        builder.append('(');
         switch (destinationAddressMode) {
             case IEEE:
                 builder.append(destinationIeeeAddress);
@@ -190,7 +190,7 @@ public class ConBeeEnqueueSendDataRequest extends ConBeeFrameRequest {
         if (adsuData != null) {
             boolean first = true;
             for (int val : adsuData) {
-                if (first == false) {
+                if (!first) {
                     builder.append(' ');
                 }
                 first = false;

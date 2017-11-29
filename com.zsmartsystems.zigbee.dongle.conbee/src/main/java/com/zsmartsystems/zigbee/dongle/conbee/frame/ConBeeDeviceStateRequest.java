@@ -31,7 +31,7 @@ public class ConBeeDeviceStateRequest extends ConBeeFrameRequest {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(35);
         builder.append("DeviceStateRequest [sequence=");
         builder.append(sequence);
         builder.append(']');

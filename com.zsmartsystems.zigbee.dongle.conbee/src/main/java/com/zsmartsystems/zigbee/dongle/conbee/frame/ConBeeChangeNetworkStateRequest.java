@@ -41,7 +41,7 @@ public class ConBeeChangeNetworkStateRequest extends ConBeeFrameRequest {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(40);
         builder.append("ChangeNetworkStateRequest [sequence=");
         builder.append(sequence);
         builder.append(']');

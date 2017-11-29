@@ -54,9 +54,7 @@ public class ConBeeReadParameterResponse extends ConBeeFrameResponse {
             case NETWORK_KEY:
                 break;
             case NWK_ADDRESS:
-                // int address = value
-                // return new ZigBeeEndpointAddress(value[0]);
-                break;
+                return value[0] + (value[1] << 8);
             case NWK_PANID:
                 return value[0] + (value[1] << 8);
             case NWK_UPDATE_ID:
@@ -75,7 +73,7 @@ public class ConBeeReadParameterResponse extends ConBeeFrameResponse {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(90);
         builder.append("ReadParameterResponse [sequence=");
         builder.append(sequence);
         builder.append(", status=");
@@ -85,7 +83,7 @@ public class ConBeeReadParameterResponse extends ConBeeFrameResponse {
         builder.append(", value=");
         boolean first = true;
         for (int val : value) {
-            if (first == false) {
+            if (!first) {
                 builder.append(' ');
             }
             first = false;

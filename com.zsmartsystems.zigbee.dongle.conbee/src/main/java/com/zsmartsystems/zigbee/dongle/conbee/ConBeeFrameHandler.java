@@ -471,17 +471,4 @@ public class ConBeeFrameHandler {
     interface ConBeeListener {
         boolean transactionEvent(ConBeeFrameResponse response);
     }
-
-    private String bufferToString(final int[] buffer, final int length) {
-        StringBuilder builder = new StringBuilder();
-        boolean first = true;
-        for (int cnt = 0; cnt < length; cnt++) {
-            if (first == false) {
-                builder.append(' ');
-            }
-            first = false;
-            builder.append(String.format("%02X", buffer[cnt]));
-        }
-        return builder.toString();
-    }
 }

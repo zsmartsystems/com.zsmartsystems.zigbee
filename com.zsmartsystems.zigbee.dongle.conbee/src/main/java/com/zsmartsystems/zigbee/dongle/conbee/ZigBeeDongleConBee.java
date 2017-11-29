@@ -63,7 +63,7 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
     /**
      * The handler that processes the low level communication with the ConBee
      */
-    ConBeeFrameHandler conbeeHandler;
+    private ConBeeFrameHandler conbeeHandler;
 
     /**
      * The firmware version in the ConBee
@@ -100,11 +100,6 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
         firmwareVersion = String.format("%08X", versionResponse.getVersion());
 
         ConBeeReadParameterRequest readParameter;
-        readParameter = new ConBeeReadParameterRequest();
-        readParameter.setParameter(ConBeeNetworkParameter.MAC_ADDRESS);
-        ConBeeReadParameterResponse response = (ConBeeReadParameterResponse) conbeeHandler
-                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class))
-                .getResponse();
 
         readParameter = new ConBeeReadParameterRequest();
         readParameter.setParameter(ConBeeNetworkParameter.DEVICE_TYPE);
@@ -233,6 +228,14 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
 
     @Override
     public void shutdown() {
+        if (conbeeHandler == null) {
+            return;
+        }
+        conbeeHandler.setClosing();
+        zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        serialPort.close();
+        conbeeHandler.close();
+        logger.debug("ConBee dongle shutdown.");
     }
 
     @Override

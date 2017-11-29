@@ -31,7 +31,7 @@ public class ConBeeDeviceStateResponse extends ConBeeFrameResponse {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(110);
         builder.append("DeviceStateResponse [sequence=");
         builder.append(sequence);
         builder.append(", status=");

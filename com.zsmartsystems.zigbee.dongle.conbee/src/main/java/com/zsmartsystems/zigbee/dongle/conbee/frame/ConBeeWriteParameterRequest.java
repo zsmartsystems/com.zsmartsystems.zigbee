@@ -83,7 +83,7 @@ public class ConBeeWriteParameterRequest extends ConBeeFrameRequest {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(70);
         builder.append("WriteParameterRequest [sequence=");
         builder.append(sequence);
         builder.append(", parameter=");

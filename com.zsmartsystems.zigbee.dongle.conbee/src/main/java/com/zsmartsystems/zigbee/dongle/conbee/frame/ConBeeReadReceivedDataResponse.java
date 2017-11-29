@@ -207,7 +207,7 @@ public class ConBeeReadReceivedDataResponse extends ConBeeFrameResponse {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(210);
         builder.append("ReadReceivedDataResponse [sequence=");
         builder.append(sequence);
         builder.append(", status=");
@@ -216,7 +216,7 @@ public class ConBeeReadReceivedDataResponse extends ConBeeFrameResponse {
         builder.append(state);
         builder.append(", sourceAddress=");
         builder.append(sourceAddressMode);
-        builder.append("(");
+        builder.append('(');
         if (sourceAddressMode == ConBeeAddressMode.IEEE) {
             builder.append(sourceIeeeAddress);
         } else {
@@ -224,7 +224,7 @@ public class ConBeeReadReceivedDataResponse extends ConBeeFrameResponse {
         }
         builder.append("), destinationAddress=");
         builder.append(destinationAddressMode);
-        builder.append("(");
+        builder.append('(');
         if (destinationAddressMode == ConBeeAddressMode.IEEE) {
             builder.append(destinationIeeeAddress);
         } else {
@@ -246,7 +246,7 @@ public class ConBeeReadReceivedDataResponse extends ConBeeFrameResponse {
         } else {
             boolean first = true;
             for (int val : adsuData) {
-                if (first == false) {
+                if (!first) {
                     builder.append(' ');
                 }
                 first = false;

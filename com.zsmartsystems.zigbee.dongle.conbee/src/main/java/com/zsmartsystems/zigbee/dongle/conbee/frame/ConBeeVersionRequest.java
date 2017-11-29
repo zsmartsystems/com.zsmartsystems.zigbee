@@ -29,7 +29,7 @@ public class ConBeeVersionRequest extends ConBeeFrameRequest {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(35);
         builder.append("QueryVersionRequest [sequence=");
         builder.append(sequence);
         builder.append(']');

@@ -29,7 +29,7 @@ public class ConBeeReadReceivedDataRequest extends ConBeeFrameRequest {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(40);
         builder.append("ReadReceivedDataRequest [sequence=");
         builder.append(sequence);
         builder.append(']');

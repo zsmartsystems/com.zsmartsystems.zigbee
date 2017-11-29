@@ -48,16 +48,16 @@ public enum ConBeeAddressMode {
      *            the code to lookup
      * @return enumeration value of the alarm type.
      */
-    public static ConBeeAddressMode getMode(int i) {
+    public static ConBeeAddressMode getMode(int mode) {
         if (codeMapping == null) {
             initMapping();
         }
 
-        if (codeMapping.get(i) == null) {
+        if (codeMapping.get(mode) == null) {
             return UNKNOWN;
         }
 
-        return codeMapping.get(i);
+        return codeMapping.get(mode);
     }
 
     /**

@@ -99,7 +99,7 @@ public class ConBeeQuerySendDataResponse extends ConBeeFrameResponse {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(130);
         builder.append("QuerySendDataResponse [sequence=");
         builder.append(sequence);
         builder.append(", networkState=");
@@ -107,7 +107,7 @@ public class ConBeeQuerySendDataResponse extends ConBeeFrameResponse {
 
         builder.append(", destinationAddress=(");
         builder.append(destinationAddressMode);
-        builder.append("=");
+        builder.append('=');
         if (destinationAddressMode == ConBeeAddressMode.IEEE) {
             builder.append(destinationIeeeAddress);
         } else {

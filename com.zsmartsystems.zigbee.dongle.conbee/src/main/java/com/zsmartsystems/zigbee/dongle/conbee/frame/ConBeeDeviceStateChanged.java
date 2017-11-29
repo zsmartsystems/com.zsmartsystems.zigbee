@@ -29,13 +29,14 @@ public class ConBeeDeviceStateChanged extends ConBeeFrameResponse {
         state = deserializeDeviceState();
     }
 
+    @Override
     public ConBeeDeviceState getDeviceState() {
         return state;
     }
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(110);
         builder.append("DeviceStateChanged [sequence=");
         builder.append(sequence);
         builder.append(", status=");
