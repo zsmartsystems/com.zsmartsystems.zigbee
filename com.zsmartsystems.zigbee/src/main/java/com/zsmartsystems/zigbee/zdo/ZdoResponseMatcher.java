@@ -7,8 +7,8 @@
  */
 package com.zsmartsystems.zigbee.zdo;
 
-import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 
 /**
  * The ZDO response matcher.

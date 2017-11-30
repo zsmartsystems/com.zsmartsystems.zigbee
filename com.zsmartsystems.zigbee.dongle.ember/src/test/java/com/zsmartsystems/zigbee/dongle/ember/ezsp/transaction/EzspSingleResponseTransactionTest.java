@@ -19,6 +19,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
 public class EzspSingleResponseTransactionTest extends EzspFrameTest {
     @Test
     public void testResponseMatches() {
