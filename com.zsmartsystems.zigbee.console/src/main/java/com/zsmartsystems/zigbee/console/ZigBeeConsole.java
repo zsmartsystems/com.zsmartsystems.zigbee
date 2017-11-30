@@ -1411,12 +1411,11 @@ public final class ZigBeeConsole {
                     .get();
             if (result.isSuccess()) {
                 final ConfigureReportingResponse response = result.getResponse();
-                final int statusCode = response.getRecords().get(0).getStatus();
-                if (statusCode == 0) {
+                final ZclStatus statusCode = response.getRecords().get(0).getStatus();
+                if (statusCode == ZclStatus.SUCCESS) {
                     out.println("Attribute value configure reporting success.");
                 } else {
-                    final ZclStatus status = ZclStatus.getStatus((byte) statusCode);
-                    out.println("Attribute value configure reporting error: " + status);
+                    out.println("Attribute value configure reporting error: " + statusCode);
                 }
                 return true;
             } else {
@@ -1485,12 +1484,11 @@ public final class ZigBeeConsole {
             final CommandResult result = cluster.setReporting(zclAttribute, 0, 0xffff, reportableChange).get();
             if (result.isSuccess()) {
                 final ConfigureReportingResponse response = result.getResponse();
-                final int statusCode = response.getRecords().get(0).getStatus();
-                if (statusCode == 0) {
+                final ZclStatus statusCode = response.getRecords().get(0).getStatus();
+                if (statusCode == ZclStatus.SUCCESS) {
                     out.println("Attribute value configure reporting success.");
                 } else {
-                    final ZclStatus status = ZclStatus.getStatus((byte) statusCode);
-                    out.println("Attribute value configure reporting error: " + status);
+                    out.println("Attribute value configure reporting error: " + statusCode);
                 }
                 return true;
             } else {

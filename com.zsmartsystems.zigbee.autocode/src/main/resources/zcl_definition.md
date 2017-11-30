@@ -1698,6 +1698,7 @@ x,y values, as defined by this specification.
 |0x0007 |ColorTemperature      |Unsigned 16-bit Integer    |Read only  |Optional  |Mandatory |
 |0x0008 |ColorMode             |8-bit Enumeration          |Read only  |Optional  |          |
 
+
 #### CurrentHue Attribute
 The CurrentHue attribute contains the current hue value of the light. It is updated
 as fast as practical during commands that change the hue.
@@ -1763,8 +1764,14 @@ The value ColorTemperature = 0 indicates an undefined value. The value
 ColorTemperature = 65535 indicates an invalid value. 
 
 #### ColorMode Attribute
-The ColorMode attribute indicates which attributes are currently determining the
-color of the device
+The ColorMode attribute indicates which attributes are currently determining the color of the device.
+If either the CurrentHue or CurrentSaturation attribute is implemented, this attribute SHALL also be
+implemented, otherwise it is optional. The value of the ColorMode attribute cannot be written directly
+- it is set upon reception of another command in to the appropriate mode for that command.
+
+0x00 CurrentHue and CurrentSaturation
+0x01 CurrentX and CurrentY
+0x02 ColorTemperatureMireds
 
 ### Received
 

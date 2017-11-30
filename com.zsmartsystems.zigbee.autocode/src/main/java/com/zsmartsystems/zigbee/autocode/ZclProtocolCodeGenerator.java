@@ -914,6 +914,12 @@ public class ZclProtocolCodeGenerator {
                     for (final Field field : fields) {
                         out.println("    /**");
                         out.println("     * " + field.fieldLabel + " command message field.");
+                        if (field.description.size() != 0) {
+                            out.println("     *");
+                            for (String line : field.description) {
+                                out.println("     * " + line);
+                            }
+                        }
                         out.println("     */");
                         out.println("    private " + field.dataTypeClass + " " + field.nameLowerCamelCase + ";");
                         out.println();
@@ -995,6 +1001,12 @@ public class ZclProtocolCodeGenerator {
                         out.println();
                         out.println("    /**");
                         out.println("     * Gets " + field.fieldLabel + ".");
+                        if (field.description.size() != 0) {
+                            out.println("     *");
+                            for (String line : field.description) {
+                                out.println("     * " + line);
+                            }
+                        }
                         out.println("     *");
                         out.println("     * @return the " + field.fieldLabel);
                         out.println("     */");
@@ -1004,6 +1016,12 @@ public class ZclProtocolCodeGenerator {
                         out.println();
                         out.println("    /**");
                         out.println("     * Sets " + field.fieldLabel + ".");
+                        if (field.description.size() != 0) {
+                            out.println("     *");
+                            for (String line : field.description) {
+                                out.println("     * " + line);
+                            }
+                        }
                         out.println("     *");
                         out.println("     * @param " + field.nameLowerCamelCase + " the " + field.fieldLabel);
                         out.println("     */");
@@ -2009,6 +2027,7 @@ public class ZclProtocolCodeGenerator {
                         out.println("    /**");
                         out.println("     * " + field.fieldLabel + " command message field.");
                         if (field.description.size() != 0) {
+                            out.println("     *");
                             for (String line : field.description) {
                                 out.println("     * " + line);
                             }
