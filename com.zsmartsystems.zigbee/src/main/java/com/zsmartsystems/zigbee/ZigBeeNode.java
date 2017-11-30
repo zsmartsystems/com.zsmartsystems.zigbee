@@ -332,8 +332,11 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     }
 
     /**
-     * Request an update of the binding table for this node
-     * TODO: This needs to handle the response and further requests if required to complete the table
+     * Request an update of the binding table for this node.
+     * <p>
+     * This method returns a future to a boolean. Upon success the caller should call {@link #getBindingTable()}
+     * 
+     * @return {@link Future} returning a {@link Boolean}
      */
     public Future<Boolean> updateBindingTable() {
         RunnableFuture<Boolean> future = new FutureTask<Boolean>(new Callable<Boolean>() {

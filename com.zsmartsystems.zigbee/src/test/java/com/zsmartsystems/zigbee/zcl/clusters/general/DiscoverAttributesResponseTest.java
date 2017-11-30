@@ -38,7 +38,7 @@ public class DiscoverAttributesResponseTest extends CommandTest {
 
         System.out.println(response);
 
-        List<AttributeInformation> records = response.getInformation();
+        List<AttributeInformation> records = response.getAttributeInformation();
         assertEquals(5, records.size());
 
         AttributeInformation record = records.get(0);

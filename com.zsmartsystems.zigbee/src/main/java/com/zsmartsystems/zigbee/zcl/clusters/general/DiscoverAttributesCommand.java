@@ -28,11 +28,18 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 public class DiscoverAttributesCommand extends ZclCommand {
     /**
      * Start attribute identifier command message field.
+     *
+     * The start attribute identifier field is 16 bits in length and specifies the value
+     * of the identifier at which to begin the attribute discovery.
      */
     private Integer startAttributeIdentifier;
 
     /**
      * Maximum attribute identifiers command message field.
+     *
+     * The  maximum attribute identifiers field is 8 bits in length and specifies the
+     * maximum number of attribute identifiers that are to be returned in the resulting
+     * Discover Attributes Response command.
      */
     private Integer maximumAttributeIdentifiers;
 
@@ -61,6 +68,9 @@ public class DiscoverAttributesCommand extends ZclCommand {
     /**
      * Gets Start attribute identifier.
      *
+     * The start attribute identifier field is 16 bits in length and specifies the value
+     * of the identifier at which to begin the attribute discovery.
+     *
      * @return the Start attribute identifier
      */
     public Integer getStartAttributeIdentifier() {
@@ -69,6 +79,9 @@ public class DiscoverAttributesCommand extends ZclCommand {
 
     /**
      * Sets Start attribute identifier.
+     *
+     * The start attribute identifier field is 16 bits in length and specifies the value
+     * of the identifier at which to begin the attribute discovery.
      *
      * @param startAttributeIdentifier the Start attribute identifier
      */
@@ -79,6 +92,10 @@ public class DiscoverAttributesCommand extends ZclCommand {
     /**
      * Gets Maximum attribute identifiers.
      *
+     * The  maximum attribute identifiers field is 8 bits in length and specifies the
+     * maximum number of attribute identifiers that are to be returned in the resulting
+     * Discover Attributes Response command.
+     *
      * @return the Maximum attribute identifiers
      */
     public Integer getMaximumAttributeIdentifiers() {
@@ -87,6 +104,10 @@ public class DiscoverAttributesCommand extends ZclCommand {
 
     /**
      * Sets Maximum attribute identifiers.
+     *
+     * The  maximum attribute identifiers field is 8 bits in length and specifies the
+     * maximum number of attribute identifiers that are to be returned in the resulting
+     * Discover Attributes Response command.
      *
      * @param maximumAttributeIdentifiers the Maximum attribute identifiers
      */

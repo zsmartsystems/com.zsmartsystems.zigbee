@@ -49,15 +49,21 @@ public class ZclLevelControlCluster extends ZclCluster {
     public static final int ATTR_REMAININGTIME = 0x0001;
     public static final int ATTR_ONOFFTRANSITIONTIME = 0x0010;
     public static final int ATTR_ONLEVEL = 0x0011;
+    public static final int ATTR_ONTRANSITIONTIME = 0x0012;
+    public static final int ATTR_OFFTRANSITIONTIME = 0x0013;
+    public static final int ATTR_DEFAULTMOVERATE = 0x0014;
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(4);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(7);
 
         attributeMap.put(ATTR_CURRENTLEVEL, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_CURRENTLEVEL, "CurrentLevel", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, true));
         attributeMap.put(ATTR_REMAININGTIME, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_REMAININGTIME, "RemainingTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_ONOFFTRANSITIONTIME, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_ONOFFTRANSITIONTIME, "OnOffTransitionTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_ONLEVEL, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_ONLEVEL, "OnLevel", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_ONTRANSITIONTIME, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_ONTRANSITIONTIME, "OnTransitionTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_OFFTRANSITIONTIME, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_OFFTRANSITIONTIME, "OffTransitionTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_DEFAULTMOVERATE, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_DEFAULTMOVERATE, "DefaultMoveRate", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
 
         return attributeMap;
     }
@@ -77,7 +83,7 @@ public class ZclLevelControlCluster extends ZclCluster {
      * Get the <i>CurrentLevel</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
-     * meaning of 'level' is device dependent.
+     * meaning of 'level' is device dependent. Value is between 0 and 254.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -94,7 +100,7 @@ public class ZclLevelControlCluster extends ZclCluster {
      * Synchronously get the <i>CurrentLevel</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
-     * meaning of 'level' is device dependent.
+     * meaning of 'level' is device dependent. Value is between 0 and 254.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -126,7 +132,7 @@ public class ZclLevelControlCluster extends ZclCluster {
      * Set reporting for the <i>CurrentLevel</i> attribute [attribute ID <b>0</b>].
      * <p>
      * The CurrentLevel attribute represents the current level of this device. The
-     * meaning of 'level' is device dependent.
+     * meaning of 'level' is device dependent. Value is between 0 and 254.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -339,8 +345,229 @@ public class ZclLevelControlCluster extends ZclCluster {
         return (Integer) readSync(attributes.get(ATTR_ONLEVEL));
     }
 
+
+    /**
+     * Set the <i>OnTransitionTime</i> attribute [attribute ID <b>18</b>].
+     * <p>
+     * The OnTransitionTime attribute represents the time taken to move the current level from the
+     * minimum level to the maximum level when an On command is received by an On/Off cluster on
+     * the same endpoint.  It is specified in 10ths of a second.  If this command is not implemented,
+     * or contains a value of 0xffff, the OnOffTransitionTime will be used instead.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param onTransitionTime the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setOnTransitionTime(final Object value) {
+        return write(attributes.get(ATTR_ONTRANSITIONTIME), value);
+    }
+
+    /**
+     * Get the <i>OnTransitionTime</i> attribute [attribute ID <b>18</b>].
+     * <p>
+     * The OnTransitionTime attribute represents the time taken to move the current level from the
+     * minimum level to the maximum level when an On command is received by an On/Off cluster on
+     * the same endpoint.  It is specified in 10ths of a second.  If this command is not implemented,
+     * or contains a value of 0xffff, the OnOffTransitionTime will be used instead.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getOnTransitionTimeAsync() {
+        return read(attributes.get(ATTR_ONTRANSITIONTIME));
+    }
+
+
+    /**
+     * Synchronously get the <i>OnTransitionTime</i> attribute [attribute ID <b>18</b>].
+     * <p>
+     * The OnTransitionTime attribute represents the time taken to move the current level from the
+     * minimum level to the maximum level when an On command is received by an On/Off cluster on
+     * the same endpoint.  It is specified in 10ths of a second.  If this command is not implemented,
+     * or contains a value of 0xffff, the OnOffTransitionTime will be used instead.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getOnTransitionTime(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ONTRANSITIONTIME).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ONTRANSITIONTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ONTRANSITIONTIME).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_ONTRANSITIONTIME));
+    }
+
+
+    /**
+     * Set the <i>OffTransitionTime</i> attribute [attribute ID <b>19</b>].
+     * <p>
+     * The OffTransitionTime attribute represents the time taken to move the current level from the
+     * maximum level to the minimum level when an Off command is received by an On/Off cluster on
+     * the same endpoint.  It is specified in 10ths of a second.  If this command is not implemented,
+     * or contains a value of 0xffff, the OnOffTransitionTime will be used instead.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param offTransitionTime the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setOffTransitionTime(final Object value) {
+        return write(attributes.get(ATTR_OFFTRANSITIONTIME), value);
+    }
+
+    /**
+     * Get the <i>OffTransitionTime</i> attribute [attribute ID <b>19</b>].
+     * <p>
+     * The OffTransitionTime attribute represents the time taken to move the current level from the
+     * maximum level to the minimum level when an Off command is received by an On/Off cluster on
+     * the same endpoint.  It is specified in 10ths of a second.  If this command is not implemented,
+     * or contains a value of 0xffff, the OnOffTransitionTime will be used instead.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getOffTransitionTimeAsync() {
+        return read(attributes.get(ATTR_OFFTRANSITIONTIME));
+    }
+
+
+    /**
+     * Synchronously get the <i>OffTransitionTime</i> attribute [attribute ID <b>19</b>].
+     * <p>
+     * The OffTransitionTime attribute represents the time taken to move the current level from the
+     * maximum level to the minimum level when an Off command is received by an On/Off cluster on
+     * the same endpoint.  It is specified in 10ths of a second.  If this command is not implemented,
+     * or contains a value of 0xffff, the OnOffTransitionTime will be used instead.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getOffTransitionTime(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_OFFTRANSITIONTIME).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_OFFTRANSITIONTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_OFFTRANSITIONTIME).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_OFFTRANSITIONTIME));
+    }
+
+
+    /**
+     * Set the <i>DefaultMoveRate</i> attribute [attribute ID <b>20</b>].
+     * <p>
+     * The DefaultMoveRate attribute determines the movement rate, in units per second, when a Move
+     * command is received with a Rate parameter of 0xFF.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param defaultMoveRate the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setDefaultMoveRate(final Object value) {
+        return write(attributes.get(ATTR_DEFAULTMOVERATE), value);
+    }
+
+    /**
+     * Get the <i>DefaultMoveRate</i> attribute [attribute ID <b>20</b>].
+     * <p>
+     * The DefaultMoveRate attribute determines the movement rate, in units per second, when a Move
+     * command is received with a Rate parameter of 0xFF.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getDefaultMoveRateAsync() {
+        return read(attributes.get(ATTR_DEFAULTMOVERATE));
+    }
+
+
+    /**
+     * Synchronously get the <i>DefaultMoveRate</i> attribute [attribute ID <b>20</b>].
+     * <p>
+     * The DefaultMoveRate attribute determines the movement rate, in units per second, when a Move
+     * command is received with a Rate parameter of 0xFF.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getDefaultMoveRate(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_DEFAULTMOVERATE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_DEFAULTMOVERATE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_DEFAULTMOVERATE).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_DEFAULTMOVERATE));
+    }
+
     /**
      * The Move to Level Command
+     * <p>
+     * On receipt of this command, a device SHALL move from its current level to the
+     * value given in the Level field. The meaning of ‘level’ is device dependent –e.g.,
+     * for a light it MAY mean brightness level.The movement SHALL be as continuous as
+     * technically practical, i.e., not a step function, and the time taken to move to
+     * the new level SHALL be equal to the value of the Transition time field, in tenths
+     * of a second, or as close to this as the device is able.If the Transition time field
+     * takes the value 0xffff then the time taken to move to the new level SHALL instead
+     * be determined by the OnOffTransitionTimeattribute. If OnOffTransitionTime, which is
+     * an optional attribute, is not present, the device SHALL move to its new level as fast
+     * as it is able.
      *
      * @param level {@link Integer} Level
      * @param transitionTime {@link Integer} Transition time

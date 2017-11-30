@@ -153,6 +153,15 @@ within the cluster to which this command is directed.
 |Start attribute identifier    |Unsigned 16-bit integer    |
 |Maximum attribute identifiers |Unsigned 8-bit integer     |
 
+##### Start attribute identifier
+The start attribute identifier field is 16 bits in length and specifies the value
+of the identifier at which to begin the attribute discovery.
+
+##### Maximum attribute identifiers
+The  maximum attribute identifiers field is 8 bits in length and specifies the
+maximum number of attribute identifiers that are to be returned in the resulting
+Discover Attributes Response command.
+
 #### Discover Attributes Response Command [0x0d]
 
 The discover attributes response command is generated in response to a discover
@@ -160,8 +169,21 @@ attributes command.
 
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
-|Command identifier         |Boolean                    |
-|Information                |N X Attribute information  |
+|Discovery Complete         |Boolean                    |
+|Attribute Information      |N X Attribute information  |
+
+
+##### Discovery Complete
+The discovery complete field is a Boolean field. A value of 0 indicates that there
+are more attributes to be discovered that have an attribute identifier value greater
+than the last attribute identifier in the last attribute information field. A value
+of 1 indicates that there are no more attributes to be discovered.
+
+##### Attribute Identifier
+The attribute identifier field SHALL contain the identifier of a discovered attribute.
+Attributes SHALL be included in ascending order, starting with the lowest attribute
+identifier that is greater than or equal to the start attribute identifier field of the
+received Discover Attributes command.
 
 #### Read Attributes Structured Command [0x0e]
 
@@ -213,7 +235,7 @@ command.
 
 |Field Name                   |Data Type                    |
 |-----------------------------|-----------------------------|
-|Discovery complete           |Unsigned 8-bit integer       |
+|Discovery complete           |Boolean                      |
 |Command identifiers          |X Unsigned 8-bit integer     |
 
 
@@ -234,7 +256,7 @@ command.
 
 |Field Name                   |Data Type                    |
 |-----------------------------|-----------------------------|
-|Discovery complete           |Unsigned 8-bit integer       |
+|Discovery complete           |Boolean                      |
 |Command identifiers          |X Unsigned 8-bit integer     |
 
 
@@ -255,10 +277,10 @@ command is directed, including whether the attribute is readable, writeable or r
 The Discover Attributes Extended Response command is generated in response to a Discover Attributes
 Extended command. 
 
-|Field Name                   |Data Type                   |
-|-----------------------------|----------------------------|
-|Discovery complete           |Unsigned 8-bit integer             |
-|Command identifiers          |N x Extended Attribute Information |
+|Field Name                   |Data Type                          |
+|-----------------------------|-----------------------------------|
+|Discovery complete           |Boolean                            |
+|Attribute Information        |N x Extended Attribute Information |
 
 
 
@@ -855,10 +877,13 @@ a door, or the power output of a heater.
 |0x0001 |RemainingTime        |Unsigned 16-bit integer    |Read Only  |Optional  |          |
 |0x0010 |OnOffTransitionTime  |Unsigned 16-bit integer    |Read/Write |Optional  |          |
 |0x0011 |OnLevel              |Unsigned 8-bit integer     |Read/Write |Optional  |          |
+|0x0012 |OnTransitionTime     |Unsigned 16-bit integer    |Read/Write |Optional  |          |
+|0x0013 |OffTransitionTime    |Unsigned 16-bit integer    |Read/Write |Optional  |          |
+|0x0014 |DefaultMoveRate      |Unsigned 16-bit integer    |Read/Write |Optional  |          |
 
 #### CurrentLevel Attribute
 The CurrentLevel attribute represents the current level of this device. The
-meaning of 'level' is device dependent.
+meaning of 'level' is device dependent. Value is between 0 and 254.
 
 #### RemainingTime Attribute
 The RemainingTime attribute represents the time remaining until the current
@@ -878,9 +903,36 @@ The OnLevel attribute determines the value that the CurrentLevel attribute is se
 when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
 the OnLevel attribute is not implemented, or is set to 0xff, it has no effect. 
 
+#### OnTransitionTime Attribute
+The OnTransitionTime attribute represents the time taken to move the current level from the
+minimum level to the maximum level when an On command is received by an On/Off cluster on
+the same endpoint.  It is specified in 10ths of a second.  If this command is not implemented,
+or contains a value of 0xffff, the OnOffTransitionTime will be used instead.
+
+#### OffTransitionTime Attribute
+The OffTransitionTime attribute represents the time taken to move the current level from the
+maximum level to the minimum level when an Off command is received by an On/Off cluster on
+the same endpoint.  It is specified in 10ths of a second.  If this command is not implemented,
+or contains a value of 0xffff, the OnOffTransitionTime will be used instead.
+
+#### DefaultMoveRate Attribute
+The DefaultMoveRate attribute determines the movement rate, in units per second, when a Move
+command is received with a Rate parameter of 0xFF.
+
 ### Received
 
 #### Move to Level Command [0x00]
+On receipt of this command, a device SHALL move from its current level to the 
+value given in the Level field. The meaning of ‘level’ is device dependent –e.g.,
+for a light it MAY mean brightness level.The movement SHALL be as continuous as
+technically practical, i.e., not a step function, and the time taken to move to
+the new level SHALL be equal to the value of the Transition time field, in tenths
+of a second, or as close to this as the device is able.If the Transition time field
+takes the value 0xffff then the time taken to move to the new level SHALL instead
+be determined by the OnOffTransitionTimeattribute. If OnOffTransitionTime, which is
+an optional attribute, is not present, the device SHALL move to its new level as fast
+as it is able.
+
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Level                      |Unsigned 8-bit integer     |
@@ -2245,10 +2297,10 @@ reports and supervision of the IAS network.
 |0x0000 |ZoneState                                   |8-bit Enumeration          |Read only  |Mandatory |          |
 |0x0001 |ZoneType                                    |16-bit Enumeration         |Read only  |Mandatory |          |
 |0x0002 |ZoneStatus                                  |16-bit Bitmap              |Read only  |Mandatory |          |
-|0x0010 |IASCIEAddress                             |IEEE Address               |Read/Write |Mandatory |          |
-|0x0011 |ZoneID                                     |Unsigned 8-bit Integer     |Read only  |Mandatory |          |
-|0x0012 |NumberOfZoneSensitivityLevelsSupported |Unsigned 8-bit Integer     |Read only  |Optional  |          |
-|0x0013 |CurrentZoneSensitivityLevel              |Unsigned 8-bit Integer     |Read/Write |Optional  |          |
+|0x0010 |IASCIEAddress                               |IEEE Address               |Read/Write |Mandatory |          |
+|0x0011 |ZoneID                                      |Unsigned 8-bit Integer     |Read only  |Mandatory |          |
+|0x0012 |NumberOfZoneSensitivityLevelsSupported      |Unsigned 8-bit Integer     |Read only  |Optional  |          |
+|0x0013 |CurrentZoneSensitivityLevel                 |Unsigned 8-bit Integer     |Read/Write |Optional  |          |
 
 #### ZoneState Attribute
 
