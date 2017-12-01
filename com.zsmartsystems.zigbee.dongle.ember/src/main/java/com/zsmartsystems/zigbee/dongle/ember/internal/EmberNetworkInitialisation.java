@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
@@ -41,7 +42,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspMultiResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspSingleResponseTransaction;
@@ -165,7 +165,7 @@ public class EmberNetworkInitialisation {
      */
     private Integer doEnergyScan(int scanDuration) {
         EzspStartScanRequest energyScan = new EzspStartScanRequest();
-        energyScan.setChannelMask(EzspChannelMask.EZSP_CHANNEL_MASK_ALL.getKey());
+        energyScan.setChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ);
         energyScan.setDuration(scanDuration);
         energyScan.setScanType(EzspNetworkScanType.EZSP_ENERGY_SCAN);
 
@@ -211,7 +211,7 @@ public class EmberNetworkInitialisation {
     private boolean doActiveScan(int scanDuration) {
         // Now do an active scan to see if there are other networks operating
         EzspStartScanRequest activeScan = new EzspStartScanRequest();
-        activeScan.setChannelMask(EzspChannelMask.EZSP_CHANNEL_MASK_ALL.getKey());
+        activeScan.setChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ);
         activeScan.setDuration(scanDuration);
         activeScan.setScanType(EzspNetworkScanType.EZSP_ACTIVE_SCAN);
 

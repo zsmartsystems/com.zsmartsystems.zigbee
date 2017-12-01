@@ -34,7 +34,7 @@ public class TelegesisChangeChannelCommandTest extends TelegesisFrameBaseTest {
         TelegesisChangeChannelCommand command = new TelegesisChangeChannelCommand();
         command.setChannel(12);
         System.out.println(command);
-        assertEquals("AT+CCHANGE:0C\r\n", intArrayToString(command.serialize()));
+        assertEquals("AT+CCHANGE:12\r\n", intArrayToString(command.serialize()));
 
         command.deserialize(stringToIntArray("OK\r"));
         System.out.println(command);

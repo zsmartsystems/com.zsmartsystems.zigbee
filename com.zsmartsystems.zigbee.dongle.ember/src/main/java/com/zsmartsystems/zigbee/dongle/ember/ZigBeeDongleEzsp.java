@@ -21,9 +21,12 @@ import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
+import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCurrentSecurityStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCurrentSecurityStateResponse;
@@ -229,6 +232,18 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
         logger.debug(networkInitResponse.toString());
 
+        EzspAddEndpointRequest addEndpoint = new EzspAddEndpointRequest();
+        addEndpoint.setEndpoint(1);
+        addEndpoint.setDeviceId(0);
+        addEndpoint.setProfileId(ZigBeeProfileType.HOME_AUTOMATION.getId());
+        addEndpoint.setInputClusterList(new int[] { 0 });
+        addEndpoint.setOutputClusterList(new int[] { 0 });
+        logger.debug(addEndpoint.toString());
+        EzspTransaction addEndpointTransaction = ashHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(addEndpoint, EzspAddEndpointResponse.class));
+        EzspAddEndpointResponse addEndpointResponse = (EzspAddEndpointResponse) addEndpointTransaction.getResponse();
+        logger.debug(addEndpointResponse.toString());
+
         networkParameters = getNetworkParameters();
         getCurrentSecurityState();
 
@@ -285,9 +300,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         logger.debug("Current Security State = {}", currentSecurityState);
 
         logger.debug("EZSP dongle startup done.");
-
-        // Mainly for debug we run a task to periodically download the neighbor table
-        // new EzspNeighborTable(ashHandler, 31);
 
         return true;
     }
@@ -357,17 +369,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         }
         return currentSecurityStateResponse.getState();
     }
-
-    // private void permitJoin() {
-    // EzspPermitJoiningRequest request = new EzspPermitJoiningRequest();
-    // request.setDuration(255);
-    // EzspTransaction transaction = ashHandler
-    // .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspPermitJoiningResponse.class));
-    // EzspPermitJoiningResponse response = (EzspPermitJoiningResponse) transaction.getResponse();
-    // logger.debug(response.toString());
-
-    // zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
-    // }
 
     @Override
     public void sendCommand(final ZigBeeApsFrame apsFrame) throws ZigBeeException {

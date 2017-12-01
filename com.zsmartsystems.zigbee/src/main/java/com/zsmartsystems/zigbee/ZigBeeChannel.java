@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
+package com.zsmartsystems.zigbee;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,69 +52,87 @@ import java.util.Map;
  * @author Chris Jackson
  *
  */
-public enum EzspChannelMask {
-    EZSP_CHANNEL_MASK_UNKNONW(0),
-    EZSP_CHANNEL_MASK_ALL(0x07FFF800),
-    EZSP_CHANNEL_MASK_CHAN11(0x00000800),
-    EZSP_CHANNEL_MASK_CHAN12(0x00001000),
-    EZSP_CHANNEL_MASK_CHAN13(0x00002000),
-    EZSP_CHANNEL_MASK_CHAN14(0x00004000),
-    EZSP_CHANNEL_MASK_CHAN15(0x00008000),
-    EZSP_CHANNEL_MASK_CHAN16(0x00010000),
-    EZSP_CHANNEL_MASK_CHAN17(0x00020000),
-    EZSP_CHANNEL_MASK_CHAN18(0x00040000),
-    EZSP_CHANNEL_MASK_CHAN19(0x00080000),
-    EZSP_CHANNEL_MASK_CHAN20(0x00100000),
-    EZSP_CHANNEL_MASK_CHAN21(0x00200000),
-    EZSP_CHANNEL_MASK_CHAN22(0x00400000),
-    EZSP_CHANNEL_MASK_CHAN23(0x00800000),
-    EZSP_CHANNEL_MASK_CHAN24(0x01000000),
-    EZSP_CHANNEL_MASK_CHAN25(0x02000000),
-    EZSP_CHANNEL_MASK_CHAN26(0x04000000);
+public enum ZigBeeChannel {
+    UNKNOWN(-1, 0),
+    CHANNEL_00(0, 0x00000001),
+    CHANNEL_01(1, 0x00000002),
+    CHANNEL_02(2, 0x00000004),
+    CHANNEL_03(3, 0x00000008),
+    CHANNEL_04(4, 0x00000010),
+    CHANNEL_05(5, 0x00000020),
+    CHANNEL_06(6, 0x00000040),
+    CHANNEL_07(7, 0x00000080),
+    CHANNEL_08(8, 0x00000100),
+    CHANNEL_09(9, 0x00000200),
+    CHANNEL_10(10, 0x00000400),
+    CHANNEL_11(11, 0x00000800),
+    CHANNEL_12(12, 0x00001000),
+    CHANNEL_13(13, 0x00002000),
+    CHANNEL_14(14, 0x00004000),
+    CHANNEL_15(15, 0x00008000),
+    CHANNEL_16(16, 0x00010000),
+    CHANNEL_17(17, 0x00020000),
+    CHANNEL_18(18, 0x00040000),
+    CHANNEL_19(19, 0x00080000),
+    CHANNEL_20(20, 0x00100000),
+    CHANNEL_21(21, 0x00200000),
+    CHANNEL_22(22, 0x00400000),
+    CHANNEL_23(23, 0x00800000),
+    CHANNEL_24(24, 0x01000000),
+    CHANNEL_25(25, 0x02000000),
+    CHANNEL_26(26, 0x04000000);
 
     /**
      * A mapping between the integer code and its corresponding type to
      * facilitate lookup by code.
      */
-    private static Map<Integer, EzspChannelMask> codeMapping;
+    private static Map<Integer, ZigBeeChannel> codeMapping;
 
-    private int key;
+    private int channel;
+    private int mask;
 
-    private EzspChannelMask(int key) {
-        this.key = key;
+    private ZigBeeChannel(int channel, int mask) {
+        this.channel = channel;
+        this.mask = mask;
     }
 
     private static void initMapping() {
-        codeMapping = new HashMap<Integer, EzspChannelMask>();
-        for (EzspChannelMask s : values()) {
-            codeMapping.put(s.key, s);
+        codeMapping = new HashMap<Integer, ZigBeeChannel>();
+        for (ZigBeeChannel s : values()) {
+            codeMapping.put(s.channel, s);
         }
     }
 
     /**
-     * Lookup function based on the EzspNetworkScanType type code. Returns null
-     * if the code does not exist.
-     *
-     * @param i
-     *            the code to lookup
-     * @return enumeration value of the alarm type.
+     * @return the channel
      */
-    public static EzspChannelMask getEzspChannelMask(int i) {
+    public int getChannel() {
+        return channel;
+    }
+
+    /**
+     * @return the channel mask
+     */
+    public int getMask() {
+        return mask;
+    }
+
+    /**
+     * Lookup function based on the ZigBeeChannel channel number. Returns null
+     * if the channel does not exist.
+     *
+     * @param channel the channel to lookup
+     * @return enumeration value of the {@link ZigBeeChannel}.
+     */
+    public static ZigBeeChannel create(int channel) {
         if (codeMapping == null) {
             initMapping();
         }
 
-        if (codeMapping.get(i) == null) {
-            return EZSP_CHANNEL_MASK_UNKNONW;
+        if (codeMapping.get(channel) == null) {
+            return UNKNOWN;
         }
 
-        return codeMapping.get(i);
-    }
-
-    /**
-     * @return the key
-     */
-    public int getKey() {
-        return key;
+        return codeMapping.get(channel);
     }
 }

@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
@@ -26,6 +27,7 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFrameHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBecomeNetworkManagerCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBecomeTrustCentreCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBootloadCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisChangeChannelCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCreatePanCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceType;
@@ -41,6 +43,7 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetw
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisReceiveMessageEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendMulticastCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendUnicastCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetChannelMaskCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetEpanIdCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetExtendedFunctionCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetInputClustersCommand;
@@ -578,7 +581,24 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public boolean setZigBeeChannel(int channel) {
-        this.radioChannel = channel;
+        ZigBeeChannelMask channelMask = new ZigBeeChannelMask();
+        channelMask.addChannel(channel);
+
+        TelegesisSetChannelMaskCommand maskCommand = new TelegesisSetChannelMaskCommand();
+        maskCommand.setChannelMask(channelMask.getChannelMask() >> 11);
+        if (frameHandler.sendRequest(maskCommand) == null || maskCommand.getStatus() != TelegesisStatusCode.SUCCESS) {
+            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+            return false;
+        }
+
+        TelegesisChangeChannelCommand channelCommand = new TelegesisChangeChannelCommand();
+        channelCommand.setChannel(channel);
+        if (frameHandler.sendRequest(channelCommand) == null
+                || channelCommand.getStatus() != TelegesisStatusCode.SUCCESS) {
+            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+            return false;
+        }
+
         return false;
     }
 

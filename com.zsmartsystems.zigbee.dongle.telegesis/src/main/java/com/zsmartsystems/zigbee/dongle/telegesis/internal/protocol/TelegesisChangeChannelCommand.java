@@ -46,7 +46,7 @@ public class TelegesisChangeChannelCommand extends TelegesisFrame implements Tel
         serializeCommand("AT+CCHANGE");
         if (channel != null) {
             serializeDelimiter();
-            serializeInt8(channel);
+            serializeInteger(channel);
         }
 
         return getPayload();
