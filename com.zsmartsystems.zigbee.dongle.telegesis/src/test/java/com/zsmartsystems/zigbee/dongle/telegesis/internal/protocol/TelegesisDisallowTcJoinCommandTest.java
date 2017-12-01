@@ -20,13 +20,13 @@ public class TelegesisDisallowTcJoinCommandTest extends TelegesisFrameBaseTest {
     @Test
     public void test() {
         TelegesisDisallowTcJoinCommand command = new TelegesisDisallowTcJoinCommand();
-        command.setJoin(false);
+        command.setDisallowJoin(false);
         command.setPassword("password");
         System.out.println(command);
         assertEquals("ATS0A5=0:password\r\n", intArrayToString(command.serialize()));
 
         command = new TelegesisDisallowTcJoinCommand();
-        command.setJoin(true);
+        command.setDisallowJoin(true);
         command.setPassword("password");
         System.out.println(command);
         assertEquals("ATS0A5=1:password\r\n", intArrayToString(command.serialize()));

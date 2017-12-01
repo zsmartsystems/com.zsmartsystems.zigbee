@@ -57,7 +57,7 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisStat
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.TransportConfigResult;
-import com.zsmartsystems.zigbee.transport.TrustCentreLinkMode;
+import com.zsmartsystems.zigbee.transport.TrustCentreJoinMode;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
@@ -168,7 +168,7 @@ public class ZigBeeDongleTelegesis
      * <br>
      * + Bit 4: Set: Send Network key encrypted with the link key to nodes joining
      * <br>
-     * - Bit 3: Set: Do not allow nodes to re-join unsecured
+     * + Bit 3: Set: Do not allow nodes to re-join unsecured
      * <br>
      * + Bit 2: Set: Send Network key encrypted with the link key to nodes re-joining unsecured
      * <br>
@@ -176,7 +176,7 @@ public class ZigBeeDongleTelegesis
      * <br>
      * - Bit 0: Set: Do not allow other nodes to join the network via this node
      */
-    private final int defaultS0A = 0x0156;
+    private final int defaultS0A = 0x015E;
 
     /**
      * S0E – Prompt Enable 1
@@ -589,6 +589,8 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public boolean setZigBeePanId(int panId) {
+        // Note that Telegesis dongle will not set a PAN ID if it detects the same PAN is already in use.
+        // This can cause issues when trying to create a new coordinator on the same PAN.
         this.panId = panId;
         return true;
     }
@@ -708,7 +710,7 @@ public class ZigBeeDongleTelegesis
 
                     case TRUST_CENTRE_JOIN_MODE:
                         configuration.setResult(option,
-                                setTcJoinMode((TrustCentreLinkMode) configuration.getValue(option)));
+                                setTcJoinMode((TrustCentreJoinMode) configuration.getValue(option)));
                         break;
 
                     default:
@@ -744,24 +746,24 @@ public class ZigBeeDongleTelegesis
         return TransportConfigResult.SUCCESS;
     }
 
-    private TransportConfigResult setTcJoinMode(TrustCentreLinkMode linkMode) {
+    private TransportConfigResult setTcJoinMode(TrustCentreJoinMode linkMode) {
         logger.debug("Setting Telegesis trust centre link mode: {}", linkMode);
 
         TelegesisDisallowTcJoinCommand disallowJoinCommand = new TelegesisDisallowTcJoinCommand();
         switch (linkMode) {
             case TC_JOIN_DENY:
-                disallowJoinCommand.setJoin(true);
+                disallowJoinCommand.setDisallowJoin(true);
                 disallowJoinCommand.setPassword(telegesisPassword);
                 frameHandler.sendRequest(disallowJoinCommand);
                 break;
             case TC_JOIN_SECURE:
             case TC_JOIN_INSECURE:
-                disallowJoinCommand.setJoin(false);
+                disallowJoinCommand.setDisallowJoin(false);
                 disallowJoinCommand.setPassword(telegesisPassword);
                 frameHandler.sendRequest(disallowJoinCommand);
 
                 TelegesisDisallowUnsecuredRejoinCommand unsecuredRejoinCommand = new TelegesisDisallowUnsecuredRejoinCommand();
-                unsecuredRejoinCommand.setRejoin(linkMode == TrustCentreLinkMode.TC_JOIN_SECURE ? true : false);
+                unsecuredRejoinCommand.setDisallowRejoin(linkMode == TrustCentreJoinMode.TC_JOIN_SECURE ? true : false);
                 unsecuredRejoinCommand.setPassword(telegesisPassword);
                 frameHandler.sendRequest(unsecuredRejoinCommand);
                 break;

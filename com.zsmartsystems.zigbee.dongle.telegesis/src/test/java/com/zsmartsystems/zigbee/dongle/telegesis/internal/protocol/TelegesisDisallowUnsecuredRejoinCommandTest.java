@@ -20,13 +20,13 @@ public class TelegesisDisallowUnsecuredRejoinCommandTest extends TelegesisFrameB
     @Test
     public void test() {
         TelegesisDisallowUnsecuredRejoinCommand command = new TelegesisDisallowUnsecuredRejoinCommand();
-        command.setRejoin(false);
+        command.setDisallowRejoin(false);
         command.setPassword("password");
         System.out.println(command);
         assertEquals("ATS0A3=0:password\r\n", intArrayToString(command.serialize()));
 
         command = new TelegesisDisallowUnsecuredRejoinCommand();
-        command.setRejoin(true);
+        command.setDisallowRejoin(true);
         command.setPassword("password");
         System.out.println(command);
         assertEquals("ATS0A3=1:password\r\n", intArrayToString(command.serialize()));

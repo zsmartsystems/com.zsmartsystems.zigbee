@@ -27,16 +27,16 @@ public class TransportConfigTest {
         config = new TransportConfig();
         assertEquals(0, config.getOptions().size());
 
-        config = new TransportConfig(TransportConfigOption.TRUST_CENTRE_JOIN_MODE, TrustCentreLinkMode.TC_JOIN_DENY);
+        config = new TransportConfig(TransportConfigOption.TRUST_CENTRE_JOIN_MODE, TrustCentreJoinMode.TC_JOIN_DENY);
         assertEquals(1, config.getOptions().size());
 
         assertTrue(config.addOption(TransportConfigOption.CONCENTRATOR_TYPE, ConcentratorType.DISABLED));
         assertEquals(2, config.getOptions().size());
 
-        assertFalse(config.addOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE, TrustCentreLinkMode.TC_JOIN_DENY));
+        assertFalse(config.addOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE, TrustCentreJoinMode.TC_JOIN_DENY));
         assertEquals(2, config.getOptions().size());
 
-        assertEquals(TrustCentreLinkMode.TC_JOIN_DENY, config.getOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE));
+        assertEquals(TrustCentreJoinMode.TC_JOIN_DENY, config.getOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE));
         assertNull(config.getOption(TransportConfigOption.TRUST_CENTRE_LINK_KEY));
 
         assertTrue(config.setResult(TransportConfigOption.CONCENTRATOR_TYPE, TransportConfigResult.SUCCESS));

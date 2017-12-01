@@ -46,7 +46,7 @@ import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServerStatus;
 import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaStatusCallback;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
-import com.zsmartsystems.zigbee.transport.TrustCentreLinkMode;
+import com.zsmartsystems.zigbee.transport.TrustCentreJoinMode;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
@@ -2642,7 +2642,7 @@ public final class ZigBeeConsole {
             }
 
             TransportConfig config = new TransportConfig(TransportConfigOption.TRUST_CENTRE_JOIN_MODE,
-                    TrustCentreLinkMode.valueOf(args[2].toUpperCase()));
+                    TrustCentreJoinMode.valueOf(args[2].toUpperCase()));
 
             dongle.updateTransportConfig(config);
             print("Trust Centre configuration returned "

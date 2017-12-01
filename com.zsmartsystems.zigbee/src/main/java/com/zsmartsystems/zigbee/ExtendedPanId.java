@@ -48,7 +48,7 @@ public class ExtendedPanId {
     }
 
     /**
-     * Create an {@link ExtendedPanId} from a {@link String}
+     * Create an {@link ExtendedPanId} from a {@link String} defined in hexadecimal notation.
      *
      * @param panId the panId as a {@link String}
      */
