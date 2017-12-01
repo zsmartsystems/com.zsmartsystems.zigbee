@@ -23,7 +23,7 @@ public class TelegesisDisallowUnsecuredRejoinCommand extends TelegesisFrame impl
     /**
      * Command field
      */
-    private Boolean rejoin;
+    private Boolean disallowRejoin;
 
     /**
      * Command field
@@ -32,10 +32,10 @@ public class TelegesisDisallowUnsecuredRejoinCommand extends TelegesisFrame impl
 
     /**
      *
-     * @param rejoin the rejoin to set as {@link Boolean}
+     * @param disallowRejoin the disallowRejoin to set as {@link Boolean}
      */
-    public void setRejoin(Boolean rejoin) {
-        this.rejoin = rejoin;
+    public void setDisallowRejoin(Boolean disallowRejoin) {
+        this.disallowRejoin = disallowRejoin;
     }
 
     /**
@@ -50,7 +50,7 @@ public class TelegesisDisallowUnsecuredRejoinCommand extends TelegesisFrame impl
     public int[] serialize() {
         // Serialize the command fields
         serializeCommand("ATS0A3=");
-        serializeBoolean(rejoin);
+        serializeBoolean(disallowRejoin);
         serializeDelimiter();
         serializeString(password);
 
@@ -75,8 +75,8 @@ public class TelegesisDisallowUnsecuredRejoinCommand extends TelegesisFrame impl
         final StringBuilder builder = new StringBuilder(309);
         // First present the command parameters...
         // Then the responses later if they are available
-        builder.append("TelegesisDisallowUnsecuredRejoinCommand [rejoin=");
-        builder.append(rejoin);
+        builder.append("TelegesisDisallowUnsecuredRejoinCommand [disallowRejoin=");
+        builder.append(disallowRejoin);
         builder.append(", password=");
         builder.append(password);
         if (status != null) {

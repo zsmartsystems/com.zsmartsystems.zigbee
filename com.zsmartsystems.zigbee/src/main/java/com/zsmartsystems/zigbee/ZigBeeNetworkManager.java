@@ -301,7 +301,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return true if the PAN Id was set correctly
      */
     public boolean setZigBeePanId(int panId) {
-        if ((panId < 0 || panId > 0x3fff) & panId != 0xffff) {
+        if (panId < 0 || panId > 0xfffe) {
             return false;
         }
         return transport.setZigBeePanId(panId);
@@ -391,7 +391,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     /**
      * Schedules a runnable task for execution. This uses a fixed size scheduler to limit thread execution.
-     * 
+     *
      * @param runnableTask
      */
     public void executeTask(Runnable runnableTask) {

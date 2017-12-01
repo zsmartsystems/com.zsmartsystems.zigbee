@@ -30,7 +30,7 @@ public class DiscoverCommandsGeneratedResponse extends ZclCommand {
     /**
      * Discovery complete command message field.
      */
-    private Integer discoveryComplete;
+    private Boolean discoveryComplete;
 
     /**
      * Command identifiers command message field.
@@ -64,7 +64,7 @@ public class DiscoverCommandsGeneratedResponse extends ZclCommand {
      *
      * @return the Discovery complete
      */
-    public Integer getDiscoveryComplete() {
+    public Boolean getDiscoveryComplete() {
         return discoveryComplete;
     }
 
@@ -73,7 +73,7 @@ public class DiscoverCommandsGeneratedResponse extends ZclCommand {
      *
      * @param discoveryComplete the Discovery complete
      */
-    public void setDiscoveryComplete(final Integer discoveryComplete) {
+    public void setDiscoveryComplete(final Boolean discoveryComplete) {
         this.discoveryComplete = discoveryComplete;
     }
 
@@ -97,13 +97,13 @@ public class DiscoverCommandsGeneratedResponse extends ZclCommand {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(discoveryComplete, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(discoveryComplete, ZclDataType.BOOLEAN);
         serializer.serialize(commandIdentifiers, ZclDataType.X_UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        discoveryComplete = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        discoveryComplete = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
         commandIdentifiers = (List<Integer>) deserializer.deserialize(ZclDataType.X_UNSIGNED_8_BIT_INTEGER);
     }
 

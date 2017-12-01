@@ -11,7 +11,7 @@ package com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol;
 /**
  * Class to implement the Telegesis command <b>Disallow TC Join</b>.
  * <p>
- * Set: Don’t allow nodes to join(TC setting)
+ * Set: Don’t allow nodes to join (TC setting)
  * <p>
  * This class provides methods for processing Telegesis AT API commands.
  * <p>
@@ -23,7 +23,7 @@ public class TelegesisDisallowTcJoinCommand extends TelegesisFrame implements Te
     /**
      * Command field
      */
-    private Boolean join;
+    private Boolean disallowJoin;
 
     /**
      * Command field
@@ -32,10 +32,10 @@ public class TelegesisDisallowTcJoinCommand extends TelegesisFrame implements Te
 
     /**
      *
-     * @param join the join to set as {@link Boolean}
+     * @param disallowJoin the disallowJoin to set as {@link Boolean}
      */
-    public void setJoin(Boolean join) {
-        this.join = join;
+    public void setDisallowJoin(Boolean disallowJoin) {
+        this.disallowJoin = disallowJoin;
     }
 
     /**
@@ -50,7 +50,7 @@ public class TelegesisDisallowTcJoinCommand extends TelegesisFrame implements Te
     public int[] serialize() {
         // Serialize the command fields
         serializeCommand("ATS0A5=");
-        serializeBoolean(join);
+        serializeBoolean(disallowJoin);
         serializeDelimiter();
         serializeString(password);
 
@@ -75,8 +75,8 @@ public class TelegesisDisallowTcJoinCommand extends TelegesisFrame implements Te
         final StringBuilder builder = new StringBuilder(300);
         // First present the command parameters...
         // Then the responses later if they are available
-        builder.append("TelegesisDisallowTcJoinCommand [join=");
-        builder.append(join);
+        builder.append("TelegesisDisallowTcJoinCommand [disallowJoin=");
+        builder.append(disallowJoin);
         builder.append(", password=");
         builder.append(password);
         if (status != null) {

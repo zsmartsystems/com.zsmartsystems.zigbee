@@ -31,12 +31,12 @@ public class DiscoverAttributesExtendedResponse extends ZclCommand {
     /**
      * Discovery complete command message field.
      */
-    private Integer discoveryComplete;
+    private Boolean discoveryComplete;
 
     /**
-     * Command identifiers command message field.
+     * Attribute Information command message field.
      */
-    private List<ExtendedAttributeInformation> commandIdentifiers;
+    private List<ExtendedAttributeInformation> attributeInformation;
 
     /**
      * Default constructor.
@@ -65,7 +65,7 @@ public class DiscoverAttributesExtendedResponse extends ZclCommand {
      *
      * @return the Discovery complete
      */
-    public Integer getDiscoveryComplete() {
+    public Boolean getDiscoveryComplete() {
         return discoveryComplete;
     }
 
@@ -74,49 +74,49 @@ public class DiscoverAttributesExtendedResponse extends ZclCommand {
      *
      * @param discoveryComplete the Discovery complete
      */
-    public void setDiscoveryComplete(final Integer discoveryComplete) {
+    public void setDiscoveryComplete(final Boolean discoveryComplete) {
         this.discoveryComplete = discoveryComplete;
     }
 
     /**
-     * Gets Command identifiers.
+     * Gets Attribute Information.
      *
-     * @return the Command identifiers
+     * @return the Attribute Information
      */
-    public List<ExtendedAttributeInformation> getCommandIdentifiers() {
-        return commandIdentifiers;
+    public List<ExtendedAttributeInformation> getAttributeInformation() {
+        return attributeInformation;
     }
 
     /**
-     * Sets Command identifiers.
+     * Sets Attribute Information.
      *
-     * @param commandIdentifiers the Command identifiers
+     * @param attributeInformation the Attribute Information
      */
-    public void setCommandIdentifiers(final List<ExtendedAttributeInformation> commandIdentifiers) {
-        this.commandIdentifiers = commandIdentifiers;
+    public void setAttributeInformation(final List<ExtendedAttributeInformation> attributeInformation) {
+        this.attributeInformation = attributeInformation;
     }
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(discoveryComplete, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(commandIdentifiers, ZclDataType.N_X_EXTENDED_ATTRIBUTE_INFORMATION);
+        serializer.serialize(discoveryComplete, ZclDataType.BOOLEAN);
+        serializer.serialize(attributeInformation, ZclDataType.N_X_EXTENDED_ATTRIBUTE_INFORMATION);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        discoveryComplete = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        commandIdentifiers = (List<ExtendedAttributeInformation>) deserializer.deserialize(ZclDataType.N_X_EXTENDED_ATTRIBUTE_INFORMATION);
+        discoveryComplete = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
+        attributeInformation = (List<ExtendedAttributeInformation>) deserializer.deserialize(ZclDataType.N_X_EXTENDED_ATTRIBUTE_INFORMATION);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(112);
+        final StringBuilder builder = new StringBuilder(114);
         builder.append("DiscoverAttributesExtendedResponse [");
         builder.append(super.toString());
         builder.append(", discoveryComplete=");
         builder.append(discoveryComplete);
-        builder.append(", commandIdentifiers=");
-        builder.append(commandIdentifiers);
+        builder.append(", attributeInformation=");
+        builder.append(attributeInformation);
         builder.append(']');
         return builder.toString();
     }

@@ -46,7 +46,7 @@ import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServerStatus;
 import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaStatusCallback;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
-import com.zsmartsystems.zigbee.transport.TrustCentreLinkMode;
+import com.zsmartsystems.zigbee.transport.TrustCentreJoinMode;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
@@ -58,15 +58,11 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsGeneratedResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsReceivedResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupResponse;
-import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
@@ -1900,31 +1896,27 @@ public final class ZigBeeConsole {
                 }
             }
 
-            Future<CommandResult> future = cluster.discoverCommandsReceived();
-            CommandResult result = future.get();
+            Future<Boolean> future = cluster.discoverCommandsReceived(false);
+            Boolean result = future.get();
 
-            if (result.isSuccess()) {
-                final DiscoverCommandsReceivedResponse response = result.getResponse();
-
-                for (Integer cmd : response.getCommandIdentifiers()) {
-                    out.println("Cluster " + response.getClusterId() + ", Command=" + cmd);
+            if (result) {
+                for (Integer cmd : cluster.getSupportedCommandsReceived()) {
+                    out.println("Cluster " + cluster.getClusterId() + ", Command=" + cmd);
                 }
             } else {
-                out.println("Error executing command: " + result.getMessage());
+                out.println("Error getting list of commands received");
             }
 
-            future = cluster.discoverCommandsGenerated();
+            future = cluster.discoverCommandsGenerated(false);
             result = future.get();
 
-            if (result.isSuccess()) {
-                final DiscoverCommandsGeneratedResponse response = result.getResponse();
-
-                for (Integer cmd : response.getCommandIdentifiers()) {
-                    out.println("Cluster " + response.getClusterId() + ", Command=" + cmd);
+            if (result) {
+                for (Integer cmd : cluster.getSupportedCommandsGenerated()) {
+                    out.println("Cluster " + cluster.getClusterId() + ", Command=" + cmd);
                 }
 
             } else {
-                out.println("Error executing command: " + result.getMessage());
+                out.println("Error getting list of commands generated");
             }
 
             return true;
@@ -1982,25 +1974,23 @@ public final class ZigBeeConsole {
                 }
             }
 
-            final Future<CommandResult> future = cluster.discoverAttributes();
-            CommandResult result = future.get();
+            final Future<Boolean> future = cluster.discoverAttributes(false);
+            Boolean result = future.get();
 
-            if (result.isSuccess()) {
-                final DiscoverAttributesResponse response = result.getResponse();
-
-                for (AttributeInformation info : response.getInformation()) {
-                    ZclAttribute attribute = cluster.getAttribute(info.getIdentifier());
+            if (result) {
+                for (Integer attributeId : cluster.getSupportedAttributes()) {
+                    ZclAttribute attribute = cluster.getAttribute(attributeId);
                     String name = "unknown";
                     if (attribute != null) {
                         name = attribute.getName();
                     }
-                    out.println("Cluster " + response.getClusterId() + ", Attribute=" + info.getIdentifier()
-                            + ",  Type=" + info.getDataType() + ", " + name);
+                    out.println("Cluster " + cluster.getClusterId() + ", Attribute=" + attribute.getId() + ",  Type="
+                            + attribute.getDataType() + ", " + name);
                 }
 
                 return true;
             } else {
-                out.println("Error executing command: " + result.getMessage());
+                out.println("Failed to retrieve supported attributes");
                 return true;
             }
         }
@@ -2652,7 +2642,7 @@ public final class ZigBeeConsole {
             }
 
             TransportConfig config = new TransportConfig(TransportConfigOption.TRUST_CENTRE_JOIN_MODE,
-                    TrustCentreLinkMode.valueOf(args[2].toUpperCase()));
+                    TrustCentreJoinMode.valueOf(args[2].toUpperCase()));
 
             dongle.updateTransportConfig(config);
             print("Trust Centre configuration returned "

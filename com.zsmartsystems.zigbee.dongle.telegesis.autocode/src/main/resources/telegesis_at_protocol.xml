@@ -874,7 +874,7 @@
 			<prompt>ATS0A3=</prompt>
 			<parameter>
 				<data_type>Boolean</data_type>
-				<name>rejoin</name>
+				<name>Disallow Rejoin</name>
 				<description></description>
 			</parameter>
 			<parameter>
@@ -887,12 +887,12 @@
 
 	<command>
 		<name>Disallow TC Join</name>
-		<description>Set: Don’t allow nodes to join(TC setting)</description>
+		<description>Set: Don’t allow nodes to join (TC setting)</description>
 		<command_parameters>
 			<prompt>ATS0A5=</prompt>
 			<parameter>
 				<data_type>Boolean</data_type>
-				<name>join</name>
+				<name>Disallow Join</name>
 				<description></description>
 			</parameter>
 			<parameter>

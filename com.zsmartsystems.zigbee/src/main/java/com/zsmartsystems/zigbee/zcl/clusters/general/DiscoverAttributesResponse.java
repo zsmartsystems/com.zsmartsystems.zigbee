@@ -29,14 +29,23 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
  */
 public class DiscoverAttributesResponse extends ZclCommand {
     /**
-     * Command identifier command message field.
+     * Discovery Complete command message field.
+     *
+     * The discovery complete field is a Boolean field. A value of 0 indicates that there
+     * are more attributes to be discovered that have an attribute identifier value greater
+     * than the last attribute identifier in the last attribute information field. A value
+     * of 1 indicates that there are no more attributes to be discovered.
+     * The attribute identifier field SHALL contain the identifier of a discovered attribute.
+     * Attributes SHALL be included in ascending order, starting with the lowest attribute
+     * identifier that is greater than or equal to the start attribute identifier field of the
+     * received Discover Attributes command.
      */
-    private Boolean commandIdentifier;
+    private Boolean discoveryComplete;
 
     /**
-     * Information command message field.
+     * Attribute Information command message field.
      */
-    private List<AttributeInformation> information;
+    private List<AttributeInformation> attributeInformation;
 
     /**
      * Default constructor.
@@ -61,62 +70,80 @@ public class DiscoverAttributesResponse extends ZclCommand {
     }
 
     /**
-     * Gets Command identifier.
+     * Gets Discovery Complete.
      *
-     * @return the Command identifier
+     * The discovery complete field is a Boolean field. A value of 0 indicates that there
+     * are more attributes to be discovered that have an attribute identifier value greater
+     * than the last attribute identifier in the last attribute information field. A value
+     * of 1 indicates that there are no more attributes to be discovered.
+     * The attribute identifier field SHALL contain the identifier of a discovered attribute.
+     * Attributes SHALL be included in ascending order, starting with the lowest attribute
+     * identifier that is greater than or equal to the start attribute identifier field of the
+     * received Discover Attributes command.
+     *
+     * @return the Discovery Complete
      */
-    public Boolean getCommandIdentifier() {
-        return commandIdentifier;
+    public Boolean getDiscoveryComplete() {
+        return discoveryComplete;
     }
 
     /**
-     * Sets Command identifier.
+     * Sets Discovery Complete.
      *
-     * @param commandIdentifier the Command identifier
+     * The discovery complete field is a Boolean field. A value of 0 indicates that there
+     * are more attributes to be discovered that have an attribute identifier value greater
+     * than the last attribute identifier in the last attribute information field. A value
+     * of 1 indicates that there are no more attributes to be discovered.
+     * The attribute identifier field SHALL contain the identifier of a discovered attribute.
+     * Attributes SHALL be included in ascending order, starting with the lowest attribute
+     * identifier that is greater than or equal to the start attribute identifier field of the
+     * received Discover Attributes command.
+     *
+     * @param discoveryComplete the Discovery Complete
      */
-    public void setCommandIdentifier(final Boolean commandIdentifier) {
-        this.commandIdentifier = commandIdentifier;
+    public void setDiscoveryComplete(final Boolean discoveryComplete) {
+        this.discoveryComplete = discoveryComplete;
     }
 
     /**
-     * Gets Information.
+     * Gets Attribute Information.
      *
-     * @return the Information
+     * @return the Attribute Information
      */
-    public List<AttributeInformation> getInformation() {
-        return information;
+    public List<AttributeInformation> getAttributeInformation() {
+        return attributeInformation;
     }
 
     /**
-     * Sets Information.
+     * Sets Attribute Information.
      *
-     * @param information the Information
+     * @param attributeInformation the Attribute Information
      */
-    public void setInformation(final List<AttributeInformation> information) {
-        this.information = information;
+    public void setAttributeInformation(final List<AttributeInformation> attributeInformation) {
+        this.attributeInformation = attributeInformation;
     }
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(commandIdentifier, ZclDataType.BOOLEAN);
-        serializer.serialize(information, ZclDataType.N_X_ATTRIBUTE_INFORMATION);
+        serializer.serialize(discoveryComplete, ZclDataType.BOOLEAN);
+        serializer.serialize(attributeInformation, ZclDataType.N_X_ATTRIBUTE_INFORMATION);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        commandIdentifier = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
-        information = (List<AttributeInformation>) deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_INFORMATION);
+        discoveryComplete = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
+        attributeInformation = (List<AttributeInformation>) deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_INFORMATION);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(97);
+        final StringBuilder builder = new StringBuilder(106);
         builder.append("DiscoverAttributesResponse [");
         builder.append(super.toString());
-        builder.append(", commandIdentifier=");
-        builder.append(commandIdentifier);
-        builder.append(", information=");
-        builder.append(information);
+        builder.append(", discoveryComplete=");
+        builder.append(discoveryComplete);
+        builder.append(", attributeInformation=");
+        builder.append(attributeInformation);
         builder.append(']');
         return builder.toString();
     }
