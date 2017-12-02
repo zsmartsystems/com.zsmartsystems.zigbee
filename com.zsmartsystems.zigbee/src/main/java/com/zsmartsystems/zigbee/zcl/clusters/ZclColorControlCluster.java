@@ -42,21 +42,99 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclColorControlCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0300;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Color control";
 
     // Attribute constants
+    /**
+     * The CurrentHue attribute contains the current hue value of the light. It is updated
+     * as fast as practical during commands that change the hue.
+     * <p>
+     * The hue in degrees shall be related to the CurrentHue attribute by the relationship
+     * Hue = CurrentHue x 360 / 254 (CurrentHue in the range 0 - 254 inclusive)
+     * <p>
+     * If this attribute is implemented then the CurrentSaturation and ColorMode
+     * attributes shall also be implemented.
+     */
     public static final int ATTR_CURRENTHUE = 0x0000;
+    /**
+     * The CurrentSaturation attribute holds the current saturation value of the light. It is
+     * updated as fast as practical during commands that change the saturation.
+     * The saturation shall be related to the CurrentSaturation attribute by the
+     * relationship
+     * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254 inclusive)
+     * If this attribute is implemented then the CurrentHue and ColorMode attributes
+     * shall also be implemented.
+     */
     public static final int ATTR_CURRENTSATURATION = 0x0001;
+    /**
+     * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
+     * until the currently active command will be complete.
+     */
     public static final int ATTR_REMAININGTIME = 0x0002;
+    /**
+     * The CurrentX attribute contains the current value of the normalized chromaticity
+     * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical
+     * during commands that change the color.
+     * <p>
+     * The value of x shall be related to the CurrentX attribute by the relationship
+     * <p>
+     * x = CurrentX / 65535 (CurrentX in the range 0 to 65279 inclusive)
+     */
     public static final int ATTR_CURRENTX = 0x0003;
+    /**
+     * The CurrentY attribute contains the current value of the normalized chromaticity
+     * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical
+     * during commands that change the color.
+     * <p>
+     * The value of y shall be related to the CurrentY attribute by the relationship
+     * <p>
+     * y = CurrentY / 65535 (CurrentY in the range 0 to 65279 inclusive)
+     */
     public static final int ATTR_CURRENTY = 0x0004;
+    /**
+     * The DriftCompensation attribute indicates what mechanism, if any, is in use for
+     * compensation for color/intensity drift over time.
+     */
     public static final int ATTR_DRIFTCOMPENSATION = 0x0005;
+    /**
+     * The CompensationText attribute holds a textual indication of what mechanism, if
+     * any, is in use to compensate for color/intensity drift over time.
+     */
     public static final int ATTR_COMPENSATIONTEXT = 0x0006;
+    /**
+     * The ColorTemperature attribute contains a scaled inverse of the current value of
+     * the color temperature. It is updated as fast as practical during commands that
+     * change the color.
+     * <p>
+     * The color temperature value in Kelvins shall be related to the ColorTemperature
+     * attribute by the relationship
+     * <p>
+     * Color temperature = 1,000,000 / ColorTemperature (ColorTemperature in the
+     * range 1 to 65279 inclusive, giving a color temperature range from 1,000,000
+     * Kelvins to 15.32 Kelvins).
+     * <p>
+     * The value ColorTemperature = 0 indicates an undefined value. The value
+     * ColorTemperature = 65535 indicates an invalid value.
+     */
     public static final int ATTR_COLORTEMPERATURE = 0x0007;
+    /**
+     * The ColorMode attribute indicates which attributes are currently determining the color of the device.
+     * If either the CurrentHue or CurrentSaturation attribute is implemented, this attribute SHALL also be
+     * implemented, otherwise it is optional. The value of the ColorMode attribute cannot be written directly
+     * - it is set upon reception of another command in to the appropriate mode for that command.
+     * <p>
+     * 0x00 CurrentHue and CurrentSaturation
+     * 0x01 CurrentX and CurrentY
+     * 0x02 ColorTemperatureMireds
+     */
     public static final int ATTR_COLORMODE = 0x0008;
 
     // Attribute initialisation

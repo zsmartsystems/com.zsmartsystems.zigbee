@@ -36,13 +36,30 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclIdentifyCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0003;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Identify";
 
     // Attribute constants
+    /**
+     * The IdentifyTime attribute specifies the remaining length of time, in seconds, that
+     * the device will continue to identify itself.
+     * <p>
+     * If this attribute is set to a value other than 0x0000 then the device shall enter its
+     * identification procedure, in order to indicate to an observer which of several
+     * devices it is. It is recommended that this procedure consists of flashing a light
+     * with a period of 0.5 seconds. The IdentifyTime attribute shall be decremented
+     * every second.
+     * <p>
+     * If this attribute reaches or is set to the value 0x0000 then the device shall
+     * terminate its identification procedure.
+     */
     public static final int ATTR_IDENTIFYTIME = 0x0000;
 
     // Attribute initialisation

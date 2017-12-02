@@ -31,13 +31,20 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclOnOffCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0006;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "On/Off";
 
     // Attribute constants
+    /**
+     * The OnOff attribute has the following values: 0 = Off, 1 = On
+     */
     public static final int ATTR_ONOFF = 0x0000;
 
     // Attribute initialisation

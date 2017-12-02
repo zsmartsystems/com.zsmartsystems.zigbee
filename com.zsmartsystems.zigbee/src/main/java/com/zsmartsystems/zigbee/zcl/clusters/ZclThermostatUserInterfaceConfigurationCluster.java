@@ -20,10 +20,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0204;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Thermostat User Interface Configuration";
 
     // Attribute initialisation

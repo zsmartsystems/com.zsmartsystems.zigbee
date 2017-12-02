@@ -28,19 +28,50 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclOccupancySensingCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0406;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Occupancy sensing";
 
     // Attribute constants
+    /**
+     * The Occupancy attribute is a bitmap.
+     * <p>
+     * Bit 0 specifies the sensed occupancy as follows: 1 = occupied, 0 = unoccupied.
+     * All other bits are reserved.
+     */
     public static final int ATTR_OCCUPANCY = 0x0000;
+    /**
+     * The OccupancySensorType attribute specifies the type of the occupancy sensor.
+     */
     public static final int ATTR_OCCUPANCYSENSORTYPE = 0x0001;
+    /**
+     */
     public static final int ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY = 0x0010;
+    /**
+     */
     public static final int ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY = 0x0011;
+    /**
+     * The UltraSonicOccupiedToUnoccupiedTime attribute specifies the time delay, in
+     * seconds, before the ultrasonic sensor changes to its occupied state when the
+     * sensed area becomes unoccupied. This attribute, along with
+     * UltraSonicUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter'
+     * when used in an area where occupation changes frequently.
+     */
     public static final int ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY = 0x0020;
+    /**
+     * The UltraSonicUnoccupiedToOccupiedTime attribute specifies the time delay, in
+     * seconds, before the ultrasonic sensor changes to its unoccupied state when the
+     * sensed area becomes occupied.
+     */
     public static final int ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY = 0x0021;
+    /**
+     */
     public static final int ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD = 0x0022;
 
     // Attribute initialisation

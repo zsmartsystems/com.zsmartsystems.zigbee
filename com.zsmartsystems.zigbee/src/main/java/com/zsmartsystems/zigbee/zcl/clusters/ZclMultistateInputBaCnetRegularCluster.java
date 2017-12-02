@@ -20,10 +20,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclMultistateInputBaCnetRegularCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x060E;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Multistate Input (BACnet Regular)";
 
     // Attribute initialisation

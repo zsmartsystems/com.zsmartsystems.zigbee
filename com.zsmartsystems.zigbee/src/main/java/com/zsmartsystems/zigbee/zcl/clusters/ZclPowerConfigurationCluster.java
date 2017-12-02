@@ -28,26 +28,136 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclPowerConfigurationCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0001;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Power configuration";
 
     // Attribute constants
+    /**
+     * The MainsVoltage attribute is 16-bits in length and specifies the actual (measured)
+     * RMS voltage (or DC voltage in the case of a DC supply) currently applied to the
+     * device, measured in units of 100mV.
+     */
     public static final int ATTR_MAINSVOLTAGE = 0x0000;
+    /**
+     * The MainsFrequency attribute is 8-bits in length and represents the frequency, in
+     * Hertz, of the mains as determined by the device as follows:-
+     * <p>
+     * MainsFrequency = 0.5 x measured frequency
+     * <p>
+     * Where 2 Hz <= measured frequency <= 506 Hz, corresponding to a
+     * <p>
+     * MainsFrequency in the range 1 to 0xfd.
+     * <p>
+     * The maximum resolution this format allows is 2 Hz.
+     * The following special values of MainsFrequency apply.
+     * <li>0x00 indicates a frequency that is too low to be measured.</li>
+     * <li>0xfe indicates a frequency that is too high to be measured.</li>
+     * <li>0xff indicates that the frequency could not be measured.</li>
+     */
     public static final int ATTR_MAINSFREQUENCY = 0x0001;
+    /**
+     * The MainsAlarmMask attribute is 8-bits in length and specifies which mains
+     * alarms may be generated. A ‘1’ in each bit position enables the alarm.
+     */
     public static final int ATTR_MAINSALARMMASK = 0x0010;
+    /**
+     * The MainsVoltageMinThreshold attribute is 16-bits in length and specifies the
+     * lower alarm threshold, measured in units of 100mV, for the MainsVoltage
+     * attribute. The value of this attribute shall be less than MainsVoltageMaxThreshold.
+     * <p>
+     * If the value of MainsVoltage drops below the threshold specified by
+     * MainsVoltageMinThreshold, the device shall start a timer to expire after
+     * MainsVoltageDwellTripPoint seconds. If the value of this attribute increases to
+     * greater than or equal to MainsVoltageMinThreshold before the timer expires, the
+     * device shall stop and reset the timer. If the timer expires, an alarm shall be
+     * generated.
+     * <p>
+     * The Alarm Code field included in the generated alarm shall be 0x00.
+     * <p>
+     * If this attribute takes the value 0xffff then this alarm shall not be generated.
+     */
     public static final int ATTR_MAINSVOLTAGEMINTHRESHOLD = 0x0011;
+    /**
+     * The MainsVoltageMaxThreshold attribute is 16-bits in length and specifies the
+     * upper alarm threshold, measured in units of 100mV, for the MainsVoltage
+     * attribute. The value of this attribute shall be greater than
+     * MainsVoltageMinThreshold.
+     * <p>
+     * If the value of MainsVoltage rises above the threshold specified by
+     * MainsVoltageMaxThreshold, the device shall start a timer to expire after
+     * MainsVoltageDwellTripPoint seconds. If the value of this attribute drops to lower
+     * than or equal to MainsVoltageMaxThreshold before the timer expires, the device
+     * shall stop and reset the timer. If the timer expires, an alarm shall be generated.
+     * <p>
+     * The Alarm Code field included in the generated alarm shall be 0x01.
+     * <p>
+     * If this attribute takes the value 0xffff then this alarm shall not be generated.
+     */
     public static final int ATTR_MAINSVOLTAGEMAXTHRESHOLD = 0x0012;
+    /**
+     * The MainsVoltageDwellTripPoint attribute is 16-bits in length and specifies the
+     * length of time, in seconds that the value of MainsVoltage may exist beyond either
+     * of its thresholds before an alarm is generated.
+     * <p>
+     * If this attribute takes the value 0xffff then the associated alarms shall not be
+     * generated.
+     */
     public static final int ATTR_MAINSVOLTAGEDWELLTRIPPOINT = 0x0013;
+    /**
+     * The BatteryVoltage attribute is 8-bits in length and specifies the current actual
+     * (measured) battery voltage, in units of 100mV.
+     * The value 0xff indicates an invalid or unknown reading.
+     */
     public static final int ATTR_BATTERYVOLTAGE = 0x0020;
+    /**
+     * The BatteryManufacturer attribute is a maximum of 16 bytes in length and
+     * specifies the name of the battery manufacturer as a ZigBee character string.
+     */
     public static final int ATTR_BATTERYMANUFACTURER = 0x0030;
+    /**
+     * The BatterySize attribute is an enumeration which specifies the type of battery
+     * being used by the device.
+     */
     public static final int ATTR_BATTERYSIZE = 0x0031;
+    /**
+     * The BatteryAHrRating attribute is 16-bits in length and specifies the Ampere-hour
+     * rating of the battery, measured in units of 10mAHr.
+     */
     public static final int ATTR_BATTERYAHRRATING = 0x0032;
+    /**
+     * The BatteryQuantity attribute is 8-bits in length and specifies the number of
+     * battery cells used to power the device.
+     */
     public static final int ATTR_BATTERYQUANTITY = 0x0033;
+    /**
+     * The BatteryRatedVoltage attribute is 8-bits in length and specifies the rated
+     * voltage of the battery being used in the device, measured in units of 100mV.
+     */
     public static final int ATTR_BATTERYRATEDVOLTAGE = 0x0034;
+    /**
+     * The BatteryAlarmMask attribute is 8-bits in length and specifies which battery
+     * alarms may be generated.
+     */
     public static final int ATTR_BATTERYALARMMASK = 0x0035;
+    /**
+     * The BatteryVoltageMinThreshold attribute is 8-bits in length and specifies the low
+     * voltage alarm threshold, measured in units of 100mV, for the BatteryVoltage
+     * attribute.
+     * <p>
+     * If the value of BatteryVoltage drops below the threshold specified by
+     * BatteryVoltageMinThreshold an alarm shall be generated.
+     * <p>
+     * The Alarm Code field included in the generated alarm shall be 0x10.
+     * <p>
+     * If this attribute takes the value 0xff then this alarm shall not be generated.
+     */
     public static final int ATTR_BATTERYVOLTAGEMINTHRESHOLD = 0x0036;
 
     // Attribute initialisation

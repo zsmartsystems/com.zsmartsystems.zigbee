@@ -52,18 +52,55 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclScenesCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0005;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Scenes";
 
     // Attribute constants
+    /**
+     * The SceneCount attribute specifies the number of scenes currently in the device's
+     * scene table.
+     */
     public static final int ATTR_SCENECOUNT = 0x0000;
+    /**
+     * The CurrentScene attribute holds the Scene ID of the scene last invoked.
+     */
     public static final int ATTR_CURRENTSCENE = 0x0001;
+    /**
+     * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
+     * 0x0000 if the scene last invoked is not associated with a group.
+     */
     public static final int ATTR_CURRENTGROUP = 0x0002;
+    /**
+     * The SceneValid attribute indicates whether the state of the device corresponds to
+     * that associated with the CurrentScene and CurrentGroup attributes. TRUE
+     * indicates that these attributes are valid, FALSE indicates that they are not valid.
+     * <p>
+     * Before a scene has been stored or recalled, this attribute is set to FALSE. After a
+     * successful Store Scene or Recall Scene command it is set to TRUE. If, after a
+     * scene is stored or recalled, the state of the device is modified, this attribute is set to
+     * FALSE.
+     */
     public static final int ATTR_SCENEVALID = 0x0003;
+    /**
+     * The most significant bit of the NameSupport attribute indicates whether or not
+     * scene names are supported. A value of 1 indicates that they are supported, and a
+     * value of 0 indicates that they are not supported.
+     */
     public static final int ATTR_NAMESUPPORT = 0x0004;
+    /**
+     * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address
+     * of the device that last configured the scene table.
+     * <p>
+     * The value 0xffffffffffffffff indicates that the device has not been configured, or
+     * that the address of the device that last configured the scenes cluster is not known.
+     */
     public static final int ATTR_LASTCONFIGUREDBY = 0x0005;
 
     // Attribute initialisation

@@ -34,16 +34,30 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclIasWdCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0502;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "IAS WD";
 
     // Attribute constants
+    /**
+     * The MaxDuration attribute specifies the maximum time in seconds that the siren
+     * will sound continuously, regardless of start/stop commands.
+     */
     public static final int ATTR_MAXDURATION = 0x0000;
+    /**
+     */
     public static final int ATTR_ZONETYPE = 0x0001;
+    /**
+     */
     public static final int ATTR_ZONESTATUS = 0x0002;
+    /**
+     */
     public static final int ATTR_IAS_CIE_ADDRESS = 0x0010;
 
     // Attribute initialisation

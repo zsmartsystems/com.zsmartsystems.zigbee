@@ -33,37 +33,108 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclThermostatCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0201;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Thermostat";
 
     // Attribute constants
+    /**
+     * LocalTemperature represents the temperature in degrees Celsius, as measured locally.
+     */
     public static final int ATTR_LOCALTEMPERATURE = 0x0000;
+    /**
+     * OutdoorTemperature represents the temperature in degrees Celsius, as measured locally.
+     */
     public static final int ATTR_OUTDOORTEMPERATURE = 0x0001;
+    /**
+     * Occupancy specifies whether the heated/cooled space is occupied or not
+     */
     public static final int ATTR_OCCUPANCY = 0x0002;
+    /**
+     * The MinHeatSetpointLimit attribute specifies the absolute minimum level that the heating setpoint MAY be
+     * set to. This is a limitation imposed by the manufacturer.
+     */
     public static final int ATTR_ABSMINHEATSETPOINTLIMIT = 0x0003;
+    /**
+     * The MaxHeatSetpointLimit attribute specifies the absolute maximum level that the heating setpoint MAY be
+     * set to. This is a limitation imposed by the manufacturer.
+     */
     public static final int ATTR_ABSMAXHEATSETPOINTLIMIT = 0x0004;
+    /**
+     * The MinCoolSetpointLimit attribute specifies the absolute minimum level that the cooling setpoint MAY be
+     * set to. This is a limitation imposed by the manufacturer.
+     */
     public static final int ATTR_ABSMINCOOLSETPOINTLIMIT = 0x0005;
+    /**
+     * The MaxCoolSetpointLimit attribute specifies the absolute maximum level that the cooling setpoint MAY be
+     * set to. This is a limitation imposed by the manufacturer.
+     */
     public static final int ATTR_ABSMAXCOOLSETPOINTLIMIT = 0x0006;
+    /**
+     * The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling demanded by the PI
+     * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
+     * thermostat is in “off” or “heating” mode.
+     */
     public static final int ATTR_PICOOLINGDEMAND = 0x0007;
+    /**
+     * The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating demanded by the PI
+     * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
+     * thermostat is in “off” or “cooling” mode.
+     */
     public static final int ATTR_PIHEATINGDEMAND = 0x0008;
+    /**
+     */
     public static final int ATTR_HVACSYSTEMTYPECONFIGURATION = 0x0009;
+    /**
+     */
     public static final int ATTR_LOCALTEMPERATURECALIBRATION = 0x0010;
+    /**
+     */
     public static final int ATTR_OCCUPIEDCOOLINGSETPOINT = 0x0011;
+    /**
+     */
     public static final int ATTR_OCCUPIEDHEATINGSETPOINT = 0x0012;
+    /**
+     */
     public static final int ATTR_UNOCCUPIEDCOOLINGSETPOINT = 0x0013;
+    /**
+     */
     public static final int ATTR_UNOCCUPIEDHEATINGSETPOINT = 0x0014;
+    /**
+     */
     public static final int ATTR_MINHEATSETPOINTLIMIT = 0x0015;
+    /**
+     */
     public static final int ATTR_MAXHEATSETPOINTLIMIT = 0x0016;
+    /**
+     */
     public static final int ATTR_MINCOOLSETPOINTLIMIT = 0x0017;
+    /**
+     */
     public static final int ATTR_MAXCOOLSETPOINTLIMIT = 0x0018;
+    /**
+     */
     public static final int ATTR_MINSETPOINTDEADBAND = 0x0019;
+    /**
+     */
     public static final int ATTR_REMOTESENSING = 0x001A;
+    /**
+     */
     public static final int ATTR_CONTROLSEQUENCEOFOPERATION = 0x001B;
+    /**
+     */
     public static final int ATTR_SYSTEMMODE = 0x001C;
+    /**
+     */
     public static final int ATTR_ALARMMASK = 0x001D;
+    /**
+     */
     public static final int ATTR_THERMOSTATRUNNINGMODE = 0x001E;
 
     // Attribute initialisation

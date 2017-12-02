@@ -28,16 +28,53 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclFlowMeasurementCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0404;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Flow measurement";
 
     // Attribute constants
+    /**
+     * MeasuredValue represents the flow in m3/h as follows:-
+     * <p>
+     * MeasuredValue = 10 x Flow
+     * <p>
+     * Where 0 m3/h <= Flow <= 6,553.4 m3
+     * <p>
+     * /h, corresponding to a MeasuredValue in the
+     * range 0 to 0xfffe.
+     * <p>
+     * The maximum resolution this format allows is 0.1 m3/h.
+     * <p>
+     * A MeasuredValue of 0xffff indicates that the pressure measurement is invalid.
+     * <p>
+     * MeasuredValue is updated continuously as new measurements are made.
+     */
     public static final int ATTR_MEASUREDVALUE = 0x0000;
+    /**
+     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
+     * that can be measured. A value of 0xffff means this attribute is not defined
+     */
     public static final int ATTR_MINMEASUREDVALUE = 0x0001;
+    /**
+     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
+     * that can be measured. A value of 0xffff means this attribute is not defined.
+     * <p>
+     * MaxMeasuredValue shall be greater than MinMeasuredValue.
+     * <p>
+     * MinMeasuredValue and MaxMeasuredValue define the range of the sensor
+     */
     public static final int ATTR_MAXMEASUREDVALUE = 0x0002;
+    /**
+     * The Tolerance attribute indicates the magnitude of the possible error that is
+     * associated with MeasuredValue . The true value is located in the range
+     * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
+     */
     public static final int ATTR_TOLERANCE = 0x0003;
 
     // Attribute initialisation

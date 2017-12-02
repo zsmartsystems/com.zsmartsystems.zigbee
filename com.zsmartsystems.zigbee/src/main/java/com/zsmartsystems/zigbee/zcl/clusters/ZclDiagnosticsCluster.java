@@ -25,42 +25,106 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclDiagnosticsCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0B05;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Diagnostics";
 
     // Attribute constants
+    /**
+     */
     public static final int ATTR_MACRXBCAST = 0x0100;
+    /**
+     */
     public static final int ATTR_MACTXBCAST = 0x0101;
+    /**
+     */
     public static final int ATTR_MACRXUCAST = 0x0102;
+    /**
+     */
     public static final int ATTR_MACTXUCAST = 0x0103;
+    /**
+     */
     public static final int ATTR_MACTXUCASTRETRY = 0x0104;
+    /**
+     */
     public static final int ATTR_MACTXUCASTFAIL = 0x0105;
+    /**
+     */
     public static final int ATTR_APSRXBCAST = 0x0106;
+    /**
+     */
     public static final int ATTR_APSTXBCAST = 0x0107;
+    /**
+     */
     public static final int ATTR_APSRXUCAST = 0x0108;
+    /**
+     */
     public static final int ATTR_APSTXUCASTSUCCESS = 0x0109;
+    /**
+     */
     public static final int ATTR_APSTXUCASTRETRY = 0x010A;
+    /**
+     */
     public static final int ATTR_APSTXUCASTFAIL = 0x010B;
+    /**
+     */
     public static final int ATTR_ROUTEDISCINITIATED = 0x010C;
+    /**
+     */
     public static final int ATTR_NEIGHBORADDED = 0x010D;
+    /**
+     */
     public static final int ATTR_NEIGHBORREMOVED = 0x010E;
+    /**
+     */
     public static final int ATTR_NEIGHBORSTALE = 0x010F;
+    /**
+     */
     public static final int ATTR_JOININDICATION = 0x0110;
+    /**
+     */
     public static final int ATTR_CHILDMOVED = 0x0111;
+    /**
+     */
     public static final int ATTR_NWKFCFAILURE = 0x0112;
+    /**
+     */
     public static final int ATTR_APSFCFAILURE = 0x0113;
+    /**
+     */
     public static final int ATTR_APSUNAUTHORIZEDKEY = 0x0114;
+    /**
+     */
     public static final int ATTR_NWKDECRYPTFAILURES = 0x0115;
+    /**
+     */
     public static final int ATTR_APSDECRYPTFAILURES = 0x0116;
+    /**
+     */
     public static final int ATTR_PACKETBUFFERALLOCATEFAILURES = 0x0117;
+    /**
+     */
     public static final int ATTR_RELAYEDUCAST = 0x0118;
+    /**
+     */
     public static final int ATTR_PHYTOMACQUEUELIMITREACHED = 0x0119;
+    /**
+     */
     public static final int ATTR_PACKETVALIDATEDROPCOUNT = 0x011A;
+    /**
+     */
     public static final int ATTR_AVERAGEMACRETRYPERAPSMESSAGESENT = 0x011B;
+    /**
+     */
     public static final int ATTR_LASTMESSAGELQI = 0x011C;
+    /**
+     */
     public static final int ATTR_LASTMESSAGERSSI = 0x011D;
 
     // Attribute initialisation
