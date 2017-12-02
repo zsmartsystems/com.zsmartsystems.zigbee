@@ -25,7 +25,7 @@ public class NodeDescriptor {
     private int bufferSize;
     private boolean complexDescriptorAvailable;
     private int manufacturerCode;
-    private LogicalType logicalType;
+    private LogicalType logicalType = LogicalType.UNKNOWN;
     private Set<ServerCapabilitiesType> serverCapabilities = new HashSet<ServerCapabilitiesType>();
     private int incomingTransferSize;
     private int outgoingTransferSize;

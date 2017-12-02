@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeException;
@@ -132,6 +133,11 @@ public class ZigBeeDongleTelegesis
      * The current extended pan ID
      */
     private ExtendedPanId extendedPanId;
+
+    /**
+     * The IeeeAddress of the Telegesis radio
+     */
+    private IeeeAddress ieeeAddress;
 
     /**
      * The Telegesis version used in this system.
@@ -361,6 +367,8 @@ public class ZigBeeDongleTelegesis
             builder.append("Version=R");
             builder.append(productInfo.getFirmwareRevision());
             versionString = builder.toString();
+
+            ieeeAddress = productInfo.getIeeeAddress();
         }
 
         // Get network information
@@ -424,6 +432,11 @@ public class ZigBeeDongleTelegesis
         serialPort.close();
         frameHandler.close();
         logger.debug("Telegesis dongle shutdown.");
+    }
+
+    @Override
+    public IeeeAddress getIeeeAddress() {
+        return ieeeAddress;
     }
 
     private void initialiseNetwork() {

@@ -55,7 +55,8 @@ public class ConBeeFrameHandler {
 
     private final static AtomicInteger callbackSequence = new AtomicInteger(1);
 
-    private int receiveTimeout = 175;
+    private final int RECEIVE_TIMEOUT_DEFAULT = 250;
+    private int receiveTimeout = RECEIVE_TIMEOUT_DEFAULT;
     private final Timer timer = new Timer();
     private TimerTask timerTask = null;
 
@@ -79,6 +80,9 @@ public class ConBeeFrameHandler {
      */
     private Thread receiveThread = null;
 
+    /**
+     * Object used to synchronise access to the send queue
+     */
     private Object transmitSync = new Object();
 
     /**
@@ -196,38 +200,37 @@ public class ConBeeFrameHandler {
     protected void handleConBeeState(ConBeeDeviceState deviceState) {
         logger.debug("ConBeeDeviceState={}", deviceState);
         synchronized (transmitSync) {
+            logger.debug("ConBeeDeviceState-sync");
             if (sentFrame != null) {
                 logger.debug("ConBeeDeviceState sendFrame!=null");
                 return;
             }
 
             if (deviceState.isDataIndication()) {
-                logger.debug("ConBeeDeviceState READ");
+                logger.debug("ConBeeDeviceState read");
                 // There is data available to be read - read the next frame
                 ConBeeReadReceivedDataRequest readRequest = new ConBeeReadReceivedDataRequest();
-                // readRequest.setSequence(callbackSequence.getAndIncrement());
                 outputFrame(readRequest);
             } else if (deviceState.isDataRequest() && !sendQueue.isEmpty()) {
-                logger.debug("ConBeeDeviceState SEND");
                 // Data can be sent
                 try {
-                    outputFrame(sendQueue.take());
+                    logger.debug("ConBeeDeviceState out before");
+                    ConBeeFrameRequest txFrame = sendQueue.take();
+                    logger.debug("ConBeeDeviceState out {}", txFrame);
+                    outputFrame(txFrame);
+                    logger.debug("ConBeeDeviceState out after");
                 } catch (InterruptedException e) {
                     logger.debug("Interrupted getting frame to send");
                 }
             } else if (deviceState.isDataConfirm()) {
-                logger.debug("ConBeeDeviceState STATE");
                 // Check the state of a sent frame
                 ConBeeQuerySendDataRequest queryRequest = new ConBeeQuerySendDataRequest();
-                // queryRequest.setSequence(callbackSequence.getAndIncrement());
                 outputFrame(queryRequest);
             } else if (deviceState.isConfigChanged()) {
-                logger.debug("ConBeeDeviceState CONFIG");
                 // The configuration has changed
-            } else {
-                logger.debug("ConBeeDeviceState NONE");
             }
         }
+        logger.debug("ConBeeDeviceState-done");
     }
 
     /**
@@ -342,10 +345,13 @@ public class ConBeeFrameHandler {
         logger.debug("TX CONBEE queue: {}", sendQueue.size());
 
         synchronized (transmitSync) {
+            logger.debug("TX CONBEE queue: {} sync", sendQueue.size());
             if (sentFrame == null) {
+                logger.debug("TX CONBEE queue: {} send", sendQueue.size());
                 outputFrame(new ConBeeDeviceStateRequest());
             }
         }
+        logger.debug("TX CONBEE queue: {} exit", sendQueue.size());
     }
 
     /**

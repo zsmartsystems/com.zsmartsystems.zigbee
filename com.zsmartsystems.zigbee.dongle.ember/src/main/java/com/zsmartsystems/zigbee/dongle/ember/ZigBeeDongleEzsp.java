@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
@@ -125,6 +126,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * The current network parameters as {@link EmberNetworkParameters}
      */
     private EmberNetworkParameters networkParameters = new EmberNetworkParameters();
+
+    /**
+     * The IeeeAddress of the Ember NCP
+     */
+    private IeeeAddress ieeeAddress;
 
     /**
      * The Ember version used in this system. Set during initialisation and saved in case the client is interested.
@@ -314,6 +320,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         serialPort.close();
         ashHandler.close();
         ashHandler = null;
+    }
+
+    @Override
+    public IeeeAddress getIeeeAddress() {
+        return ieeeAddress;
     }
 
     /**

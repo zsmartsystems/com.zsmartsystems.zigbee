@@ -27,8 +27,10 @@ import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsRequest;
@@ -56,7 +58,8 @@ import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
  *
  * @author Chris Jackson
  */
-public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnnounceListener {
+public class ZigBeeNetworkDiscoverer
+        implements ZigBeeCommandListener, ZigBeeAnnounceListener, ZigBeeNetworkStateListener {
     /**
      * The logger.
      */
@@ -98,6 +101,11 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
      */
     private final Set<ZigBeeEndpointAddress> discoveryProgress = new HashSet<ZigBeeEndpointAddress>();
 
+    /**
+     * Flag used to initialise the discoverer once the network is ONLINE
+     */
+    private boolean initialized = false;
+
     private enum NodeDiscoveryState {
         NWK_ADDRESS,
         IEEE_ADDRESS,
@@ -125,14 +133,10 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
     }
 
     /**
-     * Starts up ZigBee network discoverer.
+     * Starts up ZigBee network discoverer. This adds a listener to wait for the network to go online.
      */
     public void startup() {
-        networkManager.addCommandListener(this);
-        networkManager.addAnnounceListener(this);
-
-        // Start discovery from root node.
-        startNodeDiscovery(0);
+        networkManager.addNetworkStateListener(this);
     }
 
     /**
@@ -606,5 +610,18 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
 
         // Remove the node from the discovery list
         discoveryNodes.remove(node.getNetworkAddress());
+    }
+
+    @Override
+    public void networkStateUpdated(ZigBeeTransportState state) {
+        if (state == ZigBeeTransportState.ONLINE && !initialized) {
+            initialized = true;
+
+            networkManager.addCommandListener(this);
+            networkManager.addAnnounceListener(this);
+
+            // Start discovery from root node.
+            startNodeDiscovery(0);
+        }
     }
 }

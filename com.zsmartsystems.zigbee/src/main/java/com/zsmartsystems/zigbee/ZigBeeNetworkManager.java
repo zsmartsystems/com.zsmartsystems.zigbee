@@ -45,6 +45,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
+import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
 
 /**
  * Implements functions for managing the ZigBee interfaces.
@@ -256,7 +257,21 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             networkStateSerializer.deserialize(this);
         }
 
-        return transport.initialize();
+        ZigBeeInitializeResponse transportResponse = transport.initialize();
+
+        IeeeAddress address = transport.getIeeeAddress();
+        ZigBeeNode node = getNode(address);
+        if (node == null) {
+            node = new ZigBeeNode(this);
+            node.setIeeeAddress(address);
+            node.setNetworkAddress(0);
+
+            addNode(node);
+        }
+
+        networkDiscoverer.startup();
+
+        return transportResponse;
     }
 
     /**
@@ -372,10 +387,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public boolean startup(boolean reinitialize) {
         if (!transport.startup(reinitialize)) {
             return false;
-        }
-
-        if (networkDiscoverer != null) {
-            networkDiscoverer.startup();
         }
 
         return true;
@@ -685,6 +696,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
+    /**
+     * Adds a {@link ZigBeeNetworkStateListener} to receive notifications when the network state changes.
+     *
+     * @param stateListener the {@link ZigBeeNetworkStateListener} to receive the notifications
+     */
     public void addNetworkStateListener(ZigBeeNetworkStateListener stateListener) {
         final List<ZigBeeNetworkStateListener> modifiedStateListeners = new ArrayList<ZigBeeNetworkStateListener>(
                 stateListeners);
@@ -692,6 +708,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         stateListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
 
+    /**
+     * Removes a {@link ZigBeeNetworkStateListener}.
+     *
+     * @param stateListener the {@link ZigBeeNetworkStateListener} to stop receiving the notifications
+     */
     public void removeNetworkStateListener(ZigBeeNetworkStateListener stateListener) {
         final List<ZigBeeNetworkStateListener> modifiedStateListeners = new ArrayList<ZigBeeNetworkStateListener>(
                 stateListeners);
