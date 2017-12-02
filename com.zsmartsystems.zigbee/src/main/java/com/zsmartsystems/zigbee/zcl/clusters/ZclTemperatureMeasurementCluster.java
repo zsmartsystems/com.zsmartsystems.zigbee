@@ -25,16 +25,54 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclTemperatureMeasurementCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0402;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Temperature measurement";
 
     // Attribute constants
+    /**
+     * MeasuredValue represents the temperature in degrees Celsius as follows:-
+     * MeasuredValue = 100 x temperature in degrees Celsius.
+     * <p>
+     * Where -273.15°C <= temperature <= 327.67 ºC, corresponding to a
+     * <p>
+     * MeasuredValue in the range 0x954d to 0x7fff. The maximum resolution this
+     * format allows is 0.01 ºC.
+     * <p>
+     * A MeasuredValue of 0x8000 indicates that the temperature measurement is
+     * invalid.
+     * <p>
+     * MeasuredValue is updated continuously as new measurements are made.
+     */
     public static final int ATTR_MEASUREDVALUE = 0x0000;
+    /**
+     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
+     * that is capable of being measured. A MinMeasuredValue of 0x8000 indicates that
+     * the minimum value is unknown.
+     */
     public static final int ATTR_MINMEASUREDVALUE = 0x0001;
+    /**
+     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
+     * that is capable of being measured.
+     * <p>
+     * MaxMeasuredValue shall be greater than MinMeasuredValue.
+     * <p>
+     * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
+     * <p>
+     * A MaxMeasuredValue of 0x8000 indicates that the maximum value is unknown.
+     */
     public static final int ATTR_MAXMEASUREDVALUE = 0x0002;
+    /**
+     * The Tolerance attribute indicates the magnitude of the possible error that is
+     * associated with MeasuredValue . The true value is located in the range
+     * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
+     */
     public static final int ATTR_TOLERANCE = 0x0003;
 
     // Attribute initialisation

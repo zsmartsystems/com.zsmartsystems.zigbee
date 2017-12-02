@@ -38,19 +38,61 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclLevelControlCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0008;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Level Control";
 
     // Attribute constants
+    /**
+     * The CurrentLevel attribute represents the current level of this device. The
+     * meaning of 'level' is device dependent. Value is between 0 and 254.
+     */
     public static final int ATTR_CURRENTLEVEL = 0x0000;
+    /**
+     * The RemainingTime attribute represents the time remaining until the current
+     * command is complete - it is specified in 1/10ths of a second.
+     */
     public static final int ATTR_REMAININGTIME = 0x0001;
+    /**
+     * The OnOffTransitionTime attribute represents the time taken to move to or from
+     * the target level when On of Off commands are received by an On/Off cluster on
+     * the same endpoint. It is specified in 1/10ths of a second.
+     * <p>
+     * The actual time taken should be as close to OnOffTransitionTime as the device is
+     * able. N.B. If the device is not able to move at a variable rate, the
+     * OnOffTransitionTime attribute should not be implemented.
+     */
     public static final int ATTR_ONOFFTRANSITIONTIME = 0x0010;
+    /**
+     * The OnLevel attribute determines the value that the CurrentLevel attribute is set to
+     * when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If
+     * the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.
+     */
     public static final int ATTR_ONLEVEL = 0x0011;
+    /**
+     * The OnTransitionTime attribute represents the time taken to move the current level from the
+     * minimum level to the maximum level when an On command is received by an On/Off cluster on
+     * the same endpoint.  It is specified in 10ths of a second.  If this command is not implemented,
+     * or contains a value of 0xffff, the OnOffTransitionTime will be used instead.
+     */
     public static final int ATTR_ONTRANSITIONTIME = 0x0012;
+    /**
+     * The OffTransitionTime attribute represents the time taken to move the current level from the
+     * maximum level to the minimum level when an Off command is received by an On/Off cluster on
+     * the same endpoint.  It is specified in 10ths of a second.  If this command is not implemented,
+     * or contains a value of 0xffff, the OnOffTransitionTime will be used instead.
+     */
     public static final int ATTR_OFFTRANSITIONTIME = 0x0013;
+    /**
+     * The DefaultMoveRate attribute determines the movement rate, in units per second, when a Move
+     * command is received with a Rate parameter of 0xFF.
+     */
     public static final int ATTR_DEFAULTMOVERATE = 0x0014;
 
     // Attribute initialisation

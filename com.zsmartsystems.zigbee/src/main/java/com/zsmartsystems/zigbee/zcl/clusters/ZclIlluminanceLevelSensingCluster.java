@@ -29,14 +29,25 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0401;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Illuminance level sensing";
 
     // Attribute constants
+    /**
+     * The LevelStatus attribute indicates whether the measured illuminance is above,
+     * below, or within a band around IlluminanceTargetLevel .
+     */
     public static final int ATTR_LEVELSTATUS = 0x0000;
+    /**
+     * The LightSensorType attribute specifies the electronic type of the light sensor.
+     */
     public static final int ATTR_LIGHTSENSORTYPE = 0x0001;
 
     // Attribute initialisation

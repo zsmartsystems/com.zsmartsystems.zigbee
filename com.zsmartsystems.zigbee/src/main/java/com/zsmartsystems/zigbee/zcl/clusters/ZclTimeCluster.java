@@ -25,20 +25,81 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclTimeCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x000A;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Time";
 
     // Attribute constants
+    /**
+     * The Time attribute is 32-bits in length and holds the time value of a real time
+     * clock. This attribute has data type UTCTime, but note that it may not actually be
+     * synchronised to UTC - see discussion of the TimeStatus attribute below.
+     * <p>
+     * If the Master bit of the TimeStatus attribute has a value of 0, writing to this
+     * attribute shall set the real time clock to the written value, otherwise it cannot be
+     * written. The value 0xffffffff indicates an invalid time.
+     */
     public static final int ATTR_TIME = 0x0000;
+    /**
+     * The TimeStatus attribute holds a number of bit fields.
+     */
     public static final int ATTR_TIMESTATUS = 0x0001;
+    /**
+     * The TimeZone attribute indicates the local time zone, as a signed offset in seconds
+     * from the Time attribute value. The value 0xffffffff indicates an invalid time zone.
+     */
     public static final int ATTR_TIMEZONE = 0x0002;
+    /**
+     * The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff
+     * indicates an invalid DST start time.
+     */
     public static final int ATTR_DSTSTART = 0x0003;
+    /**
+     * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
+     * indicates an invalid DST end time.
+     * <p>
+     * Note that the three attributes DstStart, DstEnd and DstShift are optional, but if any
+     * one of them is implemented the other two must also be implemented.
+     * Note that this attribute should be set to a new value once every year.
+     * <p>
+     * Note that this attribute should be set to a new value once every year, and should be
+     * written synchronously with the DstStart attribute.
+     * The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff
+     * indicates an invalid DST end time.
+     * <p>
+     * Note that this attribute should be set to a new value once every year, and should be
+     * written synchronously with the DstStart attribute
+     */
     public static final int ATTR_DSTEND = 0x0004;
+    /**
+     * The DstShift attribute represents a signed offset in seconds from the standard time,
+     * to be applied between the times DstStart and DstEnd to calculate the Local Time.
+     * The value 0xffffffff indicates an invalid DST shift.
+     * <p>
+     * The range of this attribute is +/- one day. Note that the actual range of DST values
+     * employed by countries is much smaller than this, so the manufacturer has the
+     * option to impose a smaller range.
+     */
     public static final int ATTR_DSTSHIFT = 0x0005;
+    /**
+     * A device may derive the time by reading the Time and TimeZone attributes
+     * and adding them together. If implemented however, the optional StandardTime
+     * attribute indicates this time directly. The value 0xffffffff indicates an invalid
+     * Standard Time.
+     */
     public static final int ATTR_STANDARDTIME = 0x0006;
+    /**
+     * A device may derive the time by reading the Time, TimeZone, DstStart, DstEnd
+     * and DstShift attributes and performing the calculation. If implemented however,
+     * the optional LocalTime attribute indicates this time directly. The value 0xffffffff
+     * indicates an invalid Local Time.
+     */
     public static final int ATTR_LOCALTIME = 0x0007;
 
     // Attribute initialisation

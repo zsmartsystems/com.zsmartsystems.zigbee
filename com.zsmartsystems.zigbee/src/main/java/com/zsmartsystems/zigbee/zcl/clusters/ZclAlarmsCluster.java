@@ -45,13 +45,25 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclAlarmsCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0009;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Alarms";
 
     // Attribute constants
+    /**
+     * The AlarmCount attribute is 16-bits in length and specifies the number of entries
+     * currently in the alarm table. This attribute shall be specified in the range 0x00 to
+     * the maximum defined in the profile using this cluster.
+     * <p>
+     * If alarm logging is not implemented this attribute shall always take the value
+     * 0x00.
+     */
     public static final int ATTR_ALARMCOUNT = 0x0000;
 
     // Attribute initialisation

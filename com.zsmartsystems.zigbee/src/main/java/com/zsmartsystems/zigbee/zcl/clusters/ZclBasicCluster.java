@@ -27,25 +27,90 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclBasicCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0000;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Basic";
 
     // Attribute constants
+    /**
+     * The ZCLVersion attribute is 8 bits in length and specifies the version number of
+     * the ZigBee Cluster Library that all clusters on this endpoint conform to.
+     */
     public static final int ATTR_ZCLVERSION = 0x0000;
+    /**
+     * The ApplicationVersion attribute is 8 bits in length and specifies the version
+     * number of the application software contained in the device. The usage of this
+     * attribute is manufacturer dependent.
+     */
     public static final int ATTR_APPLICATIONVERSION = 0x0001;
+    /**
+     * The StackVersion attribute is 8 bits in length and specifies the version number
+     * of the implementation of the ZigBee stack contained in the device. The usage of
+     * this attribute is manufacturer dependent.
+     */
     public static final int ATTR_STACKVERSION = 0x0002;
+    /**
+     * The HWVersion attribute is 8 bits in length and specifies the version number of
+     * the hardware of the device. The usage of this attribute is manufacturer dependent.
+     */
     public static final int ATTR_HWVERSION = 0x0003;
+    /**
+     * The ManufacturerName attribute is a maximum of 32 bytes in length and specifies
+     * the name of the manufacturer as a ZigBee character string.
+     */
     public static final int ATTR_MANUFACTURERNAME = 0x0004;
+    /**
+     * The ModelIdentifier attribute is a maximum of 32 bytes in length and specifies the
+     * model number (or other identifier) assigned by the manufacturer as a ZigBee character string.
+     */
     public static final int ATTR_MODELIDENTIFIER = 0x0005;
+    /**
+     * The DateCode attribute is a ZigBee character string with a maximum length of 16 bytes.
+     * The first 8 characters specify the date of manufacturer of the device in international
+     * date notation according to ISO 8601, i.e. YYYYMMDD, e.g. 20060814.
+     */
     public static final int ATTR_DATECODE = 0x0006;
+    /**
+     * The PowerSource attribute is 8 bits in length and specifies the source(s) of power
+     * available to the device. Bits b0–b6 of this attribute represent the primary power
+     * source of the device and bit b7 indicates whether the device has a secondary power
+     * source in the form of a battery backup.
+     */
     public static final int ATTR_POWERSOURCE = 0x0007;
+    /**
+     * The LocationDescription attribute is a maximum of 16 bytes in length and describes
+     * the physical location of the device as a ZigBee character string.
+     */
     public static final int ATTR_LOCATIONDESCRIPTION = 0x0010;
+    /**
+     * The PhysicalEnvironment attribute is 8 bits in length and specifies the type of
+     * physical environment in which the device will operate.
+     */
     public static final int ATTR_PHYSICALENVIRONMENT = 0x0011;
+    /**
+     * The DeviceEnabled attribute is a boolean and specifies whether the device is enabled
+     * or disabled.
+     */
     public static final int ATTR_DEVICEENABLED = 0x0012;
+    /**
+     * The AlarmMask attribute is 8 bits in length and specifies which of a number of general
+     * alarms may be generated.
+     */
     public static final int ATTR_ALARMMASK = 0x0013;
+    /**
+     * The DisableLocalConfig attribute allows a number of local device configuration
+     * functions to be disabled.
+     * <p>
+     * The intention of this attribute is to allow disabling of any local configuration
+     * user interface, for example to prevent reset or binding buttons being activated by
+     * unauthorised persons in a public building.
+     */
     public static final int ATTR_DISABLELOCALCONFIG = 0x0014;
 
     // Attribute initialisation

@@ -29,17 +29,53 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclIlluminanceMeasurementCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x0400;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "Illuminance measurement";
 
     // Attribute constants
+    /**
+     * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
+     * <p>
+     * MeasuredValue = 10,000 x log10 Illuminance + 1
+     * <p>
+     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
+     * the range 1 to 0xfffe.
+     * <p>
+     * The following special values of MeasuredValue apply.
+     * <li>0x0000 indicates a value of Illuminance that is too low to be measured.</li>
+     * <li>0xffff indicates that the Illuminance measurement is invalid.</li>
+     */
     public static final int ATTR_MEASUREDVALUE = 0x0000;
+    /**
+     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
+     * that can be measured. A value of 0xffff indicates that this attribute is not defined.
+     */
     public static final int ATTR_MINMEASUREDVALUE = 0x0001;
+    /**
+     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
+     * that can be measured. A value of 0xffff indicates that this attribute is not defined.
+     * <p>
+     * MaxMeasuredValue shall be greater than MinMeasuredValue.
+     * <p>
+     * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
+     */
     public static final int ATTR_MAXMEASUREDVALUE = 0x0002;
+    /**
+     * The Tolerance attribute indicates the magnitude of the possible error that is
+     * associated with MeasuredValue . The true value is located in the range
+     * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
+     */
     public static final int ATTR_TOLERANCE = 0x0003;
+    /**
+     * The LightSensorType attribute specifies the electronic type of the light sensor.
+     */
     public static final int ATTR_LIGHTSENSORTYPE = 0x0004;
 
     // Attribute initialisation

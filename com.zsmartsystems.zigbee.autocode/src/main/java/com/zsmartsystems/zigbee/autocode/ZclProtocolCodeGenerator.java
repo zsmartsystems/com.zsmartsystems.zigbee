@@ -1477,16 +1477,27 @@ public class ZclProtocolCodeGenerator {
                 // outputClassJavaDoc(out);
                 out.println("public class " + className + " extends ZclCluster {");
 
-                out.println("    // Cluster ID");
+                out.println("    /**");
+                out.println("     * The ZigBee Cluster Library Cluster ID");
+                out.println("     */");
                 out.println("    public static final int CLUSTER_ID = " + String.format("0x%04X;", cluster.clusterId));
                 out.println();
-                out.println("    // Cluster Name");
+                out.println("    /**");
+                out.println("     * The ZigBee Cluster Library Cluster Name");
+                out.println("     */");
                 out.println("    public static final String CLUSTER_NAME = \"" + cluster.clusterName + "\";");
                 out.println();
 
                 if (cluster.attributes.size() != 0) {
                     out.println("    // Attribute constants");
                     for (final Attribute attribute : cluster.attributes.values()) {
+                        out.println("    /**");
+                        if (attribute.attributeDescription.size() != 0) {
+                            for (String line : attribute.attributeDescription) {
+                                out.println("     * " + line);
+                            }
+                        }
+                        out.println("     */");
                         out.println("    public static final int " + attribute.enumName + " = "
                                 + String.format("0x%04X", attribute.attributeId) + ";");
                     }

@@ -44,25 +44,120 @@ import java.util.concurrent.Future;
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ZclRssiLocationCluster extends ZclCluster {
-    // Cluster ID
+    /**
+     * The ZigBee Cluster Library Cluster ID
+     */
     public static final int CLUSTER_ID = 0x000B;
 
-    // Cluster Name
+    /**
+     * The ZigBee Cluster Library Cluster Name
+     */
     public static final String CLUSTER_NAME = "RSSI Location";
 
     // Attribute constants
+    /**
+     * The LocationType attribute is 8 bits long and is divided into bit fields.
+     */
     public static final int ATTR_LOCATIONTYPE = 0x0000;
+    /**
+     */
     public static final int ATTR_LOCATIONMETHOD = 0x0001;
+    /**
+     * The LocationAge attribute indicates the amount of time, measured in seconds, that
+     * has transpired since the location information was last calculated. This attribute is
+     * not valid if the Absolute bit of the LocationType attribute is set to one.
+     */
     public static final int ATTR_LOCATIONAGE = 0x0002;
+    /**
+     * The QualityMeasure attribute is a measure of confidence in the corresponding
+     * location information. The higher the value, the more confident the transmitting
+     * device is in the location information. A value of 0x64 indicates complete (100%)
+     * confidence and a value of 0x00 indicates zero confidence. (Note: no fixed
+     * confidence metric is mandated – the metric may be application and manufacturer
+     * dependent).
+     * <p>
+     * This field is not valid if the Absolute bit of the LocationType attribute is set to one.
+     */
     public static final int ATTR_QUALITYMEASURE = 0x0003;
+    /**
+     * The NumberOfDevices attribute is the number of devices whose location data
+     * were used to calculate the last location value. This attribute is related to the
+     * QualityMeasure attribute.
+     */
     public static final int ATTR_NUMBEROFDEVICES = 0x0004;
+    /**
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
+     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * <p>
+     * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
+     * <p>
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
+     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
+     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     */
     public static final int ATTR_COORDINATE1 = 0x0010;
+    /**
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
+     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * <p>
+     * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
+     * <p>
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
+     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
+     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     */
     public static final int ATTR_COORDINATE2 = 0x0011;
+    /**
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
+     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * <p>
+     * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
+     * <p>
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
+     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
+     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     */
     public static final int ATTR_COORDINATE3 = 0x0012;
+    /**
+     * The Power attribute specifies the value of the average power P0, measured in
+     * dBm, received at a reference distance of one meter from the transmitter.
+     * <p>
+     * P0 = Power / 100
+     * <p>
+     * A value of 0x8000 indicates that Power is unknown.
+     */
     public static final int ATTR_POWER = 0x0013;
+    /**
+     * The PathLossExponent attribute specifies the value of the Path Loss Exponent n,
+     * an exponent that describes the rate at which the signal power decays with
+     * increasing distance from the transmitter.
+     * <p>
+     * n = PathLossExponent / 100
+     * <p>
+     * A value of 0xffff indicates that PathLossExponent is unknown.
+     */
     public static final int ATTR_PATHLOSSEXPONENT = 0x0014;
+    /**
+     * The ReportingPeriod attribute specifies the time in seconds between successive
+     * reports of the device's location by means of the Location Data Notification
+     * command. The minimum value this attribute can take is specified by the profile in
+     * use. If ReportingPeriod is zero, the device does not automatically report its
+     * location. Note that location information can always be polled at any time.
+     */
     public static final int ATTR_REPORTINGPERIOD = 0x0015;
+    /**
+     * The CalculationPeriod attribute specifies the time in seconds between successive
+     * calculations of the device's location. If CalculationPeriod is less than the
+     * physically possible minimum period that the calculation can be performed, the
+     * calculation will be repeated as frequently as possible.
+     */
     public static final int ATTR_CALCULATIONPERIOD = 0x0016;
+    /**
+     * The NumberRSSIMeasurements attribute specifies the number of RSSI
+     * measurements to be used to generate one location estimate. The measurements are
+     * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
+     * equal to 1.
+     */
     public static final int ATTR_NUMBERRSSIMEASUREMENTS = 0x0017;
 
     // Attribute initialisation
