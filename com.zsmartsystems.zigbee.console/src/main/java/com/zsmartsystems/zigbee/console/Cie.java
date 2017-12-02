@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.util;
+package com.zsmartsystems.zigbee.console;
 
 /**
  * Provides methods to convert colours from RGB to CIE colour space.
