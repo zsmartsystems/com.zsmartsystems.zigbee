@@ -37,6 +37,8 @@ public class ZigBeeApsFrameTest {
 
         frame.setSecurityEnable(false);
         assertFalse(frame.isSecurityEnable());
+
+        System.out.println(frame);
     }
 
     @Test
@@ -58,6 +60,7 @@ public class ZigBeeApsFrameTest {
     @Test
     public void testGroupAddress() {
         ZigBeeApsFrame frame = new ZigBeeApsFrame();
+        System.out.println(frame);
 
         frame.setGroupAddress(1);
         assertEquals(1, frame.getGroupAddress());

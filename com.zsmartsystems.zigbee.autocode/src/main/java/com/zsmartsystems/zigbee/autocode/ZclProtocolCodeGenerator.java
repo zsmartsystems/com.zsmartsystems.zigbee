@@ -55,16 +55,10 @@ public class ZclProtocolCodeGenerator {
      *            the command line arguments
      */
     public static void main(final String[] args) {
-        final String definitionFilePathZcl;
-        final String definitionFilePathZdp;
-        final String definitionFilePathOta;
-        // if (args.length != 0) {
-        // definitionFilePathZcl = args[0];
-        // } else {
-        definitionFilePathZcl = "./src/main/resources/zcl_definition.md";
-        definitionFilePathZdp = "./src/main/resources/zdp_definition.md";
-        definitionFilePathOta = "./src/main/resources/ota_definition.md";
-        // }
+        final String definitionFilePathZcl = "./src/main/resources/zcl_definition.md";
+        final String definitionFilePathZll = "./src/main/resources/zll_definition.md";
+        final String definitionFilePathZdp = "./src/main/resources/zdp_definition.md";
+        final String definitionFilePathOta = "./src/main/resources/ota_definition.md";
 
         final String sourceRootPath;
         if (args.length != 0) {
@@ -93,12 +87,14 @@ public class ZclProtocolCodeGenerator {
         final Context contextZcl = new Context();
         final File definitionFileZcl = new File(definitionFilePathZcl);
         final File definitionFileOta = new File(definitionFilePathOta);
-        if (!(definitionFileZcl.exists() && definitionFileOta.exists())) {
+        final File definitionFileZll = new File(definitionFilePathZll);
+        if (!(definitionFileZcl.exists() && definitionFileOta.exists() && definitionFileZll.exists())) {
             System.out.println("Definition file does not exist: " + definitionFilePathZcl);
         } else {
             try {
                 contextZcl.lines = new ArrayList<String>(FileUtils.readLines(definitionFileZcl, "UTF-8"));
                 contextZcl.lines.addAll(new ArrayList<String>(FileUtils.readLines(definitionFileOta, "UTF-8")));
+                contextZcl.lines.addAll(new ArrayList<String>(FileUtils.readLines(definitionFileZll, "UTF-8")));
                 generateZclCode(contextZcl, sourceRootFile, packageRoot);
             } catch (final IOException e) {
                 System.out.println(
@@ -429,9 +425,14 @@ public class ZclProtocolCodeGenerator {
 
         out.println("package " + packageRoot + ";");
         out.println();
+        out.println("import java.util.Map;");
+        out.println("import java.util.HashMap;");
+
+        out.println();
         outputClassJavaDoc(out, "Enumeration of ZigBee profile types");
         out.println("public enum " + className + " {");
 
+        out.println("    UNKNOWN(-1, \"Unknown Profile\"),");
         final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
         for (final Profile profile : profiles) {
             out.print("    " + profile.profileType + "(" + String.format("0x%04x", profile.profileId) + ", \""
@@ -440,26 +441,65 @@ public class ZclProtocolCodeGenerator {
         }
 
         out.println();
+        out.println("    /*");
+        out.println("     * The ZigBee profile ID");
+        out.println("     */");
         out.println("    private final int profileId;");
+        out.println();
+        out.println("    /*");
+        out.println("     * The ZigBee profile label");
+        out.println("     */");
         out.println("    private final String label;");
+        out.println();
+        out.println("    /**");
+        out.println("     * Map containing the link of profile type value to the enum");
+        out.println("     */");
+        out.println("    private static Map<Integer, ZigBeeProfileType> map = null;");
         out.println();
         out.println("    " + className + "(final int profileId, final String label) {");
         out.println("        this.profileId = profileId;");
         out.println("        this.label = label;");
         out.println("    }");
         out.println();
+        out.println("    /*");
+        out.println("     * Get the ZigBee profile ID");
+        out.println("     *");
+        out.println("     * @ return the profile ID");
+        out.println("     */");
         out.println("    public int getId() {");
         out.println("        return profileId;");
         out.println("    }");
         out.println();
+        out.println("    /*");
+        out.println("     * Get the ZigBee profile label");
+        out.println("     *");
+        out.println("     * @ return the profile label");
+        out.println("     */");
         out.println("    public String getLabel() {");
         out.println("        return label;");
         out.println("    }");
         out.println();
-        out.println("    public String toString() {");
-        out.println("        return label;");
-        out.println("    }");
+
+        out.println("    /**");
+        out.println("     * Get a {@link " + className + "} from an integer");
+        out.println("     *");
+        out.println("     * @param profileTypeValue integer value defining the profile type");
+        out.println("     * @return {@link " + className + "} or {@link #UNKNOWN} if the value could not be converted");
+        out.println("     */");
+        out.println("    public static " + className + " getProfileType(int profileTypeValue) {");
+        out.println("        if (map == null) {");
+        out.println("            map = new HashMap<Integer, ZigBeeProfileType>();");
+        out.println("            for (" + className + " profileType : values()) {");
+        out.println("                map.put(profileType.profileId, profileType);");
+        out.println("            }");
+        out.println("        }");
         out.println();
+        out.println("        if (map.get(profileTypeValue) == null) {");
+        out.println("            return UNKNOWN;");
+        out.println("        }");
+        out.println("        return map.get(profileTypeValue);");
+        out.println("    }");
+
         out.println("}");
 
         out.flush();
@@ -497,16 +537,21 @@ public class ZclProtocolCodeGenerator {
         outputClassJavaDoc(out, "Enumeration of ZigBee Clusters");
         out.println("public enum " + className + " {");
 
+        boolean first = true;
         final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
         for (final Profile profile : profiles) {
             final LinkedList<Cluster> clusters = new LinkedList<Cluster>(profile.clusters.values());
             for (final Cluster cluster : clusters) {
+                if (first == false) {
+                    out.println(",");
+                }
+                first = false;
                 out.print("    " + cluster.clusterType + "(" + String.format("0x%04X", cluster.clusterId)
                         + ", ZigBeeProfileType." + profile.profileType + ", Zcl" + cluster.nameUpperCamelCase
                         + "Cluster.class, \"" + cluster.clusterName + "\")");
-                out.println(clusters.getLast().equals(cluster) ? ';' : ',');
             }
         }
+        out.println(";");
 
         out.println();
         out.println(

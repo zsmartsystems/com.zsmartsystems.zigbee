@@ -96,8 +96,8 @@ public enum ZclClusterType {
     APPLIANCE_STATISTICS(0x0B03, ZigBeeProfileType.HOME_AUTOMATION, ZclApplianceStatisticsCluster.class, "Appliance Statistics"),
     ELECTRICAL_MEASUREMENT(0x0B04, ZigBeeProfileType.HOME_AUTOMATION, ZclElectricalMeasurementCluster.class, "Electrical Measurement"),
     DIAGNOSTICS(0x0B05, ZigBeeProfileType.HOME_AUTOMATION, ZclDiagnosticsCluster.class, "Diagnostics"),
-    TOUCHLINK(0x1000, ZigBeeProfileType.HOME_AUTOMATION, ZclTouchlinkCluster.class, "Touchlink"),
-    GENERAL(0xFFFF, ZigBeeProfileType.HOME_AUTOMATION, ZclGeneralCluster.class, "General");
+    GENERAL(0xFFFF, ZigBeeProfileType.HOME_AUTOMATION, ZclGeneralCluster.class, "General"),
+    TOUCHLINK(0x1000, ZigBeeProfileType.ZIGBEE_LIGHT_LINK, ZclTouchlinkCluster.class, "Touchlink");
 
     private static final Map<Integer, ZclClusterType> idValueMap = new HashMap<Integer, ZclClusterType>();
 

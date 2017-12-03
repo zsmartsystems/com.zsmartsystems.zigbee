@@ -2625,7 +2625,3 @@ command that is still current.
 
 ### Received
 ### Generated
-
-## Touchlink [0x1000]
-### Received
-### Generated
