@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeException;
@@ -18,11 +19,14 @@ import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeAddressMode;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceState;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceStateChanged;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceStateRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeDeviceStateResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeEnqueueSendDataRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeFrame;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeNetworkParameter;
+import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeNetworkState;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadParameterResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.frame.ConBeeReadReceivedDataResponse;
@@ -66,15 +70,29 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
     private ConBeeFrameHandler conbeeHandler;
 
     /**
+     * The current network state of the ConBee stack
+     */
+    private ConBeeNetworkState currentNetworkState = null;
+
+    /**
      * The firmware version in the ConBee
      */
     private String firmwareVersion;
 
     /**
+     * The IeeeAddress of the ConBee
+     */
+    private IeeeAddress ieeeAddress;
+
+    /**
+     * Flag to remember that initialisation is completed to we can avoid signalling ONLINE state prematurely.
+     */
+    private boolean initialisationComplete = false;
+
+    /**
      * Constructor to configure the port interface.
      *
-     * @param serialPort
-     *            the serial port
+     * @param serialPort the serial port
      */
     public ZigBeeDongleConBee(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
@@ -100,6 +118,7 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
         firmwareVersion = String.format("%08X", versionResponse.getVersion());
 
         ConBeeReadParameterRequest readParameter;
+        ConBeeReadParameterResponse readResponse;
 
         readParameter = new ConBeeReadParameterRequest();
         readParameter.setParameter(ConBeeNetworkParameter.DEVICE_TYPE);
@@ -107,9 +126,17 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
                 .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class));
 
         readParameter = new ConBeeReadParameterRequest();
+        readParameter.setParameter(ConBeeNetworkParameter.MAC_ADDRESS);
+        readResponse = (ConBeeReadParameterResponse) conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class))
+                .getResponse();
+        ieeeAddress = (IeeeAddress) readResponse.getValue();
+
+        readParameter = new ConBeeReadParameterRequest();
         readParameter.setParameter(ConBeeNetworkParameter.NWK_PANID);
-        conbeeHandler
-                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class));
+        readResponse = (ConBeeReadParameterResponse) conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class))
+                .getResponse();
 
         readParameter = new ConBeeReadParameterRequest();
         readParameter.setParameter(ConBeeNetworkParameter.APS_EXTENDED_PANID);
@@ -131,7 +158,18 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
         conbeeHandler
                 .sendTransaction(new ConBeeSingleResponseTransaction(readParameter, ConBeeReadParameterResponse.class));
 
+        ConBeeDeviceStateRequest stateRequest = new ConBeeDeviceStateRequest();
+        conbeeHandler
+                .sendTransaction(new ConBeeSingleResponseTransaction(stateRequest, ConBeeDeviceStateResponse.class));
+
+        initialisationComplete = true;
+
         return ZigBeeInitializeResponse.JOINED;
+    }
+
+    @Override
+    public IeeeAddress getIeeeAddress() {
+        return ieeeAddress;
     }
 
     @Override
@@ -306,6 +344,33 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
             apsFrame.setPayload(receivedData.getAdsuData());
             zigbeeNetworkReceive.receiveCommand(apsFrame);
             return;
+        }
+
+        if (frame instanceof ConBeeDeviceStateChanged || frame instanceof ConBeeDeviceStateResponse) {
+            ConBeeDeviceState deviceState;
+            if (frame instanceof ConBeeDeviceStateChanged) {
+                deviceState = ((ConBeeDeviceStateChanged) frame).getDeviceState();
+            } else {
+                deviceState = ((ConBeeDeviceStateResponse) frame).getDeviceState();
+
+            }
+
+            if (!initialisationComplete || deviceState.getNetworkState() == currentNetworkState) {
+                return;
+            }
+            currentNetworkState = deviceState.getNetworkState();
+            switch (deviceState.getNetworkState()) {
+                case NET_CONNECTED:
+                    zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.ONLINE);
+                    break;
+                case NET_JOINING:
+                case NET_LEAVING:
+                case NET_OFFLINE:
+                    zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

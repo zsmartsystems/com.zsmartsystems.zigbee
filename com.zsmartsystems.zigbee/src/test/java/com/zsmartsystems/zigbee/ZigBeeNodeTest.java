@@ -34,7 +34,14 @@ public class ZigBeeNodeTest {
     @Test
     public void testAddDescriptors() {
         ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
+
+        // Not null by default
+        assertNotNull(node.getNodeDescriptor());
+        assertNotNull(node.getPowerDescriptor());
+
         node.setPowerDescriptor(null);
+        assertEquals(null, node.getPowerDescriptor());
+        node.setNodeDescriptor(null);
         assertEquals(null, node.getPowerDescriptor());
 
         System.out.println(node.toString());
@@ -184,6 +191,8 @@ public class ZigBeeNodeTest {
         assertFalse(node.isReducedFuntionDevice());
         assertFalse(node.isPrimaryTrustCenter());
         assertFalse(node.isSecurityCapable());
+
+        assertEquals(LogicalType.UNKNOWN, node.getLogicalType());
 
         NodeDescriptor nodeDescriptor = new NodeDescriptor();
         node.setNodeDescriptor(nodeDescriptor);

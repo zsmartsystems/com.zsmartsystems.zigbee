@@ -65,12 +65,12 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     /**
      * The {@link NodeDescriptor} for the node
      */
-    private NodeDescriptor nodeDescriptor;
+    private NodeDescriptor nodeDescriptor = new NodeDescriptor();
 
     /**
      * The {@link PowerDescriptor} for the node
      */
-    private PowerDescriptor powerDescriptor;
+    private PowerDescriptor powerDescriptor = new PowerDescriptor();
 
     /**
      * A flag indicating if this node is configured to allow joining
@@ -335,7 +335,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * Request an update of the binding table for this node.
      * <p>
      * This method returns a future to a boolean. Upon success the caller should call {@link #getBindingTable()}
-     * 
+     *
      * @return {@link Future} returning a {@link Boolean}
      */
     public Future<Boolean> updateBindingTable() {

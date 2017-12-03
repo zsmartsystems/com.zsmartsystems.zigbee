@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.transport;
 import java.util.Map;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
@@ -29,10 +30,6 @@ import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
  * while allowing the transport implementation (eg dongle) to format the data as per its needs. The payload is
  * serialised by the framework using the {@link ZigBeeSerializer} and {@link ZigBeeDeserializer} interfaces, thus
  * allowing the format to be set for different hardware implementations.
- * <p>
- * The ZDO interface exchanges only command classes. This is different to the ZCL interface since different sticks
- * tend to implement ZDO functionality as individual commands rather than allowing a binary ZDO packet to be sent and
- * received.
  *
  * @author Chris Jackson
  */
@@ -43,6 +40,9 @@ public interface ZigBeeTransportTransmit {
      * <p>
      * During the initialize() method, the provider must initialize the ports and perform any configuration required to
      * get the stack ready for use. If the dongle has already joined a network, then this method will return true.
+     * <p>
+     * At the completion of the initialize method, the {@link #getIeeeAddress()} method must return the valid address
+     * for the coordinator.
      *
      * @return {@link ZigBeeInitializeResponse}
      */
@@ -68,6 +68,13 @@ public interface ZigBeeTransportTransmit {
      * Get the transport layer version string
      */
     String getVersionString();
+
+    /**
+     * Returns the {@link IeeeAddress} of the local device
+     *
+     * @return the {@link IeeeAddress} of the local device
+     */
+    IeeeAddress getIeeeAddress();
 
     /**
      * Sends ZigBee Cluster Library command without waiting for response. Responses are provided to the framework

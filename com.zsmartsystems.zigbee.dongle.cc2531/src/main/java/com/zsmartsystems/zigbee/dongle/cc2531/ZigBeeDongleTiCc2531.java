@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
@@ -83,6 +84,11 @@ public class ZigBeeDongleTiCc2531
     private final HashMap<Integer, Integer> endpoint2Profile = new HashMap<Integer, Integer>();
 
     /**
+     * The IeeeAddress of the Ember NCP
+     */
+    private IeeeAddress ieeeAddress;
+
+    /**
      * The Ember version used in this system. Set during initialisation and saved in case the client is interested.
      */
     private String versionString = "Unknown";
@@ -125,6 +131,11 @@ public class ZigBeeDongleTiCc2531
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
         return ZigBeeInitializeResponse.JOINED;
+    }
+
+    @Override
+    public IeeeAddress getIeeeAddress() {
+        return ieeeAddress;
     }
 
     @Override

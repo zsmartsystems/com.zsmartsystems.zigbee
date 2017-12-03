@@ -32,8 +32,8 @@ import com.zsmartsystems.zigbee.zcl.ZclHeader;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 
-public class ZigBeeNetworkManagerTest
-        implements ZigBeeNetworkNodeListener, ZigBeeNetworkStateListener, ZigBeeNetworkEndpointListener, ZigBeeCommandListener {
+public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigBeeNetworkStateListener,
+        ZigBeeNetworkEndpointListener, ZigBeeCommandListener {
     private ZigBeeNetworkNodeListener mockedNodeListener;
     private List<ZigBeeNode> nodeNodeListenerCapture;
     private ZigBeeNetworkEndpointListener mockedDeviceListener;
