@@ -46,8 +46,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * server) cluster must be set somewhat higher than the maximum reporting interval
  * set for the attribute on the server (or client) cluster.
  *
- *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
 public class AttributeReportingConfigurationRecord implements ZclListItemField {
@@ -397,9 +395,29 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Attribute Reporting Configuration Record: attributeDataType=" + attributeDataType
-                + ", attributeIdentifier=" + attributeIdentifier + ", minimumReportingInterval="
-                + minimumReportingInterval + ", maximumReportingInterval=" + maximumReportingInterval
-                + ", reportableChange=" + reportableChange + ", timeoutPeriod=" + timeoutPeriod;
+        StringBuilder builder = new StringBuilder(220);
+
+        builder.append("AttributeReportingConfigurationRecord: [attributeDataType=");
+        builder.append(attributeDataType);
+        builder.append(", attributeIdentifier=");
+        builder.append(attributeIdentifier);
+        builder.append(", direction=");
+        builder.append(direction);
+        if (direction == 0) {
+            builder.append(", minimumReportingInterval=");
+            builder.append(minimumReportingInterval);
+            builder.append(", maximumReportingInterval=");
+            builder.append(maximumReportingInterval);
+            if (attributeDataType.isAnalog()) {
+                builder.append(", reportableChange=");
+                builder.append(reportableChange);
+            }
+        } else if (direction == 1) {
+            builder.append(", timeoutPeriod=");
+            builder.append(timeoutPeriod);
+        }
+        builder.append(']');
+
+        return builder.toString();
     }
 }
