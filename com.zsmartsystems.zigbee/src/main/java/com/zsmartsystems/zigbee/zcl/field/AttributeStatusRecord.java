@@ -90,7 +90,7 @@ public class AttributeStatusRecord implements ZclListItemField {
     @Override
     public void serialize(final ZigBeeSerializer serializer) {
         serializer.appendZigBeeType(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        if (status != ZclStatus.SUCCESS) {
+        if (status == ZclStatus.SUCCESS) {
             serializer.appendZigBeeType(direction, ZclDataType.BOOLEAN);
             serializer.appendZigBeeType(attributeIdentifier, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
@@ -99,7 +99,7 @@ public class AttributeStatusRecord implements ZclListItemField {
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
         status = (ZclStatus) deserializer.readZigBeeType(ZclDataType.ZCL_STATUS);
-        if (status != ZclStatus.SUCCESS) {
+        if (status == ZclStatus.SUCCESS) {
             direction = (boolean) deserializer.readZigBeeType(ZclDataType.BOOLEAN);
             attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
