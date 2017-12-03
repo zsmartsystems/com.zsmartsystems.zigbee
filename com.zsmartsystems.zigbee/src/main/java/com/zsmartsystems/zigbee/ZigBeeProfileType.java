@@ -7,6 +7,9 @@
  */
 package com.zsmartsystems.zigbee;
 
+import java.util.Map;
+import java.util.HashMap;
+
 /**
  * Enumeration of ZigBee profile types
  * <p>
@@ -15,26 +18,65 @@ package com.zsmartsystems.zigbee;
  * @author Chris Jackson
  */
 public enum ZigBeeProfileType {
-    HOME_AUTOMATION(0x0104, "Home Automation");
+    UNKNOWN(-1, "Unknown Profile"),
+    HOME_AUTOMATION(0x0104, "Home Automation"),
+    ZIGBEE_LIGHT_LINK(0xc05e, "ZigBee Light Link");
 
+    /*
+     * The ZigBee profile ID
+     */
     private final int profileId;
+
+    /*
+     * The ZigBee profile label
+     */
     private final String label;
+
+    /**
+     * Map containing the link of profile type value to the enum
+     */
+    private static Map<Integer, ZigBeeProfileType> map = null;
 
     ZigBeeProfileType(final int profileId, final String label) {
         this.profileId = profileId;
         this.label = label;
     }
 
+    /*
+     * Get the ZigBee profile ID
+     *
+     * @ return the profile ID
+     */
     public int getId() {
         return profileId;
     }
 
+    /*
+     * Get the ZigBee profile label
+     *
+     * @ return the profile label
+     */
     public String getLabel() {
         return label;
     }
 
-    public String toString() {
-        return label;
-    }
+    /**
+     * Get a {@link ZigBeeProfileType} from an integer
+     *
+     * @param profileTypeValue integer value defining the profile type
+     * @return {@link ZigBeeProfileType} or {@link #UNKNOWN} if the value could not be converted
+     */
+    public static ZigBeeProfileType getProfileType(int profileTypeValue) {
+        if (map == null) {
+            map = new HashMap<Integer, ZigBeeProfileType>();
+            for (ZigBeeProfileType profileType : values()) {
+                map.put(profileType.profileId, profileType);
+            }
+        }
 
+        if (map.get(profileTypeValue) == null) {
+            return UNKNOWN;
+        }
+        return map.get(profileTypeValue);
+    }
 }

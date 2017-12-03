@@ -542,8 +542,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
 
         ZigBeeCommand command = null;
-        switch (apsFrame.getProfile()) {
+        switch (apsFrame.getProfile()) { // TODO: Use ZigBeeProfileType
             case 0x0000:
+            case 0xC05E:
                 command = receiveZdoCommand(fieldDeserializer, apsFrame);
                 break;
             case 0x0104:

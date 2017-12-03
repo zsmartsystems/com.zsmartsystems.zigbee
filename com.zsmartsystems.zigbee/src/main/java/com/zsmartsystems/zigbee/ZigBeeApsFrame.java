@@ -268,7 +268,7 @@ public class ZigBeeApsFrame {
         builder.append("/");
         builder.append(destinationEndpoint);
         builder.append(", profile=");
-        builder.append(profile);
+        builder.append(String.format("%04X", profile));
         builder.append(", cluster=");
         builder.append(cluster);
         builder.append(", addressMode=");
