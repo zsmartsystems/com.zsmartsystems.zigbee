@@ -238,13 +238,15 @@ public class ZclGeneralCluster extends ZclCluster {
      * The Configure Reporting Response command is generated in response to a
      * Configure Reporting command.
      *
+     * @param status {@link ZclStatus} Status
      * @param records {@link List<AttributeStatusRecord>} Records
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configureReportingResponse(List<AttributeStatusRecord> records) {
+    public Future<CommandResult> configureReportingResponse(ZclStatus status, List<AttributeStatusRecord> records) {
         ConfigureReportingResponse command = new ConfigureReportingResponse();
 
         // Set the fields
+        command.setStatus(status);
         command.setRecords(records);
 
         return send(command);
@@ -397,13 +399,15 @@ public class ZclGeneralCluster extends ZclCluster {
      * attribute record shall contain the identifier and the actual value of the attribute, or
      * element thereof, to be written.
      *
+     * @param status {@link ZclStatus} Status
      * @param attributeSelectors {@link Object} Attribute selectors
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> writeAttributesStructuredCommand(Object attributeSelectors) {
+    public Future<CommandResult> writeAttributesStructuredCommand(ZclStatus status, Object attributeSelectors) {
         WriteAttributesStructuredCommand command = new WriteAttributesStructuredCommand();
 
         // Set the fields
+        command.setStatus(status);
         command.setAttributeSelectors(attributeSelectors);
 
         return send(command);
@@ -415,13 +419,15 @@ public class ZclGeneralCluster extends ZclCluster {
      * The write attributes structured response command is generated in response to a
      * write attributes structured command.
      *
+     * @param status {@link ZclStatus} Status
      * @param records {@link List<WriteAttributeStatusRecord>} Records
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> writeAttributesStructuredResponse(List<WriteAttributeStatusRecord> records) {
+    public Future<CommandResult> writeAttributesStructuredResponse(ZclStatus status, List<WriteAttributeStatusRecord> records) {
         WriteAttributesStructuredResponse command = new WriteAttributesStructuredResponse();
 
         // Set the fields
+        command.setStatus(status);
         command.setRecords(records);
 
         return send(command);

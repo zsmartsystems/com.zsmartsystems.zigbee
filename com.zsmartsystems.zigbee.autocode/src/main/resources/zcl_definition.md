@@ -97,9 +97,23 @@ additional attributes available.
 The Configure Reporting Response command is generated in response to a
 Configure Reporting command. 
 
-|Field Name                 |Data Type                  |
-|---------------------------|---------------------------|
-|Records                    |N X Attribute status record|
+|Field Name                 |Data Type                    |
+|---------------------------|-----------------------------|
+|Status                     |Zcl Status [status-response] |
+|Records                    |N X Attribute status record  |
+
+
+##### Status
+Status is only provided if the command was successful, and the 
+attribute status records are not included for successfully
+written attributes, in order to save bandwidth.
+
+##### Records
+Note that attribute status records are not included for successfully
+configured attributes in order to save bandwidth.  In the case of successful
+configuration of all attributes, only a single attribute status record SHALL
+be included in the command, with the status field set to SUCCESS and the direction and
+attribute identifier fields omitted.
 
 #### Read Reporting Configuration Command [0x08]
 
@@ -203,19 +217,45 @@ change the values of one or more attributes located on another device. Each writ
 attribute record shall contain the identifier and the actual value of the attribute, or
 element thereof, to be written.
 
-|Field Name                 |Data Type                  |
-|---------------------------|---------------------------|
-|Attribute selectors        |N X Attribute selector     |
+|Field Name                 |Data Type                    |
+|---------------------------|-----------------------------|
+|Status                     |Zcl Status [status-response] |
+|Attribute selectors        |N X Attribute selector       |
+
+
+##### Status
+Status is only provided if the command was successful, and the 
+attribute selector records are not included for successfully
+written attributes, in order to save bandwidth.
+
+##### Attribute selectors
+Note that write attribute status records are not included for successfully
+written attributes, in order to save bandwidth. In the case of successful 
+writing of all attributes, only a single  write attribute status record
+SHALL be included in the command, with the status field set to SUCCESS and the
+attribute identifier and selector fields omitted.
 
 #### Write Attributes Structured Response Command [0x10]
 
 The write attributes structured response command is generated in response to a
 write attributes structured command.
 
-|Field Name                 |Data Type                  |
-|---------------------------|---------------------------|
+|Field Name                 |Data Type                         |
+|---------------------------|----------------------------------|
+|Status                     |Zcl Status[status-response]       |
 |Records                    |N X Write attribute status record |
 
+##### Status
+Status is only provided if the command was successful, and the write
+attribute status records are not included for successfully
+written attributes, in order to save bandwidth.
+
+##### Records
+Note that write attribute status records are not included for successfully
+written attributes, in order to save bandwidth.  In the case of successful
+writing of all attributes, only a single write attribute status record
+SHALL be included in the command, with the status field set to SUCCESS and the
+attribute identifier field omitted.
 
 #### Discover Commands Received [0x11]
 

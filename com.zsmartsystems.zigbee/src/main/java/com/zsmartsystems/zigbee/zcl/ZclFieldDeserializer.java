@@ -28,14 +28,25 @@ public class ZclFieldDeserializer {
 
     /**
      * Constructor for setting the payload and start index.
+     *
+     * @param deserializer the {@link ZigBeeDeserializer} to use for deserialization
      */
     public ZclFieldDeserializer(final ZigBeeDeserializer deserializer) {
         this.deserializer = deserializer;
     }
 
     /**
+     * Gets the remaining payload length
+     *
+     * @return the number of bytes remaining in the input stream
+     */
+    public int getRemainingLength() {
+        return deserializer.getSize() - deserializer.getPosition();
+    }
+
+    /**
      * Checks if there are further bytes to be read
-     * 
+     *
      * @return true if we are at the end of the input stream
      */
     public boolean isEndOfStream() {

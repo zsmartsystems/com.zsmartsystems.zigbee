@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -34,15 +35,35 @@ public class ConfigureReportingResponseTest extends CommandTest {
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
 
         ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
+        System.out.println(zclHeader);
         response.deserialize(fieldDeserializer);
+        System.out.println(response);
+
+        assertNull(response.getStatus());
 
         assertEquals(1, response.getRecords().size());
         AttributeStatusRecord record = response.getRecords().get(0);
 
         assertEquals(0, record.getAttributeIdentifier());
         assertEquals(ZclStatus.SUCCESS, record.getStatus());
+    }
 
+    @Test
+    public void testStatusOnly() {
+        int[] packet = getPacketData("18 11 07 00");
+
+        ConfigureReportingResponse response = new ConfigureReportingResponse();
+
+        DefaultDeserializer deserializer = new DefaultDeserializer(packet);
+        ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
+
+        ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
         System.out.println(zclHeader);
+
+        response.deserialize(fieldDeserializer);
         System.out.println(response);
+
+        assertEquals(ZclStatus.SUCCESS, response.getStatus());
+        assertNull(response.getRecords());
     }
 }
