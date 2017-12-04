@@ -14,6 +14,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 import java.util.List;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
 
 /**
@@ -29,7 +30,22 @@ import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
  */
 public class WriteAttributesStructuredResponse extends ZclCommand {
     /**
+     * Status command message field.
+     *
+     * Status is only provided if the command was successful, and the write
+     * attribute status records are not included for successfully
+     * written attributes, in order to save bandwidth.
+     */
+    private ZclStatus status;
+
+    /**
      * Records command message field.
+     *
+     * Note that write attribute status records are not included for successfully
+     * written attributes, in order to save bandwidth.  In the case of successful
+     * writing of all attributes, only a single write attribute status record
+     * SHALL be included in the command, with the status field set to SUCCESS and the
+     * attribute identifier field omitted.
      */
     private List<WriteAttributeStatusRecord> records;
 
@@ -56,7 +72,39 @@ public class WriteAttributesStructuredResponse extends ZclCommand {
     }
 
     /**
+     * Gets Status.
+     *
+     * Status is only provided if the command was successful, and the write
+     * attribute status records are not included for successfully
+     * written attributes, in order to save bandwidth.
+     *
+     * @return the Status
+     */
+    public ZclStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets Status.
+     *
+     * Status is only provided if the command was successful, and the write
+     * attribute status records are not included for successfully
+     * written attributes, in order to save bandwidth.
+     *
+     * @param status the Status
+     */
+    public void setStatus(final ZclStatus status) {
+        this.status = status;
+    }
+
+    /**
      * Gets Records.
+     *
+     * Note that write attribute status records are not included for successfully
+     * written attributes, in order to save bandwidth.  In the case of successful
+     * writing of all attributes, only a single write attribute status record
+     * SHALL be included in the command, with the status field set to SUCCESS and the
+     * attribute identifier field omitted.
      *
      * @return the Records
      */
@@ -67,6 +115,12 @@ public class WriteAttributesStructuredResponse extends ZclCommand {
     /**
      * Sets Records.
      *
+     * Note that write attribute status records are not included for successfully
+     * written attributes, in order to save bandwidth.  In the case of successful
+     * writing of all attributes, only a single write attribute status record
+     * SHALL be included in the command, with the status field set to SUCCESS and the
+     * attribute identifier field omitted.
+     *
      * @param records the Records
      */
     public void setRecords(final List<WriteAttributeStatusRecord> records) {
@@ -75,19 +129,29 @@ public class WriteAttributesStructuredResponse extends ZclCommand {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        if (status == ZclStatus.SUCCESS) {
+            serializer.serialize(status, ZclDataType.ZCL_STATUS);
+            return;
+        }
         serializer.serialize(records, ZclDataType.N_X_WRITE_ATTRIBUTE_STATUS_RECORD);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        if (deserializer.getRemainingLength() == 1) {
+            status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
+            return;
+        }
         records = (List<WriteAttributeStatusRecord>) deserializer.deserialize(ZclDataType.N_X_WRITE_ATTRIBUTE_STATUS_RECORD);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(63);
+        final StringBuilder builder = new StringBuilder(89);
         builder.append("WriteAttributesStructuredResponse [");
         builder.append(super.toString());
+        builder.append(", status=");
+        builder.append(status);
         builder.append(", records=");
         builder.append(records);
         builder.append(']');

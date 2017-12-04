@@ -1097,7 +1097,14 @@ public class ZclProtocolCodeGenerator {
                             // if listSizer != null and contains && then check the param bit
 
                             if (field.listSizer != null) {
-                                if (field.conditionOperator != null) {
+                                if (field.listSizer.equals("statusResponse")) {
+                                    // Special case where a ZclStatus may be sent, or, a list of results.
+                                    // This checks for a single response
+                                    out.println("        if (status == ZclStatus.SUCCESS) {");
+                                    out.println("            serializer.serialize(status, ZclDataType.ZCL_STATUS);");
+                                    out.println("            return;");
+                                    out.println("        }");
+                                } else if (field.conditionOperator != null) {
                                     if (field.conditionOperator == "&&") {
                                         out.println("        if ((" + field.listSizer + " & " + field.condition
                                                 + ") != 0) {");
@@ -1127,7 +1134,15 @@ public class ZclProtocolCodeGenerator {
                         out.println("    public void deserialize(final ZclFieldDeserializer deserializer) {");
                         for (final Field field : fields) {
                             if (field.listSizer != null) {
-                                if (field.conditionOperator != null) {
+                                if (field.listSizer.equals("statusResponse")) {
+                                    // Special case where a ZclStatus may be sent, or, a list of results.
+                                    // This checks for a single response
+                                    out.println("        if (deserializer.getRemainingLength() == 1) {");
+                                    out.println(
+                                            "            status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);");
+                                    out.println("            return;");
+                                    out.println("        }");
+                                } else if (field.conditionOperator != null) {
                                     if (field.conditionOperator == "&&") {
                                         out.println("        if ((" + field.listSizer + " & " + field.condition
                                                 + ") != 0) {");

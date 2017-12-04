@@ -12,6 +12,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 
 /**
  * Write Attributes Structured Command value object class.
@@ -28,7 +29,22 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  */
 public class WriteAttributesStructuredCommand extends ZclCommand {
     /**
+     * Status command message field.
+     *
+     * Status is only provided if the command was successful, and the
+     * attribute selector records are not included for successfully
+     * written attributes, in order to save bandwidth.
+     */
+    private ZclStatus status;
+
+    /**
      * Attribute selectors command message field.
+     *
+     * Note that write attribute status records are not included for successfully
+     * written attributes, in order to save bandwidth. In the case of successful
+     * writing of all attributes, only a single  write attribute status record
+     * SHALL be included in the command, with the status field set to SUCCESS and the
+     * attribute identifier and selector fields omitted.
      */
     private Object attributeSelectors;
 
@@ -55,7 +71,39 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
     }
 
     /**
+     * Gets Status.
+     *
+     * Status is only provided if the command was successful, and the
+     * attribute selector records are not included for successfully
+     * written attributes, in order to save bandwidth.
+     *
+     * @return the Status
+     */
+    public ZclStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets Status.
+     *
+     * Status is only provided if the command was successful, and the
+     * attribute selector records are not included for successfully
+     * written attributes, in order to save bandwidth.
+     *
+     * @param status the Status
+     */
+    public void setStatus(final ZclStatus status) {
+        this.status = status;
+    }
+
+    /**
      * Gets Attribute selectors.
+     *
+     * Note that write attribute status records are not included for successfully
+     * written attributes, in order to save bandwidth. In the case of successful
+     * writing of all attributes, only a single  write attribute status record
+     * SHALL be included in the command, with the status field set to SUCCESS and the
+     * attribute identifier and selector fields omitted.
      *
      * @return the Attribute selectors
      */
@@ -66,6 +114,12 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
     /**
      * Sets Attribute selectors.
      *
+     * Note that write attribute status records are not included for successfully
+     * written attributes, in order to save bandwidth. In the case of successful
+     * writing of all attributes, only a single  write attribute status record
+     * SHALL be included in the command, with the status field set to SUCCESS and the
+     * attribute identifier and selector fields omitted.
+     *
      * @param attributeSelectors the Attribute selectors
      */
     public void setAttributeSelectors(final Object attributeSelectors) {
@@ -74,19 +128,29 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
+        if (status == ZclStatus.SUCCESS) {
+            serializer.serialize(status, ZclDataType.ZCL_STATUS);
+            return;
+        }
         serializer.serialize(attributeSelectors, ZclDataType.N_X_ATTRIBUTE_SELECTOR);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
+        if (deserializer.getRemainingLength() == 1) {
+            status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
+            return;
+        }
         attributeSelectors = (Object) deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_SELECTOR);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(73);
+        final StringBuilder builder = new StringBuilder(99);
         builder.append("WriteAttributesStructuredCommand [");
         builder.append(super.toString());
+        builder.append(", status=");
+        builder.append(status);
         builder.append(", attributeSelectors=");
         builder.append(attributeSelectors);
         builder.append(']');
