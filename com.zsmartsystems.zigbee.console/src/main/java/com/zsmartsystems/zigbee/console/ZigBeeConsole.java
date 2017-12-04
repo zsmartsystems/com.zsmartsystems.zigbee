@@ -36,6 +36,7 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
+import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
@@ -2630,7 +2631,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getSyntax() {
-            return "trustcentre [LINKMODE] [MODE]";
+            return "trustcentre [MODE|KEY] [MODE / KEY]";
         }
 
         /**
@@ -2638,21 +2639,35 @@ public final class ZigBeeConsole {
          */
         @Override
         public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 3) {
+            if (args.length < 3) {
                 return false;
             }
+            TransportConfig config = new TransportConfig();
+            switch (args[1].toLowerCase()) {
+                case "mode":
+                    config.addOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE,
+                            TrustCentreJoinMode.valueOf(args[2].toUpperCase()));
+                    break;
+                case "key":
+                    String key = "";
+                    for (int cnt = 0; cnt < 16; cnt++) {
+                        key += args[cnt + 2];
+                    }
+                    config.addOption(TransportConfigOption.TRUST_CENTRE_LINK_KEY, new ZigBeeKey(key));
+                    break;
 
-            TransportConfig config = new TransportConfig(TransportConfigOption.TRUST_CENTRE_JOIN_MODE,
-                    TrustCentreJoinMode.valueOf(args[2].toUpperCase()));
+                default:
+                    return false;
+            }
 
+            TransportConfigOption option = config.getOptions().iterator().next();
             dongle.updateTransportConfig(config);
-            print("Trust Centre configuration returned "
-                    + config.getResult(TransportConfigOption.TRUST_CENTRE_JOIN_MODE), out);
+            print("Trust Centre configuration for " + option + " returned " + config.getResult(option), out);
             return true;
         }
     }
 
-   /**
+    /**
      * Locks door.
      */
     private class SupportedClusterCommand implements ConsoleCommand {
@@ -2695,8 +2710,6 @@ public final class ZigBeeConsole {
             return true;
         }
     }
-
-
 
     /**
      * Dongle firmware update command.
@@ -2767,8 +2780,7 @@ public final class ZigBeeConsole {
         }
     }
 
-
-   /**
+    /**
      * Rediscover a node from its IEEE address.
      */
     private class RediscoverCommand implements ConsoleCommand {

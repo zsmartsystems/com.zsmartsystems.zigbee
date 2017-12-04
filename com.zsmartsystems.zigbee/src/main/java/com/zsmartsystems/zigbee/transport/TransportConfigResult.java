@@ -19,13 +19,17 @@ public enum TransportConfigResult {
      */
     SUCCESS,
     /**
-     * A configuration for the requested option has not been set 
-     */
-    ERROR_REQUEST_NOT_SET,
-    /**
-     * The transport has not yet set a result for this request.
+     * The transport has not set a result for this request. This could mean it did not process the request.
      */
     ERROR_NO_RESULT,
+    /**
+     * There was an error implementing the request.
+     */
+    FAILURE,
+    /**
+     * A configuration for the requested option has not been set
+     */
+    ERROR_REQUEST_NOT_SET,
     /**
      * The transport was unable to implement a configuration option as it was in an invalid mode
      */

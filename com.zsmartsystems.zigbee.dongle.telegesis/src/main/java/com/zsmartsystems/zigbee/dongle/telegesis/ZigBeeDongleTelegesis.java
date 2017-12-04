@@ -722,7 +722,15 @@ public class ZigBeeDongleTelegesis
     public boolean setTcLinkKey(ZigBeeKey key) {
         linkKey = key;
 
-        return false;
+        TelegesisSetTrustCentreLinkKeyCommand linkKeyCommand = new TelegesisSetTrustCentreLinkKeyCommand();
+        linkKeyCommand.setLinkKey(linkKey);
+        linkKeyCommand.setPassword(telegesisPassword);
+        if (frameHandler.sendRequest(linkKeyCommand) == null) {
+            logger.debug("Error setting Telegesis link key");
+            return false;
+        }
+
+        return true;
     }
 
     @SuppressWarnings("unchecked")
@@ -744,6 +752,12 @@ public class ZigBeeDongleTelegesis
                     case TRUST_CENTRE_JOIN_MODE:
                         configuration.setResult(option,
                                 setTcJoinMode((TrustCentreJoinMode) configuration.getValue(option)));
+                        break;
+
+                    case TRUST_CENTRE_LINK_KEY:
+                        configuration.setResult(option,
+                                setTcLinkKey((ZigBeeKey) configuration.getValue(option)) ? TransportConfigResult.SUCCESS
+                                        : TransportConfigResult.FAILURE);
                         break;
 
                     default:
