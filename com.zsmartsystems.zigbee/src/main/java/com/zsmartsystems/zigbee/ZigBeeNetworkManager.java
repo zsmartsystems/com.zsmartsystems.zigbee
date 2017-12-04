@@ -260,13 +260,15 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         ZigBeeInitializeResponse transportResponse = transport.initialize();
 
         IeeeAddress address = transport.getIeeeAddress();
-        ZigBeeNode node = getNode(address);
-        if (node == null) {
-            node = new ZigBeeNode(this);
-            node.setIeeeAddress(address);
-            node.setNetworkAddress(0);
+        if (address != null) {
+            ZigBeeNode node = getNode(address);
+            if (node == null) {
+                node = new ZigBeeNode(this);
+                node.setIeeeAddress(address);
+                node.setNetworkAddress(0);
 
-            addNode(node);
+                addNode(node);
+            }
         }
 
         networkDiscoverer.startup();

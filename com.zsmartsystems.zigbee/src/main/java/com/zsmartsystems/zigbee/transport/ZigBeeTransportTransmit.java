@@ -72,7 +72,7 @@ public interface ZigBeeTransportTransmit {
     /**
      * Returns the {@link IeeeAddress} of the local device
      *
-     * @return the {@link IeeeAddress} of the local device
+     * @return the {@link IeeeAddress} of the local device. May return null if the address is not known.
      */
     IeeeAddress getIeeeAddress();
 
