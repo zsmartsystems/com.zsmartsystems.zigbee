@@ -250,10 +250,6 @@ public class ZigBeeNetworkDiscoverer
             discoveryStartTime.put(nodeNetworkAddress, System.currentTimeMillis());
         }
 
-        ZigBeeNode node = new ZigBeeNode(networkManager);
-        node.setNetworkAddress(nodeNetworkAddress);
-        discoveryNodes.put(nodeNetworkAddress, node);
-
         logger.debug("{}: Scheduling node discovery", nodeNetworkAddress);
         Runnable runnable = new Runnable() {
             @Override
@@ -364,37 +360,53 @@ public class ZigBeeNetworkDiscoverer
      */
     private boolean getIeeeAddress(final int networkAddress) {
         try {
-            // Request extended response, start index for associated list is 0
-            final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
-            ieeeAddressRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
-            ieeeAddressRequest.setRequestType(1);
-            ieeeAddressRequest.setStartIndex(0);
-            ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
-            CommandResult response = networkManager.unicast(ieeeAddressRequest, ieeeAddressRequest).get();
+            Integer startIndex = 0;
+            int totalAssociatedDevices = 0;
+            Set<Integer> associatedDevices = new HashSet<Integer>();
+            IeeeAddress ieeeAddress = null;
 
-            final IeeeAddressResponse ieeeAddressResponse = response.getResponse();
-            if (ieeeAddressResponse != null && ieeeAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
-                ZigBeeNode node = discoveryNodes.get(networkAddress);
-                if (node == null) {
-                    logger.debug("Discovery node not found in getIeeeAddress");
-                } else {
-                    node.setIeeeAddress(ieeeAddressResponse.getIeeeAddrRemoteDev());
-                    node.setAssociatedDevices(ieeeAddressResponse.getNwkAddrAssocDevList());
+            do {
+                // Request extended response, start index for associated list is 0
+                final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
+                ieeeAddressRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
+                ieeeAddressRequest.setRequestType(1);
+                ieeeAddressRequest.setStartIndex(startIndex);
+                ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
+                CommandResult response = networkManager.unicast(ieeeAddressRequest, ieeeAddressRequest).get();
+                if (response.isError()) {
+                    return false;
                 }
 
-                // Start discovery for any associated nodes
-                for (final int deviceNetworkAddress : ieeeAddressResponse.getNwkAddrAssocDevList()) {
-                    startNodeDiscovery(deviceNetworkAddress);
+                final IeeeAddressResponse ieeeAddressResponse = response.getResponse();
+                if (ieeeAddressResponse != null && ieeeAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
+                    logger.debug("Ieee Address for {} returned {}", networkAddress, ieeeAddressResponse);
+                    ieeeAddress = ieeeAddressResponse.getIeeeAddrRemoteDev();
+                    if (startIndex.equals(ieeeAddressResponse.getStartIndex())) {
+                        associatedDevices.addAll(ieeeAddressResponse.getNwkAddrAssocDevList());
+
+                        startIndex += ieeeAddressResponse.getNumAssocDev() == null ? 0
+                                : ieeeAddressResponse.getNumAssocDev();
+                        totalAssociatedDevices = ieeeAddressResponse.getNumAssocDev() == null ? 0
+                                : ieeeAddressResponse.getNumAssocDev();
+                    }
                 }
-                return true;
-            } else {
-                logger.debug("Ieee Address for {} returned {}", networkAddress, ieeeAddressResponse);
+
+            } while (startIndex < totalAssociatedDevices);
+
+            ZigBeeNode node = new ZigBeeNode(networkManager, ieeeAddress);
+            node.setNetworkAddress(networkAddress);
+            node.setAssociatedDevices(associatedDevices);
+            discoveryNodes.put(networkAddress, node);
+
+            // Start discovery for any associated nodes
+            for (final int deviceNetworkAddress : associatedDevices) {
+                startNodeDiscovery(deviceNetworkAddress);
             }
         } catch (InterruptedException | ExecutionException e) {
             logger.debug("Error in checkIeeeAddressResponse", e);
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -535,7 +547,6 @@ public class ZigBeeNetworkDiscoverer
             CommandResult response = networkManager.unicast(simpleDescriptorRequest, simpleDescriptorRequest).get();
 
             final SimpleDescriptorResponse simpleDescriptorResponse = (SimpleDescriptorResponse) response.getResponse();
-
             if (simpleDescriptorResponse == null) {
                 return false;
             }

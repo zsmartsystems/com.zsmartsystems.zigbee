@@ -113,7 +113,7 @@ public class ZigBeeEndpointTest {
     private ZigBeeEndpoint getDevice() {
         ZigBeeTransportTransmit mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
-        ZigBeeNode node = new ZigBeeNode(networkManager);
+        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress());
         node.setNetworkAddress(1234);
         return new ZigBeeEndpoint(networkManager, node, 5);
     }

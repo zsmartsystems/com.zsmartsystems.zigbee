@@ -50,9 +50,10 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
     public void testAddRemoveNode() {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
-        ZigBeeNode node1 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
+        ZigBeeNode node1 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
         node1.setNetworkAddress(1234);
-        ZigBeeNode node2 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
+        ZigBeeNode node2 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class),
+                new IeeeAddress("123456789ABCDEF0"));
         node2.setNetworkAddress(5678);
 
         // Add a node and make sure it's in the list
@@ -98,11 +99,8 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         foundNode = networkManager.getNode(1234);
         assertNull(networkManager.getNode(1234));
 
-        node2.setIeeeAddress(new IeeeAddress("123456789ABCDEF0"));
         networkManager.updateNode(node2);
-        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(4));
-        networkManager.updateNode(null);
-        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(4));
+        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(3));
         assertEquals(1, networkManager.getNodes().size());
 
         // Check we can also get using the IEEE address
@@ -117,6 +115,24 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         networkManager.addNetworkNodeListener(null);
         networkManager.removeNetworkNodeListener(null);
         networkManager.removeNetworkNodeListener(mockedNodeListener);
+    }
+
+    @Test
+    public void testAddExistingNode() {
+        String address = "123456789ABCDEF0";
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+
+        ZigBeeNode node1 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress(address));
+        node1.setNetworkAddress(1234);
+        ZigBeeNode node2 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress(address));
+        node2.setNetworkAddress(5678);
+        networkManager.addNode(node1);
+        assertEquals(1, networkManager.getNodes().size());
+        ZigBeeNode nodeWeGot = networkManager.getNode(new IeeeAddress(address));
+        assertEquals(Integer.valueOf(1234), nodeWeGot.getNetworkAddress());
+        networkManager.addNode(node2);
+        assertEquals(1, networkManager.getNodes().size());
+        assertEquals(Integer.valueOf(5678), nodeWeGot.getNetworkAddress());
     }
 
     @Test

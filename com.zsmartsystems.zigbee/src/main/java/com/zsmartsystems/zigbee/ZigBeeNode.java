@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -55,7 +57,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     /**
      * The extended {@link IeeeAddress} for the node
      */
-    private IeeeAddress ieeeAddress;
+    private final IeeeAddress ieeeAddress;
 
     /**
      * The 16 bit network address for the node
@@ -86,22 +88,22 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     /**
      * List of associated devices for the node, specified in a {@link List} {@link Integer}
      */
-    private final List<Integer> associatedDevices = new ArrayList<Integer>();
+    private final Set<Integer> associatedDevices = new HashSet<Integer>();
 
     /**
      * List of neighbors for the node, specified in a {@link NeighborTable}
      */
-    private final List<NeighborTable> neighbors = new ArrayList<NeighborTable>();
+    private final Set<NeighborTable> neighbors = new HashSet<NeighborTable>();
 
     /**
      * List of routes within the node, specified in a {@link RoutingTable}
      */
-    private final List<RoutingTable> routes = new ArrayList<RoutingTable>();
+    private final Set<RoutingTable> routes = new HashSet<RoutingTable>();
 
     /**
      * List of binding records
      */
-    private final List<BindingTable> bindingTable = new ArrayList<BindingTable>();
+    private final Set<BindingTable> bindingTable = new HashSet<BindingTable>();
 
     /**
      * List of endpoints this node exposes
@@ -124,20 +126,18 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * Constructor
      *
      * @param networkManager the {@link ZigBeeNetworkManager}
+     * @param ieeeAddress the {@link IeeeAddress} of the node
+     * @throws {@link IllegalArgumentException} if ieeeAddress is null
      */
-    public ZigBeeNode(ZigBeeNetworkManager networkManager) {
+    public ZigBeeNode(ZigBeeNetworkManager networkManager, IeeeAddress ieeeAddress) {
+        if (ieeeAddress == null) {
+            throw new IllegalArgumentException("IeeeAddress can't be null when creating ZigBeeNode");
+        }
+
         this.networkManager = networkManager;
+        this.ieeeAddress = ieeeAddress;
 
         networkManager.addCommandListener(this);
-    }
-
-    /**
-     * Sets the {@link IeeeAddress} of the node
-     *
-     * param ieeeAddress the {@link IeeeAddress} of the node
-     */
-    public void setIeeeAddress(IeeeAddress ieeeAddress) {
-        this.ieeeAddress = ieeeAddress;
     }
 
     /**
@@ -323,11 +323,11 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * Gets the current binding table for the device. Note that this doesn't retrieve the table from the device, to do
      * this use the {@link #updateBindingTable()} method.
      *
-     * @return {@link List} of {@link BindingTable} for the device
+     * @return {@link Set} of {@link BindingTable} for the device
      */
-    public List<BindingTable> getBindingTable() {
+    public Set<BindingTable> getBindingTable() {
         synchronized (bindingTable) {
-            return new ArrayList<BindingTable>(bindingTable);
+            return new HashSet<BindingTable>(bindingTable);
         }
     }
 
@@ -482,11 +482,11 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     /**
      * Get the list of neighbors as a {@link NeighborTable}
      *
-     * @return current list of neighbors as a {@link NeighborTable}
+     * @return current {@link Set} of neighbors as a {@link NeighborTable}
      */
-    public List<NeighborTable> getNeighbors() {
+    public Set<NeighborTable> getNeighbors() {
         synchronized (neighbors) {
-            return new ArrayList<NeighborTable>(neighbors);
+            return new HashSet<NeighborTable>(neighbors);
         }
     }
 
@@ -499,45 +499,27 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * @param neighbors list of neighbors as a {@link NeighborTable}. Setting to null will remove all neighbors.
      * @return true if the neighbor table was updated
      */
-    public boolean setNeighbors(List<NeighborTable> neighbors) {
-        boolean changes = false;
-        synchronized (this.neighbors) {
-            if (neighbors == null) {
-                if (this.neighbors.size() != 0) {
-                    this.neighbors.clear();
-                    changes = true;
-                }
-            } else if (this.neighbors.size() != neighbors.size()) {
-                changes = true;
-            } else {
-                for (NeighborTable neighbor : this.neighbors) {
-                    if (!neighbors.contains(neighbor)) {
-                        changes = true;
-                        break;
-                    }
-                }
-            }
-
-            // Update the list if needed
-            if (changes) {
-                this.neighbors.clear();
-                if (neighbors != null) {
-                    this.neighbors.addAll(neighbors);
-                }
-            }
+    public boolean setNeighbors(Set<NeighborTable> neighbors) {
+        if (this.neighbors.equals(neighbors)) {
+            return false;
         }
 
-        return changes;
+        synchronized (this.neighbors) {
+            this.neighbors.clear();
+            this.neighbors.addAll(neighbors);
+        }
+
+        return true;
     }
 
     /**
      * Get the list of associated devices as a {@link List} of {@link Integer}
      *
-     * @return current list of associated devices as a {@link List} of {@link Integer}
+     * @return current list of associated devices as a {@link Set} of {@link Integer}
      */
-    public List<Integer> getAssociatedDevices() {
+    public Set<Integer> getAssociatedDevices() {
         synchronized (associatedDevices) {
-            return new ArrayList<Integer>(associatedDevices);
+            return new HashSet<Integer>(associatedDevices);
         }
     }
 
@@ -550,45 +532,27 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * @param neighbors list of neighbors as a {@link NeighborTable}. Setting to null will remove all neighbors.
      * @return true if the neighbor table was updated
      */
-    public boolean setAssociatedDevices(List<Integer> associatedDevices) {
-        boolean changes = false;
-        synchronized (this.associatedDevices) {
-            if (associatedDevices == null) {
-                if (this.associatedDevices.size() != 0) {
-                    this.associatedDevices.clear();
-                    changes = true;
-                }
-            } else if (this.associatedDevices.size() != associatedDevices.size()) {
-                changes = true;
-            } else {
-                for (Integer neighbor : this.associatedDevices) {
-                    if (!associatedDevices.contains(neighbor)) {
-                        changes = true;
-                        break;
-                    }
-                }
-            }
-
-            // Update the list if needed
-            if (changes) {
-                this.associatedDevices.clear();
-                if (associatedDevices != null) {
-                    this.associatedDevices.addAll(associatedDevices);
-                }
-            }
+    public boolean setAssociatedDevices(Set<Integer> associatedDevices) {
+        if (this.associatedDevices.equals(associatedDevices)) {
+            return false;
         }
 
-        return changes;
+        synchronized (this.associatedDevices) {
+            this.associatedDevices.clear();
+            this.associatedDevices.addAll(associatedDevices);
+        }
+
+        return true;
     }
 
     /**
      * Get the list of routes as a {@link RoutingTable}
      *
-     * @return list of routes as a {@link RoutingTable}
+     * @return {@link Set} of routes as a {@link RoutingTable}
      */
-    public List<RoutingTable> getRoutes() {
+    public Collection<RoutingTable> getRoutes() {
         synchronized (routes) {
-            return new ArrayList<RoutingTable>(routes);
+            return new HashSet<RoutingTable>(routes);
         }
     }
 
@@ -601,35 +565,17 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * @param routes list of routes as a {@link RoutingTable}. Setting to null will remove all routes.
      * @return true if the route table was updated
      */
-    public boolean setRoutes(List<RoutingTable> routes) {
-        boolean changes = false;
-        synchronized (this.routes) {
-            if (routes == null) {
-                if (this.routes.size() != 0) {
-                    this.routes.clear();
-                    changes = true;
-                }
-            } else if (this.routes.size() != routes.size()) {
-                changes = true;
-            } else {
-                for (RoutingTable route : this.routes) {
-                    if (!routes.contains(route)) {
-                        changes = true;
-                        break;
-                    }
-                }
-            }
-
-            // Update the list if needed
-            if (changes) {
-                this.routes.clear();
-                if (routes != null) {
-                    this.routes.addAll(routes);
-                }
-            }
+    public boolean setRoutes(Set<RoutingTable> routes) {
+        if (this.routes.equals(routes)) {
+            return false;
         }
 
-        return changes;
+        synchronized (this.routes) {
+            this.routes.clear();
+            this.routes.addAll(routes);
+        }
+
+        return true;
     }
 
     /**
@@ -732,5 +678,71 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
         return "ZigBeeNode [IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + ", Type="
                 + nodeDescriptor.getLogicalType() + "]";
+    }
+
+    /**
+     * Updates the node. This will copy data from another node into this node. Updated elements are checked for equality
+     * and the method will only return true if the node data has been changed.
+     *
+     * @param node the {@link ZigBeeNode} that contains the newer node data.
+     * @return true if there were changes made as a result of the update
+     */
+    protected boolean updateNode(ZigBeeNode node) {
+        if (!node.getIeeeAddress().equals(ieeeAddress)) {
+            return false;
+        }
+
+        boolean updated = false;
+
+        if (!networkAddress.equals(node.getNetworkAddress())) {
+            updated = true;
+            networkAddress = node.getNetworkAddress();
+        }
+
+        if (!nodeDescriptor.equals(node.getNodeDescriptor())) {
+            updated = true;
+            nodeDescriptor = node.getNodeDescriptor();
+        }
+
+        if (!powerDescriptor.equals(node.getPowerDescriptor())) {
+            updated = true;
+            powerDescriptor = node.getPowerDescriptor();
+        }
+
+        synchronized (associatedDevices) {
+            if (!associatedDevices.equals(node.getAssociatedDevices())) {
+                updated = true;
+                associatedDevices.clear();
+                associatedDevices.addAll(node.getAssociatedDevices());
+            }
+        }
+
+        synchronized (bindingTable) {
+            if (!bindingTable.equals(node.getBindingTable())) {
+                updated = true;
+                bindingTable.clear();
+                bindingTable.addAll(node.getBindingTable());
+            }
+        }
+
+        synchronized (neighbors) {
+            if (!neighbors.equals(node.getNeighbors())) {
+                updated = true;
+                neighbors.clear();
+                neighbors.addAll(node.getNeighbors());
+            }
+        }
+
+        synchronized (routes) {
+            if (!routes.equals(node.getRoutes())) {
+                updated = true;
+                routes.clear();
+                routes.addAll(node.getRoutes());
+            }
+        }
+
+        // TODO: How to deal with endpoints
+
+        return updated;
     }
 }

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -86,9 +87,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private final Logger logger = LoggerFactory.getLogger(ZigBeeNetworkManager.class);
 
     /**
-     * The nodes in the ZigBee network - maps 16 bit network address to {@link ZigBeeNode}
+     * The nodes in the ZigBee network - maps {@link IeeeAddress} to {@link ZigBeeNode}
      */
-    private final Map<Integer, ZigBeeNode> networkNodes = new TreeMap<Integer, ZigBeeNode>();
+    private final Map<IeeeAddress, ZigBeeNode> networkNodes = new ConcurrentHashMap<IeeeAddress, ZigBeeNode>();
 
     /**
      * The groups in the ZigBee network.
@@ -263,8 +264,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (address != null) {
             ZigBeeNode node = getNode(address);
             if (node == null) {
-                node = new ZigBeeNode(this);
-                node.setIeeeAddress(address);
+                node = new ZigBeeNode(this, address);
                 node.setNetworkAddress(0);
 
                 addNode(node);
@@ -1044,24 +1044,24 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return the {@link ZigBeeNode}
      */
     public ZigBeeNode getNode(final Integer networkAddress) {
-        return networkNodes.get(networkAddress);
+        synchronized (networkNodes) {
+            for (ZigBeeNode node : networkNodes.values()) {
+                if (node.getNetworkAddress().equals(networkAddress)) {
+                    return node;
+                }
+            }
+        }
+        return null;
     }
 
     /**
      * Gets a node given the {@link IeeeAddress}
      *
      * @param ieeeAddress the {@link IeeeAddress}
-     * @return the {@link ZigBeeNode}
+     * @return the {@link ZigBeeNode} or null if the node was not found
      */
     public ZigBeeNode getNode(final IeeeAddress ieeeAddress) {
-        synchronized (networkNodes) {
-            for (ZigBeeNode node : networkNodes.values()) {
-                if (node.getIeeeAddress().equals(ieeeAddress)) {
-                    return node;
-                }
-            }
-        }
-        return null;
+        return networkNodes.get(ieeeAddress);
     }
 
     /**
@@ -1079,10 +1079,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         synchronized (networkNodes) {
             // Don't update if the node is not known
             // We especially don't want to notify listeners of a device we removed, that didn't exist!
-            if (!networkNodes.containsKey(node.getNetworkAddress())) {
+            if (!networkNodes.containsKey(node.getIeeeAddress())) {
                 return;
             }
-            networkNodes.remove(node.getNetworkAddress());
+            networkNodes.remove(node.getIeeeAddress());
         }
         synchronized (this) {
             for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
@@ -1115,10 +1115,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         synchronized (networkNodes) {
             // Don't add if the node is already known
             // We especially don't want to notify listeners
-            if (networkNodes.containsKey(node.getNetworkAddress())) {
+            if (networkNodes.containsKey(node.getIeeeAddress())) {
+                updateNode(node);
                 return;
             }
-            networkNodes.put(node.getNetworkAddress(), node);
+            networkNodes.put(node.getIeeeAddress(), node);
         }
         synchronized (this) {
             for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
@@ -1146,9 +1147,19 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             return;
         }
 
+        final ZigBeeNode currentNode;
         synchronized (networkNodes) {
-            networkNodes.remove(node.getNetworkAddress());
-            networkNodes.put(node.getNetworkAddress(), node);
+            currentNode = networkNodes.get(node.getIeeeAddress());
+
+            // Return if we don't know this node
+            if (currentNode == null) {
+                return;
+            }
+
+            // Return if there were no updates
+            if (!currentNode.updateNode(node)) {
+                return;
+            }
         }
 
         synchronized (this) {
@@ -1156,7 +1167,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        listener.nodeUpdated(node);
+                        listener.nodeUpdated(currentNode);
                     }
                 });
             }

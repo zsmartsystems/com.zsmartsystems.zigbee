@@ -7,10 +7,8 @@
  */
 package com.zsmartsystems.zigbee;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
@@ -207,9 +205,9 @@ public class ZigBeeNetworkMeshMonitor implements ZigBeeCommandListener {
                 try {
                     boolean update = false;
 
-                    List<Integer> associations = null;
-                    List<NeighborTable> neighbors = null;
-                    List<RoutingTable> routes = null;
+                    Set<Integer> associations = null;
+                    Set<NeighborTable> neighbors = null;
+                    Set<RoutingTable> routes = null;
 
                     // We request the neighbor table for all devices
                     neighbors = getNeighborTable(nodeNetworkAddress);
@@ -267,13 +265,13 @@ public class ZigBeeNetworkMeshMonitor implements ZigBeeCommandListener {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    private List<Integer> getAssociatedNodes(final int networkAddress) throws InterruptedException, ExecutionException {
+    private Set<Integer> getAssociatedNodes(final int networkAddress) throws InterruptedException, ExecutionException {
         // Start index for the list is 0
         int retries = 0;
         int startIndex = 0;
         int totalNodes = 0;
 
-        List<Integer> nodes = new ArrayList<Integer>();
+        Set<Integer> nodes = new HashSet<Integer>();
         do {
             // Request extended response, start index for associated list is 0
             final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
@@ -316,13 +314,13 @@ public class ZigBeeNetworkMeshMonitor implements ZigBeeCommandListener {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    private List<NeighborTable> getNeighborTable(final int networkAddress)
+    private Set<NeighborTable> getNeighborTable(final int networkAddress)
             throws InterruptedException, ExecutionException {
         // Start index for the list is 0
         int retries = 0;
         int startIndex = 0;
         int totalNeighbors = 0;
-        List<NeighborTable> neighbors = new ArrayList<NeighborTable>();
+        Set<NeighborTable> neighbors = new HashSet<NeighborTable>();
         do {
             final ManagementLqiRequest neighborRequest = new ManagementLqiRequest();
             neighborRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
@@ -372,13 +370,13 @@ public class ZigBeeNetworkMeshMonitor implements ZigBeeCommandListener {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    private List<RoutingTable> getRoutingTable(final int networkAddress)
+    private Set<RoutingTable> getRoutingTable(final int networkAddress)
             throws InterruptedException, ExecutionException {
         // Start index for the list is 0
         int retries = 0;
         int startIndex = 0;
         int totalRoutes = 0;
-        List<RoutingTable> routes = new ArrayList<RoutingTable>();
+        Set<RoutingTable> routes = new HashSet<RoutingTable>();
         do {
             final ManagementRoutingRequest routeRequest = new ManagementRoutingRequest();
             routeRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));

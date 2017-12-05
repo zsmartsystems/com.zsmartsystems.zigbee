@@ -28,8 +28,7 @@ public class ZigBeeNodeDaoTest {
     public void testSerialize() {
         ZigBeeTransportTransmit mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
-        ZigBeeNode node = new ZigBeeNode(networkManager);
-        node.setIeeeAddress(new IeeeAddress("1234567890ABCDEF"));
+        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress("1234567890ABCDEF"));
         node.setNetworkAddress(12345);
 
         ZigBeeEndpoint endpoint;

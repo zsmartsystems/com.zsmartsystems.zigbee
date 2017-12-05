@@ -16,6 +16,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -51,7 +52,7 @@ public class ZclClusterTest {
     public void getReporting() {
         createNetworkManager();
 
-        ZigBeeNode node = new ZigBeeNode(networkManager);
+        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress());
         node.setNetworkAddress(1234);
         ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
         ZclCluster cluster = new ZclOnOffCluster(networkManager, device);
@@ -72,7 +73,7 @@ public class ZclClusterTest {
     public void setReporting() {
         createNetworkManager();
 
-        ZigBeeNode node = new ZigBeeNode(networkManager);
+        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress());
         node.setNetworkAddress(1234);
         ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
         ZclCluster cluster = new ZclOnOffCluster(networkManager, device);
@@ -93,7 +94,7 @@ public class ZclClusterTest {
     public void getClusterId() {
         createNetworkManager();
 
-        ZigBeeNode node = new ZigBeeNode(networkManager);
+        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress());
         node.setNetworkAddress(1234);
         ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
         ZclCluster cluster = new ZclOnOffCluster(networkManager, device);
@@ -104,7 +105,7 @@ public class ZclClusterTest {
     public void getClusterName() {
         createNetworkManager();
 
-        ZigBeeNode node = new ZigBeeNode(networkManager);
+        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress());
         node.setNetworkAddress(1234);
         ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
         ZclCluster cluster = new ZclLevelControlCluster(networkManager, device);

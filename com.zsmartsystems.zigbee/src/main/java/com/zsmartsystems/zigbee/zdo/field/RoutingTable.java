@@ -7,8 +7,6 @@
  */
 package com.zsmartsystems.zigbee.zdo.field;
 
-import java.util.Objects;
-
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -126,21 +124,56 @@ public class RoutingTable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(status, destinationAddress, nextHopAddress, routeRecordRequired);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((destinationAddress == null) ? 0 : destinationAddress.hashCode());
+        result = prime * result + (manyToOne ? 1231 : 1237);
+        result = prime * result + (memoryConstrained ? 1231 : 1237);
+        result = prime * result + ((nextHopAddress == null) ? 0 : nextHopAddress.hashCode());
+        result = prime * result + (routeRecordRequired ? 1231 : 1237);
+        result = prime * result + ((status == null) ? 0 : status.hashCode());
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
         if (obj == null) {
             return false;
         }
-        if (!RoutingTable.class.isAssignableFrom(obj.getClass())) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        final RoutingTable other = (RoutingTable) obj;
-        return (getStatus().equals(other.getStatus()) && getDestinationAddress().equals(other.getDestinationAddress())
-                && getNextHopAddress().equals(other.getNextHopAddress())
-                && isRouteRecordRequired() == (other.isRouteRecordRequired())) ? true : false;
+        RoutingTable other = (RoutingTable) obj;
+        if (destinationAddress == null) {
+            if (other.destinationAddress != null) {
+                return false;
+            }
+        } else if (!destinationAddress.equals(other.destinationAddress)) {
+            return false;
+        }
+        if (manyToOne != other.manyToOne) {
+            return false;
+        }
+        if (memoryConstrained != other.memoryConstrained) {
+            return false;
+        }
+        if (nextHopAddress == null) {
+            if (other.nextHopAddress != null) {
+                return false;
+            }
+        } else if (!nextHopAddress.equals(other.nextHopAddress)) {
+            return false;
+        }
+        if (routeRecordRequired != other.routeRecordRequired) {
+            return false;
+        }
+        if (status != other.status) {
+            return false;
+        }
+        return true;
     }
 
     @Override

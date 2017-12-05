@@ -192,7 +192,7 @@ public class PowerDescriptor {
 
     /**
      * Sets the current power mode for the descriptor
-     * 
+     *
      * @param currentPowerMode the {@link CurrentPowerModeType}
      */
     public void setCurrentPowerMode(int currentPowerMode) {
@@ -264,6 +264,48 @@ public class PowerDescriptor {
         setAvailablePowerSources(byte1 >> 4 & 0x0f);
         setCurrentPowerSource(byte2 & 0x0f);
         setCurrentPowerLevel(byte2 >> 4 & 0x0f);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((availablePowerSources == null) ? 0 : availablePowerSources.hashCode());
+        result = prime * result + ((currentPowerMode == null) ? 0 : currentPowerMode.hashCode());
+        result = prime * result + ((currentPowerSource == null) ? 0 : currentPowerSource.hashCode());
+        result = prime * result + ((powerLevel == null) ? 0 : powerLevel.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        PowerDescriptor other = (PowerDescriptor) obj;
+        if (availablePowerSources == null) {
+            if (other.availablePowerSources != null) {
+                return false;
+            }
+        } else if (!availablePowerSources.equals(other.availablePowerSources)) {
+            return false;
+        }
+        if (currentPowerMode != other.currentPowerMode) {
+            return false;
+        }
+        if (currentPowerSource != other.currentPowerSource) {
+            return false;
+        }
+        if (powerLevel != other.powerLevel) {
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.zdo.field;
 
 /**
  * Complex Descriptor
- * 
+ *
  * @author Chris Jackson
  *
  */
@@ -34,5 +34,11 @@ public class ComplexDescriptor {
 
     public String getSerialNumber() {
         return serialNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "ComplexDescriptor [manufacturerName=" + manufacturerName + ", modelName=" + modelName
+                + ", serialNumber=" + serialNumber + "]";
     }
 }

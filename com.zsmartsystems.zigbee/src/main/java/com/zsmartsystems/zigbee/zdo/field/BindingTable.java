@@ -134,6 +134,64 @@ public class BindingTable {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + clusterId;
+        result = prime * result + dstAddrMode;
+        result = prime * result + dstGroupAddr;
+        result = prime * result + ((dstNodeAddr == null) ? 0 : dstNodeAddr.hashCode());
+        result = prime * result + dstNodeEndpoint;
+        result = prime * result + ((srcAddr == null) ? 0 : srcAddr.hashCode());
+        result = prime * result + srcEndpoint;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        BindingTable other = (BindingTable) obj;
+        if (clusterId != other.clusterId) {
+            return false;
+        }
+        if (dstAddrMode != other.dstAddrMode) {
+            return false;
+        }
+        if (dstGroupAddr != other.dstGroupAddr) {
+            return false;
+        }
+        if (dstNodeAddr == null) {
+            if (other.dstNodeAddr != null) {
+                return false;
+            }
+        } else if (!dstNodeAddr.equals(other.dstNodeAddr)) {
+            return false;
+        }
+        if (dstNodeEndpoint != other.dstNodeEndpoint) {
+            return false;
+        }
+        if (srcAddr == null) {
+            if (other.srcAddr != null) {
+                return false;
+            }
+        } else if (!srcAddr.equals(other.srcAddr)) {
+            return false;
+        }
+        if (srcEndpoint != other.srcEndpoint) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder(120);
         builder.append("BindingTable [srcAddr=");

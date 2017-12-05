@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.zdo.descriptors;
+package com.zsmartsystems.zigbee.zdo.field;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

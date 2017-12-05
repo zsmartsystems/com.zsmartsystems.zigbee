@@ -276,6 +276,92 @@ public class NodeDescriptor {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + apsFlags;
+        result = prime * result + bufferSize;
+        result = prime * result + (complexDescriptorAvailable ? 1231 : 1237);
+        result = prime * result + (extendedEndpointListAvailable ? 1231 : 1237);
+        result = prime * result + (extendedSimpleDescriptorListAvailable ? 1231 : 1237);
+        result = prime * result + ((frequencyBands == null) ? 0 : frequencyBands.hashCode());
+        result = prime * result + incomingTransferSize;
+        result = prime * result + ((logicalType == null) ? 0 : logicalType.hashCode());
+        result = prime * result + ((macCapabilities == null) ? 0 : macCapabilities.hashCode());
+        result = prime * result + manufacturerCode;
+        result = prime * result + outgoingTransferSize;
+        result = prime * result + ((serverCapabilities == null) ? 0 : serverCapabilities.hashCode());
+        result = prime * result + (userDescriptorAvailable ? 1231 : 1237);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        NodeDescriptor other = (NodeDescriptor) obj;
+        if (apsFlags != other.apsFlags) {
+            return false;
+        }
+        if (bufferSize != other.bufferSize) {
+            return false;
+        }
+        if (complexDescriptorAvailable != other.complexDescriptorAvailable) {
+            return false;
+        }
+        if (extendedEndpointListAvailable != other.extendedEndpointListAvailable) {
+            return false;
+        }
+        if (extendedSimpleDescriptorListAvailable != other.extendedSimpleDescriptorListAvailable) {
+            return false;
+        }
+        if (frequencyBands == null) {
+            if (other.frequencyBands != null) {
+                return false;
+            }
+        } else if (!frequencyBands.equals(other.frequencyBands)) {
+            return false;
+        }
+        if (incomingTransferSize != other.incomingTransferSize) {
+            return false;
+        }
+        if (logicalType != other.logicalType) {
+            return false;
+        }
+        if (macCapabilities == null) {
+            if (other.macCapabilities != null) {
+                return false;
+            }
+        } else if (!macCapabilities.equals(other.macCapabilities)) {
+            return false;
+        }
+        if (manufacturerCode != other.manufacturerCode) {
+            return false;
+        }
+        if (outgoingTransferSize != other.outgoingTransferSize) {
+            return false;
+        }
+        if (serverCapabilities == null) {
+            if (other.serverCapabilities != null) {
+                return false;
+            }
+        } else if (!serverCapabilities.equals(other.serverCapabilities)) {
+            return false;
+        }
+        if (userDescriptorAvailable != other.userDescriptorAvailable) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "NodeDescriptor [apsFlags=" + apsFlags + ", bufferSize=" + bufferSize + ", complexDescriptorAvailable="
                 + complexDescriptorAvailable + ", manufacturerCode=" + manufacturerCode + ", logicalType=" + logicalType

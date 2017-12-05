@@ -14,12 +14,13 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
@@ -33,7 +34,7 @@ import com.zsmartsystems.zigbee.zdo.field.RoutingTable.DiscoveryState;
 public class ZigBeeNodeTest {
     @Test
     public void testAddDescriptors() {
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
 
         // Not null by default
         assertNotNull(node.getNodeDescriptor());
@@ -49,8 +50,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testSetIeeeAddress() {
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
-        node.setIeeeAddress(new IeeeAddress("17880100dc880b"));
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("17880100dc880b"));
         assertEquals(new IeeeAddress("17880100dc880b"), node.getIeeeAddress());
 
         System.out.println(node.toString());
@@ -59,7 +59,7 @@ public class ZigBeeNodeTest {
     @Test
     public void testSetPowerDescriptor() {
         PowerDescriptor descriptor = new PowerDescriptor(1, 2, 4, 0xc);
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
         node.setPowerDescriptor(descriptor);
         assertEquals(CurrentPowerModeType.RECEIVER_ON_PERIODICALLY, node.getPowerDescriptor().getCurrentPowerMode());
         assertEquals(PowerSourceType.DISPOSABLE_BATTERY, node.getPowerDescriptor().getCurrentPowerSource());
@@ -99,42 +99,38 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testNeighborTableUpdate() {
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
-        List<NeighborTable> neighbors;
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
+        Set<NeighborTable> neighbors;
 
         NeighborTable neighbor1 = getNeighborTable(12345, "123456789", 0);
         NeighborTable neighbor2 = getNeighborTable(12345, "123456789", 0);
         NeighborTable neighbor3 = getNeighborTable(54321, "987654321", 0);
 
-        assertFalse(node.setNeighbors(null));
-
-        neighbors = new ArrayList<NeighborTable>();
+        neighbors = new HashSet<NeighborTable>();
         neighbors.add(neighbor1);
         assertTrue(node.setNeighbors(neighbors));
 
-        neighbors = new ArrayList<NeighborTable>();
+        neighbors = new HashSet<NeighborTable>();
         neighbors.add(neighbor2);
         assertFalse(node.setNeighbors(neighbors));
 
-        neighbors = new ArrayList<NeighborTable>();
+        neighbors = new HashSet<NeighborTable>();
         neighbors.add(neighbor3);
         neighbors.add(neighbor1);
         assertTrue(node.setNeighbors(neighbors));
 
-        neighbors = new ArrayList<NeighborTable>();
+        neighbors = new HashSet<NeighborTable>();
         neighbors.add(neighbor1);
         neighbors.add(neighbor3);
         assertFalse(node.setNeighbors(neighbors));
 
         assertEquals(2, node.getNeighbors().size());
-        assertTrue(node.setNeighbors(null));
-        assertEquals(0, node.getNeighbors().size());
     }
 
     @Test
     public void testRoutingTableUpdate() {
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
-        List<RoutingTable> routes;
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
+        Set<RoutingTable> routes;
 
         RoutingTable route1 = new RoutingTable();
         route1.setDestinationAddress(12345);
@@ -160,33 +156,29 @@ public class ZigBeeNodeTest {
         route4.setStatus(DiscoveryState.INACTIVE);
         route4.setRouteRecordRequired(false);
 
-        assertFalse(node.setRoutes(null));
-
-        routes = new ArrayList<RoutingTable>();
+        routes = new HashSet<RoutingTable>();
         routes.add(route1);
         assertTrue(node.setRoutes(routes));
 
-        routes = new ArrayList<RoutingTable>();
+        routes = new HashSet<RoutingTable>();
         routes.add(route2);
         assertFalse(node.setRoutes(routes));
 
-        routes = new ArrayList<RoutingTable>();
+        routes = new HashSet<RoutingTable>();
         routes.add(route3);
         assertTrue(node.setRoutes(routes));
 
-        routes = new ArrayList<RoutingTable>();
+        routes = new HashSet<RoutingTable>();
         routes.add(route1);
         routes.add(route4);
         assertTrue(node.setRoutes(routes));
 
         assertEquals(2, node.getRoutes().size());
-        assertTrue(node.setRoutes(null));
-        assertEquals(0, node.getRoutes().size());
     }
 
     @Test
     public void testDeviceTypes() {
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
         assertFalse(node.isFullFuntionDevice());
         assertFalse(node.isReducedFuntionDevice());
         assertFalse(node.isPrimaryTrustCenter());
@@ -222,7 +214,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testLastUpdate() {
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
         assertNull(node.getLastUpdateTime());
         node.setLastUpdateTime();
         assertNotNull(node.getLastUpdateTime());
@@ -230,7 +222,7 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testJoiningEnabled() {
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
 
         node.setJoining(true);
         assertTrue(node.isJoiningEnabled());
@@ -238,14 +230,14 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testAssociatedDevices() {
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class));
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
 
         // Check list is empty to start
         assertNotNull(node.getAssociatedDevices());
         assertEquals(0, node.getAssociatedDevices().size());
 
         // Add 3 nodes
-        List<Integer> associatedDevices = new ArrayList<Integer>();
+        Set<Integer> associatedDevices = new HashSet<Integer>();
         associatedDevices.add(1);
         associatedDevices.add(2);
         associatedDevices.add(3);
@@ -254,102 +246,127 @@ public class ZigBeeNodeTest {
         assertEquals(3, node.getAssociatedDevices().size());
 
         // Remove 1 node
-        associatedDevices = new ArrayList<Integer>();
+        associatedDevices = new HashSet<Integer>();
         associatedDevices.add(1);
         associatedDevices.add(3);
         changed = node.setAssociatedDevices(associatedDevices);
         assertTrue(changed);
         assertEquals(2, node.getAssociatedDevices().size());
-        assertEquals(Integer.valueOf(1), node.getAssociatedDevices().get(0));
-        assertEquals(Integer.valueOf(3), node.getAssociatedDevices().get(1));
+
+        Integer[] devices = new Integer[2];
+        node.getAssociatedDevices().toArray(devices);
+        assertEquals(Integer.valueOf(1), devices[0]);
+        assertEquals(Integer.valueOf(3), devices[1]);
 
         // Add the same list and make sure it shows no change
         changed = node.setAssociatedDevices(associatedDevices);
         assertFalse(changed);
 
         // Add a new node
-        associatedDevices = new ArrayList<Integer>();
+        associatedDevices = new HashSet<Integer>();
         associatedDevices.add(1);
         associatedDevices.add(3);
         associatedDevices.add(4);
         changed = node.setAssociatedDevices(associatedDevices);
         assertTrue(changed);
         assertEquals(3, node.getAssociatedDevices().size());
-        assertEquals(Integer.valueOf(1), node.getAssociatedDevices().get(0));
-        assertEquals(Integer.valueOf(3), node.getAssociatedDevices().get(1));
-        assertEquals(Integer.valueOf(4), node.getAssociatedDevices().get(2));
+
+        devices = new Integer[3];
+        node.getAssociatedDevices().toArray(devices);
+        assertEquals(Integer.valueOf(1), devices[0]);
+        assertEquals(Integer.valueOf(3), devices[1]);
+        assertEquals(Integer.valueOf(4), devices[2]);
 
         // Keep number the same, but change the list
-        associatedDevices = new ArrayList<Integer>();
+        associatedDevices = new HashSet<Integer>();
         associatedDevices.add(2);
         associatedDevices.add(3);
         associatedDevices.add(4);
         changed = node.setAssociatedDevices(associatedDevices);
         assertTrue(changed);
         assertEquals(3, node.getAssociatedDevices().size());
-        assertEquals(Integer.valueOf(2), node.getAssociatedDevices().get(0));
-        assertEquals(Integer.valueOf(3), node.getAssociatedDevices().get(1));
-        assertEquals(Integer.valueOf(4), node.getAssociatedDevices().get(2));
 
-        // Set to null
-        changed = node.setAssociatedDevices(null);
-        assertTrue(changed);
-        assertNotNull(node.getAssociatedDevices());
-        assertEquals(0, node.getAssociatedDevices().size());
+        devices = new Integer[3];
+        node.getAssociatedDevices().toArray(devices);
+        assertEquals(Integer.valueOf(2), devices[0]);
+        assertEquals(Integer.valueOf(3), devices[1]);
+        assertEquals(Integer.valueOf(4), devices[2]);
     }
 
-    /**
-     * @Test
-     *       public void testAddRemoveDevice() {
-     *       ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
-     *
-     *       ZigBeeDevice device1 = new ZigBeeDevice(networkManager);
-     *       device1.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
-     *       networkManager.addDevice(device1);
-     *       assertEquals(1, networkManager.getDevices().size());
-     *
-     *       ZigBeeDevice device2 = new ZigBeeDevice(networkManager);
-     *       device2.setDeviceAddress(new ZigBeeDeviceAddress(6789, 0));
-     *       networkManager.addDevice(device2);
-     *       assertEquals(2, networkManager.getDevices().size());
-     *
-     *       device2 = new ZigBeeDevice(networkManager);
-     *       device2.setDeviceAddress(new ZigBeeDeviceAddress(1234, 1));
-     *       device2.setIeeeAddress(new IeeeAddress("1234567890ABCDEF"));
-     *       networkManager.addDevice(device2);
-     *       device2 = new ZigBeeDevice(networkManager);
-     *       device2.setDeviceAddress(new ZigBeeDeviceAddress(1234, 2));
-     *       device2.setIeeeAddress(new IeeeAddress("1234567890ABCDEF"));
-     *       networkManager.addDevice(device2);
-     *       device2 = new ZigBeeDevice(networkManager);
-     *       device2.setDeviceAddress(new ZigBeeDeviceAddress(1234, 3));
-     *       device2.setIeeeAddress(new IeeeAddress("1234567890ABCDEF"));
-     *       networkManager.addDevice(device2);
-     *       device2 = new ZigBeeDevice(networkManager);
-     *       device2.setDeviceAddress(new ZigBeeDeviceAddress(1234, 4));
-     *       device2.setIeeeAddress(new IeeeAddress("1234567890ABCDEF"));
-     *       networkManager.addDevice(device2);
-     *
-     *       // We should now have 6 devices, 5 of then in node 1234, and 4 of them have IEEE address
-     *       assertEquals(6, networkManager.getDevices().size());
-     *       assertEquals(5, networkManager.getNodeDevices(1234).size());
-     *       assertEquals(4, networkManager.getNodeDevices(new IeeeAddress("1234567890ABCDEF")).size());
-     *
-     *       device2 = networkManager.getDevice(new ZigBeeDeviceAddress(6789, 0));
-     *       device2.setLabel("Device Label");
-     *       networkManager.updateDevice(device2);
-     *       assertEquals(6, networkManager.getDevices().size());
-     *       assertEquals("Device Label", networkManager.getDevice(new ZigBeeDeviceAddress(6789, 0)).getLabel());
-     *
-     *       networkManager.removeDevice(new ZigBeeDeviceAddress(6789, 0));
-     *       assertEquals(5, networkManager.getDevices().size());
-     *
-     *       assertNull(networkManager.getDevice(null));
-     *       assertNull(networkManager.getDevice(new ZigBeeGroupAddress(1)));
-     *
-     *       networkManager.addNetworkDeviceListener(null);
-     *       networkManager.removeNetworkDeviceListener(null);
-     *       networkManager.removeNetworkDeviceListener(mockedDeviceListener);
-     *       }
-     */
+    private NeighborTable getNeighborTable(int[] packet) {
+        DefaultDeserializer deserializer = new DefaultDeserializer(packet);
+
+        NeighborTable neighbor = new NeighborTable();
+        neighbor.deserialize(deserializer);
+
+        return neighbor;
+    }
+
+    @Test
+    public void testUpdated() {
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        ZigBeeNode newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        node.setNetworkAddress(1234);
+        newNode.setNetworkAddress(1234);
+
+        assertFalse(node.updateNode(newNode));
+
+        newNode.setNetworkAddress(5678);
+        assertTrue(node.updateNode(newNode));
+
+        Set<Integer> associated = new HashSet<Integer>();
+        associated.add(1);
+        associated.add(2);
+        associated.add(3);
+        node.setAssociatedDevices(associated);
+        associated = new HashSet<Integer>();
+        associated.add(1);
+        associated.add(2);
+        associated.add(3);
+        newNode.setAssociatedDevices(associated);
+        assertFalse(node.updateNode(newNode));
+
+        associated = new HashSet<Integer>();
+        associated.add(3);
+        associated.add(2);
+        associated.add(1);
+        newNode.setAssociatedDevices(associated);
+        assertFalse(node.updateNode(newNode));
+
+        associated = new HashSet<Integer>();
+        associated.add(1);
+        associated.add(3);
+        newNode.setAssociatedDevices(associated);
+        assertTrue(node.updateNode(newNode));
+
+        Set<NeighborTable> neighbors = new HashSet<NeighborTable>();
+        neighbors.add(getNeighborTable(new int[] { 0xB1, 0x68, 0xDE, 0x3A, 0x00, 0x00, 0x00, 0x00, 0x86, 0x06, 0x00,
+                0x00, 0x00, 0xEE, 0x1F, 0x00, 0xA9, 0x44, 0x25, 0x02, 0x0F, 0xE2 }));
+        node.setNeighbors(neighbors);
+
+        neighbors = new HashSet<NeighborTable>();
+        neighbors.add(getNeighborTable(new int[] { 0xB1, 0x68, 0xDE, 0x3A, 0x00, 0x00, 0x00, 0x00, 0x86, 0x06, 0x00,
+                0x00, 0x00, 0xEE, 0x1F, 0x00, 0xA9, 0x44, 0x25, 0x02, 0x0F, 0xE2 }));
+        newNode.setNeighbors(neighbors);
+        assertFalse(node.updateNode(newNode));
+
+        neighbors = new HashSet<NeighborTable>();
+        neighbors.add(getNeighborTable(new int[] { 0xB1, 0x68, 0xDE, 0x3A, 0x00, 0x00, 0x00, 0x00, 0x86, 0x06, 0x00,
+                0x00, 0x00, 0xEE, 0x1F, 0x00, 0xA9, 0x44, 0x25, 0x02, 0x0F, 0xE2 }));
+        neighbors.add(getNeighborTable(new int[] { 0xB1, 0x68, 0xDE, 0x3A, 0x00, 0x00, 0x00, 0x00, 0x84, 0x06, 0x00,
+                0x00, 0x00, 0xEE, 0x1F, 0x00, 0xA9, 0x44, 0x25, 0x02, 0x0F, 0xE2 }));
+        newNode.setNeighbors(neighbors);
+        assertTrue(node.updateNode(newNode));
+
+        neighbors = new HashSet<NeighborTable>();
+        neighbors.add(getNeighborTable(new int[] { 0xB1, 0x68, 0xDE, 0x3A, 0x00, 0x00, 0x00, 0x00, 0x86, 0x06, 0x00,
+                0x00, 0x00, 0xEE, 0x1F, 0x00, 0xA9, 0x44, 0x25, 0x02, 0x0F, 0xE2 }));
+        neighbors.add(getNeighborTable(new int[] { 0xB0, 0x68, 0xDE, 0x3A, 0x00, 0x00, 0x00, 0x00, 0x84, 0x06, 0x00,
+                0x00, 0x00, 0xEE, 0x1F, 0x00, 0xA9, 0x44, 0x25, 0x02, 0x0F, 0xE2 }));
+        newNode.setNeighbors(neighbors);
+        assertTrue(node.updateNode(newNode));
+
+        newNode.setNeighbors(neighbors);
+        assertFalse(node.updateNode(newNode));
+    }
 }
