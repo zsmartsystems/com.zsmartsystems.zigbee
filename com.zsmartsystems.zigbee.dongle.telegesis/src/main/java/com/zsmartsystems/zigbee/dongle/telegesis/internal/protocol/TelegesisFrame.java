@@ -199,6 +199,37 @@ public class TelegesisFrame {
     }
 
     /**
+     * Serializes an 32 bit long in hexadecimal (8 characters long)
+     *
+     * @param value the value to serialize
+     */
+    protected void serializeInt32(Long value) {
+        String strValue = Long.toHexString(value);
+
+        for (int cnt = strValue.length(); cnt < 8; cnt++) {
+            buffer[length++] = '0';
+        }
+        serializeUpperCaseString(strValue);
+    }
+
+    /**
+     * Deserializes an 32 bit long in hexadecimal
+     *
+     * @return the deserialized value
+     */
+    protected Long deserializeInt32() {
+        if (buffer.length < position + 8) {
+            return null;
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (int cnt = 0; cnt < 8; cnt++) {
+            builder.append((char) buffer[position++]);
+        }
+        return Long.parseLong(builder.toString(), 16);
+    }
+
+    /**
      * Deserializes an 8 bit signed integer in hexadecimal
      *
      * @return the deserialized value

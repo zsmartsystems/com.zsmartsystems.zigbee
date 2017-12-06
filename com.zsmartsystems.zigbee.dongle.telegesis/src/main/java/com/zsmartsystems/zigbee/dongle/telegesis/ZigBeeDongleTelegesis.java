@@ -49,6 +49,7 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSend
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetChannelMaskCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetEpanIdCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetExtendedFunctionCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetFrameCntCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetInputClustersCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetMainFunctionCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetNetworkKeyCommand;
@@ -785,6 +786,15 @@ public class ZigBeeDongleTelegesis
             } catch (ClassCastException e) {
                 configuration.setResult(option, TransportConfigResult.ERROR_INVALID_VALUE);
             }
+        }
+    }
+
+    public void reinitializeDongle(Integer panId, ExtendedPanId epanId, Long frameCounter) {
+        TelegesisSetFrameCntCommand setCount = new TelegesisSetFrameCntCommand();
+        setCount.setFrameCnt(frameCounter);
+        if (frameHandler.sendRequest(setCount) == null) {
+            logger.debug("Error setting Telegesis security frame counter");
+            return;
         }
     }
 
