@@ -2057,9 +2057,9 @@ No cluster specific commands.
 ### Attributes
 |Id     |Name                  |Type                       |Access     |Implement |Reporting |
 |-------|----------------------|---------------------------|-----------|----------|----------|
-|0x0000 |MeasuredValue         |Unsigned 16-bit Integer    |Read only  |Mandatory |Mandatory |
-|0x0001 |MinMeasuredValue      |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
-|0x0002 |MaxMeasuredValue      |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
+|0x0000 |MeasuredValue         |Signed 16-bit Integer      |Read only  |Mandatory |Mandatory |
+|0x0001 |MinMeasuredValue      |Signed 16-bit Integer      |Read only  |Mandatory |          |
+|0x0002 |MaxMeasuredValue      |Signed 16-bit Integer      |Read only  |Mandatory |          |
 |0x0003 |Tolerance             |Unsigned 16-bit Integer    |Read only  |Optional  |Mandatory |
 
 #### MeasuredValue Attribute
@@ -2111,13 +2111,13 @@ including configuration and provision of notifications of pressure measurements.
 ### Attributes
 |Id     |Name                  |Type                       |Access     |Implement |Reporting |
 |-------|----------------------|---------------------------|-----------|----------|----------|
-|0x0000 |MeasuredValue         |Unsigned 16-bit Integer    |Read only  |Mandatory |Mandatory |
-|0x0001 |MinMeasuredValue      |Unsigned 16-bit Integer    |Read only  |Mandatory |          |
-|0x0002 |MaxMeasuredValue      |Unsigned 16-bit Integer    |Read only  |Mandatory |Mandatory |
+|0x0000 |MeasuredValue         |Signed 16-bit Integer      |Read only  |Mandatory |Mandatory |
+|0x0001 |MinMeasuredValue      |Signed 16-bit Integer      |Read only  |Mandatory |          |
+|0x0002 |MaxMeasuredValue      |Signed 16-bit Integer      |Read only  |Mandatory |Mandatory |
 |0x0003 |Tolerance             |Unsigned 16-bit Integer    |Read only  |Optional  |          |
-|0x0010 |ScaledValue           |Unsigned 16-bit Integer    |Read only  |Optional  |Mandatory |
-|0x0011 |MinScaledValue        |Unsigned 16-bit Integer    |Read only  |Optional  |          |
-|0x0012 |MaxScaledValue        |Unsigned 16-bit Integer    |Read only  |Optional  |          |
+|0x0010 |ScaledValue           |Signed 16-bit Integer      |Read only  |Optional  |Mandatory |
+|0x0011 |MinScaledValue        |Signed 16-bit Integer      |Read only  |Optional  |          |
+|0x0012 |MaxScaledValue        |Signed 16-bit Integer      |Read only  |Optional  |          |
 |0x0013 |ScaledTolerance       |Unsigned 16-bit Integer    |Read only  |Optional  |Mandatory |
 |0x0014 |Scale                 |Unsigned 8-bit Integer     |Read only  |Optional  |          |
 
