@@ -7,8 +7,6 @@
  */
 package com.zsmartsystems.zigbee.zdo.field;
 
-import java.util.Objects;
-
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
@@ -191,21 +189,80 @@ public class NeighborTable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(extendedAddress, networkAddress, lqi);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((depth == null) ? 0 : depth.hashCode());
+        result = prime * result + ((deviceType == null) ? 0 : deviceType.hashCode());
+        result = prime * result + ((extendedAddress == null) ? 0 : extendedAddress.hashCode());
+        result = prime * result + ((extendedPanId == null) ? 0 : extendedPanId.hashCode());
+        result = prime * result + ((lqi == null) ? 0 : lqi.hashCode());
+        result = prime * result + ((networkAddress == null) ? 0 : networkAddress.hashCode());
+        result = prime * result + ((permitJoining == null) ? 0 : permitJoining.hashCode());
+        result = prime * result + ((relationship == null) ? 0 : relationship.hashCode());
+        result = prime * result + ((rxOnWhenIdle == null) ? 0 : rxOnWhenIdle.hashCode());
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
         if (obj == null) {
             return false;
         }
-        if (!NeighborTable.class.isAssignableFrom(obj.getClass())) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        final NeighborTable other = (NeighborTable) obj;
-        return (getExtendedAddress().equals(other.getExtendedAddress())
-                && getNetworkAddress().equals(other.getNetworkAddress()) && getLqi().equals(other.getLqi())) ? true
-                        : false;
+        NeighborTable other = (NeighborTable) obj;
+        if (depth == null) {
+            if (other.depth != null) {
+                return false;
+            }
+        } else if (!depth.equals(other.depth)) {
+            return false;
+        }
+        if (deviceType != other.deviceType) {
+            return false;
+        }
+        if (extendedAddress == null) {
+            if (other.extendedAddress != null) {
+                return false;
+            }
+        } else if (!extendedAddress.equals(other.extendedAddress)) {
+            return false;
+        }
+        if (extendedPanId == null) {
+            if (other.extendedPanId != null) {
+                return false;
+            }
+        } else if (!extendedPanId.equals(other.extendedPanId)) {
+            return false;
+        }
+        if (lqi == null) {
+            if (other.lqi != null) {
+                return false;
+            }
+        } else if (!lqi.equals(other.lqi)) {
+            return false;
+        }
+        if (networkAddress == null) {
+            if (other.networkAddress != null) {
+                return false;
+            }
+        } else if (!networkAddress.equals(other.networkAddress)) {
+            return false;
+        }
+        if (permitJoining != other.permitJoining) {
+            return false;
+        }
+        if (relationship != other.relationship) {
+            return false;
+        }
+        if (rxOnWhenIdle != other.rxOnWhenIdle) {
+            return false;
+        }
+        return true;
     }
 
     @Override

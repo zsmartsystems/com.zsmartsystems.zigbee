@@ -53,9 +53,8 @@ public class ZigBeeOtaServerTest implements ZigBeeOtaStatusCallback {
         IeeeAddress ieeeAddress = new IeeeAddress("1234567890ABCDEF");
         ZigBeeEndpointAddress networkAddress = new ZigBeeEndpointAddress(1234, 56);
         ZigBeeNetworkManager mockedNetworkManager = Mockito.mock(ZigBeeNetworkManager.class);
-        ZigBeeNode node = new ZigBeeNode(mockedNetworkManager);
+        ZigBeeNode node = new ZigBeeNode(mockedNetworkManager, ieeeAddress);
         node.setNetworkAddress(networkAddress.getAddress());
-        node.setIeeeAddress(ieeeAddress);
         node.setNodeDescriptor(nodeDescriptor);
         ZigBeeEndpoint endpoint = new ZigBeeEndpoint(mockedNetworkManager, node, networkAddress.getEndpoint());
         // device.setIeeeAddress(ieeeAddress);

@@ -102,8 +102,7 @@ public class ZigBeeNodeDao {
     }
 
     public static ZigBeeNode createFromZigBeeDao(ZigBeeNetworkManager networkManager, ZigBeeNodeDao nodeDao) {
-        ZigBeeNode node = new ZigBeeNode(networkManager);
-        node.setIeeeAddress(new IeeeAddress(nodeDao.getIeeeAddress()));
+        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress(nodeDao.getIeeeAddress()));
         node.setNetworkAddress(nodeDao.getNetworkAddress());
         node.setNodeDescriptor(nodeDao.getNodeDescriptor());
         node.setPowerDescriptor(nodeDao.getPowerDescriptor());

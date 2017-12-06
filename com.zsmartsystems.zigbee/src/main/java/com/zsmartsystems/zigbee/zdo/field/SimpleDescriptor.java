@@ -110,6 +110,60 @@ public class SimpleDescriptor {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + deviceId;
+        result = prime * result + deviceVersion;
+        result = prime * result + endpoint;
+        result = prime * result + ((inputClusterList == null) ? 0 : inputClusterList.hashCode());
+        result = prime * result + ((outputClusterList == null) ? 0 : outputClusterList.hashCode());
+        result = prime * result + profileId;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        SimpleDescriptor other = (SimpleDescriptor) obj;
+        if (deviceId != other.deviceId) {
+            return false;
+        }
+        if (deviceVersion != other.deviceVersion) {
+            return false;
+        }
+        if (endpoint != other.endpoint) {
+            return false;
+        }
+        if (inputClusterList == null) {
+            if (other.inputClusterList != null) {
+                return false;
+            }
+        } else if (!inputClusterList.equals(other.inputClusterList)) {
+            return false;
+        }
+        if (outputClusterList == null) {
+            if (other.outputClusterList != null) {
+                return false;
+            }
+        } else if (!outputClusterList.equals(other.outputClusterList)) {
+            return false;
+        }
+        if (profileId != other.profileId) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "SimpleDescriptor [endpoint=" + endpoint + ", profileId=" + String.format("%04X", profileId)
                 + ", deviceId=" + deviceId + ", deviceVersion=" + deviceVersion + ", inputClusterList="

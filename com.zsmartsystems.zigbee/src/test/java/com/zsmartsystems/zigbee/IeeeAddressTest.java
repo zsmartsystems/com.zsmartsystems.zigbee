@@ -53,4 +53,27 @@ public class IeeeAddressTest {
         IeeeAddress address = new IeeeAddress("17880100dc880b");
         assertEquals("0017880100DC880B", address.toString());
     }
+
+    @Test
+    public void testCompareTo() {
+        IeeeAddress address1 = new IeeeAddress("17880100dc880b");
+
+        IeeeAddress address2 = new IeeeAddress("17880100dc880b");
+        assertEquals(0, address1.compareTo(address2));
+
+        address2 = new IeeeAddress("17880100dc880c");
+        assertEquals(-1, address1.compareTo(address2));
+
+        address2 = new IeeeAddress("17880100dc880a");
+        assertEquals(1, address1.compareTo(address2));
+
+        address2 = new IeeeAddress("27880100dc880c");
+        assertEquals(-1, address1.compareTo(address2));
+
+        address2 = new IeeeAddress("17880120dc880c");
+        assertEquals(-1, address1.compareTo(address2));
+
+        address2 = new IeeeAddress("16880100dc880b");
+        assertEquals(1, address1.compareTo(address2));
+    }
 }

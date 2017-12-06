@@ -17,7 +17,7 @@ import java.util.Objects;
  * @author Chris Jackson
  *
  */
-public class IeeeAddress {
+public class IeeeAddress implements Comparable {
     private int[] address;
 
     /**
@@ -110,5 +110,24 @@ public class IeeeAddress {
         }
 
         return builder.toString();
+    }
+
+    @Override
+    public int compareTo(Object object) {
+        if (object == null) {
+            return -1;
+        }
+        if (!IeeeAddress.class.isAssignableFrom(object.getClass())) {
+            return -1;
+        }
+        final IeeeAddress other = (IeeeAddress) object;
+        for (int cnt = 0; cnt < 8; cnt++) {
+            if (other.getValue()[cnt] == address[cnt]) {
+                continue;
+            }
+
+            return other.getValue()[cnt] < address[cnt] ? 1 : -1;
+        }
+        return 0;
     }
 }
