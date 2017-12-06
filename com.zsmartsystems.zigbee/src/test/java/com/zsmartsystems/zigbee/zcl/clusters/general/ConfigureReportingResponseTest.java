@@ -66,4 +66,28 @@ public class ConfigureReportingResponseTest extends CommandTest {
         assertEquals(ZclStatus.SUCCESS, response.getStatus());
         assertNull(response.getRecords());
     }
+
+    @Test
+    public void testErrorInvalidDataType() {
+        int[] packet = getPacketData("08 6C 07 8D 00 00 00");
+
+        ConfigureReportingResponse response = new ConfigureReportingResponse();
+
+        DefaultDeserializer deserializer = new DefaultDeserializer(packet);
+        ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
+
+        ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
+        System.out.println(zclHeader);
+
+        response.deserialize(fieldDeserializer);
+        System.out.println(response);
+
+        assertNull(response.getStatus());
+
+        assertEquals(1, response.getRecords().size());
+        AttributeStatusRecord record = response.getRecords().get(0);
+
+        assertEquals(0, record.getAttributeIdentifier());
+        assertEquals(ZclStatus.INVALID_DATA_TYPE, record.getStatus());
+    }
 }
