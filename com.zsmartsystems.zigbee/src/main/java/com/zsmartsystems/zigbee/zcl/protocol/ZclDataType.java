@@ -50,7 +50,7 @@ public enum ZclDataType {
     N_X_WRITE_ATTRIBUTE_RECORD("N X Write attribute record", WriteAttributeRecord.class, 0x00, false),
     N_X_WRITE_ATTRIBUTE_STATUS_RECORD("N X Write attribute status record", WriteAttributeStatusRecord.class, 0x00, false),
     OCTET_STRING("Octet string", String.class, 0x41, false),
-    SIGNED_16_BIT_INTEGER("Signed 16-bit integer", Integer.class, 0x29, true),
+    SIGNED_16_BIT_INTEGER("Signed 16-bit Integer", Integer.class, 0x29, true),
     SIGNED_32_BIT_INTEGER("Signed 32-bit integer", Integer.class, 0x2B, true),
     SIGNED_8_BIT_INTEGER("Signed 8-bit Integer", Integer.class, 0x28, true),
     UNSIGNED_16_BIT_INTEGER("Unsigned 16-bit integer", Integer.class, 0x21, true),
