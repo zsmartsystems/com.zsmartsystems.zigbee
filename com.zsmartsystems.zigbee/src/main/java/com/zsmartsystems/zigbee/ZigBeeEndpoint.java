@@ -17,8 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import com.zsmartsystems.zigbee.zcl.ZclServer;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
@@ -79,11 +79,11 @@ public class ZigBeeEndpoint implements ZigBeeCommandListener {
     private final Map<Integer, ZclCluster> outputClusters = new ConcurrentHashMap<Integer, ZclCluster>();
 
     /**
-     * Map of {@link ZigBeeServer}s that are available to this endpoint. Servers are added
-     * with the {@link #addServer(ZigBeeServer server)} method and can be retrieved with the
-     * {@link #getServer(int clusterId)} method.
+     * Map of {@link ZigBeeApplication}s that are available to this endpoint. Extensions are added
+     * with the {@link #addExtension(ZigBeeApplication extension)} method and can be retrieved with the
+     * {@link #getExtension(int clusterId)} method.
      */
-    private final Map<Integer, ZclServer> servers = new ConcurrentHashMap<Integer, ZclServer>();
+    private final Map<Integer, ZigBeeApplication> extensions = new ConcurrentHashMap<Integer, ZigBeeApplication>();
 
     /**
      * Constructor
@@ -350,25 +350,30 @@ public class ZigBeeEndpoint implements ZigBeeCommandListener {
     }
 
     /**
-     * Adds a server and makes it available to this endpoint.
+     * Adds an extension and makes it available to this endpoint.
      * The cluster used by the server must be in the output clusters list and this will be passed to the
-     * {@link ZigBeeServer#serverStartup()) method to start the server.
+     * {@link ZclExtension#serverStartup()) method to start the extension.
      *
-     * @param server the new {@link ZigBeeServer}
+     * @param extension the new {@link ZigBeeApplication}
      */
-    public void addServer(ZclServer server) {
-        servers.put(server.getClusterId(), server);
-        server.serverStartup(outputClusters.get(server.getClusterId()));
+    public void addExtension(ZigBeeApplication extension) {
+        extensions.put(extension.getClusterId(), extension);
+        ZclCluster cluster = outputClusters.get(extension.getClusterId());
+        if (cluster == null) {
+            cluster = inputClusters.get(extension.getClusterId());
+        }
+        extension.serverStartup(cluster);
     }
 
     /**
-     * Gets the server associated with the clusterId. Returns null if there is no server linked to the requested cluster
+     * Gets the extension associated with the clusterId. Returns null if there is no server linked to the requested
+     * cluster
      *
      * @param clusterId
-     * @return the {@link ZigBeeServer}
+     * @return the {@link ZclServer}
      */
-    public ZclServer getServer(int clusterId) {
-        return servers.get(clusterId);
+    public ZigBeeApplication getExtension(int clusterId) {
+        return extensions.get(clusterId);
     }
 
     @Override
@@ -378,9 +383,9 @@ public class ZigBeeEndpoint implements ZigBeeCommandListener {
         }
 
         // Pass all commands received from this device to any registered servers
-        synchronized (servers) {
-            for (ZclServer server : servers.values()) {
-                server.commandReceived(command);
+        synchronized (extensions) {
+            for (ZigBeeApplication extension : extensions.values()) {
+                extension.commandReceived(command);
             }
         }
 

@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.autocode.zcl;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tlaukkan on 4/10/2016.
@@ -18,4 +19,5 @@ public class Field {
     public String condition;
     public String conditionOperator;
     public List<String> description;
+    public Map<Integer, String> valueMap;
 }

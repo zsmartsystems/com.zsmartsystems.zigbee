@@ -41,10 +41,11 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaFile;
-import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServer;
-import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaServerStatus;
-import com.zsmartsystems.zigbee.otaserver.ZigBeeOtaStatusCallback;
+import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieApp;
+import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
+import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServer;
+import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServerStatus;
+import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaStatusCallback;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.TrustCentreJoinMode;
@@ -57,6 +58,7 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
@@ -203,6 +205,18 @@ public final class ZigBeeConsole {
             @Override
             public void nodeAdded(ZigBeeNode node) {
                 print("Node Added " + node, System.out);
+
+                ZigBeeNode coordinator = networkManager.getNode(0);
+                for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
+                    if (endpoint.getInputCluster(ZclIasZoneCluster.CLUSTER_ID) != null) {
+                        endpoint.addExtension(new ZigBeeIasCieApp(coordinator.getIeeeAddress(), 0));
+                        break;
+                    }
+                    if (endpoint.getInputCluster(ZclOtaUpgradeCluster.CLUSTER_ID) != null) {
+                        endpoint.addExtension(new ZigBeeOtaServer());
+                        break;
+                    }
+                }
             }
 
             @Override
@@ -1533,12 +1547,12 @@ public final class ZigBeeConsole {
             }
 
             // Check if the OTA server is already set
-            ZigBeeOtaServer otaServer = (ZigBeeOtaServer) endpoint.getServer(ZclOtaUpgradeCluster.CLUSTER_ID);
+            ZigBeeOtaServer otaServer = (ZigBeeOtaServer) endpoint.getExtension(ZclOtaUpgradeCluster.CLUSTER_ID);
             if (otaServer == null) {
                 // Create and add the server
                 otaServer = new ZigBeeOtaServer();
 
-                endpoint.addServer(otaServer);
+                endpoint.addExtension(otaServer);
 
                 otaServer.addListener(new ZigBeeOtaStatusCallback() {
                     @Override

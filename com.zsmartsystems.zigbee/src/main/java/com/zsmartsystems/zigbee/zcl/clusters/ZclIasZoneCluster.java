@@ -46,6 +46,7 @@ public class ZclIasZoneCluster extends ZclCluster {
 
     // Attribute constants
     /**
+     * The Zone State attribute defines if the device is currently enrolled with a CIE or not.
      */
     public static final int ATTR_ZONESTATE = 0x0000;
     /**
@@ -53,7 +54,7 @@ public class ZclIasZoneCluster extends ZclCluster {
      */
     public static final int ATTR_ZONETYPE = 0x0001;
     /**
-     * The ZoneStatus attribute is a bit map.
+     * The ZoneStatus attribute is a bit map. Each bit defines the state of an alarm.
      */
     public static final int ATTR_ZONESTATUS = 0x0002;
     /**
@@ -107,6 +108,8 @@ public class ZclIasZoneCluster extends ZclCluster {
     /**
      * Get the <i>ZoneState</i> attribute [attribute ID <b>0</b>].
      * <p>
+     * The Zone State attribute defines if the device is currently enrolled with a CIE or not.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -120,6 +123,8 @@ public class ZclIasZoneCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>ZoneState</i> attribute [attribute ID <b>0</b>].
+     * <p>
+     * The Zone State attribute defines if the device is currently enrolled with a CIE or not.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -195,7 +200,7 @@ public class ZclIasZoneCluster extends ZclCluster {
     /**
      * Get the <i>ZoneStatus</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * The ZoneStatus attribute is a bit map.
+     * The ZoneStatus attribute is a bit map. Each bit defines the state of an alarm.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -211,7 +216,7 @@ public class ZclIasZoneCluster extends ZclCluster {
     /**
      * Synchronously get the <i>ZoneStatus</i> attribute [attribute ID <b>2</b>].
      * <p>
-     * The ZoneStatus attribute is a bit map.
+     * The ZoneStatus attribute is a bit map. Each bit defines the state of an alarm.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -502,6 +507,10 @@ public class ZclIasZoneCluster extends ZclCluster {
 
     /**
      * The Zone Enroll Request Command
+     * <p>
+     * The Zone Enroll Request command is generated when a device embodying the Zone server cluster wishes
+     * to be  enrolled as an active  alarm device. It  must do this immediately it has joined the network
+     * (during commissioning).
      *
      * @param zoneType {@link Integer} Zone Type
      * @param manufacturerCode {@link Integer} Manufacturer Code

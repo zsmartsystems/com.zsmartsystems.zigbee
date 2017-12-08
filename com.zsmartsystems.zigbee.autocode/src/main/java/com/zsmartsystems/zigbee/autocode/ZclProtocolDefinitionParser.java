@@ -209,6 +209,19 @@ public class ZclProtocolDefinitionParser {
                 continue;
             }
 
+            if (line.startsWith("|") && !line.startsWith("|Id") && !line.startsWith("|-")) {
+                final String row = line.trim().substring(1, line.length() - 1);
+                final String[] columns = row.split("\\|");
+                int value = Integer.parseInt(columns[0].trim().substring(2), 16);
+                String label = columns[1].trim();
+
+                field.valueMap.put(value, label);
+                continue;
+            }
+            if (line.startsWith("|") && (line.startsWith("|Id") || line.startsWith("|-"))) {
+                continue;
+            }
+
             if (field.description.size() == 0 && line.trim().length() == 0) {
                 continue;
             }
@@ -243,6 +256,7 @@ public class ZclProtocolDefinitionParser {
                 final Field field = new Field();
                 field.description = new ArrayList<String>();
                 field.fieldId = fieldIndex;
+                field.valueMap = new TreeMap<Integer, String>();
 
                 field.fieldLabel = columns[0].trim();
                 if (field.fieldLabel.contains("[")) {
@@ -309,6 +323,10 @@ public class ZclProtocolDefinitionParser {
                 System.out.println("      " + CodeGeneratorUtil.toHex(fieldIndex) + ") " + field.fieldLabel + ": "
                         + dataType.dataTypeName);
                 fieldIndex++;
+            }
+
+            if (line.startsWith("|Id") || line.startsWith("|-")) {
+                continue;
             }
 
             if (line.startsWith("|")) {

@@ -213,6 +213,14 @@ public class ZclProtocolCodeGenerator {
         // }
 
         try {
+            generateAttributeEnumeration(context, packageRoot, sourceRootPath);
+        } catch (final IOException e) {
+            System.out.println("Failed to generate attribute enum classes.");
+            e.printStackTrace();
+            return;
+        }
+
+        try {
             generateFieldEnumeration(context, packageRoot, sourceRootPath);
         } catch (final IOException e) {
             System.out.println("Failed to generate field enum classes.");
@@ -1753,7 +1761,7 @@ public class ZclProtocolCodeGenerator {
         }
     }
 
-    private static void generateFieldEnumeration(Context context, String packageRootPrefix, File sourceRootPath)
+    private static void generateAttributeEnumeration(Context context, String packageRootPrefix, File sourceRootPath)
             throws IOException {
 
         final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
@@ -1768,85 +1776,124 @@ public class ZclProtocolCodeGenerator {
 
                         final String packageRoot = packageRootPrefix + packageZclProtocolCommand + "."
                                 + cluster.clusterType.replace("_", "").toLowerCase();
-                        final String packagePath = getPackagePath(sourceRootPath, packageRoot);
-                        final File packageFile = getPackageFile(packagePath);
 
                         final String className = attribute.nameUpperCamelCase + "Enum";
-                        final PrintWriter out = getClassOut(packageFile, className);
 
-                        out.println("/**");
-                        out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
-                        out.println(" * All rights reserved. This program and the accompanying materials");
-                        out.println(" * are made available under the terms of the Eclipse Public License v1.0");
-                        out.println(" * which accompanies this distribution, and is available at");
-                        out.println(" * http://www.eclipse.org/legal/epl-v10.html");
-                        out.println(" */");
-
-                        out.println("package " + packageRoot + ";");
-
-                        out.println();
-                        out.println("import java.util.HashMap;");
-                        out.println("import java.util.Map;");
-
-                        out.println();
-                        outputClassJavaDoc(out, "Enumeration of " + cluster.clusterName + " attribute "
-                                + attribute.attributeLabel + " options.");
-                        out.println("public enum " + className + " {");
-                        boolean first = true;
-                        for (final Integer key : attribute.valueMap.keySet()) {
-                            String value = attribute.valueMap.get(key);
-
-                            if (!first) {
-                                out.println(",");
-                            }
-                            first = false;
-                            // out.println(" /**");
-                            // out.println(" * " + cmd.commandLabel);
-                            // out.println(" * <p>");
-                            // out.println(" * See {@link " + cmd.nameUpperCamelCase + "}");
-                            // out.println(" */");
-                            out.print("    " + CodeGeneratorUtil.labelToEnumerationValue(value)
-                                    + String.format("(0x%04X)", key));
-                        }
-                        out.println(";");
-                        out.println();
-
-                        out.println("    /**");
-                        out.println("     * A mapping between the integer code and its corresponding " + className
-                                + " type to facilitate lookup by value.");
-                        out.println("     */");
-                        out.println("    private static Map<Integer, " + className + "> idMap;");
-
-                        out.println();
-                        out.println("    private final int key;");
-                        out.println();
-                        out.println("    " + className + "(final int key) {");
-                        out.println("        this.key = key;");
-                        // out.println(" this.label = label;");
-                        out.println("    }");
-                        out.println();
-
-                        out.println("    public int getKey() {");
-                        out.println("        return key;");
-                        out.println("    }");
-                        out.println();
-                        out.println("    public static " + className + " getByValue(final int value) {");
-                        out.println("        if (idMap == null) {");
-                        out.println("            idMap = new HashMap<Integer, " + className + ">();");
-                        out.println("            for (" + className + " enumValue : values()) {");
-                        out.println("                idMap.put(enumValue.key, enumValue);");
-                        out.println("            }");
-                        out.println("        }");
-                        out.println("        return idMap.get(value);");
-                        out.println("    }");
-                        out.println("}");
-
-                        out.flush();
-                        out.close();
+                        outputEnum(packageRoot, sourceRootPath, className, attribute.valueMap, cluster.clusterName,
+                                attribute.attributeLabel);
                     }
                 }
             }
         }
+    }
+
+    private static void generateFieldEnumeration(Context context, String packageRootPrefix, File sourceRootPath)
+            throws IOException {
+
+        final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
+        for (final Profile profile : profiles) {
+            final LinkedList<Cluster> clusters = new LinkedList<Cluster>(profile.clusters.values());
+            for (final Cluster cluster : clusters) {
+                final ArrayList<Command> commands = new ArrayList<Command>();
+                commands.addAll(cluster.received.values());
+                commands.addAll(cluster.generated.values());
+
+                if (commands.size() != 0) {
+                    for (final Command command : commands) {
+                        for (final Field field : command.fields.values()) {
+                            if (field.valueMap.isEmpty()) {
+                                continue;
+                            }
+
+                            final String packageRoot = packageRootPrefix + packageZclProtocolCommand + "."
+                                    + cluster.clusterType.replace("_", "").toLowerCase();
+
+                            final String className = field.nameUpperCamelCase + "Enum";
+
+                            outputEnum(packageRoot, sourceRootPath, className, field.valueMap, cluster.clusterName,
+                                    field.fieldLabel);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private static void outputEnum(String packageRoot, File sourceRootPath, String className,
+            Map<Integer, String> valueMap, String parentName, String label) throws IOException {
+
+        final String packagePath = getPackagePath(sourceRootPath, packageRoot);
+        final File packageFile = getPackageFile(packagePath);
+
+        final PrintWriter out = getClassOut(packageFile, className);
+
+        out.println("/**");
+        out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+        out.println(" * All rights reserved. This program and the accompanying materials");
+        out.println(" * are made available under the terms of the Eclipse Public License v1.0");
+        out.println(" * which accompanies this distribution, and is available at");
+        out.println(" * http://www.eclipse.org/legal/epl-v10.html");
+        out.println(" */");
+
+        out.println("package " + packageRoot + ";");
+
+        out.println();
+        out.println("import java.util.HashMap;");
+        out.println("import java.util.Map;");
+
+        out.println();
+        outputClassJavaDoc(out, "Enumeration of " + parentName + " attribute " + label + " options.");
+        out.println("public enum " + className + " {");
+        boolean first = true;
+        for (final Integer key : valueMap.keySet()) {
+            String value = valueMap.get(key);
+
+            if (!first) {
+                out.println(",");
+            }
+            first = false;
+            // out.println(" /**");
+            // out.println(" * " + cmd.commandLabel);
+            // out.println(" * <p>");
+            // out.println(" * See {@link " + cmd.nameUpperCamelCase + "}");
+            // out.println(" */");
+            out.print("    " + CodeGeneratorUtil.labelToEnumerationValue(value) + String.format("(0x%04X)", key));
+        }
+        out.println(";");
+        out.println();
+
+        out.println("    /**");
+        out.println("     * A mapping between the integer code and its corresponding " + className
+                + " type to facilitate lookup by value.");
+        out.println("     */");
+        out.println("    private static Map<Integer, " + className + "> idMap;");
+
+        out.println();
+        out.println("    private final int key;");
+        out.println();
+        out.println("    " + className + "(final int key) {");
+        out.println("        this.key = key;");
+        // out.println(" this.label = label;");
+        out.println("    }");
+        out.println();
+
+        out.println("    public int getKey() {");
+        out.println("        return key;");
+        out.println("    }");
+        out.println();
+        out.println("    public static " + className + " getByValue(final int value) {");
+        out.println("        if (idMap == null) {");
+        out.println("            idMap = new HashMap<Integer, " + className + ">();");
+        out.println("            for (" + className + " enumValue : values()) {");
+        out.println("                idMap.put(enumValue.key, enumValue);");
+        out.println("            }");
+        out.println("        }");
+        out.println("        return idMap.get(value);");
+        out.println("    }");
+        out.println("}");
+
+        out.flush();
+        out.close();
     }
 
     private static void outputAttributeJavaDoc(PrintWriter out, String type, Attribute attribute,

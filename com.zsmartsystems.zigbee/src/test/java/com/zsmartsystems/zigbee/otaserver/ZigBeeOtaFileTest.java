@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ZigBeeStackType;
+import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 
 /**

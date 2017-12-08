@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.otaserver;
+package com.zsmartsystems.zigbee.app.otaserver;
 
 import java.util.HashMap;
 import java.util.Map;
