@@ -546,10 +546,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         ZigBeeCommand command = null;
         switch (apsFrame.getProfile()) { // TODO: Use ZigBeeProfileType
             case 0x0000:
-            case 0xC05E:
                 command = receiveZdoCommand(fieldDeserializer, apsFrame);
                 break;
             case 0x0104:
+            case 0xC05E:
                 command = receiveZclCommand(fieldDeserializer, apsFrame);
                 break;
             default:
