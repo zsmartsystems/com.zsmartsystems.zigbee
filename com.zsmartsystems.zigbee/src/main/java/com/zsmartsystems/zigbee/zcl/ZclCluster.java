@@ -7,13 +7,13 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
@@ -109,9 +109,14 @@ public abstract class ZclCluster {
     private final Set<Integer> supportedCommandsGenerated = new HashSet<Integer>();
 
     /**
-     * List of listeners to receive notifications when an attribute updates its value
+     * Set of listeners to receive notifications when an attribute updates its value
      */
-    private final List<ZclAttributeListener> attributeListeners = new ArrayList<ZclAttributeListener>();
+    private final Set<ZclAttributeListener> attributeListeners = new CopyOnWriteArraySet<ZclAttributeListener>();
+
+    /**
+     * Set of listeners to receive notifications when a command is received
+     */
+    private final Set<ZclCommandListener> commandListeners = new CopyOnWriteArraySet<ZclCommandListener>();
 
     /**
      * Map of attributes supported by the cluster. This contains all attributes, even if they are not supported by the
@@ -698,6 +703,11 @@ public abstract class ZclCluster {
         return future;
     }
 
+    /**
+     * Adds a {@link ZclAttributeListener} to receive reports when an attribute is updated
+     *
+     * @param listener the {@link ZclAttributeListener} to add
+     */
     public void addAttributeListener(ZclAttributeListener listener) {
         // Don't add more than once.
         if (attributeListeners.contains(listener)) {
@@ -732,10 +742,47 @@ public abstract class ZclCluster {
     }
 
     /**
+     * Adds a {@link ZclCommandListener} to receive commands
+     *
+     * @param listener the {@link ZclCommandListener} to add
+     */
+    public void addCommandListener(ZclCommandListener listener) {
+        // Don't add more than once.
+        if (commandListeners.contains(listener)) {
+            return;
+        }
+        commandListeners.add(listener);
+    }
+
+    /**
+     * Remove a {@link ZclCommandListener} from the cluster.
+     *
+     * @param listener callback listener implementing {@link ZclCommandListener} to remove
+     */
+    public void removeCommandListener(final ZclCommandListener listener) {
+        commandListeners.remove(listener);
+    }
+
+    /**
+     * Notify command listeners of an received {@link ZclCommand}.
+     *
+     * @param command the {@link ZclCommand} to notify
+     */
+    private void notifyCommandListener(final ZclCommand command) {
+        for (final ZclCommandListener listener : commandListeners) {
+            NotificationService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    listener.commandReceived(command);
+                }
+            });
+        }
+    }
+
+    /**
      * Processes a list of attribute reports for this cluster
      *
-     * @param reports
-     *            {@List} of {@link AttributeReport}
+     * @param reports {@List} of {@link AttributeReport}
      */
     public void handleAttributeReport(List<AttributeReport> reports) {
         for (AttributeReport report : reports) {
@@ -751,8 +798,7 @@ public abstract class ZclCluster {
     /**
      * Processes a list of attribute status reports for this cluster
      *
-     * @param reports
-     *            {@List} of {@link ReadAttributeStatusRecord}
+     * @param reports {@List} of {@link ReadAttributeStatusRecord}
      */
     public void handleAttributeStatus(List<ReadAttributeStatusRecord> records) {
         for (ReadAttributeStatusRecord record : records) {
@@ -760,6 +806,16 @@ public abstract class ZclCluster {
             attribute.updateValue(record.getAttributeValue());
             notifyAttributeListener(attribute);
         }
+    }
+
+    /**
+     * Processes a command received in this cluster. This is called from the node so we already know that the command is
+     * addressed to this endpoint and this cluster.
+     *
+     * @param command the received {@link ZclCommand}
+     */
+    public void handleCommand(ZclCommand command) {
+        notifyCommandListener(command);
     }
 
     /**

@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.internal.NotificationService;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoResponseMatcher;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
@@ -668,16 +669,20 @@ public class ZigBeeNode implements ZigBeeCommandListener {
                 logger.debug("Error sending MatchDescriptorResponse ", e);
             }
         }
-    }
 
-    @Override
-    public String toString() {
-        if (nodeDescriptor == null) {
-            return "ZigBeeNode [IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + "]";
+        if (!(command instanceof ZclCommand)) {
+            return;
         }
 
-        return "ZigBeeNode [IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + ", Type="
-                + nodeDescriptor.getLogicalType() + "]";
+        ZclCommand zclCommand = (ZclCommand) command;
+        ZigBeeEndpointAddress endpointAddress = (ZigBeeEndpointAddress) zclCommand.getSourceAddress();
+
+        ZigBeeEndpoint endpoint = endpoints.get(endpointAddress.getEndpoint());
+        if (endpoint == null) {
+            return;
+        }
+
+        endpoint.commandReceived(zclCommand);
     }
 
     /**
@@ -745,4 +750,15 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
         return updated;
     }
+
+    @Override
+    public String toString() {
+        if (nodeDescriptor == null) {
+            return "ZigBeeNode [IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + "]";
+        }
+
+        return "ZigBeeNode [IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + ", Type="
+                + nodeDescriptor.getLogicalType() + "]";
+    }
+
 }

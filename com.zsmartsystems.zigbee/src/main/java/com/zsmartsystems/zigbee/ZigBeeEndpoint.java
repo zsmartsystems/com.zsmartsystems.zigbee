@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
@@ -30,19 +31,19 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  *
  * @author Chris Jackson
  */
-public class ZigBeeEndpoint implements ZigBeeCommandListener {
+public class ZigBeeEndpoint {
     /**
      * The {@link Logger}.
      */
     private final static Logger logger = LoggerFactory.getLogger(ZigBeeEndpoint.class);
 
     /**
-     * The {@link ZigBeeNetworkManager} that manages this node
+     * The {@link ZigBeeNetworkManager} that manages this endpoint
      */
     private final ZigBeeNetworkManager networkManager;
 
     /**
-     * Link to the parent {@link ZigBeeNode} to which this device belongs
+     * Link to the parent {@link ZigBeeNode} to which this endpoint belongs
      */
     private final ZigBeeNode node;
 
@@ -88,7 +89,7 @@ public class ZigBeeEndpoint implements ZigBeeCommandListener {
     /**
      * Constructor
      *
-     * @param networkManager the {@link ZigBeeNetworkManager} to which the device belongs
+     * @param networkManager the {@link ZigBeeNetworkManager} to which the endpoint belongs
      * @param node the parent {@link ZigBeeNode}
      * @param endpoint the endpoint number within the {@link ZigBeeNode}
      */
@@ -96,12 +97,10 @@ public class ZigBeeEndpoint implements ZigBeeCommandListener {
         this.networkManager = networkManager;
         this.node = node;
         this.endpointId = endpoint;
-        networkManager.addCommandListener(this);
     }
 
     @Override
     protected void finalize() {
-        networkManager.removeCommandListener(this);
     }
 
     /**
@@ -216,7 +215,7 @@ public class ZigBeeEndpoint implements ZigBeeCommandListener {
     }
 
     /**
-     * Gets the device address
+     * Gets the endpoint address
      *
      * @return the {@link ZigBeeEndpointAddress}
      */
@@ -225,7 +224,7 @@ public class ZigBeeEndpoint implements ZigBeeCommandListener {
     }
 
     /**
-     * Gets output cluster IDs. This provides the IDs of all clusters the device
+     * Gets output cluster IDs. This provides the IDs of all clusters the endpoint
      * supports as a client.
      *
      * @return the {@link Collection} of output cluster IDs
@@ -376,30 +375,28 @@ public class ZigBeeEndpoint implements ZigBeeCommandListener {
         return extensions.get(clusterId);
     }
 
-    @Override
-    public void commandReceived(ZigBeeCommand command) {
+    public void commandReceived(ZclCommand command) {
         if (!command.getSourceAddress().equals(getEndpointAddress())) {
             return;
         }
 
-        // Pass all commands received from this device to any registered servers
+        // Pass all commands received from this endpoint to any registered extensions
         synchronized (extensions) {
             for (ZigBeeApplication extension : extensions.values()) {
                 extension.commandReceived(command);
             }
         }
 
+        // Get the cluster
+        ZclCluster cluster = getReceiveCluster(command.getClusterId(), command.getCommandDirection());
+        if (cluster == null) {
+            logger.debug("{}: Cluster {} not found for attribute response", getEndpointAddress(),
+                    command.getClusterId());
+            return;
+        }
+
         if (command instanceof ReportAttributesCommand) {
             ReportAttributesCommand attributeCommand = (ReportAttributesCommand) command;
-
-            // Get the cluster
-            ZclCluster cluster = getReceiveCluster(attributeCommand.getClusterId(),
-                    attributeCommand.getCommandDirection());
-            if (cluster == null) {
-                logger.debug("{}: Cluster {} not found for attribute report", getEndpointAddress(),
-                        attributeCommand.getClusterId());
-                return;
-            }
 
             // Pass the reports to the cluster
             cluster.handleAttributeReport(attributeCommand.getReports());
@@ -409,25 +406,20 @@ public class ZigBeeEndpoint implements ZigBeeCommandListener {
         if (command instanceof ReadAttributesResponse) {
             ReadAttributesResponse attributeCommand = (ReadAttributesResponse) command;
 
-            // Get the cluster
-            ZclCluster cluster = getReceiveCluster(attributeCommand.getClusterId(),
-                    attributeCommand.getCommandDirection());
-            if (cluster == null) {
-                logger.debug("{}: Cluster {} not found for attribute response", getEndpointAddress(),
-                        attributeCommand.getClusterId());
-                return;
-            }
-
-            attributeCommand.getRecords();
             // Pass the reports to the cluster
             cluster.handleAttributeStatus(attributeCommand.getRecords());
             return;
+        }
+
+        // If this is a specific cluster command, pass the command to the cluster command handler
+        if (!command.isGenericCommand()) {
+            cluster.handleCommand(command);
         }
     }
 
     @Override
     public String toString() {
-        return "ZigBeeDevice [networkAddress=" + getEndpointAddress().toString() + ", profileId="
+        return "ZigBeeEndpoint [networkAddress=" + getEndpointAddress().toString() + ", profileId="
                 + String.format("%04X", profileId) + ", deviceId=" + deviceId + ", deviceVersion=" + deviceVersion
                 + ", inputClusterIds=" + getInputClusterIds().toString() + ", outputClusterIds="
                 + getOutputClusterIds().toString() + "]";
