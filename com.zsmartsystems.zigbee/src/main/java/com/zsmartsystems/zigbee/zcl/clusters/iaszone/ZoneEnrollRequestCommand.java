@@ -16,6 +16,10 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Zone Enroll Request Command value object class.
  * <p>
+ * The Zone Enroll Request command is generated when a device embodying the Zone server cluster wishes
+ * to be  enrolled as an active  alarm device. It  must do this immediately it has joined the network
+ * (during commissioning).
+ * <p>
  * Cluster: <b>IAS Zone</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS Zone cluster.
  * <p>

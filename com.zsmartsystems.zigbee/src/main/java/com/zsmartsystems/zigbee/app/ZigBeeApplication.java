@@ -5,10 +5,11 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.zcl;
+package com.zsmartsystems.zigbee.app;
 
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.zcl.ZclCluster;
 
 /**
  * Defines the interface for a ZigBee Server
@@ -20,7 +21,7 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
  * @author Chris Jackson
  *
  */
-public interface ZclServer {
+public interface ZigBeeApplication {
 
     /**
      * Starts a server. The server should perform any initialisation. This gets called when

@@ -60,7 +60,15 @@ The following table provides a summary of some of the dongles / chipsets that ar
 
 * Receive: Defines the typical receive performance. A smaller number is best.
 * Transmit: Defines the maximum output power. A larger number is best.
- 
+
+## Applications
+
+The framework includes functional applications to support higher layer functionality. This includes -:
+
+* IAS CIE client
+* OTA Upgrade Server
+
+These provide minimal functionality and can be extended as required.
 
 # Contributing
 

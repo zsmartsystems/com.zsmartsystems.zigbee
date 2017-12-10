@@ -153,7 +153,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private final Set<CommandExecution> commandExecutions = new HashSet<CommandExecution>();
 
     /**
-     * The command notifier.
+     * The {@link ZigBeeCommandNotifier}. This is used for sending notifications asynchronously to listeners.
      */
     private final ZigBeeCommandNotifier commandNotifier = new ZigBeeCommandNotifier();
 
@@ -254,10 +254,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return {@link ZigBeeInitializeResponse}
      */
     public ZigBeeInitializeResponse initialize() {
-        if (networkStateSerializer != null) {
-            networkStateSerializer.deserialize(this);
-        }
-
         ZigBeeInitializeResponse transportResponse = transport.initialize();
 
         IeeeAddress address = transport.getIeeeAddress();
@@ -269,6 +265,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
                 addNode(node);
             }
+        }
+
+        if (networkStateSerializer != null) {
+            networkStateSerializer.deserialize(this);
         }
 
         networkDiscoverer.startup();
@@ -1121,6 +1121,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             }
             networkNodes.put(node.getIeeeAddress(), node);
         }
+
         synchronized (this) {
             for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
                 NotificationService.execute(new Runnable() {
@@ -1192,5 +1193,4 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         clusterMatcher.addCluster(cluster);
     }
-
 }

@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.otaserver;
+package com.zsmartsystems.zigbee.app.otaserver;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,9 +24,9 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import com.zsmartsystems.zigbee.zcl.ZclServer;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockCommand;
@@ -105,7 +105,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  *
  * @author Chris Jackson
  */
-public class ZigBeeOtaServer implements ZclServer {
+public class ZigBeeOtaServer implements ZigBeeApplication {
     /**
      * A static Thread pool is used here to ensure that we don't end up with large numbers of page requests
      * spawning multiple threads. This should ensure a level of pacing if we had a lot of devices on the network that
