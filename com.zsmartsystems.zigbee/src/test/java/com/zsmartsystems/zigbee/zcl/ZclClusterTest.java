@@ -111,4 +111,5 @@ public class ZclClusterTest {
         ZclCluster cluster = new ZclLevelControlCluster(networkManager, device);
         assertEquals("Level Control", cluster.getClusterName());
     }
+
 }
