@@ -117,6 +117,9 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      */
     public static final int ATTR_BATTERYVOLTAGE = 0x0020;
     /**
+     */
+    public static final int ATTR_BATTERYPERCENTAGEREMAINING = 0x0021;
+    /**
      * The BatteryManufacturer attribute is a maximum of 16 bytes in length and
      * specifies the name of the battery manufacturer as a ZigBee character string.
      */
@@ -159,10 +162,34 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * If this attribute takes the value 0xff then this alarm shall not be generated.
      */
     public static final int ATTR_BATTERYVOLTAGEMINTHRESHOLD = 0x0036;
+    /**
+     */
+    public static final int ATTR_BATTERYVOLTAGETHRESHOLD1 = 0x0037;
+    /**
+     */
+    public static final int ATTR_BATTERYVOLTAGETHRESHOLD2 = 0x0038;
+    /**
+     */
+    public static final int ATTR_BATTERYVOLTAGETHRESHOLD3 = 0x0039;
+    /**
+     */
+    public static final int ATTR_BATTERYPERCENTAGEMINTHRESHOLD = 0x003A;
+    /**
+     */
+    public static final int ATTR_BATTERYPERCENTAGETHRESHOLD1 = 0x003B;
+    /**
+     */
+    public static final int ATTR_BATTERYPERCENTAGETHRESHOLD2 = 0x003C;
+    /**
+     */
+    public static final int ATTR_BATTERYPERCENTAGETHRESHOLD3 = 0x003D;
+    /**
+     */
+    public static final int ATTR_BATTERYALARMSTATE = 0x003E;
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(14);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(23);
 
         attributeMap.put(ATTR_MAINSVOLTAGE, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSVOLTAGE, "MainsVoltage", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_MAINSFREQUENCY, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSFREQUENCY, "MainsFrequency", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
@@ -171,6 +198,7 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         attributeMap.put(ATTR_MAINSVOLTAGEMAXTHRESHOLD, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSVOLTAGEMAXTHRESHOLD, "MainsVoltageMaxThreshold", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_MAINSVOLTAGEDWELLTRIPPOINT, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSVOLTAGEDWELLTRIPPOINT, "MainsVoltageDwellTripPoint", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_BATTERYVOLTAGE, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYVOLTAGE, "BatteryVoltage", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_BATTERYPERCENTAGEREMAINING, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYPERCENTAGEREMAINING, "BatteryPercentageRemaining", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
         attributeMap.put(ATTR_BATTERYMANUFACTURER, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYMANUFACTURER, "BatteryManufacturer", ZclDataType.CHARACTER_STRING, false, true, true, false));
         attributeMap.put(ATTR_BATTERYSIZE, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYSIZE, "BatterySize", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
         attributeMap.put(ATTR_BATTERYAHRRATING, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYAHRRATING, "BatteryAHrRating", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
@@ -178,6 +206,14 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         attributeMap.put(ATTR_BATTERYRATEDVOLTAGE, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYRATEDVOLTAGE, "BatteryRatedVoltage", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_BATTERYALARMMASK, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYALARMMASK, "BatteryAlarmMask", ZclDataType.BITMAP_8_BIT, false, true, true, false));
         attributeMap.put(ATTR_BATTERYVOLTAGEMINTHRESHOLD, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYVOLTAGEMINTHRESHOLD, "BatteryVoltageMinThreshold", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYVOLTAGETHRESHOLD1, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYVOLTAGETHRESHOLD1, "BatteryVoltageThreshold1", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYVOLTAGETHRESHOLD2, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYVOLTAGETHRESHOLD2, "BatteryVoltageThreshold2", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYVOLTAGETHRESHOLD3, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYVOLTAGETHRESHOLD3, "BatteryVoltageThreshold3", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYPERCENTAGEMINTHRESHOLD, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYPERCENTAGEMINTHRESHOLD, "BatteryPercentageMinThreshold", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYPERCENTAGETHRESHOLD1, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYPERCENTAGETHRESHOLD1, "BatteryPercentageThreshold1", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYPERCENTAGETHRESHOLD2, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYPERCENTAGETHRESHOLD2, "BatteryPercentageThreshold2", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYPERCENTAGETHRESHOLD3, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYPERCENTAGETHRESHOLD3, "BatteryPercentageThreshold3", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYALARMSTATE, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYALARMSTATE, "BatteryAlarmState", ZclDataType.BITMAP_32_BIT, false, true, false, false));
 
         return attributeMap;
     }
@@ -713,6 +749,65 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGE));
     }
 
+    /**
+     * Get the <i>BatteryPercentageRemaining</i> attribute [attribute ID <b>33</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getBatteryPercentageRemainingAsync() {
+        return read(attributes.get(ATTR_BATTERYPERCENTAGEREMAINING));
+    }
+
+
+    /**
+     * Synchronously get the <i>BatteryPercentageRemaining</i> attribute [attribute ID <b>33</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getBatteryPercentageRemaining(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYPERCENTAGEREMAINING).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYPERCENTAGEREMAINING).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYPERCENTAGEREMAINING).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGEREMAINING));
+    }
+
+
+    /**
+     * Set reporting for the <i>BatteryPercentageRemaining</i> attribute [attribute ID <b>33</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param minInterval {@link int} minimum reporting period
+     * @param maxInterval {@link int} maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setBatteryPercentageRemainingReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_BATTERYPERCENTAGEREMAINING), minInterval, maxInterval, reportableChange);
+    }
+
 
     /**
      * Set the <i>BatteryManufacturer</i> attribute [attribute ID <b>48</b>].
@@ -1197,5 +1292,446 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         }
 
         return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD));
+    }
+
+
+    /**
+     * Set the <i>BatteryVoltageThreshold1</i> attribute [attribute ID <b>55</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param batteryVoltageThreshold1 the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setBatteryVoltageThreshold1(final Object value) {
+        return write(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1), value);
+    }
+
+    /**
+     * Get the <i>BatteryVoltageThreshold1</i> attribute [attribute ID <b>55</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getBatteryVoltageThreshold1Async() {
+        return read(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1));
+    }
+
+
+    /**
+     * Synchronously get the <i>BatteryVoltageThreshold1</i> attribute [attribute ID <b>55</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getBatteryVoltageThreshold1(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1));
+    }
+
+
+    /**
+     * Set the <i>BatteryVoltageThreshold2</i> attribute [attribute ID <b>56</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param batteryVoltageThreshold2 the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setBatteryVoltageThreshold2(final Object value) {
+        return write(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2), value);
+    }
+
+    /**
+     * Get the <i>BatteryVoltageThreshold2</i> attribute [attribute ID <b>56</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getBatteryVoltageThreshold2Async() {
+        return read(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2));
+    }
+
+
+    /**
+     * Synchronously get the <i>BatteryVoltageThreshold2</i> attribute [attribute ID <b>56</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getBatteryVoltageThreshold2(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2));
+    }
+
+
+    /**
+     * Set the <i>BatteryVoltageThreshold3</i> attribute [attribute ID <b>57</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param batteryVoltageThreshold3 the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setBatteryVoltageThreshold3(final Object value) {
+        return write(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3), value);
+    }
+
+    /**
+     * Get the <i>BatteryVoltageThreshold3</i> attribute [attribute ID <b>57</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getBatteryVoltageThreshold3Async() {
+        return read(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3));
+    }
+
+
+    /**
+     * Synchronously get the <i>BatteryVoltageThreshold3</i> attribute [attribute ID <b>57</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getBatteryVoltageThreshold3(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3));
+    }
+
+
+    /**
+     * Set the <i>BatteryPercentageMinThreshold</i> attribute [attribute ID <b>58</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param batteryPercentageMinThreshold the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setBatteryPercentageMinThreshold(final Object value) {
+        return write(attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD), value);
+    }
+
+    /**
+     * Get the <i>BatteryPercentageMinThreshold</i> attribute [attribute ID <b>58</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getBatteryPercentageMinThresholdAsync() {
+        return read(attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD));
+    }
+
+
+    /**
+     * Synchronously get the <i>BatteryPercentageMinThreshold</i> attribute [attribute ID <b>58</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getBatteryPercentageMinThreshold(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD));
+    }
+
+
+    /**
+     * Set the <i>BatteryPercentageThreshold1</i> attribute [attribute ID <b>59</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param batteryPercentageThreshold1 the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setBatteryPercentageThreshold1(final Object value) {
+        return write(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1), value);
+    }
+
+    /**
+     * Get the <i>BatteryPercentageThreshold1</i> attribute [attribute ID <b>59</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getBatteryPercentageThreshold1Async() {
+        return read(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1));
+    }
+
+
+    /**
+     * Synchronously get the <i>BatteryPercentageThreshold1</i> attribute [attribute ID <b>59</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getBatteryPercentageThreshold1(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1));
+    }
+
+
+    /**
+     * Set the <i>BatteryPercentageThreshold2</i> attribute [attribute ID <b>60</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param batteryPercentageThreshold2 the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setBatteryPercentageThreshold2(final Object value) {
+        return write(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2), value);
+    }
+
+    /**
+     * Get the <i>BatteryPercentageThreshold2</i> attribute [attribute ID <b>60</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getBatteryPercentageThreshold2Async() {
+        return read(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2));
+    }
+
+
+    /**
+     * Synchronously get the <i>BatteryPercentageThreshold2</i> attribute [attribute ID <b>60</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getBatteryPercentageThreshold2(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2));
+    }
+
+
+    /**
+     * Set the <i>BatteryPercentageThreshold3</i> attribute [attribute ID <b>61</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param batteryPercentageThreshold3 the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setBatteryPercentageThreshold3(final Object value) {
+        return write(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3), value);
+    }
+
+    /**
+     * Get the <i>BatteryPercentageThreshold3</i> attribute [attribute ID <b>61</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getBatteryPercentageThreshold3Async() {
+        return read(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3));
+    }
+
+
+    /**
+     * Synchronously get the <i>BatteryPercentageThreshold3</i> attribute [attribute ID <b>61</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getBatteryPercentageThreshold3(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3));
+    }
+
+    /**
+     * Get the <i>BatteryAlarmState</i> attribute [attribute ID <b>62</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getBatteryAlarmStateAsync() {
+        return read(attributes.get(ATTR_BATTERYALARMSTATE));
+    }
+
+
+    /**
+     * Synchronously get the <i>BatteryAlarmState</i> attribute [attribute ID <b>62</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getBatteryAlarmState(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_BATTERYALARMSTATE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_BATTERYALARMSTATE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_BATTERYALARMSTATE).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_BATTERYALARMSTATE));
     }
 }
