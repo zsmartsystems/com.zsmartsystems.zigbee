@@ -507,7 +507,9 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
         synchronized (this.neighbors) {
             this.neighbors.clear();
-            this.neighbors.addAll(neighbors);
+            if (neighbors != null) {
+                this.neighbors.addAll(neighbors);
+            }
         }
 
         return true;

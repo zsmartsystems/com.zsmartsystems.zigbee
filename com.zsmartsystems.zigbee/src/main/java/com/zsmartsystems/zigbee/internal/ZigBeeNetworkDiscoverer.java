@@ -51,9 +51,9 @@ import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
 /**
  * {@link ZigBeeNetworkDiscoverer} is used to discover devices in the network.
  * <p>
- * Notifications will be sent to the listeners when nodes and devices are discovered.
- * Device listeners are always notified first as each device discovery completes.
- * Once a node is fully discovered and all its devices are included into the network,
+ * Notifications will be sent to the listeners when nodes and endpoints are discovered.
+ * Device listeners are always notified first as each endpoint discovery completes.
+ * Once a node is fully discovered and all its endpoints are included into the network,
  * we can notify the node listeners.
  *
  * @author Chris Jackson
@@ -97,7 +97,7 @@ public class ZigBeeNetworkDiscoverer
             .synchronizedMap(new ConcurrentHashMap<Integer, Long>());
 
     /**
-     * List of devices being discovered so we know when to notify of node updates
+     * List of endpoints being discovered so we know when to notify of node updates
      */
     private final Set<ZigBeeEndpointAddress> discoveryProgress = new HashSet<ZigBeeEndpointAddress>();
 
@@ -254,56 +254,60 @@ public class ZigBeeNetworkDiscoverer
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                logger.debug("{}: Starting node discovery", nodeNetworkAddress);
-                int retries = 0;
-                boolean success;
-                NodeDiscoveryState discoveryState = NodeDiscoveryState.IEEE_ADDRESS;
-                do {
-                    if (Thread.currentThread().isInterrupted()) {
-                        break;
-                    }
-
-                    success = false;
-                    switch (discoveryState) {
-                        case IEEE_ADDRESS:
-                            success = getIeeeAddress(nodeNetworkAddress);
-                            break;
-                        case NODE_DESCRIPTOR:
-                            success = getNodeDescriptor(nodeNetworkAddress);
-                            break;
-                        case POWER_DESCRIPTOR:
-                            success = getPowerDescriptor(nodeNetworkAddress);
-                            break;
-                        case ACTIVE_ENDPOINTS:
-                            success = getActiveEndpoints(nodeNetworkAddress);
-                            break;
-                        default:
-                            logger.debug("{}: Unknown discovery state: {}", nodeNetworkAddress, discoveryState);
-                            break;
-                    }
-
-                    if (success) {
-                        logger.debug("{}: Discovery request {} successfull. Advanced to {}.", nodeNetworkAddress,
-                                discoveryState, discoveryFlow.get(discoveryState));
-                        discoveryState = discoveryFlow.get(discoveryState);
-                        if (discoveryState == NodeDiscoveryState.DISCOVERY_END) {
+                try {
+                    logger.debug("{}: Starting node discovery", nodeNetworkAddress);
+                    int retries = 0;
+                    boolean success;
+                    NodeDiscoveryState discoveryState = NodeDiscoveryState.IEEE_ADDRESS;
+                    do {
+                        if (Thread.currentThread().isInterrupted()) {
                             break;
                         }
 
-                        continue;
-                    }
+                        success = false;
+                        switch (discoveryState) {
+                            case IEEE_ADDRESS:
+                                success = getIeeeAddress(nodeNetworkAddress);
+                                break;
+                            case NODE_DESCRIPTOR:
+                                success = getNodeDescriptor(nodeNetworkAddress);
+                                break;
+                            case POWER_DESCRIPTOR:
+                                success = getPowerDescriptor(nodeNetworkAddress);
+                                break;
+                            case ACTIVE_ENDPOINTS:
+                                success = getActiveEndpoints(nodeNetworkAddress);
+                                break;
+                            default:
+                                logger.debug("{}: Unknown discovery state: {}", nodeNetworkAddress, discoveryState);
+                                break;
+                        }
 
-                    // We failed with the last request. Wait a bit then retry
-                    try {
-                        logger.debug("{}: Discovery request {} failed. Wait before retry.", nodeNetworkAddress,
-                                discoveryState);
-                        Thread.sleep(RETRY_PERIOD);
-                    } catch (InterruptedException e) {
-                        return;
-                    }
-                } while (retries++ < RETRY_COUNT);
+                        if (success) {
+                            logger.debug("{}: Discovery request {} successfull. Advanced to {}.", nodeNetworkAddress,
+                                    discoveryState, discoveryFlow.get(discoveryState));
+                            discoveryState = discoveryFlow.get(discoveryState);
+                            if (discoveryState == NodeDiscoveryState.DISCOVERY_END) {
+                                break;
+                            }
 
-                logger.debug("{}: Ending node discovery", nodeNetworkAddress);
+                            continue;
+                        }
+
+                        // We failed with the last request. Wait a bit then retry
+                        try {
+                            logger.debug("{}: Discovery request {} failed. Wait before retry.", nodeNetworkAddress,
+                                    discoveryState);
+                            Thread.sleep(RETRY_PERIOD);
+                        } catch (InterruptedException e) {
+                            return;
+                        }
+                    } while (retries++ < RETRY_COUNT);
+
+                    logger.debug("{}: Ending node discovery", nodeNetworkAddress);
+                } catch (Exception e) {
+                    logger.error("{}: Error during node discovery: ", nodeNetworkAddress, e);
+                }
             }
         };
 
@@ -311,41 +315,46 @@ public class ZigBeeNetworkDiscoverer
     }
 
     /**
-     * Performs device level discovery. This discovers the device level attributes such as clusters.
+     * Performs endpoint level discovery. This discovers the endpoint attributes such as clusters.
      *
      * @param networkAddress the {@link ZigBeeEndpointAddress} to discover
      */
-    private void startDeviceDiscovery(final ZigBeeEndpointAddress deviceNetworkAddress) {
+    private void startEndpointDiscovery(final ZigBeeEndpointAddress endpointNetworkAddress) {
         synchronized (discoveryProgress) {
-            // Don't start a new discovery thread if one already exists for this device
-            if (discoveryProgress.contains(deviceNetworkAddress)) {
+            // Don't start a new discovery thread if one already exists for this endpoint
+            if (discoveryProgress.contains(endpointNetworkAddress)) {
                 return;
             }
 
-            // Add this device to the progress list
-            discoveryProgress.add(deviceNetworkAddress);
+            // Add this endpoint to the progress list
+            discoveryProgress.add(endpointNetworkAddress);
         }
 
-        logger.debug("{}: Scheduling device discovery", deviceNetworkAddress);
+        logger.debug("{}: Scheduling endpoint discovery", endpointNetworkAddress);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                logger.debug("{}: Starting device discovery", deviceNetworkAddress);
-                int retries = 0;
-                while (!getSimpleDescriptor(deviceNetworkAddress)) {
-                    if (Thread.currentThread().isInterrupted()) {
-                        break;
-                    }
+                try {
+                    logger.debug("{}: Starting endpoint discovery", endpointNetworkAddress);
+                    int retries = 0;
+                    while (!getSimpleDescriptor(endpointNetworkAddress)) {
+                        if (Thread.currentThread().isInterrupted()) {
+                            break;
+                        }
 
-                    if (retries++ > RETRY_COUNT) {
-                        break;
+                        if (retries++ > RETRY_COUNT) {
+                            break;
+                        }
+                        try {
+                            Thread.sleep(RETRY_PERIOD);
+                        } catch (InterruptedException e) {
+                            return;
+                        }
                     }
-                    try {
-                        Thread.sleep(RETRY_PERIOD);
-                    } catch (InterruptedException e) {
-                        return;
-                    }
+                } catch (Exception e) {
+                    logger.error("{}: Error during endpoint discovery: ", endpointNetworkAddress, e);
                 }
+
             }
         };
 
@@ -510,12 +519,12 @@ public class ZigBeeNetworkDiscoverer
             }
 
             if (activeEndpointsResponse.getStatus() == ZdoStatus.SUCCESS) {
-                for (final int endpoint : activeEndpointsResponse.getActiveEpList()) {
-                    ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, endpoint);
-                    node.addEndpoint(device);
+                for (final int endpointId : activeEndpointsResponse.getActiveEpList()) {
+                    ZigBeeEndpoint endpoint = new ZigBeeEndpoint(networkManager, node, endpointId);
+                    node.addEndpoint(endpoint);
 
-                    startDeviceDiscovery(
-                            new ZigBeeEndpointAddress(activeEndpointsResponse.getNwkAddrOfInterest(), endpoint));
+                    startEndpointDiscovery(
+                            new ZigBeeEndpointAddress(activeEndpointsResponse.getNwkAddrOfInterest(), endpointId));
                 }
 
                 // Call updateNode in case there are no endpoints in this node
@@ -533,17 +542,17 @@ public class ZigBeeNetworkDiscoverer
     }
 
     /**
-     * Get the description of a device endpoint
+     * Get the description of an endpoint
      *
-     * @param deviceAddress the {@link ZigBeeEndpointAddress} of the device
+     * @param endpointAddress the {@link ZigBeeEndpointAddress} of the endpoint
      * @return true if the message was processed ok
      */
-    private boolean getSimpleDescriptor(final ZigBeeEndpointAddress deviceAddress) {
+    private boolean getSimpleDescriptor(final ZigBeeEndpointAddress endpointAddress) {
         try {
             final SimpleDescriptorRequest simpleDescriptorRequest = new SimpleDescriptorRequest();
-            simpleDescriptorRequest.setDestinationAddress(new ZigBeeEndpointAddress(deviceAddress.getAddress()));
-            simpleDescriptorRequest.setNwkAddrOfInterest(deviceAddress.getAddress());
-            simpleDescriptorRequest.setEndpoint(deviceAddress.getEndpoint());
+            simpleDescriptorRequest.setDestinationAddress(new ZigBeeEndpointAddress(endpointAddress.getAddress()));
+            simpleDescriptorRequest.setNwkAddrOfInterest(endpointAddress.getAddress());
+            simpleDescriptorRequest.setEndpoint(endpointAddress.getEndpoint());
             CommandResult response = networkManager.unicast(simpleDescriptorRequest, simpleDescriptorRequest).get();
 
             final SimpleDescriptorResponse simpleDescriptorResponse = (SimpleDescriptorResponse) response.getResponse();
@@ -551,12 +560,13 @@ public class ZigBeeNetworkDiscoverer
                 return false;
             }
 
-            if (simpleDescriptorResponse.getStatus() == ZdoStatus.SUCCESS) {
-                updateDevice(deviceAddress, simpleDescriptorResponse.getSimpleDescriptor());
+            if (simpleDescriptorResponse.getStatus() == ZdoStatus.SUCCESS
+                    && simpleDescriptorResponse.getSimpleDescriptor() != null) {
+                updateEndpoint(endpointAddress, simpleDescriptorResponse.getSimpleDescriptor());
 
                 return true;
             } else {
-                logger.debug("Simple Descriptor for {} returned {}", deviceAddress, simpleDescriptorResponse);
+                logger.debug("Simple Descriptor for {} returned {}", endpointAddress, simpleDescriptorResponse);
             }
         } catch (InterruptedException |
 
@@ -570,32 +580,32 @@ public class ZigBeeNetworkDiscoverer
     // TODO: Get supported Attributes and Commands
 
     /**
-     * Updates {@link ZigBeeEndpoint} in the {@link ZigBeeNode} and completes discovery if all devices are discovered in
-     * this node.
+     * Updates {@link ZigBeeEndpoint} in the {@link ZigBeeNode} and completes discovery if all endpoints are discovered
+     * in this node.
      *
-     * @param deviceAddress the {@link ZigBeeEndpointAddress} of the device to add
+     * @param endpointAddress the {@link ZigBeeEndpointAddress} of the device to add
      * @param simpleDescriptor the {@link SimpleDescriptor} of the device
      */
-    private void updateDevice(final ZigBeeEndpointAddress deviceAddress, final SimpleDescriptor simpleDescriptor) {
-        final ZigBeeNode node = discoveryNodes.get(deviceAddress.getAddress());
+    private void updateEndpoint(final ZigBeeEndpointAddress endpointAddress, final SimpleDescriptor simpleDescriptor) {
+        final ZigBeeNode node = discoveryNodes.get(endpointAddress.getAddress());
         if (node == null) {
-            logger.debug("Error finding node when adding {}", deviceAddress);
+            logger.debug("Error finding node when adding {}", endpointAddress);
             return;
         }
 
-        final ZigBeeEndpoint device = node.getEndpoint(deviceAddress.getEndpoint());
+        final ZigBeeEndpoint endpoint = node.getEndpoint(endpointAddress.getEndpoint());
 
-        device.setProfileId(simpleDescriptor.getProfileId());
-        device.setDeviceId(simpleDescriptor.getDeviceId());
-        device.setDeviceVersion(simpleDescriptor.getDeviceVersion());
-        device.setInputClusterIds(simpleDescriptor.getInputClusterList());
-        device.setOutputClusterIds(simpleDescriptor.getOutputClusterList());
+        endpoint.setProfileId(simpleDescriptor.getProfileId());
+        endpoint.setDeviceId(simpleDescriptor.getDeviceId());
+        endpoint.setDeviceVersion(simpleDescriptor.getDeviceVersion());
+        endpoint.setInputClusterIds(simpleDescriptor.getInputClusterList());
+        endpoint.setOutputClusterIds(simpleDescriptor.getOutputClusterList());
 
-        node.addEndpoint(device);
+        node.addEndpoint(endpoint);
 
         synchronized (discoveryProgress) {
             // Remove this device from the progress list
-            discoveryProgress.remove(deviceAddress);
+            discoveryProgress.remove(endpointAddress);
         }
         updateNode(node);
     }
@@ -608,7 +618,7 @@ public class ZigBeeNetworkDiscoverer
      */
     private void updateNode(final ZigBeeNode node) {
         synchronized (discoveryProgress) {
-            // Check the progress list to see if there are still devices to be discovered on this node
+            // Check the progress list to see if there are still endpoints to be discovered on this node
             for (ZigBeeEndpointAddress address : discoveryProgress) {
                 if (address.getAddress() == node.getNetworkAddress()) {
                     return;

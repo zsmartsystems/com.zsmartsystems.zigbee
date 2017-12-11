@@ -368,5 +368,9 @@ public class ZigBeeNodeTest {
 
         newNode.setNeighbors(neighbors);
         assertFalse(node.updateNode(newNode));
+
+        assertEquals(2, node.getNeighbors().size());
+        assertTrue(node.setNeighbors(null));
+        assertEquals(0, node.getNeighbors().size());
     }
 }
