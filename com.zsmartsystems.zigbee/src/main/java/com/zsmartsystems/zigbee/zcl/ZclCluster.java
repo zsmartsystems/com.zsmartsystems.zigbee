@@ -549,14 +549,14 @@ public abstract class ZclCluster {
 
                         CommandResult result = send(command).get();
                         if (result.isError()) {
-                            break;
+                            return false;
                         }
 
                         DiscoverAttributesResponse response = (DiscoverAttributesResponse) result.getResponse();
                         complete = response.getDiscoveryComplete();
                         if (response.getAttributeInformation() != null) {
-                            index += response.getAttributeInformation().size();
                             attributes.addAll(response.getAttributeInformation());
+                            index = Collections.max(attributes).getIdentifier() + 1;
                         }
                     } while (!complete);
 
@@ -634,15 +634,15 @@ public abstract class ZclCluster {
 
                         CommandResult result = send(command).get();
                         if (result.isError()) {
-                            break;
+                            return false;
                         }
 
                         DiscoverCommandsReceivedResponse response = (DiscoverCommandsReceivedResponse) result
                                 .getResponse();
                         complete = response.getDiscoveryComplete();
                         if (response.getCommandIdentifiers() != null) {
-                            index += response.getCommandIdentifiers().size();
                             commands.addAll(response.getCommandIdentifiers());
+                            index = Collections.max(commands) + 1;
                         }
                     } while (!complete);
 
@@ -717,15 +717,15 @@ public abstract class ZclCluster {
 
                         CommandResult result = send(command).get();
                         if (result.isError()) {
-                            break;
+                            return false;
                         }
 
                         DiscoverCommandsGeneratedResponse response = (DiscoverCommandsGeneratedResponse) result
                                 .getResponse();
                         complete = response.getDiscoveryComplete();
                         if (response.getCommandIdentifiers() != null) {
-                            index += response.getCommandIdentifiers().size();
                             commands.addAll(response.getCommandIdentifiers());
+                            index = Collections.max(commands) + 1;
                         }
                     } while (!complete);
 

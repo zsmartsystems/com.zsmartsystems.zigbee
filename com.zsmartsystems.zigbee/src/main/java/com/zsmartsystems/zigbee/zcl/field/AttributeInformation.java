@@ -17,7 +17,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  * @author Chris Jackson
  */
-public class AttributeInformation implements ZclListItemField {
+public class AttributeInformation implements ZclListItemField, Comparable<AttributeInformation> {
     /**
      * The ZigBee attribute data type.
      */
@@ -77,7 +77,13 @@ public class AttributeInformation implements ZclListItemField {
     }
 
     @Override
+    public int compareTo(AttributeInformation other) {
+        return Integer.compare(identifier, other.getIdentifier());
+    }
+
+    @Override
     public String toString() {
         return "Attribute Information [dataType=" + dataType + ", identifier=" + identifier + "]";
     }
+
 }
