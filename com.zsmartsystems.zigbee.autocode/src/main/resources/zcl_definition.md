@@ -431,13 +431,22 @@ and for configuring under/over voltage alarms.
 |0x0012 |MainsVoltageMaxThreshold  |Unsigned 16-bit integer    |Read/Write |Optional  |          |
 |0x0013 |MainsVoltageDwellTripPoint|Unsigned 16-bit integer    |Read/Write |Optional  |          |
 |0x0020 |BatteryVoltage            |Unsigned 8-bit integer     |Read       |Optional  |          |
-|0x0030 |BatteryManufacturer       |Character string           |Read/Write |Optional  |          |
-|0x0031 |BatterySize               |8-bit Enumeration          |Read/Write |Optional  |          |
-|0x0032 |BatteryAHrRating          |Unsigned 16-bit integer    |Read/Write |Optional  |          |
-|0x0033 |BatteryQuantity           |Unsigned 8-bit integer     |Read/Write |Optional  |          |
-|0x0034 |BatteryRatedVoltage       |Unsigned 8-bit integer     |Read/Write |Optional  |          |
-|0x0035 |BatteryAlarmMask          |8-bit Bitmap               |Read/Write |Optional  |          |
-|0x0036 |BatteryVoltageMinThreshold|Unsigned 8-bit integer     |Read/Write |Optional  |          |
+|0x0021 |BatteryPercentageRemaining   |Unsigned 8-bit integer     |Read       |Optional  |Mandatory |
+|0x0030 |BatteryManufacturer          |Character string           |Read/Write |Optional  |          |
+|0x0031 |BatterySize                  |8-bit Enumeration          |Read/Write |Optional  |          |
+|0x0032 |BatteryAHrRating             |Unsigned 16-bit integer    |Read/Write |Optional  |          |
+|0x0033 |BatteryQuantity              |Unsigned 8-bit integer     |Read/Write |Optional  |          |
+|0x0034 |BatteryRatedVoltage          |Unsigned 8-bit integer     |Read/Write |Optional  |          |
+|0x0035 |BatteryAlarmMask             |8-bit Bitmap               |Read/Write |Optional  |          |
+|0x0036 |BatteryVoltageMinThreshold   |Unsigned 8-bit integer     |Read/Write |Optional  |          |
+|0x0037 |BatteryVoltageThreshold1     |Unsigned 8-bit integer     |Read/Write |Optional  |          |
+|0x0038 |BatteryVoltageThreshold2     |Unsigned 8-bit integer     |Read/Write |Optional  |          |
+|0x0039 |BatteryVoltageThreshold3     |Unsigned 8-bit integer     |Read/Write |Optional  |          |
+|0x003A |BatteryPercentageMinThreshold|Unsigned 8-bit integer     |Read/Write |Optional  |          |
+|0x003B |BatteryPercentageThreshold1  |Unsigned 8-bit integer     |Read/Write |Optional  |          |
+|0x003C |BatteryPercentageThreshold2  |Unsigned 8-bit integer     |Read/Write |Optional  |          |
+|0x003D |BatteryPercentageThreshold3  |Unsigned 8-bit integer     |Read/Write |Optional  |          |
+|0x003E |BatteryAlarmState            |32-bit Bitmap              |Read       |Optional  |          |
 
 
 
@@ -518,6 +527,20 @@ specifies the name of the battery manufacturer as a ZigBee character string.
 #### BatterySize Attribute
 The BatterySize attribute is an enumeration which specifies the type of battery
 being used by the device.
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0000 |No Battery                |
+|0x0001 |Build In                  |
+|0x0002 |Other                     |
+|0x0003 |AA  Cell                  |
+|0x0004 |AAA Cell                  |
+|0x0005 |C Cell                    |
+|0x0006 |D Cell                    |
+|0x0007 |CR2 Cell                  |
+|0x0008 |CR123A Cell               |
+|0x00FF |Unknown                   |
+
 
 #### BatteryAHrRating Attribute
 The BatteryAHrRating attribute is 16-bits in length and specifies the Ampere-hour

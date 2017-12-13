@@ -26,6 +26,7 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
  */
 public enum ZclDataType {
     BITMAP_16_BIT("16-bit Bitmap", Integer.class, 0x19, false),
+    BITMAP_32_BIT("32-bit Bitmap", Integer.class, 0x1B, false),
     BITMAP_8_BIT("Bitmap 8-bit", Integer.class, 0x18, false),
     BOOLEAN("Boolean", Boolean.class, 0x10, false),
     BYTE_ARRAY("Byte array", ByteArray.class, 0x00, false),
@@ -61,7 +62,6 @@ public enum ZclDataType {
     ZCL_STATUS("Zcl Status", ZclStatus.class, 0x00, false),
     EXTENDED_PANID("EXTENDED_PANID", ExtendedPanId.class, 0x00, false),
     BINDING_TABLE("Binding Table", BindingTable.class, 0x00, false),
-    BITMAP_32_BIT("Bitmap 32-bit", Integer.class, 0x1B, false),
     CLUSTERID("ClusterId", Integer.class, 0x00, false),
     COMPLEX_DESCRIPTOR("Complex Descriptor", ComplexDescriptor.class, 0x00, false),
     ENDPOINT("Endpoint", Integer.class, 0x00, false),
