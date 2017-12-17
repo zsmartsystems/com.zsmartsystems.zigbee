@@ -4,7 +4,7 @@
 
     <groupId>com.zsmartsystems</groupId>
     <artifactId>zigbee</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -16,7 +16,7 @@
         <url>https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</url>
         <connection>scm:git:https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</connection>
         <developerConnection>scm:git:https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>zigbee-1.0.2</tag>
     </scm>
 
     <repositories>
