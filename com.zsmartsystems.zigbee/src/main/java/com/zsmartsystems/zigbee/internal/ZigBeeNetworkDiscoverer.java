@@ -66,24 +66,39 @@ public class ZigBeeNetworkDiscoverer
     private final Logger logger = LoggerFactory.getLogger(ZigBeeNetworkDiscoverer.class);
 
     /**
-     * Maximum number of retries to perform
+     * Default maximum number of retries to perform
      */
-    private static final int RETRY_COUNT = 3;
+    private final int DEFAULT_MAX_RETRY_COUNT = 3;
 
     /**
-     * Period between retries
+     * Default period between retries
      */
-    private static final int RETRY_PERIOD = 1500;
+    private final int DEFAULT_RETRY_PERIOD = 1500;
 
     /**
-     * Minimum time before information can be queried again for same network address or endpoint.
+     * Default minimum time before information can be queried again for same network address or endpoint.
      */
-    private static final int MINIMUM_REQUERY_TIME_MILLIS = 60000;
+    private final int DEFAULT_REQUERY_TIME = 60000;
 
     /**
      * The ZigBee network manager.
      */
     private ZigBeeNetworkManager networkManager;
+
+    /**
+     * Period between retries
+     */
+    private int retryPeriod = DEFAULT_RETRY_PERIOD;
+
+    /**
+     * Period between retries
+     */
+    private int retryCount = DEFAULT_MAX_RETRY_COUNT;
+
+    /**
+     * The minimum time before performing a requery
+     */
+    private int requeryPeriod = DEFAULT_REQUERY_TIME;
 
     /**
      * Map of discovery nodes - nodes that are being actively discovered
@@ -147,6 +162,34 @@ public class ZigBeeNetworkDiscoverer
         networkManager.removeAnnounceListener(this);
     }
 
+    /**
+     * Sets the retry period in milliseconds. This is the amount of time the service will wait following a failed
+     * request before performing a retry.
+     *
+     * @param retryPeriod the period in milliseconds between retries
+     */
+    public void setRetryPeriod(int retryPeriod) {
+        this.retryPeriod = retryPeriod;
+    }
+
+    /**
+     * Sets the maximum number of retries the service will perform at any stage before failing.
+     *
+     * @param retryCount the maximum number of retries.
+     */
+    public void setRetryCount(int retryCount) {
+        this.retryCount = retryCount;
+    }
+
+    /**
+     * Sets the minimum period between requeries on each node
+     *
+     * @param requeryPeriod the requery period in milliseconds
+     */
+    public void setRequeryPeriod(int requeryPeriod) {
+        this.requeryPeriod = requeryPeriod;
+    }
+
     @Override
     public void deviceStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
             final IeeeAddress ieeeAddress) {
@@ -164,7 +207,7 @@ public class ZigBeeNetworkDiscoverer
 
     @Override
     public void commandReceived(final ZigBeeCommand command) {
-        // ZCL command received from remote node. Request IEEE address if it is not yet known.
+        // ZCL command received from remote node. Perform discovery if it is not yet known.
         if (command instanceof ZclCommand) {
             final ZclCommand zclCommand = (ZclCommand) command;
             if (networkManager.getNode(zclCommand.getSourceAddress().getAddress()) == null) {
@@ -200,7 +243,7 @@ public class ZigBeeNetworkDiscoverer
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                logger.debug("Starting node rediscovery of {}", ieeeAddress);
+                logger.debug("{}: Starting node rediscovery", ieeeAddress);
                 int retries = 0;
                 try {
                     do {
@@ -222,11 +265,19 @@ public class ZigBeeNetworkDiscoverer
                             startNodeDiscovery(nwkAddressResponse.getNwkAddrRemoteDev());
                             break;
                         }
-                    } while (retries++ < RETRY_COUNT);
+
+                        // We failed with the last request. Wait a bit then retry
+                        try {
+                            logger.debug("{}: Node rediscovery request failed. Wait before retry.", ieeeAddress);
+                            Thread.sleep(retryPeriod);
+                        } catch (InterruptedException e) {
+                            break;
+                        }
+                    } while (retries++ < retryCount);
                 } catch (InterruptedException | ExecutionException e) {
-                    logger.debug("Error in rediscoverNode", e);
+                    logger.debug("Error in rediscoverNode ", e);
                 }
-                logger.debug("Finishing node rediscovery of {}", ieeeAddress);
+                logger.debug("{}: Finishing node rediscovery", ieeeAddress);
             }
         };
 
@@ -237,13 +288,13 @@ public class ZigBeeNetworkDiscoverer
      * Performs the top level node discovery. This discovers node level attributes such as the endpoints and
      * descriptors.
      *
-     * @param networkAddress
+     * @param networkAddress the network address to start a discovery on
      */
     private void startNodeDiscovery(final int nodeNetworkAddress) {
         // Check if we need to do a rediscovery on this node first...
         synchronized (discoveryStartTime) {
-            if (discoveryStartTime.get(nodeNetworkAddress) != null && System.currentTimeMillis()
-                    - discoveryStartTime.get(nodeNetworkAddress) < MINIMUM_REQUERY_TIME_MILLIS) {
+            if (discoveryStartTime.get(nodeNetworkAddress) != null
+                    && System.currentTimeMillis() - discoveryStartTime.get(nodeNetworkAddress) < requeryPeriod) {
                 logger.trace("{}: Node discovery already in progress", nodeNetworkAddress);
                 return;
             }
@@ -291,18 +342,24 @@ public class ZigBeeNetworkDiscoverer
                                 break;
                             }
 
+                            retries = 0;
                             continue;
                         }
 
                         // We failed with the last request. Wait a bit then retry
                         try {
-                            logger.debug("{}: Discovery request {} failed. Wait before retry.", nodeNetworkAddress,
+                            logger.debug("{}: Node discovery request {} failed. Wait before retry.", nodeNetworkAddress,
                                     discoveryState);
-                            Thread.sleep(RETRY_PERIOD);
+                            Thread.sleep(retryPeriod);
                         } catch (InterruptedException e) {
-                            return;
+                            break;
                         }
-                    } while (retries++ < RETRY_COUNT);
+                    } while (retries++ < retryCount);
+
+                    // Remove this node from the discovery list - just in case this exits following an error or retries.
+                    synchronized (discoveryStartTime) {
+                        discoveryStartTime.remove(nodeNetworkAddress);
+                    }
 
                     logger.debug("{}: Ending node discovery", nodeNetworkAddress);
                 } catch (Exception e) {
@@ -323,6 +380,7 @@ public class ZigBeeNetworkDiscoverer
         synchronized (discoveryProgress) {
             // Don't start a new discovery thread if one already exists for this endpoint
             if (discoveryProgress.contains(endpointNetworkAddress)) {
+                logger.debug("{}: Endpoint discovery already in progress", endpointNetworkAddress);
                 return;
             }
 
@@ -342,19 +400,27 @@ public class ZigBeeNetworkDiscoverer
                             break;
                         }
 
-                        if (retries++ > RETRY_COUNT) {
+                        if (retries++ > retryPeriod) {
                             break;
                         }
                         try {
-                            Thread.sleep(RETRY_PERIOD);
+                            logger.debug("{}: Endpoint discovery request failed. Wait before retry.",
+                                    endpointNetworkAddress);
+                            Thread.sleep(retryCount);
                         } catch (InterruptedException e) {
-                            return;
+                            break;
                         }
                     }
                 } catch (Exception e) {
                     logger.error("{}: Error during endpoint discovery: ", endpointNetworkAddress, e);
                 }
 
+                // Remove this endpoint from the discovery list - just in case this exits following an error or retries.
+                synchronized (discoveryProgress) {
+                    discoveryProgress.remove(endpointNetworkAddress);
+                }
+
+                logger.debug("{}: Ending endpoint discovery", endpointNetworkAddress);
             }
         };
 
@@ -387,8 +453,8 @@ public class ZigBeeNetworkDiscoverer
                 }
 
                 final IeeeAddressResponse ieeeAddressResponse = response.getResponse();
+                logger.debug("{}: Ieee Address returned {}", networkAddress, ieeeAddressResponse);
                 if (ieeeAddressResponse != null && ieeeAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
-                    logger.debug("Ieee Address for {} returned {}", networkAddress, ieeeAddressResponse);
                     ieeeAddress = ieeeAddressResponse.getIeeeAddrRemoteDev();
                     if (startIndex.equals(ieeeAddressResponse.getStartIndex())) {
                         associatedDevices.addAll(ieeeAddressResponse.getNwkAddrAssocDevList());
@@ -412,7 +478,7 @@ public class ZigBeeNetworkDiscoverer
                 startNodeDiscovery(deviceNetworkAddress);
             }
         } catch (InterruptedException | ExecutionException e) {
-            logger.debug("Error in checkIeeeAddressResponse", e);
+            logger.debug("Error in checkIeeeAddressResponse ", e);
         }
 
         return true;
@@ -432,6 +498,7 @@ public class ZigBeeNetworkDiscoverer
             CommandResult response = networkManager.unicast(nodeDescriptorRequest, nodeDescriptorRequest).get();
 
             final NodeDescriptorResponse nodeDescriptorResponse = (NodeDescriptorResponse) response.getResponse();
+            logger.debug("{}: Node Descriptor returned {}", networkAddress, nodeDescriptorResponse);
             if (nodeDescriptorResponse == null) {
                 return false;
             }
@@ -439,17 +506,15 @@ public class ZigBeeNetworkDiscoverer
             if (nodeDescriptorResponse.getStatus() == ZdoStatus.SUCCESS) {
                 ZigBeeNode node = discoveryNodes.get(networkAddress);
                 if (node == null) {
-                    logger.debug("Discovery node not found getNodeDescriptor");
+                    logger.debug("{}: Discovery node not found getNodeDescriptor", networkAddress);
                 } else {
                     node.setNodeDescriptor(nodeDescriptorResponse.getNodeDescriptor());
                 }
 
                 return true;
-            } else {
-                logger.debug("Node Descriptor for {} returned {}", networkAddress, nodeDescriptorResponse);
             }
         } catch (InterruptedException | ExecutionException e) {
-            logger.debug("Error in checkNodeDescriptorResponse", e);
+            logger.debug("Error in checkNodeDescriptorResponse ", e);
         }
 
         return false;
@@ -469,6 +534,7 @@ public class ZigBeeNetworkDiscoverer
             CommandResult response = networkManager.unicast(powerDescriptorRequest, powerDescriptorRequest).get();
 
             final PowerDescriptorResponse powerDescriptorResponse = (PowerDescriptorResponse) response.getResponse();
+            logger.debug("{}: Power Descriptor returned {}", networkAddress, powerDescriptorResponse);
             if (powerDescriptorResponse == null) {
                 return false;
             }
@@ -476,7 +542,7 @@ public class ZigBeeNetworkDiscoverer
             if (powerDescriptorResponse.getStatus() == ZdoStatus.SUCCESS) {
                 ZigBeeNode node = discoveryNodes.get(networkAddress);
                 if (node == null) {
-                    logger.debug("Discovery node not found getPowerDescriptor");
+                    logger.debug("{}: Discovery node not found getPowerDescriptor", networkAddress);
                 } else {
                     node.setPowerDescriptor(powerDescriptorResponse.getPowerDescriptor());
                 }
@@ -484,11 +550,9 @@ public class ZigBeeNetworkDiscoverer
                 return true;
             } else if (powerDescriptorResponse.getStatus() == ZdoStatus.NOT_SUPPORTED) {
                 return true;
-            } else {
-                logger.debug("Power Descriptor for {} returned {}", networkAddress, powerDescriptorResponse);
             }
         } catch (InterruptedException | ExecutionException e) {
-            logger.debug("Error in checkPowerDescriptorResponse", e);
+            logger.debug("Error in checkPowerDescriptorResponse ", e);
         }
 
         return false;
@@ -508,13 +572,14 @@ public class ZigBeeNetworkDiscoverer
             CommandResult response = networkManager.unicast(activeEndpointsRequest, activeEndpointsRequest).get();
 
             final ActiveEndpointsResponse activeEndpointsResponse = (ActiveEndpointsResponse) response.getResponse();
+            logger.debug("{}: Active Endpoints returned {}", networkAddress, activeEndpointsResponse);
             if (activeEndpointsResponse == null) {
                 return false;
             }
 
             final ZigBeeNode node = discoveryNodes.get(networkAddress);
             if (node == null) {
-                logger.debug("Error finding node in getActiveEndpoints");
+                logger.debug("{}: Error finding node in getActiveEndpoints", networkAddress);
                 return false;
             }
 
@@ -531,11 +596,9 @@ public class ZigBeeNetworkDiscoverer
                 updateNode(node);
 
                 return true;
-            } else {
-                logger.debug("Active Endpoints for {} returned {}", networkAddress, activeEndpointsResponse);
             }
         } catch (InterruptedException | ExecutionException e) {
-            logger.debug("Error in checkActiveEndpointsResponse", e);
+            logger.debug("Error in checkActiveEndpointsResponse ", e);
         }
 
         return false;
@@ -556,6 +619,7 @@ public class ZigBeeNetworkDiscoverer
             CommandResult response = networkManager.unicast(simpleDescriptorRequest, simpleDescriptorRequest).get();
 
             final SimpleDescriptorResponse simpleDescriptorResponse = (SimpleDescriptorResponse) response.getResponse();
+            logger.debug("{}: Simple Descriptor returned {}", endpointAddress, simpleDescriptorResponse);
             if (simpleDescriptorResponse == null) {
                 return false;
             }
@@ -565,19 +629,13 @@ public class ZigBeeNetworkDiscoverer
                 updateEndpoint(endpointAddress, simpleDescriptorResponse.getSimpleDescriptor());
 
                 return true;
-            } else {
-                logger.debug("Simple Descriptor for {} returned {}", endpointAddress, simpleDescriptorResponse);
             }
-        } catch (InterruptedException |
-
-                ExecutionException e) {
-            logger.error("Error in checkActiveEndpointsResponse", e);
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error("Error in checkActiveEndpointsResponse ", e);
         }
 
         return false;
     }
-
-    // TODO: Get supported Attributes and Commands
 
     /**
      * Updates {@link ZigBeeEndpoint} in the {@link ZigBeeNode} and completes discovery if all endpoints are discovered
@@ -589,12 +647,15 @@ public class ZigBeeNetworkDiscoverer
     private void updateEndpoint(final ZigBeeEndpointAddress endpointAddress, final SimpleDescriptor simpleDescriptor) {
         final ZigBeeNode node = discoveryNodes.get(endpointAddress.getAddress());
         if (node == null) {
-            logger.debug("Error finding node when adding {}", endpointAddress);
+            logger.debug("{}: Error finding node in updateEndpoint", endpointAddress);
             return;
         }
 
         final ZigBeeEndpoint endpoint = node.getEndpoint(endpointAddress.getEndpoint());
-
+        if (endpoint == null) {
+            logger.debug("{}: Error finding endpoint in updateEndpoint", endpointAddress);
+            return;
+        }
         endpoint.setProfileId(simpleDescriptor.getProfileId());
         endpoint.setDeviceId(simpleDescriptor.getDeviceId());
         endpoint.setDeviceVersion(simpleDescriptor.getDeviceVersion());
@@ -625,6 +686,8 @@ public class ZigBeeNetworkDiscoverer
                 }
             }
         }
+
+        logger.debug("{}: Discovery has completed all endpoints", node.getNetworkAddress());
 
         // Add the node to the network...
         networkManager.addNode(node);
