@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -28,10 +27,6 @@ public class CommandResultTest {
         CommandResult result = new CommandResult();
         assertTrue(result.isError());
 
-        result = new CommandResult("Test");
-        assertTrue(result.isError());
-        assertFalse(result.isSuccess());
-
         result = new CommandResult(new ZigBeeCommand());
         assertFalse(result.isError());
         assertTrue(result.isSuccess());
@@ -49,15 +44,4 @@ public class CommandResultTest {
         assertFalse(result.isSuccess());
     }
 
-    @Test
-    public void testGetMessage() {
-        CommandResult result = new CommandResult();
-        assertTrue(result.isError());
-        assertTrue(result.isTimeout());
-
-        assertEquals("Timeout.", result.getMessage());
-
-        result = new CommandResult("Test");
-        assertEquals("Test", result.getMessage());
-    }
 }

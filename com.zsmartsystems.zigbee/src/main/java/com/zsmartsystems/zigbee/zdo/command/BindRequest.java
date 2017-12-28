@@ -30,31 +30,50 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 public class BindRequest extends ZdoRequest {
     /**
      * SrcAddress command message field.
+     *
+     * The IEEE address for the source.
      */
     private IeeeAddress srcAddress;
 
     /**
      * SrcEndpoint command message field.
+     *
+     * The source endpoint for the binding entry.
      */
     private Integer srcEndpoint;
 
     /**
      * BindCluster command message field.
+     *
+     * The identifier of the cluster on the source device that is bound to the destination.
      */
     private Integer bindCluster;
 
     /**
      * DstAddrMode command message field.
+     *
+     * The addressing mode for the destination address used in this command. This field
+     * can take one of the non-reserved values from the following list:
+     * 0x00 = reserved
+     * 0x01 = 16-bit group address for DstAddress and DstEndp not present
+     * 0x02 = reserved
+     * 0x03 = 64-bit extended address for DstAddress and DstEndp present
+     * 0x04 – 0xff = reserved
      */
     private Integer dstAddrMode;
 
     /**
      * DstAddress command message field.
+     *
+     * The destination address for the binding entry.
      */
     private IeeeAddress dstAddress;
 
     /**
      * DstEndpoint command message field.
+     *
+     * This field shall be present only if the DstAddrMode field has a value of 0x03 and,
+     * if present, shall be the destination endpoint for the binding entry.
      */
     private Integer dstEndpoint;
 
@@ -67,6 +86,8 @@ public class BindRequest extends ZdoRequest {
 
     /**
      * Gets SrcAddress.
+     * <p>
+     * The IEEE address for the source.
      *
      * @return the SrcAddress
      */
@@ -76,6 +97,8 @@ public class BindRequest extends ZdoRequest {
 
     /**
      * Sets SrcAddress.
+     * <p>
+     * The IEEE address for the source.
      *
      * @param srcAddress the SrcAddress
      */
@@ -85,6 +108,8 @@ public class BindRequest extends ZdoRequest {
 
     /**
      * Gets SrcEndpoint.
+     * <p>
+     * The source endpoint for the binding entry.
      *
      * @return the SrcEndpoint
      */
@@ -94,6 +119,8 @@ public class BindRequest extends ZdoRequest {
 
     /**
      * Sets SrcEndpoint.
+     * <p>
+     * The source endpoint for the binding entry.
      *
      * @param srcEndpoint the SrcEndpoint
      */
@@ -103,6 +130,8 @@ public class BindRequest extends ZdoRequest {
 
     /**
      * Gets BindCluster.
+     * <p>
+     * The identifier of the cluster on the source device that is bound to the destination.
      *
      * @return the BindCluster
      */
@@ -112,6 +141,8 @@ public class BindRequest extends ZdoRequest {
 
     /**
      * Sets BindCluster.
+     * <p>
+     * The identifier of the cluster on the source device that is bound to the destination.
      *
      * @param bindCluster the BindCluster
      */
@@ -121,6 +152,14 @@ public class BindRequest extends ZdoRequest {
 
     /**
      * Gets DstAddrMode.
+     * <p>
+     * The addressing mode for the destination address used in this command. This field
+     * can take one of the non-reserved values from the following list:
+     * 0x00 = reserved
+     * 0x01 = 16-bit group address for DstAddress and DstEndp not present
+     * 0x02 = reserved
+     * 0x03 = 64-bit extended address for DstAddress and DstEndp present
+     * 0x04 – 0xff = reserved
      *
      * @return the DstAddrMode
      */
@@ -130,6 +169,14 @@ public class BindRequest extends ZdoRequest {
 
     /**
      * Sets DstAddrMode.
+     * <p>
+     * The addressing mode for the destination address used in this command. This field
+     * can take one of the non-reserved values from the following list:
+     * 0x00 = reserved
+     * 0x01 = 16-bit group address for DstAddress and DstEndp not present
+     * 0x02 = reserved
+     * 0x03 = 64-bit extended address for DstAddress and DstEndp present
+     * 0x04 – 0xff = reserved
      *
      * @param dstAddrMode the DstAddrMode
      */
@@ -139,6 +186,8 @@ public class BindRequest extends ZdoRequest {
 
     /**
      * Gets DstAddress.
+     * <p>
+     * The destination address for the binding entry.
      *
      * @return the DstAddress
      */
@@ -148,6 +197,8 @@ public class BindRequest extends ZdoRequest {
 
     /**
      * Sets DstAddress.
+     * <p>
+     * The destination address for the binding entry.
      *
      * @param dstAddress the DstAddress
      */
@@ -157,6 +208,9 @@ public class BindRequest extends ZdoRequest {
 
     /**
      * Gets DstEndpoint.
+     * <p>
+     * This field shall be present only if the DstAddrMode field has a value of 0x03 and,
+     * if present, shall be the destination endpoint for the binding entry.
      *
      * @return the DstEndpoint
      */
@@ -166,6 +220,9 @@ public class BindRequest extends ZdoRequest {
 
     /**
      * Sets DstEndpoint.
+     * <p>
+     * This field shall be present only if the DstAddrMode field has a value of 0x03 and,
+     * if present, shall be the destination endpoint for the binding entry.
      *
      * @param dstEndpoint the DstEndpoint
      */

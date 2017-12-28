@@ -30,7 +30,6 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
-import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
@@ -84,16 +83,12 @@ public class ZigBeeOtaServerTest implements ZigBeeOtaStatusCallback {
         // e.printStackTrace();
         // }
 
-        try {
-            Mockito.doAnswer(new Answer<Integer>() {
-                @Override
-                public Integer answer(InvocationOnMock invocation) {
-                    return 0;
-                }
-            }).when(mockedNetworkManager).sendCommand(mockedCommandCaptor.capture());
-        } catch (ZigBeeException e) {
-            e.printStackTrace();
-        }
+        Mockito.doAnswer(new Answer<Integer>() {
+            @Override
+            public Integer answer(InvocationOnMock invocation) {
+                return 0;
+            }
+        }).when(mockedNetworkManager).sendCommand(mockedCommandCaptor.capture());
 
         Mockito.doAnswer(new Answer<Future<CommandResult>>() {
             @Override

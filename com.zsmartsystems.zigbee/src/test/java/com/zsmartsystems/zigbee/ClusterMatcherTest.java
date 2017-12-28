@@ -31,16 +31,12 @@ public class ClusterMatcherTest {
 
     private ClusterMatcher getMatcher() {
         ZigBeeNetworkManager mockedNetworkManager = Mockito.mock(ZigBeeNetworkManager.class);
-        try {
-            Mockito.doAnswer(new Answer<Integer>() {
-                @Override
-                public Integer answer(InvocationOnMock invocation) {
-                    return 0;
-                }
-            }).when(mockedNetworkManager).sendCommand(mockedCommandCaptor.capture());
-        } catch (ZigBeeException e) {
-            e.printStackTrace();
-        }
+        Mockito.doAnswer(new Answer<Integer>() {
+            @Override
+            public Integer answer(InvocationOnMock invocation) {
+                return 0;
+            }
+        }).when(mockedNetworkManager).sendCommand(mockedCommandCaptor.capture());
 
         ClusterMatcher matcher = new ClusterMatcher(mockedNetworkManager);
 

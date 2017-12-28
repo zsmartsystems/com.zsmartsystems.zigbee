@@ -345,6 +345,31 @@ NOT_SUPPORTED status to the Bind_req if not supported.
 |DstAddress                 |IEEE address               |
 |DstEndpoint                |Unsigned 8-bit integer     |
 
+##### SrcAddress
+The IEEE address for the source.
+
+##### SrcEndpoint
+The source endpoint for the binding entry.
+
+##### BindCluster
+The identifier of the cluster on the source device that is bound to the destination.
+
+##### DstAddrMode
+The addressing mode for the destination address used in this command. This field
+can take one of the non-reserved values from the following list:
+0x00 = reserved
+0x01 = 16-bit group address for DstAddress and DstEndp not present
+0x02 = reserved
+0x03 = 64-bit extended address for DstAddress and DstEndp present
+0x04 – 0xff = reserved
+
+##### DstAddress
+The destination address for the binding entry.
+
+##### DstEndpoint
+This field shall be present only if the DstAddrMode field has a value of 0x03 and,
+if present, shall be the destination endpoint for the binding entry.
+
 #### Unbind Request [0x0022]
 
 The Unbind_req is generated from a Local Device wishing to remove a Binding
@@ -356,10 +381,35 @@ address must be that of the a Primary binding table cache or the SrcAddress.
 |---------------------------|---------------------------|
 |SrcAddress                 |IEEE address               |
 |SrcEndpoint                |Unsigned 8-bit integer     |
-|ClusterID                  |Unsigned 16-bit integer    |
+|BindCluster                |Unsigned 16-bit integer    |
 |DstAddrMode                |Unsigned 8-bit integer     |
 |DstAddress                 |IEEE address               |
 |DstEndpoint                |Unsigned 8-bit integer     |
+
+##### SrcAddress
+The IEEE address for the source.
+
+##### SrcEndpoint
+The source endpoint for the binding entry.
+
+##### BindCluster
+The identifier of the cluster on the source device that is bound to the destination.
+
+##### DstAddrMode
+The addressing mode for the destination address used in this command. This field
+can take one of the non-reserved values from the following list:
+0x00 = reserved
+0x01 = 16-bit group address for DstAddress and DstEndp not present
+0x02 = reserved
+0x03 = 64-bit extended address for DstAddress and DstEndp present
+0x04 – 0xff = reserved
+
+##### DstAddress
+The destination address for the binding entry.
+
+##### DstEndpoint
+This field shall be present only if the DstAddrMode field has a value of 0x03 and,
+if present, shall be the destination endpoint for the binding entry.
 
 #### Bind Register [0x0023]
 

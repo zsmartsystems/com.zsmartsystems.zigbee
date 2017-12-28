@@ -171,11 +171,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         cmd.setDestinationAddress(deviceAddress);
 
         boolean error = false;
-        try {
-            networkManager.sendCommand(cmd);
-        } catch (ZigBeeException e) {
-            error = true;
-        }
+        networkManager.sendCommand(cmd);
 
         assertFalse(error);
         assertEquals(1, mockedApsFrameListener.getAllValues().size());
@@ -327,12 +323,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         // device.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
         // networkManager.addDevice(device);
 
-        try {
-            Mockito.doNothing().when(mockedTransport).sendCommand(mockedApsFrameListener.capture());
-        } catch (ZigBeeException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        Mockito.doNothing().when(mockedTransport).sendCommand(mockedApsFrameListener.capture());
 
         return networkManager;
     }

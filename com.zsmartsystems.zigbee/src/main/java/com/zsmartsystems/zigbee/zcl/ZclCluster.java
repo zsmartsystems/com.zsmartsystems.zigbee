@@ -26,7 +26,6 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
-import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
@@ -415,7 +414,7 @@ public abstract class ZclCluster {
      */
     public Future<CommandResult> bind(IeeeAddress address, int endpointId) {
         final BindRequest command = new BindRequest();
-        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
+        command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
         command.setSrcAddress(zigbeeEndpoint.getIeeeAddress());
         command.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
         command.setBindCluster(clusterId);
@@ -443,9 +442,10 @@ public abstract class ZclCluster {
      */
     public Future<CommandResult> unbind(IeeeAddress address, int endpointId) {
         final UnbindRequest command = new UnbindRequest();
+        command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
         command.setSrcAddress(zigbeeEndpoint.getIeeeAddress());
         command.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
-        command.setClusterId(clusterId);
+        command.setBindCluster(clusterId);
         command.setDstAddrMode(3); // 64 bit addressing
         command.setDstAddress(address);
         command.setDstEndpoint(endpointId);
@@ -474,11 +474,7 @@ public abstract class ZclCluster {
         defaultResponse.setClusterId(clusterId);
         defaultResponse.setStatusCode(status);
 
-        try {
-            zigbeeManager.sendCommand(defaultResponse);
-        } catch (ZigBeeException e) {
-            logger.debug("Exception sending default response message: ", e);
-        }
+        zigbeeManager.sendCommand(defaultResponse);
     }
 
     /**

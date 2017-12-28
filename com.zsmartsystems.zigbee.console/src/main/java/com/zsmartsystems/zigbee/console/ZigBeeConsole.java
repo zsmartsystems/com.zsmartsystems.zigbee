@@ -1431,7 +1431,7 @@ public final class ZigBeeConsole {
                 }
                 return true;
             } else {
-                out.println("Error executing command: " + result.getMessage());
+                out.println("Error executing command: " + result);
                 return true;
             }
         }
@@ -1504,7 +1504,7 @@ public final class ZigBeeConsole {
                 }
                 return true;
             } else {
-                out.println("Error executing command: " + result.getMessage());
+                out.println("Error executing command: " + result);
                 return true;
             }
 
@@ -1705,7 +1705,7 @@ public final class ZigBeeConsole {
 
                 return true;
             } else {
-                out.println("Error executing command: " + result.getMessage());
+                out.println("Error executing command: " + result);
                 return true;
             }
 
@@ -1778,7 +1778,7 @@ public final class ZigBeeConsole {
                 }
                 return true;
             } else {
-                out.println("Error executing command: " + result.getMessage());
+                out.println("Error executing command: " + result);
                 return true;
             }
         }
@@ -1854,7 +1854,7 @@ public final class ZigBeeConsole {
 
                 return true;
             } else {
-                out.println("Error executing command: " + result.getMessage());
+                out.println("Error executing command: " + result);
                 return true;
             }
 
@@ -2570,7 +2570,7 @@ public final class ZigBeeConsole {
                 }
                 return true;
             } else {
-                out.println("Error executing command: " + result.getMessage());
+                out.println("Error executing command: " + result);
                 return true;
             }
         }
@@ -2622,7 +2622,7 @@ public final class ZigBeeConsole {
                 out.println();
                 return true;
             } else {
-                out.println("Error executing command: " + result.getMessage());
+                out.println("Error executing command: " + result);
                 return true;
             }
         }
@@ -2843,7 +2843,7 @@ public final class ZigBeeConsole {
             out.println("Success response received.");
             return true;
         } else {
-            out.println("Error executing command: " + result.getMessage());
+            out.println("Error executing command: " + result);
             return true;
         }
     }

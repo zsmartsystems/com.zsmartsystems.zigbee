@@ -25,28 +25,12 @@ public class CommandResult {
     private final ZigBeeCommand response;
 
     /**
-     * The message.
-     */
-    private final String message;
-
-    /**
      * Constructor which sets the received response command or null if timeout occurs.
      *
      * @param response the response command.
      */
     public CommandResult(final ZigBeeCommand response) {
         this.response = response;
-        this.message = null;
-    }
-
-    /**
-     * Constructor for message situations. Setting a message indicates a failure.
-     *
-     * @param message the message
-     */
-    public CommandResult(final String message) {
-        this.response = null;
-        this.message = message;
     }
 
     /**
@@ -54,7 +38,6 @@ public class CommandResult {
      */
     public CommandResult() {
         this.response = null;
-        this.message = null;
     }
 
     /**
@@ -72,7 +55,7 @@ public class CommandResult {
      * @return TRUE if timeout occurred
      */
     public boolean isTimeout() {
-        return response == null && message == null;
+        return response == null;
     }
 
     /**
@@ -83,8 +66,6 @@ public class CommandResult {
     public boolean isError() {
         if (hasStatusCode()) {
             return getStatusCode() != 0;
-        } else if (message != null) {
-            return true;
         } else {
             return response == null;
         }
@@ -129,32 +110,23 @@ public class CommandResult {
         return (ZigBeeCommand) response;
     }
 
-    /**
-     * Gets error or timeout message.
-     *
-     * @return the message
-     */
-    public String getMessage() {
-        if (isTimeout()) {
-            return "Timeout.";
-        }
-        if (hasStatusCode()) {
-            return ZclStatus.getStatus((byte) (int) getStatusCode()).getDescription();
-        } else {
-            return message;
-        }
-    }
-
     @Override
     public String toString() {
+        StringBuilder builder = new StringBuilder(60);
+        builder.append("CommandResult [");
         if (isSuccess()) {
-            return "success";
+            builder.append("SUCCESS, ");
+            builder.append(response);
         } else if (isTimeout()) {
-            return "timeout";
+            builder.append("TIMEOUT");
         } else {
             final ZclStatus status = ZclStatus.getStatus((byte) getStatusCode().intValue());
-            return "message: " + status.name() + "(0x" + Integer.toHexString(status.getId()) + ", "
-                    + status.getDescription() + ")";
+            builder.append("ERROR (");
+            builder.append(status.name());
+            builder.append(String.format(",0x02), ", status.getId()));
+            builder.append(response);
         }
+        builder.append(']');
+        return builder.toString();
     }
 }

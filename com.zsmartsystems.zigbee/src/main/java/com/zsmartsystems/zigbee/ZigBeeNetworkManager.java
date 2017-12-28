@@ -427,7 +427,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     @Override
-    public int sendCommand(ZigBeeCommand command) throws ZigBeeException {
+    public int sendCommand(ZigBeeCommand command) {
         // Create the application frame
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
 
@@ -791,14 +791,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
             commandExecution.setCommandListener(commandListener);
             addCommandExecution(commandExecution);
-            try {
-                int transactionId = sendCommand(command);
-                if (command instanceof ZclCommand) {
-                    ((ZclCommand) command).setTransactionId(transactionId);
-                }
-            } catch (final ZigBeeException e) {
-                future.set(new CommandResult(e.toString()));
-                removeCommandExecution(commandExecution);
+            int transactionId = sendCommand(command);
+            if (command instanceof ZclCommand) {
+                ((ZclCommand) command).setTransactionId(transactionId);
             }
 
             return future;
@@ -816,12 +811,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         synchronized (command) {
             final CommandResultFuture future = new CommandResultFuture(this);
 
-            try {
-                sendCommand(command);
-                future.set(new CommandResult(new BroadcastResponse()));
-            } catch (final ZigBeeException e) {
-                future.set(new CommandResult(e.toString()));
-            }
+            sendCommand(command);
+            future.set(new CommandResult(new BroadcastResponse()));
 
             return future;
         }
@@ -901,12 +892,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setDestinationAddress(destination);
         command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
-        try {
-            sendCommand(command);
-        } catch (final ZigBeeException e) {
-            logger.debug("Error sending permit join command.", e);
-            return false;
-        }
+        sendCommand(command);
 
         // If this is a broadcast, then we send it to our own address as well
         // This seems to be required for some stacks (eg ZNP)
@@ -917,12 +903,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             command.setDestinationAddress(new ZigBeeEndpointAddress(0));
             command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
-            try {
-                sendCommand(command);
-            } catch (final ZigBeeException e) {
-                logger.debug("Error sending permit join command.", e);
-                return false;
-            }
+            sendCommand(command);
         }
 
         return true;

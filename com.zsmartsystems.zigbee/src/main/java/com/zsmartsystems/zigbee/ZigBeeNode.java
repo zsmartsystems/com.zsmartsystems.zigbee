@@ -226,11 +226,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         command.setDestinationAddress(new ZigBeeEndpointAddress(0));
         command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
-        try {
-            networkManager.sendCommand(command);
-        } catch (final ZigBeeException e) {
-            logger.debug("Error sending permit join command.", e);
-        }
+        networkManager.sendCommand(command);
     }
 
     /**
@@ -321,7 +317,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     }
 
     /**
-     * Gets the current binding table for the device. Note that this doesn't retrieve the table from the device, to do
+     * Gets the current binding table for the device. Note that this doesn't retrieve the table from the device - to do
      * this use the {@link #updateBindingTable()} method.
      *
      * @return {@link Set} of {@link BindingTable} for the device
@@ -665,11 +661,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
             matchResponse.setMatchList(matchList);
 
             matchResponse.setDestinationAddress(command.getSourceAddress());
-            try {
-                networkManager.sendCommand(matchResponse);
-            } catch (ZigBeeException e) {
-                logger.debug("Error sending MatchDescriptorResponse ", e);
-            }
+            networkManager.sendCommand(matchResponse);
         }
 
         if (!(command instanceof ZclCommand)) {

@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
-import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -88,11 +87,7 @@ public class ClusterMatcher implements ZigBeeCommandListener {
             matchResponse.setMatchList(matchList);
 
             matchResponse.setDestinationAddress(command.getSourceAddress());
-            try {
-                networkManager.sendCommand(matchResponse);
-            } catch (ZigBeeException e) {
-                logger.debug("Error sending MatchDescriptorResponse ", e);
-            }
+            networkManager.sendCommand(matchResponse);
         }
     }
 }
