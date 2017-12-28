@@ -17,7 +17,6 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
-import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
@@ -508,7 +507,7 @@ public class ZigBeeDongleTelegesis
     }
 
     @Override
-    public void sendCommand(final ZigBeeApsFrame apsFrame) throws ZigBeeException {
+    public void sendCommand(final ZigBeeApsFrame apsFrame) {
         if (frameHandler == null) {
             logger.debug("Telegesis frame handler not set for send.");
             return;

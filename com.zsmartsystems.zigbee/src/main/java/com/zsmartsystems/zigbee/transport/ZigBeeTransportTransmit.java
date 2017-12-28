@@ -12,7 +12,6 @@ import java.util.Map;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetwork;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
@@ -90,9 +89,8 @@ public interface ZigBeeTransportTransmit {
      *
      * @param apsFrame the {@link ZigBeeApsFrame} to be sent
      * @return transaction ID
-     * @throws {@link ZigBeeException} if exception occurs in sending
      */
-    void sendCommand(final ZigBeeApsFrame apsFrame) throws ZigBeeException;
+    void sendCommand(final ZigBeeApsFrame apsFrame);
 
     /**
      * Sets the {@link ZigBeeTransportReceive}. Set by the network so that the {@link ZigBeeTransportTransmit} can send

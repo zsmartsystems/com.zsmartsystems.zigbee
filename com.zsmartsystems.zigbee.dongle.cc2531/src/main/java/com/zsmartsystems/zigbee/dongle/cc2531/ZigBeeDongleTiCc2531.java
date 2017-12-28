@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoActiveEndpoint;
@@ -246,7 +245,7 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
-    public void sendCommand(final ZigBeeApsFrame apsFrame) throws ZigBeeException {
+    public void sendCommand(final ZigBeeApsFrame apsFrame) {
         synchronized (networkManager) {
             final short sender;
             if (apsFrame.getProfile() == 0) {
@@ -258,26 +257,12 @@ public class ZigBeeDongleTiCc2531
             // TODO: How to differentiate group and device addressing?????
             boolean groupCommand = false;
             if (!groupCommand) {
-                // final AF_DATA_CONFIRM response =
                 networkManager.sendCommand(new AF_DATA_REQUEST(apsFrame.getDestinationAddress(),
                         (short) apsFrame.getDestinationEndpoint(), sender, apsFrame.getCluster(),
                         apsFrame.getSequence(), (byte) 0x30, (byte) apsFrame.getRadius(), apsFrame.getPayload()));
-                // if (response == null) {
-                // throw new ZigBeeException("Unable to send cluster on the ZigBee network due to general error.");
-                // }
-                // if (response.getStatus() != 0) {
-                // throw new ZigBeeException("Unable to send cluster on the ZigBee network due to: "
-                // + ResponseStatus.getStatus(response.getStatus()) + " "
-                // + (response.getErrorMsg() != null ? " - " + response.getErrorMsg() : "") + ")");
-                // }
             } else {
-                // final AF_DATA_SRSP_EXT response =
                 networkManager.sendCommand(new AF_DATA_REQUEST_EXT(apsFrame.getDestinationAddress(), sender,
                         apsFrame.getCluster(), apsFrame.getSequence(), (byte) (0), (byte) 0, apsFrame.getPayload()));
-                // if (response.getStatus() != 0) {
-                // throw new ZigBeeException("Unable to send cluster on the ZigBee network due to: "
-                // + ResponseStatus.getStatus(response.getStatus()));
-                // }
             }
         }
     }

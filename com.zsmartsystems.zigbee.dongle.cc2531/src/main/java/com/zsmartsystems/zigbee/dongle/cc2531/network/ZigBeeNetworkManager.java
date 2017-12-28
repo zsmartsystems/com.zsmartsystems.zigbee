@@ -37,7 +37,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
-import com.zsmartsystems.zigbee.ZigBeeException;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.BlockingCommandReceiver;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ResponseStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
@@ -826,9 +825,8 @@ public class ZigBeeNetworkManager {
      * Sends a command without waiting for the response
      *
      * @param request {@link ZToolPacket}
-     * @throws ZigBeeException
      */
-    public void sendCommand(final ZToolPacket request) throws ZigBeeException {
+    public void sendCommand(final ZToolPacket request) {
         sendSynchronous(request);
     }
 
