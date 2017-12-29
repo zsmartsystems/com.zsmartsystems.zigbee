@@ -152,7 +152,7 @@ public class ZigBeeIasCieApp implements ZigBeeApplication {
     public boolean serverStartup(ZclCluster cluster) {
         iasZoneCluster = (ZclIasZoneCluster) cluster;
 
-        int currentState = iasZoneCluster.getZoneState(0);
+        Integer currentState = iasZoneCluster.getZoneState(0);
         ZoneStateEnum currentStateEnum = ZoneStateEnum.getByValue(currentState);
         logger.debug("{}: IAS CIE state is currently {}[{}]", iasZoneCluster.getZigBeeAddress(), currentStateEnum,
                 currentState);
@@ -168,7 +168,7 @@ public class ZigBeeIasCieApp implements ZigBeeApplication {
             logger.debug("{}: IAS CIE address is confirmed {}", iasZoneCluster.getZigBeeAddress(), currentIeeeAddress);
         }
 
-        int currentZone = iasZoneCluster.getZoneId(0);
+        Integer currentZone = iasZoneCluster.getZoneId(0);
         logger.debug("{}: IAS CIE zone is currently {}", iasZoneCluster.getZigBeeAddress(), currentZone);
 
         return false;
