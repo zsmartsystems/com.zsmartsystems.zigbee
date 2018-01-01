@@ -893,6 +893,11 @@ Attributes and commands for switching devices between ‘On’ and ‘Off’ sta
 |Id     |Name                 |Type                       |Access     |Implement |Reporting |
 |-------|---------------------|---------------------------|-----------|----------|----------|
 |0x0000 |OnOff                |Boolean                    |Read Only  |Mandatory |Mandatory |
+|0x4000 |GlobalSceneControl   |Boolean                    |Read/Write |          |Mandatory |
+|0x4001 |OffTime              |Unsigned 16-bit integer    |Read/Write |          |Mandatory |
+|0x4002 |OffWaitTime          |Unsigned 16-bit integer    |Read/Write |          |Mandatory |
+
+
 
 #### OnOff Attribute
 The OnOff attribute has the following values: 0 = Off, 1 = On
