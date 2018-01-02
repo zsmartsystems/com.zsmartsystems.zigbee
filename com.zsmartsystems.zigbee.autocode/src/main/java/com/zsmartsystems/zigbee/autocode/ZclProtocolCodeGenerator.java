@@ -2324,6 +2324,13 @@ public class ZclProtocolCodeGenerator {
                             out.print("                .equals(((" + command.responseCommand + ") response).get"
                                     + command.responseMatchers.get(matcher) + "()))");
                         }
+
+                        // Default address checker
+                        if (first == true) {
+                            out.print("((ZdoRequest) request).getDestinationAddress().equals((("
+                                    + command.responseCommand + ") response).getSourceAddress())");
+                        }
+
                         out.print(";");
                         out.println();
                         out.println("    }");

@@ -11,6 +11,9 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.ManagementBindResponse;
 
 /**
  * Management Bind Request value object class.
@@ -23,7 +26,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class ManagementBindRequest extends ZdoRequest {
+public class ManagementBindRequest extends ZdoRequest implements CommandResponseMatcher {
     /**
      * StartIndex command message field.
      */
@@ -66,6 +69,15 @@ public class ManagementBindRequest extends ZdoRequest {
         super.deserialize(deserializer);
 
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Override
+    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {
+        if (!(response instanceof ManagementBindResponse)) {
+            return false;
+        }
+
+        return ((ZdoRequest) request).getDestinationAddress().equals(((ManagementBindResponse) response).getSourceAddress());
     }
 
     @Override

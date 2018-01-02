@@ -11,6 +11,9 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.zdo.command.BindResponse;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.IeeeAddress;
 
@@ -27,7 +30,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class BindRequest extends ZdoRequest {
+public class BindRequest extends ZdoRequest implements CommandResponseMatcher {
     /**
      * SrcAddress command message field.
      *
@@ -252,6 +255,15 @@ public class BindRequest extends ZdoRequest {
         dstAddrMode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         dstAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         dstEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+    }
+
+    @Override
+    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {
+        if (!(response instanceof BindResponse)) {
+            return false;
+        }
+
+        return ((ZdoRequest) request).getDestinationAddress().equals(((BindResponse) response).getSourceAddress());
     }
 
     @Override
