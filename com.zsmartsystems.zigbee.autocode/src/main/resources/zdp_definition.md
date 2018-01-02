@@ -370,6 +370,10 @@ The destination address for the binding entry.
 This field shall be present only if the DstAddrMode field has a value of 0x03 and,
 if present, shall be the destination endpoint for the binding entry.
 
+##### Expected Response
+Packet: Bind Response
+
+
 #### Unbind Request [0x0022]
 
 The Unbind_req is generated from a Local Device wishing to remove a Binding
@@ -410,6 +414,9 @@ The destination address for the binding entry.
 ##### DstEndpoint
 This field shall be present only if the DstAddrMode field has a value of 0x03 and,
 if present, shall be the destination endpoint for the binding entry.
+
+##### Expected Response
+Packet: Unbind Response
 
 #### Bind Register [0x0023]
 
@@ -543,6 +550,9 @@ binding table.
 |---------------------------|---------------------------|
 |StartIndex                 |Unsigned 8-bit integer     |
 
+##### Expected Response
+Packet: Management Bind Response
+
 #### Management Leave Request [0x0034]
 
 The Mgmt_Leave_req is generated from a Local Device requesting that a Remote
@@ -592,6 +602,9 @@ authentication policy will be affected. The addressing may be unicast or
 |---------------------------|---------------------------|
 |PermitDuration             |Unsigned 8-bit integer     |
 |TC_Significance            |Boolean                    |
+
+##### Expected Response
+Packet: Management Permit Joining Response
 
 #### Cache Request [0x0037]
 

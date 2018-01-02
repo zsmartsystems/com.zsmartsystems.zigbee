@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zdo.ZdoResponseMatcher;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindResponse;
@@ -348,7 +347,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
                     bindingRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
                     bindingRequest.setStartIndex(index);
 
-                    CommandResult result = networkManager.unicast(bindingRequest, new ZdoResponseMatcher()).get();
+                    CommandResult result = networkManager.unicast(bindingRequest, new ManagementBindRequest()).get();
                     if (result.isError()) {
                         return false;
                     }
