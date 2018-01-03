@@ -174,6 +174,9 @@ public class ZigBeeNodeTest {
         assertTrue(node.setRoutes(routes));
 
         assertEquals(2, node.getRoutes().size());
+
+        assertTrue(node.setRoutes(null));
+        assertEquals(0, node.getRoutes().size());
     }
 
     @Test

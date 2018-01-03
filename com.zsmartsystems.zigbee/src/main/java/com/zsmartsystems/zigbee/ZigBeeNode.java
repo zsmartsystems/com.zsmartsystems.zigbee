@@ -570,7 +570,9 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
         synchronized (this.routes) {
             this.routes.clear();
-            this.routes.addAll(routes);
+            if (routes != null) {
+                this.routes.addAll(routes);
+            }
         }
 
         return true;
