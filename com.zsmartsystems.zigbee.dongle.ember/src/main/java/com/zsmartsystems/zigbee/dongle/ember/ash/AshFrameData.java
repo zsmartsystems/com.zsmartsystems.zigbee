@@ -7,8 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ash;
 
-import java.util.Arrays;
-
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 
 /**
@@ -23,21 +21,21 @@ public class AshFrameData extends AshFrame {
      *
      * @param buffer
      */
-    public AshFrameData(EzspFrameRequest ezspRequestFrame) {
+    public AshFrameData() {
         frameType = FrameType.DATA;
-        dataBuffer = ezspRequestFrame.serialize();
     }
 
     /**
-     * Create frame from incoming data
+     * Set the {@link EzspFrameRequest} data to send
      *
-     * @param frameBuffer
+     * @param ezspRequestFrame the {@link EzspFrameRequest} data frame to send
      */
-    public AshFrameData(int[] frameBuffer) {
-        frameType = FrameType.DATA;
+    public void setData(EzspFrameRequest ezspRequestFrame) {
+        dataBuffer = ezspRequestFrame.serialize();
+    }
 
-        processHeader(frameBuffer);
-        dataBuffer = Arrays.copyOfRange(frameBuffer, 1, frameBuffer.length - 2);
+    public void setData(int[] data) {
+        dataBuffer = data;
     }
 
     public void setReTx() {
@@ -48,6 +46,7 @@ public class AshFrameData extends AshFrame {
         return reTx;
     }
 
+    @Override
     public int[] getDataBuffer() {
         return dataBuffer;
     }
@@ -63,14 +62,19 @@ public class AshFrameData extends AshFrame {
         result.append(reTx);
         result.append(", data=");
 
-        for (int i = 0; i < dataBuffer.length; i++) {
-            if (i != 0) {
-                result.append(" ");
+        if (dataBuffer == null) {
+            result.append("null");
+        } else {
+            for (int i = 0; i < dataBuffer.length; i++) {
+                if (i != 0) {
+                    result.append(" ");
+                }
+                result.append(String.format("%02X", dataBuffer[i]));
             }
-            result.append(String.format("%02X", dataBuffer[i]));
         }
-        result.append("]");
+        result.append(']');
 
         return result.toString();
     }
+
 }

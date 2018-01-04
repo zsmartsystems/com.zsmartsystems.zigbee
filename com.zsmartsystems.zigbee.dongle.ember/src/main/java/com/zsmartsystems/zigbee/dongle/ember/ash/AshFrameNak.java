@@ -14,19 +14,8 @@ package com.zsmartsystems.zigbee.dongle.ember.ash;
  *
  */
 public class AshFrameNak extends AshFrame {
-    /**
-     * Constructor to create an ASH NAK frame.
-     *
-     * @param buffer
-     */
-    public AshFrameNak(int ackNum) {
+    public AshFrameNak() {
         this.frameType = FrameType.NAK;
-        this.ackNum = ackNum;
-    }
-
-    public AshFrameNak(int[] frameBuffer) {
-        this.frameType = FrameType.NAK;
-        processHeader(frameBuffer);
     }
 
     @Override
