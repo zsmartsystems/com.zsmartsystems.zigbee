@@ -124,6 +124,13 @@ public abstract class ZclCluster {
     protected Map<Integer, ZclAttribute> attributes = initializeAttributes();
 
     /**
+     * The {@link ZclAttributeNormalizer} is used to normalize attribute data types to ensure that data types are
+     * consistent with the ZCL definition. This ensures that the application can rely on consistent and deterministic
+     * data type when listening to attribute updates.
+     */
+    private final ZclAttributeNormalizer normalizer;
+
+    /**
      * Abstract method called when the cluster starts to initialise the list of attributes defined in this cluster by
      * the cluster library
      *
@@ -137,6 +144,7 @@ public abstract class ZclCluster {
         this.zigbeeEndpoint = zigbeeEndpoint;
         this.clusterId = clusterId;
         this.clusterName = clusterName;
+        this.normalizer = new ZclAttributeNormalizer();
     }
 
     protected Future<CommandResult> send(ZclCommand command) {
@@ -818,7 +826,7 @@ public abstract class ZclCluster {
             if (attribute == null) {
                 return;
             }
-            attribute.updateValue(report.getAttributeValue());
+            attribute.updateValue(normalizer.normalizeZclData(attribute.getDataType(), report.getAttributeValue()));
             notifyAttributeListener(attribute);
         }
     }
@@ -831,7 +839,8 @@ public abstract class ZclCluster {
     public void handleAttributeStatus(List<ReadAttributeStatusRecord> records) {
         for (ReadAttributeStatusRecord record : records) {
             ZclAttribute attribute = attributes.get(record.getAttributeIdentifier());
-            attribute.updateValue(record.getAttributeValue());
+            attribute.updateValue(
+                    normalizer.normalizeZclData(record.getAttributeDataType(), record.getAttributeValue()));
             notifyAttributeListener(attribute);
         }
     }

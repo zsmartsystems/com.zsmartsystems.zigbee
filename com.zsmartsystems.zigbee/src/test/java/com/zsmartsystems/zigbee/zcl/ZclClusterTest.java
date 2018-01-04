@@ -11,24 +11,29 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
+import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.command.BindRequest;
 import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
 
@@ -163,6 +168,27 @@ public class ZclClusterTest {
         ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
         ZclCluster cluster = new ZclLevelControlCluster(networkManager, device);
         assertEquals("Level Control", cluster.getClusterName());
+    }
+
+    @Test
+    public void handleAttributeReport() {
+        createNetworkManager();
+
+        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress());
+        node.setNetworkAddress(1234);
+        ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
+        ZclCluster cluster = new ZclOnOffCluster(networkManager, device);
+
+        List<AttributeReport> attributeList = new ArrayList<AttributeReport>();
+        AttributeReport report;
+        report = new AttributeReport();
+        report.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
+        report.setAttributeIdentifier(0);
+        report.setAttributeValue(Integer.valueOf(1));
+        attributeList.add(report);
+        cluster.handleAttributeReport(attributeList);
+        ZclAttribute attribute = cluster.getAttribute(0);
+        assertTrue(attribute.getLastValue() instanceof Boolean);
     }
 
 }
