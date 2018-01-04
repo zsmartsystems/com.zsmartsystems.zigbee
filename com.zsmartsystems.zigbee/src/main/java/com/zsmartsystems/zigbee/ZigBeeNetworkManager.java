@@ -39,7 +39,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
-import com.zsmartsystems.zigbee.zcl.ZclResponseMatcher;
+import com.zsmartsystems.zigbee.zcl.ZclTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandType;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
@@ -750,21 +750,21 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (destination.isGroup()) {
             return broadcast(command);
         } else {
-            final CommandResponseMatcher responseMatcher = new ZclResponseMatcher();
+            final ZigBeeTransactionMatcher responseMatcher = new ZclTransactionMatcher();
             return unicast(command, responseMatcher);
         }
     }
 
     /**
-     * Sends ZCL command and uses the {@link CommandResponseMatcher} to match the response.
+     * Sends ZCL command and uses the {@link ZigBeeTransactionMatcher} to match the response.
      *
      * @param command
      *            the {@link ZigBeeCommand}
      * @param responseMatcher
-     *            the {@link CommandResponseMatcher}
+     *            the {@link ZigBeeTransactionMatcher}
      * @return the command result future
      */
-    public Future<CommandResult> unicast(final ZigBeeCommand command, final CommandResponseMatcher responseMatcher) {
+    public Future<CommandResult> unicast(final ZigBeeCommand command, final ZigBeeTransactionMatcher responseMatcher) {
         synchronized (command) {
             final CommandResultFuture future = new CommandResultFuture(this);
             final CommandExecution commandExecution = new CommandExecution(System.currentTimeMillis(), command, future);
@@ -776,7 +776,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                     // command is sent and hence transaction ID for the command
                     // set.
                     synchronized (command) {
-                        if (responseMatcher.isMatch(command, receivedCommand)) {
+                        if (responseMatcher.isTransactionMatch(command, receivedCommand)) {
                             synchronized (future) {
                                 future.set(new CommandResult(receivedCommand));
                                 synchronized (future) {

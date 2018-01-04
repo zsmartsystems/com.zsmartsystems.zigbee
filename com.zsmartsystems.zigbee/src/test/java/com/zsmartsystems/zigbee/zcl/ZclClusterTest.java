@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
@@ -41,13 +41,13 @@ public class ZclClusterTest {
     ZigBeeTransportTransmit mockedTransport;
     ZigBeeNetworkManager networkManager;
     ArgumentCaptor<ZigBeeCommand> commandCapture;
-    ArgumentCaptor<CommandResponseMatcher> matcherCapture;
+    ArgumentCaptor<ZigBeeTransactionMatcher> matcherCapture;
 
     private void createNetworkManager() {
         mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
         networkManager = Mockito.mock(ZigBeeNetworkManager.class);
         commandCapture = ArgumentCaptor.forClass(ZigBeeCommand.class);
-        matcherCapture = ArgumentCaptor.forClass(CommandResponseMatcher.class);
+        matcherCapture = ArgumentCaptor.forClass(ZigBeeTransactionMatcher.class);
         Mockito.when(networkManager.unicast(commandCapture.capture(), matcherCapture.capture())).thenReturn(null);
     }
 

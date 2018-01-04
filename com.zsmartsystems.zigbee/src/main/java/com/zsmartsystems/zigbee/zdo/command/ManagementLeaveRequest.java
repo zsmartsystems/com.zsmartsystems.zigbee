@@ -12,7 +12,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
-import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveResponse;
 import com.zsmartsystems.zigbee.IeeeAddress;
 
@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class ManagementLeaveRequest extends ZdoRequest implements CommandResponseMatcher {
+public class ManagementLeaveRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * DeviceAddress command message field.
      */
@@ -98,7 +98,7 @@ public class ManagementLeaveRequest extends ZdoRequest implements CommandRespons
     }
 
     @Override
-    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {
+    public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
         if (!(response instanceof ManagementLeaveResponse)) {
             return false;
         }

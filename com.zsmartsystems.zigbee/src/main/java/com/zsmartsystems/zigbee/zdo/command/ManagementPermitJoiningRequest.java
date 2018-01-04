@@ -12,7 +12,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
-import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningResponse;
 
 /**
@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class ManagementPermitJoiningRequest extends ZdoRequest implements CommandResponseMatcher {
+public class ManagementPermitJoiningRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * PermitDuration command message field.
      */
@@ -101,7 +101,7 @@ public class ManagementPermitJoiningRequest extends ZdoRequest implements Comman
     }
 
     @Override
-    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {
+    public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
         if (!(response instanceof ManagementPermitJoiningResponse)) {
             return false;
         }

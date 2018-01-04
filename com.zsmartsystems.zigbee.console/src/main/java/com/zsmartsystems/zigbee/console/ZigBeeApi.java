@@ -20,7 +20,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import com.zsmartsystems.zigbee.zcl.ZclCustomResponseMatcher;
+import com.zsmartsystems.zigbee.zcl.ZclTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveToColorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorCommand;
@@ -378,7 +378,7 @@ public class ZigBeeApi {
 
         command.setDestinationAddress(device.getEndpointAddress());
 
-        return networkManager.unicast(command, new ZclCustomResponseMatcher());
+        return networkManager.unicast(command, new ZclTransactionMatcher());
     }
 
     /**
@@ -394,7 +394,7 @@ public class ZigBeeApi {
         command.setGroupList(Collections.<Integer> emptyList());
         command.setDestinationAddress(device.getEndpointAddress());
 
-        return networkManager.unicast(command, new ZclCustomResponseMatcher());
+        return networkManager.unicast(command, new ZclTransactionMatcher());
     }
 
     /**
@@ -410,7 +410,7 @@ public class ZigBeeApi {
 
         command.setDestinationAddress(device.getEndpointAddress());
 
-        return networkManager.unicast(command, new ZclCustomResponseMatcher());
+        return networkManager.unicast(command, new ZclTransactionMatcher());
     }
 
     /**
@@ -426,6 +426,6 @@ public class ZigBeeApi {
 
         command.setDestinationAddress(device.getEndpointAddress());
 
-        return networkManager.unicast(command, new ZclCustomResponseMatcher());
+        return networkManager.unicast(command, new ZclTransactionMatcher());
     }
 }

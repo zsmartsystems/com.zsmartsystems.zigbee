@@ -23,7 +23,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.CommandResultFuture;
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -75,7 +75,7 @@ public class ZigBeeNetworkDiscovererTest {
                 return commandFuture;
             }
         }).when(networkManager).unicast(org.mockito.Matchers.any(ZigBeeCommand.class),
-                org.mockito.Matchers.any(CommandResponseMatcher.class));
+                org.mockito.Matchers.any(ZigBeeTransactionMatcher.class));
 
         Mockito.doAnswer(new Answer<Void>() {
             @Override

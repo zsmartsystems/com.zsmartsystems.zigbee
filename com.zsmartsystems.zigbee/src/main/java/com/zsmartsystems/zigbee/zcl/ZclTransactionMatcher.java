@@ -7,22 +7,22 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
-import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 
 /**
  * The ZCL response matcher.
  * <p>
- * Implements {@link CommandResponseMatcher} to check if a ZCL transaction matches a request.
- * The matcher will return true if the request and response transaction IDs match.
+ * Implements {@link ZigBeeTransactionMatcher} to check if a ZCL transaction matches a request.
+ * The matcher will return true if the request and response transaction IDs match and the request destination address,
+ * and response source address match.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
-public class ZclResponseMatcher implements CommandResponseMatcher {
+public class ZclTransactionMatcher implements ZigBeeTransactionMatcher {
 
     @Override
-    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {
+    public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
         if (!request.getSourceAddress().equals(response.getDestinationAddress())) {
             return false;
         }

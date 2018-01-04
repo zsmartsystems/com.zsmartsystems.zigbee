@@ -12,7 +12,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
-import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zdo.command.ComplexDescriptorResponse;
 
 /**
@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zdo.command.ComplexDescriptorResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class ComplexDescriptorRequest extends ZdoRequest implements CommandResponseMatcher {
+public class ComplexDescriptorRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * NWKAddrOfInterest command message field.
      */
@@ -71,7 +71,7 @@ public class ComplexDescriptorRequest extends ZdoRequest implements CommandRespo
     }
 
     @Override
-    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {
+    public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
         if (!(response instanceof ComplexDescriptorResponse)) {
             return false;
         }

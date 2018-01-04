@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
@@ -26,21 +27,29 @@ public class ZclResponseMatcherTest {
 
     @Test
     public void testMatch() {
-        ZclResponseMatcher matcher = new ZclResponseMatcher();
+        ZclTransactionMatcher matcher = new ZclTransactionMatcher();
 
         ZclCommand zclCommand = new OnCommand();
+        zclCommand.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
         ZclCommand zclResponse = new DefaultResponse();
+        zclResponse.setDestinationAddress(new ZigBeeEndpointAddress(1234, 5));
 
-        assertFalse(matcher.isMatch(zclCommand, zclResponse));
+        assertFalse(matcher.isTransactionMatch(zclCommand, zclResponse));
 
         zclCommand.setTransactionId(22);
         zclResponse.setTransactionId(22);
-        assertTrue(matcher.isMatch(zclCommand, zclResponse));
+        assertTrue(matcher.isTransactionMatch(zclCommand, zclResponse));
 
         zclResponse.setTransactionId(222);
-        assertFalse(matcher.isMatch(zclCommand, zclResponse));
+        assertFalse(matcher.isTransactionMatch(zclCommand, zclResponse));
 
         ZdoCommand zdoResponse = new DeviceAnnounce();
-        assertFalse(matcher.isMatch(zclCommand, zdoResponse));
+        assertFalse(matcher.isTransactionMatch(zclCommand, zdoResponse));
+
+        zclResponse.setTransactionId(22);
+        assertTrue(matcher.isTransactionMatch(zclCommand, zclResponse));
+
+        zclResponse.setDestinationAddress(new ZigBeeEndpointAddress(1234, 6));
+        assertFalse(matcher.isTransactionMatch(zclCommand, zclResponse));
     }
 }
