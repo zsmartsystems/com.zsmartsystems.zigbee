@@ -7,8 +7,8 @@
  */
 package com.zsmartsystems.zigbee.zdo;
 
-import com.zsmartsystems.zigbee.CommandResponseMatcher;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 
 /**
  * The ZDO response matcher.
@@ -16,13 +16,12 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
  * The matcher will return true if the the response packet is a {@link ZdoResponse}
  * and the response source address matches the destination of the request.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
-public class ZdoResponseMatcher implements CommandResponseMatcher {
+public class ZdoTransactionMatcher implements ZigBeeTransactionMatcher {
 
     @Override
-    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {
+    public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
         if (response instanceof ZdoResponse) {
             return ((ZdoRequest) request).getDestinationAddress().equals(((ZdoResponse) response).getSourceAddress());
         } else {

@@ -145,7 +145,7 @@ public abstract class ZclCluster {
             command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         }
 
-        return zigbeeManager.unicast(command, new ZclResponseMatcher());
+        return zigbeeManager.unicast(command, new ZclTransactionMatcher());
     }
 
     /**
@@ -183,7 +183,6 @@ public abstract class ZclCluster {
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
         return send(command);
-        // return zigbeeManager.unicast(command, new ZclCustomResponseMatcher());
     }
 
     /**
@@ -197,13 +196,8 @@ public abstract class ZclCluster {
         CommandResult result;
         try {
             result = read(attribute).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            logger.debug("readSync interrupted", e);
-            return null;
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            logger.debug("readSync exception", e);
+        } catch (InterruptedException | ExecutionException e) {
+            logger.debug("readSync exception ", e);
             return null;
         }
 

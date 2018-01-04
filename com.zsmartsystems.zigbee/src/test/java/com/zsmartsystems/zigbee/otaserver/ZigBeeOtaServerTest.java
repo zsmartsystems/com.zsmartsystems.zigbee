@@ -24,7 +24,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import com.zsmartsystems.zigbee.CommandResponseMatcher;
+import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
@@ -96,7 +96,7 @@ public class ZigBeeOtaServerTest implements ZigBeeOtaStatusCallback {
                 return null;
             }
         }).when(mockedNetworkManager).unicast(mockedCommandCaptor.capture(),
-                (CommandResponseMatcher) Matchers.anyObject());
+                (ZigBeeTransactionMatcher) Matchers.anyObject());
 
         ZclOtaUpgradeCluster cluster = new ZclOtaUpgradeCluster(mockedNetworkManager, endpoint);
 

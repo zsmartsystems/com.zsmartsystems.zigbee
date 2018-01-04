@@ -27,19 +27,19 @@ public class ZdoResponseMatcherTest {
 
     @Test
     public void testMatch() {
-        ZdoResponseMatcher matcher = new ZdoResponseMatcher();
+        ZdoTransactionMatcher matcher = new ZdoTransactionMatcher();
 
         ZdoRequest zdoCommand = new BindRequest();
         BindResponse zdoResponse = new BindResponse();
 
         zdoCommand.setDestinationAddress(new ZigBeeEndpointAddress(1234));
         zdoResponse.setSourceAddress(new ZigBeeEndpointAddress(1234));
-        assertTrue(matcher.isMatch(zdoCommand, zdoResponse));
+        assertTrue(matcher.isTransactionMatch(zdoCommand, zdoResponse));
 
         zdoResponse.setSourceAddress(new ZigBeeEndpointAddress(5678));
-        assertFalse(matcher.isMatch(zdoCommand, zdoResponse));
+        assertFalse(matcher.isTransactionMatch(zdoCommand, zdoResponse));
 
         ZclCommand zclResponse = new OffCommand();
-        assertFalse(matcher.isMatch(zdoCommand, zclResponse));
+        assertFalse(matcher.isTransactionMatch(zdoCommand, zclResponse));
     }
 }

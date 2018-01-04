@@ -8,11 +8,11 @@
 package com.zsmartsystems.zigbee;
 
 /**
- * Defines the interface for the response matcher
+ * Defines the interface for transaction matcher
  *
- * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
-public interface CommandResponseMatcher {
+public interface ZigBeeTransactionMatcher {
     /**
      * Matches request and response.
      *
@@ -20,5 +20,5 @@ public interface CommandResponseMatcher {
      * @param response the response {@link ZigBeeCommand}
      * @return true if request matches response
      */
-    boolean isMatch(ZigBeeCommand request, ZigBeeCommand response);
+    boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response);
 }
