@@ -10,6 +10,9 @@ package com.zsmartsystems.zigbee.internal;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * {@link NotificationService} is used to provide notifications to our listeners "safely". A separate
  * thread is used so that the notifier is not blocked.
@@ -19,10 +22,19 @@ import java.util.concurrent.Executors;
  * @author Chris Jackson
  */
 public class NotificationService {
+    /**
+     * The logger
+     */
+    private static Logger logger = LoggerFactory.getLogger(NotificationService.class);
+
     private static ExecutorService executorService = Executors.newCachedThreadPool();
 
     public static void execute(Runnable command) {
-        executorService.execute(command);
+        try {
+            executorService.execute(command);
+        } catch (Exception e) {
+            logger.error("Error ", e);
+        }
     }
 
 }

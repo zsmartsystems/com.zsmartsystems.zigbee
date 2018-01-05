@@ -25,7 +25,6 @@ import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
-import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
@@ -43,13 +42,11 @@ import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
  *
  */
 public class ZclClusterTest {
-    ZigBeeTransportTransmit mockedTransport;
-    ZigBeeNetworkManager networkManager;
-    ArgumentCaptor<ZigBeeCommand> commandCapture;
-    ArgumentCaptor<ZigBeeTransactionMatcher> matcherCapture;
+    private ZigBeeNetworkManager networkManager;
+    private ArgumentCaptor<ZigBeeCommand> commandCapture;
+    private ArgumentCaptor<ZigBeeTransactionMatcher> matcherCapture;
 
     private void createNetworkManager() {
-        mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
         networkManager = Mockito.mock(ZigBeeNetworkManager.class);
         commandCapture = ArgumentCaptor.forClass(ZigBeeCommand.class);
         matcherCapture = ArgumentCaptor.forClass(ZigBeeTransactionMatcher.class);
@@ -179,16 +176,28 @@ public class ZclClusterTest {
         ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
         ZclCluster cluster = new ZclOnOffCluster(networkManager, device);
 
+        ZclAttributeListener listenerMock = Mockito.mock(ZclAttributeListener.class);
+        ArgumentCaptor<ZclAttribute> attributeCapture = ArgumentCaptor.forClass(ZclAttribute.class);
+        cluster.addAttributeListener(listenerMock);
         List<AttributeReport> attributeList = new ArrayList<AttributeReport>();
         AttributeReport report;
         report = new AttributeReport();
         report.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
         report.setAttributeIdentifier(0);
         report.setAttributeValue(Integer.valueOf(1));
+        System.out.println(report);
         attributeList.add(report);
         cluster.handleAttributeReport(attributeList);
         ZclAttribute attribute = cluster.getAttribute(0);
         assertTrue(attribute.getLastValue() instanceof Boolean);
+
+        Mockito.verify(listenerMock, Mockito.timeout(1000).times(1)).attributeUpdated(attributeCapture.capture());
+
+        attribute = attributeCapture.getValue();
+        assertTrue(attribute.getLastValue() instanceof Boolean);
+        assertEquals(ZclDataType.BOOLEAN, attribute.getDataType());
+        assertEquals(0, attribute.getId());
+        assertEquals(true, attribute.getLastValue());
     }
 
 }
