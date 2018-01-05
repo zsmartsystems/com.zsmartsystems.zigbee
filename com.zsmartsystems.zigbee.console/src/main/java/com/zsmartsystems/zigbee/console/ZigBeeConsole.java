@@ -1692,15 +1692,14 @@ public final class ZigBeeConsole {
                     return true;
                 }
 
-                final int statusCode = response.getRecords().get(0).getStatus();
-                if (statusCode == 0) {
+                final ZclStatus statusCode = response.getRecords().get(0).getStatus();
+                if (statusCode == ZclStatus.SUCCESS) {
                     out.println("Cluster " + response.getClusterId() + ", Attribute "
                             + response.getRecords().get(0).getAttributeIdentifier() + ", type "
                             + response.getRecords().get(0).getAttributeDataType() + ", value: "
                             + response.getRecords().get(0).getAttributeValue());
                 } else {
-                    final ZclStatus status = ZclStatus.getStatus((byte) statusCode);
-                    out.println("Attribute value read error: " + status);
+                    out.println("Attribute value read error: " + statusCode);
                 }
 
                 return true;
@@ -1841,15 +1840,14 @@ public final class ZigBeeConsole {
             if (result.isSuccess()) {
                 final ReadAttributesResponse response = result.getResponse();
 
-                final int statusCode = response.getRecords().get(0).getStatus();
-                if (statusCode == 0) {
+                final ZclStatus statusCode = response.getRecords().get(0).getStatus();
+                if (statusCode == ZclStatus.SUCCESS) {
                     out.println("Cluster " + response.getClusterId() + ", Attribute "
                             + response.getRecords().get(0).getAttributeIdentifier() + ", type "
                             + response.getRecords().get(0).getAttributeDataType() + ", value: "
                             + response.getRecords().get(0).getAttributeValue());
                 } else {
-                    final ZclStatus status = ZclStatus.getStatus((byte) statusCode);
-                    out.println("Attribute value read error: " + status);
+                    out.println("Attribute value read error: " + statusCode);
                 }
 
                 return true;

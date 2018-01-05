@@ -24,14 +24,17 @@ public class ReadAttributeStatusRecord implements ZclListItemField {
      * The attribute identifier.
      */
     private int attributeIdentifier;
+
     /**
      * The status.
      */
-    private int status;
+    private ZclStatus status;
+
     /**
      * The attribute data type.
      */
     private ZclDataType attributeDataType;
+
     /**
      * The attribute data type.
      */
@@ -96,7 +99,7 @@ public class ReadAttributeStatusRecord implements ZclListItemField {
      *
      * @return the status
      */
-    public int getStatus() {
+    public ZclStatus getStatus() {
         return status;
     }
 
@@ -105,14 +108,14 @@ public class ReadAttributeStatusRecord implements ZclListItemField {
      *
      * @param status the status
      */
-    public void setStatus(int status) {
+    public void setStatus(ZclStatus status) {
         this.status = status;
     }
 
     @Override
     public void serialize(final ZigBeeSerializer serializer) {
         serializer.appendZigBeeType((short) attributeIdentifier, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.appendZigBeeType((byte) status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.appendZigBeeType(status, ZclDataType.ZCL_STATUS);
         serializer.appendZigBeeType((byte) attributeDataType.getId(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.appendZigBeeType(attributeValue, attributeDataType);
     }
@@ -120,8 +123,8 @@ public class ReadAttributeStatusRecord implements ZclListItemField {
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
         attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        status = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        if (ZclStatus.getStatus((byte) status).equals(ZclStatus.SUCCESS)) {
+        status = (ZclStatus) deserializer.readZigBeeType(ZclDataType.ZCL_STATUS);
+        if (status.equals(ZclStatus.SUCCESS)) {
             attributeDataType = ZclDataType
                     .getType((int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER));
             attributeValue = deserializer.readZigBeeType(attributeDataType);
@@ -130,7 +133,7 @@ public class ReadAttributeStatusRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Read Attribute Status Record: attributeDataType=" + attributeDataType + ", attributeIdentifier="
-                + attributeIdentifier + ", status=" + status + ", attributeValue=" + attributeValue;
+        return "ReadAttributeStatusRecord [attributeDataType=" + attributeDataType + ", attributeIdentifier="
+                + attributeIdentifier + ", status=" + status + ", attributeValue=" + attributeValue + "]";
     }
 }
