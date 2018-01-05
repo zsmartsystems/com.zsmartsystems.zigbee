@@ -214,7 +214,7 @@ public abstract class ZclCluster {
         }
 
         ReadAttributesResponse response = result.getResponse();
-        if (response.getRecords().get(0).getStatus() == 0) {
+        if (response.getRecords().get(0).getStatus() == ZclStatus.SUCCESS) {
             ReadAttributeStatusRecord attributeRecord = response.getRecords().get(0);
             return normalizer.normalizeZclData(attribute.getDataType(), attributeRecord.getAttributeValue());
         }
@@ -839,6 +839,12 @@ public abstract class ZclCluster {
      */
     public void handleAttributeStatus(List<ReadAttributeStatusRecord> records) {
         for (ReadAttributeStatusRecord record : records) {
+            if (record.getStatus() != ZclStatus.SUCCESS) {
+                logger.debug("{}: Error reading attribute {} in cluster {} - {}", zigbeeEndpoint.getEndpointAddress(),
+                        record.getAttributeIdentifier(), clusterId, record.getStatus());
+                continue;
+            }
+
             ZclAttribute attribute = attributes.get(record.getAttributeIdentifier());
             if (attribute == null) {
                 logger.debug("{}: Unknown attribute {} in cluster {}", zigbeeEndpoint.getEndpointAddress(),

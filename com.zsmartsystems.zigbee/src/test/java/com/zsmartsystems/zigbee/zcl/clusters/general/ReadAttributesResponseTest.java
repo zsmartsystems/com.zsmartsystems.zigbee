@@ -16,6 +16,7 @@ import org.junit.Test;
 import com.zsmartsystems.zigbee.CommandTest;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -43,7 +44,7 @@ public class ReadAttributesResponseTest extends CommandTest {
         ReadAttributeStatusRecord record = records.get(0);
         assertEquals(ZclDataType.CHARACTER_STRING, record.getAttributeDataType());
         assertEquals(5, record.getAttributeIdentifier());
-        assertEquals(0, record.getStatus());
+        assertEquals(ZclStatus.SUCCESS, record.getStatus());
         assertEquals("LCT003", record.getAttributeValue());
     }
 
@@ -64,8 +65,25 @@ public class ReadAttributesResponseTest extends CommandTest {
         ReadAttributeStatusRecord record = records.get(0);
         assertEquals(ZclDataType.UNSIGNED_8_BIT_INTEGER, record.getAttributeDataType());
         assertEquals(6, record.getAttributeIdentifier());
-        assertEquals(0, record.getStatus());
+        assertEquals(ZclStatus.SUCCESS, record.getStatus());
         assertEquals(2, record.getAttributeValue());
+    }
+
+    @Test
+    public void testReceiveNull() {
+        int[] packet = getPacketData("01 00 86");
+
+        ReadAttributesResponse response = new ReadAttributesResponse();
+
+        DefaultDeserializer deserializer = new DefaultDeserializer(packet);
+        ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
+
+        response.deserialize(fieldDeserializer);
+        System.out.println(response);
+
+        List<ReadAttributeStatusRecord> records = response.getRecords();
+        ReadAttributeStatusRecord record = records.get(0);
+        assertEquals(ZclStatus.UNSUPPORTED_ATTRIBUTE, record.getStatus());
     }
 
 }
