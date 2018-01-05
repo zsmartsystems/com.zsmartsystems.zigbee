@@ -7,6 +7,9 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -19,12 +22,17 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  */
 public class ZclAttributeNormalizer {
+    /**
+     * The logger
+     */
+    private Logger logger = LoggerFactory.getLogger(ZclAttributeNormalizer.class);
 
     protected Object normalizeZclData(ZclDataType dataType, Object data) {
         switch (dataType) {
             case BOOLEAN:
                 if (data instanceof Integer) {
-                    return Boolean.valueOf(!data.equals(0));
+                    logger.debug("Normalizing data Integer {} to BOOLEAN", data);
+                    return Boolean.valueOf(!((Integer) data).equals(0));
                 }
                 break;
             default:

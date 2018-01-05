@@ -215,7 +215,8 @@ public abstract class ZclCluster {
 
         ReadAttributesResponse response = result.getResponse();
         if (response.getRecords().get(0).getStatus() == 0) {
-            return response.getRecords().get(0).getAttributeValue();
+            ReadAttributeStatusRecord attributeRecord = response.getRecords().get(0);
+            return normalizer.normalizeZclData(attribute.getDataType(), attributeRecord.getAttributeValue());
         }
 
         return null;
@@ -268,7 +269,6 @@ public abstract class ZclCluster {
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
         return send(command);
-        // return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
     /**
@@ -314,7 +314,6 @@ public abstract class ZclCluster {
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
         return send(command);
-        // return zigbeeManager.unicast(command, new ZclResponseMatcher());
     }
 
     /**
@@ -824,10 +823,12 @@ public abstract class ZclCluster {
         for (AttributeReport report : reports) {
             ZclAttribute attribute = attributes.get(report.getAttributeIdentifier());
             if (attribute == null) {
-                return;
+                logger.debug("{}: Unknown attribute {} in cluster {}", zigbeeEndpoint.getEndpointAddress(),
+                        report.getAttributeIdentifier(), clusterId);
+            } else {
+                attribute.updateValue(normalizer.normalizeZclData(attribute.getDataType(), report.getAttributeValue()));
+                notifyAttributeListener(attribute);
             }
-            attribute.updateValue(normalizer.normalizeZclData(attribute.getDataType(), report.getAttributeValue()));
-            notifyAttributeListener(attribute);
         }
     }
 
@@ -839,9 +840,13 @@ public abstract class ZclCluster {
     public void handleAttributeStatus(List<ReadAttributeStatusRecord> records) {
         for (ReadAttributeStatusRecord record : records) {
             ZclAttribute attribute = attributes.get(record.getAttributeIdentifier());
-            attribute.updateValue(
-                    normalizer.normalizeZclData(record.getAttributeDataType(), record.getAttributeValue()));
-            notifyAttributeListener(attribute);
+            if (attribute == null) {
+                logger.debug("{}: Unknown attribute {} in cluster {}", zigbeeEndpoint.getEndpointAddress(),
+                        record.getAttributeIdentifier(), clusterId);
+            } else {
+                attribute.updateValue(normalizer.normalizeZclData(attribute.getDataType(), record.getAttributeValue()));
+                notifyAttributeListener(attribute);
+            }
         }
     }
 

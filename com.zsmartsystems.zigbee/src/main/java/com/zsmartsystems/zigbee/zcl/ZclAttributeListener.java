@@ -20,5 +20,4 @@ public interface ZclAttributeListener {
      * @param attribute the {@link ZclAttribute} that has been updated
      */
     void attributeUpdated(ZclAttribute attribute);
-
 }
