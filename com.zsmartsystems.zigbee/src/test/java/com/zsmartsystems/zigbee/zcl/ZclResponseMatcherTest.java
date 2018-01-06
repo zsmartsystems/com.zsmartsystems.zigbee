@@ -30,9 +30,9 @@ public class ZclResponseMatcherTest {
         ZclTransactionMatcher matcher = new ZclTransactionMatcher();
 
         ZclCommand zclCommand = new OnCommand();
-        zclCommand.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
+        zclCommand.setDestinationAddress(new ZigBeeEndpointAddress(1234, 5));
         ZclCommand zclResponse = new DefaultResponse();
-        zclResponse.setDestinationAddress(new ZigBeeEndpointAddress(1234, 5));
+        zclResponse.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
 
         assertFalse(matcher.isTransactionMatch(zclCommand, zclResponse));
 
@@ -49,7 +49,7 @@ public class ZclResponseMatcherTest {
         zclResponse.setTransactionId(22);
         assertTrue(matcher.isTransactionMatch(zclCommand, zclResponse));
 
-        zclResponse.setDestinationAddress(new ZigBeeEndpointAddress(1234, 6));
+        zclResponse.setSourceAddress(new ZigBeeEndpointAddress(1234, 6));
         assertFalse(matcher.isTransactionMatch(zclCommand, zclResponse));
     }
 }
