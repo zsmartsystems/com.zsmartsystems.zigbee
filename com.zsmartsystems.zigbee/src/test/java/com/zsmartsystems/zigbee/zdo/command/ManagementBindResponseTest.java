@@ -40,7 +40,6 @@ public class ManagementBindResponseTest extends CommandTest {
         System.out.println(response);
 
         assertEquals(1, (int) response.getBindingTableEntries());
-        assertEquals(1, (int) response.getBindingTableListCount());
         assertEquals(0, (int) response.getStartIndex());
 
         List<BindingTable> table = response.getBindingTableList();

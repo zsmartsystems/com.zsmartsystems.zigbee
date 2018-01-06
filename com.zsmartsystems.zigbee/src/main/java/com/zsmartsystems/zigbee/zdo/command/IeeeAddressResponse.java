@@ -39,11 +39,6 @@ public class IeeeAddressResponse extends ZdoResponse {
     private Integer nwkAddrRemoteDev;
 
     /**
-     * NumAssocDev command message field.
-     */
-    private Integer numAssocDev;
-
-    /**
      * StartIndex command message field.
      */
     private Integer startIndex;
@@ -97,24 +92,6 @@ public class IeeeAddressResponse extends ZdoResponse {
     }
 
     /**
-     * Gets NumAssocDev.
-     *
-     * @return the NumAssocDev
-     */
-    public Integer getNumAssocDev() {
-        return numAssocDev;
-    }
-
-    /**
-     * Sets NumAssocDev.
-     *
-     * @param numAssocDev the NumAssocDev
-     */
-    public void setNumAssocDev(final Integer numAssocDev) {
-        this.numAssocDev = numAssocDev;
-    }
-
-    /**
      * Gets StartIndex.
      *
      * @return the StartIndex
@@ -157,7 +134,7 @@ public class IeeeAddressResponse extends ZdoResponse {
         serializer.serialize(status, ZclDataType.ZDO_STATUS);
         serializer.serialize(ieeeAddrRemoteDev, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(nwkAddrRemoteDev, ZclDataType.NWK_ADDRESS);
-        serializer.serialize(numAssocDev, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(nwkAddrAssocDevList.size(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(startIndex, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         for (int cnt = 0; cnt < nwkAddrAssocDevList.size(); cnt++) {
             serializer.serialize(nwkAddrAssocDevList.get(cnt), ZclDataType.NWK_ADDRESS);
@@ -181,10 +158,7 @@ public class IeeeAddressResponse extends ZdoResponse {
         if (deserializer.isEndOfStream()) {
             return;
         }
-        numAssocDev = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        if (numAssocDev == 0) {
-            return;
-        }
+        Integer numAssocDev = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (numAssocDev != null) {
             for (int cnt = 0; cnt < numAssocDev; cnt++) {
@@ -204,8 +178,6 @@ public class IeeeAddressResponse extends ZdoResponse {
         builder.append(ieeeAddrRemoteDev);
         builder.append(", nwkAddrRemoteDev=");
         builder.append(nwkAddrRemoteDev);
-        builder.append(", numAssocDev=");
-        builder.append(numAssocDev);
         builder.append(", startIndex=");
         builder.append(startIndex);
         builder.append(", nwkAddrAssocDevList=");

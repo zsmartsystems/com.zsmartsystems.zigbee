@@ -355,7 +355,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
                     ManagementBindResponse response = (ManagementBindResponse) result.getResponse();
                     if (response.getStartIndex() == index) {
                         tableSize = response.getBindingTableEntries();
-                        index += response.getBindingTableListCount();
+                        index += response.getBindingTableList().size();
                         bindingTable.addAll(response.getBindingTableList());
                     }
                 } while (index < tableSize);

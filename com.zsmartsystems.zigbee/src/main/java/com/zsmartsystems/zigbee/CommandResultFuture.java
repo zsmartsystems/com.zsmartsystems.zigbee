@@ -36,9 +36,9 @@ public class CommandResultFuture implements Future<CommandResult> {
     private CommandResult result;
 
     /**
-     * Constructor which sets the simple ZigBee API this future belongs to.
+     * Constructor which sets the {@link ZigBeeNetworkManager} to which this future belongs.
      *
-     * @param zigBeeNetworkManager the simple ZigBee API
+     * @param {@link ZigBeeNetworkManager} the ZigBee network
      */
     public CommandResultFuture(ZigBeeNetworkManager zigBeeNetworkManager) {
         this.networkManager = zigBeeNetworkManager;

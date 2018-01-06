@@ -32,11 +32,6 @@ public class MatchDescriptorResponse extends ZdoResponse {
     private Integer nwkAddrOfInterest;
 
     /**
-     * MatchLength command message field.
-     */
-    private Integer matchLength;
-
-    /**
      * MatchList command message field.
      */
     private List<Integer> matchList;
@@ -67,24 +62,6 @@ public class MatchDescriptorResponse extends ZdoResponse {
     }
 
     /**
-     * Gets MatchLength.
-     *
-     * @return the MatchLength
-     */
-    public Integer getMatchLength() {
-        return matchLength;
-    }
-
-    /**
-     * Sets MatchLength.
-     *
-     * @param matchLength the MatchLength
-     */
-    public void setMatchLength(final Integer matchLength) {
-        this.matchLength = matchLength;
-    }
-
-    /**
      * Gets MatchList.
      *
      * @return the MatchList
@@ -108,7 +85,7 @@ public class MatchDescriptorResponse extends ZdoResponse {
 
         serializer.serialize(status, ZclDataType.ZDO_STATUS);
         serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
-        serializer.serialize(matchLength, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(matchList.size(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
         for (int cnt = 0; cnt < matchList.size(); cnt++) {
             serializer.serialize(matchList.get(cnt), ZclDataType.ENDPOINT);
         }
@@ -127,7 +104,7 @@ public class MatchDescriptorResponse extends ZdoResponse {
             return;
         }
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        matchLength = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer matchLength = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (matchLength != null) {
             for (int cnt = 0; cnt < matchLength; cnt++) {
                 matchList.add((Integer) deserializer.deserialize(ZclDataType.ENDPOINT));
@@ -144,8 +121,6 @@ public class MatchDescriptorResponse extends ZdoResponse {
         builder.append(status);
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);
-        builder.append(", matchLength=");
-        builder.append(matchLength);
         builder.append(", matchList=");
         builder.append(matchList);
         builder.append(']');

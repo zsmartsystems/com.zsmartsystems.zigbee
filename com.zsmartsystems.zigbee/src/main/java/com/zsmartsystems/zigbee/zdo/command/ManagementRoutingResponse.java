@@ -39,11 +39,6 @@ public class ManagementRoutingResponse extends ZdoResponse {
     private Integer startIndex;
 
     /**
-     * RoutingTableListCount command message field.
-     */
-    private Integer routingTableListCount;
-
-    /**
      * RoutingTableList command message field.
      */
     private List<RoutingTable> routingTableList;
@@ -92,24 +87,6 @@ public class ManagementRoutingResponse extends ZdoResponse {
     }
 
     /**
-     * Gets RoutingTableListCount.
-     *
-     * @return the RoutingTableListCount
-     */
-    public Integer getRoutingTableListCount() {
-        return routingTableListCount;
-    }
-
-    /**
-     * Sets RoutingTableListCount.
-     *
-     * @param routingTableListCount the RoutingTableListCount
-     */
-    public void setRoutingTableListCount(final Integer routingTableListCount) {
-        this.routingTableListCount = routingTableListCount;
-    }
-
-    /**
      * Gets RoutingTableList.
      *
      * @return the RoutingTableList
@@ -134,7 +111,7 @@ public class ManagementRoutingResponse extends ZdoResponse {
         serializer.serialize(status, ZclDataType.ZDO_STATUS);
         serializer.serialize(routingTableEntries, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(startIndex, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(routingTableListCount, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(routingTableList.size(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
         for (int cnt = 0; cnt < routingTableList.size(); cnt++) {
             serializer.serialize(routingTableList.get(cnt), ZclDataType.ROUTING_TABLE);
         }
@@ -154,7 +131,7 @@ public class ManagementRoutingResponse extends ZdoResponse {
         }
         routingTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        routingTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer routingTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (routingTableListCount != null) {
             for (int cnt = 0; cnt < routingTableListCount; cnt++) {
                 routingTableList.add((RoutingTable) deserializer.deserialize(ZclDataType.ROUTING_TABLE));
@@ -173,8 +150,6 @@ public class ManagementRoutingResponse extends ZdoResponse {
         builder.append(routingTableEntries);
         builder.append(", startIndex=");
         builder.append(startIndex);
-        builder.append(", routingTableListCount=");
-        builder.append(routingTableListCount);
         builder.append(", routingTableList=");
         builder.append(routingTableList);
         builder.append(']');

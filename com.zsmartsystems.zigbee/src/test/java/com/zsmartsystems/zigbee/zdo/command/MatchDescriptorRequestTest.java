@@ -37,8 +37,8 @@ public class MatchDescriptorRequestTest extends CommandTest {
 
         assertEquals(Integer.valueOf(65533), request.getNwkAddrOfInterest());
         assertEquals(Integer.valueOf(260), request.getProfileId());
-        assertEquals(Integer.valueOf(0), request.getInClusterCount());
-        assertEquals(Integer.valueOf(1), request.getOutClusterCount());
+        assertEquals(0, request.getInClusterList().size());
+        assertEquals(1, request.getOutClusterList().size());
         assertEquals(Integer.valueOf(1280), request.getOutClusterList().get(0));
     }
 }

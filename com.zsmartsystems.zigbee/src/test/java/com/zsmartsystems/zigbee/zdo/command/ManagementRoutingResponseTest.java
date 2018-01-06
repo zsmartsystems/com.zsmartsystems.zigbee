@@ -41,7 +41,6 @@ public class ManagementRoutingResponseTest extends CommandTest {
         System.out.println(routingResponse);
 
         assertEquals(1, (int) routingResponse.getRoutingTableEntries());
-        assertEquals(1, (int) routingResponse.getRoutingTableListCount());
         assertEquals(0, (int) routingResponse.getStartIndex());
 
         List<RoutingTable> routes = routingResponse.getRoutingTableList();
