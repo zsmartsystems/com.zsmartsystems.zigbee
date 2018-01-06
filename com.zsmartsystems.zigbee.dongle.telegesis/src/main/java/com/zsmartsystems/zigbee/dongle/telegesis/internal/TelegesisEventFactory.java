@@ -7,6 +7,14 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis.internal;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisAckMessageEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisAddressResponseEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceJoinedNetworkEvent;
@@ -25,13 +33,6 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisRece
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisRouteRecordMessageEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisRouterAnnounceEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSleepyDeviceAnnounceEvent;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * Helper factory class to create Telegesis event classes.
@@ -91,8 +92,8 @@ public class TelegesisEventFactory {
             telegesisEvent.deserialize(data);
             return telegesisEvent;
         } catch (SecurityException | NoSuchMethodException | InstantiationException | InvocationTargetException
-               | IllegalAccessException | IllegalArgumentException e) {
-            logger.debug("Error creating instance of EzspFrame", e);
+                | IllegalAccessException | IllegalArgumentException e) {
+            logger.debug("Error creating instance of TelegesisEvent", e);
         }
 
         return null;
