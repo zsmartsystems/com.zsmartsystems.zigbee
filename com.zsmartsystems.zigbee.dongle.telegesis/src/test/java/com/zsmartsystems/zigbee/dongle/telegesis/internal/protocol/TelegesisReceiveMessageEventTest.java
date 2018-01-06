@@ -43,5 +43,5 @@ public class TelegesisReceiveMessageEventTest extends TelegesisFrameBaseTest {
         assertEquals(Integer.valueOf(-69), event.getRssi());
         assertEquals(Integer.valueOf(255), event.getLqi());
     }
+
 }
-//
