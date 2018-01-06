@@ -231,7 +231,6 @@ public class AshFrameHandler {
 
                         // Send the next frame
                         sendNextFrame();
-
                     } catch (final IOException e) {
                         logger.error("AshFrameHandler IOException: ", e);
 
@@ -241,6 +240,8 @@ public class AshFrameHandler {
                             // frameHandler.error(e);
                             close = true;
                         }
+                    } catch (final Exception e) {
+                        logger.error("AshFrameHandler Exception: ", e);
                     }
                 }
                 logger.debug("AshFrameHandler exited.");
