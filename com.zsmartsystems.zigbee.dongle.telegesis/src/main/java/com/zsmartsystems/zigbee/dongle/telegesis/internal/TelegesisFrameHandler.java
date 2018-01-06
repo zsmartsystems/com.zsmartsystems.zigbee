@@ -17,6 +17,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -83,6 +85,21 @@ public class TelegesisFrameHandler {
      */
     private boolean closeHandler = false;
 
+    /**
+     * Scheduler used as a timer to abort any transactions that don't complete in a timely manner
+     */
+    private ScheduledExecutorService timeoutScheduler;
+
+    /**
+     * The future be used for timeouts
+     */
+    private ScheduledFuture<?> timeoutTimer = null;
+
+    /**
+     * The maximum number of milliseconds to wait for the response from the stick
+     */
+    private final int TRANSACTION_TIMEOUT = 500;
+
     enum RxStateMachine {
         WAITING,
         RECEIVE_CMD,
@@ -99,6 +116,7 @@ public class TelegesisFrameHandler {
     public void start(final ZigBeePort serialPort) {
 
         this.serialPort = serialPort;
+        this.timeoutScheduler = Executors.newSingleThreadScheduledExecutor();
 
         parserThread = new Thread("TelegesisFrameHandler") {
             @Override
@@ -106,44 +124,48 @@ public class TelegesisFrameHandler {
                 logger.debug("TelegesisFrameHandler thread started");
 
                 while (!closeHandler) {
-                    // Get a packet from the serial port
-                    int[] responseData = getPacket();
-                    if (responseData == null) {
-                        continue;
-                    }
+                    try {
+                        // Get a packet from the serial port
+                        int[] responseData = getPacket();
+                        if (responseData == null) {
+                            continue;
+                        }
 
-                    StringBuilder builder = new StringBuilder();
-                    for (int value : responseData) {
-                        builder.append(String.format(" %02X", value));
-                    }
-                    logger.debug("TELEGESIS RX: Data {}", builder.toString());
+                        StringBuilder builder = new StringBuilder();
+                        for (int value : responseData) {
+                            builder.append(String.format(" %02X", value));
+                        }
+                        logger.debug("TELEGESIS RX: Data{}", builder.toString());
 
-                    // Use the Event Factory to get an event
-                    TelegesisEvent event = TelegesisEventFactory.getTelegesisFrame(responseData);
-                    if (event != null) {
-                        notifyEventReceived(event);
-                        continue;
-                    }
+                        // Use the Event Factory to get an event
+                        TelegesisEvent event = TelegesisEventFactory.getTelegesisFrame(responseData);
+                        if (event != null) {
+                            notifyEventReceived(event);
+                            continue;
+                        }
 
-                    // If we're sending a command, then we need to process any responses
-                    synchronized (commandLock) {
-                        if (sentCommand != null) {
-                            boolean done;
-                            try {
-                                done = sentCommand.deserialize(responseData);
-                            } catch (Exception e) {
-                                logger.debug("Exception deserialising frame {}. Transaction will complete. ",
-                                        builder.toString(), e);
-                                done = true;
-                            }
+                        // If we're sending a command, then we need to process any responses
+                        synchronized (commandLock) {
+                            if (sentCommand != null) {
+                                boolean done;
+                                try {
+                                    done = sentCommand.deserialize(responseData);
+                                } catch (Exception e) {
+                                    logger.debug("Exception deserialising frame {}. Transaction will complete. ",
+                                            builder.toString(), e);
+                                    done = true;
+                                }
 
-                            if (done) {
-                                // Command completed
-                                notifyTransactionComplete(sentCommand);
-                                sentCommand = null;
-                                sendNextFrame();
+                                if (done) {
+                                    // Command completed
+                                    notifyTransactionComplete(sentCommand);
+                                    sentCommand = null;
+                                    sendNextFrame();
+                                }
                             }
                         }
+                    } catch (Exception e) {
+                        logger.error("TelegesisFrameHandler exception", e);
                     }
                 }
                 logger.debug("TelegesisFrameHandler thread exited.");
@@ -283,6 +305,7 @@ public class TelegesisFrameHandler {
             TelegesisCommand nextFrame = sendQueue.poll();
             if (nextFrame == null) {
                 // Nothing to send
+                stopTimer();
                 return;
             }
 
@@ -298,6 +321,9 @@ public class TelegesisFrameHandler {
                 serialPort.write(sendByte);
             }
             logger.debug("TELEGESIS TX: Data{}", builder.toString());
+
+            // Start the timeout
+            startTimer();
         }
     }
 
@@ -524,12 +550,48 @@ public class TelegesisFrameHandler {
         return executor.submit(worker);
     }
 
+    /**
+     * Wait for the requested {@link TelegesisEvent} to occur
+     *
+     * @param eventClass the {@link TelegesisEvent} to wait for
+     * @return the {@link TelegesisEvent} once received, or null on exception
+     */
     public TelegesisEvent eventWait(final Class<?> eventClass) {
         Future<TelegesisEvent> future = waitEventAsync(eventClass);
         try {
             return future.get(10, TimeUnit.SECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             return null;
+        }
+    }
+
+    /**
+     * Starts the transaction timeout. This will simply cancel the transaction and send the next frame from the queue if
+     * the timer times out. We don't try and retry as this might cause other unwanted issues.
+     */
+    private void startTimer() {
+        stopTimer();
+        logger.trace("TELEGESIS Timer: Start");
+        timeoutTimer = timeoutScheduler.schedule(new Runnable() {
+            @Override
+            public void run() {
+                timeoutTimer = null;
+                logger.debug("TELEGESIS Timer: Timeout");
+                synchronized (commandLock) {
+                    if (sentCommand != null) {
+                        sentCommand = null;
+                        sendNextFrame();
+                    }
+                }
+            }
+        }, TRANSACTION_TIMEOUT, TimeUnit.MILLISECONDS);
+    }
+
+    private void stopTimer() {
+        if (timeoutTimer != null) {
+            logger.trace("TELEGESIS Timer: Stop");
+            timeoutTimer.cancel(false);
+            timeoutTimer = null;
         }
     }
 
