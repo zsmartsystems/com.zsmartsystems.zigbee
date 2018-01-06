@@ -47,4 +47,11 @@ public class TelegesisEventFactoryTest extends TelegesisFrameBaseTest {
         assertNull(event);
     }
 
+    @Test
+    public void testCorruptMessage() {
+        TelegesisEvent event = TelegesisEventFactory.getTelegesisFrame(
+                new int[] { 0x52, 0x58, 0x3A, 0x33, 0x44, 0x45, 0x42, 0x2C, 0x30, 0x93, 0x05, 0x00, 0xEA, 0x11 });
+
+        assertNull(event);
+    }
 }

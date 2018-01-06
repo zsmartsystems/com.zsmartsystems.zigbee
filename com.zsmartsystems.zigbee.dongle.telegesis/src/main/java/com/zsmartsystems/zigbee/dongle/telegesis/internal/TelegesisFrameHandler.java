@@ -113,11 +113,10 @@ public class TelegesisFrameHandler {
                     }
 
                     StringBuilder builder = new StringBuilder();
-                    builder.append("Data");
                     for (int value : responseData) {
                         builder.append(String.format(" %02X", value));
                     }
-                    logger.debug("TELEGESIS RX: {}", builder.toString());
+                    logger.debug("TELEGESIS RX: Data {}", builder.toString());
 
                     // Use the Event Factory to get an event
                     TelegesisEvent event = TelegesisEventFactory.getTelegesisFrame(responseData);
@@ -128,14 +127,24 @@ public class TelegesisFrameHandler {
 
                     // If we're sending a command, then we need to process any responses
                     synchronized (commandLock) {
-                        if (sentCommand != null && sentCommand.deserialize(responseData)) {
-                            // Command completed
-                            notifyTransactionComplete(sentCommand);
-                            sentCommand = null;
-                            sendNextFrame();
+                        if (sentCommand != null) {
+                            boolean done;
+                            try {
+                                done = sentCommand.deserialize(responseData);
+                            } catch (Exception e) {
+                                logger.debug("Exception deserialising frame {}. Transaction will complete. ",
+                                        builder.toString(), e);
+                                done = true;
+                            }
+
+                            if (done) {
+                                // Command completed
+                                notifyTransactionComplete(sentCommand);
+                                sentCommand = null;
+                                sendNextFrame();
+                            }
                         }
                     }
-
                 }
                 logger.debug("TelegesisFrameHandler thread exited.");
             }
