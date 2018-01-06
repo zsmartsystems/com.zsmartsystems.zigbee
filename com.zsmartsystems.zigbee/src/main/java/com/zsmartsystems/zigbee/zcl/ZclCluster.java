@@ -204,7 +204,10 @@ public abstract class ZclCluster {
         CommandResult result;
         try {
             result = read(attribute).get();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException e) {
+            logger.debug("readSync interrupted");
+            return null;
+        } catch (ExecutionException e) {
             logger.debug("readSync exception ", e);
             return null;
         }
