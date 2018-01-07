@@ -53,11 +53,6 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
     private Integer transmissionFailures;
 
     /**
-     * ScannedChannelsListCount command message field.
-     */
-    private Integer scannedChannelsListCount;
-
-    /**
      * EnergyValues command message field.
      */
     private List<Integer> energyValues;
@@ -124,24 +119,6 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
     }
 
     /**
-     * Gets ScannedChannelsListCount.
-     *
-     * @return the ScannedChannelsListCount
-     */
-    public Integer getScannedChannelsListCount() {
-        return scannedChannelsListCount;
-    }
-
-    /**
-     * Sets ScannedChannelsListCount.
-     *
-     * @param scannedChannelsListCount the ScannedChannelsListCount
-     */
-    public void setScannedChannelsListCount(final Integer scannedChannelsListCount) {
-        this.scannedChannelsListCount = scannedChannelsListCount;
-    }
-
-    /**
      * Gets EnergyValues.
      *
      * @return the EnergyValues
@@ -167,7 +144,7 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
         serializer.serialize(scannedChannels, ZclDataType.UNSIGNED_32_BIT_INTEGER);
         serializer.serialize(totalTransmissions, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(transmissionFailures, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.serialize(scannedChannelsListCount, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(energyValues.size(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
         for (int cnt = 0; cnt < energyValues.size(); cnt++) {
             serializer.serialize(energyValues.get(cnt), ZclDataType.UNSIGNED_8_BIT_INTEGER);
         }
@@ -188,7 +165,7 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
         scannedChannels = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
         totalTransmissions = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         transmissionFailures = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        scannedChannelsListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer scannedChannelsListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (scannedChannelsListCount != null) {
             for (int cnt = 0; cnt < scannedChannelsListCount; cnt++) {
                 energyValues.add((Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER));
@@ -209,8 +186,6 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
         builder.append(totalTransmissions);
         builder.append(", transmissionFailures=");
         builder.append(transmissionFailures);
-        builder.append(", scannedChannelsListCount=");
-        builder.append(scannedChannelsListCount);
         builder.append(", energyValues=");
         builder.append(energyValues);
         builder.append(']');

@@ -33,11 +33,6 @@ public class BindRegisterResponse extends ZdoResponse {
     private Integer bindingTableEntries;
 
     /**
-     * BindingTableListCount command message field.
-     */
-    private Integer bindingTableListCount;
-
-    /**
      * BindingTableList command message field.
      */
     private List<List<BindingTable>> bindingTableList;
@@ -68,24 +63,6 @@ public class BindRegisterResponse extends ZdoResponse {
     }
 
     /**
-     * Gets BindingTableListCount.
-     *
-     * @return the BindingTableListCount
-     */
-    public Integer getBindingTableListCount() {
-        return bindingTableListCount;
-    }
-
-    /**
-     * Sets BindingTableListCount.
-     *
-     * @param bindingTableListCount the BindingTableListCount
-     */
-    public void setBindingTableListCount(final Integer bindingTableListCount) {
-        this.bindingTableListCount = bindingTableListCount;
-    }
-
-    /**
      * Gets BindingTableList.
      *
      * @return the BindingTableList
@@ -109,7 +86,7 @@ public class BindRegisterResponse extends ZdoResponse {
 
         serializer.serialize(status, ZclDataType.ZDO_STATUS);
         serializer.serialize(bindingTableEntries, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.serialize(bindingTableListCount, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        serializer.serialize(bindingTableList.size(), ZclDataType.UNSIGNED_16_BIT_INTEGER);
         for (int cnt = 0; cnt < bindingTableList.size(); cnt++) {
             serializer.serialize(bindingTableList.get(cnt), ZclDataType.N_X_BINDING_TABLE);
         }
@@ -128,7 +105,7 @@ public class BindRegisterResponse extends ZdoResponse {
             return;
         }
         bindingTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        bindingTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        Integer bindingTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         if (bindingTableListCount != null) {
             for (int cnt = 0; cnt < bindingTableListCount; cnt++) {
                 bindingTableList.add((List<BindingTable>) deserializer.deserialize(ZclDataType.N_X_BINDING_TABLE));
@@ -145,8 +122,6 @@ public class BindRegisterResponse extends ZdoResponse {
         builder.append(status);
         builder.append(", bindingTableEntries=");
         builder.append(bindingTableEntries);
-        builder.append(", bindingTableListCount=");
-        builder.append(bindingTableListCount);
         builder.append(", bindingTableList=");
         builder.append(bindingTableList);
         builder.append(']');

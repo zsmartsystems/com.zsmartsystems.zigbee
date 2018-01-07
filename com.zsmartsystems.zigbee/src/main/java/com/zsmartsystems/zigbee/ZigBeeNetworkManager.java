@@ -772,9 +772,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             final ZigBeeCommandListener commandListener = new ZigBeeCommandListener() {
                 @Override
                 public void commandReceived(ZigBeeCommand receivedCommand) {
-                    // Ensure that received command is not processed before
-                    // command is sent and hence transaction ID for the command
-                    // set.
+                    // Ensure that received command is not processed before command is sent
+                    // and hence transaction ID for the command set.
                     synchronized (command) {
                         if (responseMatcher.isTransactionMatch(command, receivedCommand)) {
                             synchronized (future) {

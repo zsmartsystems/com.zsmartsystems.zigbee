@@ -46,7 +46,6 @@ public class ManagementLqiResponseTest extends CommandTest {
         System.out.println(lqiResponse);
 
         assertEquals(2, (int) lqiResponse.getNeighborTableEntries());
-        assertEquals(2, (int) lqiResponse.getNeighborTableListCount());
         assertEquals(0, (int) lqiResponse.getStartIndex());
 
         List<NeighborTable> neighbors = lqiResponse.getNeighborTableList();

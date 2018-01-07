@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.internal;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,7 +18,9 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import com.zsmartsystems.zigbee.internal.ClusterMatcher;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
 
 /**
@@ -51,6 +53,7 @@ public class ClusterMatcherTest {
         List<Integer> clusterListIn = new ArrayList<Integer>();
         List<Integer> clusterListOut = new ArrayList<Integer>();
         MatchDescriptorRequest request = new MatchDescriptorRequest();
+        request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
         request.setProfileId(0x104);
         request.setInClusterList(clusterListIn);
         request.setOutClusterList(clusterListOut);
@@ -69,6 +72,7 @@ public class ClusterMatcherTest {
         List<Integer> clusterListOut = new ArrayList<Integer>();
         clusterListIn.add(0x500);
         MatchDescriptorRequest request = new MatchDescriptorRequest();
+        request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
         request.setProfileId(0x104);
         request.setInClusterList(clusterListIn);
         request.setOutClusterList(clusterListOut);
@@ -87,6 +91,7 @@ public class ClusterMatcherTest {
         List<Integer> clusterListOut = new ArrayList<Integer>();
         clusterListOut.add(0x500);
         MatchDescriptorRequest request = new MatchDescriptorRequest();
+        request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
         request.setProfileId(0x104);
         request.setInClusterList(clusterListIn);
         request.setOutClusterList(clusterListOut);
@@ -106,6 +111,7 @@ public class ClusterMatcherTest {
         clusterListIn.add(0x500);
         clusterListOut.add(0x500);
         MatchDescriptorRequest request = new MatchDescriptorRequest();
+        request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
         request.setProfileId(0x104);
         request.setInClusterList(clusterListIn);
         request.setOutClusterList(clusterListOut);

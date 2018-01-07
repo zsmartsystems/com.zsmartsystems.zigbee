@@ -291,8 +291,8 @@ public class ZigBeeNetworkMeshMonitor implements ZigBeeCommandListener {
 
                 // Continue with next request
                 // TODO: Differentiate between total devices, and devices in this request
-                startIndex += ieeeAddressResponse.getNumAssocDev() == null ? 0 : ieeeAddressResponse.getNumAssocDev();
-                totalNodes = ieeeAddressResponse.getNumAssocDev() == null ? 0 : ieeeAddressResponse.getNumAssocDev();
+                startIndex += ieeeAddressResponse.getNwkAddrAssocDevList().size();
+                totalNodes = ieeeAddressResponse.getNwkAddrAssocDevList().size();
             } else {
                 logger.debug("{}: Ieee Address request returned {}", networkAddress, ieeeAddressResponse);
 
@@ -342,7 +342,7 @@ public class ZigBeeNetworkMeshMonitor implements ZigBeeCommandListener {
                 }
 
                 // Continue with next request
-                startIndex += neighborResponse.getNeighborTableListCount();
+                startIndex += neighborResponse.getNeighborTableList().size();
                 totalNeighbors = neighborResponse.getNeighborTableEntries();
             } else {
                 logger.debug("{}: ManagementLqiRequest returned {}", networkAddress, neighborResponse);
@@ -388,7 +388,7 @@ public class ZigBeeNetworkMeshMonitor implements ZigBeeCommandListener {
                 routes.addAll(routingResponse.getRoutingTableList());
 
                 // Continue with next request
-                startIndex += routingResponse.getRoutingTableListCount();
+                startIndex += routingResponse.getRoutingTableList().size();
                 totalRoutes = routingResponse.getRoutingTableEntries();
             } else {
                 logger.debug("{}: ManagementRoutingRequest returned {}", networkAddress, routingResponse);

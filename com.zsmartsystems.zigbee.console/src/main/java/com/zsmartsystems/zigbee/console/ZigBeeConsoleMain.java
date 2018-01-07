@@ -179,6 +179,8 @@ public class ZigBeeConsoleMain {
         ZigBeeNetworkMeshMonitor meshMonitor = new ZigBeeNetworkMeshMonitor(networkManager);
         meshMonitor.startup(60);
 
+        networkManager.addSupportedCluster(ZclIasZoneCluster.CLUSTER_ID);
+
         console.start();
 
         System.out.println("Console closed.");

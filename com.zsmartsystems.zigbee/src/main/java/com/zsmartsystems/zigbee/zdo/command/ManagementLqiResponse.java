@@ -39,11 +39,6 @@ public class ManagementLqiResponse extends ZdoResponse {
     private Integer startIndex;
 
     /**
-     * NeighborTableListCount command message field.
-     */
-    private Integer neighborTableListCount;
-
-    /**
      * NeighborTableList command message field.
      */
     private List<NeighborTable> neighborTableList;
@@ -92,24 +87,6 @@ public class ManagementLqiResponse extends ZdoResponse {
     }
 
     /**
-     * Gets NeighborTableListCount.
-     *
-     * @return the NeighborTableListCount
-     */
-    public Integer getNeighborTableListCount() {
-        return neighborTableListCount;
-    }
-
-    /**
-     * Sets NeighborTableListCount.
-     *
-     * @param neighborTableListCount the NeighborTableListCount
-     */
-    public void setNeighborTableListCount(final Integer neighborTableListCount) {
-        this.neighborTableListCount = neighborTableListCount;
-    }
-
-    /**
      * Gets NeighborTableList.
      *
      * @return the NeighborTableList
@@ -134,7 +111,7 @@ public class ManagementLqiResponse extends ZdoResponse {
         serializer.serialize(status, ZclDataType.ZDO_STATUS);
         serializer.serialize(neighborTableEntries, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(startIndex, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(neighborTableListCount, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(neighborTableList.size(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
         for (int cnt = 0; cnt < neighborTableList.size(); cnt++) {
             serializer.serialize(neighborTableList.get(cnt), ZclDataType.NEIGHBOR_TABLE);
         }
@@ -154,7 +131,7 @@ public class ManagementLqiResponse extends ZdoResponse {
         }
         neighborTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        neighborTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer neighborTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (neighborTableListCount != null) {
             for (int cnt = 0; cnt < neighborTableListCount; cnt++) {
                 neighborTableList.add((NeighborTable) deserializer.deserialize(ZclDataType.NEIGHBOR_TABLE));
@@ -173,8 +150,6 @@ public class ManagementLqiResponse extends ZdoResponse {
         builder.append(neighborTableEntries);
         builder.append(", startIndex=");
         builder.append(startIndex);
-        builder.append(", neighborTableListCount=");
-        builder.append(neighborTableListCount);
         builder.append(", neighborTableList=");
         builder.append(neighborTableList);
         builder.append(']');

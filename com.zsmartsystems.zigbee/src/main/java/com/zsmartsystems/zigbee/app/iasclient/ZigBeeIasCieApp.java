@@ -153,9 +153,11 @@ public class ZigBeeIasCieApp implements ZigBeeApplication {
         iasZoneCluster = (ZclIasZoneCluster) cluster;
 
         Integer currentState = iasZoneCluster.getZoneState(0);
-        ZoneStateEnum currentStateEnum = ZoneStateEnum.getByValue(currentState);
-        logger.debug("{}: IAS CIE state is currently {}[{}]", iasZoneCluster.getZigBeeAddress(), currentStateEnum,
-                currentState);
+        if (currentState != null) {
+            ZoneStateEnum currentStateEnum = ZoneStateEnum.getByValue(currentState);
+            logger.debug("{}: IAS CIE state is currently {}[{}]", iasZoneCluster.getZigBeeAddress(), currentStateEnum,
+                    currentState);
+        }
 
         IeeeAddress currentIeeeAddress = iasZoneCluster.getIascieAddress(0);
         logger.debug("{}: IAS CIE address is currently {}", iasZoneCluster.getZigBeeAddress(), currentIeeeAddress);

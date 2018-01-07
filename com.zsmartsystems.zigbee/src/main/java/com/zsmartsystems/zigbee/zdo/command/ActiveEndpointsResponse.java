@@ -32,11 +32,6 @@ public class ActiveEndpointsResponse extends ZdoResponse {
     private Integer nwkAddrOfInterest;
 
     /**
-     * ActiveEPCnt command message field.
-     */
-    private Integer activeEpCnt;
-
-    /**
      * ActiveEPList command message field.
      */
     private List<Integer> activeEpList;
@@ -67,24 +62,6 @@ public class ActiveEndpointsResponse extends ZdoResponse {
     }
 
     /**
-     * Gets ActiveEPCnt.
-     *
-     * @return the ActiveEPCnt
-     */
-    public Integer getActiveEpCnt() {
-        return activeEpCnt;
-    }
-
-    /**
-     * Sets ActiveEPCnt.
-     *
-     * @param activeEpCnt the ActiveEPCnt
-     */
-    public void setActiveEpCnt(final Integer activeEpCnt) {
-        this.activeEpCnt = activeEpCnt;
-    }
-
-    /**
      * Gets ActiveEPList.
      *
      * @return the ActiveEPList
@@ -108,7 +85,7 @@ public class ActiveEndpointsResponse extends ZdoResponse {
 
         serializer.serialize(status, ZclDataType.ZDO_STATUS);
         serializer.serialize(nwkAddrOfInterest, ZclDataType.NWK_ADDRESS);
-        serializer.serialize(activeEpCnt, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(activeEpList.size(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
         for (int cnt = 0; cnt < activeEpList.size(); cnt++) {
             serializer.serialize(activeEpList.get(cnt), ZclDataType.ENDPOINT);
         }
@@ -127,7 +104,7 @@ public class ActiveEndpointsResponse extends ZdoResponse {
             return;
         }
         nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        activeEpCnt = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer activeEpCnt = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (activeEpCnt != null) {
             for (int cnt = 0; cnt < activeEpCnt; cnt++) {
                 activeEpList.add((Integer) deserializer.deserialize(ZclDataType.ENDPOINT));
@@ -144,8 +121,6 @@ public class ActiveEndpointsResponse extends ZdoResponse {
         builder.append(status);
         builder.append(", nwkAddrOfInterest=");
         builder.append(nwkAddrOfInterest);
-        builder.append(", activeEpCnt=");
-        builder.append(activeEpCnt);
         builder.append(", activeEpList=");
         builder.append(activeEpList);
         builder.append(']');

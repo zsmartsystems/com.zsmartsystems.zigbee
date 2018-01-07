@@ -23,7 +23,6 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.CommandResultFuture;
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -31,6 +30,7 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -95,7 +95,6 @@ public class ZigBeeNetworkDiscovererTest {
         ieeeResponse.setSourceAddress(new ZigBeeEndpointAddress(0));
         ieeeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         ieeeResponse.setIeeeAddrRemoteDev(new IeeeAddress("1234567890ABCDEF"));
-        ieeeResponse.setNumAssocDev(0);
         responses.put(ZdoCommandType.IEEE_ADDRESS_REQUEST.getClusterId(), ieeeResponse);
 
         NodeDescriptorResponse nodeResponse = new NodeDescriptorResponse();
@@ -121,7 +120,6 @@ public class ZigBeeNetworkDiscovererTest {
         endpointsResponse.setSourceAddress(new ZigBeeEndpointAddress(0));
         endpointsResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         endpointsResponse.setNwkAddrOfInterest(0);
-        endpointsResponse.setActiveEpCnt(1);
         List<Integer> activeEpList = new ArrayList<Integer>();
         activeEpList.add(1);
         endpointsResponse.setActiveEpList(activeEpList);

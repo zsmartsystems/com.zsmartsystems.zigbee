@@ -49,19 +49,9 @@ public class EndDeviceBindRequest extends ZdoRequest {
     private Integer profileId;
 
     /**
-     * InClusterCount command message field.
-     */
-    private Integer inClusterCount;
-
-    /**
      * InClusterList command message field.
      */
     private List<Integer> inClusterList;
-
-    /**
-     * OutClusterCount command message field.
-     */
-    private Integer outClusterCount;
 
     /**
      * OutClusterList command message field.
@@ -148,24 +138,6 @@ public class EndDeviceBindRequest extends ZdoRequest {
     }
 
     /**
-     * Gets InClusterCount.
-     *
-     * @return the InClusterCount
-     */
-    public Integer getInClusterCount() {
-        return inClusterCount;
-    }
-
-    /**
-     * Sets InClusterCount.
-     *
-     * @param inClusterCount the InClusterCount
-     */
-    public void setInClusterCount(final Integer inClusterCount) {
-        this.inClusterCount = inClusterCount;
-    }
-
-    /**
      * Gets InClusterList.
      *
      * @return the InClusterList
@@ -181,24 +153,6 @@ public class EndDeviceBindRequest extends ZdoRequest {
      */
     public void setInClusterList(final List<Integer> inClusterList) {
         this.inClusterList = inClusterList;
-    }
-
-    /**
-     * Gets OutClusterCount.
-     *
-     * @return the OutClusterCount
-     */
-    public Integer getOutClusterCount() {
-        return outClusterCount;
-    }
-
-    /**
-     * Sets OutClusterCount.
-     *
-     * @param outClusterCount the OutClusterCount
-     */
-    public void setOutClusterCount(final Integer outClusterCount) {
-        this.outClusterCount = outClusterCount;
     }
 
     /**
@@ -227,11 +181,11 @@ public class EndDeviceBindRequest extends ZdoRequest {
         serializer.serialize(srcAddress, ZclDataType.IEEE_ADDRESS);
         serializer.serialize(srcEndpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(profileId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.serialize(inClusterCount, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(inClusterList.size(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
         for (int cnt = 0; cnt < inClusterList.size(); cnt++) {
             serializer.serialize(inClusterList.get(cnt), ZclDataType.CLUSTERID);
         }
-        serializer.serialize(outClusterCount, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(outClusterList.size(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
         for (int cnt = 0; cnt < outClusterList.size(); cnt++) {
             serializer.serialize(outClusterList.get(cnt), ZclDataType.CLUSTERID);
         }
@@ -249,13 +203,13 @@ public class EndDeviceBindRequest extends ZdoRequest {
         srcAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         srcEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         profileId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        inClusterCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer inClusterCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (inClusterCount != null) {
             for (int cnt = 0; cnt < inClusterCount; cnt++) {
                 inClusterList.add((Integer) deserializer.deserialize(ZclDataType.CLUSTERID));
             }
         }
-        outClusterCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer outClusterCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (outClusterCount != null) {
             for (int cnt = 0; cnt < outClusterCount; cnt++) {
                 outClusterList.add((Integer) deserializer.deserialize(ZclDataType.CLUSTERID));
@@ -276,12 +230,8 @@ public class EndDeviceBindRequest extends ZdoRequest {
         builder.append(srcEndpoint);
         builder.append(", profileId=");
         builder.append(profileId);
-        builder.append(", inClusterCount=");
-        builder.append(inClusterCount);
         builder.append(", inClusterList=");
         builder.append(inClusterList);
-        builder.append(", outClusterCount=");
-        builder.append(outClusterCount);
         builder.append(", outClusterList=");
         builder.append(outClusterList);
         builder.append(']');

@@ -2043,7 +2043,7 @@ public class ZclProtocolCodeGenerator {
 
                     if (command.responseCommand != null && command.responseCommand.length() != 0) {
                         out.println("import " + packageRootPrefix + ".ZigBeeCommand;");
-                        out.println("import " + packageRootPrefix + ".CommandResponseMatcher;");
+                        out.println("import " + packageRootPrefix + ".ZigBeeTransactionMatcher;");
                         out.println("import " + packageRootPrefix + packageZdpCommand + "." + command.responseCommand
                                 + ";");
                     }
@@ -2133,12 +2133,16 @@ public class ZclProtocolCodeGenerator {
                     }
 
                     if (command.responseCommand != null && command.responseCommand.length() != 0) {
-                        out.print(" implements CommandResponseMatcher");
+                        out.print(" implements ZigBeeTransactionMatcher");
                     }
                     out.println(" {");
 
                     for (final Field field : fields) {
                         if (reservedFields.contains(field.nameLowerCamelCase)) {
+                            continue;
+                        }
+
+                        if (getAutoSized(fields, field.nameLowerCamelCase) != null) {
                             continue;
                         }
 
@@ -2179,6 +2183,10 @@ public class ZclProtocolCodeGenerator {
 
                     for (final Field field : fields) {
                         if (reservedFields.contains(field.nameLowerCamelCase)) {
+                            continue;
+                        }
+
+                        if (getAutoSized(fields, field.nameLowerCamelCase) != null) {
                             continue;
                         }
 
@@ -2233,6 +2241,14 @@ public class ZclProtocolCodeGenerator {
                         out.println("        super.serialize(serializer);");
                         out.println();
                         for (final Field field : fields) {
+                            if (getAutoSized(fields, field.nameLowerCamelCase) != null) {
+                                Field sizedField = getAutoSized(fields, field.nameLowerCamelCase);
+                                out.println("        serializer.serialize(" + sizedField.nameLowerCamelCase
+                                        + ".size(), ZclDataType." + field.dataType + ");");
+
+                                continue;
+                            }
+
                             if (field.listSizer != null) {
                                 out.println("        for (int cnt = 0; cnt < " + field.nameLowerCamelCase
                                         + ".size(); cnt++) {");
@@ -2271,6 +2287,11 @@ public class ZclProtocolCodeGenerator {
                                 out.println("            return;");
                                 out.println("        }");
                             }
+                            if (getAutoSized(fields, field.nameLowerCamelCase) != null) {
+                                out.println("        Integer " + field.nameLowerCamelCase + " = (" + field.dataTypeClass
+                                        + ") deserializer.deserialize(" + "ZclDataType." + field.dataType + ");");
+                                continue;
+                            }
 
                             if (field.listSizer != null) {
                                 out.println("        if (" + field.listSizer + " != null) {");
@@ -2303,7 +2324,8 @@ public class ZclProtocolCodeGenerator {
                     if (command.responseCommand != null && command.responseCommand.length() != 0) {
                         out.println();
                         out.println("    @Override");
-                        out.println("    public boolean isMatch(ZigBeeCommand request, ZigBeeCommand response) {");
+                        out.println(
+                                "    public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {");
                         out.println("        if (!(response instanceof " + command.responseCommand + ")) {");
                         out.println("            return false;");
                         out.println("        }");
@@ -2349,6 +2371,10 @@ public class ZclProtocolCodeGenerator {
                     out.println("        builder.append(\"" + className + " [\");");
                     out.println("        builder.append(super.toString());");
                     for (final Field field : fields) {
+                        if (getAutoSized(fields, field.nameLowerCamelCase) != null) {
+                            continue;
+                        }
+
                         out.println("        builder.append(\", " + field.nameLowerCamelCase + "=\");");
                         out.println("        builder.append(" + field.nameLowerCamelCase + ");");
                     }
@@ -2364,6 +2390,15 @@ public class ZclProtocolCodeGenerator {
                 }
             }
         }
+    }
+
+    private static Field getAutoSized(LinkedList<Field> fields, String name) {
+        for (Field field : fields) {
+            if (name.equals(field.listSizer)) {
+                return field;
+            }
+        }
+        return null;
     }
 
     private static String getZdoCommandTypeEnum(final Cluster cluster, final Command command, boolean received) {
@@ -2508,7 +2543,7 @@ public class ZclProtocolCodeGenerator {
                             "import " + packageRootPrefix + packageZdpCommand + "." + command.responseCommand + ";");
 
                     out.println("import " + packageRootPrefix + ".Command;");
-                    out.println("import " + packageRootPrefix + ".CommandResponseMatcher;");
+                    out.println("import " + packageRootPrefix + ".ZigBeeTransactionMatcher;");
                     // out.println("import " + packageRootPrefix + packageZdp + ".ZdoRequest;");
                     // out.println("import " + packageRootPrefix + packageZdp + ".ZdoResponse;");
 
@@ -2537,7 +2572,7 @@ public class ZclProtocolCodeGenerator {
                     out.println(" * Code is auto-generated. Modifications may be overwritten!");
 
                     out.println(" */");
-                    out.println("public class " + className + " implements CommandResponseMatcher {");
+                    out.println("public class " + className + " implements ZigBeeTransactionMatcher {");
 
                     // out.println(" /**");
                     // out.println(" * Default constructor.");
@@ -2551,7 +2586,7 @@ public class ZclProtocolCodeGenerator {
 
                     out.println();
                     out.println("    @Override");
-                    out.println("    public boolean isMatch(Command request, Command response) {");
+                    out.println("    public boolean isTransactionMatch(Command request, Command response) {");
                     out.println("        if (response instanceof " + command.responseCommand + ") {");
                     // out.println(" return ((" + command.nameUpperCamelCase + ") request).get"
                     // + command.responseRequest + "() == ((" + command.responseCommand + ") response).get"
