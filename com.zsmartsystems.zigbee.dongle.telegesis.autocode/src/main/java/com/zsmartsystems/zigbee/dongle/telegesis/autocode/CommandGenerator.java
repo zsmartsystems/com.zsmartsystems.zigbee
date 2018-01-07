@@ -973,7 +973,6 @@ public class CommandGenerator extends ClassGenerator {
         addImport("java.lang.reflect.Constructor");
         addImport("org.slf4j.Logger");
         addImport("org.slf4j.LoggerFactory");
-        addImport("java.lang.reflect.InvocationTargetException");
         addImport("java.util.Map");
         addImport("java.util.concurrent.ConcurrentHashMap");
 
@@ -1043,10 +1042,8 @@ public class CommandGenerator extends ClassGenerator {
         out.println("            TelegesisEvent telegesisEvent = (TelegesisEvent) ctor.newInstance();");
         out.println("            telegesisEvent.deserialize(data);");
         out.println("            return telegesisEvent;");
-        out.println(
-                "        } catch (SecurityException | NoSuchMethodException | InstantiationException | InvocationTargetException");
-        out.println("               | IllegalAccessException | IllegalArgumentException e) {");
-        out.println("            logger.debug(\"Error creating instance of EzspFrame\", e);");
+        out.println("        } catch (Exception e) {");
+        out.println("            logger.debug(\"Error creating instance of Telegesis event\", e);");
         out.println("        }");
         out.println();
         out.println("        return null;");
