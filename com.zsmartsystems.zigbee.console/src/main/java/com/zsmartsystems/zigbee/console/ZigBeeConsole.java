@@ -1161,7 +1161,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getSyntax() {
-            return "level DEVICEID LEVEL";
+            return "level DEVICEID LEVEL [RATE]";
         }
 
         /**
@@ -1169,7 +1169,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 3) {
+            if (args.length < 3) {
                 return false;
             }
 
@@ -1185,7 +1185,16 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final CommandResult response = zigbeeApi.level(destination, level, 1.0).get();
+            float time = (float) 1.0;
+            if (args.length == 4) {
+                try {
+                    time = Float.parseFloat(args[3]);
+                } catch (final NumberFormatException e) {
+                    return false;
+                }
+            }
+
+            final CommandResult response = zigbeeApi.level(destination, level, time).get();
             return defaultResponseProcessing(response, out);
         }
     }
