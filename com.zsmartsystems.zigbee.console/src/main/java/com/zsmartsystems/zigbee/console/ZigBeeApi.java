@@ -157,7 +157,7 @@ public class ZigBeeApi {
         if (endpoint == null) {
             return null;
         }
-        ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint.getCluster(ZclOnOffCluster.CLUSTER_ID);
+        ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint.getInputCluster(ZclOnOffCluster.CLUSTER_ID);
         return cluster.onCommand();
     }
 

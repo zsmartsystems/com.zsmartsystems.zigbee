@@ -59,6 +59,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
@@ -170,6 +171,8 @@ public final class ZigBeeConsole {
         commands.put("trustcentre", new TrustCentreCommand());
 
         commands.put("rediscover", new RediscoverCommand());
+
+        commands.put("stress", new StressCommand());
 
         this.networkManager = networkManager;
         zigBeeApi = new ZigBeeApi(networkManager);
@@ -910,7 +913,6 @@ public final class ZigBeeConsole {
 
             final CommandResult response = zigbeeApi.on(destination).get();
             return defaultResponseProcessing(response, out);
-
         }
     }
 
@@ -2834,6 +2836,121 @@ public final class ZigBeeConsole {
 
             print("Sending rediscovery request for address " + address, out);
             networkManager.rediscoverNode(address);
+            return true;
+        }
+    }
+
+    /**
+     * Stress the system by sending a command to a node
+     */
+    private class StressCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Stress test. Note after sending this command you will need to stop the console.";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "stress NODEID";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
+            if (args.length != 2) {
+                return false;
+            }
+
+            final ZigBeeEndpoint endpoint = getDevice(zigbeeApi, args[1]);
+            if (endpoint == null) {
+                print("Endpoint not found.", out);
+                return false;
+            }
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int cnt = 0;
+                    while (true) {
+                        print("STRESSING 1 CNT: " + cnt++, out);
+                        ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint
+                                .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+                        cluster.onCommand();
+                        try {
+                            Thread.sleep(167);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int cnt = 0;
+                    while (true) {
+                        print("STRESSING 2 CNT: " + cnt++, out);
+                        ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint
+                                .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+                        cluster.onCommand();
+                        try {
+                            Thread.sleep(107);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int cnt = 0;
+                    while (true) {
+                        print("STRESSING 3 CNT: " + cnt++, out);
+                        ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint
+                                .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+                        cluster.onCommand();
+                        try {
+                            Thread.sleep(131);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int cnt = 0;
+                    while (true) {
+                        print("STRESSING 4 CNT: " + cnt++, out);
+                        ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint
+                                .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+                        cluster.onCommand();
+                        try {
+                            Thread.sleep(187);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+
             return true;
         }
     }
