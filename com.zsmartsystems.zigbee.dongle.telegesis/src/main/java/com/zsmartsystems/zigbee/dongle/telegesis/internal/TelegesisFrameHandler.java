@@ -9,10 +9,10 @@ package com.zsmartsystems.zigbee.dongle.telegesis.internal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -46,7 +46,7 @@ public class TelegesisFrameHandler {
     /**
      * The queue of {@link TelegesisFrame} frames waiting to be sent
      */
-    private final Queue<TelegesisCommand> sendQueue = new LinkedList<TelegesisCommand>();
+    private final Queue<TelegesisCommand> sendQueue = new ConcurrentLinkedQueue<TelegesisCommand>();
 
     private ExecutorService executor = Executors.newCachedThreadPool();
 
@@ -134,6 +134,12 @@ public class TelegesisFrameHandler {
 
                 while (!closeHandler) {
                     try {
+                        synchronized (commandLock) {
+                            if (sentCommand == null) {
+                                sendNextFrame();
+                            }
+                        }
+
                         // Get a packet from the serial port
                         int[] responseData = getPacket();
                         if (responseData == null) {
@@ -169,7 +175,6 @@ public class TelegesisFrameHandler {
                                     // Command completed
                                     notifyTransactionComplete(sentCommand);
                                     sentCommand = null;
-                                    sendNextFrame();
                                 }
                             }
                         }
@@ -301,9 +306,6 @@ public class TelegesisFrameHandler {
         return parserThread != null && parserThread.isAlive();
     }
 
-    // Synchronize this method so we can do the window check without interruption.
-    // Otherwise this method could be called twice from different threads that could end up with
-    // more than the TX_WINDOW number of frames sent.
     private void sendNextFrame() {
         synchronized (commandLock) {
             // Are we already processing a command?

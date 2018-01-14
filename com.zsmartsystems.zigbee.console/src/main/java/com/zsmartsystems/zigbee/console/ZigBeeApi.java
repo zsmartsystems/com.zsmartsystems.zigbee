@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.SquawkCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.StartWarningCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.MoveToLevelCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.MoveToLevelWithOnOffCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
 
 /**
@@ -214,7 +214,7 @@ public class ZigBeeApi {
      */
     public Future<CommandResult> level(final ZigBeeAddress destination, final double level, final double time) {
 
-        final MoveToLevelCommand command = new MoveToLevelCommand();
+        final MoveToLevelWithOnOffCommand command = new MoveToLevelWithOnOffCommand();
 
         int l = (int) (level * 254);
         if (l > 254) {
