@@ -122,7 +122,7 @@ public class AshFrameHandler {
      * Flag reflecting that parser has been closed and parser parserThread
      * should exit.
      */
-    private boolean close = false;
+    private boolean closeHandler = false;
 
     /**
      * Construct the handler and provide the {@link EzspFrameHandler}
@@ -146,11 +146,11 @@ public class AshFrameHandler {
         parserThread = new Thread("AshFrameHandler") {
             @Override
             public void run() {
-                logger.trace("AshFrameHandler thread started");
+                logger.debug("AshFrameHandler thread started");
 
                 int exceptionCnt = 0;
 
-                while (!close) {
+                while (!closeHandler) {
                     try {
                         int[] packetData = getPacket();
                         if (packetData == null) {
@@ -212,7 +212,6 @@ public class AshFrameHandler {
                                 case RSTACK:
                                     // Stack has been reset!
                                     handleReset((AshFrameRstAck) packet);
-
                                     break;
                                 default:
                                     break;
@@ -233,7 +232,7 @@ public class AshFrameHandler {
                             logger.error("AshFrameHandler exception count exceeded");
                             // if (!close) {
                             // frameHandler.error(e);
-                            close = true;
+                            closeHandler = true;
                         }
                     } catch (final Exception e) {
                         logger.error("AshFrameHandler Exception: ", e);
@@ -252,7 +251,7 @@ public class AshFrameHandler {
         int inputCount = 0;
         boolean inputError = false;
 
-        while (!close) {
+        while (!closeHandler) {
             int val = port.read();
             logger.trace("ASH RX: " + String.format("%02X", val));
             switch (val) {
@@ -329,19 +328,20 @@ public class AshFrameHandler {
      * Set the close flag to true.
      */
     public void setClosing() {
-        this.close = true;
+        this.closeHandler = true;
     }
 
     /**
      * Requests parser thread to shutdown.
      */
     public void close() {
-        this.close = true;
+        setClosing();
         stopRetryTimer();
 
         try {
             parserThread.interrupt();
             parserThread.join();
+            logger.debug("AshFrameHandler close complete.");
         } catch (InterruptedException e) {
             logger.warn("Interrupted in packet parser thread shutdown join.");
         }
@@ -362,7 +362,7 @@ public class AshFrameHandler {
     private synchronized void sendNextFrame() {
         // We're not allowed to send if we're not connected
         if (!stateConnected) {
-            logger.warn("Trying to send when not connected.");
+            logger.debug("Trying to send when not connected.");
             return;
         }
 
@@ -608,7 +608,7 @@ public class AshFrameHandler {
                         try {
                             wait();
                         } catch (InterruptedException e) {
-                            logger.debug(e.getMessage());
+                            complete = true;
                         }
                     }
                 }
@@ -660,7 +660,7 @@ public class AshFrameHandler {
             return ezspTransaction;
         } catch (InterruptedException | ExecutionException e) {
             futureResponse.cancel(true);
-            logger.debug("Error sending EZSP transaction to listeners: ", e);
+            logger.debug("EZSP interrupted in sendRequest: ", e);
         }
 
         return null;

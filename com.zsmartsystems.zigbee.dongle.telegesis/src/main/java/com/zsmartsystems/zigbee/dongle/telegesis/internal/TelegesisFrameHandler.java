@@ -471,7 +471,7 @@ public class TelegesisFrameHandler {
                         try {
                             wait();
                         } catch (InterruptedException e) {
-                            logger.debug(e.getMessage());
+                            complete = true;
                         }
                     }
                 }

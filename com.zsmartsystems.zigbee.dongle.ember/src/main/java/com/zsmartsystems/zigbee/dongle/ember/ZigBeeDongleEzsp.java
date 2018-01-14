@@ -230,13 +230,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         getNetworkParameters();
 
-        // Now initialise the network
-        EzspNetworkInitRequest networkInitRequest = new EzspNetworkInitRequest();
-        EzspTransaction networkInitTransaction = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(networkInitRequest, EzspNetworkInitResponse.class));
-        EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
-        logger.debug(networkInitResponse.toString());
-
+        // Add the endpoint
         EzspAddEndpointRequest addEndpoint = new EzspAddEndpointRequest();
         addEndpoint.setEndpoint(1);
         addEndpoint.setDeviceId(0);
@@ -248,6 +242,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 .sendEzspTransaction(new EzspSingleResponseTransaction(addEndpoint, EzspAddEndpointResponse.class));
         EzspAddEndpointResponse addEndpointResponse = (EzspAddEndpointResponse) addEndpointTransaction.getResponse();
         logger.debug(addEndpointResponse.toString());
+
+        // Now initialise the network
+        EzspNetworkInitRequest networkInitRequest = new EzspNetworkInitRequest();
+        EzspTransaction networkInitTransaction = ashHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(networkInitRequest, EzspNetworkInitResponse.class));
+        EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
+        logger.debug(networkInitResponse.toString());
 
         networkParameters = getNetworkParameters();
         getCurrentSecurityState();
