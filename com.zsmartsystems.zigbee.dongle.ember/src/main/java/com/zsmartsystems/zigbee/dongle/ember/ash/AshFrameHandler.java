@@ -218,13 +218,11 @@ public class AshFrameHandler {
                             }
                         }
 
-                        // Send the response
-                        if (responseFrame != null) {
+                        // Send the next frame
+                        if (!sendNextFrame() && responseFrame != null) {
+                            // We didn't have another data frame to send, so send the ACK/NAK response
                             sendFrame(responseFrame);
                         }
-
-                        // Send the next frame
-                        sendNextFrame();
                     } catch (final IOException e) {
                         logger.error("AshFrameHandler IOException: ", e);
 
@@ -359,11 +357,11 @@ public class AshFrameHandler {
     // Synchronize this method so we can do the window check without interruption.
     // Otherwise this method could be called twice from different threads that could end up with
     // more than the TX_WINDOW number of frames sent.
-    private synchronized void sendNextFrame() {
+    private synchronized boolean sendNextFrame() {
         // We're not allowed to send if we're not connected
         if (!stateConnected) {
             logger.debug("Trying to send when not connected.");
-            return;
+            return false;
         }
 
         // Check how many frames are outstanding
@@ -373,13 +371,13 @@ public class AshFrameHandler {
             if (timerTask == null) {
                 startRetryTimer();
             }
-            return;
+            return false;
         }
 
         EzspFrameRequest nextFrame = sendQueue.poll();
         if (nextFrame == null) {
             // Nothing to send
-            return;
+            return false;
         }
 
         // Encapsulate the EZSP frame into the ASH packet
@@ -387,6 +385,7 @@ public class AshFrameHandler {
         AshFrameData ashFrame = new AshFrameData(nextFrame);
 
         sendFrame(ashFrame);
+        return true;
     }
 
     private synchronized void sendFrame(AshFrame ashFrame) {
