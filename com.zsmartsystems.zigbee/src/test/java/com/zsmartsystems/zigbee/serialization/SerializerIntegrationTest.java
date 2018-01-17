@@ -84,6 +84,12 @@ public class SerializerIntegrationTest {
     }
 
     @Test
+    public void testDeserialize_BITMAP_32_BIT() {
+        int valIn = 0x9119;
+        testSerializer(valIn, ZclDataType.BITMAP_32_BIT);
+    }
+
+    @Test
     public void testDeserialize_BITMAP_16_BIT() {
         int valIn = 0x9119;
         testSerializer(valIn, ZclDataType.BITMAP_16_BIT);

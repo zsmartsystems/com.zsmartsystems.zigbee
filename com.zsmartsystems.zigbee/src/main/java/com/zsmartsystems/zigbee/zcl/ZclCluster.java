@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ExecutionException;
@@ -94,7 +95,7 @@ public abstract class ZclCluster {
      * After initialisation, the list will contain an empty list. Once a successful call to
      * {@link #discoverAttributes()} has been made, the list will reflect the attributes supported by the remote device.
      */
-    private final Set<Integer> supportedAttributes = new HashSet<Integer>();
+    private final Set<Integer> supportedAttributes = new TreeSet<Integer>();
 
     /**
      * The list of supported commands that the remote device can generate
