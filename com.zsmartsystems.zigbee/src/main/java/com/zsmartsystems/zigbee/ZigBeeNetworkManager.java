@@ -131,7 +131,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * We use a {@link Executors.newFixedThreadPool} to provide a fixed number of threads as otherwise this could result
      * in a large number of simultaneous threads in large networks.
      */
-    private final ExecutorService executorService = Executors.newFixedThreadPool(16);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(6);
 
     /**
      * The {@link ZigBeeTransportTransmit} implementation. This provides the interface
@@ -1127,6 +1127,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (node == null) {
             return;
         }
+        logger.debug("{}: Node {} update", node.getIeeeAddress(), node.getNetworkAddress());
 
         final ZigBeeNode currentNode;
         synchronized (networkNodes) {
@@ -1134,12 +1135,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
             // Return if we don't know this node
             if (currentNode == null) {
+                logger.debug("{}: Node {} is not known", node.getIeeeAddress(), node.getNetworkAddress());
                 return;
             }
 
             // Return if there were no updates
             if (!currentNode.updateNode(node)) {
-                return;
+                // logger.debug("{}: Node {} is not updated", node.getIeeeAddress(), node.getNetworkAddress());
+                // return;
             }
         }
 

@@ -32,7 +32,7 @@ echo 10c4 89fb > /sys/bus/usb-serial/drivers/cp210x/new_id
 
 ### ConBee / RaspBee
 
-The library supports the Dresden Electronics RaspBee and ConBee dongles.
+The library supports the Dresden Electronics RaspBee and ConBee dongles. Note that this requires some further work.
  
 ## Tested Hardware
  

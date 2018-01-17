@@ -248,7 +248,7 @@ public class ZigBeeNetworkMeshMonitor implements ZigBeeCommandListener {
                         networkManager.updateNode(node);
                     }
 
-                    logger.debug("{}: Ending mesh update", nodeNetworkAddress);
+                    logger.debug("{}: Ending mesh update. Updated={}", nodeNetworkAddress, update);
                 } catch (InterruptedException | ExecutionException e) {
                     logger.debug("{}: Mesh update exception: ", nodeNetworkAddress, e);
                 }

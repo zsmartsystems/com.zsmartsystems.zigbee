@@ -497,6 +497,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      */
     public boolean setNeighbors(Set<NeighborTable> neighbors) {
         if (this.neighbors.equals(neighbors)) {
+            logger.debug("{}: Neighbor table unchanged", ieeeAddress);
             return false;
         }
 
@@ -506,6 +507,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
                 this.neighbors.addAll(neighbors);
             }
         }
+        logger.debug("{}: Neighbor table updated: {}", ieeeAddress, neighbors);
 
         return true;
     }
@@ -532,6 +534,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      */
     public boolean setAssociatedDevices(Set<Integer> associatedDevices) {
         if (this.associatedDevices.equals(associatedDevices)) {
+            logger.debug("{}: Associated devices table unchanged", ieeeAddress);
             return false;
         }
 
@@ -539,6 +542,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
             this.associatedDevices.clear();
             this.associatedDevices.addAll(associatedDevices);
         }
+        logger.debug("{}: Associated devices table updated: {}", ieeeAddress, associatedDevices);
 
         return true;
     }
@@ -564,7 +568,10 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * @return true if the route table was updated
      */
     public boolean setRoutes(Set<RoutingTable> routes) {
+        logger.debug("{}: Routing table NEW: {}", ieeeAddress, routes);
+        logger.debug("{}: Routing table OLD: {}", ieeeAddress, this.routes);
         if (this.routes.equals(routes)) {
+            logger.debug("{}: Routing table unchanged", ieeeAddress);
             return false;
         }
 
@@ -574,6 +581,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
                 this.routes.addAll(routes);
             }
         }
+        logger.debug("{}: Routing table updated: {}", ieeeAddress, routes);
 
         return true;
     }
