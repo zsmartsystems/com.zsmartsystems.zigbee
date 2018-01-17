@@ -2666,6 +2666,105 @@ command that is still current.
 ### Generated
 
 ## Electrical Measurement [0x0B04]
+This cluster provides a mechanism for querying data about the electrical properties as measured
+by the device. This cluster may be implemented on any device type and be implemented on a per-endpoint
+basis. For example, a power  strip device could represent each outlet on a  different endpoint and
+report electrical  information for each individual outlet. The only caveat is that if you implement
+an attribute that has an associated multiplier and divisor, then you must implement the associated
+multiplier and divisor attributes. For example if you implement DCVoltage, you must also implement
+DCVoltageMultiplier and DCVoltageDivisor.
+
+If you are interested in reading information about the power supply or battery level on the device,
+please see the Power Configuration cluster.
+
+### Attributes
+
+|Id     |Name                             |Type                       |Access     |Implement |Reporting |
+|-------|---------------------------------|---------------------------|-----------|----------|----------|
+|0x0000 |MeasurementType                  |32-bit Bitmap              |Read only  |Mandatory |          |
+|0x0300 |ACFrequency                      |Unsigned 16-bit Integer    |Read only  |Optional  |          |
+|0x0304 |TotalActivePower                 |Signed 32-bit Integer      |Read only  |Optional  |          |
+|0x0305 |TotalReactivePower               |Signed 32-bit Integer      |Read only  |Optional  |          |
+|0x0306 |TotalApparentPower               |Unsigned 32-bit Integer    |Read only  |Optional  |          |
+|0x0505 |RMSVoltage                       |Unsigned 16-bit Integer    |Read only  |Optional  |          |
+|0x0508 |RMSCurrent                       |Unsigned 16-bit Integer    |Read only  |Optional  |          |
+|0x050B |ActivePower                      |Signed 16-bit Integer      |Read only  |Optional  |          |
+|0x0602 |ACCurrentMultiplier              |Unsigned 16-bit Integer    |Read only  |Optional  |          |
+|0x0603 |ACCurrentDivisor                 |Unsigned 16-bit Integer    |Read only  |Optional  |          |
+|0x0604 |ACPowerMultiplier                |Unsigned 16-bit Integer    |Read only  |Optional  |          |
+|0x0605 |ACPowerDivisor                   |Unsigned 16-bit Integer    |Read only  |Optional  |          |
+
+
+
+#### MeasurementType Attribute
+This attribute indicates a device’s measurement capabilities. This will be indicated by setting
+the desire measurement bits to 1.
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0000 |AC Active Measurement     |
+|0x0001 |AC Reactive Measurement   |
+|0x0002 |AC Apparent Measurement   |
+|0x0004 |Phase A Measurement       |
+|0x0008 |Phase B Measurement       |
+|0x0010 |Phase C Measurement       |
+|0x0020 |DC Measurement            |
+|0x0040 |Harmonics Measurement     |
+|0x0080 |Power Quality Measurement |
+
+####  ACFrequency Attribute
+The ACFrequency attribute represents the most recent AC Frequency reading in Hertz (Hz).
+If the frequency cannot be measured, a value of 0xFFFF is returned. 
+
+#### TotalActivePower Attribute
+Active power represents the current demand of active power delivered or received at the
+premises, in kW. Positive values indicate power delivered to the premises where negative
+values indicate power received from the premises. In case if device is capable of measuring
+multi elements or phases then this will be net active power value.
+
+#### TotalReactivePower Attribute
+Reactive power represents the  current demand of reactive power delivered or 
+received at the premises, in kVAr. Positive values indicate power delivered to
+the premises where negative values indicate power received from the premises. In
+case if device is capable of measuring multi elements or phases then this will be net reactive
+power value.
+
+#### TotalApparentPower Attribute
+Represents the current demand of apparent power, in kVA. In case if device is capable of
+measuring multi elements or phases then this will be net apparent power value.
+
+#### RMSVoltage Attribute
+Represents the  most recent RMS voltage reading in Volts (V). If the RMS voltage cannot be
+measured, a value of 0xFFFF is returned.
+
+#### RMSCurrent Attribute
+Represents the most recent RMS current reading in Amps (A). If the power cannot be measured,
+a value of 0xFFFF is returned. 
+
+#### ActivePower Attribute
+Represents the single phase or Phase A, current demand of active power delivered or received at
+the premises, in Watts (W). Positive values indicate power delivered to the premises where negative
+values indicate power received from the premises.
+
+#### ACCurrentMultiplier Attribute
+Provides a value to be multiplied against the InstantaneousCurrent and RMSCurrentattributes. 
+his attribute must be used in conjunction with the ACCurrentDivisorattribute. 0x0000 is an invalid value for this attribute.
+
+#### ACCurrentDivisor Attribute
+Provides  a  value  to  be  divided  against the ACCurrent, InstantaneousCurrent and
+RMSCurrentattributes. This attribute must be used in conjunction with the ACCurrentMultiplierattribute
+0x0000 is an invalid value for this attribute.
+ 
+#### ACPowerMultiplier Attribute
+Provides a value to be multiplied against the InstantaneousPower and ActivePowerattributes.
+This attribute must be used in conjunction with the ACPowerDivisorattribute. 0x0000 is an invalid
+value for this attribute
+
+#### ACPowerDivisor Attribute
+Provides a value to be divided against the InstantaneousPower and ActivePowerattributes.
+This  attribute must be used in conjunction with the ACPowerMultiplierattribute. 0x0000 is an
+invalid value for this attribute.
+ 
 ### Received
 ### Generated
 

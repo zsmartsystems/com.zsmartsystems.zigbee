@@ -8,11 +8,15 @@
 package com.zsmartsystems.zigbee.zcl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -198,6 +202,41 @@ public class ZclClusterTest {
         assertEquals(ZclDataType.BOOLEAN, attribute.getDataType());
         assertEquals(0, attribute.getId());
         assertEquals(true, attribute.getLastValue());
+    }
+
+    private void setSupportedClusters(ZclCluster cluster, Set<Integer> supportedAttributes) {
+        try {
+            Field f = ZclCluster.class.getDeclaredField("supportedAttributes");
+            f.setAccessible(true);
+            f.set(cluster, supportedAttributes);
+        } catch (NoSuchFieldException x) {
+            x.printStackTrace();
+        } catch (IllegalArgumentException x) {
+            x.printStackTrace();
+        } catch (IllegalAccessException x) {
+            x.printStackTrace();
+        }
+    }
+
+    @Test
+    public void isAttributeSupported() {
+        createNetworkManager();
+
+        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress());
+        node.setNetworkAddress(1234);
+        ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
+        ZclCluster cluster = new ZclOnOffCluster(networkManager, device);
+        Set<Integer> set = new HashSet<Integer>();
+        set.add(1);
+        set.add(4);
+        set.add(2);
+        setSupportedClusters(cluster, set);
+
+        assertEquals(3, cluster.getSupportedAttributes().size());
+
+        assertTrue(cluster.isAttributeSupported(1));
+        assertTrue(cluster.isAttributeSupported(2));
+        assertFalse(cluster.isAttributeSupported(3));
     }
 
 }
