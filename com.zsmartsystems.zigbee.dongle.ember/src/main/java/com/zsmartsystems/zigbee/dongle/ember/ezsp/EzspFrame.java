@@ -113,6 +113,17 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspZigbeeKeyEstablish
  */
 public abstract class EzspFrame {
     private final static Logger logger = LoggerFactory.getLogger(EzspFrame.class);
+    
+    /**
+     * define protocol version in use, set to 4 by default
+     */
+    protected static int ezspVersion = 4;
+
+    /**
+     * The upper protocol version supported by this module
+     */
+    private static final int MAX_SUPPORTED_EZSP_VERSION = 6;
+
 
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
     protected static final int FRAME_ID_ADD_TRANSIENT_LINK_KEY = 0xAF;
@@ -318,8 +329,14 @@ public abstract class EzspFrame {
      * @return the {@link EzspFrameResponse} or null if the response can't be created.
      */
     public static EzspFrameResponse createHandler(AshFrameData data) {
-        Class<?> ezspClass = ezspHandlerMap.get(data.getDataBuffer()[2]);
-        if (ezspClass == null) {
+    	Class<?> ezspClass;
+		if (data.getDataBuffer()[2] != 0xFF) {
+		    ezspClass = ezspHandlerMap.get(data.getDataBuffer()[2]);
+		} else {
+		    ezspClass = ezspHandlerMap.get(data.getDataBuffer()[4]);
+		}
+    	 
+    	 if (ezspClass == null) {
             return null;
         }
 
@@ -335,4 +352,19 @@ public abstract class EzspFrame {
 
         return null;
     }
+
+	public static int getEzspVersion() {
+		return ezspVersion;
+	}
+
+	public static boolean setEzspVersion(int i_ezspVersion) {
+		boolean lo_supported = false;
+		
+		if( i_ezspVersion <= EzspFrame.MAX_SUPPORTED_EZSP_VERSION ) {
+			EzspFrame.ezspVersion = i_ezspVersion;
+			lo_supported = true;
+		}
+		
+		return lo_supported;
+	}
 }
