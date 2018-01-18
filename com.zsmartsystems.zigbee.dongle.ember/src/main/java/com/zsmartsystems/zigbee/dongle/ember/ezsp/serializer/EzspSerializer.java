@@ -16,6 +16,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConfigTxPowerMode;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityState;
@@ -191,6 +192,19 @@ public class EzspSerializer {
         buffer[length++] = joinMethod.getKey();
     }
 
+    
+    /**
+     * Adds a EmberConfigTxPowerMode into the output stream
+     *
+     * @param val
+     */
+    public void serializeEmberConfigTxPowerMode(EmberConfigTxPowerMode val) {
+    	int value = val.getKey();
+        buffer[length++] = value & 0xFF;
+        buffer[length++] = (value >> 8) & 0xFF;
+    }
+    
+    
     /**
      * Returns the data to be sent to the NCP
      *
@@ -199,5 +213,4 @@ public class EzspSerializer {
     public int[] getPayload() {
         return Arrays.copyOfRange(buffer, 0, length);
     }
-
 }
