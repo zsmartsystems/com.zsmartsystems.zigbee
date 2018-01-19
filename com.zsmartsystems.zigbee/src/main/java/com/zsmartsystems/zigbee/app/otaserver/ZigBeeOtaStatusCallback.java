@@ -18,7 +18,8 @@ public interface ZigBeeOtaStatusCallback {
      * Provides a callback following the status change of the OTA server
      *
      * @param status the updated {@link ZigBeeOtaServerStatus}
+     * @param percent the current percent complete of the transfer
      */
-    void otaStatusUpdate(ZigBeeOtaServerStatus status);
+    void otaStatusUpdate(ZigBeeOtaServerStatus status, int percent);
 
 }

@@ -1567,8 +1567,8 @@ public final class ZigBeeConsole {
 
                 otaServer.addListener(new ZigBeeOtaStatusCallback() {
                     @Override
-                    public void otaStatusUpdate(ZigBeeOtaServerStatus status) {
-                        print("OTA status callback: " + status, out);
+                    public void otaStatusUpdate(ZigBeeOtaServerStatus status, int percent) {
+                        print("OTA status callback: " + status + ", percent=" + percent, out);
                     }
                 });
             }

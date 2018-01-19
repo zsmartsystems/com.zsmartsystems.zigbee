@@ -24,7 +24,6 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
@@ -32,6 +31,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServer;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServerStatus;
@@ -128,7 +128,7 @@ public class ZigBeeOtaServerTest implements ZigBeeOtaStatusCallback {
     }
 
     @Override
-    public void otaStatusUpdate(ZigBeeOtaServerStatus status) {
+    public void otaStatusUpdate(ZigBeeOtaServerStatus status, int percent) {
         otaStatusCapture.add(status);
     }
 

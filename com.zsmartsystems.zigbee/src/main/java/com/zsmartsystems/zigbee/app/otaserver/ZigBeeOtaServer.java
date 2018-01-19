@@ -190,6 +190,11 @@ public class ZigBeeOtaServer implements ZigBeeApplication {
     private TimerTask timerTask = null;
 
     /**
+     * The current percentage complete
+     */
+    private int percentComplete = 0;
+
+    /**
      * Default transfer timeout period in milliseconds
      */
     private final long TRANSFER_TIMEOUT_PERIOD = 30000;
@@ -469,12 +474,11 @@ public class ZigBeeOtaServer implements ZigBeeApplication {
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {
-                        statusListener.otaStatusUpdate(updatedStatus);
+                        statusListener.otaStatusUpdate(updatedStatus, percentComplete);
                     }
                 });
             }
         }
-
     }
 
     /**
@@ -692,6 +696,15 @@ public class ZigBeeOtaServer implements ZigBeeApplication {
         // Restart the timer
         startTransferTimer();
 
+        int percent = command.getFileOffset() * 100 / otaFile.getImageSize();
+        if (percent > 100) {
+            percent = 100;
+        }
+        if (percent != percentComplete) {
+            percentComplete = percent;
+            updateStatus(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS);
+        }
+
         // Send the block response
         sendImageBlock(command.getFileOffset(), command.getMaximumDataSize());
     }
@@ -722,6 +735,8 @@ public class ZigBeeOtaServer implements ZigBeeApplication {
 
         // Stop the transfer timer
         stopTransferTimer();
+
+        percentComplete = 100;
 
         // Handle the status
         switch (command.getStatus()) {
