@@ -54,7 +54,6 @@ public class EmberFirmwareUpdateHandlerTest {
             return (boolean) privateMethod.invoke(firmwareHandler);
         } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
                 | InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -74,7 +73,6 @@ public class EmberFirmwareUpdateHandlerTest {
             return (int) privateMethod.invoke(firmwareHandler);
         } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
                 | InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -121,7 +119,6 @@ public class EmberFirmwareUpdateHandlerTest {
             returnVal = (boolean) privateMethod.invoke(firmwareHandler);
         } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
                 | InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             returnVal = false;
         }

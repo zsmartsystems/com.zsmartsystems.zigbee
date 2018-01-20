@@ -41,7 +41,6 @@ public class TelegesisFrameTest extends TelegesisFrameBaseTest {
             }
         } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
                 | InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -61,7 +60,6 @@ public class TelegesisFrameTest extends TelegesisFrameBaseTest {
 
         } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
                 | InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

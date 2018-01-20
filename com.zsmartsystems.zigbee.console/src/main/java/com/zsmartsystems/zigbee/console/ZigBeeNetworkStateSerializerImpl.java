@@ -128,7 +128,6 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
                 }
             }
         } catch (UnsupportedEncodingException | FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

@@ -36,7 +36,6 @@ public class CommandResultFutureTest {
             assertEquals(result, future.get());
             assertEquals(result, future.get(1, TimeUnit.MICROSECONDS));
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

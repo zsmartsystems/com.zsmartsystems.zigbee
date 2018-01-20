@@ -83,14 +83,10 @@ public class ZigBeeNodeTest {
             fieldLqi.setAccessible(true);
             fieldLqi.set(neighbor, lqi);
         } catch (IllegalAccessException | IllegalArgumentException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-
         } catch (SecurityException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (NoSuchFieldException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

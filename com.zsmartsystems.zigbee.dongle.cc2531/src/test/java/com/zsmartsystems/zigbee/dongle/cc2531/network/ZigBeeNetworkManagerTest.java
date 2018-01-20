@@ -18,9 +18,6 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import com.zsmartsystems.zigbee.dongle.cc2531.network.CommandInterface;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.SynchronousCommandListener;
-import com.zsmartsystems.zigbee.dongle.cc2531.network.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 
 /**
@@ -42,7 +39,6 @@ public class ZigBeeNetworkManagerTest {
             Mockito.doNothing().when(commandInterface).sendSynchronousCommand(argumentPacket.capture(),
                     argumentListener.capture(), argumentTimeout.capture());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -91,7 +87,6 @@ public class ZigBeeNetworkManagerTest {
                     packet.getPacket()));
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -103,8 +98,7 @@ public class ZigBeeNetworkManagerTest {
         int[] mask;
         Method privateMethod;
         try {
-            privateMethod = ZigBeeNetworkManager.class.getDeclaredMethod("buildChannelMask",
-                    new Class[] { int.class });
+            privateMethod = ZigBeeNetworkManager.class.getDeclaredMethod("buildChannelMask", new Class[] { int.class });
             privateMethod.setAccessible(true);
 
             mask = (int[]) privateMethod.invoke(networkManager, -1);
@@ -118,7 +112,6 @@ public class ZigBeeNetworkManagerTest {
 
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
