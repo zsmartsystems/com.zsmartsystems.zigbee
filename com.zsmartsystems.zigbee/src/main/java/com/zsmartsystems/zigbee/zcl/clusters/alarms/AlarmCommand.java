@@ -16,6 +16,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Alarm Command value object class.
  * <p>
+ * The alarm command signals an alarm situation on the sending device.
+ * <br>
+ * An alarm command is generated when a  cluster  which has alarm functionality detects an alarm
+ * condition, e.g., an attribute has taken on a value that is outside a ‘safe’ range. The details
+ * are given by individual cluster specifications.
+ * <p>
  * Cluster: <b>Alarms</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Alarms cluster.
  * <p>
