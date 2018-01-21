@@ -19,6 +19,7 @@ import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
+import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisEventListener;
@@ -30,6 +31,8 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBoot
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisChangeChannelCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCreatePanCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceJoinedNetworkEvent;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceLeftNetworkEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceType;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisallowTcJoinCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisallowUnsecuredRejoinCommand;
@@ -570,6 +573,22 @@ public class ZigBeeDongleTelegesis
             apsFrame.setSourceAddress(rxMessage.getNetworkAddress());
             apsFrame.setPayload(rxMessage.getMessageData());
             zigbeeTransportReceive.receiveCommand(apsFrame);
+            return;
+        }
+
+        // Handle devices joining and leaving
+        if (event instanceof TelegesisDeviceJoinedNetworkEvent) {
+            TelegesisDeviceJoinedNetworkEvent deviceJoinedEvent = (TelegesisDeviceJoinedNetworkEvent) event;
+
+            zigbeeTransportReceive.nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN,
+                    deviceJoinedEvent.getNetworkAddress(), deviceJoinedEvent.getIeeeAddress());
+            return;
+        }
+        if (event instanceof TelegesisDeviceLeftNetworkEvent) {
+            TelegesisDeviceLeftNetworkEvent deviceLeftEvent = (TelegesisDeviceLeftNetworkEvent) event;
+
+            zigbeeTransportReceive.nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, deviceLeftEvent.getNetworkAddress(),
+                    deviceLeftEvent.getIeeeAddress());
             return;
         }
 
