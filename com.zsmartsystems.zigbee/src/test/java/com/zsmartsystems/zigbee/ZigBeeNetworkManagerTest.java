@@ -332,20 +332,14 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
     @Override
     public void deviceAdded(ZigBeeEndpoint device) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void deviceUpdated(ZigBeeEndpoint device) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void deviceRemoved(ZigBeeEndpoint device) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override

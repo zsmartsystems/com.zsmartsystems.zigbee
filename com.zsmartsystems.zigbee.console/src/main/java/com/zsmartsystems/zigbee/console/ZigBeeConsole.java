@@ -2887,7 +2887,6 @@ public final class ZigBeeConsole {
                         try {
                             Thread.sleep(167);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }
@@ -2906,7 +2905,6 @@ public final class ZigBeeConsole {
                         try {
                             Thread.sleep(107);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }
@@ -2925,7 +2923,6 @@ public final class ZigBeeConsole {
                         try {
                             Thread.sleep(131);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }
@@ -2944,7 +2941,6 @@ public final class ZigBeeConsole {
                         try {
                             Thread.sleep(187);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }

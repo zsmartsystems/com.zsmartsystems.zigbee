@@ -223,7 +223,6 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
 
     @Override
     public boolean setZigBeeNetworkKey(ZigBeeKey key) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -245,7 +244,6 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
 
     @Override
     public boolean setTcLinkKey(ZigBeeKey key) {
-        // TODO Auto-generated method stub
         return false;
     }
 

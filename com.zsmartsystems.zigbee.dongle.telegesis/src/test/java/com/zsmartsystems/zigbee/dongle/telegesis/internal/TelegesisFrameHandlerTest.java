@@ -58,7 +58,6 @@ public class TelegesisFrameHandlerTest {
             return (int[]) privateMethod.invoke(frameHandler);
         } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
                 | InvocationTargetException | NoSuchFieldException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -156,7 +155,6 @@ public class TelegesisFrameHandlerTest {
                 privateMethod.invoke(frameHandler, eventOk);
             } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
                     | InvocationTargetException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -164,7 +162,6 @@ public class TelegesisFrameHandlerTest {
                 eventCapture.wait(1000);
             }
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

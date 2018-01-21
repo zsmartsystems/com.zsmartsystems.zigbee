@@ -54,7 +54,6 @@ public class TelegesisFirmwareUpdateHandlerTest {
             return (boolean) privateMethod.invoke(firmwareHandler);
         } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
                 | InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -74,7 +73,6 @@ public class TelegesisFirmwareUpdateHandlerTest {
             return (int) privateMethod.invoke(firmwareHandler);
         } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
                 | InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -122,7 +120,6 @@ public class TelegesisFirmwareUpdateHandlerTest {
             returnVal = (boolean) privateMethod.invoke(firmwareHandler);
         } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
                 | InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             returnVal = false;
         }
