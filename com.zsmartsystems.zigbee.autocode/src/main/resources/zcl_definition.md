@@ -1095,12 +1095,24 @@ If alarm logging is not implemented this attribute shall always take the value
 ### Generated
 
 #### Alarm Command [0x00]
+The alarm command signals an alarm situation on the sending device.
+
+An alarm command is generated when a  cluster  which has alarm functionality detects an alarm
+condition, e.g., an attribute has taken on a value that is outside a ‘safe’ range. The details
+are given by individual cluster specifications.
+
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Alarm code                 |8-bit enumeration          |
 |Cluster identifier         |Unsigned 16-bit integer    |
 
 #### Get Alarm Response Command [0x01]
+If there is at least one alarm record in the alarm table then the status field is set to SUCCESS.
+The alarm code, cluster identifier and time stamp fields SHALL all be present and SHALL take their
+values from the item in the alarm table that they are reporting.If there  are  no more  alarms logged
+in the  alarm table  then the  status field is set  to NOT_FOUND  and the alarm code, cluster
+identifier and time stamp fields SHALL be omitted.
+
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 |Status                     |8-bit enumeration          |

@@ -651,9 +651,9 @@ public final class ZigBeeConsole {
             // out);
             print("Device Version   : " + device.getDeviceVersion(), out);
             print("Input Clusters   : ", out);
-            printClusters(device, device.getInputClusterIds(), out);
+            printClusters(device, device.getInputClusterIds(), true, out);
             print("Output Clusters  : ", out);
-            printClusters(device, device.getOutputClusterIds(), out);
+            printClusters(device, device.getOutputClusterIds(), false, out);
 
             return true;
         }
@@ -663,11 +663,18 @@ public final class ZigBeeConsole {
          *
          * @param device the device
          * @param collection the cluster IDs
+         * @param input
          * @param out the output print stream
          */
-        private void printClusters(final ZigBeeEndpoint device, final Collection<Integer> collection, PrintStream out) {
+        private void printClusters(final ZigBeeEndpoint device, final Collection<Integer> collection, boolean input,
+                PrintStream out) {
             for (int clusterId : collection) {
-                ZclCluster cluster = device.getCluster(clusterId);
+                ZclCluster cluster;
+                if (input) {
+                    cluster = device.getInputCluster(clusterId);
+                } else {
+                    cluster = device.getOutputCluster(clusterId);
+                }
                 if (cluster != null) {
                     print("                 : " + clusterId + " " + cluster.getClusterName(), out);
                     for (ZclAttribute attribute : cluster.getAttributes()) {
@@ -2005,12 +2012,11 @@ public final class ZigBeeConsole {
             if (result) {
                 for (Integer attributeId : cluster.getSupportedAttributes()) {
                     ZclAttribute attribute = cluster.getAttribute(attributeId);
-                    String name = "unknown";
+                    out.print("Cluster " + cluster.getClusterId() + ", Attribute=" + attributeId);
                     if (attribute != null) {
-                        name = attribute.getName();
+                        out.print(",  Type=" + attribute.getDataType() + ", " + attribute.getName());
                     }
-                    out.println("Cluster " + cluster.getClusterId() + ", Attribute=" + attribute.getId() + ",  Type="
-                            + attribute.getDataType() + ", " + name);
+                    out.println();
                 }
 
                 return true;
