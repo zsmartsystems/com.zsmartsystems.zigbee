@@ -20,7 +20,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * @author Chris Jackson
  */
 public class ZclFieldDeserializer {
-
     /**
      * Delegate deserializer.
      */
@@ -56,22 +55,26 @@ public class ZclFieldDeserializer {
     /**
      * Deserializes a field.
      *
-     * @param dataType the data type of the field.
+     * @param dataType the {@link ZclDataType} of the field.
      * @return the value
      */
     public Object deserialize(final ZclDataType dataType) {
         if (ZclListItemField.class.isAssignableFrom(dataType.getDataClass())) {
             final Class dataTypeClass = dataType.getDataClass();
             final List<ZclListItemField> list = new ArrayList<ZclListItemField>();
-            while (deserializer.getSize() - deserializer.getPosition() > 0) {
-                final ZclListItemField item;
-                try {
-                    item = (ZclListItemField) dataTypeClass.newInstance();
-                } catch (final Exception e) {
-                    throw new IllegalArgumentException("Error deserializing field: " + dataType.getLabel(), e);
+            try {
+                while (deserializer.getSize() - deserializer.getPosition() > 0) {
+                    final ZclListItemField item;
+                    try {
+                        item = (ZclListItemField) dataTypeClass.newInstance();
+                    } catch (final Exception e) {
+                        throw new IllegalArgumentException("Error deserializing field: " + dataType.getLabel(), e);
+                    }
+                    item.deserialize(this.deserializer);
+                    list.add(item);
                 }
-                item.deserialize(this.deserializer);
-                list.add(item);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                // Eat the exception - this terminates the list!
             }
             return list;
         }
