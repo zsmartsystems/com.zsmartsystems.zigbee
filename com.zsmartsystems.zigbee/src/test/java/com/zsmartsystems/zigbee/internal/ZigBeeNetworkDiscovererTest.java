@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.concurrent.Future;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -87,6 +88,7 @@ public class ZigBeeNetworkDiscovererTest {
         }).when(networkManager).executeTask(org.mockito.Matchers.any(Runnable.class));
     }
 
+    @Ignore
     @Test
     public void testNormal() {
         // Add all the required responses to a list
