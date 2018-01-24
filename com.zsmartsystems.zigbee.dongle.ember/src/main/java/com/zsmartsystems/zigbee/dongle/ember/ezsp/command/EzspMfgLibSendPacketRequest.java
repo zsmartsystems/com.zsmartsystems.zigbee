@@ -73,7 +73,7 @@ public class EzspMfgLibSendPacketRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeUInt8(messageContents.length);
+        serializer.serializeUInt8(messageContents.length+2);
         serializer.serializeUInt8Array(messageContents);
         serializer.serializeUInt8(0); // CRC[0]
         serializer.serializeUInt8(0); // CRC[1]
