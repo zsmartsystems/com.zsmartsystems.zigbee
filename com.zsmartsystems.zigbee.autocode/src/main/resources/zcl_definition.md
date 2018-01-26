@@ -923,6 +923,34 @@ No cluster specific commands.
 ## On/off Switch Configuration [0x0007]
 Attributes and commands for configuring On/Off switching devices
 
+### Attributes
+
+|Id     |Name                 |Type                       |Access     |Implement |Reporting |
+|-------|---------------------|---------------------------|-----------|----------|----------|
+|0x0000 |SwitchType           |8-bit enumeration          |Read Only  |Mandatory |          |
+|0x0010 |SwitchActions        |8-bit enumeration          |Read Write |Mandatory |          |
+
+#### SwitchType Attribute
+The SwitchTypeattribute  specifies  the  basic  functionality  of  the  On/Off  switching  device.
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0000 |Toggle                    |
+|0x0001 |Momentary                 |
+|0x0002 |Multifunction             |
+
+#### SwitchActions Attribute
+
+The SwitchActions attribute is 8 bits in length and specifies the commands of the On/Off cluster
+to be generated when the switch moves between its two states
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0000 |On                        |
+|0x0001 |Off                       |
+|0x0002 |Toggle                    |
+
+
 ### Received
 
 No cluster specific commands.
