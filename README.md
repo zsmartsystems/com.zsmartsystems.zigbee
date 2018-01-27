@@ -80,6 +80,8 @@ These provide minimal functionality and can be extended as required.
 ## Maven goals
  
 * To build: ```mvn clean install```
+* To prepeare a new release: ```mvn release:prepare```
+* To perform a new release: ```mvn release:perform```
 * To bump the version: ```mvn release:update-versions```
 * To format the license header: ```mvn license:format```
 

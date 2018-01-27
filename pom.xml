@@ -1,183 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.zsmartsystems</groupId>
-    <artifactId>zigbee</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
-    <packaging>pom</packaging>
+	<groupId>com.zsmartsystems</groupId>
+	<artifactId>zigbee</artifactId>
+	<version>1.0.3-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
 
-    <scm>
-        <url>https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</url>
-        <connection>scm:git:https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</connection>
-        <developerConnection>scm:git:https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
+	<scm>
+		<url>https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</url>
+		<connection>scm:git:https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</connection>
+		<developerConnection>scm:git:https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</developerConnection>
+		<tag>zigbee-1.0.3</tag>
+	</scm>
 
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>bintray-zsmartsystems</id>
-            <name>bintray</name>
-            <url>http://dl.bintray.com/zsmartsystems</url>
-        </repository>
-    </repositories>
+	<distributionManagement>
+		<repository>
+            <id>bintray-zsmartsystems-com.zsmartsystems</id>
+            <name>zsmartsystems-com.zsmartsystems</name>
+            <url>https://api.bintray.com/maven/zsmartsystems/com.zsmartsystems/zigbee/;publish=1</url>
+		</repository>
+	</distributionManagement>
 
-    <distributionManagement>
-        <repository>
-            <id>bintray-zsmartsystems-com.zsmartsystems.zigbee</id>
-            <name>zsmartsystems-com.zsmartsystems.zigbee</name>
-            <url>https://api.bintray.com/maven/zsmartsystems/maven/com.zsmartsystems.zigbee/;publish=1;</url>
-        </repository>
-    </distributionManagement>
+	<modules>
+		<module>com.zsmartsystems.zigbee</module>
+		<module>com.zsmartsystems.zigbee.dongle.cc2531</module>
+		<module>com.zsmartsystems.zigbee.dongle.ember</module>
+		<module>com.zsmartsystems.zigbee.dongle.conbee</module>
+		<module>com.zsmartsystems.zigbee.dongle.telegesis</module>
+		<module>com.zsmartsystems.zigbee.console</module>
+		<module>com.zsmartsystems.zigbee.serial</module>
+		<module>com.zsmartsystems.zigbee.test</module>
+	</modules>
 
-    <modules>
-        <module>com.zsmartsystems.zigbee</module>
-        <module>com.zsmartsystems.zigbee.dongle.cc2531</module>
-        <module>com.zsmartsystems.zigbee.dongle.ember</module>
-        <module>com.zsmartsystems.zigbee.dongle.conbee</module>
-        <module>com.zsmartsystems.zigbee.dongle.telegesis</module>
-        <module>com.zsmartsystems.zigbee.console</module>
-        <module>com.zsmartsystems.zigbee.serial</module>
-        <module>com.zsmartsystems.zigbee.test</module>
-    </modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <failOnError>false</failOnError>
-                </configuration>
-            </plugin>
-            
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
-                <configuration>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <releaseProfiles>release</releaseProfiles>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                </configuration>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.8</version>
-                <executions>
-                    <execution>
-                        <id>jacoco-prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<failOnError>false</failOnError>
+				</configuration>
+			</plugin>
 
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <version>3.0</version>
-                <configuration>
-                    <header>src/etc/header.txt</header>
-                    <failIfMissing>true</failIfMissing>
-                    <strictCheck>true</strictCheck>
-                    <includes>
-                        <include>src/**/*.java</include>
-                    </includes>
-                    <properties>
-                        <year>2017</year>
-                    </properties>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-        </plugins>
-        
-    </build>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>release</releaseProfiles>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
 
-    <dependencies>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.8</version>
+				<executions>
+					<execution>
+						<id>jacoco-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<header>src/etc/header.txt</header>
+					<failIfMissing>true</failIfMissing>
+					<strictCheck>true</strictCheck>
+					<includes>
+						<include>src/**/*.java</include>
+					</includes>
+					<properties>
+						<year>2017</year>
+					</properties>
+					<encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.5</version>
-        </dependency>
+		</plugins>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.5</version>
-        </dependency>
+	</build>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.9.5</version>
-            <scope>test</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.awaitility</groupId>
-            <artifactId>awaitility</artifactId>
-            <version>2.0.0</version>
-            <scope>test</scope>
-        </dependency>
+	<dependencies>
 
-    </dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.awaitility</groupId>
+			<artifactId>awaitility</artifactId>
+			<version>2.0.0</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
 
 </project>

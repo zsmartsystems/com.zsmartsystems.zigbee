@@ -1,12 +1,12 @@
 {
     "package": {
-        "name": "bin",
-        "repo": "com.zsmartsystems.zigbee",
+        "name": "zigbee",
+        "repo": "com.zsmartsystems",
         "subject": "zsmartsystems"
     },
 
     "version": {
-        "name": "1.0.0-SNAPSHOT",
+        "name": "1.0.3",
         "desc": ""
     },
 

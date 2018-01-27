@@ -4,7 +4,6 @@
 
     <groupId>com.zsmartsystems.zigbee</groupId>
     <artifactId>com.zsmartsystems.zigbee.autocode</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
