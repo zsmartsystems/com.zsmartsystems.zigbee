@@ -13,6 +13,10 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.ColorLoopSetCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveToHueAndSaturationCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveToHueCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedStepHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveColorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveSaturationCommand;
@@ -130,16 +134,76 @@ public class ZclColorControlCluster extends ZclCluster {
      * If either the CurrentHue or CurrentSaturation attribute is implemented, this attribute SHALL also be
      * implemented, otherwise it is optional. The value of the ColorMode attribute cannot be written directly
      * - it is set upon reception of another command in to the appropriate mode for that command.
-     * <p>
-     * 0x00 CurrentHue and CurrentSaturation
-     * 0x01 CurrentX and CurrentY
-     * 0x02 ColorTemperatureMireds
      */
     public static final int ATTR_COLORMODE = 0x0008;
+    /**
+     * The EnhancedCurrentHueattribute represents non-equidistant steps along the CIE 1931 color
+     * triangle, and it provides 16-bits precision. The upper 8 bits of this attribute SHALL be
+     * used as an index in the implementation specific XY lookup table to provide the non-equidistance
+     * steps (see the ZLL test specification for an example).  The lower 8 bits SHALL be used to
+     * interpolate between these steps in a linear way in order to provide color zoom for the user.
+     */
+    public static final int ATTR_ENHANCEDCURRENTHUE = 0x4000;
+    /**
+     * The EnhancedColorModeattribute specifies which attributes are currently determining the color of the device.
+     * To provide compatibility with standard ZCL, the original ColorModeattribute SHALLindicate ‘CurrentHueand CurrentSaturation’
+     * when the light uses the EnhancedCurrentHueattribute.
+     */
+    public static final int ATTR_ENHANCEDCOLORMODE = 0x4001;
+    /**
+     * The ColorLoopActive attribute specifies the current active status of the color loop.
+     * If this attribute has the value 0x00, the color loop SHALLnot be active. If this attribute
+     * has the value 0x01, the color loop SHALL be active. All other values (0x02 – 0xff) are reserved.
+     */
+    public static final int ATTR_COLORLOOPACTIVE = 0x4002;
+    /**
+     * The ColorLoopDirection attribute specifies the current direction of the color loop.
+     * If this attribute has the value 0x00, the EnhancedCurrentHue attribute SHALL be decremented.
+     * If this attribute has the value 0x01, the EnhancedCurrentHue attribute SHALL be incremented.
+     * All other values (0x02 – 0xff) are reserved.
+     */
+    public static final int ATTR_COLORLOOPDIRECTION = 0x4003;
+    /**
+     * The ColorLoopTime attribute specifies the number of seconds it SHALL take to perform a full
+     * color loop, i.e.,to cycle all values of the EnhancedCurrentHue attribute (between 0x0000 and 0xffff).
+     */
+    public static final int ATTR_COLORLOOPTIME = 0x4004;
+    /**
+     * The ColorLoopStartEnhancedHueattribute specifies the value of the EnhancedCurrentHue attribute
+     * from which the color loop SHALL be started.
+     */
+    public static final int ATTR_COLORLOOPSTARTHUE = 0x4005;
+    /**
+     * The ColorLoopStoredEnhancedHue attribute specifies the value of the EnhancedCurrentHue attribute
+     * before the color loop was started. Once the color loop is complete, the EnhancedCurrentHue
+     * attribute SHALL be restored to this value.
+     */
+    public static final int ATTR_COLORLOOPSTOREDHUE = 0x4006;
+    /**
+     * The ColorCapabilitiesattribute specifies the color capabilities of the device supporting the
+     * color control cluster.
+     * <p>
+     * Note:The support of the CurrentXand CurrentYattributes is mandatory regardless of color capabilities.
+     */
+    public static final int ATTR_COLORCAPABILITIES = 0x400A;
+    /**
+     * The ColorTempPhysicalMinMiredsattribute indicates the minimum mired value
+     * supported by the hardware. ColorTempPhysicalMinMiredscorresponds to the maximum
+     * color temperature in kelvins supported by the hardware.
+     * ColorTempPhysicalMinMireds ≤ ColorTemperatureMireds
+     */
+    public static final int ATTR_COLORTEMPERATUREMIN = 0x400B;
+    /**
+     * The ColorTempPhysicalMaxMiredsattribute indicates the maximum mired value
+     * supported by the hard-ware. ColorTempPhysicalMaxMiredscorresponds to the minimum
+     * color temperature in kelvins supported by the hardware.
+     * ColorTemperatureMireds ≤ ColorTempPhysicalMaxMireds.
+     */
+    public static final int ATTR_COLORTEMPERATUREMAX = 0x400C;
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(9);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(19);
 
         attributeMap.put(ATTR_CURRENTHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTHUE, "CurrentHue", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
         attributeMap.put(ATTR_CURRENTSATURATION, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTSATURATION, "CurrentSaturation", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
@@ -150,6 +214,16 @@ public class ZclColorControlCluster extends ZclCluster {
         attributeMap.put(ATTR_COMPENSATIONTEXT, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COMPENSATIONTEXT, "CompensationText", ZclDataType.CHARACTER_STRING, false, true, false, false));
         attributeMap.put(ATTR_COLORTEMPERATURE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORTEMPERATURE, "ColorTemperature", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, true));
         attributeMap.put(ATTR_COLORMODE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORMODE, "ColorMode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_ENHANCEDCURRENTHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_ENHANCEDCURRENTHUE, "EnhancedCurrentHue", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, true));
+        attributeMap.put(ATTR_ENHANCEDCOLORMODE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_ENHANCEDCOLORMODE, "EnhancedColorMode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_COLORLOOPACTIVE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPACTIVE, "ColorLoopActive", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COLORLOOPDIRECTION, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPDIRECTION, "ColorLoopDirection", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COLORLOOPTIME, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPTIME, "ColorLoopTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COLORLOOPSTARTHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPSTARTHUE, "ColorLoopStartHue", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COLORLOOPSTOREDHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPSTOREDHUE, "ColorLoopStoredHue", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COLORCAPABILITIES, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORCAPABILITIES, "ColorCapabilities", ZclDataType.BITMAP_16_BIT, false, true, false, false));
+        attributeMap.put(ATTR_COLORTEMPERATUREMIN, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORTEMPERATUREMIN, "ColorTemperatureMin", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COLORTEMPERATUREMAX, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORTEMPERATUREMAX, "ColorTemperatureMax", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
     }
@@ -753,10 +827,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * implemented, otherwise it is optional. The value of the ColorMode attribute cannot be written directly
      * - it is set upon reception of another command in to the appropriate mode for that command.
      * <p>
-     * 0x00 CurrentHue and CurrentSaturation
-     * 0x01 CurrentX and CurrentY
-     * 0x02 ColorTemperatureMireds
-     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -775,10 +845,6 @@ public class ZclColorControlCluster extends ZclCluster {
      * If either the CurrentHue or CurrentSaturation attribute is implemented, this attribute SHALL also be
      * implemented, otherwise it is optional. The value of the ColorMode attribute cannot be written directly
      * - it is set upon reception of another command in to the appropriate mode for that command.
-     * <p>
-     * 0x00 CurrentHue and CurrentSaturation
-     * 0x01 CurrentX and CurrentY
-     * 0x02 ColorTemperatureMireds
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -803,6 +869,537 @@ public class ZclColorControlCluster extends ZclCluster {
         }
 
         return (Integer) readSync(attributes.get(ATTR_COLORMODE));
+    }
+
+    /**
+     * Get the <i>EnhancedCurrentHue</i> attribute [attribute ID <b>16384</b>].
+     * <p>
+     * The EnhancedCurrentHueattribute represents non-equidistant steps along the CIE 1931 color
+     * triangle, and it provides 16-bits precision. The upper 8 bits of this attribute SHALL be
+     * used as an index in the implementation specific XY lookup table to provide the non-equidistance
+     * steps (see the ZLL test specification for an example).  The lower 8 bits SHALL be used to
+     * interpolate between these steps in a linear way in order to provide color zoom for the user.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getEnhancedCurrentHueAsync() {
+        return read(attributes.get(ATTR_ENHANCEDCURRENTHUE));
+    }
+
+
+    /**
+     * Synchronously get the <i>EnhancedCurrentHue</i> attribute [attribute ID <b>16384</b>].
+     * <p>
+     * The EnhancedCurrentHueattribute represents non-equidistant steps along the CIE 1931 color
+     * triangle, and it provides 16-bits precision. The upper 8 bits of this attribute SHALL be
+     * used as an index in the implementation specific XY lookup table to provide the non-equidistance
+     * steps (see the ZLL test specification for an example).  The lower 8 bits SHALL be used to
+     * interpolate between these steps in a linear way in order to provide color zoom for the user.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getEnhancedCurrentHue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ENHANCEDCURRENTHUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ENHANCEDCURRENTHUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ENHANCEDCURRENTHUE).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_ENHANCEDCURRENTHUE));
+    }
+
+
+    /**
+     * Set reporting for the <i>EnhancedCurrentHue</i> attribute [attribute ID <b>16384</b>].
+     * <p>
+     * The EnhancedCurrentHueattribute represents non-equidistant steps along the CIE 1931 color
+     * triangle, and it provides 16-bits precision. The upper 8 bits of this attribute SHALL be
+     * used as an index in the implementation specific XY lookup table to provide the non-equidistance
+     * steps (see the ZLL test specification for an example).  The lower 8 bits SHALL be used to
+     * interpolate between these steps in a linear way in order to provide color zoom for the user.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param minInterval {@link int} minimum reporting period
+     * @param maxInterval {@link int} maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setEnhancedCurrentHueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_ENHANCEDCURRENTHUE), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Get the <i>EnhancedColorMode</i> attribute [attribute ID <b>16385</b>].
+     * <p>
+     * The EnhancedColorModeattribute specifies which attributes are currently determining the color of the device.
+     * To provide compatibility with standard ZCL, the original ColorModeattribute SHALLindicate ‘CurrentHueand CurrentSaturation’
+     * when the light uses the EnhancedCurrentHueattribute.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getEnhancedColorModeAsync() {
+        return read(attributes.get(ATTR_ENHANCEDCOLORMODE));
+    }
+
+
+    /**
+     * Synchronously get the <i>EnhancedColorMode</i> attribute [attribute ID <b>16385</b>].
+     * <p>
+     * The EnhancedColorModeattribute specifies which attributes are currently determining the color of the device.
+     * To provide compatibility with standard ZCL, the original ColorModeattribute SHALLindicate ‘CurrentHueand CurrentSaturation’
+     * when the light uses the EnhancedCurrentHueattribute.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getEnhancedColorMode(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_ENHANCEDCOLORMODE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_ENHANCEDCOLORMODE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_ENHANCEDCOLORMODE).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_ENHANCEDCOLORMODE));
+    }
+
+    /**
+     * Get the <i>ColorLoopActive</i> attribute [attribute ID <b>16386</b>].
+     * <p>
+     * The ColorLoopActive attribute specifies the current active status of the color loop.
+     * If this attribute has the value 0x00, the color loop SHALLnot be active. If this attribute
+     * has the value 0x01, the color loop SHALL be active. All other values (0x02 – 0xff) are reserved.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getColorLoopActiveAsync() {
+        return read(attributes.get(ATTR_COLORLOOPACTIVE));
+    }
+
+
+    /**
+     * Synchronously get the <i>ColorLoopActive</i> attribute [attribute ID <b>16386</b>].
+     * <p>
+     * The ColorLoopActive attribute specifies the current active status of the color loop.
+     * If this attribute has the value 0x00, the color loop SHALLnot be active. If this attribute
+     * has the value 0x01, the color loop SHALL be active. All other values (0x02 – 0xff) are reserved.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getColorLoopActive(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COLORLOOPACTIVE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COLORLOOPACTIVE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COLORLOOPACTIVE).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_COLORLOOPACTIVE));
+    }
+
+    /**
+     * Get the <i>ColorLoopDirection</i> attribute [attribute ID <b>16387</b>].
+     * <p>
+     * The ColorLoopDirection attribute specifies the current direction of the color loop.
+     * If this attribute has the value 0x00, the EnhancedCurrentHue attribute SHALL be decremented.
+     * If this attribute has the value 0x01, the EnhancedCurrentHue attribute SHALL be incremented.
+     * All other values (0x02 – 0xff) are reserved.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getColorLoopDirectionAsync() {
+        return read(attributes.get(ATTR_COLORLOOPDIRECTION));
+    }
+
+
+    /**
+     * Synchronously get the <i>ColorLoopDirection</i> attribute [attribute ID <b>16387</b>].
+     * <p>
+     * The ColorLoopDirection attribute specifies the current direction of the color loop.
+     * If this attribute has the value 0x00, the EnhancedCurrentHue attribute SHALL be decremented.
+     * If this attribute has the value 0x01, the EnhancedCurrentHue attribute SHALL be incremented.
+     * All other values (0x02 – 0xff) are reserved.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getColorLoopDirection(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COLORLOOPDIRECTION).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COLORLOOPDIRECTION).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COLORLOOPDIRECTION).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_COLORLOOPDIRECTION));
+    }
+
+    /**
+     * Get the <i>ColorLoopTime</i> attribute [attribute ID <b>16388</b>].
+     * <p>
+     * The ColorLoopTime attribute specifies the number of seconds it SHALL take to perform a full
+     * color loop, i.e.,to cycle all values of the EnhancedCurrentHue attribute (between 0x0000 and 0xffff).
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getColorLoopTimeAsync() {
+        return read(attributes.get(ATTR_COLORLOOPTIME));
+    }
+
+
+    /**
+     * Synchronously get the <i>ColorLoopTime</i> attribute [attribute ID <b>16388</b>].
+     * <p>
+     * The ColorLoopTime attribute specifies the number of seconds it SHALL take to perform a full
+     * color loop, i.e.,to cycle all values of the EnhancedCurrentHue attribute (between 0x0000 and 0xffff).
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getColorLoopTime(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COLORLOOPTIME).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COLORLOOPTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COLORLOOPTIME).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_COLORLOOPTIME));
+    }
+
+    /**
+     * Get the <i>ColorLoopStartHue</i> attribute [attribute ID <b>16389</b>].
+     * <p>
+     * The ColorLoopStartEnhancedHueattribute specifies the value of the EnhancedCurrentHue attribute
+     * from which the color loop SHALL be started.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getColorLoopStartHueAsync() {
+        return read(attributes.get(ATTR_COLORLOOPSTARTHUE));
+    }
+
+
+    /**
+     * Synchronously get the <i>ColorLoopStartHue</i> attribute [attribute ID <b>16389</b>].
+     * <p>
+     * The ColorLoopStartEnhancedHueattribute specifies the value of the EnhancedCurrentHue attribute
+     * from which the color loop SHALL be started.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getColorLoopStartHue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COLORLOOPSTARTHUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COLORLOOPSTARTHUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COLORLOOPSTARTHUE).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_COLORLOOPSTARTHUE));
+    }
+
+    /**
+     * Get the <i>ColorLoopStoredHue</i> attribute [attribute ID <b>16390</b>].
+     * <p>
+     * The ColorLoopStoredEnhancedHue attribute specifies the value of the EnhancedCurrentHue attribute
+     * before the color loop was started. Once the color loop is complete, the EnhancedCurrentHue
+     * attribute SHALL be restored to this value.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getColorLoopStoredHueAsync() {
+        return read(attributes.get(ATTR_COLORLOOPSTOREDHUE));
+    }
+
+
+    /**
+     * Synchronously get the <i>ColorLoopStoredHue</i> attribute [attribute ID <b>16390</b>].
+     * <p>
+     * The ColorLoopStoredEnhancedHue attribute specifies the value of the EnhancedCurrentHue attribute
+     * before the color loop was started. Once the color loop is complete, the EnhancedCurrentHue
+     * attribute SHALL be restored to this value.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getColorLoopStoredHue(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COLORLOOPSTOREDHUE).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COLORLOOPSTOREDHUE).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COLORLOOPSTOREDHUE).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_COLORLOOPSTOREDHUE));
+    }
+
+    /**
+     * Get the <i>ColorCapabilities</i> attribute [attribute ID <b>16394</b>].
+     * <p>
+     * The ColorCapabilitiesattribute specifies the color capabilities of the device supporting the
+     * color control cluster.
+     * <p>
+     * Note:The support of the CurrentXand CurrentYattributes is mandatory regardless of color capabilities.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getColorCapabilitiesAsync() {
+        return read(attributes.get(ATTR_COLORCAPABILITIES));
+    }
+
+
+    /**
+     * Synchronously get the <i>ColorCapabilities</i> attribute [attribute ID <b>16394</b>].
+     * <p>
+     * The ColorCapabilitiesattribute specifies the color capabilities of the device supporting the
+     * color control cluster.
+     * <p>
+     * Note:The support of the CurrentXand CurrentYattributes is mandatory regardless of color capabilities.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getColorCapabilities(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COLORCAPABILITIES).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COLORCAPABILITIES).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COLORCAPABILITIES).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_COLORCAPABILITIES));
+    }
+
+    /**
+     * Get the <i>ColorTemperatureMin</i> attribute [attribute ID <b>16395</b>].
+     * <p>
+     * The ColorTempPhysicalMinMiredsattribute indicates the minimum mired value
+     * supported by the hardware. ColorTempPhysicalMinMiredscorresponds to the maximum
+     * color temperature in kelvins supported by the hardware.
+     * ColorTempPhysicalMinMireds ≤ ColorTemperatureMireds
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getColorTemperatureMinAsync() {
+        return read(attributes.get(ATTR_COLORTEMPERATUREMIN));
+    }
+
+
+    /**
+     * Synchronously get the <i>ColorTemperatureMin</i> attribute [attribute ID <b>16395</b>].
+     * <p>
+     * The ColorTempPhysicalMinMiredsattribute indicates the minimum mired value
+     * supported by the hardware. ColorTempPhysicalMinMiredscorresponds to the maximum
+     * color temperature in kelvins supported by the hardware.
+     * ColorTempPhysicalMinMireds ≤ ColorTemperatureMireds
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getColorTemperatureMin(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COLORTEMPERATUREMIN).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COLORTEMPERATUREMIN).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COLORTEMPERATUREMIN).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_COLORTEMPERATUREMIN));
+    }
+
+    /**
+     * Get the <i>ColorTemperatureMax</i> attribute [attribute ID <b>16396</b>].
+     * <p>
+     * The ColorTempPhysicalMaxMiredsattribute indicates the maximum mired value
+     * supported by the hard-ware. ColorTempPhysicalMaxMiredscorresponds to the minimum
+     * color temperature in kelvins supported by the hardware.
+     * ColorTemperatureMireds ≤ ColorTempPhysicalMaxMireds.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getColorTemperatureMaxAsync() {
+        return read(attributes.get(ATTR_COLORTEMPERATUREMAX));
+    }
+
+
+    /**
+     * Synchronously get the <i>ColorTemperatureMax</i> attribute [attribute ID <b>16396</b>].
+     * <p>
+     * The ColorTempPhysicalMaxMiredsattribute indicates the maximum mired value
+     * supported by the hard-ware. ColorTempPhysicalMaxMiredscorresponds to the minimum
+     * color temperature in kelvins supported by the hardware.
+     * ColorTemperatureMireds ≤ ColorTempPhysicalMaxMireds.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getColorTemperatureMax(final long refreshPeriod) {
+        if(refreshPeriod > 0 && attributes.get(ATTR_COLORTEMPERATUREMAX).getLastReportTime() != null) {
+            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
+            if(attributes.get(ATTR_COLORTEMPERATUREMAX).getLastReportTime().getTimeInMillis() < refreshTime) {
+                return (Integer) attributes.get(ATTR_COLORTEMPERATUREMAX).getLastValue();
+            }
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_COLORTEMPERATUREMAX));
     }
 
     /**
@@ -1004,6 +1601,86 @@ public class ZclColorControlCluster extends ZclCluster {
         return send(command);
     }
 
+    /**
+     * The Enhanced Move To Hue Command
+     *
+     * @param hue {@link Integer} Hue
+     * @param direction {@link Integer} Direction
+     * @param transitionTime {@link Integer} Transition time
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> enhancedMoveToHueCommand(Integer hue, Integer direction, Integer transitionTime) {
+        EnhancedMoveToHueCommand command = new EnhancedMoveToHueCommand();
+
+        // Set the fields
+        command.setHue(hue);
+        command.setDirection(direction);
+        command.setTransitionTime(transitionTime);
+
+        return send(command);
+    }
+
+    /**
+     * The Enhanced Step Hue Command
+     *
+     * @param stepMode {@link Integer} Step Mode
+     * @param stepSize {@link Integer} Step Size
+     * @param transitionTime {@link Integer} Transition time
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> enhancedStepHueCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
+        EnhancedStepHueCommand command = new EnhancedStepHueCommand();
+
+        // Set the fields
+        command.setStepMode(stepMode);
+        command.setStepSize(stepSize);
+        command.setTransitionTime(transitionTime);
+
+        return send(command);
+    }
+
+    /**
+     * The Enhanced Move To Hue and Saturation Command
+     *
+     * @param hue {@link Integer} Hue
+     * @param saturation {@link Integer} Saturation
+     * @param transitionTime {@link Integer} Transition time
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> enhancedMoveToHueAndSaturationCommand(Integer hue, Integer saturation, Integer transitionTime) {
+        EnhancedMoveToHueAndSaturationCommand command = new EnhancedMoveToHueAndSaturationCommand();
+
+        // Set the fields
+        command.setHue(hue);
+        command.setSaturation(saturation);
+        command.setTransitionTime(transitionTime);
+
+        return send(command);
+    }
+
+    /**
+     * The Color Loop Set Command
+     *
+     * @param updateFlags {@link Integer} Update Flags
+     * @param action {@link Integer} Action
+     * @param direction {@link Integer} Direction
+     * @param transitionTime {@link Integer} Transition time
+     * @param startHue {@link Integer} Start Hue
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> colorLoopSetCommand(Integer updateFlags, Integer action, Integer direction, Integer transitionTime, Integer startHue) {
+        ColorLoopSetCommand command = new ColorLoopSetCommand();
+
+        // Set the fields
+        command.setUpdateFlags(updateFlags);
+        command.setAction(action);
+        command.setDirection(direction);
+        command.setTransitionTime(transitionTime);
+        command.setStartHue(startHue);
+
+        return send(command);
+    }
+
     @Override
     public ZclCommand getCommandFromId(int commandId) {
         switch (commandId) {
@@ -1029,6 +1706,14 @@ public class ZclColorControlCluster extends ZclCluster {
                 return new StepColorCommand();
             case 10: // MOVE_TO_COLOR_TEMPERATURE_COMMAND
                 return new MoveToColorTemperatureCommand();
+            case 64: // ENHANCED_MOVE_TO_HUE_COMMAND
+                return new EnhancedMoveToHueCommand();
+            case 65: // ENHANCED_STEP_HUE_COMMAND
+                return new EnhancedStepHueCommand();
+            case 66: // ENHANCED_MOVE_TO_HUE_AND_SATURATION_COMMAND
+                return new EnhancedMoveToHueAndSaturationCommand();
+            case 67: // COLOR_LOOP_SET_COMMAND
+                return new ColorLoopSetCommand();
             default:
                 return null;
         }

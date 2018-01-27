@@ -111,6 +111,10 @@ import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveToColorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveColorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepColorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveToColorTemperatureCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveToHueCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedStepHueCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveToHueAndSaturationCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.ColorLoopSetCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneStatusChangeNotificationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollRequestCommand;
@@ -226,6 +230,12 @@ public enum ZclCommandType {
      */
     CLEAR_WEEKLY_SCHEDULE(0x0201, 3, ClearWeeklySchedule.class, ZclCommandDirection.CLIENT_TO_SERVER),
     /**
+     * COLOR_LOOP_SET_COMMAND: Color Loop Set Command
+     * <p>
+     * See {@link ColorLoopSetCommand}
+     */
+    COLOR_LOOP_SET_COMMAND(0x0300, 67, ColorLoopSetCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
      * COMPACT_LOCATION_DATA_NOTIFICATION_COMMAND: Compact Location Data Notification Command
      * <p>
      * See {@link CompactLocationDataNotificationCommand}
@@ -309,6 +319,24 @@ public enum ZclCommandType {
      * See {@link EmergencyCommand}
      */
     EMERGENCY_COMMAND(0x0501, 2, EmergencyCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * ENHANCED_MOVE_TO_HUE_AND_SATURATION_COMMAND: Enhanced Move To Hue and Saturation Command
+     * <p>
+     * See {@link EnhancedMoveToHueAndSaturationCommand}
+     */
+    ENHANCED_MOVE_TO_HUE_AND_SATURATION_COMMAND(0x0300, 66, EnhancedMoveToHueAndSaturationCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * ENHANCED_MOVE_TO_HUE_COMMAND: Enhanced Move To Hue Command
+     * <p>
+     * See {@link EnhancedMoveToHueCommand}
+     */
+    ENHANCED_MOVE_TO_HUE_COMMAND(0x0300, 64, EnhancedMoveToHueCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * ENHANCED_STEP_HUE_COMMAND: Enhanced Step Hue Command
+     * <p>
+     * See {@link EnhancedStepHueCommand}
+     */
+    ENHANCED_STEP_HUE_COMMAND(0x0300, 65, EnhancedStepHueCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
     /**
      * FIRE_COMMAND: Fire Command
      * <p>
