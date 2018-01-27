@@ -883,6 +883,10 @@ public class ZclBasicCluster extends ZclCluster {
 
     /**
      * The Reset to Factory Defaults Command
+     * <p>
+     * On receipt of this command, the device resets all the attributes of all its clusters
+     * to their factory defaults.Note that ZigBee networking functionality,bindings, groups
+     * or other persistent data are not affected by this command
      *
      * @return the {@link Future<CommandResult>} command result future
      */

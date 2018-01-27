@@ -409,6 +409,10 @@ unauthorised persons in a public building.
 ### Received
 
 #### Reset to Factory Defaults Command [0x00]
+On receipt of this command, the device resets all the attributes of all its clusters
+to their factory defaults. Note that ZigBee networking functionality,bindings, groups
+or other persistent data are not affected by this command
+
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 
