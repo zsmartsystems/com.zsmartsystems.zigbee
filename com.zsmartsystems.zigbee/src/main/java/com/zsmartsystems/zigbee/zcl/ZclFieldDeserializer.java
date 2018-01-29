@@ -60,7 +60,7 @@ public class ZclFieldDeserializer {
      */
     public Object deserialize(final ZclDataType dataType) {
         if (ZclListItemField.class.isAssignableFrom(dataType.getDataClass())) {
-            final Class dataTypeClass = dataType.getDataClass();
+            final Class<?> dataTypeClass = dataType.getDataClass();
             final List<ZclListItemField> list = new ArrayList<ZclListItemField>();
             try {
                 while (deserializer.getSize() - deserializer.getPosition() > 0) {

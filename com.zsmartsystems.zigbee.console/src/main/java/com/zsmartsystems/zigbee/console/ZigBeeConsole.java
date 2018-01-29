@@ -41,6 +41,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieApp;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServer;
@@ -633,27 +634,26 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
-
-            if (device == null) {
+            final ZigBeeEndpoint endpoint = getDevice(zigbeeApi, args[1]);
+            if (endpoint == null) {
                 return false;
             }
 
-            print("IEEE Address     : " + device.getParentNode().getIeeeAddress(), out);
-            print("Network Address  : " + device.getParentNode().getNetworkAddress(), out);
-            print("Endpoint         : " + device.getEndpointId(), out);
-            // print("Device Profile : " + ZigBeeApiConstants.getProfileName(device.getProfileId())
-            // + String.format(" (0x%04X)", device.getProfileId()), out);
+            print("IEEE Address     : " + endpoint.getParentNode().getIeeeAddress(), out);
+            print("Network Address  : " + endpoint.getParentNode().getNetworkAddress(), out);
+            print("Endpoint         : " + endpoint.getEndpointId(), out);
+            print("Device Profile : " + ZigBeeProfileType.getProfileType(endpoint.getProfileId())
+                    + String.format(" (0x%04X)", endpoint.getProfileId()), out);
             // print("Device Category : "
             // + ZigBeeApiConstants.getCategoryDeviceName(device.getProfileId(), device.getDeviceId())
             // + String.format(" (0x%04X)", device.getDeviceId()), out);
             // print("Device Type : " + ZigBeeApiConstants.getDeviceName(device.getProfileId(), device.getDeviceId()),
             // out);
-            print("Device Version   : " + device.getDeviceVersion(), out);
+            print("Device Version   : " + endpoint.getDeviceVersion(), out);
             print("Input Clusters   : ", out);
-            printClusters(device, device.getInputClusterIds(), true, out);
+            printClusters(endpoint, endpoint.getInputClusterIds(), true, out);
             print("Output Clusters  : ", out);
-            printClusters(device, device.getOutputClusterIds(), false, out);
+            printClusters(endpoint, endpoint.getOutputClusterIds(), false, out);
 
             return true;
         }

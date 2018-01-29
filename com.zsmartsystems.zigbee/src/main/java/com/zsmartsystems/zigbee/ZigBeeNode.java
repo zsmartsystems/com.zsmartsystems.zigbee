@@ -24,6 +24,8 @@ import java.util.concurrent.RunnableFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.dao.ZigBeeEndpointDao;
+import com.zsmartsystems.zigbee.dao.ZigBeeNodeDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -57,7 +59,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     /**
      * The extended {@link IeeeAddress} for the node
      */
-    private final IeeeAddress ieeeAddress;
+    private IeeeAddress ieeeAddress;
 
     /**
      * The 16 bit network address for the node
@@ -752,6 +754,45 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         // TODO: How to deal with endpoints
 
         return updated;
+    }
+
+    /**
+     * Gets a {@link ZigBeeNodeDao} representing the node
+     *
+     * @return the {@link ZigBeeNodeDao}
+     */
+    public ZigBeeNodeDao getDao() {
+        ZigBeeNodeDao dao = new ZigBeeNodeDao();
+
+        dao.setIeeeAddress(ieeeAddress.toString());
+        dao.setNetworkAddress(networkAddress);
+        dao.setNodeDescriptor(nodeDescriptor);
+        dao.setPowerDescriptor(powerDescriptor);
+        dao.setBindingTable(bindingTable);
+
+        List<ZigBeeEndpointDao> endpointDaoList = new ArrayList<ZigBeeEndpointDao>();
+        for (ZigBeeEndpoint endpoint : endpoints.values()) {
+            endpointDaoList.add(endpoint.getDao());
+        }
+        dao.setEndpoints(endpointDaoList);
+
+        return dao;
+    }
+
+    public void setDao(ZigBeeNodeDao dao) {
+        ieeeAddress = new IeeeAddress(dao.getIeeeAddress());
+        networkAddress = dao.getNetworkAddress();
+        nodeDescriptor = dao.getNodeDescriptor();
+        powerDescriptor = dao.getPowerDescriptor();
+        if (dao.getBindingTable() != null) {
+            bindingTable.addAll(dao.getBindingTable());
+        }
+
+        for (ZigBeeEndpointDao endpointDao : dao.getEndpoints()) {
+            ZigBeeEndpoint endpoint = new ZigBeeEndpoint(networkManager, this, endpointDao.getEndpointId());
+            endpoint.setDao(endpointDao);
+            endpoints.put(endpoint.getEndpointId(), endpoint);
+        }
     }
 
     @Override
