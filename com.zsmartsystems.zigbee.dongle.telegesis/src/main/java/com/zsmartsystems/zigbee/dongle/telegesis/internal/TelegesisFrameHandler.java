@@ -105,8 +105,14 @@ public class TelegesisFrameHandler {
      */
     private final int DEFAULT_COMMAND_TIMEOUT = 10000;
 
+    /**
+     * The maximum number of milliseconds to wait for the response from the stick once the request was sent
+     */
     private int transactionTimeout = DEFAULT_TRANSACTION_TIMEOUT;
 
+    /**
+     * The maximum number of milliseconds to wait for the completion of the transaction after it's queued
+     */
     private int commandTimeout = DEFAULT_COMMAND_TIMEOUT;
 
     enum RxStateMachine {
@@ -585,7 +591,7 @@ public class TelegesisFrameHandler {
     public TelegesisEvent eventWait(final Class<?> eventClass) {
         Future<TelegesisEvent> future = waitEventAsync(eventClass);
         try {
-            return future.get(transactionTimeout, TimeUnit.MILLISECONDS);
+            return future.get(commandTimeout, TimeUnit.MILLISECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             logger.debug("Telegesis interrupted in eventWait {}", eventClass);
             future.cancel(true);
