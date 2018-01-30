@@ -13,7 +13,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
- * Network Update Request value object class.
+ * Management Network Update Request value object class.
  * <p>
  * This command is provided to allow updating of network configuration parameters
  * or to request information from devices on network conditions in the local
@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-public class NetworkUpdateRequest extends ZdoRequest {
+public class ManagementNetworkUpdateRequest extends ZdoRequest {
     /**
      * ScanChannels command message field.
      */
@@ -51,7 +51,7 @@ public class NetworkUpdateRequest extends ZdoRequest {
     /**
      * Default constructor.
      */
-    public NetworkUpdateRequest() {
+    public ManagementNetworkUpdateRequest() {
         clusterId = 0x0038;
     }
 
@@ -169,8 +169,8 @@ public class NetworkUpdateRequest extends ZdoRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(181);
-        builder.append("NetworkUpdateRequest [");
+        final StringBuilder builder = new StringBuilder(191);
+        builder.append("ManagementNetworkUpdateRequest [");
         builder.append(super.toString());
         builder.append(", scanChannels=");
         builder.append(scanChannels);

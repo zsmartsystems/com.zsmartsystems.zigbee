@@ -53,5 +53,10 @@ public class ZigBeeChannelMaskTest {
         mask.addChannel(-1);
         mask.addChannel(33);
         assertEquals(17, mask.getChannels().size());
+
+        assertTrue(mask.getChannels().contains(ZigBeeChannel.CHANNEL_11));
+        mask.removeChannel(ZigBeeChannel.CHANNEL_11);
+        assertFalse(mask.getChannels().contains(ZigBeeChannel.CHANNEL_11));
+        assertEquals(16, mask.getChannels().size());
     }
 }

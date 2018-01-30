@@ -47,8 +47,8 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementDirectJoinRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
-import com.zsmartsystems.zigbee.zdo.command.CacheRequest;
-import com.zsmartsystems.zigbee.zdo.command.NetworkUpdateRequest;
+import com.zsmartsystems.zigbee.zdo.command.ManagementCacheRequest;
+import com.zsmartsystems.zigbee.zdo.command.ManagementNetworkUpdateRequest;
 import com.zsmartsystems.zigbee.zdo.command.NetworkAddressResponse;
 import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
 import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorResponse;
@@ -165,12 +165,6 @@ public enum ZdoCommandType {
      */
     BIND_RESPONSE(0x8021, BindResponse.class),
     /**
-     * Cache Request
-     * <p>
-     * See {@link CacheRequest}
-     */
-    CACHE_REQUEST(0x0037, CacheRequest.class),
-    /**
      * Complex Descriptor Request
      * <p>
      * See {@link ComplexDescriptorRequest}
@@ -285,6 +279,12 @@ public enum ZdoCommandType {
      */
     MANAGEMENT_BIND_RESPONSE(0x8033, ManagementBindResponse.class),
     /**
+     * Management Cache Request
+     * <p>
+     * See {@link ManagementCacheRequest}
+     */
+    MANAGEMENT_CACHE_REQUEST(0x0037, ManagementCacheRequest.class),
+    /**
      * Management Cache Response
      * <p>
      * See {@link ManagementCacheResponse}
@@ -345,6 +345,12 @@ public enum ZdoCommandType {
      */
     MANAGEMENT_NETWORK_UPDATE_NOTIFY(0x8038, ManagementNetworkUpdateNotify.class),
     /**
+     * Management Network Update Request
+     * <p>
+     * See {@link ManagementNetworkUpdateRequest}
+     */
+    MANAGEMENT_NETWORK_UPDATE_REQUEST(0x0038, ManagementNetworkUpdateRequest.class),
+    /**
      * Management Permit Joining Request
      * <p>
      * See {@link ManagementPermitJoiningRequest}
@@ -392,12 +398,6 @@ public enum ZdoCommandType {
      * See {@link NetworkAddressResponse}
      */
     NETWORK_ADDRESS_RESPONSE(0x8000, NetworkAddressResponse.class),
-    /**
-     * Network Update Request
-     * <p>
-     * See {@link NetworkUpdateRequest}
-     */
-    NETWORK_UPDATE_REQUEST(0x0038, NetworkUpdateRequest.class),
     /**
      * Node Descriptor Request
      * <p>

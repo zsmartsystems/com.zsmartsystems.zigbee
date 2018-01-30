@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This class provides methods for managing the standard ZigBee channel mask.
  *
  * @author Chris Jackson
  *
@@ -53,6 +54,15 @@ public class ZigBeeChannelMask {
      */
     public int getChannelMask() {
         return channelMask;
+    }
+
+    /**
+     * Sets the channel bitmask of the channels in this channel mask
+     *
+     * @param int containing the channel bitmask
+     */
+    public void setChannelMask(int channelMask) {
+        this.channelMask = channelMask;
     }
 
     /**
@@ -99,6 +109,15 @@ public class ZigBeeChannelMask {
     }
 
     /**
+     * Removes a new channel to the channel mask
+     *
+     * @param channel {@link ZigBeeChannel} to add to the mask
+     */
+    public void removeChannel(ZigBeeChannel channel) {
+        channelMask &= ~channel.getMask();
+    }
+
+    /**
      * Tests of the specified channel number is included in the bitmask
      *
      * @param channel the channel number
@@ -117,4 +136,26 @@ public class ZigBeeChannelMask {
     public boolean containsChannel(ZigBeeChannel channel) {
         return ((channelMask & channel.getMask()) != 0);
     }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder(150);
+        builder.append("ZigBeeChannelMask [channelMask=");
+        boolean first = true;
+        for (ZigBeeChannel channel : getChannels()) {
+            if (first == false) {
+                builder.append(", ");
+            }
+            builder.append(channel);
+            first = false;
+        }
+        builder.append(']');
+        return builder.toString();
+    }
+
 }

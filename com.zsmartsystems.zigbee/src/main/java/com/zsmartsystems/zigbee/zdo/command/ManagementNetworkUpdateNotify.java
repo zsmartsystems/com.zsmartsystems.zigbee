@@ -28,32 +28,35 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * When sent in response to a Mgmt_NWK_Update_req command the status field
  * shall represent the status of the request. When sent unsolicited the status field
  * shall be set to SUCCESS.
- * A Status of NOT_SUPPORTED indicates that the request was directed to a device
- * which was not the ZigBee Coordinator or that the ZigBee Coordinator does not
- * support End Device Binding. Otherwise, End_Device_Bind_req processing is
- * performed as described below, including transmission of the
- * End_Device_Bind_rsp.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 public class ManagementNetworkUpdateNotify extends ZdoResponse {
     /**
      * ScannedChannels command message field.
+     *
+     * List of channels scanned by the request.
      */
     private Integer scannedChannels;
 
     /**
      * TotalTransmissions command message field.
+     *
+     * Count of the total transmissions reported by the device.
      */
     private Integer totalTransmissions;
 
     /**
      * TransmissionFailures command message field.
+     *
+     * Sum of the total transmission failures reported by the device.
      */
     private Integer transmissionFailures;
 
     /**
      * EnergyValues command message field.
+     *
+     * The result of an energy measurement made on this channel.
      */
     private List<Integer> energyValues;
 
@@ -66,6 +69,8 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
 
     /**
      * Gets ScannedChannels.
+     * <p>
+     * List of channels scanned by the request.
      *
      * @return the ScannedChannels
      */
@@ -75,6 +80,8 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
 
     /**
      * Sets ScannedChannels.
+     * <p>
+     * List of channels scanned by the request.
      *
      * @param scannedChannels the ScannedChannels
      */
@@ -84,6 +91,8 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
 
     /**
      * Gets TotalTransmissions.
+     * <p>
+     * Count of the total transmissions reported by the device.
      *
      * @return the TotalTransmissions
      */
@@ -93,6 +102,8 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
 
     /**
      * Sets TotalTransmissions.
+     * <p>
+     * Count of the total transmissions reported by the device.
      *
      * @param totalTransmissions the TotalTransmissions
      */
@@ -102,6 +113,8 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
 
     /**
      * Gets TransmissionFailures.
+     * <p>
+     * Sum of the total transmission failures reported by the device.
      *
      * @return the TransmissionFailures
      */
@@ -111,6 +124,8 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
 
     /**
      * Sets TransmissionFailures.
+     * <p>
+     * Sum of the total transmission failures reported by the device.
      *
      * @param transmissionFailures the TransmissionFailures
      */
@@ -120,6 +135,8 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
 
     /**
      * Gets EnergyValues.
+     * <p>
+     * The result of an energy measurement made on this channel.
      *
      * @return the EnergyValues
      */
@@ -129,6 +146,8 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
 
     /**
      * Sets EnergyValues.
+     * <p>
+     * The result of an energy measurement made on this channel.
      *
      * @param energyValues the EnergyValues
      */

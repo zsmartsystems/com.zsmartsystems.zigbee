@@ -606,13 +606,13 @@ authentication policy will be affected. The addressing may be unicast or
 ##### Expected Response
 Packet: Management Permit Joining Response
 
-#### Cache Request [0x0037]
+#### Management Cache Request [0x0037]
 
 The Mgmt_Cache_req is provided to enable ZigBee devices on the network to
 retrieve a list of ZigBee End Devices registered with a Primary Discovery Cache
 device. The destination addressing on this primitive shall be unicast.
 
-#### Network Update Request [0x0038]
+#### Management Network Update Request [0x0038]
 
 This command is provided to allow updating of network configuration parameters
 or to request information from devices on network conditions in the local
@@ -1185,17 +1185,33 @@ during the scan, or 0xff if there is too much interference on this channel.
 When sent in response to a Mgmt_NWK_Update_req command the status field
 shall represent the status of the request. When sent unsolicited the status field
 shall be set to SUCCESS.
-A Status of NOT_SUPPORTED indicates that the request was directed to a device
-which was not the ZigBee Coordinator or that the ZigBee Coordinator does not
-support End Device Binding. Otherwise, End_Device_Bind_req processing is
-performed as described below, including transmission of the
-End_Device_Bind_rsp.
 
-|Field Name                 |Data Type                  |
-|---------------------------|---------------------------|
-|Status                     |Zdo Status                 |
-|ScannedChannels            |Unsigned 32-bit integer    |
-|TotalTransmissions         |Unsigned 16-bit integer    |
-|TransmissionFailures       |Unsigned 16-bit integer    |
-|ScannedChannelsListCount   |Unsigned 8-bit integer     |
+|Field Name                 |Data Type                                        |
+|---------------------------|-------------------------------------------------|
+|Status                     |Zdo Status                                       |
+|ScannedChannels            |Unsigned 32-bit integer                          |
+|TotalTransmissions         |Unsigned 16-bit integer                          |
+|TransmissionFailures       |Unsigned 16-bit integer                          |
+|ScannedChannelsListCount   |Unsigned 8-bit integer                           |
 |EnergyValues               |Unsigned 8-bit integer[ScannedChannelsListCount] |
+
+##### Status
+The status of the Mgmt_NWK_Update_notify command.
+SUCCESS, INVALID_REQUEST, NOT_SUPPORTED or any status values returned from the PLME-SET,confirm primitive
+
+##### ScannedChannels
+List of channels scanned by the request.
+
+##### TotalTransmissions
+Count of the total transmissions reported by the device.
+
+##### TransmissionFailures
+Sum of the total transmission failures reported by the device.
+
+##### ScannedChannelsListCount
+The list shall contain the number of records contained in the EnergyValues parameter.
+
+##### EnergyValues
+The result of an energy measurement made on this channel.
+
+
