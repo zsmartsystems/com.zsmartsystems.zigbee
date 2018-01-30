@@ -56,6 +56,19 @@ public class DefaultDeserializerTest {
         testDeserialize(valIn, valOut, ZclDataType.ZIGBEE_DATA_TYPE);
     }
 
+    @Test
+    public void testDeserialize_CHARACTER_STRING() {
+        testDeserialize(new int[] { 0xFF }, null, ZclDataType.CHARACTER_STRING);
+        testDeserialize(new int[] { 0x00 }, "", ZclDataType.CHARACTER_STRING);
+        testDeserialize(new int[] { 0x01, 0x49 }, "I", ZclDataType.CHARACTER_STRING);
+        testDeserialize(
+                new int[] { 0x0D, 0x49, 0x6E, 0x74, 0x65, 0x72, 0x6E, 0x61, 0x74, 0x69, 0x6F, 0x6E, 0x61, 0x6C },
+                "International", ZclDataType.CHARACTER_STRING);
+        testDeserialize(
+                new int[] { 0x0E, 0x49, 0x6E, 0x74, 0x65, 0x72, 0x6E, 0x61, 0x74, 0x69, 0x6F, 0x6E, 0x61, 0x6C, 0x00 },
+                "International", ZclDataType.CHARACTER_STRING);
+    }
+
     private void testDeserialize(int[] input, Object objectIn, ZclDataType type) {
         DefaultDeserializer deserializer = new DefaultDeserializer(input);
         Object objectOut = deserializer.readZigBeeType(type);
