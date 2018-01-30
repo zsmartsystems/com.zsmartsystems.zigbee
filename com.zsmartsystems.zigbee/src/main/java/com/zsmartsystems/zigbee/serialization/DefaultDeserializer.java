@@ -74,6 +74,15 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
             case CHARACTER_STRING:
             case OCTET_STRING:
                 int size = payload[index++];
+                if (size == 255) {
+                    value[0] = null;
+                    break;
+                }
+                for (int cnt = 0; cnt < size; cnt++) {
+                    if (payload[index + cnt] == 0) {
+                        size = cnt;
+                    }
+                }
                 value[0] = new String(payload, index, size);
                 index += size;
                 break;
