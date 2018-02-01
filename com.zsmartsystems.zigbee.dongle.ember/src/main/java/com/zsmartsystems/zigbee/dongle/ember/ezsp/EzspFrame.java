@@ -37,6 +37,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationVa
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCurrentSecurityStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetEui64Response;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetExtendedTimeoutResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetKeyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNeighborResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNodeIdResponse;
@@ -46,6 +47,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRouteTableEntry
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGpEpIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIdConflictHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingRouteErrorHandler;
@@ -58,6 +60,18 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupEui64ByNodeI
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupNodeIdByEui64Response;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMacFilterMatchMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfgLibEndResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfgLibGetChannelResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfgLibGetPowerResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfgLibRxHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfgLibSendPacketResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfgLibSetChannelResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfgLibSetPowerResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfgLibStartResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfgLibStartStreamResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfgLibStartToneResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfgLibStopStreamResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfgLibStopToneResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNeighborCountResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
@@ -92,6 +106,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStopScanResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTrustCenterJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspZigbeeKeyEstablishmentHandler;
+
 
 /**
  * The EmberZNet Serial Protocol (EZSP) is the protocol used by a host application processor to interact with the
@@ -190,7 +205,24 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_TRUST_CENTER_JOIN_HANDLER = 0x24;
     protected static final int FRAME_ID_VERSION = 0x00;
     protected static final int FRAME_ID_ZIGBEE_KEY_ESTABLISHMENT_HANDLER = 0x9B;
+    protected static final int FRAME_ID_GET_KEY = 0x6A;
+    protected static final int FRAME_ID_GP_EP_INCOMING_MESSAGE_HANDLER = 0xC5;
 
+    // Mfglib Frames
+    protected static final int FRAME_ID_MFG_LIB_START = 0x83;
+    protected static final int FRAME_ID_MFG_LIB_END = 0x84;
+    protected static final int FRAME_ID_MFG_LIB_START_TONE = 0x85;
+    protected static final int FRAME_ID_MFG_LIB_STOP_TONE = 0x86;
+    protected static final int FRAME_ID_MFG_LIB_START_STREAM = 0x87;
+    protected static final int FRAME_ID_MFG_LIB_STOP_STREAM = 0x88;
+    protected static final int FRAME_ID_MFG_LIB_SEND_PACKET = 0x89;
+    protected static final int FRAME_ID_MFG_LIB_SET_CHANNEL = 0x8a;
+    protected static final int FRAME_ID_MFG_LIB_GET_CHANNEL = 0x8b;
+    protected static final int FRAME_ID_MFG_LIB_SET_POWER = 0x8c;
+    protected static final int FRAME_ID_MFG_LIB_GET_POWER = 0x8d;
+    protected static final int FRAME_ID_MFG_LIB_RX_HANDLER = 0x8e;
+    
+    
     protected int sequenceNumber;
     protected int frameControl;
     protected int frameId = 0;
@@ -274,6 +306,21 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_TRUST_CENTER_JOIN_HANDLER, EzspTrustCenterJoinHandler.class);
         ezspHandlerMap.put(FRAME_ID_VERSION, EzspVersionResponse.class);
         ezspHandlerMap.put(FRAME_ID_ZIGBEE_KEY_ESTABLISHMENT_HANDLER, EzspZigbeeKeyEstablishmentHandler.class);
+        ezspHandlerMap.put(FRAME_ID_GET_KEY, EzspGetKeyResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GP_EP_INCOMING_MESSAGE_HANDLER, EzspGpEpIncomingMessageHandler.class);
+        // mfg lib frames
+        ezspHandlerMap.put(FRAME_ID_MFG_LIB_START, EzspMfgLibStartResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MFG_LIB_END, EzspMfgLibEndResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MFG_LIB_START_TONE, EzspMfgLibStartToneResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MFG_LIB_STOP_TONE, EzspMfgLibStopToneResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MFG_LIB_START_STREAM, EzspMfgLibStartStreamResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MFG_LIB_STOP_STREAM, EzspMfgLibStopStreamResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MFG_LIB_SEND_PACKET, EzspMfgLibSendPacketResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MFG_LIB_SET_CHANNEL, EzspMfgLibSetChannelResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MFG_LIB_GET_CHANNEL, EzspMfgLibGetChannelResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MFG_LIB_SET_POWER, EzspMfgLibSetPowerResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MFG_LIB_GET_POWER, EzspMfgLibGetPowerResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MFG_LIB_RX_HANDLER, EzspMfgLibRxHandler.class);
     }
 
     /**

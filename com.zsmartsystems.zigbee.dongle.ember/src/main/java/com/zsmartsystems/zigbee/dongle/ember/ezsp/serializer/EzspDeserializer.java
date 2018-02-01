@@ -19,11 +19,13 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorTyp
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberDeviceUpdate;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberIncomingMessageType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinDecision;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMacPassthroughType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNeighborTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
@@ -36,6 +38,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberZigbeeNetwork;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
+
+
 
 /**
  * The EmberZNet Serial Protocol Data Representation
@@ -266,5 +270,12 @@ public class EzspDeserializer {
 
         return list;
     }
-
+    
+    public EmberKeyStruct deserializeEmberKeyStruct() {
+    	return new EmberKeyStruct(this);
+    }
+    
+    public EmberGpAddress deserializeEmberGpAddress() {
+        return new EmberGpAddress(this);
+    }    
 }

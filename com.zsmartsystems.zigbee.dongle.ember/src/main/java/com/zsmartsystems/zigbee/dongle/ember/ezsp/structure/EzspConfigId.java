@@ -35,6 +35,18 @@ public enum EzspConfigId {
     EZSP_CONFIG_PACKET_BUFFER_COUNT(0x0001),
 
     /**
+     * The maximum number of router neighbors the stack can 
+     * keep track of. A neighbor is a node within radio range.
+     */
+    EZSP_CONFIG_NEIGHBOR_TABLE_SIZE(0x0002),
+
+    /**
+     * The maximum number of APS retried messages the 
+     * stack can be transmitting at any time.
+     */
+    EZSP_CONFIG_APS_UNICAST_MESSAGE_COUNT(0x0003),
+    
+    /**
      * The maximum number of non-volatile bindings supported by the stack.
      */
     EZSP_CONFIG_BINDING_TABLE_SIZE(0x0004),
@@ -46,6 +58,26 @@ public enum EzspConfigId {
      * ::EZSP_CONFIG_TRUST_CENTER_ADDRESS_CACHE_SIZE.).
      */
     EZSP_CONFIG_ADDRESS_TABLE_SIZE(0x0005),
+    
+    /**
+     * The maximum number of multicast groups that the
+     * device may be a member of.
+     */
+    EZSP_CONFIG_MULTICAST_TABLE_SIZE(0x0006),
+    
+    /**
+     * The maximum number of destinations to which a node 
+     * can route messages. This includes both messages
+     * originating at this node and those relayed for others.
+     */
+    EZSP_CONFIG_ROUTE_TABLE_SIZE(0x0007),
+
+    /**
+     * The number of simultaneous route discoveries that a
+     * node will support.
+     */
+    EZSP_CONFIG_DISCOVERY_TABLE_SIZE(0x0008),
+
 
     /**
      * Specifies the stack profile.
@@ -73,11 +105,40 @@ public enum EzspConfigId {
      * child.
      */
     EZSP_CONFIG_INDIRECT_TRANSMISSION_TIMEOUT(0x0012),
+    
+    /**
+     * The maximum amount of time that an end device child
+     * can wait between polls. If no poll is heard within this
+     * timeout, then the parent removes the end device from
+     * its tables.
+     */
+    EZSP_CONFIG_END_DEVICE_POLL_TIMEOUT(0x0013),
+    
+    /**
+     * The maximum amount of time that a mobile node can
+     * wait between polls. If no poll is heard within this timeout,
+     * then the parent removes the mobile node from its
+     * tables.
+     */
+    EZSP_CONFIG_MOBILE_NODE_POLL_TIMEOUT(0x0014),
 
+    /**
+     * The number of child table entries reserved for use only
+     * by mobile nodes.
+     */
+    EZSP_CONFIG_RESERVED_MOBILE_CHILD_ENTRIES(0x0015),
+    
+    
     /**
      * Enables boost power mode and/or the alternate transmitter output.
      */
     EZSP_CONFIG_TX_POWER_MODE(0x0017),
+
+    /**
+     * 0: Allow this node to relay messages. 1: Prevent this
+     * node from relaying messages.
+     */
+    EZSP_CONFIG_DISABLE_RELAY(0x0018),
 
     /**
      * The maximum number of EUI64 to network address associations that the Trust Center can
@@ -97,11 +158,80 @@ public enum EzspConfigId {
     EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE(0x001A),
 
     /**
+     * The units used for timing out end devices on their
+     * parents.
+     */
+    EZSP_CONFIG_END_DEVICE_POLL_TIMEOUT_SHIFT(0x001B),
+
+    /**
+     * The number of blocks of a fragmented message that
+     * can be sent in a single window.
+     */
+    EZSP_CONFIG_FRAGMENT_WINDOW_SIZE(0x001C),
+
+    /**
+     * The time the stack will wait (in milliseconds) between
+     * sending blocks of a fragmented message.
+     */
+    EZSP_CONFIG_FRAGMENT_DELAY_MS(0x001D),
+
+    
+    /**
      * The size of the Key Table used for storing individual link keys (if the device is a Trust
      * Center) or Application Link Keys (if the device is a normal node).
      */
     EZSP_CONFIG_KEY_TABLE_SIZE(0x001E),
 
+    /**
+     * The APS ACK timeout value. The stack waits this
+     * amount of time between resends of APS retried
+     * messages.
+     */
+    EZSP_CONFIG_APS_ACK_TIMEOUT(0x001F),
+    
+
+    /**
+     * The duration of a beacon jitter, in the units used by the
+     * 15.4 scan parameter (((1 << duration) + 1) * 15ms),
+     * when responding to a beacon request.
+     */
+    EZSP_CONFIG_BEACON_JITTER_DURATION(0x0020),
+
+    /**
+     * The time the coordinator will wait (in seconds) for a
+     * second end device bind request to arrive.
+     */
+    EZSP_CONFIG_END_DEVICE_BIND_TIMEOUT(0x0021),
+    
+	/**
+	 * The number of PAN id conflict reports that must be
+	 * received by the network manager within one minute to
+	 * trigger a PAN id change.
+	 */
+    EZSP_CONFIG_PAN_ID_CONFLICT_REPORT_THRESHOLD(0x0022),
+
+    /**
+     * The timeout value in minutes for how long the Trust
+     * Center or a normal node waits for the ZigBee Request
+     * Key to complete. On the Trust Center this controls
+     * whether or not the device buffers the request, waiting for
+     * a matching pair of ZigBee Request Key. If the value is
+     * non-zero, the Trust Center buffers and waits for that
+     * amount of time. If the value is zero, the Trust Center
+     * does not buffer the request and immediately responds
+     * to the request. Zero is the most compliant behavior.
+     */
+    EZSP_CONFIG_REQUEST_KEY_TIMEOUT(0x0024),
+
+    /**
+     * This value indicates the size of the runtime modifiable
+     * certificate table. Normally certificates are stored in MFG
+     * tokens but this table can be used to field upgrade
+     * devices with new Smart Energy certificates. This value
+     * cannot be set, it can only be queried.
+     */
+    EZSP_CONFIG_CERTIFICATE_TABLE_SIZE(0x0029),
+    
     /**
      * This is a bitmask that controls which incoming ZDO request messages are passed to the
      * application. The bits are defined in the EmberZdoConfigurationFlags enumeration. To see
@@ -112,21 +242,81 @@ public enum EzspConfigId {
     EZSP_CONFIG_APPLICATION_ZDO_FLAGS(0x002A),
 
     /**
+     * The maximum number of broadcasts during a single
+     * broadcast timeout period.
+     */
+    EZSP_CONFIG_BROADCAST_TABLE_SIZE(0x002B),
+
+    /**
+     * The size of the MAC filter list table.
+     */
+    EZSP_CONFIG_MAC_FILTER_TABLE_SIZE(0x002C),
+    
+    /**
      * The number of supported networks.
      */
     EZSP_CONFIG_SUPPORTED_NETWORKS(0x002D),
 
+	/**
+	 * Whether multicasts are sent to the RxOnWhenIdle=true
+	 * address (0xFFFD) or the sleepy broadcast address
+	 * (0xFFFF). The RxOnWhenIdle=true address is the
+	 * ZigBee compliant destination for multicasts.
+	 */
+    EZSP_CONFIG_SEND_MULTICASTS_TO_SLEEPY_ADDRESS(0x002E),
+    
     /**
-     * The number of passive acknowledgements to record from neighbors before we stop
-     * re-transmitting broadcasts.
+     * ZLL group address initial configuration.
+     */
+    EZSP_CONFIG_ZLL_GROUP_ADDRESSES(0x002F),
+	
+    /**
+     * ZLL rssi threshold initial configuration.
+     */
+    EZSP_CONFIG_ZLL_RSSI_THRESHOLD(0x0030),
+
+    /**
+     * Toggles the mtorr flow control in the stack.
+     */
+    EZSP_CONFIG_MTORR_FLOW_CONTROL(0x0033),
+
+    /**
+     * Setting the retry queue size.
+     */
+    EZSP_CONFIG_RETRY_QUEUE_SIZE(0x0034),
+
+    /**
+     * Setting the new broadcast entry threshold.
+     */
+    EZSP_CONFIG_NEW_BROADCAST_ENTRY_THRESHOLD(0x0035),
+
+    /**
+     * The length of time, in seconds, that a trust center will
+     * store a transient link key that a device can use to join its
+     * network. A transient key is added with a call to
+     * emberAddTransientLinkKey. After the transient key is
+     * added, it will be removed once this amount of time has
+     * passed. A joining device will not be able to use that key
+     * to join until it is added again on the trust center. The
+     * default value is 300 seconds, i.e., 5 minutes.
+     */
+    EZSP_CONFIG_TRANSIENT_KEY_TIMEOUT_S(0x0036),
+
+    /**
+     * The number of passive acknowledgements to record
+     * from neighbors before we stop re-transmitting
+     * broadcasts
      */
     EZSP_CONFIG_BROADCAST_MIN_ACKS_NEEDED(0x0037),
 
     /**
-     * The length of time, in seconds, that a trust center will allow a Trust Center (insecure)
-     * rejoin for a device that is using the well-known link key. This timeout takes effect once
-     * rejoins using the well-known key has been allowed. This command updates the
-     * emAllowTcRejoinsUsingWellKnownKeyTimeoutSec value.
+     * The length of time, in seconds, that a trust center will
+     * allow a Trust Center (insecure) rejoin for a device that is
+     * using the well-known link key. This timeout takes effect
+     * once rejoins using the well-known key has been
+     * allowed. This command updates the
+     * emAllowTcRejoinsUsingWellKnownKeyTimeoutSec
+     * value.
      */
     EZSP_CONFIG_TC_REJOINS_USING_WELL_KNOWN_KEY_TIMEOUT_S(0x0038);
 
