@@ -28,13 +28,6 @@ public class EzspMfglibSendPacketRequest extends EzspFrameRequest {
     public static int FRAME_ID = 0x89;
 
     /**
-     * The current channel.
-     * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
-     */
-    private int packetLength;
-
-    /**
      * The packet to send. The last two bytes will be replacedwith the 16-bit CRC.
      * <p>
      * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
@@ -52,26 +45,6 @@ public class EzspMfglibSendPacketRequest extends EzspFrameRequest {
     public EzspMfglibSendPacketRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
-    }
-
-    /**
-     * The current channel.
-     * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
-     *
-     * @return the current packetLength as {@link int}
-     */
-    public int getPacketLength() {
-        return packetLength;
-    }
-
-    /**
-     * The current channel.
-     *
-     * @param packetLength the packetLength to set as {@link int}
-     */
-    public void setPacketLength(int packetLength) {
-        this.packetLength = packetLength;
     }
 
     /**
@@ -100,7 +73,7 @@ public class EzspMfglibSendPacketRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeUInt8(packetLength);
+        serializer.serializeUInt8(packetContents.length);
         serializer.serializeUInt8Array(packetContents);
         return serializer.getPayload();
     }
@@ -108,9 +81,7 @@ public class EzspMfglibSendPacketRequest extends EzspFrameRequest {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder(80);
-        builder.append("EzspMfglibSendPacketRequest [packetLength=");
-        builder.append(packetLength);
-        builder.append(", packetContents=");
+        builder.append("EzspMfglibSendPacketRequest [packetContents=");
         for (int c = 0; c < packetContents.length; c++) {
             if (c > 0) {
                 builder.append(" ");
