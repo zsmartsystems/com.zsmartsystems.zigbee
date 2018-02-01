@@ -42,6 +42,10 @@ public abstract class EzspFrameResponse extends EzspFrame {
         sequenceNumber = deserializer.deserializeUInt8();
         frameControl = deserializer.deserializeUInt8();
         frameId = deserializer.deserializeUInt8();
+        if (frameId == 0xFF) {
+        	deserializer.deserializeUInt8();
+        	frameId = deserializer.deserializeUInt8();
+        }
         isResponse = (frameControl & 0x80) != 0;
     }
 
