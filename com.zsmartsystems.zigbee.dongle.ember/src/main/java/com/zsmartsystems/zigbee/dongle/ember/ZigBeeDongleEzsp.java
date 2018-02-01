@@ -42,12 +42,15 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRespon
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendMulticastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConcentratorRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConcentratorResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTrustCenterJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
@@ -63,6 +66,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberFirmwareUpdateHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberNetworkInitialisation;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberStackConfiguration;
+import com.zsmartsystems.zigbee.transport.ConcentratorConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.TransportConfigResult;
@@ -142,7 +146,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         stackConfiguration = new HashMap<EzspConfigId, Integer>();
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE, 16);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SECURITY_LEVEL, 5);
-        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_ADDRESS_TABLE_SIZE, 2);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_ADDRESS_TABLE_SIZE, 8);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_TRUST_CENTER_ADDRESS_CACHE_SIZE, 2);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_STACK_PROFILE, 2);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_INDIRECT_TRANSMISSION_TIMEOUT, 7680);
@@ -150,7 +154,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_TX_POWER_MODE, 0);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SUPPORTED_NETWORKS, 2);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_KEY_TABLE_SIZE, 4);
-        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS, 0x0F);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS, 0x01);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_MAX_END_DEVICE_CHILDREN, 16);
 
         stackPolicies = new HashMap<EzspPolicyId, EzspDecisionId>();
@@ -159,6 +163,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 EzspDecisionId.EZSP_MESSAGE_TAG_ONLY_IN_CALLBACK);
         // stackPolicies.put(EzspPolicyId.EZSP_APP_KEY_REQUEST_POLICY, value)
 
+        // stackPolicies.put(EzspPolicyId.EZSP_POLL_HANDLER_POLICY, EzspDecisionId.EZSP_POLL_HANDLER_CALLBACK);
         stackPolicies.put(EzspPolicyId.EZSP_BINDING_MODIFICATION_POLICY,
                 EzspDecisionId.EZSP_CHECK_BINDING_MODIFICATIONS_ARE_VALID_ENDPOINT_CLUSTERS);
 
@@ -583,6 +588,15 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         for (TransportConfigOption option : configuration.getOptions()) {
             try {
                 switch (option) {
+                    case CONCENTRATOR_CONFIG:
+                        configuration.setResult(option,
+                                setConcentrator((ConcentratorConfig) configuration.getValue(option)));
+                        break;
+
+                    case TRUST_CENTRE_LINK_KEY:
+
+                    case TRUST_CENTRE_JOIN_MODE:
+
                     default:
                         configuration.setResult(option, TransportConfigResult.ERROR_UNSUPPORTED);
                         logger.debug("Unsupported configuration option \"{}\" in EZSP dongle", option);
@@ -678,5 +692,40 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         }
         bootloadHandler.cancelUpdate();
         return true;
+    }
+
+    private TransportConfigResult setConcentrator(ConcentratorConfig concentratorConfig) {
+        EzspSetConcentratorRequest concentratorRequest = new EzspSetConcentratorRequest();
+        concentratorRequest.setMinTime(concentratorConfig.getRefreshMinimum());
+        concentratorRequest.setMaxTime(concentratorConfig.getRefreshMaximum());
+        concentratorRequest.setMaxHops(concentratorConfig.getMaxHops());
+        concentratorRequest.setRouteErrorThreshold(concentratorConfig.getMaxFailures());
+        concentratorRequest.setDeliveryFailureThreshold(concentratorConfig.getMaxFailures());
+        switch (concentratorConfig.getType()) {
+            case DISABLED:
+                concentratorRequest.setEnable(false);
+                break;
+            case HIGH_RAM:
+                concentratorRequest.setConcentratorType(EmberConcentratorType.EMBER_HIGH_RAM_CONCENTRATOR);
+                concentratorRequest.setEnable(false);
+                break;
+            case LOW_RAM:
+                concentratorRequest.setConcentratorType(EmberConcentratorType.EMBER_LOW_RAM_CONCENTRATOR);
+                concentratorRequest.setEnable(false);
+                break;
+            default:
+                break;
+        }
+
+        EzspTransaction concentratorTransaction = ashHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(concentratorRequest, EzspNetworkInitResponse.class));
+        EzspSetConcentratorResponse concentratorResponse = (EzspSetConcentratorResponse) concentratorTransaction
+                .getResponse();
+        logger.debug(concentratorResponse.toString());
+
+        if (concentratorResponse.getStatus() == EzspStatus.EZSP_SUCCESS) {
+            return TransportConfigResult.SUCCESS;
+        }
+        return TransportConfigResult.FAILURE;
     }
 }
