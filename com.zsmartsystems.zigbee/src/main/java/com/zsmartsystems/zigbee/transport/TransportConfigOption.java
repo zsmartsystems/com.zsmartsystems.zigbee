@@ -23,8 +23,17 @@ public enum TransportConfigOption {
      * Defines the concentrator type.
      * <p>
      * Value must be one of {@link ConcentratorType}.
+     *
+     * @deprecated use CONCENTRATOR_CONFIG
      */
     CONCENTRATOR_TYPE,
+
+    /**
+     * Defines the concentrator type.
+     * <p>
+     * Value must be one of {@link ConcentratorConfigs}.
+     */
+    CONCENTRATOR_CONFIG,
 
     /**
      * Configures the trust centre join mode.
