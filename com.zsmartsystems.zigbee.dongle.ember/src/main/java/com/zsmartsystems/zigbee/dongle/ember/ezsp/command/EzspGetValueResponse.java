@@ -102,7 +102,7 @@ public class EzspGetValueResponse extends EzspFrameResponse {
         builder.append(", value=");
         for (int c = 0; c < value.length; c++) {
             if (c > 0) {
-                builder.append(" ");
+                builder.append(' ');
             }
             builder.append(String.format("%02X", value[c]));
         }

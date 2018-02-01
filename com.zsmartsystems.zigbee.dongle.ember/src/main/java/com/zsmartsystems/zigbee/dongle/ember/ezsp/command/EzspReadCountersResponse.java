@@ -67,7 +67,7 @@ public class EzspReadCountersResponse extends EzspFrameResponse {
         builder.append("EzspReadCountersResponse [values=");
         for (int c = 0; c < values.length; c++) {
             if (c > 0) {
-                builder.append(" ");
+                builder.append(' ');
             }
             builder.append(String.format("%02X", values[c]));
         }

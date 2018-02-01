@@ -238,7 +238,7 @@ public class EmberZigbeeNetwork {
         } else {
             for (int cnt = 0; cnt < extendedPanId.length; cnt++) {
                 if (cnt != 0) {
-                    builder.append(" ");
+                    builder.append(' ');
                 }
                 builder.append(String.format("%02X", extendedPanId[cnt]));
             }

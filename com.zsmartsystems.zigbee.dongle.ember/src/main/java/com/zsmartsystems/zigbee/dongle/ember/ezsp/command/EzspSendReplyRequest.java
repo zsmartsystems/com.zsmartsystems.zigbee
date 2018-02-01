@@ -176,7 +176,7 @@ public class EzspSendReplyRequest extends EzspFrameRequest {
         builder.append(", messageContents=");
         for (int c = 0; c < messageContents.length; c++) {
             if (c > 0) {
-                builder.append(" ");
+                builder.append(' ');
             }
             builder.append(String.format("%02X", messageContents[c]));
         }
