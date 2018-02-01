@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
@@ -24,6 +25,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurity
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinDecision;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStructBitmask;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMacPassthroughType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNeighborTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
@@ -265,6 +269,22 @@ public class EzspDeserializer {
         }
 
         return list;
+    }
+
+    public ExtendedPanId deserializeExtendedPanId() {
+        return new ExtendedPanId(deserializeUInt8Array(8));
+    }
+
+    public EmberKeyType deserializeEmberKeyType() {
+        return EmberKeyType.getEmberKeyType(deserializeUInt8());
+    }
+
+    public EmberKeyStructBitmask deserializeEmberKeyStructBitmask() {
+        return EmberKeyStructBitmask.getEmberKeyStructBitmask(deserializeUInt8());
+    }
+
+    public EmberKeyStruct deserializeEmberKeyStruct() {
+        return new EmberKeyStruct(this);
     }
 
 }

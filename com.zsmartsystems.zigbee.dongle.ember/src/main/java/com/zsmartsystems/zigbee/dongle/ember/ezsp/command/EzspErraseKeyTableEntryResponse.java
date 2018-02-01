@@ -8,12 +8,13 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
- * Class to implement the Ember EZSP command <b>setConcentrator</b>.
+ * Class to implement the Ember EZSP command <b>erraseKeyTableEntry</b>.
  * <p>
- * Enable/disable concentrator support.
+ * This function erases the data in the key table entry at the specified index. If the index is
+ * invalid, falseis returned.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -21,51 +22,51 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspSetConcentratorResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x10;
+public class EzspErraseKeyTableEntryResponse extends EzspFrameResponse {
+    public static int FRAME_ID = 0x76;
 
     /**
-     * An EmberStatus value indicating success or the reason for failure.
+     * The success or failure of the operation.
      * <p>
-     * EZSP type is <i>EzspStatus</i> - Java type is {@link EzspStatus}
+     * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      */
-    private EzspStatus status;
+    private EmberStatus status;
 
     /**
      * Response and Handler constructor
      */
-    public EzspSetConcentratorResponse(int[] inputBuffer) {
+    public EzspErraseKeyTableEntryResponse(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
         // Deserialize the fields
-        status = deserializer.deserializeEzspStatus();
+        status = deserializer.deserializeEmberStatus();
     }
 
     /**
-     * An EmberStatus value indicating success or the reason for failure.
+     * The success or failure of the operation.
      * <p>
-     * EZSP type is <i>EzspStatus</i> - Java type is {@link EzspStatus}
+     * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      *
-     * @return the current status as {@link EzspStatus}
+     * @return the current status as {@link EmberStatus}
      */
-    public EzspStatus getStatus() {
+    public EmberStatus getStatus() {
         return status;
     }
 
     /**
-     * An EmberStatus value indicating success or the reason for failure.
+     * The success or failure of the operation.
      *
-     * @param status the status to set as {@link EzspStatus}
+     * @param status the status to set as {@link EmberStatus}
      */
-    public void setStatus(EzspStatus status) {
+    public void setStatus(EmberStatus status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(55);
-        builder.append("EzspSetConcentratorResponse [status=");
+        final StringBuilder builder = new StringBuilder(59);
+        builder.append("EzspErraseKeyTableEntryResponse [status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

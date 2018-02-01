@@ -117,6 +117,15 @@ public enum EzspConfigId {
     EZSP_CONFIG_SUPPORTED_NETWORKS(0x002D),
 
     /**
+     * The length of time, in seconds, that a trust center will store a transient link key that a
+     * device can use to join its network. A transient key is added with a call to
+     * emberAddTransientLinkKey. After the transient key is added, it will be removed once this
+     * amount of time has passed. A joining device will not be able to use that key to join until it is
+     * added again on the trust center. The default value is 300 seconds, i.e., 5 minutes.
+     */
+    EZSP_CONFIG_TRANSIENT_KEY_TIMEOUT_S(0x0036),
+
+    /**
      * The number of passive acknowledgements to record from neighbors before we stop
      * re-transmitting broadcasts.
      */

@@ -9,12 +9,14 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
 
 /**
- * Class to implement the Ember EZSP command <b>getValue</b>.
+ * Class to implement the Ember EZSP command <b>mfglibStart</b>.
  * <p>
- * Reads a value from the NCP.
+ * Activate use of mfglib test routines and enables the radio receiver to report packets it
+ * receives to the mfgLibRxHandler() callback. These packets will not be passed up with a CRC
+ * failure. All other mfglib functions will return an error until the mfglibStart() has been
+ * called
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -22,15 +24,15 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspGetValueRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0xAA;
+public class EzspMfglibStartRequest extends EzspFrameRequest {
+    public static int FRAME_ID = 0x83;
 
     /**
-     * Identifies which policy to modify.
+     * true to generate a mfglibRxHandler callback when a packet is received.
      * <p>
-     * EZSP type is <i>EzspValueId</i> - Java type is {@link EzspValueId}
+     * EZSP type is <i>bool</i> - Java type is {@link boolean}
      */
-    private EzspValueId valueId;
+    private boolean rxCallback;
 
     /**
      * Serialiser used to seialise to binary line data
@@ -40,29 +42,29 @@ public class EzspGetValueRequest extends EzspFrameRequest {
     /**
      * Request constructor
      */
-    public EzspGetValueRequest() {
+    public EzspMfglibStartRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
     }
 
     /**
-     * Identifies which policy to modify.
+     * true to generate a mfglibRxHandler callback when a packet is received.
      * <p>
-     * EZSP type is <i>EzspValueId</i> - Java type is {@link EzspValueId}
+     * EZSP type is <i>bool</i> - Java type is {@link boolean}
      *
-     * @return the current valueId as {@link EzspValueId}
+     * @return the current rxCallback as {@link boolean}
      */
-    public EzspValueId getValueId() {
-        return valueId;
+    public boolean getRxCallback() {
+        return rxCallback;
     }
 
     /**
-     * Identifies which policy to modify.
+     * true to generate a mfglibRxHandler callback when a packet is received.
      *
-     * @param valueId the valueId to set as {@link EzspValueId}
+     * @param rxCallback the rxCallback to set as {@link boolean}
      */
-    public void setValueId(EzspValueId valueId) {
-        this.valueId = valueId;
+    public void setRxCallback(boolean rxCallback) {
+        this.rxCallback = rxCallback;
     }
 
     @Override
@@ -71,15 +73,15 @@ public class EzspGetValueRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeEzspValueId(valueId);
+        serializer.serializeBool(rxCallback);
         return serializer.getPayload();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(47);
-        builder.append("EzspGetValueRequest [valueId=");
-        builder.append(valueId);
+        final StringBuilder builder = new StringBuilder(50);
+        builder.append("EzspMfglibStartRequest [rxCallback=");
+        builder.append(rxCallback);
         builder.append(']');
         return builder.toString();
     }

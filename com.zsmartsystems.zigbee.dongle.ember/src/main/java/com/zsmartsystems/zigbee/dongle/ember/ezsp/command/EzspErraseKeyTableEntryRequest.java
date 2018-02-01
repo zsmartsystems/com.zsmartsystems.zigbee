@@ -11,11 +11,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 
 /**
- * Class to implement the Ember EZSP command <b>getStandaloneBootloaderVersionPlatMicroPhy</b>.
+ * Class to implement the Ember EZSP command <b>erraseKeyTableEntry</b>.
  * <p>
- * Detects if the standalone bootloader is installed, and if so returns the installed version.
- * If not return 0xffff. A returned version of 0x1234 would indicate version 1.2 build 34. Also
- * return the node's version of PLAT, MICRO and PHY.
+ * This function erases the data in the key table entry at the specified index. If the index is
+ * invalid, falseis returned.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -23,8 +22,15 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x91;
+public class EzspErraseKeyTableEntryRequest extends EzspFrameRequest {
+    public static int FRAME_ID = 0x76;
+
+    /**
+     * This indicates the index of entry to erase.
+     * <p>
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     */
+    private int index;
 
     /**
      * Serialiser used to seialise to binary line data
@@ -34,9 +40,29 @@ public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspF
     /**
      * Request constructor
      */
-    public EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest() {
+    public EzspErraseKeyTableEntryRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
+    }
+
+    /**
+     * This indicates the index of entry to erase.
+     * <p>
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     *
+     * @return the current index as {@link int}
+     */
+    public int getIndex() {
+        return index;
+    }
+
+    /**
+     * This indicates the index of entry to erase.
+     *
+     * @param index the index to set as {@link int}
+     */
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     @Override
@@ -45,11 +71,16 @@ public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspF
         serializeHeader(serializer);
 
         // Serialize the fields
+        serializer.serializeUInt8(index);
         return serializer.getPayload();
     }
 
     @Override
     public String toString() {
-        return "EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest []";
+        final StringBuilder builder = new StringBuilder(58);
+        builder.append("EzspErraseKeyTableEntryRequest [index=");
+        builder.append(index);
+        builder.append(']');
+        return builder.toString();
     }
 }

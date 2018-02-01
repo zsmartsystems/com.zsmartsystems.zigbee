@@ -11,9 +11,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 
 /**
- * Class to implement the Ember EZSP command <b>setConcentrator</b>.
+ * Class to implement the Ember EZSP command <b>setValue</b>.
  * <p>
- * Enable/disable concentrator support.
+ * Writes a value to the NCP.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -21,11 +21,13 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspSetConcentratorResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x10;
+public class EzspSetValueResponse extends EzspFrameResponse {
+    public static int FRAME_ID = 0xAB;
 
     /**
-     * An EmberStatus value indicating success or the reason for failure.
+     * EZSP_SUCCESS if the value was changed, EZSP_ERROR_INVALID_VALUE if the new value was out of
+     * bounds, EZSP_ERROR_INVALID_ID if the NCP does not recognize valueId,
+     * EZSP_ERROR_INVALID_CALL if the value could not be modified.
      * <p>
      * EZSP type is <i>EzspStatus</i> - Java type is {@link EzspStatus}
      */
@@ -34,7 +36,7 @@ public class EzspSetConcentratorResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspSetConcentratorResponse(int[] inputBuffer) {
+    public EzspSetValueResponse(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
@@ -43,7 +45,9 @@ public class EzspSetConcentratorResponse extends EzspFrameResponse {
     }
 
     /**
-     * An EmberStatus value indicating success or the reason for failure.
+     * EZSP_SUCCESS if the value was changed, EZSP_ERROR_INVALID_VALUE if the new value was out of
+     * bounds, EZSP_ERROR_INVALID_ID if the NCP does not recognize valueId,
+     * EZSP_ERROR_INVALID_CALL if the value could not be modified.
      * <p>
      * EZSP type is <i>EzspStatus</i> - Java type is {@link EzspStatus}
      *
@@ -54,7 +58,9 @@ public class EzspSetConcentratorResponse extends EzspFrameResponse {
     }
 
     /**
-     * An EmberStatus value indicating success or the reason for failure.
+     * EZSP_SUCCESS if the value was changed, EZSP_ERROR_INVALID_VALUE if the new value was out of
+     * bounds, EZSP_ERROR_INVALID_ID if the NCP does not recognize valueId,
+     * EZSP_ERROR_INVALID_CALL if the value could not be modified.
      *
      * @param status the status to set as {@link EzspStatus}
      */
@@ -64,8 +70,8 @@ public class EzspSetConcentratorResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(55);
-        builder.append("EzspSetConcentratorResponse [status=");
+        final StringBuilder builder = new StringBuilder(48);
+        builder.append("EzspSetValueResponse [status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

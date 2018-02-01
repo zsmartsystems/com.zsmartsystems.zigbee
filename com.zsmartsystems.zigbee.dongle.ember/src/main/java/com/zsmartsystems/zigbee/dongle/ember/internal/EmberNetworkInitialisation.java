@@ -112,7 +112,7 @@ public class EmberNetworkInitialisation {
                 extendedPanIdBuilder.append(String.format("%02X", extendedPanId[cnt]));
             }
 
-            networkParameters.setExtendedPanId(extendedPanId);
+            networkParameters.setExtendedPanId(new ExtendedPanId(extendedPanId));
             logger.debug("Created random Extended PAN ID: {}", extendedPanIdBuilder.toString());
         }
 
@@ -304,7 +304,7 @@ public class EmberNetworkInitialisation {
     private boolean doFormNetwork(int panId, ExtendedPanId extendedPanId, int channel) {
         EmberNetworkParameters networkParameters = new EmberNetworkParameters();
         networkParameters.setJoinMethod(EmberJoinMethod.EMBER_USE_MAC_ASSOCIATION);
-        networkParameters.setExtendedPanId(extendedPanId.getValue());
+        networkParameters.setExtendedPanId(extendedPanId);
         networkParameters.setPanId(panId);
         networkParameters.setRadioChannel(channel);
         EzspFormNetworkRequest formNetwork = new EzspFormNetworkRequest();

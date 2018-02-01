@@ -9,13 +9,12 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 
 /**
- * Class to implement the Ember EZSP command <b>getStandaloneBootloaderVersionPlatMicroPhy</b>.
+ * Class to implement the Ember EZSP command <b>getKey</b>.
  * <p>
- * Detects if the standalone bootloader is installed, and if so returns the installed version.
- * If not return 0xffff. A returned version of 0x1234 would indicate version 1.2 build 34. Also
- * return the node's version of PLAT, MICRO and PHY.
+ * Gets a Security Key based on the passed key type.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -23,8 +22,15 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x91;
+public class EzspGetKeyRequest extends EzspFrameRequest {
+    public static int FRAME_ID = 0x6A;
+
+    /**
+     * 
+     * <p>
+     * EZSP type is <i>EmberKeyType</i> - Java type is {@link EmberKeyType}
+     */
+    private EmberKeyType keyType;
 
     /**
      * Serialiser used to seialise to binary line data
@@ -34,9 +40,29 @@ public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspF
     /**
      * Request constructor
      */
-    public EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest() {
+    public EzspGetKeyRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
+    }
+
+    /**
+     * 
+     * <p>
+     * EZSP type is <i>EmberKeyType</i> - Java type is {@link EmberKeyType}
+     *
+     * @return the current keyType as {@link EmberKeyType}
+     */
+    public EmberKeyType getKeyType() {
+        return keyType;
+    }
+
+    /**
+     * 
+     *
+     * @param keyType the keyType to set as {@link EmberKeyType}
+     */
+    public void setKeyType(EmberKeyType keyType) {
+        this.keyType = keyType;
     }
 
     @Override
@@ -45,11 +71,16 @@ public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspF
         serializeHeader(serializer);
 
         // Serialize the fields
+        serializer.serializeEmberKeyType(keyType);
         return serializer.getPayload();
     }
 
     @Override
     public String toString() {
-        return "EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest []";
+        final StringBuilder builder = new StringBuilder(45);
+        builder.append("EzspGetKeyRequest [keyType=");
+        builder.append(keyType);
+        builder.append(']');
+        return builder.toString();
     }
 }

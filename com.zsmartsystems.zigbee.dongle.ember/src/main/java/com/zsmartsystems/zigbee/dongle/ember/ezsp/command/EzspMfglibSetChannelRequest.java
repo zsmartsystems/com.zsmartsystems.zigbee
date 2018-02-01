@@ -11,11 +11,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 
 /**
- * Class to implement the Ember EZSP command <b>getStandaloneBootloaderVersionPlatMicroPhy</b>.
+ * Class to implement the Ember EZSP command <b>mfglibSetChannel</b>.
  * <p>
- * Detects if the standalone bootloader is installed, and if so returns the installed version.
- * If not return 0xffff. A returned version of 0x1234 would indicate version 1.2 build 34. Also
- * return the node's version of PLAT, MICRO and PHY.
+ * Sets the radio channel. Calibration occurs if this is the first time the channel has been
+ * used.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -23,8 +22,15 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x91;
+public class EzspMfglibSetChannelRequest extends EzspFrameRequest {
+    public static int FRAME_ID = 0x8A;
+
+    /**
+     * The current channel.
+     * <p>
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     */
+    private int channel;
 
     /**
      * Serialiser used to seialise to binary line data
@@ -34,9 +40,29 @@ public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspF
     /**
      * Request constructor
      */
-    public EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest() {
+    public EzspMfglibSetChannelRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
+    }
+
+    /**
+     * The current channel.
+     * <p>
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     *
+     * @return the current channel as {@link int}
+     */
+    public int getChannel() {
+        return channel;
+    }
+
+    /**
+     * The current channel.
+     *
+     * @param channel the channel to set as {@link int}
+     */
+    public void setChannel(int channel) {
+        this.channel = channel;
     }
 
     @Override
@@ -45,11 +71,16 @@ public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspF
         serializeHeader(serializer);
 
         // Serialize the fields
+        serializer.serializeUInt8(channel);
         return serializer.getPayload();
     }
 
     @Override
     public String toString() {
-        return "EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest []";
+        final StringBuilder builder = new StringBuilder(55);
+        builder.append("EzspMfglibSetChannelRequest [channel=");
+        builder.append(channel);
+        builder.append(']');
+        return builder.toString();
     }
 }

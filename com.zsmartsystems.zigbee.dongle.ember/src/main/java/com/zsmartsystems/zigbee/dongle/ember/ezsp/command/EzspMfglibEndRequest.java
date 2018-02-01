@@ -11,11 +11,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
 
 /**
- * Class to implement the Ember EZSP command <b>getStandaloneBootloaderVersionPlatMicroPhy</b>.
+ * Class to implement the Ember EZSP command <b>mfglibEnd</b>.
  * <p>
- * Detects if the standalone bootloader is installed, and if so returns the installed version.
- * If not return 0xffff. A returned version of 0x1234 would indicate version 1.2 build 34. Also
- * return the node's version of PLAT, MICRO and PHY.
+ * Deactivate use of mfglib test routines; restores the hardware to the state it was in prior to
+ * mfglibStart() and stops receiving packets started by mfglibStart() at the same time.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -23,8 +22,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x91;
+public class EzspMfglibEndRequest extends EzspFrameRequest {
+    public static int FRAME_ID = 0x84;
 
     /**
      * Serialiser used to seialise to binary line data
@@ -34,7 +33,7 @@ public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspF
     /**
      * Request constructor
      */
-    public EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest() {
+    public EzspMfglibEndRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
     }
@@ -50,6 +49,6 @@ public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspF
 
     @Override
     public String toString() {
-        return "EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest []";
+        return "EzspMfglibEndRequest []";
     }
 }
