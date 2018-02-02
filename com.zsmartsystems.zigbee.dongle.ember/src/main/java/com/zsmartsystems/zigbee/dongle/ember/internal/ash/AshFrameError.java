@@ -43,11 +43,12 @@ public class AshFrameError extends AshFrame {
         final StringBuilder builder = new StringBuilder();
         builder.append("AshFrameError [version=");
         builder.append(version);
-        builder.append(". errorCode=");
+        builder.append(", errorCode=");
         builder.append(errorCode);
+        builder.append(", ");
         AshErrorCode ashError = AshErrorCode.getAshErrorCode(errorCode);
         builder.append(ashError.getDescription());
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 

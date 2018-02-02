@@ -13,8 +13,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspMessageSentHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberApsOption;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberOutgoingMessageType;
@@ -27,6 +27,7 @@ public class EzspMessageSentHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive1() {
+        EzspFrame.setEzspVersion(4);
         EzspMessageSentHandler messageSentHandler = new EzspMessageSentHandler(
                 getPacketData("01 90 3F 00 00 00 00 01 00 00 00 00 00 01 00 00 45 00 00 00"));
 
@@ -37,6 +38,7 @@ public class EzspMessageSentHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive2() {
+        EzspFrame.setEzspVersion(4);
         EzspMessageSentHandler messageSentHandler = new EzspMessageSentHandler(
                 getPacketData("04 90 3F 00 00 00 00 00 04 00 00 00 40 11 00 00 78 04 00 00"));
 

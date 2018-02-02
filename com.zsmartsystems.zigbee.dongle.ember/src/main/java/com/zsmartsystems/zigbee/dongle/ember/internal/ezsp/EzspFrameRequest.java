@@ -18,10 +18,20 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
  *
  * UG100: EZSP Reference Guide
  *
- * An EZSP Frame is made up as follows -:
+ * An EZSP V4 Frame is made up as follows -:
  * <ul>
  * <li>Sequence : 1 byte sequence number
  * <li>Frame Control: 1 byte
+ * <li>Frame ID : 1 byte
+ * <li>Parameters : variable length
+ * </ul>
+ * <p>
+ * An EZSP V5+ Frame is made up as follows -:
+ * <ul>
+ * <li>Sequence : 1 byte sequence number
+ * <li>Frame Control: 1 byte
+ * <li>Legacy Frame ID : 1 byte
+ * <li>Extended Frame Control : 1 byte
  * <li>Frame ID : 1 byte
  * <li>Parameters : variable length
  * </ul>
@@ -51,7 +61,12 @@ public abstract class EzspFrameRequest extends EzspFrame {
         serializer.serializeUInt8(sequenceNumber);
 
         // Output Frame Control Byte
-        serializer.serializeUInt8(0);
+        serializer.serializeUInt8(EZSP_FC_REQUEST);
+
+        if (ezspVersion > 4) {
+            serializer.serializeUInt8(EZSP_LEGACY_FRAME_ID);
+            serializer.serializeUInt8(0x00);
+        }
 
         // Output Frame ID
         serializer.serializeUInt8(frameId);

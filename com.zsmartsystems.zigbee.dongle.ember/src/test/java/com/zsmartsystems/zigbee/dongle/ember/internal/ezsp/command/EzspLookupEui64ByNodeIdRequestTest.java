@@ -13,8 +13,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspLookupEui64ByNodeIdRequest;
 
 /**
  *
@@ -24,6 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspLookupEui
 public class EzspLookupEui64ByNodeIdRequestTest extends EzspFrameTest {
     @Test
     public void testLookupAddress() {
+        EzspFrame.setEzspVersion(4);
         EzspLookupEui64ByNodeIdRequest request = new EzspLookupEui64ByNodeIdRequest();
         request.setNodeId(0);
         request.setSequenceNumber(5);

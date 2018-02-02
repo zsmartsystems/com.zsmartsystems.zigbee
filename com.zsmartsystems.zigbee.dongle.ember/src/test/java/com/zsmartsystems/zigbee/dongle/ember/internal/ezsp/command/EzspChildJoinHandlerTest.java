@@ -13,8 +13,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspChildJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberNodeType;
 
 /**
@@ -24,6 +24,7 @@ public class EzspChildJoinHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive1() {
+        EzspFrame.setEzspVersion(4);
         EzspChildJoinHandler handler = new EzspChildJoinHandler(
                 getPacketData("0B 90 23 00 00 95 87 F9 41 F6 02 00 4B 12 00 04"));
 

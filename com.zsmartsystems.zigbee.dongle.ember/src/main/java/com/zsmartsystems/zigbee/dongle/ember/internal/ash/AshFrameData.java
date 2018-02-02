@@ -69,7 +69,7 @@ public class AshFrameData extends AshFrame {
             }
             result.append(String.format("%02X", dataBuffer[i]));
         }
-        result.append("]");
+        result.append(']');
 
         return result.toString();
     }

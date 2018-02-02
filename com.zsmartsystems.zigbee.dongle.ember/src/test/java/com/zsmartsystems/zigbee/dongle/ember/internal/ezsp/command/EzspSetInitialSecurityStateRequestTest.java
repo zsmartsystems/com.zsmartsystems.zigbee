@@ -14,8 +14,8 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetInitialSecurityStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberInitialSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberInitialSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyData;
@@ -28,6 +28,8 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyDat
 public class EzspSetInitialSecurityStateRequestTest extends EzspFrameTest {
     @Test
     public void testSecurityStateRequest() {
+        EzspFrame.setEzspVersion(4);
+
         EmberKeyData keyData;
         EzspSetInitialSecurityStateRequest request = new EzspSetInitialSecurityStateRequest();
         EmberInitialSecurityState state = new EmberInitialSecurityState();
@@ -42,9 +44,8 @@ public class EzspSetInitialSecurityStateRequestTest extends EzspFrameTest {
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_STANDARD_SECURITY_MODE);
         request.setState(state);
         request.setSequenceNumber(7);
-        assertTrue(Arrays.equals(
-                getPacketData(
-                        "07 00 68 00 00 BB 00 00 00 00 00 00 00 00 00 00 00 00 00 00 BB AA 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AA 00 EF CD AB 90 78 56 34 12"),
+        assertTrue(Arrays.equals(getPacketData(
+                "07 00 68 00 00 BB 00 00 00 00 00 00 00 00 00 00 00 00 00 00 BB AA 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AA 00 EF CD AB 90 78 56 34 12"),
                 request.serialize()));
     }
 }

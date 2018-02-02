@@ -11,8 +11,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNeighborCountResponse;
 
 /**
  *
@@ -22,6 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNeighborC
 public class EzspNeighborCountResponseTest extends EzspFrameTest {
     @Test
     public void testVersion() {
+        EzspFrame.setEzspVersion(4);
         EzspNeighborCountResponse response = new EzspNeighborCountResponse(getPacketData("28 80 7A 01"));
 
         assertEquals(true, response.isResponse());

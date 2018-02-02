@@ -13,8 +13,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspAddEndpointRequest;
 
 /**
  *
@@ -24,6 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspAddEndpoi
 public class EzspAddEndpointRequestTest extends EzspFrameTest {
     @Test
     public void testAddEndpointRequest() {
+        EzspFrame.setEzspVersion(4);
         int[] clusters = new int[] { 0, 1, 6 };
         EzspAddEndpointRequest request = new EzspAddEndpointRequest();
         request.setAppFlags(0);
@@ -42,6 +43,7 @@ public class EzspAddEndpointRequestTest extends EzspFrameTest {
 
     @Test
     public void testAddEndpointRequestNoClusters() {
+        EzspFrame.setEzspVersion(4);
         int[] clusters = new int[] {};
         EzspAddEndpointRequest request = new EzspAddEndpointRequest();
         request.setDeviceId(0);
@@ -56,4 +58,3 @@ public class EzspAddEndpointRequestTest extends EzspFrameTest {
         assertTrue(Arrays.equals(getPacketData("AA 00 02 01 04 01 00 00 00 00 00"), request.serialize()));
     }
 }
-// [2, 0, 2, 1, 4, 1, 0, 0, 0, 0, 0]

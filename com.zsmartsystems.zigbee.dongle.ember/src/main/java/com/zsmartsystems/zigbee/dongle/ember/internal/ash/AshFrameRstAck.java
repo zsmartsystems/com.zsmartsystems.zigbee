@@ -49,11 +49,12 @@ public class AshFrameRstAck extends AshFrame {
         final StringBuilder builder = new StringBuilder();
         builder.append("AshFrameRstAck [version=");
         builder.append(version);
-        builder.append(". resetCode=");
+        builder.append(", resetCode=");
         builder.append(resetCode);
+        builder.append(", ");
         AshErrorCode ashError = AshErrorCode.getAshErrorCode(resetCode);
         builder.append(ashError.getDescription());
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 }

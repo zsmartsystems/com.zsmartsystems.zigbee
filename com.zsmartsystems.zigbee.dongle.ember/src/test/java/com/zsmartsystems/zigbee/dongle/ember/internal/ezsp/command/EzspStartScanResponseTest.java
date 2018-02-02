@@ -11,9 +11,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspStartScanResponse;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus;
 
 /**
@@ -24,6 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
 public class EzspStartScanResponseTest extends EzspFrameTest {
     @Test
     public void testVersion() {
+        EzspFrame.setEzspVersion(4);
         EzspVersionResponse version = new EzspVersionResponse(getPacketData("03 80 00 04 02 00 58"));
 
         assertEquals(3, version.getSequenceNumber());

@@ -14,8 +14,8 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspStartScanRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspNetworkScanType;
 
 /**
@@ -26,6 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspNetwork
 public class EzspStartScanRequestTest extends EzspFrameTest {
     @Test
     public void testVersion() {
+        EzspFrame.setEzspVersion(4);
         EzspStartScanRequest request = new EzspStartScanRequest();
         request.setSequenceNumber(3);
         request.setScanType(EzspNetworkScanType.EZSP_ENERGY_SCAN);

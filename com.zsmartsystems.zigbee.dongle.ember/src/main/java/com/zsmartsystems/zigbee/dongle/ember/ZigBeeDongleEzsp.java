@@ -181,37 +181,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
-        if (!serialPort.open()) {
-            logger.error("Unable to open Ember serial port");
+        if (!initialiseEzspProtocol()) {
             return ZigBeeInitializeResponse.FAILED;
         }
-        ashHandler = new AshFrameHandler(this);
-
-        // Connect to the ASH handler and NCP
-        ashHandler.start(serialPort);
-        ashHandler.connect();
-
-        // We MUST send the version command first.
-        EzspVersionRequest version = new EzspVersionRequest();
-        version.setDesiredProtocolVersion(4);
-        EzspTransaction versionTransaction = ashHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(version, EzspVersionResponse.class));
-        EzspVersionResponse versionResponse = (EzspVersionResponse) versionTransaction.getResponse();
-        logger.debug(versionResponse.toString());
-
-        StringBuilder builder = new StringBuilder(60);
-        builder.append("EZSP Version=");
-        builder.append(versionResponse.getProtocolVersion());
-        builder.append(", Stack Type=");
-        builder.append(versionResponse.getStackType());
-        builder.append(", Stack Version=");
-        for (int cnt = 3; cnt >= 0; cnt--) {
-            builder.append((versionResponse.getStackVersion() >> (cnt * 4)) & 0x0F);
-            if (cnt != 0) {
-                builder.append('.');
-            }
-        }
-        versionString = builder.toString();
 
         // Perform any stack configuration
         EmberStackConfiguration stackConfigurer = new EmberStackConfiguration(ashHandler);
@@ -640,19 +612,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         return versionString;
     }
 
-    @Override
-    public boolean updateFirmware(final InputStream firmware, final ZigBeeTransportFirmwareCallback callback) {
-        if (ashHandler != null) {
-            logger.debug("ashHandler is operating in updateFirmware");
-            return false;
-        }
-
+    private boolean initialiseEzspProtocol() {
         if (!serialPort.open()) {
-            logger.error("Unable to open EZSP serial port");
+            logger.error("Unable to open Ember serial port");
             return false;
         }
-
-        AshFrameHandler ashHandler = new AshFrameHandler(this);
+        ashHandler = new AshFrameHandler(this);
 
         // Connect to the ASH handler and NCP
         ashHandler.start(serialPort);
@@ -660,11 +625,55 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // We MUST send the version command first.
         EzspVersionRequest version = new EzspVersionRequest();
-        version.setDesiredProtocolVersion(4);
+        version.setDesiredProtocolVersion(EzspFrame.getEzspVersion());
         EzspTransaction versionTransaction = ashHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(version, EzspVersionResponse.class));
         EzspVersionResponse versionResponse = (EzspVersionResponse) versionTransaction.getResponse();
         logger.debug(versionResponse.toString());
+
+        if (versionResponse.getProtocolVersion() != EzspFrame.getEzspVersion()) {
+            // The device supports a different version that we current have set
+            if (!EzspFrame.setEzspVersion(versionResponse.getProtocolVersion())) {
+                logger.error("NCP requires unsupported version of EZSP (required = V{}, supported = V{})",
+                        versionResponse.getProtocolVersion(), EzspFrame.getEzspVersion());
+                return false;
+            }
+
+            version = new EzspVersionRequest();
+            version.setDesiredProtocolVersion(EzspFrame.getEzspVersion());
+            versionTransaction = ashHandler
+                    .sendEzspTransaction(new EzspSingleResponseTransaction(version, EzspVersionResponse.class));
+            versionResponse = (EzspVersionResponse) versionTransaction.getResponse();
+            logger.debug(versionResponse.toString());
+        }
+
+        StringBuilder builder = new StringBuilder(60);
+        builder.append("EZSP Version=");
+        builder.append(versionResponse.getProtocolVersion());
+        builder.append(", Stack Type=");
+        builder.append(versionResponse.getStackType());
+        builder.append(", Stack Version=");
+        for (int cnt = 3; cnt >= 0; cnt--) {
+            builder.append((versionResponse.getStackVersion() >> (cnt * 4)) & 0x0F);
+            if (cnt != 0) {
+                builder.append('.');
+            }
+        }
+        versionString = builder.toString();
+
+        return true;
+    }
+
+    @Override
+    public boolean updateFirmware(final InputStream firmware, final ZigBeeTransportFirmwareCallback callback) {
+        if (ashHandler != null) {
+            logger.debug("ashHandler is operating in updateFirmware");
+            return false;
+        }
+
+        if (!initialiseEzspProtocol()) {
+            return false;
+        }
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
         callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);

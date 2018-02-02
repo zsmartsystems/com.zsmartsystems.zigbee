@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberConcentratorType;
 
@@ -24,6 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberConcen
 public class EzspSetConcentratorRequestTest extends EzspFrameTest {
     @Test
     public void testEnabled() {
+        EzspFrame.setEzspVersion(4);
         EzspSetConcentratorRequest request = new EzspSetConcentratorRequest();
         request.setSequenceNumber(52);
         request.setConcentratorType(EmberConcentratorType.EMBER_HIGH_RAM_CONCENTRATOR);
@@ -39,6 +41,7 @@ public class EzspSetConcentratorRequestTest extends EzspFrameTest {
 
     @Test
     public void testDisabled() {
+        EzspFrame.setEzspVersion(4);
         EzspSetConcentratorRequest request = new EzspSetConcentratorRequest();
         request.setSequenceNumber(52);
         request.setConcentratorType(EmberConcentratorType.EMBER_LOW_RAM_CONCENTRATOR);
