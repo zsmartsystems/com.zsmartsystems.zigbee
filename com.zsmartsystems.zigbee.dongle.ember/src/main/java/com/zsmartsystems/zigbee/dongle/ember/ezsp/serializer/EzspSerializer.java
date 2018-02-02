@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer;
 import java.util.Arrays;
 import java.util.Set;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
@@ -21,13 +22,17 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurity
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStructBitmask;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNodeType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberPowerMode;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
 
 /**
  * The EmberZNet Serial Protocol Data Representation
@@ -49,6 +54,15 @@ public class EzspSerializer {
      * @param val
      */
     public void serializeUInt8(int val) {
+        buffer[length++] = val & 0xFF;
+    }
+
+    /**
+     * Adds an int8s_t into the output stream
+     *
+     * @param val
+     */
+    public void serializeInt8S(int val) {
         buffer[length++] = val & 0xFF;
     }
 
@@ -191,6 +205,10 @@ public class EzspSerializer {
         buffer[length++] = joinMethod.getKey();
     }
 
+    public void serializeExtendedPanId(ExtendedPanId extendedPanId) {
+        serializeUInt8Array(extendedPanId.getValue());
+    }
+
     /**
      * Returns the data to be sent to the NCP
      *
@@ -198,6 +216,22 @@ public class EzspSerializer {
      */
     public int[] getPayload() {
         return Arrays.copyOfRange(buffer, 0, length);
+    }
+
+    public void serializeEmberKeyType(EmberKeyType keyType) {
+        buffer[length++] = keyType.getKey();
+    }
+
+    public void serializeEzspValueId(EzspValueId valueId) {
+        buffer[length++] = valueId.getKey();
+    }
+
+    public void serializeEmberKeyStructBitmask(EmberKeyStructBitmask bitmask) {
+        buffer[length++] = bitmask.getKey();
+    }
+
+    public void serializeEmberPowerMode(EmberPowerMode powerMode) {
+        serializeUInt16(powerMode.getKey());
     }
 
 }

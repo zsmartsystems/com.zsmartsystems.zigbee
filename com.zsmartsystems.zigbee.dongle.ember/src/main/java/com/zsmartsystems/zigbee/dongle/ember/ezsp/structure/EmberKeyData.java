@@ -89,7 +89,7 @@ public class EmberKeyData {
         } else {
             for (int cnt = 0; cnt < contents.length; cnt++) {
                 if (cnt != 0) {
-                    builder.append(" ");
+                    builder.append(' ');
                 }
                 builder.append(String.format("%02X", contents[cnt]));
             }

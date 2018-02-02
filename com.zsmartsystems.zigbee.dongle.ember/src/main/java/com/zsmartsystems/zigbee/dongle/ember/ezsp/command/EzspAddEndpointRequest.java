@@ -233,14 +233,14 @@ public class EzspAddEndpointRequest extends EzspFrameRequest {
         builder.append(", inputClusterList=");
         for (int c = 0; c < inputClusterList.length; c++) {
             if (c > 0) {
-                builder.append(" ");
+                builder.append(' ');
             }
             builder.append(String.format("%02X", inputClusterList[c]));
         }
         builder.append(", outputClusterList=");
         for (int c = 0; c < outputClusterList.length; c++) {
             if (c > 0) {
-                builder.append(" ");
+                builder.append(' ');
             }
             builder.append(String.format("%02X", outputClusterList[c]));
         }

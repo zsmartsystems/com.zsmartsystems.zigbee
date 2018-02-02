@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.serializer.EzspSerializer;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
 
 /**
  * Class to implement the Ember EZSP command <b>getValue</b>.
@@ -27,9 +28,9 @@ public class EzspGetValueRequest extends EzspFrameRequest {
     /**
      * Identifies which policy to modify.
      * <p>
-     * EZSP type is <i>EzspValueId</i> - Java type is {@link int}
+     * EZSP type is <i>EzspValueId</i> - Java type is {@link EzspValueId}
      */
-    private int valueId;
+    private EzspValueId valueId;
 
     /**
      * Serialiser used to seialise to binary line data
@@ -47,20 +48,20 @@ public class EzspGetValueRequest extends EzspFrameRequest {
     /**
      * Identifies which policy to modify.
      * <p>
-     * EZSP type is <i>EzspValueId</i> - Java type is {@link int}
+     * EZSP type is <i>EzspValueId</i> - Java type is {@link EzspValueId}
      *
-     * @return the current valueId as {@link int}
+     * @return the current valueId as {@link EzspValueId}
      */
-    public int getValueId() {
+    public EzspValueId getValueId() {
         return valueId;
     }
 
     /**
      * Identifies which policy to modify.
      *
-     * @param valueId the valueId to set as {@link int}
+     * @param valueId the valueId to set as {@link EzspValueId}
      */
-    public void setValueId(int valueId) {
+    public void setValueId(EzspValueId valueId) {
         this.valueId = valueId;
     }
 
@@ -70,7 +71,7 @@ public class EzspGetValueRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeUInt8(valueId);
+        serializer.serializeEzspValueId(valueId);
         return serializer.getPayload();
     }
 

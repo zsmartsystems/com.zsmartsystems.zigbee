@@ -593,7 +593,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public boolean setZigBeeExtendedPanId(ExtendedPanId extendedPanId) {
-        networkParameters.setExtendedPanId(extendedPanId.getValue());
+        networkParameters.setExtendedPanId(extendedPanId);
         return false;
     }
 
