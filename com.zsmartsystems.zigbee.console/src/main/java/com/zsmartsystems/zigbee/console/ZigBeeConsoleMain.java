@@ -26,6 +26,8 @@ import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.serial.ZigBeeSerialPort;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
+import com.zsmartsystems.zigbee.transport.ConcentratorConfig;
+import com.zsmartsystems.zigbee.transport.ConcentratorType;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
@@ -118,6 +120,17 @@ public class ZigBeeConsoleMain {
             dongle = new ZigBeeDongleTiCc2531(serialPort);
         } else if (dongleName.toUpperCase().equals("EMBER")) {
             dongle = new ZigBeeDongleEzsp(serialPort);
+
+            // Configure the concentrator
+            // Max Hops defaults to system max
+            ConcentratorConfig concentratorConfig = new ConcentratorConfig();
+            concentratorConfig.setType(ConcentratorType.LOW_RAM);
+            concentratorConfig.setMaxFailures(8);
+            concentratorConfig.setMaxHops(0);
+            concentratorConfig.setRefreshMinimum(60);
+            concentratorConfig.setRefreshMaximum(3600);
+            transportOptions.addOption(TransportConfigOption.CONCENTRATOR_CONFIG, concentratorConfig);
+
         } else if (dongleName.toUpperCase().equals("CONBEE")) {
             dongle = new ZigBeeDongleConBee(serialPort);
         } else if (dongleName.toUpperCase().equals("TELEGESIS")) {
