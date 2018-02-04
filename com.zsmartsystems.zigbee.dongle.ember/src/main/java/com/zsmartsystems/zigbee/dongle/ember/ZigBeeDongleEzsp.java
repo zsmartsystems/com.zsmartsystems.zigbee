@@ -734,18 +734,18 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 break;
             case HIGH_RAM:
                 concentratorRequest.setConcentratorType(EmberConcentratorType.EMBER_HIGH_RAM_CONCENTRATOR);
-                concentratorRequest.setEnable(false);
+                concentratorRequest.setEnable(true);
                 break;
             case LOW_RAM:
                 concentratorRequest.setConcentratorType(EmberConcentratorType.EMBER_LOW_RAM_CONCENTRATOR);
-                concentratorRequest.setEnable(false);
+                concentratorRequest.setEnable(true);
                 break;
             default:
                 break;
         }
 
         EzspTransaction concentratorTransaction = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(concentratorRequest, EzspNetworkInitResponse.class));
+                new EzspSingleResponseTransaction(concentratorRequest, EzspSetConcentratorResponse.class));
         EzspSetConcentratorResponse concentratorResponse = (EzspSetConcentratorResponse) concentratorTransaction
                 .getResponse();
         logger.debug(concentratorResponse.toString());
