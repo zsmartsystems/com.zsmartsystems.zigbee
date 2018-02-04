@@ -119,10 +119,20 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspZigbeeKey
  * <p>
  * Reference: UG100: EZSP Reference Guide
  * <p>
- * An EZSP Frame is made up as follows -:
+ * An EZSP V4 Frame is made up as follows -:
  * <ul>
  * <li>Sequence : 1 byte sequence number
  * <li>Frame Control: 1 byte
+ * <li>Frame ID : 1 byte
+ * <li>Parameters : variable length
+ * </ul>
+ * <p>
+ * An EZSP V5+ Frame is made up as follows -:
+ * <ul>
+ * <li>Sequence : 1 byte sequence number
+ * <li>Frame Control: 1 byte
+ * <li>Legacy Frame ID : 1 byte
+ * <li>Extended Frame Control : 1 byte
  * <li>Frame ID : 1 byte
  * <li>Parameters : variable length
  * </ul>
@@ -132,7 +142,45 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspZigbeeKey
  * @author Chris Jackson
  */
 public abstract class EzspFrame {
+    /**
+     * The logger
+     */
     private final static Logger logger = LoggerFactory.getLogger(EzspFrame.class);
+
+    /**
+     * The maximum supported version of EZSP
+     */
+    private static final int EZSP_MIN_VERSION = 4;
+
+    /**
+     * The maximum supported version of EZSP
+     */
+    private static final int EZSP_MAX_VERSION = 6;
+
+    /**
+     * The current version of EZSP being used
+     */
+    protected static int ezspVersion = EZSP_MIN_VERSION;
+
+    /**
+     * Extended frame control: Security flag
+     */
+    protected int EZSP_EXT_FC_SECURITY = 0x00;
+
+    /**
+     * Legacy frame ID for EZSP 5+
+     */
+    protected int EZSP_LEGACY_FRAME_ID = 0xFF;
+
+    /**
+     * EZSP Frame Control Request flag
+     */
+    protected int EZSP_FC_REQUEST = 0x00;
+
+    /**
+     * EZSP Frame Control Response flag
+     */
+    protected int EZSP_FC_RESPONSE = 0x80;
 
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
     protected static final int FRAME_ID_ADD_OR_UPDATE_KEY_TABLE_ENTRY = 0x66;
@@ -271,7 +319,8 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_PARENT_CHILD_PARAMETERS, EzspGetParentChildParametersResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_POLICY, EzspGetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_ROUTE_TABLE_ENTRY, EzspGetRouteTableEntryResponse.class);
-        ezspHandlerMap.put(FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY, EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY,
+                EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_VALUE, EzspGetValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_XNCP_INFO, EzspGetXncpInfoResponse.class);
         ezspHandlerMap.put(FRAME_ID_ID_CONFLICT_HANDLER, EzspIdConflictHandler.class);
@@ -378,7 +427,13 @@ public abstract class EzspFrame {
      * @return the {@link EzspFrameResponse} or null if the response can't be created.
      */
     public static EzspFrameResponse createHandler(AshFrameData data) {
-        Class<?> ezspClass = ezspHandlerMap.get(data.getDataBuffer()[2]);
+        Class<?> ezspClass;
+        if (data.getDataBuffer()[2] != 0xFF) {
+            ezspClass = ezspHandlerMap.get(data.getDataBuffer()[2]);
+        } else {
+            ezspClass = ezspHandlerMap.get(data.getDataBuffer()[4]);
+        }
+
         if (ezspClass == null) {
             return null;
         }
@@ -394,5 +449,29 @@ public abstract class EzspFrame {
         }
 
         return null;
+    }
+
+    /**
+     * Set the EZSP version to use
+     *
+     * @param ezspVersion the EZSP protocol version
+     * @return true if the version is supported
+     */
+    public static boolean setEzspVersion(int ezspVersion) {
+        if (ezspVersion <= EZSP_MAX_VERSION && ezspVersion >= EZSP_MIN_VERSION) {
+            EzspFrame.ezspVersion = ezspVersion;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Gets the current version of EZSP that is in use. This will default to the minimum supported version on startup
+     *
+     * @return the current version of EZSP
+     */
+    public static int getEzspVersion() {
+        return EzspFrame.ezspVersion;
     }
 }

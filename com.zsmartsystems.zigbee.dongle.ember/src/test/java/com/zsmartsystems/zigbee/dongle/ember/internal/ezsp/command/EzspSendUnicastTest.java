@@ -15,9 +15,8 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSendUnicastRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberApsOption;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberOutgoingMessageType;
@@ -33,6 +32,7 @@ public class EzspSendUnicastTest extends EzspFrameTest {
 
     @Test
     public void testReceive1() {
+        EzspFrame.setEzspVersion(4);
         EzspSendUnicastResponse unicastResponse = new EzspSendUnicastResponse(getPacketData("02 80 34 00 9E"));
 
         assertEquals(0x34, unicastResponse.getFrameId());
@@ -42,6 +42,7 @@ public class EzspSendUnicastTest extends EzspFrameTest {
 
     @Test
     public void testSendPermitJoining() {
+        EzspFrame.setEzspVersion(4);
         ManagementPermitJoiningRequest permitJoining = new ManagementPermitJoiningRequest();
 
         permitJoining.setDestinationAddress(new ZigBeeEndpointAddress(0x401C));
@@ -83,9 +84,5 @@ public class EzspSendUnicastTest extends EzspFrameTest {
             out += String.format("%02X ", c);
         }
         System.out.println(out);
-
-        // assertTrue(Arrays.equals(getPacketData("02 00 02 01 04 01 00 00 00 03 03 00 00 01 00 06 00 00 00 01 00 06
-        // 00"),
-        // messageToSend));
     }
 }

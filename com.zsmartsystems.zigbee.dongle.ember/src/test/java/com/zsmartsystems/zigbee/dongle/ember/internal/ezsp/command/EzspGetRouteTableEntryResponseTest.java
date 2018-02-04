@@ -12,8 +12,8 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetRouteTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberRouteTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus;
 
@@ -25,6 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
 public class EzspGetRouteTableEntryResponseTest extends EzspFrameTest {
     @Test
     public void testVersion() {
+        EzspFrame.setEzspVersion(4);
         EzspGetRouteTableEntryResponse response = new EzspGetRouteTableEntryResponse(
                 getPacketData("28 80 7B 00 FF FF 00 00 03 00 00 00"));
 

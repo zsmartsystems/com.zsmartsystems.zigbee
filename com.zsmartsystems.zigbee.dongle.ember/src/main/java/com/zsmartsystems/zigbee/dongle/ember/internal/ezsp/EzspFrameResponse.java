@@ -42,51 +42,11 @@ public abstract class EzspFrameResponse extends EzspFrame {
         sequenceNumber = deserializer.deserializeUInt8();
         frameControl = deserializer.deserializeUInt8();
         frameId = deserializer.deserializeUInt8();
-        isResponse = (frameControl & 0x80) != 0;
+        if (frameId == EZSP_LEGACY_FRAME_ID) {
+            deserializer.deserializeUInt8();
+            frameId = deserializer.deserializeUInt8();
+        }
+        isResponse = (frameControl & EZSP_FC_RESPONSE) != 0;
     }
-
-    /*
-     * protected boolean initialiseEzspResponse(EzspDeserializer deserializer, int[] inputBuffer) {
-     * buffer = inputBuffer;
-     * position = 0;
-     *
-     * // Check the sequence number
-     * if (inputBuffer[0] != sequenceNumber) {
-     * return false;
-     * }
-     *
-     * // Make sure this is a response
-     * if ((inputBuffer[1] & 0x80) == 0) {
-     * return false;
-     * }
-     *
-     * position = 3;
-     *
-     * // Default the status to success. This can be overridden if the response
-     * // provides a status
-     * emberStatus = EmberStatus.EMBER_SUCCESS;
-     *
-     * return true;
-     * }
-     */
-    /*
-     * protected boolean initialEzspResponse(EzspFrame response) {
-     * // Make sure this is a response
-     * if (!response.isResponse()) {
-     * return false;
-     * }
-     * 
-     * // Check the sequence number
-     * if (response.getSequenceNumber() != sequenceNumber) {
-     * return false;
-     * }
-     * 
-     * // Default the status to success. This can be overridden if the response
-     * // provides a status
-     * emberStatus = EmberStatus.EMBER_SUCCESS;
-     * 
-     * return true;
-     * }
-     */
 
 }

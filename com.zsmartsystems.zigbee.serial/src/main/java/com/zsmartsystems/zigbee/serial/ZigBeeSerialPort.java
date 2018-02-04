@@ -126,7 +126,7 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
             throw new RuntimeException("Serial port already open.");
         }
 
-        logger.debug("Opening port {} at {} baud with {}.", baudRate, baudRate, flowControl);
+        logger.debug("Opening port {} at {} baud with {}.", portName, baudRate, flowControl);
 
         serialPort = new jssc.SerialPort(portName);
         try {

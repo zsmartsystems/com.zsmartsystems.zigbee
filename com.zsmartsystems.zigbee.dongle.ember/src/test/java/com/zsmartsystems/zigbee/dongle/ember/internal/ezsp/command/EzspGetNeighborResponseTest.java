@@ -13,8 +13,8 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetNeighborResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberNeighborTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus;
 
@@ -26,6 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
 public class EzspGetNeighborResponseTest extends EzspFrameTest {
     @Test
     public void testVersion() {
+        EzspFrame.setEzspVersion(4);
         EzspGetNeighborResponse response = new EzspGetNeighborResponse(
                 getPacketData("29 80 79 00 9E 72 FF 01 01 03 CC 43 6B 05 00 6F 0D 00"));
 

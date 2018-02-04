@@ -18,8 +18,8 @@ import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberIncomingMessageType;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 
@@ -30,6 +30,7 @@ public class EzspIncomingMessageHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive1() {
+        EzspFrame.setEzspVersion(4);
         EzspIncomingMessageHandler incomingMessageHandler = new EzspIncomingMessageHandler(
                 getPacketData("00 94 45 00 00 01 00 00 00 00 00 00 00 00 58 FF 00 00 00 FF FF 01 00"));
 
@@ -40,6 +41,7 @@ public class EzspIncomingMessageHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive2() {
+        EzspFrame.setEzspVersion(4);
         // This tests a number of stages - not just this class
         // We process the received frame, make sure the dongle sends it to the networkManager
         EzspIncomingMessageHandler incomingMessageHandler = new EzspIncomingMessageHandler(getPacketData(
@@ -76,6 +78,8 @@ public class EzspIncomingMessageHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive3() {
+        EzspFrame.setEzspVersion(4);
+
         EzspIncomingMessageHandler incomingMessageHandler = new EzspIncomingMessageHandler(getPacketData(
                 "01 90 45 00 00 00 02 80 00 00 40 00 00 00 44 FF 00 00 00 FF FF 11 00 00 00 00 00 40 8F CD AB 52 80 00 41 2A 80 00 00"));
         assertEquals(0x45, incomingMessageHandler.getFrameId());

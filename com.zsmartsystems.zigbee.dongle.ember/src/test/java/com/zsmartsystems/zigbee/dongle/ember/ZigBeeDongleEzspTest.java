@@ -8,11 +8,13 @@
 package com.zsmartsystems.zigbee.dongle.ember;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
-import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 
 /**
  *
@@ -34,5 +36,22 @@ public class ZigBeeDongleEzspTest {
 
         dongle.setZigBeePanId(0x1234);
         assertEquals(0x1234, dongle.getZigBeePanId());
+    }
+
+    @Test
+    public void testEzspVersions() {
+        EzspFrame.setEzspVersion(4);
+        assertEquals(4, EzspFrame.getEzspVersion());
+        assertFalse(EzspFrame.setEzspVersion(3));
+        assertEquals(4, EzspFrame.getEzspVersion());
+        assertTrue(EzspFrame.setEzspVersion(4));
+        assertEquals(4, EzspFrame.getEzspVersion());
+        assertTrue(EzspFrame.setEzspVersion(5));
+        assertEquals(5, EzspFrame.getEzspVersion());
+        assertTrue(EzspFrame.setEzspVersion(6));
+        assertEquals(6, EzspFrame.getEzspVersion());
+        assertFalse(EzspFrame.setEzspVersion(7));
+        assertEquals(6, EzspFrame.getEzspVersion());
+        EzspFrame.setEzspVersion(4);
     }
 }
