@@ -14,21 +14,21 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.dongle.ember.ash.AshFrameHandler;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspSingleResponseTransaction;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.transaction.EzspTransaction;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameHandler;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetConfigurationValueRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetConfigurationValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetPolicyRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetPolicyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetConfigurationValueRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetConfigurationValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetPolicyRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetPolicyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspConfigId;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspDecisionId;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspPolicyId;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspStatus;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspSingleResponseTransaction;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspTransaction;
 
 /**
  * This class provides utility functions to configure, and read the configuration from the Ember stack.
