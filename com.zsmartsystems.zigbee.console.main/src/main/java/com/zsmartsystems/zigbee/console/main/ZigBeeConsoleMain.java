@@ -237,12 +237,12 @@ public class ZigBeeConsoleMain {
     /**
      * Parse decimal or hexadecimal integer.
      *
-     * @param s the string
+     * @param strVal the string value to parse
      * @return the parsed integer value
      */
-    private static int parseDecimalOrHexInt(String s) {
+    private static int parseDecimalOrHexInt(String strVal) {
         int radix = 10;
-        String number = s;
+        String number = strVal;
         if (number.startsWith("0x")) {
             number = number.substring(2);
             radix = 16;

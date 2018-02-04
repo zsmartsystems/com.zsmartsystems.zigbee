@@ -46,7 +46,7 @@ The library supports the Texas Instruments ZNP protocol over a serial interface.
 
 ### Silicon Labs Ember EM35x / EFR32
 
-The library supports the Silicon Labs EZSP protocol using ASH over a serial interface.
+The library supports the Silicon Labs EZSP protocol using ASH or SPI protocols over a serial interface. The implementation of the SPI protocol assumes that the SPI provides a TTY-like software interface to the application, or is otherwise abstracted via the ```ZigBeePort``` interface.  
 
 It is worth noting that EM3588 devices that have an embedded USB core will likely work with any baud rate, where dongles using external USB interface (eg CP2102 used with an EM3581) will likely require a specific baud rate. This has been noted on the HUSBZB-1 which embeds an EM3581 and requires a rate of 57600.
 

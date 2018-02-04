@@ -42,8 +42,6 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
 public abstract class EzspFrameRequest extends EzspFrame {
     private final static AtomicLong sequence = new AtomicLong(1);
 
-    protected EzspFrameResponse response = null;
-
     /**
      * Constructor used to create an outgoing frame
      *

@@ -27,7 +27,7 @@ public class EmberConsoleNcpVersionCommand extends EmberConsoleAbstractCommand {
 
     @Override
     public String getDescription() {
-        return "Gets the NCP version";
+        return "Gets the NCP firmware version";
     }
 
     @Override

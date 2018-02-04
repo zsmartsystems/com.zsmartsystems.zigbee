@@ -75,17 +75,17 @@ public abstract class EzspFrame {
     /**
      * Legacy frame ID for EZSP 5+
      */
-    protected final int EZSP_LEGACY_FRAME_ID = 0xFF;
+    protected static final int EZSP_LEGACY_FRAME_ID = 0xFF;
 
     /**
      * EZSP Frame Control Request flag
      */
-    protected final int EZSP_FC_REQUEST = 0x00;
+    protected static final int EZSP_FC_REQUEST = 0x00;
 
     /**
      * EZSP Frame Control Response flag
      */
-    protected final int EZSP_FC_RESPONSE = 0x80;
+    protected static final int EZSP_FC_RESPONSE = 0x80;
 
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
     protected static final int FRAME_ID_ADD_OR_UPDATE_KEY_TABLE_ENTRY = 0x66;
@@ -350,14 +350,15 @@ public abstract class EzspFrame {
     /**
      * Creates and {@link EzspFrameResponse} from the {@link AshFrameData}.
      *
+     * @param data the int[] containing the EZSP data from which to generate the frame
      * @return the {@link EzspFrameResponse} or null if the response can't be created.
      */
-    public static EzspFrameResponse createHandler(AshFrameData data) {
+    public static EzspFrameResponse createHandler(int[] data) {
         Class<?> ezspClass;
-        if (data.getDataBuffer()[2] != 0xFF) {
-            ezspClass = ezspHandlerMap.get(data.getDataBuffer()[2]);
+        if (data[2] != 0xFF) {
+            ezspClass = ezspHandlerMap.get(data[2]);
         } else {
-            ezspClass = ezspHandlerMap.get(data.getDataBuffer()[4]);
+            ezspClass = ezspHandlerMap.get(data[4]);
         }
 
         if (ezspClass == null) {
@@ -367,7 +368,7 @@ public abstract class EzspFrame {
         Constructor<?> ctor;
         try {
             ctor = ezspClass.getConstructor(int[].class);
-            EzspFrameResponse ezspFrame = (EzspFrameResponse) ctor.newInstance(data.getDataBuffer());
+            EzspFrameResponse ezspFrame = (EzspFrameResponse) ctor.newInstance(data);
             return ezspFrame;
         } catch (SecurityException | NoSuchMethodException | IllegalArgumentException | InstantiationException
                 | IllegalAccessException | InvocationTargetException e) {

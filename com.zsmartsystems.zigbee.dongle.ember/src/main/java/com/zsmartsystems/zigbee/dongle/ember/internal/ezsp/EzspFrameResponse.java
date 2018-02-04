@@ -13,15 +13,29 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspDeseri
  * The EmberZNet Serial Protocol (EZSP) is the protocol used by a host
  * application processor to interact with the EmberZNet PRO stack running on a
  * Network CoProcessor (NCP).
- *
- * UG100: EZSP Reference Guide
- *
+ * <p>
+ * Refer to UG100: EZSP Reference Guide
+ * <p>
  * An EZSP Frame is made up as follows -:
  * <ul>
  * <li>Sequence : 1 byte sequence number
- * <li>Frame Control: 1 byte
+ * <li>Frame Control : 1 byte
+ * <li>Legacy Frame ID : 1 byte
+ * <li>Extended Frame Control : 1 byte
  * <li>Frame ID : 1 byte
  * <li>Parameters : variable length
+ * </ul>
+ * <p>
+ * The Frame Control byte is as follows -:
+ * <ul>
+ * <li>bit 7 : 1 for Response
+ * <li>bit 6 : networkIndex[1]
+ * <li>bit 5 : networkIndex[0]
+ * <li>bit 4 : callbackType[1]
+ * <li>bit 3 : callbackType[0]
+ * <li>bit 2 : callbackPending
+ * <li>bit 1 : truncated
+ * <li>bit 0 : overflow
  * </ul>
  *
  * @author Chris Jackson
@@ -30,10 +44,14 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspDeseri
 public abstract class EzspFrameResponse extends EzspFrame {
     protected EzspDeserializer deserializer;
 
+    private static final int EZSP_FC_CB_PENDING = 0x04;
+
+    private boolean callbackPending = false;
+
     /**
      * Constructor used to create a received frame. The constructor reads the header fields from the incoming message.
      *
-     * @param inputBuffer
+     * @param inputBuffer the input array to deserialize
      */
     protected EzspFrameResponse(int[] inputBuffer) {
         super();
@@ -47,6 +65,16 @@ public abstract class EzspFrameResponse extends EzspFrame {
             frameId = deserializer.deserializeUInt8();
         }
         isResponse = (frameControl & EZSP_FC_RESPONSE) != 0;
+        callbackPending = (frameControl & EZSP_FC_CB_PENDING) != 0;
+    }
+
+    /**
+     * Returns true if the frame control byte indicates that a callback is pending for this response frame
+     *
+     * @return true if a callback is pending
+     */
+    public boolean isCallbackPending() {
+        return callbackPending;
     }
 
 }

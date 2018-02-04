@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspEnergyScanResultHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspFormNetworkRequest;
@@ -59,13 +58,16 @@ public class EmberNetworkInitialisation {
      */
     private final Logger logger = LoggerFactory.getLogger(EmberNetworkInitialisation.class);
 
-    private AshFrameHandler ashHandler;
+    /**
+     * The frame handler used to send the EZSP frames to the NCP
+     */
+    private EzspProtocolHandler protocolHandler;
 
     /**
-     * @param ashHandler the {@link AshFrameHandler} used to communicate with the NCP
+     * @param protocolHandler the {@link EzspProtocolHandler} used to communicate with the NCP
      */
-    public EmberNetworkInitialisation(AshFrameHandler ashHandler) {
-        this.ashHandler = ashHandler;
+    public EmberNetworkInitialisation(EzspProtocolHandler protocolHandler) {
+        this.protocolHandler = protocolHandler;
     }
 
     /**
@@ -142,7 +144,7 @@ public class EmberNetworkInitialisation {
     private boolean checkNetworkJoined() {
         // Check if the network is initialised
         EzspNetworkStateRequest networkStateRequest = new EzspNetworkStateRequest();
-        EzspTransaction networkStateTransaction = ashHandler.sendEzspTransaction(
+        EzspTransaction networkStateTransaction = protocolHandler.sendEzspTransaction(
                 new EzspSingleResponseTransaction(networkStateRequest, EzspNetworkStateResponse.class));
         EzspNetworkStateResponse networkStateResponse = (EzspNetworkStateResponse) networkStateTransaction
                 .getResponse();
@@ -154,7 +156,7 @@ public class EmberNetworkInitialisation {
 
     private boolean doLeaveNetwork() {
         EzspLeaveNetworkRequest leaveNetworkRequest = new EzspLeaveNetworkRequest();
-        EzspTransaction leaveNetworkTransaction = ashHandler.sendEzspTransaction(
+        EzspTransaction leaveNetworkTransaction = protocolHandler.sendEzspTransaction(
                 new EzspSingleResponseTransaction(leaveNetworkRequest, EzspLeaveNetworkResponse.class));
         EzspLeaveNetworkResponse leaveNetworkResponse = (EzspLeaveNetworkResponse) leaveNetworkTransaction
                 .getResponse();
@@ -179,7 +181,7 @@ public class EmberNetworkInitialisation {
                 EzspNetworkFoundHandler.class, EzspEnergyScanResultHandler.class));
         EzspMultiResponseTransaction scanTransaction = new EzspMultiResponseTransaction(energyScan,
                 EzspScanCompleteHandler.class, relatedResponses);
-        ashHandler.sendEzspTransaction(scanTransaction);
+        protocolHandler.sendEzspTransaction(scanTransaction);
 
         EzspScanCompleteHandler scanCompleteResponse = (EzspScanCompleteHandler) scanTransaction.getResponse();
         logger.debug(scanCompleteResponse.toString());
@@ -190,6 +192,7 @@ public class EmberNetworkInitialisation {
 
             return null;
         }
+        logger.debug("Energy scan completed: {}", scanCompleteResponse);
 
         int lowestRSSI = 999;
         int lowestChannel = 11;
@@ -225,7 +228,7 @@ public class EmberNetworkInitialisation {
                 EzspNetworkFoundHandler.class, EzspEnergyScanResultHandler.class));
         EzspMultiResponseTransaction transaction = new EzspMultiResponseTransaction(activeScan,
                 EzspScanCompleteHandler.class, relatedResponses);
-        ashHandler.sendEzspTransaction(transaction);
+        protocolHandler.sendEzspTransaction(transaction);
         EzspScanCompleteHandler activeScanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
         logger.debug(activeScanCompleteResponse.toString());
 
@@ -245,7 +248,7 @@ public class EmberNetworkInitialisation {
         EzspGetNetworkParametersRequest networkParms = new EzspGetNetworkParametersRequest();
         EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(networkParms,
                 EzspGetNetworkParametersResponse.class);
-        ashHandler.sendEzspTransaction(transaction);
+        protocolHandler.sendEzspTransaction(transaction);
         EzspGetNetworkParametersResponse getNetworkParametersResponse = (EzspGetNetworkParametersResponse) transaction
                 .getResponse();
         logger.debug(getNetworkParametersResponse.toString());
@@ -287,7 +290,7 @@ public class EmberNetworkInitialisation {
         securityState.setState(state);
         EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(securityState,
                 EzspSetInitialSecurityStateResponse.class);
-        ashHandler.sendEzspTransaction(transaction);
+        protocolHandler.sendEzspTransaction(transaction);
         EzspSetInitialSecurityStateResponse securityStateResponse = (EzspSetInitialSecurityStateResponse) transaction
                 .getResponse();
         logger.debug(securityStateResponse.toString());
@@ -317,7 +320,7 @@ public class EmberNetworkInitialisation {
         formNetwork.setParameters(networkParameters);
         EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(formNetwork,
                 EzspFormNetworkResponse.class);
-        ashHandler.sendEzspTransaction(transaction);
+        protocolHandler.sendEzspTransaction(transaction);
         EzspFormNetworkResponse formNetworkResponse = (EzspFormNetworkResponse) transaction.getResponse();
         logger.debug(formNetworkResponse.toString());
         if (formNetworkResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
