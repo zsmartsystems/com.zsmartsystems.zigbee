@@ -165,11 +165,8 @@ public class ZclIdentifyCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getIdentifyTime(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_IDENTIFYTIME).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_IDENTIFYTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_IDENTIFYTIME).getLastValue();
-            }
+        if (attributes.get(ATTR_IDENTIFYTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_IDENTIFYTIME).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_IDENTIFYTIME));

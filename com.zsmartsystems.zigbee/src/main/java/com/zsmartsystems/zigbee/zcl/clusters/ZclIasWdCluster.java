@@ -139,11 +139,8 @@ public class ZclIasWdCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMaxDuration(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MAXDURATION).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MAXDURATION).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MAXDURATION).getLastValue();
-            }
+        if (attributes.get(ATTR_MAXDURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MAXDURATION).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MAXDURATION));
@@ -181,11 +178,8 @@ public class ZclIasWdCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getZoneType(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ZONETYPE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ZONETYPE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ZONETYPE).getLastValue();
-            }
+        if (attributes.get(ATTR_ZONETYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ZONETYPE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ZONETYPE));
@@ -223,11 +217,8 @@ public class ZclIasWdCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getZoneStatus(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ZONESTATUS).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ZONESTATUS).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ZONESTATUS).getLastValue();
-            }
+        if (attributes.get(ATTR_ZONESTATUS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ZONESTATUS).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ZONESTATUS));
@@ -280,11 +271,8 @@ public class ZclIasWdCluster extends ZclCluster {
      * @return the {@link IeeeAddress} attribute value, or null on error
      */
     public IeeeAddress getIasCieAddress(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_IAS_CIE_ADDRESS).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_IAS_CIE_ADDRESS).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (IeeeAddress) attributes.get(ATTR_IAS_CIE_ADDRESS).getLastValue();
-            }
+        if (attributes.get(ATTR_IAS_CIE_ADDRESS).isLastValueCurrent(refreshPeriod)) {
+            return (IeeeAddress) attributes.get(ATTR_IAS_CIE_ADDRESS).getLastValue();
         }
 
         return (IeeeAddress) readSync(attributes.get(ATTR_IAS_CIE_ADDRESS));

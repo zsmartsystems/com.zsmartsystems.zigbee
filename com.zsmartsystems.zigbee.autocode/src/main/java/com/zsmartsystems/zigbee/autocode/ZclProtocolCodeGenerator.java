@@ -1629,15 +1629,10 @@ public class ZclProtocolCodeGenerator {
                         outputAttributeJavaDoc(out, "Synchronously get", attribute, zclDataType);
                         out.println("    public " + attribute.dataTypeClass + " get"
                                 + attribute.nameUpperCamelCase.replace("_", "") + "(final long refreshPeriod) {");
-                        out.println("        if(refreshPeriod > 0 && attributes.get(" + attribute.enumName
-                                + ").getLastReportTime() != null) {");
-                        out.println(
-                                "            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;");
-                        out.println("            if(attributes.get(" + attribute.enumName
-                                + ").getLastReportTime().getTimeInMillis() < refreshTime) {");
-                        out.println("                return (" + attribute.dataTypeClass + ") attributes.get("
+                        out.println("        if (attributes.get(" + attribute.enumName
+                                + ").isLastValueCurrent(refreshPeriod)) {");
+                        out.println("            return (" + attribute.dataTypeClass + ") attributes.get("
                                 + attribute.enumName + ").getLastValue();");
-                        out.println("            }");
                         out.println("        }");
                         out.println();
                         out.println("        return (" + attribute.dataTypeClass + ") readSync(attributes.get("

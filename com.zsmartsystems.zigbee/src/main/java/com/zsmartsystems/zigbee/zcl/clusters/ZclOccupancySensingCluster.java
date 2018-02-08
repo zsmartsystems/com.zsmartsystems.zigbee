@@ -142,11 +142,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getOccupancy(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_OCCUPANCY).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_OCCUPANCY).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_OCCUPANCY).getLastValue();
-            }
+        if (attributes.get(ATTR_OCCUPANCY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_OCCUPANCY).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_OCCUPANCY));
@@ -209,11 +206,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getOccupancySensorType(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_OCCUPANCYSENSORTYPE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_OCCUPANCYSENSORTYPE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_OCCUPANCYSENSORTYPE).getLastValue();
-            }
+        if (attributes.get(ATTR_OCCUPANCYSENSORTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_OCCUPANCYSENSORTYPE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_OCCUPANCYSENSORTYPE));
@@ -266,11 +260,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getPirOccupiedToUnoccupiedDelay(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY).getLastValue();
-            }
+        if (attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY));
@@ -323,11 +314,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getPirUnoccupiedToOccupiedDelay(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY).getLastValue();
-            }
+        if (attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY));
@@ -398,11 +386,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getUltraSonicOccupiedToUnoccupiedDelay(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).getLastValue();
-            }
+        if (attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY));
@@ -467,11 +452,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getUltraSonicUnoccupiedToOccupiedDelay(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).getLastValue();
-            }
+        if (attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY));
@@ -524,11 +506,8 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getUltrasonicUnoccupiedToOccupiedThreshold(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD).getLastValue();
-            }
+        if (attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD));

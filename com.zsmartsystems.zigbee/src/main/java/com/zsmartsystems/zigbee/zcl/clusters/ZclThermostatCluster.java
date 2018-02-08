@@ -217,11 +217,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getLocalTemperature(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_LOCALTEMPERATURE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_LOCALTEMPERATURE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_LOCALTEMPERATURE).getLastValue();
-            }
+        if (attributes.get(ATTR_LOCALTEMPERATURE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_LOCALTEMPERATURE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_LOCALTEMPERATURE));
@@ -282,11 +279,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getOutdoorTemperature(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_OUTDOORTEMPERATURE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_OUTDOORTEMPERATURE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_OUTDOORTEMPERATURE).getLastValue();
-            }
+        if (attributes.get(ATTR_OUTDOORTEMPERATURE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_OUTDOORTEMPERATURE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_OUTDOORTEMPERATURE));
@@ -328,11 +322,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getOccupancy(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_OCCUPANCY).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_OCCUPANCY).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_OCCUPANCY).getLastValue();
-            }
+        if (attributes.get(ATTR_OCCUPANCY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_OCCUPANCY).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_OCCUPANCY));
@@ -376,11 +367,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getAbsMinHeatSetpointLimit(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ABSMINHEATSETPOINTLIMIT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ABSMINHEATSETPOINTLIMIT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ABSMINHEATSETPOINTLIMIT).getLastValue();
-            }
+        if (attributes.get(ATTR_ABSMINHEATSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ABSMINHEATSETPOINTLIMIT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ABSMINHEATSETPOINTLIMIT));
@@ -424,11 +412,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getAbsMaxHeatSetpointLimit(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT).getLastValue();
-            }
+        if (attributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT));
@@ -472,11 +457,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getAbsMinCoolSetpointLimit(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT).getLastValue();
-            }
+        if (attributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT));
@@ -520,11 +502,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getAbsMaxCoolSetpointLimit(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT).getLastValue();
-            }
+        if (attributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT));
@@ -570,11 +549,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getPiCoolingDemand(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_PICOOLINGDEMAND).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_PICOOLINGDEMAND).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_PICOOLINGDEMAND).getLastValue();
-            }
+        if (attributes.get(ATTR_PICOOLINGDEMAND).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_PICOOLINGDEMAND).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_PICOOLINGDEMAND));
@@ -641,11 +617,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getPiHeatingDemand(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_PIHEATINGDEMAND).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_PIHEATINGDEMAND).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_PIHEATINGDEMAND).getLastValue();
-            }
+        if (attributes.get(ATTR_PIHEATINGDEMAND).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_PIHEATINGDEMAND).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_PIHEATINGDEMAND));
@@ -704,11 +677,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getHvacSystemTypeConfiguration(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION).getLastValue();
-            }
+        if (attributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION));
@@ -746,11 +716,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getLocalTemperatureCalibration(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_LOCALTEMPERATURECALIBRATION).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_LOCALTEMPERATURECALIBRATION).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_LOCALTEMPERATURECALIBRATION).getLastValue();
-            }
+        if (attributes.get(ATTR_LOCALTEMPERATURECALIBRATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_LOCALTEMPERATURECALIBRATION).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_LOCALTEMPERATURECALIBRATION));
@@ -788,11 +755,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getOccupiedCoolingSetpoint(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT).getLastValue();
-            }
+        if (attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT));
@@ -830,11 +794,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getOccupiedHeatingSetpoint(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT).getLastValue();
-            }
+        if (attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT));
@@ -872,11 +833,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getUnoccupiedCoolingSetpoint(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT).getLastValue();
-            }
+        if (attributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT));
@@ -914,11 +872,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getUnoccupiedHeatingSetpoint(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT).getLastValue();
-            }
+        if (attributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT));
@@ -956,11 +911,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMinHeatSetpointLimit(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MINHEATSETPOINTLIMIT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MINHEATSETPOINTLIMIT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MINHEATSETPOINTLIMIT).getLastValue();
-            }
+        if (attributes.get(ATTR_MINHEATSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MINHEATSETPOINTLIMIT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MINHEATSETPOINTLIMIT));
@@ -998,11 +950,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMaxHeatSetpointLimit(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MAXHEATSETPOINTLIMIT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MAXHEATSETPOINTLIMIT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MAXHEATSETPOINTLIMIT).getLastValue();
-            }
+        if (attributes.get(ATTR_MAXHEATSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MAXHEATSETPOINTLIMIT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MAXHEATSETPOINTLIMIT));
@@ -1040,11 +989,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMinCoolSetpointLimit(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MINCOOLSETPOINTLIMIT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MINCOOLSETPOINTLIMIT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MINCOOLSETPOINTLIMIT).getLastValue();
-            }
+        if (attributes.get(ATTR_MINCOOLSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MINCOOLSETPOINTLIMIT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MINCOOLSETPOINTLIMIT));
@@ -1082,11 +1028,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMaxCoolSetpointLimit(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MAXCOOLSETPOINTLIMIT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MAXCOOLSETPOINTLIMIT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MAXCOOLSETPOINTLIMIT).getLastValue();
-            }
+        if (attributes.get(ATTR_MAXCOOLSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MAXCOOLSETPOINTLIMIT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MAXCOOLSETPOINTLIMIT));
@@ -1124,11 +1067,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMinSetpointDeadBand(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MINSETPOINTDEADBAND).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MINSETPOINTDEADBAND).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MINSETPOINTDEADBAND).getLastValue();
-            }
+        if (attributes.get(ATTR_MINSETPOINTDEADBAND).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MINSETPOINTDEADBAND).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MINSETPOINTDEADBAND));
@@ -1166,11 +1106,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getRemoteSensing(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_REMOTESENSING).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_REMOTESENSING).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_REMOTESENSING).getLastValue();
-            }
+        if (attributes.get(ATTR_REMOTESENSING).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_REMOTESENSING).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_REMOTESENSING));
@@ -1208,11 +1145,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getControlSequenceOfOperation(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION).getLastValue();
-            }
+        if (attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION));
@@ -1250,11 +1184,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getSystemMode(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_SYSTEMMODE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_SYSTEMMODE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_SYSTEMMODE).getLastValue();
-            }
+        if (attributes.get(ATTR_SYSTEMMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_SYSTEMMODE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_SYSTEMMODE));
@@ -1292,11 +1223,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getAlarmMask(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ALARMMASK).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ALARMMASK).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ALARMMASK).getLastValue();
-            }
+        if (attributes.get(ATTR_ALARMMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ALARMMASK).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ALARMMASK));
@@ -1334,11 +1262,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getThermostatRunningMode(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_THERMOSTATRUNNINGMODE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_THERMOSTATRUNNINGMODE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_THERMOSTATRUNNINGMODE).getLastValue();
-            }
+        if (attributes.get(ATTR_THERMOSTATRUNNINGMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_THERMOSTATRUNNINGMODE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_THERMOSTATRUNNINGMODE));

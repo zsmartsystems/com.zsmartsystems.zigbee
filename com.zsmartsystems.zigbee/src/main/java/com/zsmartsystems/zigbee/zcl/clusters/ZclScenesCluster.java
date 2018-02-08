@@ -166,11 +166,8 @@ public class ZclScenesCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getSceneCount(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_SCENECOUNT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_SCENECOUNT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_SCENECOUNT).getLastValue();
-            }
+        if (attributes.get(ATTR_SCENECOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_SCENECOUNT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_SCENECOUNT));
@@ -212,11 +209,8 @@ public class ZclScenesCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getCurrentScene(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTSCENE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_CURRENTSCENE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_CURRENTSCENE).getLastValue();
-            }
+        if (attributes.get(ATTR_CURRENTSCENE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_CURRENTSCENE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_CURRENTSCENE));
@@ -260,11 +254,8 @@ public class ZclScenesCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getCurrentGroup(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTGROUP).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_CURRENTGROUP).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_CURRENTGROUP).getLastValue();
-            }
+        if (attributes.get(ATTR_CURRENTGROUP).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_CURRENTGROUP).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_CURRENTGROUP));
@@ -320,11 +311,8 @@ public class ZclScenesCluster extends ZclCluster {
      * @return the {@link Boolean} attribute value, or null on error
      */
     public Boolean getSceneValid(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_SCENEVALID).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_SCENEVALID).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Boolean) attributes.get(ATTR_SCENEVALID).getLastValue();
-            }
+        if (attributes.get(ATTR_SCENEVALID).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) attributes.get(ATTR_SCENEVALID).getLastValue();
         }
 
         return (Boolean) readSync(attributes.get(ATTR_SCENEVALID));
@@ -370,11 +358,8 @@ public class ZclScenesCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getNameSupport(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_NAMESUPPORT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_NAMESUPPORT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_NAMESUPPORT).getLastValue();
-            }
+        if (attributes.get(ATTR_NAMESUPPORT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_NAMESUPPORT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_NAMESUPPORT));
@@ -424,11 +409,8 @@ public class ZclScenesCluster extends ZclCluster {
      * @return the {@link IeeeAddress} attribute value, or null on error
      */
     public IeeeAddress getLastConfiguredBy(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_LASTCONFIGUREDBY).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_LASTCONFIGUREDBY).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (IeeeAddress) attributes.get(ATTR_LASTCONFIGUREDBY).getLastValue();
-            }
+        if (attributes.get(ATTR_LASTCONFIGUREDBY).isLastValueCurrent(refreshPeriod)) {
+            return (IeeeAddress) attributes.get(ATTR_LASTCONFIGUREDBY).getLastValue();
         }
 
         return (IeeeAddress) readSync(attributes.get(ATTR_LASTCONFIGUREDBY));

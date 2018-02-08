@@ -2337,7 +2337,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getSyntax() {
-            return "info node [MANUFACTURER|APPVERSION|MODEL|APPVERSION|STKVERSION|HWVERSION|ZCLVERSION|DATE]";
+            return "info node [MANUFACTURER|APPVERSION|MODEL|APPVERSION|STKVERSION|HWVERSION|ZCLVERSION|DATE] [REFRESH]";
         }
 
         /**
@@ -2345,11 +2345,20 @@ public final class ZigBeeConsole {
          */
         @Override
         public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 3) {
+            if (args.length < 3) {
                 return false;
             }
 
+            long refresh = Long.MAX_VALUE;
+            if (args.length == 4) {
+                refresh = 0;
+            }
+
             final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
+            if (device == null) {
+                print("Can't find endpoint " + args[1], out);
+                return false;
+            }
             final String command = args[2].toUpperCase();
 
             ZclBasicCluster basicCluster = (ZclBasicCluster) device.getCluster(0);
@@ -2361,25 +2370,25 @@ public final class ZigBeeConsole {
             String response = null;
             switch (command) {
                 case "MANUFACTURER":
-                    response = basicCluster.getManufacturerName(Long.MAX_VALUE);
+                    response = basicCluster.getManufacturerName(refresh);
                     break;
                 case "MODEL":
-                    response = basicCluster.getModelIdentifier(Long.MAX_VALUE);
+                    response = basicCluster.getModelIdentifier(refresh);
                     break;
                 case "APPVERSION":
-                    response = basicCluster.getApplicationVersion(Long.MAX_VALUE).toString();
+                    response = basicCluster.getApplicationVersion(refresh).toString();
                     break;
                 case "STKVERSION":
-                    response = basicCluster.getStackVersion(Long.MAX_VALUE).toString();
+                    response = basicCluster.getStackVersion(refresh).toString();
                     break;
                 case "ZCLVERSION":
-                    response = basicCluster.getZclVersion(Long.MAX_VALUE).toString();
+                    response = basicCluster.getZclVersion(refresh).toString();
                     break;
                 case "HWVERSION":
-                    response = basicCluster.getHwVersion(Long.MAX_VALUE).toString();
+                    response = basicCluster.getHwVersion(refresh).toString();
                     break;
                 case "DATE":
-                    response = basicCluster.getDateCode(Long.MAX_VALUE).toString();
+                    response = basicCluster.getDateCode(refresh).toString();
                     break;
                 default:
                     print("Unknown info type: " + command, out);

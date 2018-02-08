@@ -109,11 +109,8 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getLevelStatus(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_LEVELSTATUS).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_LEVELSTATUS).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_LEVELSTATUS).getLastValue();
-            }
+        if (attributes.get(ATTR_LEVELSTATUS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_LEVELSTATUS).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_LEVELSTATUS));
@@ -174,11 +171,8 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getLightSensorType(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_LIGHTSENSORTYPE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_LIGHTSENSORTYPE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_LIGHTSENSORTYPE).getLastValue();
-            }
+        if (attributes.get(ATTR_LIGHTSENSORTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_LIGHTSENSORTYPE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_LIGHTSENSORTYPE));

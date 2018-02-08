@@ -208,11 +208,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMacRxBcast(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MACRXBCAST).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MACRXBCAST).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MACRXBCAST).getLastValue();
-            }
+        if (attributes.get(ATTR_MACRXBCAST).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MACRXBCAST).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MACRXBCAST));
@@ -250,11 +247,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMacTxBcast(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MACTXBCAST).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MACTXBCAST).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MACTXBCAST).getLastValue();
-            }
+        if (attributes.get(ATTR_MACTXBCAST).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MACTXBCAST).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MACTXBCAST));
@@ -292,11 +286,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMacRxUcast(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MACRXUCAST).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MACRXUCAST).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MACRXUCAST).getLastValue();
-            }
+        if (attributes.get(ATTR_MACRXUCAST).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MACRXUCAST).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MACRXUCAST));
@@ -334,11 +325,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMacTxUcast(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MACTXUCAST).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MACTXUCAST).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MACTXUCAST).getLastValue();
-            }
+        if (attributes.get(ATTR_MACTXUCAST).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MACTXUCAST).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MACTXUCAST));
@@ -376,11 +364,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMacTxUcastRetry(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MACTXUCASTRETRY).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MACTXUCASTRETRY).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MACTXUCASTRETRY).getLastValue();
-            }
+        if (attributes.get(ATTR_MACTXUCASTRETRY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MACTXUCASTRETRY).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MACTXUCASTRETRY));
@@ -418,11 +403,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMacTxUcastFail(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MACTXUCASTFAIL).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MACTXUCASTFAIL).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MACTXUCASTFAIL).getLastValue();
-            }
+        if (attributes.get(ATTR_MACTXUCASTFAIL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MACTXUCASTFAIL).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MACTXUCASTFAIL));
@@ -460,11 +442,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getApsRxBcast(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_APSRXBCAST).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_APSRXBCAST).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_APSRXBCAST).getLastValue();
-            }
+        if (attributes.get(ATTR_APSRXBCAST).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_APSRXBCAST).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_APSRXBCAST));
@@ -502,11 +481,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getApsTxBcast(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_APSTXBCAST).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_APSTXBCAST).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_APSTXBCAST).getLastValue();
-            }
+        if (attributes.get(ATTR_APSTXBCAST).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_APSTXBCAST).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_APSTXBCAST));
@@ -544,11 +520,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getApsRxUcast(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_APSRXUCAST).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_APSRXUCAST).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_APSRXUCAST).getLastValue();
-            }
+        if (attributes.get(ATTR_APSRXUCAST).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_APSRXUCAST).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_APSRXUCAST));
@@ -586,11 +559,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getApsTxUcastSuccess(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_APSTXUCASTSUCCESS).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_APSTXUCASTSUCCESS).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_APSTXUCASTSUCCESS).getLastValue();
-            }
+        if (attributes.get(ATTR_APSTXUCASTSUCCESS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_APSTXUCASTSUCCESS).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_APSTXUCASTSUCCESS));
@@ -628,11 +598,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getApsTxUcastRetry(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_APSTXUCASTRETRY).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_APSTXUCASTRETRY).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_APSTXUCASTRETRY).getLastValue();
-            }
+        if (attributes.get(ATTR_APSTXUCASTRETRY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_APSTXUCASTRETRY).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_APSTXUCASTRETRY));
@@ -670,11 +637,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getApsTxUcastFail(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_APSTXUCASTFAIL).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_APSTXUCASTFAIL).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_APSTXUCASTFAIL).getLastValue();
-            }
+        if (attributes.get(ATTR_APSTXUCASTFAIL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_APSTXUCASTFAIL).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_APSTXUCASTFAIL));
@@ -712,11 +676,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getRouteDiscInitiated(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ROUTEDISCINITIATED).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ROUTEDISCINITIATED).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ROUTEDISCINITIATED).getLastValue();
-            }
+        if (attributes.get(ATTR_ROUTEDISCINITIATED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ROUTEDISCINITIATED).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ROUTEDISCINITIATED));
@@ -754,11 +715,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getNeighborAdded(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_NEIGHBORADDED).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_NEIGHBORADDED).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_NEIGHBORADDED).getLastValue();
-            }
+        if (attributes.get(ATTR_NEIGHBORADDED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_NEIGHBORADDED).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_NEIGHBORADDED));
@@ -796,11 +754,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getNeighborRemoved(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_NEIGHBORREMOVED).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_NEIGHBORREMOVED).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_NEIGHBORREMOVED).getLastValue();
-            }
+        if (attributes.get(ATTR_NEIGHBORREMOVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_NEIGHBORREMOVED).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_NEIGHBORREMOVED));
@@ -838,11 +793,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getNeighborStale(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_NEIGHBORSTALE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_NEIGHBORSTALE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_NEIGHBORSTALE).getLastValue();
-            }
+        if (attributes.get(ATTR_NEIGHBORSTALE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_NEIGHBORSTALE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_NEIGHBORSTALE));
@@ -880,11 +832,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getJoinIndication(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_JOININDICATION).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_JOININDICATION).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_JOININDICATION).getLastValue();
-            }
+        if (attributes.get(ATTR_JOININDICATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_JOININDICATION).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_JOININDICATION));
@@ -922,11 +871,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getChildMoved(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_CHILDMOVED).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_CHILDMOVED).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_CHILDMOVED).getLastValue();
-            }
+        if (attributes.get(ATTR_CHILDMOVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_CHILDMOVED).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_CHILDMOVED));
@@ -964,11 +910,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getNwkfcFailure(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_NWKFCFAILURE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_NWKFCFAILURE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_NWKFCFAILURE).getLastValue();
-            }
+        if (attributes.get(ATTR_NWKFCFAILURE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_NWKFCFAILURE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_NWKFCFAILURE));
@@ -1006,11 +949,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getApsfcFailure(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_APSFCFAILURE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_APSFCFAILURE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_APSFCFAILURE).getLastValue();
-            }
+        if (attributes.get(ATTR_APSFCFAILURE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_APSFCFAILURE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_APSFCFAILURE));
@@ -1048,11 +988,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getApsUnauthorizedKey(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_APSUNAUTHORIZEDKEY).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_APSUNAUTHORIZEDKEY).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_APSUNAUTHORIZEDKEY).getLastValue();
-            }
+        if (attributes.get(ATTR_APSUNAUTHORIZEDKEY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_APSUNAUTHORIZEDKEY).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_APSUNAUTHORIZEDKEY));
@@ -1090,11 +1027,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getNwkDecryptFailures(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_NWKDECRYPTFAILURES).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_NWKDECRYPTFAILURES).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_NWKDECRYPTFAILURES).getLastValue();
-            }
+        if (attributes.get(ATTR_NWKDECRYPTFAILURES).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_NWKDECRYPTFAILURES).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_NWKDECRYPTFAILURES));
@@ -1132,11 +1066,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getApsDecryptFailures(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_APSDECRYPTFAILURES).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_APSDECRYPTFAILURES).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_APSDECRYPTFAILURES).getLastValue();
-            }
+        if (attributes.get(ATTR_APSDECRYPTFAILURES).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_APSDECRYPTFAILURES).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_APSDECRYPTFAILURES));
@@ -1174,11 +1105,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getPacketBufferAllocateFailures(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_PACKETBUFFERALLOCATEFAILURES).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_PACKETBUFFERALLOCATEFAILURES).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_PACKETBUFFERALLOCATEFAILURES).getLastValue();
-            }
+        if (attributes.get(ATTR_PACKETBUFFERALLOCATEFAILURES).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_PACKETBUFFERALLOCATEFAILURES).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_PACKETBUFFERALLOCATEFAILURES));
@@ -1216,11 +1144,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getRelayedUcast(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_RELAYEDUCAST).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_RELAYEDUCAST).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_RELAYEDUCAST).getLastValue();
-            }
+        if (attributes.get(ATTR_RELAYEDUCAST).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_RELAYEDUCAST).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_RELAYEDUCAST));
@@ -1258,11 +1183,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getPhytoMaCqueuelimitreached(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_PHYTOMACQUEUELIMITREACHED).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_PHYTOMACQUEUELIMITREACHED).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_PHYTOMACQUEUELIMITREACHED).getLastValue();
-            }
+        if (attributes.get(ATTR_PHYTOMACQUEUELIMITREACHED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_PHYTOMACQUEUELIMITREACHED).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_PHYTOMACQUEUELIMITREACHED));
@@ -1300,11 +1222,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getPacketValidatedropcount(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_PACKETVALIDATEDROPCOUNT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_PACKETVALIDATEDROPCOUNT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_PACKETVALIDATEDROPCOUNT).getLastValue();
-            }
+        if (attributes.get(ATTR_PACKETVALIDATEDROPCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_PACKETVALIDATEDROPCOUNT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_PACKETVALIDATEDROPCOUNT));
@@ -1342,11 +1261,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getAverageMacRetryPerApsMessageSent(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_AVERAGEMACRETRYPERAPSMESSAGESENT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_AVERAGEMACRETRYPERAPSMESSAGESENT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_AVERAGEMACRETRYPERAPSMESSAGESENT).getLastValue();
-            }
+        if (attributes.get(ATTR_AVERAGEMACRETRYPERAPSMESSAGESENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_AVERAGEMACRETRYPERAPSMESSAGESENT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_AVERAGEMACRETRYPERAPSMESSAGESENT));
@@ -1384,11 +1300,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getLastMessageLqi(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_LASTMESSAGELQI).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_LASTMESSAGELQI).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_LASTMESSAGELQI).getLastValue();
-            }
+        if (attributes.get(ATTR_LASTMESSAGELQI).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_LASTMESSAGELQI).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_LASTMESSAGELQI));
@@ -1426,11 +1339,8 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getLastMessageRssi(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_LASTMESSAGERSSI).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_LASTMESSAGERSSI).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_LASTMESSAGERSSI).getLastValue();
-            }
+        if (attributes.get(ATTR_LASTMESSAGERSSI).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_LASTMESSAGERSSI).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_LASTMESSAGERSSI));

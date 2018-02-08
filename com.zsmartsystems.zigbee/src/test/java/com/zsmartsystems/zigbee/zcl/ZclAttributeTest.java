@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
@@ -53,6 +54,9 @@ public class ZclAttributeTest {
         ZclAttribute attribute = new ZclAttribute(ZclClusterType.ON_OFF, 0, "Test Name",
                 ZclDataType.UNSIGNED_8_BIT_INTEGER, false, false, false, false);
 
+        // No value has been set, so should always be false
+        assertFalse(attribute.isLastValueCurrent(Long.MAX_VALUE));
+
         Calendar start = Calendar.getInstance();
         attribute.updateValue(0);
         Calendar stop = Calendar.getInstance();
@@ -60,5 +64,14 @@ public class ZclAttributeTest {
         assertEquals(0, attribute.getLastValue());
         assertTrue(attribute.getLastReportTime().compareTo(start) >= 0);
         assertTrue(attribute.getLastReportTime().compareTo(stop) <= 0);
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        assertFalse(attribute.isLastValueCurrent(50));
+        assertTrue(attribute.isLastValueCurrent(Long.MAX_VALUE));
     }
 }
