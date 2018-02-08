@@ -105,11 +105,8 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getSwitchType(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_SWITCHTYPE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_SWITCHTYPE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_SWITCHTYPE).getLastValue();
-            }
+        if (attributes.get(ATTR_SWITCHTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_SWITCHTYPE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_SWITCHTYPE));
@@ -171,11 +168,8 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getSwitchActions(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_SWITCHACTIONS).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_SWITCHACTIONS).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_SWITCHACTIONS).getLastValue();
-            }
+        if (attributes.get(ATTR_SWITCHACTIONS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_SWITCHACTIONS).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_SWITCHACTIONS));

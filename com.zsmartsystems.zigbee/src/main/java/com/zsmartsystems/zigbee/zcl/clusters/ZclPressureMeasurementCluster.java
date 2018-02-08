@@ -173,11 +173,8 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMeasuredValue(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MEASUREDVALUE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MEASUREDVALUE).getLastValue();
-            }
+        if (attributes.get(ATTR_MEASUREDVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MEASUREDVALUE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MEASUREDVALUE));
@@ -250,11 +247,8 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMinMeasuredValue(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MINMEASUREDVALUE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MINMEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MINMEASUREDVALUE).getLastValue();
-            }
+        if (attributes.get(ATTR_MINMEASUREDVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MINMEASUREDVALUE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MINMEASUREDVALUE));
@@ -306,11 +300,8 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMaxMeasuredValue(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MAXMEASUREDVALUE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MAXMEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MAXMEASUREDVALUE).getLastValue();
-            }
+        if (attributes.get(ATTR_MAXMEASUREDVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MAXMEASUREDVALUE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MAXMEASUREDVALUE));
@@ -380,11 +371,8 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getTolerance(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_TOLERANCE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_TOLERANCE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_TOLERANCE).getLastValue();
-            }
+        if (attributes.get(ATTR_TOLERANCE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_TOLERANCE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_TOLERANCE));
@@ -422,11 +410,8 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getScaledValue(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_SCALEDVALUE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_SCALEDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_SCALEDVALUE).getLastValue();
-            }
+        if (attributes.get(ATTR_SCALEDVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_SCALEDVALUE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_SCALEDVALUE));
@@ -481,11 +466,8 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMinScaledValue(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MINSCALEDVALUE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MINSCALEDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MINSCALEDVALUE).getLastValue();
-            }
+        if (attributes.get(ATTR_MINSCALEDVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MINSCALEDVALUE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MINSCALEDVALUE));
@@ -523,11 +505,8 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMaxScaledValue(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MAXSCALEDVALUE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MAXSCALEDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MAXSCALEDVALUE).getLastValue();
-            }
+        if (attributes.get(ATTR_MAXSCALEDVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MAXSCALEDVALUE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MAXSCALEDVALUE));
@@ -565,11 +544,8 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getScaledTolerance(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_SCALEDTOLERANCE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_SCALEDTOLERANCE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_SCALEDTOLERANCE).getLastValue();
-            }
+        if (attributes.get(ATTR_SCALEDTOLERANCE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_SCALEDTOLERANCE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_SCALEDTOLERANCE));
@@ -624,11 +600,8 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getScale(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_SCALE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_SCALE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_SCALE).getLastValue();
-            }
+        if (attributes.get(ATTR_SCALE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_SCALE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_SCALE));

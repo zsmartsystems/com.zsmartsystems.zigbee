@@ -200,11 +200,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @return the {@link Calendar} attribute value, or null on error
      */
     public Calendar getTime(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_TIME).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_TIME).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Calendar) attributes.get(ATTR_TIME).getLastValue();
-            }
+        if (attributes.get(ATTR_TIME).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) attributes.get(ATTR_TIME).getLastValue();
         }
 
         return (Calendar) readSync(attributes.get(ATTR_TIME));
@@ -263,11 +260,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getTimeStatus(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_TIMESTATUS).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_TIMESTATUS).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_TIMESTATUS).getLastValue();
-            }
+        if (attributes.get(ATTR_TIMESTATUS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_TIMESTATUS).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_TIMESTATUS));
@@ -329,11 +323,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getTimeZone(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_TIMEZONE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_TIMEZONE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_TIMEZONE).getLastValue();
-            }
+        if (attributes.get(ATTR_TIMEZONE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_TIMEZONE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_TIMEZONE));
@@ -395,11 +386,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getDstStart(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_DSTSTART).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_DSTSTART).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_DSTSTART).getLastValue();
-            }
+        if (attributes.get(ATTR_DSTSTART).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_DSTSTART).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_DSTSTART));
@@ -497,11 +485,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getDstEnd(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_DSTEND).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_DSTEND).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_DSTEND).getLastValue();
-            }
+        if (attributes.get(ATTR_DSTEND).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_DSTEND).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_DSTEND));
@@ -578,11 +563,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getDstShift(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_DSTSHIFT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_DSTSHIFT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_DSTSHIFT).getLastValue();
-            }
+        if (attributes.get(ATTR_DSTSHIFT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_DSTSHIFT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_DSTSHIFT));
@@ -630,11 +612,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getStandardTime(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_STANDARDTIME).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_STANDARDTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_STANDARDTIME).getLastValue();
-            }
+        if (attributes.get(ATTR_STANDARDTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_STANDARDTIME).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_STANDARDTIME));
@@ -682,11 +661,8 @@ public class ZclTimeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getLocalTime(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_LOCALTIME).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_LOCALTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_LOCALTIME).getLastValue();
-            }
+        if (attributes.get(ATTR_LOCALTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_LOCALTIME).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_LOCALTIME));

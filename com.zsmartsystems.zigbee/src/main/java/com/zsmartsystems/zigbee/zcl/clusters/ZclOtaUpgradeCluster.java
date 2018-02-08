@@ -189,11 +189,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @return the {@link IeeeAddress} attribute value, or null on error
      */
     public IeeeAddress getUpgradeServerId(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_UPGRADESERVERID).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_UPGRADESERVERID).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (IeeeAddress) attributes.get(ATTR_UPGRADESERVERID).getLastValue();
-            }
+        if (attributes.get(ATTR_UPGRADESERVERID).isLastValueCurrent(refreshPeriod)) {
+            return (IeeeAddress) attributes.get(ATTR_UPGRADESERVERID).getLastValue();
         }
 
         return (IeeeAddress) readSync(attributes.get(ATTR_UPGRADESERVERID));
@@ -241,11 +238,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getFileOffset(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_FILEOFFSET).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_FILEOFFSET).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_FILEOFFSET).getLastValue();
-            }
+        if (attributes.get(ATTR_FILEOFFSET).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_FILEOFFSET).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_FILEOFFSET));
@@ -289,11 +283,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getCurrentFileVersion(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTFILEVERSION).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_CURRENTFILEVERSION).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_CURRENTFILEVERSION).getLastValue();
-            }
+        if (attributes.get(ATTR_CURRENTFILEVERSION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_CURRENTFILEVERSION).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_CURRENTFILEVERSION));
@@ -337,11 +328,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getCurrentZigBeeStackVersion(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTZIGBEESTACKVERSION).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_CURRENTZIGBEESTACKVERSION).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_CURRENTZIGBEESTACKVERSION).getLastValue();
-            }
+        if (attributes.get(ATTR_CURRENTZIGBEESTACKVERSION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_CURRENTZIGBEESTACKVERSION).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_CURRENTZIGBEESTACKVERSION));
@@ -389,11 +377,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getDownloadedFileVersion(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_DOWNLOADEDFILEVERSION).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_DOWNLOADEDFILEVERSION).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_DOWNLOADEDFILEVERSION).getLastValue();
-            }
+        if (attributes.get(ATTR_DOWNLOADEDFILEVERSION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_DOWNLOADEDFILEVERSION).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_DOWNLOADEDFILEVERSION));
@@ -441,11 +426,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getDownloadedZigBeeStackVersion(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_DOWNLOADEDZIGBEESTACKVERSION).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_DOWNLOADEDZIGBEESTACKVERSION).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_DOWNLOADEDZIGBEESTACKVERSION).getLastValue();
-            }
+        if (attributes.get(ATTR_DOWNLOADEDZIGBEESTACKVERSION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_DOWNLOADEDZIGBEESTACKVERSION).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_DOWNLOADEDZIGBEESTACKVERSION));
@@ -495,11 +477,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getImageUpgradeStatus(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_IMAGEUPGRADESTATUS).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_IMAGEUPGRADESTATUS).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_IMAGEUPGRADESTATUS).getLastValue();
-            }
+        if (attributes.get(ATTR_IMAGEUPGRADESTATUS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_IMAGEUPGRADESTATUS).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_IMAGEUPGRADESTATUS));
@@ -537,11 +516,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getManufacturerId(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MANUFACTURERID).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MANUFACTURERID).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MANUFACTURERID).getLastValue();
-            }
+        if (attributes.get(ATTR_MANUFACTURERID).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MANUFACTURERID).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MANUFACTURERID));
@@ -579,11 +555,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getImageTypeId(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_IMAGETYPEID).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_IMAGETYPEID).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_IMAGETYPEID).getLastValue();
-            }
+        if (attributes.get(ATTR_IMAGETYPEID).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_IMAGETYPEID).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_IMAGETYPEID));
@@ -639,11 +612,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMinimumBlockRequestDelay(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MINIMUMBLOCKREQUESTDELAY).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MINIMUMBLOCKREQUESTDELAY).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MINIMUMBLOCKREQUESTDELAY).getLastValue();
-            }
+        if (attributes.get(ATTR_MINIMUMBLOCKREQUESTDELAY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MINIMUMBLOCKREQUESTDELAY).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MINIMUMBLOCKREQUESTDELAY));
@@ -681,11 +651,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getImageStamp(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_IMAGESTAMP).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_IMAGESTAMP).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_IMAGESTAMP).getLastValue();
-            }
+        if (attributes.get(ATTR_IMAGESTAMP).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_IMAGESTAMP).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_IMAGESTAMP));

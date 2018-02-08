@@ -132,11 +132,8 @@ public class ZclAlarmsCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getAlarmCount(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ALARMCOUNT).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ALARMCOUNT).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ALARMCOUNT).getLastValue();
-            }
+        if (attributes.get(ATTR_ALARMCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ALARMCOUNT).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ALARMCOUNT));

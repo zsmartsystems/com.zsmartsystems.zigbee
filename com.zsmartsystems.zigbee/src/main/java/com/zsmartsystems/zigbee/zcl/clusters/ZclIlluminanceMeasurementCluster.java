@@ -156,11 +156,8 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMeasuredValue(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MEASUREDVALUE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MEASUREDVALUE).getLastValue();
-            }
+        if (attributes.get(ATTR_MEASUREDVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MEASUREDVALUE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MEASUREDVALUE));
@@ -232,11 +229,8 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMinMeasuredValue(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MINMEASUREDVALUE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MINMEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MINMEASUREDVALUE).getLastValue();
-            }
+        if (attributes.get(ATTR_MINMEASUREDVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MINMEASUREDVALUE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MINMEASUREDVALUE));
@@ -288,11 +282,8 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getMaxMeasuredValue(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_MAXMEASUREDVALUE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_MAXMEASUREDVALUE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_MAXMEASUREDVALUE).getLastValue();
-            }
+        if (attributes.get(ATTR_MAXMEASUREDVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_MAXMEASUREDVALUE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_MAXMEASUREDVALUE));
@@ -338,11 +329,8 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getTolerance(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_TOLERANCE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_TOLERANCE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_TOLERANCE).getLastValue();
-            }
+        if (attributes.get(ATTR_TOLERANCE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_TOLERANCE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_TOLERANCE));
@@ -405,11 +393,8 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getLightSensorType(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_LIGHTSENSORTYPE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_LIGHTSENSORTYPE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_LIGHTSENSORTYPE).getLastValue();
-            }
+        if (attributes.get(ATTR_LIGHTSENSORTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_LIGHTSENSORTYPE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_LIGHTSENSORTYPE));

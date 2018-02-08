@@ -159,11 +159,8 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getCurrentLevel(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTLEVEL).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_CURRENTLEVEL).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_CURRENTLEVEL).getLastValue();
-            }
+        if (attributes.get(ATTR_CURRENTLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_CURRENTLEVEL).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_CURRENTLEVEL));
@@ -227,11 +224,8 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getRemainingTime(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_REMAININGTIME).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_REMAININGTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_REMAININGTIME).getLastValue();
-            }
+        if (attributes.get(ATTR_REMAININGTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_REMAININGTIME).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_REMAININGTIME));
@@ -308,11 +302,8 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getOnOffTransitionTime(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ONOFFTRANSITIONTIME).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ONOFFTRANSITIONTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ONOFFTRANSITIONTIME).getLastValue();
-            }
+        if (attributes.get(ATTR_ONOFFTRANSITIONTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ONOFFTRANSITIONTIME).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ONOFFTRANSITIONTIME));
@@ -377,11 +368,8 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getOnLevel(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ONLEVEL).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ONLEVEL).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ONLEVEL).getLastValue();
-            }
+        if (attributes.get(ATTR_ONLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ONLEVEL).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ONLEVEL));
@@ -449,11 +437,8 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getOnTransitionTime(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ONTRANSITIONTIME).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ONTRANSITIONTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ONTRANSITIONTIME).getLastValue();
-            }
+        if (attributes.get(ATTR_ONTRANSITIONTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ONTRANSITIONTIME).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ONTRANSITIONTIME));
@@ -521,11 +506,8 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getOffTransitionTime(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_OFFTRANSITIONTIME).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_OFFTRANSITIONTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_OFFTRANSITIONTIME).getLastValue();
-            }
+        if (attributes.get(ATTR_OFFTRANSITIONTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_OFFTRANSITIONTIME).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_OFFTRANSITIONTIME));
@@ -587,11 +569,8 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getDefaultMoveRate(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_DEFAULTMOVERATE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_DEFAULTMOVERATE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_DEFAULTMOVERATE).getLastValue();
-            }
+        if (attributes.get(ATTR_DEFAULTMOVERATE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_DEFAULTMOVERATE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_DEFAULTMOVERATE));

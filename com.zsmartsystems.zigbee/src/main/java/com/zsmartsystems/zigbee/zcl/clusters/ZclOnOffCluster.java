@@ -115,11 +115,8 @@ public class ZclOnOffCluster extends ZclCluster {
      * @return the {@link Boolean} attribute value, or null on error
      */
     public Boolean getOnOff(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ONOFF).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ONOFF).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Boolean) attributes.get(ATTR_ONOFF).getLastValue();
-            }
+        if (attributes.get(ATTR_ONOFF).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) attributes.get(ATTR_ONOFF).getLastValue();
         }
 
         return (Boolean) readSync(attributes.get(ATTR_ONOFF));
@@ -190,11 +187,8 @@ public class ZclOnOffCluster extends ZclCluster {
      * @return the {@link Boolean} attribute value, or null on error
      */
     public Boolean getGlobalSceneControl(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_GLOBALSCENECONTROL).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_GLOBALSCENECONTROL).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Boolean) attributes.get(ATTR_GLOBALSCENECONTROL).getLastValue();
-            }
+        if (attributes.get(ATTR_GLOBALSCENECONTROL).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) attributes.get(ATTR_GLOBALSCENECONTROL).getLastValue();
         }
 
         return (Boolean) readSync(attributes.get(ATTR_GLOBALSCENECONTROL));
@@ -263,11 +257,8 @@ public class ZclOnOffCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getOffTime(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_OFFTIME).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_OFFTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_OFFTIME).getLastValue();
-            }
+        if (attributes.get(ATTR_OFFTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_OFFTIME).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_OFFTIME));
@@ -337,11 +328,8 @@ public class ZclOnOffCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getOffWaitTime(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_OFFWAITTIME).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_OFFWAITTIME).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_OFFWAITTIME).getLastValue();
-            }
+        if (attributes.get(ATTR_OFFWAITTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_OFFWAITTIME).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_OFFWAITTIME));

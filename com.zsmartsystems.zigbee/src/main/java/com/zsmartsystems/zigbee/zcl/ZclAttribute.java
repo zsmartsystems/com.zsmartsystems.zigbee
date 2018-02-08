@@ -286,6 +286,26 @@ public class ZclAttribute {
     }
 
     /**
+     * Checks if the last value received for the attribute is still current.
+     * If the last update time is more recent than the allowedAge then this will return true. allowedAge is defined in
+     * milliseconds.
+     *
+     * @param allowedAge the number of milliseconds to consider the value current
+     * @return true if the last value can be considered current
+     */
+    public boolean isLastValueCurrent(long allowedAge) {
+        if (lastReportTime == null) {
+            return false;
+        }
+
+        long refreshTime = Calendar.getInstance().getTimeInMillis() - allowedAge;
+        if (refreshTime < 0) {
+            return true;
+        }
+        return getLastReportTime().getTimeInMillis() > refreshTime;
+    }
+
+    /**
      * Gets the name of this attribute
      *
      * @return the name as {@link String}
@@ -319,6 +339,10 @@ public class ZclAttribute {
         builder.append(dataType);
         builder.append(", lastValue=");
         builder.append(lastValue);
+        if (lastReportTime != null) {
+            builder.append(", lastReportTime=");
+            builder.append(lastReportTime.getTime());
+        }
         builder.append(']');
 
         return builder.toString();

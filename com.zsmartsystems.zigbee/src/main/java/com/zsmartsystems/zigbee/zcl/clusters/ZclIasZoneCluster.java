@@ -141,11 +141,8 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getZoneState(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ZONESTATE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ZONESTATE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ZONESTATE).getLastValue();
-            }
+        if (attributes.get(ATTR_ZONESTATE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ZONESTATE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ZONESTATE));
@@ -187,11 +184,8 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getZoneType(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ZONETYPE).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ZONETYPE).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ZONETYPE).getLastValue();
-            }
+        if (attributes.get(ATTR_ZONETYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ZONETYPE).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ZONETYPE));
@@ -233,11 +227,8 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getZoneStatus(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ZONESTATUS).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ZONESTATUS).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ZONESTATUS).getLastValue();
-            }
+        if (attributes.get(ATTR_ZONESTATUS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ZONESTATUS).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ZONESTATUS));
@@ -320,11 +311,8 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @return the {@link IeeeAddress} attribute value, or null on error
      */
     public IeeeAddress getIascieAddress(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_IASCIEADDRESS).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_IASCIEADDRESS).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (IeeeAddress) attributes.get(ATTR_IASCIEADDRESS).getLastValue();
-            }
+        if (attributes.get(ATTR_IASCIEADDRESS).isLastValueCurrent(refreshPeriod)) {
+            return (IeeeAddress) attributes.get(ATTR_IASCIEADDRESS).getLastValue();
         }
 
         return (IeeeAddress) readSync(attributes.get(ATTR_IASCIEADDRESS));
@@ -362,11 +350,8 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getZoneId(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_ZONEID).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_ZONEID).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_ZONEID).getLastValue();
-            }
+        if (attributes.get(ATTR_ZONEID).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ZONEID).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_ZONEID));
@@ -404,11 +389,8 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getNumberOfZoneSensitivityLevelsSupported(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED).getLastValue();
-            }
+        if (attributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED));
@@ -461,11 +443,8 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @return the {@link Integer} attribute value, or null on error
      */
     public Integer getCurrentZoneSensitivityLevel(final long refreshPeriod) {
-        if(refreshPeriod > 0 && attributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL).getLastReportTime() != null) {
-            long refreshTime = Calendar.getInstance().getTimeInMillis() - refreshPeriod;
-            if(attributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL).getLastReportTime().getTimeInMillis() < refreshTime) {
-                return (Integer) attributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL).getLastValue();
-            }
+        if (attributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL).getLastValue();
         }
 
         return (Integer) readSync(attributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL));
