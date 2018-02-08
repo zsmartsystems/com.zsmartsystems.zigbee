@@ -32,6 +32,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
 
@@ -410,6 +411,38 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
                 "ZigBeeApsFrame [sourceAddress=18/0, destinationAddress=0/0, profile=0000, cluster=32772, addressMode=null, radius=0, sequence=210, payload=00 00 12 00 1C 0B 5E C0 10 02 02 09 00 00 03 00 04 00 05 00 06 00 08 00 00 03 00 10 01 FC 01 19 00]");
         ZigBeeCommand command = getZigBeeCommand(apsFrame);
         assertTrue(command instanceof SimpleDescriptorResponse);
+    }
+
+    @Test
+    public void testFrame3() {
+        ZigBeeApsFrame apsFrame = getApsFrame(
+                "ZigBeeApsFrame [sourceAddress=29601/1, destinationAddress=0/1, profile=0104, cluster=0, addressMode=null, radius=0, sequence=58, payload=18 01 0A 01 FF 42 25 01 21 EF 0B 04 21 A8 01 05 21 0A 00 06 24 01 00 00 00 00 64 29 9F 08 65 21 C4 19 66 2B 67 8A 01 00 0A 21 00 00]");
+        ZigBeeCommand command = getZigBeeCommand(apsFrame);
+        assertTrue(command instanceof ReportAttributesCommand);
+    }
+
+    @Test
+    public void testFrame4() {
+        ZigBeeApsFrame apsFrame = getApsFrame(
+                "ZigBeeApsFrame [sourceAddress=29601/1, destinationAddress=0/1, profile=0104, cluster=1027, addressMode=null, radius=0, sequence=68, payload=18 02 0A 00 00 29 F1 03 14 00 28 FF 10 00 29 6D 27]");
+        ZigBeeCommand command = getZigBeeCommand(apsFrame);
+        assertTrue(command instanceof ReportAttributesCommand);
+    }
+
+    @Test
+    public void testFrame5() {
+        ZigBeeApsFrame apsFrame = getApsFrame(
+                "ZigBeeApsFrame [sourceAddress=29601/1, destinationAddress=0/1, profile=0104, cluster=1029, addressMode=null, radius=0, sequence=68, payload=18 01 0A 00 00 21 88 1B]");
+        ZigBeeCommand command = getZigBeeCommand(apsFrame);
+        assertTrue(command instanceof ReportAttributesCommand);
+    }
+
+    @Test
+    public void testFrame6() {
+        ZigBeeApsFrame apsFrame = getApsFrame(
+                "ZigBeeApsFrame [sourceAddress=29601/1, destinationAddress=0/1, profile=0104, cluster=1026, addressMode=null, radius=0, sequence=68, payload=18 00 0A 00 00 29 E5 09]");
+        ZigBeeCommand command = getZigBeeCommand(apsFrame);
+        assertTrue(command instanceof ReportAttributesCommand);
     }
 
     private ZigBeeCommand getZigBeeCommand(ZigBeeApsFrame apsFrame) {

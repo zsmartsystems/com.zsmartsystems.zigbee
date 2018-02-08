@@ -78,12 +78,13 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                     value[0] = null;
                     break;
                 }
+                int length = size;
                 for (int cnt = 0; cnt < size; cnt++) {
                     if (payload[index + cnt] == 0) {
-                        size = cnt;
+                        length = cnt;
                     }
                 }
-                value[0] = new String(payload, index, size);
+                value[0] = new String(payload, index, length);
                 index += size;
                 break;
             case ENDPOINT:
