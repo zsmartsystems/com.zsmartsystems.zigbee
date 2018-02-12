@@ -51,7 +51,7 @@ public class BindingTable {
     /**
      * Destination address if the address mode is a node address
      */
-    private IeeeAddress dstNodeAddr;
+    private IeeeAddress dstAddr;
 
     /**
      * Destination endpoint if the address mode is a node address
@@ -97,7 +97,7 @@ public class BindingTable {
      * @return the dstNodeAddr
      */
     public IeeeAddress getDstNodeAddr() {
-        return dstNodeAddr;
+        return dstAddr;
     }
 
     /**
@@ -115,7 +115,7 @@ public class BindingTable {
         if (dstAddrMode == 1) {
             serializer.appendZigBeeType(dstGroupAddr, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         } else if (dstAddrMode == 3) {
-            serializer.appendZigBeeType(dstNodeAddr, ZclDataType.IEEE_ADDRESS);
+            serializer.appendZigBeeType(dstAddr, ZclDataType.IEEE_ADDRESS);
             serializer.appendZigBeeType(dstNodeEndpoint, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         }
     }
@@ -128,7 +128,7 @@ public class BindingTable {
         if (dstAddrMode == 1) {
             dstGroupAddr = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         } else if (dstAddrMode == 3) {
-            dstNodeAddr = (IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
+            dstAddr = (IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
             dstNodeEndpoint = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         }
     }
@@ -140,7 +140,7 @@ public class BindingTable {
         result = prime * result + clusterId;
         result = prime * result + dstAddrMode;
         result = prime * result + dstGroupAddr;
-        result = prime * result + ((dstNodeAddr == null) ? 0 : dstNodeAddr.hashCode());
+        result = prime * result + ((dstAddr == null) ? 0 : dstAddr.hashCode());
         result = prime * result + dstNodeEndpoint;
         result = prime * result + ((srcAddr == null) ? 0 : srcAddr.hashCode());
         result = prime * result + srcEndpoint;
@@ -168,11 +168,11 @@ public class BindingTable {
         if (dstGroupAddr != other.dstGroupAddr) {
             return false;
         }
-        if (dstNodeAddr == null) {
-            if (other.dstNodeAddr != null) {
+        if (dstAddr == null) {
+            if (other.dstAddr != null) {
                 return false;
             }
-        } else if (!dstNodeAddr.equals(other.dstNodeAddr)) {
+        } else if (!dstAddr.equals(other.dstAddr)) {
             return false;
         }
         if (dstNodeEndpoint != other.dstNodeEndpoint) {
@@ -204,7 +204,7 @@ public class BindingTable {
                 builder.append(dstGroupAddr);
                 break;
             case 3:
-                builder.append(dstNodeAddr);
+                builder.append(dstAddr);
                 builder.append('/');
                 builder.append(dstNodeEndpoint);
                 break;

@@ -7,14 +7,12 @@
  */
 package com.zsmartsystems.zigbee.dao;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeEndpoint;
-import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
 
@@ -50,6 +48,8 @@ public class ZigBeeNodeDao {
      */
     private List<ZigBeeEndpointDao> endpoints;
 
+    private Set<BindingTable> bindingTable;
+
     public String getIeeeAddress() {
         return ieeeAddress;
     }
@@ -82,36 +82,19 @@ public class ZigBeeNodeDao {
         this.powerDescriptor = powerDescriptor;
     }
 
-    private void setEndpoints(Collection<ZigBeeEndpoint> endpoints) {
-        this.endpoints = new ArrayList<ZigBeeEndpointDao>();
-
-        for (ZigBeeEndpoint endpoint : endpoints) {
-            this.endpoints.add(ZigBeeEndpointDao.createFromZigBeeDevice(endpoint));
-        }
+    public void setEndpoints(List<ZigBeeEndpointDao> endpointDaoList) {
+        this.endpoints = endpointDaoList;
     }
 
-    public static ZigBeeNodeDao createFromZigBeeNode(ZigBeeNode node) {
-        ZigBeeNodeDao nodeDao = new ZigBeeNodeDao();
-        nodeDao.setIeeeAddress(node.getIeeeAddress().toString());
-        nodeDao.setNetworkAddress(node.getNetworkAddress());
-        nodeDao.setNodeDescriptor(node.getNodeDescriptor());
-        nodeDao.setPowerDescriptor(node.getPowerDescriptor());
-        nodeDao.setEndpoints(node.getEndpoints());
-
-        return nodeDao;
+    public List<ZigBeeEndpointDao> getEndpoints() {
+        return endpoints;
     }
 
-    public static ZigBeeNode createFromZigBeeDao(ZigBeeNetworkManager networkManager, ZigBeeNodeDao nodeDao) {
-        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress(nodeDao.getIeeeAddress()));
-        node.setNetworkAddress(nodeDao.getNetworkAddress());
-        node.setNodeDescriptor(nodeDao.getNodeDescriptor());
-        node.setPowerDescriptor(nodeDao.getPowerDescriptor());
-        if (nodeDao.endpoints != null) {
-            for (ZigBeeEndpointDao endpoint : nodeDao.endpoints) {
-                node.addEndpoint(ZigBeeEndpointDao.createFromZigBeeDao(networkManager, node, endpoint));
-            }
-        }
+    public void setBindingTable(Set<BindingTable> bindingTable) {
+        this.bindingTable = bindingTable;
+    }
 
-        return node;
+    public Set<BindingTable> getBindingTable() {
+        return bindingTable;
     }
 }

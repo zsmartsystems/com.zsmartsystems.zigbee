@@ -28,6 +28,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.dao.ZclClusterDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
@@ -76,7 +77,7 @@ public abstract class ZclCluster {
     /**
      * The ZCL cluster ID for this cluster
      */
-    protected final int clusterId;
+    protected int clusterId;
 
     /**
      * The name of this cluster
@@ -890,5 +891,27 @@ public abstract class ZclCluster {
      */
     public ZclCommand getResponseFromId(int commandId) {
         return null;
+    }
+
+    public ZclClusterDao getDao() {
+        ZclClusterDao dao = new ZclClusterDao();
+
+        dao.setClusterId(clusterId);
+        dao.setClient(isClient);
+        dao.setSupportedAttributes(supportedAttributes);
+        dao.setSupportedCommandsGenerated(supportedCommandsGenerated);
+        dao.setSupportedCommandsReceived(supportedCommandsReceived);
+        dao.setAttributes(attributes);
+
+        return dao;
+    }
+
+    public void setDao(ZclClusterDao dao) {
+        clusterId = dao.getClusterId();
+        isClient = dao.getClient();
+        supportedAttributes.addAll(dao.getSupportedAttributes());
+        supportedCommandsGenerated.addAll(dao.getSupportedCommandsGenerated());
+        supportedCommandsReceived.addAll(dao.getSupportedCommandsReceived());
+        attributes = dao.getAttributes();
     }
 }

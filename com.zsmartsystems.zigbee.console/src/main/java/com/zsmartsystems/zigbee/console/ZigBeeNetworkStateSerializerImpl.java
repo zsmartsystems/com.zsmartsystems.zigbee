@@ -24,11 +24,15 @@ import org.slf4j.LoggerFactory;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.dao.ZclClusterDao;
 import com.zsmartsystems.zigbee.dao.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.dao.ZigBeeNodeDao;
+import com.zsmartsystems.zigbee.zcl.ZclAttribute;
+import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.FrequencyBandType;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.ServerCapabilitiesType;
@@ -37,7 +41,7 @@ import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.PowerSourceType;
 /**
  * Serializes and deserializes the ZigBee network state.
  *
- * @author Tommi S.E. Laukkanen
+ * @author Chris Jackson
  */
 public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSerializer {
     /**
@@ -53,11 +57,16 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
     private XStream openStream() {
         XStream stream = new XStream(new StaxDriver());
         stream.alias("ZigBeeNode", ZigBeeNodeDao.class);
-        stream.alias("ZigBeeDevice", ZigBeeEndpointDao.class);
+        stream.alias("ZigBeeEndpoint", ZigBeeEndpointDao.class);
+        stream.alias("ZclCluster", ZclClusterDao.class);
+        stream.alias("ZclAttribute", ZclAttribute.class);
         stream.alias("MacCapabilitiesType", MacCapabilitiesType.class);
         stream.alias("ServerCapabilitiesType", ServerCapabilitiesType.class);
         stream.alias("PowerSourceType", PowerSourceType.class);
         stream.alias("FrequencyBandType", FrequencyBandType.class);
+        stream.alias("BindingTable", BindingTable.class);
+        stream.registerLocalConverter(BindingTable.class, "srcAddr", new IeeeAddressConverter());
+        stream.registerLocalConverter(BindingTable.class, "dstAddr", new IeeeAddressConverter());
         return stream;
     }
 
@@ -71,16 +80,12 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
     public void serialize(final ZigBeeNetworkManager networkState) {
         XStream stream = openStream();
 
-        final List<Object> destinations = new ArrayList<Object>();
+        final List<ZigBeeNodeDao> destinations = new ArrayList<ZigBeeNodeDao>();
 
         for (ZigBeeNode node : networkState.getNodes()) {
-            ZigBeeNodeDao nodeDao = ZigBeeNodeDao.createFromZigBeeNode(node);
+            ZigBeeNodeDao nodeDao = node.getDao();
             destinations.add(nodeDao);
         }
-        // for (ZigBeeEndpoint device : networkState.getDevices()) {
-        // ZigBeeDeviceDao deviceDao = ZigBeeDeviceDao.createFromZigBeeDevice(device);
-        // destinations.add(deviceDao);
-        // }
 
         final File file = new File(networkStateFilePath);
 
@@ -93,7 +98,7 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
             logger.error("Error writing network state", e);
         }
 
-        logger.info("ZigBee saving network state done.");
+        logger.info("ZigBee saving network state complete.");
     }
 
     /**
@@ -119,17 +124,17 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
             final List<Object> objects = (List<Object>) stream.fromXML(reader);
             for (final Object object : objects) {
                 if (object instanceof ZigBeeNodeDao) {
-                    networkState.addNode(ZigBeeNodeDao.createFromZigBeeDao(networkState, (ZigBeeNodeDao) object));
-                    // } else {
-                    // networkState.addEndpoint(ZigBeeDeviceDao.createFromZigBeeDao(networkState, (ZigBeeDeviceDao)
-                    // object));
+                    ZigBeeNodeDao nodeDao = (ZigBeeNodeDao) object;
+                    ZigBeeNode node = new ZigBeeNode(networkState, new IeeeAddress(nodeDao.getIeeeAddress()));
+                    node.setDao(nodeDao);
+                    networkState.addNode(node);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        logger.info("Loading network state done.");
+        logger.info("Loading network state complete.");
     }
 
 }
