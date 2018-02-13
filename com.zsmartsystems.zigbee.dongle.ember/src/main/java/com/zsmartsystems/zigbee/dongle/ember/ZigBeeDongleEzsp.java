@@ -764,4 +764,19 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         }
         return TransportConfigResult.FAILURE;
     }
+
+    /**
+     * Get a map of statistics counters from the dongle
+     *
+     * @return map of counters
+     */
+    public Map<String, Long> getCounters() {
+        Map<String, Long> counters = new HashMap<String, Long>();
+
+        if (ashHandler != null) {
+            counters.putAll(ashHandler.getCounters());
+        }
+
+        return counters;
+    }
 }

@@ -31,6 +31,6 @@ public class AshFrameNak extends AshFrame {
 
     @Override
     public String toString() {
-        return "AshFrameNak [ackNum=" + ackNum + "]";
+        return "AshFrameNak [ackNum=" + ackNum + ", notRdy=" + nRdy + "]";
     }
 }
