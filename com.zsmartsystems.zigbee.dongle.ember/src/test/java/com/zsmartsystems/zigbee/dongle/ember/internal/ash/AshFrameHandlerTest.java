@@ -20,15 +20,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Map;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrame;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameAck;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameData;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameHandler;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameNak;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameRst;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrame.FrameType;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
@@ -244,5 +239,22 @@ public class AshFrameHandlerTest {
         assertEquals(6, inFrame.getAckNum());
         assertEquals(2, inFrame.getFrmNum());
         assertEquals(FrameType.DATA, inFrame.getFrameType());
+    }
+
+    @Test
+    public void testGetCounters() {
+        AshFrameHandler frameHandler = new AshFrameHandler(null);
+
+        assertNotNull(frameHandler.getCounters());
+
+        Map<String, Long> counters = frameHandler.getCounters();
+
+        assertEquals(Long.valueOf(0), counters.get("ASH_RX_DAT"));
+        assertEquals(Long.valueOf(0), counters.get("ASH_TX_DAT"));
+        assertEquals(Long.valueOf(0), counters.get("ASH_RX_ACK"));
+        assertEquals(Long.valueOf(0), counters.get("ASH_TX_ACK"));
+        assertEquals(Long.valueOf(0), counters.get("ASH_RX_NAK"));
+        assertEquals(Long.valueOf(0), counters.get("ASH_TX_NAK"));
+        assertEquals(Long.valueOf(0), counters.get("ASH_RX_ERR"));
     }
 }
