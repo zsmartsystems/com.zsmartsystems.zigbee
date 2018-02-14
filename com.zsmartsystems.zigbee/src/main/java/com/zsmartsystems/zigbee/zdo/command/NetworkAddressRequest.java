@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * Code is auto-generated. Modifications may be overwritten!
  */
 
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-23T21:55:42Z")
 public class NetworkAddressRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * IEEEAddr command message field.
@@ -37,7 +37,7 @@ public class NetworkAddressRequest extends ZdoRequest implements ZigBeeTransacti
 
     /**
      * RequestType command message field.
-     *
+     * <p>
      * Request type for this command:
      * 0x00 – Single device response
      * 0x01 – Extended response

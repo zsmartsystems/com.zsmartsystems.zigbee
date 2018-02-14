@@ -23,7 +23,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-23T21:02:10Z")
 public enum ZclClusterType {
     BASIC(0x0000, ZigBeeProfileType.HOME_AUTOMATION, ZclBasicCluster.class, "Basic"),
     POWER_CONFIGURATION(0x0001, ZigBeeProfileType.HOME_AUTOMATION, ZclPowerConfigurationCluster.class, "Power configuration"),
@@ -49,6 +49,7 @@ public enum ZclClusterType {
     COMMISSIONING(0x0015, ZigBeeProfileType.HOME_AUTOMATION, ZclCommissioningCluster.class, "Commissioning"),
     OTA_UPGRADE(0x0019, ZigBeeProfileType.HOME_AUTOMATION, ZclOtaUpgradeCluster.class, "OTA Upgrade"),
     APPLIANCE_CONTROL(0x001B, ZigBeeProfileType.HOME_AUTOMATION, ZclApplianceControlCluster.class, "Appliance Control"),
+    POLL_CONTROL(0x0020, ZigBeeProfileType.HOME_AUTOMATION, ZclPollControlCluster.class, "Poll Control"),
     SHADE_CONFIGURATION(0x0100, ZigBeeProfileType.HOME_AUTOMATION, ZclShadeConfigurationCluster.class, "Shade Configuration"),
     DOOR_LOCK(0x0101, ZigBeeProfileType.HOME_AUTOMATION, ZclDoorLockCluster.class, "Door Lock"),
     PUMP_CONFIGURATION_AND_CONTROL(0x0200, ZigBeeProfileType.HOME_AUTOMATION, ZclPumpConfigurationAndControlCluster.class, "Pump Configuration and Control"),

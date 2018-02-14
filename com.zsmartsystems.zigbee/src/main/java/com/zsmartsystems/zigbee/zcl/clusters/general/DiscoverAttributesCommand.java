@@ -27,11 +27,11 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-23T21:55:42Z")
 public class DiscoverAttributesCommand extends ZclCommand {
     /**
      * Start attribute identifier command message field.
-     *
+     * <p>
      * The start attribute identifier field is 16 bits in length and specifies the value
      * of the identifier at which to begin the attribute discovery.
      */
@@ -39,7 +39,7 @@ public class DiscoverAttributesCommand extends ZclCommand {
 
     /**
      * Maximum attribute identifiers command message field.
-     *
+     * <p>
      * The  maximum attribute identifiers field is 8 bits in length and specifies the
      * maximum number of attribute identifiers that are to be returned in the resulting
      * Discover Attributes Response command.

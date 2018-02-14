@@ -30,11 +30,11 @@ import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-23T21:55:42Z")
 public class WriteAttributesStructuredResponse extends ZclCommand {
     /**
      * Status command message field.
-     *
+     * <p>
      * Status is only provided if the command was successful, and the write
      * attribute status records are not included for successfully
      * written attributes, in order to save bandwidth.
@@ -43,7 +43,7 @@ public class WriteAttributesStructuredResponse extends ZclCommand {
 
     /**
      * Records command message field.
-     *
+     * <p>
      * Note that write attribute status records are not included for successfully
      * written attributes, in order to save bandwidth.  In the case of successful
      * writing of all attributes, only a single write attribute status record

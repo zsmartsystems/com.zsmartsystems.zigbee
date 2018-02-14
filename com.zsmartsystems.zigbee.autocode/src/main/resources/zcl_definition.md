@@ -2085,6 +2085,59 @@ No cluster specific commands.
 |---------------------------|---------------------------|
 |Status                     |8-bit enumeration          |
 
+## Poll Control [0x0020]
+
+This cluster provides a mechanism for the management of an end device’s MAC Data Request rate.
+For the purposes of this cluster, the term “poll” always refers to the sending of a MAC Data
+Request from the end device to the end device’s parent. This cluster can be used for instance
+by a configuration device to make an end device responsive for a certain period of time so that
+the device can be managed by the controller. This cluster is composed of a client and server. The end device implements the server side of this cluster. The server side contains several attributes related to the MAC Data Request rate for the device. The client side implements commands used to manage the poll rate for the device. The end device which implements the server side of this cluster sends a query to the client on a predetermined interval to see if the client would like to manage the poll period of the end device in question. When the client side of the cluster hears from the server it has the opportunity to respond with configuration data to either put the end device in a short poll mode or let the end device continue to function normally.
+
+### Attributes
+
+|Id     |Name                       |Type                       |Access     |Implement |Reporting |
+|-------|---------------------------|---------------------------|-----------|----------|----------|
+|0x0000 |CheckinInterval            |Unsigned 32-bit integer    |Read Write |Mandatory |Mandatory |
+|0x0001 |LongPollInterval           |Unsigned 32-bit integer    |Read       |Mandatory |Mandatory |
+|0x0002 |ShortPollInterval          |Unsigned 16-bit integer    |Read       |Mandatory |Mandatory |
+|0x0003 |FastPollTimeout            |Unsigned 16-bit integer    |Read       |Mandatory |Mandatory |
+|0x0004 |CheckinIntervalMin         |Unsigned 32-bit integer    |Read       |          |          |
+|0x0005 |LongPollIntervalMin        |Unsigned 32-bit integer    |Read       |          |          |
+|0x0006 |FastPollTimeoutMin         |Unsigned 32-bit integer    |Read       |          |          |
+
+#### CheckinInterval Attribute
+
+The Poll Control server is responsible for checking in with the poll control client periodically to see if the poll control  client wants to modify the poll rate of the poll control server.  This is due to the fact that  the  PollControl server is implemented on an end device that MAY have an unpredictable sleep-wake cycle. The CheckinInterval represents the default amount of time between check-ins by the poll control server with the poll control client. The CheckinInterval is measured in quarter-seconds. A value of 0 indicates that the Poll Control Server is turned off and the poll control server will not check-in with the poll control client. The Poll Control Server checks in with the Poll Control Client by sending a Checkin command to the Client. This value SHOULDbe longer than the LongPoll Interval attribute. If the Client writes an invalid attribute value (Example: Out of Range as defined in Table 3-126 or a value smaller than the optional Check-inIntervalMinattribute value or a value smaller than the LongPollInterval attribute value), the Server SHOULD return Write Attributes Response with an error status not equal to ZCL_SUCCESS(0x00). The Poll Control Client will hold onto the actions or messages for the Poll Control Server at the application level until the Poll Control Server checks in with the Poll Control Client.
+
+#### LongPollInterval Attribute
+
+An end device that implements the Poll Control server MAY optionally expose a LongPollInterval attribute. 
+The Long Poll Interval represents the maximum amount of time in quarter-seconds between MAC Data Requests
+from the end device to its parent. 
+
+The LongPollInterval defines the frequency of polling that an end device does when it is NOT in fast poll mode.  The LongPollInterval SHOULD be longer than the ShortPollInterval attribute but shorter than the CheckinInterval attribute.A  value of 0xffffffff is reserved to indicate that the device does not have or does not know its long poll interval
+
+
+#### ShortPollInterval Attribute
+
+An  end  device  that  implements  the  Poll  Control  server MAY optionally  expose the ShortPollInterval attribute.  The ShortPollIntervalrepresents  the  number  of  quarterseconds  that  an  end  device  waits  between MAC Data Requests to its parent when it is expecting data (i.e.,in fast poll mode).
+
+#### FastPollTimeout Attribute
+
+The FastPollTimeout attribute represents the number of quarterseconds that an end device will stay in fast poll mode by default. It is suggested that the FastPollTimeoutattribute value be greater than 7.68 seconds.The Poll Control Cluster  Client MAYoverride  this  value  by  indicating  a  different  value  in  the  Fast  Poll Duration argument in the Check-in Response command. If the Client writes a value out of range as defined in Table 3-126 or greater  than  the  optional FastPollTimeoutMax attribute  value  if  supported, the Server SHOULD return a  Write  Attributes  Response with a status of  INVALID_VALUE30.  An  end  device  that implements the  Poll Control server can be  put into a  fast poll  mode during  which it will send MAC Data Requests  to  its  parent  at  the  frequency  of  its  configured ShortPollInterval attribute.  During this  period  of time, fast polling is considered active. When the device goes into fast poll mode, it is required to send MAC DataRequests to its parent at an accelerated rate and is thus more responsive on the network and can receive data asynchronously from the device implementing the Poll Control Cluster Client.
+
+#### CheckinIntervalMin Attribute
+
+The Poll Control Server MAY optionally provide its own minimum value for the Check-inInterval to protect against the Check-inInterval being set too low and draining the battery on the end device implementing the Poll Control Server.
+
+#### LongPollIntervalMin Attribute
+
+The Poll Control Server MAYoptionally provide its own minimum value for the LongPollIntervalto protect against  another  device  setting  the  value  to  too  short  a  time  resulting  in  an  inadvertent  power  drain  on  the device.
+
+#### FastPollTimeoutMin Attribute
+
+The Poll Control Server MAY optionally provide its own maximum value for the FastPollTimeout to avoid it being set to too high a value resulting in an inadvertent power drain on the device.
+
 # Closures
 ## Shade Configuration [0x0100]
 
