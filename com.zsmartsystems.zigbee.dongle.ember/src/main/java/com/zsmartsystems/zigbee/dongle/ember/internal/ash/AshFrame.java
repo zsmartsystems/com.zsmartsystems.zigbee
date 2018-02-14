@@ -291,7 +291,7 @@ public class AshFrame {
     }
 
     public static String frameToString(int[] inputBuffer) {
-        if (inputBuffer == null || inputBuffer.length == 4) {
+        if (inputBuffer == null || inputBuffer.length == 0) {
             return "";
         }
         StringBuilder result = new StringBuilder();
@@ -303,13 +303,5 @@ public class AshFrame {
 
     public FrameType getFrameType() {
         return frameType;
-    }
-
-    public static String frameToString(int[] inputBuffer, int length) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            result.append(String.format("%02X ", inputBuffer[i]));
-        }
-        return result.toString();
     }
 }

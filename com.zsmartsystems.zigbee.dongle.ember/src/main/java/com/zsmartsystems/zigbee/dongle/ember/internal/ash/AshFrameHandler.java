@@ -169,7 +169,7 @@ public class AshFrameHandler {
                         final AshFrame packet = AshFrame.createFromInput(packetData);
                         AshFrame responseFrame = null;
                         if (packet == null) {
-                            logger.error("<-- RX ASH frame: BAD PACKET {}", AshFrame.frameToString(packetData));
+                            logger.error("<-- RX ASH error: BAD PACKET {}", AshFrame.frameToString(packetData));
 
                             // Send a NAK
                             responseFrame = new AshFrameNak(ackNum);
@@ -232,6 +232,13 @@ public class AshFrameHandler {
                                 default:
                                     break;
                             }
+                        }
+
+                        // Due to possible I/O buffering, it is important to note that the Host could receive several
+                        // valid or invalid frames after triggering a reset of the NCP. The Host must discard all frames
+                        // and errors until a valid RSTACK frame is received.
+                        if (!stateConnected) {
+                            continue;
                         }
 
                         // Send the next frame
@@ -564,6 +571,13 @@ public class AshFrameHandler {
                 // drop message from queue
                 sentQueue.poll();
                 retries = 0;
+            }
+
+            // If a DATA frame acknowledgement is not received within the current timeout value,
+            // then t_rx_ack is doubled.
+            receiveTimeout *= 2;
+            if (receiveTimeout > T_RX_ACK_MAX) {
+                receiveTimeout = T_RX_ACK_MAX;
             }
 
             try {
