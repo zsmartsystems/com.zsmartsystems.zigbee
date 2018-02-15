@@ -148,7 +148,7 @@ public abstract class EzspFrame {
     private final static Logger logger = LoggerFactory.getLogger(EzspFrame.class);
 
     /**
-     * The maximum supported version of EZSP
+     * The minimum supported version of EZSP
      */
     private static final int EZSP_MIN_VERSION = 4;
 
@@ -163,24 +163,24 @@ public abstract class EzspFrame {
     protected static int ezspVersion = EZSP_MIN_VERSION;
 
     /**
-     * Extended frame control: Security flag
+     * The maximum supported version of EZSP
      */
-    protected int EZSP_EXT_FC_SECURITY = 0x00;
+    private static final int MAX_EZSP_VERSION = 6;
 
     /**
      * Legacy frame ID for EZSP 5+
      */
-    protected int EZSP_LEGACY_FRAME_ID = 0xFF;
+    protected static final int EZSP_LEGACY_FRAME_ID = 0xFF;
 
     /**
      * EZSP Frame Control Request flag
      */
-    protected int EZSP_FC_REQUEST = 0x00;
+    protected final int EZSP_FC_REQUEST = 0x00;
 
     /**
      * EZSP Frame Control Response flag
      */
-    protected int EZSP_FC_RESPONSE = 0x80;
+    protected final int EZSP_FC_RESPONSE = 0x80;
 
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
     protected static final int FRAME_ID_ADD_OR_UPDATE_KEY_TABLE_ENTRY = 0x66;
@@ -319,8 +319,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_PARENT_CHILD_PARAMETERS, EzspGetParentChildParametersResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_POLICY, EzspGetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_ROUTE_TABLE_ENTRY, EzspGetRouteTableEntryResponse.class);
-        ezspHandlerMap.put(FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY,
-                EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY, EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_VALUE, EzspGetValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_XNCP_INFO, EzspGetXncpInfoResponse.class);
         ezspHandlerMap.put(FRAME_ID_ID_CONFLICT_HANDLER, EzspIdConflictHandler.class);

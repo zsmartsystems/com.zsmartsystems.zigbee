@@ -53,10 +53,9 @@ public class EzspIncomingRouteRecordHandler extends EzspFrameResponse {
     private int lastHopRssi;
 
     /**
-     * The route record. Each relay in the list is an uint16_t node ID. The list is passed as uint8_t *
-     * to avoid alignment problems.
+     * The route record. Each relay in the list is an uint16_t node ID.
      * <p>
-     * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
+     * EZSP type is <i>uint16_t[]</i> - Java type is {@link int[]}
      */
     private int[] relayList;
 
@@ -73,7 +72,7 @@ public class EzspIncomingRouteRecordHandler extends EzspFrameResponse {
         lastHopLqi = deserializer.deserializeUInt8();
         lastHopRssi = deserializer.deserializeInt8S();
         int relayCount = deserializer.deserializeUInt8();
-        relayList= deserializer.deserializeUInt8Array(relayCount);
+        relayList= deserializer.deserializeUInt16Array(relayCount);
     }
 
     /**
@@ -157,10 +156,9 @@ public class EzspIncomingRouteRecordHandler extends EzspFrameResponse {
     }
 
     /**
-     * The route record. Each relay in the list is an uint16_t node ID. The list is passed as uint8_t *
-     * to avoid alignment problems.
+     * The route record. Each relay in the list is an uint16_t node ID.
      * <p>
-     * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
+     * EZSP type is <i>uint16_t[]</i> - Java type is {@link int[]}
      *
      * @return the current relayList as {@link int[]}
      */
@@ -169,8 +167,7 @@ public class EzspIncomingRouteRecordHandler extends EzspFrameResponse {
     }
 
     /**
-     * The route record. Each relay in the list is an uint16_t node ID. The list is passed as uint8_t *
-     * to avoid alignment problems.
+     * The route record. Each relay in the list is an uint16_t node ID.
      *
      * @param relayList the relayList to set as {@link int[]}
      */
