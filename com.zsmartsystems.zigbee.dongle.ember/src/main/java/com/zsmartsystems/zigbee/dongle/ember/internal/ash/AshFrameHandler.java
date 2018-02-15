@@ -187,22 +187,21 @@ public class AshFrameHandler {
                                     // Always use the ackNum - even if this frame is discarded
                                     ackSentQueue(packet.getAckNum());
 
+                                    AshFrameData dataPacket = (AshFrameData) packet;
+
                                     // Check for out of sequence frame number
-                                    if (packet.getFrmNum() != ackNum) {
-                                        // Send a NAK
-                                        responseFrame = new AshFrameNak(ackNum);
-                                    } else {
+                                    if (packet.getFrmNum() == ackNum) {
                                         // Frame was in sequence
 
                                         // Get the EZSP frame
-                                        EzspFrameResponse response = EzspFrame.createHandler((AshFrameData) packet);
+                                        EzspFrameResponse response = EzspFrame.createHandler(dataPacket);
                                         logger.debug("ASH: RX EZSP: " + response);
                                         if (response == null) {
                                             logger.debug("ASH: No frame handler created for {}", packet);
                                         } else if (response != null && !notifyTransactionComplete(response)) {
                                             // No transactions owned this response, so we pass it to
                                             // our unhandled response handler
-                                            EzspFrame ezspFrame = EzspFrame.createHandler(((AshFrameData) packet));
+                                            EzspFrame ezspFrame = EzspFrame.createHandler((dataPacket));
                                             if (ezspFrame != null) {
                                                 frameHandler.handlePacket(ezspFrame);
                                             }
@@ -211,6 +210,12 @@ public class AshFrameHandler {
                                         // Update our next expected data frame
                                         ackNum = (ackNum + 1) & 0x07;
 
+                                        responseFrame = new AshFrameAck(ackNum);
+                                    } else if (!dataPacket.getReTx()) {
+                                        // Send a NAK - this is out of sequence and not a retransmission
+                                        responseFrame = new AshFrameNak(ackNum);
+                                    } else {
+                                        // Send an ACK - this was out of sequence but was a retransmission
                                         responseFrame = new AshFrameAck(ackNum);
                                     }
                                     break;
