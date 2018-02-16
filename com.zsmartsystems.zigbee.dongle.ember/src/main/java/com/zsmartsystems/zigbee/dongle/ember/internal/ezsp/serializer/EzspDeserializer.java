@@ -20,6 +20,9 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberConcen
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberCurrentSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberCurrentSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberDeviceUpdate;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberGpAddress;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberGpKeyType;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberGpSecurityLevel;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberIncomingMessageType;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberInitialSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberJoinDecision;
@@ -285,6 +288,22 @@ public class EzspDeserializer {
 
     public EmberKeyStruct deserializeEmberKeyStruct() {
         return new EmberKeyStruct(this);
+    }
+
+    // public EmberGpProxyTableEntry deserializeEmberGpProxyTableEntry() {
+    // return new EmberGpProxyTableEntry(this);
+    // }
+
+    public EmberGpAddress deserializeEmberGpAddress() {
+        return new EmberGpAddress(this);
+    }
+
+    public EmberGpSecurityLevel deserializeEmberGpSecurityLevel() {
+        return EmberGpSecurityLevel.getEmberGpSecurityLevel(deserializeUInt8());
+    }
+
+    public EmberGpKeyType deserializeEmberGpKeyType() {
+        return EmberGpKeyType.getEmberGpKeyType(deserializeUInt8());
     }
 
 }

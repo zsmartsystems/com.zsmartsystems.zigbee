@@ -18,6 +18,8 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberBindin
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberBindingType;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberConcentratorType;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberCurrentSecurityBitmask;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberGpAddress;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberGpProxyTableEntryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberInitialSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberInitialSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberJoinMethod;
@@ -232,6 +234,14 @@ public class EzspSerializer {
 
     public void serializeEmberPowerMode(EmberPowerMode powerMode) {
         serializeUInt16(powerMode.getKey());
+    }
+
+    public void serializeEmberGpAddress(EmberGpAddress address) {
+        address.serialize(this);
+    }
+
+    public void serializeEmberGpProxyTableEntryStatus(EmberGpProxyTableEntryStatus status) {
+        buffer[length++] = status.getKey();
     }
 
 }
