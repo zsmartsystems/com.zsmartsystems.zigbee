@@ -195,7 +195,7 @@ public class AshFrameHandler {
 
                                         // Get the EZSP frame
                                         EzspFrameResponse response = EzspFrame.createHandler(dataPacket);
-                                        logger.debug("ASH: RX EZSP: " + response);
+                                        logger.debug("RX EZSP: " + response);
                                         if (response == null) {
                                             logger.debug("ASH: No frame handler created for {}", packet);
                                         } else if (response != null && !notifyTransactionComplete(response)) {
@@ -411,7 +411,7 @@ public class AshFrameHandler {
         }
 
         // Encapsulate the EZSP frame into the ASH packet
-        logger.debug("ASH: TX EZSP: {}", nextFrame);
+        logger.debug("TX EZSP: {}", nextFrame);
         AshFrameData ashFrame = new AshFrameData(nextFrame);
 
         sendFrame(ashFrame);
