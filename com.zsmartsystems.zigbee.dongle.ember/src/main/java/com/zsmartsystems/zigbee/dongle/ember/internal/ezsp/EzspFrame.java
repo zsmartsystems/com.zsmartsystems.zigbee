@@ -27,6 +27,8 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspClearBind
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspClearKeyTableResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspClearTransientLinkKeysResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspCounterRolloverHandler;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspDGpSendResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspDGpSentHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspDeleteBindingResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspEnergyScanRequestResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspEnergyScanResultHandler;
@@ -52,6 +54,9 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetRouteT
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetXncpInfoResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGpProxyTableLookupResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGpProxyTableProcessGpPairingResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGpepIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspIdConflictHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspIncomingRouteErrorHandler;
@@ -170,7 +175,7 @@ public abstract class EzspFrame {
     /**
      * Legacy frame ID for EZSP 5+
      */
-    protected static final int EZSP_LEGACY_FRAME_ID = 0xFF;
+    protected final int EZSP_LEGACY_FRAME_ID = 0xFF;
 
     /**
      * EZSP Frame Control Request flag
@@ -193,6 +198,8 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_CLEAR_KEY_TABLE = 0xB1;
     protected static final int FRAME_ID_CLEAR_TRANSIENT_LINK_KEYS = 0x6B;
     protected static final int FRAME_ID_COUNTER_ROLLOVER_HANDLER = 0xF2;
+    protected static final int FRAME_ID_D_GP_SEND = 0xC6;
+    protected static final int FRAME_ID_D_GP_SENT_HANDLER = 0xC7;
     protected static final int FRAME_ID_DELETE_BINDING = 0x2D;
     protected static final int FRAME_ID_ENERGY_SCAN_REQUEST = 0x9C;
     protected static final int FRAME_ID_ENERGY_SCAN_RESULT_HANDLER = 0x48;
@@ -218,6 +225,9 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY = 0x91;
     protected static final int FRAME_ID_GET_VALUE = 0xAA;
     protected static final int FRAME_ID_GET_XNCP_INFO = 0x13;
+    protected static final int FRAME_ID_GP_PROXY_TABLE_LOOKUP = 0xC0;
+    protected static final int FRAME_ID_GP_PROXY_TABLE_PROCESS_GP_PAIRING = 0xC9;
+    protected static final int FRAME_ID_GPEP_INCOMING_MESSAGE_HANDLER = 0xC5;
     protected static final int FRAME_ID_ID_CONFLICT_HANDLER = 0x7C;
     protected static final int FRAME_ID_INCOMING_MESSAGE_HANDLER = 0x45;
     protected static final int FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER = 0x80;
@@ -297,6 +307,8 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_CLEAR_KEY_TABLE, EzspClearKeyTableResponse.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_TRANSIENT_LINK_KEYS, EzspClearTransientLinkKeysResponse.class);
         ezspHandlerMap.put(FRAME_ID_COUNTER_ROLLOVER_HANDLER, EzspCounterRolloverHandler.class);
+        ezspHandlerMap.put(FRAME_ID_D_GP_SEND, EzspDGpSendResponse.class);
+        ezspHandlerMap.put(FRAME_ID_D_GP_SENT_HANDLER, EzspDGpSentHandler.class);
         ezspHandlerMap.put(FRAME_ID_DELETE_BINDING, EzspDeleteBindingResponse.class);
         ezspHandlerMap.put(FRAME_ID_ENERGY_SCAN_REQUEST, EzspEnergyScanRequestResponse.class);
         ezspHandlerMap.put(FRAME_ID_ENERGY_SCAN_RESULT_HANDLER, EzspEnergyScanResultHandler.class);
@@ -322,6 +334,9 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY, EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_VALUE, EzspGetValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_XNCP_INFO, EzspGetXncpInfoResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GP_PROXY_TABLE_LOOKUP, EzspGpProxyTableLookupResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GP_PROXY_TABLE_PROCESS_GP_PAIRING, EzspGpProxyTableProcessGpPairingResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GPEP_INCOMING_MESSAGE_HANDLER, EzspGpepIncomingMessageHandler.class);
         ezspHandlerMap.put(FRAME_ID_ID_CONFLICT_HANDLER, EzspIdConflictHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_MESSAGE_HANDLER, EzspIncomingMessageHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER, EzspIncomingRouteErrorHandler.class);
