@@ -81,6 +81,12 @@ public class EmberNetworkInitialisation {
      * @param networkKey the {@link EmberKeyData} with the network key. This can not be set to all 00 or all FF.
      */
     public void formNetwork(EmberNetworkParameters networkParameters, EmberKeyData networkKey) {
+        if (networkParameters.getExtendedPanId() == null) {
+            networkParameters.setExtendedPanId(new ExtendedPanId());
+        }
+
+        logger.debug("Initialising Ember network with configuration {}", networkParameters);
+
         int scanDuration = 1; // 6
 
         // Leave the current network so we can initialise a new network
@@ -90,7 +96,7 @@ public class EmberNetworkInitialisation {
 
         // Perform an energy scan to find a clear channel
         int quietestChannel = doEnergyScan(scanDuration);
-        logger.debug("Energy scan reports quietest channel is " + quietestChannel);
+        logger.debug("Energy scan reports quietest channel is {}", quietestChannel);
 
         // Check if any current networks were found and avoid those channels, PAN ID and especially Extended PAN ID
         doActiveScan(scanDuration);
