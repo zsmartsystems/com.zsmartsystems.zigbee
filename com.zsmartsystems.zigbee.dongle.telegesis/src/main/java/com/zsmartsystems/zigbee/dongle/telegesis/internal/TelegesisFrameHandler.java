@@ -156,7 +156,7 @@ public class TelegesisFrameHandler {
                         for (int value : responseData) {
                             builder.append(String.format(" %02X", value));
                         }
-                        logger.debug("TELEGESIS RX: Data{}", builder.toString());
+                        logger.debug("RX Telegesis Data:{}", builder.toString());
 
                         // Use the Event Factory to get an event
                         TelegesisEvent event = TelegesisEventFactory.getTelegesisFrame(responseData);
@@ -216,7 +216,7 @@ public class TelegesisFrameHandler {
                 logger.debug("TELEGESIS RX buffer overrun - resetting!");
             }
 
-            logger.trace("TELEGESIS RX: {}", String.format("%02X %c", val, val));
+            logger.trace("RX Telegesis: {}", String.format("%02X %c", val, val));
 
             switch (rxState) {
                 case WAITING:
@@ -337,7 +337,7 @@ public class TelegesisFrameHandler {
                 builder.append(String.format(" %02X", sendByte));
                 serialPort.write(sendByte);
             }
-            logger.debug("TELEGESIS TX: Data{}", builder.toString());
+            logger.debug("TX Telegesis Data:{}", builder.toString());
 
             // Start the timeout
             startTimer();
@@ -367,7 +367,7 @@ public class TelegesisFrameHandler {
     private boolean notifyTransactionComplete(final TelegesisCommand response) {
         boolean processed = false;
 
-        logger.debug("Telegesis command complete: {}", response);
+        logger.debug("RX Telegesis: {}", response);
         synchronized (transactionListeners) {
             for (TelegesisListener listener : transactionListeners) {
                 try {
@@ -425,7 +425,7 @@ public class TelegesisFrameHandler {
      * @param response the {@link TelegesisEvent} received
      */
     private void notifyEventReceived(final TelegesisEvent event) {
-        logger.debug("Telegesis event received: {}", event);
+        logger.debug("RX Telegesis: {}", event);
         synchronized (eventListeners) {
             for (TelegesisEventListener listener : eventListeners) {
                 try {
