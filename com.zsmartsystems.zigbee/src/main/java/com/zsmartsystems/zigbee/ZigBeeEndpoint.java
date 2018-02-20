@@ -462,17 +462,23 @@ public class ZigBeeEndpoint {
 
     public void setDao(ZigBeeEndpointDao dao) {
         endpointId = dao.getEndpointId();
-        profileId = dao.getProfileId();
-
-        for (ZclClusterDao clusterDao : dao.getInputClusters()) {
-            ZclCluster cluster = getClusterClass(clusterDao.getClusterId());
-            cluster.setDao(clusterDao);
-            inputClusters.put(clusterDao.getClusterId(), cluster);
+        if (dao.getProfileId() != null) {
+            profileId = dao.getProfileId();
         }
-        for (ZclClusterDao clusterDao : dao.getOutputClusters()) {
-            ZclCluster cluster = getClusterClass(clusterDao.getClusterId());
-            cluster.setDao(clusterDao);
-            outputClusters.put(clusterDao.getClusterId(), cluster);
+
+        if (dao.getInputClusterIds() != null) {
+            for (ZclClusterDao clusterDao : dao.getInputClusters()) {
+                ZclCluster cluster = getClusterClass(clusterDao.getClusterId());
+                cluster.setDao(clusterDao);
+                inputClusters.put(clusterDao.getClusterId(), cluster);
+            }
+        }
+        if (dao.getOutputClusterIds() != null) {
+            for (ZclClusterDao clusterDao : dao.getOutputClusters()) {
+                ZclCluster cluster = getClusterClass(clusterDao.getClusterId());
+                cluster.setDao(clusterDao);
+                outputClusters.put(clusterDao.getClusterId(), cluster);
+            }
         }
     }
 
