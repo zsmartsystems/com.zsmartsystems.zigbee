@@ -18,6 +18,7 @@ import java.util.List;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.dao.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclAlarmsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
@@ -34,7 +35,7 @@ public class ZigBeeEndpointTest {
 
     @Test
     public void testOutputClusterIds() {
-        ZigBeeEndpoint device = getDevice();
+        ZigBeeEndpoint device = getEndpoint();
 
         List<Integer> clusterIdList = new ArrayList<Integer>();
         clusterIdList.add(ZclAlarmsCluster.CLUSTER_ID);
@@ -65,7 +66,7 @@ public class ZigBeeEndpointTest {
 
     @Test
     public void testInputClusterIds() {
-        ZigBeeEndpoint endpoint = getDevice();
+        ZigBeeEndpoint endpoint = getEndpoint();
 
         List<Integer> clusterIdList = new ArrayList<Integer>();
         clusterIdList.add(ZclAlarmsCluster.CLUSTER_ID);
@@ -88,29 +89,37 @@ public class ZigBeeEndpointTest {
 
     @Test
     public void testProfileId() {
-        ZigBeeEndpoint device = getDevice();
+        ZigBeeEndpoint endpoint = getEndpoint();
 
-        device.setProfileId(0x104);
-        assertEquals(0x104, device.getProfileId());
+        endpoint.setProfileId(0x104);
+        assertEquals(0x104, endpoint.getProfileId());
     }
 
     @Test
     public void testDeviceVersion() {
-        ZigBeeEndpoint device = getDevice();
+        ZigBeeEndpoint endpoint = getEndpoint();
 
-        device.setDeviceVersion(123);
-        assertEquals(123, device.getDeviceVersion());
+        endpoint.setDeviceVersion(123);
+        assertEquals(123, endpoint.getDeviceVersion());
     }
 
     @Test
     public void testGetDeviceId() {
-        ZigBeeEndpoint device = getDevice();
+        ZigBeeEndpoint endpoint = getEndpoint();
 
-        device.setDeviceId(9999);
-        assertEquals(9999, device.getDeviceId());
+        endpoint.setDeviceId(9999);
+        assertEquals(9999, endpoint.getDeviceId());
     }
 
-    private ZigBeeEndpoint getDevice() {
+    @Test
+    public void setDao() {
+        ZigBeeEndpoint endpoint = getEndpoint();
+
+        ZigBeeEndpointDao dao = new ZigBeeEndpointDao();
+        endpoint.setDao(dao);
+    }
+
+    private ZigBeeEndpoint getEndpoint() {
         ZigBeeTransportTransmit mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
         ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress());
