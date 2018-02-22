@@ -46,5 +46,4 @@ public class ZclApplianceIdentificationCluster extends ZclCluster {
     public ZclApplianceIdentificationCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }

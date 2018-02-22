@@ -14,7 +14,6 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -99,7 +98,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>Occupancy</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -117,7 +115,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     public Future<CommandResult> getOccupancyAsync() {
         return read(attributes.get(ATTR_OCCUPANCY));
     }
-
 
     /**
      * Synchronously get the <i>Occupancy</i> attribute [attribute ID <b>0</b>].
@@ -148,7 +145,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_OCCUPANCY));
     }
-
 
     /**
      * Set reporting for the <i>Occupancy</i> attribute [attribute ID <b>0</b>].
@@ -185,7 +181,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
         return read(attributes.get(ATTR_OCCUPANCYSENSORTYPE));
     }
 
-
     /**
      * Synchronously get the <i>OccupancySensorType</i> attribute [attribute ID <b>1</b>].
      * <p>
@@ -212,7 +207,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_OCCUPANCYSENSORTYPE));
     }
-
 
     /**
      * Set the <i>PIROccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>16</b>].
@@ -241,7 +235,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
         return read(attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY));
     }
 
-
     /**
      * Synchronously get the <i>PIROccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>16</b>].
      * <p>
@@ -266,7 +259,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY));
     }
-
 
     /**
      * Set the <i>PIRUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>17</b>].
@@ -295,7 +287,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
         return read(attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY));
     }
 
-
     /**
      * Synchronously get the <i>PIRUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>17</b>].
      * <p>
@@ -320,7 +311,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY));
     }
-
 
     /**
      * Set the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>32</b>].
@@ -361,7 +351,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
         return read(attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY));
     }
 
-
     /**
      * Synchronously get the <i>UltraSonicOccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>32</b>].
      * <p>
@@ -392,7 +381,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY));
     }
-
 
     /**
      * Set the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>33</b>].
@@ -429,7 +417,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
         return read(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY));
     }
 
-
     /**
      * Synchronously get the <i>UltraSonicUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>33</b>].
      * <p>
@@ -459,7 +446,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
         return (Integer) readSync(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY));
     }
 
-
     /**
      * Set the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute [attribute ID <b>34</b>].
      * <p>
@@ -486,7 +472,6 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     public Future<CommandResult> getUltrasonicUnoccupiedToOccupiedThresholdAsync() {
         return read(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
     }
-
 
     /**
      * Synchronously get the <i>UltrasonicUnoccupiedToOccupiedThreshold</i> attribute [attribute ID <b>34</b>].

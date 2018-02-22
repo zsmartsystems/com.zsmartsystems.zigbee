@@ -46,5 +46,4 @@ public class ZclBinaryOutputBasicCluster extends ZclCluster {
     public ZclBinaryOutputBasicCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }

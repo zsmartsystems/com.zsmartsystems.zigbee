@@ -46,5 +46,4 @@ public class ZclShadeConfigurationCluster extends ZclCluster {
     public ZclShadeConfigurationCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }

@@ -32,7 +32,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SetDeviceConfiguration
 import com.zsmartsystems.zigbee.zcl.field.NeighborInformation;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -191,7 +190,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>LocationType</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -206,7 +204,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
     public Future<CommandResult> getLocationTypeAsync() {
         return read(attributes.get(ATTR_LOCATIONTYPE));
     }
-
 
     /**
      * Synchronously get the <i>LocationType</i> attribute [attribute ID <b>0</b>].
@@ -247,7 +244,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
     public Future<CommandResult> getLocationMethodAsync() {
         return read(attributes.get(ATTR_LOCATIONMETHOD));
     }
-
 
     /**
      * Synchronously get the <i>LocationMethod</i> attribute [attribute ID <b>1</b>].
@@ -290,7 +286,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
     public Future<CommandResult> getLocationAgeAsync() {
         return read(attributes.get(ATTR_LOCATIONAGE));
     }
-
 
     /**
      * Synchronously get the <i>LocationAge</i> attribute [attribute ID <b>2</b>].
@@ -343,7 +338,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
         return read(attributes.get(ATTR_QUALITYMEASURE));
     }
 
-
     /**
      * Synchronously get the <i>QualityMeasure</i> attribute [attribute ID <b>3</b>].
      * <p>
@@ -395,7 +389,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
         return read(attributes.get(ATTR_NUMBEROFDEVICES));
     }
 
-
     /**
      * Synchronously get the <i>NumberOfDevices</i> attribute [attribute ID <b>4</b>].
      * <p>
@@ -424,7 +417,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_NUMBEROFDEVICES));
     }
-
 
     /**
      * Set the <i>Coordinate1</i> attribute [attribute ID <b>16</b>].
@@ -471,7 +463,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
         return read(attributes.get(ATTR_COORDINATE1));
     }
 
-
     /**
      * Synchronously get the <i>Coordinate1</i> attribute [attribute ID <b>16</b>].
      * <p>
@@ -505,7 +496,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_COORDINATE1));
     }
-
 
     /**
      * Set the <i>Coordinate2</i> attribute [attribute ID <b>17</b>].
@@ -552,7 +542,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
         return read(attributes.get(ATTR_COORDINATE2));
     }
 
-
     /**
      * Synchronously get the <i>Coordinate2</i> attribute [attribute ID <b>17</b>].
      * <p>
@@ -586,7 +575,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_COORDINATE2));
     }
-
 
     /**
      * Set the <i>Coordinate3</i> attribute [attribute ID <b>18</b>].
@@ -633,7 +621,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
         return read(attributes.get(ATTR_COORDINATE3));
     }
 
-
     /**
      * Synchronously get the <i>Coordinate3</i> attribute [attribute ID <b>18</b>].
      * <p>
@@ -667,7 +654,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_COORDINATE3));
     }
-
 
     /**
      * Set the <i>Power</i> attribute [attribute ID <b>19</b>].
@@ -710,7 +696,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
         return read(attributes.get(ATTR_POWER));
     }
 
-
     /**
      * Synchronously get the <i>Power</i> attribute [attribute ID <b>19</b>].
      * <p>
@@ -742,7 +727,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_POWER));
     }
-
 
     /**
      * Set the <i>PathLossExponent</i> attribute [attribute ID <b>20</b>].
@@ -787,7 +771,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
         return read(attributes.get(ATTR_PATHLOSSEXPONENT));
     }
 
-
     /**
      * Synchronously get the <i>PathLossExponent</i> attribute [attribute ID <b>20</b>].
      * <p>
@@ -820,7 +803,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_PATHLOSSEXPONENT));
     }
-
 
     /**
      * Set the <i>ReportingPeriod</i> attribute [attribute ID <b>21</b>].
@@ -861,7 +843,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
         return read(attributes.get(ATTR_REPORTINGPERIOD));
     }
 
-
     /**
      * Synchronously get the <i>ReportingPeriod</i> attribute [attribute ID <b>21</b>].
      * <p>
@@ -892,7 +873,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_REPORTINGPERIOD));
     }
-
 
     /**
      * Set the <i>CalculationPeriod</i> attribute [attribute ID <b>22</b>].
@@ -931,7 +911,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
         return read(attributes.get(ATTR_CALCULATIONPERIOD));
     }
 
-
     /**
      * Synchronously get the <i>CalculationPeriod</i> attribute [attribute ID <b>22</b>].
      * <p>
@@ -961,7 +940,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_CALCULATIONPERIOD));
     }
-
 
     /**
      * Set the <i>NumberRSSIMeasurements</i> attribute [attribute ID <b>23</b>].
@@ -999,7 +977,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
     public Future<CommandResult> getNumberRssiMeasurementsAsync() {
         return read(attributes.get(ATTR_NUMBERRSSIMEASUREMENTS));
     }
-
 
     /**
      * Synchronously get the <i>NumberRSSIMeasurements</i> attribute [attribute ID <b>23</b>].

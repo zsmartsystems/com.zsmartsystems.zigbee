@@ -22,7 +22,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.thermostat.SetWeeklySchedule;
 import com.zsmartsystems.zigbee.zcl.clusters.thermostat.SetpointRaiseLowerCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -180,7 +179,6 @@ public class ZclThermostatCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>LocalTemperature</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -195,7 +193,6 @@ public class ZclThermostatCluster extends ZclCluster {
     public Future<CommandResult> getLocalTemperatureAsync() {
         return read(attributes.get(ATTR_LOCALTEMPERATURE));
     }
-
 
     /**
      * Synchronously get the <i>LocalTemperature</i> attribute [attribute ID <b>0</b>].
@@ -223,7 +220,6 @@ public class ZclThermostatCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_LOCALTEMPERATURE));
     }
-
 
     /**
      * Set reporting for the <i>LocalTemperature</i> attribute [attribute ID <b>0</b>].
@@ -257,7 +253,6 @@ public class ZclThermostatCluster extends ZclCluster {
     public Future<CommandResult> getOutdoorTemperatureAsync() {
         return read(attributes.get(ATTR_OUTDOORTEMPERATURE));
     }
-
 
     /**
      * Synchronously get the <i>OutdoorTemperature</i> attribute [attribute ID <b>1</b>].
@@ -301,7 +296,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_OCCUPANCY));
     }
 
-
     /**
      * Synchronously get the <i>Occupancy</i> attribute [attribute ID <b>2</b>].
      * <p>
@@ -344,7 +338,6 @@ public class ZclThermostatCluster extends ZclCluster {
     public Future<CommandResult> getAbsMinHeatSetpointLimitAsync() {
         return read(attributes.get(ATTR_ABSMINHEATSETPOINTLIMIT));
     }
-
 
     /**
      * Synchronously get the <i>AbsMinHeatSetpointLimit</i> attribute [attribute ID <b>3</b>].
@@ -390,7 +383,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT));
     }
 
-
     /**
      * Synchronously get the <i>AbsMaxHeatSetpointLimit</i> attribute [attribute ID <b>4</b>].
      * <p>
@@ -435,7 +427,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT));
     }
 
-
     /**
      * Synchronously get the <i>AbsMinCoolSetpointLimit</i> attribute [attribute ID <b>5</b>].
      * <p>
@@ -479,7 +470,6 @@ public class ZclThermostatCluster extends ZclCluster {
     public Future<CommandResult> getAbsMaxCoolSetpointLimitAsync() {
         return read(attributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT));
     }
-
 
     /**
      * Synchronously get the <i>AbsMaxCoolSetpointLimit</i> attribute [attribute ID <b>6</b>].
@@ -526,7 +516,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_PICOOLINGDEMAND));
     }
 
-
     /**
      * Synchronously get the <i>PICoolingDemand</i> attribute [attribute ID <b>7</b>].
      * <p>
@@ -555,7 +544,6 @@ public class ZclThermostatCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_PICOOLINGDEMAND));
     }
-
 
     /**
      * Set reporting for the <i>PICoolingDemand</i> attribute [attribute ID <b>7</b>].
@@ -594,7 +582,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_PIHEATINGDEMAND));
     }
 
-
     /**
      * Synchronously get the <i>PIHeatingDemand</i> attribute [attribute ID <b>8</b>].
      * <p>
@@ -623,7 +610,6 @@ public class ZclThermostatCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_PIHEATINGDEMAND));
     }
-
 
     /**
      * Set reporting for the <i>PIHeatingDemand</i> attribute [attribute ID <b>8</b>].
@@ -657,7 +643,6 @@ public class ZclThermostatCluster extends ZclCluster {
     public Future<CommandResult> getHvacSystemTypeConfigurationAsync() {
         return read(attributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION));
     }
-
 
     /**
      * Synchronously get the <i>HVACSystemTypeConfiguration</i> attribute [attribute ID <b>9</b>].
@@ -697,7 +682,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_LOCALTEMPERATURECALIBRATION));
     }
 
-
     /**
      * Synchronously get the <i>LocalTemperatureCalibration</i> attribute [attribute ID <b>16</b>].
      * <p>
@@ -735,7 +719,6 @@ public class ZclThermostatCluster extends ZclCluster {
     public Future<CommandResult> getOccupiedCoolingSetpointAsync() {
         return read(attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT));
     }
-
 
     /**
      * Synchronously get the <i>OccupiedCoolingSetpoint</i> attribute [attribute ID <b>17</b>].
@@ -775,7 +758,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT));
     }
 
-
     /**
      * Synchronously get the <i>OccupiedHeatingSetpoint</i> attribute [attribute ID <b>18</b>].
      * <p>
@@ -813,7 +795,6 @@ public class ZclThermostatCluster extends ZclCluster {
     public Future<CommandResult> getUnoccupiedCoolingSetpointAsync() {
         return read(attributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT));
     }
-
 
     /**
      * Synchronously get the <i>UnoccupiedCoolingSetpoint</i> attribute [attribute ID <b>19</b>].
@@ -853,7 +834,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT));
     }
 
-
     /**
      * Synchronously get the <i>UnoccupiedHeatingSetpoint</i> attribute [attribute ID <b>20</b>].
      * <p>
@@ -891,7 +871,6 @@ public class ZclThermostatCluster extends ZclCluster {
     public Future<CommandResult> getMinHeatSetpointLimitAsync() {
         return read(attributes.get(ATTR_MINHEATSETPOINTLIMIT));
     }
-
 
     /**
      * Synchronously get the <i>MinHeatSetpointLimit</i> attribute [attribute ID <b>21</b>].
@@ -931,7 +910,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_MAXHEATSETPOINTLIMIT));
     }
 
-
     /**
      * Synchronously get the <i>MaxHeatSetpointLimit</i> attribute [attribute ID <b>22</b>].
      * <p>
@@ -969,7 +947,6 @@ public class ZclThermostatCluster extends ZclCluster {
     public Future<CommandResult> getMinCoolSetpointLimitAsync() {
         return read(attributes.get(ATTR_MINCOOLSETPOINTLIMIT));
     }
-
 
     /**
      * Synchronously get the <i>MinCoolSetpointLimit</i> attribute [attribute ID <b>23</b>].
@@ -1009,7 +986,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_MAXCOOLSETPOINTLIMIT));
     }
 
-
     /**
      * Synchronously get the <i>MaxCoolSetpointLimit</i> attribute [attribute ID <b>24</b>].
      * <p>
@@ -1047,7 +1023,6 @@ public class ZclThermostatCluster extends ZclCluster {
     public Future<CommandResult> getMinSetpointDeadBandAsync() {
         return read(attributes.get(ATTR_MINSETPOINTDEADBAND));
     }
-
 
     /**
      * Synchronously get the <i>MinSetpointDeadBand</i> attribute [attribute ID <b>25</b>].
@@ -1087,7 +1062,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_REMOTESENSING));
     }
 
-
     /**
      * Synchronously get the <i>RemoteSensing</i> attribute [attribute ID <b>26</b>].
      * <p>
@@ -1125,7 +1099,6 @@ public class ZclThermostatCluster extends ZclCluster {
     public Future<CommandResult> getControlSequenceOfOperationAsync() {
         return read(attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION));
     }
-
 
     /**
      * Synchronously get the <i>ControlSequenceOfOperation</i> attribute [attribute ID <b>27</b>].
@@ -1165,7 +1138,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_SYSTEMMODE));
     }
 
-
     /**
      * Synchronously get the <i>SystemMode</i> attribute [attribute ID <b>28</b>].
      * <p>
@@ -1204,7 +1176,6 @@ public class ZclThermostatCluster extends ZclCluster {
         return read(attributes.get(ATTR_ALARMMASK));
     }
 
-
     /**
      * Synchronously get the <i>AlarmMask</i> attribute [attribute ID <b>29</b>].
      * <p>
@@ -1242,7 +1213,6 @@ public class ZclThermostatCluster extends ZclCluster {
     public Future<CommandResult> getThermostatRunningModeAsync() {
         return read(attributes.get(ATTR_THERMOSTATRUNNINGMODE));
     }
-
 
     /**
      * Synchronously get the <i>ThermostatRunningMode</i> attribute [attribute ID <b>30</b>].

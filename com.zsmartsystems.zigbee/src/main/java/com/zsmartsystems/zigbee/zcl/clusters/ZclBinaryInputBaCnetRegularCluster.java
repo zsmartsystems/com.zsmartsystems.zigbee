@@ -46,5 +46,4 @@ public class ZclBinaryInputBaCnetRegularCluster extends ZclCluster {
     public ZclBinaryInputBaCnetRegularCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }

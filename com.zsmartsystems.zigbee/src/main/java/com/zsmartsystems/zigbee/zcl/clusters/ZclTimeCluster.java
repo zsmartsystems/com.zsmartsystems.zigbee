@@ -128,8 +128,6 @@ public class ZclTimeCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
-
     /**
      * Set the <i>Time</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -173,7 +171,6 @@ public class ZclTimeCluster extends ZclCluster {
         return read(attributes.get(ATTR_TIME));
     }
 
-
     /**
      * Synchronously get the <i>Time</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -207,7 +204,6 @@ public class ZclTimeCluster extends ZclCluster {
         return (Calendar) readSync(attributes.get(ATTR_TIME));
     }
 
-
     /**
      * Set the <i>TimeStatus</i> attribute [attribute ID <b>1</b>].
      * <p>
@@ -239,7 +235,6 @@ public class ZclTimeCluster extends ZclCluster {
         return read(attributes.get(ATTR_TIMESTATUS));
     }
 
-
     /**
      * Synchronously get the <i>TimeStatus</i> attribute [attribute ID <b>1</b>].
      * <p>
@@ -266,7 +261,6 @@ public class ZclTimeCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_TIMESTATUS));
     }
-
 
     /**
      * Set the <i>TimeZone</i> attribute [attribute ID <b>2</b>].
@@ -301,7 +295,6 @@ public class ZclTimeCluster extends ZclCluster {
         return read(attributes.get(ATTR_TIMEZONE));
     }
 
-
     /**
      * Synchronously get the <i>TimeZone</i> attribute [attribute ID <b>2</b>].
      * <p>
@@ -329,7 +322,6 @@ public class ZclTimeCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_TIMEZONE));
     }
-
 
     /**
      * Set the <i>DstStart</i> attribute [attribute ID <b>3</b>].
@@ -364,7 +356,6 @@ public class ZclTimeCluster extends ZclCluster {
         return read(attributes.get(ATTR_DSTSTART));
     }
 
-
     /**
      * Synchronously get the <i>DstStart</i> attribute [attribute ID <b>3</b>].
      * <p>
@@ -392,7 +383,6 @@ public class ZclTimeCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_DSTSTART));
     }
-
 
     /**
      * Set the <i>DstEnd</i> attribute [attribute ID <b>4</b>].
@@ -451,7 +441,6 @@ public class ZclTimeCluster extends ZclCluster {
         return read(attributes.get(ATTR_DSTEND));
     }
 
-
     /**
      * Synchronously get the <i>DstEnd</i> attribute [attribute ID <b>4</b>].
      * <p>
@@ -491,7 +480,6 @@ public class ZclTimeCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_DSTEND));
     }
-
 
     /**
      * Set the <i>DstShift</i> attribute [attribute ID <b>5</b>].
@@ -535,7 +523,6 @@ public class ZclTimeCluster extends ZclCluster {
     public Future<CommandResult> getDstShiftAsync() {
         return read(attributes.get(ATTR_DSTSHIFT));
     }
-
 
     /**
      * Synchronously get the <i>DstShift</i> attribute [attribute ID <b>5</b>].
@@ -588,7 +575,6 @@ public class ZclTimeCluster extends ZclCluster {
         return read(attributes.get(ATTR_STANDARDTIME));
     }
 
-
     /**
      * Synchronously get the <i>StandardTime</i> attribute [attribute ID <b>6</b>].
      * <p>
@@ -636,7 +622,6 @@ public class ZclTimeCluster extends ZclCluster {
     public Future<CommandResult> getLocalTimeAsync() {
         return read(attributes.get(ATTR_LOCALTIME));
     }
-
 
     /**
      * Synchronously get the <i>LocalTime</i> attribute [attribute ID <b>7</b>].

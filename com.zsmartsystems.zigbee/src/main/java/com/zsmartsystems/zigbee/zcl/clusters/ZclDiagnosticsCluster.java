@@ -14,7 +14,6 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -175,7 +174,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>MacRxBcast</i> attribute [attribute ID <b>256</b>].
      * <p>
@@ -188,7 +186,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getMacRxBcastAsync() {
         return read(attributes.get(ATTR_MACRXBCAST));
     }
-
 
     /**
      * Synchronously get the <i>MacRxBcast</i> attribute [attribute ID <b>256</b>].
@@ -228,7 +225,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_MACTXBCAST));
     }
 
-
     /**
      * Synchronously get the <i>MacTxBcast</i> attribute [attribute ID <b>257</b>].
      * <p>
@@ -266,7 +262,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getMacRxUcastAsync() {
         return read(attributes.get(ATTR_MACRXUCAST));
     }
-
 
     /**
      * Synchronously get the <i>MacRxUcast</i> attribute [attribute ID <b>258</b>].
@@ -306,7 +301,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_MACTXUCAST));
     }
 
-
     /**
      * Synchronously get the <i>MacTxUcast</i> attribute [attribute ID <b>259</b>].
      * <p>
@@ -344,7 +338,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getMacTxUcastRetryAsync() {
         return read(attributes.get(ATTR_MACTXUCASTRETRY));
     }
-
 
     /**
      * Synchronously get the <i>MacTxUcastRetry</i> attribute [attribute ID <b>260</b>].
@@ -384,7 +377,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_MACTXUCASTFAIL));
     }
 
-
     /**
      * Synchronously get the <i>MacTxUcastFail</i> attribute [attribute ID <b>261</b>].
      * <p>
@@ -422,7 +414,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getApsRxBcastAsync() {
         return read(attributes.get(ATTR_APSRXBCAST));
     }
-
 
     /**
      * Synchronously get the <i>APSRxBcast</i> attribute [attribute ID <b>262</b>].
@@ -462,7 +453,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_APSTXBCAST));
     }
 
-
     /**
      * Synchronously get the <i>APSTxBcast</i> attribute [attribute ID <b>263</b>].
      * <p>
@@ -500,7 +490,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getApsRxUcastAsync() {
         return read(attributes.get(ATTR_APSRXUCAST));
     }
-
 
     /**
      * Synchronously get the <i>APSRxUcast</i> attribute [attribute ID <b>264</b>].
@@ -540,7 +529,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_APSTXUCASTSUCCESS));
     }
 
-
     /**
      * Synchronously get the <i>APSTxUcastSuccess</i> attribute [attribute ID <b>265</b>].
      * <p>
@@ -578,7 +566,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getApsTxUcastRetryAsync() {
         return read(attributes.get(ATTR_APSTXUCASTRETRY));
     }
-
 
     /**
      * Synchronously get the <i>APSTxUcastRetry</i> attribute [attribute ID <b>266</b>].
@@ -618,7 +605,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_APSTXUCASTFAIL));
     }
 
-
     /**
      * Synchronously get the <i>APSTxUcastFail</i> attribute [attribute ID <b>267</b>].
      * <p>
@@ -656,7 +642,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getRouteDiscInitiatedAsync() {
         return read(attributes.get(ATTR_ROUTEDISCINITIATED));
     }
-
 
     /**
      * Synchronously get the <i>RouteDiscInitiated</i> attribute [attribute ID <b>268</b>].
@@ -696,7 +681,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_NEIGHBORADDED));
     }
 
-
     /**
      * Synchronously get the <i>NeighborAdded</i> attribute [attribute ID <b>269</b>].
      * <p>
@@ -734,7 +718,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getNeighborRemovedAsync() {
         return read(attributes.get(ATTR_NEIGHBORREMOVED));
     }
-
 
     /**
      * Synchronously get the <i>NeighborRemoved</i> attribute [attribute ID <b>270</b>].
@@ -774,7 +757,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_NEIGHBORSTALE));
     }
 
-
     /**
      * Synchronously get the <i>NeighborStale</i> attribute [attribute ID <b>271</b>].
      * <p>
@@ -812,7 +794,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getJoinIndicationAsync() {
         return read(attributes.get(ATTR_JOININDICATION));
     }
-
 
     /**
      * Synchronously get the <i>JoinIndication</i> attribute [attribute ID <b>272</b>].
@@ -852,7 +833,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_CHILDMOVED));
     }
 
-
     /**
      * Synchronously get the <i>ChildMoved</i> attribute [attribute ID <b>273</b>].
      * <p>
@@ -890,7 +870,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getNwkfcFailureAsync() {
         return read(attributes.get(ATTR_NWKFCFAILURE));
     }
-
 
     /**
      * Synchronously get the <i>NWKFCFailure</i> attribute [attribute ID <b>274</b>].
@@ -930,7 +909,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_APSFCFAILURE));
     }
 
-
     /**
      * Synchronously get the <i>APSFCFailure</i> attribute [attribute ID <b>275</b>].
      * <p>
@@ -968,7 +946,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getApsUnauthorizedKeyAsync() {
         return read(attributes.get(ATTR_APSUNAUTHORIZEDKEY));
     }
-
 
     /**
      * Synchronously get the <i>APSUnauthorizedKey</i> attribute [attribute ID <b>276</b>].
@@ -1008,7 +985,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_NWKDECRYPTFAILURES));
     }
 
-
     /**
      * Synchronously get the <i>NWKDecryptFailures</i> attribute [attribute ID <b>277</b>].
      * <p>
@@ -1046,7 +1022,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getApsDecryptFailuresAsync() {
         return read(attributes.get(ATTR_APSDECRYPTFAILURES));
     }
-
 
     /**
      * Synchronously get the <i>APSDecryptFailures</i> attribute [attribute ID <b>278</b>].
@@ -1086,7 +1061,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_PACKETBUFFERALLOCATEFAILURES));
     }
 
-
     /**
      * Synchronously get the <i>PacketBufferAllocateFailures</i> attribute [attribute ID <b>279</b>].
      * <p>
@@ -1124,7 +1098,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getRelayedUcastAsync() {
         return read(attributes.get(ATTR_RELAYEDUCAST));
     }
-
 
     /**
      * Synchronously get the <i>RelayedUcast</i> attribute [attribute ID <b>280</b>].
@@ -1164,7 +1137,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_PHYTOMACQUEUELIMITREACHED));
     }
 
-
     /**
      * Synchronously get the <i>PhytoMACqueuelimitreached</i> attribute [attribute ID <b>281</b>].
      * <p>
@@ -1202,7 +1174,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getPacketValidatedropcountAsync() {
         return read(attributes.get(ATTR_PACKETVALIDATEDROPCOUNT));
     }
-
 
     /**
      * Synchronously get the <i>PacketValidatedropcount</i> attribute [attribute ID <b>282</b>].
@@ -1242,7 +1213,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_AVERAGEMACRETRYPERAPSMESSAGESENT));
     }
 
-
     /**
      * Synchronously get the <i>AverageMACRetryPerAPSMessageSent</i> attribute [attribute ID <b>283</b>].
      * <p>
@@ -1281,7 +1251,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
         return read(attributes.get(ATTR_LASTMESSAGELQI));
     }
 
-
     /**
      * Synchronously get the <i>LastMessageLQI</i> attribute [attribute ID <b>284</b>].
      * <p>
@@ -1319,7 +1288,6 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public Future<CommandResult> getLastMessageRssiAsync() {
         return read(attributes.get(ATTR_LASTMESSAGERSSI));
     }
-
 
     /**
      * Synchronously get the <i>LastMessageRSSI</i> attribute [attribute ID <b>285</b>].

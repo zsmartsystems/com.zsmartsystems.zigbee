@@ -46,5 +46,4 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
     public ZclThermostatUserInterfaceConfigurationCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }

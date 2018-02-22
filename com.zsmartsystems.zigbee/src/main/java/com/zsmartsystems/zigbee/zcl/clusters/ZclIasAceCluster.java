@@ -67,7 +67,6 @@ public class ZclIasAceCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * The Arm Command
      *

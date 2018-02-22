@@ -21,7 +21,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.alarms.ResetAlarmLogCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.alarms.ResetAllAlarmsCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -85,7 +84,6 @@ public class ZclAlarmsCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>AlarmCount</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -105,7 +103,6 @@ public class ZclAlarmsCluster extends ZclCluster {
     public Future<CommandResult> getAlarmCountAsync() {
         return read(attributes.get(ATTR_ALARMCOUNT));
     }
-
 
     /**
      * Synchronously get the <i>AlarmCount</i> attribute [attribute ID <b>0</b>].

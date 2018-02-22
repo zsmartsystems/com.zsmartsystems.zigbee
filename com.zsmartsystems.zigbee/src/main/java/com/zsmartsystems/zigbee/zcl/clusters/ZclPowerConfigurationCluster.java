@@ -14,7 +14,6 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -228,7 +227,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>MainsVoltage</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -245,7 +243,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     public Future<CommandResult> getMainsVoltageAsync() {
         return read(attributes.get(ATTR_MAINSVOLTAGE));
     }
-
 
     /**
      * Synchronously get the <i>MainsVoltage</i> attribute [attribute ID <b>0</b>].
@@ -304,7 +301,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_MAINSFREQUENCY));
     }
 
-
     /**
      * Synchronously get the <i>MainsFrequency</i> attribute [attribute ID <b>1</b>].
      * <p>
@@ -345,7 +341,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return (Integer) readSync(attributes.get(ATTR_MAINSFREQUENCY));
     }
 
-
     /**
      * Set the <i>MainsAlarmMask</i> attribute [attribute ID <b>16</b>].
      * <p>
@@ -379,7 +374,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_MAINSALARMMASK));
     }
 
-
     /**
      * Synchronously get the <i>MainsAlarmMask</i> attribute [attribute ID <b>16</b>].
      * <p>
@@ -407,7 +401,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_MAINSALARMMASK));
     }
-
 
     /**
      * Set the <i>MainsVoltageMinThreshold</i> attribute [attribute ID <b>17</b>].
@@ -466,7 +459,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD));
     }
 
-
     /**
      * Synchronously get the <i>MainsVoltageMinThreshold</i> attribute [attribute ID <b>17</b>].
      * <p>
@@ -506,7 +498,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD));
     }
-
 
     /**
      * Set the <i>MainsVoltageMaxThreshold</i> attribute [attribute ID <b>18</b>].
@@ -565,7 +556,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD));
     }
 
-
     /**
      * Synchronously get the <i>MainsVoltageMaxThreshold</i> attribute [attribute ID <b>18</b>].
      * <p>
@@ -605,7 +595,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD));
     }
-
 
     /**
      * Set the <i>MainsVoltageDwellTripPoint</i> attribute [attribute ID <b>19</b>].
@@ -647,7 +636,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     public Future<CommandResult> getMainsVoltageDwellTripPointAsync() {
         return read(attributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT));
     }
-
 
     /**
      * Synchronously get the <i>MainsVoltageDwellTripPoint</i> attribute [attribute ID <b>19</b>].
@@ -698,7 +686,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYVOLTAGE));
     }
 
-
     /**
      * Synchronously get the <i>BatteryVoltage</i> attribute [attribute ID <b>32</b>].
      * <p>
@@ -741,7 +728,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYPERCENTAGEREMAINING));
     }
 
-
     /**
      * Synchronously get the <i>BatteryPercentageRemaining</i> attribute [attribute ID <b>33</b>].
      * <p>
@@ -767,7 +753,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGEREMAINING));
     }
 
-
     /**
      * Set reporting for the <i>BatteryPercentageRemaining</i> attribute [attribute ID <b>33</b>].
      * <p>
@@ -783,7 +768,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     public Future<CommandResult> setBatteryPercentageRemainingReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(attributes.get(ATTR_BATTERYPERCENTAGEREMAINING), minInterval, maxInterval, reportableChange);
     }
-
 
     /**
      * Set the <i>BatteryManufacturer</i> attribute [attribute ID <b>48</b>].
@@ -818,7 +802,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYMANUFACTURER));
     }
 
-
     /**
      * Synchronously get the <i>BatteryManufacturer</i> attribute [attribute ID <b>48</b>].
      * <p>
@@ -846,7 +829,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (String) readSync(attributes.get(ATTR_BATTERYMANUFACTURER));
     }
-
 
     /**
      * Set the <i>BatterySize</i> attribute [attribute ID <b>49</b>].
@@ -881,7 +863,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYSIZE));
     }
 
-
     /**
      * Synchronously get the <i>BatterySize</i> attribute [attribute ID <b>49</b>].
      * <p>
@@ -909,7 +890,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_BATTERYSIZE));
     }
-
 
     /**
      * Set the <i>BatteryAHrRating</i> attribute [attribute ID <b>50</b>].
@@ -944,7 +924,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYAHRRATING));
     }
 
-
     /**
      * Synchronously get the <i>BatteryAHrRating</i> attribute [attribute ID <b>50</b>].
      * <p>
@@ -972,7 +951,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_BATTERYAHRRATING));
     }
-
 
     /**
      * Set the <i>BatteryQuantity</i> attribute [attribute ID <b>51</b>].
@@ -1007,7 +985,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYQUANTITY));
     }
 
-
     /**
      * Synchronously get the <i>BatteryQuantity</i> attribute [attribute ID <b>51</b>].
      * <p>
@@ -1035,7 +1012,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_BATTERYQUANTITY));
     }
-
 
     /**
      * Set the <i>BatteryRatedVoltage</i> attribute [attribute ID <b>52</b>].
@@ -1070,7 +1046,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYRATEDVOLTAGE));
     }
 
-
     /**
      * Synchronously get the <i>BatteryRatedVoltage</i> attribute [attribute ID <b>52</b>].
      * <p>
@@ -1098,7 +1073,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_BATTERYRATEDVOLTAGE));
     }
-
 
     /**
      * Set the <i>BatteryAlarmMask</i> attribute [attribute ID <b>53</b>].
@@ -1133,7 +1107,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYALARMMASK));
     }
 
-
     /**
      * Synchronously get the <i>BatteryAlarmMask</i> attribute [attribute ID <b>53</b>].
      * <p>
@@ -1161,7 +1134,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_BATTERYALARMMASK));
     }
-
 
     /**
      * Set the <i>BatteryVoltageMinThreshold</i> attribute [attribute ID <b>54</b>].
@@ -1212,7 +1184,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD));
     }
 
-
     /**
      * Synchronously get the <i>BatteryVoltageMinThreshold</i> attribute [attribute ID <b>54</b>].
      * <p>
@@ -1249,7 +1220,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD));
     }
 
-
     /**
      * Set the <i>BatteryVoltageThreshold1</i> attribute [attribute ID <b>55</b>].
      * <p>
@@ -1277,7 +1247,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1));
     }
 
-
     /**
      * Synchronously get the <i>BatteryVoltageThreshold1</i> attribute [attribute ID <b>55</b>].
      * <p>
@@ -1302,7 +1271,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1));
     }
-
 
     /**
      * Set the <i>BatteryVoltageThreshold2</i> attribute [attribute ID <b>56</b>].
@@ -1331,7 +1299,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2));
     }
 
-
     /**
      * Synchronously get the <i>BatteryVoltageThreshold2</i> attribute [attribute ID <b>56</b>].
      * <p>
@@ -1356,7 +1323,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2));
     }
-
 
     /**
      * Set the <i>BatteryVoltageThreshold3</i> attribute [attribute ID <b>57</b>].
@@ -1385,7 +1351,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3));
     }
 
-
     /**
      * Synchronously get the <i>BatteryVoltageThreshold3</i> attribute [attribute ID <b>57</b>].
      * <p>
@@ -1410,7 +1375,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3));
     }
-
 
     /**
      * Set the <i>BatteryPercentageMinThreshold</i> attribute [attribute ID <b>58</b>].
@@ -1439,7 +1403,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD));
     }
 
-
     /**
      * Synchronously get the <i>BatteryPercentageMinThreshold</i> attribute [attribute ID <b>58</b>].
      * <p>
@@ -1464,7 +1427,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD));
     }
-
 
     /**
      * Set the <i>BatteryPercentageThreshold1</i> attribute [attribute ID <b>59</b>].
@@ -1493,7 +1455,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1));
     }
 
-
     /**
      * Synchronously get the <i>BatteryPercentageThreshold1</i> attribute [attribute ID <b>59</b>].
      * <p>
@@ -1518,7 +1479,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1));
     }
-
 
     /**
      * Set the <i>BatteryPercentageThreshold2</i> attribute [attribute ID <b>60</b>].
@@ -1547,7 +1507,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
         return read(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2));
     }
 
-
     /**
      * Synchronously get the <i>BatteryPercentageThreshold2</i> attribute [attribute ID <b>60</b>].
      * <p>
@@ -1572,7 +1531,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2));
     }
-
 
     /**
      * Set the <i>BatteryPercentageThreshold3</i> attribute [attribute ID <b>61</b>].
@@ -1600,7 +1558,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     public Future<CommandResult> getBatteryPercentageThreshold3Async() {
         return read(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3));
     }
-
 
     /**
      * Synchronously get the <i>BatteryPercentageThreshold3</i> attribute [attribute ID <b>61</b>].
@@ -1639,7 +1596,6 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     public Future<CommandResult> getBatteryAlarmStateAsync() {
         return read(attributes.get(ATTR_BATTERYALARMSTATE));
     }
-
 
     /**
      * Synchronously get the <i>BatteryAlarmState</i> attribute [attribute ID <b>62</b>].

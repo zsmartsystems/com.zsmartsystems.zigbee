@@ -14,7 +14,6 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -147,7 +146,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>MeasurementType</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -163,7 +161,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getMeasurementTypeAsync() {
         return read(attributes.get(ATTR_MEASUREMENTTYPE));
     }
-
 
     /**
      * Synchronously get the <i>MeasurementType</i> attribute [attribute ID <b>0</b>].
@@ -208,7 +205,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getAcFrequencyAsync() {
         return read(attributes.get(ATTR_ACFREQUENCY));
     }
-
 
     /**
      * Synchronously get the <i>ACFrequency</i> attribute [attribute ID <b>768</b>].
@@ -255,7 +251,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getTotalActivePowerAsync() {
         return read(attributes.get(ATTR_TOTALACTIVEPOWER));
     }
-
 
     /**
      * Synchronously get the <i>TotalActivePower</i> attribute [attribute ID <b>772</b>].
@@ -306,7 +301,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         return read(attributes.get(ATTR_TOTALREACTIVEPOWER));
     }
 
-
     /**
      * Synchronously get the <i>TotalReactivePower</i> attribute [attribute ID <b>773</b>].
      * <p>
@@ -354,7 +348,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         return read(attributes.get(ATTR_TOTALAPPARENTPOWER));
     }
 
-
     /**
      * Synchronously get the <i>TotalApparentPower</i> attribute [attribute ID <b>774</b>].
      * <p>
@@ -399,7 +392,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         return read(attributes.get(ATTR_RMSVOLTAGE));
     }
 
-
     /**
      * Synchronously get the <i>RMSVoltage</i> attribute [attribute ID <b>1285</b>].
      * <p>
@@ -443,7 +435,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getRmsCurrentAsync() {
         return read(attributes.get(ATTR_RMSCURRENT));
     }
-
 
     /**
      * Synchronously get the <i>RMSCurrent</i> attribute [attribute ID <b>1288</b>].
@@ -490,7 +481,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         return read(attributes.get(ATTR_ACTIVEPOWER));
     }
 
-
     /**
      * Synchronously get the <i>ActivePower</i> attribute [attribute ID <b>1291</b>].
      * <p>
@@ -536,7 +526,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         return read(attributes.get(ATTR_ACCURRENTMULTIPLIER));
     }
 
-
     /**
      * Synchronously get the <i>ACCurrentMultiplier</i> attribute [attribute ID <b>1538</b>].
      * <p>
@@ -581,7 +570,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getAcCurrentDivisorAsync() {
         return read(attributes.get(ATTR_ACCURRENTDIVISOR));
     }
-
 
     /**
      * Synchronously get the <i>ACCurrentDivisor</i> attribute [attribute ID <b>1539</b>].
@@ -629,7 +617,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         return read(attributes.get(ATTR_ACPOWERMULTIPLIER));
     }
 
-
     /**
      * Synchronously get the <i>ACPowerMultiplier</i> attribute [attribute ID <b>1540</b>].
      * <p>
@@ -675,7 +662,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getAcPowerDivisorAsync() {
         return read(attributes.get(ATTR_ACPOWERDIVISOR));
     }
-
 
     /**
      * Synchronously get the <i>ACPowerDivisor</i> attribute [attribute ID <b>1541</b>].

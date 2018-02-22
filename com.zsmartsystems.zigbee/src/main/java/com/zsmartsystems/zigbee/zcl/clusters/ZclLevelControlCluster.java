@@ -23,7 +23,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.Stop2Command;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StopCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -120,7 +119,6 @@ public class ZclLevelControlCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>CurrentLevel</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -136,7 +134,6 @@ public class ZclLevelControlCluster extends ZclCluster {
     public Future<CommandResult> getCurrentLevelAsync() {
         return read(attributes.get(ATTR_CURRENTLEVEL));
     }
-
 
     /**
      * Synchronously get the <i>CurrentLevel</i> attribute [attribute ID <b>0</b>].
@@ -165,7 +162,6 @@ public class ZclLevelControlCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_CURRENTLEVEL));
     }
-
 
     /**
      * Set reporting for the <i>CurrentLevel</i> attribute [attribute ID <b>0</b>].
@@ -202,7 +198,6 @@ public class ZclLevelControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_REMAININGTIME));
     }
 
-
     /**
      * Synchronously get the <i>RemainingTime</i> attribute [attribute ID <b>1</b>].
      * <p>
@@ -230,7 +225,6 @@ public class ZclLevelControlCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_REMAININGTIME));
     }
-
 
     /**
      * Set the <i>OnOffTransitionTime</i> attribute [attribute ID <b>16</b>].
@@ -275,7 +269,6 @@ public class ZclLevelControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_ONOFFTRANSITIONTIME));
     }
 
-
     /**
      * Synchronously get the <i>OnOffTransitionTime</i> attribute [attribute ID <b>16</b>].
      * <p>
@@ -308,7 +301,6 @@ public class ZclLevelControlCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_ONOFFTRANSITIONTIME));
     }
-
 
     /**
      * Set the <i>OnLevel</i> attribute [attribute ID <b>17</b>].
@@ -345,7 +337,6 @@ public class ZclLevelControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_ONLEVEL));
     }
 
-
     /**
      * Synchronously get the <i>OnLevel</i> attribute [attribute ID <b>17</b>].
      * <p>
@@ -374,7 +365,6 @@ public class ZclLevelControlCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_ONLEVEL));
     }
-
 
     /**
      * Set the <i>OnTransitionTime</i> attribute [attribute ID <b>18</b>].
@@ -413,7 +403,6 @@ public class ZclLevelControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_ONTRANSITIONTIME));
     }
 
-
     /**
      * Synchronously get the <i>OnTransitionTime</i> attribute [attribute ID <b>18</b>].
      * <p>
@@ -443,7 +432,6 @@ public class ZclLevelControlCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_ONTRANSITIONTIME));
     }
-
 
     /**
      * Set the <i>OffTransitionTime</i> attribute [attribute ID <b>19</b>].
@@ -482,7 +470,6 @@ public class ZclLevelControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_OFFTRANSITIONTIME));
     }
 
-
     /**
      * Synchronously get the <i>OffTransitionTime</i> attribute [attribute ID <b>19</b>].
      * <p>
@@ -512,7 +499,6 @@ public class ZclLevelControlCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_OFFTRANSITIONTIME));
     }
-
 
     /**
      * Set the <i>DefaultMoveRate</i> attribute [attribute ID <b>20</b>].
@@ -546,7 +532,6 @@ public class ZclLevelControlCluster extends ZclCluster {
     public Future<CommandResult> getDefaultMoveRateAsync() {
         return read(attributes.get(ATTR_DEFAULTMOVERATE));
     }
-
 
     /**
      * Synchronously get the <i>DefaultMoveRate</i> attribute [attribute ID <b>20</b>].

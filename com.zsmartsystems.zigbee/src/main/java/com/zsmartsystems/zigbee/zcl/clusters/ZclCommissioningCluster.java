@@ -58,7 +58,6 @@ public class ZclCommissioningCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * The Restart Device Command
      *

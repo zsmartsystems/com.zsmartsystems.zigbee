@@ -1509,7 +1509,7 @@ public class ZclProtocolCodeGenerator {
 
                 for (final Attribute attribute : cluster.attributes.values()) {
                     if (attribute.attributeAccess.toLowerCase().contains("read")) {
-                        imports.add("java.util.Calendar");
+                        // imports.add("java.util.Calendar");
                     }
                 }
 
@@ -1605,13 +1605,11 @@ public class ZclProtocolCodeGenerator {
                         + "(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {");
                 out.println("        super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);");
                 out.println("    }");
-                out.println();
 
                 for (final Attribute attribute : cluster.attributes.values()) {
                     DataTypeMap zclDataType = ZclDataType.getDataTypeMapping().get(attribute.dataType);
 
                     if (attribute.attributeAccess.toLowerCase().contains("write")) {
-                        out.println();
                         outputAttributeJavaDoc(out, "Set", attribute, zclDataType);
                         out.println("    public Future<CommandResult> set"
                                 + attribute.nameUpperCamelCase.replace("_", "") + "(final Object value) {");
@@ -1625,7 +1623,6 @@ public class ZclProtocolCodeGenerator {
                                 + attribute.nameUpperCamelCase.replace("_", "") + "Async() {");
                         out.println("        return read(attributes.get(" + attribute.enumName + "));");
                         out.println("    }");
-                        out.println();
                         outputAttributeJavaDoc(out, "Synchronously get", attribute, zclDataType);
                         out.println("    public " + attribute.dataTypeClass + " get"
                                 + attribute.nameUpperCamelCase.replace("_", "") + "(final long refreshPeriod) {");
@@ -1642,7 +1639,6 @@ public class ZclProtocolCodeGenerator {
 
                     if (attribute.attributeAccess.toLowerCase().contains("read")
                             && attribute.attributeReporting.toLowerCase().equals("mandatory")) {
-                        out.println();
                         outputAttributeJavaDoc(out, "Set reporting for", attribute, zclDataType);
                         if (zclDataType.analogue) {
                             out.println("    public Future<CommandResult> set" + attribute.nameUpperCamelCase

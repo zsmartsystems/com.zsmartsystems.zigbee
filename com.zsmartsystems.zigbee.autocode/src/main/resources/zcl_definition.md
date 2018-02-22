@@ -920,6 +920,64 @@ The OnOff attribute has the following values: 0 = Off, 1 = On
 |Field Name                 |Data Type                  |
 |---------------------------|---------------------------|
 
+#### Off With Effect Command [0x40]
+The Off With Effect command allows devices to be turned off using enhanced ways of fading.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|Effect Identifier          |Unsigned 8-bit integer     |
+|Effect Variant             |Unsigned 8-bit integer     |
+
+##### Effect Identifier Field
+The Effect Identifier field is 8-bits in length and specifies the fading effect to use when
+switching the device off.
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0000 |Delayed All Off           |
+|0x0001 |Dying Light               |
+
+##### Effect Variant Field
+The Effect Variant field is 8-bits in length and is used to indicate which variant of the
+effect, indicated in the Effect Identifier field, SHOULD be triggered. If a device does not
+support the given variant, it SHALL use the default variant. This field is dependent on the
+value of the Effect Identifier field.
+
+
+#### On With Recall Global Scene Command [0x41]
+
+The On With Recall Global Scene command allows the recall of the settings when the device was turned off.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+
+#### On With Timed Off Command [0x42]
+
+The On With Timed Off command allows devices to be turned on for a specific duration
+with a guarded off duration so that SHOULD the device be subsequently switched off,
+further On With Timed Off commands, received during this time, are prevented from
+turning the devices back on. Note that the device can be periodically re-kicked by
+subsequent On With Timed Off commands, e.g., from an on/off sensor.
+
+|Field Name                 |Data Type                  |
+|---------------------------|---------------------------|
+|On Off Control             |Unsigned 8-bit integer     |
+|On Time                    |Unsigned 16-bit integer    |
+|Off Wait Time              |Unsigned 16-bit integer    |
+
+##### On Off Control Field
+The On/Off Control field is 8-bits in length and contains information on how the device is to be operated.
+
+##### On Time Field
+The On Time field is 16 bits in length and specifies the length of time (in 1/10ths second)
+that the device is to remain  “on”,  i.e., with its OnOffattribute equal to 0x01,
+before automatically turning “off”. This field SHALL be specified in the range 0x0000–0xfffe.
+
+##### Off Time Wait Field
+The Off Wait Time field is 16 bits in length and specifies the length of time (in 1/10ths second)
+that the device SHALL remain “off”, i.e., with its OnOffattribute equal to 0x00, and guarded to
+prevent an on command turning the device back “on”. This field SHALL be specified in the range 0x0000–0xfffe.
+
 ### Generated
 
 No cluster specific commands.

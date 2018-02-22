@@ -46,5 +46,4 @@ public class ZclMultistateOutputBaCnetRegularCluster extends ZclCluster {
     public ZclMultistateOutputBaCnetRegularCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }

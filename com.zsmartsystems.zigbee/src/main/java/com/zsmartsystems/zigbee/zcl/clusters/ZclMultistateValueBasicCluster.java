@@ -46,5 +46,4 @@ public class ZclMultistateValueBasicCluster extends ZclCluster {
     public ZclMultistateValueBasicCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }
