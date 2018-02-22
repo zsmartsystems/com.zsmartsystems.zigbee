@@ -54,7 +54,6 @@ public class ZclDoorLockCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * The Lock Door Command
      *

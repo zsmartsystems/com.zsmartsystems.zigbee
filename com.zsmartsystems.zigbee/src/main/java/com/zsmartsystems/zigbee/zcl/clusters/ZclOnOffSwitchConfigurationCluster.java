@@ -14,7 +14,6 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -68,7 +67,6 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>SwitchType</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -83,7 +81,6 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
     public Future<CommandResult> getSwitchTypeAsync() {
         return read(attributes.get(ATTR_SWITCHTYPE));
     }
-
 
     /**
      * Synchronously get the <i>SwitchType</i> attribute [attribute ID <b>0</b>].
@@ -111,7 +108,6 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_SWITCHTYPE));
     }
-
 
     /**
      * Set the <i>SwitchActions</i> attribute [attribute ID <b>16</b>].
@@ -145,7 +141,6 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
     public Future<CommandResult> getSwitchActionsAsync() {
         return read(attributes.get(ATTR_SWITCHACTIONS));
     }
-
 
     /**
      * Synchronously get the <i>SwitchActions</i> attribute [attribute ID <b>16</b>].

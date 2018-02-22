@@ -46,5 +46,4 @@ public class ZclMultistateValueBaCnetExtendedCluster extends ZclCluster {
     public ZclMultistateValueBaCnetExtendedCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }

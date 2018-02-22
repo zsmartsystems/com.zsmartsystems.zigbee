@@ -14,7 +14,6 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -97,7 +96,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -123,7 +121,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getMeasuredValueAsync() {
         return read(attributes.get(ATTR_MEASUREDVALUE));
     }
-
 
     /**
      * Synchronously get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
@@ -162,7 +159,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_MEASUREDVALUE));
     }
-
 
     /**
      * Set reporting for the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
@@ -209,7 +205,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getMinMeasuredValueAsync() {
         return read(attributes.get(ATTR_MINMEASUREDVALUE));
     }
-
 
     /**
      * Synchronously get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
@@ -262,7 +257,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
         return read(attributes.get(ATTR_MAXMEASUREDVALUE));
     }
 
-
     /**
      * Synchronously get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
@@ -314,7 +308,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
         return read(attributes.get(ATTR_TOLERANCE));
     }
 
-
     /**
      * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
      * <p>
@@ -343,7 +336,6 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_TOLERANCE));
     }
-
 
     /**
      * Set reporting for the <i>Tolerance</i> attribute [attribute ID <b>3</b>].

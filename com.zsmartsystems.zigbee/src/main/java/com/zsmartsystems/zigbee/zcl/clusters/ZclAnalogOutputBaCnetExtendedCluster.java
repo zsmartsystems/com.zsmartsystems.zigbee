@@ -46,5 +46,4 @@ public class ZclAnalogOutputBaCnetExtendedCluster extends ZclCluster {
     public ZclAnalogOutputBaCnetExtendedCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }

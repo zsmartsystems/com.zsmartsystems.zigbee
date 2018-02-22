@@ -14,7 +14,6 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -70,7 +69,6 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>LevelStatus</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -86,7 +84,6 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     public Future<CommandResult> getLevelStatusAsync() {
         return read(attributes.get(ATTR_LEVELSTATUS));
     }
-
 
     /**
      * Synchronously get the <i>LevelStatus</i> attribute [attribute ID <b>0</b>].
@@ -115,7 +112,6 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_LEVELSTATUS));
     }
-
 
     /**
      * Set reporting for the <i>LevelStatus</i> attribute [attribute ID <b>0</b>].
@@ -149,7 +145,6 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     public Future<CommandResult> getLightSensorTypeAsync() {
         return read(attributes.get(ATTR_LIGHTSENSORTYPE));
     }
-
 
     /**
      * Synchronously get the <i>LightSensorType</i> attribute [attribute ID <b>1</b>].

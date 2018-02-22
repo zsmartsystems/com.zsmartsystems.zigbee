@@ -18,7 +18,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.iaswd.SquawkCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.StartWarningCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -82,8 +81,6 @@ public class ZclIasWdCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
-
     /**
      * Set the <i>MaxDuration</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -116,7 +113,6 @@ public class ZclIasWdCluster extends ZclCluster {
     public Future<CommandResult> getMaxDurationAsync() {
         return read(attributes.get(ATTR_MAXDURATION));
     }
-
 
     /**
      * Synchronously get the <i>MaxDuration</i> attribute [attribute ID <b>0</b>].
@@ -159,7 +155,6 @@ public class ZclIasWdCluster extends ZclCluster {
         return read(attributes.get(ATTR_ZONETYPE));
     }
 
-
     /**
      * Synchronously get the <i>ZoneType</i> attribute [attribute ID <b>1</b>].
      * <p>
@@ -198,7 +193,6 @@ public class ZclIasWdCluster extends ZclCluster {
         return read(attributes.get(ATTR_ZONESTATUS));
     }
 
-
     /**
      * Synchronously get the <i>ZoneStatus</i> attribute [attribute ID <b>2</b>].
      * <p>
@@ -223,7 +217,6 @@ public class ZclIasWdCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_ZONESTATUS));
     }
-
 
     /**
      * Set the <i>IAS_CIE_Address</i> attribute [attribute ID <b>16</b>].
@@ -251,7 +244,6 @@ public class ZclIasWdCluster extends ZclCluster {
     public Future<CommandResult> getIasCieAddressAsync() {
         return read(attributes.get(ATTR_IAS_CIE_ADDRESS));
     }
-
 
     /**
      * Synchronously get the <i>IAS_CIE_Address</i> attribute [attribute ID <b>16</b>].

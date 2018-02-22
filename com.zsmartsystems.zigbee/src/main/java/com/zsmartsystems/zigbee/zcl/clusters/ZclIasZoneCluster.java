@@ -19,7 +19,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneStatusChangeNotificationCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -104,7 +103,6 @@ public class ZclIasZoneCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>ZoneState</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -119,7 +117,6 @@ public class ZclIasZoneCluster extends ZclCluster {
     public Future<CommandResult> getZoneStateAsync() {
         return read(attributes.get(ATTR_ZONESTATE));
     }
-
 
     /**
      * Synchronously get the <i>ZoneState</i> attribute [attribute ID <b>0</b>].
@@ -163,7 +160,6 @@ public class ZclIasZoneCluster extends ZclCluster {
         return read(attributes.get(ATTR_ZONETYPE));
     }
 
-
     /**
      * Synchronously get the <i>ZoneType</i> attribute [attribute ID <b>1</b>].
      * <p>
@@ -206,7 +202,6 @@ public class ZclIasZoneCluster extends ZclCluster {
         return read(attributes.get(ATTR_ZONESTATUS));
     }
 
-
     /**
      * Synchronously get the <i>ZoneStatus</i> attribute [attribute ID <b>2</b>].
      * <p>
@@ -233,7 +228,6 @@ public class ZclIasZoneCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_ZONESTATUS));
     }
-
 
     /**
      * Set the <i>IASCIEAddress</i> attribute [attribute ID <b>16</b>].
@@ -281,7 +275,6 @@ public class ZclIasZoneCluster extends ZclCluster {
     public Future<CommandResult> getIascieAddressAsync() {
         return read(attributes.get(ATTR_IASCIEADDRESS));
     }
-
 
     /**
      * Synchronously get the <i>IASCIEAddress</i> attribute [attribute ID <b>16</b>].
@@ -331,7 +324,6 @@ public class ZclIasZoneCluster extends ZclCluster {
         return read(attributes.get(ATTR_ZONEID));
     }
 
-
     /**
      * Synchronously get the <i>ZoneID</i> attribute [attribute ID <b>17</b>].
      * <p>
@@ -370,7 +362,6 @@ public class ZclIasZoneCluster extends ZclCluster {
         return read(attributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED));
     }
 
-
     /**
      * Synchronously get the <i>NumberOfZoneSensitivityLevelsSupported</i> attribute [attribute ID <b>18</b>].
      * <p>
@@ -395,7 +386,6 @@ public class ZclIasZoneCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED));
     }
-
 
     /**
      * Set the <i>CurrentZoneSensitivityLevel</i> attribute [attribute ID <b>19</b>].
@@ -423,7 +413,6 @@ public class ZclIasZoneCluster extends ZclCluster {
     public Future<CommandResult> getCurrentZoneSensitivityLevelAsync() {
         return read(attributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL));
     }
-
 
     /**
      * Synchronously get the <i>CurrentZoneSensitivityLevel</i> attribute [attribute ID <b>19</b>].

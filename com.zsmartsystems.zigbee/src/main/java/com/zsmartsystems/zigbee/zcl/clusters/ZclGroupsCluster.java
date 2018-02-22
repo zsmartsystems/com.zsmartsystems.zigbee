@@ -79,7 +79,6 @@ public class ZclGroupsCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * The Add Group Command
      *

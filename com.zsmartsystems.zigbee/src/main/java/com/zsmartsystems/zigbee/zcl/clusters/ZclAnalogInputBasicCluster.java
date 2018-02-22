@@ -46,5 +46,4 @@ public class ZclAnalogInputBasicCluster extends ZclCluster {
     public ZclAnalogInputBasicCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }

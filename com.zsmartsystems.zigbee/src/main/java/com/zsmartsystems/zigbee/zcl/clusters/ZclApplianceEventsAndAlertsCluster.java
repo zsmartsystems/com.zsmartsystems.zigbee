@@ -46,5 +46,4 @@ public class ZclApplianceEventsAndAlertsCluster extends ZclCluster {
     public ZclApplianceEventsAndAlertsCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }

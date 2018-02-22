@@ -46,5 +46,4 @@ public class ZclTouchlinkCluster extends ZclCluster {
     public ZclTouchlinkCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }

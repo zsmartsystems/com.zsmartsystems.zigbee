@@ -84,7 +84,6 @@ public class ZclGeneralCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * The Read Attributes Command
      * <p>

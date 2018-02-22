@@ -46,5 +46,4 @@ public class ZclBinaryValueBasicCluster extends ZclCluster {
     public ZclBinaryValueBasicCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
-
 }

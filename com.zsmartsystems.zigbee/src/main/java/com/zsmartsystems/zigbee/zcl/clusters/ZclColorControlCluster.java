@@ -30,7 +30,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepSaturationCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -238,7 +237,6 @@ public class ZclColorControlCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>CurrentHue</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -260,7 +258,6 @@ public class ZclColorControlCluster extends ZclCluster {
     public Future<CommandResult> getCurrentHueAsync() {
         return read(attributes.get(ATTR_CURRENTHUE));
     }
-
 
     /**
      * Synchronously get the <i>CurrentHue</i> attribute [attribute ID <b>0</b>].
@@ -295,7 +292,6 @@ public class ZclColorControlCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_CURRENTHUE));
     }
-
 
     /**
      * Set reporting for the <i>CurrentHue</i> attribute [attribute ID <b>0</b>].
@@ -343,7 +339,6 @@ public class ZclColorControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_CURRENTSATURATION));
     }
 
-
     /**
      * Synchronously get the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
      * <p>
@@ -376,7 +371,6 @@ public class ZclColorControlCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_CURRENTSATURATION));
     }
-
 
     /**
      * Set reporting for the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
@@ -417,7 +411,6 @@ public class ZclColorControlCluster extends ZclCluster {
     public Future<CommandResult> getRemainingTimeAsync() {
         return read(attributes.get(ATTR_REMAININGTIME));
     }
-
 
     /**
      * Synchronously get the <i>RemainingTime</i> attribute [attribute ID <b>2</b>].
@@ -468,7 +461,6 @@ public class ZclColorControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_CURRENTX));
     }
 
-
     /**
      * Synchronously get the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
      * <p>
@@ -501,7 +493,6 @@ public class ZclColorControlCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_CURRENTX));
     }
-
 
     /**
      * Set reporting for the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
@@ -548,7 +539,6 @@ public class ZclColorControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_CURRENTY));
     }
 
-
     /**
      * Synchronously get the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
      * <p>
@@ -581,7 +571,6 @@ public class ZclColorControlCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_CURRENTY));
     }
-
 
     /**
      * Set reporting for the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
@@ -622,7 +611,6 @@ public class ZclColorControlCluster extends ZclCluster {
     public Future<CommandResult> getDriftCompensationAsync() {
         return read(attributes.get(ATTR_DRIFTCOMPENSATION));
     }
-
 
     /**
      * Synchronously get the <i>DriftCompensation</i> attribute [attribute ID <b>5</b>].
@@ -667,7 +655,6 @@ public class ZclColorControlCluster extends ZclCluster {
     public Future<CommandResult> getCompensationTextAsync() {
         return read(attributes.get(ATTR_COMPENSATIONTEXT));
     }
-
 
     /**
      * Synchronously get the <i>CompensationText</i> attribute [attribute ID <b>6</b>].
@@ -724,7 +711,6 @@ public class ZclColorControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_COLORTEMPERATURE));
     }
 
-
     /**
      * Synchronously get the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
      * <p>
@@ -763,7 +749,6 @@ public class ZclColorControlCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_COLORTEMPERATURE));
     }
-
 
     /**
      * Set reporting for the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
@@ -812,7 +797,6 @@ public class ZclColorControlCluster extends ZclCluster {
     public Future<CommandResult> getColorModeAsync() {
         return read(attributes.get(ATTR_COLORMODE));
     }
-
 
     /**
      * Synchronously get the <i>ColorMode</i> attribute [attribute ID <b>8</b>].
@@ -863,7 +847,6 @@ public class ZclColorControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_ENHANCEDCURRENTHUE));
     }
 
-
     /**
      * Synchronously get the <i>EnhancedCurrentHue</i> attribute [attribute ID <b>16384</b>].
      * <p>
@@ -894,7 +877,6 @@ public class ZclColorControlCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_ENHANCEDCURRENTHUE));
     }
-
 
     /**
      * Set reporting for the <i>EnhancedCurrentHue</i> attribute [attribute ID <b>16384</b>].
@@ -934,7 +916,6 @@ public class ZclColorControlCluster extends ZclCluster {
     public Future<CommandResult> getEnhancedColorModeAsync() {
         return read(attributes.get(ATTR_ENHANCEDCOLORMODE));
     }
-
 
     /**
      * Synchronously get the <i>EnhancedColorMode</i> attribute [attribute ID <b>16385</b>].
@@ -981,7 +962,6 @@ public class ZclColorControlCluster extends ZclCluster {
     public Future<CommandResult> getColorLoopActiveAsync() {
         return read(attributes.get(ATTR_COLORLOOPACTIVE));
     }
-
 
     /**
      * Synchronously get the <i>ColorLoopActive</i> attribute [attribute ID <b>16386</b>].
@@ -1030,7 +1010,6 @@ public class ZclColorControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_COLORLOOPDIRECTION));
     }
 
-
     /**
      * Synchronously get the <i>ColorLoopDirection</i> attribute [attribute ID <b>16387</b>].
      * <p>
@@ -1077,7 +1056,6 @@ public class ZclColorControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_COLORLOOPTIME));
     }
 
-
     /**
      * Synchronously get the <i>ColorLoopTime</i> attribute [attribute ID <b>16388</b>].
      * <p>
@@ -1121,7 +1099,6 @@ public class ZclColorControlCluster extends ZclCluster {
     public Future<CommandResult> getColorLoopStartHueAsync() {
         return read(attributes.get(ATTR_COLORLOOPSTARTHUE));
     }
-
 
     /**
      * Synchronously get the <i>ColorLoopStartHue</i> attribute [attribute ID <b>16389</b>].
@@ -1167,7 +1144,6 @@ public class ZclColorControlCluster extends ZclCluster {
     public Future<CommandResult> getColorLoopStoredHueAsync() {
         return read(attributes.get(ATTR_COLORLOOPSTOREDHUE));
     }
-
 
     /**
      * Synchronously get the <i>ColorLoopStoredHue</i> attribute [attribute ID <b>16390</b>].
@@ -1215,7 +1191,6 @@ public class ZclColorControlCluster extends ZclCluster {
     public Future<CommandResult> getColorCapabilitiesAsync() {
         return read(attributes.get(ATTR_COLORCAPABILITIES));
     }
-
 
     /**
      * Synchronously get the <i>ColorCapabilities</i> attribute [attribute ID <b>16394</b>].
@@ -1265,7 +1240,6 @@ public class ZclColorControlCluster extends ZclCluster {
         return read(attributes.get(ATTR_COLORTEMPERATUREMIN));
     }
 
-
     /**
      * Synchronously get the <i>ColorTemperatureMin</i> attribute [attribute ID <b>16395</b>].
      * <p>
@@ -1313,7 +1287,6 @@ public class ZclColorControlCluster extends ZclCluster {
     public Future<CommandResult> getColorTemperatureMaxAsync() {
         return read(attributes.get(ATTR_COLORTEMPERATUREMAX));
     }
-
 
     /**
      * Synchronously get the <i>ColorTemperatureMax</i> attribute [attribute ID <b>16396</b>].

@@ -28,7 +28,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -146,7 +145,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>UpgradeServerID</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -164,7 +162,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     public Future<CommandResult> getUpgradeServerIdAsync() {
         return read(attributes.get(ATTR_UPGRADESERVERID));
     }
-
 
     /**
      * Synchronously get the <i>UpgradeServerID</i> attribute [attribute ID <b>0</b>].
@@ -214,7 +211,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         return read(attributes.get(ATTR_FILEOFFSET));
     }
 
-
     /**
      * Synchronously get the <i>FileOffset</i> attribute [attribute ID <b>1</b>].
      * <p>
@@ -261,7 +257,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         return read(attributes.get(ATTR_CURRENTFILEVERSION));
     }
 
-
     /**
      * Synchronously get the <i>CurrentFileVersion</i> attribute [attribute ID <b>2</b>].
      * <p>
@@ -305,7 +300,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     public Future<CommandResult> getCurrentZigBeeStackVersionAsync() {
         return read(attributes.get(ATTR_CURRENTZIGBEESTACKVERSION));
     }
-
 
     /**
      * Synchronously get the <i>CurrentZigBeeStackVersion</i> attribute [attribute ID <b>3</b>].
@@ -352,7 +346,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     public Future<CommandResult> getDownloadedFileVersionAsync() {
         return read(attributes.get(ATTR_DOWNLOADEDFILEVERSION));
     }
-
 
     /**
      * Synchronously get the <i>DownloadedFileVersion</i> attribute [attribute ID <b>4</b>].
@@ -401,7 +394,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     public Future<CommandResult> getDownloadedZigBeeStackVersionAsync() {
         return read(attributes.get(ATTR_DOWNLOADEDZIGBEESTACKVERSION));
     }
-
 
     /**
      * Synchronously get the <i>DownloadedZigBeeStackVersion</i> attribute [attribute ID <b>5</b>].
@@ -452,7 +444,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         return read(attributes.get(ATTR_IMAGEUPGRADESTATUS));
     }
 
-
     /**
      * Synchronously get the <i>ImageUpgradeStatus</i> attribute [attribute ID <b>6</b>].
      * <p>
@@ -497,7 +488,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         return read(attributes.get(ATTR_MANUFACTURERID));
     }
 
-
     /**
      * Synchronously get the <i>ManufacturerID</i> attribute [attribute ID <b>7</b>].
      * <p>
@@ -535,7 +525,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     public Future<CommandResult> getImageTypeIdAsync() {
         return read(attributes.get(ATTR_IMAGETYPEID));
     }
-
 
     /**
      * Synchronously get the <i>ImageTypeID</i> attribute [attribute ID <b>8</b>].
@@ -584,7 +573,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         return read(attributes.get(ATTR_MINIMUMBLOCKREQUESTDELAY));
     }
 
-
     /**
      * Synchronously get the <i>MinimumBlockRequestDelay</i> attribute [attribute ID <b>9</b>].
      * <p>
@@ -631,7 +619,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     public Future<CommandResult> getImageStampAsync() {
         return read(attributes.get(ATTR_IMAGESTAMP));
     }
-
 
     /**
      * Synchronously get the <i>ImageStamp</i> attribute [attribute ID <b>10</b>].

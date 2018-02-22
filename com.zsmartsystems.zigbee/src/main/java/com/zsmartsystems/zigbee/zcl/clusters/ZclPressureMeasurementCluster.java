@@ -14,7 +14,6 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -116,7 +115,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -141,7 +139,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getMeasuredValueAsync() {
         return read(attributes.get(ATTR_MEASUREDVALUE));
     }
-
 
     /**
      * Synchronously get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
@@ -179,7 +176,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_MEASUREDVALUE));
     }
-
 
     /**
      * Set reporting for the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
@@ -224,7 +220,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getMinMeasuredValueAsync() {
         return read(attributes.get(ATTR_MINMEASUREDVALUE));
     }
-
 
     /**
      * Synchronously get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
@@ -274,7 +269,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
         return read(attributes.get(ATTR_MAXMEASUREDVALUE));
     }
 
-
     /**
      * Synchronously get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
      * <p>
@@ -306,7 +300,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_MAXMEASUREDVALUE));
     }
-
 
     /**
      * Set reporting for the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
@@ -347,7 +340,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getToleranceAsync() {
         return read(attributes.get(ATTR_TOLERANCE));
     }
-
 
     /**
      * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
@@ -391,7 +383,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
         return read(attributes.get(ATTR_SCALEDVALUE));
     }
 
-
     /**
      * Synchronously get the <i>ScaledValue</i> attribute [attribute ID <b>16</b>].
      * <p>
@@ -416,7 +407,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_SCALEDVALUE));
     }
-
 
     /**
      * Set reporting for the <i>ScaledValue</i> attribute [attribute ID <b>16</b>].
@@ -446,7 +436,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getMinScaledValueAsync() {
         return read(attributes.get(ATTR_MINSCALEDVALUE));
     }
-
 
     /**
      * Synchronously get the <i>MinScaledValue</i> attribute [attribute ID <b>17</b>].
@@ -486,7 +475,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
         return read(attributes.get(ATTR_MAXSCALEDVALUE));
     }
 
-
     /**
      * Synchronously get the <i>MaxScaledValue</i> attribute [attribute ID <b>18</b>].
      * <p>
@@ -525,7 +513,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
         return read(attributes.get(ATTR_SCALEDTOLERANCE));
     }
 
-
     /**
      * Synchronously get the <i>ScaledTolerance</i> attribute [attribute ID <b>19</b>].
      * <p>
@@ -550,7 +537,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_SCALEDTOLERANCE));
     }
-
 
     /**
      * Set reporting for the <i>ScaledTolerance</i> attribute [attribute ID <b>19</b>].
@@ -580,7 +566,6 @@ public class ZclPressureMeasurementCluster extends ZclCluster {
     public Future<CommandResult> getScaleAsync() {
         return read(attributes.get(ATTR_SCALE));
     }
-
 
     /**
      * Synchronously get the <i>Scale</i> attribute [attribute ID <b>20</b>].

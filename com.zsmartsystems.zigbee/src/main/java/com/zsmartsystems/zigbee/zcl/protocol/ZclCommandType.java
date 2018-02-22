@@ -42,6 +42,9 @@ import com.zsmartsystems.zigbee.zcl.clusters.scenes.GetSceneMembershipCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.ToggleCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffWithEffectCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnWithRecallGlobalSceneCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnWithTimedOffCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.MoveToLevelCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.MoveCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StepCommand;
@@ -584,11 +587,29 @@ public enum ZclCommandType {
      */
     OFF_COMMAND(0x0006, 0, OffCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
     /**
+     * OFF_WITH_EFFECT_COMMAND: Off With Effect Command
+     * <p>
+     * See {@link OffWithEffectCommand}
+     */
+    OFF_WITH_EFFECT_COMMAND(0x0006, 64, OffWithEffectCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
      * ON_COMMAND: On Command
      * <p>
      * See {@link OnCommand}
      */
     ON_COMMAND(0x0006, 1, OnCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * ON_WITH_RECALL_GLOBAL_SCENE_COMMAND: On With Recall Global Scene Command
+     * <p>
+     * See {@link OnWithRecallGlobalSceneCommand}
+     */
+    ON_WITH_RECALL_GLOBAL_SCENE_COMMAND(0x0006, 65, OnWithRecallGlobalSceneCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * ON_WITH_TIMED_OFF_COMMAND: On With Timed Off Command
+     * <p>
+     * See {@link OnWithTimedOffCommand}
+     */
+    ON_WITH_TIMED_OFF_COMMAND(0x0006, 66, OnWithTimedOffCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
     /**
      * PANIC_COMMAND: Panic Command
      * <p>

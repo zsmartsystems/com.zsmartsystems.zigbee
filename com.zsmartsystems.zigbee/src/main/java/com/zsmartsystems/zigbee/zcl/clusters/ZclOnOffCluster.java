@@ -14,11 +14,13 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffWithEffectCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnWithRecallGlobalSceneCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnWithTimedOffCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.ToggleCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -78,7 +80,6 @@ public class ZclOnOffCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>OnOff</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -93,7 +94,6 @@ public class ZclOnOffCluster extends ZclCluster {
     public Future<CommandResult> getOnOffAsync() {
         return read(attributes.get(ATTR_ONOFF));
     }
-
 
     /**
      * Synchronously get the <i>OnOff</i> attribute [attribute ID <b>0</b>].
@@ -122,7 +122,6 @@ public class ZclOnOffCluster extends ZclCluster {
         return (Boolean) readSync(attributes.get(ATTR_ONOFF));
     }
 
-
     /**
      * Set reporting for the <i>OnOff</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -139,7 +138,6 @@ public class ZclOnOffCluster extends ZclCluster {
     public Future<CommandResult> setOnOffReporting(final int minInterval, final int maxInterval) {
         return setReporting(attributes.get(ATTR_ONOFF), minInterval, maxInterval);
     }
-
 
     /**
      * Set the <i>GlobalSceneControl</i> attribute [attribute ID <b>16384</b>].
@@ -168,7 +166,6 @@ public class ZclOnOffCluster extends ZclCluster {
         return read(attributes.get(ATTR_GLOBALSCENECONTROL));
     }
 
-
     /**
      * Synchronously get the <i>GlobalSceneControl</i> attribute [attribute ID <b>16384</b>].
      * <p>
@@ -194,7 +191,6 @@ public class ZclOnOffCluster extends ZclCluster {
         return (Boolean) readSync(attributes.get(ATTR_GLOBALSCENECONTROL));
     }
 
-
     /**
      * Set reporting for the <i>GlobalSceneControl</i> attribute [attribute ID <b>16384</b>].
      * <p>
@@ -209,7 +205,6 @@ public class ZclOnOffCluster extends ZclCluster {
     public Future<CommandResult> setGlobalSceneControlReporting(final int minInterval, final int maxInterval) {
         return setReporting(attributes.get(ATTR_GLOBALSCENECONTROL), minInterval, maxInterval);
     }
-
 
     /**
      * Set the <i>OffTime</i> attribute [attribute ID <b>16385</b>].
@@ -238,7 +233,6 @@ public class ZclOnOffCluster extends ZclCluster {
         return read(attributes.get(ATTR_OFFTIME));
     }
 
-
     /**
      * Synchronously get the <i>OffTime</i> attribute [attribute ID <b>16385</b>].
      * <p>
@@ -264,7 +258,6 @@ public class ZclOnOffCluster extends ZclCluster {
         return (Integer) readSync(attributes.get(ATTR_OFFTIME));
     }
 
-
     /**
      * Set reporting for the <i>OffTime</i> attribute [attribute ID <b>16385</b>].
      * <p>
@@ -280,7 +273,6 @@ public class ZclOnOffCluster extends ZclCluster {
     public Future<CommandResult> setOffTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(attributes.get(ATTR_OFFTIME), minInterval, maxInterval, reportableChange);
     }
-
 
     /**
      * Set the <i>OffWaitTime</i> attribute [attribute ID <b>16386</b>].
@@ -309,7 +301,6 @@ public class ZclOnOffCluster extends ZclCluster {
         return read(attributes.get(ATTR_OFFWAITTIME));
     }
 
-
     /**
      * Synchronously get the <i>OffWaitTime</i> attribute [attribute ID <b>16386</b>].
      * <p>
@@ -334,7 +325,6 @@ public class ZclOnOffCluster extends ZclCluster {
 
         return (Integer) readSync(attributes.get(ATTR_OFFWAITTIME));
     }
-
 
     /**
      * Set reporting for the <i>OffWaitTime</i> attribute [attribute ID <b>16386</b>].
@@ -385,6 +375,63 @@ public class ZclOnOffCluster extends ZclCluster {
         return send(command);
     }
 
+    /**
+     * The Off With Effect Command
+     * <p>
+     * The Off With Effect command allows devices to be turned off using enhanced ways of fading.
+     *
+     * @param effectIdentifier {@link Integer} Effect Identifier
+     * @param effectVariant {@link Integer} Effect Variant
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> offWithEffectCommand(Integer effectIdentifier, Integer effectVariant) {
+        OffWithEffectCommand command = new OffWithEffectCommand();
+
+        // Set the fields
+        command.setEffectIdentifier(effectIdentifier);
+        command.setEffectVariant(effectVariant);
+
+        return send(command);
+    }
+
+    /**
+     * The On With Recall Global Scene Command
+     * <p>
+     * The On With Recall Global Scene command allows the recall of the settings when the device was turned off.
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> onWithRecallGlobalSceneCommand() {
+        OnWithRecallGlobalSceneCommand command = new OnWithRecallGlobalSceneCommand();
+
+        return send(command);
+    }
+
+    /**
+     * The On With Timed Off Command
+     * <p>
+     * The On With Timed Off command allows devices to be turned on for a specific duration
+     * with a guarded off duration so that SHOULD the device be subsequently switched off,
+     * further On With Timed Off commands, received during this time, are prevented from
+     * turning the devices back on. Note that the device can be periodically re-kicked by
+     * subsequent On With Timed Off commands, e.g., from an on/off sensor.
+     *
+     * @param onOffControl {@link Integer} On Off Control
+     * @param onTime {@link Integer} On Time
+     * @param offWaitTime {@link Integer} Off Wait Time
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> onWithTimedOffCommand(Integer onOffControl, Integer onTime, Integer offWaitTime) {
+        OnWithTimedOffCommand command = new OnWithTimedOffCommand();
+
+        // Set the fields
+        command.setOnOffControl(onOffControl);
+        command.setOnTime(onTime);
+        command.setOffWaitTime(offWaitTime);
+
+        return send(command);
+    }
+
     @Override
     public ZclCommand getCommandFromId(int commandId) {
         switch (commandId) {
@@ -394,6 +441,12 @@ public class ZclOnOffCluster extends ZclCluster {
                 return new OnCommand();
             case 2: // TOGGLE_COMMAND
                 return new ToggleCommand();
+            case 64: // OFF_WITH_EFFECT_COMMAND
+                return new OffWithEffectCommand();
+            case 65: // ON_WITH_RECALL_GLOBAL_SCENE_COMMAND
+                return new OnWithRecallGlobalSceneCommand();
+            case 66: // ON_WITH_TIMED_OFF_COMMAND
+                return new OnWithTimedOffCommand();
             default:
                 return null;
         }

@@ -18,7 +18,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.identify.IdentifyQueryCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.identify.IdentifyQueryResponse;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -81,8 +80,6 @@ public class ZclIdentifyCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
-
     /**
      * Set the <i>IdentifyTime</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -133,7 +130,6 @@ public class ZclIdentifyCluster extends ZclCluster {
     public Future<CommandResult> getIdentifyTimeAsync() {
         return read(attributes.get(ATTR_IDENTIFYTIME));
     }
-
 
     /**
      * Synchronously get the <i>IdentifyTime</i> attribute [attribute ID <b>0</b>].

@@ -30,7 +30,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.scenes.ViewSceneResponse;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -127,7 +126,6 @@ public class ZclScenesCluster extends ZclCluster {
         super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
-
     /**
      * Get the <i>SceneCount</i> attribute [attribute ID <b>0</b>].
      * <p>
@@ -143,7 +141,6 @@ public class ZclScenesCluster extends ZclCluster {
     public Future<CommandResult> getSceneCountAsync() {
         return read(attributes.get(ATTR_SCENECOUNT));
     }
-
 
     /**
      * Synchronously get the <i>SceneCount</i> attribute [attribute ID <b>0</b>].
@@ -188,7 +185,6 @@ public class ZclScenesCluster extends ZclCluster {
         return read(attributes.get(ATTR_CURRENTSCENE));
     }
 
-
     /**
      * Synchronously get the <i>CurrentScene</i> attribute [attribute ID <b>1</b>].
      * <p>
@@ -231,7 +227,6 @@ public class ZclScenesCluster extends ZclCluster {
     public Future<CommandResult> getCurrentGroupAsync() {
         return read(attributes.get(ATTR_CURRENTGROUP));
     }
-
 
     /**
      * Synchronously get the <i>CurrentGroup</i> attribute [attribute ID <b>2</b>].
@@ -282,7 +277,6 @@ public class ZclScenesCluster extends ZclCluster {
     public Future<CommandResult> getSceneValidAsync() {
         return read(attributes.get(ATTR_SCENEVALID));
     }
-
 
     /**
      * Synchronously get the <i>SceneValid</i> attribute [attribute ID <b>3</b>].
@@ -335,7 +329,6 @@ public class ZclScenesCluster extends ZclCluster {
         return read(attributes.get(ATTR_NAMESUPPORT));
     }
 
-
     /**
      * Synchronously get the <i>NameSupport</i> attribute [attribute ID <b>4</b>].
      * <p>
@@ -383,7 +376,6 @@ public class ZclScenesCluster extends ZclCluster {
     public Future<CommandResult> getLastConfiguredByAsync() {
         return read(attributes.get(ATTR_LASTCONFIGUREDBY));
     }
-
 
     /**
      * Synchronously get the <i>LastConfiguredBy</i> attribute [attribute ID <b>5</b>].
