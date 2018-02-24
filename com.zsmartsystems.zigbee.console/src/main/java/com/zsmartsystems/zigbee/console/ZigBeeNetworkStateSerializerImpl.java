@@ -54,6 +54,12 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
      */
     private final String networkStateFilePath = "simple-network.xml";
 
+    private final String networkId;
+
+    public ZigBeeNetworkStateSerializerImpl(String networkId) {
+        this.networkId = networkId + "-" + networkStateFilePath;
+    }
+
     private XStream openStream() {
         XStream stream = new XStream(new StaxDriver());
         stream.alias("ZigBeeNode", ZigBeeNodeDao.class);
@@ -87,7 +93,7 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
             destinations.add(nodeDao);
         }
 
-        final File file = new File(networkStateFilePath);
+        final File file = new File(networkId);
 
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
@@ -109,7 +115,7 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
      */
     @Override
     public void deserialize(final ZigBeeNetworkManager networkState) {
-        final File file = new File(networkStateFilePath);
+        final File file = new File(networkId);
         boolean networkStateExists = file.exists();
         if (networkStateExists == false) {
             return;

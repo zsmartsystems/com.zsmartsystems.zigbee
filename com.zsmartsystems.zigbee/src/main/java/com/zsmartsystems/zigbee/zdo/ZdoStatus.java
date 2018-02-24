@@ -11,7 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Defines the Zdo status values and textual descriptions
+ * Defines the ZDO status values and textual descriptions
+ * <p>
+ * From ZigBee Specification 2.4.5 ZDP Enumeration Description
  *
  * @author Chris Jackson
  */
@@ -30,7 +32,8 @@ public enum ZdoStatus {
     /**
      * The requested device did not exist on a device following a child descriptor request to a parent.
      */
-    DEVICE_NOT_FOUND(0x81, "The requested device did not exist on a device following a child descriptor request to a parent."),
+    DEVICE_NOT_FOUND(0x81,
+            "The requested device did not exist on a device following a child descriptor request to a parent."),
     /**
      * The supplied endpoint was equal to 0x00 or between 0xf1 and 0xff.
      */
@@ -55,7 +58,8 @@ public enum ZdoStatus {
      * The unbind request was unsuccessful due to the coordinator or source device not having an entry in its binding
      * table to unbind.
      */
-    NO_ENTRY(0x88, "The unbind request was unsuccessful due to the coordinator or source device not having an entry in its binding table to unbind."),
+    NO_ENTRY(0x88,
+            "The unbind request was unsuccessful due to the coordinator or source device not having an entry in its binding table to unbind."),
     /**
      * A child descriptor was not available following a discovery request to a parent.
      */
@@ -71,11 +75,12 @@ public enum ZdoStatus {
     /**
      * The device does not have table space to support the operation.
      */
-    TABLE_FULL(0x8c, "The device does not have table space to support the operation."),
+    TABLE_FULL(0x8C, "The device does not have table space to support the operation."),
     /**
      * The permissions configuration table on the target indicates that the request is not authorized from this device.
      */
-    NOT_AUTHORIZED(0x8D, "The permissions configuration table on the target indicates that the request is not authorized from this device.");
+    NOT_AUTHORIZED(0x8D,
+            "The permissions configuration table on the target indicates that the request is not authorized from this device.");
 
     private final int id;
     private final String description;

@@ -153,7 +153,10 @@ public class ZigBeeConsoleMain {
 
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(dongle);
 
-        ZigBeeNetworkStateSerializer networkStateSerializer = new ZigBeeNetworkStateSerializerImpl();
+        ZigBeeNetworkStateSerializer networkStateSerializer = new ZigBeeNetworkStateSerializerImpl(dongleName);
+        if (resetNetwork) {
+            // networkStateSerializer.remove();
+        }
         networkManager.setNetworkStateSerializer(networkStateSerializer);
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
         final ZigBeeConsole console = new ZigBeeConsole(networkManager, dongle);

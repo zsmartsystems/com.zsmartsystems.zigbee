@@ -91,10 +91,10 @@ public class PowerDescriptor {
         UNKNOWN
     }
 
-    private CurrentPowerModeType currentPowerMode;
-    private Set<PowerSourceType> availablePowerSources;;
-    private PowerSourceType currentPowerSource;
-    private PowerLevelType powerLevel;
+    private CurrentPowerModeType currentPowerMode = CurrentPowerModeType.UNKNOWN;
+    private Set<PowerSourceType> availablePowerSources = new HashSet<PowerSourceType>();
+    private PowerSourceType currentPowerSource = PowerSourceType.UNKNOWN;
+    private PowerLevelType powerLevel = PowerLevelType.UNKNOWN;
 
     public PowerDescriptor() {
         // Default constructor - does nothing
