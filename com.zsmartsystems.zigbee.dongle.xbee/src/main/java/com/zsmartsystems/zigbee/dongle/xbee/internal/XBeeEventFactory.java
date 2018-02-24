@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2018 by the respective copyright holders.
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,11 +8,11 @@
 package com.zsmartsystems.zigbee.dongle.xbee.internal;
 
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeEvent;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeManyToOneRouteRequestIndicatorEvent;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeManyToOneRouteRequestEvent;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeModemStatusEvent;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeRouteRecordIndicatorEvent;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeZigbeeExplicitRxIndicatorEvent;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeZigbeeReceivePacketEvent;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeReceivePacketEvent;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeReceivePacketExplicitEvent;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeRouteRecordEvent;
 import java.lang.reflect.Constructor;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,10 +35,10 @@ public class XBeeEventFactory {
     static {
         // Define the API commands
         events.put(0x8A, XBeeModemStatusEvent.class);
-        events.put(0x90, XBeeZigbeeReceivePacketEvent.class);
-        events.put(0x91, XBeeZigbeeExplicitRxIndicatorEvent.class);
-        events.put(0xA1, XBeeRouteRecordIndicatorEvent.class);
-        events.put(0xA3, XBeeManyToOneRouteRequestIndicatorEvent.class);
+        events.put(0x90, XBeeReceivePacketEvent.class);
+        events.put(0x91, XBeeReceivePacketExplicitEvent.class);
+        events.put(0xA1, XBeeRouteRecordEvent.class);
+        events.put(0xA3, XBeeManyToOneRouteRequestEvent.class);
     }
 
     public static XBeeEvent getXBeeFrame(int[] data) {

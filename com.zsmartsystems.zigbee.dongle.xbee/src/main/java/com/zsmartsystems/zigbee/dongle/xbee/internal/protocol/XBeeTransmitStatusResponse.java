@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2018 by the respective copyright holders.
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,7 +11,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.DeliveryStatus;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.DiscoveryStatus;
 
 /**
- * Class to implement the XBee command <b>ZigBee Transmit Status</b>.
+ * Class to implement the XBee command <b>Transmit Status</b>.
  * <p>
  * When a Transmit Request (0x10, 0x11) completes, the
 			device sends a Transmit Status
@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.DiscoveryStatus;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class XBeeZigbeeTransmitStatusResponse extends XBeeFrame implements XBeeResponse {
+public class XBeeTransmitStatusResponse extends XBeeFrame implements XBeeResponse {
     /**
      * Response field
      * The frame Id
@@ -138,8 +138,8 @@ public class XBeeZigbeeTransmitStatusResponse extends XBeeFrame implements XBeeR
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(572);
-        builder.append("XBeeZigbeeTransmitStatusResponse [frameId=");
+        final StringBuilder builder = new StringBuilder(566);
+        builder.append("XBeeTransmitStatusResponse [frameId=");
         builder.append(frameId);
         builder.append(", networkAddress=");
         builder.append(networkAddress);

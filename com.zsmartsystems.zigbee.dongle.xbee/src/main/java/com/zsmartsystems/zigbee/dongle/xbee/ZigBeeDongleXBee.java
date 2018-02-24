@@ -21,11 +21,33 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeEventListener;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeFrameHandler;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.EncryptionOptions;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.TransmitOptions;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeEvent;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeExtendedPanIdResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetDetailedVersionCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetExtendedPanIdCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetFirmwareVersionCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetHardwareVersionCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetIeeeAddressHighCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetIeeeAddressLowCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetPanIdCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeIeeeAddressHighResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeIeeeAddressLowResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeModemStatusEvent;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeePanIdResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeReceivePacketExplicitEvent;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetApiEnableCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetApiModeCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetCoordinatorEnableCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetEncryptionEnableCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetEncryptionOptionsCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetLinkKeyCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetNetworkKeyCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetSaveDataCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetSoftwareResetCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetZigbeeStackProfileCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeTransmitRequestExplicitCommand;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.TransportConfigResult;
@@ -97,6 +119,12 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
      */
     private String versionString = "Unknown";
 
+    private boolean coordinatorStarted = false;
+    private boolean initialisationComplete = false;
+
+    final private IeeeAddress groupIeeeAddress = new IeeeAddress("000000000000FFFE");
+    final private IeeeAddress broadcastIeeeAddress = new IeeeAddress("000000000000FFFF");
+
     public ZigBeeDongleXBee(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
     }
@@ -117,6 +145,23 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         frameHandler.start(serialPort);
         frameHandler.addEventListener(this);
 
+        // Reset to a known state
+        XBeeSetSoftwareResetCommand resetCommand = new XBeeSetSoftwareResetCommand();
+        frameHandler.sendRequest(resetCommand);
+
+        // Device sends WATCHDOG_TIMER_RESET event
+        frameHandler.eventWait(XBeeModemStatusEvent.class);
+
+        // Enable the API with escaping
+        XBeeSetApiEnableCommand apiEnableCommand = new XBeeSetApiEnableCommand();
+        apiEnableCommand.setMode(2);
+        frameHandler.sendRequest(apiEnableCommand);
+
+        // Set the API mode so we receive detailed data including ZDO
+        XBeeSetApiModeCommand apiModeCommand = new XBeeSetApiModeCommand();
+        apiModeCommand.setMode(3);
+        frameHandler.sendRequest(apiModeCommand);
+
         // Get the product information
         XBeeGetHardwareVersionCommand hwVersionCommand = new XBeeGetHardwareVersionCommand();
         frameHandler.sendRequest(hwVersionCommand);
@@ -127,7 +172,67 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         XBeeGetDetailedVersionCommand versionCommand = new XBeeGetDetailedVersionCommand();
         frameHandler.sendRequest(versionCommand);
 
+        // Get Ieee Address
+        XBeeGetIeeeAddressHighCommand ieeeHighCommand = new XBeeGetIeeeAddressHighCommand();
+        XBeeIeeeAddressHighResponse ieeeHighResponse = (XBeeIeeeAddressHighResponse) frameHandler
+                .sendRequest(ieeeHighCommand);
+        XBeeGetIeeeAddressLowCommand ieeeLowCommand = new XBeeGetIeeeAddressLowCommand();
+        XBeeIeeeAddressLowResponse ieeeLowResponse = (XBeeIeeeAddressLowResponse) frameHandler
+                .sendRequest(ieeeLowCommand);
+
+        int[] tmpAddress = new int[8];
+        tmpAddress[0] = ieeeLowResponse.getIeeeAddress()[3];
+        tmpAddress[1] = ieeeLowResponse.getIeeeAddress()[2];
+        tmpAddress[2] = ieeeLowResponse.getIeeeAddress()[1];
+        tmpAddress[3] = ieeeLowResponse.getIeeeAddress()[0];
+        tmpAddress[4] = ieeeHighResponse.getIeeeAddress()[3];
+        tmpAddress[5] = ieeeHighResponse.getIeeeAddress()[2];
+        tmpAddress[6] = ieeeHighResponse.getIeeeAddress()[1];
+        tmpAddress[7] = ieeeHighResponse.getIeeeAddress()[0];
+        ieeeAddress = new IeeeAddress(tmpAddress);
+
+        logger.debug("XBee IeeeAddress={}", ieeeAddress);
+
+        // Set the ZigBee stack profile
+        XBeeSetZigbeeStackProfileCommand stackProfile = new XBeeSetZigbeeStackProfileCommand();
+        stackProfile.setStackProfile(2);
+        frameHandler.sendRequest(stackProfile);
+
+        // Enable Security
+        XBeeSetEncryptionEnableCommand enableEncryption = new XBeeSetEncryptionEnableCommand();
+        enableEncryption.setEnableEncryption(true);
+        frameHandler.sendRequest(enableEncryption);
+
+        XBeeSetEncryptionOptionsCommand encryptionOptions = new XBeeSetEncryptionOptionsCommand();
+        encryptionOptions.addEncryptionOptions(EncryptionOptions.ENABLE_TRUST_CENTRE);
+        frameHandler.sendRequest(encryptionOptions);
+
+        // Enable coordinator mode
+        XBeeSetCoordinatorEnableCommand coordinatorEnable = new XBeeSetCoordinatorEnableCommand();
+        coordinatorEnable.setEnable(true);
+        frameHandler.sendRequest(coordinatorEnable);
+
+        // Set the network key
+        XBeeSetNetworkKeyCommand networkKey = new XBeeSetNetworkKeyCommand();
+        networkKey.setNetworkKey(new ZigBeeKey());
+        frameHandler.sendRequest(networkKey);
+
+        // Set the link key
+        XBeeSetLinkKeyCommand setLinkKey = new XBeeSetLinkKeyCommand();
+        setLinkKey.setLinkKey(linkKey);
+        frameHandler.sendRequest(setLinkKey);
+
+        // Save the configuration in the XBee
+        XBeeSetSaveDataCommand saveData = new XBeeSetSaveDataCommand();
+        frameHandler.sendRequest(saveData);
+
         // Get network information
+
+        XBeeGetPanIdCommand getPanId = new XBeeGetPanIdCommand();
+        XBeePanIdResponse panIdResponse = (XBeePanIdResponse) frameHandler.sendRequest(getPanId);
+
+        XBeeGetExtendedPanIdCommand getEPanId = new XBeeGetExtendedPanIdCommand();
+        XBeeExtendedPanIdResponse epanIdResponse = (XBeeExtendedPanIdResponse) frameHandler.sendRequest(getEPanId);
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
@@ -157,7 +262,11 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         // panId = networkInfo.getPanId();
         // extendedPanId = networkInfo.getEpanId();
 
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
+        initialisationComplete = true;
+
+        if (coordinatorStarted) {
+            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
+        }
         return true;
     }
 
@@ -189,40 +298,38 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
             return;
         }
 
-        XBeeCommand command;
-        if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE && apsFrame.getDestinationAddress() < 0xfff8) {
-            // Unicast command
-            // TelegesisSendUnicastCommand unicastCommand = new TelegesisSendUnicastCommand();
-            // unicastCommand.setAddress(apsFrame.getDestinationAddress());
-            // unicastCommand.setDestEp(apsFrame.getDestinationEndpoint());
-            // unicastCommand.setSourceEp(0);
-            // unicastCommand.setProfileId(apsFrame.getProfile());
-            // unicastCommand.setClusterId(apsFrame.getCluster());
-            // unicastCommand.setMessageData(apsFrame.getPayload());
-            // command = unicastCommand;
-        } else if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE
-                && apsFrame.getDestinationAddress() >= 0xfff8) {
-            // Broadcast command
-            // TelegesisSendMulticastCommand multicastCommand = new TelegesisSendMulticastCommand();
-            // multicastCommand.setAddress(apsFrame.getDestinationAddress());
-            // multicastCommand.setDestEp(apsFrame.getDestinationEndpoint());
-            // multicastCommand.setProfileId(apsFrame.getProfile());
-            // multicastCommand.setClusterId(apsFrame.getCluster());
-            // multicastCommand.setRadius(apsFrame.getRadius());
-            // multicastCommand.setMessageData(apsFrame.getPayload());
-            // multicastCommand.setSourceEp(apsFrame.getSourceEndpoint());
-            // command = multicastCommand;
-        } else if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.GROUP) {
-            // Multicast command
-            // TelegesisSendMulticastCommand multicastCommand = new TelegesisSendMulticastCommand();
-            // command = multicastCommand;
+        XBeeTransmitRequestExplicitCommand command = new XBeeTransmitRequestExplicitCommand();
+        command.setNetworkAddress(apsFrame.getDestinationAddress());
+        command.setDestinationEndpoint(apsFrame.getDestinationEndpoint());
+        command.setSourceEndpoint(apsFrame.getSourceEndpoint());
+        command.setProfileId(apsFrame.getProfile());
+        command.setCluster(apsFrame.getCluster());
+        command.setBroadcastRadius(0);
+        if (apsFrame.getDestinationEndpoint() != 0) {
+            command.addOptions(TransmitOptions.ENABLE_APS_ENCRYPTION);
+        }
+        if (apsFrame.getDestinationAddress() > 0xFFF8) {
+            command.setIeeeAddress(broadcastIeeeAddress);
+        } else if (apsFrame.getDestinationIeeeAddress() == null) {
+            if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.GROUP) {
+                command.setIeeeAddress(groupIeeeAddress);
+            } else {
+            }
+            command.setIeeeAddress(new IeeeAddress("FFFFFFFFFFFFFFFF"));
         } else {
-            logger.debug("XBee message not sent: {}, {}", apsFrame);
-            return;
+            command.setIeeeAddress(apsFrame.getDestinationIeeeAddress());
         }
 
-        // logger.debug("XBee send: {}", command.toString());
-        // frameHandler.queueFrame(command);
+        int[] data = new int[apsFrame.getPayload().length + 1];
+        data[0] = apsFrame.getSequence();
+        int cnt = 0;
+        for (int value : apsFrame.getPayload()) {
+            data[cnt++] = value;
+        }
+        command.setData(data);
+
+        logger.debug("XBee send: {}", command.toString());
+        frameHandler.sendRequestAsync(command);
     }
 
     @Override
@@ -232,31 +339,51 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
 
     @Override
     public void xbeeEventReceived(XBeeEvent event) {
-        logger.debug("XBee RX: " + event.toString());
-        // if (event instanceof TelegesisReceiveMessageEvent) {
-        // TelegesisReceiveMessageEvent rxMessage = (TelegesisReceiveMessageEvent) event;
+        if (event instanceof XBeeReceivePacketExplicitEvent) {
+            XBeeReceivePacketExplicitEvent rxMessage = (XBeeReceivePacketExplicitEvent) event;
 
-        // ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
-        // apsFrame.setApsCounter(emberApsFrame.getSequence());
-        // apsFrame.setCluster(rxMessage.getClusterId());
-        // apsFrame.setDestinationEndpoint(rxMessage.getDestinationEp());
-        // apsFrame.setProfile(rxMessage.getProfileId());
-        // apsFrame.setSourceEndpoint(rxMessage.getSourceEp());
+            ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+            apsFrame.setCluster(rxMessage.getClusterId());
+            apsFrame.setDestinationEndpoint(rxMessage.getDestinationEndpoint());
+            apsFrame.setProfile(rxMessage.getProfileId());
+            apsFrame.setSourceEndpoint(rxMessage.getSourceEndpoint());
 
-        // apsFrame.setSourceAddress(rxMessage.getNetworkAddress());
-        // apsFrame.setPayload(rxMessage.getMessageData());
-        // zigbeeTransportReceive.receiveCommand(apsFrame);
-        // return;
-        // }
+            apsFrame.setSourceAddress(rxMessage.getNetworkAddress());
+            apsFrame.setPayload(rxMessage.getData());
+
+            zigbeeTransportReceive.receiveCommand(apsFrame);
+            return;
+        }
 
         // Handle devices joining and leaving
-        // if (event instanceof TelegesisDeviceJoinedNetworkEvent) {
-        // TelegesisDeviceJoinedNetworkEvent deviceJoinedEvent = (TelegesisDeviceJoinedNetworkEvent) event;
+        if (event instanceof XBeeModemStatusEvent) {
+            XBeeModemStatusEvent modemStatus = (XBeeModemStatusEvent) event;
 
-        // zigbeeTransportReceive.nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN,
-        // deviceJoinedEvent.getNetworkAddress(), deviceJoinedEvent.getIeeeAddress());
-        // return;
-        // }
+            switch (modemStatus.getStatus()) {
+                case COORDINATOR_STARTED:
+                    coordinatorStarted = true;
+                    if (initialisationComplete) {
+                        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
+                    }
+                    break;
+                case DISASSOCIATED:
+                    zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+                    break;
+                case HARDWARE_RESET:
+                    break;
+                case JOINED_NETWORK:
+                    break;
+                case NETWORK_SECURITY_KEY_UPDATED:
+                    break;
+                case WATCHDOG_TIMER_RESET:
+                    break;
+                default:
+                    break;
+            }
+
+            return;
+        }
+
         // if (event instanceof TelegesisDeviceLeftNetworkEvent) {
         // TelegesisDeviceLeftNetworkEvent deviceLeftEvent = (TelegesisDeviceLeftNetworkEvent) event;
 

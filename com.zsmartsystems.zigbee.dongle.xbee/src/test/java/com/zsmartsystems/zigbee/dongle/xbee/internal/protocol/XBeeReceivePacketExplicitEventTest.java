@@ -21,10 +21,10 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * @author Chris Jackson
  *
  */
-public class XBeeZigbeeExplicitRxIndicatorEventTest extends XBeeFrameBaseTest {
+public class XBeeReceivePacketExplicitEventTest extends XBeeFrameBaseTest {
     @Test
     public void test() {
-        XBeeZigbeeExplicitRxIndicatorEvent event = new XBeeZigbeeExplicitRxIndicatorEvent();
+        XBeeReceivePacketExplicitEvent event = new XBeeReceivePacketExplicitEvent();
         event.deserialize(
                 getPacketData("00 18 91 00 13 A2 00 40 52 2B AA 7D 84 E0 E0 22 11 C1 05 02 52 78 44 61 74 61 52"));
         System.out.println(event);

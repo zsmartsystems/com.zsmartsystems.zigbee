@@ -19,4 +19,5 @@ public class Parameter {
     public Integer minimum;
     public Integer maximum;
     public String value;
+    public boolean bitfield;
 }

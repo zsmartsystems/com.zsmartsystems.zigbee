@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2018 by the respective copyright holders.
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,19 +7,39 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee.internal;
 
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeActiveScanResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeApiEnableResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeApiModeResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeAtResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeCoordinatorEnableResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeDetailedVersionResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeEncryptionEnableResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeEncryptionOptionsResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeEnergyScanResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeExtendedPanIdConfigResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeExtendedPanIdResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeFirmwareVersionResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeHardwareVersionResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeIeeeAddressHighResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeIeeeAddressLowResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeJoinNotificationResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeLinkKeyResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeNetworkKeyResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeNetworkResetResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeNodeDiscoveryResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeePanIdResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeResetResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSaveDataResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSoftwareResetResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeTransmitStatusResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeZigbeeStackProfileResponse;
 import java.lang.reflect.Constructor;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeAtResponse;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeDetailedVersionResponse;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeFirmwareVersionResponse;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeHardwareVersionResponse;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeResponse;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeZigbeeTransmitStatusResponse;
 
 /**
  * Helper factory class to create {@link XBeeResponse} classes.
@@ -37,12 +57,33 @@ public class XBeeResponseFactory {
     static {
         // Define the API commands
         events.put(0x88, XBeeAtResponse.class);
-        events.put(0x8B, XBeeZigbeeTransmitStatusResponse.class);
+        events.put(0x8B, XBeeTransmitStatusResponse.class);
 
         // Define the AT commands
+        atCommands.put(0x414F, XBeeApiModeResponse.class); // AO
+        atCommands.put(0x4150, XBeeApiEnableResponse.class); // AP
+        atCommands.put(0x4153, XBeeActiveScanResponse.class); // AS
+        atCommands.put(0x4345, XBeeCoordinatorEnableResponse.class); // CE
+        atCommands.put(0x4544, XBeeEnergyScanResponse.class); // ED
+        atCommands.put(0x4545, XBeeEncryptionEnableResponse.class); // EE
+        atCommands.put(0x454F, XBeeEncryptionOptionsResponse.class); // EO
+        atCommands.put(0x4652, XBeeSoftwareResetResponse.class); // FR
         atCommands.put(0x4856, XBeeHardwareVersionResponse.class); // HV
+        atCommands.put(0x4944, XBeeExtendedPanIdConfigResponse.class); // ID
+        atCommands.put(0x4A4E, XBeeJoinNotificationResponse.class); // JN
+        atCommands.put(0x4B59, XBeeLinkKeyResponse.class); // KY
+        atCommands.put(0x4E44, XBeeNodeDiscoveryResponse.class); // ND
+        atCommands.put(0x4E4B, XBeeNetworkKeyResponse.class); // NK
+        atCommands.put(0x4E52, XBeeNetworkResetResponse.class); // NR
+        atCommands.put(0x4F49, XBeePanIdResponse.class); // OI
+        atCommands.put(0x4F50, XBeeExtendedPanIdResponse.class); // OP
+        atCommands.put(0x5245, XBeeResetResponse.class); // RE
+        atCommands.put(0x5348, XBeeIeeeAddressHighResponse.class); // SH
+        atCommands.put(0x534C, XBeeIeeeAddressLowResponse.class); // SL
         atCommands.put(0x564C, XBeeDetailedVersionResponse.class); // VL
         atCommands.put(0x5652, XBeeFirmwareVersionResponse.class); // VR
+        atCommands.put(0x5752, XBeeSaveDataResponse.class); // WR
+        atCommands.put(0x5A53, XBeeZigbeeStackProfileResponse.class); // ZS
     }
 
     public static XBeeResponse getXBeeFrame(int[] data) {

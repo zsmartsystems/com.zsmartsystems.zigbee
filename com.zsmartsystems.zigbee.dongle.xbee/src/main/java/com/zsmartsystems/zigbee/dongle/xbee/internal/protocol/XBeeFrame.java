@@ -7,9 +7,13 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeKey;
 
 /**
  * Base class for all XBee frames. Provides methods to serialise and deserialise data.
@@ -24,7 +28,7 @@ public class XBeeFrame {
     protected int pushPosition = 0;
     private int frameType;
 
-    private final int START_DELIMITER = 0x7E;
+    // private final int START_DELIMITER = 0x7E;
 
     /**
      * Initialise the deserialiser. This sets the data for the deserialiser methods to use.
@@ -45,11 +49,11 @@ public class XBeeFrame {
      * @param command
      */
     protected void serializeCommand(int command) {
-        length = 4;
-        buffer[0] = START_DELIMITER;
+        length = 3;
+        // buffer[0] = START_DELIMITER;
+        buffer[0] = 0;
         buffer[1] = 0;
-        buffer[2] = 0;
-        buffer[3] = command;
+        buffer[2] = command;
     }
 
     /**
@@ -81,12 +85,30 @@ public class XBeeFrame {
     }
 
     /**
-     * Deserializes an 16 bit integer in hexadecimal
+     * Deserializes an 16 bit integer
      *
      * @return the deserialized value
      */
     protected Integer deserializeInt16() {
         return (buffer[position++] << 8) + buffer[position++];
+    }
+
+    /**
+     * Serializes a boolean
+     *
+     * @param value the value to serialize
+     */
+    protected void serializeBoolean(Boolean value) {
+        buffer[length++] = value ? 1 : 0;
+    }
+
+    /**
+     * Deserializes a boolean
+     *
+     * @return the deserialized value
+     */
+    protected Boolean deserializeBoolean() {
+        return buffer[position++] != 0;
     }
 
     /**
@@ -122,9 +144,13 @@ public class XBeeFrame {
      *
      * @return the {@link ExtendedPanId}
      */
-    // protected ExtendedPanId deserializeExtendedPanId() {
-    // return new ExtendedPanId("");
-    // }
+    protected ExtendedPanId deserializeExtendedPanId() {
+        int ePanId[] = new int[8];
+        for (int cnt = 7; cnt >= 0; cnt--) {
+            ePanId[cnt] = buffer[position++];
+        }
+        return new ExtendedPanId(ePanId);
+    }
 
     /**
      * Serializes an integer data array
@@ -164,14 +190,9 @@ public class XBeeFrame {
      * @param address the {@link vIeeeAddress}
      */
     protected void serializeIeeeAddress(IeeeAddress address) {
-        buffer[length++] = address.getValue()[7];
-        buffer[length++] = address.getValue()[6];
-        buffer[length++] = address.getValue()[5];
-        buffer[length++] = address.getValue()[4];
-        buffer[length++] = address.getValue()[3];
-        buffer[length++] = address.getValue()[2];
-        buffer[length++] = address.getValue()[1];
-        buffer[length++] = address.getValue()[0];
+        for (int cnt = 7; cnt >= 0; cnt--) {
+            buffer[length++] = address.getValue()[cnt];
+        }
     }
 
     /**
@@ -188,12 +209,43 @@ public class XBeeFrame {
     }
 
     /**
+     * Serializes an {@link ZigBeeKey}
+     *
+     * @param key the {@link vIeeeAddress}
+     */
+    protected void serializeZigBeeKey(ZigBeeKey key) {
+        for (int cnt = 0; cnt <= 15; cnt++) {
+            buffer[length++] = key.getValue()[cnt];
+        }
+        // for (int cnt = 15; cnt >= 0; cnt--) {
+        // buffer[length++] = key.getValue()[cnt];
+        // }
+    }
+
+    /**
+     * Deserializes a {@link ZigBeeKey}
+     *
+     * @return the {@link ZigBeeKey}
+     */
+    protected ZigBeeKey deserializeZigBeeKey() {
+        int address[] = new int[16];
+        for (int cnt = 7; cnt >= 0; cnt--) {
+            address[cnt] = buffer[position++];
+        }
+        return new ZigBeeKey(address);
+    }
+
+    /**
      * Serializes a {@link TransmitOptions}
      *
      * @param options
      */
-    protected void serializeTransmitOptions(TransmitOptions options) {
-        // serializeUpperCaseString(key.toString());
+    protected void serializeTransmitOptions(List<TransmitOptions> options) {
+        int value = 0;
+        for (TransmitOptions option : options) {
+            value |= option.getKey();
+        }
+        buffer[length++] = value;
     }
 
     /**
@@ -206,21 +258,46 @@ public class XBeeFrame {
     }
 
     /**
-     * Deserializes a {link ModemStatus}
-     *
-     * @return the {@link ModemStatus}
-     */
-    protected ModemStatus deserializeModemStatus() {
-        return ModemStatus.getModemStatus(deserializeInt8());
-    }
-
-    /**
      * Deserializes a {link ReceiveOptions}
      *
      * @return the {@link ReceiveOptions}
      */
     protected ReceiveOptions deserializeReceiveOptions() {
         return ReceiveOptions.getReceiveOptions(deserializeInt8());
+    }
+
+    protected List<EncryptionOptions> deserializeEncryptionOptions() {
+        List<EncryptionOptions> options = new ArrayList<EncryptionOptions>();
+        for (EncryptionOptions option : EncryptionOptions.values()) {
+            if ((buffer[position] & option.getKey()) != 0) {
+                options.add(option);
+            }
+        }
+        position++;
+
+        return options;
+    }
+
+    /**
+     * Serializes a {@link EncryptionOptions}
+     *
+     * @param options
+     */
+    protected void serializeEncryptionOptions(List<EncryptionOptions> options) {
+        int value = 0;
+        for (EncryptionOptions option : options) {
+            value |= option.getKey();
+        }
+        buffer[length++] = value;
+    }
+
+    /**
+     * Deserializes a {link ModemStatus}
+     *
+     * @return the {@link ModemStatus}
+     */
+    protected ModemStatus deserializeModemStatus() {
+        return ModemStatus.getModemStatus(deserializeInt8());
     }
 
     /**
@@ -281,12 +358,12 @@ public class XBeeFrame {
      */
     protected int[] getPayload() {
         // Update the length
-        int dataLen = length - 3;
-        buffer[1] = (dataLen >> 8) & 0xff;
-        buffer[2] = dataLen & 0xff;
+        int dataLen = length - 2;
+        buffer[0] = (dataLen >> 8) & 0xff;
+        buffer[1] = dataLen & 0xff;
 
         int checksum = 0;
-        for (int cnt = 3; cnt < length; cnt++) {
+        for (int cnt = 2; cnt < length; cnt++) {
             checksum += buffer[cnt];
         }
 

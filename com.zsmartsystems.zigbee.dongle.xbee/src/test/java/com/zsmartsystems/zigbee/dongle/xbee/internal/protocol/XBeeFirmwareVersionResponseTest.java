@@ -8,6 +8,9 @@
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -23,7 +26,8 @@ public class XBeeFirmwareVersionResponseTest extends XBeeFrameBaseTest {
         event.deserialize(getPacketData("00 07 88 02 56 52 00 21 A7 05"));
         System.out.println(event);
         assertEquals(0x88, event.getFrameType());
-        // assertEquals(Integer.valueOf(0x7D84), event.getNetworkAddress());
+        assertEquals(CommandStatus.OK, event.getCommandStatus());
+        assertTrue(Arrays.equals(new int[] { 0x21, 0xA7 }, event.getFirmwareVersion()));
     }
 
 }

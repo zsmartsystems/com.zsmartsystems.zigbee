@@ -8,6 +8,9 @@
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -18,17 +21,17 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * @author Chris Jackson
  *
  */
-public class XBeeRouteRecordIndicatorEventTest extends XBeeFrameBaseTest {
+public class XBeeReceivePacketEventTest extends XBeeFrameBaseTest {
     @Test
     public void test() {
-        XBeeRouteRecordIndicatorEvent event = new XBeeRouteRecordIndicatorEvent();
-        event.deserialize(getPacketData("00 13 A1 00 13 A2 00 40 40 11 22 33 44 01 03 EE FF CC DD AA BB 80"));
+        XBeeReceivePacketEvent event = new XBeeReceivePacketEvent();
+        event.deserialize(getPacketData("00 12 90 00 13 A2 00 40 52 2B AA 7D 84 01 52 78 44 61 74 61 0D"));
         System.out.println(event);
-        assertEquals(0xA1, event.getFrameType());
-        assertEquals(Integer.valueOf(0x3344), event.getNetworkAddress());
+        assertEquals(0x90, event.getFrameType());
+        assertEquals(Integer.valueOf(0x7D84), event.getNetworkAddress());
         assertEquals(ReceiveOptions.PACKET_ACKNOWLEDGED, event.getReceiveOptions());
-        assertEquals(new IeeeAddress("0013A20040401122"), event.getIeeeAddress());
-        assertEquals(3, event.getAddressList().length);
+        assertEquals(new IeeeAddress("0013A20040522BAA"), event.getIeeeAddress());
+        assertTrue(Arrays.equals(getPacketData("52 78 44 61 74 61"), event.getData()));
     }
 
 }

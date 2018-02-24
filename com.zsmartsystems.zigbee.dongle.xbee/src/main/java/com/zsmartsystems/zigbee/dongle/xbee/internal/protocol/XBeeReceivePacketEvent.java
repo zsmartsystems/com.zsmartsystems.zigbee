@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2018 by the respective copyright holders.
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,14 +11,12 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.ReceiveOptions;
 
 /**
- * Class to implement the XBee command <b>Route Record Indicator</b>.
+ * Class to implement the XBee command <b>Receive Packet</b>.
  * <p>
- * The route record indicator is received whenever a device
-			sends a ZigBee route record
- * command. The device uses the route record
-			indicator with many-to-one routing to create
- * source routes for
-			devices in a network.
+ * When a device configured with a standard API Rx Indicator
+			(AO = 0) receives an RF data
+ * packet, it sends it out the serial
+			interface using this message type.
 		
  * <p>
  * This class provides methods for processing XBee API commands.
@@ -27,13 +25,10 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.ReceiveOptions;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class XBeeRouteRecordIndicatorEvent extends XBeeFrame implements XBeeEvent {
+public class XBeeReceivePacketEvent extends XBeeFrame implements XBeeEvent {
     /**
      * Response field
-     * MSB first, LSB last. The 64-bit address of the device
-					that initiated
-					the route
-     * record.
+     * The sender's 64-bit address. MSB first, LSB last.
 				
      */
     private IeeeAddress ieeeAddress;
@@ -51,18 +46,12 @@ public class XBeeRouteRecordIndicatorEvent extends XBeeFrame implements XBeeEven
 
     /**
      * Response field
-     * The number of addresses in the source route (excluding
-					source and
-     * destination).
-				
+     * The RF data that the device receives.
      */
-    private int[] addressList;
+    private int[] data;
 
     /**
-     * MSB first, LSB last. The 64-bit address of the device
-					that initiated
-					the route
-     * record.
+     * The sender's 64-bit address. MSB first, LSB last.
 				
      *
      * @return the ieeeAddress as {@link IeeeAddress}
@@ -89,15 +78,12 @@ public class XBeeRouteRecordIndicatorEvent extends XBeeFrame implements XBeeEven
     }
 
     /**
-     * The number of addresses in the source route (excluding
-					source and
-     * destination).
-				
+     * The RF data that the device receives.
      *
-     * @return the addressList as {@link int[]}
+     * @return the data as {@link int[]}
      */
-    public int[] getAddressList() {
-        return addressList;
+    public int[] getData() {
+        return data;
     }
 
 
@@ -116,31 +102,28 @@ public class XBeeRouteRecordIndicatorEvent extends XBeeFrame implements XBeeEven
         // Deserialize field "Receive Options"
         receiveOptions = deserializeReceiveOptions();
 
-        // Deserialize field "Number of addresses"
-        int numberOfAddresses = deserializeInt8();
-
-        // Deserialize field "Address List"
-        addressList = deserializeInt16Array(numberOfAddresses);
+        // Deserialize field "Data"
+        data = deserializeData();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(569);
-        builder.append("XBeeRouteRecordIndicatorEvent [ieeeAddress=");
+        final StringBuilder builder = new StringBuilder(472);
+        builder.append("XBeeReceivePacketEvent [ieeeAddress=");
         builder.append(ieeeAddress);
         builder.append(", networkAddress=");
         builder.append(networkAddress);
         builder.append(", receiveOptions=");
         builder.append(receiveOptions);
-        builder.append(", addressList=");
-        if (addressList == null) {
+        builder.append(", data=");
+        if (data == null) {
             builder.append("null");
         } else {
-            for (int cnt = 0; cnt < addressList.length; cnt++) {
+            for (int cnt = 0; cnt < data.length; cnt++) {
                 if (cnt > 0) {
                     builder.append(' ');
                 }
-                builder.append(String.format("%04X", addressList[cnt]));
+                builder.append(String.format("%02X", data[cnt]));
             }
         }
         builder.append(']');

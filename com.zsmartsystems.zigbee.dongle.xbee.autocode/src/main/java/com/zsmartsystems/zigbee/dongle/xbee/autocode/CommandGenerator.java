@@ -37,17 +37,26 @@ public class CommandGenerator extends ClassGenerator {
             idParameter.name = "Frame ID";
             idParameter.data_type = "uint8";
             idParameter.multiple = false;
+            idParameter.bitfield = false;
+
+            Parameter stateParameter = new Parameter();
+            stateParameter.name = "Command Status";
+            stateParameter.data_type = "CommandStatus";
+            stateParameter.multiple = false;
+            stateParameter.bitfield = false;
 
             Parameter atParameter = new Parameter();
             atParameter.name = "AT Parameter";
             atParameter.data_type = "AtCommand";
             atParameter.value = '"' + atCommand.command + '"';
 
+            String description = "AT Command <b>" + atCommand.command + "</b></p>" + atCommand.description;
+
             if (atCommand.getter) {
                 Command command = new Command();
                 command.id = 0x08;
                 command.name = "Get " + atCommand.name;
-                command.description = atCommand.description;
+                command.description = description;
                 command.command_parameters = new ArrayList<ParameterGroup>();
                 command.response_parameters = new ArrayList<ParameterGroup>();
                 ParameterGroup commandGroup = new ParameterGroup();
@@ -62,14 +71,18 @@ public class CommandGenerator extends ClassGenerator {
                 Command command = new Command();
                 command.id = 0x08;
                 command.name = "Set " + atCommand.name;
-                command.description = atCommand.description;
+                command.description = description;
                 command.command_parameters = new ArrayList<ParameterGroup>();
                 command.response_parameters = new ArrayList<ParameterGroup>();
                 ParameterGroup commandGroup = new ParameterGroup();
                 commandGroup.parameters = new ArrayList<Parameter>();
                 commandGroup.parameters.add(idParameter);
                 commandGroup.parameters.add(atParameter);
-                commandGroup.parameters.addAll(atCommand.response_parameters.get(0).parameters);
+
+                if (atCommand.command_parameters != null && atCommand.command_parameters.size() != 0) {
+                    commandGroup.parameters.addAll(atCommand.command_parameters.get(0).parameters);
+                }
+
                 command.command_parameters.add(commandGroup);
                 protocol.commands.add(command);
             }
@@ -77,14 +90,17 @@ public class CommandGenerator extends ClassGenerator {
             Command response = new Command();
             response.id = 0x88;
             response.name = atCommand.name;
-            response.description = atCommand.description;
+            response.description = description;
             response.command_parameters = new ArrayList<ParameterGroup>();
             response.response_parameters = new ArrayList<ParameterGroup>();
             ParameterGroup responseGroup = new ParameterGroup();
             responseGroup.parameters = new ArrayList<Parameter>();
             responseGroup.parameters.add(idParameter);
             responseGroup.parameters.add(atParameter);
-            responseGroup.parameters.addAll(atCommand.response_parameters.get(0).parameters);
+            responseGroup.parameters.add(stateParameter);
+            if (atCommand.response_parameters != null && atCommand.response_parameters.size() != 0) {
+                responseGroup.parameters.addAll(atCommand.response_parameters.get(0).parameters);
+            }
             response.response_parameters.add(responseGroup);
             protocol.commands.add(response);
         }
@@ -474,7 +490,7 @@ public class CommandGenerator extends ClassGenerator {
     }
 
     private void createParameterDefinition(PrintWriter out, String indent, Parameter parameter) {
-        if (parameter.multiple) {
+        if (parameter.multiple | parameter.bitfield) {
             addImport("java.util.List");
             addImport("java.util.ArrayList");
             out.println(indent + "private List<" + getTypeClass(parameter.data_type) + "> "
@@ -513,7 +529,7 @@ public class CommandGenerator extends ClassGenerator {
                         + getTypeClass(parameter.data_type) + "}");
             }
             out.println(indent + " */");
-            if (parameter.multiple) {
+            if (parameter.multiple | parameter.bitfield) {
                 out.println(indent + "public List<" + getTypeClass(parameter.data_type) + "> get"
                         + stringToUpperCamelCase(parameter.name) + "() {");
 
@@ -543,7 +559,7 @@ public class CommandGenerator extends ClassGenerator {
                 outputWithLinebreak(out, "    ", parameter.description);
             }
             out.println(indent + " *");
-            if (parameter.multiple) {
+            if (parameter.multiple | parameter.bitfield) {
                 addImport("java.util.Collection");
                 out.println(indent + " * @param " + parameter.name + " the " + stringToLowerCamelCase(parameter.name)
                         + " to add to the {@link Set} as {@link " + getTypeClass(parameter.data_type) + "}");

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2018 by the respective copyright holders.
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,7 +11,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.ReceiveOptions;
 
 /**
- * Class to implement the XBee command <b>ZigBee Explicit Rx Indicator</b>.
+ * Class to implement the XBee command <b>Receive Packet Explicit</b>.
  * <p>
  * When a device configured with explicit API Rx Indicator
 			(AO = 1) receives an RF packet, it
@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.ReceiveOptions;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class XBeeZigbeeExplicitRxIndicatorEvent extends XBeeFrame implements XBeeEvent {
+public class XBeeReceivePacketExplicitEvent extends XBeeFrame implements XBeeEvent {
     /**
      * Response field
      * MSB first, LSB last. The sender's 64-bit address. Set
@@ -248,8 +248,8 @@ public class XBeeZigbeeExplicitRxIndicatorEvent extends XBeeFrame implements XBe
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(844);
-        builder.append("XBeeZigbeeExplicitRxIndicatorEvent [ieeeAddress=");
+        final StringBuilder builder = new StringBuilder(840);
+        builder.append("XBeeReceivePacketExplicitEvent [ieeeAddress=");
         builder.append(ieeeAddress);
         builder.append(", networkAddress=");
         builder.append(networkAddress);

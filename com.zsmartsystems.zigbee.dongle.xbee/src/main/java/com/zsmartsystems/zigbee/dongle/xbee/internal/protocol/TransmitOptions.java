@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2018 by the respective copyright holders.
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,8 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class to implement the XBee Enumeration <b>TransmitOptions</b>.
@@ -19,6 +21,72 @@ public enum TransmitOptions {
     /**
      * Default unknown value
      */
-    UNKNOWN,
-;
+    UNKNOWN(-1),
+
+    /**
+     * [1]
+     */
+    DISABLE_RETRIES(0x0001),
+
+    /**
+     * [8]
+     */
+    MULTICAST_ADDRESSING(0x0008),
+
+    /**
+     * [32]
+     */
+    ENABLE_APS_ENCRYPTION(0x0020),
+
+    /**
+     * [64]
+     */
+    EXTENDED_TRANSMISSION_TIMEOUT(0x0040);
+
+    /**
+     * A mapping between the integer code and its corresponding type to
+     * facilitate lookup by code.
+     */
+    private static Map<Integer, TransmitOptions> codeMapping;
+
+    private int key;
+
+    private TransmitOptions(int key) {
+        this.key = key;
+    }
+
+    private static void initMapping() {
+        codeMapping = new HashMap<Integer, TransmitOptions>();
+        for (TransmitOptions s : values()) {
+            codeMapping.put(s.key, s);
+        }
+    }
+
+    /**
+     * Lookup function based on the type code. Returns null if the code does not exist.
+     *
+     * @param transmitOptions
+     *            the code to lookup
+     * @return enumeration value.
+     */
+    public static TransmitOptions getTransmitOptions(int transmitOptions) {
+        if (codeMapping == null) {
+            initMapping();
+        }
+
+        if (codeMapping.get(transmitOptions) == null) {
+            return UNKNOWN;
+        }
+
+        return codeMapping.get(transmitOptions);
+    }
+
+    /**
+     * Returns the XBee protocol defined value for this enum
+     *
+     * @return the XBee enumeration key
+     */
+    public int getKey() {
+        return key;
+    }
 }

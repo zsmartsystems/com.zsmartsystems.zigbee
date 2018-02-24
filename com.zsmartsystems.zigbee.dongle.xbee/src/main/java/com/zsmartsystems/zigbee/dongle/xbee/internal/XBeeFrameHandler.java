@@ -99,7 +99,7 @@ public class XBeeFrameHandler {
     /**
      * Frame ID counter
      */
-    private final static AtomicInteger frameId = new AtomicInteger();
+    private final AtomicInteger frameId = new AtomicInteger();
 
     /**
      * The maximum number of milliseconds to wait for the response from the stick once the request was sent
@@ -131,6 +131,11 @@ public class XBeeFrameHandler {
     private final int XBEE_FLAG = 0x7E;
     private final int XBEE_ESCAPE = 0x7D;
     private final int XBEE_XOR = 0x20;
+    private final int XBEE_XON = 0x11;
+    private final int XBEE_XOFF = 0x13;
+
+    private final List<Integer> escapeCodes = Arrays
+            .asList(new Integer[] { XBEE_FLAG, XBEE_ESCAPE, XBEE_XON, XBEE_XOFF });
 
     /**
      * Construct which sets input stream where the packet is read from the and
@@ -167,7 +172,7 @@ public class XBeeFrameHandler {
                         for (int value : responseData) {
                             builder.append(String.format(" %02X", value));
                         }
-                        logger.debug("XBEE RX: Data{}", builder.toString());
+                        logger.debug("RX XBEE Data:{}", builder.toString());
 
                         // Use the Event Factory to get an event
                         XBeeEvent event = XBeeEventFactory.getXBeeFrame(responseData);
@@ -177,10 +182,8 @@ public class XBeeFrameHandler {
 
                         // Use the Response Factory to get a response
                         XBeeResponse response = XBeeResponseFactory.getXBeeFrame(responseData);
-                        if (response != null) {
-                            if (notifyResponseReceived(response)) {
-                                sentCommand = null;
-                            }
+                        if (response != null && notifyResponseReceived(response)) {
+                            sentCommand = null;
                         }
                     } catch (Exception e) {
                         logger.error("XBeeFrameHandler exception", e);
@@ -200,9 +203,10 @@ public class XBeeFrameHandler {
         RxStateMachine rxState = RxStateMachine.WAITING;
         int length = 0;
         int cnt = 0;
+        int checksum = 0;
         boolean escaped = false;
 
-        logger.debug("XBEE: Get Packet");
+        logger.trace("XBEE: Get Packet");
         while (!closeHandler) {
             int val = serialPort.read();
             if (val == -1) {
@@ -216,7 +220,7 @@ public class XBeeFrameHandler {
                 logger.debug("XBEE RX buffer overrun - resetting!");
             }
 
-            logger.debug("XBEE RX: {}", String.format("%02X %c", val, val));
+            logger.trace("RX XBEE: {}", String.format("%02X %c", val, val));
 
             if (escaped) {
                 escaped = false;
@@ -248,6 +252,7 @@ public class XBeeFrameHandler {
                     }
                     break;
                 case RECEIVE_DATA:
+                    checksum += val;
                     inputBuffer[cnt++] = val;
                     break;
                 default:
@@ -255,7 +260,11 @@ public class XBeeFrameHandler {
             }
 
             if (cnt == length) {
-                return Arrays.copyOfRange(inputBuffer, 0, length);
+                if ((checksum & 0xff) == 255) {
+                    return Arrays.copyOfRange(inputBuffer, 0, length);
+                } else {
+                    return null;
+                }
             }
         }
 
@@ -296,11 +305,13 @@ public class XBeeFrameHandler {
         synchronized (commandLock) {
             // Are we already processing a command?
             if (sentCommand != null) {
+                logger.trace("TX XBEE Frame outstanding: {}", sentCommand);
                 return;
             }
 
             XBeeCommand nextFrame = sendQueue.poll();
             if (nextFrame == null) {
+                logger.trace("XBEE TX: Nothing to send");
                 // Nothing to send
                 stopTimer();
                 return;
@@ -311,13 +322,20 @@ public class XBeeFrameHandler {
             // Remember the command we're processing
             sentCommand = nextFrame;
 
+            serialPort.write(XBEE_FLAG);
+
             // Send the data
             StringBuilder builder = new StringBuilder();
             for (int sendByte : nextFrame.serialize()) {
                 builder.append(String.format(" %02X", sendByte));
-                serialPort.write(sendByte);
+                if (escapeCodes.contains(sendByte)) {
+                    serialPort.write(XBEE_ESCAPE);
+                    serialPort.write(sendByte ^ XBEE_XOR);
+                } else {
+                    serialPort.write(sendByte);
+                }
             }
-            logger.debug("XBEE TX: Data{}", builder.toString());
+            logger.debug("TX XBEE Data:{}", builder.toString());
 
             // Start the timeout
             startTimer();
@@ -333,7 +351,7 @@ public class XBeeFrameHandler {
     private void queueFrame(XBeeCommand request) {
         sendQueue.add(request);
 
-        logger.debug("TX XBee queue: {}", sendQueue.size());
+        logger.debug("TX XBEE queue: {}: {}", sendQueue.size(), request);
 
         sendNextFrame();
     }
@@ -347,7 +365,7 @@ public class XBeeFrameHandler {
     private boolean notifyResponseReceived(final XBeeResponse response) {
         boolean processed = false;
 
-        logger.debug("XBee response received: {}", response);
+        logger.debug("RX XBEE: {}", response.toString());
         synchronized (transactionListeners) {
             for (XBeeListener listener : transactionListeners) {
                 try {
@@ -402,10 +420,10 @@ public class XBeeFrameHandler {
     /**
      * Notify any event listeners when we receive an event.
      *
-     * @param response the {@link XBeeEvent} received
+     * @param event the {@link XBeeEvent} received
      */
     private void notifyEventReceived(final XBeeEvent event) {
-        logger.debug("XBee event received: {}", event);
+        logger.debug("RX XBEE: {}", event.toString());
         synchronized (eventListeners) {
             for (XBeeEventListener listener : eventListeners) {
                 try {
@@ -439,12 +457,12 @@ public class XBeeFrameHandler {
      * @param command Request {@link XBeeCommand} to send
      * @return response {@link Future} {@link XBeeResponse}
      */
-    private Future<XBeeResponse> sendRequestAsync(final XBeeCommand command) {
+    public Future<XBeeResponse> sendRequestAsync(final XBeeCommand command) {
         class TransactionWaiter implements Callable<XBeeResponse>, XBeeListener {
             private boolean complete = false;
             private XBeeResponse completionResponse = null;
 
-            int ourFrameId = 0;
+            private int ourFrameId = 0;
 
             @Override
             public XBeeResponse call() {

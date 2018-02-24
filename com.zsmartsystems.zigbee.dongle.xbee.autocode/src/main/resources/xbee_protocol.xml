@@ -72,7 +72,7 @@
 	</command>
 
 	<command>
-		<name>ZigBee Transmit Request</name>
+		<name>Transmit Request</name>
 		<id>0x10</id>
 		<description>This frame causes the device to send payload data as an
 			RF packet to a specific destination. n For broadcast transmissions,
@@ -126,6 +126,7 @@
 					addressing, and routing. All unused and unsupported bits must be
 					set to 0.
 				</description>
+				<bitfield>true</bitfield>
 			</parameter>
 			<parameter>
 				<data_type>uint8[]</data_type>
@@ -136,7 +137,7 @@
 	</command>
 
 	<command>
-		<name>Explicit Addressing ZigBee Command Frame</name>
+		<name>Transmit Request Explicit</name>
 		<id>0x11</id>
 		<description>This frame is similar to Transmit Request (0x10), but it
 			also requires you to specify the application layer addressing fields:
@@ -225,6 +226,7 @@
 					addressing, and routing. All unused and unsupported bits must be
 					set to 0.
 				</description>
+				<bitfield>true</bitfield>
 			</parameter>
 			<parameter>
 				<data_type>uint8[]</data_type>
@@ -347,7 +349,7 @@
 	</command>
 
 	<command>
-		<name>ZigBee Transmit Status</name>
+		<name>Transmit Status</name>
 		<id>0x8B</id>
 		<description>When a Transmit Request (0x10, 0x11) completes, the
 			device sends a Transmit Status message out of the serial interface.
@@ -390,7 +392,7 @@
 	</command>
 
 	<command>
-		<name>ZigBee Receive Packet</name>
+		<name>Receive Packet</name>
 		<id>0x90</id>
 		<description>When a device configured with a standard API Rx Indicator
 			(AO = 0) receives an RF data packet, it sends it out the serial
@@ -422,7 +424,7 @@
 	</command>
 
 	<command>
-		<name>ZigBee Explicit Rx Indicator</name>
+		<name>Receive Packet Explicit</name>
 		<id>0x91</id>
 		<description>When a device configured with explicit API Rx Indicator
 			(AO = 1) receives an RF packet, it sends it out the serial interface
@@ -496,7 +498,7 @@
 	</command>
 
 	<command>
-		<name>Route Record Indicator</name>
+		<name>Route Record</name>
 		<id>0xA1</id>
 		<description>The route record indicator is received whenever a device
 			sends a ZigBee route record command. The device uses the route record
@@ -541,7 +543,7 @@
 	</command>
 
 	<command>
-		<name>Many-to-One Route Request Indicator</name>
+		<name>Many-to-One Route Request</name>
 		<id>0xA3</id>
 		<description>The many-to-one route request indicator frame is sent out
 			the serial port when a many-to-one route request is received.
@@ -571,26 +573,26 @@
 	<enum>
 		<name>TransmitOptions</name>
 		<values>
-			<parameter>
+			<value>
 				<enum_value>0x0001</enum_value>
 				<name>Disable Retries</name>
 				<description></description>
-			</parameter>
-			<parameter>
+			</value>
+			<value>
 				<enum_value>0x0008</enum_value>
 				<name>Multicast Addressing</name>
 				<description></description>
-			</parameter>
-			<parameter>
+			</value>
+			<value>
 				<enum_value>0x0020</enum_value>
 				<name>Enable APS encryption</name>
 				<description></description>
-			</parameter>
-			<parameter>
+			</value>
+			<value>
 				<enum_value>0x0040</enum_value>
 				<name>Extended Transmission Timeout</name>
 				<description></description>
-			</parameter>
+			</value>
 		</values>
 	</enum>
 
@@ -815,7 +817,28 @@
 		</values>
 	</enum>
 
+	<enum>
+		<name>EncryptionOptions</name>
+		<values>
+			<value>
+				<enum_value>0x0001</enum_value>
+				<name>Send NWK Key in clear</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0002</enum_value>
+				<name>Enable Trust Centre</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0008</enum_value>
+				<name>Authenticate Joining</name>
+				<description></description>
+			</value>
+		</values>
+	</enum>
 
+<!-- AT Command Parameters -->
 
 	<at_command>
 		<name>Firmware Version</name>
@@ -827,6 +850,38 @@
 			<parameter>
 				<data_type>Data</data_type>
 				<name>Firmware Version</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Ieee Address High</name>
+		<description>Displays the upper 32 bits of the unique IEEE 64-bit extended address assigned to the XBee in the factory.
+		</description>
+		<command>SH</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>Ieee Address</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Ieee Address Low</name>
+		<description>DisplaLs the lower 32 bits of the unique IEEE 64-bit extended address assigned to the XBee in the factory.
+		</description>
+		<command>SL</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>Ieee Address</name>
 				<description>
 				</description>
 			</parameter>
@@ -859,6 +914,376 @@
 			<parameter>
 				<data_type>Data</data_type>
 				<name>Hardware Version</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Active Scan</name>
+		<description>Scans the neighborhood for beacon responses. The AS command is only valid as a local command.
+		</description>
+		<command>AS</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>AS_type</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Channel</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>Extended PAN ID</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Allow Join</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Stack Profile</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>LQI</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>RSSI</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Save Data</name>
+		<description>Writes parameter values to non-volatile memory so that parameter modifications persist through subsequent resets.
+		</description>
+		<command>WR</command>
+		<getter>false</getter>
+		<response_parameters>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Reset</name>
+		<description>This command sets all parameters except ZS and KY to their default values. To change ZS and KY, you must explicitly set them. In order for the default parameters to persist through subsequent resets, send a separate WR command after RE. Read-only parameters are not directly affected by RE and reflect the current state of the device.
+		</description>
+		<command>RE</command>
+		<getter>false</getter>
+		<response_parameters>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Software Reset</name>
+		<description>Resets the device. The device responds immediately with an OK and performs a reset 100 ms later. If you issue FR while the device is in Command Mode, the reset effectively exits Command mode.</description>
+		<command>FR</command>
+		<getter>false</getter>
+		<response_parameters>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Network Reset</name>
+		<description>Resets network layer parameters on one or more modules within a PAN. Responds immediately with 	an OK then causes a network restart. The device loses all network configuration and routing information. If NR = 0: Resets network layer parameters on the node issuing the command. If NR = 1: Sends broadcast transmission to reset network layer parameters on all nodes in the PAN.</description>
+		<command>NR</command>
+		<getter>false</getter>
+		<command_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Reset Remote Devices</name>
+				<description>Sends broadcast transmission to reset network layer parameters on all nodes in the PAN.
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Reset Remote Devices</name>
+				<description>Sends broadcast transmission to reset network layer parameters on all nodes in the PAN.
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Node Discovery</name>
+		<description></description>
+		<command>ND</command>
+		<getter>false</getter>
+		<response_parameters>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Network Key</name>
+		<description>Set the 128-bit AES network encryption key. This command is write-only and cannot be read. If set to 0 (default), the device selects a random network key.</description>
+		<command>NK</command>
+		<getter>false</getter>
+		<command_parameters>
+			<parameter>
+				<data_type>ZigBeeKey</data_type>
+				<name>Network Key</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Link Key</name>
+		<description>Sets the 128-bit AES link key value that the device uses for encryption and decryption. This command
+is write-only and cannot be read. If you set KY to 0 the coordinator transmits the network key in the
+clear to joining devices, and joining devices acquire the network key in the clear when joining.</description>
+		<command>KY</command>
+		<getter>false</getter>
+		<command_parameters>
+			<parameter>
+				<data_type>ZigBeeKey</data_type>
+				<name>Link Key</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Encryption Enable</name>
+		<description>Set or read the encryption enable setting.</description>
+		<command>EE</command>
+		<command_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Enable Encryption</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Enable Encryption</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Encryption Options</name>
+		<description>Set or read the encryption enable setting.</description>
+		<command>EO</command>
+		<command_parameters>
+			<parameter>
+				<data_type>EncryptionOptions</data_type>
+				<name>Encryption Options</name>
+				<description>
+				</description>
+				<bitfield>true</bitfield>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Join Notification</name>
+		<description>Set or read the join notification setting.
+If enabled, the device transmits a broadcast node identification packet on power up and when joining.
+This action blinks the Associate LED rapidly on all devices that receive the transmission, and sends an
+API frame out the serial port of API devices.
+Digi recommends you disable this feature for large networks to prevent excessive broadcasts.</description>
+		<command>JN</command>
+		<command_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Enable Notification</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Enable Notification</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>ZigBee Stack Profile</name>
+		<description>Set or read the Zigbee stack profile value. This must be the same on all devices that will join the same
+network. Effective with release 4x5E, changing ZS to a different value causes all current parameters
+to be written to persistent storage.</description>
+		<command>ZS</command>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Stack Profile</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Stack Profile</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+	
+	<at_command>
+		<name>Energy Scan</name>
+		<description>Start an Energy Detect scan. This command accepts an argument to specify the time in milliseconds
+to scan IEEE 802.15.4 channels 11 through 26. The device loops through all 16 channels until the time
+elapses and returns the maximal energy on each channel. In Transparent mode, a comma must follow each value with the list ending with a carriage return. The values returned reflect the detected energy
+level in units of -dBm. Convert an ED response of 49, 3A, and so on, to decimal to become -73 dBm, -58
+dBm, and so on.</description>
+		<command>ED</command>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Scan Time</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+	</at_command>
+
+	<at_command>
+		<name>PAN ID</name>
+		<description>Read the 16-bit PAN ID. The OI value reflects the actual 16-bit PAN ID where the device is running.</description>
+		<command>OI</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Pan Id</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Extended PAN ID Config</name>
+		<description>Set or read the 64-bit extended PAN ID. If set to 0, the coordinator selects a random extended PAN ID,
+and the router/end device joins any extended PAN ID.</description>
+		<command>ID</command>
+		<setter>false</setter>
+		<command_parameters>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>Extended Pan Id</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>Extended Pan Id</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+	
+	<at_command>
+		<name>Extended PAN ID</name>
+		<description>Read the 64-bit extended PAN ID. The OP value reflects the operating extended PAN ID where the
+device is running. If ID > 0, OP equals ID</description>
+		<command>OP</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>Extended Pan Id</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Coordinator Enable</name>
+		<description>Sets or displays whether the device is a coordinator. (SM must be 0 to set CE to 1).</description>
+		<command>CE</command>
+		<command_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Enable</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Enable</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>API Mode</name>
+		<description>Configure the options for API. The current options select the type of receive API frame to send out the UART for received RF data packets.
+		0 Default API Rx Indicator enabled
+1 Default API Explicit Rx Indicator - 0x91, this is for Explicit Addressing data frames.
+3 Enable ZDO passthrough of ZDO requests to the serial port that are not supported by the stack, as well as Simple_Desc_req, Active_EP_req, and Match_Desc_req.
+		</description>
+		<command>AO</command>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Mode</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Mode</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>API Enable</name>
+		<description>Enables API Mode. The device ignores this command when using SPI. API mode 1 is always used.</description>
+		<command>AP</command>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Mode</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Mode</name>
 				<description>
 				</description>
 			</parameter>

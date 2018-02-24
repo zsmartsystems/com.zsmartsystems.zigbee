@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2018 by the respective copyright holders.
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,9 +9,12 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.TransmitOptions;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
- * Class to implement the XBee command <b>ZigBee Transmit Request</b>.
+ * Class to implement the XBee command <b>Transmit Request</b>.
  * <p>
  * This frame causes the device to send payload data as an
 			RF packet to a specific
@@ -47,7 +50,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.TransmitOptions;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class XBeeZigbeeTransmitRequestCommand extends XBeeFrame implements XBeeCommand {
+public class XBeeTransmitRequestCommand extends XBeeFrame implements XBeeCommand {
     /**
      * The frame Id
 				
@@ -92,7 +95,7 @@ public class XBeeZigbeeTransmitRequestCommand extends XBeeFrame implements XBeeC
 					set to 0.
 				
      */
-    private TransmitOptions options;
+    private List<TransmitOptions> options = new ArrayList<TransmitOptions>();
 
     /**
      * Data sent to the destination device.
@@ -155,10 +158,56 @@ public class XBeeZigbeeTransmitRequestCommand extends XBeeFrame implements XBeeC
 					set to 0.
 				
      *
-     * @param options the options to set as {@link TransmitOptions}
+     * @param Options the options to add to the {@link Set} as {@link TransmitOptions}
      */
-    public void setOptions(TransmitOptions options) {
-        this.options = options;
+    public void addOptions(TransmitOptions options) {
+        this.options.add(options);
+    }
+
+    /**
+     * 0x01 - Disable retries. 0x20 - Enable APS encryption
+					(if EE=1). 0x40 - Use the extended
+     * transmission timeout for this
+					destination. Enabling APS encryption decreases the
+     * maximum number
+					of RF payload bytes by 4 (below the value reported by NP).
+     * Setting
+					the extended timeout bit causes the stack to set the
+     * extended
+					transmission timeout for the destination address. See
+     * Transmission,
+					addressing, and routing. All unused and unsupported bits must
+     * be
+					set to 0.
+				
+     *
+     * @param options the options to remove to the {@link Set} as {@link TransmitOptions}
+     */
+    public void removeOptions(TransmitOptions options) {
+        this.options.remove(options);
+    }
+
+    /**
+     * 0x01 - Disable retries. 0x20 - Enable APS encryption
+					(if EE=1). 0x40 - Use the extended
+     * transmission timeout for this
+					destination. Enabling APS encryption decreases the
+     * maximum number
+					of RF payload bytes by 4 (below the value reported by NP).
+     * Setting
+					the extended timeout bit causes the stack to set the
+     * extended
+					transmission timeout for the destination address. See
+     * Transmission,
+					addressing, and routing. All unused and unsupported bits must
+     * be
+					set to 0.
+				
+     *
+     * @param options the options to set to the {@link Set} as {@link TransmitOptions}
+     */
+    public void setOptions(Collection<TransmitOptions> options) {
+        this.options.addAll(options);
     }
 
     /**
@@ -185,10 +234,10 @@ public class XBeeZigbeeTransmitRequestCommand extends XBeeFrame implements XBeeC
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(572);
+        final StringBuilder builder = new StringBuilder(566);
         // First present the command parameters...
         // Then the responses later if they are available
-        builder.append("XBeeZigbeeTransmitRequestCommand [frameId=");
+        builder.append("XBeeTransmitRequestCommand [frameId=");
         builder.append(frameId);
         builder.append(", ieeeAddress=");
         builder.append(ieeeAddress);

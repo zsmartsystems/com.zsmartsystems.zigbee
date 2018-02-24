@@ -70,6 +70,12 @@ public class XBeeFrameHandlerTest {
     }
 
     @Test
+    public void testReceivePacketBadChecksum() {
+        int[] response = getPacket("7E 00 02 8A 06 6E");
+        assertNull(response);
+    }
+
+    @Test
     public void testReceivePacketWithPreamble() {
         int[] response = getPacket("00 11 22 7E 00 02 8A 06 6F");
         assertNotNull(response);

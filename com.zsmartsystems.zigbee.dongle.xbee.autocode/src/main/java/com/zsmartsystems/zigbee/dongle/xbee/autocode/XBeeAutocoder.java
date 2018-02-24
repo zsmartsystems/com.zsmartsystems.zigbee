@@ -157,12 +157,16 @@ public class XBeeAutocoder {
                     if (nodes.item(temp).getNodeName().equals("data_type")) {
                         parameter.data_type = nodes.item(temp).getTextContent();
                         parameter.multiple = false;
+                        parameter.bitfield = false;
                     }
                     if (nodes.item(temp).getNodeName().equals("name")) {
                         parameter.name = nodes.item(temp).getTextContent();
                     }
                     if (nodes.item(temp).getNodeName().equals("optional")) {
                         parameter.optional = nodes.item(temp).getTextContent().toLowerCase().equals("true");
+                    }
+                    if (nodes.item(temp).getNodeName().equals("bitfield")) {
+                        parameter.bitfield = nodes.item(temp).getTextContent().toLowerCase().equals("true");
                     }
                     if (nodes.item(temp).getNodeName().equals("multiple")) {
                         parameter.multiple = nodes.item(temp).getTextContent().toLowerCase().equals("true");

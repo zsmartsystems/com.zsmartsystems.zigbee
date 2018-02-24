@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2018 by the respective copyright holders.
+ * Copyright (c) 2016-2017 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,11 +7,12 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
 
 /**
  * Class to implement the XBee command <b>Hardware Version</b>.
  * <p>
- * Display the hardware version number of the device.
+ * AT Command <b>HV</b></p>Display the hardware version number of the device.
 		
  * <p>
  * This class provides methods for processing XBee API commands.
@@ -28,6 +29,11 @@ public class XBeeHardwareVersionResponse extends XBeeFrame implements XBeeRespon
 
     /**
      * Response field
+     */
+    private CommandStatus commandStatus;
+
+    /**
+     * Response field
      * 
 				
      */
@@ -39,6 +45,14 @@ public class XBeeHardwareVersionResponse extends XBeeFrame implements XBeeRespon
      */
     public Integer getFrameId() {
         return frameId;
+    }
+
+    /**
+     *
+     * @return the commandStatus as {@link CommandStatus}
+     */
+    public CommandStatus getCommandStatus() {
+        return commandStatus;
     }
 
     /**
@@ -62,15 +76,20 @@ public class XBeeHardwareVersionResponse extends XBeeFrame implements XBeeRespon
         frameId = deserializeInt8();
         deserializeAtCommand();
 
+        // Deserialize field "Command Status"
+        commandStatus = deserializeCommandStatus();
+
         // Deserialize field "Hardware Version"
         hardwareVersion = deserializeData();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(387);
+        final StringBuilder builder = new StringBuilder(477);
         builder.append("XBeeHardwareVersionResponse [frameId=");
         builder.append(frameId);
+        builder.append(", commandStatus=");
+        builder.append(commandStatus);
         builder.append(", hardwareVersion=");
         if (hardwareVersion == null) {
             builder.append("null");
