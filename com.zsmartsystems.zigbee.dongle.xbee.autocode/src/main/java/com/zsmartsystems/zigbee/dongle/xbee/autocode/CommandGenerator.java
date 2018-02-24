@@ -28,9 +28,67 @@ public class CommandGenerator extends ClassGenerator {
     final String commandPackage = "com.zsmartsystems.zigbee.dongle.xbee.internal.protocol";
     final String enumPackage = "com.zsmartsystems.zigbee.dongle.xbee.internal.protocol";
 
-    Map<String, String> events = new TreeMap<String, String>();
+    Map<Integer, String> events = new TreeMap<Integer, String>();
 
     public void go(Protocol protocol) throws FileNotFoundException {
+        // Create "API" commands for AT commands
+        for (Command atCommand : protocol.at_commands) {
+            Parameter idParameter = new Parameter();
+            idParameter.name = "Frame ID";
+            idParameter.data_type = "uint8";
+            idParameter.multiple = false;
+
+            Parameter atParameter = new Parameter();
+            atParameter.name = "AT Parameter";
+            atParameter.data_type = "AtCommand";
+            atParameter.value = '"' + atCommand.command + '"';
+
+            if (atCommand.getter) {
+                Command command = new Command();
+                command.id = 0x08;
+                command.name = "Get " + atCommand.name;
+                command.description = atCommand.description;
+                command.command_parameters = new ArrayList<ParameterGroup>();
+                command.response_parameters = new ArrayList<ParameterGroup>();
+                ParameterGroup commandGroup = new ParameterGroup();
+                commandGroup.parameters = new ArrayList<Parameter>();
+                commandGroup.parameters.add(idParameter);
+                commandGroup.parameters.add(atParameter);
+                command.command_parameters.add(commandGroup);
+                protocol.commands.add(command);
+            }
+
+            if (atCommand.setter) {
+                Command command = new Command();
+                command.id = 0x08;
+                command.name = "Set " + atCommand.name;
+                command.description = atCommand.description;
+                command.command_parameters = new ArrayList<ParameterGroup>();
+                command.response_parameters = new ArrayList<ParameterGroup>();
+                ParameterGroup commandGroup = new ParameterGroup();
+                commandGroup.parameters = new ArrayList<Parameter>();
+                commandGroup.parameters.add(idParameter);
+                commandGroup.parameters.add(atParameter);
+                commandGroup.parameters.addAll(atCommand.response_parameters.get(0).parameters);
+                command.command_parameters.add(commandGroup);
+                protocol.commands.add(command);
+            }
+
+            Command response = new Command();
+            response.id = 0x88;
+            response.name = atCommand.name;
+            response.description = atCommand.description;
+            response.command_parameters = new ArrayList<ParameterGroup>();
+            response.response_parameters = new ArrayList<ParameterGroup>();
+            ParameterGroup responseGroup = new ParameterGroup();
+            responseGroup.parameters = new ArrayList<Parameter>();
+            responseGroup.parameters.add(idParameter);
+            responseGroup.parameters.add(atParameter);
+            responseGroup.parameters.addAll(atCommand.response_parameters.get(0).parameters);
+            response.response_parameters.add(responseGroup);
+            protocol.commands.add(response);
+        }
+
         String packageName;
         String className;
         for (Command command : protocol.commands) {
@@ -38,19 +96,26 @@ public class CommandGenerator extends ClassGenerator {
             if (command.command_parameters.size() > 0) {
                 className = "XBee" + stringToUpperCamelCase(command.name) + "Command";
             } else {
-                className = "XBee" + stringToUpperCamelCase(command.name) + "Event";
+                String responseType = "Event";
+                for (Parameter parameter : command.response_parameters.get(0).parameters) {
+                    if (parameter.name.toUpperCase().equals("FRAME ID")) {
+                        responseType = "Response";
+                    }
+
+                }
+                className = "XBee" + stringToUpperCamelCase(command.name) + responseType;
             }
 
             createCommandClass(packageName, className, command, command.command_parameters,
                     command.response_parameters);
-
         }
 
         for (Enumeration enumeration : protocol.enumerations) {
             createEnumClass(enumeration);
         }
 
-        createFrameClass();
+        createEventFactory("Event", protocol);
+        createEventFactory("Response", protocol);
     }
 
     private void createCommandClass(String packageName, String className, Command command,
@@ -61,7 +126,12 @@ public class CommandGenerator extends ClassGenerator {
         }
         // Create a list of async events that we need to handle
         if (className.endsWith("Event")) {
-            // events.put(command.response_parameters.get(0).prompt, className);
+            events.put(command.id, className);
+        }
+
+        // Create a list of responses that we need to handle
+        if (className.endsWith("Response")) {
+            // responses.put(command.id, className);
         }
 
         System.out.println("Processing command class " + command.name + "  [" + className + "()]");
@@ -96,9 +166,13 @@ public class CommandGenerator extends ClassGenerator {
             out.print("XBeeCommand ");
         }
 
-        if (responseParameterGroup.size() > 0) {
+        if (className.endsWith("Event")) {
             out.print("XBeeEvent ");
         }
+        if (className.endsWith("Response")) {
+            out.print("XBeeResponse ");
+        }
+
         out.println("{");
 
         for (ParameterGroup group : commandParameterGroup) {
@@ -106,7 +180,8 @@ public class CommandGenerator extends ClassGenerator {
                 if (parameter.auto_size != null) {
                     continue;
                 }
-                if ("CONSTANT".equals(parameter.data_type.toUpperCase())) {
+                // Constant...
+                if (parameter.value != null && parameter.value.length() != 0) {
                     continue;
                 }
 
@@ -127,7 +202,8 @@ public class CommandGenerator extends ClassGenerator {
                 if (parameter.auto_size != null) {
                     continue;
                 }
-                if ("CONSTANT".equals(parameter.data_type.toUpperCase())) {
+                // Constant
+                if (parameter.value != null && parameter.value.length() != 0) {
                     continue;
                 }
 
@@ -190,8 +266,9 @@ public class CommandGenerator extends ClassGenerator {
 
                     first = false;
 
-                    if ("CONSTANT".equals(parameter.data_type.toUpperCase())) {
-                        out.println(indent + "serializeInt8(" + parameter.value + ");");
+                    if (parameter.value != null && parameter.value.length() != 0) {
+                        out.println(indent + "serialize" + getTypeSerializer(parameter.data_type) + "("
+                                + parameter.value + ");");
                         continue;
                     }
 
@@ -418,7 +495,8 @@ public class CommandGenerator extends ClassGenerator {
             if (parameter.auto_size != null) {
                 continue;
             }
-            if ("CONSTANT".equals(parameter.data_type.toUpperCase())) {
+            // Constant...
+            if (parameter.value != null && parameter.value.length() != 0) {
                 continue;
             }
 
@@ -454,7 +532,9 @@ public class CommandGenerator extends ClassGenerator {
             if (parameter.auto_size != null) {
                 continue;
             }
-            if ("CONSTANT".equals(parameter.data_type.toUpperCase())) {
+
+            // Constant...
+            if (parameter.value != null && parameter.value.length() != 0) {
                 continue;
             }
 
@@ -547,8 +627,9 @@ public class CommandGenerator extends ClassGenerator {
 
         int cnt = 0;
         for (Parameter parameter : group.parameters) {
-            if ("CONSTANT".equals(parameter.data_type.toUpperCase())) {
-                // out.println(indent + "stepDeserializer();");
+            // Constant
+            if (parameter.value != null && parameter.value.length() != 0) {
+                out.println(indent + "deserialize" + getTypeSerializer(parameter.data_type) + "();");
                 continue;
             }
 
@@ -581,12 +662,6 @@ public class CommandGenerator extends ClassGenerator {
                 out.println(" [optional]");
             } else {
                 out.println();
-            }
-
-            if (cnt < group.parameters.size()) {
-                if (parameter.optional != null && parameter.optional == true) {
-                    out.println(indent + "pushDeserializer();");
-                }
             }
 
             if (parameter.auto_size != null) {
@@ -659,7 +734,8 @@ public class CommandGenerator extends ClassGenerator {
             if (parameter.auto_size != null) {
                 continue;
             }
-            if ("CONSTANT".equals(parameter.data_type.toUpperCase())) {
+            // Constant...
+            if (parameter.value != null && parameter.value.length() != 0) {
                 continue;
             }
 
@@ -854,96 +930,111 @@ public class CommandGenerator extends ClassGenerator {
         out.close();
     }
 
-    private int hashString(String in) {
-        int hash = 0;
-        int multiplier = 1;
-        for (byte val : in.getBytes()) {
-            hash += (val & 0xff) * multiplier;
-            int shifted = multiplier << 5;
-            multiplier = shifted - multiplier;
-        }
-
-        return hash;
-    }
-
-    private void createFrameClass() throws FileNotFoundException {
-        // Do a quick check to make sure we don't have duplicate hash's
-        List<Integer> hashcodes = new ArrayList<Integer>();
-        for (String event : events.values()) {
-            int hash = hashString(event);
-            if (hashcodes.contains(hash)) {
-                System.out.println("*********** OOOOOPS - duplicate hashcode!!!  ");
-            }
-            hashcodes.add(hash);
-        }
-
+    private void createEventFactory(String className, Protocol protocol) throws FileNotFoundException {
         StringWriter stringWriter = new StringWriter();
         PrintWriter out = new PrintWriter(stringWriter);
 
         clearImports();
-        addImport(commandPackage + ".XBeeEvent");
+        addImport(commandPackage + ".XBee" + className);
         addImport("java.lang.reflect.Constructor");
         addImport("org.slf4j.Logger");
         addImport("org.slf4j.LoggerFactory");
         addImport("java.util.Map");
         addImport("java.util.concurrent.ConcurrentHashMap");
 
-        for (String event : events.values()) {
-            addImport(commandPackage + "." + event);
-        }
         out.println();
 
         out.println("/**");
-        out.println(" * Helper factory class to create XBee event classes.");
+        out.println(" * Helper factory class to create {@link XBee" + className + "} classes.");
         out.println(" * <p>");
         out.println(" * Note that this code is autogenerated. Manual changes may be overwritten.");
         out.println(" *");
         out.println(" * @author Chris Jackson - Initial contribution of Java code generator");
         out.println(" */");
 
-        out.println("public class XBeeEventFactory {");
+        out.println("public class XBee" + className + "Factory {");
         out.println("    private final static Logger logger = LoggerFactory.getLogger(XBeeEventFactory.class);");
         out.println();
 
         out.println("    private static Map<Integer, Class<?>> events = new ConcurrentHashMap<Integer, Class<?>>();");
+        if (className == "Response") {
+            out.println(
+                    "    private static Map<Integer, Class<?>> atCommands = new ConcurrentHashMap<Integer, Class<?>>();");
+        }
         out.println();
 
         Map<Integer, String> sortedEvents = new TreeMap<Integer, String>();
-        for (String event : events.keySet()) {
-            if (sortedEvents.containsKey(hashString(event))) {
-                System.out
-                        .println("Duplicate hash " + events.get(event) + " === " + sortedEvents.get(hashString(event)));
+        for (Command command : protocol.commands) {
+            if (command.command_parameters.size() > 0) {
+                continue;
             }
-            sortedEvents.put(hashString(event), events.get(event));
+            String responseType = "Event";
+            for (Parameter parameter : command.response_parameters.get(0).parameters) {
+                if (parameter.name.toUpperCase().equals("FRAME ID")) {
+                    responseType = "Response";
+                    break;
+                }
+            }
+            if (className != responseType) {
+                continue;
+            }
+
+            // The following check is necessary to prevent the AT command class from overwriting the actual AT Response
+            if (sortedEvents.get(command.id) != null) {
+                continue;
+            }
+
+            String eventClassName = "XBee" + stringToUpperCamelCase(command.name) + responseType;
+            sortedEvents.put(command.id, eventClassName);
+            addImport(commandPackage + "." + eventClassName);
         }
 
         out.println("    static {");
+        out.println("        // Define the API commands");
         for (Integer event : sortedEvents.keySet()) {
-            out.println("        events.put(" + String.format("0x%08X", event) + ", " + sortedEvents.get(event)
+            out.println("        events.put(" + String.format("0x%02X", event) + ", " + sortedEvents.get(event)
                     + ".class);");
+        }
+
+        if (className == "Response") {
+            Map<String, String> sortedAt = new TreeMap<String, String>();
+
+            out.println();
+            out.println("        // Define the AT commands");
+            for (Command atCommand : protocol.at_commands) {
+                addImport(commandPackage + ".XBee" + stringToUpperCamelCase(atCommand.name) + "Response");
+                sortedAt.put(atCommand.command, atCommand.name);
+            }
+
+            for (String cmd : sortedAt.keySet()) {
+                Integer cmdInt = Integer.valueOf(cmd.charAt(1) + (cmd.charAt(0) << 8));
+                out.println("        atCommands.put(" + String.format("0x%04X", cmdInt) + ", XBee"
+                        + stringToUpperCamelCase(sortedAt.get(cmd)) + "Response.class); // " + cmd);
+            }
+
         }
         out.println("    }");
         out.println();
 
-        out.println("    public static XBeeEvent getXBeeFrame(int[] data) {");
+        out.println("    public static XBee" + className + " getXBeeFrame(int[] data) {");
 
-        out.println("        // Create the hash of the prompt");
-        out.println("        int hash = 0;");
-        out.println("        int multiplier = 1;");
-        out.println("        for (int value : data) {");
-        out.println("            if (value == '\\n' || value == ':' || value == '=') {");
-        out.println("                break;");
-        out.println("            }");
+        if (className == "Response") {
+            out.println("        Class<?> xbeeClass = null;");
+            out.println();
+            out.println("        // Try and correlate any AT command responses first");
+            out.println("        if (data[2] == 0x88) {");
+            out.println("            xbeeClass = atCommands.get((data[4] << 8) + data[5]);");
+            out.println("        }");
+            out.println();
+            out.println("        // If not found, then use the API commands");
+            out.println("        if (xbeeClass == null) {");
+            out.println("            xbeeClass = events.get(data[2]);");
+            out.println("        }");
+        } else {
+            out.println("        Class<?> xbeeClass = events.get(data[2]);");
+        }
         out.println();
-
-        out.println("            hash += (value & 0xff) * multiplier;");
-        out.println("            int shifted = multiplier << 5;");
-        out.println("            multiplier = shifted - multiplier;");
-
-        out.println("        }");
-        out.println();
-
-        out.println("        Class<?> xbeeClass = events.get(hash);");
+        out.println("        // No handler found");
         out.println("        if (xbeeClass == null) {");
         out.println("            return null;");
         out.println("        }");
@@ -951,11 +1042,11 @@ public class CommandGenerator extends ClassGenerator {
         out.println("        Constructor<?> ctor;");
         out.println("        try {");
         out.println("            ctor = xbeeClass.getConstructor();");
-        out.println("            XBeeEvent xbeeEvent = (XBeeEvent) ctor.newInstance();");
-        out.println("            xbeeEvent.deserialize(data);");
-        out.println("            return xbeeEvent;");
+        out.println("            XBee" + className + " xbeeFrame = (XBee" + className + ") ctor.newInstance();");
+        out.println("            xbeeFrame.deserialize(data);");
+        out.println("            return xbeeFrame;");
         out.println("        } catch (Exception e) {");
-        out.println("            logger.debug(\"Error creating instance of XBee event\", e);");
+        out.println("            logger.debug(\"Error creating instance of XBee" + className + "\", e);");
         out.println("        }");
         out.println();
         out.println("        return null;");
@@ -966,7 +1057,7 @@ public class CommandGenerator extends ClassGenerator {
         out.flush();
 
         File packageFile = new File(sourceRootPath + internalPackage.replace(".", "/"));
-        PrintWriter outFile = getClassOut(packageFile, "XBeeEventFactory");
+        PrintWriter outFile = getClassOut(packageFile, "XBee" + className + "Factory");
 
         outputCopywrite(outFile);
         outFile.println("package " + internalPackage + ";");

@@ -13,7 +13,14 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
  * @author Chris Jackson
  *
  */
-public interface XBeeEvent {
+public interface XBeeResponse {
+    /**
+     * Gets the frame Id used to correct the request and response
+     *
+     * @return frame ID
+     */
+    public Integer getFrameId();
+
     /**
      * Deserialize an incoming data packet.
      * <p>

@@ -64,12 +64,16 @@ public class XBeeAutocoder {
             case "protocol":
                 Protocol protocol = new Protocol();
                 protocol.commands = new ArrayList<Command>();
+                protocol.at_commands = new ArrayList<Command>();
                 protocol.structures = new ArrayList<Structure>();
                 protocol.enumerations = new ArrayList<Enumeration>();
 
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
                     if (nodes.item(temp).getNodeName().equals("command")) {
                         protocol.commands.add((Command) processNode(nodes.item(temp)));
+                    }
+                    if (nodes.item(temp).getNodeName().equals("at_command")) {
+                        protocol.at_commands.add((Command) processNode(nodes.item(temp)));
                     }
                     if (nodes.item(temp).getNodeName().equals("structure")) {
                         protocol.structures.add((Structure) processNode(nodes.item(temp)));
@@ -80,21 +84,19 @@ public class XBeeAutocoder {
                 }
                 return protocol;
             case "command":
+            case "at_command":
                 Command command = new Command();
                 command.command_parameters = new ArrayList<ParameterGroup>();
                 command.response_parameters = new ArrayList<ParameterGroup>();
+                command.getter = true;
+                command.setter = true;
 
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
                     if (nodes.item(temp).getNodeName().equals("name")) {
                         command.name = nodes.item(temp).getTextContent();
                     }
-                    if (nodes.item(temp).getNodeName().equals("class")) {
-                        String id = nodes.item(temp).getTextContent();
-                        if (id.startsWith("0x")) {
-                            command.cmdClass = Integer.parseInt(id.substring(2), 16);
-                        } else {
-                            command.cmdClass = Integer.parseInt(id.substring(2));
-                        }
+                    if (nodes.item(temp).getNodeName().equals("command")) {
+                        command.command = nodes.item(temp).getTextContent();
                     }
                     if (nodes.item(temp).getNodeName().equals("id")) {
                         String id = nodes.item(temp).getTextContent();
@@ -113,6 +115,12 @@ public class XBeeAutocoder {
                     }
                     if (nodes.item(temp).getNodeName().equals("response_parameters")) {
                         command.response_parameters.add((ParameterGroup) processNode(nodes.item(temp)));
+                    }
+                    if (nodes.item(temp).getNodeName().equals("getter")) {
+                        command.getter = Boolean.valueOf(nodes.item(temp).getTextContent());
+                    }
+                    if (nodes.item(temp).getNodeName().equals("setter")) {
+                        command.setter = Boolean.valueOf(nodes.item(temp).getTextContent());
                     }
                 }
                 System.out.println("Done: Command - " + command.name);
@@ -178,7 +186,7 @@ public class XBeeAutocoder {
                         parameter.defaultValue = nodes.item(temp).getTextContent();
                     }
                     if (nodes.item(temp).getNodeName().equals("value")) {
-                        parameter.value = Integer.parseInt(nodes.item(temp).getTextContent());
+                        parameter.value = nodes.item(temp).getTextContent();
                     }
                     if (nodes.item(temp).getNodeName().equals("display")) {
                         String display = nodes.item(temp).getTextContent();

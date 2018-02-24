@@ -120,7 +120,7 @@ public class XBeeRouteRecordIndicatorEvent extends XBeeFrame implements XBeeEven
         int numberOfAddresses = deserializeInt8();
 
         // Deserialize field "Address List"
-        addressList= deserializeInt16Array(numberOfAddresses);
+        addressList = deserializeInt16Array(numberOfAddresses);
     }
 
     @Override

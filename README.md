@@ -33,7 +33,11 @@ echo 10c4 89fb > /sys/bus/usb-serial/drivers/cp210x/new_id
 ### ConBee / RaspBee
 
 The library supports the Dresden Electronics RaspBee and ConBee dongles. Note that this requires some further work.
- 
+
+### XBee
+
+The XBee S2C XStick is supported.
+
 ## Tested Hardware
  
 ## ZigBee Dongles and Chipsets
@@ -42,7 +46,7 @@ The following table provides a summary of some of the dongles / chipsets that ar
  
 | Model                 | Support         | Receive     | Transmit     | Antenna  |
 |-----------------------|-----------------|-------------|--------------|----------|
-| Xbee XU-Z11           | No              | -90dBm      | +4.5dBm      | Internal |
+| Xbee XU-Z11           | Yes             | -90dBm      | +4.5dBm      | Internal |
 | EM358                 | Yes (EZSP)      | -100dBm     | +8.0dBm      | Internal |
 | **EM358LR**           | Yes (EZSP)      | -103dBm     | **+20.0dBm** | Internal |
 | MGM111                | Yes (EZSP)      | -99dBm      | +10dBm       | Internal |

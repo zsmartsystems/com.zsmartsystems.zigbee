@@ -11,10 +11,10 @@ import org.junit.Test;
  * @author Chris Jackson
  *
  */
-public class XBeeAtCommandCommandTest {
+public class XBeeAtCommandTest {
     @Test
     public void test() {
-        XBeeAtCommandCommand command = new XBeeAtCommandCommand();
+        XBeeAtCommand command = new XBeeAtCommand();
 
         command.setFrameId(0);
         command.setAtCommand("AB");
@@ -25,7 +25,7 @@ public class XBeeAtCommandCommandTest {
 
     @Test
     public void test2() {
-        XBeeAtCommandCommand command = new XBeeAtCommandCommand();
+        XBeeAtCommand command = new XBeeAtCommand();
 
         command.setFrameId(0x52);
         command.setAtCommand("NJ");

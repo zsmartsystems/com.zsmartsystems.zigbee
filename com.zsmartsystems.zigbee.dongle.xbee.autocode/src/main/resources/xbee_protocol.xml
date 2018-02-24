@@ -1,7 +1,7 @@
 <protocol>
 
 	<command>
-		<name>AT Command</name>
+		<name>AT</name>
 		<id>0x08</id>
 		<description>Use this frame to query or set device parameters on the
 			local device. This API command applies changes after running the
@@ -35,7 +35,7 @@
 	</command>
 
 	<command>
-		<name>AT Command - Queue Parameter Value</name>
+		<name>AT Queue Parameter</name>
 		<id>0x09</id>
 		<description>This frame allows you to query or set device parameters.
 			In contrast to the AT Command (0x08) frame, this frame queues new
@@ -270,7 +270,7 @@
 				</description>
 			</parameter>
 			<parameter>
-				<data_type>constant</data_type>
+				<data_type>uint8</data_type>
 				<name>Route command options</name>
 				<description>Set to 0.</description>
 				<value>0</value>
@@ -295,7 +295,7 @@
 	</command>
 
 	<command>
-		<name>AT Command Response</name>
+		<name>AT</name>
 		<id>0x88</id>
 		<description>A device sends this frame in response to an AT Command
 			(0x08 or 0x09) frame. Some commands send back multiple frames; for
@@ -560,7 +560,7 @@
 				<description>The sender's 16-bit address.</description>
 			</parameter>
 			<parameter>
-				<data_type>constant</data_type>
+				<data_type>uint8</data_type>
 				<name>Reserved</name>
 				<description>Set to 0.</description>
 				<value>0</value>
@@ -814,5 +814,55 @@
 			</value>
 		</values>
 	</enum>
+
+
+
+	<at_command>
+		<name>Firmware Version</name>
+		<description>Reads the firmware version on a device as a 4-digit hex number.
+		</description>
+		<command>VR</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>Firmware Version</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Detailed Version</name>
+		<description>Shows detailed version information, device type, time stamp for the build, Ember stack version, and bootloader version.
+		</description>
+		<command>VL</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>Version Info</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Hardware Version</name>
+		<description>Display the hardware version number of the device.
+		</description>
+		<command>HV</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>Hardware Version</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
 
 </protocol>

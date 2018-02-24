@@ -72,6 +72,7 @@ public class XBeeManyToOneRouteRequestIndicatorEvent extends XBeeFrame implement
 
         // Deserialize field "Network Address"
         networkAddress = deserializeInt16();
+        deserializeInt8();
     }
 
     @Override

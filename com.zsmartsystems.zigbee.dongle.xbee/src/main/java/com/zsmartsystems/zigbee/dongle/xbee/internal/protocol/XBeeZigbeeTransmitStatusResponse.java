@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.DiscoveryStatus;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class XBeeZigbeeTransmitStatusEvent extends XBeeFrame implements XBeeEvent {
+public class XBeeZigbeeTransmitStatusResponse extends XBeeFrame implements XBeeResponse {
     /**
      * Response field
      * The frame Id
@@ -138,8 +138,8 @@ public class XBeeZigbeeTransmitStatusEvent extends XBeeFrame implements XBeeEven
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(569);
-        builder.append("XBeeZigbeeTransmitStatusEvent [frameId=");
+        final StringBuilder builder = new StringBuilder(572);
+        builder.append("XBeeZigbeeTransmitStatusResponse [frameId=");
         builder.append(frameId);
         builder.append(", networkAddress=");
         builder.append(networkAddress);

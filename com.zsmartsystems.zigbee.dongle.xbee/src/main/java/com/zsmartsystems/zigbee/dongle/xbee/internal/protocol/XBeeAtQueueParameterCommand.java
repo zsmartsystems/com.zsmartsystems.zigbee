@@ -9,16 +9,21 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
 
 /**
- * Class to implement the XBee command <b>AT Command</b>.
+ * Class to implement the XBee command <b>AT Queue Parameter</b>.
  * <p>
- * Use this frame to query or set device parameters on the
-			local device. This API command
- * applies changes after running the
-			command. You can query parameter values by sending
- * the 0x08 AT
-			Command frame with no parameter value field (the two-byte AT command
-			is
- * immediately followed by the frame checksum).
+ * This frame allows you to query or set device parameters.
+			In contrast to the AT Command
+ * (0x08) frame, this frame queues new
+			parameter values and does not apply them until you
+ * issue either: n
+			The AT Command (0x08) frame (for API type) n The AC command
+ * When
+			querying parameter values, the 0x09 frame behaves identically to the
+			0x08
+ * frame. The device returns register queries immediately and not
+			does not queue them. The
+ * response for this command is also an AT
+			Command Response frame (0x88).
 		
  * <p>
  * This class provides methods for processing XBee API commands.
@@ -27,7 +32,7 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class XBeeAtCommandCommand extends XBeeFrame implements XBeeCommand {
+public class XBeeAtQueueParameterCommand extends XBeeFrame implements XBeeCommand {
     /**
      * The frame Id
 				
@@ -87,7 +92,7 @@ public class XBeeAtCommandCommand extends XBeeFrame implements XBeeCommand {
     @Override
     public int[] serialize() {
         // Serialize the command fields
-        serializeCommand(0x08);
+        serializeCommand(0x09);
         serializeInt8(frameId);
         serializeAtCommand(atCommand);
         serializeData(parameterValue);
@@ -97,10 +102,10 @@ public class XBeeAtCommandCommand extends XBeeFrame implements XBeeCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(380);
+        final StringBuilder builder = new StringBuilder(387);
         // First present the command parameters...
         // Then the responses later if they are available
-        builder.append("XBeeAtCommandCommand [frameId=");
+        builder.append("XBeeAtQueueParameterCommand [frameId=");
         builder.append(frameId);
         builder.append(", atCommand=");
         builder.append(atCommand);

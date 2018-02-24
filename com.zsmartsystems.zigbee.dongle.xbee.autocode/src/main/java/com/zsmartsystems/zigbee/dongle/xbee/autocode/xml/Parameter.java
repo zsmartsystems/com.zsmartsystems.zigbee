@@ -18,5 +18,5 @@ public class Parameter {
     public Boolean optional;
     public Integer minimum;
     public Integer maximum;
-    public Integer value;
+    public String value;
 }

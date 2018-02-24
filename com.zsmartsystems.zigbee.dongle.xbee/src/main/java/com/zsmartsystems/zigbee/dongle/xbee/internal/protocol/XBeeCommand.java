@@ -8,12 +8,19 @@
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
 /**
- * Interface for the Telegesis command
+ * Interface for the XBee command
  *
  * @author Chris Jackson
  *
  */
 public interface XBeeCommand {
+
+    /**
+     * Sets the frame ID used to correlate responses with commands
+     *
+     * @param frameId
+     */
+    public void setFrameId(Integer frameId);
 
     /**
      * Serializes the command to the int[] array for sending to the XBee stick

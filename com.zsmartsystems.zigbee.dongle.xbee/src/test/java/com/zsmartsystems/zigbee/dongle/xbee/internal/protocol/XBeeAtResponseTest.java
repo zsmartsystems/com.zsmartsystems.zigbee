@@ -18,10 +18,10 @@ import org.junit.Test;
  * @author Chris Jackson
  *
  */
-public class XBeeAtCommandResponseEventTest extends XBeeFrameBaseTest {
+public class XBeeAtResponseTest extends XBeeFrameBaseTest {
     @Test
     public void testNoData() {
-        XBeeAtCommandResponseEvent event = new XBeeAtCommandResponseEvent();
+        XBeeAtResponse event = new XBeeAtResponse();
         event.deserialize(getPacketData("00 05 88 01 42 44 00 F0"));
         System.out.println(event);
         assertEquals(Integer.valueOf(0x01), event.getFrameId());
@@ -32,7 +32,7 @@ public class XBeeAtCommandResponseEventTest extends XBeeFrameBaseTest {
 
     @Test
     public void testData() {
-        XBeeAtCommandResponseEvent event = new XBeeAtCommandResponseEvent();
+        XBeeAtResponse event = new XBeeAtResponse();
         event.deserialize(getPacketData("00 05 88 01 42 44 00 01 02 03 F0"));
         System.out.println(event);
         assertEquals(Integer.valueOf(0x01), event.getFrameId());

@@ -23,6 +23,9 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeEventListener;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeFrameHandler;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeEvent;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetDetailedVersionCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetFirmwareVersionCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetHardwareVersionCommand;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.TransportConfigResult;
@@ -115,6 +118,14 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         frameHandler.addEventListener(this);
 
         // Get the product information
+        XBeeGetHardwareVersionCommand hwVersionCommand = new XBeeGetHardwareVersionCommand();
+        frameHandler.sendRequest(hwVersionCommand);
+
+        XBeeGetFirmwareVersionCommand fwVersionCommand = new XBeeGetFirmwareVersionCommand();
+        frameHandler.sendRequest(fwVersionCommand);
+
+        XBeeGetDetailedVersionCommand versionCommand = new XBeeGetDetailedVersionCommand();
+        frameHandler.sendRequest(versionCommand);
 
         // Get network information
 
@@ -125,18 +136,18 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
 
     @Override
     public boolean startup(boolean reinitialize) {
-        logger.debug("Telegesis dongle startup.");
+        logger.debug("XBee dongle startup.");
 
         // If frameHandler is null then the serial port didn't initialise
         if (frameHandler == null) {
-            logger.error("Initialising Telegesis Dongle but low level handler is not initialised.");
+            logger.error("Initialising XBee Dongle but low level handler is not initialised.");
             zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
             return false;
         }
 
         // If we want to reinitialize the network, then go...
         if (reinitialize) {
-            logger.debug("Reinitialising Telegesis dongle and forming network.");
+            logger.debug("Reinitialising XBee dongle and forming network.");
             initialiseNetwork();
         }
 
@@ -174,7 +185,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
     @Override
     public void sendCommand(final ZigBeeApsFrame apsFrame) {
         if (frameHandler == null) {
-            logger.debug("Telegesis frame handler not set for send.");
+            logger.debug("XBee frame handler not set for send.");
             return;
         }
 
@@ -206,7 +217,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
             // TelegesisSendMulticastCommand multicastCommand = new TelegesisSendMulticastCommand();
             // command = multicastCommand;
         } else {
-            logger.debug("Telegesis message not sent: {}, {}", apsFrame);
+            logger.debug("XBee message not sent: {}, {}", apsFrame);
             return;
         }
 
@@ -352,7 +363,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
 
                     default:
                         configuration.setResult(option, TransportConfigResult.ERROR_UNSUPPORTED);
-                        logger.debug("Unsupported configuration option \"{}\" in Telegesis dongle", option);
+                        logger.debug("Unsupported configuration option \"{}\" in XBee dongle", option);
                         break;
                 }
             } catch (ClassCastException e) {

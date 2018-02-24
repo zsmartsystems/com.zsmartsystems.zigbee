@@ -9,9 +9,11 @@ import java.util.List;
  */
 public class Command {
     public String name;
-    public Integer cmdClass;
+    public String command;
     public Integer id;
     public String description;
     public List<ParameterGroup> command_parameters;
     public List<ParameterGroup> response_parameters;
+    public boolean getter;
+    public boolean setter;
 }

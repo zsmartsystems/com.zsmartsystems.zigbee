@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -18,7 +19,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
@@ -29,13 +29,17 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  *
  */
 public class XBeeFrameHandlerTest {
-    private String CR = "\r";
-    private String LF = "\n";
-    private String CRLF = "\r\n";
-
     private int[] getPacket(String packet) {
+        String split[] = packet.split(" ");
+
+        byte[] response = new byte[split.length];
+        int cnt = 0;
+        for (String val : split) {
+            response[cnt++] = (byte) Integer.parseInt(val, 16);
+        }
+
         XBeeFrameHandler frameHandler = new XBeeFrameHandler();
-        ByteArrayInputStream stream = new ByteArrayInputStream(packet.getBytes());
+        ByteArrayInputStream stream = new ByteArrayInputStream(response);
 
         ZigBeePort port = new TestPort(stream, null);
 
@@ -57,13 +61,35 @@ public class XBeeFrameHandlerTest {
         return null;
     }
 
-    @Ignore
     @Test
-    public void testReceivePacket_LongData() {
-        int[] response = getPacket("BCAST:000D6F000005A666,12=123456789012345678" + CRLF);
+    public void testReceivePacket() {
+        int[] response = getPacket("7E 00 02 8A 06 6F");
         assertNotNull(response);
-        assertEquals(44, response.length);
-        assertEquals('B', response[0]);
+        assertEquals(5, response.length);
+        assertEquals(0x8A, response[2]);
+    }
+
+    @Test
+    public void testReceivePacketWithPreamble() {
+        int[] response = getPacket("00 11 22 7E 00 02 8A 06 6F");
+        assertNotNull(response);
+        assertEquals(5, response.length);
+        assertEquals(0x8A, response[2]);
+    }
+
+    @Test
+    public void testReceivePacketTooLong() {
+        int[] response = getPacket("7E FF 00 8A 06 6F");
+        assertNull(response);
+    }
+
+    @Test
+    public void testReceivePacketEscaped() {
+        int[] response = getPacket("7E 00 02 23 7D 31 CB");
+        assertNotNull(response);
+        assertEquals(5, response.length);
+        assertEquals(0x23, response[2]);
+        assertEquals(0x11, response[3]);
     }
 
     class TestPort implements ZigBeePort {

@@ -10,7 +10,7 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
 
 /**
- * Class to implement the XBee command <b>AT Command Response</b>.
+ * Class to implement the XBee command <b>AT</b>.
  * <p>
  * A device sends this frame in response to an AT Command
 			(0x08 or 0x09) frame. Some commands
@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class XBeeAtCommandResponseEvent extends XBeeFrame implements XBeeEvent {
+public class XBeeAtResponse extends XBeeFrame implements XBeeResponse {
     /**
      * Response field
      * The frame Id
@@ -121,8 +121,8 @@ public class XBeeAtCommandResponseEvent extends XBeeFrame implements XBeeEvent {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(476);
-        builder.append("XBeeAtCommandResponseEvent [frameId=");
+        final StringBuilder builder = new StringBuilder(464);
+        builder.append("XBeeAtResponse [frameId=");
         builder.append(frameId);
         builder.append(", atCommand=");
         builder.append(atCommand);
