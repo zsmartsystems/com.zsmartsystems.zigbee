@@ -367,11 +367,13 @@ public class ZigBeeNetworkDiscoverer
      * @param node the {@link ZigBeeNode} to add
      */
     private void addNode(final IeeeAddress ieeeAddress, int networkAddress) {
-        if (networkManager.getNode(ieeeAddress) != null) {
+        ZigBeeNode node = networkManager.getNode(ieeeAddress);
+        if (node != null) {
+            node.setNetworkAddress(networkAddress);
             return;
         }
 
-        ZigBeeNode node = new ZigBeeNode(networkManager, ieeeAddress);
+        node = new ZigBeeNode(networkManager, ieeeAddress);
         node.setNetworkAddress(networkAddress);
 
         // Add the node to the network...
