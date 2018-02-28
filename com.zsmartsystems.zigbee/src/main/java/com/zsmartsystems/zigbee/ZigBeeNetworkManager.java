@@ -504,6 +504,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             apsFrame.setAddressMode(ZigBeeNwkAddressMode.DEVICE);
             apsFrame.setDestinationAddress(((ZigBeeEndpointAddress) command.getDestinationAddress()).getAddress());
             apsFrame.setDestinationEndpoint(((ZigBeeEndpointAddress) command.getDestinationAddress()).getEndpoint());
+
+            ZigBeeNode node = getNode(command.getDestinationAddress().getAddress());
+            if (node != null) {
+                apsFrame.setDestinationIeeeAddress(node.getIeeeAddress());
+            }
         } else {
             apsFrame.setAddressMode(ZigBeeNwkAddressMode.GROUP);
             // TODO: Handle multicast
