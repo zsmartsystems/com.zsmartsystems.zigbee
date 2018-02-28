@@ -37,6 +37,11 @@ public class ZigBeeApsFrame {
     private int destinationAddress;
 
     /**
+     * Destination address.
+     */
+    private IeeeAddress destinationIeeeAddress;
+
+    /**
      * Source address
      */
     private int sourceAddress;
@@ -137,6 +142,14 @@ public class ZigBeeApsFrame {
 
     public void setDestinationAddress(int destinationAddress) {
         this.destinationAddress = destinationAddress;
+    }
+
+    public IeeeAddress getDestinationIeeeAddress() {
+        return destinationIeeeAddress;
+    }
+
+    public void setDestinationIeeeAddress(IeeeAddress destinationIeeeAddress) {
+        this.destinationIeeeAddress = destinationIeeeAddress;
     }
 
     public int getSourceAddress() {
@@ -289,4 +302,5 @@ public class ZigBeeApsFrame {
         builder.append("]");
         return builder.toString();
     }
+
 }
