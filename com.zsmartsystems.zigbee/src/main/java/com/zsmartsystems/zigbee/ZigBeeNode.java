@@ -688,7 +688,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
             tasks.add(NodeDiscoveryTask.POWER_DESCRIPTOR);
         }
 
-        if (endpoints.size() == 0) {
+        if (endpoints.size() == 0 && networkAddress != 0) {
             tasks.add(NodeDiscoveryTask.ACTIVE_ENDPOINTS);
         }
 
@@ -706,7 +706,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         tasks.add(NodeDiscoveryTask.NEIGHBORS);
 
         if (nodeDescriptor.getLogicalType() != LogicalType.END_DEVICE) {
-            tasks.add(NodeDiscoveryTask.ROUTES);
+            // tasks.add(NodeDiscoveryTask.ROUTES);
         }
 
         serviceDiscoverer.startDiscovery(tasks);

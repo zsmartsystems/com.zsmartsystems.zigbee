@@ -559,7 +559,6 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public void telegesisEventReceived(TelegesisEvent event) {
-        logger.debug("Telegesis RX: " + event.toString());
         if (event instanceof TelegesisReceiveMessageEvent) {
             TelegesisReceiveMessageEvent rxMessage = (TelegesisReceiveMessageEvent) event;
 

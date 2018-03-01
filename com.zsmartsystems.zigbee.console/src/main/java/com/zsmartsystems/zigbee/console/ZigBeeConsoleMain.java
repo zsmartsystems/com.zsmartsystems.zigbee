@@ -23,6 +23,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
 import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
+import com.zsmartsystems.zigbee.dongle.xbee.ZigBeeDongleXBee;
 import com.zsmartsystems.zigbee.serial.ZigBeeSerialPort;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
@@ -130,7 +131,8 @@ public class ZigBeeConsoleMain {
             concentratorConfig.setRefreshMinimum(60);
             concentratorConfig.setRefreshMaximum(3600);
             transportOptions.addOption(TransportConfigOption.CONCENTRATOR_CONFIG, concentratorConfig);
-
+        } else if (dongleName.toUpperCase().equals("XBEE")) {
+            dongle = new ZigBeeDongleXBee(serialPort);
         } else if (dongleName.toUpperCase().equals("CONBEE")) {
             dongle = new ZigBeeDongleConBee(serialPort);
         } else if (dongleName.toUpperCase().equals("TELEGESIS")) {

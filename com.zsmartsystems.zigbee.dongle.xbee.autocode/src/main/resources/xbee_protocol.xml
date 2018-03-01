@@ -1,0 +1,1293 @@
+<protocol>
+
+	<command>
+		<name>AT</name>
+		<id>0x08</id>
+		<description>Use this frame to query or set device parameters on the
+			local device. This API command applies changes after running the
+			command. You can query parameter values by sending the 0x08 AT
+			Command frame with no parameter value field (the two-byte AT command
+			is immediately followed by the frame checksum).
+		</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Frame Id</name>
+				<description>The frame Id
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>AtCommand</data_type>
+				<name>AT Command</name>
+				<description>Command name: two ASCII characters that identify the AT
+					command.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>Parameter value</name>
+				<description>If present, indicates the requested parameter value to
+					set the given register. If no characters are present, it queries
+					the register.
+				</description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>AT Queue Parameter</name>
+		<id>0x09</id>
+		<description>This frame allows you to query or set device parameters.
+			In contrast to the AT Command (0x08) frame, this frame queues new
+			parameter values and does not apply them until you issue either: n
+			The AT Command (0x08) frame (for API type) n The AC command When
+			querying parameter values, the 0x09 frame behaves identically to the
+			0x08 frame. The device returns register queries immediately and not
+			does not queue them. The response for this command is also an AT
+			Command Response frame (0x88).
+		</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Frame Id</name>
+				<description>The frame Id
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>AtCommand</data_type>
+				<name>AT Command</name>
+				<description>Command name: two ASCII characters that identify the AT
+					command.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>Parameter value</name>
+				<description>If present, indicates the requested parameter value to
+					set the given register. If no characters are present, it queries
+					the register.
+				</description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Transmit Request</name>
+		<id>0x10</id>
+		<description>This frame causes the device to send payload data as an
+			RF packet to a specific destination. n For broadcast transmissions,
+			set the 64-bit destination address to 0x000000000000FFFF. Address the
+			coordinator by either setting the 64-bit address to all 0x00s and the
+			16-bit address to 0xFFFE, or setting the 64-bit address to the
+			coordinator's 64-bit address and the 16-bit address to 0x0000. n For
+			all other transmissions, setting the 16-bit address to the correct
+			16-bit address helps improve performance when transmitting to
+			multiple destinations. If you do not know a 16-bit address, set this
+			field to 0xFFFE (unknown). If successful, the Transmit Status frame
+			(0x8B) indicates the discovered 16-bit address. You can set the
+			broadcast radius from 0 up to NH. If set to 0, the value of NH
+			specifies the broadcast radius (recommended). This parameter is only
+			used for broadcast transmissions. You can read the maximum number of
+			payload bytes with the NP command.
+		</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Frame Id</name>
+				<description>The frame Id
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description>64-bit destination address. MSB first, LSB last. Set to
+					the 64-bit address of the destination device. Reserved 64-bit
+					address for the coordinator = 0x0000000000000000 Broadcast =
+					0x000000000000FFFF.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Network Address</name>
+				<description>16-bit destination network address. Set to the 16-bit
+					address of the destination device, if known. If the address is
+					unknown or if sending a broadcast, set to 0xFFFE.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>TransmitOptions</data_type>
+				<name>Options</name>
+				<description>0x01 - Disable retries. 0x20 - Enable APS encryption
+					(if EE=1). 0x40 - Use the extended transmission timeout for this
+					destination. Enabling APS encryption decreases the maximum number
+					of RF payload bytes by 4 (below the value reported by NP). Setting
+					the extended timeout bit causes the stack to set the extended
+					transmission timeout for the destination address. See Transmission,
+					addressing, and routing. All unused and unsupported bits must be
+					set to 0.
+				</description>
+				<bitfield>true</bitfield>
+			</parameter>
+			<parameter>
+				<data_type>uint8[]</data_type>
+				<name>Data</name>
+				<description>Data sent to the destination device.</description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Transmit Request Explicit</name>
+		<id>0x11</id>
+		<description>This frame is similar to Transmit Request (0x10), but it
+			also requires you to specify the application layer addressing fields:
+			endpoints, cluster ID, and profile ID. This frame causes the device
+			to send payload data as an RF packet to a specific destination, using
+			specific source and destination endpoints, cluster ID, and profile
+			ID. n For broadcast transmissions, set the 64-bit destination address
+			to 0x000000000000FFFF. Address the coordinator by either setting the
+			64-bit address to all 0x00s and the 16-bit address to 0xFFFE, or
+			setting the 64-bit address to the coordinator's 64-bit address and
+			the 16-bit address to 0x0000. n For all other transmissions, setting
+			the 16-bit address to the correct 16-bit address helps improve
+			performance when transmitting to multiple destinations. If you do not
+			know a 16-bit address, set this field to 0xFFFE (unknown). If
+			successful, the Transmit Status frame (0x8B) indicates the discovered
+			16-bit address. You can set the broadcast radius from 0 up to NH to
+			0xFF. If set to 0, the value of NH specifies the broadcast radius
+			(recommended). This parameter is only used for broadcast
+			transmissions. You can read the maximum number of payload bytes with
+			the NP command.
+		</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Frame Id</name>
+				<description>The frame Id
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description>64-bit destination address. MSB first, LSB last. Set to
+					the 64-bit address of the destination device. Reserved 64-bit
+					address for the coordinator = 0x0000000000000000 Broadcast =
+					0x000000000000FFFF.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Network Address</name>
+				<description>16-bit destination network address. Set to the 16-bit
+					address of the destination device, if known. If the address is
+					unknown or if sending a broadcast, set to 0xFFFE.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Source Endpoint</name>
+				<description>Source Endpoint for the transmission</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Destination Endpoint</name>
+				<description>Destination Endpoint for the transmission.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Cluster</name>
+				<description>Cluster ID used in the transmission.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Profile ID</name>
+				<description>Profile ID used in the transmission.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Broadcast Radius</name>
+				<description>Sets the maximum number of hops a broadcast
+					transmission can traverse. If set to 0, the device sets the
+					transmission radius to the network maximum hops value.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>TransmitOptions</data_type>
+				<name>Options</name>
+				<description>Bitfield of supported transmission options. Supported
+					values include the following: 0x01 - Disable retries 0x04- Indirect
+					Addressing 0x08- Multicast Addressing 0x20 - Enable APS encryption
+					(if EE = 1) 0x40 - Use the extended transmission timeout for this
+					destination Enabling APS encryption decreases the maximum number of
+					RF payload bytes by 4 (below the value reported by NP). Setting the
+					extended timeout bit causes the stack to set the extended
+					transmission timeout for the destination address. See Transmission,
+					addressing, and routing. All unused and unsupported bits must be
+					set to 0.
+				</description>
+				<bitfield>true</bitfield>
+			</parameter>
+			<parameter>
+				<data_type>uint8[]</data_type>
+				<name>Data</name>
+				<description>Data sent to the destination device.</description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Create Source Route</name>
+		<id>0x21</id>
+		<description>This frame creates a source route in the device. A source
+			route specifies the complete route a packet traverses to get from
+			source to destination. For best results, use source routing with
+			many-to-one routing. There is no response frame for this frame type.
+			Take care when generating source routes. An incorrectly formatted
+			frame will be silently rejected by the radio or cause unexpected
+			results.
+		</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Frame Id</name>
+				<description>The frame Id
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description>64-bit destination address. MSB first, LSB last. Set to
+					the 64-bit address of the destination device. Reserved 64-bit
+					address for the coordinator = 0x0000000000000000 Broadcast =
+					0x000000000000FFFF.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Network Address</name>
+				<description>16-bit destination network address. Set to the 16-bit
+					address of the destination device, if known. If the address is
+					unknown or if sending a broadcast, set to 0xFFFE.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Route command options</name>
+				<description>Set to 0.</description>
+				<value>0</value>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Number of Addresses</name>
+				<description>The number of addresses in the source route (excluding
+					source and destination). If this number is 0 or greater than the
+					source route table size (40), the device silently discards this API
+					frame. However, the device discards a frame with more than 11
+					intermediate hops
+				</description>
+				<auto_size>Address List</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint16[]</data_type>
+				<name>Address List</name>
+				<description></description>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>AT</name>
+		<id>0x88</id>
+		<description>A device sends this frame in response to an AT Command
+			(0x08 or 0x09) frame. Some commands send back multiple frames; for
+			example, the ND command.
+		</description>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Frame Id</name>
+				<description>The frame Id
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>AtCommand</data_type>
+				<name>AT Command</name>
+				<description>Command name: two ASCII characters that identify the
+					command.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>CommandStatus</data_type>
+				<name>Command Status</name>
+				<description>
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8[]</data_type>
+				<name>Command Data</name>
+				<description>The register data in binary format. If the host sets
+					the register, the device does not return this field.
+				</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Modem Status</name>
+		<id>0x8A</id>
+		<description>Devices send the status messages in this frame in
+			response to specific conditions.
+		</description>
+		<response_parameters>
+			<parameter>
+				<data_type>ModemStatus</data_type>
+				<name>status</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Transmit Status</name>
+		<id>0x8B</id>
+		<description>When a Transmit Request (0x10, 0x11) completes, the
+			device sends a Transmit Status message out of the serial interface.
+			This message indicates if the Transmit Request was successful or if
+			it failed.
+		</description>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Frame Id</name>
+				<description>The frame Id
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Network Address</name>
+				<description>The 16-bit Network Address where the packet was
+					delivered (if successful). If not successful, this address is
+					0xFFFD (destination address 6 unknown).
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Transmit retry count</name>
+				<description>The number of application transmission retries that
+					occur.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>DeliveryStatus</data_type>
+				<name>Delivery status</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>DiscoveryStatus</data_type>
+				<name>Discovery status</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Receive Packet</name>
+		<id>0x90</id>
+		<description>When a device configured with a standard API Rx Indicator
+			(AO = 0) receives an RF data packet, it sends it out the serial
+			interface using this message type.
+		</description>
+		<response_parameters>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description>The sender's 64-bit address. MSB first, LSB last.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Network Address</name>
+				<description>The sender's 16-bit address.</description>
+			</parameter>
+			<parameter>
+				<data_type>ReceiveOptions</data_type>
+				<name>Receive Options</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>uint8[]</data_type>
+				<name>Data</name>
+				<description>The RF data that the device receives.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Receive Packet Explicit</name>
+		<id>0x91</id>
+		<description>When a device configured with explicit API Rx Indicator
+			(AO = 1) receives an RF packet, it sends it out the serial interface
+			using this message type. The Cluster ID and endpoints must be used to
+			identify the type of transaction that occurred.
+		</description>
+		<response_parameters>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description>MSB first, LSB last. The sender's 64-bit address. Set
+					to 0xFFFFFFFFFFFFFFFF (unknown 64-bit address) if the sender's
+					64-bit address is unknown.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Network Address</name>
+				<description>The sender's 16-bit address.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Source Endpoint</name>
+				<description>Endpoint of the source that initiates transmission. The
+					default value is shown when Transmit Request frame - 0x10 is used
+					to send data from the source. Non-defaults are shown if Explicit
+					Addressing Command frame - 0x11 is used to send data from the
+					source, or if a non-default value was used, otherwise the default
+					value remains.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Destination Endpoint</name>
+				<description>Endpoint of the destination that the message is
+					addressed to. The default value is shown when Transmit Request
+					frame - 0x10 is used to send data from the source. Non-defaults are
+					shown if Explicit Addressing Command frame - 0x11 is used to send
+					data from the source, or if a non-default value was used, otherwise
+					the default value remains.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Cluster ID</name>
+				<description>The Cluster ID that the frame is addressed to. The
+					default value is shown when Transmit Request frame - 0x10 is used
+					to send data from the source. Non-defaults are shown if Explicit
+					Addressing Command frame - 0x11 is used to send data from the
+					source, or if a non-default value was used, otherwise the default
+					value remains.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Profile ID</name>
+				<description>The Profile ID that the fame is addressed to.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>ReceiveOptions</data_type>
+				<name>Receive Options</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>uint8[]</data_type>
+				<name>Data</name>
+				<description>The RF data that the device receives.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Route Record</name>
+		<id>0xA1</id>
+		<description>The route record indicator is received whenever a device
+			sends a ZigBee route record command. The device uses the route record
+			indicator with many-to-one routing to create source routes for
+			devices in a network.
+		</description>
+		<response_parameters>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description>MSB first, LSB last. The 64-bit address of the device
+					that initiated
+					the route record.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Network Address</name>
+				<description>The sender's 16-bit address.</description>
+			</parameter>
+			<parameter>
+				<data_type>ReceiveOptions</data_type>
+				<name>Receive Options</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Number of addresses</name>
+				<description>The number of addresses in the source route (excluding
+					source and destination).
+				</description>
+				<auto_size>Address List</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint16[]</data_type>
+				<name>Address List</name>
+				<description>The number of addresses in the source route (excluding
+					source and destination).
+				</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Many-to-One Route Request</name>
+		<id>0xA3</id>
+		<description>The many-to-one route request indicator frame is sent out
+			the serial port when a many-to-one route request is received.
+		</description>
+		<response_parameters>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description>MSB first, LSB last. The 64-bit address of the device
+					that initiated the route record.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Network Address</name>
+				<description>The sender's 16-bit address.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Reserved</name>
+				<description>Set to 0.</description>
+				<value>0</value>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<enum>
+		<name>TransmitOptions</name>
+		<values>
+			<value>
+				<enum_value>0x0001</enum_value>
+				<name>Disable Retries</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0008</enum_value>
+				<name>Multicast Addressing</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0020</enum_value>
+				<name>Enable APS encryption</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0040</enum_value>
+				<name>Extended Transmission Timeout</name>
+				<description></description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>ReceiveOptions</name>
+		<values>
+			<value>
+				<enum_value>0x0001</enum_value>
+				<name>Packet Acknowledged</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0002</enum_value>
+				<name>Packet Broadcast</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0020</enum_value>
+				<name>APS encryption</name>
+				<description></description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>CommandStatus</name>
+		<values>
+			<value>
+				<enum_value>0x0000</enum_value>
+				<name>OK</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0001</enum_value>
+				<name>Error</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0002</enum_value>
+				<name>Invalid command</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0003</enum_value>
+				<name>Invalid parameter</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0004</enum_value>
+				<name>Tx failure</name>
+				<description></description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>ModemStatus</name>
+		<values>
+			<value>
+				<enum_value>0x0000</enum_value>
+				<name>Hardware Reset</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0001</enum_value>
+				<name>Watchdog timer reset</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0002</enum_value>
+				<name>Joined network</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0003</enum_value>
+				<name>Disassociated</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0006</enum_value>
+				<name>Coordinator started</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0007</enum_value>
+				<name>Network security key updated</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x000D</enum_value>
+				<name>Voltage supply limit exceeded</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0011</enum_value>
+				<name>Modem configuration changed while join in progress</name>
+				<description></description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>DeliveryStatus</name>
+		<values>
+			<value>
+				<enum_value>0x0000</enum_value>
+				<name>Success</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0001</enum_value>
+				<name>MAC ACK Failure</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0002</enum_value>
+				<name>CCA Failure</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0015</enum_value>
+				<name>Invalid destination endpoint</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0021</enum_value>
+				<name>Network ACK Failure</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0022</enum_value>
+				<name>Not Joined to Network</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0023</enum_value>
+				<name>Self-addressed</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0024</enum_value>
+				<name>Address Not Found</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0025</enum_value>
+				<name>Route Not Found</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0026</enum_value>
+				<name>Broadcast source failed to hear a neighbor relay the message
+				</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x002B</enum_value>
+				<name>Invalid binding table index</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x002C</enum_value>
+				<name>Resource error</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x002D</enum_value>
+				<name>Attempted broadcast with APS transmission</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x002E</enum_value>
+				<name>Attempted unicast with APS transmission</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0032</enum_value>
+				<name>Resource error 2</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0074</enum_value>
+				<name>Data payload too large</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0075</enum_value>
+				<name>Indirect message unrequested</name>
+				<description></description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>DiscoveryStatus</name>
+		<values>
+			<value>
+				<enum_value>0x0000</enum_value>
+				<name>No Discovery Overhead</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0001</enum_value>
+				<name>Address Discovery</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0002</enum_value>
+				<name>Route Discovery</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0003</enum_value>
+				<name>Address and Route</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0040</enum_value>
+				<name>Extended Timeout Discovery</name>
+				<description></description>
+			</value>
+		</values>
+	</enum>
+
+	<enum>
+		<name>EncryptionOptions</name>
+		<values>
+			<value>
+				<enum_value>0x0001</enum_value>
+				<name>Send NWK Key in clear</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0002</enum_value>
+				<name>Enable Trust Centre</name>
+				<description></description>
+			</value>
+			<value>
+				<enum_value>0x0008</enum_value>
+				<name>Authenticate Joining</name>
+				<description></description>
+			</value>
+		</values>
+	</enum>
+
+<!-- AT Command Parameters -->
+
+	<at_command>
+		<name>Firmware Version</name>
+		<description>Reads the firmware version on a device as a 4-digit hex number.
+		</description>
+		<command>VR</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>Firmware Version</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Ieee Address High</name>
+		<description>Displays the upper 32 bits of the unique IEEE 64-bit extended address assigned to the XBee in the factory.
+		</description>
+		<command>SH</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>Ieee Address</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Ieee Address Low</name>
+		<description>DisplaLs the lower 32 bits of the unique IEEE 64-bit extended address assigned to the XBee in the factory.
+		</description>
+		<command>SL</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>Ieee Address</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Detailed Version</name>
+		<description>Shows detailed version information, device type, time stamp for the build, Ember stack version, and bootloader version.
+		</description>
+		<command>VL</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>Version Info</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Hardware Version</name>
+		<description>Display the hardware version number of the device.
+		</description>
+		<command>HV</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>Data</data_type>
+				<name>Hardware Version</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Active Scan</name>
+		<description>Scans the neighborhood for beacon responses. The AS command is only valid as a local command.
+		</description>
+		<command>AS</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>AS_type</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Channel</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>Extended PAN ID</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Allow Join</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Stack Profile</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>LQI</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>RSSI</name>
+				<description></description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Save Data</name>
+		<description>Writes parameter values to non-volatile memory so that parameter modifications persist through subsequent resets.
+		</description>
+		<command>WR</command>
+		<getter>false</getter>
+		<response_parameters>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Reset</name>
+		<description>This command sets all parameters except ZS and KY to their default values. To change ZS and KY, you must explicitly set them. In order for the default parameters to persist through subsequent resets, send a separate WR command after RE. Read-only parameters are not directly affected by RE and reflect the current state of the device.
+		</description>
+		<command>RE</command>
+		<getter>false</getter>
+		<response_parameters>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Software Reset</name>
+		<description>Resets the device. The device responds immediately with an OK and performs a reset 100 ms later. If you issue FR while the device is in Command Mode, the reset effectively exits Command mode.</description>
+		<command>FR</command>
+		<getter>false</getter>
+		<response_parameters>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Network Reset</name>
+		<description>Resets network layer parameters on one or more modules within a PAN. Responds immediately with 	an OK then causes a network restart. The device loses all network configuration and routing information. If NR = 0: Resets network layer parameters on the node issuing the command. If NR = 1: Sends broadcast transmission to reset network layer parameters on all nodes in the PAN.</description>
+		<command>NR</command>
+		<getter>false</getter>
+		<command_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Reset Remote Devices</name>
+				<description>Sends broadcast transmission to reset network layer parameters on all nodes in the PAN.
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Reset Remote Devices</name>
+				<description>Sends broadcast transmission to reset network layer parameters on all nodes in the PAN.
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Node Discovery</name>
+		<description></description>
+		<command>ND</command>
+		<getter>false</getter>
+		<response_parameters>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Network Key</name>
+		<description>Set the 128-bit AES network encryption key. This command is write-only and cannot be read. If set to 0 (default), the device selects a random network key.</description>
+		<command>NK</command>
+		<getter>false</getter>
+		<command_parameters>
+			<parameter>
+				<data_type>ZigBeeKey</data_type>
+				<name>Network Key</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Link Key</name>
+		<description>Sets the 128-bit AES link key value that the device uses for encryption and decryption. This command
+is write-only and cannot be read. If you set KY to 0 the coordinator transmits the network key in the
+clear to joining devices, and joining devices acquire the network key in the clear when joining.</description>
+		<command>KY</command>
+		<getter>false</getter>
+		<command_parameters>
+			<parameter>
+				<data_type>ZigBeeKey</data_type>
+				<name>Link Key</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Encryption Enable</name>
+		<description>Set or read the encryption enable setting.</description>
+		<command>EE</command>
+		<command_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Enable Encryption</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Enable Encryption</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Encryption Options</name>
+		<description>Set or read the encryption enable setting.</description>
+		<command>EO</command>
+		<command_parameters>
+			<parameter>
+				<data_type>EncryptionOptions</data_type>
+				<name>Encryption Options</name>
+				<description>
+				</description>
+				<bitfield>true</bitfield>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Join Notification</name>
+		<description>Set or read the join notification setting.
+If enabled, the device transmits a broadcast node identification packet on power up and when joining.
+This action blinks the Associate LED rapidly on all devices that receive the transmission, and sends an
+API frame out the serial port of API devices.
+Digi recommends you disable this feature for large networks to prevent excessive broadcasts.</description>
+		<command>JN</command>
+		<command_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Enable Notification</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Enable Notification</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>ZigBee Stack Profile</name>
+		<description>Set or read the Zigbee stack profile value. This must be the same on all devices that will join the same
+network. Effective with release 4x5E, changing ZS to a different value causes all current parameters
+to be written to persistent storage.</description>
+		<command>ZS</command>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Stack Profile</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Stack Profile</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+	
+	<at_command>
+		<name>Energy Scan</name>
+		<description>Start an Energy Detect scan. This command accepts an argument to specify the time in milliseconds
+to scan IEEE 802.15.4 channels 11 through 26. The device loops through all 16 channels until the time
+elapses and returns the maximal energy on each channel. In Transparent mode, a comma must follow each value with the list ending with a carriage return. The values returned reflect the detected energy
+level in units of -dBm. Convert an ED response of 49, 3A, and so on, to decimal to become -73 dBm, -58
+dBm, and so on.</description>
+		<command>ED</command>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Scan Time</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+	</at_command>
+
+	<at_command>
+		<name>PAN ID</name>
+		<description>Read the 16-bit PAN ID. The OI value reflects the actual 16-bit PAN ID where the device is running.</description>
+		<command>OI</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Pan Id</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Extended PAN ID Config</name>
+		<description>Set or read the 64-bit extended PAN ID. If set to 0, the coordinator selects a random extended PAN ID,
+and the router/end device joins any extended PAN ID.</description>
+		<command>ID</command>
+		<setter>false</setter>
+		<command_parameters>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>Extended Pan Id</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>Extended Pan Id</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+	
+	<at_command>
+		<name>Extended PAN ID</name>
+		<description>Read the 64-bit extended PAN ID. The OP value reflects the operating extended PAN ID where the
+device is running. If ID > 0, OP equals ID</description>
+		<command>OP</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>Extended Pan Id</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Coordinator Enable</name>
+		<description>Sets or displays whether the device is a coordinator. (SM must be 0 to set CE to 1).</description>
+		<command>CE</command>
+		<command_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Enable</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Boolean</data_type>
+				<name>Enable</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>API Mode</name>
+		<description>Configure the options for API. The current options select the type of receive API frame to send out the UART for received RF data packets.
+		0 Default API Rx Indicator enabled
+1 Default API Explicit Rx Indicator - 0x91, this is for Explicit Addressing data frames.
+3 Enable ZDO passthrough of ZDO requests to the serial port that are not supported by the stack, as well as Simple_Desc_req, Active_EP_req, and Match_Desc_req.
+		</description>
+		<command>AO</command>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Mode</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Mode</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>API Enable</name>
+		<description>Enables API Mode. The device ignores this command when using SPI. API mode 1 is always used.</description>
+		<command>AP</command>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Mode</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Mode</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+</protocol>
