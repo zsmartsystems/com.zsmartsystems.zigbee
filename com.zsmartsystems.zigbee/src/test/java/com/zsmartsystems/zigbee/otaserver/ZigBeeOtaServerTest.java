@@ -101,7 +101,7 @@ public class ZigBeeOtaServerTest implements ZigBeeOtaStatusCallback {
         ZclOtaUpgradeCluster cluster = new ZclOtaUpgradeCluster(mockedNetworkManager, endpoint);
 
         ZigBeeOtaServer server = new ZigBeeOtaServer();
-        assertTrue(server.serverStartup(cluster));
+        assertTrue(server.appStartup(cluster));
         server.addListener(this);
 
         ZigBeeOtaFile otaFile = Mockito.mock(ZigBeeOtaFile.class);

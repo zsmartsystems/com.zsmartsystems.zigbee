@@ -213,11 +213,11 @@ public final class ZigBeeConsole {
                 ZigBeeNode coordinator = networkManager.getNode(0);
                 for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
                     if (endpoint.getInputCluster(ZclIasZoneCluster.CLUSTER_ID) != null) {
-                        endpoint.addExtension(new ZigBeeIasCieApp(coordinator.getIeeeAddress(), 0));
+                        endpoint.addApplication(new ZigBeeIasCieApp(coordinator.getIeeeAddress(), 0));
                         break;
                     }
                     if (endpoint.getInputCluster(ZclOtaUpgradeCluster.CLUSTER_ID) != null) {
-                        endpoint.addExtension(new ZigBeeOtaServer());
+                        endpoint.addApplication(new ZigBeeOtaServer());
                         break;
                     }
                 }
@@ -1565,12 +1565,12 @@ public final class ZigBeeConsole {
             }
 
             // Check if the OTA server is already set
-            ZigBeeOtaServer otaServer = (ZigBeeOtaServer) endpoint.getExtension(ZclOtaUpgradeCluster.CLUSTER_ID);
+            ZigBeeOtaServer otaServer = (ZigBeeOtaServer) endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
             if (otaServer == null) {
                 // Create and add the server
                 otaServer = new ZigBeeOtaServer();
 
-                endpoint.addExtension(otaServer);
+                endpoint.addApplication(otaServer);
 
                 otaServer.addListener(new ZigBeeOtaStatusCallback() {
                     @Override

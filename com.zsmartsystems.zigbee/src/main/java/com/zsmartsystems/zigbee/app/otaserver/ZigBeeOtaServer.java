@@ -233,14 +233,14 @@ public class ZigBeeOtaServer implements ZigBeeApplication {
     }
 
     @Override
-    public boolean serverStartup(final ZclCluster cluster) {
+    public boolean appStartup(final ZclCluster cluster) {
         this.cluster = (ZclOtaUpgradeCluster) cluster;
 
         return true;
     }
 
     @Override
-    public void serverShutdown() {
+    public void appShutdown() {
         // Nothing to do
     }
 
