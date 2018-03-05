@@ -149,7 +149,7 @@ public class ZigBeeIasCieApp implements ZigBeeApplication {
     }
 
     @Override
-    public boolean serverStartup(ZclCluster cluster) {
+    public boolean appStartup(ZclCluster cluster) {
         iasZoneCluster = (ZclIasZoneCluster) cluster;
 
         Integer currentState = iasZoneCluster.getZoneState(0);
@@ -177,7 +177,7 @@ public class ZigBeeIasCieApp implements ZigBeeApplication {
     }
 
     @Override
-    public void serverShutdown() {
+    public void appShutdown() {
         // Nothing to do
     }
 

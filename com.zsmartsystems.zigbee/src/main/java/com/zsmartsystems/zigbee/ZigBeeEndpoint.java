@@ -82,11 +82,11 @@ public class ZigBeeEndpoint {
     private final Map<Integer, ZclCluster> outputClusters = new ConcurrentHashMap<Integer, ZclCluster>();
 
     /**
-     * Map of {@link ZigBeeApplication}s that are available to this endpoint. Extensions are added
-     * with the {@link #addExtension(ZigBeeApplication extension)} method and can be retrieved with the
-     * {@link #getExtension(int clusterId)} method.
+     * Map of {@link ZigBeeApplication}s that are available to this endpoint. Applications are added
+     * with the {@link #addApplication(ZigBeeApplication application)} method and can be retrieved with the
+     * {@link #getApplication(int clusterId)} method.
      */
-    private final Map<Integer, ZigBeeApplication> extensions = new ConcurrentHashMap<Integer, ZigBeeApplication>();
+    private final Map<Integer, ZigBeeApplication> applications = new ConcurrentHashMap<Integer, ZigBeeApplication>();
 
     /**
      * Constructor
@@ -364,41 +364,47 @@ public class ZigBeeEndpoint {
     }
 
     /**
-     * Adds an extension and makes it available to this endpoint.
+     * Adds an application and makes it available to this endpoint.
      * The cluster used by the server must be in the output clusters list and this will be passed to the
-     * {@link ZclExtension#serverStartup()) method to start the extension.
+     * {@link ZclApplication#serverStartup()) method to start the application.
      *
-     * @param extension the new {@link ZigBeeApplication}
+     * @param application the new {@link ZigBeeApplication}
      */
-    public void addExtension(ZigBeeApplication extension) {
-        extensions.put(extension.getClusterId(), extension);
-        ZclCluster cluster = outputClusters.get(extension.getClusterId());
+    public void addApplication(ZigBeeApplication application) {
+        applications.put(application.getClusterId(), application);
+        ZclCluster cluster = outputClusters.get(application.getClusterId());
         if (cluster == null) {
-            cluster = inputClusters.get(extension.getClusterId());
+            cluster = inputClusters.get(application.getClusterId());
         }
-        extension.serverStartup(cluster);
+        application.appStartup(cluster);
     }
 
     /**
-     * Gets the extension associated with the clusterId. Returns null if there is no server linked to the requested
+     * Gets the application associated with the clusterId. Returns null if there is no server linked to the requested
      * cluster
      *
      * @param clusterId
-     * @return the {@link ZclServer}
+     * @return the {@link ZigBeeApplication}
      */
-    public ZigBeeApplication getExtension(int clusterId) {
-        return extensions.get(clusterId);
+    public ZigBeeApplication getApplication(int clusterId) {
+        return applications.get(clusterId);
     }
 
+    /**
+     * Incoming command handler. The endpoint will process any commands addressed to this endpoint ID and pass o
+     * clusters and applications
+     *
+     * @param command the {@link ZclCommand} received
+     */
     public void commandReceived(ZclCommand command) {
         if (!command.getSourceAddress().equals(getEndpointAddress())) {
             return;
         }
 
-        // Pass all commands received from this endpoint to any registered extensions
-        synchronized (extensions) {
-            for (ZigBeeApplication extension : extensions.values()) {
-                extension.commandReceived(command);
+        // Pass all commands received from this endpoint to any registered applications
+        synchronized (applications) {
+            for (ZigBeeApplication application : applications.values()) {
+                application.commandReceived(command);
             }
         }
 
