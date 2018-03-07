@@ -34,6 +34,10 @@ public class NodeDescriptor {
     private final Set<MacCapabilitiesType> macCapabilities = new HashSet<MacCapabilitiesType>();
     private boolean extendedEndpointListAvailable;
     private boolean extendedSimpleDescriptorListAvailable;
+    private int stackCompliance;
+
+    final private int R21_BITMASK = 0xFE00;
+    final private int R21_BITSHIFT = 9;
 
     public enum LogicalType {
         COORDINATOR,
@@ -187,6 +191,8 @@ public class NodeDescriptor {
         if ((serverMask & 0x40) != 0) {
             this.serverCapabilities.add(ServerCapabilitiesType.NETWORK_MANAGER);
         }
+
+        stackCompliance = (serverMask & R21_BITMASK) >> R21_BITSHIFT;
     }
 
     public Set<ServerCapabilitiesType> getServerCapabilities() {
@@ -361,6 +367,15 @@ public class NodeDescriptor {
         return true;
     }
 
+    /**
+     * Get the stack compliance level
+     *
+     * @return the stack compliance level
+     */
+    public int getStackCompliance() {
+        return stackCompliance;
+    }
+
     @Override
     public String toString() {
         return "NodeDescriptor [apsFlags=" + apsFlags + ", bufferSize=" + bufferSize + ", complexDescriptorAvailable="
@@ -369,7 +384,8 @@ public class NodeDescriptor {
                 + ", outgoingTransferSize=" + outgoingTransferSize + ", userDescriptorAvailable="
                 + userDescriptorAvailable + ", frequencyBands=" + frequencyBands + ", macCapabilities="
                 + macCapabilities + ", extendedEndpointListAvailable=" + extendedEndpointListAvailable
-                + ", extendedSimpleDescriptorListAvailable=" + extendedSimpleDescriptorListAvailable + "]";
+                + ", extendedSimpleDescriptorListAvailable=" + extendedSimpleDescriptorListAvailable
+                + ", stackCompliance=" + stackCompliance + "]";
     }
 
 }
