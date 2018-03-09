@@ -1,5 +1,11 @@
 package com.zsmartsystems.zigbee.autocode;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
@@ -51,5 +57,27 @@ public class CodeGeneratorUtil {
     public static String splitCamelCase(String value) {
         return value.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])", "(?<=[^A-Z])(?=[A-Z])",
                 "(?<=[A-Za-z])(?=[^A-Za-z])"), " ");
+    }
+
+    protected static void outputLicense(PrintWriter out) {
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader("../src/etc/header.txt"));
+            String line = br.readLine();
+
+            out.println("/**");
+            while (line != null) {
+                out.println(" * " + line.replaceFirst("\\$\\{year\\}", "2018"));
+                line = br.readLine();
+            }
+            out.println(" */");
+            br.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
