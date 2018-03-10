@@ -1585,6 +1585,136 @@ No cluster specific commands.
 
 ## Multistate Input (Basic) [0x0012]
 
+The Multistate Input (Basic) cluster provides an interface for reading the value of a
+multistate measurement and accessing various characteristics of that measurement. The
+cluster is typically used to implement a sensor that measures a physical quantity that
+can take on one of a number of discrete states.
+
+### Attributes
+|Id     |Name                  |Type                       |Access     |Implement |Reporting |
+|-------|----------------------|---------------------------|-----------|----------|----------|
+|0x000E |StateText             |Character string           |Read/Write |Optional  |          |
+|0x001C |Description           |Character string           |Read/Write |Optional  |          |
+|0x004A |NumberOfStates        |Unsigned 16-bit Integer    |Read/Write |Mandatory |          |
+|0x0051 |OutOfService          |Boolean                    |Read/Write |Mandatory |          |
+|0x0055 |PresentValue          |Unsigned 16-bit Integer    |Read/Write |Mandatory |          |
+|0x0067 |Reliability           |8-bit enumeration          |Read/Write |Optional  |          |
+|0x006F |StatusFlags           |8-bit bitmap               |Read only  |Mandatory |          |
+|0x0100 |ApplicationType       |Signed 32-bit integer      |Read only  |Optional  |          |
+
+#### StateText Attribute
+This  attribute, of type Array of Character strings, holds descriptions of all possible
+states of a multistate PresentValue.  The number of descriptions matches the number of states
+defined in the NumberOfStates property. The PresentValue, interpreted as an integer, serves as
+an index into the array. If the size of this array is changed, the NumberOfStates property SHALL
+also be changed to the same value. The character set used SHALL be ASCII, and the attribute
+SHALL contain a maximum of 16 characters, which SHALL be printable but are otherwise unrestricted.
+
+#### Description Attribute
+The Description attribute, of type Character string, MAY be used to hold a description
+of the usage of the input, output or value, as appropriate to the cluster. The character
+set used SHALL be ASCII, and the attribute SHALL contain a maximum of 16 characters,
+which SHALL be printable but are otherwise unrestricted.
+
+#### NumberOfStates Attribute
+This attribute, of type Unsigned 16-bit integer, defines the number of states that a multistate
+PresentValue MAY have. The NumberOfStates property SHALL always have a value greater than zero. 
+If the value of this property is changed, the size of the StateText array, if present, SHALL also
+be changed to the same value. The states are numbered consecutively, starting with 1.
+
+#### OutOfService Attribute
+The OutOfService attribute, of type Boolean, indicates whether (TRUE) or not (FALSE) the physical
+input, output or value that the cluster represents is not in service. For an Input cluster, when
+OutOfService is TRUE the PresentValue attribute is decoupled from the physical input and  will
+not track changes to the  physical input. For an Output cluster, when OutOfService is TRUE the
+PresentValue attribute is decoupled from the physical output, so changes to PresentValue will not
+affect the physical output. For a Value cluster, when OutOfService is TRUE the PresentValue attribute
+MAY be written to freely by software local to the device that the cluster resides on.
+
+#### PresentValue Attribute
+The PresentValue attribute indicates the current value of the input, output or
+value, as appropriate  for the cluster. For Analog clusters it is of type single precision, for Binary
+clusters it is of type  Boolean, and for multistate clusters it is of type Unsigned 16-bit integer. The
+PresentValue attribute of an input cluster SHALL be writable when OutOfService is TRUE. When the PriorityArray
+attribute is implemented, writing to PresentValue SHALL be equivalent to writing to element 16 of PriorityArray,
+i.e., with a priority of 16.
+
+#### Reliability Attribute
+The Reliability attribute, of type 8-bit enumeration, provides an indication of whether
+the PresentValueor the operation of the physical input, output or value in question (as
+appropriate for the cluster) is “reliable” as far as can be determined and, if not, why
+not. The Reliability attribute MAY have any of the following values:
+
+NO-FAULT-DETECTED (0)
+OVER-RANGE (2)
+UNDER-RANGE (3)
+OPEN-LOOP (4)
+SHORTED-LOOP (5)
+UNRELIABLE-OTHER (7)
+PROCESS-ERROR (8)
+MULTI-STATE-FAULT (9)
+CONFIGURATION-ERROR (10)
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0000 |NO-FAULT-DETECTED         |
+|0x0002 |OVER-RANGE                |
+|0x0003 |UNDER-RANGE               |
+|0x0004 |OPEN-LOOP                 |
+|0x0005 |SHORTED-LOOP              |
+|0x0007 |UNRELIABLE-OTHER          |
+|0x0008 |PROCESS-ERROR             |
+|0x0009 |MULTI-STATE-FAULT         |
+|0x000A |CONFIGURATION-ERROR       |
+
+#### StatusFlags Attribute
+This attribute, of type bitmap, represents four Boolean flags that indicate the general “health”
+of the analog sensor. Three of the flags are associated with the values of other optional attributes
+of this cluster. A more detailed status could be determined by reading the optional attributes (if
+supported) that are linked to these flags. The relationship between individual flags is not defined. 
+
+The four flags are Bit 0 = IN_ALARM, Bit 1 = FAULT, Bit 2 = OVERRIDDEN, Bit 3 = OUT OF SERVICE
+
+where:
+
+IN_ALARM -Logical FALSE (0) if the EventStateattribute has a value of NORMAL, otherwise logical TRUE (1).
+This bit is always 0 unless the cluster implementing the EventState attribute is implemented on the same
+endpoint.
+
+FAULT -Logical TRUE (1) if the Reliability attribute is present and does not have a value of NO FAULT DETECTED,
+otherwise logical FALSE (0).
+
+OVERRIDDEN -Logical TRUE (1) if the cluster has been overridden by some  mechanism local to the device. 
+Otherwise, the value is logical FALSE (0). In this context, for an input cluster, “overridden” is taken
+to mean that the PresentValue and Reliability(optional) attributes are no longer tracking changes to the
+physical input. For an Output cluster, “overridden” is taken to mean that the physical output is no longer
+tracking changes to the PresentValue attribute and the Reliability attribute is no longer a reflection of
+the physical output. For a Value cluster, “overridden” is taken to mean that the PresentValue attribute is
+not writeable.
+
+OUT OF SERVICE -Logical TRUE (1) if the OutOfService attribute has a value of TRUE, otherwise
+logical FALSE (0).
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0001 |IN_ALARM                  |
+|0x0002 |FAULT                     |
+|0x0004 |OVERRIDDEN                |
+|0x0008 |OUT OF SERVICE            |
+
+
+#### ApplicationType Attribute
+The ApplicationType attribute is an unsigned 32 bit integer that indicates the specific
+application usage for this cluster. (Note: This attribute has no BACnet equivalent).
+ApplicationType is subdivided into Group, Type and an Index number, as follows.
+
+Group = Bits 24 -31 An indication of the cluster this attribute is part of.
+
+Type = Bits 16 -23 For Analog clusters, the physical quantity that the Present Value attribute
+of the cluster represents. For Binary and Multistate clusters, the application usage domain.
+
+Index = Bits 0 -15The specific application usage of the cluster. 
+
 ### Received
 
 No cluster specific commands.
@@ -1594,6 +1724,139 @@ No cluster specific commands.
 No cluster specific commands.
 
 ## Multistate Output (Basic) [0x0013]
+The Multistate Output (Basic) cluster provides an interface for setting the value of an output
+that can take one of a number of discrete values, and accessing characteristics of that value. 
+
+### Attributes
+|Id     |Name                  |Type                       |Access     |Implement |Reporting |
+|-------|----------------------|---------------------------|-----------|----------|----------|
+|0x000E |StateText             |Character string           |Read/Write |Optional  |          |
+|0x001C |Description           |Character string           |Read/Write |Optional  |          |
+|0x004A |NumberOfStates        |Unsigned 16-bit Integer    |Read/Write |Mandatory |          |
+|0x0051 |OutOfService          |Boolean                    |Read/Write |Mandatory |          |
+|0x0055 |PresentValue          |Unsigned 16-bit Integer    |Read/Write |Mandatory |          |
+|0x0067 |Reliability           |8-bit enumeration          |Read/Write |Optional  |          |
+|0x0068 |RelinguishDefault     |Unsigned 16-bit Integer    |Read/Write |Optional  |          |
+|0x006F |StatusFlags           |8-bit bitmap               |Read only  |Mandatory |          |
+|0x0100 |ApplicationType       |Signed 32-bit integer      |Read only  |Optional  |          |
+
+#### StateText Attribute
+This  attribute, of type Array of Character strings, holds descriptions of all possible
+states of a multistate PresentValue.  The number of descriptions matches the number of states
+defined in the NumberOfStates property. The PresentValue, interpreted as an integer, serves as
+an index into the array. If the size of this array is changed, the NumberOfStates property SHALL
+also be changed to the same value. The character set used SHALL be ASCII, and the attribute
+SHALL contain a maximum of 16 characters, which SHALL be printable but are otherwise unrestricted.
+
+#### Description Attribute
+The Description attribute, of type Character string, MAY be used to hold a description
+of the usage of the input, output or value, as appropriate to the cluster. The character
+set used SHALL be ASCII, and the attribute SHALL contain a maximum of 16 characters,
+which SHALL be printable but are otherwise unrestricted.
+
+#### NumberOfStates Attribute
+This attribute, of type Unsigned 16-bit integer, defines the number of states that a multistate
+PresentValue MAY have. The NumberOfStates property SHALL always have a value greater than zero. 
+If the value of this property is changed, the size of the StateText array, if present, SHALL also
+be changed to the same value. The states are numbered consecutively, starting with 1.
+
+#### OutOfService Attribute
+The OutOfService attribute, of type Boolean, indicates whether (TRUE) or not (FALSE) the physical
+input, output or value that the cluster represents is not in service. For an Input cluster, when
+OutOfService is TRUE the PresentValue attribute is decoupled from the physical input and  will
+not track changes to the  physical input. For an Output cluster, when OutOfService is TRUE the
+PresentValue attribute is decoupled from the physical output, so changes to PresentValue will not
+affect the physical output. For a Value cluster, when OutOfService is TRUE the PresentValue attribute
+MAY be written to freely by software local to the device that the cluster resides on.
+
+#### PresentValue Attribute
+The PresentValue attribute indicates the current value of the input, output or
+value, as appropriate  for the cluster. For Analog clusters it is of type single precision, for Binary
+clusters it is of type  Boolean, and for multistate clusters it is of type Unsigned 16-bit integer. The
+PresentValue attribute of an input cluster SHALL be writable when OutOfService is TRUE. When the PriorityArray
+attribute is implemented, writing to PresentValue SHALL be equivalent to writing to element 16 of PriorityArray,
+i.e., with a priority of 16.
+
+#### Reliability Attribute
+The Reliability attribute, of type 8-bit enumeration, provides an indication of whether
+the PresentValueor the operation of the physical input, output or value in question (as
+appropriate for the cluster) is “reliable” as far as can be determined and, if not, why
+not. The Reliability attribute MAY have any of the following values:
+
+NO-FAULT-DETECTED (0)
+OVER-RANGE (2)
+UNDER-RANGE (3)
+OPEN-LOOP (4)
+SHORTED-LOOP (5)
+UNRELIABLE-OTHER (7)
+PROCESS-ERROR (8)
+MULTI-STATE-FAULT (9)
+CONFIGURATION-ERROR (10)
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0000 |NO-FAULT-DETECTED         |
+|0x0002 |OVER-RANGE                |
+|0x0003 |UNDER-RANGE               |
+|0x0004 |OPEN-LOOP                 |
+|0x0005 |SHORTED-LOOP              |
+|0x0007 |UNRELIABLE-OTHER          |
+|0x0008 |PROCESS-ERROR             |
+|0x0009 |MULTI-STATE-FAULT         |
+|0x000A |CONFIGURATION-ERROR       |
+
+#### RelinquishDefault Attribute
+The RelinquishDefault attribute is the default value to be used for the PresentValue
+attribute when all elements of the PriorityArray attribute are marked as invalid.
+
+#### StatusFlags Attribute
+This attribute, of type bitmap, represents four Boolean flags that indicate the general “health”
+of the analog sensor. Three of the flags are associated with the values of other optional attributes
+of this cluster. A more detailed status could be determined by reading the optional attributes (if
+supported) that are linked to these flags. The relationship between individual flags is not defined. 
+
+The four flags are Bit 0 = IN_ALARM, Bit 1 = FAULT, Bit 2 = OVERRIDDEN, Bit 3 = OUT OF SERVICE
+
+where:
+
+IN_ALARM -Logical FALSE (0) if the EventStateattribute has a value of NORMAL, otherwise logical TRUE (1).
+This bit is always 0 unless the cluster implementing the EventState attribute is implemented on the same
+endpoint.
+
+FAULT -Logical TRUE (1) if the Reliability attribute is present and does not have a value of NO FAULT DETECTED,
+otherwise logical FALSE (0).
+
+OVERRIDDEN -Logical TRUE (1) if the cluster has been overridden by some  mechanism local to the device. 
+Otherwise, the value is logical FALSE (0). In this context, for an input cluster, “overridden” is taken
+to mean that the PresentValue and Reliability(optional) attributes are no longer tracking changes to the
+physical input. For an Output cluster, “overridden” is taken to mean that the physical output is no longer
+tracking changes to the PresentValue attribute and the Reliability attribute is no longer a reflection of
+the physical output. For a Value cluster, “overridden” is taken to mean that the PresentValue attribute is
+not writeable.
+
+OUT OF SERVICE -Logical TRUE (1) if the OutOfService attribute has a value of TRUE, otherwise
+logical FALSE (0).
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0001 |IN_ALARM                  |
+|0x0002 |FAULT                     |
+|0x0004 |OVERRIDDEN                |
+|0x0008 |OUT OF SERVICE            |
+
+
+#### ApplicationType Attribute
+The ApplicationType attribute is an unsigned 32 bit integer that indicates the specific
+application usage for this cluster. (Note: This attribute has no BACnet equivalent).
+ApplicationType is subdivided into Group, Type and an Index number, as follows.
+
+Group = Bits 24 -31 An indication of the cluster this attribute is part of.
+
+Type = Bits 16 -23 For Analog clusters, the physical quantity that the Present Value attribute
+of the cluster represents. For Binary and Multistate clusters, the application usage domain.
+
+Index = Bits 0 -15 The specific application usage of the cluster. 
+
 
 ### Received
 
@@ -1604,6 +1867,139 @@ No cluster specific commands.
 No cluster specific commands.
 
 ## Multistate Value (Basic) [0x0014]
+The Multistate Value (Basic) cluster provides an interface for setting a multistate
+value, typically used as a control system parameter, and accessing characteristics of that value.
+
+### Attributes
+|Id     |Name                  |Type                       |Access     |Implement |Reporting |
+|-------|----------------------|---------------------------|-----------|----------|----------|
+|0x000E |StateText             |Character string           |Read/Write |Optional  |          |
+|0x001C |Description           |Character string           |Read/Write |Optional  |          |
+|0x004A |NumberOfStates        |Unsigned 16-bit Integer    |Read/Write |Mandatory |          |
+|0x0051 |OutOfService          |Boolean                    |Read/Write |Mandatory |          |
+|0x0055 |PresentValue          |Unsigned 16-bit Integer    |Read/Write |Mandatory |          |
+|0x0067 |Reliability           |8-bit enumeration          |Read/Write |Optional  |          |
+|0x0068 |RelinguishDefault     |Unsigned 16-bit Integer    |Read/Write |Optional  |          |
+|0x006F |StatusFlags           |8-bit bitmap               |Read only  |Mandatory |          |
+|0x0100 |ApplicationType       |Signed 32-bit integer      |Read only  |Optional  |          |
+
+#### StateText Attribute
+This  attribute, of type Array of Character strings, holds descriptions of all possible
+states of a multistate PresentValue.  The number of descriptions matches the number of states
+defined in the NumberOfStates property. The PresentValue, interpreted as an integer, serves as
+an index into the array. If the size of this array is changed, the NumberOfStates property SHALL
+also be changed to the same value. The character set used SHALL be ASCII, and the attribute
+SHALL contain a maximum of 16 characters, which SHALL be printable but are otherwise unrestricted.
+
+#### Description Attribute
+The Description attribute, of type Character string, MAY be used to hold a description
+of the usage of the input, output or value, as appropriate to the cluster. The character
+set used SHALL be ASCII, and the attribute SHALL contain a maximum of 16 characters,
+which SHALL be printable but are otherwise unrestricted.
+
+#### NumberOfStates Attribute
+This attribute, of type Unsigned 16-bit integer, defines the number of states that a multistate
+PresentValue MAY have. The NumberOfStates property SHALL always have a value greater than zero. 
+If the value of this property is changed, the size of the StateText array, if present, SHALL also
+be changed to the same value. The states are numbered consecutively, starting with 1.
+
+#### OutOfService Attribute
+The OutOfService attribute, of type Boolean, indicates whether (TRUE) or not (FALSE) the physical
+input, output or value that the cluster represents is not in service. For an Input cluster, when
+OutOfService is TRUE the PresentValue attribute is decoupled from the physical input and  will
+not track changes to the  physical input. For an Output cluster, when OutOfService is TRUE the
+PresentValue attribute is decoupled from the physical output, so changes to PresentValue will not
+affect the physical output. For a Value cluster, when OutOfService is TRUE the PresentValue attribute
+MAY be written to freely by software local to the device that the cluster resides on.
+
+#### PresentValue Attribute
+The PresentValue attribute indicates the current value of the input, output or
+value, as appropriate for the cluster. For Analog clusters it is of type single precision, for Binary
+clusters it is of type  Boolean, and for multistate clusters it is of type Unsigned 16-bit integer. The
+PresentValue attribute of an input cluster SHALL be writable when OutOfService is TRUE. When the PriorityArray
+attribute is implemented, writing to PresentValue SHALL be equivalent to writing to element 16 of PriorityArray,
+i.e., with a priority of 16.
+
+#### Reliability Attribute
+The Reliability attribute, of type 8-bit enumeration, provides an indication of whether
+the PresentValueor the operation of the physical input, output or value in question (as
+appropriate for the cluster) is “reliable” as far as can be determined and, if not, why
+not. The Reliability attribute MAY have any of the following values:
+
+NO-FAULT-DETECTED (0)
+OVER-RANGE (2)
+UNDER-RANGE (3)
+OPEN-LOOP (4)
+SHORTED-LOOP (5)
+UNRELIABLE-OTHER (7)
+PROCESS-ERROR (8)
+MULTI-STATE-FAULT (9)
+CONFIGURATION-ERROR (10)
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0000 |NO-FAULT-DETECTED         |
+|0x0002 |OVER-RANGE                |
+|0x0003 |UNDER-RANGE               |
+|0x0004 |OPEN-LOOP                 |
+|0x0005 |SHORTED-LOOP              |
+|0x0007 |UNRELIABLE-OTHER          |
+|0x0008 |PROCESS-ERROR             |
+|0x0009 |MULTI-STATE-FAULT         |
+|0x000A |CONFIGURATION-ERROR       |
+
+#### RelinquishDefault Attribute
+The RelinquishDefault attribute is the default value to be used for the PresentValue
+attribute when all elements of the PriorityArray attribute are marked as invalid.
+
+#### StatusFlags Attribute
+This attribute, of type bitmap, represents four Boolean flags that indicate the general “health”
+of the analog sensor. Three of the flags are associated with the values of other optional attributes
+of this cluster. A more detailed status could be determined by reading the optional attributes (if
+supported) that are linked to these flags. The relationship between individual flags is not defined. 
+
+The four flags are Bit 0 = IN_ALARM, Bit 1 = FAULT, Bit 2 = OVERRIDDEN, Bit 3 = OUT OF SERVICE
+
+where:
+
+IN_ALARM -Logical FALSE (0) if the EventStateattribute has a value of NORMAL, otherwise logical TRUE (1).
+This bit is always 0 unless the cluster implementing the EventState attribute is implemented on the same
+endpoint.
+
+FAULT -Logical TRUE (1) if the Reliability attribute is present and does not have a value of NO FAULT DETECTED,
+otherwise logical FALSE (0).
+
+OVERRIDDEN -Logical TRUE (1) if the cluster has been overridden by some  mechanism local to the device. 
+Otherwise, the value is logical FALSE (0). In this context, for an input cluster, “overridden” is taken
+to mean that the PresentValue and Reliability(optional) attributes are no longer tracking changes to the
+physical input. For an Output cluster, “overridden” is taken to mean that the physical output is no longer
+tracking changes to the PresentValue attribute and the Reliability attribute is no longer a reflection of
+the physical output. For a Value cluster, “overridden” is taken to mean that the PresentValue attribute is
+not writeable.
+
+OUT OF SERVICE -Logical TRUE (1) if the OutOfService attribute has a value of TRUE, otherwise
+logical FALSE (0).
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0001 |IN_ALARM                  |
+|0x0002 |FAULT                     |
+|0x0004 |OVERRIDDEN                |
+|0x0008 |OUT OF SERVICE            |
+
+
+#### ApplicationType Attribute
+The ApplicationType attribute is an unsigned 32 bit integer that indicates the specific
+application usage for this cluster. (Note: This attribute has no BACnet equivalent).
+ApplicationType is subdivided into Group, Type and an Index number, as follows.
+
+Group = Bits 24 -31 An indication of the cluster this attribute is part of.
+
+Type = Bits 16 -23 For Analog clusters, the physical quantity that the Present Value attribute
+of the cluster represents. For Binary and Multistate clusters, the application usage domain.
+
+Index = Bits 0 -15The specific application usage of the cluster. 
+
 
 ### Received
 
