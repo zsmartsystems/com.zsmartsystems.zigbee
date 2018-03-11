@@ -1,1 +1,0 @@
-java -jar target/zigbee-gateway-server-3.0.1-SNAPSHOT.jar COM5 38400 11 4951 00000000000000000000000000000000 false 5000 secret

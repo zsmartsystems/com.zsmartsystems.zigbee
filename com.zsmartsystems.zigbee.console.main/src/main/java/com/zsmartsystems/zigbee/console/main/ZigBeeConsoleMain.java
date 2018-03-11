@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.console;
+package com.zsmartsystems.zigbee.console.main;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,9 +37,8 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 
 /**
- * The ZigBee gateway console. Simple console used as an example and test application.
+ * The ZigBee test console. Simple console used for testing the framework.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
 public class ZigBeeConsoleMain {
@@ -50,7 +49,7 @@ public class ZigBeeConsoleMain {
     /**
      * The usage.
      */
-    public static final String USAGE = "Syntax: java -jar zigbee4java-serialPort.jar [EMBER|CC2531|TELEGESIS|CONBEE] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET";
+    public static final String USAGE = "Syntax: java -jar zigbee4java-serialPort.jar [EMBER|CC2531|TELEGESIS|CONBEE|XBEE] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET";
 
     /**
      * Private constructor to disable constructing main class.
@@ -114,7 +113,7 @@ public class ZigBeeConsoleMain {
 
         final ZigBeePort serialPort = new ZigBeeSerialPort(serialPortName, serialBaud, flowControl);
 
-        System.out.println("Initialising console...");
+        System.out.println("Initialising ZigBee console...");
 
         final ZigBeeTransportTransmit dongle;
         if (dongleName.toUpperCase().equals("CC2531")) {
@@ -188,10 +187,10 @@ public class ZigBeeConsoleMain {
         dongle.updateTransportConfig(transportOptions);
 
         if (!networkManager.startup(resetNetwork)) {
-            System.out.println("ZigBee API starting up ... [FAIL]");
+            System.out.println("ZigBee console starting up ... [FAIL]");
             // return;
         } else {
-            System.out.println("ZigBee API starting up ... [OK]");
+            System.out.println("ZigBee console starting up ... [OK]");
         }
 
         // Start the mesh monitor
