@@ -49,6 +49,7 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.command.BindRequest;
 import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
 
@@ -161,14 +162,46 @@ public abstract class ZclCluster {
     /**
      * Read an attribute
      *
+     * @param attribute the attribute to read
+     * @return command future
+     */
+    public Future<CommandResult> read(final int attribute) {
+        final ReadAttributesCommand command = new ReadAttributesCommand();
+
+        command.setClusterId(clusterId);
+        command.setIdentifiers(Collections.singletonList(attribute));
+        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
+
+        return send(command);
+    }
+
+    /**
+     * Read an attribute
+     *
      * @param attribute the {@link ZclAttribute} to read
      * @return command future
      */
     public Future<CommandResult> read(final ZclAttribute attribute) {
-        final ReadAttributesCommand command = new ReadAttributesCommand();
+        return read(attribute.getId());
+    }
+
+    /**
+     * Write an attribute
+     *
+     * @param attribute the attribute to write
+     * @param dataType the {@link ZclDataType} of the object
+     * @param value the value to set (as {@link Object})
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> write(final int attribute, final ZclDataType dataType, final Object value) {
+        final WriteAttributesCommand command = new WriteAttributesCommand();
 
         command.setClusterId(clusterId);
-        command.setIdentifiers(Collections.singletonList(attribute.getId()));
+        final WriteAttributeRecord attributeIdentifier = new WriteAttributeRecord();
+        attributeIdentifier.setAttributeIdentifier(attribute);
+        attributeIdentifier.setAttributeDataType(dataType);
+        attributeIdentifier.setAttributeValue(value);
+        command.setRecords(Collections.singletonList(attributeIdentifier));
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
         return send(command);
@@ -182,17 +215,7 @@ public abstract class ZclCluster {
      * @return command future {@link CommandResult}
      */
     public Future<CommandResult> write(final ZclAttribute attribute, final Object value) {
-        final WriteAttributesCommand command = new WriteAttributesCommand();
-
-        command.setClusterId(clusterId);
-        final WriteAttributeRecord attributeIdentifier = new WriteAttributeRecord();
-        attributeIdentifier.setAttributeIdentifier(attribute.getId());
-        attributeIdentifier.setAttributeDataType(attribute.getDataType());
-        attributeIdentifier.setAttributeValue(value);
-        command.setRecords(Collections.singletonList(attributeIdentifier));
-        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
-
-        return send(command);
+        return write(attribute.getId(), attribute.getDataType(), value);
     }
 
     /**
