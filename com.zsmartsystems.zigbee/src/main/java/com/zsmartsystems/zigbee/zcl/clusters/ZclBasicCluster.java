@@ -111,10 +111,14 @@ public class ZclBasicCluster extends ZclCluster {
      * unauthorised persons in a public building.
      */
     public static final int ATTR_DISABLELOCALCONFIG = 0x0014;
+    /**
+     * The SWBuildIDattribute represents a detailed, manufacturer-specific reference to the version of the software.
+     */
+    public static final int ATTR_SWBUILDID = 0x4000;
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(13);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(14);
 
         attributeMap.put(ATTR_ZCLVERSION, new ZclAttribute(ZclClusterType.BASIC, ATTR_ZCLVERSION, "ZCLVersion", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_APPLICATIONVERSION, new ZclAttribute(ZclClusterType.BASIC, ATTR_APPLICATIONVERSION, "ApplicationVersion", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
@@ -129,6 +133,7 @@ public class ZclBasicCluster extends ZclCluster {
         attributeMap.put(ATTR_DEVICEENABLED, new ZclAttribute(ZclClusterType.BASIC, ATTR_DEVICEENABLED, "DeviceEnabled", ZclDataType.BOOLEAN, true, true, true, false));
         attributeMap.put(ATTR_ALARMMASK, new ZclAttribute(ZclClusterType.BASIC, ATTR_ALARMMASK, "AlarmMask", ZclDataType.BITMAP_8_BIT, true, true, true, false));
         attributeMap.put(ATTR_DISABLELOCALCONFIG, new ZclAttribute(ZclClusterType.BASIC, ATTR_DISABLELOCALCONFIG, "DisableLocalConfig", ZclDataType.BITMAP_8_BIT, true, true, true, false));
+        attributeMap.put(ATTR_SWBUILDID, new ZclAttribute(ZclClusterType.BASIC, ATTR_SWBUILDID, "SWBuildID", ZclDataType.CHARACTER_STRING, false, true, false, false));
 
         return attributeMap;
     }
@@ -820,6 +825,48 @@ public class ZclBasicCluster extends ZclCluster {
         }
 
         return (Integer) readSync(attributes.get(ATTR_DISABLELOCALCONFIG));
+    }
+
+    /**
+     * Get the <i>SWBuildID</i> attribute [attribute ID <b>16384</b>].
+     * <p>
+     * The SWBuildIDattribute represents a detailed, manufacturer-specific reference to the version of the software.
+     * <p>
+     * The attribute is of type {@link String}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getSwBuildIdAsync() {
+        return read(attributes.get(ATTR_SWBUILDID));
+    }
+
+    /**
+     * Synchronously get the <i>SWBuildID</i> attribute [attribute ID <b>16384</b>].
+     * <p>
+     * The SWBuildIDattribute represents a detailed, manufacturer-specific reference to the version of the software.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link String}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link String} attribute value, or null on error
+     */
+    public String getSwBuildId(final long refreshPeriod) {
+        if (attributes.get(ATTR_SWBUILDID).isLastValueCurrent(refreshPeriod)) {
+            return (String) attributes.get(ATTR_SWBUILDID).getLastValue();
+        }
+
+        return (String) readSync(attributes.get(ATTR_SWBUILDID));
     }
 
     /**
