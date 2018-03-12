@@ -343,6 +343,7 @@ Extended command.
 |0x0012 |DeviceEnabled        |Boolean                    |Read/Write |Mandatory |          |
 |0x0013 |AlarmMask            |8-bit bitmap               |Read/Write |Mandatory |          |
 |0x0014 |DisableLocalConfig   |8-bit bitmap               |Read/Write |Mandatory |          |
+|0x4000 |SWBuildID            |Character string           |Read Only  |Optional  |          |
 
 #### ZCLVersion Attribute
 The ZCLVersion attribute is 8 bits in length and specifies the version number of
@@ -381,6 +382,18 @@ available to the device. Bits b0–b6 of this attribute represent the primary po
 source of the device and bit b7 indicates whether the device has a secondary power
 source in the form of a battery backup. 
 
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0000 |Unknown                   |
+|0x0001 |Mains Single Phase        |
+|0x0002 |Mains Three Phase         |
+|0x0003 |Battery                   |
+|0x0004 |DC Source                 |
+|0x0005 |Emergency Mains Constant  |
+|0x0006 |Emergency Mains Changeover|
+
+
+
 #### LocationDescription Attribute
 The LocationDescription attribute is a maximum of 16 bytes in length and describes
 the physical location of the device as a ZigBee character string. 
@@ -388,6 +401,15 @@ the physical location of the device as a ZigBee character string.
 #### PhysicalEnvironment Attribute
 The PhysicalEnvironment attribute is 8 bits in length and specifies the type of
 physical environment in which the device will operate. 
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0000 |Unknown                   |
+|0x0001 |Atrium                    |
+|0x0002 |Bar                       |
+|0x0003 |Courtyard                 |
+|0x0004 |Bathroom                  |
+|0x0005 |edroom                    |
 
 #### DeviceEnabled Attribute
 The DeviceEnabled attribute is a boolean and specifies whether the device is enabled
@@ -404,6 +426,9 @@ functions to be disabled.
 The intention of this attribute is to allow disabling of any local configuration
 user interface, for example to prevent reset or binding buttons being activated by
 unauthorised persons in a public building.
+
+#### SWBuildID Attribute
+The SWBuildIDattribute represents a detailed, manufacturer-specific reference to the version of the software.
 
 
 ### Received
