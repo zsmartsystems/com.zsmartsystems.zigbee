@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.onoffswitchconfiguration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Generated;
+
 /**
  * Enumeration of On/off Switch Configuration attribute SwitchActions options.
  * <p>
@@ -17,6 +19,7 @@ import java.util.Map;
  *
  * @author Chris Jackson
  */
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-12T23:36:29Z")
 public enum SwitchActionsEnum {
     ON(0x0000),
     OFF(0x0001),

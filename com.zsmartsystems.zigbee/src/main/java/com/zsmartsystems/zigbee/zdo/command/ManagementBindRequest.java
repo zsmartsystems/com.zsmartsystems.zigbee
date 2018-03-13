@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,6 +14,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindResponse;
+import javax.annotation.Generated;
 
 /**
  * Management Bind Request value object class.
@@ -26,6 +27,8 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementBindResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
+
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-12T23:36:29Z")
 public class ManagementBindRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * StartIndex command message field.

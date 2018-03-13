@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.protocol;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.Generated;
 import com.zsmartsystems.zigbee.zcl.field.*;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -24,6 +26,7 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
  *
  * @author Chris Jackson
  */
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-12T23:36:29Z")
 public enum ZclDataType {
     BITMAP_16_BIT("16-bit Bitmap", Integer.class, 0x19, false),
     BITMAP_32_BIT("32-bit Bitmap", Integer.class, 0x1B, false),
