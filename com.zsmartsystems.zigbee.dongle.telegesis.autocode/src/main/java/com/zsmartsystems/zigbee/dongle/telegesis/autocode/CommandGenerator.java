@@ -1085,6 +1085,8 @@ public class CommandGenerator extends ClassGenerator {
             case "Int16":
             case "Integer":
                 return "Integer";
+            case "Int32":
+                return "Long";
             case "Boolean":
                 return "Boolean";
             case "String":

@@ -143,6 +143,7 @@ public class ZigBeeConsoleMain {
             Set<Integer> clusters = new HashSet<Integer>();
             clusters.add(ZclIasZoneCluster.CLUSTER_ID);
             transportOptions.addOption(TransportConfigOption.SUPPORTED_OUTPUT_CLUSTERS, clusters);
+            // transportOptions.addOption(TransportConfigOption.SECURITY_FRAME_COUNTER, 0x8000L);
         } else {
             dongle = null;
         }

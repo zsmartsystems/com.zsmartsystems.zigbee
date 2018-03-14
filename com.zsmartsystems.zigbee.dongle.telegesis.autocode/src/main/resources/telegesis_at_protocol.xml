@@ -1226,6 +1226,54 @@
 		</command_parameters>
 	</command>
 
+	<command>
+		<name>Get Frame Cnt</name>
+		<description>Gets the security frame counter</description>
+		<command_parameters>
+			<prompt>AT+FRAMECNT?</prompt>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Int32</data_type>
+				<name>frame cnt</name>
+				<description></description>
+				<display>hex[08]</display>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Restore Factory Defaults</name>
+		<description>Module Performs a factory resetAll non-volatile S Registers are updated with their factory defaults and the node leaves the network it is currently joined to.</description>
+		<command_parameters>
+			<prompt>AT&#038;F</prompt>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>Set Frame Cnt</name>
+		<description>Sets the security frame counter</description>
+		<command_parameters>
+			<prompt>AT+FRAMECNT=</prompt>
+			<parameter>
+				<data_type>Int32</data_type>
+				<name>frame cnt</name>
+				<description></description>
+				<display>hex[08]</display>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>Int32</data_type>
+				<name>frame cnt confirmed</name>
+				<description></description>
+				<display>hex[08]</display>
+			</parameter>
+		</response_parameters>
+	</command>
+
 	<enum>
 		<name>TelegesisStatusCode</name>
 		<description></description>
