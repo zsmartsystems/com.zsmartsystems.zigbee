@@ -167,7 +167,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtendedR
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-12T23:36:29Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
 public enum ZclCommandType {
     /**
      * ADD_GROUP_COMMAND: Add Group Command

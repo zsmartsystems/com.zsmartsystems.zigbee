@@ -35,7 +35,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-12T23:36:29Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
 public class ZclElectricalMeasurementCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -95,6 +95,12 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      */
     public static final int ATTR_ACTIVEPOWER = 0x050B;
     /**
+     */
+    public static final int ATTR_ACVOLTAGEMULTIPLIER = 0x0600;
+    /**
+     */
+    public static final int ATTR_ACVOLTAGEDIVISOR = 0x0601;
+    /**
      * Provides a value to be multiplied against the InstantaneousCurrent and RMSCurrentattributes.
      * his attribute must be used in conjunction with the ACCurrentDivisorattribute. 0x0000 is an invalid value for this attribute.
      */
@@ -120,7 +126,7 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(12);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(14);
 
         attributeMap.put(ATTR_MEASUREMENTTYPE, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_MEASUREMENTTYPE, "MeasurementType", ZclDataType.BITMAP_32_BIT, true, true, false, false));
         attributeMap.put(ATTR_ACFREQUENCY, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_ACFREQUENCY, "ACFrequency", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
@@ -130,6 +136,8 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         attributeMap.put(ATTR_RMSVOLTAGE, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_RMSVOLTAGE, "RMSVoltage", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_RMSCURRENT, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_RMSCURRENT, "RMSCurrent", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_ACTIVEPOWER, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_ACTIVEPOWER, "ActivePower", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ACVOLTAGEMULTIPLIER, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_ACVOLTAGEMULTIPLIER, "ACVoltageMultiplier", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ACVOLTAGEDIVISOR, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_ACVOLTAGEDIVISOR, "ACVoltageDivisor", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_ACCURRENTMULTIPLIER, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_ACCURRENTMULTIPLIER, "ACCurrentMultiplier", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_ACCURRENTDIVISOR, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_ACCURRENTDIVISOR, "ACCurrentDivisor", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_ACPOWERMULTIPLIER, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_ACPOWERMULTIPLIER, "ACPowerMultiplier", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
@@ -510,6 +518,82 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         }
 
         return (Integer) readSync(attributes.get(ATTR_ACTIVEPOWER));
+    }
+
+    /**
+     * Get the <i>ACVoltageMultiplier</i> attribute [attribute ID <b>1536</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getAcVoltageMultiplierAsync() {
+        return read(attributes.get(ATTR_ACVOLTAGEMULTIPLIER));
+    }
+
+    /**
+     * Synchronously get the <i>ACVoltageMultiplier</i> attribute [attribute ID <b>1536</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getAcVoltageMultiplier(final long refreshPeriod) {
+        if (attributes.get(ATTR_ACVOLTAGEMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ACVOLTAGEMULTIPLIER).getLastValue();
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_ACVOLTAGEMULTIPLIER));
+    }
+
+    /**
+     * Get the <i>ACVoltageDivisor</i> attribute [attribute ID <b>1537</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getAcVoltageDivisorAsync() {
+        return read(attributes.get(ATTR_ACVOLTAGEDIVISOR));
+    }
+
+    /**
+     * Synchronously get the <i>ACVoltageDivisor</i> attribute [attribute ID <b>1537</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getAcVoltageDivisor(final long refreshPeriod) {
+        if (attributes.get(ATTR_ACVOLTAGEDIVISOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ACVOLTAGEDIVISOR).getLastValue();
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_ACVOLTAGEDIVISOR));
     }
 
     /**

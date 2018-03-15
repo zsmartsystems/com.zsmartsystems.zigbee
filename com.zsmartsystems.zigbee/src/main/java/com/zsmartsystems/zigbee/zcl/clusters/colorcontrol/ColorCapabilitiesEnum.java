@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-12T23:36:29Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
 public enum ColorCapabilitiesEnum {
     HUE_AND_SATURATION(0x0001),
     ENHANCED_HUE(0x0002),

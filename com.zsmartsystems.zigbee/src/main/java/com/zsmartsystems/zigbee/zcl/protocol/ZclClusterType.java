@@ -23,7 +23,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-12T23:36:29Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
 public enum ZclClusterType {
     BASIC(0x0000, ZigBeeProfileType.HOME_AUTOMATION, ZclBasicCluster.class, "Basic"),
     POWER_CONFIGURATION(0x0001, ZigBeeProfileType.HOME_AUTOMATION, ZclPowerConfigurationCluster.class, "Power configuration"),
