@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
  * Code is auto-generated. Modifications may be overwritten!
  */
 
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-12T23:36:29Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
 public class ManagementLqiResponse extends ZdoResponse {
     /**
      * NeighborTableEntries command message field.
