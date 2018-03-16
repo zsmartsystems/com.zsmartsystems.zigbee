@@ -1,10 +1,20 @@
+/**
+ * Copyright (c) 2016-2018 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package com.zsmartsystems.zigbee.autocode;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +64,71 @@ public class ZclProtocolCodeGenerator {
 
     private static String generatedDate;
 
+    private static boolean fileCompare(String file1, String file2) throws IOException {
+        BufferedReader reader1 = new BufferedReader(new FileReader(file1));
+        BufferedReader reader2 = new BufferedReader(new FileReader(file2));
+
+        String line1 = reader1.readLine();
+        String line2 = reader2.readLine();
+
+        boolean areEqual = true;
+
+        int lineNum = 1;
+
+        while (line1 != null || line2 != null) {
+            if (line1 == null || line2 == null) {
+                areEqual = false;
+
+                break;
+            } else if (!line1.startsWith("@Generated") && !line1.equalsIgnoreCase(line2)) {
+                areEqual = false;
+
+                break;
+            }
+
+            line1 = reader1.readLine();
+            line2 = reader2.readLine();
+
+            lineNum++;
+        }
+
+        if (areEqual) {
+            System.out.println("Two files have same content.");
+        } else {
+            System.out.println("Two files have different content. They differ at line " + lineNum);
+            System.out.println("File1 has " + line1 + " and File2 has " + line2 + " at line " + lineNum);
+        }
+
+        reader1.close();
+        reader2.close();
+
+        return areEqual;
+    }
+
+    private static void copyFile(String source, String dest) throws IOException {
+        Files.copy(new File(source).toPath(), new File(dest).toPath());
+    }
+
+    private static void compareFiles(String inFolder, String outFolder, String folder) {
+        File[] files = new File(inFolder + folder).listFiles();
+        for (File file : files) {
+            if (file.isDirectory()) {
+                compareFiles(inFolder, outFolder, folder + "/" + file.getName());
+            } else {
+                System.out.println("File: " + folder + "/" + file.getName());
+                try {
+                    if (!fileCompare(inFolder + folder + "/" + file.getName(),
+                            outFolder + folder + "/" + file.getName())) {
+                        copyFile(inFolder + folder + "/" + file.getName(), outFolder + folder + "/" + file.getName());
+                        System.out.println("File: " + folder + "/" + file.getName() + " updated");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     /**
      * The main method for running the code generator.
      *
@@ -71,10 +146,17 @@ public class ZclProtocolCodeGenerator {
         final String definitionFilePathOta = "./src/main/resources/ota_definition.md";
 
         final String sourceRootPath;
-        if (args.length != 0) {
-            sourceRootPath = args[0];
-        } else {
-            sourceRootPath = "../com.zsmartsystems.zigbee/src/main/java/";
+        // if (args.length != 0) {
+        // sourceRootPath = args[0];
+        // } else {
+        // sourceRootPath = "../com.zsmartsystems.zigbee/src/main/java/";
+        // }
+        String outRootPath = "../com.zsmartsystems.zigbee/src/main/java/";
+
+        sourceRootPath = "target/src/main/java/";
+        final File packageFolder = new File(sourceRootPath);
+        if (!packageFolder.exists()) {
+            packageFolder.mkdirs();
         }
 
         final File sourceRootFile = new File(sourceRootPath);
@@ -157,6 +239,9 @@ public class ZclProtocolCodeGenerator {
             }
 
             generateZclDataTypeEnumeration(dataTypes, packageRoot, packageFile);
+
+            String inRootPath = sourceRootPath.substring(0, sourceRootPath.length() - 1);
+            compareFiles(inRootPath, outRootPath, "");
         } catch (final IOException e) {
             System.out.println("Failed to generate data types enumeration.");
             e.printStackTrace();

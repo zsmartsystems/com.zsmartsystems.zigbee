@@ -16,7 +16,7 @@
 		<url>https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</url>
 		<connection>scm:git:https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</connection>
 		<developerConnection>scm:git:https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</developerConnection>
-		<tag>zigbee-1.0.3</tag>
+		<tag>zigbee-1.0.6</tag>
 	</scm>
 
 	<distributionManagement>
@@ -28,12 +28,15 @@
 	</distributionManagement>
 
 	<modules>
-		<module>com.zsmartsystems.zigbee</module>
+        <module>com.zsmartsystems.zigbee</module>
+        <module>com.zsmartsystems.zigbee.autocode</module>
         <module>com.zsmartsystems.zigbee.dongle.xbee</module>
+        <module>com.zsmartsystems.zigbee.dongle.xbee.autocode</module>
 		<module>com.zsmartsystems.zigbee.dongle.cc2531</module>
 		<module>com.zsmartsystems.zigbee.dongle.ember</module>
 		<module>com.zsmartsystems.zigbee.dongle.conbee</module>
-		<module>com.zsmartsystems.zigbee.dongle.telegesis</module>
+        <module>com.zsmartsystems.zigbee.dongle.telegesis</module>
+        <module>com.zsmartsystems.zigbee.dongle.telegesis.autocode</module>
 		<module>com.zsmartsystems.zigbee.console</module>
 		<module>com.zsmartsystems.zigbee.serial</module>
 		<module>com.zsmartsystems.zigbee.test</module>
@@ -54,10 +57,19 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.3</version>
+				<version>3.0.0</version>
 				<configuration>
 					<failOnError>false</failOnError>
 				</configuration>
+                <executions>
+                    <execution>
+                        <id>javadoc-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
 			</plugin>
 
 			<plugin>
@@ -125,6 +137,7 @@
 
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
                 <configuration>
                     <archive>
                         <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
@@ -135,6 +148,7 @@
             <plugin>
 				<groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <id>bundle-manifest</id>
@@ -146,8 +160,8 @@
                 </executions>
                 <configuration>
                     <instructions>
-                        <Bundle-Name>${artifactId}</Bundle-Name>
-                        <Bundle-SymbolicName>${artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.artifactId}</Bundle-Name>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Description>${pom.name}</Bundle-Description>
                     </instructions>
                 </configuration>

@@ -9,12 +9,13 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.main.skip>true</maven.main.skip>
     </properties>
     
     <parent>
         <groupId>com.zsmartsystems</groupId>
         <artifactId>zigbee</artifactId>
-        <version>1.0.4-SNAPSHOT</version>
+        <version>1.0.7-SNAPSHOT</version>
     </parent>
 
     <build>
