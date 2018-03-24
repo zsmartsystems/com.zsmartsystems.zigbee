@@ -62,9 +62,20 @@ public class ZclProtocolCodeGenerator {
     static String packageZdpTransaction = packageZdp + ".transaction";
     static String packageZdpDescriptors = packageZdpField;
 
+    private static int lineLen = 120;
+
     private static String generatedDate;
 
     private static boolean fileCompare(String file1, String file2) throws IOException {
+        File f = new File(file1);
+        if (!f.exists()) {
+            return false;
+        }
+        f = new File(file2);
+        if (!f.exists()) {
+            return false;
+        }
+
         BufferedReader reader1 = new BufferedReader(new FileReader(file1));
         BufferedReader reader2 = new BufferedReader(new FileReader(file2));
 
@@ -106,6 +117,10 @@ public class ZclProtocolCodeGenerator {
     }
 
     private static void copyFile(String source, String dest) throws IOException {
+        File f = new File(dest);
+        if (f.exists()) {
+            Files.delete(new File(dest).toPath());
+        }
         Files.copy(new File(source).toPath(), new File(dest).toPath());
     }
 
@@ -1016,9 +1031,7 @@ public class ZclProtocolCodeGenerator {
 
                     if (command.commandDescription != null && command.commandDescription.size() != 0) {
                         out.println(" * <p>");
-                        for (String line : command.commandDescription) {
-                            out.println(" * " + line);
-                        }
+                        outputWithLinebreak(out, "", command.commandDescription);
                     }
 
                     out.println(" * <p>");
@@ -1030,9 +1043,7 @@ public class ZclProtocolCodeGenerator {
 
                     if (cluster.clusterDescription.size() > 0) {
                         out.println(" * <p>");
-                        for (String line : cluster.clusterDescription) {
-                            out.println(" * " + line);
-                        }
+                        outputWithLinebreak(out, "", cluster.clusterDescription);
                     }
 
                     out.println(" * <p>");
@@ -1046,10 +1057,8 @@ public class ZclProtocolCodeGenerator {
                         out.println("    /**");
                         out.println("     * " + field.fieldLabel + " command message field.");
                         if (field.description.size() != 0) {
-                            out.println("     *");
-                            for (String line : field.description) {
-                                out.println("     * " + line);
-                            }
+                            out.println("     * <p>");
+                            outputWithLinebreak(out, "    ", field.description);
                         }
                         out.println("     */");
                         out.println("    private " + field.dataTypeClass + " " + field.nameLowerCamelCase + ";");
@@ -1149,9 +1158,7 @@ public class ZclProtocolCodeGenerator {
                         out.println("     * Sets " + field.fieldLabel + ".");
                         if (field.description.size() != 0) {
                             out.println("     *");
-                            for (String line : field.description) {
-                                out.println("     * " + line);
-                            }
+                            outputWithLinebreak(out, "    ", field.description);
                         }
                         out.println("     *");
                         out.println("     * @param " + field.nameLowerCamelCase + " the " + field.fieldLabel);
@@ -1445,6 +1452,41 @@ public class ZclProtocolCodeGenerator {
         out.close();
     }
 
+    protected static void outputWithLinebreak(PrintWriter out, String indent, List<String> lines) {
+        for (String line : lines) {
+            String[] words = line.split(" ");
+            if (words.length == 0) {
+                return;
+            }
+
+            out.print(indent + " *");
+
+            int len = 2;
+            for (String word : words) {
+                // if (word.toLowerCase().equals("note:")) {
+                // if (len > 2) {
+                // out.println();
+                // }
+                // out.println(indent + " * <p>");
+                // out.print(indent + " * <b>Note:</b>");
+                // continue;
+                // }
+                if (len + word.length() > lineLen) {
+                    out.println();
+                    out.print(indent + " *");
+                    len = 2;
+                }
+                out.print(" ");
+                out.print(word);
+                len += word.length();
+            }
+
+            if (len != 0) {
+                out.println();
+            }
+        }
+    }
+
     private static void generateZclClusterClasses(Context context, String packageRootPrefix, File sourceRootPath)
             throws IOException {
 
@@ -1602,12 +1644,11 @@ public class ZclProtocolCodeGenerator {
                 out.println("/**");
                 out.println(" * <b>" + cluster.clusterName + "</b> cluster implementation (<i>Cluster ID "
                         + String.format("0x%04X", cluster.clusterId) + "</i>).");
-                if (cluster.clusterDescription.size() != 0) {
+                if (cluster.clusterDescription.size() > 0) {
                     out.println(" * <p>");
-                    for (String line : cluster.clusterDescription) {
-                        out.println(" * " + line);
-                    }
                 }
+                outputWithLinebreak(out, "", cluster.clusterDescription);
+
                 out.println(" * <p>");
                 out.println(" * Code is auto-generated. Modifications may be overwritten!");
 
@@ -1631,11 +1672,8 @@ public class ZclProtocolCodeGenerator {
                     out.println("    // Attribute constants");
                     for (final Attribute attribute : cluster.attributes.values()) {
                         out.println("    /**");
-                        if (attribute.attributeDescription.size() != 0) {
-                            for (String line : attribute.attributeDescription) {
-                                out.println("     * " + line);
-                            }
-                        }
+                        outputWithLinebreak(out, "    ", attribute.attributeDescription);
+
                         out.println("     */");
                         out.println("    public static final int " + attribute.enumName + " = "
                                 + String.format("0x%04X", attribute.attributeId) + ";");
@@ -1732,9 +1770,7 @@ public class ZclProtocolCodeGenerator {
                     out.println("     * The " + command.commandLabel);
                     if (command.commandDescription.size() != 0) {
                         out.println("     * <p>");
-                        for (String line : command.commandDescription) {
-                            out.println("     * " + line);
-                        }
+                        outputWithLinebreak(out, "    ", command.commandDescription);
                     }
                     out.println("     *");
 
@@ -1963,9 +1999,7 @@ public class ZclProtocolCodeGenerator {
                 + attribute.attributeId + "</b>].");
         if (attribute.attributeDescription.size() != 0) {
             out.println("     * <p>");
-            for (String line : attribute.attributeDescription) {
-                out.println("     * " + line);
-            }
+            outputWithLinebreak(out, "    ", attribute.attributeDescription);
         }
         if ("Synchronously get".equals(type)) {
             out.println("     * <p>");
@@ -2165,16 +2199,12 @@ public class ZclProtocolCodeGenerator {
 
                     if (command.commandDescription != null && command.commandDescription.size() != 0) {
                         out.println(" * <p>");
-                        for (String line : command.commandDescription) {
-                            out.println(" * " + line);
-                        }
+                        outputWithLinebreak(out, "", command.commandDescription);
                     }
 
                     if (cluster.clusterDescription.size() > 0) {
                         out.println(" * <p>");
-                        for (String line : cluster.clusterDescription) {
-                            out.println(" * " + line);
-                        }
+                        outputWithLinebreak(out, "", cluster.clusterDescription);
                     }
 
                     out.println(" * <p>");
@@ -2207,11 +2237,9 @@ public class ZclProtocolCodeGenerator {
 
                         out.println("    /**");
                         out.println("     * " + field.fieldLabel + " command message field.");
-                        if (field.description.size() != 0) {
-                            out.println("     *");
-                            for (String line : field.description) {
-                                out.println("     * " + line);
-                            }
+                        if (field.description.size() > 0) {
+                            out.println("     * <p>");
+                            outputWithLinebreak(out, "    ", field.description);
                         }
                         out.println("     */");
                         out.println("    private " + getFieldType(field) + " " + field.nameLowerCamelCase + ";");
@@ -2254,9 +2282,7 @@ public class ZclProtocolCodeGenerator {
                         out.println("     * Gets " + field.fieldLabel + ".");
                         if (field.description.size() != 0) {
                             out.println("     * <p>");
-                            for (String line : field.description) {
-                                out.println("     * " + line);
-                            }
+                            outputWithLinebreak(out, "    ", field.description);
                         }
                         out.println("     *");
                         out.println("     * @return the " + field.fieldLabel);
@@ -2269,9 +2295,7 @@ public class ZclProtocolCodeGenerator {
                         out.println("     * Sets " + field.fieldLabel + ".");
                         if (field.description.size() != 0) {
                             out.println("     * <p>");
-                            for (String line : field.description) {
-                                out.println("     * " + line);
-                            }
+                            outputWithLinebreak(out, "    ", field.description);
                         }
                         out.println("     *");
                         out.println("     * @param " + field.nameLowerCamelCase + " the " + field.fieldLabel);
@@ -2609,16 +2633,12 @@ public class ZclProtocolCodeGenerator {
 
                     if (command.commandDescription != null && command.commandDescription.size() != 0) {
                         out.println(" * <p>");
-                        for (String line : command.commandDescription) {
-                            out.println(" * " + line);
-                        }
+                        outputWithLinebreak(out, "", command.commandDescription);
                     }
 
                     if (cluster.clusterDescription.size() > 0) {
                         out.println(" * <p>");
-                        for (String line : cluster.clusterDescription) {
-                            out.println(" * " + line);
-                        }
+                        outputWithLinebreak(out, "", cluster.clusterDescription);
                     }
 
                     out.println(" * <p>");

@@ -30,11 +30,11 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeStatusRecord;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-23T21:55:42Z")
 public class ConfigureReportingResponse extends ZclCommand {
     /**
      * Status command message field.
-     *
+     * <p>
      * Status is only provided if the command was successful, and the
      * attribute status records are not included for successfully
      * written attributes, in order to save bandwidth.
@@ -43,7 +43,7 @@ public class ConfigureReportingResponse extends ZclCommand {
 
     /**
      * Records command message field.
-     *
+     * <p>
      * Note that attribute status records are not included for successfully
      * configured attributes in order to save bandwidth.  In the case of successful
      * configuration of all attributes, only a single attribute status record SHALL

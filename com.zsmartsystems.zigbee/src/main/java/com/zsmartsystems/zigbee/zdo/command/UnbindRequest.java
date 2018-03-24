@@ -29,32 +29,32 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * Code is auto-generated. Modifications may be overwritten!
  */
 
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-23T21:55:42Z")
 public class UnbindRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * SrcAddress command message field.
-     *
+     * <p>
      * The IEEE address for the source.
      */
     private IeeeAddress srcAddress;
 
     /**
      * SrcEndpoint command message field.
-     *
+     * <p>
      * The source endpoint for the binding entry.
      */
     private Integer srcEndpoint;
 
     /**
      * BindCluster command message field.
-     *
+     * <p>
      * The identifier of the cluster on the source device that is bound to the destination.
      */
     private Integer bindCluster;
 
     /**
      * DstAddrMode command message field.
-     *
+     * <p>
      * The addressing mode for the destination address used in this command. This field
      * can take one of the non-reserved values from the following list:
      * 0x00 = reserved
@@ -67,14 +67,14 @@ public class UnbindRequest extends ZdoRequest implements ZigBeeTransactionMatche
 
     /**
      * DstAddress command message field.
-     *
+     * <p>
      * The destination address for the binding entry.
      */
     private IeeeAddress dstAddress;
 
     /**
      * DstEndpoint command message field.
-     *
+     * <p>
      * This field shall be present only if the DstAddrMode field has a value of 0x03 and,
      * if present, shall be the destination endpoint for the binding entry.
      */

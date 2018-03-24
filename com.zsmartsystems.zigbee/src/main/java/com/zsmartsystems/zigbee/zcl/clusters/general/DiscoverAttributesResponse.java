@@ -29,11 +29,11 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-23T21:55:42Z")
 public class DiscoverAttributesResponse extends ZclCommand {
     /**
      * Discovery Complete command message field.
-     *
+     * <p>
      * The discovery complete field is a Boolean field. A value of 0 indicates that there
      * are more attributes to be discovered that have an attribute identifier value greater
      * than the last attribute identifier in the last attribute information field. A value
