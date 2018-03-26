@@ -130,9 +130,18 @@ import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetZoneIdMapResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.EmergencyCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetZoneInformationResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.FireCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iasace.ZoneStatusChangedCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.PanicCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iasace.PanelStatusChangedCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetZoneIdMapCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetPanelStatusResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetZoneInformationCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iasace.SetBypassedZoneListCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetPanelStatusCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iasace.BypassResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetBypassedZoneListCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetZoneStatusResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetZoneStatusCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.StartWarningCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.SquawkCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
@@ -167,7 +176,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtendedR
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T18:46:15Z")
 public enum ZclCommandType {
     /**
      * ADD_GROUP_COMMAND: Add Group Command
@@ -229,6 +238,12 @@ public enum ZclCommandType {
      * See {@link BypassCommand}
      */
     BYPASS_COMMAND(0x0501, 1, BypassCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * BYPASS_RESPONSE: Bypass Response
+     * <p>
+     * See {@link BypassResponse}
+     */
+    BYPASS_RESPONSE(0x0501, 7, BypassResponse.class, ZclCommandDirection.SERVER_TO_CLIENT),
     /**
      * CLEAR_WEEKLY_SCHEDULE: Clear Weekly Schedule
      * <p>
@@ -362,6 +377,12 @@ public enum ZclCommandType {
      */
     GET_ALARM_RESPONSE(0x0009, 1, GetAlarmResponse.class, ZclCommandDirection.SERVER_TO_CLIENT),
     /**
+     * GET_BYPASSED_ZONE_LIST_COMMAND: Get Bypassed Zone List Command
+     * <p>
+     * See {@link GetBypassedZoneListCommand}
+     */
+    GET_BYPASSED_ZONE_LIST_COMMAND(0x0501, 8, GetBypassedZoneListCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
      * GET_DEVICE_CONFIGURATION_COMMAND: Get Device Configuration Command
      * <p>
      * See {@link GetDeviceConfigurationCommand}
@@ -385,6 +406,18 @@ public enum ZclCommandType {
      * See {@link GetLocationDataCommand}
      */
     GET_LOCATION_DATA_COMMAND(0x000B, 3, GetLocationDataCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * GET_PANEL_STATUS_COMMAND: Get Panel Status Command
+     * <p>
+     * See {@link GetPanelStatusCommand}
+     */
+    GET_PANEL_STATUS_COMMAND(0x0501, 7, GetPanelStatusCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * GET_PANEL_STATUS_RESPONSE: Get Panel Status Response
+     * <p>
+     * See {@link GetPanelStatusResponse}
+     */
+    GET_PANEL_STATUS_RESPONSE(0x0501, 5, GetPanelStatusResponse.class, ZclCommandDirection.SERVER_TO_CLIENT),
     /**
      * GET_RELAY_STATUS_LOG: Get Relay Status Log
      * <p>
@@ -445,6 +478,18 @@ public enum ZclCommandType {
      * See {@link GetZoneInformationResponse}
      */
     GET_ZONE_INFORMATION_RESPONSE(0x0501, 2, GetZoneInformationResponse.class, ZclCommandDirection.SERVER_TO_CLIENT),
+    /**
+     * GET_ZONE_STATUS_COMMAND: Get Zone Status Command
+     * <p>
+     * See {@link GetZoneStatusCommand}
+     */
+    GET_ZONE_STATUS_COMMAND(0x0501, 9, GetZoneStatusCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * GET_ZONE_STATUS_RESPONSE: Get Zone Status Response
+     * <p>
+     * See {@link GetZoneStatusResponse}
+     */
+    GET_ZONE_STATUS_RESPONSE(0x0501, 8, GetZoneStatusResponse.class, ZclCommandDirection.SERVER_TO_CLIENT),
     /**
      * IDENTIFY_COMMAND: Identify Command
      * <p>
@@ -613,6 +658,12 @@ public enum ZclCommandType {
      * See {@link OnWithTimedOffCommand}
      */
     ON_WITH_TIMED_OFF_COMMAND(0x0006, 66, OnWithTimedOffCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * PANEL_STATUS_CHANGED_COMMAND: Panel Status Changed Command
+     * <p>
+     * See {@link PanelStatusChangedCommand}
+     */
+    PANEL_STATUS_CHANGED_COMMAND(0x0501, 4, PanelStatusChangedCommand.class, ZclCommandDirection.SERVER_TO_CLIENT),
     /**
      * PANIC_COMMAND: Panic Command
      * <p>
@@ -848,6 +899,12 @@ public enum ZclCommandType {
      */
     SET_ABSOLUTE_LOCATION_COMMAND(0x000B, 0, SetAbsoluteLocationCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
     /**
+     * SET_BYPASSED_ZONE_LIST_COMMAND: Set Bypassed Zone List Command
+     * <p>
+     * See {@link SetBypassedZoneListCommand}
+     */
+    SET_BYPASSED_ZONE_LIST_COMMAND(0x0501, 6, SetBypassedZoneListCommand.class, ZclCommandDirection.SERVER_TO_CLIENT),
+    /**
      * SET_DEVICE_CONFIGURATION_COMMAND: Set Device Configuration Command
      * <p>
      * See {@link SetDeviceConfigurationCommand}
@@ -1027,6 +1084,12 @@ public enum ZclCommandType {
      * See {@link ZoneEnrollResponse}
      */
     ZONE_ENROLL_RESPONSE(0x0500, 0, ZoneEnrollResponse.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * ZONE_STATUS_CHANGED_COMMAND: Zone Status Changed Command
+     * <p>
+     * See {@link ZoneStatusChangedCommand}
+     */
+    ZONE_STATUS_CHANGED_COMMAND(0x0501, 3, ZoneStatusChangedCommand.class, ZclCommandDirection.SERVER_TO_CLIENT),
     /**
      * ZONE_STATUS_CHANGE_NOTIFICATION_COMMAND: Zone Status Change Notification Command
      * <p>

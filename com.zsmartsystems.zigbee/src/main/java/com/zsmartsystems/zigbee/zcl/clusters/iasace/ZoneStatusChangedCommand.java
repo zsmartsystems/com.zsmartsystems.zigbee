@@ -14,10 +14,13 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
- * Get Zone Information Response value object class.
+ * Zone Status Changed Command value object class.
+ * <p>
+ * This command updates ACE clients in the system of changes to zone status recorded by the ACE server (e.g., IAS CIE device).
+ * An IAS ACE server SHOULD send a Zone Status Changed command upon a change to an IAS Zone de-vice’s ZoneStatusthat it manages (i.e.,
+ * IAS ACE server SHOULD send a Zone Status Changed command upon receipt of a Zone Status Change Notification command).
  * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
@@ -29,22 +32,22 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T18:46:15Z")
-public class GetZoneInformationResponse extends ZclCommand {
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T17:34:00Z")
+public class ZoneStatusChangedCommand extends ZclCommand {
     /**
      * Zone ID command message field.
      */
     private Integer zoneId;
 
     /**
-     * Zone Type command message field.
+     * Zone Status command message field.
      */
-    private Integer zoneType;
+    private Integer zoneStatus;
 
     /**
-     * IEEE address command message field.
+     * Audible Notification command message field.
      */
-    private IeeeAddress ieeeAddress;
+    private Integer audibleNotification;
 
     /**
      * Zone Label command message field.
@@ -54,10 +57,10 @@ public class GetZoneInformationResponse extends ZclCommand {
     /**
      * Default constructor.
      */
-    public GetZoneInformationResponse() {
+    public ZoneStatusChangedCommand() {
         genericCommand = false;
         clusterId = 1281;
-        commandId = 2;
+        commandId = 3;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
@@ -80,39 +83,39 @@ public class GetZoneInformationResponse extends ZclCommand {
     }
 
     /**
-     * Gets Zone Type.
+     * Gets Zone Status.
      *
-     * @return the Zone Type
+     * @return the Zone Status
      */
-    public Integer getZoneType() {
-        return zoneType;
+    public Integer getZoneStatus() {
+        return zoneStatus;
     }
 
     /**
-     * Sets Zone Type.
+     * Sets Zone Status.
      *
-     * @param zoneType the Zone Type
+     * @param zoneStatus the Zone Status
      */
-    public void setZoneType(final Integer zoneType) {
-        this.zoneType = zoneType;
+    public void setZoneStatus(final Integer zoneStatus) {
+        this.zoneStatus = zoneStatus;
     }
 
     /**
-     * Gets IEEE address.
+     * Gets Audible Notification.
      *
-     * @return the IEEE address
+     * @return the Audible Notification
      */
-    public IeeeAddress getIeeeAddress() {
-        return ieeeAddress;
+    public Integer getAudibleNotification() {
+        return audibleNotification;
     }
 
     /**
-     * Sets IEEE address.
+     * Sets Audible Notification.
      *
-     * @param ieeeAddress the IEEE address
+     * @param audibleNotification the Audible Notification
      */
-    public void setIeeeAddress(final IeeeAddress ieeeAddress) {
-        this.ieeeAddress = ieeeAddress;
+    public void setAudibleNotification(final Integer audibleNotification) {
+        this.audibleNotification = audibleNotification;
     }
 
     /**
@@ -136,30 +139,30 @@ public class GetZoneInformationResponse extends ZclCommand {
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(zoneId, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(zoneType, ZclDataType.ENUMERATION_16_BIT);
-        serializer.serialize(ieeeAddress, ZclDataType.IEEE_ADDRESS);
+        serializer.serialize(zoneStatus, ZclDataType.ENUMERATION_16_BIT);
+        serializer.serialize(audibleNotification, ZclDataType.ENUMERATION_8_BIT);
         serializer.serialize(zoneLabel, ZclDataType.CHARACTER_STRING);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         zoneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        zoneType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_16_BIT);
-        ieeeAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        zoneStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_16_BIT);
+        audibleNotification = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
         zoneLabel = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(143);
-        builder.append("GetZoneInformationResponse [");
+        final StringBuilder builder = new StringBuilder(151);
+        builder.append("ZoneStatusChangedCommand [");
         builder.append(super.toString());
         builder.append(", zoneId=");
         builder.append(zoneId);
-        builder.append(", zoneType=");
-        builder.append(zoneType);
-        builder.append(", ieeeAddress=");
-        builder.append(ieeeAddress);
+        builder.append(", zoneStatus=");
+        builder.append(zoneStatus);
+        builder.append(", audibleNotification=");
+        builder.append(audibleNotification);
         builder.append(", zoneLabel=");
         builder.append(zoneLabel);
         builder.append(']');
