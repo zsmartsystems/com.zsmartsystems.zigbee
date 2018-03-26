@@ -18,6 +18,9 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Get Zone ID Map Response value object class.
  * <p>
+ * The 16 fields of the payload indicate whether each of the Zone IDs from 0 to 0xff is allocated or not. If bit n
+ * of Zone ID Map section N is set to 1, then Zone ID (16 x N + n ) is allocated, else it is not allocated
+ * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
@@ -28,7 +31,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T18:46:15Z")
 public class GetZoneIdMapResponse extends ZclCommand {
     /**
      * Zone ID Map section 0 command message field.

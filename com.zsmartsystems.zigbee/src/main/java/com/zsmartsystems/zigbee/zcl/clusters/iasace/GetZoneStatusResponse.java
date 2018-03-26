@@ -1,0 +1,198 @@
+/**
+ * Copyright (c) 2016-2018 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
+package com.zsmartsystems.zigbee.zcl.clusters.iasace;
+
+import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+
+/**
+ * Get Zone Status Response value object class.
+ * <p>
+ * This command updates requesting IAS ACE clients in the system of changes to the IAS Zone server statuses recorded
+ * by the ACE server (e.g., IAS CIE device).
+ * <p>
+ * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
+ * This command is a <b>specific</b> command used for the IAS ACE cluster.
+ * <p>
+ * The IAS ACE cluster defines an interface to the functionality of any Ancillary
+ * Control Equipment of the IAS system. Using this cluster, a ZigBee enabled ACE
+ * device can access a IAS CIE device and manipulate the IAS system, on behalf of a
+ * level-2 user.
+ * <p>
+ * Code is auto-generated. Modifications may be overwritten!
+ */
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T18:44:43Z")
+public class GetZoneStatusResponse extends ZclCommand {
+    /**
+     * Zone Status Complete command message field.
+     */
+    private Boolean zoneStatusComplete;
+
+    /**
+     * Number of zones command message field.
+     */
+    private Integer numberOfZones;
+
+    /**
+     * Ias Ace Zone Status command message field.
+     */
+    private Integer iasAceZoneStatus;
+
+    /**
+     * Zone Id command message field.
+     */
+    private Integer zoneId;
+
+    /**
+     * Zone Status command message field.
+     */
+    private Integer zoneStatus;
+
+    /**
+     * Default constructor.
+     */
+    public GetZoneStatusResponse() {
+        genericCommand = false;
+        clusterId = 1281;
+        commandId = 8;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Gets Zone Status Complete.
+     *
+     * @return the Zone Status Complete
+     */
+    public Boolean getZoneStatusComplete() {
+        return zoneStatusComplete;
+    }
+
+    /**
+     * Sets Zone Status Complete.
+     *
+     * @param zoneStatusComplete the Zone Status Complete
+     */
+    public void setZoneStatusComplete(final Boolean zoneStatusComplete) {
+        this.zoneStatusComplete = zoneStatusComplete;
+    }
+
+    /**
+     * Gets Number of zones.
+     *
+     * @return the Number of zones
+     */
+    public Integer getNumberOfZones() {
+        return numberOfZones;
+    }
+
+    /**
+     * Sets Number of zones.
+     *
+     * @param numberOfZones the Number of zones
+     */
+    public void setNumberOfZones(final Integer numberOfZones) {
+        this.numberOfZones = numberOfZones;
+    }
+
+    /**
+     * Gets Ias Ace Zone Status.
+     *
+     * @return the Ias Ace Zone Status
+     */
+    public Integer getIasAceZoneStatus() {
+        return iasAceZoneStatus;
+    }
+
+    /**
+     * Sets Ias Ace Zone Status.
+     *
+     * @param iasAceZoneStatus the Ias Ace Zone Status
+     */
+    public void setIasAceZoneStatus(final Integer iasAceZoneStatus) {
+        this.iasAceZoneStatus = iasAceZoneStatus;
+    }
+
+    /**
+     * Gets Zone Id.
+     *
+     * @return the Zone Id
+     */
+    public Integer getZoneId() {
+        return zoneId;
+    }
+
+    /**
+     * Sets Zone Id.
+     *
+     * @param zoneId the Zone Id
+     */
+    public void setZoneId(final Integer zoneId) {
+        this.zoneId = zoneId;
+    }
+
+    /**
+     * Gets Zone Status.
+     *
+     * @return the Zone Status
+     */
+    public Integer getZoneStatus() {
+        return zoneStatus;
+    }
+
+    /**
+     * Sets Zone Status.
+     *
+     * @param zoneStatus the Zone Status
+     */
+    public void setZoneStatus(final Integer zoneStatus) {
+        this.zoneStatus = zoneStatus;
+    }
+
+    @Override
+    public void serialize(final ZclFieldSerializer serializer) {
+        serializer.serialize(zoneStatusComplete, ZclDataType.BOOLEAN);
+        serializer.serialize(numberOfZones, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(iasAceZoneStatus, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(zoneId, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(zoneStatus, ZclDataType.BITMAP_16_BIT);
+    }
+
+    @Override
+    public void deserialize(final ZclFieldDeserializer deserializer) {
+        zoneStatusComplete = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
+        numberOfZones = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        iasAceZoneStatus = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        zoneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        zoneStatus = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder(187);
+        builder.append("GetZoneStatusResponse [");
+        builder.append(super.toString());
+        builder.append(", zoneStatusComplete=");
+        builder.append(zoneStatusComplete);
+        builder.append(", numberOfZones=");
+        builder.append(numberOfZones);
+        builder.append(", iasAceZoneStatus=");
+        builder.append(iasAceZoneStatus);
+        builder.append(", zoneId=");
+        builder.append(zoneId);
+        builder.append(", zoneStatus=");
+        builder.append(zoneStatus);
+        builder.append(']');
+        return builder.toString();
+    }
+
+}

@@ -20,6 +20,13 @@ import java.util.List;
 /**
  * Bypass Command value object class.
  * <p>
+ * Provides IAS ACE clients with a method to send zone bypass requests to the IAS ACE server.
+ * Bypassed zones MAYbe faulted or in alarm but will not trigger the security system to go into alarm.
+ * For example, a user MAYwish to allow certain windows in his premises protected by an IAS Zone server to
+ * be left open while the user leaves the premises. The user could bypass the IAS Zone server protecting
+ * the window on his IAS ACE client (e.g., security keypad), and if the IAS ACE server indicates that zone is
+ * successfully by-passed, arm his security system while he is away.
+ * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
@@ -30,7 +37,7 @@ import java.util.List;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T18:46:15Z")
 public class BypassCommand extends ZclCommand {
     /**
      * Number of Zones command message field.
@@ -41,6 +48,11 @@ public class BypassCommand extends ZclCommand {
      * Zone IDs command message field.
      */
     private List<Integer> zoneIDs;
+
+    /**
+     * Arm/Disarm Code command message field.
+     */
+    private String armDisarmCode;
 
     /**
      * Default constructor.
@@ -88,27 +100,49 @@ public class BypassCommand extends ZclCommand {
         this.zoneIDs = zoneIDs;
     }
 
+    /**
+     * Gets Arm/Disarm Code.
+     *
+     * @return the Arm/Disarm Code
+     */
+    public String getArmDisarmCode() {
+        return armDisarmCode;
+    }
+
+    /**
+     * Sets Arm/Disarm Code.
+     *
+     * @param armDisarmCode the Arm/Disarm Code
+     */
+    public void setArmDisarmCode(final String armDisarmCode) {
+        this.armDisarmCode = armDisarmCode;
+    }
+
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(numberOfZones, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(zoneIDs, ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(armDisarmCode, ZclDataType.CHARACTER_STRING);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         numberOfZones = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         zoneIDs = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        armDisarmCode = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(76);
+        final StringBuilder builder = new StringBuilder(109);
         builder.append("BypassCommand [");
         builder.append(super.toString());
         builder.append(", numberOfZones=");
         builder.append(numberOfZones);
         builder.append(", zoneIDs=");
         builder.append(zoneIDs);
+        builder.append(", armDisarmCode=");
+        builder.append(armDisarmCode);
         builder.append(']');
         return builder.toString();
     }
