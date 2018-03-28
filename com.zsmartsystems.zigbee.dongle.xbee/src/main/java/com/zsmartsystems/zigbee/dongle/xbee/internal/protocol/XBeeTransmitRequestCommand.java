@@ -16,33 +16,17 @@ import java.util.List;
 /**
  * Class to implement the XBee command <b>Transmit Request</b>.
  * <p>
- * This frame causes the device to send payload data as an
-			RF packet to a specific
- * destination. n For broadcast transmissions,
-			set the 64-bit destination address to
- * 0x000000000000FFFF. Address the
-			coordinator by either setting the 64-bit address to
- * all 0x00s and the
-			16-bit address to 0xFFFE, or setting the 64-bit address to
- * the
-			coordinator's 64-bit address and the 16-bit address to 0x0000. n For
-			all other
- * transmissions, setting the 16-bit address to the correct
-			16-bit address helps improve
- * performance when transmitting to
-			multiple destinations. If you do not know a 16-bit
- * address, set this
-			field to 0xFFFE (unknown). If successful, the Transmit Status
- * frame
-			(0x8B) indicates the discovered 16-bit address. You can set the
-			broadcast
- * radius from 0 up to NH. If set to 0, the value of NH
-			specifies the broadcast radius
- * (recommended). This parameter is only
-			used for broadcast transmissions. You can read
- * the maximum number of
-			payload bytes with the NP command.
-		
+ * This frame causes the device to send payload data as an RF packet to a specific destination. n
+ * For broadcast transmissions, set the 64-bit destination address to 0x000000000000FFFF.
+ * Address the coordinator by either setting the 64-bit address to all 0x00s and the 16-bit
+ * address to 0xFFFE, or setting the 64-bit address to the coordinator's 64-bit address and the
+ * 16-bit address to 0x0000. n For all other transmissions, setting the 16-bit address to the
+ * correct 16-bit address helps improve performance when transmitting to multiple
+ * destinations. If you do not know a 16-bit address, set this field to 0xFFFE (unknown). If
+ * successful, the Transmit Status frame (0x8B) indicates the discovered 16-bit address. You
+ * can set the broadcast radius from 0 up to NH. If set to 0, the value of NH specifies the broadcast
+ * radius (recommended). This parameter is only used for broadcast transmissions. You can
+ * read the maximum number of payload bytes with the NP command.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -53,47 +37,28 @@ import java.util.List;
 public class XBeeTransmitRequestCommand extends XBeeFrame implements XBeeCommand {
     /**
      * The frame Id
-				
      */
     private Integer frameId;
 
     /**
-     * 64-bit destination address. MSB first, LSB last. Set to
-					the 64-bit address of the
-     * destination device. Reserved 64-bit
-					address for the coordinator =
-     * 0x0000000000000000 Broadcast =
-					0x000000000000FFFF.
-				
+     * 64-bit destination address. MSB first, LSB last. Set to the 64-bit address of the
+     * destination device. Reserved 64-bit address for the coordinator = 0x0000000000000000
+     * Broadcast = 0x000000000000FFFF.
      */
     private IeeeAddress ieeeAddress;
 
     /**
-     * 16-bit destination network address. Set to the 16-bit
-					address of the destination
-     * device, if known. If the address is
-					unknown or if sending a broadcast, set to
-     * 0xFFFE.
-				
+     * 16-bit destination network address. Set to the 16-bit address of the destination device, if
+     * known. If the address is unknown or if sending a broadcast, set to 0xFFFE.
      */
     private Integer networkAddress;
 
     /**
-     * 0x01 - Disable retries. 0x20 - Enable APS encryption
-					(if EE=1). 0x40 - Use the extended
-     * transmission timeout for this
-					destination. Enabling APS encryption decreases the
-     * maximum number
-					of RF payload bytes by 4 (below the value reported by NP).
-     * Setting
-					the extended timeout bit causes the stack to set the
-     * extended
-					transmission timeout for the destination address. See
-     * Transmission,
-					addressing, and routing. All unused and unsupported bits must
-     * be
-					set to 0.
-				
+     * 0x01 - Disable retries. 0x20 - Enable APS encryption (if EE=1). 0x40 - Use the extended
+     * transmission timeout for this destination. Enabling APS encryption decreases the maximum
+     * number of RF payload bytes by 4 (below the value reported by NP). Setting the extended timeout
+     * bit causes the stack to set the extended transmission timeout for the destination address.
+     * See Transmission, addressing, and routing. All unused and unsupported bits must be set to 0.
      */
     private List<TransmitOptions> options = new ArrayList<TransmitOptions>();
 
@@ -104,7 +69,6 @@ public class XBeeTransmitRequestCommand extends XBeeFrame implements XBeeCommand
 
     /**
      * The frame Id
-				
      *
      * @param frameId the frameId to set as {@link Integer}
      */
@@ -113,13 +77,9 @@ public class XBeeTransmitRequestCommand extends XBeeFrame implements XBeeCommand
     }
 
     /**
-     * 64-bit destination address. MSB first, LSB last. Set to
-					the 64-bit address of the
-     * destination device. Reserved 64-bit
-					address for the coordinator =
-     * 0x0000000000000000 Broadcast =
-					0x000000000000FFFF.
-				
+     * 64-bit destination address. MSB first, LSB last. Set to the 64-bit address of the
+     * destination device. Reserved 64-bit address for the coordinator = 0x0000000000000000
+     * Broadcast = 0x000000000000FFFF.
      *
      * @param ieeeAddress the ieeeAddress to set as {@link IeeeAddress}
      */
@@ -128,12 +88,8 @@ public class XBeeTransmitRequestCommand extends XBeeFrame implements XBeeCommand
     }
 
     /**
-     * 16-bit destination network address. Set to the 16-bit
-					address of the destination
-     * device, if known. If the address is
-					unknown or if sending a broadcast, set to
-     * 0xFFFE.
-				
+     * 16-bit destination network address. Set to the 16-bit address of the destination device, if
+     * known. If the address is unknown or if sending a broadcast, set to 0xFFFE.
      *
      * @param networkAddress the networkAddress to set as {@link Integer}
      */
@@ -142,21 +98,11 @@ public class XBeeTransmitRequestCommand extends XBeeFrame implements XBeeCommand
     }
 
     /**
-     * 0x01 - Disable retries. 0x20 - Enable APS encryption
-					(if EE=1). 0x40 - Use the extended
-     * transmission timeout for this
-					destination. Enabling APS encryption decreases the
-     * maximum number
-					of RF payload bytes by 4 (below the value reported by NP).
-     * Setting
-					the extended timeout bit causes the stack to set the
-     * extended
-					transmission timeout for the destination address. See
-     * Transmission,
-					addressing, and routing. All unused and unsupported bits must
-     * be
-					set to 0.
-				
+     * 0x01 - Disable retries. 0x20 - Enable APS encryption (if EE=1). 0x40 - Use the extended
+     * transmission timeout for this destination. Enabling APS encryption decreases the maximum
+     * number of RF payload bytes by 4 (below the value reported by NP). Setting the extended timeout
+     * bit causes the stack to set the extended transmission timeout for the destination address.
+     * See Transmission, addressing, and routing. All unused and unsupported bits must be set to 0.
      *
      * @param Options the options to add to the {@link Set} as {@link TransmitOptions}
      */
@@ -165,21 +111,11 @@ public class XBeeTransmitRequestCommand extends XBeeFrame implements XBeeCommand
     }
 
     /**
-     * 0x01 - Disable retries. 0x20 - Enable APS encryption
-					(if EE=1). 0x40 - Use the extended
-     * transmission timeout for this
-					destination. Enabling APS encryption decreases the
-     * maximum number
-					of RF payload bytes by 4 (below the value reported by NP).
-     * Setting
-					the extended timeout bit causes the stack to set the
-     * extended
-					transmission timeout for the destination address. See
-     * Transmission,
-					addressing, and routing. All unused and unsupported bits must
-     * be
-					set to 0.
-				
+     * 0x01 - Disable retries. 0x20 - Enable APS encryption (if EE=1). 0x40 - Use the extended
+     * transmission timeout for this destination. Enabling APS encryption decreases the maximum
+     * number of RF payload bytes by 4 (below the value reported by NP). Setting the extended timeout
+     * bit causes the stack to set the extended transmission timeout for the destination address.
+     * See Transmission, addressing, and routing. All unused and unsupported bits must be set to 0.
      *
      * @param options the options to remove to the {@link Set} as {@link TransmitOptions}
      */
@@ -188,21 +124,11 @@ public class XBeeTransmitRequestCommand extends XBeeFrame implements XBeeCommand
     }
 
     /**
-     * 0x01 - Disable retries. 0x20 - Enable APS encryption
-					(if EE=1). 0x40 - Use the extended
-     * transmission timeout for this
-					destination. Enabling APS encryption decreases the
-     * maximum number
-					of RF payload bytes by 4 (below the value reported by NP).
-     * Setting
-					the extended timeout bit causes the stack to set the
-     * extended
-					transmission timeout for the destination address. See
-     * Transmission,
-					addressing, and routing. All unused and unsupported bits must
-     * be
-					set to 0.
-				
+     * 0x01 - Disable retries. 0x20 - Enable APS encryption (if EE=1). 0x40 - Use the extended
+     * transmission timeout for this destination. Enabling APS encryption decreases the maximum
+     * number of RF payload bytes by 4 (below the value reported by NP). Setting the extended timeout
+     * bit causes the stack to set the extended transmission timeout for the destination address.
+     * See Transmission, addressing, and routing. All unused and unsupported bits must be set to 0.
      *
      * @param options the options to set to the {@link Set} as {@link TransmitOptions}
      */

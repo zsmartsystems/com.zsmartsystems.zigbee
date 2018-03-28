@@ -11,20 +11,12 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 /**
  * Class to implement the XBee command <b>AT Queue Parameter</b>.
  * <p>
- * This frame allows you to query or set device parameters.
-			In contrast to the AT Command
- * (0x08) frame, this frame queues new
-			parameter values and does not apply them until you
- * issue either: n
-			The AT Command (0x08) frame (for API type) n The AC command
- * When
-			querying parameter values, the 0x09 frame behaves identically to the
-			0x08
- * frame. The device returns register queries immediately and not
-			does not queue them. The
- * response for this command is also an AT
-			Command Response frame (0x88).
-		
+ * This frame allows you to query or set device parameters. In contrast to the AT Command (0x08)
+ * frame, this frame queues new parameter values and does not apply them until you issue either:
+ * n The AT Command (0x08) frame (for API type) n The AC command When querying parameter values,
+ * the 0x09 frame behaves identically to the 0x08 frame. The device returns register queries
+ * immediately and not does not queue them. The response for this command is also an AT Command
+ * Response frame (0x88).
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -35,29 +27,22 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 public class XBeeAtQueueParameterCommand extends XBeeFrame implements XBeeCommand {
     /**
      * The frame Id
-				
      */
     private Integer frameId;
 
     /**
-     * Command name: two ASCII characters that identify the AT
-					command.
-				
+     * Command name: two ASCII characters that identify the AT command.
      */
     private String atCommand;
 
     /**
-     * If present, indicates the requested parameter value to
-					set the given register. If no
-     * characters are present, it queries
-					the register.
-				
+     * If present, indicates the requested parameter value to set the given register. If no
+     * characters are present, it queries the register.
      */
     private int[] parameterValue;
 
     /**
      * The frame Id
-				
      *
      * @param frameId the frameId to set as {@link Integer}
      */
@@ -66,9 +51,7 @@ public class XBeeAtQueueParameterCommand extends XBeeFrame implements XBeeComman
     }
 
     /**
-     * Command name: two ASCII characters that identify the AT
-					command.
-				
+     * Command name: two ASCII characters that identify the AT command.
      *
      * @param atCommand the atCommand to set as {@link String}
      */
@@ -77,11 +60,8 @@ public class XBeeAtQueueParameterCommand extends XBeeFrame implements XBeeComman
     }
 
     /**
-     * If present, indicates the requested parameter value to
-					set the given register. If no
-     * characters are present, it queries
-					the register.
-				
+     * If present, indicates the requested parameter value to set the given register. If no
+     * characters are present, it queries the register.
      *
      * @param parameterValue the parameterValue to set as {@link int[]}
      */

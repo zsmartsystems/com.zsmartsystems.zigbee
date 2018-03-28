@@ -16,7 +16,6 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
  * values. To change ZS and KY, you must explicitly set them. In order for the default parameters
  * to persist through subsequent resets, send a separate WR command after RE. Read-only
  * parameters are not directly affected by RE and reflect the current state of the device.
-		
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>

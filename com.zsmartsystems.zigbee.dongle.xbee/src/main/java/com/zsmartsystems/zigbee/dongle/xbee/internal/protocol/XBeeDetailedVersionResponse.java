@@ -14,7 +14,6 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
  * <p>
  * AT Command <b>VL</b></p>Shows detailed version information, device type, time stamp for
  * the build, Ember stack version, and bootloader version.
-		
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -35,8 +34,6 @@ public class XBeeDetailedVersionResponse extends XBeeFrame implements XBeeRespon
 
     /**
      * Response field
-     * 
-				
      */
     private int[] versionInfo;
 
@@ -57,8 +54,6 @@ public class XBeeDetailedVersionResponse extends XBeeFrame implements XBeeRespon
     }
 
     /**
-     * 
-				
      *
      * @return the versionInfo as {@link int[]}
      */

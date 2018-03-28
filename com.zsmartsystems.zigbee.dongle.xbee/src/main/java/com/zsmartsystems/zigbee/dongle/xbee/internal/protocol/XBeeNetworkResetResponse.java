@@ -13,7 +13,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
  * Class to implement the XBee command <b>Network Reset</b>.
  * <p>
  * AT Command <b>NR</b></p>Resets network layer parameters on one or more modules within a
- * PAN. Responds immediately with 	an OK then causes a network restart. The device loses all
+ * PAN. Responds immediately with an OK then causes a network restart. The device loses all
  * network configuration and routing information. If NR = 0: Resets network layer parameters
  * on the node issuing the command. If NR = 1: Sends broadcast transmission to reset network
  * layer parameters on all nodes in the PAN.
@@ -37,9 +37,7 @@ public class XBeeNetworkResetResponse extends XBeeFrame implements XBeeResponse 
 
     /**
      * Response field
-     * Sends broadcast transmission to reset network layer parameters on all nodes in the
-     * PAN.
-				
+     * Sends broadcast transmission to reset network layer parameters on all nodes in the PAN.
      */
     private Boolean resetRemoteDevices;
 
@@ -60,9 +58,7 @@ public class XBeeNetworkResetResponse extends XBeeFrame implements XBeeResponse 
     }
 
     /**
-     * Sends broadcast transmission to reset network layer parameters on all nodes in the
-     * PAN.
-				
+     * Sends broadcast transmission to reset network layer parameters on all nodes in the PAN.
      *
      * @return the resetRemoteDevices as {@link Boolean}
      */

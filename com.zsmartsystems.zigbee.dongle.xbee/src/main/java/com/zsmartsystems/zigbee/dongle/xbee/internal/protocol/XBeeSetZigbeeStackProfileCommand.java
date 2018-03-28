@@ -12,10 +12,8 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
  * Class to implement the XBee command <b>Set ZigBee Stack Profile</b>.
  * <p>
  * AT Command <b>ZS</b></p>Set or read the Zigbee stack profile value. This must be the same on
- * all devices that will join the same
-network. Effective with release 4x5E, changing ZS to a
- * different value causes all current parameters
-to be written to persistent storage.
+ * all devices that will join the same network. Effective with release 4x5E, changing ZS to a
+ * different value causes all current parameters to be written to persistent storage.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -29,8 +27,6 @@ public class XBeeSetZigbeeStackProfileCommand extends XBeeFrame implements XBeeC
     private Integer frameId;
 
     /**
-     * 
-				
      */
     private Integer stackProfile;
 
@@ -43,8 +39,6 @@ public class XBeeSetZigbeeStackProfileCommand extends XBeeFrame implements XBeeC
     }
 
     /**
-     * 
-				
      *
      * @param stackProfile the stackProfile to set as {@link Integer}
      */

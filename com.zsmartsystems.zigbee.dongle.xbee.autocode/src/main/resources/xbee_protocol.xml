@@ -497,6 +497,61 @@
 		</response_parameters>
 	</command>
 
+
+	<command>
+		<name>OTA Firmware Update Status</name>
+		<id>0xA0</id>
+		<description>The Over-the-Air Firmware Update Status frame provides an
+			indication of the status of a firmware update transmission attempt. A
+			query command (0x01 0x51) sent to a target with a 64-bit address of
+			0x0013A200 40522BAA through an updater with 64-bit address
+			0x0013A200403E0750 and 16-bit address 0x0000, generates the following
+			expected response.
+		</description>
+		<response_parameters>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Ieee Address</name>
+				<description>MSB first, LSB last. The address of the remote radio
+					returning this response.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Network Address</name>
+				<description>The 16-bit address of the updater device.</description>
+			</parameter>
+			<parameter>
+				<data_type>ReceiveOptions</data_type>
+				<name>Receive Options</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Bootloader Message Type</name>
+				<description>0x06 - ACK
+					0x15 - NACK
+					0x40 - No Mac ACK
+					0x51 - Query (received if the bootloader is not active on the target)
+					0x52 - Query Response
+				</description>
+				<auto_size>Address List</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Block Number</name>
+				<description>Block number used in the update request. Set to 0 if not applicable.
+				</description>
+			</parameter>
+			<parameter>
+				<data_type>IeeeAddress</data_type>
+				<name>Target Address</name>
+				<description>The 64-bit Address of remote device that is being updated (target)
+				</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
 	<command>
 		<name>Route Record</name>
 		<id>0xA1</id>
@@ -838,11 +893,12 @@
 		</values>
 	</enum>
 
-<!-- AT Command Parameters -->
+	<!-- AT Command Parameters -->
 
 	<at_command>
 		<name>Firmware Version</name>
-		<description>Reads the firmware version on a device as a 4-digit hex number.
+		<description>Reads the firmware version on a device as a 4-digit hex
+			number.
 		</description>
 		<command>VR</command>
 		<setter>false</setter>
@@ -858,7 +914,8 @@
 
 	<at_command>
 		<name>Ieee Address High</name>
-		<description>Displays the upper 32 bits of the unique IEEE 64-bit extended address assigned to the XBee in the factory.
+		<description>Displays the upper 32 bits of the unique IEEE 64-bit
+			extended address assigned to the XBee in the factory.
 		</description>
 		<command>SH</command>
 		<setter>false</setter>
@@ -874,7 +931,8 @@
 
 	<at_command>
 		<name>Ieee Address Low</name>
-		<description>DisplaLs the lower 32 bits of the unique IEEE 64-bit extended address assigned to the XBee in the factory.
+		<description>DisplaLs the lower 32 bits of the unique IEEE 64-bit
+			extended address assigned to the XBee in the factory.
 		</description>
 		<command>SL</command>
 		<setter>false</setter>
@@ -890,7 +948,8 @@
 
 	<at_command>
 		<name>Detailed Version</name>
-		<description>Shows detailed version information, device type, time stamp for the build, Ember stack version, and bootloader version.
+		<description>Shows detailed version information, device type, time
+			stamp for the build, Ember stack version, and bootloader version.
 		</description>
 		<command>VL</command>
 		<setter>false</setter>
@@ -922,7 +981,8 @@
 
 	<at_command>
 		<name>Active Scan</name>
-		<description>Scans the neighborhood for beacon responses. The AS command is only valid as a local command.
+		<description>Scans the neighborhood for beacon responses. The AS
+			command is only valid as a local command.
 		</description>
 		<command>AS</command>
 		<setter>false</setter>
@@ -967,7 +1027,8 @@
 
 	<at_command>
 		<name>Save Data</name>
-		<description>Writes parameter values to non-volatile memory so that parameter modifications persist through subsequent resets.
+		<description>Writes parameter values to non-volatile memory so that
+			parameter modifications persist through subsequent resets.
 		</description>
 		<command>WR</command>
 		<getter>false</getter>
@@ -977,7 +1038,12 @@
 
 	<at_command>
 		<name>Reset</name>
-		<description>This command sets all parameters except ZS and KY to their default values. To change ZS and KY, you must explicitly set them. In order for the default parameters to persist through subsequent resets, send a separate WR command after RE. Read-only parameters are not directly affected by RE and reflect the current state of the device.
+		<description>This command sets all parameters except ZS and KY to
+			their default values. To change ZS and KY, you must explicitly set
+			them. In order for the default parameters to persist through
+			subsequent resets, send a separate WR command after RE. Read-only
+			parameters are not directly affected by RE and reflect the current
+			state of the device.
 		</description>
 		<command>RE</command>
 		<getter>false</getter>
@@ -987,7 +1053,10 @@
 
 	<at_command>
 		<name>Software Reset</name>
-		<description>Resets the device. The device responds immediately with an OK and performs a reset 100 ms later. If you issue FR while the device is in Command Mode, the reset effectively exits Command mode.</description>
+		<description>Resets the device. The device responds immediately with
+			an OK and performs a reset 100 ms later. If you issue FR while the
+			device is in Command Mode, the reset effectively exits Command mode.
+		</description>
 		<command>FR</command>
 		<getter>false</getter>
 		<response_parameters>
@@ -996,14 +1065,21 @@
 
 	<at_command>
 		<name>Network Reset</name>
-		<description>Resets network layer parameters on one or more modules within a PAN. Responds immediately with 	an OK then causes a network restart. The device loses all network configuration and routing information. If NR = 0: Resets network layer parameters on the node issuing the command. If NR = 1: Sends broadcast transmission to reset network layer parameters on all nodes in the PAN.</description>
+		<description>Resets network layer parameters on one or more modules
+			within a PAN. Responds immediately with an OK then causes a network
+			restart. The device loses all network configuration and routing
+			information. If NR = 0: Resets network layer parameters on the node
+			issuing the command. If NR = 1: Sends broadcast transmission to reset
+			network layer parameters on all nodes in the PAN.
+		</description>
 		<command>NR</command>
 		<getter>false</getter>
 		<command_parameters>
 			<parameter>
 				<data_type>Boolean</data_type>
 				<name>Reset Remote Devices</name>
-				<description>Sends broadcast transmission to reset network layer parameters on all nodes in the PAN.
+				<description>Sends broadcast transmission to reset network layer
+					parameters on all nodes in the PAN.
 				</description>
 			</parameter>
 		</command_parameters>
@@ -1011,7 +1087,8 @@
 			<parameter>
 				<data_type>Boolean</data_type>
 				<name>Reset Remote Devices</name>
-				<description>Sends broadcast transmission to reset network layer parameters on all nodes in the PAN.
+				<description>Sends broadcast transmission to reset network layer
+					parameters on all nodes in the PAN.
 				</description>
 			</parameter>
 		</response_parameters>
@@ -1028,7 +1105,10 @@
 
 	<at_command>
 		<name>Network Key</name>
-		<description>Set the 128-bit AES network encryption key. This command is write-only and cannot be read. If set to 0 (default), the device selects a random network key.</description>
+		<description>Set the 128-bit AES network encryption key. This command
+			is write-only and cannot be read. If set to 0 (default), the device
+			selects a random network key.
+		</description>
 		<command>NK</command>
 		<getter>false</getter>
 		<command_parameters>
@@ -1043,9 +1123,16 @@
 
 	<at_command>
 		<name>Link Key</name>
-		<description>Sets the 128-bit AES link key value that the device uses for encryption and decryption. This command
-is write-only and cannot be read. If you set KY to 0 the coordinator transmits the network key in the
-clear to joining devices, and joining devices acquire the network key in the clear when joining.</description>
+		<description>Sets the 128-bit AES link key value that the device uses
+			for encryption and decryption. This command
+			is write-only and cannot
+			be read. If you set KY to 0 the coordinator
+			transmits the network key
+			in the
+			clear to joining devices, and joining devices acquire the
+			network key in
+			the clear when joining.
+		</description>
 		<command>KY</command>
 		<getter>false</getter>
 		<command_parameters>
@@ -1100,10 +1187,19 @@ clear to joining devices, and joining devices acquire the network key in the cle
 	<at_command>
 		<name>Join Notification</name>
 		<description>Set or read the join notification setting.
-If enabled, the device transmits a broadcast node identification packet on power up and when joining.
-This action blinks the Associate LED rapidly on all devices that receive the transmission, and sends an
-API frame out the serial port of API devices.
-Digi recommends you disable this feature for large networks to prevent excessive broadcasts.</description>
+			If enabled, the
+			device transmits a broadcast node identification packet
+			on power up
+			and when joining.
+			This action blinks the Associate LED rapidly on all
+			devices that receive
+			the transmission, and sends an
+			API frame out the
+			serial port of API devices.
+			Digi recommends you disable this feature
+			for large networks to prevent
+			excessive broadcasts.
+		</description>
 		<command>JN</command>
 		<command_parameters>
 			<parameter>
@@ -1125,9 +1221,14 @@ Digi recommends you disable this feature for large networks to prevent excessive
 
 	<at_command>
 		<name>ZigBee Stack Profile</name>
-		<description>Set or read the Zigbee stack profile value. This must be the same on all devices that will join the same
-network. Effective with release 4x5E, changing ZS to a different value causes all current parameters
-to be written to persistent storage.</description>
+		<description>Set or read the Zigbee stack profile value. This must be
+			the same on all devices that will join the same
+			network. Effective
+			with release 4x5E, changing ZS to a different value causes
+			all current
+			parameters
+			to be written to persistent storage.
+		</description>
 		<command>ZS</command>
 		<command_parameters>
 			<parameter>
@@ -1146,14 +1247,26 @@ to be written to persistent storage.</description>
 			</parameter>
 		</response_parameters>
 	</at_command>
-	
+
 	<at_command>
 		<name>Energy Scan</name>
-		<description>Start an Energy Detect scan. This command accepts an argument to specify the time in milliseconds
-to scan IEEE 802.15.4 channels 11 through 26. The device loops through all 16 channels until the time
-elapses and returns the maximal energy on each channel. In Transparent mode, a comma must follow each value with the list ending with a carriage return. The values returned reflect the detected energy
-level in units of -dBm. Convert an ED response of 49, 3A, and so on, to decimal to become -73 dBm, -58
-dBm, and so on.</description>
+		<description>Start an Energy Detect scan. This command accepts an
+			argument to specify the time in milliseconds
+			to scan IEEE 802.15.4
+			channels 11 through 26. The device loops through
+			all 16 channels until
+			the time
+			elapses and returns the maximal energy on each channel. In
+			Transparent mode,
+			a comma must follow each value with the list ending
+			with a carriage
+			return. The values returned reflect the detected
+			energy
+			level in units of -dBm. Convert an ED response of 49, 3A, and
+			so on, to
+			decimal to become -73 dBm, -58
+			dBm, and so on.
+		</description>
 		<command>ED</command>
 		<command_parameters>
 			<parameter>
@@ -1167,7 +1280,9 @@ dBm, and so on.</description>
 
 	<at_command>
 		<name>PAN ID</name>
-		<description>Read the 16-bit PAN ID. The OI value reflects the actual 16-bit PAN ID where the device is running.</description>
+		<description>Read the 16-bit PAN ID. The OI value reflects the actual
+			16-bit PAN ID where the device is running.
+		</description>
 		<command>OI</command>
 		<setter>false</setter>
 		<response_parameters>
@@ -1182,8 +1297,11 @@ dBm, and so on.</description>
 
 	<at_command>
 		<name>Extended PAN ID Config</name>
-		<description>Set or read the 64-bit extended PAN ID. If set to 0, the coordinator selects a random extended PAN ID,
-and the router/end device joins any extended PAN ID.</description>
+		<description>Set or read the 64-bit extended PAN ID. If set to 0, the
+			coordinator selects a random extended PAN ID,
+			and the router/end
+			device joins any extended PAN ID.
+		</description>
 		<command>ID</command>
 		<setter>false</setter>
 		<command_parameters>
@@ -1203,11 +1321,14 @@ and the router/end device joins any extended PAN ID.</description>
 			</parameter>
 		</response_parameters>
 	</at_command>
-	
+
 	<at_command>
 		<name>Extended PAN ID</name>
-		<description>Read the 64-bit extended PAN ID. The OP value reflects the operating extended PAN ID where the
-device is running. If ID > 0, OP equals ID</description>
+		<description>Read the 64-bit extended PAN ID. The OP value reflects
+			the operating extended PAN ID where the
+			device is running. If ID > 0,
+			OP equals ID
+		</description>
 		<command>OP</command>
 		<setter>false</setter>
 		<response_parameters>
@@ -1222,7 +1343,9 @@ device is running. If ID > 0, OP equals ID</description>
 
 	<at_command>
 		<name>Coordinator Enable</name>
-		<description>Sets or displays whether the device is a coordinator. (SM must be 0 to set CE to 1).</description>
+		<description>Sets or displays whether the device is a coordinator. (SM
+			must be 0 to set CE to 1).
+		</description>
 		<command>CE</command>
 		<command_parameters>
 			<parameter>
@@ -1244,10 +1367,17 @@ device is running. If ID > 0, OP equals ID</description>
 
 	<at_command>
 		<name>API Mode</name>
-		<description>Configure the options for API. The current options select the type of receive API frame to send out the UART for received RF data packets.
-		0 Default API Rx Indicator enabled
-1 Default API Explicit Rx Indicator - 0x91, this is for Explicit Addressing data frames.
-3 Enable ZDO passthrough of ZDO requests to the serial port that are not supported by the stack, as well as Simple_Desc_req, Active_EP_req, and Match_Desc_req.
+		<description>Configure the options for API. The current options select
+			the type of receive API frame to send out the UART for received RF
+			data packets.
+			0 Default API Rx Indicator enabled
+			1 Default API Explicit
+			Rx Indicator - 0x91, this is for Explicit
+			Addressing data frames.
+			3
+			Enable ZDO passthrough of ZDO requests to the serial port that are
+			not supported by the stack, as well as Simple_Desc_req,
+			Active_EP_req, and Match_Desc_req.
 		</description>
 		<command>AO</command>
 		<command_parameters>
@@ -1270,7 +1400,9 @@ device is running. If ID > 0, OP equals ID</description>
 
 	<at_command>
 		<name>API Enable</name>
-		<description>Enables API Mode. The device ignores this command when using SPI. API mode 1 is always used.</description>
+		<description>Enables API Mode. The device ignores this command when
+			using SPI. API mode 1 is always used.
+		</description>
 		<command>AP</command>
 		<command_parameters>
 			<parameter>

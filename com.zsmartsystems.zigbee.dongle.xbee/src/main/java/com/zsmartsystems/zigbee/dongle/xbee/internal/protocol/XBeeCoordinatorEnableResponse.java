@@ -34,8 +34,6 @@ public class XBeeCoordinatorEnableResponse extends XBeeFrame implements XBeeResp
 
     /**
      * Response field
-     * 
-				
      */
     private Boolean enable;
 
@@ -56,8 +54,6 @@ public class XBeeCoordinatorEnableResponse extends XBeeFrame implements XBeeResp
     }
 
     /**
-     * 
-				
      *
      * @return the enable as {@link Boolean}
      */

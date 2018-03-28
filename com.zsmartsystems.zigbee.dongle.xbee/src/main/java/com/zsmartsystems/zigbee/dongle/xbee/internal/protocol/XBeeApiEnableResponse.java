@@ -34,8 +34,6 @@ public class XBeeApiEnableResponse extends XBeeFrame implements XBeeResponse {
 
     /**
      * Response field
-     * 
-				
      */
     private Integer mode;
 
@@ -56,8 +54,6 @@ public class XBeeApiEnableResponse extends XBeeFrame implements XBeeResponse {
     }
 
     /**
-     * 
-				
      *
      * @return the mode as {@link Integer}
      */

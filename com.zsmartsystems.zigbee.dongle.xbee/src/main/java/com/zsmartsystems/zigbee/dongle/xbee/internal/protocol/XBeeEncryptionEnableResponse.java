@@ -33,8 +33,6 @@ public class XBeeEncryptionEnableResponse extends XBeeFrame implements XBeeRespo
 
     /**
      * Response field
-     * 
-				
      */
     private Boolean enableEncryption;
 
@@ -55,8 +53,6 @@ public class XBeeEncryptionEnableResponse extends XBeeFrame implements XBeeRespo
     }
 
     /**
-     * 
-				
      *
      * @return the enableEncryption as {@link Boolean}
      */

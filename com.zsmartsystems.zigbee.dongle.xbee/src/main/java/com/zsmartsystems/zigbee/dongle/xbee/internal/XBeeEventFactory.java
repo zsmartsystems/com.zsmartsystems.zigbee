@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeEvent;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeManyToOneRouteRequestEvent;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeModemStatusEvent;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeOtaFirmwareUpdateStatusEvent;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeReceivePacketEvent;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeReceivePacketExplicitEvent;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeRouteRecordEvent;
@@ -37,6 +38,7 @@ public class XBeeEventFactory {
         events.put(0x8A, XBeeModemStatusEvent.class);
         events.put(0x90, XBeeReceivePacketEvent.class);
         events.put(0x91, XBeeReceivePacketExplicitEvent.class);
+        events.put(0xA0, XBeeOtaFirmwareUpdateStatusEvent.class);
         events.put(0xA1, XBeeRouteRecordEvent.class);
         events.put(0xA3, XBeeManyToOneRouteRequestEvent.class);
     }

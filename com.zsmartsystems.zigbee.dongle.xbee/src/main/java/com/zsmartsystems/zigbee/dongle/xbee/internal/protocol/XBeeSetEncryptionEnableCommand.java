@@ -25,8 +25,6 @@ public class XBeeSetEncryptionEnableCommand extends XBeeFrame implements XBeeCom
     private Integer frameId;
 
     /**
-     * 
-				
      */
     private Boolean enableEncryption;
 
@@ -39,8 +37,6 @@ public class XBeeSetEncryptionEnableCommand extends XBeeFrame implements XBeeCom
     }
 
     /**
-     * 
-				
      *
      * @param enableEncryption the enableEncryption to set as {@link Boolean}
      */

@@ -14,8 +14,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
  * Class to implement the XBee command <b>Extended PAN ID Config</b>.
  * <p>
  * AT Command <b>ID</b></p>Set or read the 64-bit extended PAN ID. If set to 0, the coordinator
- * selects a random extended PAN ID,
-and the router/end device joins any extended PAN ID.
+ * selects a random extended PAN ID, and the router/end device joins any extended PAN ID.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -36,8 +35,6 @@ public class XBeeExtendedPanIdConfigResponse extends XBeeFrame implements XBeeRe
 
     /**
      * Response field
-     * 
-				
      */
     private ExtendedPanId extendedPanId;
 
@@ -58,8 +55,6 @@ public class XBeeExtendedPanIdConfigResponse extends XBeeFrame implements XBeeRe
     }
 
     /**
-     * 
-				
      *
      * @return the extendedPanId as {@link ExtendedPanId}
      */

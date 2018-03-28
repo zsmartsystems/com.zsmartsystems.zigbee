@@ -12,7 +12,6 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
  * Class to implement the XBee command <b>Get Firmware Version</b>.
  * <p>
  * AT Command <b>VR</b></p>Reads the firmware version on a device as a 4-digit hex number.
-		
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>

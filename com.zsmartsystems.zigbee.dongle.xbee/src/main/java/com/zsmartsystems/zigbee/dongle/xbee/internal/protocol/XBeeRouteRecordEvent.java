@@ -13,13 +13,9 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.ReceiveOptions;
 /**
  * Class to implement the XBee command <b>Route Record</b>.
  * <p>
- * The route record indicator is received whenever a device
-			sends a ZigBee route record
- * command. The device uses the route record
-			indicator with many-to-one routing to create
- * source routes for
-			devices in a network.
-		
+ * The route record indicator is received whenever a device sends a ZigBee route record
+ * command. The device uses the route record indicator with many-to-one routing to create
+ * source routes for devices in a network.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -30,11 +26,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.ReceiveOptions;
 public class XBeeRouteRecordEvent extends XBeeFrame implements XBeeEvent {
     /**
      * Response field
-     * MSB first, LSB last. The 64-bit address of the device
-					that initiated
-					the route
-     * record.
-				
+     * MSB first, LSB last. The 64-bit address of the device that initiated the route record.
      */
     private IeeeAddress ieeeAddress;
 
@@ -51,19 +43,12 @@ public class XBeeRouteRecordEvent extends XBeeFrame implements XBeeEvent {
 
     /**
      * Response field
-     * The number of addresses in the source route (excluding
-					source and
-     * destination).
-				
+     * The number of addresses in the source route (excluding source and destination).
      */
     private int[] addressList;
 
     /**
-     * MSB first, LSB last. The 64-bit address of the device
-					that initiated
-					the route
-     * record.
-				
+     * MSB first, LSB last. The 64-bit address of the device that initiated the route record.
      *
      * @return the ieeeAddress as {@link IeeeAddress}
      */
@@ -89,10 +74,7 @@ public class XBeeRouteRecordEvent extends XBeeFrame implements XBeeEvent {
     }
 
     /**
-     * The number of addresses in the source route (excluding
-					source and
-     * destination).
-				
+     * The number of addresses in the source route (excluding source and destination).
      *
      * @return the addressList as {@link int[]}
      */

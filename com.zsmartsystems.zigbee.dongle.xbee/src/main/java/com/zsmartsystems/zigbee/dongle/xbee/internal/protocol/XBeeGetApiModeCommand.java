@@ -12,15 +12,11 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
  * Class to implement the XBee command <b>Get API Mode</b>.
  * <p>
  * AT Command <b>AO</b></p>Configure the options for API. The current options select the type
- * of receive API frame to send out the UART for received RF data packets.
-		0 Default API Rx
- * Indicator enabled
-1 Default API Explicit Rx Indicator - 0x91, this is for Explicit
- * Addressing data frames.
-3 Enable ZDO passthrough of ZDO requests to the serial port that are
+ * of receive API frame to send out the UART for received RF data packets. 0 Default API Rx
+ * Indicator enabled 1 Default API Explicit Rx Indicator - 0x91, this is for Explicit
+ * Addressing data frames. 3 Enable ZDO passthrough of ZDO requests to the serial port that are
  * not supported by the stack, as well as Simple_Desc_req, Active_EP_req, and
  * Match_Desc_req.
-		
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>

@@ -11,10 +11,13 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.ReceiveOptions;
 
 /**
- * Class to implement the XBee command <b>Receive Packet</b>.
+ * Class to implement the XBee command <b>OTA Firmware Update Status</b>.
  * <p>
- * When a device configured with a standard API Rx Indicator (AO = 0) receives an RF data packet,
- * it sends it out the serial interface using this message type.
+ * The Over-the-Air Firmware Update Status frame provides an indication of the status of a
+ * firmware update transmission attempt. A query command (0x01 0x51) sent to a target with a
+ * 64-bit address of 0x0013A200 40522BAA through an updater with 64-bit address
+ * 0x0013A200403E0750 and 16-bit address 0x0000, generates the following expected
+ * response.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -22,16 +25,16 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.ReceiveOptions;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class XBeeReceivePacketEvent extends XBeeFrame implements XBeeEvent {
+public class XBeeOtaFirmwareUpdateStatusEvent extends XBeeFrame implements XBeeEvent {
     /**
      * Response field
-     * The sender's 64-bit address. MSB first, LSB last.
+     * MSB first, LSB last. The address of the remote radio returning this response.
      */
     private IeeeAddress ieeeAddress;
 
     /**
      * Response field
-     * The sender's 16-bit address.
+     * The 16-bit address of the updater device.
      */
     private Integer networkAddress;
 
@@ -42,12 +45,18 @@ public class XBeeReceivePacketEvent extends XBeeFrame implements XBeeEvent {
 
     /**
      * Response field
-     * The RF data that the device receives.
+     * Block number used in the update request. Set to 0 if not applicable.
      */
-    private int[] data;
+    private Integer blockNumber;
 
     /**
-     * The sender's 64-bit address. MSB first, LSB last.
+     * Response field
+     * The 64-bit Address of remote device that is being updated (target)
+     */
+    private IeeeAddress targetAddress;
+
+    /**
+     * MSB first, LSB last. The address of the remote radio returning this response.
      *
      * @return the ieeeAddress as {@link IeeeAddress}
      */
@@ -56,7 +65,7 @@ public class XBeeReceivePacketEvent extends XBeeFrame implements XBeeEvent {
     }
 
     /**
-     * The sender's 16-bit address.
+     * The 16-bit address of the updater device.
      *
      * @return the networkAddress as {@link Integer}
      */
@@ -73,12 +82,21 @@ public class XBeeReceivePacketEvent extends XBeeFrame implements XBeeEvent {
     }
 
     /**
-     * The RF data that the device receives.
+     * Block number used in the update request. Set to 0 if not applicable.
      *
-     * @return the data as {@link int[]}
+     * @return the blockNumber as {@link Integer}
      */
-    public int[] getData() {
-        return data;
+    public Integer getBlockNumber() {
+        return blockNumber;
+    }
+
+    /**
+     * The 64-bit Address of remote device that is being updated (target)
+     *
+     * @return the targetAddress as {@link IeeeAddress}
+     */
+    public IeeeAddress getTargetAddress() {
+        return targetAddress;
     }
 
 
@@ -97,30 +115,29 @@ public class XBeeReceivePacketEvent extends XBeeFrame implements XBeeEvent {
         // Deserialize field "Receive Options"
         receiveOptions = deserializeReceiveOptions();
 
-        // Deserialize field "Data"
-        data = deserializeData();
+        // Deserialize field "Bootloader Message Type"
+        int bootloaderMessageType = deserializeInt8();
+
+        // Deserialize field "Block Number"
+        blockNumber = deserializeInt8();
+
+        // Deserialize field "Target Address"
+        targetAddress = deserializeIeeeAddress();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(472);
-        builder.append("XBeeReceivePacketEvent [ieeeAddress=");
+        final StringBuilder builder = new StringBuilder(662);
+        builder.append("XBeeOtaFirmwareUpdateStatusEvent [ieeeAddress=");
         builder.append(ieeeAddress);
         builder.append(", networkAddress=");
         builder.append(networkAddress);
         builder.append(", receiveOptions=");
         builder.append(receiveOptions);
-        builder.append(", data=");
-        if (data == null) {
-            builder.append("null");
-        } else {
-            for (int cnt = 0; cnt < data.length; cnt++) {
-                if (cnt > 0) {
-                    builder.append(' ');
-                }
-                builder.append(String.format("%02X", data[cnt]));
-            }
-        }
+        builder.append(", blockNumber=");
+        builder.append(blockNumber);
+        builder.append(", targetAddress=");
+        builder.append(targetAddress);
         builder.append(']');
         return builder.toString();
     }

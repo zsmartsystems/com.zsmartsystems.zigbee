@@ -13,13 +13,9 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.DiscoveryStatus;
 /**
  * Class to implement the XBee command <b>Transmit Status</b>.
  * <p>
- * When a Transmit Request (0x10, 0x11) completes, the
-			device sends a Transmit Status
- * message out of the serial interface.
-			This message indicates if the Transmit Request was
- * successful or if
-			it failed.
-		
+ * When a Transmit Request (0x10, 0x11) completes, the device sends a Transmit Status message
+ * out of the serial interface. This message indicates if the Transmit Request was successful
+ * or if it failed.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -31,25 +27,19 @@ public class XBeeTransmitStatusResponse extends XBeeFrame implements XBeeRespons
     /**
      * Response field
      * The frame Id
-				
      */
     private Integer frameId;
 
     /**
      * Response field
-     * The 16-bit Network Address where the packet was
-					delivered (if successful). If not
-     * successful, this address is
-					0xFFFD (destination address 6 unknown).
-				
+     * The 16-bit Network Address where the packet was delivered (if successful). If not
+     * successful, this address is 0xFFFD (destination address 6 unknown).
      */
     private Integer networkAddress;
 
     /**
      * Response field
-     * The number of application transmission retries that
-					occur.
-				
+     * The number of application transmission retries that occur.
      */
     private Integer transmitRetryCount;
 
@@ -65,7 +55,6 @@ public class XBeeTransmitStatusResponse extends XBeeFrame implements XBeeRespons
 
     /**
      * The frame Id
-				
      *
      * @return the frameId as {@link Integer}
      */
@@ -74,11 +63,8 @@ public class XBeeTransmitStatusResponse extends XBeeFrame implements XBeeRespons
     }
 
     /**
-     * The 16-bit Network Address where the packet was
-					delivered (if successful). If not
-     * successful, this address is
-					0xFFFD (destination address 6 unknown).
-				
+     * The 16-bit Network Address where the packet was delivered (if successful). If not
+     * successful, this address is 0xFFFD (destination address 6 unknown).
      *
      * @return the networkAddress as {@link Integer}
      */
@@ -87,9 +73,7 @@ public class XBeeTransmitStatusResponse extends XBeeFrame implements XBeeRespons
     }
 
     /**
-     * The number of application transmission retries that
-					occur.
-				
+     * The number of application transmission retries that occur.
      *
      * @return the transmitRetryCount as {@link Integer}
      */

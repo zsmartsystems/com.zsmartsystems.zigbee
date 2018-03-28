@@ -13,7 +13,6 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
  * <p>
  * AT Command <b>AS</b></p>Scans the neighborhood for beacon responses. The AS command is
  * only valid as a local command.
-		
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>

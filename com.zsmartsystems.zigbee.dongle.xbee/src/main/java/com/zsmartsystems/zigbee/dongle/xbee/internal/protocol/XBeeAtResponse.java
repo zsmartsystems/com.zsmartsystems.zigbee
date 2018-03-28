@@ -12,11 +12,8 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
 /**
  * Class to implement the XBee command <b>AT</b>.
  * <p>
- * A device sends this frame in response to an AT Command
-			(0x08 or 0x09) frame. Some commands
- * send back multiple frames; for
-			example, the ND command.
-		
+ * A device sends this frame in response to an AT Command (0x08 or 0x09) frame. Some commands send
+ * back multiple frames; for example, the ND command.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -28,37 +25,29 @@ public class XBeeAtResponse extends XBeeFrame implements XBeeResponse {
     /**
      * Response field
      * The frame Id
-				
      */
     private Integer frameId;
 
     /**
      * Response field
-     * Command name: two ASCII characters that identify the
-					command.
-				
+     * Command name: two ASCII characters that identify the command.
      */
     private String atCommand;
 
     /**
      * Response field
-     * 
-				
      */
     private CommandStatus commandStatus;
 
     /**
      * Response field
-     * The register data in binary format. If the host sets
-					the register, the device does not
-     * return this field.
-				
+     * The register data in binary format. If the host sets the register, the device does not return
+     * this field.
      */
     private int[] commandData;
 
     /**
      * The frame Id
-				
      *
      * @return the frameId as {@link Integer}
      */
@@ -67,9 +56,7 @@ public class XBeeAtResponse extends XBeeFrame implements XBeeResponse {
     }
 
     /**
-     * Command name: two ASCII characters that identify the
-					command.
-				
+     * Command name: two ASCII characters that identify the command.
      *
      * @return the atCommand as {@link String}
      */
@@ -78,8 +65,6 @@ public class XBeeAtResponse extends XBeeFrame implements XBeeResponse {
     }
 
     /**
-     * 
-				
      *
      * @return the commandStatus as {@link CommandStatus}
      */
@@ -88,10 +73,8 @@ public class XBeeAtResponse extends XBeeFrame implements XBeeResponse {
     }
 
     /**
-     * The register data in binary format. If the host sets
-					the register, the device does not
-     * return this field.
-				
+     * The register data in binary format. If the host sets the register, the device does not return
+     * this field.
      *
      * @return the commandData as {@link int[]}
      */

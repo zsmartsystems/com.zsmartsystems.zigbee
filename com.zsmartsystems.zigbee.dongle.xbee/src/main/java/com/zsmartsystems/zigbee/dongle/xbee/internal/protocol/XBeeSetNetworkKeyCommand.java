@@ -27,8 +27,6 @@ public class XBeeSetNetworkKeyCommand extends XBeeFrame implements XBeeCommand {
     private Integer frameId;
 
     /**
-     * 
-				
      */
     private ZigBeeKey networkKey;
 
@@ -41,8 +39,6 @@ public class XBeeSetNetworkKeyCommand extends XBeeFrame implements XBeeCommand {
     }
 
     /**
-     * 
-				
      *
      * @param networkKey the networkKey to set as {@link ZigBeeKey}
      */
