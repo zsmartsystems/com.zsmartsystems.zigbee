@@ -12,7 +12,6 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
  * Class to implement the XBee command <b>Get Hardware Version</b>.
  * <p>
  * AT Command <b>HV</b></p>Display the hardware version number of the device.
-		
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>

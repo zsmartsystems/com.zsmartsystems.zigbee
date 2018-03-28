@@ -1250,6 +1250,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param int cluster
      */
     public void addSupportedCluster(int cluster) {
+        logger.debug("Adding supported cluster {}", cluster);
         if (clusterMatcher == null) {
             clusterMatcher = new ClusterMatcher(this);
         }

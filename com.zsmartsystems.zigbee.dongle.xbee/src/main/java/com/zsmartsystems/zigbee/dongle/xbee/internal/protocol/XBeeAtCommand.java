@@ -11,15 +11,10 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 /**
  * Class to implement the XBee command <b>AT</b>.
  * <p>
- * Use this frame to query or set device parameters on the
-			local device. This API command
- * applies changes after running the
-			command. You can query parameter values by sending
- * the 0x08 AT
-			Command frame with no parameter value field (the two-byte AT command
-			is
- * immediately followed by the frame checksum).
-		
+ * Use this frame to query or set device parameters on the local device. This API command applies
+ * changes after running the command. You can query parameter values by sending the 0x08 AT
+ * Command frame with no parameter value field (the two-byte AT command is immediately
+ * followed by the frame checksum).
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -30,29 +25,22 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 public class XBeeAtCommand extends XBeeFrame implements XBeeCommand {
     /**
      * The frame Id
-				
      */
     private Integer frameId;
 
     /**
-     * Command name: two ASCII characters that identify the AT
-					command.
-				
+     * Command name: two ASCII characters that identify the AT command.
      */
     private String atCommand;
 
     /**
-     * If present, indicates the requested parameter value to
-					set the given register. If no
-     * characters are present, it queries
-					the register.
-				
+     * If present, indicates the requested parameter value to set the given register. If no
+     * characters are present, it queries the register.
      */
     private int[] parameterValue;
 
     /**
      * The frame Id
-				
      *
      * @param frameId the frameId to set as {@link Integer}
      */
@@ -61,9 +49,7 @@ public class XBeeAtCommand extends XBeeFrame implements XBeeCommand {
     }
 
     /**
-     * Command name: two ASCII characters that identify the AT
-					command.
-				
+     * Command name: two ASCII characters that identify the AT command.
      *
      * @param atCommand the atCommand to set as {@link String}
      */
@@ -72,11 +58,8 @@ public class XBeeAtCommand extends XBeeFrame implements XBeeCommand {
     }
 
     /**
-     * If present, indicates the requested parameter value to
-					set the given register. If no
-     * characters are present, it queries
-					the register.
-				
+     * If present, indicates the requested parameter value to set the given register. If no
+     * characters are present, it queries the register.
      *
      * @param parameterValue the parameterValue to set as {@link int[]}
      */

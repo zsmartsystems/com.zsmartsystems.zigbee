@@ -14,7 +14,6 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
  * <p>
  * AT Command <b>SL</b></p>DisplaLs the lower 32 bits of the unique IEEE 64-bit extended
  * address assigned to the XBee in the factory.
-		
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -35,8 +34,6 @@ public class XBeeIeeeAddressLowResponse extends XBeeFrame implements XBeeRespons
 
     /**
      * Response field
-     * 
-				
      */
     private int[] ieeeAddress;
 
@@ -57,8 +54,6 @@ public class XBeeIeeeAddressLowResponse extends XBeeFrame implements XBeeRespons
     }
 
     /**
-     * 
-				
      *
      * @return the ieeeAddress as {@link int[]}
      */

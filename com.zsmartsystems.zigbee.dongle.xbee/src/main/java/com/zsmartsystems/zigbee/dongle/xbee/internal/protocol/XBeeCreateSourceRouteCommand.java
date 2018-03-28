@@ -12,18 +12,11 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 /**
  * Class to implement the XBee command <b>Create Source Route</b>.
  * <p>
- * This frame creates a source route in the device. A source
-			route specifies the complete
- * route a packet traverses to get from
-			source to destination. For best results, use source
- * routing with
-			many-to-one routing. There is no response frame for this frame
- * type.
-			Take care when generating source routes. An incorrectly formatted
-			frame
- * will be silently rejected by the radio or cause unexpected
-			results.
-		
+ * This frame creates a source route in the device. A source route specifies the complete route a
+ * packet traverses to get from source to destination. For best results, use source routing
+ * with many-to-one routing. There is no response frame for this frame type. Take care when
+ * generating source routes. An incorrectly formatted frame will be silently rejected by the
+ * radio or cause unexpected results.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -34,28 +27,19 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 public class XBeeCreateSourceRouteCommand extends XBeeFrame implements XBeeCommand {
     /**
      * The frame Id
-				
      */
     private Integer frameId;
 
     /**
-     * 64-bit destination address. MSB first, LSB last. Set to
-					the 64-bit address of the
-     * destination device. Reserved 64-bit
-					address for the coordinator =
-     * 0x0000000000000000 Broadcast =
-					0x000000000000FFFF.
-				
+     * 64-bit destination address. MSB first, LSB last. Set to the 64-bit address of the
+     * destination device. Reserved 64-bit address for the coordinator = 0x0000000000000000
+     * Broadcast = 0x000000000000FFFF.
      */
     private IeeeAddress ieeeAddress;
 
     /**
-     * 16-bit destination network address. Set to the 16-bit
-					address of the destination
-     * device, if known. If the address is
-					unknown or if sending a broadcast, set to
-     * 0xFFFE.
-				
+     * 16-bit destination network address. Set to the 16-bit address of the destination device, if
+     * known. If the address is unknown or if sending a broadcast, set to 0xFFFE.
      */
     private Integer networkAddress;
 
@@ -65,7 +49,6 @@ public class XBeeCreateSourceRouteCommand extends XBeeFrame implements XBeeComma
 
     /**
      * The frame Id
-				
      *
      * @param frameId the frameId to set as {@link Integer}
      */
@@ -74,13 +57,9 @@ public class XBeeCreateSourceRouteCommand extends XBeeFrame implements XBeeComma
     }
 
     /**
-     * 64-bit destination address. MSB first, LSB last. Set to
-					the 64-bit address of the
-     * destination device. Reserved 64-bit
-					address for the coordinator =
-     * 0x0000000000000000 Broadcast =
-					0x000000000000FFFF.
-				
+     * 64-bit destination address. MSB first, LSB last. Set to the 64-bit address of the
+     * destination device. Reserved 64-bit address for the coordinator = 0x0000000000000000
+     * Broadcast = 0x000000000000FFFF.
      *
      * @param ieeeAddress the ieeeAddress to set as {@link IeeeAddress}
      */
@@ -89,12 +68,8 @@ public class XBeeCreateSourceRouteCommand extends XBeeFrame implements XBeeComma
     }
 
     /**
-     * 16-bit destination network address. Set to the 16-bit
-					address of the destination
-     * device, if known. If the address is
-					unknown or if sending a broadcast, set to
-     * 0xFFFE.
-				
+     * 16-bit destination network address. Set to the 16-bit address of the destination device, if
+     * known. If the address is unknown or if sending a broadcast, set to 0xFFFE.
      *
      * @param networkAddress the networkAddress to set as {@link Integer}
      */

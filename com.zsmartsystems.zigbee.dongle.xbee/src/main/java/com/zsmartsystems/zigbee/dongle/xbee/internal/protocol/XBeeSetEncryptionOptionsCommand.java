@@ -29,8 +29,6 @@ public class XBeeSetEncryptionOptionsCommand extends XBeeFrame implements XBeeCo
     private Integer frameId;
 
     /**
-     * 
-				
      */
     private List<EncryptionOptions> encryptionOptions = new ArrayList<EncryptionOptions>();
 
@@ -43,8 +41,6 @@ public class XBeeSetEncryptionOptionsCommand extends XBeeFrame implements XBeeCo
     }
 
     /**
-     * 
-				
      *
      * @param Encryption Options the encryptionOptions to add to the {@link Set} as {@link EncryptionOptions}
      */
@@ -53,8 +49,6 @@ public class XBeeSetEncryptionOptionsCommand extends XBeeFrame implements XBeeCo
     }
 
     /**
-     * 
-				
      *
      * @param encryptionOptions the encryptionOptions to remove to the {@link Set} as {@link EncryptionOptions}
      */
@@ -63,8 +57,6 @@ public class XBeeSetEncryptionOptionsCommand extends XBeeFrame implements XBeeCo
     }
 
     /**
-     * 
-				
      *
      * @param encryptionOptions the encryptionOptions to set to the {@link Set} as {@link EncryptionOptions}
      */

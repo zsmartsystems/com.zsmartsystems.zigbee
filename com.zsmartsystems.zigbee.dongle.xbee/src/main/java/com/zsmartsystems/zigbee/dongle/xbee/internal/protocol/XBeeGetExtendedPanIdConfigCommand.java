@@ -12,8 +12,7 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
  * Class to implement the XBee command <b>Get Extended PAN ID Config</b>.
  * <p>
  * AT Command <b>ID</b></p>Set or read the 64-bit extended PAN ID. If set to 0, the coordinator
- * selects a random extended PAN ID,
-and the router/end device joins any extended PAN ID.
+ * selects a random extended PAN ID, and the router/end device joins any extended PAN ID.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>

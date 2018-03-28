@@ -13,10 +13,8 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
  * Class to implement the XBee command <b>Link Key</b>.
  * <p>
  * AT Command <b>KY</b></p>Sets the 128-bit AES link key value that the device uses for
- * encryption and decryption. This command
-is write-only and cannot be read. If you set KY to 0
- * the coordinator transmits the network key in the
-clear to joining devices, and joining
+ * encryption and decryption. This command is write-only and cannot be read. If you set KY to 0
+ * the coordinator transmits the network key in the clear to joining devices, and joining
  * devices acquire the network key in the clear when joining.
  * <p>
  * This class provides methods for processing XBee API commands.

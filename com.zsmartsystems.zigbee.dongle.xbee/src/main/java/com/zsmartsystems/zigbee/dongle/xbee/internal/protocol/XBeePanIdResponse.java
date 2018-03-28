@@ -34,8 +34,6 @@ public class XBeePanIdResponse extends XBeeFrame implements XBeeResponse {
 
     /**
      * Response field
-     * 
-				
      */
     private Integer panId;
 
@@ -56,8 +54,6 @@ public class XBeePanIdResponse extends XBeeFrame implements XBeeResponse {
     }
 
     /**
-     * 
-				
      *
      * @return the panId as {@link Integer}
      */

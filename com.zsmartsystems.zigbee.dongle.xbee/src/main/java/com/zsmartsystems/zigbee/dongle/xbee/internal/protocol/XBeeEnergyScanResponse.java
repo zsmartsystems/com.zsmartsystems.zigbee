@@ -13,15 +13,11 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
  * Class to implement the XBee command <b>Energy Scan</b>.
  * <p>
  * AT Command <b>ED</b></p>Start an Energy Detect scan. This command accepts an argument to
- * specify the time in milliseconds
-to scan IEEE 802.15.4 channels 11 through 26. The device
- * loops through all 16 channels until the time
-elapses and returns the maximal energy on each
+ * specify the time in milliseconds to scan IEEE 802.15.4 channels 11 through 26. The device
+ * loops through all 16 channels until the time elapses and returns the maximal energy on each
  * channel. In Transparent mode, a comma must follow each value with the list ending with a
- * carriage return. The values returned reflect the detected energy
-level in units of -dBm.
- * Convert an ED response of 49, 3A, and so on, to decimal to become -73 dBm, -58
-dBm, and so on.
+ * carriage return. The values returned reflect the detected energy level in units of -dBm.
+ * Convert an ED response of 49, 3A, and so on, to decimal to become -73 dBm, -58 dBm, and so on.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>

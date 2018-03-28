@@ -12,10 +12,8 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 /**
  * Class to implement the XBee command <b>Many-to-One Route Request</b>.
  * <p>
- * The many-to-one route request indicator frame is sent out
-			the serial port when a
- * many-to-one route request is received.
-		
+ * The many-to-one route request indicator frame is sent out the serial port when a many-to-one
+ * route request is received.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -26,10 +24,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 public class XBeeManyToOneRouteRequestEvent extends XBeeFrame implements XBeeEvent {
     /**
      * Response field
-     * MSB first, LSB last. The 64-bit address of the device
-					that initiated the route
-     * record.
-				
+     * MSB first, LSB last. The 64-bit address of the device that initiated the route record.
      */
     private IeeeAddress ieeeAddress;
 
@@ -40,10 +35,7 @@ public class XBeeManyToOneRouteRequestEvent extends XBeeFrame implements XBeeEve
     private Integer networkAddress;
 
     /**
-     * MSB first, LSB last. The 64-bit address of the device
-					that initiated the route
-     * record.
-				
+     * MSB first, LSB last. The 64-bit address of the device that initiated the route record.
      *
      * @return the ieeeAddress as {@link IeeeAddress}
      */

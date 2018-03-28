@@ -12,9 +12,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.ModemStatus;
 /**
  * Class to implement the XBee command <b>Modem Status</b>.
  * <p>
- * Devices send the status messages in this frame in
-			response to specific conditions.
-		
+ * Devices send the status messages in this frame in response to specific conditions.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>

@@ -13,7 +13,6 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
  * <p>
  * AT Command <b>VL</b></p>Shows detailed version information, device type, time stamp for
  * the build, Ember stack version, and bootloader version.
-		
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>

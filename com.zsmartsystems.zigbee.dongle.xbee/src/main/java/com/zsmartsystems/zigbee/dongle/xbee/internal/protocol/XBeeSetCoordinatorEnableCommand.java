@@ -26,8 +26,6 @@ public class XBeeSetCoordinatorEnableCommand extends XBeeFrame implements XBeeCo
     private Integer frameId;
 
     /**
-     * 
-				
      */
     private Boolean enable;
 
@@ -40,8 +38,6 @@ public class XBeeSetCoordinatorEnableCommand extends XBeeFrame implements XBeeCo
     }
 
     /**
-     * 
-				
      *
      * @param enable the enable to set as {@link Boolean}
      */

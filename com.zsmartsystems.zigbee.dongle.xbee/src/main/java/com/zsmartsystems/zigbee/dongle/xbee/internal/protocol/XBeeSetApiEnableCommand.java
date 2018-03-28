@@ -26,8 +26,6 @@ public class XBeeSetApiEnableCommand extends XBeeFrame implements XBeeCommand {
     private Integer frameId;
 
     /**
-     * 
-				
      */
     private Integer mode;
 
@@ -40,8 +38,6 @@ public class XBeeSetApiEnableCommand extends XBeeFrame implements XBeeCommand {
     }
 
     /**
-     * 
-				
      *
      * @param mode the mode to set as {@link Integer}
      */

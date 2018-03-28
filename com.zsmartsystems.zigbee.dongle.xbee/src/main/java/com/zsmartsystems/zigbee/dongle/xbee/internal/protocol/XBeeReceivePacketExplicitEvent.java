@@ -13,13 +13,9 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.ReceiveOptions;
 /**
  * Class to implement the XBee command <b>Receive Packet Explicit</b>.
  * <p>
- * When a device configured with explicit API Rx Indicator
-			(AO = 1) receives an RF packet, it
- * sends it out the serial interface
-			using this message type. The Cluster ID and endpoints
- * must be used to
-			identify the type of transaction that occurred.
-		
+ * When a device configured with explicit API Rx Indicator (AO = 1) receives an RF packet, it
+ * sends it out the serial interface using this message type. The Cluster ID and endpoints must
+ * be used to identify the type of transaction that occurred.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -30,11 +26,8 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.ReceiveOptions;
 public class XBeeReceivePacketExplicitEvent extends XBeeFrame implements XBeeEvent {
     /**
      * Response field
-     * MSB first, LSB last. The sender's 64-bit address. Set
-					to 0xFFFFFFFFFFFFFFFF
-     * (unknown 64-bit address) if the sender's
-					64-bit address is unknown.
-				
+     * MSB first, LSB last. The sender's 64-bit address. Set to 0xFFFFFFFFFFFFFFFF (unknown
+     * 64-bit address) if the sender's 64-bit address is unknown.
      */
     private IeeeAddress ieeeAddress;
 
@@ -46,55 +39,34 @@ public class XBeeReceivePacketExplicitEvent extends XBeeFrame implements XBeeEve
 
     /**
      * Response field
-     * Endpoint of the source that initiates transmission. The
-					default value is shown when
-     * Transmit Request frame - 0x10 is used
-					to send data from the source. Non-defaults are
-     * shown if Explicit
-					Addressing Command frame - 0x11 is used to send data from
-     * the
-					source, or if a non-default value was used, otherwise the default
-					value
-     * remains.
-				
+     * Endpoint of the source that initiates transmission. The default value is shown when
+     * Transmit Request frame - 0x10 is used to send data from the source. Non-defaults are shown if
+     * Explicit Addressing Command frame - 0x11 is used to send data from the source, or if a
+     * non-default value was used, otherwise the default value remains.
      */
     private Integer sourceEndpoint;
 
     /**
      * Response field
-     * Endpoint of the destination that the message is
-					addressed to. The default value is
-     * shown when Transmit Request
-					frame - 0x10 is used to send data from the source.
-     * Non-defaults are
-					shown if Explicit Addressing Command frame - 0x11 is used to
-     * send
-					data from the source, or if a non-default value was used, otherwise
-					the
-     * default value remains.
-				
+     * Endpoint of the destination that the message is addressed to. The default value is shown when
+     * Transmit Request frame - 0x10 is used to send data from the source. Non-defaults are shown if
+     * Explicit Addressing Command frame - 0x11 is used to send data from the source, or if a
+     * non-default value was used, otherwise the default value remains.
      */
     private Integer destinationEndpoint;
 
     /**
      * Response field
-     * The Cluster ID that the frame is addressed to. The
-					default value is shown when Transmit
-     * Request frame - 0x10 is used
-					to send data from the source. Non-defaults are shown if
-     * Explicit
-					Addressing Command frame - 0x11 is used to send data from the
-					source,
-     * or if a non-default value was used, otherwise the default
-					value remains.
-				
+     * The Cluster ID that the frame is addressed to. The default value is shown when Transmit
+     * Request frame - 0x10 is used to send data from the source. Non-defaults are shown if Explicit
+     * Addressing Command frame - 0x11 is used to send data from the source, or if a non-default value
+     * was used, otherwise the default value remains.
      */
     private Integer clusterId;
 
     /**
      * Response field
      * The Profile ID that the fame is addressed to.
-				
      */
     private Integer profileId;
 
@@ -110,11 +82,8 @@ public class XBeeReceivePacketExplicitEvent extends XBeeFrame implements XBeeEve
     private int[] data;
 
     /**
-     * MSB first, LSB last. The sender's 64-bit address. Set
-					to 0xFFFFFFFFFFFFFFFF
-     * (unknown 64-bit address) if the sender's
-					64-bit address is unknown.
-				
+     * MSB first, LSB last. The sender's 64-bit address. Set to 0xFFFFFFFFFFFFFFFF (unknown
+     * 64-bit address) if the sender's 64-bit address is unknown.
      *
      * @return the ieeeAddress as {@link IeeeAddress}
      */
@@ -132,17 +101,10 @@ public class XBeeReceivePacketExplicitEvent extends XBeeFrame implements XBeeEve
     }
 
     /**
-     * Endpoint of the source that initiates transmission. The
-					default value is shown when
-     * Transmit Request frame - 0x10 is used
-					to send data from the source. Non-defaults are
-     * shown if Explicit
-					Addressing Command frame - 0x11 is used to send data from
-     * the
-					source, or if a non-default value was used, otherwise the default
-					value
-     * remains.
-				
+     * Endpoint of the source that initiates transmission. The default value is shown when
+     * Transmit Request frame - 0x10 is used to send data from the source. Non-defaults are shown if
+     * Explicit Addressing Command frame - 0x11 is used to send data from the source, or if a
+     * non-default value was used, otherwise the default value remains.
      *
      * @return the sourceEndpoint as {@link Integer}
      */
@@ -151,17 +113,10 @@ public class XBeeReceivePacketExplicitEvent extends XBeeFrame implements XBeeEve
     }
 
     /**
-     * Endpoint of the destination that the message is
-					addressed to. The default value is
-     * shown when Transmit Request
-					frame - 0x10 is used to send data from the source.
-     * Non-defaults are
-					shown if Explicit Addressing Command frame - 0x11 is used to
-     * send
-					data from the source, or if a non-default value was used, otherwise
-					the
-     * default value remains.
-				
+     * Endpoint of the destination that the message is addressed to. The default value is shown when
+     * Transmit Request frame - 0x10 is used to send data from the source. Non-defaults are shown if
+     * Explicit Addressing Command frame - 0x11 is used to send data from the source, or if a
+     * non-default value was used, otherwise the default value remains.
      *
      * @return the destinationEndpoint as {@link Integer}
      */
@@ -170,16 +125,10 @@ public class XBeeReceivePacketExplicitEvent extends XBeeFrame implements XBeeEve
     }
 
     /**
-     * The Cluster ID that the frame is addressed to. The
-					default value is shown when Transmit
-     * Request frame - 0x10 is used
-					to send data from the source. Non-defaults are shown if
-     * Explicit
-					Addressing Command frame - 0x11 is used to send data from the
-					source,
-     * or if a non-default value was used, otherwise the default
-					value remains.
-				
+     * The Cluster ID that the frame is addressed to. The default value is shown when Transmit
+     * Request frame - 0x10 is used to send data from the source. Non-defaults are shown if Explicit
+     * Addressing Command frame - 0x11 is used to send data from the source, or if a non-default value
+     * was used, otherwise the default value remains.
      *
      * @return the clusterId as {@link Integer}
      */
@@ -189,7 +138,6 @@ public class XBeeReceivePacketExplicitEvent extends XBeeFrame implements XBeeEve
 
     /**
      * The Profile ID that the fame is addressed to.
-				
      *
      * @return the profileId as {@link Integer}
      */

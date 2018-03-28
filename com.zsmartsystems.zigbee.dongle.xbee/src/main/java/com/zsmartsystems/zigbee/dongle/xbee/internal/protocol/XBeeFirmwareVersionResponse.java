@@ -13,7 +13,6 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
  * Class to implement the XBee command <b>Firmware Version</b>.
  * <p>
  * AT Command <b>VR</b></p>Reads the firmware version on a device as a 4-digit hex number.
-		
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -34,8 +33,6 @@ public class XBeeFirmwareVersionResponse extends XBeeFrame implements XBeeRespon
 
     /**
      * Response field
-     * 
-				
      */
     private int[] firmwareVersion;
 
@@ -56,8 +53,6 @@ public class XBeeFirmwareVersionResponse extends XBeeFrame implements XBeeRespon
     }
 
     /**
-     * 
-				
      *
      * @return the firmwareVersion as {@link int[]}
      */

@@ -11,15 +11,11 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 /**
  * Class to implement the XBee command <b>Set Join Notification</b>.
  * <p>
- * AT Command <b>JN</b></p>Set or read the join notification setting.
-If enabled, the device
- * transmits a broadcast node identification packet on power up and when joining.
-This action
- * blinks the Associate LED rapidly on all devices that receive the transmission, and sends
- * an
-API frame out the serial port of API devices.
-Digi recommends you disable this feature
- * for large networks to prevent excessive broadcasts.
+ * AT Command <b>JN</b></p>Set or read the join notification setting. If enabled, the device
+ * transmits a broadcast node identification packet on power up and when joining. This action
+ * blinks the Associate LED rapidly on all devices that receive the transmission, and sends an
+ * API frame out the serial port of API devices. Digi recommends you disable this feature for
+ * large networks to prevent excessive broadcasts.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -33,8 +29,6 @@ public class XBeeSetJoinNotificationCommand extends XBeeFrame implements XBeeCom
     private Integer frameId;
 
     /**
-     * 
-				
      */
     private Boolean enableNotification;
 
@@ -47,8 +41,6 @@ public class XBeeSetJoinNotificationCommand extends XBeeFrame implements XBeeCom
     }
 
     /**
-     * 
-				
      *
      * @param enableNotification the enableNotification to set as {@link Boolean}
      */

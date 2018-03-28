@@ -114,7 +114,7 @@ public abstract class ClassGenerator {
     }
 
     protected void outputWithLinebreak(PrintWriter out, String indent, String line) {
-        String[] words = line.split(" ");
+        String[] words = line.split("\\s+");
         if (words.length == 0) {
             return;
         }

@@ -13,7 +13,6 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
  * Class to implement the XBee command <b>Hardware Version</b>.
  * <p>
  * AT Command <b>HV</b></p>Display the hardware version number of the device.
-		
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -34,8 +33,6 @@ public class XBeeHardwareVersionResponse extends XBeeFrame implements XBeeRespon
 
     /**
      * Response field
-     * 
-				
      */
     private int[] hardwareVersion;
 
@@ -56,8 +53,6 @@ public class XBeeHardwareVersionResponse extends XBeeFrame implements XBeeRespon
     }
 
     /**
-     * 
-				
      *
      * @return the hardwareVersion as {@link int[]}
      */
