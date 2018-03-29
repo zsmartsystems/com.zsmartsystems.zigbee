@@ -125,6 +125,8 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
     final private IeeeAddress groupIeeeAddress = new IeeeAddress("000000000000FFFE");
     final private IeeeAddress broadcastIeeeAddress = new IeeeAddress("000000000000FFFF");
 
+    final private int MAX_RESET_RETRIES = 3;
+
     public ZigBeeDongleXBee(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
     }
@@ -146,11 +148,19 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         frameHandler.addEventListener(this);
 
         // Reset to a known state
-        XBeeSetSoftwareResetCommand resetCommand = new XBeeSetSoftwareResetCommand();
-        frameHandler.sendRequest(resetCommand);
-
         // Device sends WATCHDOG_TIMER_RESET event
-        frameHandler.eventWait(XBeeModemStatusEvent.class);
+        // A retry mechanism is used as sometimes the reset response is not received.
+        // This appears to happen if there are other events queued in the stick.
+        int resetCount = 0;
+        do {
+            if (resetCount >= MAX_RESET_RETRIES) {
+                logger.info("XBee dongle reset failed after {} tries.", ++resetCount);
+                return ZigBeeInitializeResponse.FAILED;
+            }
+            logger.debug("XBee dongle reset {}.", ++resetCount);
+            XBeeSetSoftwareResetCommand resetCommand = new XBeeSetSoftwareResetCommand();
+            frameHandler.sendRequest(resetCommand);
+        } while (frameHandler.eventWait(XBeeModemStatusEvent.class) == null);
 
         // Enable the API with escaping
         XBeeSetApiEnableCommand apiEnableCommand = new XBeeSetApiEnableCommand();
