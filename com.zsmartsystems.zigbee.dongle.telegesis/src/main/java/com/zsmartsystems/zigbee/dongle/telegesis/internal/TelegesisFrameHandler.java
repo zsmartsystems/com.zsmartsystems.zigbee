@@ -387,7 +387,7 @@ public class TelegesisFrameHandler {
      * Sets the command timeout. This is the number of milliseconds to wait for a response from the stick once the
      * command has been sent.
      *
-     * @param commandTimeout
+     * @param commandTimeout the number of milliseconds to wait for a response
      */
     public void setCommandTimeout(int commandTimeout) {
         this.commandTimeout = commandTimeout;
@@ -397,7 +397,7 @@ public class TelegesisFrameHandler {
      * Sets the transaction timeout. This is the number of milliseconds to wait for a response from the stick once the
      * command has been initially queued.
      *
-     * @param commandTimeout
+     * @param transactionTimeout the number of milliseconds to wait for a response from the stick
      */
     public void setTransactionTimeout(int transactionTimeout) {
         this.transactionTimeout = transactionTimeout;
@@ -532,8 +532,8 @@ public class TelegesisFrameHandler {
     /**
      * Sends a Telegesis request to the NCP without waiting for the response.
      *
-     * @param command Request {@link TelegesisCommand} to send
-     * @return response {@link Future} {@link TelegesisCommand}
+     * @param eventClass Request {@link TelegesisCommand} to send
+     * @return response {@link Future} {@link TelegesisEvent}
      */
     public Future<TelegesisEvent> waitEventAsync(final Class<?> eventClass) {
         class TransactionWaiter implements Callable<TelegesisEvent>, TelegesisEventListener {

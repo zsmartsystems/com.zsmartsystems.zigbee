@@ -31,10 +31,16 @@ public interface TelegesisCommand {
      * A prompt handler will always process the data and should always return true since it can not handle multiple
      * responses.
      *
+     * @param data the data to deserialize
      * @return true if this data frame completes the transaction
      */
     public boolean deserialize(int[] data);
 
+    /**
+     * Gets the status code from the command response
+     * 
+     * @return the {@link TelegesisStatusCode} of the response
+     */
     public TelegesisStatusCode getStatus();
 
 }
