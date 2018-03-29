@@ -80,7 +80,6 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
      * Serializes the network state.
      *
      * @param networkState the network state
-     * @return the serialized network state as json {@link String}.
      */
     @Override
     public void serialize(final ZigBeeNetworkManager networkState) {
@@ -111,7 +110,6 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
      * Deserializes the network state.
      *
      * @param networkState the network state
-     * @param networkStateString the network state as {@link String}
      */
     @Override
     public void deserialize(final ZigBeeNetworkManager networkState) {

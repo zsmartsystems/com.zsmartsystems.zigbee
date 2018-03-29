@@ -47,7 +47,7 @@ public class TelegesisFrame {
      * Serialises the command. This should be the first method called when serialising a command. In addition to
      * serialising the command, it initialises internal variables used to properly create the command packet.
      *
-     * @param command
+     * @param command the command to serialize
      */
     protected void serializeCommand(String command) {
         position = 0;
@@ -352,7 +352,7 @@ public class TelegesisFrame {
     /**
      * Serializes a {@link ExtendedPanId}
      *
-     * @param address the {@link ExtendedPanId}
+     * @param epanId the {@link ExtendedPanId}
      */
     protected void serializeExtendedPanId(ExtendedPanId epanId) {
         serializeUpperCaseString(epanId.toString());
@@ -436,7 +436,7 @@ public class TelegesisFrame {
     /**
      * Serializes a specified delimiter between two fields.
      *
-     * @param the delimiter to serialize
+     * @param delimiter the delimiter to serialize
      */
     protected void serializeDelimiter(int delimiter) {
         buffer[length++] = delimiter;
@@ -446,7 +446,7 @@ public class TelegesisFrame {
     /**
      * Serializes an {@link IeeeAddress}
      *
-     * @param address the {@link vIeeeAddress}
+     * @param address the {@link IeeeAddress}
      */
     protected void serializeIeeeAddress(IeeeAddress address) {
         serializeUpperCaseString(address.toString());
@@ -467,18 +467,18 @@ public class TelegesisFrame {
     }
 
     /**
-     * Serializes a {@link NetworkKey}
+     * Serializes a {@link ZigBeeKey}
      *
-     * @param key
+     * @param key the {@link ZigBeeKey} to serialize
      */
     protected void serializeZigBeeKey(ZigBeeKey key) {
         serializeUpperCaseString(key.toString());
     }
 
     /**
-     * Deserializes a {link NetworkKey}
+     * Deserializes a {link ZigBeeKey}
      *
-     * @return the {@link NetworkKey}
+     * @return the {@link ZigBeeKey}
      */
     protected ZigBeeKey deserializeZigBeeKey() {
         String string = deserializeHexString(32);
