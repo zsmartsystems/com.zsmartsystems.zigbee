@@ -153,6 +153,9 @@ public class XBeeActiveScanResponse extends XBeeFrame implements XBeeResponse {
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
+        if (commandStatus != CommandStatus.OK) {
+            return;
+        }
 
         // Deserialize field "AS_type"
         asType = deserializeInt8();
@@ -183,20 +186,22 @@ public class XBeeActiveScanResponse extends XBeeFrame implements XBeeResponse {
         builder.append(frameId);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
-        builder.append(", asType=");
-        builder.append(asType);
-        builder.append(", channel=");
-        builder.append(channel);
-        builder.append(", extendedPanId=");
-        builder.append(extendedPanId);
-        builder.append(", allowJoin=");
-        builder.append(allowJoin);
-        builder.append(", stackProfile=");
-        builder.append(stackProfile);
-        builder.append(", lqi=");
-        builder.append(lqi);
-        builder.append(", rssi=");
-        builder.append(rssi);
+        if (commandStatus == CommandStatus.OK) {
+            builder.append(", asType=");
+            builder.append(asType);
+            builder.append(", channel=");
+            builder.append(channel);
+            builder.append(", extendedPanId=");
+            builder.append(extendedPanId);
+            builder.append(", allowJoin=");
+            builder.append(allowJoin);
+            builder.append(", stackProfile=");
+            builder.append(stackProfile);
+            builder.append(", lqi=");
+            builder.append(lqi);
+            builder.append(", rssi=");
+            builder.append(rssi);
+        }
         builder.append(']');
         return builder.toString();
     }

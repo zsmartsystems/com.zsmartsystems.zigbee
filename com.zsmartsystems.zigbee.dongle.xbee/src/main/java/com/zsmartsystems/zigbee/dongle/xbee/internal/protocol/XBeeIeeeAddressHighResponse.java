@@ -74,6 +74,9 @@ public class XBeeIeeeAddressHighResponse extends XBeeFrame implements XBeeRespon
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
+        if (commandStatus != CommandStatus.OK) {
+            return;
+        }
 
         // Deserialize field "Ieee Address"
         ieeeAddress = deserializeData();
@@ -86,15 +89,17 @@ public class XBeeIeeeAddressHighResponse extends XBeeFrame implements XBeeRespon
         builder.append(frameId);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
-        builder.append(", ieeeAddress=");
-        if (ieeeAddress == null) {
-            builder.append("null");
-        } else {
-            for (int cnt = 0; cnt < ieeeAddress.length; cnt++) {
-                if (cnt > 0) {
-                    builder.append(' ');
+        if (commandStatus == CommandStatus.OK) {
+            builder.append(", ieeeAddress=");
+            if (ieeeAddress == null) {
+                builder.append("null");
+            } else {
+                for (int cnt = 0; cnt < ieeeAddress.length; cnt++) {
+                    if (cnt > 0) {
+                        builder.append(' ');
+                    }
+                    builder.append(String.format("%02X", ieeeAddress[cnt]));
                 }
-                builder.append(String.format("%02X", ieeeAddress[cnt]));
             }
         }
         builder.append(']');

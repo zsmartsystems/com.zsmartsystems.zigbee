@@ -74,6 +74,9 @@ public class XBeeDetailedVersionResponse extends XBeeFrame implements XBeeRespon
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
+        if (commandStatus != CommandStatus.OK) {
+            return;
+        }
 
         // Deserialize field "Version Info"
         versionInfo = deserializeData();
@@ -86,15 +89,17 @@ public class XBeeDetailedVersionResponse extends XBeeFrame implements XBeeRespon
         builder.append(frameId);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
-        builder.append(", versionInfo=");
-        if (versionInfo == null) {
-            builder.append("null");
-        } else {
-            for (int cnt = 0; cnt < versionInfo.length; cnt++) {
-                if (cnt > 0) {
-                    builder.append(' ');
+        if (commandStatus == CommandStatus.OK) {
+            builder.append(", versionInfo=");
+            if (versionInfo == null) {
+                builder.append("null");
+            } else {
+                for (int cnt = 0; cnt < versionInfo.length; cnt++) {
+                    if (cnt > 0) {
+                        builder.append(' ');
+                    }
+                    builder.append(String.format("%02X", versionInfo[cnt]));
                 }
-                builder.append(String.format("%02X", versionInfo[cnt]));
             }
         }
         builder.append(']');

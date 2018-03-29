@@ -77,6 +77,9 @@ public class XBeeJoinNotificationResponse extends XBeeFrame implements XBeeRespo
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
+        if (commandStatus != CommandStatus.OK) {
+            return;
+        }
 
         // Deserialize field "Enable Notification"
         enableNotification = deserializeBoolean();
@@ -89,8 +92,10 @@ public class XBeeJoinNotificationResponse extends XBeeFrame implements XBeeRespo
         builder.append(frameId);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
-        builder.append(", enableNotification=");
-        builder.append(enableNotification);
+        if (commandStatus == CommandStatus.OK) {
+            builder.append(", enableNotification=");
+            builder.append(enableNotification);
+        }
         builder.append(']');
         return builder.toString();
     }

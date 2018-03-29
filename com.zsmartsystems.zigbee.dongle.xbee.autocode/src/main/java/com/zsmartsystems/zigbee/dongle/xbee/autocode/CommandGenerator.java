@@ -726,11 +726,12 @@ public class CommandGenerator extends ClassGenerator {
                         + getTypeSerializer(parameter.data_type) + "();");
             }
 
-            // if (parameter.optional != null && parameter.optional == true) {
-            // out.println(indent + "if (" + stringToLowerCamelCase(parameter.name) + " == null) {");
-            // out.println(indent + " popDeserializer();");
-            // out.println(indent + "}");
-            // }
+            if (getTypeSerializer(parameter.data_type).equals("CommandStatus")
+                    && !(group.parameters.indexOf(parameter) == (group.parameters.size() - 1))) {
+                out.println(indent + "if (commandStatus != CommandStatus.OK) {");
+                out.println(indent + "    return;");
+                out.println(indent + "}");
+            }
 
             if (cnt < group.parameters.size()) {
                 if (parameter.optional != null && parameter.optional == true) {
@@ -753,6 +754,7 @@ public class CommandGenerator extends ClassGenerator {
     }
 
     private void createToString(PrintWriter out, String indent, boolean first, String className, ParameterGroup group) {
+        boolean extraIndent = false;
         for (Parameter parameter : group.parameters) {
             if (parameter.auto_size != null) {
                 continue;
@@ -802,6 +804,18 @@ public class CommandGenerator extends ClassGenerator {
             } else {
                 out.println(indent + "builder.append(" + formatParameterString(parameter) + ");");
             }
+
+            if (getTypeSerializer(parameter.data_type).equals("CommandStatus")
+                    && !(group.parameters.indexOf(parameter) == (group.parameters.size() - 1))) {
+                out.println(indent + "if (commandStatus == CommandStatus.OK) {");
+                indent += "    ";
+                extraIndent = true;
+            }
+        }
+
+        if (extraIndent) {
+            indent = indent.substring(0, indent.length() - 4);
+            out.println(indent + "}");
         }
     }
 

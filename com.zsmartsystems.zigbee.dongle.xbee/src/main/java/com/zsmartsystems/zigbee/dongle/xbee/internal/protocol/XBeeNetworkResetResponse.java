@@ -79,6 +79,9 @@ public class XBeeNetworkResetResponse extends XBeeFrame implements XBeeResponse 
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
+        if (commandStatus != CommandStatus.OK) {
+            return;
+        }
 
         // Deserialize field "Reset Remote Devices"
         resetRemoteDevices = deserializeBoolean();
@@ -91,8 +94,10 @@ public class XBeeNetworkResetResponse extends XBeeFrame implements XBeeResponse 
         builder.append(frameId);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
-        builder.append(", resetRemoteDevices=");
-        builder.append(resetRemoteDevices);
+        if (commandStatus == CommandStatus.OK) {
+            builder.append(", resetRemoteDevices=");
+            builder.append(resetRemoteDevices);
+        }
         builder.append(']');
         return builder.toString();
     }

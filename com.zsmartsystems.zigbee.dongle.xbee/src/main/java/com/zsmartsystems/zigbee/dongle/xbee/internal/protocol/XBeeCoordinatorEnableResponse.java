@@ -74,6 +74,9 @@ public class XBeeCoordinatorEnableResponse extends XBeeFrame implements XBeeResp
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
+        if (commandStatus != CommandStatus.OK) {
+            return;
+        }
 
         // Deserialize field "Enable"
         enable = deserializeBoolean();
@@ -86,8 +89,10 @@ public class XBeeCoordinatorEnableResponse extends XBeeFrame implements XBeeResp
         builder.append(frameId);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
-        builder.append(", enable=");
-        builder.append(enable);
+        if (commandStatus == CommandStatus.OK) {
+            builder.append(", enable=");
+            builder.append(enable);
+        }
         builder.append(']');
         return builder.toString();
     }

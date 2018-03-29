@@ -12,8 +12,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.DeliveryStatus;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.DiscoveryStatus;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeePanIdResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeTransmitStatusResponse;
 
@@ -36,7 +38,7 @@ public class XBeeResponseFactoryTest {
     }
 
     @Test
-    public void testGetResponse() {
+    public void testGetResponse1() {
         int[] data = getPacketData("00 07 8B 8F F7 7B 00 00 40 33");
         XBeeResponse frame = XBeeResponseFactory.getXBeeFrame(data);
         assertTrue(frame instanceof XBeeTransmitStatusResponse);
@@ -47,6 +49,17 @@ public class XBeeResponseFactoryTest {
         assertEquals(Integer.valueOf(0), event.getTransmitRetryCount());
         assertEquals(DeliveryStatus.SUCCESS, event.getDeliveryStatus());
         assertEquals(DiscoveryStatus.EXTENDED_TIMEOUT_DISCOVERY, event.getDiscoveryStatus());
+    }
+
+    @Test
+    public void testGetResponse2() {
+        int[] data = getPacketData("00 05 88 10 4F 49 02 CD");
+        XBeeResponse frame = XBeeResponseFactory.getXBeeFrame(data);
+        assertTrue(frame instanceof XBeePanIdResponse);
+        System.out.println(frame);
+
+        XBeePanIdResponse event = (XBeePanIdResponse) frame;
+        assertEquals(CommandStatus.INVALID_COMMAND, event.getCommandStatus());
     }
 
 }

@@ -97,6 +97,9 @@ public class XBeeAtResponse extends XBeeFrame implements XBeeResponse {
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
+        if (commandStatus != CommandStatus.OK) {
+            return;
+        }
 
         // Deserialize field "Command Data"
         commandData = deserializeData();
@@ -111,15 +114,17 @@ public class XBeeAtResponse extends XBeeFrame implements XBeeResponse {
         builder.append(atCommand);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
-        builder.append(", commandData=");
-        if (commandData == null) {
-            builder.append("null");
-        } else {
-            for (int cnt = 0; cnt < commandData.length; cnt++) {
-                if (cnt > 0) {
-                    builder.append(' ');
+        if (commandStatus == CommandStatus.OK) {
+            builder.append(", commandData=");
+            if (commandData == null) {
+                builder.append("null");
+            } else {
+                for (int cnt = 0; cnt < commandData.length; cnt++) {
+                    if (cnt > 0) {
+                        builder.append(' ');
+                    }
+                    builder.append(String.format("%02X", commandData[cnt]));
                 }
-                builder.append(String.format("%02X", commandData[cnt]));
             }
         }
         builder.append(']');
