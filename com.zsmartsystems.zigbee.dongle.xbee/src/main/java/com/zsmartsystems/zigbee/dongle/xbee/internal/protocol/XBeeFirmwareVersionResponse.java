@@ -73,6 +73,9 @@ public class XBeeFirmwareVersionResponse extends XBeeFrame implements XBeeRespon
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
+        if (commandStatus != CommandStatus.OK) {
+            return;
+        }
 
         // Deserialize field "Firmware Version"
         firmwareVersion = deserializeData();
@@ -85,15 +88,17 @@ public class XBeeFirmwareVersionResponse extends XBeeFrame implements XBeeRespon
         builder.append(frameId);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
-        builder.append(", firmwareVersion=");
-        if (firmwareVersion == null) {
-            builder.append("null");
-        } else {
-            for (int cnt = 0; cnt < firmwareVersion.length; cnt++) {
-                if (cnt > 0) {
-                    builder.append(' ');
+        if (commandStatus == CommandStatus.OK) {
+            builder.append(", firmwareVersion=");
+            if (firmwareVersion == null) {
+                builder.append("null");
+            } else {
+                for (int cnt = 0; cnt < firmwareVersion.length; cnt++) {
+                    if (cnt > 0) {
+                        builder.append(' ');
+                    }
+                    builder.append(String.format("%02X", firmwareVersion[cnt]));
                 }
-                builder.append(String.format("%02X", firmwareVersion[cnt]));
             }
         }
         builder.append(']');

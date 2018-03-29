@@ -74,6 +74,9 @@ public class XBeePanIdResponse extends XBeeFrame implements XBeeResponse {
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
+        if (commandStatus != CommandStatus.OK) {
+            return;
+        }
 
         // Deserialize field "Pan Id"
         panId = deserializeInt16();
@@ -86,8 +89,10 @@ public class XBeePanIdResponse extends XBeeFrame implements XBeeResponse {
         builder.append(frameId);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
-        builder.append(", panId=");
-        builder.append(panId);
+        if (commandStatus == CommandStatus.OK) {
+            builder.append(", panId=");
+            builder.append(panId);
+        }
         builder.append(']');
         return builder.toString();
     }

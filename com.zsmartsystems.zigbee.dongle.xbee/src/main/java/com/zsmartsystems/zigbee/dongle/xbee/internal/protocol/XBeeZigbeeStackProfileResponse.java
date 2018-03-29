@@ -75,6 +75,9 @@ public class XBeeZigbeeStackProfileResponse extends XBeeFrame implements XBeeRes
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
+        if (commandStatus != CommandStatus.OK) {
+            return;
+        }
 
         // Deserialize field "Stack Profile"
         stackProfile = deserializeInt8();
@@ -87,8 +90,10 @@ public class XBeeZigbeeStackProfileResponse extends XBeeFrame implements XBeeRes
         builder.append(frameId);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
-        builder.append(", stackProfile=");
-        builder.append(stackProfile);
+        if (commandStatus == CommandStatus.OK) {
+            builder.append(", stackProfile=");
+            builder.append(stackProfile);
+        }
         builder.append(']');
         return builder.toString();
     }

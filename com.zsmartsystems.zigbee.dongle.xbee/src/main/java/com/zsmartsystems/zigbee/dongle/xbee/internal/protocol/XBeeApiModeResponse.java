@@ -78,6 +78,9 @@ public class XBeeApiModeResponse extends XBeeFrame implements XBeeResponse {
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
+        if (commandStatus != CommandStatus.OK) {
+            return;
+        }
 
         // Deserialize field "Mode"
         mode = deserializeInt8();
@@ -90,8 +93,10 @@ public class XBeeApiModeResponse extends XBeeFrame implements XBeeResponse {
         builder.append(frameId);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
-        builder.append(", mode=");
-        builder.append(mode);
+        if (commandStatus == CommandStatus.OK) {
+            builder.append(", mode=");
+            builder.append(mode);
+        }
         builder.append(']');
         return builder.toString();
     }

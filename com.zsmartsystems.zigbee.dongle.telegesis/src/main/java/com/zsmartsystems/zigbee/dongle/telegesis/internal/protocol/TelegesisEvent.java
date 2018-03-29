@@ -18,6 +18,8 @@ public interface TelegesisEvent {
 
     /**
      * Deserialize an incoming data packet.
+     * 
+     * @param data the received data to deserialize
      */
     public void deserialize(int[] data);
 }
