@@ -149,11 +149,13 @@ public class XBeeFrameHandler {
         this.serialPort = serialPort;
         this.timeoutScheduler = Executors.newSingleThreadScheduledExecutor();
 
+        // Clear anything in the receive buffer before we start
+        emptyRxBuffer();
+
         parserThread = new Thread("XBeeFrameHandler") {
             @Override
             public void run() {
                 logger.debug("XBeeFrameHandler thread started");
-
                 while (!closeHandler) {
                     try {
                         synchronized (commandLock) {
@@ -197,6 +199,28 @@ public class XBeeFrameHandler {
         parserThread.start();
     }
 
+    /**
+     * Reads all input from the receive queue until a timeout occurs.
+     * This is used on startup to clear any data from the XBee internal buffers before we start sending packets
+     * ourselves.
+     */
+    private void emptyRxBuffer() {
+        logger.debug("XBeeFrameHandler clearing receive buffer.");
+        while (true) {
+            int val = serialPort.read(100);
+            if (val == -1) {
+                // Timeout
+                break;
+            }
+        }
+        logger.debug("XBeeFrameHandler cleared receive buffer.");
+    }
+
+    /**
+     * Gets an XBee API packet
+     *
+     * @return the int array with the packet data
+     */
     private int[] getPacket() {
         int[] inputBuffer = new int[120];
         int inputBufferLength = 0;
