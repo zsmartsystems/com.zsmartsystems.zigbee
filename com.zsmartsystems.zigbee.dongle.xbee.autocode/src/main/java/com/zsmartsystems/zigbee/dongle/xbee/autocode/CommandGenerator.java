@@ -568,8 +568,9 @@ public class CommandGenerator extends ClassGenerator {
             out.println(indent + " *");
             if (parameter.multiple | parameter.bitfield) {
                 addImport("java.util.Collection");
-                out.println(indent + " * @param " + parameter.name + " the " + stringToLowerCamelCase(parameter.name)
-                        + " to add to the {@link Set} as {@link " + getTypeClass(parameter.data_type) + "}");
+                out.println(indent + " * @param " + stringToLowerCamelCase(parameter.name) + " the "
+                        + stringToLowerCamelCase(parameter.name) + " to add to the {@link Set} as {@link "
+                        + getTypeClass(parameter.data_type) + "}");
                 out.println(indent + " */");
                 out.println(indent + "public void add" + stringToUpperCamelCase(parameter.name) + "("
                         + getTypeClass(parameter.data_type) + " " + stringToLowerCamelCase(parameter.name) + ") {");

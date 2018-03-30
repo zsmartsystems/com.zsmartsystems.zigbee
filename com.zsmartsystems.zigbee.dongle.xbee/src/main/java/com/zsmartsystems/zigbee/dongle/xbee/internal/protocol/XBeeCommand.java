@@ -18,7 +18,7 @@ public interface XBeeCommand {
     /**
      * Sets the frame ID used to correlate responses with commands
      *
-     * @param frameId
+     * @param frameId the frame ID
      */
     public void setFrameId(Integer frameId);
 

@@ -231,8 +231,8 @@ public class ZigBeeNodeServiceDiscoverer {
         networkAddressRequest.setIeeeAddr(node.getIeeeAddress());
         networkAddressRequest.setRequestType(0);
         networkAddressRequest.setStartIndex(0);
-        networkAddressRequest
-                .setDestinationAddress(new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_RX_ON.getKey()));
+        networkAddressRequest.setDestinationAddress(
+                new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_ALL_DEVICES.getKey()));
 
         CommandResult response = networkManager.unicast(networkAddressRequest, networkAddressRequest).get();
         final NetworkAddressResponse networkAddressResponse = (NetworkAddressResponse) response.getResponse();

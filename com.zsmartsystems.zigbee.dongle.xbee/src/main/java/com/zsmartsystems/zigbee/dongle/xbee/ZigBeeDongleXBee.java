@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
@@ -237,12 +236,13 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         frameHandler.sendRequest(saveData);
 
         // Get network information
-
         XBeeGetPanIdCommand getPanId = new XBeeGetPanIdCommand();
         XBeePanIdResponse panIdResponse = (XBeePanIdResponse) frameHandler.sendRequest(getPanId);
+        panId = panIdResponse.getPanId();
 
         XBeeGetExtendedPanIdCommand getEPanId = new XBeeGetExtendedPanIdCommand();
         XBeeExtendedPanIdResponse epanIdResponse = (XBeeExtendedPanIdResponse) frameHandler.sendRequest(getEPanId);
+        extendedPanId = epanIdResponse.getExtendedPanId();
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
@@ -315,9 +315,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         command.setProfileId(apsFrame.getProfile());
         command.setCluster(apsFrame.getCluster());
         command.setBroadcastRadius(0);
-        if (apsFrame.getDestinationEndpoint() != 0) {
-            command.addOptions(TransmitOptions.ENABLE_APS_ENCRYPTION);
-        }
+
         if (apsFrame.getDestinationAddress() > 0xFFF8) {
             command.setIeeeAddress(broadcastIeeeAddress);
         } else if (apsFrame.getDestinationIeeeAddress() == null) {
@@ -330,13 +328,13 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
             command.setIeeeAddress(apsFrame.getDestinationIeeeAddress());
         }
 
-        int[] data = new int[apsFrame.getPayload().length + 1];
-        data[0] = apsFrame.getSequence();
-        int cnt = 0;
-        for (int value : apsFrame.getPayload()) {
-            data[cnt++] = value;
+        if (apsFrame.getDestinationAddress() < 0xFFF8 && apsFrame.getDestinationAddress() != 0) {
+            // There seems to be a bug in the XBee that causes it to hang if APS Encryption is
+            // enabled when sending a command to the local coordinator. Don't do it!
+            command.addOptions(TransmitOptions.ENABLE_APS_ENCRYPTION);
         }
-        command.setData(data);
+
+        command.setData(apsFrame.getPayload());
 
         logger.debug("XBee send: {}", command.toString());
         frameHandler.sendRequestAsync(command);
@@ -422,9 +420,6 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
 
     @Override
     public boolean setZigBeeChannel(int channel) {
-        ZigBeeChannelMask channelMask = new ZigBeeChannelMask();
-        channelMask.addChannel(channel);
-
         return false;
     }
 

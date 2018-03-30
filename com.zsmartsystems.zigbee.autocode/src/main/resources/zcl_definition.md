@@ -2374,7 +2374,7 @@ No cluster specific commands.
 
 # Lighting
 
-## Color control [0x0300]
+## Color Control [0x0300]
 This cluster provides an interface for changing the color of a light. Color is
 specified according to the Commission Internationale de l'Éclairage (CIE)
 specification CIE 1931 Color Space, [B4]. Color control is carried out in terms of

@@ -409,7 +409,8 @@ public class XBeeFrameHandler {
      * Sets the command timeout. This is the number of milliseconds to wait for a response from the stick once the
      * command has been sent.
      *
-     * @param commandTimeout
+     * @param commandTimeout the number of milliseconds to wait for a response from the stick once the
+     *            command has been sent.
      */
     public void setCommandTimeout(int commandTimeout) {
         this.commandTimeout = commandTimeout;
@@ -419,7 +420,8 @@ public class XBeeFrameHandler {
      * Sets the transaction timeout. This is the number of milliseconds to wait for a response from the stick once the
      * command has been initially queued.
      *
-     * @param commandTimeout
+     * @param commandTimeout the number of milliseconds to wait for a response from the stick once the
+     *            command has been initially queued.
      */
     public void setTransactionTimeout(int transactionTimeout) {
         this.transactionTimeout = transactionTimeout;
@@ -528,9 +530,9 @@ public class XBeeFrameHandler {
                     return false;
                 }
 
-                completionResponse = response;
-                complete = true;
                 synchronized (this) {
+                    completionResponse = response;
+                    complete = true;
                     notify();
                 }
 
@@ -602,8 +604,8 @@ public class XBeeFrameHandler {
 
                 receivedEvent = event;
 
-                complete = true;
                 synchronized (this) {
+                    complete = true;
                     notify();
                 }
             }

@@ -42,7 +42,7 @@ public class XBeeSetEncryptionOptionsCommand extends XBeeFrame implements XBeeCo
 
     /**
      *
-     * @param Encryption Options the encryptionOptions to add to the {@link Set} as {@link EncryptionOptions}
+     * @param encryptionOptions the encryptionOptions to add to the {@link Set} as {@link EncryptionOptions}
      */
     public void addEncryptionOptions(EncryptionOptions encryptionOptions) {
         this.encryptionOptions.add(encryptionOptions);

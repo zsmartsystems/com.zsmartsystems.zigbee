@@ -183,7 +183,7 @@ public class XBeeTransmitRequestExplicitCommand extends XBeeFrame implements XBe
      * transmission timeout for the destination address. See Transmission, addressing, and
      * routing. All unused and unsupported bits must be set to 0.
      *
-     * @param Options the options to add to the {@link Set} as {@link TransmitOptions}
+     * @param options the options to add to the {@link Set} as {@link TransmitOptions}
      */
     public void addOptions(TransmitOptions options) {
         this.options.add(options);
