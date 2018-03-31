@@ -1,6 +1,7 @@
 * Code style should use [standard naming conventions](https://www.thoughtco.com/using-java-naming-conventions-2034199)
 * Codacy static testing should pass.
-* Please consider raising issues before working on an enhancement to provide some coordination.
+* Run the findBugs goal and check that you have not introduced any bugs into your code. FindBugs reports are generated with the ```mvn site``` goal, and reports are located in the ```target/site/findbugs.html``` file.
+* Please consider raising issues before working on an enhancement to provide some coordination with other contributors.
 * Keep PRs short - try and keep a single PR per enhancement. This makes tracking and reviewing easier.
 * Contributions must be supported with tests.
 * Code must be formatted using the Eclipse code formatter provided in the project.
