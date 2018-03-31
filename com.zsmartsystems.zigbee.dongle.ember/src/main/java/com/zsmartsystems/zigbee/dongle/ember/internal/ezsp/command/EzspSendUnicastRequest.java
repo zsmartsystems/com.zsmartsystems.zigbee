@@ -43,7 +43,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberOutgoi
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSendUnicastRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x34;
+    public static final int FRAME_ID = 0x34;
 
     /**
      * Specifies the outgoing message type. Must be one of EMBER_OUTGOING_DIRECT,

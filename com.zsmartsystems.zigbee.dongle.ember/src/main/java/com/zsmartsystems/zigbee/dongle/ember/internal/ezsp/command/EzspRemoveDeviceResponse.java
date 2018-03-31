@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspRemoveDeviceResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0xA8;
+    public static final int FRAME_ID = 0xA8;
 
     /**
      * An EmberStatus value indicating success, or the reason for failure

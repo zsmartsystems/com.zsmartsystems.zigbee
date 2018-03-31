@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspPolicyI
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGetPolicyRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x56;
+    public static final int FRAME_ID = 0x56;
 
     /**
      * Identifies which policy to modify.

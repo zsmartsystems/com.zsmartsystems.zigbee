@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGetChildDataResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x4A;
+    public static final int FRAME_ID = 0x4A;
 
     /**
      * EMBER_SUCCESS if there is a child at index. EMBER_NOT_JOINED if there is no child at index.

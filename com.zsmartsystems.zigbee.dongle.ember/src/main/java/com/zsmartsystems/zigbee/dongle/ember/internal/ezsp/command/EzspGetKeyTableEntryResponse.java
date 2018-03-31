@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGetKeyTableEntryResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x71;
+    public static final int FRAME_ID = 0x71;
 
     /**
      * EMBER_TABLE_ENTRY_ERASED if the index is an erased key entry. EMBER_INDEX_OUT_OF_RANGE

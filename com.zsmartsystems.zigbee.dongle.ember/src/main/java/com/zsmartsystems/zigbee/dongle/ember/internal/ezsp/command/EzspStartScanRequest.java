@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspNetwork
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspStartScanRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x1A;
+    public static final int FRAME_ID = 0x1A;
 
     /**
      * Indicates the type of scan to be performed. Possible values are: EZSP_ENERGY_SCAN and

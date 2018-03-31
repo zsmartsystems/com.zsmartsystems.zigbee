@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspStackStatusHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0x19;
+    public static final int FRAME_ID = 0x19;
 
     /**
      * Stack status. One of the following: EMBER_NETWORK_UP, EMBER_NETWORK_DOWN,

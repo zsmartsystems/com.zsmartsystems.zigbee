@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGetKeyTableEntryRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x71;
+    public static final int FRAME_ID = 0x71;
 
     /**
      * The index of the entry in the table to retrieve.

@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGetRouteTableEntryResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x7B;
+    public static final int FRAME_ID = 0x7B;
 
     /**
      * EMBER_ERR_FATAL if the index is out of range or the device is an end device, and EMBER_SUCCESS

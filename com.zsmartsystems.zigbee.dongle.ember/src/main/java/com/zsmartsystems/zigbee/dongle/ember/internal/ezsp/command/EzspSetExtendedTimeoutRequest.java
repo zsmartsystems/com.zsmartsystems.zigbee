@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSetExtendedTimeoutRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x7E;
+    public static final int FRAME_ID = 0x7E;
 
     /**
      * The address of the node for which the timeout is to be set.

@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.dongle.ember.internal;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -108,8 +109,8 @@ public class EmberStackConfiguration {
     public boolean setConfiguration(Map<EzspConfigId, Integer> configuration) {
         boolean success = true;
 
-        for (EzspConfigId configId : configuration.keySet()) {
-            if (!setConfiguration(configId, configuration.get(configId))) {
+        for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
+            if (!setConfiguration(config.getKey(), config.getValue())) {
                 success = false;
             }
         }
@@ -191,8 +192,8 @@ public class EmberStackConfiguration {
     public boolean setPolicy(Map<EzspPolicyId, EzspDecisionId> policies) {
         boolean success = true;
 
-        for (EzspPolicyId policyId : policies.keySet()) {
-            if (!setPolicy(policyId, policies.get(policyId))) {
+        for (Entry<EzspPolicyId, EzspDecisionId> policy : policies.entrySet()) {
+            if (!setPolicy(policy.getKey(), policy.getValue())) {
                 success = false;
             }
         }

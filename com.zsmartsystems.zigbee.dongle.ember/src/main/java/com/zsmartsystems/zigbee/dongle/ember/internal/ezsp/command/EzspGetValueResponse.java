@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspStatus;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGetValueResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0xAA;
+    public static final int FRAME_ID = 0xAA;
 
     /**
      * EZSP_SUCCESS if the value was read successfully, EZSP_ERROR_INVALID_ID if the NCP does not

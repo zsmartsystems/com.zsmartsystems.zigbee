@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGetAddressTableRemoteEui64Response extends EzspFrameResponse {
-    public static int FRAME_ID = 0x5E;
+    public static final int FRAME_ID = 0x5E;
 
     /**
      * The EUI64 of the address table entry is copied to this location.

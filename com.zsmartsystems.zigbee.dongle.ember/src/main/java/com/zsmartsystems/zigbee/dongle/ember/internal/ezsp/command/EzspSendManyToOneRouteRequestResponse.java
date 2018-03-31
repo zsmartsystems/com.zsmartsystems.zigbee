@@ -43,7 +43,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSendManyToOneRouteRequestResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x41;
+    public static final int FRAME_ID = 0x41;
 
     /**
      * EMBER_SUCCESS if the route request was successfully submitted to the transmit queue, and

@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberApsFra
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSendReplyRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x39;
+    public static final int FRAME_ID = 0x39;
 
     /**
      * Value supplied by incoming unicast.

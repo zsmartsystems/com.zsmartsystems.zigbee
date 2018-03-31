@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x91;
+    public static final int FRAME_ID = 0x91;
 
     /**
      * BOOTLOADER_INVALID_VERSION if the standalone bootloader is not present, or the version of

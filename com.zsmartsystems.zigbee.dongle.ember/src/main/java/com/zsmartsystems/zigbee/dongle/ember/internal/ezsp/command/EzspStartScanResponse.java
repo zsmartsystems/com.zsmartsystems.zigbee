@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspStartScanResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x1A;
+    public static final int FRAME_ID = 0x1A;
 
     /**
      * EMBER_SUCCESS signals that the scan successfully started. Possible error responses and

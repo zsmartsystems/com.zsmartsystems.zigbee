@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSetExtendedTimeoutResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x7E;
+    public static final int FRAME_ID = 0x7E;
 
     /**
      * Response and Handler constructor

@@ -10,7 +10,6 @@ package com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerializer;
-
 import java.util.HashSet;
 import java.util.Set;
 

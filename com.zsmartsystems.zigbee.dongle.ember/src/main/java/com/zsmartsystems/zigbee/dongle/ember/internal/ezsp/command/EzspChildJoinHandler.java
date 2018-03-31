@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberNodeTy
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspChildJoinHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0x23;
+    public static final int FRAME_ID = 0x23;
 
     /**
      * The index of the child of interest.

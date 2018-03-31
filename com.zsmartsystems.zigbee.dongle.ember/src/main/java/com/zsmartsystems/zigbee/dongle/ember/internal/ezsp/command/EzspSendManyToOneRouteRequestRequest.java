@@ -44,7 +44,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberConcen
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSendManyToOneRouteRequestRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x41;
+    public static final int FRAME_ID = 0x41;
 
     /**
      * Must be either EMBER_HIGH_RAM_CONCENTRATOR or EMBER_LOW_RAM_CONCENTRATOR. The former

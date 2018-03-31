@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspMfglibStartRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x83;
+    public static final int FRAME_ID = 0x83;
 
     /**
      * true to generate a mfglibRxHandler callback when a packet is received.

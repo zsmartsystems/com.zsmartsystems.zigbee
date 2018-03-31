@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspRemoteDeleteBindingHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0x32;
+    public static final int FRAME_ID = 0x32;
 
     /**
      * The index of a binding table entry.

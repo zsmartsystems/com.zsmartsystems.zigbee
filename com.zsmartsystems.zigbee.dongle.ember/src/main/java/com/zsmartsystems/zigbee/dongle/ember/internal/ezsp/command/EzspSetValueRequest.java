@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspValueId
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSetValueRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0xAB;
+    public static final int FRAME_ID = 0xAB;
 
     /**
      * Identifies which policy to change.

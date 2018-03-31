@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberIncomi
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspIncomingMessageHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0x45;
+    public static final int FRAME_ID = 0x45;
 
     /**
      * The type of the incoming message. One of the following: EMBER_INCOMING_UNICAST,

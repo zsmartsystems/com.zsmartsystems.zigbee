@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGetBindingRemoteNodeIdResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x2F;
+    public static final int FRAME_ID = 0x2F;
 
     /**
      * The short ID of the destination node or EMBER_NULL_NODE_ID if no destination is known.

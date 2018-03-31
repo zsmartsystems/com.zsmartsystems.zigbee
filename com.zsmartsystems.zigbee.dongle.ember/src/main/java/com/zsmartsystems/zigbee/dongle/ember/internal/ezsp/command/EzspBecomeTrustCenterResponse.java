@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspBecomeTrustCenterResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x77;
+    public static final int FRAME_ID = 0x77;
 
     /**
      * The response status.

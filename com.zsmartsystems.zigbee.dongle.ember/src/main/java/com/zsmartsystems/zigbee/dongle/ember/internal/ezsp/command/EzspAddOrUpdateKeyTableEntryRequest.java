@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyDat
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspAddOrUpdateKeyTableEntryRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x66;
+    public static final int FRAME_ID = 0x66;
 
     /**
      * The address of the partner device that shares the key

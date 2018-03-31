@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspMfglibSetChannelResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x8A;
+    public static final int FRAME_ID = 0x8A;
 
     /**
      * The success or failure code of the operation.

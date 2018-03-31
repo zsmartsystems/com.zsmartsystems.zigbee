@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspMfglibSendPacketRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x89;
+    public static final int FRAME_ID = 0x89;
 
     /**
      * The packet to send. The last two bytes will be replacedwith the 16-bit CRC.

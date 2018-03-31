@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspIncomingRouteErrorHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0x80;
+    public static final int FRAME_ID = 0x80;
 
     /**
      * EMBER_SOURCE_ROUTE_FAILURE or EMBER_MANY_TO_ONE_ROUTE_FAILURE.

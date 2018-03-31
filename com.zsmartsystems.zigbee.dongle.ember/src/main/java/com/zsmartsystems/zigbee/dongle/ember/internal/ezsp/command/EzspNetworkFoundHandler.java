@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberZigbee
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspNetworkFoundHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0x1B;
+    public static final int FRAME_ID = 0x1B;
 
     /**
      * The parameters associated with the network found.

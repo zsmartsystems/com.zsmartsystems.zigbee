@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberInitia
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSetInitialSecurityStateRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x68;
+    public static final int FRAME_ID = 0x68;
 
     /**
      * The security configuration to be set.

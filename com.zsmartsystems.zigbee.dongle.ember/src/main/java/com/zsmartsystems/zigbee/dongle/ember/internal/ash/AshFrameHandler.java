@@ -198,7 +198,7 @@ public class AshFrameHandler {
                                         logger.debug("RX EZSP: " + response);
                                         if (response == null) {
                                             logger.debug("ASH: No frame handler created for {}", packet);
-                                        } else if (response != null && !notifyTransactionComplete(response)) {
+                                        } else if (!notifyTransactionComplete(response)) {
                                             // No transactions owned this response, so we pass it to
                                             // our unhandled response handler
                                             EzspFrame ezspFrame = EzspFrame.createHandler((dataPacket));
@@ -717,7 +717,7 @@ public class AshFrameHandler {
      *
      * @return map of counters
      */
-    public Map<String, Long> getCounters() {
+    public synchronized Map<String, Long> getCounters() {
         Map<String, Long> counters = new HashMap<String, Long>();
 
         counters.put("ASH_TX_DAT", statsTxData);

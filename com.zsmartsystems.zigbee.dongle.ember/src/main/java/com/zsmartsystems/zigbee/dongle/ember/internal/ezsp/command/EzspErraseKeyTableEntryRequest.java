@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspErraseKeyTableEntryRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x76;
+    public static final int FRAME_ID = 0x76;
 
     /**
      * This indicates the index of entry to erase.

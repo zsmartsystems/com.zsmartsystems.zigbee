@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspZigbeeKeyEstablishmentHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0x9B;
+    public static final int FRAME_ID = 0x9B;
 
     /**
      * This is the IEEE address of the partner that the device successfully established a key with.

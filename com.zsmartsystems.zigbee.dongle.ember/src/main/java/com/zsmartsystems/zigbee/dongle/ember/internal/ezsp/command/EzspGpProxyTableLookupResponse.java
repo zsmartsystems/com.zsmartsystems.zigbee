@@ -21,7 +21,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGpProxyTableLookupResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0xC0;
+    public static final int FRAME_ID = 0xC0;
 
     /**
      * The index, or 0xFF for not found.

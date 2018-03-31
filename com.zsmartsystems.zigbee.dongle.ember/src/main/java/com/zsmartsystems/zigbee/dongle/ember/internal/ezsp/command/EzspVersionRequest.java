@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspVersionRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x00;
+    public static final int FRAME_ID = 0x00;
 
     /**
      * The EZSP version the Host wishes to use. To successfully set the version and allow other

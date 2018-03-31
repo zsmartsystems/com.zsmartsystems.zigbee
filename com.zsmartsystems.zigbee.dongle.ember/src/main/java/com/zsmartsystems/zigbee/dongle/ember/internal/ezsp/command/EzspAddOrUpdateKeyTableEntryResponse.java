@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspAddOrUpdateKeyTableEntryResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x66;
+    public static final int FRAME_ID = 0x66;
 
     /**
      * The success or failure error code of the operation.
