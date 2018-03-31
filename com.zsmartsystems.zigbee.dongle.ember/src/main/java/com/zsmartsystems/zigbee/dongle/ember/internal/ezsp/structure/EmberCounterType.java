@@ -175,9 +175,43 @@ public enum EmberCounterType {
     EMBER_COUNTER_RELAYED_UNICAST(0x001C),
 
     /**
+     * The number of times we dropped a packet due to reaching the preset PHY to MAC queue limit
+     * (emMaxPhyToMacQueueLength).  The limit will determine how many messages are accepted by
+     * the PHY between calls to emberTick(). After that limit is hit, packets will be dropped.  The
+     * number of dropped packets will be recorded in this counter.
+     * <p>
+     * <b>Note:</b> For each call to
+     * emberCounterHandler() there may be more than 1 packet that was dropped due to the limit
+     * reached.  The actual number of packets dropped will be returned in the 'data' parameter
+     * passed to that function.
+     */
+    EMBER_COUNTER_PHY_TO_MAC_QUEUE_LIMIT_REACHED(0x001D),
+
+    /**
+     * The number of times we dropped a packet due to the packet-validate library checking a packet
+     * and rejecting it due to length or other formatting problems.
+     */
+    EMBER_COUNTER_PACKET_VALIDATE_LIBRARY_DROPPED_COUNT(0x001E),
+
+    /**
+     * The number of times the NWK retry queue is full and a new message failed to be added.
+     */
+    EMBER_COUNTER_TYPE_NWK_RETRY_OVERFLOW(0x001F),
+
+    /**
+     * The number of times the PHY layer was unable to transmit due to a failed CCA
+     */
+    EMBER_COUNTER_PHY_CCA_FAIL_COUNT(0x0020),
+
+    /**
+     * The number of times a NWK broadcast was dropped because the the broadcast table was full.
+     */
+    EMBER_COUNTER_BROADCAST_TABLE_FULL(0x0021),
+
+    /**
      * A placeholder giving the number of Ember counter types.
      */
-    EMBER_COUNTER_TYPE_COUNT(0x001D);
+    EMBER_COUNTER_TYPE_COUNT(0x0022);
 
     /**
      * A mapping between the integer code and its corresponding type to
@@ -187,30 +221,25 @@ public enum EmberCounterType {
 
     private int key;
 
-    private EmberCounterType(int key) {
-        this.key = key;
-    }
-
-    private static void initMapping() {
+    static {
         codeMapping = new HashMap<Integer, EmberCounterType>();
         for (EmberCounterType s : values()) {
             codeMapping.put(s.key, s);
         }
     }
 
+    private EmberCounterType(int key) {
+        this.key = key;
+    }
+
     /**
      * Lookup function based on the EmberStatus type code. Returns null if the
      * code does not exist.
      *
-     * @param code
-     *            the code to lookup
+     * @param code the code to lookup
      * @return enumeration value of the alarm type.
      */
     public static EmberCounterType getEmberCounterType(int code) {
-        if (codeMapping == null) {
-            initMapping();
-        }
-
         if (codeMapping.get(code) == null) {
             return UNKNOWN;
         }
@@ -219,7 +248,7 @@ public enum EmberCounterType {
     }
 
     /**
-     * Returns the EZSP protocol defined value for this enum
+     * Returns the EZSP protocol defined value for this enumeration.
      *
      * @return the EZSP protocol key
      */

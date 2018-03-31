@@ -47,6 +47,18 @@ public enum EmberInitialSecurityBitmask {
     EMBER_PRECONFIGURED_NETWORK_KEY_MODE(0x0008),
 
     /**
+     * This denotes that the ::EmberInitialSecurityState::preconfiguredTrustCenterEui64
+     * has a value in it containing the trust center EUI64.  The device will only join a network and
+     * accept commands from a trust center with that EUI64. Normally this bit is NOT set, and the
+     * EUI64 of the trust center is learned during the join process.  When commissioning a device to
+     * join onto an existing network that is using a trust center, and without sending any messages,
+     * this bit must be set and the field
+     * ::EmberInitialSecurityState::preconfiguredTrustCenterEui64 must be populated with
+     * the appropriate EUI64.
+     */
+    EMBER_HAVE_TRUST_CENTER_EUI64(0x0040),
+
+    /**
      * This denotes that the preconfiguredKey is not the actual Link Key but a Secret Key known only
      * to the Trust Center. It is hashed with the IEEE Address of the destination device in order to
      * create the actual Link Key used in encryption. This is bit is only used by the Trust Center. The
@@ -95,19 +107,7 @@ public enum EmberInitialSecurityBitmask {
      * the actual preconfigured key. If that token is not valid, then the call to
      * emberSetInitialSecurityState() will fail.
      */
-    EMBER_GET_PRECONFIGURED_KEY_FROM_INSTALL_CODE(0x2000),
-
-    /**
-     * This denotes that the ::EmberInitialSecurityState::preconfiguredTrustCenterEui64
-     * has a value in it containing the trust center EUI64. The device will only join a network and
-     * accept commands from a trust center with that EUI64. Normally this bit is NOT set, and the
-     * EUI64 of the trust center is learned during the join process. When commissioning a device to
-     * join onto an existing network, which is using a trust center, and without sending any
-     * messages, this bit must be set and the field
-     * ::EmberInitialSecurityState::preconfiguredTrustCenterEui64 must be populated with
-     * the appropriate EUI64.
-     */
-    EMBER_HAVE_TRUST_CENTER_EUI64(0x0040);
+    EMBER_GET_PRECONFIGURED_KEY_FROM_INSTALL_CODE(0x2000);
 
     /**
      * A mapping between the integer code and its corresponding type to
@@ -117,30 +117,25 @@ public enum EmberInitialSecurityBitmask {
 
     private int key;
 
-    private EmberInitialSecurityBitmask(int key) {
-        this.key = key;
-    }
-
-    private static void initMapping() {
+    static {
         codeMapping = new HashMap<Integer, EmberInitialSecurityBitmask>();
         for (EmberInitialSecurityBitmask s : values()) {
             codeMapping.put(s.key, s);
         }
     }
 
+    private EmberInitialSecurityBitmask(int key) {
+        this.key = key;
+    }
+
     /**
      * Lookup function based on the EmberStatus type code. Returns null if the
      * code does not exist.
      *
-     * @param code
-     *            the code to lookup
+     * @param code the code to lookup
      * @return enumeration value of the alarm type.
      */
     public static EmberInitialSecurityBitmask getEmberInitialSecurityBitmask(int code) {
-        if (codeMapping == null) {
-            initMapping();
-        }
-
         if (codeMapping.get(code) == null) {
             return UNKNOWN;
         }
@@ -149,7 +144,7 @@ public enum EmberInitialSecurityBitmask {
     }
 
     /**
-     * Returns the EZSP protocol defined value for this enum
+     * Returns the EZSP protocol defined value for this enumeration.
      *
      * @return the EZSP protocol key
      */

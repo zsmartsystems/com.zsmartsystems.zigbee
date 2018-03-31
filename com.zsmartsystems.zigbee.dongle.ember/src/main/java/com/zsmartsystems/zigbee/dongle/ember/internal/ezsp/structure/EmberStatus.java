@@ -684,30 +684,25 @@ public enum EmberStatus {
 
     private int key;
 
-    private EmberStatus(int key) {
-        this.key = key;
-    }
-
-    private static void initMapping() {
+    static {
         codeMapping = new HashMap<Integer, EmberStatus>();
         for (EmberStatus s : values()) {
             codeMapping.put(s.key, s);
         }
     }
 
+    private EmberStatus(int key) {
+        this.key = key;
+    }
+
     /**
      * Lookup function based on the EmberStatus type code. Returns null if the
      * code does not exist.
      *
-     * @param code
-     *            the code to lookup
+     * @param code the code to lookup
      * @return enumeration value of the alarm type.
      */
     public static EmberStatus getEmberStatus(int code) {
-        if (codeMapping == null) {
-            initMapping();
-        }
-
         if (codeMapping.get(code) == null) {
             return UNKNOWN;
         }
@@ -716,7 +711,7 @@ public enum EmberStatus {
     }
 
     /**
-     * Returns the EZSP protocol defined value for this enum
+     * Returns the EZSP protocol defined value for this enumeration.
      *
      * @return the EZSP protocol key
      */

@@ -36,12 +36,26 @@ public enum EmberKeyStructBitmask {
     /**
      * The key has an incoming frame counter associated with it.
      */
-    EMBER_KEY_HAS_INCOMING_FRAME_COUNTER(0x0003),
+    EMBER_KEY_HAS_INCOMING_FRAME_COUNTER(0x0004),
 
     /**
      * The key has a Partner IEEE address associated with it.
      */
-    EMBER_KEY_HAS_PARTNER_EUI64(0x0004);
+    EMBER_KEY_HAS_PARTNER_EUI64(0x0008),
+
+    /**
+     * This indicates the key is authorized for use in APS data messages. If the key is not authorized
+     * for use in APS data messages it has not yet gone through a key agreement protocol, such as CBKE
+     * (i.e. ECC).
+     */
+    EMBER_KEY_IS_AUTHORIZED(0x0010),
+
+    /**
+     * This indicates that the partner associated with the link is a sleepy end device.  This bit is
+     * set automatically if the local device hears a device announce from the partner indicating it
+     * is not an 'RX on when idle' device.
+     */
+    EMBER_KEY_PARTNER_IS_SLEEPY(0x0020);
 
     /**
      * A mapping between the integer code and its corresponding type to
@@ -51,30 +65,25 @@ public enum EmberKeyStructBitmask {
 
     private int key;
 
-    private EmberKeyStructBitmask(int key) {
-        this.key = key;
-    }
-
-    private static void initMapping() {
+    static {
         codeMapping = new HashMap<Integer, EmberKeyStructBitmask>();
         for (EmberKeyStructBitmask s : values()) {
             codeMapping.put(s.key, s);
         }
     }
 
+    private EmberKeyStructBitmask(int key) {
+        this.key = key;
+    }
+
     /**
      * Lookup function based on the EmberStatus type code. Returns null if the
      * code does not exist.
      *
-     * @param code
-     *            the code to lookup
+     * @param code the code to lookup
      * @return enumeration value of the alarm type.
      */
     public static EmberKeyStructBitmask getEmberKeyStructBitmask(int code) {
-        if (codeMapping == null) {
-            initMapping();
-        }
-
         if (codeMapping.get(code) == null) {
             return UNKNOWN;
         }
@@ -83,7 +92,7 @@ public enum EmberKeyStructBitmask {
     }
 
     /**
-     * Returns the EZSP protocol defined value for this enum
+     * Returns the EZSP protocol defined value for this enumeration.
      *
      * @return the EZSP protocol key
      */
