@@ -188,12 +188,15 @@ public abstract class ZclCluster {
     /**
      * Write an attribute
      *
-     * @param attribute the attribute to write
+     * @param attribute the attribute ID to write
      * @param dataType the {@link ZclDataType} of the object
      * @param value the value to set (as {@link Object})
      * @return command future {@link CommandResult}
      */
     public Future<CommandResult> write(final int attribute, final ZclDataType dataType, final Object value) {
+        logger.debug("{}: Writing cluster {}, attribute {}, value {}, as dataType {}", clusterId, attribute, value,
+                dataType);
+
         final WriteAttributesCommand command = new WriteAttributesCommand();
 
         command.setClusterId(clusterId);

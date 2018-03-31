@@ -473,6 +473,14 @@ public class ZclProtocolCodeGenerator {
         out.println("    private final boolean analogue;");
         out.println("    private static Map<Integer, " + className + "> codeTypeMapping;");
         out.println();
+
+        out.println("    static {");
+        out.println("        codeTypeMapping = new HashMap<Integer, " + className + ">();");
+        out.println("        for (" + className + " s : values()) {");
+        out.println("            codeTypeMapping.put(s.id, s);");
+        out.println("        }");
+        out.println("    }");
+        out.println();
         out.println("    " + className
                 + "(final String label, final Class<?> dataClass, final int id, final boolean analogue) {");
         out.println("        this.label = label;");
@@ -482,18 +490,7 @@ public class ZclProtocolCodeGenerator {
         out.println("    }");
         out.println();
 
-        out.println("    private static void initMapping() {");
-        out.println("        codeTypeMapping = new HashMap<Integer, " + className + ">();");
-        out.println("        for (" + className + " s : values()) {");
-        out.println("            codeTypeMapping.put(s.id, s);");
-        out.println("        }");
-        out.println("    }");
-
         out.println("    public static " + className + " getType(int id) {");
-        out.println("        if (codeTypeMapping == null) {");
-        out.println("            initMapping();");
-        out.println("        }");
-
         out.println("        return codeTypeMapping.get(id);");
         out.println("    }");
 

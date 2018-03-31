@@ -47,7 +47,6 @@ public class ZigBeeDongleXBeeTest {
     public void sendCommand() {
         XBeeFrameHandler frameHandler = Mockito.mock(XBeeFrameHandler.class);
         ArgumentCaptor<XBeeCommand> commandCapture = ArgumentCaptor.forClass(XBeeCommand.class);
-        // Mockito.doNothing().when(frameHandler).sendRequestAsync(commandCapture.capture());
         Mockito.when(frameHandler.sendRequestAsync(commandCapture.capture())).thenReturn(null);
 
         ZigBeeDongleXBee dongle = new ZigBeeDongleXBee(null);

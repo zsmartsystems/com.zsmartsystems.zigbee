@@ -26,16 +26,16 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T14:10:45Z")
 public enum ZclDataType {
     BITMAP_16_BIT("16-bit Bitmap", Integer.class, 0x19, false),
     BITMAP_32_BIT("32-bit Bitmap", Integer.class, 0x1B, false),
     BITMAP_8_BIT("Bitmap 8-bit", Integer.class, 0x18, false),
     BOOLEAN("Boolean", Boolean.class, 0x10, false),
     BYTE_ARRAY("Byte array", ByteArray.class, 0x00, false),
-    CHARACTER_STRING("Character string", String.class, 0x42, false),
+    CHARACTER_STRING("Character String", String.class, 0x42, false),
     DATA_8_BIT("8-bit data", Integer.class, 0x08, false),
-    ENUMERATION_16_BIT("16-bit Enumeration", Integer.class, 0x31, false),
+    ENUMERATION_16_BIT("16-bit enumeration", Integer.class, 0x31, false),
     ENUMERATION_8_BIT("8-bit Enumeration", Integer.class, 0x30, false),
     IEEE_ADDRESS("IEEE Address", IeeeAddress.class, 0xF0, false),
     N_X_ATTRIBUTE_IDENTIFIER("N X Attribute identifier", Integer.class, 0x00, false),
@@ -50,7 +50,7 @@ public enum ZclDataType {
     N_X_NEIGHBORS_INFORMATION("N X Neighbors information", NeighborInformation.class, 0x00, false),
     N_X_READ_ATTRIBUTE_STATUS_RECORD("N X Read attribute status record", ReadAttributeStatusRecord.class, 0x00, false),
     N_X_UNSIGNED_16_BIT_INTEGER("N X Unsigned 16-bit integer", Integer.class, 0x00, false),
-    N_X_UNSIGNED_8_BIT_INTEGER("N X Unsigned 8-bit integer", Integer.class, 0x00, false),
+    N_X_UNSIGNED_8_BIT_INTEGER("N x Unsigned 8-bit Integer", Integer.class, 0x00, false),
     N_X_WRITE_ATTRIBUTE_RECORD("N X Write attribute record", WriteAttributeRecord.class, 0x00, false),
     N_X_WRITE_ATTRIBUTE_STATUS_RECORD("N X Write attribute status record", WriteAttributeStatusRecord.class, 0x00, false),
     OCTET_STRING("Octet string", String.class, 0x41, false),
@@ -87,6 +87,13 @@ public enum ZclDataType {
     private final boolean analogue;
     private static Map<Integer, ZclDataType> codeTypeMapping;
 
+    static {
+        codeTypeMapping = new HashMap<Integer, ZclDataType>();
+        for (ZclDataType s : values()) {
+            codeTypeMapping.put(s.id, s);
+        }
+    }
+
     ZclDataType(final String label, final Class<?> dataClass, final int id, final boolean analogue) {
         this.label = label;
         this.dataClass = dataClass;
@@ -94,16 +101,7 @@ public enum ZclDataType {
         this.analogue = analogue;
     }
 
-    private static void initMapping() {
-        codeTypeMapping = new HashMap<Integer, ZclDataType>();
-        for (ZclDataType s : values()) {
-            codeTypeMapping.put(s.id, s);
-        }
-    }
     public static ZclDataType getType(int id) {
-        if (codeTypeMapping == null) {
-            initMapping();
-        }
         return codeTypeMapping.get(id);
     }
 
