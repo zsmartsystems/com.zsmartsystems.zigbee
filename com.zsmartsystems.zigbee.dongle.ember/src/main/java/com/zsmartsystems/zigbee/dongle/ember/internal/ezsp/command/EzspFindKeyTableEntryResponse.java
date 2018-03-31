@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspFindKeyTableEntryResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x75;
+    public static final int FRAME_ID = 0x75;
 
     /**
      * This indicates the index of the entry that matches the search criteria. A value of 0xFF is

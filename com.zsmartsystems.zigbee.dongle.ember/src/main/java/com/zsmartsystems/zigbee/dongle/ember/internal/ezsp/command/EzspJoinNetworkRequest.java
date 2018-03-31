@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberNodeTy
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspJoinNetworkRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x1F;
+    public static final int FRAME_ID = 0x1F;
 
     /**
      * Specification of the role that this node will have in the network. This role must not be

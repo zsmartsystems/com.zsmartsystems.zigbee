@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspIdConflictHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0x7C;
+    public static final int FRAME_ID = 0x7C;
 
     /**
      * The short id for which a conflict was detected.

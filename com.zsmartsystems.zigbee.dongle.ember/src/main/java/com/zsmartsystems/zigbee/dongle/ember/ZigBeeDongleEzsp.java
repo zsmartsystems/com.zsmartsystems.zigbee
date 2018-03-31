@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.dongle.ember;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -189,25 +190,25 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         EmberStackConfiguration stackConfigurer = new EmberStackConfiguration(ashHandler);
 
         Map<EzspConfigId, Integer> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
-        for (EzspConfigId config : configuration.keySet()) {
-            logger.debug("Configuration state {} = {}", config, configuration.get(config));
+        for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
+            logger.debug("Configuration state {} = {}", config.getKey(), config.getValue());
         }
 
         Map<EzspPolicyId, EzspDecisionId> policies = stackConfigurer.getPolicy(stackPolicies.keySet());
-        for (EzspPolicyId policy : policies.keySet()) {
-            logger.debug("Policy state {} = {}", policy, policies.get(policy));
+        for (Entry<EzspPolicyId, EzspDecisionId> policy : policies.entrySet()) {
+            logger.debug("Policy state {} = {}", policy.getKey(), policy.getValue());
         }
 
         stackConfigurer.setConfiguration(stackConfiguration);
         configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
-        for (EzspConfigId config : configuration.keySet()) {
-            logger.debug("Configuration state {} = {}", config, configuration.get(config));
+        for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
+            logger.debug("Configuration state {} = {}", config.getKey(), config.getValue());
         }
 
         stackConfigurer.setPolicy(stackPolicies);
         policies = stackConfigurer.getPolicy(stackPolicies.keySet());
-        for (EzspPolicyId policy : policies.keySet()) {
-            logger.debug("Policy state {} = {}", policy, policies.get(policy));
+        for (Entry<EzspPolicyId, EzspDecisionId> policy : policies.entrySet()) {
+            logger.debug("Policy state {} = {}", policy.getKey(), policy.getValue());
         }
 
         getNetworkParameters();

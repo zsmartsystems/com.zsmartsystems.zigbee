@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberGpAddr
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspDGpSendRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0xC6;
+    public static final int FRAME_ID = 0xC6;
 
     /**
      * The action to perform on the GP TX queue (true to add, false to remove).

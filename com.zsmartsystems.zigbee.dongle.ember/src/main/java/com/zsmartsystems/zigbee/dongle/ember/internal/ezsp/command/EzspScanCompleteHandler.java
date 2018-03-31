@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspScanCompleteHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0x1C;
+    public static final int FRAME_ID = 0x1C;
 
     /**
      * The channel on which the current error occurred. Undefined for the case of EMBER_SUCCESS.

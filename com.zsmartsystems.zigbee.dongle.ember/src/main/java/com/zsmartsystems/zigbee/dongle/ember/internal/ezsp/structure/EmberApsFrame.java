@@ -7,11 +7,10 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerializer;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class to implement the Ember Structure <b>EmberApsFrame</b>.

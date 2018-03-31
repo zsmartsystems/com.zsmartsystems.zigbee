@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspLookupEui64ByNodeIdResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x61;
+    public static final int FRAME_ID = 0x61;
 
     /**
      * EMBER_SUCCESS if the EUI64 was found, EMBER_ERR_FATAL if the EUI64 is not known.

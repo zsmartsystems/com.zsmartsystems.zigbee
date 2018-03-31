@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyDat
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspAddTransientLinkKeyRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0xAF;
+    public static final int FRAME_ID = 0xAF;
 
     /**
      * This is the IEEE address of the partner that the device successfully established a key with.

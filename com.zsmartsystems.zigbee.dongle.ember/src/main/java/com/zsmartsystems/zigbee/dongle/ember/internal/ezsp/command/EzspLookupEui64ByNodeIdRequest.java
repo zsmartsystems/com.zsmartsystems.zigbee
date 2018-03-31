@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspLookupEui64ByNodeIdRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x61;
+    public static final int FRAME_ID = 0x61;
 
     /**
      * The short ID of the node or EMBER_NULL_NODE_ID if the short ID is not known.

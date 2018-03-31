@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspStatus;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspAddEndpointResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x02;
+    public static final int FRAME_ID = 0x02;
 
     /**
      * EZSP_SUCCESS if the configuration value was changed, EZSP_ERROR_OUT_OF_MEMORY if the new

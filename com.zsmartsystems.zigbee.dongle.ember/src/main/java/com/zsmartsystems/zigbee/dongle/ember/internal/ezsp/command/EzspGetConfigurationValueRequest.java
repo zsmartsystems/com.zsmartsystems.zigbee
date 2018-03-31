@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspConfigI
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGetConfigurationValueRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x52;
+    public static final int FRAME_ID = 0x52;
 
     /**
      * Identifies which configuration value to read

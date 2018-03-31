@@ -21,7 +21,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspCounterRolloverHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0xF2;
+    public static final int FRAME_ID = 0xF2;
 
     /**
      * Type of Counter.

@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberConcen
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSetConcentratorRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x10;
+    public static final int FRAME_ID = 0x10;
 
     /**
      * If this bool is true the concentrator support is enabled. Otherwise is disabled. If this bool

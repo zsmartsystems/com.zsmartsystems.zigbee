@@ -32,6 +32,13 @@ public enum AshErrorCode {
     private final int errorCode;
     private final String description;
 
+    static {
+        codeHashMap = new HashMap<Integer, AshErrorCode>();
+        for (AshErrorCode value : values()) {
+            codeHashMap.put(value.getErrorCode(), value);
+        }
+    }
+
     AshErrorCode(int errorCode, String description) {
         this.errorCode = errorCode;
         this.description = description;
@@ -44,13 +51,6 @@ public enum AshErrorCode {
      * @return
      */
     public static AshErrorCode getAshErrorCode(int errorCode) {
-        if (codeHashMap == null) {
-            codeHashMap = new HashMap<Integer, AshErrorCode>();
-            for (AshErrorCode value : values()) {
-                codeHashMap.put(value.getErrorCode(), value);
-            }
-        }
-
         AshErrorCode error = codeHashMap.get(errorCode);
         if (error == null) {
             return UNKNOWN;

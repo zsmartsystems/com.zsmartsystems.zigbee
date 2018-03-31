@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGetChildDataRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x4A;
+    public static final int FRAME_ID = 0x4A;
 
     /**
      * The index of the child of interest in the child table. Possible indexes range from zero to

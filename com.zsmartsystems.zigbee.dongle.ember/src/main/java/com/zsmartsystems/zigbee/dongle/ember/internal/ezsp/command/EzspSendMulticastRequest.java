@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberApsFra
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSendMulticastRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x38;
+    public static final int FRAME_ID = 0x38;
 
     /**
      * The APS frame for the message. The multicast will be sent to the groupId in this frame.

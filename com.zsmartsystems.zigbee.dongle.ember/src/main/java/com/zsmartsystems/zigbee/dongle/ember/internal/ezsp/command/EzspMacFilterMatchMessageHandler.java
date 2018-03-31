@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberMacPas
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspMacFilterMatchMessageHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0x46;
+    public static final int FRAME_ID = 0x46;
 
     /**
      * The index of the filter that was matched.

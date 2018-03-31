@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyDat
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSetKeyTableEntryRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x72;
+    public static final int FRAME_ID = 0x72;
 
     /**
      * The index of the entry in the table to set.

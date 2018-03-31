@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberPowerM
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspMfglibSetPowerRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x8C;
+    public static final int FRAME_ID = 0x8C;
 
     /**
      * Power mode.

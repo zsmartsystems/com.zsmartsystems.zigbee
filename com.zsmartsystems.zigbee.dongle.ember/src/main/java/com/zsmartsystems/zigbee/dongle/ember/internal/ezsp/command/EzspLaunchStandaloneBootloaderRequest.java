@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspLaunchStandaloneBootloaderRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x8F;
+    public static final int FRAME_ID = 0x8F;
 
     /**
      * Controls the mode in which the standalone bootloader will run. See the app. note for full

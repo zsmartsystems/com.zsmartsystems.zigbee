@@ -21,7 +21,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspMfglibGetPowerResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x8D;
+    public static final int FRAME_ID = 0x8D;
 
     /**
      * Power in units of dBm. Refer to radio data sheet for valid range.

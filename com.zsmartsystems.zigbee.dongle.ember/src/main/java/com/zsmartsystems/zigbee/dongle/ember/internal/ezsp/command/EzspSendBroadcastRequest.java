@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberApsFra
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSendBroadcastRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x36;
+    public static final int FRAME_ID = 0x36;
 
     /**
      * The destination to which to send the broadcast. This must be one of the three ZigBee broadcast

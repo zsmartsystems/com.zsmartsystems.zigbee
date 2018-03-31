@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspPermitJoiningRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x22;
+    public static final int FRAME_ID = 0x22;
 
     /**
      * A value of 0x00 disables joining. A value of 0xFF enables joining. Any other value enables

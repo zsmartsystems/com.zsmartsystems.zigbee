@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspLookupNodeIdByEui64Response extends EzspFrameResponse {
-    public static int FRAME_ID = 0x60;
+    public static final int FRAME_ID = 0x60;
 
     /**
      * The short ID of the node or EMBER_NULL_NODE_ID if the short ID is not known.

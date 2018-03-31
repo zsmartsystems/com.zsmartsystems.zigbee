@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSetRadioChannelResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x9A;
+    public static final int FRAME_ID = 0x9A;
 
     /**
      * An EmberStatus value indicating the success or failure of the command.

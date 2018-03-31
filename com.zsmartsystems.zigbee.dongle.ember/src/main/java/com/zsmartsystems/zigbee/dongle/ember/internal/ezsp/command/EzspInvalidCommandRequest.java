@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerial
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspInvalidCommandRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x58;
+    public static final int FRAME_ID = 0x58;
 
     /**
      * Serialiser used to seialise to binary line data

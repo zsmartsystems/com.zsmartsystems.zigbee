@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSendReplyResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x39;
+    public static final int FRAME_ID = 0x39;
 
     /**
      * An EmberStatus value. EMBER_INVALID_CALL - The EZSP_UNICAST_REPLIES_POLICY is set to

@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspVersionResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x00;
+    public static final int FRAME_ID = 0x00;
 
     /**
      * The EZSP version the NCP is using

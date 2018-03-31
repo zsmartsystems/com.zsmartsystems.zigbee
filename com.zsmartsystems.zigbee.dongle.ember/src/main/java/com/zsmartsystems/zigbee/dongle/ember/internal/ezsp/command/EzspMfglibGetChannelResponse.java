@@ -21,7 +21,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspMfglibGetChannelResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x8B;
+    public static final int FRAME_ID = 0x8B;
 
     /**
      * The current channel.

@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspNetworkInitResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x17;
+    public static final int FRAME_ID = 0x17;
 
     /**
      * An EmberStatus value that indicates one of the following: successful initialization,

@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyDat
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspGpProxyTableProcessGpPairingRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0xC9;
+    public static final int FRAME_ID = 0xC9;
 
     /**
      * The options field of the GP Pairing command.

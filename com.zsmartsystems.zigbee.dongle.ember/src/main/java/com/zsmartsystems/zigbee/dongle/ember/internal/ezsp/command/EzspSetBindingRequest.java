@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberBindin
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspSetBindingRequest extends EzspFrameRequest {
-    public static int FRAME_ID = 0x2B;
+    public static final int FRAME_ID = 0x2B;
 
     /**
      * The index of a binding table entry.

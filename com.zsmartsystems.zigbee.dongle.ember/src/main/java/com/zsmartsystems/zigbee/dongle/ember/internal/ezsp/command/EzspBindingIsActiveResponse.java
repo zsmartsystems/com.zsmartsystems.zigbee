@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspBindingIsActiveResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x2E;
+    public static final int FRAME_ID = 0x2E;
 
     /**
      * True if the binding table entry is active, false otherwise.

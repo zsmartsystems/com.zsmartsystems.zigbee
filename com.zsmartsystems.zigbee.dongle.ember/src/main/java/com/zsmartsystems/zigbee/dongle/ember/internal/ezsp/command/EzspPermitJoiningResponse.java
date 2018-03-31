@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspPermitJoiningResponse extends EzspFrameResponse {
-    public static int FRAME_ID = 0x22;
+    public static final int FRAME_ID = 0x22;
 
     /**
      * An EmberStatus value indicating success or the reason for failure.

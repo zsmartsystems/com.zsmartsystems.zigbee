@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
  * @author Chris Jackson - Initial contribution of Java code generator
  */
 public class EzspEnergyScanResultHandler extends EzspFrameResponse {
-    public static int FRAME_ID = 0x48;
+    public static final int FRAME_ID = 0x48;
 
     /**
      * The 802.15.4 channel number that was scanned
