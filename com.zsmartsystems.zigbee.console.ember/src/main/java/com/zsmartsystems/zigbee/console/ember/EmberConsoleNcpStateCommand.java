@@ -26,7 +26,7 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
 
     @Override
     public String getDescription() {
-        return "Gets the NCP state";
+        return "Gets the NCP network state";
     }
 
     @Override

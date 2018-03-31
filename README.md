@@ -108,12 +108,55 @@ These provide minimal functionality and can be extended as required.
 # Console Application
 
 A console application is provided as part of the package. This application allows full use and testing of the framework. It can be used to test any new functionality without the added complexity of application level integration, or may be used as a stand-alone ZigBee configuration tool.
- 
+
+All commands implement the ```ZigBeeConsoleCommand``` interface, providing an easily extendible command system.
+
 The command handlers used in the console application are in the package ```com.zsmartsystems.zigbee.console```. This is separate from the main console application, and this allows the command handlers to be incorporated into other frameworks.
 
 Command handlers for commands specific to each dongle implementation are in the package ```com.zsmartsystems.zigbee.console.xxx``` (where xxx is the name of the dongle). These commands allow access to non standard API relating solely to each dongle.
  
 Command handlers take a set of arguments as provided by the user and will throw ```IllegalArgumentException``` if there are any errors with arguments, or ```IllegalStateException``` if there are any issues with the network state that prevent the command execution.
+
+## General Commands
+Note that the console is currently being refactored and this readme only documents the commands that have been migrated. For a full list of commands, use the _help_ command in the console.
+
+| Command         | Description                                           |
+|-----------------|-------------------------------------------------------|
+|join             |Enable or disable network join                         |
+|leave            |Remove a node from the network                         |
+|nodelist         |Lists the known nodes in the network                   |
+|node             |Provides detailed information about a node             |
+|endpoint         |Provides detailed information about an endpoint        |
+|info             |Get basic info about a device                          |
+|read             |Read an attribute                                      |
+|write            |Write an attribute                                     |
+|bind             |Binds a device to another device                       |
+|unbind           |Unbinds a device from another device                   |
+|bindtable        |Reads and displays the binding table from a node       |
+|attsupported     |Check what attributes are supported within a cluster   |
+|subscribe        |Subscribe to attribute reports                         |
+|unsubscribe      |Unsubscribe from attribute reports                     |
+|reportcfg        |Read the reporting configuration of an attribute       |
+
+
+## Ember NCP Commands
+The following commands are available if the transport layer is using the Silabs Ember NCP.
+
+| Command         | Description                                           |
+|-----------------|-------------------------------------------------------|
+|ncpchildren      |Gets the NCP child information                         |
+|ncpcounters      |Gets the NCP debug counters                            |
+|ncpstate         |Gets the NCP network state                             |
+|ncpversion       |Gets the NCP firmware version                          |
+|ncpnetworkparms  |Gets the current NCP network parameters                |
+|ncpsecuritystate |Gets the current NCP security state and configuration  |
+
+## Telegesis Commands
+The following commands are available if the transport layer is using the Telegesis dongle.
+
+| Command         | Description                                           |
+|-----------------|-------------------------------------------------------|
+|                 |                                                       |
 
 # Contributing
 
