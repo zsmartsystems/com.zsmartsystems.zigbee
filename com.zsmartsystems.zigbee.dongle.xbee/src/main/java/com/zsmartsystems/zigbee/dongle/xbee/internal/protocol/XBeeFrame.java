@@ -46,7 +46,7 @@ public class XBeeFrame {
      * Serialises the command. This should be the first method called when serialising a command. In addition to
      * serialising the command, it initialises internal variables used to properly create the command packet.
      *
-     * @param command
+     * @param command the command ID to serialize
      */
     protected void serializeCommand(int command) {
         length = 3;
@@ -187,7 +187,7 @@ public class XBeeFrame {
     /**
      * Serializes an {@link IeeeAddress}
      *
-     * @param address the {@link vIeeeAddress}
+     * @param address the {@link IeeeAddress}
      */
     protected void serializeIeeeAddress(IeeeAddress address) {
         for (int cnt = 7; cnt >= 0; cnt--) {
@@ -211,7 +211,7 @@ public class XBeeFrame {
     /**
      * Serializes an {@link ZigBeeKey}
      *
-     * @param key the {@link vIeeeAddress}
+     * @param key the {@link ZigBeeKey}
      */
     protected void serializeZigBeeKey(ZigBeeKey key) {
         for (int cnt = 0; cnt <= 15; cnt++) {
@@ -238,7 +238,7 @@ public class XBeeFrame {
     /**
      * Serializes a {@link TransmitOptions}
      *
-     * @param options
+     * @param options the list of {@link TransmitOptions} to serialize
      */
     protected void serializeTransmitOptions(List<TransmitOptions> options) {
         int value = 0;
@@ -246,15 +246,6 @@ public class XBeeFrame {
             value |= option.getKey();
         }
         buffer[length++] = value;
-    }
-
-    /**
-     * Serializes a {@link ReceiveOptions}
-     *
-     * @param key
-     */
-    protected void serializeReceiveOptions(ReceiveOptions key) {
-        // serializeUpperCaseString(key.toString());
     }
 
     /**
@@ -281,7 +272,7 @@ public class XBeeFrame {
     /**
      * Serializes a {@link EncryptionOptions}
      *
-     * @param options
+     * @param options list of {@link EncryptionOptions} to serialize
      */
     protected void serializeEncryptionOptions(List<EncryptionOptions> options) {
         int value = 0;

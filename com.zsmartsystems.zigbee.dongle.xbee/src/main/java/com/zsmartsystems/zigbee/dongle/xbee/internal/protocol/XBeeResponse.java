@@ -29,6 +29,8 @@ public interface XBeeResponse {
      * <p>
      * A prompt handler will always process the data and should always return true since it can not handle multiple
      * responses.
+     * 
+     * @param data the data to deserialize
      */
     public void deserialize(int[] data);
 }
