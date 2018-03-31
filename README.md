@@ -14,7 +14,7 @@ This project aims to provide a ZigBee Cluster Library written in Java. Packages 
 
 The library supports the Texas Instruments ZNP protocol over a serial interface.
 
-### Silicon Labs Ember EM35x
+### Silicon Labs Ember EM35x / EFR32
 
 The library supports the Silicon Labs EZSP protocol using ASH over a serial interface.
 
@@ -48,6 +48,7 @@ The following table provides a summary of some of the dongles / chipsets that ar
 |-----------------------|-----------------|-------------|--------------|----------|
 | Xbee XU-Z11           | Yes             | -90dBm      | +4.5dBm      | Internal |
 | EM358                 | Yes (EZSP)      | -100dBm     | +8.0dBm      | Internal |
+| EFR32                 | Yes (EZSP)      |             |              |          | 
 | **EM358LR**           | Yes (EZSP)      | -103dBm     | **+20.0dBm** | Internal |
 | MGM111                | Yes (EZSP)      | -99dBm      | +10dBm       | Internal |
 | RaspBee               | Yes (CONBEE)    | **-105dBm** | +8.7dBm      | Internal |
@@ -74,11 +75,16 @@ The framework includes functional applications to support higher layer functiona
 
 These provide minimal functionality and can be extended as required.
 
+# Console Application
+
+A console application is provided as part of the package. This application allows full use and testing of the framework.
+
 # Contributing
 
 * Code style should use [standard naming conventions](https://www.thoughtco.com/using-java-naming-conventions-2034199)
 * Codacy static testing should pass.
-* Please consider raising issues before working on an enhancement to provide some coordination.
+* Run the findBugs goal and check that you have not introduced any bugs into your code. FindBugs reports are generated with the ```mvn site``` goal, and reports are located in the ```target/site/findbugs.html``` file.
+* Please consider raising issues before working on an enhancement to provide some coordination with other contributors.
 * Keep PRs short - try and keep a single PR per enhancement. This makes tracking and reviewing easier.
 * Contributions must be supported with tests.
 * Code must be formatted using the Eclipse code formatter provided in the project.
@@ -92,6 +98,7 @@ These provide minimal functionality and can be extended as required.
 * To perform a new release: ```mvn release:perform```
 * To bump the version: ```mvn release:update-versions```
 * To format the license header: ```mvn license:format```
+* To produce the findbugs (etc) reports: ```mvn site```
 
 # License
 
