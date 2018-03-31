@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T11:42:15Z")
 public enum ZigBeeProfileType {
     UNKNOWN(-1, "Unknown Profile"),
     HOME_AUTOMATION(0x0104, "Home Automation"),
@@ -39,6 +39,13 @@ public enum ZigBeeProfileType {
      * Map containing the link of profile type value to the enum
      */
     private static Map<Integer, ZigBeeProfileType> map = null;
+
+    static {
+        map = new HashMap<Integer, ZigBeeProfileType>();
+        for (ZigBeeProfileType profileType : values()) {
+            map.put(profileType.profileId, profileType);
+        }
+    }
 
     ZigBeeProfileType(final int profileId, final String label) {
         this.profileId = profileId;
@@ -70,13 +77,6 @@ public enum ZigBeeProfileType {
      * @return {@link ZigBeeProfileType} or {@link #UNKNOWN} if the value could not be converted
      */
     public static ZigBeeProfileType getProfileType(int profileTypeValue) {
-        if (map == null) {
-            map = new HashMap<Integer, ZigBeeProfileType>();
-            for (ZigBeeProfileType profileType : values()) {
-                map.put(profileType.profileId, profileType);
-            }
-        }
-
         if (map.get(profileTypeValue) == null) {
             return UNKNOWN;
         }

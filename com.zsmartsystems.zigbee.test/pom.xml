@@ -34,6 +34,11 @@
         </dependency>
         <dependency>
             <groupId>com.zsmartsystems.zigbee</groupId>
+            <artifactId>com.zsmartsystems.zigbee.dongle.xbee</artifactId>
+            <version>1.0.8-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zsmartsystems.zigbee</groupId>
             <artifactId>com.zsmartsystems.zigbee.dongle.conbee</artifactId>
             <version>1.0.8-SNAPSHOT</version>
         </dependency>

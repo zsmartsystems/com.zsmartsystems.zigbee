@@ -228,7 +228,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param networkStateSerializer the {@link ZigBeeNetworkStateSerializer}
      */
     public void setNetworkStateSerializer(ZigBeeNetworkStateSerializer networkStateSerializer) {
-        this.networkStateSerializer = networkStateSerializer;
+        synchronized (this) {
+            this.networkStateSerializer = networkStateSerializer;
+        }
     }
 
     /**
@@ -268,8 +270,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public ZigBeeInitializeResponse initialize() {
         ZigBeeInitializeResponse transportResponse = transport.initialize();
 
-        if (networkStateSerializer != null) {
-            networkStateSerializer.deserialize(this);
+        synchronized (this) {
+            if (networkStateSerializer != null) {
+                networkStateSerializer.deserialize(this);
+            }
         }
 
         IeeeAddress address = transport.getIeeeAddress();
@@ -413,8 +417,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public void shutdown() {
         executorService.shutdownNow();
 
-        if (networkStateSerializer != null) {
-            networkStateSerializer.serialize(this);
+        synchronized (this) {
+            if (networkStateSerializer != null) {
+                networkStateSerializer.serialize(this);
+            }
         }
 
         networkDiscoverer.shutdown();
@@ -795,11 +801,22 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                     }
                 });
             }
-        }
 
-        if (state == ZigBeeTransportState.ONLINE) {
-            for (ZigBeeNode node : networkNodes.values()) {
-                node.startDiscovery();
+            if (state == ZigBeeTransportState.ONLINE) {
+                for (final ZigBeeNode node : networkNodes.values()) {
+                    for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
+                        NotificationService.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.nodeAdded(node);
+                            }
+                        });
+                    }
+                }
+
+                for (ZigBeeNode node : networkNodes.values()) {
+                    node.startDiscovery();
+                }
             }
         }
     }
@@ -1168,6 +1185,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             networkNodes.put(node.getIeeeAddress(), node);
         }
 
+        if (networkState != ZigBeeTransportState.ONLINE) {
+            return;
+        }
+
         synchronized (this) {
             for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
                 NotificationService.execute(new Runnable() {
@@ -1183,9 +1204,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             }
         }
 
-        if (networkState == ZigBeeTransportState.ONLINE) {
-            node.startDiscovery();
-        }
+        node.startDiscovery();
     }
 
     /**
