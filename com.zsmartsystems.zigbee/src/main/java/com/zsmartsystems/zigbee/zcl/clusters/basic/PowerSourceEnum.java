@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
 public enum PowerSourceEnum {
     UNKNOWN(0x0000),
     MAINS_SINGLE_PHASE(0x0001),
@@ -34,6 +34,13 @@ public enum PowerSourceEnum {
      */
     private static Map<Integer, PowerSourceEnum> idMap;
 
+    static {
+        idMap = new HashMap<Integer, PowerSourceEnum>();
+        for (PowerSourceEnum enumValue : values()) {
+            idMap.put(enumValue.key, enumValue);
+        }
+    }
+
     private final int key;
 
     PowerSourceEnum(final int key) {
@@ -45,12 +52,6 @@ public enum PowerSourceEnum {
     }
 
     public static PowerSourceEnum getByValue(final int value) {
-        if (idMap == null) {
-            idMap = new HashMap<Integer, PowerSourceEnum>();
-            for (PowerSourceEnum enumValue : values()) {
-                idMap.put(enumValue.key, enumValue);
-            }
-        }
         return idMap.get(value);
     }
 }

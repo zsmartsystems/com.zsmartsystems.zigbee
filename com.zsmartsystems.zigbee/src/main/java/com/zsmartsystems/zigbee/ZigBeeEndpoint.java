@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -99,10 +100,6 @@ public class ZigBeeEndpoint {
         this.networkManager = networkManager;
         this.node = node;
         this.endpointId = endpoint;
-    }
-
-    @Override
-    protected void finalize() {
     }
 
     /**
@@ -281,11 +278,13 @@ public class ZigBeeEndpoint {
         // Create a cluster class
         ZclCluster cluster = null;
         Constructor<? extends ZclCluster> constructor;
+        // try {
         try {
             constructor = clusterType.getClusterClass().getConstructor(ZigBeeNetworkManager.class,
                     ZigBeeEndpoint.class);
             cluster = constructor.newInstance(networkManager, this);
-        } catch (Exception e) {
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException e) {
             logger.debug("{}: Error instantiating cluster {}", getEndpointAddress(), clusterType);
             return null;
         }

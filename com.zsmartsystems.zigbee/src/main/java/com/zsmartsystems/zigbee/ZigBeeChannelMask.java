@@ -19,11 +19,11 @@ public class ZigBeeChannelMask {
     /**
      * All currently defined ZigBee channels in all bands
      */
-    public static int CHANNEL_MASK_ALL = 0x07FFFFFF;
+    public final static int CHANNEL_MASK_ALL = 0x07FFFFFF;
     /**
      * All currently defined ZigBee channels in the 2.4GHz band
      */
-    public static int CHANNEL_MASK_2GHZ = 0x07FFF800;
+    public final static int CHANNEL_MASK_2GHZ = 0x07FFF800;
 
     /**
      * The channel mask

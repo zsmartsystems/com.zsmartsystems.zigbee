@@ -706,7 +706,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         tasks.add(NodeDiscoveryTask.NEIGHBORS);
 
         if (nodeDescriptor.getLogicalType() != LogicalType.END_DEVICE) {
-            // tasks.add(NodeDiscoveryTask.ROUTES);
+            tasks.add(NodeDiscoveryTask.ROUTES);
         }
 
         serviceDiscoverer.startDiscovery(tasks);

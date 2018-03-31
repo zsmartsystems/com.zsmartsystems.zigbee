@@ -378,7 +378,7 @@ public class ZigBeeOtaServer implements ZigBeeApplication {
      *
      * @param transferTimeoutPeriod the timeout period in milliseconds
      */
-    public void setTransferTimeoutPeriod(long transferTimeoutPeriod) {
+    public synchronized void setTransferTimeoutPeriod(long transferTimeoutPeriod) {
         this.transferTimeoutPeriod = transferTimeoutPeriod;
     }
 

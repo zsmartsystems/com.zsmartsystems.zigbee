@@ -45,6 +45,14 @@ public enum ZigBeeStackType {
      */
     private static Map<Integer, ZigBeeStackType> map = null;
 
+    static {
+        map = new HashMap<Integer, ZigBeeStackType>();
+        for (ZigBeeStackType stackType : values()) {
+            map.put(stackType.stackId, stackType);
+        }
+
+    }
+
     private ZigBeeStackType(int stackId) {
         this.stackId = stackId;
     }
@@ -56,13 +64,6 @@ public enum ZigBeeStackType {
      * @return {@link ZigBeeStackType} or {@link #UNKNOWN} if the value could not be converted
      */
     public static ZigBeeStackType getStackType(int stackTypeValue) {
-        if (map == null) {
-            map = new HashMap<Integer, ZigBeeStackType>();
-            for (ZigBeeStackType stackType : values()) {
-                map.put(stackType.stackId, stackType);
-            }
-
-        }
         if (map.get(stackTypeValue) == null) {
             return UNKNOWN;
         }

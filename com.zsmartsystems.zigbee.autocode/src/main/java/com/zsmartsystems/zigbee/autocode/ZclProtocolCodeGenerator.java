@@ -1964,13 +1964,18 @@ public class ZclProtocolCodeGenerator {
                 + " type to facilitate lookup by value.");
         out.println("     */");
         out.println("    private static Map<Integer, " + className + "> idMap;");
-
+        out.println();
+        out.println("    static {");
+        out.println("        idMap = new HashMap<Integer, " + className + ">();");
+        out.println("        for (" + className + " enumValue : values()) {");
+        out.println("            idMap.put(enumValue.key, enumValue);");
+        out.println("        }");
+        out.println("    }");
         out.println();
         out.println("    private final int key;");
         out.println();
         out.println("    " + className + "(final int key) {");
         out.println("        this.key = key;");
-        // out.println(" this.label = label;");
         out.println("    }");
         out.println();
 
@@ -1979,12 +1984,6 @@ public class ZclProtocolCodeGenerator {
         out.println("    }");
         out.println();
         out.println("    public static " + className + " getByValue(final int value) {");
-        out.println("        if (idMap == null) {");
-        out.println("            idMap = new HashMap<Integer, " + className + ">();");
-        out.println("            for (" + className + " enumValue : values()) {");
-        out.println("                idMap.put(enumValue.key, enumValue);");
-        out.println("            }");
-        out.println("        }");
         out.println("        return idMap.get(value);");
         out.println("    }");
         out.println("}");

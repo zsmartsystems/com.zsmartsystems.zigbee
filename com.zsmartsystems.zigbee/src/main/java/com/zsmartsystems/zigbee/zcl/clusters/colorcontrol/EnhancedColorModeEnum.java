@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
 public enum EnhancedColorModeEnum {
     CURRENTHUE_AND_CURRENTSATURATION(0x0000),
     CURRENTX_AND_CURRENTY(0x0001),
@@ -29,6 +29,13 @@ public enum EnhancedColorModeEnum {
      * A mapping between the integer code and its corresponding EnhancedColorModeEnum type to facilitate lookup by value.
      */
     private static Map<Integer, EnhancedColorModeEnum> idMap;
+
+    static {
+        idMap = new HashMap<Integer, EnhancedColorModeEnum>();
+        for (EnhancedColorModeEnum enumValue : values()) {
+            idMap.put(enumValue.key, enumValue);
+        }
+    }
 
     private final int key;
 
@@ -41,12 +48,6 @@ public enum EnhancedColorModeEnum {
     }
 
     public static EnhancedColorModeEnum getByValue(final int value) {
-        if (idMap == null) {
-            idMap = new HashMap<Integer, EnhancedColorModeEnum>();
-            for (EnhancedColorModeEnum enumValue : values()) {
-                idMap.put(enumValue.key, enumValue);
-            }
-        }
         return idMap.get(value);
     }
 }

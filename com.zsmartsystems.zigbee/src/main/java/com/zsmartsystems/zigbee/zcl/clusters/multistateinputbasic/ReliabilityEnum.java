@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
 public enum ReliabilityEnum {
     NO_FAULT_DETECTED(0x0000),
     OVER_RANGE(0x0002),
@@ -36,6 +36,13 @@ public enum ReliabilityEnum {
      */
     private static Map<Integer, ReliabilityEnum> idMap;
 
+    static {
+        idMap = new HashMap<Integer, ReliabilityEnum>();
+        for (ReliabilityEnum enumValue : values()) {
+            idMap.put(enumValue.key, enumValue);
+        }
+    }
+
     private final int key;
 
     ReliabilityEnum(final int key) {
@@ -47,12 +54,6 @@ public enum ReliabilityEnum {
     }
 
     public static ReliabilityEnum getByValue(final int value) {
-        if (idMap == null) {
-            idMap = new HashMap<Integer, ReliabilityEnum>();
-            for (ReliabilityEnum enumValue : values()) {
-                idMap.put(enumValue.key, enumValue);
-            }
-        }
         return idMap.get(value);
     }
 }

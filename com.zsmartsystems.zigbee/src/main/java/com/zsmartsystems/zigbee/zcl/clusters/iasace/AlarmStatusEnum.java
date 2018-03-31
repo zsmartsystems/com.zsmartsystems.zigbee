@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T16:35:56Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
 public enum AlarmStatusEnum {
     NO_ALARM(0x0000),
     BURGLAR(0x0001),
@@ -34,6 +34,13 @@ public enum AlarmStatusEnum {
      */
     private static Map<Integer, AlarmStatusEnum> idMap;
 
+    static {
+        idMap = new HashMap<Integer, AlarmStatusEnum>();
+        for (AlarmStatusEnum enumValue : values()) {
+            idMap.put(enumValue.key, enumValue);
+        }
+    }
+
     private final int key;
 
     AlarmStatusEnum(final int key) {
@@ -45,12 +52,6 @@ public enum AlarmStatusEnum {
     }
 
     public static AlarmStatusEnum getByValue(final int value) {
-        if (idMap == null) {
-            idMap = new HashMap<Integer, AlarmStatusEnum>();
-            for (AlarmStatusEnum enumValue : values()) {
-                idMap.put(enumValue.key, enumValue);
-            }
-        }
         return idMap.get(value);
     }
 }
