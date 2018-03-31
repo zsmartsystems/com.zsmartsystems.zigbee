@@ -123,7 +123,7 @@ public class CommandResult {
             final ZclStatus status = ZclStatus.getStatus((byte) getStatusCode().intValue());
             builder.append("ERROR (");
             builder.append(status.name());
-            builder.append(String.format(",0x02), ", status.getId()));
+            builder.append(String.format(",0x%02X), ", status.getId()));
             builder.append(response);
         }
         builder.append(']');

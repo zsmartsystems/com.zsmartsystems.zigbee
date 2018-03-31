@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
 public enum PhysicalEnvironmentEnum {
     UNKNOWN(0x0000),
     ATRIUM(0x0001),
@@ -33,6 +33,13 @@ public enum PhysicalEnvironmentEnum {
      */
     private static Map<Integer, PhysicalEnvironmentEnum> idMap;
 
+    static {
+        idMap = new HashMap<Integer, PhysicalEnvironmentEnum>();
+        for (PhysicalEnvironmentEnum enumValue : values()) {
+            idMap.put(enumValue.key, enumValue);
+        }
+    }
+
     private final int key;
 
     PhysicalEnvironmentEnum(final int key) {
@@ -44,12 +51,6 @@ public enum PhysicalEnvironmentEnum {
     }
 
     public static PhysicalEnvironmentEnum getByValue(final int value) {
-        if (idMap == null) {
-            idMap = new HashMap<Integer, PhysicalEnvironmentEnum>();
-            for (PhysicalEnvironmentEnum enumValue : values()) {
-                idMap.put(enumValue.key, enumValue);
-            }
-        }
         return idMap.get(value);
     }
 }

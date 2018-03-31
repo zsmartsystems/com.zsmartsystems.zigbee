@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
 public enum ZoneTypeEnum {
     STANDARD_CIE(0x0000),
     MOTION_SENSOR(0x000D),
@@ -40,6 +40,13 @@ public enum ZoneTypeEnum {
      */
     private static Map<Integer, ZoneTypeEnum> idMap;
 
+    static {
+        idMap = new HashMap<Integer, ZoneTypeEnum>();
+        for (ZoneTypeEnum enumValue : values()) {
+            idMap.put(enumValue.key, enumValue);
+        }
+    }
+
     private final int key;
 
     ZoneTypeEnum(final int key) {
@@ -51,12 +58,6 @@ public enum ZoneTypeEnum {
     }
 
     public static ZoneTypeEnum getByValue(final int value) {
-        if (idMap == null) {
-            idMap = new HashMap<Integer, ZoneTypeEnum>();
-            for (ZoneTypeEnum enumValue : values()) {
-                idMap.put(enumValue.key, enumValue);
-            }
-        }
         return idMap.get(value);
     }
 }

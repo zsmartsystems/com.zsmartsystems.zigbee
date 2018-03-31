@@ -58,8 +58,9 @@ public enum ZclStatus {
             "A manufacturer specific unicast, ZCL specific command was "
                     + "received with an unknown manufacturer code, or the manufacturer code "
                     + "was recognized but the command is not supported."),
-    INVALID_FIELD(0x85, "At least one field of the command contains an incorrect value, "
-            + "according to the specification the device is implemented to."),
+    INVALID_FIELD(0x85,
+            "At least one field of the command contains an incorrect value, "
+                    + "according to the specification the device is implemented to."),
     UNSUPPORTED_ATTRIBUTE(0x86, "The specified attribute does not exist on the device."),
     INVALID_VALUE(0x87,
             "Out of range error, or set to a reserved value. Attribute keeps its old value. "
@@ -90,6 +91,13 @@ public enum ZclStatus {
     private final String description;
     private static Map<Integer, ZclStatus> map = null;
 
+    static {
+        map = new HashMap<Integer, ZclStatus>();
+        for (ZclStatus status : values()) {
+            map.put(status.statusId, status);
+        }
+    }
+
     private ZclStatus(int statusId, String description) {
         this.statusId = statusId;
         this.description = description;
@@ -102,13 +110,6 @@ public enum ZclStatus {
      * @return {@link ZclStatus} or {@link #UNKNOWN}
      */
     public static ZclStatus getStatus(int statusValue) {
-        if (map == null) {
-            map = new HashMap<Integer, ZclStatus>();
-            for (ZclStatus status : values()) {
-                map.put(status.statusId, status);
-            }
-
-        }
         if (map.get(statusValue) == null) {
             return UNKNOWN;
         }

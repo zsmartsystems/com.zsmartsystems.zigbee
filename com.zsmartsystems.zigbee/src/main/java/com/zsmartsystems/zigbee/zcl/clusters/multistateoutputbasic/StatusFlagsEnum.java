@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
 public enum StatusFlagsEnum {
     IN_ALARM(0x0001),
     FAULT(0x0002),
@@ -30,6 +30,13 @@ public enum StatusFlagsEnum {
      * A mapping between the integer code and its corresponding StatusFlagsEnum type to facilitate lookup by value.
      */
     private static Map<Integer, StatusFlagsEnum> idMap;
+
+    static {
+        idMap = new HashMap<Integer, StatusFlagsEnum>();
+        for (StatusFlagsEnum enumValue : values()) {
+            idMap.put(enumValue.key, enumValue);
+        }
+    }
 
     private final int key;
 
@@ -42,12 +49,6 @@ public enum StatusFlagsEnum {
     }
 
     public static StatusFlagsEnum getByValue(final int value) {
-        if (idMap == null) {
-            idMap = new HashMap<Integer, StatusFlagsEnum>();
-            for (StatusFlagsEnum enumValue : values()) {
-                idMap.put(enumValue.key, enumValue);
-            }
-        }
         return idMap.get(value);
     }
 }

@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
 public enum SwitchTypeEnum {
     TOGGLE(0x0000),
     MOMENTARY(0x0001),
@@ -29,6 +29,13 @@ public enum SwitchTypeEnum {
      * A mapping between the integer code and its corresponding SwitchTypeEnum type to facilitate lookup by value.
      */
     private static Map<Integer, SwitchTypeEnum> idMap;
+
+    static {
+        idMap = new HashMap<Integer, SwitchTypeEnum>();
+        for (SwitchTypeEnum enumValue : values()) {
+            idMap.put(enumValue.key, enumValue);
+        }
+    }
 
     private final int key;
 
@@ -41,12 +48,6 @@ public enum SwitchTypeEnum {
     }
 
     public static SwitchTypeEnum getByValue(final int value) {
-        if (idMap == null) {
-            idMap = new HashMap<Integer, SwitchTypeEnum>();
-            for (SwitchTypeEnum enumValue : values()) {
-                idMap.put(enumValue.key, enumValue);
-            }
-        }
         return idMap.get(value);
     }
 }

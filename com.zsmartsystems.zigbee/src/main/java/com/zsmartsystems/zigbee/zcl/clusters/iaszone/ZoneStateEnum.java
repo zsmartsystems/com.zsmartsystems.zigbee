@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
 public enum ZoneStateEnum {
     NOT_ENROLLED(0x0000),
     ENROLLED(0x0001);
@@ -28,6 +28,13 @@ public enum ZoneStateEnum {
      * A mapping between the integer code and its corresponding ZoneStateEnum type to facilitate lookup by value.
      */
     private static Map<Integer, ZoneStateEnum> idMap;
+
+    static {
+        idMap = new HashMap<Integer, ZoneStateEnum>();
+        for (ZoneStateEnum enumValue : values()) {
+            idMap.put(enumValue.key, enumValue);
+        }
+    }
 
     private final int key;
 
@@ -40,12 +47,6 @@ public enum ZoneStateEnum {
     }
 
     public static ZoneStateEnum getByValue(final int value) {
-        if (idMap == null) {
-            idMap = new HashMap<Integer, ZoneStateEnum>();
-            for (ZoneStateEnum enumValue : values()) {
-                idMap.put(enumValue.key, enumValue);
-            }
-        }
         return idMap.get(value);
     }
 }

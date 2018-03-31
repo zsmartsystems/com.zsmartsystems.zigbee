@@ -86,19 +86,19 @@ public enum ZdoStatus {
     private final String description;
     private static Map<Integer, ZdoStatus> map = null;
 
+    static {
+        map = new HashMap<Integer, ZdoStatus>();
+        for (ZdoStatus s : values()) {
+            map.put(s.id, s);
+        }
+    }
+
     private ZdoStatus(int id, String description) {
         this.id = id;
         this.description = description;
     }
 
     public static ZdoStatus getStatus(int b) {
-        if (map == null) {
-            map = new HashMap<Integer, ZdoStatus>();
-            for (ZdoStatus s : values()) {
-                map.put(s.id, s);
-            }
-
-        }
         if (map.get(b) == null) {
             return UNKNOWN;
         }

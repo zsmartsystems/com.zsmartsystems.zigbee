@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T16:35:56Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
 public enum BypassResultEnum {
     ZONE_BYPASSED(0x0000),
     ZONE_NOT_BYPASSED(0x0001),
@@ -33,6 +33,13 @@ public enum BypassResultEnum {
      */
     private static Map<Integer, BypassResultEnum> idMap;
 
+    static {
+        idMap = new HashMap<Integer, BypassResultEnum>();
+        for (BypassResultEnum enumValue : values()) {
+            idMap.put(enumValue.key, enumValue);
+        }
+    }
+
     private final int key;
 
     BypassResultEnum(final int key) {
@@ -44,12 +51,6 @@ public enum BypassResultEnum {
     }
 
     public static BypassResultEnum getByValue(final int value) {
-        if (idMap == null) {
-            idMap = new HashMap<Integer, BypassResultEnum>();
-            for (BypassResultEnum enumValue : values()) {
-                idMap.put(enumValue.key, enumValue);
-            }
-        }
         return idMap.get(value);
     }
 }

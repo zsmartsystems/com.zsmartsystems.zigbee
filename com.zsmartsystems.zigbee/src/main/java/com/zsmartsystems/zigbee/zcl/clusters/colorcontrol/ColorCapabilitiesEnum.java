@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
 public enum ColorCapabilitiesEnum {
     HUE_AND_SATURATION(0x0001),
     ENHANCED_HUE(0x0002),
@@ -32,6 +32,13 @@ public enum ColorCapabilitiesEnum {
      */
     private static Map<Integer, ColorCapabilitiesEnum> idMap;
 
+    static {
+        idMap = new HashMap<Integer, ColorCapabilitiesEnum>();
+        for (ColorCapabilitiesEnum enumValue : values()) {
+            idMap.put(enumValue.key, enumValue);
+        }
+    }
+
     private final int key;
 
     ColorCapabilitiesEnum(final int key) {
@@ -43,12 +50,6 @@ public enum ColorCapabilitiesEnum {
     }
 
     public static ColorCapabilitiesEnum getByValue(final int value) {
-        if (idMap == null) {
-            idMap = new HashMap<Integer, ColorCapabilitiesEnum>();
-            for (ColorCapabilitiesEnum enumValue : values()) {
-                idMap.put(enumValue.key, enumValue);
-            }
-        }
         return idMap.get(value);
     }
 }

@@ -38,6 +38,13 @@ public enum ZigBeeOtaTagType {
     private final int tagId;
     private static Map<Integer, ZigBeeOtaTagType> map = null;
 
+    static {
+        map = new HashMap<Integer, ZigBeeOtaTagType>();
+        for (ZigBeeOtaTagType tagType : values()) {
+            map.put(tagType.tagId, tagType);
+        }
+    }
+
     private ZigBeeOtaTagType(int tagId) {
         this.tagId = tagId;
     }
@@ -49,13 +56,6 @@ public enum ZigBeeOtaTagType {
      * @return the {@link ZigBeeOtaTagType} or {@link #UNKNOWN}
      */
     public static ZigBeeOtaTagType getTagType(int tagTypeValue) {
-        if (map == null) {
-            map = new HashMap<Integer, ZigBeeOtaTagType>();
-            for (ZigBeeOtaTagType tagType : values()) {
-                map.put(tagType.tagId, tagType);
-            }
-
-        }
         if (map.get(tagTypeValue) == null) {
             return UNKNOWN;
         }

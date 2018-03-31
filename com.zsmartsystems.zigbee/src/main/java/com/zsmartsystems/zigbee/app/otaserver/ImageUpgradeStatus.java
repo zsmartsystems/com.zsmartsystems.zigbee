@@ -79,6 +79,13 @@ public enum ImageUpgradeStatus {
      */
     private static Map<Integer, ImageUpgradeStatus> map = null;
 
+    static {
+        map = new HashMap<Integer, ImageUpgradeStatus>();
+        for (ImageUpgradeStatus stackType : values()) {
+            map.put(stackType.statusId, stackType);
+        }
+    }
+
     private ImageUpgradeStatus(int stackId) {
         this.statusId = stackId;
     }
@@ -90,13 +97,6 @@ public enum ImageUpgradeStatus {
      * @return {@link ImageUpgradeStatus} or {@link #UNKNOWN} if the value could not be converted
      */
     public static ImageUpgradeStatus getStatus(int statusValue) {
-        if (map == null) {
-            map = new HashMap<Integer, ImageUpgradeStatus>();
-            for (ImageUpgradeStatus stackType : values()) {
-                map.put(stackType.statusId, stackType);
-            }
-
-        }
         if (map.get(statusValue) == null) {
             return UNKNOWN;
         }
