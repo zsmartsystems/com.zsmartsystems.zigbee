@@ -673,8 +673,8 @@ public class AshFrameHandler {
                 }
 
                 // response = request;
-                complete = true;
                 synchronized (this) {
+                    complete = true;
                     notify();
                 }
 

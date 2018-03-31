@@ -496,8 +496,8 @@ public class TelegesisFrameHandler {
                 }
 
                 // response = request;
-                complete = true;
                 synchronized (this) {
+                    complete = true;
                     notify();
                 }
 
@@ -571,8 +571,8 @@ public class TelegesisFrameHandler {
 
                 receivedEvent = event;
 
-                complete = true;
                 synchronized (this) {
+                    complete = true;
                     notify();
                 }
             }

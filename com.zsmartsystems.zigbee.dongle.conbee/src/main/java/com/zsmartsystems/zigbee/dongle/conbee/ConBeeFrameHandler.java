@@ -436,8 +436,8 @@ public class ConBeeFrameHandler {
                 }
 
                 // response = request;
-                complete = true;
                 synchronized (this) {
+                    complete = true;
                     notify();
                 }
 
