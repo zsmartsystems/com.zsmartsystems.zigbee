@@ -572,6 +572,15 @@ public class ZclProtocolCodeGenerator {
         out.println("     */");
         out.println("    private static Map<Integer, ZigBeeProfileType> map = null;");
         out.println();
+
+        out.println("    static {");
+        out.println("        map = new HashMap<Integer, ZigBeeProfileType>();");
+        out.println("        for (" + className + " profileType : values()) {");
+        out.println("            map.put(profileType.profileId, profileType);");
+        out.println("        }");
+        out.println("    }");
+        out.println();
+
         out.println("    " + className + "(final int profileId, final String label) {");
         out.println("        this.profileId = profileId;");
         out.println("        this.label = label;");
@@ -603,13 +612,6 @@ public class ZclProtocolCodeGenerator {
         out.println("     * @return {@link " + className + "} or {@link #UNKNOWN} if the value could not be converted");
         out.println("     */");
         out.println("    public static " + className + " getProfileType(int profileTypeValue) {");
-        out.println("        if (map == null) {");
-        out.println("            map = new HashMap<Integer, ZigBeeProfileType>();");
-        out.println("            for (" + className + " profileType : values()) {");
-        out.println("                map.put(profileType.profileId, profileType);");
-        out.println("            }");
-        out.println("        }");
-        out.println();
         out.println("        if (map.get(profileTypeValue) == null) {");
         out.println("            return UNKNOWN;");
         out.println("        }");
