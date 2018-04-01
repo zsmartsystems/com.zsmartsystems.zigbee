@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
+import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
@@ -23,6 +24,10 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
  *
  */
 public class ZigBeeConsoleReportingUnsubscribeCommand extends ZigBeeConsoleAbstractCommand {
+    @Override
+    public String getCommand() {
+        return "unsubscribe";
+    }
 
     @Override
     public String getDescription() {
@@ -31,7 +36,7 @@ public class ZigBeeConsoleReportingUnsubscribeCommand extends ZigBeeConsoleAbstr
 
     @Override
     public String getSyntax() {
-        return "unsubscribe ENDPOINT IN|OUT CLUSTER ATTRIBUTE";
+        return "ENDPOINT IN|OUT CLUSTER ATTRIBUTE";
     }
 
     @Override
@@ -40,15 +45,14 @@ public class ZigBeeConsoleReportingUnsubscribeCommand extends ZigBeeConsoleAbstr
     }
 
     @Override
-    public boolean process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) throws Exception {
+    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
+            throws IllegalArgumentException, InterruptedException, ExecutionException {
         if (args.length != 6) {
-            return false;
+            throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
         final int clusterId = parseCluster(args[3]);
-        final int attributeId = parseAttribute(args[4]);
-
         final ZclCluster cluster;
         final String direction = args[2].toUpperCase();
         if ("IN".equals(direction)) {
@@ -59,6 +63,7 @@ public class ZigBeeConsoleReportingUnsubscribeCommand extends ZigBeeConsoleAbstr
             throw new IllegalArgumentException("Cluster direction must be IN or OUT");
         }
 
+        final int attributeId = parseAttribute(args[4]);
         final ZclAttribute attribute = cluster.getAttribute(attributeId);
 
         final CommandResult result = cluster.setReporting(attribute, 0, 0xFFFF, null).get();
@@ -70,10 +75,8 @@ public class ZigBeeConsoleReportingUnsubscribeCommand extends ZigBeeConsoleAbstr
             } else {
                 out.println("Attribute value configure reporting error: " + statusCode);
             }
-            return true;
         } else {
             out.println("Error executing command: " + result);
-            return true;
         }
     }
 }

@@ -44,12 +44,12 @@ import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServer;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServerStatus;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaStatusCallback;
-import com.zsmartsystems.zigbee.console.ZigBeeConsoleAbstractCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeReadCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindingTableCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeEndpointCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeNodeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceInformationCommand;
@@ -109,7 +109,7 @@ public final class ZigBeeConsole {
      * Map of registered commands and their implementations.
      */
     private Map<String, ConsoleCommand> commands = new TreeMap<String, ConsoleCommand>();
-    private Map<String, ZigBeeConsoleAbstractCommand> newCommands = new TreeMap<String, ZigBeeConsoleAbstractCommand>();
+    private Map<String, ZigBeeConsoleCommand> newCommands = new TreeMap<>();
 
     /**
      * The ZigBee API.
@@ -123,9 +123,13 @@ public final class ZigBeeConsole {
      * Constructor which configures ZigBee API and constructs commands.
      *
      * @param dongle the dongle
+     * @param commands2
      */
-    public ZigBeeConsole(final ZigBeeNetworkManager networkManager, final ZigBeeTransportTransmit dongle) {
+    public ZigBeeConsole(final ZigBeeNetworkManager networkManager, final ZigBeeTransportTransmit dongle,
+            List<Class<? extends ZigBeeConsoleCommand>> transportCommands) {
         this.dongle = dongle;
+
+        createCommands(newCommands, transportCommands);
 
         commands.put("groupadd", new GroupAddCommand());
         commands.put("groupremove", new GroupRemoveCommand());
@@ -256,6 +260,18 @@ public final class ZigBeeConsole {
         }));
     }
 
+    private void createCommands(Map<String, ZigBeeConsoleCommand> newCommands2,
+            List<Class<? extends ZigBeeConsoleCommand>> transportCommands) {
+        for (Class<? extends ZigBeeConsoleCommand> commandClass : transportCommands) {
+            try {
+                ZigBeeConsoleCommand command = commandClass.newInstance();
+                newCommands2.put(command.getCommand(), command);
+            } catch (InstantiationException | IllegalAccessException | SecurityException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     /**
      * Starts this console application
      */
@@ -333,7 +349,7 @@ public final class ZigBeeConsole {
             return;
         }
 
-        final ZigBeeConsoleAbstractCommand newCommand = newCommands.get(args[0].toLowerCase());
+        final ZigBeeConsoleCommand newCommand = newCommands.get(args[0].toLowerCase());
         if (newCommand != null) {
             try {
                 newCommand.process(networkManager, args, out);
@@ -375,18 +391,6 @@ public final class ZigBeeConsole {
         } catch (final IOException e) {
             return null;
         }
-    }
-
-    /**
-     * Gets destination by device identifier or group ID.
-     *
-     * @param networkManager the {@link ZigBeeNetworkManager}
-     * @param destinationIdentifier the device identifier or group ID
-     * @return the device
-     */
-    private ZigBeeAddress getDestination(final ZigBeeNetworkManager networkManager,
-            final String destinationIdentifier) {
-        return null;
     }
 
     /**

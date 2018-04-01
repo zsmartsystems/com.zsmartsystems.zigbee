@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
@@ -22,6 +23,10 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
  *
  */
 public class ZigBeeConsoleDeviceInformationCommand extends ZigBeeConsoleAbstractCommand {
+    @Override
+    public String getCommand() {
+        return "info";
+    }
 
     @Override
     public String getDescription() {
@@ -30,7 +35,7 @@ public class ZigBeeConsoleDeviceInformationCommand extends ZigBeeConsoleAbstract
 
     @Override
     public String getSyntax() {
-        return "info ENDPOINT [MANUFACTURER|APPVERSION|MODEL|APPVERSION|STKVERSION|HWVERSION|ZCLVERSION|DATE] [REFRESH]";
+        return "ENDPOINT [MANUFACTURER|APPVERSION|MODEL|APPVERSION|STKVERSION|HWVERSION|ZCLVERSION|DATE] [REFRESH]";
     }
 
     @Override
@@ -39,9 +44,10 @@ public class ZigBeeConsoleDeviceInformationCommand extends ZigBeeConsoleAbstract
     }
 
     @Override
-    public boolean process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) throws Exception {
+    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
+            throws IllegalArgumentException {
         if (args.length < 2) {
-            return false;
+            throw new IllegalArgumentException("Invalid number of arguments");
         }
         Map<String, String> commands = new TreeMap<>();
         long refresh = Long.MAX_VALUE;
@@ -49,7 +55,7 @@ public class ZigBeeConsoleDeviceInformationCommand extends ZigBeeConsoleAbstract
         for (int cnt = 2; cnt < args.length; cnt++) {
             String arg = args[cnt];
             String upperArg = arg.toUpperCase();
-            if (upperArg.equals("REFRESH")) {
+            if ("REFRESH".equals(upperArg)) {
                 refresh = 0;
                 continue;
             }
@@ -112,10 +118,9 @@ public class ZigBeeConsoleDeviceInformationCommand extends ZigBeeConsoleAbstract
         }
 
         out.println("Node Info     Value");
-        for (String command : commands.keySet()) {
-            out.println(String.format("%-12s  ", command) + commands.get(command));
+        for (Entry<String, String> command : commands.entrySet()) {
+            out.println(String.format("%-12s  ", command.getKey()) + command.getValue());
         }
-        return true;
     }
 
 }

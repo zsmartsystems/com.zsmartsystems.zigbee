@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
@@ -21,6 +22,10 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
  *
  */
 public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstractCommand {
+    @Override
+    public String getCommand() {
+        return "attsupported";
+    }
 
     @Override
     public String getDescription() {
@@ -29,7 +34,7 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
 
     @Override
     public String getSyntax() {
-        return "attsupported ENDPOINT CLUSTER";
+        return "ENDPOINT CLUSTER";
     }
 
     @Override
@@ -38,9 +43,10 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
     }
 
     @Override
-    public boolean process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) throws Exception {
+    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
+            throws IllegalArgumentException, InterruptedException, ExecutionException {
         if (args.length != 3) {
-            return false;
+            throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
@@ -55,7 +61,7 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
                 out.println("Using output cluster");
             } else {
                 out.println("Cluster not found");
-                return false;
+                return;
             }
         }
 
@@ -74,11 +80,8 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
                 }
                 out.println();
             }
-
-            return true;
         } else {
             out.println("Failed to retrieve supported attributes");
-            return true;
         }
     }
 }

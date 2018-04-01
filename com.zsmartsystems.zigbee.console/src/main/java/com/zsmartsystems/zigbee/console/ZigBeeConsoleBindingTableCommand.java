@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
+import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
@@ -21,6 +22,10 @@ import com.zsmartsystems.zigbee.zdo.field.BindingTable;
  *
  */
 public class ZigBeeConsoleBindingTableCommand extends ZigBeeConsoleAbstractCommand {
+    @Override
+    public String getCommand() {
+        return "bindtable";
+    }
 
     @Override
     public String getDescription() {
@@ -29,7 +34,7 @@ public class ZigBeeConsoleBindingTableCommand extends ZigBeeConsoleAbstractComma
 
     @Override
     public String getSyntax() {
-        return "bindtable [NODE]";
+        return "NODEID";
     }
 
     @Override
@@ -38,9 +43,10 @@ public class ZigBeeConsoleBindingTableCommand extends ZigBeeConsoleAbstractComma
     }
 
     @Override
-    public boolean process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) throws Exception {
+    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
+            throws IllegalArgumentException, InterruptedException, ExecutionException {
         if (args.length != 2) {
-            return false;
+            throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         ZigBeeNode node = getNode(networkManager, args[1]);
@@ -48,13 +54,13 @@ public class ZigBeeConsoleBindingTableCommand extends ZigBeeConsoleAbstractComma
         final Boolean result = node.updateBindingTable().get();
         if (!result) {
             out.println("Binding table read error");
-            return true;
+            return;
         }
 
         out.println("Binding table for node " + node.getNetworkAddress() + " [" + node.getIeeeAddress() + "]");
         if (node.getBindingTable().isEmpty()) {
             out.println("--- Empty");
-            return true;
+            return;
         }
 
         out.println("Src Address          | Dest Address         | Group | Mode | Cluster");
@@ -63,7 +69,5 @@ public class ZigBeeConsoleBindingTableCommand extends ZigBeeConsoleAbstractComma
                     entry.getSrcEndpoint(), entry.getDstNodeAddr(), entry.getDstNodeEndpoint(), entry.getDstGroupAddr(),
                     entry.getDstAddrMode(), entry.getClusterId(), ZclClusterType.getValueById(entry.getClusterId())));
         }
-
-        return true;
     }
 }

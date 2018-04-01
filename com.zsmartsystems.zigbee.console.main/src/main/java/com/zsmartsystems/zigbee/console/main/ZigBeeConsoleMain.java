@@ -7,7 +7,9 @@
  */
 package com.zsmartsystems.zigbee.console.main;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.xml.DOMConfigurator;
@@ -19,6 +21,13 @@ import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkMeshMonitor;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpChildrenCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpCountersCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpStateCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpVersionCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNetworkStateCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleSecurityStateCommand;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
 import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
@@ -115,6 +124,8 @@ public class ZigBeeConsoleMain {
 
         System.out.println("Initialising ZigBee console...");
 
+        List<Class<? extends ZigBeeConsoleCommand>> commands = new ArrayList<>();
+
         final ZigBeeTransportTransmit dongle;
         if (dongleName.toUpperCase().equals("CC2531")) {
             dongle = new ZigBeeDongleTiCc2531(serialPort);
@@ -130,6 +141,14 @@ public class ZigBeeConsoleMain {
             concentratorConfig.setRefreshMinimum(60);
             concentratorConfig.setRefreshMaximum(3600);
             transportOptions.addOption(TransportConfigOption.CONCENTRATOR_CONFIG, concentratorConfig);
+
+            // Add transport specific console commands
+            commands.add(EmberConsoleNcpChildrenCommand.class);
+            commands.add(EmberConsoleNcpCountersCommand.class);
+            commands.add(EmberConsoleNcpStateCommand.class);
+            commands.add(EmberConsoleNcpVersionCommand.class);
+            commands.add(EmberConsoleNetworkStateCommand.class);
+            commands.add(EmberConsoleSecurityStateCommand.class);
         } else if (dongleName.toUpperCase().equals("XBEE")) {
             dongle = new ZigBeeDongleXBee(serialPort);
         } else if (dongleName.toUpperCase().equals("CONBEE")) {
@@ -161,7 +180,7 @@ public class ZigBeeConsoleMain {
         }
         networkManager.setNetworkStateSerializer(networkStateSerializer);
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
-        final ZigBeeConsole console = new ZigBeeConsole(networkManager, dongle);
+        final ZigBeeConsole console = new ZigBeeConsole(networkManager, dongle, commands);
 
         // Initialise the network
         networkManager.initialize();

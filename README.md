@@ -21,6 +21,9 @@ The framework implements a package structure that allows efficient use of re-usa
 |com.zsmartsystems.zigbee.dongle.xbee               |Dongle driver for the Digi XBee dongle                | 
 |com.zsmartsystems.zigbee.dongle.xbee.autocode      |Code generator for the XBee dongle commands           |
 |com.zsmartsystems.zigbee.console                   |Console commands for the general framework            |
+|com.zsmartsystems.zigbee.console.ember             |Console commands for the Silabs Ember NCP             |
+|com.zsmartsystems.zigbee.console.main              |Main CLI console application                          |
+|com.zsmartsystems.zigbee.serial                    |Serial driver implementation                          |
 |com.zsmartsystems.zigbee.test                      |Overall tests and code coverage                       |
 
 ## Testing
@@ -47,7 +50,7 @@ It is worth noting that EM3588 devices that have an embedded USB core will likel
 
 ### Telegesis ETRX3
 
-The library supports the Telegesis AT protocol over a serial interface. Currently implemented against R309. Note that some dongles such as the Qivicon Funkstick may use PID/VID codes that require special drivers or they will not be detected as a serial port.
+The library supports the Telegesis AT protocol over a serial interface. Currently implemented against R309C. Note that some dongles such as the Qivicon Funkstick may use PID/VID codes that require special drivers or they will not be detected as a serial port.
 
 Under Linux you can add the Qivicon dongle without a custom made kernel with the following command -:
 
@@ -64,6 +67,8 @@ The library supports the Dresden Electronics RaspBee and ConBee dongles. Note th
 The XBee S2C XStick is supported.
 
 ## Tested Hardware
+
+The framework has been tested against many different devices - many lights, motion sensors, temperature/humidity/light sensors, plug sockets...
  
 ## ZigBee Dongles and Chipsets
 
@@ -75,7 +80,7 @@ The following table provides a summary of some of the dongles / chipsets that ar
 | EM358                 | Yes (EZSP)      | -100dBm     | +8.0dBm      | Internal |
 | EFR32                 | Yes (EZSP)      |             |              |          | 
 | **EM358LR**           | Yes (EZSP)      | -103dBm     | **+20.0dBm** | Internal |
-| MGM111                | Yes (EZSP)      | -99dBm      | +10dBm       | Internal |
+| MGM111                | Yes (EZSP)      | -99dBm      | +10.0dBm     | Internal |
 | RaspBee               | Yes (CONBEE)    | **-105dBm** | +8.7dBm      | Internal |
 | ConBee                | Yes (CONBEE)    | **-105dBm** | +8.7dBm      | Internal |
 | CC2530                | Yes (ZNP)       | -97dBm      | +4.5dBm      |          |
@@ -88,8 +93,8 @@ The following table provides a summary of some of the dongles / chipsets that ar
 | Telegesis ETRX3       | Yes (Telegesis) |             |              | Internal |
 | Qivicon Funkstick     | Yes (Telegesis) |             |              | Internal |
 
-* Receive: Defines the typical receive performance. A smaller number is best.
-* Transmit: Defines the maximum output power. A larger number is best.
+* Receive: Defines the typical receive performance. A lower number is best.
+* Transmit: Defines the maximum output power. A higher number is best.
 
 ## Applications
 
@@ -102,7 +107,13 @@ These provide minimal functionality and can be extended as required.
 
 # Console Application
 
-A console application is provided as part of the package. This application allows full use and testing of the framework.
+A console application is provided as part of the package. This application allows full use and testing of the framework. It can be used to test any new functionality without the added complexity of application level integration, or may be used as a stand-alone ZigBee configuration tool.
+ 
+The command handlers used in the console application are in the package ```com.zsmartsystems.zigbee.console```. This is separate from the main console application, and this allows the command handlers to be incorporated into other frameworks.
+
+Command handlers for commands specific to each dongle implementation are in the package ```com.zsmartsystems.zigbee.console.xxx``` (where xxx is the name of the dongle). These commands allow access to non standard API relating solely to each dongle.
+ 
+Command handlers take a set of arguments as provided by the user and will throw ```IllegalArgumentException``` if there are any errors with arguments, or ```IllegalStateException``` if there are any issues with the network state that prevent the command execution.
 
 # Contributing
 

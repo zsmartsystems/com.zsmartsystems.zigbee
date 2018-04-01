@@ -294,6 +294,15 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
+     * Gets the {@link ZigBeeTransportTransmit} used by the network
+     *
+     * @return the {@link ZigBeeTransportTransmit} used by the network
+     */
+    public ZigBeeTransportTransmit getZigBeeTransport() {
+        return transport;
+    }
+
+    /**
      * Gets the current ZigBee RF channel.
      *
      * @return the current channel or -1 on error
@@ -1275,5 +1284,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         clusterMatcher.addCluster(cluster);
+    }
+
+    /**
+     * Gets the current {@link ZigBeeTransportState}
+     *
+     * @return the current {@link ZigBeeTransportState}
+     */
+    public ZigBeeTransportState getNetworkState() {
+        return networkState;
     }
 }

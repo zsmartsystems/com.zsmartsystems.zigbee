@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
+import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -22,6 +23,10 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
  *
  */
 public class ZigBeeConsoleBindCommand extends ZigBeeConsoleAbstractCommand {
+    @Override
+    public String getCommand() {
+        return "bind";
+    }
 
     @Override
     public String getDescription() {
@@ -30,7 +35,7 @@ public class ZigBeeConsoleBindCommand extends ZigBeeConsoleAbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "bind CLUSTERID SOURCE [DESTINATION]";
+        return "CLUSTERID SOURCE [DESTINATION]";
     }
 
     @Override
@@ -38,13 +43,11 @@ public class ZigBeeConsoleBindCommand extends ZigBeeConsoleAbstractCommand {
         return "";
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public boolean process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) throws Exception {
+    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
+            throws IllegalArgumentException, InterruptedException, ExecutionException {
         if (args.length < 3) {
-            return false;
+            throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         final int clusterId = parseCluster(args[1]);
@@ -67,6 +70,6 @@ public class ZigBeeConsoleBindCommand extends ZigBeeConsoleAbstractCommand {
         }
 
         final CommandResult response = cluster.bind(destAddress, destEndpoint).get();
-        return processDefaultResponse(response, out);
+        processDefaultResponse(response, out);
     }
 }

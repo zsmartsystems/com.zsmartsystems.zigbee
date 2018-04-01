@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
+import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -22,38 +23,22 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * @author Chris Jackson
  *
  */
-public abstract class ZigBeeConsoleAbstractCommand {
-    /**
-     * Get command description.
-     *
-     * @return the command description
-     */
+public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleCommand {
+    @Override
+    public abstract String getCommand();
+
+    @Override
     public abstract String getDescription();
 
-    /**
-     * Get command syntax.
-     *
-     * @return the command syntax
-     */
+    @Override
     public abstract String getSyntax();
 
-    /**
-     * Get detailed command help.
-     *
-     * @return the command help
-     */
+    @Override
     public abstract String getHelp();
 
-    /**
-     * Processes console command.
-     *
-     * @param networkManager the {@link ZigBeeNetworkManager}
-     * @param args the command arguments. arg[0] is the command
-     * @param out the output PrintStream
-     * @return true if the command executed successfully
-     */
-    public abstract boolean process(final ZigBeeNetworkManager networkManager, final String[] args, PrintStream out)
-            throws Exception;
+    @Override
+    public abstract void process(final ZigBeeNetworkManager networkManager, final String[] args, PrintStream out)
+            throws IllegalArgumentException, IllegalStateException, ExecutionException, InterruptedException;
 
     /**
      * Gets a {@link ZigBeeNode}

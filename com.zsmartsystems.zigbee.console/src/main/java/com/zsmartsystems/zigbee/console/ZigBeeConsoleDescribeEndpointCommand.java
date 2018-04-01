@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -24,6 +24,10 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
  *
  */
 public class ZigBeeConsoleDescribeEndpointCommand extends ZigBeeConsoleAbstractCommand {
+    @Override
+    public String getCommand() {
+        return "endpoint";
+    }
 
     @Override
     public String getDescription() {
@@ -32,7 +36,7 @@ public class ZigBeeConsoleDescribeEndpointCommand extends ZigBeeConsoleAbstractC
 
     @Override
     public String getSyntax() {
-        return "endpoint ENDPOINT";
+        return "ENDPOINT";
     }
 
     @Override
@@ -41,9 +45,10 @@ public class ZigBeeConsoleDescribeEndpointCommand extends ZigBeeConsoleAbstractC
     }
 
     @Override
-    public boolean process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) throws Exception {
+    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
+            throws IllegalArgumentException {
         if (args.length != 2) {
-            return false;
+            throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
@@ -58,11 +63,9 @@ public class ZigBeeConsoleDescribeEndpointCommand extends ZigBeeConsoleAbstractC
         printClusters(endpoint, true, out);
         out.println("Output Clusters  : ");
         printClusters(endpoint, false, out);
-
-        return true;
     }
 
-    private void printClusters(final ZigBeeEndpoint endpoint, boolean input, PrintStream out) {
+    private void printClusters(final ZigBeeEndpoint endpoint, final boolean input, final PrintStream out) {
         Collection<Integer> clusters;
         if (input) {
             clusters = endpoint.getInputClusterIds();
@@ -83,21 +86,24 @@ public class ZigBeeConsoleDescribeEndpointCommand extends ZigBeeConsoleAbstractC
 
         for (ZclCluster cluster : clusterTree.values()) {
             out.println(printClusterId(cluster.getClusterId()) + " " + cluster.getClusterName());
+            printAttributes(cluster, out);
+        }
+    }
 
-            Map<Integer, ZclAttribute> attributeTree = new TreeMap<Integer, ZclAttribute>();
-            for (ZclAttribute attribute : cluster.getAttributes()) {
-                attributeTree.put(attribute.getId(), attribute);
-            }
+    private void printAttributes(final ZclCluster cluster, final PrintStream out) {
+        Map<Integer, ZclAttribute> attributeTree = new TreeMap<Integer, ZclAttribute>();
+        for (ZclAttribute attribute : cluster.getAttributes()) {
+            attributeTree.put(attribute.getId(), attribute);
+        }
 
-            for (ZclAttribute attribute : attributeTree.values()) {
-                out.println(String.format("        %s   %5d %s%s%s %s %-40s %s %s",
-                        (cluster.getSupportedAttributes().contains(attribute.getId()) ? "S" : "U"), attribute.getId(),
-                        (attribute.isReadable() ? "r" : "-"), (attribute.isWritable() ? "w" : "-"),
-                        (attribute.isReportable() ? "s" : "-"), printZclDataType(attribute.getDataType()),
-                        attribute.getName(),
-                        (attribute.getLastValue() == null ? "" : attribute.getLastReportTime().getTime()),
-                        (attribute.getLastValue() == null ? "" : attribute.getLastValue())));
-            }
+        for (ZclAttribute attribute : attributeTree.values()) {
+            out.println(String.format("        %s   %5d %s%s%s %s %-40s %s %s",
+                    (cluster.getSupportedAttributes().contains(attribute.getId()) ? "S" : "U"), attribute.getId(),
+                    (attribute.isReadable() ? "r" : "-"), (attribute.isWritable() ? "w" : "-"),
+                    (attribute.isReportable() ? "s" : "-"), printZclDataType(attribute.getDataType()),
+                    attribute.getName(),
+                    (attribute.getLastValue() == null ? "" : attribute.getLastReportTime().getTime()),
+                    (attribute.getLastValue() == null ? "" : attribute.getLastValue())));
         }
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
+import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
@@ -23,6 +24,10 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
  *
  */
 public class ZigBeeConsoleReportingSubscribeCommand extends ZigBeeConsoleAbstractCommand {
+    @Override
+    public String getCommand() {
+        return "subscribe";
+    }
 
     @Override
     public String getDescription() {
@@ -31,7 +36,7 @@ public class ZigBeeConsoleReportingSubscribeCommand extends ZigBeeConsoleAbstrac
 
     @Override
     public String getSyntax() {
-        return "subscribe ENDPOINT IN|OUT CLUSTER ATTRIBUTE MIN-INTERVAL MAX-INTERVAL REPORTABLE-CHANGE";
+        return "ENDPOINT IN|OUT CLUSTER ATTRIBUTE MIN-INTERVAL MAX-INTERVAL REPORTABLE-CHANGE";
     }
 
     @Override
@@ -40,15 +45,14 @@ public class ZigBeeConsoleReportingSubscribeCommand extends ZigBeeConsoleAbstrac
     }
 
     @Override
-    public boolean process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) throws Exception {
-        if (args.length != 6) {
-            return false;
+    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
+            throws IllegalArgumentException, InterruptedException, ExecutionException {
+        if (args.length < 7) {
+            throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
         final int clusterId = parseCluster(args[3]);
-        final int attributeId = parseAttribute(args[4]);
-
         final ZclCluster cluster;
         final String direction = args[2].toUpperCase();
         if ("IN".equals(direction)) {
@@ -61,22 +65,23 @@ public class ZigBeeConsoleReportingSubscribeCommand extends ZigBeeConsoleAbstrac
 
         final int minInterval;
         try {
-            minInterval = Integer.parseInt(args[4]);
+            minInterval = Integer.parseInt(args[5]);
         } catch (final NumberFormatException e) {
-            return false;
+            throw new IllegalArgumentException("Min Interval has invalid format");
         }
         final int maxInterval;
         try {
-            maxInterval = Integer.parseInt(args[5]);
+            maxInterval = Integer.parseInt(args[6]);
         } catch (final NumberFormatException e) {
-            return false;
+            throw new IllegalArgumentException("Max Interval has invalid format");
         }
 
+        final int attributeId = parseAttribute(args[4]);
         final ZclAttribute attribute = cluster.getAttribute(attributeId);
 
         final Object reportableChange;
         if (args.length > 6) {
-            reportableChange = parseValue(args[4], attribute.getDataType());
+            reportableChange = parseValue(args[7], attribute.getDataType());
         } else {
             reportableChange = null;
         }
@@ -90,10 +95,8 @@ public class ZigBeeConsoleReportingSubscribeCommand extends ZigBeeConsoleAbstrac
             } else {
                 out.println("Attribute value configure reporting error: " + statusCode);
             }
-            return true;
         } else {
             out.println("Error executing command: " + result);
-            return true;
         }
     }
 

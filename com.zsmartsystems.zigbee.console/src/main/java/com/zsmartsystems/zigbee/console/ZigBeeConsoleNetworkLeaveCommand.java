@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,6 +18,10 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
  *
  */
 public class ZigBeeConsoleNetworkLeaveCommand extends ZigBeeConsoleAbstractCommand {
+    @Override
+    public String getCommand() {
+        return "leave";
+    }
 
     @Override
     public String getDescription() {
@@ -26,7 +30,7 @@ public class ZigBeeConsoleNetworkLeaveCommand extends ZigBeeConsoleAbstractComma
 
     @Override
     public String getSyntax() {
-        return "leave NODE [PARENT]";
+        return "NODE [PARENT]";
     }
 
     @Override
@@ -35,26 +39,23 @@ public class ZigBeeConsoleNetworkLeaveCommand extends ZigBeeConsoleAbstractComma
     }
 
     @Override
-    public boolean process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) throws Exception {
-        if (args.length > 2) {
-            return false;
+    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
+            throws IllegalArgumentException {
+        if (args.length > 3) {
+            throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         ZigBeeNode leaver = getNode(networkManager, args[1]);
 
         if (args.length == 2) {
             networkManager.leave(leaver.getNetworkAddress(), leaver.getIeeeAddress());
-
-            return true;
+            return;
         }
 
         if (args.length == 3) {
             ZigBeeNode parent = getNode(networkManager, args[2]);
-
             networkManager.leave(parent.getNetworkAddress(), leaver.getIeeeAddress());
-            return true;
+            return;
         }
-
-        return false;
     }
 }

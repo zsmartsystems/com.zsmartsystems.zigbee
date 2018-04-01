@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,6 +18,10 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
  *
  */
 public class ZigBeeConsoleNetworkJoinCommand extends ZigBeeConsoleAbstractCommand {
+    @Override
+    public String getCommand() {
+        return "join";
+    }
 
     @Override
     public String getDescription() {
@@ -26,7 +30,7 @@ public class ZigBeeConsoleNetworkJoinCommand extends ZigBeeConsoleAbstractComman
 
     @Override
     public String getSyntax() {
-        return "join [ENABLE|DISABLE|PERIOD] [NODE]";
+        return "[ENABLE|DISABLE|PERIOD] [NODE]";
     }
 
     @Override
@@ -35,15 +39,16 @@ public class ZigBeeConsoleNetworkJoinCommand extends ZigBeeConsoleAbstractComman
     }
 
     @Override
-    public boolean process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) throws Exception {
+    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
+            throws IllegalArgumentException {
         if (args.length < 2 | args.length > 3) {
-            return false;
+            throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         final int join;
-        if (args[1].toLowerCase().equals("enable")) {
+        if ("enable".equalsIgnoreCase(args[1])) {
             join = 255;
-        } else if (args[1].toLowerCase().equals("disable")) {
+        } else if ("disable".equalsIgnoreCase(args[1])) {
             join = 0;
         } else {
             join = Integer.parseInt(args[1]);
@@ -66,6 +71,5 @@ public class ZigBeeConsoleNetworkJoinCommand extends ZigBeeConsoleAbstractComman
                 out.println("Permit join disable broadcast success.");
             }
         }
-        return true;
     }
 }

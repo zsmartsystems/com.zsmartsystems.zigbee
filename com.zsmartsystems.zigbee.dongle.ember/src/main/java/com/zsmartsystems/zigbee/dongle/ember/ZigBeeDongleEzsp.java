@@ -287,6 +287,15 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         ashHandler = null;
     }
 
+    /**
+     * Returns an instance of the {@link EmberNcp}
+     * 
+     * @return an instance of the {@link EmberNcp}
+     */
+    public EmberNcp getEmberNcp() {
+        return new EmberNcp(ashHandler);
+    }
+
     @Override
     public IeeeAddress getIeeeAddress() {
         return ieeeAddress;

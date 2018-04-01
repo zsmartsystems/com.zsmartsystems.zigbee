@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -25,6 +25,10 @@ import com.zsmartsystems.zigbee.ZigBeeProfileType;
  *
  */
 public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
+    @Override
+    public String getCommand() {
+        return "devicelist";
+    }
 
     @Override
     public String getDescription() {
@@ -33,7 +37,7 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "devicelist";
+        return "";
     }
 
     @Override
@@ -42,7 +46,8 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
     }
 
     @Override
-    public boolean process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) throws Exception {
+    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
+            throws IllegalArgumentException {
         final Set<ZigBeeNode> nodes = networkManager.getNodes();
         final List<Integer> nodeIds = new ArrayList<Integer>();
 
@@ -75,6 +80,5 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
                 out.println();
             }
         }
-        return true;
     }
 }

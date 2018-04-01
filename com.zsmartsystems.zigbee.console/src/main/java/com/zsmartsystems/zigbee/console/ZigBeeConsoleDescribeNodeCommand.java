@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 by the respective copyright holders.
+ * Copyright (c) 2016-2018 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,6 +21,10 @@ import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
  *
  */
 public class ZigBeeConsoleDescribeNodeCommand extends ZigBeeConsoleAbstractCommand {
+    @Override
+    public String getCommand() {
+        return "node";
+    }
 
     @Override
     public String getDescription() {
@@ -29,7 +33,7 @@ public class ZigBeeConsoleDescribeNodeCommand extends ZigBeeConsoleAbstractComma
 
     @Override
     public String getSyntax() {
-        return "node NODEID";
+        return "NODEID";
     }
 
     @Override
@@ -38,9 +42,10 @@ public class ZigBeeConsoleDescribeNodeCommand extends ZigBeeConsoleAbstractComma
     }
 
     @Override
-    public boolean process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) throws Exception {
+    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
+            throws IllegalArgumentException {
         if (args.length != 2) {
-            return false;
+            throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         final ZigBeeNode node = getNode(networkManager, args[1]);
@@ -62,7 +67,5 @@ public class ZigBeeConsoleDescribeNodeCommand extends ZigBeeConsoleAbstractComma
         for (RoutingTable route : node.getRoutes()) {
             out.println(route.toString());
         }
-
-        return true;
     }
 }
