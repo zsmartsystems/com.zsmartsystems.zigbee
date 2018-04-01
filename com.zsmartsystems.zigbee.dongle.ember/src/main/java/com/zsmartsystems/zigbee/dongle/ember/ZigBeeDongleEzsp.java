@@ -30,24 +30,13 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspAddEndpointRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspAddEndpointResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspChildJoinHandler;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetChildDataRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetChildDataResponse;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetCurrentSecurityStateRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetCurrentSecurityStateResponse;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetNetworkParametersRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetNetworkParametersResponse;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetParentChildParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspLaunchStandaloneBootloaderRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspLaunchStandaloneBootloaderResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNetworkInitRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNetworkInitResponse;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNetworkStateRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNetworkStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSendMulticastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSendUnicastRequest;
@@ -55,7 +44,6 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetConcen
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetConcentratorResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspStackStatusHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspTrustCenterJoinHandler;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberApsOption;
@@ -211,20 +199,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             logger.debug("Policy state {} = {}", policy.getKey(), policy.getValue());
         }
 
-        getNetworkParameters();
+        EmberNcp ncp = new EmberNcp(ashHandler);
+
+        ncp.getNetworkParameters();
 
         // Add the endpoint
-        EzspAddEndpointRequest addEndpoint = new EzspAddEndpointRequest();
-        addEndpoint.setEndpoint(1);
-        addEndpoint.setDeviceId(0);
-        addEndpoint.setProfileId(ZigBeeProfileType.HOME_AUTOMATION.getId());
-        addEndpoint.setInputClusterList(new int[] { 0 });
-        addEndpoint.setOutputClusterList(new int[] { 0 });
-        logger.debug(addEndpoint.toString());
-        EzspTransaction addEndpointTransaction = ashHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(addEndpoint, EzspAddEndpointResponse.class));
-        EzspAddEndpointResponse addEndpointResponse = (EzspAddEndpointResponse) addEndpointTransaction.getResponse();
-        logger.debug(addEndpointResponse.toString());
+        ncp.addEndpoint(1, 0, ZigBeeProfileType.HOME_AUTOMATION.getId(), new int[] { 0 }, new int[] { 0 });
 
         // Now initialise the network
         EzspNetworkInitRequest networkInitRequest = new EzspNetworkInitRequest();
@@ -233,8 +213,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
         logger.debug(networkInitResponse.toString());
 
-        networkParameters = getNetworkParameters();
-        getCurrentSecurityState();
+        networkParameters = ncp.getNetworkParameters();
+        ncp.getCurrentSecurityState();
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
@@ -259,44 +239,35 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return false;
         }
 
+        EmberNcp ncp = new EmberNcp(ashHandler);
+
         // Check if the network is initialised
-        EzspNetworkStateRequest networkStateRequest = new EzspNetworkStateRequest();
-        EzspTransaction networkStateTransaction = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(networkStateRequest, EzspNetworkStateResponse.class));
-        EzspNetworkStateResponse networkStateResponse = (EzspNetworkStateResponse) networkStateTransaction
-                .getResponse();
-        logger.debug(networkStateResponse.toString());
-        logger.debug("EZSP networkStateResponse {}", networkStateResponse.getStatus());
+        EmberNetworkStatus networkState = ncp.getNetworkState();
+        logger.debug("EZSP networkStateResponse {}", networkState);
 
         // If we want to reinitialize the network, then go...
         if (reinitialize) {
             logger.debug("Reinitialising Ember NCP and forming network.");
-            initialiseNetwork();
+            EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(ashHandler);
+            netInitialiser.formNetwork(networkParameters, networkKey);
+            ncp.getNetworkParameters();
         }
 
         // Check if the network is now up
-        networkStateTransaction = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(networkStateRequest, EzspNetworkStateResponse.class));
-        networkStateResponse = (EzspNetworkStateResponse) networkStateTransaction.getResponse();
-        logger.debug(networkStateResponse.toString());
-        logger.debug("EZSP networkStateResponse {}", networkStateResponse.getStatus());
-        if (networkStateResponse.getStatus() == EmberNetworkStatus.EMBER_JOINED_NETWORK) {
+        networkState = ncp.getNetworkState();
+        logger.debug("EZSP networkStateResponse {}", networkState);
+        if (networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK) {
             zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
         }
 
         // Get the security state - mainly for debug
-        EmberCurrentSecurityState currentSecurityState = getCurrentSecurityState();
+        EmberCurrentSecurityState currentSecurityState = ncp.getCurrentSecurityState();
         logger.debug("Current Security State = {}", currentSecurityState);
 
-        EzspGetParentChildParametersRequest childParametersRequest = new EzspGetParentChildParametersRequest();
-        EzspTransaction childParametersTransaction = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(childParametersRequest, EzspGetParentChildParametersResponse.class));
-        EzspGetParentChildParametersResponse childParametersResponse = (EzspGetParentChildParametersResponse) childParametersTransaction
-                .getResponse();
-
+        EzspGetParentChildParametersResponse childParametersResponse = ncp.getChildParameters();
         logger.debug("Current Parent Child Information = {}", childParametersResponse);
         for (int childId = 0; childId < childParametersResponse.getChildCount(); childId++) {
-            getChildInformation(childId);
+            ncp.getChildInformation(childId);
         }
 
         logger.debug("EZSP dongle startup done.");
@@ -319,71 +290,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public IeeeAddress getIeeeAddress() {
         return ieeeAddress;
-    }
-
-    /**
-     * Gets the current network parameters, or an empty parameters class if there's an error
-     *
-     * @return {@link EmberNetworkParameters}
-     */
-    private EmberNetworkParameters getNetworkParameters() {
-        EzspGetNetworkParametersRequest networkParms = new EzspGetNetworkParametersRequest();
-        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(networkParms,
-                EzspGetNetworkParametersResponse.class);
-        ashHandler.sendEzspTransaction(transaction);
-        EzspGetNetworkParametersResponse getNetworkParametersResponse = (EzspGetNetworkParametersResponse) transaction
-                .getResponse();
-        logger.debug(getNetworkParametersResponse.toString());
-        if (getNetworkParametersResponse.getStatus() != EmberStatus.EMBER_SUCCESS
-                && getNetworkParametersResponse.getStatus() != EmberStatus.EMBER_NOT_JOINED) {
-            logger.debug("Error during retrieval of network parameters: {}", getNetworkParametersResponse);
-            return new EmberNetworkParameters();
-        }
-
-        return getNetworkParametersResponse.getParameters();
-    }
-
-    private void initialiseNetwork() {
-        EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(ashHandler);
-        netInitialiser.formNetwork(networkParameters, networkKey);
-
-        EzspGetNetworkParametersRequest networkParametersRequest = new EzspGetNetworkParametersRequest();
-        EzspTransaction networkParametersTransaction = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(networkParametersRequest, EzspGetNetworkParametersResponse.class));
-        EzspGetNetworkParametersResponse networkParametersResponse = (EzspGetNetworkParametersResponse) networkParametersTransaction
-                .getResponse();
-        logger.debug(networkParametersResponse.toString());
-    }
-
-    private EzspGetChildDataResponse getChildInformation(int childId) {
-        EzspGetChildDataRequest childDataRequest = new EzspGetChildDataRequest();
-        childDataRequest.setIndex(childId);
-        EzspTransaction childDataTransaction = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(childDataRequest, EzspGetChildDataResponse.class));
-        EzspGetChildDataResponse childDataResponse = (EzspGetChildDataResponse) childDataTransaction.getResponse();
-        logger.debug(childDataResponse.toString());
-
-        return childDataResponse;
-    }
-
-    /**
-     * Get the current security parameters
-     *
-     * @return the {@link EmberNetworkParameters} or null on error
-     */
-    private EmberCurrentSecurityState getCurrentSecurityState() {
-        EzspGetCurrentSecurityStateRequest networkParms = new EzspGetCurrentSecurityStateRequest();
-        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(networkParms,
-                EzspGetCurrentSecurityStateResponse.class);
-        ashHandler.sendEzspTransaction(transaction);
-        EzspGetCurrentSecurityStateResponse currentSecurityStateResponse = (EzspGetCurrentSecurityStateResponse) transaction
-                .getResponse();
-        logger.debug(currentSecurityStateResponse.toString());
-        if (currentSecurityStateResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
-            logger.debug("Error during retrieval of security parameters: {}", currentSecurityStateResponse);
-            return null;
-        }
-        return currentSecurityStateResponse.getState();
     }
 
     @Override
@@ -619,43 +525,36 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return false;
         }
         ashHandler = new AshFrameHandler(this);
+        EmberNcp ncp = new EmberNcp(ashHandler);
 
         // Connect to the ASH handler and NCP
         ashHandler.start(serialPort);
         ashHandler.connect();
 
         // We MUST send the version command first.
-        EzspVersionRequest version = new EzspVersionRequest();
-        version.setDesiredProtocolVersion(EzspFrame.getEzspVersion());
-        EzspTransaction versionTransaction = ashHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(version, EzspVersionResponse.class));
-        EzspVersionResponse versionResponse = (EzspVersionResponse) versionTransaction.getResponse();
-        logger.debug(versionResponse.toString());
+        EzspVersionResponse version = ncp.getVersion(4);
+        logger.debug(version.toString());
 
-        if (versionResponse.getProtocolVersion() != EzspFrame.getEzspVersion()) {
+        if (version.getProtocolVersion() != EzspFrame.getEzspVersion()) {
             // The device supports a different version that we current have set
-            if (!EzspFrame.setEzspVersion(versionResponse.getProtocolVersion())) {
+            if (!EzspFrame.setEzspVersion(version.getProtocolVersion())) {
                 logger.error("NCP requires unsupported version of EZSP (required = V{}, supported = V{})",
-                        versionResponse.getProtocolVersion(), EzspFrame.getEzspVersion());
+                        version.getProtocolVersion(), EzspFrame.getEzspVersion());
                 return false;
             }
 
-            version = new EzspVersionRequest();
-            version.setDesiredProtocolVersion(EzspFrame.getEzspVersion());
-            versionTransaction = ashHandler
-                    .sendEzspTransaction(new EzspSingleResponseTransaction(version, EzspVersionResponse.class));
-            versionResponse = (EzspVersionResponse) versionTransaction.getResponse();
-            logger.debug(versionResponse.toString());
+            version = ncp.getVersion(EzspFrame.getEzspVersion());
+            logger.debug(version.toString());
         }
 
         StringBuilder builder = new StringBuilder(60);
         builder.append("EZSP Version=");
-        builder.append(versionResponse.getProtocolVersion());
+        builder.append(version.getProtocolVersion());
         builder.append(", Stack Type=");
-        builder.append(versionResponse.getStackType());
+        builder.append(version.getStackType());
         builder.append(", Stack Version=");
         for (int cnt = 3; cnt >= 0; cnt--) {
-            builder.append((versionResponse.getStackVersion() >> (cnt * 4)) & 0x0F);
+            builder.append((version.getStackVersion() >> (cnt * 4)) & 0x0F);
             if (cnt != 0) {
                 builder.append('.');
             }
