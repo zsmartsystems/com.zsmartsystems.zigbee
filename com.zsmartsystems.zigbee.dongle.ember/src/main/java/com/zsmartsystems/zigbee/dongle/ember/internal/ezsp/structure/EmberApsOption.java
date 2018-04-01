@@ -93,30 +93,25 @@ public enum EmberApsOption {
 
     private int key;
 
-    private EmberApsOption(int key) {
-        this.key = key;
-    }
-
-    private static void initMapping() {
+    static {
         codeMapping = new HashMap<Integer, EmberApsOption>();
         for (EmberApsOption s : values()) {
             codeMapping.put(s.key, s);
         }
     }
 
+    private EmberApsOption(int key) {
+        this.key = key;
+    }
+
     /**
      * Lookup function based on the EmberStatus type code. Returns null if the
      * code does not exist.
      *
-     * @param code
-     *            the code to lookup
+     * @param code the code to lookup
      * @return enumeration value of the alarm type.
      */
     public static EmberApsOption getEmberApsOption(int code) {
-        if (codeMapping == null) {
-            initMapping();
-        }
-
         if (codeMapping.get(code) == null) {
             return UNKNOWN;
         }
@@ -125,7 +120,7 @@ public enum EmberApsOption {
     }
 
     /**
-     * Returns the EZSP protocol defined value for this enum
+     * Returns the EZSP protocol defined value for this enumeration.
      *
      * @return the EZSP protocol key
      */
