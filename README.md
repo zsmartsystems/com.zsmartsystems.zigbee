@@ -2,9 +2,34 @@
 
 # Overview
 
-This project aims to provide a ZigBee Cluster Library written in Java. Packages are broken down to provide the main ZigBee framework, separate packages for dongles, and a test application.
+This project aims to provide a ZigBee Cluster Library written in Java. Packages are broken down to provide the main ZigBee  framework, separate packages for dongles, and a console application that allows full use of the framework.
 
 # Packages
+
+The framework implements a package structure that allows efficient use of re-usable components in a number of different applications.
+
+| Package                                           | Description                                          |
+|---------------------------------------------------|------------------------------------------------------|
+|com.zsmartsystems.zigbee                           |The main framework and cluster library implementation |
+|com.zsmartsystems.zigbee.autocode                  |Code generator for the ZigBee cluster library classes |
+|com.zsmartsystems.zigbee.dongle.cc2531             |Dongle driver for the Texas Instruments ZNP CC2531    |
+|com.zsmartsystems.zigbee.dongle.conbee             |Dongle driver for the Dresden Electronics Conbee      |
+|com.zsmartsystems.zigbee.dongle.ember              |Dongle driver for the Silabs EZSP Network Co-Processor|
+|com.zsmartsystems.zigbee.dongle.ember.autocode     |Code generator for the Ember NCP dongle commands      |
+|com.zsmartsystems.zigbee.dongle.telegesis          |Dongle driver for the Telegesis dongle                |
+|com.zsmartsystems.zigbee.dongle.telegesis.autocode |Code generator for the Telegesis dongle commands      |
+|com.zsmartsystems.zigbee.dongle.xbee               |Dongle driver for the Digi XBee dongle                | 
+|com.zsmartsystems.zigbee.dongle.xbee.autocode      |Code generator for the XBee dongle commands           |
+|com.zsmartsystems.zigbee.console                   |Console commands for the general framework            |
+|com.zsmartsystems.zigbee.test                      |Overall tests and code coverage                       |
+
+## Testing
+
+The framework incorporates a lot of unit testing, ensuring real data received from devices can be correctly decoded. When an error is detected following operation with real devices, a test case is normally added to reproduce the error and then it is fixed. 
+
+## Logging
+
+A log viewer to decode the logs and present them in a usable format is available [here](http://www.cd-jackson.com/index.php/openhab/zigbee-log-viewer). This provides filtering of data at different levels and filtering by node address.
 
 ## ZigBee Stack
 
