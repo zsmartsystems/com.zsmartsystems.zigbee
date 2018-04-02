@@ -27,12 +27,12 @@ import com.zsmartsystems.zigbee.ZigBeeProfileType;
 public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
     @Override
     public String getCommand() {
-        return "devicelist";
+        return "nodelist";
     }
 
     @Override
     public String getDescription() {
-        return "Lists the known devices in the network.";
+        return "Lists the known nodes in the network.";
     }
 
     @Override
@@ -73,7 +73,7 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
                 }
                 first = false;
                 ZigBeeEndpoint endpoint = node.getEndpoint(endpointId);
-                out.println(String.format("  %-3d  %s", endpoint.getEndpointId(),
+                out.println(String.format("%-3d  %s", endpoint.getEndpointId(),
                         ZigBeeProfileType.getProfileType(endpoint.getProfileId())));
             }
             if (first) {

@@ -31,7 +31,7 @@ public class ZigBeeConsoleReportingConfigCommand extends ZigBeeConsoleAbstractCo
 
     @Override
     public String getDescription() {
-        return "Read the report configuration of an attribute.";
+        return "Read the reporting configuration of an attribute.";
     }
 
     @Override
