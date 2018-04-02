@@ -29,6 +29,7 @@ public class EzspGetNeighborResponseTest extends EzspFrameTest {
         EzspFrame.setEzspVersion(4);
         EzspGetNeighborResponse response = new EzspGetNeighborResponse(
                 getPacketData("29 80 79 00 9E 72 FF 01 01 03 CC 43 6B 05 00 6F 0D 00"));
+        System.out.println(response);
 
         assertEquals(true, response.isResponse());
         assertEquals(EzspGetNeighborResponse.FRAME_ID, response.getFrameId());

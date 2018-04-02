@@ -26,6 +26,8 @@ public class EzspStackStatusHandlerResponseTest extends EzspFrameTest {
         EzspFrame.setEzspVersion(4);
 
         EzspStackStatusHandler response = new EzspStackStatusHandler(getPacketData("03 90 19 90"));
+        System.out.println(response);
+
         assertEquals(EzspStackStatusHandler.FRAME_ID, response.getFrameId());
         assertEquals(EmberStatus.EMBER_NETWORK_UP, response.getStatus());
         assertEquals(3, response.getSequenceNumber());

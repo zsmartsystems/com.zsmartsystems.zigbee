@@ -29,6 +29,7 @@ public class EzspMacFilterMatchMessageHandlerTest extends EzspFrameTest {
 
         EzspMacFilterMatchMessageHandler response = new EzspMacFilterMatchMessageHandler(getPacketData(
                 "0F 90 46 01 80 C1 B8 21 01 C8 4A FF FF FF FF 9C 05 23 3F FF E7 0F 00 FF FF 0B 00 0B 00 10 5E C0 11 00 00 20 02 5C 37 02 12"));
+        System.out.println(response);
 
         assertEquals(true, response.isResponse());
         assertEquals(EzspMacFilterMatchMessageHandler.FRAME_ID, response.getFrameId());

@@ -24,6 +24,7 @@ public class EzspNeighborCountResponseTest extends EzspFrameTest {
     public void testVersion() {
         EzspFrame.setEzspVersion(4);
         EzspNeighborCountResponse response = new EzspNeighborCountResponse(getPacketData("28 80 7A 01"));
+        System.out.println(response);
 
         assertEquals(true, response.isResponse());
         assertEquals(EzspNeighborCountResponse.FRAME_ID, response.getFrameId());

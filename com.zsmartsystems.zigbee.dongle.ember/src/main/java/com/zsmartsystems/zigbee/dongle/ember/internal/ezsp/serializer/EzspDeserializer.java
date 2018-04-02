@@ -282,8 +282,20 @@ public class EzspDeserializer {
         return EmberKeyType.getEmberKeyType(deserializeUInt8());
     }
 
-    public EmberKeyStructBitmask deserializeEmberKeyStructBitmask() {
-        return EmberKeyStructBitmask.getEmberKeyStructBitmask(deserializeUInt8());
+    public Set<EmberKeyStructBitmask> deserializeEmberKeyStructBitmask() {
+        Set<EmberKeyStructBitmask> list = new HashSet<EmberKeyStructBitmask>();
+        int value = deserializeUInt16();
+        for (EmberKeyStructBitmask bitmask : EmberKeyStructBitmask.values()) {
+            // Ignore UNKNOWN
+            if (bitmask == EmberKeyStructBitmask.UNKNOWN) {
+                continue;
+            }
+            if ((value & bitmask.getKey()) != 0) {
+                list.add(bitmask);
+            }
+        }
+
+        return list;
     }
 
     public EmberKeyStruct deserializeEmberKeyStruct() {

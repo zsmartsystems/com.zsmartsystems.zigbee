@@ -33,6 +33,7 @@ public class EzspIncomingMessageHandlerTest extends EzspFrameTest {
         EzspFrame.setEzspVersion(4);
         EzspIncomingMessageHandler incomingMessageHandler = new EzspIncomingMessageHandler(
                 getPacketData("00 94 45 00 00 01 00 00 00 00 00 00 00 00 58 FF 00 00 00 FF FF 01 00"));
+        System.out.println(incomingMessageHandler);
 
         assertEquals(0x45, incomingMessageHandler.getFrameId());
         assertTrue(incomingMessageHandler.isResponse());
@@ -46,11 +47,11 @@ public class EzspIncomingMessageHandlerTest extends EzspFrameTest {
         // We process the received frame, make sure the dongle sends it to the networkManager
         EzspIncomingMessageHandler incomingMessageHandler = new EzspIncomingMessageHandler(getPacketData(
                 "01 90 45 00 00 00 01 80 00 00 40 00 00 00 EE FF 00 00 00 FF FF 0C 00 81 F0 F0 00 20 00 00 00 00 00 01"));
+        System.out.println(incomingMessageHandler);
 
         assertEquals(0x45, incomingMessageHandler.getFrameId());
         assertTrue(incomingMessageHandler.isResponse());
         assertEquals(EmberIncomingMessageType.EMBER_INCOMING_UNICAST, incomingMessageHandler.getType());
-        System.out.println(incomingMessageHandler);
         ZigBeeTransportReceive transportReceiveMock = Mockito.mock(ZigBeeTransportReceive.class);
         ArgumentCaptor<ZigBeeApsFrame> apsFrame = ArgumentCaptor.forClass(ZigBeeApsFrame.class);
 
@@ -82,6 +83,8 @@ public class EzspIncomingMessageHandlerTest extends EzspFrameTest {
 
         EzspIncomingMessageHandler incomingMessageHandler = new EzspIncomingMessageHandler(getPacketData(
                 "01 90 45 00 00 00 02 80 00 00 40 00 00 00 44 FF 00 00 00 FF FF 11 00 00 00 00 00 40 8F CD AB 52 80 00 41 2A 80 00 00"));
+        System.out.println(incomingMessageHandler);
+
         assertEquals(0x45, incomingMessageHandler.getFrameId());
         assertTrue(incomingMessageHandler.isResponse());
         assertEquals(EmberIncomingMessageType.EMBER_INCOMING_UNICAST, incomingMessageHandler.getType());

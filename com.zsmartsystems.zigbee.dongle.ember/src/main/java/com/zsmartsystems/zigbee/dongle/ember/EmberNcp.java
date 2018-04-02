@@ -18,15 +18,23 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetChildD
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetChildDataResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetCurrentSecurityStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetCurrentSecurityStateResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetKeyRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetKeyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetKeyTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetKeyTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetNetworkParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetParentChildParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNetworkStateResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspReadCountersRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspReadCountersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberCurrentSecurityState;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyStruct;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus;
@@ -35,7 +43,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspSingl
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspTransaction;
 
 /**
- * This class provides utility methods for accessing the Ember NCP
+ * This class provides utility methods for accessing the Ember NCP.
  *
  * @author Chris Jackson - Initial contribution
  *
@@ -52,12 +60,26 @@ public class EmberNcp {
     private AshFrameHandler ashHandler;
 
     /**
+     * The status value from the last request
+     */
+    private EmberStatus lastStatus;
+
+    /**
      * Create the NCP instance
      *
      * @param ashHandler the {@link AshFrameHandler} used for communicating with the NCP
      */
     public EmberNcp(AshFrameHandler ashHandler) {
         this.ashHandler = ashHandler;
+    }
+
+    /**
+     * Returns the {@link EmberStatus} from the last request. If the request did not provide a status, null is returned.
+     *
+     * @return {@link EmberStatus}
+     */
+    public EmberStatus getLastStatus() {
+        return lastStatus;
     }
 
     /**
@@ -68,14 +90,15 @@ public class EmberNcp {
      * @return the {@link EzspVersionResponse}
      */
     public EzspVersionResponse getVersion(int desiredVersion) {
-        EzspVersionRequest version = new EzspVersionRequest();
-        version.setDesiredProtocolVersion(EzspFrame.getEzspVersion());
-        EzspTransaction versionTransaction = ashHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(version, EzspVersionResponse.class));
-        EzspVersionResponse versionResponse = (EzspVersionResponse) versionTransaction.getResponse();
-        logger.debug(versionResponse.toString());
+        EzspVersionRequest request = new EzspVersionRequest();
+        request.setDesiredProtocolVersion(EzspFrame.getEzspVersion());
+        EzspTransaction transaction = ashHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspVersionResponse.class));
+        EzspVersionResponse response = (EzspVersionResponse) transaction.getResponse();
+        logger.debug(response.toString());
+        lastStatus = null;
 
-        return versionResponse;
+        return response;
     }
 
     /**
@@ -84,18 +107,18 @@ public class EmberNcp {
      * @return the {@link EmberNetworkParameters} or null on error
      */
     public EmberCurrentSecurityState getCurrentSecurityState() {
-        EzspGetCurrentSecurityStateRequest networkParms = new EzspGetCurrentSecurityStateRequest();
-        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(networkParms,
+        EzspGetCurrentSecurityStateRequest request = new EzspGetCurrentSecurityStateRequest();
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
                 EzspGetCurrentSecurityStateResponse.class);
         ashHandler.sendEzspTransaction(transaction);
-        EzspGetCurrentSecurityStateResponse currentSecurityStateResponse = (EzspGetCurrentSecurityStateResponse) transaction
-                .getResponse();
-        logger.debug(currentSecurityStateResponse.toString());
-        if (currentSecurityStateResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
-            logger.debug("Error during retrieval of security parameters: {}", currentSecurityStateResponse);
+        EzspGetCurrentSecurityStateResponse response = (EzspGetCurrentSecurityStateResponse) transaction.getResponse();
+        logger.debug(response.toString());
+        lastStatus = response.getStatus();
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error during retrieval of security parameters: {}", response);
             return null;
         }
-        return currentSecurityStateResponse.getState();
+        return response.getState();
     }
 
     /**
@@ -104,20 +127,19 @@ public class EmberNcp {
      * @return {@link EmberNetworkParameters}
      */
     public EmberNetworkParameters getNetworkParameters() {
-        EzspGetNetworkParametersRequest networkParms = new EzspGetNetworkParametersRequest();
-        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(networkParms,
+        EzspGetNetworkParametersRequest request = new EzspGetNetworkParametersRequest();
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
                 EzspGetNetworkParametersResponse.class);
         ashHandler.sendEzspTransaction(transaction);
-        EzspGetNetworkParametersResponse getNetworkParametersResponse = (EzspGetNetworkParametersResponse) transaction
-                .getResponse();
-        logger.debug(getNetworkParametersResponse.toString());
-        if (getNetworkParametersResponse.getStatus() != EmberStatus.EMBER_SUCCESS
-                && getNetworkParametersResponse.getStatus() != EmberStatus.EMBER_NOT_JOINED) {
-            logger.debug("Error during retrieval of network parameters: {}", getNetworkParametersResponse);
+        EzspGetNetworkParametersResponse response = (EzspGetNetworkParametersResponse) transaction.getResponse();
+        logger.debug(response.toString());
+        lastStatus = response.getStatus();
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS && response.getStatus() != EmberStatus.EMBER_NOT_JOINED) {
+            logger.debug("Error during retrieval of network parameters: {}", response);
             return new EmberNetworkParameters();
         }
 
-        return getNetworkParametersResponse.getParameters();
+        return response.getParameters();
     }
 
     /**
@@ -126,14 +148,14 @@ public class EmberNcp {
      * @return the {@link EmberNetworkStatus}
      */
     public EmberNetworkStatus getNetworkState() {
-        EzspNetworkStateRequest networkStateRequest = new EzspNetworkStateRequest();
-        EzspTransaction networkStateTransaction = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(networkStateRequest, EzspNetworkStateResponse.class));
-        EzspNetworkStateResponse networkStateResponse = (EzspNetworkStateResponse) networkStateTransaction
-                .getResponse();
-        logger.debug(networkStateResponse.toString());
+        EzspNetworkStateRequest request = new EzspNetworkStateRequest();
+        EzspTransaction transaction = ashHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspNetworkStateResponse.class));
+        EzspNetworkStateResponse response = (EzspNetworkStateResponse) transaction.getResponse();
+        logger.debug(response.toString());
+        lastStatus = null;
 
-        return networkStateResponse.getStatus();
+        return response.getStatus();
     }
 
     /**
@@ -142,30 +164,35 @@ public class EmberNcp {
      * @return the {@link EzspGetParentChildParametersResponse}
      */
     public EzspGetParentChildParametersResponse getChildParameters() {
-        EzspGetParentChildParametersRequest childParametersRequest = new EzspGetParentChildParametersRequest();
-        EzspTransaction childParametersTransaction = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(childParametersRequest, EzspGetParentChildParametersResponse.class));
-        EzspGetParentChildParametersResponse childParametersResponse = (EzspGetParentChildParametersResponse) childParametersTransaction
+        EzspGetParentChildParametersRequest request = new EzspGetParentChildParametersRequest();
+        EzspTransaction transaction = ashHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(request, EzspGetParentChildParametersResponse.class));
+        EzspGetParentChildParametersResponse response = (EzspGetParentChildParametersResponse) transaction
                 .getResponse();
+        lastStatus = null;
 
-        return childParametersResponse;
+        return response;
     }
 
     /**
      * Returns information about a child of the local node.
      *
      * @param childId the ID of the child to get information on
-     * @return the {@link EzspGetChildDataResponse} of the requested childId
+     * @return the {@link EzspGetChildDataResponse} of the requested childId or null on error
      */
     public EzspGetChildDataResponse getChildInformation(int childId) {
-        EzspGetChildDataRequest childDataRequest = new EzspGetChildDataRequest();
-        childDataRequest.setIndex(childId);
-        EzspTransaction childDataTransaction = ashHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(childDataRequest, EzspGetChildDataResponse.class));
-        EzspGetChildDataResponse childDataResponse = (EzspGetChildDataResponse) childDataTransaction.getResponse();
-        logger.debug(childDataResponse.toString());
+        EzspGetChildDataRequest request = new EzspGetChildDataRequest();
+        request.setIndex(childId);
+        EzspTransaction transaction = ashHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetChildDataResponse.class));
+        EzspGetChildDataResponse response = (EzspGetChildDataResponse) transaction.getResponse();
+        logger.debug(response.toString());
+        lastStatus = response.getStatus();
+        if (lastStatus != EmberStatus.EMBER_SUCCESS) {
+            return null;
+        }
 
-        return childDataResponse;
+        return response;
     }
 
     /**
@@ -182,18 +209,74 @@ public class EmberNcp {
      */
     public EzspStatus addEndpoint(int endpointId, int deviceId, int profileId, int[] inputClusters,
             int[] outputClusters) {
-        EzspAddEndpointRequest addEndpoint = new EzspAddEndpointRequest();
-        addEndpoint.setEndpoint(endpointId);
-        addEndpoint.setDeviceId(deviceId);
-        addEndpoint.setProfileId(profileId);
-        addEndpoint.setInputClusterList(new int[] { 0 });
-        addEndpoint.setOutputClusterList(new int[] { 0 });
-        EzspTransaction addEndpointTransaction = ashHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(addEndpoint, EzspAddEndpointResponse.class));
-        EzspAddEndpointResponse addEndpointResponse = (EzspAddEndpointResponse) addEndpointTransaction.getResponse();
+        EzspAddEndpointRequest request = new EzspAddEndpointRequest();
+        request.setEndpoint(endpointId);
+        request.setDeviceId(deviceId);
+        request.setProfileId(profileId);
+        request.setInputClusterList(new int[] { 0 });
+        request.setOutputClusterList(new int[] { 0 });
+        EzspTransaction transaction = ashHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspAddEndpointResponse.class));
+        EzspAddEndpointResponse response = (EzspAddEndpointResponse) transaction.getResponse();
 
-        logger.debug(addEndpointResponse.toString());
+        logger.debug(response.toString());
+        lastStatus = null;
 
-        return addEndpointResponse.getStatus();
+        return response.getStatus();
+    }
+
+    /**
+     * Retrieves Ember counters. See the EmberCounterType enumeration for the counter types.
+     *
+     * @return the array of counters
+     */
+    public int[] getCounters() {
+        EzspReadCountersRequest request = new EzspReadCountersRequest();
+        EzspTransaction transaction = ashHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspReadCountersResponse.class));
+        EzspReadCountersResponse response = (EzspReadCountersResponse) transaction.getResponse();
+        logger.debug(response.toString());
+        lastStatus = null;
+        return response.getValues();
+    }
+
+    /**
+     * Gets a Security Key based on the passed key type.
+     *
+     * @param keyType the {@link EmberKeyType} of the key to get
+     * @return the {@link EmberKeyStruct} or null on error
+     */
+    public EmberKeyStruct getKey(EmberKeyType keyType) {
+        EzspGetKeyRequest request = new EzspGetKeyRequest();
+        request.setKeyType(keyType);
+        EzspTransaction transaction = ashHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetKeyResponse.class));
+        EzspGetKeyResponse response = (EzspGetKeyResponse) transaction.getResponse();
+        logger.debug(response.toString());
+        lastStatus = response.getStatus();
+        if (lastStatus != EmberStatus.EMBER_SUCCESS) {
+            return null;
+        }
+        return response.getKeyStruct();
+    }
+
+    /**
+     * Gets a Security Key based on the passed key type.
+     *
+     * @param index the index of the key to get
+     * @return the {@link EmberKeyStruct} of the requested key or null on error
+     */
+    public EmberKeyStruct getKeyTableEntry(int index) {
+        EzspGetKeyTableEntryRequest request = new EzspGetKeyTableEntryRequest();
+        request.setIndex(index);
+        EzspTransaction transaction = ashHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetKeyTableEntryResponse.class));
+        EzspGetKeyTableEntryResponse response = (EzspGetKeyTableEntryResponse) transaction.getResponse();
+        logger.debug(response.toString());
+        lastStatus = response.getStatus();
+        if (lastStatus != EmberStatus.EMBER_SUCCESS) {
+            return null;
+        }
+        return response.getKeyStruct();
     }
 }

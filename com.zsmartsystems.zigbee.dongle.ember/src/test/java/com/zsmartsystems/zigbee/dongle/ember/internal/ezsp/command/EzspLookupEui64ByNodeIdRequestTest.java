@@ -28,6 +28,7 @@ public class EzspLookupEui64ByNodeIdRequestTest extends EzspFrameTest {
         EzspLookupEui64ByNodeIdRequest request = new EzspLookupEui64ByNodeIdRequest();
         request.setNodeId(0);
         request.setSequenceNumber(5);
+        System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData("05 00 61 00 00"), request.serialize()));
     }

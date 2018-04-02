@@ -30,6 +30,7 @@ public class EzspMessageSentHandlerTest extends EzspFrameTest {
         EzspFrame.setEzspVersion(4);
         EzspMessageSentHandler messageSentHandler = new EzspMessageSentHandler(
                 getPacketData("01 90 3F 00 00 00 00 01 00 00 00 00 00 01 00 00 45 00 00 00"));
+        System.out.println(messageSentHandler);
 
         assertTrue(messageSentHandler.isResponse());
         assertEquals(EmberStatus.EMBER_SUCCESS, messageSentHandler.getStatus());
@@ -41,8 +42,8 @@ public class EzspMessageSentHandlerTest extends EzspFrameTest {
         EzspFrame.setEzspVersion(4);
         EzspMessageSentHandler messageSentHandler = new EzspMessageSentHandler(
                 getPacketData("04 90 3F 00 00 00 00 00 04 00 00 00 40 11 00 00 78 04 00 00"));
-
         System.out.println(messageSentHandler);
+
         assertTrue(messageSentHandler.isResponse());
         assertEquals(EmberStatus.EMBER_SUCCESS, messageSentHandler.getStatus());
         assertEquals(0, messageSentHandler.getMessageContents().length);

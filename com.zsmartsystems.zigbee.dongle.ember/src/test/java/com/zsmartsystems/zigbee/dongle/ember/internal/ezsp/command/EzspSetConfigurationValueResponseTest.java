@@ -27,6 +27,7 @@ public class EzspSetConfigurationValueResponseTest extends EzspFrameTest {
 
         EzspSetConfigurationValueResponse response = new EzspSetConfigurationValueResponse(
                 getPacketData("02 80 53 00"));
+        System.out.println(response);
 
         assertEquals(2, response.getSequenceNumber());
         assertEquals(true, response.isResponse());
