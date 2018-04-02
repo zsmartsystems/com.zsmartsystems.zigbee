@@ -32,6 +32,7 @@ public class EzspStartScanRequestTest extends EzspFrameTest {
         request.setScanType(EzspNetworkScanType.EZSP_ENERGY_SCAN);
         request.setChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ);
         request.setDuration(1);
+        System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData("03 00 1A 00 00 F8 FF 07 01"), request.serialize()));
     }

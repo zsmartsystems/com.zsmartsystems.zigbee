@@ -26,6 +26,7 @@ public class EzspIncomingRouteRecordHandlerTest extends EzspFrameTest {
         EzspIncomingRouteRecordHandler incomingMessageHandler = new EzspIncomingRouteRecordHandler(
                 getPacketData("90 90 59 82 A2 53 C1 01 02 01 88 17 00 FF B0 02 0F 47 6B 82"));
         System.out.println(incomingMessageHandler);
+
         assertEquals(0x59, incomingMessageHandler.getFrameId());
         assertTrue(incomingMessageHandler.isResponse());
         assertEquals(2, incomingMessageHandler.getRelayList().length);

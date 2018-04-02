@@ -33,11 +33,12 @@ public class EzspSendUnicastTest extends EzspFrameTest {
     @Test
     public void testReceive1() {
         EzspFrame.setEzspVersion(4);
-        EzspSendUnicastResponse unicastResponse = new EzspSendUnicastResponse(getPacketData("02 80 34 00 9E"));
+        EzspSendUnicastResponse response = new EzspSendUnicastResponse(getPacketData("02 80 34 00 9E"));
+        System.out.println(response);
 
-        assertEquals(0x34, unicastResponse.getFrameId());
-        assertTrue(unicastResponse.isResponse());
-        assertEquals(EmberStatus.EMBER_SUCCESS, unicastResponse.getStatus());
+        assertEquals(0x34, response.getFrameId());
+        assertTrue(response.isResponse());
+        assertEquals(EmberStatus.EMBER_SUCCESS, response.getStatus());
     }
 
     @Test

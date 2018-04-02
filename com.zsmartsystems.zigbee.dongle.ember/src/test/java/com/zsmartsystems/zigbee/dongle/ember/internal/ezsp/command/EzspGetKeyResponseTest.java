@@ -8,13 +8,15 @@
 package com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
 
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberRouteTableEntry;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus;
 
 /**
@@ -22,20 +24,21 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson
  *
  */
-public class EzspGetRouteTableEntryResponseTest extends EzspFrameTest {
+public class EzspGetKeyResponseTest extends EzspFrameTest {
     @Test
     public void testVersion() {
         EzspFrame.setEzspVersion(4);
-        EzspGetRouteTableEntryResponse response = new EzspGetRouteTableEntryResponse(
-                getPacketData("28 80 7B 00 FF FF 00 00 03 00 00 00"));
+        EzspGetKeyResponse response = new EzspGetKeyResponse(getPacketData(
+                "60 80 FF 00 6A 00 03 00 03 AA AA AA AA AA AA AA AA AA AA AA AA AA AA AA AA 24 10 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"));
         System.out.println(response);
 
         assertEquals(true, response.isResponse());
-        assertEquals(EzspGetRouteTableEntryResponse.FRAME_ID, response.getFrameId());
+        assertEquals(EzspGetKeyResponse.FRAME_ID, response.getFrameId());
         assertEquals(EmberStatus.EMBER_SUCCESS, response.getStatus());
-        EmberRouteTableEntry route = response.getValue();
-        assertNotNull(route);
-        assertEquals(3, route.getStatus());
-        assertEquals(65535, route.getDestination());
+        assertTrue(Arrays.equals(new int[] { 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA,
+                0xAA, 0xAA, 0xAA, 0xAA }, response.getKeyStruct().getKey().getContents()));
+        assertEquals(0, response.getKeyStruct().getIncomingFrameCounter());
+        assertEquals(266276, response.getKeyStruct().getOutgoingFrameCounter());
+        assertEquals(EmberKeyType.EMBER_CURRENT_NETWORK_KEY, response.getKeyStruct().getType());
     }
 }

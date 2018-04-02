@@ -25,6 +25,7 @@ public class EzspStartScanResponseTest extends EzspFrameTest {
     public void testVersion() {
         EzspFrame.setEzspVersion(4);
         EzspVersionResponse version = new EzspVersionResponse(getPacketData("03 80 00 04 02 00 58"));
+        System.out.println(version);
 
         assertEquals(3, version.getSequenceNumber());
         assertEquals(true, version.isResponse());

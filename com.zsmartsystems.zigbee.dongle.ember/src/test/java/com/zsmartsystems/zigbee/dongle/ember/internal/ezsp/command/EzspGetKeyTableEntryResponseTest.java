@@ -8,13 +8,11 @@
 package com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberRouteTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus;
 
 /**
@@ -22,20 +20,18 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus
  * @author Chris Jackson
  *
  */
-public class EzspGetRouteTableEntryResponseTest extends EzspFrameTest {
+public class EzspGetKeyTableEntryResponseTest extends EzspFrameTest {
     @Test
     public void testVersion() {
         EzspFrame.setEzspVersion(4);
-        EzspGetRouteTableEntryResponse response = new EzspGetRouteTableEntryResponse(
-                getPacketData("28 80 7B 00 FF FF 00 00 03 00 00 00"));
+        EzspGetKeyTableEntryResponse response = new EzspGetKeyTableEntryResponse(getPacketData(
+                "8A 80 FF 00 71 B6 00 00 06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 20 00 00 00 6C F2 00 20 00"));
         System.out.println(response);
 
         assertEquals(true, response.isResponse());
-        assertEquals(EzspGetRouteTableEntryResponse.FRAME_ID, response.getFrameId());
-        assertEquals(EmberStatus.EMBER_SUCCESS, response.getStatus());
-        EmberRouteTableEntry route = response.getValue();
-        assertNotNull(route);
-        assertEquals(3, route.getStatus());
-        assertEquals(65535, route.getDestination());
+        assertEquals(EzspGetKeyTableEntryResponse.FRAME_ID, response.getFrameId());
+        assertEquals(EmberStatus.EMBER_TABLE_ENTRY_ERASED, response.getStatus());
+        assertEquals(0, response.getKeyStruct().getIncomingFrameCounter());
+        assertEquals(0, response.getKeyStruct().getOutgoingFrameCounter());
     }
 }

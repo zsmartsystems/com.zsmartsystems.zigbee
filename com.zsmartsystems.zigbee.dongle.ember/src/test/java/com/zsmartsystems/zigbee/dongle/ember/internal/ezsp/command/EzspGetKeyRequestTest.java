@@ -15,24 +15,22 @@ import org.junit.Test;
 
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberZdoConfigurationFlags;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspConfigId;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyType;
 
 /**
  *
  * @author Chris Jackson
  *
  */
-public class EzspSetConfigurationValueRequestTest extends EzspFrameTest {
+public class EzspGetKeyRequestTest extends EzspFrameTest {
     @Test
-    public void testVersion() {
+    public void testAddEndpointRequest() {
         EzspFrame.setEzspVersion(4);
-        EzspSetConfigurationValueRequest request = new EzspSetConfigurationValueRequest();
+        EzspGetKeyRequest request = new EzspGetKeyRequest();
+        request.setKeyType(EmberKeyType.EMBER_APPLICATION_LINK_KEY);
         request.setSequenceNumber(2);
-        request.setConfigId(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS);
-        request.setValue(EmberZdoConfigurationFlags.EMBER_APP_RECEIVES_SUPPORTED_ZDO_REQUESTS.getKey());
         System.out.println(request);
 
-        assertTrue(Arrays.equals(getPacketData("02 00 53 2A 01 00"), request.serialize()));
+        assertTrue(Arrays.equals(getPacketData("02 00 6A 05"), request.serialize()));
     }
 }

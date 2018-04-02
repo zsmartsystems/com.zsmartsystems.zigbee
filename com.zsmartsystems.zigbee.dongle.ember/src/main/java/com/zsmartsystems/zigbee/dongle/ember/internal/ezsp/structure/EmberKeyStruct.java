@@ -12,6 +12,8 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspDeseri
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.serializer.EzspSerializer;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyType;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class to implement the Ember Structure <b>EmberKeyStruct</b>.
@@ -28,8 +30,9 @@ public class EmberKeyStruct {
      * A bitmask indicating the presence of data within the various fields in the structure.
      * <p>
      * EZSP type is <i>EmberKeyStructBitmask</i> - Java type is {@link EmberKeyStructBitmask}
+     * Parameter allows multiple options so implemented as a {@link Set}.
      */
-    private EmberKeyStructBitmask bitmask;
+    private Set<EmberKeyStructBitmask> bitmask = new HashSet<EmberKeyStructBitmask>();
 
     /**
      * The type of the key.
@@ -88,19 +91,28 @@ public class EmberKeyStruct {
      * <p>
      * EZSP type is <i>EmberKeyStructBitmask</i> - Java type is {@link EmberKeyStructBitmask}
      *
-     * @return the current bitmask as {@link EmberKeyStructBitmask}
+     * @return the current bitmask as {@link Set} of {@link EmberKeyStructBitmask}
      */
-    public EmberKeyStructBitmask getBitmask() {
+    public Set<EmberKeyStructBitmask> getBitmask() {
         return bitmask;
     }
 
     /**
      * A bitmask indicating the presence of data within the various fields in the structure.
      *
-     * @param bitmask the bitmask to set as {@link EmberKeyStructBitmask}
+     * @param bitmask the bitmask to add to the {@link Set} as {@link EmberKeyStructBitmask}
      */
-    public void setBitmask(EmberKeyStructBitmask bitmask) {
-        this.bitmask = bitmask;
+    public void addBitmask(EmberKeyStructBitmask bitmask) {
+        this.bitmask.add(bitmask);
+    }
+
+    /**
+     * A bitmask indicating the presence of data within the various fields in the structure.
+     *
+     * @param bitmask the bitmask to remove to the {@link Set} as {@link EmberKeyStructBitmask}
+     */
+    public void removeBitmask(EmberKeyStructBitmask bitmask) {
+        this.bitmask.remove(bitmask);
     }
 
     /**

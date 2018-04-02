@@ -34,7 +34,6 @@ public class EzspAddEndpointRequestTest extends EzspFrameTest {
         request.setOutputClusterList(clusters);
         request.setProfileId(0x104);
         request.setSequenceNumber(2);
-
         System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData("02 00 02 01 04 01 00 00 00 03 03 00 00 01 00 06 00 00 00 01 00 06 00"),
@@ -52,7 +51,6 @@ public class EzspAddEndpointRequestTest extends EzspFrameTest {
         request.setOutputClusterList(clusters);
         request.setProfileId(0x104);
         request.setSequenceNumber(170);
-
         System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData("AA 00 02 01 04 01 00 00 00 00 00"), request.serialize()));

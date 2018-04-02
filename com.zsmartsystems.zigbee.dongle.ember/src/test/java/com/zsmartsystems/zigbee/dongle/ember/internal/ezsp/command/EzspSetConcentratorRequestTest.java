@@ -35,6 +35,7 @@ public class EzspSetConcentratorRequestTest extends EzspFrameTest {
         request.setEnable(true);
         request.setDeliveryFailureThreshold(8);
         request.setRouteErrorThreshold(8);
+        System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData("34 00 10 01 F9 FF 3C 00 10 0E 08 08 00"), request.serialize()));
     }
@@ -51,6 +52,7 @@ public class EzspSetConcentratorRequestTest extends EzspFrameTest {
         request.setEnable(false);
         request.setDeliveryFailureThreshold(8);
         request.setRouteErrorThreshold(8);
+        System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData("34 00 10 00 F8 FF 3C 00 10 0E 08 08 00"), request.serialize()));
     }

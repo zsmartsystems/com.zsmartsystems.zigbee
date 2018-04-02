@@ -228,8 +228,13 @@ public class EzspSerializer {
         buffer[length++] = valueId.getKey();
     }
 
-    public void serializeEmberKeyStructBitmask(EmberKeyStructBitmask bitmask) {
-        buffer[length++] = bitmask.getKey();
+    public void serializeEmberKeyStructBitmask(Set<EmberKeyStructBitmask> keyBitmask) {
+        int value = 0;
+        for (EmberKeyStructBitmask bitmask : keyBitmask) {
+            value |= bitmask.getKey();
+        }
+        buffer[length++] = value & 0xFF;
+        buffer[length++] = (value >> 8) & 0xFF;
     }
 
     public void serializeEmberPowerMode(EmberPowerMode powerMode) {

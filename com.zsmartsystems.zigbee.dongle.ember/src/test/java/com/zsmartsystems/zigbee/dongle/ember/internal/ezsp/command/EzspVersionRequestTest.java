@@ -28,6 +28,7 @@ public class EzspVersionRequestTest extends EzspFrameTest {
         EzspVersionRequest version = new EzspVersionRequest();
         version.setDesiredProtocolVersion(4);
         version.setSequenceNumber(0);
+        System.out.println(version);
 
         assertTrue(Arrays.equals(getPacketData("00 00 00 04"), version.serialize()));
     }
@@ -38,6 +39,7 @@ public class EzspVersionRequestTest extends EzspFrameTest {
         EzspVersionRequest version = new EzspVersionRequest();
         version.setDesiredProtocolVersion(5);
         version.setSequenceNumber(0);
+        System.out.println(version);
 
         assertTrue(Arrays.equals(getPacketData("00 00 FF 00 00 05"), version.serialize()));
     }
@@ -48,6 +50,7 @@ public class EzspVersionRequestTest extends EzspFrameTest {
         EzspVersionRequest version = new EzspVersionRequest();
         version.setDesiredProtocolVersion(6);
         version.setSequenceNumber(0);
+        System.out.println(version);
 
         assertTrue(Arrays.equals(getPacketData("00 00 FF 00 00 06"), version.serialize()));
     }
