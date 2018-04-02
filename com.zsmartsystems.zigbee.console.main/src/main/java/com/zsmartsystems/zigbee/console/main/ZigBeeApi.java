@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.console;
+package com.zsmartsystems.zigbee.console.main;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +18,6 @@ import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
@@ -68,33 +67,6 @@ public class ZigBeeApi {
     }
 
     /**
-     * Gets the ZigBee network.
-     *
-     * @return the ZigBee network
-     */
-    public ZigBeeNetworkManager getNetwork() {
-        return networkManager;
-    }
-
-    /**
-     * Removes device(s) by network address.
-     *
-     * @param address the network address
-     */
-    // public void removeDevice(final ZigBeeEndpointAddress address) {
-    // networkManager.removeDevice(address);
-    // }
-
-    /**
-     * Gets ZigBee devices.
-     *
-     * @return list of ZigBee devices
-     */
-    // public List<ZigBeeEndpoint> getDevices() {
-    // return networkManager.getDevices();
-    // }
-
-    /**
      * Gets group by network address.
      *
      * @param groupId the group ID
@@ -111,34 +83,6 @@ public class ZigBeeApi {
      */
     public List<ZigBeeGroupAddress> getGroups() {
         return networkManager.getGroups();
-    }
-
-    /**
-     * Binds two devices.
-     *
-     * @param source the source device
-     * @param destination the destination device
-     * @param clusterId the cluster ID
-     * @return TRUE if no errors occurred in sending.
-     */
-    public Future<CommandResult> bind(final ZigBeeEndpoint source, final ZigBeeEndpoint destination,
-            final int clusterId) {
-        ZclCluster cluster = source.getCluster(clusterId);
-        return cluster.bind(destination.getIeeeAddress(), destination.getEndpointId());
-    }
-
-    /**
-     * Unbinds two devices.
-     *
-     * @param source the source device
-     * @param destination the destination device
-     * @param clusterId the cluster ID
-     * @return TRUE if no errors occurred in sending.
-     */
-    public Future<CommandResult> unbind(final ZigBeeEndpoint source, final ZigBeeEndpoint destination,
-            final int clusterId) {
-        ZclCluster cluster = source.getCluster(clusterId);
-        return cluster.unbind(destination.getIeeeAddress(), destination.getEndpointId());
     }
 
     /**
@@ -298,69 +242,6 @@ public class ZigBeeApi {
         command.setWarningDuration(duration);
 
         return networkManager.send(destination, command);
-    }
-
-    /**
-     * Writes attribute to device.
-     *
-     * @param deviceAddress the ZigBeeDeviceAddress
-     * @param clusterId the cluster ID
-     * @param attributeId the attribute ID
-     * @param value the value
-     * @return the command result future
-     */
-    public Future<CommandResult> write(final ZigBeeEndpointAddress deviceAddress, final int clusterId,
-            final int attributeId, final Object value) {
-        ZigBeeEndpoint device = networkManager.getNode(deviceAddress.getAddress())
-                .getEndpoint(deviceAddress.getEndpoint());
-        ZclCluster cluster = device.getCluster(clusterId);
-        ZclAttribute attribute = cluster.getAttribute(attributeId);
-        return cluster.write(attribute, value);
-    }
-
-    /**
-     * Reads attribute from device.
-     *
-     * @param device the device ZigBeeDeviceAddress
-     * @param clusterId the cluster ID
-     * @param attributeId the attribute ID
-     * @return the command result future
-     */
-    public Future<CommandResult> read(final ZigBeeEndpointAddress deviceAddress, final int clusterId,
-            final int attributeId) {
-        ZigBeeEndpoint device = networkManager.getNode(deviceAddress.getAddress())
-                .getEndpoint(deviceAddress.getEndpoint());
-        ZclCluster cluster = device.getCluster(clusterId);
-        if (cluster == null) {
-            return null;
-        }
-        ZclAttribute attribute = cluster.getAttribute(attributeId);
-        return cluster.read(attribute);
-    }
-
-    /**
-     * Configures attribute reporting.
-     *
-     * @param device the device
-     * @param clusterId the cluster ID
-     * @param attributeId the attribute ID
-     * @param minInterval the minimum interval
-     * @param maxInterval the maximum interval
-     * @param reportableChange the reportable change
-     * @return the command result future
-     */
-    // public Future<CommandResult> report(final ZigBeeDeviceAddress device, final int clusterId, final int attributeId,
-    // final int minInterval, final int maxInterval, final Object reportableChange) {
-    // return networkManager.setReporting(device, clusterId, attributeId, minInterval, maxInterval, reportableChange);
-    // }
-
-    /**
-     * Permit joining.
-     *
-     * @param enable enable
-     */
-    public void permitJoin(final boolean enable) {
-        networkManager.permitJoin(enable ? 255 : 0);
     }
 
     /**

@@ -5,9 +5,11 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.console;
+package com.zsmartsystems.zigbee.console.main;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.xml.DOMConfigurator;
@@ -19,6 +21,13 @@ import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkMeshMonitor;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpChildrenCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpCountersCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpStateCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpVersionCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNetworkStateCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleSecurityStateCommand;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
 import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
@@ -37,9 +46,8 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 
 /**
- * The ZigBee gateway console. Simple console used as an example and test application.
+ * The ZigBee test console. Simple console used for testing the framework.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
 public class ZigBeeConsoleMain {
@@ -50,7 +58,7 @@ public class ZigBeeConsoleMain {
     /**
      * The usage.
      */
-    public static final String USAGE = "Syntax: java -jar zigbee4java-serialPort.jar [EMBER|CC2531|TELEGESIS|CONBEE] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET";
+    public static final String USAGE = "Syntax: java -jar zigbee4java-serialPort.jar [EMBER|CC2531|TELEGESIS|CONBEE|XBEE] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET";
 
     /**
      * Private constructor to disable constructing main class.
@@ -114,7 +122,9 @@ public class ZigBeeConsoleMain {
 
         final ZigBeePort serialPort = new ZigBeeSerialPort(serialPortName, serialBaud, flowControl);
 
-        System.out.println("Initialising console...");
+        System.out.println("Initialising ZigBee console...");
+
+        List<Class<? extends ZigBeeConsoleCommand>> commands = new ArrayList<>();
 
         final ZigBeeTransportTransmit dongle;
         if (dongleName.toUpperCase().equals("CC2531")) {
@@ -131,6 +141,14 @@ public class ZigBeeConsoleMain {
             concentratorConfig.setRefreshMinimum(60);
             concentratorConfig.setRefreshMaximum(3600);
             transportOptions.addOption(TransportConfigOption.CONCENTRATOR_CONFIG, concentratorConfig);
+
+            // Add transport specific console commands
+            commands.add(EmberConsoleNcpChildrenCommand.class);
+            commands.add(EmberConsoleNcpCountersCommand.class);
+            commands.add(EmberConsoleNcpStateCommand.class);
+            commands.add(EmberConsoleNcpVersionCommand.class);
+            commands.add(EmberConsoleNetworkStateCommand.class);
+            commands.add(EmberConsoleSecurityStateCommand.class);
         } else if (dongleName.toUpperCase().equals("XBEE")) {
             dongle = new ZigBeeDongleXBee(serialPort);
         } else if (dongleName.toUpperCase().equals("CONBEE")) {
@@ -162,7 +180,7 @@ public class ZigBeeConsoleMain {
         }
         networkManager.setNetworkStateSerializer(networkStateSerializer);
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
-        final ZigBeeConsole console = new ZigBeeConsole(networkManager, dongle);
+        final ZigBeeConsole console = new ZigBeeConsole(networkManager, dongle, commands);
 
         // Initialise the network
         networkManager.initialize();
@@ -188,10 +206,10 @@ public class ZigBeeConsoleMain {
         dongle.updateTransportConfig(transportOptions);
 
         if (!networkManager.startup(resetNetwork)) {
-            System.out.println("ZigBee API starting up ... [FAIL]");
+            System.out.println("ZigBee console starting up ... [FAIL]");
             // return;
         } else {
-            System.out.println("ZigBee API starting up ... [OK]");
+            System.out.println("ZigBee console starting up ... [OK]");
         }
 
         // Start the mesh monitor

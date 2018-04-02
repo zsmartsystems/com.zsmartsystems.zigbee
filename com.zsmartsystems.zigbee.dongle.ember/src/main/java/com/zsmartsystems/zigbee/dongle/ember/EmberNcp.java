@@ -16,6 +16,8 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspAddEndpoi
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspAddEndpointResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetChildDataRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetChildDataResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetConfigurationValueRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetConfigurationValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetCurrentSecurityStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetCurrentSecurityStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetKeyRequest;
@@ -26,10 +28,16 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetNetwor
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetParentChildParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetParentChildParametersResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetPolicyRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNetworkStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspReadCountersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspReadCountersResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetConfigurationValueRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetConfigurationValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetPolicyRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberCurrentSecurityState;
@@ -38,6 +46,9 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyTyp
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberStatus;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspConfigId;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspDecisionId;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspPolicyId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspStatus;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspSingleResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspTransaction;
@@ -279,4 +290,99 @@ public class EmberNcp {
         }
         return response.getKeyStruct();
     }
+
+    /**
+     * Get a configuration value
+     *
+     * @param configId the {@link EzspConfigId} to set
+     * @return the configuration value as {@link Integer} or null on error
+     */
+    public Integer getConfiguration(EzspConfigId configId) {
+        EzspGetConfigurationValueRequest request = new EzspGetConfigurationValueRequest();
+        request.setConfigId(configId);
+
+        EzspTransaction transaction = ashHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(request, EzspGetConfigurationValueResponse.class));
+        EzspGetConfigurationValueResponse response = (EzspGetConfigurationValueResponse) transaction.getResponse();
+        lastStatus = null;
+        logger.debug(response.toString());
+
+        if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
+            return null;
+        }
+
+        return response.getValue();
+    }
+
+    /**
+     * Set a configuration value
+     *
+     * @param configId the {@link EzspConfigId} to set
+     * @param value the value to set
+     * @return true if the configuration returns success
+     */
+    public boolean setConfiguration(EzspConfigId configId, Integer value) {
+        EzspSetConfigurationValueRequest request = new EzspSetConfigurationValueRequest();
+        request.setConfigId(configId);
+        request.setValue(value);
+        logger.debug(request.toString());
+
+        EzspTransaction transaction = ashHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(request, EzspSetConfigurationValueResponse.class));
+        EzspSetConfigurationValueResponse response = (EzspSetConfigurationValueResponse) transaction.getResponse();
+        lastStatus = null;
+        logger.debug(response.toString());
+
+        return response.getStatus() == EzspStatus.EZSP_SUCCESS;
+    }
+
+    /**
+     * Set a policy used by the NCP to make fast decisions.
+     *
+     * @param policyId the {@link EzspPolicyId} to set
+     * @param decisionId the {@link EzspDecisionId} to set to
+     * @return true if the policy setting was successful
+     */
+    public boolean setPolicy(EzspPolicyId policyId, EzspDecisionId decisionId) {
+        EzspSetPolicyRequest setPolicyRequest = new EzspSetPolicyRequest();
+        setPolicyRequest.setPolicyId(policyId);
+        setPolicyRequest.setDecisionId(decisionId);
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(setPolicyRequest,
+                EzspSetPolicyResponse.class);
+        ashHandler.sendEzspTransaction(transaction);
+        EzspSetPolicyResponse setPolicyResponse = (EzspSetPolicyResponse) transaction.getResponse();
+        lastStatus = null;
+        logger.debug(setPolicyResponse.toString());
+        if (setPolicyResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
+            logger.debug("Error during setting policy: {}", setPolicyResponse);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Get a policy used by the NCP to make fast decisions.
+     *
+     * @param policyId the {@link EzspPolicyId} to set
+     * @return the returned {@link EzspDecisionId} if the policy was retrieved successfully or null if there was an
+     *         error
+     */
+    public EzspDecisionId getPolicy(EzspPolicyId policyId) {
+        EzspGetPolicyRequest getPolicyRequest = new EzspGetPolicyRequest();
+        getPolicyRequest.setPolicyId(policyId);
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(getPolicyRequest,
+                EzspGetPolicyResponse.class);
+        ashHandler.sendEzspTransaction(transaction);
+        EzspGetPolicyResponse getPolicyResponse = (EzspGetPolicyResponse) transaction.getResponse();
+        lastStatus = null;
+        logger.debug(getPolicyResponse.toString());
+        if (getPolicyResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
+            logger.debug("Error getting policy: {}", getPolicyResponse);
+            return null;
+        }
+
+        return getPolicyResponse.getDecisionId();
+    }
+
 }

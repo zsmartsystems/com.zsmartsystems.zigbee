@@ -176,7 +176,6 @@ public class AshFrame {
             }
             unstuffedData[outLength++] = data;
         }
-        int[] frameBuffer = Arrays.copyOfRange(unstuffedData, 0, outLength);
 
         // Check CRC
         if (checkCRC(unstuffedData, outLength) != 0) {
@@ -189,6 +188,7 @@ public class AshFrame {
             return null;
         }
 
+        int[] frameBuffer = Arrays.copyOfRange(unstuffedData, 0, outLength);
         switch (frameType) {
             case ACK:
                 return new AshFrameAck(frameBuffer);

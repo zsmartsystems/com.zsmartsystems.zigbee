@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.console;
+package com.zsmartsystems.zigbee.console.main;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
