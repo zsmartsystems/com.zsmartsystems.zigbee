@@ -117,7 +117,16 @@ Command handlers for commands specific to each dongle implementation are in the 
  
 Command handlers take a set of arguments as provided by the user and will throw ```IllegalArgumentException``` if there are any errors with arguments, or ```IllegalStateException``` if there are any issues with the network state that prevent the command execution.
 
-## General Commands
+## Starting the Console
+The console application takes the following parameters -:
+ 
+ ```
+ Syntax: [EMBER|CC2531|TELEGESIS|CONBEE|XBEE] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET
+ ```
+ 
+## Console Commands
+
+### General Commands
 Note that the console is currently being refactored and this readme only documents the commands that have been migrated. For a full list of commands, use the _help_ command in the console.
 
 | Command         | Description                                           |
@@ -139,7 +148,7 @@ Note that the console is currently being refactored and this readme only documen
 |reportcfg        |Read the reporting configuration of an attribute       |
 
 
-## Ember NCP Commands
+### Ember NCP Commands
 The following commands are available if the transport layer is using the Silabs Ember NCP.
 
 | Command         | Description                                           |
@@ -151,7 +160,7 @@ The following commands are available if the transport layer is using the Silabs 
 |ncpnetworkparms  |Gets the current NCP network parameters                |
 |ncpsecuritystate |Gets the current NCP security state and configuration  |
 
-## Telegesis Commands
+### Telegesis Commands
 The following commands are available if the transport layer is using the Telegesis dongle.
 
 | Command         | Description                                           |
