@@ -1,4 +1,4 @@
-[![Travis Build Status](https://travis-ci.org/zsmartsystems/com.zsmartsystems.zigbee.svg?branch=master)](https://travis-ci.org/zsmartsystems/com.zsmartsystems.zigbee) [![Codacy Coverage Badge](https://api.codacy.com/project/badge/Coverage/b3e149e7838947c9967f50ff3b2a01eb)](https://www.codacy.com/app/zsmartsystems/com-zsmartsystems-zigbee?utm_source=github.com&utm_medium=referral&utm_content=zsmartsystems/com.zsmartsystems.zigbee&utm_campaign=Badge_Coverage) [![Codacy Static Analyses Badge](https://api.codacy.com/project/badge/Grade/b3e149e7838947c9967f50ff3b2a01eb)](https://www.codacy.com/app/zsmartsystems/com-zsmartsystems-zigbee?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zsmartsystems/com.zsmartsystems.zigbee&amp;utm_campaign=Badge_Grade) [![CLA Assistant Badge](https://cla-assistant.io/readme/badge/zsmartsystems/com.zsmartsystems.zigbee)](https://cla-assistant.io/zsmartsystems/com.zsmartsystems.zigbee) [ ![Download](https://api.bintray.com/packages/zsmartsystems/com.zsmartsystems/zigbee/images/download.svg) ](https://bintray.com/zsmartsystems/com.zsmartsystems/zigbee/_latestVersion)
+ [![Travis Build Status](https://travis-ci.org/zsmartsystems/com.zsmartsystems.zigbee.svg?branch=master)](https://travis-ci.org/zsmartsystems/com.zsmartsystems.zigbee) [![Codacy Coverage Badge](https://api.codacy.com/project/badge/Coverage/b3e149e7838947c9967f50ff3b2a01eb)](https://www.codacy.com/app/zsmartsystems/com-zsmartsystems-zigbee?utm_source=github.com&utm_medium=referral&utm_content=zsmartsystems/com.zsmartsystems.zigbee&utm_campaign=Badge_Coverage) [![Codacy Static Analyses Badge](https://api.codacy.com/project/badge/Grade/b3e149e7838947c9967f50ff3b2a01eb)](https://www.codacy.com/app/zsmartsystems/com-zsmartsystems-zigbee?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zsmartsystems/com.zsmartsystems.zigbee&amp;utm_campaign=Badge_Grade) [![CLA Assistant Badge](https://cla-assistant.io/readme/badge/zsmartsystems/com.zsmartsystems.zigbee)](https://cla-assistant.io/zsmartsystems/com.zsmartsystems.zigbee) [ ![Download](https://api.bintray.com/packages/zsmartsystems/com.zsmartsystems/zigbee/images/download.svg) ](https://bintray.com/zsmartsystems/com.zsmartsystems/zigbee/_latestVersion)
 
 # Overview
 
@@ -37,7 +37,7 @@ A log viewer to decode the logs and present them in a usable format is available
 ## ZigBee Stack
 
 ## Dongles
-  
+
 ### Texas Instruments CC2531
 
 The library supports the Texas Instruments ZNP protocol over a serial interface.
@@ -69,11 +69,11 @@ The XBee S2C XStick is supported.
 ## Tested Hardware
 
 The framework has been tested against many different devices - many lights, motion sensors, temperature/humidity/light sensors, plug sockets...
- 
+
 ## ZigBee Dongles and Chipsets
 
 The following table provides a summary of some of the dongles / chipsets that are available on the market nd their support within the library. Receive sensitivity and transmit power are the main parameters affecting RF performance - it should be noted that regulations may reduce transmit power in some areas of the world and other factors can also impact performance. 
- 
+
 | Model                 | Support         | Receive     | Transmit     | Antenna  |
 |-----------------------|-----------------|-------------|--------------|----------|
 | Xbee XU-Z11           | Yes             | -90dBm      | +4.5dBm      | Internal |
@@ -114,16 +114,16 @@ All commands implement the ```ZigBeeConsoleCommand``` interface, providing an ea
 The command handlers used in the console application are in the package ```com.zsmartsystems.zigbee.console```. This is separate from the main console application, and this allows the command handlers to be incorporated into other frameworks.
 
 Command handlers for commands specific to each dongle implementation are in the package ```com.zsmartsystems.zigbee.console.xxx``` (where xxx is the name of the dongle). These commands allow access to non standard API relating solely to each dongle.
- 
+
 Command handlers take a set of arguments as provided by the user and will throw ```IllegalArgumentException``` if there are any errors with arguments, or ```IllegalStateException``` if there are any issues with the network state that prevent the command execution.
 
 ## Starting the Console
 The console application takes the following parameters -:
- 
- ```
- Syntax: [EMBER|CC2531|TELEGESIS|CONBEE|XBEE] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET
- ```
- 
+
+```
+Syntax: [EMBER|CC2531|TELEGESIS|CONBEE|XBEE] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET
+```
+
 ## Console Commands
 
 ### General Commands
@@ -178,9 +178,9 @@ The following commands are available if the transport layer is using the Teleges
 * Code must be formatted using the Eclipse code formatter provided in the project.
 * Contributions must be your own and you must agree with the license.
 * You must sign the PR and commits and must agree to the [Contributor License Agreement](https://cla-assistant.io/zsmartsystems/com.zsmartsystems.zigbee).
- 
+
 ## Maven goals
- 
+
 * To build: ```mvn clean install```
 * To prepeare a new release: ```mvn release:prepare```
 * To perform a new release: ```mvn release:perform```
