@@ -167,6 +167,9 @@ public class XBeeFrameHandler {
                         // Get a packet from the serial port
                         int[] responseData = getPacket();
                         if (responseData == null) {
+                            synchronized (commandLock) {
+                                sentCommand = null;
+                            }
                             continue;
                         }
 
@@ -185,7 +188,9 @@ public class XBeeFrameHandler {
                         // Use the Response Factory to get a response
                         XBeeResponse response = XBeeResponseFactory.getXBeeFrame(responseData);
                         if (response != null && notifyResponseReceived(response)) {
-                            sentCommand = null;
+                            synchronized (commandLock) {
+                                sentCommand = null;
+                            }
                         }
                     } catch (Exception e) {
                         logger.error("XBeeFrameHandler exception", e);
@@ -222,7 +227,7 @@ public class XBeeFrameHandler {
      * @return the int array with the packet data
      */
     private int[] getPacket() {
-        int[] inputBuffer = new int[120];
+        int[] inputBuffer = new int[180];
         int inputBufferLength = 0;
         RxStateMachine rxState = RxStateMachine.WAITING;
         int length = 0;
@@ -557,6 +562,10 @@ public class XBeeFrameHandler {
             return future.get(transactionTimeout, TimeUnit.MILLISECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             logger.debug("XBee interrupted in sendRequest {}", command);
+            synchronized (commandLock) {
+                sentCommand = null;
+            }
+
             future.cancel(true);
             return null;
         }
