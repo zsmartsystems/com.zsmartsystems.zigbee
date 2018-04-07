@@ -205,7 +205,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         ncp.getNetworkParameters();
 
         // Add the endpoint
-        ncp.addEndpoint(1, 0, ZigBeeProfileType.HOME_AUTOMATION.getId(), new int[] { 0 }, new int[] { 0 });
+        ncp.addEndpoint(1, 0, ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getId(), new int[] { 0 }, new int[] { 0 });
 
         // Now initialise the network
         EzspNetworkInitRequest networkInitRequest = new EzspNetworkInitRequest();
@@ -290,7 +290,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     /**
      * Returns an instance of the {@link EmberNcp}
-     * 
+     *
      * @return an instance of the {@link EmberNcp}
      */
     public EmberNcp getEmberNcp() {

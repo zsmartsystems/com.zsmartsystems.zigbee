@@ -1,4 +1,4 @@
-# Home Automation [0x0104]
+# ZigBee Home Automation [0x0104]
 
 Home Automation ZigBee cluster library protocol description is used to code generate cluster specific command serialization classes.
 

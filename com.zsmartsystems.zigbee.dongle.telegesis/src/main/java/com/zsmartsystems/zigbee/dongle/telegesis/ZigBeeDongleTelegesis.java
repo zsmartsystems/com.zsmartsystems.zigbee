@@ -489,7 +489,7 @@ public class ZigBeeDongleTelegesis
         // Set the profile to HA
         TelegesisSetRegisterCommand setRegister = new TelegesisSetRegisterCommand();
         setRegister.setRegister(0x48);
-        setRegister.setValue(ZigBeeProfileType.HOME_AUTOMATION.getId());
+        setRegister.setValue(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getId());
         if (frameHandler.sendRequest(setRegister) == null) {
             logger.debug("Error setting Telegesis profile ID");
         }
