@@ -67,7 +67,13 @@
             <artifactId>com.zsmartsystems.zigbee.console.ember</artifactId>
             <version>1.0.9-SNAPSHOT</version>
         </dependency>
-        
+
+        <dependency>
+            <groupId>com.zsmartsystems.zigbee</groupId>
+            <artifactId>com.zsmartsystems.zigbee.console.telegesis</artifactId>
+            <version>1.0.9-SNAPSHOT</version>
+        </dependency>
+
 	    <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>

@@ -165,7 +165,7 @@ The following commands are available if the transport layer is using the Teleges
 
 | Command         | Description                                           |
 |-----------------|-------------------------------------------------------|
-|                 |                                                       |
+|ncpsecuritystate |Gets the current NCP security state and configuration  |
 
 # Contributing
 

@@ -301,8 +301,22 @@ public class ZigBeeDongleTelegesis
      */
     private final int defaultS10 = 0x56A9;
 
+    /**
+     * Constructor for Telegesis dongle.
+     * 
+     * @param serialPort the {@link ZigBeePort} for communicating with the dongle
+     */
     public ZigBeeDongleTelegesis(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
+    }
+
+    /**
+     * Gets an instance of the {@link TelegesisNcp}
+     *
+     * @return an instance of the {@link TelegesisNcp}
+     */
+    public TelegesisNcp getTelegesisNcp() {
+        return new TelegesisNcp(frameHandler);
     }
 
     @Override
