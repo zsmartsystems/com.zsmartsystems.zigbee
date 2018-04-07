@@ -19,11 +19,14 @@ import javax.annotation.Generated;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T11:42:15Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-07T17:43:10Z")
 public enum ZigBeeProfileType {
     UNKNOWN(-1, "Unknown Profile"),
-    HOME_AUTOMATION(0x0104, "Home Automation"),
-    ZIGBEE_LIGHT_LINK(0xc05e, "ZigBee Light Link");
+    ZIGBEE_HOME_AUTOMATION(0x0104, "ZigBee Home Automation"),
+    ZIGBEE_SMART_ENERGY(0x0109, "ZigBee Smart Energy"),
+    ZIGBEE_LIGHT_LINK(0xC05E, "ZigBee Light Link"),
+    MANUFACTURER_TELEGESIS(0xC091, "Manufacturer Telegesis"),
+    MANUFACTURER_DIGI(0xC105, "Manufacturer Digi");
 
     /*
      * The ZigBee profile ID

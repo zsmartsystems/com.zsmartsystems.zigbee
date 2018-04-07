@@ -159,6 +159,8 @@ public class ZclProtocolCodeGenerator {
         final String definitionFilePathZll = "./src/main/resources/zll_definition.md";
         final String definitionFilePathZdp = "./src/main/resources/zdp_definition.md";
         final String definitionFilePathOta = "./src/main/resources/ota_definition.md";
+        final String definitionFilePathZse = "./src/main/resources/zse_definition.md";
+        final String definitionFilePathMan = "./src/main/resources/manufacturer_definition.md";
 
         final String sourceRootPath;
         // if (args.length != 0) {
@@ -193,8 +195,10 @@ public class ZclProtocolCodeGenerator {
 
         final Context contextZcl = new Context();
         final File definitionFileZcl = new File(definitionFilePathZcl);
+        final File definitionFileZse = new File(definitionFilePathZse);
         final File definitionFileOta = new File(definitionFilePathOta);
         final File definitionFileZll = new File(definitionFilePathZll);
+        final File definitionFileMan = new File(definitionFilePathMan);
         if (!(definitionFileZcl.exists() && definitionFileOta.exists() && definitionFileZll.exists())) {
             System.out.println("Definition file does not exist: " + definitionFilePathZcl);
         } else {
@@ -202,6 +206,8 @@ public class ZclProtocolCodeGenerator {
                 contextZcl.lines = new ArrayList<String>(FileUtils.readLines(definitionFileZcl, "UTF-8"));
                 contextZcl.lines.addAll(new ArrayList<String>(FileUtils.readLines(definitionFileOta, "UTF-8")));
                 contextZcl.lines.addAll(new ArrayList<String>(FileUtils.readLines(definitionFileZll, "UTF-8")));
+                contextZcl.lines.addAll(new ArrayList<String>(FileUtils.readLines(definitionFileZse, "UTF-8")));
+                contextZcl.lines.addAll(new ArrayList<String>(FileUtils.readLines(definitionFileMan, "UTF-8")));
                 generateZclCode(contextZcl, sourceRootFile, packageRoot);
             } catch (final IOException e) {
                 System.out.println(
@@ -306,22 +312,6 @@ public class ZclProtocolCodeGenerator {
             return;
         }
 
-        // try {
-        // generateZclAttributeTypeEnumeration(context, packageRoot, packageFile);
-        // } catch (final IOException e) {
-        // System.out.println("Failed to generate attribute enumeration.");
-        // e.printStackTrace();
-        // return;
-        // }
-
-        // try {
-        // generateZclFieldTypeEnumeration(context, packageRoot, packageFile);
-        // } catch (final IOException e) {
-        // System.out.println("Failed to generate field enumeration.");
-        // e.printStackTrace();
-        // return;
-        // }
-
         try {
             generateAttributeEnumeration(context, packageRoot, sourceRootPath);
         } catch (final IOException e) {
@@ -358,8 +348,6 @@ public class ZclProtocolCodeGenerator {
     public static void generateZdpCode(final Context context, final File sourceRootPath, final String packageRoot) {
         ZclProtocolDefinitionParser.parseProfiles(context);
 
-        final File packageFile = getPackageFile(packageRoot);
-
         try {
             generateZdpCommandClasses(context, packageRoot, sourceRootPath);
         } catch (final IOException e) {
@@ -376,13 +364,6 @@ public class ZclProtocolCodeGenerator {
             return;
         }
 
-        // try {
-        // generateZdpCommandTransactions(context, packageRoot, sourceRootPath);
-        // } catch (final IOException e) {
-        // System.out.println("Failed to generate profile message classes.");
-        // e.printStackTrace();
-        // return;
-        // }
     }
 
     private static void outputClassJavaDoc(final PrintWriter out, String description) {
@@ -548,7 +529,7 @@ public class ZclProtocolCodeGenerator {
         out.println("    UNKNOWN(-1, \"Unknown Profile\"),");
         final LinkedList<Profile> profiles = new LinkedList<Profile>(context.profiles.values());
         for (final Profile profile : profiles) {
-            out.print("    " + profile.profileType + "(" + String.format("0x%04x", profile.profileId) + ", \""
+            out.print("    " + profile.profileType + "(" + String.format("0x%04X", profile.profileId) + ", \""
                     + profile.profileName + "\")");
             out.println(profiles.getLast().equals(profile) ? ';' : ',');
         }
