@@ -260,12 +260,12 @@ public final class ZigBeeConsole {
         }));
     }
 
-    private void createCommands(Map<String, ZigBeeConsoleCommand> newCommands2,
+    private void createCommands(Map<String, ZigBeeConsoleCommand> commands,
             List<Class<? extends ZigBeeConsoleCommand>> transportCommands) {
         for (Class<? extends ZigBeeConsoleCommand> commandClass : transportCommands) {
             try {
                 ZigBeeConsoleCommand command = commandClass.newInstance();
-                newCommands2.put(command.getCommand(), command);
+                commands.put(command.getCommand(), command);
             } catch (InstantiationException | IllegalAccessException | SecurityException e) {
                 e.printStackTrace();
             }

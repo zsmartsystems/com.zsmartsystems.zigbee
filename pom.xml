@@ -40,6 +40,7 @@
         <module>com.zsmartsystems.zigbee.console</module>
         <module>com.zsmartsystems.zigbee.console.ember</module>
         <module>com.zsmartsystems.zigbee.console.main</module>
+        <module>com.zsmartsystems.zigbee.console.telegesis</module>
 		<module>com.zsmartsystems.zigbee.serial</module>
 		<module>com.zsmartsystems.zigbee.test</module>
 	</modules>

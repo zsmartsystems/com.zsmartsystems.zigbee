@@ -28,6 +28,7 @@ import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpStateCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpVersionCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNetworkStateCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleSecurityStateCommand;
+import com.zsmartsystems.zigbee.console.telegesis.TelegesisConsoleSecurityStateCommand;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
 import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
@@ -161,7 +162,8 @@ public class ZigBeeConsoleMain {
             Set<Integer> clusters = new HashSet<Integer>();
             clusters.add(ZclIasZoneCluster.CLUSTER_ID);
             transportOptions.addOption(TransportConfigOption.SUPPORTED_OUTPUT_CLUSTERS, clusters);
-            // transportOptions.addOption(TransportConfigOption.SECURITY_FRAME_COUNTER, 0x8000L);
+
+            commands.add(TelegesisConsoleSecurityStateCommand.class);
         } else {
             dongle = null;
         }
