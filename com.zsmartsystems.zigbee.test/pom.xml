@@ -72,7 +72,7 @@
                 <executions>
                     <execution>
                         <id>codacy-upload-coverage</id>
-                        <phase>verify</phase>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>coverage</goal>
                         </goals>
