@@ -13,37 +13,36 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 /**
- * Enumeration of IAS ACE attribute Alarm Status options.
+ * Enumeration of IAS ACE attribute Zone ID options.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
-public enum AlarmStatusEnum {
-    NO_ALARM(0x0000),
-    BURGLAR(0x0001),
-    FIRE(0x0002),
-    EMERGENCY(0x0003),
-    POLICE_PANIC(0x0004),
-    FIRE_PANIC(0x0005),
-    EMERGENCY_PANIC(0x0006);
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-09T22:43:58Z")
+public enum ZoneIdEnum {
+    ZONE_BYPASSED(0x0000),
+    ZONE_NOT_BYPASSED(0x0001),
+    NOT_ALLOWED(0x0002),
+    INVALID_ZONE_ID(0x0003),
+    UNKNOWN_ZONE_ID(0x0004),
+    INVALID_ARM_CODE(0x0005);
 
     /**
-     * A mapping between the integer code and its corresponding AlarmStatusEnum type to facilitate lookup by value.
+     * A mapping between the integer code and its corresponding ZoneIdEnum type to facilitate lookup by value.
      */
-    private static Map<Integer, AlarmStatusEnum> idMap;
+    private static Map<Integer, ZoneIdEnum> idMap;
 
     static {
-        idMap = new HashMap<Integer, AlarmStatusEnum>();
-        for (AlarmStatusEnum enumValue : values()) {
+        idMap = new HashMap<Integer, ZoneIdEnum>();
+        for (ZoneIdEnum enumValue : values()) {
             idMap.put(enumValue.key, enumValue);
         }
     }
 
     private final int key;
 
-    AlarmStatusEnum(final int key) {
+    ZoneIdEnum(final int key) {
         this.key = key;
     }
 
@@ -51,7 +50,7 @@ public enum AlarmStatusEnum {
         return key;
     }
 
-    public static AlarmStatusEnum getByValue(final int value) {
+    public static ZoneIdEnum getByValue(final int value) {
         return idMap.get(value);
     }
 }

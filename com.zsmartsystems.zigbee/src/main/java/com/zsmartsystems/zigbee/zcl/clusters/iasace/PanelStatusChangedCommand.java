@@ -24,10 +24,10 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * 7.68 seconds).
  * <br>
  * An IAS ACE server SHALL send a Panel Status Changed command upon a change to the IAS CIE’s panel status (e.g.,
- * Disarmed to Arming Away/Stay/Night, Arming Away/Stay/Night to Armed, Armed to Dis-armed) as defined in the Panel Status field.
+ * Disarmed to Arming Away/Stay/Night, Arming Away/Stay/Night to Armed, Armed to Disarmed) as defined in the Panel Status field.
  * <br>
  * When Panel Status is Arming Away/Stay/Night, an IAS ACE server SHOULD send Panel Status Changed commands every second in order to
- * update the Seconds Remaining.    In some markets (e.g., North America), the final 10 seconds of the Arming Away/Stay/Night sequence
+ * update the Seconds Remaining. In some markets (e.g., North America), the final 10 seconds of the Arming Away/Stay/Night sequence
  * requires a separate audible notification (e.g., a double tone).
  * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
@@ -40,10 +40,15 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T17:34:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
 public class PanelStatusChangedCommand extends ZclCommand {
     /**
      * Panel Status command message field.
+     * <p>
+     * Indicates the number of seconds remaining for  the server to be in the state indicated in the PanelStatus parameter.
+     * The SecondsRemaining parameter SHALL be provided if the PanelStatus parameter has a value of 0x04 (Exit delay) or 0x05 (Entry delay).
+     * <p>
+     * The default value SHALL be 0x00.
      */
     private Integer panelStatus;
 
@@ -75,6 +80,11 @@ public class PanelStatusChangedCommand extends ZclCommand {
     /**
      * Gets Panel Status.
      *
+     * Indicates the number of seconds remaining for  the server to be in the state indicated in the PanelStatus parameter.
+     * The SecondsRemaining parameter SHALL be provided if the PanelStatus parameter has a value of 0x04 (Exit delay) or 0x05 (Entry delay).
+     * <p>
+     * The default value SHALL be 0x00.
+     *
      * @return the Panel Status
      */
     public Integer getPanelStatus() {
@@ -83,6 +93,11 @@ public class PanelStatusChangedCommand extends ZclCommand {
 
     /**
      * Sets Panel Status.
+     *
+     * Indicates the number of seconds remaining for  the server to be in the state indicated in the PanelStatus parameter.
+     * The SecondsRemaining parameter SHALL be provided if the PanelStatus parameter has a value of 0x04 (Exit delay) or 0x05 (Entry delay).
+     * <p>
+     * The default value SHALL be 0x00.
      *
      * @param panelStatus the Panel Status
      */

@@ -19,7 +19,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Zone Status Changed Command value object class.
  * <p>
  * This command updates ACE clients in the system of changes to zone status recorded by the ACE server (e.g., IAS CIE device).
- * An IAS ACE server SHOULD send a Zone Status Changed command upon a change to an IAS Zone de-vice’s ZoneStatusthat it manages (i.e.,
+ * An IAS ACE server SHOULD send a Zone Status Changed command upon a change to an IAS Zone device’s ZoneStatus that it manages (i.e.,
  * IAS ACE server SHOULD send a Zone Status Changed command upon receipt of a Zone Status Change Notification command).
  * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
@@ -32,10 +32,13 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T17:34:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
 public class ZoneStatusChangedCommand extends ZclCommand {
     /**
      * Zone ID command message field.
+     * <p>
+     * The index of the Zone in the CIE’s zone table (Table 8-11). If none  is programmed, the  ZoneID  attribute default
+     * value SHALL be indicated in this field.
      */
     private Integer zoneId;
 
@@ -51,6 +54,10 @@ public class ZoneStatusChangedCommand extends ZclCommand {
 
     /**
      * Zone Label command message field.
+     * <p>
+     * Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server SHALL transmit a string with a length
+     * of zero. There is no minimum or maximum length to the Zone Label field; however, the Zone Label SHOULD be between 16 to 24
+     * alphanumeric characters in length.
      */
     private String zoneLabel;
 
@@ -67,6 +74,9 @@ public class ZoneStatusChangedCommand extends ZclCommand {
     /**
      * Gets Zone ID.
      *
+     * The index of the Zone in the CIE’s zone table (Table 8-11). If none  is programmed, the  ZoneID  attribute default
+     * value SHALL be indicated in this field.
+     *
      * @return the Zone ID
      */
     public Integer getZoneId() {
@@ -75,6 +85,9 @@ public class ZoneStatusChangedCommand extends ZclCommand {
 
     /**
      * Sets Zone ID.
+     *
+     * The index of the Zone in the CIE’s zone table (Table 8-11). If none  is programmed, the  ZoneID  attribute default
+     * value SHALL be indicated in this field.
      *
      * @param zoneId the Zone ID
      */
@@ -121,6 +134,10 @@ public class ZoneStatusChangedCommand extends ZclCommand {
     /**
      * Gets Zone Label.
      *
+     * Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server SHALL transmit a string with a length
+     * of zero. There is no minimum or maximum length to the Zone Label field; however, the Zone Label SHOULD be between 16 to 24
+     * alphanumeric characters in length.
+     *
      * @return the Zone Label
      */
     public String getZoneLabel() {
@@ -129,6 +146,10 @@ public class ZoneStatusChangedCommand extends ZclCommand {
 
     /**
      * Sets Zone Label.
+     *
+     * Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server SHALL transmit a string with a length
+     * of zero. There is no minimum or maximum length to the Zone Label field; however, the Zone Label SHOULD be between 16 to 24
+     * alphanumeric characters in length.
      *
      * @param zoneLabel the Zone Label
      */

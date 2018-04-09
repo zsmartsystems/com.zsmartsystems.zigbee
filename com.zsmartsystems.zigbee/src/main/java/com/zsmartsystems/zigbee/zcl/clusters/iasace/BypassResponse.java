@@ -32,21 +32,14 @@ import java.util.List;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T17:34:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
 public class BypassResponse extends ZclCommand {
     /**
      * Bypass Result command message field.
      * <p>
-     * An array of Zone IDs for each zone requested to be bypassed via the Bypass command whereX is equal to the value of
+     * An array of Zone IDs for each zone requested to be bypassed via the Bypass command where X is equal to the value of
      * the Number of Zones field. The order of results for Zone IDs SHALL be the same as the order of Zone IDs sent in
      * the Bypass command by the IAS ACE client.
-     * Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone Status information to be obtained.
-     * A value of zero (i.e. FALSE) indicates there are additional Zone IDs for which Zone Status information is available and
-     * that the IAS ACE client SHOULD send another Get Zone Status com-mand.A value of one (i.e. TRUE) indicates there are no
-     * more Zone IDs for the IAS ACE client to query and the IAS ACE client has received all the Zone Status information for all
-     * IAS Zones managed by the IAS ACE server.
-     * <p>
-     * The IAS ACE client SHOULD NOT typically send another Get Zone Status command.
      */
     private List<Integer> bypassResult;
 
@@ -63,16 +56,9 @@ public class BypassResponse extends ZclCommand {
     /**
      * Gets Bypass Result.
      *
-     * An array of Zone IDs for each zone requested to be bypassed via the Bypass command whereX is equal to the value of
+     * An array of Zone IDs for each zone requested to be bypassed via the Bypass command where X is equal to the value of
      * the Number of Zones field. The order of results for Zone IDs SHALL be the same as the order of Zone IDs sent in
      * the Bypass command by the IAS ACE client.
-     * Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone Status information to be obtained.
-     * A value of zero (i.e. FALSE) indicates there are additional Zone IDs for which Zone Status information is available and
-     * that the IAS ACE client SHOULD send another Get Zone Status com-mand.A value of one (i.e. TRUE) indicates there are no
-     * more Zone IDs for the IAS ACE client to query and the IAS ACE client has received all the Zone Status information for all
-     * IAS Zones managed by the IAS ACE server.
-     * <p>
-     * The IAS ACE client SHOULD NOT typically send another Get Zone Status command.
      *
      * @return the Bypass Result
      */
@@ -83,16 +69,9 @@ public class BypassResponse extends ZclCommand {
     /**
      * Sets Bypass Result.
      *
-     * An array of Zone IDs for each zone requested to be bypassed via the Bypass command whereX is equal to the value of
+     * An array of Zone IDs for each zone requested to be bypassed via the Bypass command where X is equal to the value of
      * the Number of Zones field. The order of results for Zone IDs SHALL be the same as the order of Zone IDs sent in
      * the Bypass command by the IAS ACE client.
-     * Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone Status information to be obtained.
-     * A value of zero (i.e. FALSE) indicates there are additional Zone IDs for which Zone Status information is available and
-     * that the IAS ACE client SHOULD send another Get Zone Status com-mand.A value of one (i.e. TRUE) indicates there are no
-     * more Zone IDs for the IAS ACE client to query and the IAS ACE client has received all the Zone Status information for all
-     * IAS Zones managed by the IAS ACE server.
-     * <p>
-     * The IAS ACE client SHOULD NOT typically send another Get Zone Status command.
      *
      * @param bypassResult the Bypass Result
      */
