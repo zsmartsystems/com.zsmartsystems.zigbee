@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.app.otaserver;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
@@ -238,7 +239,11 @@ public class ZigBeeOtaFile {
                 break;
             }
         }
-        headerString = new String(stringBytes);
+        try {
+            headerString = new String(stringBytes, "ASCII");
+        } catch (UnsupportedEncodingException e) {
+            headerString = "";
+        }
 
         // Unsigned 32-bit integer, Total Image size (including header)
         imageSize = readUnsigned32();

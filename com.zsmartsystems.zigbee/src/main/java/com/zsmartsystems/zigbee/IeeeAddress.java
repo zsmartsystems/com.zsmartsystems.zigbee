@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee;
 
 import java.math.BigInteger;
 import java.security.InvalidParameterException;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -66,7 +67,7 @@ public class IeeeAddress implements Comparable<IeeeAddress> {
         if (address.length != 8) {
             throw new InvalidParameterException("IeeeAddress array length must be 8");
         }
-        this.address = address;
+        this.address = Arrays.copyOf(address, 8);
     }
 
     /**

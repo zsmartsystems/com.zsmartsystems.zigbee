@@ -49,7 +49,7 @@ public class CommandResultFuture implements Future<CommandResult> {
      *
      * @param commandExecution the command execution
      */
-    public void setCommandExecution(CommandExecution commandExecution) {
+    public synchronized void setCommandExecution(CommandExecution commandExecution) {
         this.commandExecution = commandExecution;
     }
 
@@ -58,7 +58,7 @@ public class CommandResultFuture implements Future<CommandResult> {
      *
      * @param result the result
      */
-    public void set(final CommandResult result) {
+    public synchronized void set(final CommandResult result) {
         this.result = result;
     }
 
@@ -73,7 +73,7 @@ public class CommandResultFuture implements Future<CommandResult> {
     }
 
     @Override
-    public boolean isDone() {
+    public synchronized boolean isDone() {
         return result != null;
     }
 
