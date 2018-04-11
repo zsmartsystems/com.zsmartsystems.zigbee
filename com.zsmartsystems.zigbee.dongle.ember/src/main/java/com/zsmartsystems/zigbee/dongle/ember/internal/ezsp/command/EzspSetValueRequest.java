@@ -33,13 +33,6 @@ public class EzspSetValueRequest extends EzspFrameRequest {
     private EzspValueId valueId;
 
     /**
-     * The length of the value parameter in bytes.
-     * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
-     */
-    private int valueLength;
-
-    /**
      * The new value.
      * <p>
      * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
@@ -80,26 +73,6 @@ public class EzspSetValueRequest extends EzspFrameRequest {
     }
 
     /**
-     * The length of the value parameter in bytes.
-     * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
-     *
-     * @return the current valueLength as {@link int}
-     */
-    public int getValueLength() {
-        return valueLength;
-    }
-
-    /**
-     * The length of the value parameter in bytes.
-     *
-     * @param valueLength the valueLength to set as {@link int}
-     */
-    public void setValueLength(int valueLength) {
-        this.valueLength = valueLength;
-    }
-
-    /**
      * The new value.
      * <p>
      * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
@@ -126,7 +99,7 @@ public class EzspSetValueRequest extends EzspFrameRequest {
 
         // Serialize the fields
         serializer.serializeEzspValueId(valueId);
-        serializer.serializeUInt8(valueLength);
+        serializer.serializeUInt8(value.length);
         serializer.serializeUInt8Array(value);
         return serializer.getPayload();
     }
@@ -136,8 +109,6 @@ public class EzspSetValueRequest extends EzspFrameRequest {
         final StringBuilder builder = new StringBuilder(97);
         builder.append("EzspSetValueRequest [valueId=");
         builder.append(valueId);
-        builder.append(", valueLength=");
-        builder.append(valueLength);
         builder.append(", value=");
         for (int c = 0; c < value.length; c++) {
             if (c > 0) {
