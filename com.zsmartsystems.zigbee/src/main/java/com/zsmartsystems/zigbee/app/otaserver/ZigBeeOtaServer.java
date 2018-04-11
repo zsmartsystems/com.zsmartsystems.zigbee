@@ -209,12 +209,12 @@ public class ZigBeeOtaServer implements ZigBeeApplication {
      * indicates that the client is requesting a device specific file such as security credential, log or configuration;
      * hence, the need to include the device’s IEEE address in the image request command.
      */
-    private final int IMAGE_BLOCK_FIELD_IEEE_ADDRESS = 0x01;
+    private static final int IMAGE_BLOCK_FIELD_IEEE_ADDRESS = 0x01;
 
     /**
      * Specifies that the minimum block period field is present
      */
-    private final int IMAGE_BLOCK_FIELD_MINIMUM_BLOCK_PERIOD = 0x02;
+    private static final int IMAGE_BLOCK_FIELD_MINIMUM_BLOCK_PERIOD = 0x02;
 
     /**
      * A list of listeners to receive status callbacks

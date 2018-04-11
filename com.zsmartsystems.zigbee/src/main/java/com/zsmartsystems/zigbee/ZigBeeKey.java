@@ -75,7 +75,7 @@ public class ZigBeeKey {
         if (key.length != 16) {
             throw new IllegalArgumentException("NetworkKey array length must be 16 hex bytes");
         }
-        this.key = key;
+        this.key = Arrays.copyOf(key, 16);
     }
 
     /**

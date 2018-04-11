@@ -70,7 +70,7 @@ public class ExtendedPanId {
         if (panId.length != 8) {
             throw new InvalidParameterException("ExtendedPanId array length must be 8");
         }
-        this.panId = panId;
+        this.panId = Arrays.copyOf(panId, 8);
     }
 
     /**

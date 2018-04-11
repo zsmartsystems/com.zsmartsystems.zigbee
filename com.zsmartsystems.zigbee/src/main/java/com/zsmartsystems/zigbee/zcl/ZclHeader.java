@@ -52,13 +52,13 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  */
 public class ZclHeader {
-    private final int MASK_FRAME_TYPE = 0b00000011;
-    private final int MASK_MANUFACTURER_SPECIFIC = 0b00000100;
-    private final int MASK_DIRECTION = 0b00001000;
-    private final int MASK_DEFAULT_RESPONSE = 0b00010000;
+    private final static int MASK_FRAME_TYPE = 0b00000011;
+    private final static int MASK_MANUFACTURER_SPECIFIC = 0b00000100;
+    private final static int MASK_DIRECTION = 0b00001000;
+    private final static int MASK_DEFAULT_RESPONSE = 0b00010000;
 
-    private final int FRAME_TYPE_ENTIRE_PROFILE = 0x00;
-    private final int FRAME_TYPE_CLUSTER_SPECIFIC = 0x01;
+    private final static int FRAME_TYPE_ENTIRE_PROFILE = 0x00;
+    private final static int FRAME_TYPE_CLUSTER_SPECIFIC = 0x01;
 
     /**
      * The frame type sub-field.
