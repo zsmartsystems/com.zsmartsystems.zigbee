@@ -25,6 +25,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpChildrenCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpCountersCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpStateCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpValueCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpVersionCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNetworkStateCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleSecurityStateCommand;
@@ -147,6 +148,7 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleNcpChildrenCommand.class);
             commands.add(EmberConsoleNcpCountersCommand.class);
             commands.add(EmberConsoleNcpStateCommand.class);
+            commands.add(EmberConsoleNcpValueCommand.class);
             commands.add(EmberConsoleNcpVersionCommand.class);
             commands.add(EmberConsoleNetworkStateCommand.class);
             commands.add(EmberConsoleSecurityStateCommand.class);
