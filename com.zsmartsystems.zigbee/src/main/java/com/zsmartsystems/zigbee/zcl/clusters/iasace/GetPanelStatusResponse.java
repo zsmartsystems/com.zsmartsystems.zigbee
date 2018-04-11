@@ -31,30 +31,40 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T17:34:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
 public class GetPanelStatusResponse extends ZclCommand {
     /**
      * Panel Status command message field.
+     * <p>
+     * Defines the current status of the alarm panel.
+     */
+    private Integer panelStatus;
+
+    /**
+     * Seconds Remaining command message field.
      * <p>
      * Indicates the number of seconds remaining for  the server to be in the state indicated in the PanelStatus parameter.
      * The SecondsRemaining parameter SHALL be provided if the PanelStatus parameter has a value of 0x04 (Exit delay) or 0x05 (Entry delay).
      * <p>
      * The default value SHALL be 0x00.
      */
-    private Integer panelStatus;
-
-    /**
-     * Seconds Remaining command message field.
-     */
     private Integer secondsRemaining;
 
     /**
      * Audible Notification command message field.
+     * <p>
+     * Provide the ACE client with information on which type of audible notification it SHOULD make for the zone status change. This field is useful
+     * for telling the ACE client to play a standard chime or other audio indication or to mute and not sound an audible notification at all. This
+     * field also allows manufacturers to create additional audible alert types (e.g., dog barking, windchimes, conga drums) to enable users to
+     * customise their system.
      */
     private Integer audibleNotification;
 
     /**
      * Alarm Status command message field.
+     * <p>
+     * Provides the ACE client with information on the type of alarm the panel is in if its Panel Status field indicates it is “in alarm.” This field
+     * MAY be useful for ACE clients to display or otherwise initiate notification for users.
      */
     private Integer alarmStatus;
 
@@ -71,10 +81,7 @@ public class GetPanelStatusResponse extends ZclCommand {
     /**
      * Gets Panel Status.
      *
-     * Indicates the number of seconds remaining for  the server to be in the state indicated in the PanelStatus parameter.
-     * The SecondsRemaining parameter SHALL be provided if the PanelStatus parameter has a value of 0x04 (Exit delay) or 0x05 (Entry delay).
-     * <p>
-     * The default value SHALL be 0x00.
+     * Defines the current status of the alarm panel.
      *
      * @return the Panel Status
      */
@@ -85,10 +92,7 @@ public class GetPanelStatusResponse extends ZclCommand {
     /**
      * Sets Panel Status.
      *
-     * Indicates the number of seconds remaining for  the server to be in the state indicated in the PanelStatus parameter.
-     * The SecondsRemaining parameter SHALL be provided if the PanelStatus parameter has a value of 0x04 (Exit delay) or 0x05 (Entry delay).
-     * <p>
-     * The default value SHALL be 0x00.
+     * Defines the current status of the alarm panel.
      *
      * @param panelStatus the Panel Status
      */
@@ -99,6 +103,11 @@ public class GetPanelStatusResponse extends ZclCommand {
     /**
      * Gets Seconds Remaining.
      *
+     * Indicates the number of seconds remaining for  the server to be in the state indicated in the PanelStatus parameter.
+     * The SecondsRemaining parameter SHALL be provided if the PanelStatus parameter has a value of 0x04 (Exit delay) or 0x05 (Entry delay).
+     * <p>
+     * The default value SHALL be 0x00.
+     *
      * @return the Seconds Remaining
      */
     public Integer getSecondsRemaining() {
@@ -107,6 +116,11 @@ public class GetPanelStatusResponse extends ZclCommand {
 
     /**
      * Sets Seconds Remaining.
+     *
+     * Indicates the number of seconds remaining for  the server to be in the state indicated in the PanelStatus parameter.
+     * The SecondsRemaining parameter SHALL be provided if the PanelStatus parameter has a value of 0x04 (Exit delay) or 0x05 (Entry delay).
+     * <p>
+     * The default value SHALL be 0x00.
      *
      * @param secondsRemaining the Seconds Remaining
      */
@@ -117,6 +131,8 @@ public class GetPanelStatusResponse extends ZclCommand {
     /**
      * Gets Audible Notification.
      *
+     * Provide the ACE client with information on which type of audible notification it SHOULD make for the zone status change. This field is useful for telling the ACE client to play a standard chime or other audio indication or to mute and not sound an audible notification at all. This field also allows manufacturers to create additional audible alert types (e.g., dog barking, windchimes, conga drums) to enable users to customise their system.
+     *
      * @return the Audible Notification
      */
     public Integer getAudibleNotification() {
@@ -125,6 +141,11 @@ public class GetPanelStatusResponse extends ZclCommand {
 
     /**
      * Sets Audible Notification.
+     *
+     * Provide the ACE client with information on which type of audible notification it SHOULD make for the zone status change. This field is useful
+     * for telling the ACE client to play a standard chime or other audio indication or to mute and not sound an audible notification at all. This
+     * field also allows manufacturers to create additional audible alert types (e.g., dog barking, windchimes, conga drums) to enable users to
+     * customise their system.
      *
      * @param audibleNotification the Audible Notification
      */
@@ -135,6 +156,8 @@ public class GetPanelStatusResponse extends ZclCommand {
     /**
      * Gets Alarm Status.
      *
+     * Provides the ACE client with information on the type of alarm the panel is in if its Panel Status field indicates it is “in alarm.” This field MAY be useful for ACE clients to display or otherwise initiate notification for users.
+     *
      * @return the Alarm Status
      */
     public Integer getAlarmStatus() {
@@ -143,6 +166,9 @@ public class GetPanelStatusResponse extends ZclCommand {
 
     /**
      * Sets Alarm Status.
+     *
+     * Provides the ACE client with information on the type of alarm the panel is in if its Panel Status field indicates it is “in alarm.” This field
+     * MAY be useful for ACE clients to display or otherwise initiate notification for users.
      *
      * @param alarmStatus the Alarm Status
      */

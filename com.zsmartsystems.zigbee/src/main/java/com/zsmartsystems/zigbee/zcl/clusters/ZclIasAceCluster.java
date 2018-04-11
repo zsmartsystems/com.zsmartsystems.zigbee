@@ -49,7 +49,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T18:46:15Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:30:44Z")
 public class ZclIasAceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -191,8 +191,12 @@ public class ZclIasAceCluster extends ZclCluster {
      * The Get Panel Status Command
      * <p>
      * This command is used by ACE clients to request an update to the status (e.g., security
-     * system arm state) of the ACE server (i.e., the IAS CIE). In particular, this command is useful for battery-powered ACE
-     * clients with polling rates longer than the ZigBee standard check-in rate.
+     * system arm state) of the ACE server (i.e., the IAS CIE). In particular, this command is
+     * useful for battery-powered ACE clients with polling rates longer than the ZigBee standard
+     * check-in rate.
+     * <br>
+     * On receipt of this command, the ACE server responds with the status of the security system.
+     * The IAS ACE server SHALL generate a Get Panel Status Response command.
      *
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -205,7 +209,7 @@ public class ZclIasAceCluster extends ZclCluster {
     /**
      * The Get Bypassed Zone List Command
      * <p>
-     * Provides IAS ACE clients with a way to retrieve the list of zones63to be bypassed. This provides them with the ability
+     * Provides IAS ACE clients with a way to retrieve the list of zones to be bypassed. This provides them with the ability
      * to provide greater local functionality (i.e., at the IAS ACE client) for users to modify the Bypassed Zone List and reduce
      * communications to the IAS ACE server when trying to arm the CIE security system.
      *
@@ -222,9 +226,9 @@ public class ZclIasAceCluster extends ZclCluster {
      * <p>
      * This command is used by ACE clients to request an update of the status of the IAS Zone devices managed by the ACE server
      * (i.e., the IAS CIE). In particular, this command is useful for battery-powered ACE clients with polling rates longer than
-     * the ZigBee standard check-in rate. The command is similar to the Get At-tributes Supportedcommand in that it specifies a
-     * starting Zone ID and a number of Zone IDs for which information is requested.Depending on the number of IAS Zone devices
-     * managed by the IAS ACE server, sending the Zone Status of all zones MAYnot fit into a single Get ZoneStatus Response command.
+     * the ZigBee standard check-in rate. The command is similar to the Get Attributes Supported command in that it specifies a
+     * starting Zone ID and a number of Zone IDs for which information is requested. Depending on the number of IAS Zone devices
+     * managed by the IAS ACE server, sending the Zone Status of all zones MAY not fit into a single Get ZoneStatus Response command.
      * IAS ACE clients MAY need to send multiple Get Zone Status commands in order to get the information they seek.
      *
      * @param startingZoneId {@link Integer} Starting Zone ID
@@ -333,7 +337,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * The Zone Status Changed Command
      * <p>
      * This command updates ACE clients in the system of changes to zone status recorded by the ACE server (e.g., IAS CIE device).
-     * An IAS ACE server SHOULD send a Zone Status Changed command upon a change to an IAS Zone de-vice’s ZoneStatusthat it manages (i.e.,
+     * An IAS ACE server SHOULD send a Zone Status Changed command upon a change to an IAS Zone device’s ZoneStatus that it manages (i.e.,
      * IAS ACE server SHOULD send a Zone Status Changed command upon receipt of a Zone Status Change Notification command).
      *
      * @param zoneId {@link Integer} Zone ID
@@ -363,10 +367,10 @@ public class ZclIasAceCluster extends ZclCluster {
      * 7.68 seconds).
      * <br>
      * An IAS ACE server SHALL send a Panel Status Changed command upon a change to the IAS CIE’s panel status (e.g.,
-     * Disarmed to Arming Away/Stay/Night, Arming Away/Stay/Night to Armed, Armed to Dis-armed) as defined in the Panel Status field.
+     * Disarmed to Arming Away/Stay/Night, Arming Away/Stay/Night to Armed, Armed to Disarmed) as defined in the Panel Status field.
      * <br>
      * When Panel Status is Arming Away/Stay/Night, an IAS ACE server SHOULD send Panel Status Changed commands every second in order to
-     * update the Seconds Remaining.    In some markets (e.g., North America), the final 10 seconds of the Arming Away/Stay/Night sequence
+     * update the Seconds Remaining. In some markets (e.g., North America), the final 10 seconds of the Arming Away/Stay/Night sequence
      * requires a separate audible notification (e.g., a double tone).
      *
      * @param panelStatus {@link Integer} Panel Status
@@ -414,7 +418,7 @@ public class ZclIasAceCluster extends ZclCluster {
     /**
      * The Set Bypassed Zone List Command
      * <p>
-     * Sets the list of bypassed zoneson the IAS ACE client. This command can be sent either as a response to the
+     * Sets the list of bypassed zones on the IAS ACE client. This command can be sent either as a response to the
      * GetBypassedZoneList command or unsolicited when the list of bypassed zones changes on the ACE server.
      *
      * @param zoneId {@link List<Integer>} Zone ID

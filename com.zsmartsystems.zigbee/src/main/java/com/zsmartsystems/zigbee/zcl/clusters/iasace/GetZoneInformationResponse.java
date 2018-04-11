@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T18:46:15Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
 public class GetZoneInformationResponse extends ZclCommand {
     /**
      * Zone ID command message field.
@@ -48,6 +48,12 @@ public class GetZoneInformationResponse extends ZclCommand {
 
     /**
      * Zone Label command message field.
+     * <p>
+     * Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server SHALL transmit a string with a length
+     * of zero.There is no minimum or maximum length to the Zone Label field; however, the Zone Label SHOULD be between 16 to 24
+     * alphanumeric characters in length.
+     * <p>
+     * The string encoding SHALL be UTF-8.
      */
     private String zoneLabel;
 
@@ -118,6 +124,12 @@ public class GetZoneInformationResponse extends ZclCommand {
     /**
      * Gets Zone Label.
      *
+     * Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server SHALL transmit a string with a length
+     * of zero.There is no minimum or maximum length to the Zone Label field; however, the Zone Label SHOULD be between 16 to 24
+     * alphanumeric characters in length.
+     * <p>
+     * The string encoding SHALL be UTF-8.
+     *
      * @return the Zone Label
      */
     public String getZoneLabel() {
@@ -126,6 +138,12 @@ public class GetZoneInformationResponse extends ZclCommand {
 
     /**
      * Sets Zone Label.
+     *
+     * Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server SHALL transmit a string with a length
+     * of zero.There is no minimum or maximum length to the Zone Label field; however, the Zone Label SHOULD be between 16 to 24
+     * alphanumeric characters in length.
+     * <p>
+     * The string encoding SHALL be UTF-8.
      *
      * @param zoneLabel the Zone Label
      */

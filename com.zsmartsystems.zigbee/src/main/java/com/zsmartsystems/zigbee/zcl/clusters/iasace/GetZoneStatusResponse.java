@@ -31,10 +31,18 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T18:44:43Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
 public class GetZoneStatusResponse extends ZclCommand {
     /**
      * Zone Status Complete command message field.
+     * <p>
+     * Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone Status information to be obtained.
+     * A value of zero (i.e. FALSE) indicates there are additional Zone IDs for which Zone Status information is available and
+     * that the IAS ACE client SHOULD send another Get Zone Status command.A value of one (i.e. TRUE) indicates there are no
+     * more Zone IDs for the IAS ACE client to query and the IAS ACE client has received all the Zone Status information for all
+     * IAS Zones managed by the IAS ACE server.
+     * <p>
+     * The IAS ACE client SHOULD NOT typically send another Get Zone Status command.
      */
     private Boolean zoneStatusComplete;
 
@@ -71,6 +79,14 @@ public class GetZoneStatusResponse extends ZclCommand {
     /**
      * Gets Zone Status Complete.
      *
+     * Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone Status information to be obtained.
+     * A value of zero (i.e. FALSE) indicates there are additional Zone IDs for which Zone Status information is available and
+     * that the IAS ACE client SHOULD send another Get Zone Status command.A value of one (i.e. TRUE) indicates there are no
+     * more Zone IDs for the IAS ACE client to query and the IAS ACE client has received all the Zone Status information for all
+     * IAS Zones managed by the IAS ACE server.
+     * <p>
+     * The IAS ACE client SHOULD NOT typically send another Get Zone Status command.
+     *
      * @return the Zone Status Complete
      */
     public Boolean getZoneStatusComplete() {
@@ -79,6 +95,14 @@ public class GetZoneStatusResponse extends ZclCommand {
 
     /**
      * Sets Zone Status Complete.
+     *
+     * Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone Status information to be obtained.
+     * A value of zero (i.e. FALSE) indicates there are additional Zone IDs for which Zone Status information is available and
+     * that the IAS ACE client SHOULD send another Get Zone Status command.A value of one (i.e. TRUE) indicates there are no
+     * more Zone IDs for the IAS ACE client to query and the IAS ACE client has received all the Zone Status information for all
+     * IAS Zones managed by the IAS ACE server.
+     * <p>
+     * The IAS ACE client SHOULD NOT typically send another Get Zone Status command.
      *
      * @param zoneStatusComplete the Zone Status Complete
      */

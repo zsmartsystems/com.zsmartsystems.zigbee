@@ -13,37 +13,34 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 /**
- * Enumeration of IAS ACE attribute Alarm Status options.
+ * Enumeration of IAS ACE attribute Arm Mode options.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  *
  * @author Chris Jackson
  */
 @Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
-public enum AlarmStatusEnum {
-    NO_ALARM(0x0000),
-    BURGLAR(0x0001),
-    FIRE(0x0002),
-    EMERGENCY(0x0003),
-    POLICE_PANIC(0x0004),
-    FIRE_PANIC(0x0005),
-    EMERGENCY_PANIC(0x0006);
+public enum ArmModeEnum {
+    DISARM(0x0000),
+    ARM_DAY(0x0001),
+    ARM_NIGHT(0x0002),
+    ARM_ALL_ZONES(0x0003);
 
     /**
-     * A mapping between the integer code and its corresponding AlarmStatusEnum type to facilitate lookup by value.
+     * A mapping between the integer code and its corresponding ArmModeEnum type to facilitate lookup by value.
      */
-    private static Map<Integer, AlarmStatusEnum> idMap;
+    private static Map<Integer, ArmModeEnum> idMap;
 
     static {
-        idMap = new HashMap<Integer, AlarmStatusEnum>();
-        for (AlarmStatusEnum enumValue : values()) {
+        idMap = new HashMap<Integer, ArmModeEnum>();
+        for (ArmModeEnum enumValue : values()) {
             idMap.put(enumValue.key, enumValue);
         }
     }
 
     private final int key;
 
-    AlarmStatusEnum(final int key) {
+    ArmModeEnum(final int key) {
         this.key = key;
     }
 
@@ -51,7 +48,7 @@ public enum AlarmStatusEnum {
         return key;
     }
 
-    public static AlarmStatusEnum getByValue(final int value) {
+    public static ArmModeEnum getByValue(final int value) {
         return idMap.get(value);
     }
 }

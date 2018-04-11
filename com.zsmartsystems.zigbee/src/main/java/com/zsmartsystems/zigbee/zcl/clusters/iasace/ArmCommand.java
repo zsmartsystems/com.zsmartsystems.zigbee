@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T18:46:15Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
 public class ArmCommand extends ZclCommand {
     /**
      * Arm Mode command message field.
@@ -42,11 +42,25 @@ public class ArmCommand extends ZclCommand {
 
     /**
      * Arm/Disarm Code command message field.
+     * <p>
+     * The Arm/DisarmCode SHALL be a code entered into the ACE client (e.g., security keypad) or system by the
+     * user upon arming/disarming. The server MAY validate the Arm/Disarm Code received from the IAS ACE client
+     * in Arm command payload before arming or disarming the system. If the client does not have the capability
+     * to input an Arm/Disarm Code (e.g., keyfob),or the system does not require one, the client SHALL a transmit
+     * a string with a length of zero.
+     * <p>
+     * There is no minimum or maximum length to the Arm/Disarm Code; however, the
+     * Arm/Disarm Code SHOULD be between four and eight alphanumeric characters in length.
+     * <p>
+     * The string encoding SHALL be UTF-8.
      */
     private String armDisarmCode;
 
     /**
      * Zone ID command message field.
+     * <p>
+     * Zone ID is the index of the Zone in the CIE's zone table (Table 8-11). If none is programmed, the Zone
+     * ID default value SHALL be indicated in this field.
      */
     private Integer zoneId;
 
@@ -81,6 +95,17 @@ public class ArmCommand extends ZclCommand {
     /**
      * Gets Arm/Disarm Code.
      *
+     * The Arm/DisarmCode SHALL be a code entered into the ACE client (e.g., security keypad) or system by the
+     * user upon arming/disarming. The server MAY validate the Arm/Disarm Code received from the IAS ACE client
+     * in Arm command payload before arming or disarming the system. If the client does not have the capability
+     * to input an Arm/Disarm Code (e.g., keyfob),or the system does not require one, the client SHALL a transmit
+     * a string with a length of zero.
+     * <p>
+     * There is no minimum or maximum length to the Arm/Disarm Code; however, the
+     * Arm/Disarm Code SHOULD be between four and eight alphanumeric characters in length.
+     * <p>
+     * The string encoding SHALL be UTF-8.
+     *
      * @return the Arm/Disarm Code
      */
     public String getArmDisarmCode() {
@@ -89,6 +114,17 @@ public class ArmCommand extends ZclCommand {
 
     /**
      * Sets Arm/Disarm Code.
+     *
+     * The Arm/DisarmCode SHALL be a code entered into the ACE client (e.g., security keypad) or system by the
+     * user upon arming/disarming. The server MAY validate the Arm/Disarm Code received from the IAS ACE client
+     * in Arm command payload before arming or disarming the system. If the client does not have the capability
+     * to input an Arm/Disarm Code (e.g., keyfob),or the system does not require one, the client SHALL a transmit
+     * a string with a length of zero.
+     * <p>
+     * There is no minimum or maximum length to the Arm/Disarm Code; however, the
+     * Arm/Disarm Code SHOULD be between four and eight alphanumeric characters in length.
+     * <p>
+     * The string encoding SHALL be UTF-8.
      *
      * @param armDisarmCode the Arm/Disarm Code
      */
@@ -99,6 +135,9 @@ public class ArmCommand extends ZclCommand {
     /**
      * Gets Zone ID.
      *
+     * Zone ID is the index of the Zone in the CIE's zone table (Table 8-11). If none is programmed, the Zone
+     * ID default value SHALL be indicated in this field.
+     *
      * @return the Zone ID
      */
     public Integer getZoneId() {
@@ -107,6 +146,9 @@ public class ArmCommand extends ZclCommand {
 
     /**
      * Sets Zone ID.
+     *
+     * Zone ID is the index of the Zone in the CIE's zone table (Table 8-11). If none is programmed, the Zone
+     * ID default value SHALL be indicated in this field.
      *
      * @param zoneId the Zone ID
      */
