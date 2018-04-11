@@ -12,9 +12,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspConfigId;
@@ -28,11 +25,6 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspPolicyI
  *
  */
 public class EmberStackConfiguration {
-    /**
-     * The {@link Logger}.
-     */
-    private final Logger logger = LoggerFactory.getLogger(EmberStackConfiguration.class);
-
     private AshFrameHandler ashHandler;
 
     /**

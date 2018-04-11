@@ -30,6 +30,8 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetParent
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetPolicyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetValueRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNetworkStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspReadCountersRequest;
@@ -38,6 +40,8 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetConfig
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetConfigurationValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetPolicyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetValueRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberCurrentSecurityState;
@@ -50,6 +54,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspConfigI
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspPolicyId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspStatus;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspValueId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspSingleResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspTransaction;
 
@@ -383,6 +388,54 @@ public class EmberNcp {
         }
 
         return getPolicyResponse.getDecisionId();
+    }
+
+    /**
+     * Set a memory value used by the NCP.
+     *
+     * @param valueId the {@link EzspValueId} to set
+     * @param value the value to set to
+     * @return true if the value setting was successful
+     */
+    public boolean setValue(EzspValueId valueId, int[] value) {
+        EzspSetValueRequest request = new EzspSetValueRequest();
+        request.setValueId(valueId);
+        request.setValue(value);
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
+                EzspSetValueResponse.class);
+        ashHandler.sendEzspTransaction(transaction);
+        EzspSetValueResponse response = (EzspSetValueResponse) transaction.getResponse();
+        lastStatus = null;
+        logger.debug(response.toString());
+        if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
+            logger.debug("Error setting value: {}", response);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Get a memory value from the NCP
+     *
+     * @param valueId the {@link EzspValueId} to set
+     * @return the returned value as int[]
+     */
+    public int[] getValue(EzspValueId valueId) {
+        EzspGetValueRequest request = new EzspGetValueRequest();
+        request.setValueId(valueId);
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
+                EzspGetValueResponse.class);
+        ashHandler.sendEzspTransaction(transaction);
+        EzspGetValueResponse response = (EzspGetValueResponse) transaction.getResponse();
+        lastStatus = null;
+        logger.debug(response.toString());
+        if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
+            logger.debug("Error getting value: {}", response);
+            return null;
+        }
+
+        return response.getValue();
     }
 
 }
