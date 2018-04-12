@@ -86,7 +86,10 @@ public class ZclDataType {
         dataTypeMapping.put("SIGNED_32_BIT_INTEGER", new DataTypeMap("Integer", 0x2b, 4, true, 0x80000000));
         dataTypeMapping.put("UNSIGNED_8_BIT_INTEGER", new DataTypeMap("Integer", 0x20, 1, true, 0xff));
         dataTypeMapping.put("UNSIGNED_16_BIT_INTEGER", new DataTypeMap("Integer", 0x21, 2, true, 0xffff));
+        dataTypeMapping.put("UNSIGNED_24_BIT_INTEGER", new DataTypeMap("Integer", 0x22, 3, true, 0xffffff));
         dataTypeMapping.put("UNSIGNED_32_BIT_INTEGER", new DataTypeMap("Integer", 0x23, 4, true, 0xffffffff));
+        dataTypeMapping.put("UNSIGNED_40_BIT_INTEGER", new DataTypeMap("Integer", 0x24, 4, true, 0));// 0xffffffffff));
+        dataTypeMapping.put("UNSIGNED_48_BIT_INTEGER", new DataTypeMap("Integer", 0x25, 6, true, 0));// 0xffffffffffff));
         dataTypeMapping.put("BITMAP_8_BIT", new DataTypeMap("Integer", 0x18, 1, false));
         dataTypeMapping.put("BITMAP_16_BIT", new DataTypeMap("Integer", 0x19, 2, false));
         dataTypeMapping.put("BITMAP_24_BIT", new DataTypeMap("Integer", 0x1a, 3, false));
