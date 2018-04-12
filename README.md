@@ -154,8 +154,10 @@ The following commands are available if the transport layer is using the Silabs 
 | Command         | Description                                           |
 |-----------------|-------------------------------------------------------|
 |ncpchildren      |Gets the NCP child information                         |
+|ncpconfig        |Read or write an NCP configuration value               |
 |ncpcounters      |Gets the NCP debug counters                            |
 |ncpstate         |Gets the NCP network state                             |
+|ncpvalue         |Read or write an NCP memory value                      |
 |ncpversion       |Gets the NCP firmware version                          |
 |ncpnetworkparms  |Gets the current NCP network parameters                |
 |ncpsecuritystate |Gets the current NCP security state and configuration  |
