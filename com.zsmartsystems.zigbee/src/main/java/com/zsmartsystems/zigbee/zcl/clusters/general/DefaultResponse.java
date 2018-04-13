@@ -27,9 +27,14 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
+ * The default response command is generated when a device receives a unicast
+ * command, there is no other relevant response specified for the command, and
+ * either an error results or the Disable default response bit of its Frame control field
+ * is set to 0.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
 public class DefaultResponse extends ZclCommand {
     /**
      * Command identifier command message field.

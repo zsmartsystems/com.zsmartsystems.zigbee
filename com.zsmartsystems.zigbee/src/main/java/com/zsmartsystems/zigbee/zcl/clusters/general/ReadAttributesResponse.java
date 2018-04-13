@@ -31,9 +31,16 @@ import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
+ * The read attributes response command is generated in response to a read attributes
+ * or read attributes structured command. The command frame shall contain a read
+ * attribute status record for each attribute identifier specified in the original read
+ * attributes or read attributes structured command. For each read attribute status
+ * record, the attribute identifier field shall contain the identifier specified in the
+ * original read attributes or read attributes structured command.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
 public class ReadAttributesResponse extends ZclCommand {
     /**
      * Records command message field.

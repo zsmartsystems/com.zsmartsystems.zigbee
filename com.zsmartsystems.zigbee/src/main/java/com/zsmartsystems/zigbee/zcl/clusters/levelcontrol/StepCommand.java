@@ -21,13 +21,9 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Level Control</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Level Control cluster.
  * <p>
- * This cluster provides an interface for controlling a characteristic of a device that
- * can be set to a level, for example the brightness of a light, the degree of closure of
- * a door, or the power output of a heater.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
 public class StepCommand extends ZclCommand {
     /**
      * Step mode command message field.

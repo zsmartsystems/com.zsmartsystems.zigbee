@@ -24,16 +24,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Identify</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Identify cluster.
  * <p>
- * Attributes and commands to put a device into an Identification mode (e.g. flashing
- * a light), that indicates to an observer – e.g. an installer - which of several devices
- * it is, also to request any device that is identifying itself to respond to the initiator.
- * <p>
- * Note that this cluster cannot be disabled, and remains functional regardless of the
- * setting of the DeviceEnable attribute in the Basic cluster.
+ * The identify query response command is generated in response to receiving an
+ * Identify Query command in the case that the device is currently identifying itself.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
 public class IdentifyQueryResponse extends ZclCommand {
     /**
      * Identify Time command message field.

@@ -29,9 +29,14 @@ import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
+ * The write attributes no response command is generated when a device wishes to
+ * change the value of one or more attributes located on another device but does not
+ * require a response. Each write attribute record shall contain the identifier and the
+ * actual value of the attribute to be written.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
 public class WriteAttributesNoResponse extends ZclCommand {
     /**
      * Records command message field.

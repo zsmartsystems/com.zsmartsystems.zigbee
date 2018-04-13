@@ -27,11 +27,15 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>On/Off</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the On/Off cluster.
  * <p>
- * Attributes and commands for switching devices between ‘On’ and ‘Off’ states.
+ * The On With Timed Off command allows devices to be turned on for a specific duration
+ * with a guarded off duration so that SHOULD the device be subsequently switched off,
+ * further On With Timed Off commands, received during this time, are prevented from
+ * turning the devices back on. Note that the device can be periodically re-kicked by
+ * subsequent On With Timed Off commands, e.g., from an on/off sensor.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
 public class OnWithTimedOffCommand extends ZclCommand {
     /**
      * On Off Control command message field.

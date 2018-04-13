@@ -28,14 +28,16 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
- * The IAS ACE cluster defines an interface to the functionality of any Ancillary
- * Control Equipment of the IAS system. Using this cluster, a ZigBee enabled ACE
- * device can access a IAS CIE device and manipulate the IAS system, on behalf of a
- * level-2 user.
+ * This command is used by ACE clients to request an update of the status of the IAS Zone devices managed by the ACE server
+ * (i.e., the IAS CIE). In particular, this command is useful for battery-powered ACE clients with polling rates longer than
+ * the ZigBee standard check-in rate. The command is similar to the Get Attributes Supported command in that it specifies a
+ * starting Zone ID and a number of Zone IDs for which information is requested. Depending on the number of IAS Zone devices
+ * managed by the IAS ACE server, sending the Zone Status of all zones MAY not fit into a single Get ZoneStatus Response command.
+ * IAS ACE clients MAY need to send multiple Get Zone Status commands in order to get the information they seek.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
 public class GetZoneStatusCommand extends ZclCommand {
     /**
      * Starting Zone ID command message field.

@@ -18,17 +18,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Enhanced Step Hue Command value object class.
  * <p>
- * Cluster: <b>Color control</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>specific</b> command used for the Color control cluster.
- * <p>
- * This cluster provides an interface for changing the color of a light. Color is
- * specified according to the Commission Internationale de l'Éclairage (CIE)
- * specification CIE 1931 Color Space, [B4]. Color control is carried out in terms of
- * x,y values, as defined by this specification.
+ * Cluster: <b>Color Control</b>. Command is sent <b>TO</b> the server.
+ * This command is a <b>specific</b> command used for the Color Control cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
 public class EnhancedStepHueCommand extends ZclCommand {
     /**
      * Step Mode command message field.

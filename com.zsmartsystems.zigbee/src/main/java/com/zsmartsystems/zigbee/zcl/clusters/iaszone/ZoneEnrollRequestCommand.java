@@ -25,13 +25,13 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>IAS Zone</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS Zone cluster.
  * <p>
- * The IAS Zone cluster defines an interface to the functionality of an IAS security
- * zone device. IAS Zone supports up to two alarm types per zone, low battery
- * reports and supervision of the IAS network.
+ * The Zone Enroll Request command is generated when a device embodying the Zone server cluster wishes
+ * to be  enrolled as an active  alarm device. It  must do this immediately it has joined the network
+ * (during commissioning).
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
 public class ZoneEnrollRequestCommand extends ZclCommand {
     /**
      * Zone Type command message field.

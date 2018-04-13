@@ -30,9 +30,18 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Thermostat</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Thermostat cluster.
  * <p>
+ * The set weekly schedule command is used to update the thermostat weekly set point schedule from a management system.
+ * If the thermostat already has a weekly set point schedule programmed then it SHOULD replace each daily set point set
+ * as it receives the updates from the management system. For example if the thermostat has 4 set points for every day of
+ * the week and is sent a Set Weekly Schedule command with one set point for Saturday then the thermostat SHOULD remove
+ * all 4 set points for Saturday and replace those with the updated set point but leave all other days unchanged.
+ * <br>
+ * If the schedule is larger than what fits in one ZigBee frame or contains more than 10 transitions, the schedule SHALL
+ * then be sent using multipleSet Weekly Schedule Commands.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
 public class SetWeeklySchedule extends ZclCommand {
     /**
      * Number of Transitions command message field.

@@ -26,9 +26,14 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
+ * The read attributes command is generated when a device wishes to determine the
+ * values of one or more attributes, or elements of attributes, located on another
+ * device. Each attribute identifier field shall contain the identifier of the attribute to
+ * be read.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
 public class ReadAttributesStructuredCommand extends ZclCommand {
     /**
      * Attribute selectors command message field.
