@@ -22,14 +22,9 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
- * The IAS ACE cluster defines an interface to the functionality of any Ancillary
- * Control Equipment of the IAS system. Using this cluster, a ZigBee enabled ACE
- * device can access a IAS CIE device and manipulate the IAS system, on behalf of a
- * level-2 user.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
 public class GetZoneInformationResponse extends ZclCommand {
     /**
      * Zone ID command message field.

@@ -27,22 +27,15 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Alarms</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Alarms cluster.
  * <p>
- * Attributes and commands for sending alarm notifications and configuring alarm
- * functionality.
- * <p>
- * Alarm conditions and their respective alarm codes are described in individual
- * clusters, along with an alarm mask field. Where not masked, alarm notifications
- * are reported to subscribed targets using binding.
- * <p>
- * Where an alarm table is implemented, all alarms, masked or otherwise, are
- * recorded and may be retrieved on demand.
- * <p>
- * Alarms may either reset automatically when the conditions that cause are no
- * longer active, or may need to be explicitly reset.
+ * If there is at least one alarm record in the alarm table then the status field is set to SUCCESS.
+ * The alarm code, cluster identifier and time stamp fields SHALL all be present and SHALL take their
+ * values from the item in the alarm table that they are reporting.If there  are  no more  alarms logged
+ * in the  alarm table  then the  status field is set  to NOT_FOUND  and the alarm code, cluster
+ * identifier and time stamp fields SHALL be omitted.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
 public class GetAlarmResponse extends ZclCommand {
     /**
      * Status command message field.

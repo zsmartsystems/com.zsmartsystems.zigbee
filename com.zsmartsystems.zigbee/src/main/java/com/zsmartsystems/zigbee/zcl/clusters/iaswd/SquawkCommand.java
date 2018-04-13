@@ -21,14 +21,9 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>IAS WD</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS WD cluster.
  * <p>
- * The IAS WD cluster provides an interface to the functionality of any Warning
- * Device equipment of the IAS system. Using this cluster, a ZigBee enabled CIE
- * device can access a ZigBee enabled IAS WD device and issue alarm warning
- * indications (siren, strobe lighting, etc.) when a system alarm condition is detected.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
 public class SquawkCommand extends ZclCommand {
     /**
      * Header command message field.

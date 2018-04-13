@@ -1021,9 +1021,9 @@ public class ZclProtocolCodeGenerator {
                             ? "a <b>generic</b> command used across the profile."
                             : "a <b>specific</b> command used for the " + cluster.clusterName + " cluster."));
 
-                    if (cluster.clusterDescription.size() > 0) {
+                    if (command.commandDescription.size() > 0) {
                         out.println(" * <p>");
-                        outputWithLinebreak(out, "", cluster.clusterDescription);
+                        outputWithLinebreak(out, "", command.commandDescription);
                     }
 
                     out.println(" * <p>");

@@ -25,9 +25,13 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
+ * The Discover Attributes Extended command is generated when a remote device wishes to discover the
+ * identifiers and types of the attributes on a device which are supported within the cluster to which this
+ * command is directed, including whether the attribute is readable, writeable or reportable.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
 public class DiscoverAttributesExtended extends ZclCommand {
     /**
      * Start attribute identifier command message field.

@@ -26,14 +26,14 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
- * The IAS ACE cluster defines an interface to the functionality of any Ancillary
- * Control Equipment of the IAS system. Using this cluster, a ZigBee enabled ACE
- * device can access a IAS CIE device and manipulate the IAS system, on behalf of a
- * level-2 user.
+ * On receipt of this command, the receiving device sets its arm mode according to the value of the Arm Mode field,
+ * as detailed in Table 8-13. It is not guaranteed that an Arm command will succeed. Based on the current state of
+ * the IAS CIE, and its related devices, the command can be rejected. The device SHALL generate an Arm Response command
+ * to indicate the resulting armed state
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
 public class ArmCommand extends ZclCommand {
     /**
      * Arm Mode command message field.

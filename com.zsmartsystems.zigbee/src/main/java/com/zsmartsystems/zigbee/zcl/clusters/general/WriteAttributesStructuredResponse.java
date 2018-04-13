@@ -28,9 +28,12 @@ import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
+ * The write attributes structured response command is generated in response to a
+ * write attributes structured command.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-23T21:55:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
 public class WriteAttributesStructuredResponse extends ZclCommand {
     /**
      * Status command message field.

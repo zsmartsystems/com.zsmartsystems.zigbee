@@ -2,6 +2,12 @@
 
 ## OTA Upgrade [0x0019]
 
+The cluster provides a standard way to upgrade devices in the network via OTA messages. Thus the upgrade process MAY be performed between two devices from different manufacturers. Devices are required to have application bootloader and additional memory space in order to successfully implement the cluster.
+
+It is the responsibility of the server to indicate to the clients when update images are available. The client MAY be upgraded or downgraded64. The upgrade server knows which client devices to upgrade and to what file version. The upgrade server MAY be notified of such information via the backend system. For ZR clients, the server MAY send a message to notify the device when an updated image is available. It is assumed that ZED clients will not be awake to receive an unsolicited notification of an available image. All clients (ZR and ZED) SHALL query (poll) the server periodically to determine whether the server has an image update for them. Image Notify is optional.
+
+The cluster is implemented in such a way that the client service works on both ZED and ZR devices. Being able to handle polling is mandatory for all server devices while being able to send a notify is optional. Hence, all client devices must be able to use a ‘poll’ mechanism to send query message to the server in order to see if the server has any new file for it. The polling mechanism also puts fewer resources on the upgrade server. It is ideal to have the server maintain as little state as possible since this will scale when there are hundreds of clients in the network. The upgrade server is not required to keep track of what pieces of an image that a particular client has received; instead the client SHALL do that. Lastly poll makes more sense for devices that MAY need to perform special setup to get ready to receive an image, such as unlocking flash or allocating space for the new image.
+
 ### Attributes
 
 |Id     |Name                         |Type                       |Access     |Implement |Reporting |

@@ -18,11 +18,9 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>On/Off</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the On/Off cluster.
  * <p>
- * Attributes and commands for switching devices between ‘On’ and ‘Off’ states.
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
 public class ToggleCommand extends ZclCommand {
     /**
      * Default constructor.

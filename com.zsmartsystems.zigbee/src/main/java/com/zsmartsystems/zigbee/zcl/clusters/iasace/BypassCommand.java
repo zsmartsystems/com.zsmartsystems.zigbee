@@ -30,14 +30,16 @@ import java.util.List;
  * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
- * The IAS ACE cluster defines an interface to the functionality of any Ancillary
- * Control Equipment of the IAS system. Using this cluster, a ZigBee enabled ACE
- * device can access a IAS CIE device and manipulate the IAS system, on behalf of a
- * level-2 user.
+ * Provides IAS ACE clients with a method to send zone bypass requests to the IAS ACE server.
+ * Bypassed zones MAYbe faulted or in alarm but will not trigger the security system to go into alarm.
+ * For example, a user MAYwish to allow certain windows in his premises protected by an IAS Zone server to
+ * be left open while the user leaves the premises. The user could bypass the IAS Zone server protecting
+ * the window on his IAS ACE client (e.g., security keypad), and if the IAS ACE server indicates that zone is
+ * successfully by-passed, arm his security system while he is away.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:28:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
 public class BypassCommand extends ZclCommand {
     /**
      * Number of Zones command message field.

@@ -26,14 +26,17 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
- * The IAS ACE cluster defines an interface to the functionality of any Ancillary
- * Control Equipment of the IAS system. Using this cluster, a ZigBee enabled ACE
- * device can access a IAS CIE device and manipulate the IAS system, on behalf of a
- * level-2 user.
+ * This command is used by ACE clients to request an update to the status (e.g., security
+ * system arm state) of the ACE server (i.e., the IAS CIE). In particular, this command is
+ * useful for battery-powered ACE clients with polling rates longer than the ZigBee standard
+ * check-in rate.
+ * <br>
+ * On receipt of this command, the ACE server responds with the status of the security system.
+ * The IAS ACE server SHALL generate a Get Panel Status Response command.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-09T21:59:14Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
 public class GetPanelStatusCommand extends ZclCommand {
     /**
      * Default constructor.

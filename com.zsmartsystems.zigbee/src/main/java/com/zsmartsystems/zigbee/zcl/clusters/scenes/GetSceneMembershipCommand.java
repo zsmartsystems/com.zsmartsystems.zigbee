@@ -26,19 +26,14 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Scenes</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
  * <p>
- * The scenes cluster provides attributes and commands for setting up and recalling
- * scenes. Each scene corresponds to a set of stored values of specified attributes for
- * one or more clusters on the same end point as the scenes cluster.
- * <p>
- * In most cases scenes are associated with a particular group ID. Scenes may also
- * exist without a group, in which case the value 0x0000 replaces the group ID. Note
- * that extra care is required in these cases to avoid a scene ID collision, and that
- * commands related to scenes without a group may only be unicast, i.e.: they may
- * not be multicast or broadcast.
+ * The Get Scene Membership command can be used to find an unused scene
+ * number within the group when no commissioning tool is in the network, or for a
+ * commissioning tool to get used scenes for a group on a single device or on all
+ * devices in the group.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
 public class GetSceneMembershipCommand extends ZclCommand {
     /**
      * Group ID command message field.
