@@ -4,6 +4,8 @@
 
 This project aims to provide a ZigBee Cluster Library written in Java. Packages are broken down to provide the main ZigBee  framework, separate packages for dongles, and a console application that allows full use of the framework.
 
+The bundles include OSGi headers for use within an OSGi framework.
+
 # Packages
 
 The framework implements a package structure that allows efficient use of re-usable components in a number of different applications.
@@ -146,6 +148,7 @@ Note that the console is currently being refactored and this readme only documen
 |subscribe        |Subscribe to attribute reports                         |
 |unsubscribe      |Unsubscribe from attribute reports                     |
 |reportcfg        |Read the reporting configuration of an attribute       |
+|installkey       |Adds an install key to the dongle                      |
 
 
 ### Ember NCP Commands
@@ -161,6 +164,7 @@ The following commands are available if the transport layer is using the Silabs 
 |ncpversion       |Gets the NCP firmware version                          |
 |ncpnetworkparms  |Gets the current NCP network parameters                |
 |ncpsecuritystate |Gets the current NCP security state and configuration  |
+|ncptransientkey  |Adds a transient link key to the NCP                   |
 
 ### Telegesis Commands
 The following commands are available if the transport layer is using the Telegesis dongle.

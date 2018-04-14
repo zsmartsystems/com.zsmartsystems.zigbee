@@ -11,7 +11,7 @@
     </appender>
 
     <appender class="org.apache.log4j.DailyRollingFileAppender" name="RollingFile">
-        <param name="File" value="debug.log" />
+        <param name="File" value="logs/debug.log" />
         <param name="DatePattern" value="'.'yyyy-MM-dd" />
         <param name="Threshold" value="debug" />
         <layout class="org.apache.log4j.PatternLayout">
@@ -20,7 +20,7 @@
     </appender>
     
     <appender class="org.apache.log4j.DailyRollingFileAppender" name="EzspFile">
-        <param name="File" value="ezsp.log" />
+        <param name="File" value="logs/ezsp.log" />
         <param name="DatePattern" value="'.'yyyy-MM-dd" />
         <param name="Threshold" value="debug" />
         <layout class="org.apache.log4j.PatternLayout">

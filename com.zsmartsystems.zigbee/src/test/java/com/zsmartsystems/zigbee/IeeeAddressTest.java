@@ -34,6 +34,16 @@ public class IeeeAddressTest {
         assertEquals("8418260000D9959B", address.toString());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorStringError() {
+        new IeeeAddress("ABCDEFGH");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorArrayError() {
+        new IeeeAddress(new int[4]);
+    }
+
     @Test
     public void testHash() {
         IeeeAddress address1 = new IeeeAddress("17880100dc880b");
