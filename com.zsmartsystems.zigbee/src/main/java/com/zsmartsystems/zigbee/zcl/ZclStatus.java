@@ -83,6 +83,7 @@ public enum ZclStatus {
     WAIT_FOR_DATA(0x97, "Server does not have data block available yet"),
     NO_IMAGE_AVAILABLE(0x98, "No OTA upgrade image available for a particular client"),
     REQUIRE_MORE_IMAGE(0x99, "The client requires more OTA upgrade image files in order to successfully upgrade."),
+    NOTIFICATION_PENDING(0x9A, "The command has been received and is being processed."),
     HARDWARE_FAILURE(0xc0, "An operation was unsuccessful due to a hardware failure."),
     SOFTWARE_FAILURE(0xc1, "An operation was unsuccessful due to a software failure."),
     CALIBRATION_ERROR(0xc2, "An error occurred during calibration.");
