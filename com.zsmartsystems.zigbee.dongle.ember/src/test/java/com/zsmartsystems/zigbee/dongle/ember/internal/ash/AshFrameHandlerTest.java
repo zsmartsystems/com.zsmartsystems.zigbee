@@ -113,6 +113,15 @@ public class AshFrameHandlerTest {
         assertFalse(frameHandler.isAlive());
     }
 
+    @Test
+    public void testReceivePacketx() {
+        int[] response = getPacket(
+                new int[] { 0x44, 0x0E, 0xA1, 0x57, 0x54, 0x45, 0x15, 0x58, 0x94, 0x6C, 0x1B, 0x6E, 0x35, 0x27, 0xEA,
+                        0x61, 0xE0, 0x60, 0x31, 0xFB, 0x04, 0xF3, 0xA7, 0x9D, 0x86, 0x86, 0xB0, 0x3E, 0x29, 0x7E });
+        assertNotNull(response);
+        assertEquals(29, response.length);
+    }
+
     class TestPort implements ZigBeePort {
         InputStream input;
         OutputStream output;

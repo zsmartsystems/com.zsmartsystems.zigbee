@@ -17,13 +17,19 @@ public class ZigBeeNodeKey {
     private IeeeAddress address;
     private ZigBeeKey key;
 
+    /**
+     * Constructor taking the {@link IeeeAddress} of the node and the {@link ZigBeeKey}
+     * 
+     * @param address the node {@link IeeeAddress}
+     * @param key the {@link ZigBeeKey}
+     */
     public ZigBeeNodeKey(IeeeAddress address, ZigBeeKey key) {
         this.address = address;
         this.key = key;
     }
 
     /**
-     * @return the {@link IeeeAddress}
+     * @return the {@link IeeeAddress} of the node
      */
     public IeeeAddress getAddress() {
         return address;

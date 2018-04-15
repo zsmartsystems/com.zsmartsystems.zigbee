@@ -12,6 +12,7 @@ import java.util.Set;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberAesMmoHashContext;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberApsOption;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberBindingTableEntry;
@@ -316,6 +317,10 @@ public class EzspDeserializer {
 
     public EmberGpKeyType deserializeEmberGpKeyType() {
         return EmberGpKeyType.getEmberGpKeyType(deserializeUInt8());
+    }
+
+    public EmberAesMmoHashContext deserializeEmberAesMmoHashContext() {
+        return new EmberAesMmoHashContext(this);
     }
 
 }

@@ -90,6 +90,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
     protected static final int FRAME_ID_ADD_OR_UPDATE_KEY_TABLE_ENTRY = 0x66;
     protected static final int FRAME_ID_ADD_TRANSIENT_LINK_KEY = 0xAF;
+    protected static final int FRAME_ID_AES_MMO_HASH = 0x6F;
     protected static final int FRAME_ID_BECOME_TRUST_CENTER = 0x77;
     protected static final int FRAME_ID_BINDING_IS_ACTIVE = 0x2E;
     protected static final int FRAME_ID_CALLBACK = 0x06;
@@ -203,6 +204,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_ADD_ENDPOINT, EzspAddEndpointResponse.class);
         ezspHandlerMap.put(FRAME_ID_ADD_OR_UPDATE_KEY_TABLE_ENTRY, EzspAddOrUpdateKeyTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_ADD_TRANSIENT_LINK_KEY, EzspAddTransientLinkKeyResponse.class);
+        ezspHandlerMap.put(FRAME_ID_AES_MMO_HASH, EzspAesMmoHashResponse.class);
         ezspHandlerMap.put(FRAME_ID_BECOME_TRUST_CENTER, EzspBecomeTrustCenterResponse.class);
         ezspHandlerMap.put(FRAME_ID_BINDING_IS_ACTIVE, EzspBindingIsActiveResponse.class);
         ezspHandlerMap.put(FRAME_ID_CALLBACK, EzspCallbackResponse.class);

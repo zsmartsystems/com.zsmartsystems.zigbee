@@ -408,7 +408,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Adds a installation key for the specified address.
+     * Adds an installation key for the specified address.
      *
      * @param address {@link IeeeAddress} the address to which the install key relates
      * @param key the install key as {@link ZigBeeKey} to be used for the specified address
