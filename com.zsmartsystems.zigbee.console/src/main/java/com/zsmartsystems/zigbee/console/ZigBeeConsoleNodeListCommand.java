@@ -59,7 +59,7 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
         out.println("Network Addr  IEEE Address      Device Type  EP   Profile");
         for (Integer nodeId : nodeIds) {
             ZigBeeNode node = networkManager.getNode(nodeId);
-            out.print(String.format("%-6d  %04X  %s  %-11s", node.getNetworkAddress(), node.getNetworkAddress(),
+            out.print(String.format("%-6d  %04X  %s  %-11s  ", node.getNetworkAddress(), node.getNetworkAddress(),
                     node.getIeeeAddress(), node.getLogicalType()));
             List<Integer> endpointIds = new ArrayList<Integer>();
             for (final ZigBeeEndpoint endpoint : node.getEndpoints()) {
@@ -69,7 +69,7 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
             boolean first = true;
             for (Integer endpointId : endpointIds) {
                 if (!first) {
-                    out.print("                                             ");
+                    out.print("                                           ");
                 }
                 first = false;
                 ZigBeeEndpoint endpoint = node.getEndpoint(endpointId);
