@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-18T20:43:25Z")
 public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -50,13 +50,32 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * The LightSensorType attribute specifies the electronic type of the light sensor.
      */
     public static final int ATTR_LIGHTSENSORTYPE = 0x0001;
+    /**
+     * The IlluminanceTargetLevel attribute specifies the target illuminance level. This
+     * target level is taken as the centre of a 'dead band', which must be sufficient in
+     * width, with hysteresis bands at both top and bottom, to provide reliable
+     * notifications without 'chatter'. Such a dead band and hysteresis bands must be
+     * provided by any implementation of this cluster. (N.B. Manufacturer specific
+     * attributes may be provided to configure these).
+     * <p>
+     * IlluminanceTargetLevel represents illuminance in Lux (symbol lx) as follows:
+     * <p>
+     * IlluminanceTargetLevel = 10,000 x log10 Illuminance
+     * <p>
+     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
+     * the range 0 to 0xfffe.
+     * <p>
+     * A value of 0xffff indicates that this attribute is not valid.
+     */
+    public static final int ATTR_ILLUMINANCETARGETLEVEL = 0x0010;
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(2);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(3);
 
         attributeMap.put(ATTR_LEVELSTATUS, new ZclAttribute(ZclClusterType.ILLUMINANCE_LEVEL_SENSING, ATTR_LEVELSTATUS, "LevelStatus", ZclDataType.ENUMERATION_8_BIT, true, true, false, true));
         attributeMap.put(ATTR_LIGHTSENSORTYPE, new ZclAttribute(ZclClusterType.ILLUMINANCE_LEVEL_SENSING, ATTR_LIGHTSENSORTYPE, "LightSensorType", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_ILLUMINANCETARGETLEVEL, new ZclAttribute(ZclClusterType.ILLUMINANCE_LEVEL_SENSING, ATTR_ILLUMINANCETARGETLEVEL, "IlluminanceTargetLevel", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
     }
@@ -173,5 +192,75 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
         }
 
         return (Integer) readSync(attributes.get(ATTR_LIGHTSENSORTYPE));
+    }
+
+    /**
+     * Get the <i>IlluminanceTargetLevel</i> attribute [attribute ID <b>16</b>].
+     * <p>
+     * The IlluminanceTargetLevel attribute specifies the target illuminance level. This
+     * target level is taken as the centre of a 'dead band', which must be sufficient in
+     * width, with hysteresis bands at both top and bottom, to provide reliable
+     * notifications without 'chatter'. Such a dead band and hysteresis bands must be
+     * provided by any implementation of this cluster. (N.B. Manufacturer specific
+     * attributes may be provided to configure these).
+     * <p>
+     * IlluminanceTargetLevel represents illuminance in Lux (symbol lx) as follows:
+     * <p>
+     * IlluminanceTargetLevel = 10,000 x log10 Illuminance
+     * <p>
+     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
+     * the range 0 to 0xfffe.
+     * <p>
+     * A value of 0xffff indicates that this attribute is not valid.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getIlluminanceTargetLevelAsync() {
+        return read(attributes.get(ATTR_ILLUMINANCETARGETLEVEL));
+    }
+
+    /**
+     * Synchronously get the <i>IlluminanceTargetLevel</i> attribute [attribute ID <b>16</b>].
+     * <p>
+     * The IlluminanceTargetLevel attribute specifies the target illuminance level. This
+     * target level is taken as the centre of a 'dead band', which must be sufficient in
+     * width, with hysteresis bands at both top and bottom, to provide reliable
+     * notifications without 'chatter'. Such a dead band and hysteresis bands must be
+     * provided by any implementation of this cluster. (N.B. Manufacturer specific
+     * attributes may be provided to configure these).
+     * <p>
+     * IlluminanceTargetLevel represents illuminance in Lux (symbol lx) as follows:
+     * <p>
+     * IlluminanceTargetLevel = 10,000 x log10 Illuminance
+     * <p>
+     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
+     * the range 0 to 0xfffe.
+     * <p>
+     * A value of 0xffff indicates that this attribute is not valid.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getIlluminanceTargetLevel(final long refreshPeriod) {
+        if (attributes.get(ATTR_ILLUMINANCETARGETLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ILLUMINANCETARGETLEVEL).getLastValue();
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_ILLUMINANCETARGETLEVEL));
     }
 }

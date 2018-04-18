@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-18T20:43:25Z")
 public class ZclOccupancySensingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -52,9 +52,17 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      */
     public static final int ATTR_OCCUPANCYSENSORTYPE = 0x0001;
     /**
+     * The PIROccupiedToUnoccupiedDelay attribute is 8-bits in length and specifies
+     * the time delay, in seconds, before the PIR sensor changes to its occupied state
+     * when the sensed area becomes unoccupied. This attribute, along with
+     * PIRUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter' when
+     * used in an area where occupation changes frequently.
      */
     public static final int ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY = 0x0010;
     /**
+     * The PIRUnoccupiedToOccupiedDelay attribute is 8-bits in length and specifies
+     * the time delay, in seconds, before the PIR sensor changes to its unoccupied state
+     * when the sensed area becomes occupied.
      */
     public static final int ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY = 0x0011;
     /**
@@ -213,6 +221,12 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     /**
      * Set the <i>PIROccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>16</b>].
      * <p>
+     * The PIROccupiedToUnoccupiedDelay attribute is 8-bits in length and specifies
+     * the time delay, in seconds, before the PIR sensor changes to its occupied state
+     * when the sensed area becomes unoccupied. This attribute, along with
+     * PIRUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter' when
+     * used in an area where occupation changes frequently.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -227,6 +241,12 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     /**
      * Get the <i>PIROccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>16</b>].
      * <p>
+     * The PIROccupiedToUnoccupiedDelay attribute is 8-bits in length and specifies
+     * the time delay, in seconds, before the PIR sensor changes to its occupied state
+     * when the sensed area becomes unoccupied. This attribute, along with
+     * PIRUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter' when
+     * used in an area where occupation changes frequently.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -239,6 +259,12 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>PIROccupiedToUnoccupiedDelay</i> attribute [attribute ID <b>16</b>].
+     * <p>
+     * The PIROccupiedToUnoccupiedDelay attribute is 8-bits in length and specifies
+     * the time delay, in seconds, before the PIR sensor changes to its occupied state
+     * when the sensed area becomes unoccupied. This attribute, along with
+     * PIRUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter' when
+     * used in an area where occupation changes frequently.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -265,6 +291,10 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     /**
      * Set the <i>PIRUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>17</b>].
      * <p>
+     * The PIRUnoccupiedToOccupiedDelay attribute is 8-bits in length and specifies
+     * the time delay, in seconds, before the PIR sensor changes to its unoccupied state
+     * when the sensed area becomes occupied.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -279,6 +309,10 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     /**
      * Get the <i>PIRUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>17</b>].
      * <p>
+     * The PIRUnoccupiedToOccupiedDelay attribute is 8-bits in length and specifies
+     * the time delay, in seconds, before the PIR sensor changes to its unoccupied state
+     * when the sensed area becomes occupied.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -291,6 +325,10 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>PIRUnoccupiedToOccupiedDelay</i> attribute [attribute ID <b>17</b>].
+     * <p>
+     * The PIRUnoccupiedToOccupiedDelay attribute is 8-bits in length and specifies
+     * the time delay, in seconds, before the PIR sensor changes to its unoccupied state
+     * when the sensed area becomes occupied.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
