@@ -131,7 +131,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.zsmartsystems.zigbee.console.ZigBeeConsoleMain</mainClass>
+                            <mainClass>com.zsmartsystems.zigbee.console.main.ZigBeeConsoleMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
