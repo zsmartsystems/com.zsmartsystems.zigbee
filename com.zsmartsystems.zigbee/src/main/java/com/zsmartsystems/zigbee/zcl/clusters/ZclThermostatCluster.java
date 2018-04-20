@@ -32,7 +32,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-18T20:43:25Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -137,10 +137,15 @@ public class ZclThermostatCluster extends ZclCluster {
     /**
      */
     public static final int ATTR_THERMOSTATRUNNINGMODE = 0x001E;
+    /**
+     * This indicates the type of errors encountered within the Mini Split AC. Error values are reported with four bytes
+     * values. Each bit within the four bytes indicates the unique error.
+     */
+    public static final int ATTR_ACERRORCODE = 0x0044;
 
     // Attribute initialisation
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(25);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(26);
 
         attributeMap.put(ATTR_LOCALTEMPERATURE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_LOCALTEMPERATURE, "LocalTemperature", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
         attributeMap.put(ATTR_OUTDOORTEMPERATURE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_OUTDOORTEMPERATURE, "OutdoorTemperature", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
@@ -167,6 +172,7 @@ public class ZclThermostatCluster extends ZclCluster {
         attributeMap.put(ATTR_SYSTEMMODE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_SYSTEMMODE, "SystemMode", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_ALARMMASK, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ALARMMASK, "AlarmMask", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
         attributeMap.put(ATTR_THERMOSTATRUNNINGMODE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_THERMOSTATRUNNINGMODE, "ThermostatRunningMode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_ACERRORCODE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ACERRORCODE, "ACErrorCode", ZclDataType.BITMAP_32_BIT, false, true, false, false));
 
         return attributeMap;
     }
@@ -1239,6 +1245,50 @@ public class ZclThermostatCluster extends ZclCluster {
         }
 
         return (Integer) readSync(attributes.get(ATTR_THERMOSTATRUNNINGMODE));
+    }
+
+    /**
+     * Get the <i>ACErrorCode</i> attribute [attribute ID <b>68</b>].
+     * <p>
+     * This indicates the type of errors encountered within the Mini Split AC. Error values are reported with four bytes
+     * values. Each bit within the four bytes indicates the unique error.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> getAcErrorCodeAsync() {
+        return read(attributes.get(ATTR_ACERRORCODE));
+    }
+
+    /**
+     * Synchronously get the <i>ACErrorCode</i> attribute [attribute ID <b>68</b>].
+     * <p>
+     * This indicates the type of errors encountered within the Mini Split AC. Error values are reported with four bytes
+     * values. Each bit within the four bytes indicates the unique error.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     */
+    public Integer getAcErrorCode(final long refreshPeriod) {
+        if (attributes.get(ATTR_ACERRORCODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_ACERRORCODE).getLastValue();
+        }
+
+        return (Integer) readSync(attributes.get(ATTR_ACERRORCODE));
     }
 
     /**

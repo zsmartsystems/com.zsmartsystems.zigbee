@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-18T20:43:25Z")
 public class ZclMultistateValueBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -100,8 +100,10 @@ public class ZclMultistateValueBasicCluster extends ZclCluster {
      */
     public static final int ATTR_RELIABILITY = 0x0067;
     /**
+     * The RelinquishDefault attribute is the default value to be used for the PresentValue
+     * attribute when all elements of the PriorityArray attribute are marked as invalid.
      */
-    public static final int ATTR_RELINGUISHDEFAULT = 0x0068;
+    public static final int ATTR_RELINQUISHDEFAULT = 0x0068;
     /**
      * This attribute, of type bitmap, represents four Boolean flags that indicate the general “health”
      * of the analog sensor. Three of the flags are associated with the values of other optional attributes
@@ -155,7 +157,7 @@ public class ZclMultistateValueBasicCluster extends ZclCluster {
         attributeMap.put(ATTR_OUTOFSERVICE, new ZclAttribute(ZclClusterType.MULTISTATE_VALUE__BASIC, ATTR_OUTOFSERVICE, "OutOfService", ZclDataType.BOOLEAN, true, true, true, false));
         attributeMap.put(ATTR_PRESENTVALUE, new ZclAttribute(ZclClusterType.MULTISTATE_VALUE__BASIC, ATTR_PRESENTVALUE, "PresentValue", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
         attributeMap.put(ATTR_RELIABILITY, new ZclAttribute(ZclClusterType.MULTISTATE_VALUE__BASIC, ATTR_RELIABILITY, "Reliability", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
-        attributeMap.put(ATTR_RELINGUISHDEFAULT, new ZclAttribute(ZclClusterType.MULTISTATE_VALUE__BASIC, ATTR_RELINGUISHDEFAULT, "RelinguishDefault", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_RELINQUISHDEFAULT, new ZclAttribute(ZclClusterType.MULTISTATE_VALUE__BASIC, ATTR_RELINQUISHDEFAULT, "RelinquishDefault", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_STATUSFLAGS, new ZclAttribute(ZclClusterType.MULTISTATE_VALUE__BASIC, ATTR_STATUSFLAGS, "StatusFlags", ZclDataType.BITMAP_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_APPLICATIONTYPE, new ZclAttribute(ZclClusterType.MULTISTATE_VALUE__BASIC, ATTR_APPLICATIONTYPE, "ApplicationType", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, false, false));
 
@@ -626,21 +628,27 @@ public class ZclMultistateValueBasicCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>RelinguishDefault</i> attribute [attribute ID <b>104</b>].
+     * Set the <i>RelinquishDefault</i> attribute [attribute ID <b>104</b>].
+     * <p>
+     * The RelinquishDefault attribute is the default value to be used for the PresentValue
+     * attribute when all elements of the PriorityArray attribute are marked as invalid.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
-     * @param relinguishDefault the {@link Integer} attribute value to be set
+     * @param relinquishDefault the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setRelinguishDefault(final Object value) {
-        return write(attributes.get(ATTR_RELINGUISHDEFAULT), value);
+    public Future<CommandResult> setRelinquishDefault(final Object value) {
+        return write(attributes.get(ATTR_RELINQUISHDEFAULT), value);
     }
 
     /**
-     * Get the <i>RelinguishDefault</i> attribute [attribute ID <b>104</b>].
+     * Get the <i>RelinquishDefault</i> attribute [attribute ID <b>104</b>].
+     * <p>
+     * The RelinquishDefault attribute is the default value to be used for the PresentValue
+     * attribute when all elements of the PriorityArray attribute are marked as invalid.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -648,12 +656,15 @@ public class ZclMultistateValueBasicCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getRelinguishDefaultAsync() {
-        return read(attributes.get(ATTR_RELINGUISHDEFAULT));
+    public Future<CommandResult> getRelinquishDefaultAsync() {
+        return read(attributes.get(ATTR_RELINQUISHDEFAULT));
     }
 
     /**
-     * Synchronously get the <i>RelinguishDefault</i> attribute [attribute ID <b>104</b>].
+     * Synchronously get the <i>RelinquishDefault</i> attribute [attribute ID <b>104</b>].
+     * <p>
+     * The RelinquishDefault attribute is the default value to be used for the PresentValue
+     * attribute when all elements of the PriorityArray attribute are marked as invalid.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -669,12 +680,12 @@ public class ZclMultistateValueBasicCluster extends ZclCluster {
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
      */
-    public Integer getRelinguishDefault(final long refreshPeriod) {
-        if (attributes.get(ATTR_RELINGUISHDEFAULT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RELINGUISHDEFAULT).getLastValue();
+    public Integer getRelinquishDefault(final long refreshPeriod) {
+        if (attributes.get(ATTR_RELINQUISHDEFAULT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) attributes.get(ATTR_RELINQUISHDEFAULT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RELINGUISHDEFAULT));
+        return (Integer) readSync(attributes.get(ATTR_RELINQUISHDEFAULT));
     }
 
     /**

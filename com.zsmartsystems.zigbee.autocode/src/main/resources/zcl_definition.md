@@ -1761,7 +1761,7 @@ that can take one of a number of discrete values, and accessing characteristics 
 |0x0051 |OutOfService          |Boolean                    |Read/Write |Mandatory |          |
 |0x0055 |PresentValue          |Unsigned 16-bit Integer    |Read/Write |Mandatory |          |
 |0x0067 |Reliability           |8-bit enumeration          |Read/Write |Optional  |          |
-|0x0068 |RelinguishDefault     |Unsigned 16-bit Integer    |Read/Write |Optional  |          |
+|0x0068 |RelinquishDefault     |Unsigned 16-bit Integer    |Read/Write |Optional  |          |
 |0x006F |StatusFlags           |8-bit bitmap               |Read only  |Mandatory |          |
 |0x0100 |ApplicationType       |Signed 32-bit integer      |Read only  |Optional  |          |
 
@@ -1904,7 +1904,7 @@ value, typically used as a control system parameter, and accessing characteristi
 |0x0051 |OutOfService          |Boolean                    |Read/Write |Mandatory |          |
 |0x0055 |PresentValue          |Unsigned 16-bit Integer    |Read/Write |Mandatory |          |
 |0x0067 |Reliability           |8-bit enumeration          |Read/Write |Optional  |          |
-|0x0068 |RelinguishDefault     |Unsigned 16-bit Integer    |Read/Write |Optional  |          |
+|0x0068 |RelinquishDefault     |Unsigned 16-bit Integer    |Read/Write |Optional  |          |
 |0x006F |StatusFlags           |8-bit bitmap               |Read only  |Mandatory |          |
 |0x0100 |ApplicationType       |Signed 32-bit integer      |Read only  |Optional  |          |
 
@@ -2218,6 +2218,7 @@ No cluster specific commands.
 |0x001C |SystemMode                 |Enumeration 8-bit          |Read       |Mandatory |          |
 |0x001D |AlarmMask                  |Enumeration 8-bit          |Read       |Optional  |          |
 |0x001E |ThermostatRunningMode      |Enumeration 8-bit          |Read       |Optional  |          |
+|0x0044 |ACErrorCode                |Bitmap 32-bit              |Read       |Optional  |          |
 
 #### LocalTemperature Attribute
 LocalTemperature represents the temperature in degrees Celsius, as measured locally.
@@ -2735,6 +2736,7 @@ is within, above or below a target band.
 |-------|----------------------|---------------------------|-----------|----------|----------|
 |0x0000 |LevelStatus           |8-bit Enumeration          |Read only  |Mandatory |Mandatory |
 |0x0001 |LightSensorType       |8-bit Enumeration          |Read only  |Optional  |          |
+|0x0010 |IlluminanceTargetLevel|Unsigned 16-bit Integer    |Read only  |Optional  |          |
 
 #### LevelStatus Attribute
 The LevelStatus attribute indicates whether the measured illuminance is above,
@@ -3006,14 +3008,14 @@ All other bits are reserved.
 #### OccupancySensorType Attribute
 The OccupancySensorType attribute specifies the type of the occupancy sensor.
 
-#### PIROccupiedToUnoccupiedTime Attribute
+#### PIROccupiedToUnoccupiedDelay Attribute
 The PIROccupiedToUnoccupiedDelay attribute is 8-bits in length and specifies
 the time delay, in seconds, before the PIR sensor changes to its occupied state
 when the sensed area becomes unoccupied. This attribute, along with
 PIRUnoccupiedToOccupiedTime, may be used to reduce sensor 'chatter' when
 used in an area where occupation changes frequently.
 
-#### PIRUnoccupiedToOccupiedTime Attribute
+#### PIRUnoccupiedToOccupiedDelay Attribute
 The PIRUnoccupiedToOccupiedDelay attribute is 8-bits in length and specifies
 the time delay, in seconds, before the PIR sensor changes to its unoccupied state
 when the sensed area becomes occupied.
