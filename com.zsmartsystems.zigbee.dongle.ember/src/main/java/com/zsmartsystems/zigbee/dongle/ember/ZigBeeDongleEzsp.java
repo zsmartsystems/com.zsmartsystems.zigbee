@@ -260,7 +260,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // If ashHandler is null then the serial port didn't initialise
         if (frameHandler == null) {
-            logger.error("Initialising Ember Dongle but low level handle is not initialised.");
+            logger.error("Initialising Ember Dongle but low level handler is not initialised.");
             return false;
         }
 

@@ -8,7 +8,7 @@
 package com.zsmartsystems.zigbee.dongle.ember;
 
 /**
- * Definition of the protocol types used in Ember
+ * Definition of the low level communication protocol types used to communicate with the Ember NCP.
  *
  * @author Chris Jackson
  *

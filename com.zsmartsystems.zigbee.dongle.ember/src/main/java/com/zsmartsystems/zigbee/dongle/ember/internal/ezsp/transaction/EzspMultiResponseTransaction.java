@@ -72,7 +72,7 @@ public class EzspMultiResponseTransaction implements EzspTransaction {
         }
 
         // Check if this response completes the transaction
-        if (response.getClass() == requiredResponse && request.getSequenceNumber() == response.getSequenceNumber()) {
+        if (response.getClass() == requiredResponse) {
             responses.add(response);
             return true;
         } else {
