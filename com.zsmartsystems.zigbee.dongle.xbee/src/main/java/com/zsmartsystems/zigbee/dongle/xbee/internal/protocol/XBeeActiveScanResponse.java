@@ -153,7 +153,7 @@ public class XBeeActiveScanResponse extends XBeeFrame implements XBeeResponse {
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
-        if (commandStatus != CommandStatus.OK) {
+        if (commandStatus != CommandStatus.OK || isComplete()) {
             return;
         }
 

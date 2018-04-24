@@ -1279,6 +1279,48 @@
 	</at_command>
 
 	<at_command>
+		<name>Operating Channel</name>
+		<description>Read the channel number used to transmit and receive data between RF devices and uses 802.15.4 channel numbers.
+A value of 0 means the device has not joined a PAN and is not operating on any channel.
+		</description>
+		<command>CH</command>
+		<setter>false</setter>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Channel</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
+		<name>Scan Channels</name>
+		<description>Set or read the list of channels to scan.
+Coordinator - Bit field list of channels to choose from prior to starting network.
+Router/End Device - Bit field list of channels scanned to find a Coordinator/Router to join. Write changes to SC using the WR command to preserve the SC setting if a power cycle occurs.
+		</description>
+		<command>SC</command>
+		<command_parameters>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Channels</name>
+				<description>
+				</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>Channels</name>
+				<description>
+				</description>
+			</parameter>
+		</response_parameters>
+	</at_command>
+
+	<at_command>
 		<name>PAN ID</name>
 		<description>Read the 16-bit PAN ID. The OI value reflects the actual
 			16-bit PAN ID where the device is running.

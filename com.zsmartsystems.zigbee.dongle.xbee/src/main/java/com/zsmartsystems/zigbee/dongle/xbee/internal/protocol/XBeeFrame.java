@@ -28,8 +28,6 @@ public class XBeeFrame {
     protected int pushPosition = 0;
     private int frameType;
 
-    // private final int START_DELIMITER = 0x7E;
-
     /**
      * Initialise the deserialiser. This sets the data for the deserialiser methods to use.
      *
@@ -40,6 +38,10 @@ public class XBeeFrame {
         length = data[0] << 8 + data[1];
         frameType = data[2];
         position = 3;
+    }
+
+    protected boolean isComplete() {
+        return (position >= (buffer.length - 1));
     }
 
     /**
@@ -217,9 +219,6 @@ public class XBeeFrame {
         for (int cnt = 0; cnt <= 15; cnt++) {
             buffer[length++] = key.getValue()[cnt];
         }
-        // for (int cnt = 15; cnt >= 0; cnt--) {
-        // buffer[length++] = key.getValue()[cnt];
-        // }
     }
 
     /**

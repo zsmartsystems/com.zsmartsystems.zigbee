@@ -163,11 +163,6 @@ public class CommandGenerator extends ClassGenerator {
         PrintWriter out = new PrintWriter(stringWriter);
 
         clearImports();
-        // addImport("org.slf4j.Logger");
-        // addImport("org.slf4j.LoggerFactory");
-
-        // addImport("java.util.Map");
-        // addImport("java.util.HashMap");
 
         out.println("/**");
         out.println(" * Class to implement the XBee command <b>" + command.name + "</b>.");
@@ -729,20 +724,14 @@ public class CommandGenerator extends ClassGenerator {
 
             if (getTypeSerializer(parameter.data_type).equals("CommandStatus")
                     && !(group.parameters.indexOf(parameter) == (group.parameters.size() - 1))) {
-                out.println(indent + "if (commandStatus != CommandStatus.OK) {");
+                out.println(indent + "if (commandStatus != CommandStatus.OK || isComplete()) {");
                 out.println(indent + "    return;");
                 out.println(indent + "}");
             }
 
             if (cnt < group.parameters.size()) {
                 if (parameter.optional != null && parameter.optional == true) {
-                    // out.println(indent + "if (" + stringToLowerCamelCase(parameter.name) + " == null) {");
-                    // out.println(indent + " popDeserializer();");
-                    // out.println(indent + "} else {");
-                    // out.println(indent + " stepDeserializer();");
-                    // out.println(indent + "}");
                 } else {
-                    // out.println(indent + "stepDeserializer();");
                 }
 
             }

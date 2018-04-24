@@ -10,10 +10,12 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
 
 /**
- * Class to implement the XBee command <b>PAN ID</b>.
+ * Class to implement the XBee command <b>Scan Channels</b>.
  * <p>
- * AT Command <b>OI</b></p>Read the 16-bit PAN ID. The OI value reflects the actual 16-bit PAN
- * ID where the device is running.
+ * AT Command <b>SC</b></p>Set or read the list of channels to scan. Coordinator - Bit field
+ * list of channels to choose from prior to starting network. Router/End Device - Bit field list
+ * of channels scanned to find a Coordinator/Router to join. Write changes to SC using the WR
+ * command to preserve the SC setting if a power cycle occurs.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -21,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class XBeePanIdResponse extends XBeeFrame implements XBeeResponse {
+public class XBeeScanChannelsResponse extends XBeeFrame implements XBeeResponse {
     /**
      * Response field
      */
@@ -35,7 +37,7 @@ public class XBeePanIdResponse extends XBeeFrame implements XBeeResponse {
     /**
      * Response field
      */
-    private Integer panId;
+    private Integer channels;
 
     /**
      *
@@ -55,10 +57,10 @@ public class XBeePanIdResponse extends XBeeFrame implements XBeeResponse {
 
     /**
      *
-     * @return the panId as {@link Integer}
+     * @return the channels as {@link Integer}
      */
-    public Integer getPanId() {
-        return panId;
+    public Integer getChannels() {
+        return channels;
     }
 
 
@@ -78,20 +80,20 @@ public class XBeePanIdResponse extends XBeeFrame implements XBeeResponse {
             return;
         }
 
-        // Deserialize field "Pan Id"
-        panId = deserializeInt16();
+        // Deserialize field "Channels"
+        channels = deserializeInt16();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(467);
-        builder.append("XBeePanIdResponse [frameId=");
+        final StringBuilder builder = new StringBuilder(474);
+        builder.append("XBeeScanChannelsResponse [frameId=");
         builder.append(frameId);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
         if (commandStatus == CommandStatus.OK) {
-            builder.append(", panId=");
-            builder.append(panId);
+            builder.append(", channels=");
+            builder.append(channels);
         }
         builder.append(']');
         return builder.toString();

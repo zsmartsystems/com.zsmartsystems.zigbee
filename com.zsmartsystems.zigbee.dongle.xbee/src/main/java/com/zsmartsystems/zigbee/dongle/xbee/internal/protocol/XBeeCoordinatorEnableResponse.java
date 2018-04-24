@@ -74,7 +74,7 @@ public class XBeeCoordinatorEnableResponse extends XBeeFrame implements XBeeResp
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
-        if (commandStatus != CommandStatus.OK) {
+        if (commandStatus != CommandStatus.OK || isComplete()) {
             return;
         }
 
