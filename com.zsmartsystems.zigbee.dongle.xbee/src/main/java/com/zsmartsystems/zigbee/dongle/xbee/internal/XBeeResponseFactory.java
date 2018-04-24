@@ -27,10 +27,12 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeLinkKeyRespons
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeNetworkKeyResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeNetworkResetResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeNodeDiscoveryResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeOperatingChannelResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeePanIdResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeResetResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSaveDataResponse;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeScanChannelsResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSoftwareResetResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeTransmitStatusResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeZigbeeStackProfileResponse;
@@ -64,6 +66,7 @@ public class XBeeResponseFactory {
         atCommands.put(0x4150, XBeeApiEnableResponse.class); // AP
         atCommands.put(0x4153, XBeeActiveScanResponse.class); // AS
         atCommands.put(0x4345, XBeeCoordinatorEnableResponse.class); // CE
+        atCommands.put(0x4348, XBeeOperatingChannelResponse.class); // CH
         atCommands.put(0x4544, XBeeEnergyScanResponse.class); // ED
         atCommands.put(0x4545, XBeeEncryptionEnableResponse.class); // EE
         atCommands.put(0x454F, XBeeEncryptionOptionsResponse.class); // EO
@@ -78,6 +81,7 @@ public class XBeeResponseFactory {
         atCommands.put(0x4F49, XBeePanIdResponse.class); // OI
         atCommands.put(0x4F50, XBeeExtendedPanIdResponse.class); // OP
         atCommands.put(0x5245, XBeeResetResponse.class); // RE
+        atCommands.put(0x5343, XBeeScanChannelsResponse.class); // SC
         atCommands.put(0x5348, XBeeIeeeAddressHighResponse.class); // SH
         atCommands.put(0x534C, XBeeIeeeAddressLowResponse.class); // SL
         atCommands.put(0x564C, XBeeDetailedVersionResponse.class); // VL

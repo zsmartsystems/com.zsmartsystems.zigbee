@@ -75,7 +75,7 @@ public class XBeeExtendedPanIdConfigResponse extends XBeeFrame implements XBeeRe
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
-        if (commandStatus != CommandStatus.OK) {
+        if (commandStatus != CommandStatus.OK || isComplete()) {
             return;
         }
 

@@ -10,10 +10,11 @@ package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
 
 /**
- * Class to implement the XBee command <b>PAN ID</b>.
+ * Class to implement the XBee command <b>Operating Channel</b>.
  * <p>
- * AT Command <b>OI</b></p>Read the 16-bit PAN ID. The OI value reflects the actual 16-bit PAN
- * ID where the device is running.
+ * AT Command <b>CH</b></p>Read the channel number used to transmit and receive data between
+ * RF devices and uses 802.15.4 channel numbers. A value of 0 means the device has not joined a PAN
+ * and is not operating on any channel.
  * <p>
  * This class provides methods for processing XBee API commands.
  * <p>
@@ -21,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class XBeePanIdResponse extends XBeeFrame implements XBeeResponse {
+public class XBeeOperatingChannelResponse extends XBeeFrame implements XBeeResponse {
     /**
      * Response field
      */
@@ -35,7 +36,7 @@ public class XBeePanIdResponse extends XBeeFrame implements XBeeResponse {
     /**
      * Response field
      */
-    private Integer panId;
+    private Integer channel;
 
     /**
      *
@@ -55,10 +56,10 @@ public class XBeePanIdResponse extends XBeeFrame implements XBeeResponse {
 
     /**
      *
-     * @return the panId as {@link Integer}
+     * @return the channel as {@link Integer}
      */
-    public Integer getPanId() {
-        return panId;
+    public Integer getChannel() {
+        return channel;
     }
 
 
@@ -78,20 +79,20 @@ public class XBeePanIdResponse extends XBeeFrame implements XBeeResponse {
             return;
         }
 
-        // Deserialize field "Pan Id"
-        panId = deserializeInt16();
+        // Deserialize field "Channel"
+        channel = deserializeInt8();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(467);
-        builder.append("XBeePanIdResponse [frameId=");
+        final StringBuilder builder = new StringBuilder(478);
+        builder.append("XBeeOperatingChannelResponse [frameId=");
         builder.append(frameId);
         builder.append(", commandStatus=");
         builder.append(commandStatus);
         if (commandStatus == CommandStatus.OK) {
-            builder.append(", panId=");
-            builder.append(panId);
+            builder.append(", channel=");
+            builder.append(channel);
         }
         builder.append(']');
         return builder.toString();

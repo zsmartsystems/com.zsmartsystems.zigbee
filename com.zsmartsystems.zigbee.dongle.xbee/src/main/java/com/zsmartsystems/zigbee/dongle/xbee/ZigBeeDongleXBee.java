@@ -30,10 +30,12 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetFirmwareVer
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetHardwareVersionCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetIeeeAddressHighCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetIeeeAddressLowCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetOperatingChannelCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeGetPanIdCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeIeeeAddressHighResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeIeeeAddressLowResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeModemStatusEvent;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeOperatingChannelResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeePanIdResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeReceivePacketExplicitEvent;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetApiEnableCommand;
@@ -44,6 +46,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetEncryptionO
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetLinkKeyCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetNetworkKeyCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetSaveDataCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetScanChannelsCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetSoftwareResetCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetZigbeeStackProfileCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeTransmitRequestExplicitCommand;
@@ -420,11 +423,21 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
 
     @Override
     public int getZigBeeChannel() {
-        return radioChannel;
+        if (frameHandler == null) {
+            return 0;
+        }
+        XBeeGetOperatingChannelCommand request = new XBeeGetOperatingChannelCommand();
+        XBeeOperatingChannelResponse response = (XBeeOperatingChannelResponse) frameHandler.sendRequest(request);
+
+        return response.getChannel();
     }
 
     @Override
     public boolean setZigBeeChannel(int channel) {
+        XBeeSetScanChannelsCommand request = new XBeeSetScanChannelsCommand();
+        request.setChannels((1 << (channel - 11)));
+        frameHandler.sendRequest(request);
+
         return false;
     }
 

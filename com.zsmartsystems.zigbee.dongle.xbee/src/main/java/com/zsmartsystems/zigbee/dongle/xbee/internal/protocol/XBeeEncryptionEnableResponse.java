@@ -73,7 +73,7 @@ public class XBeeEncryptionEnableResponse extends XBeeFrame implements XBeeRespo
 
         // Deserialize field "Command Status"
         commandStatus = deserializeCommandStatus();
-        if (commandStatus != CommandStatus.OK) {
+        if (commandStatus != CommandStatus.OK || isComplete()) {
             return;
         }
 
