@@ -20,8 +20,6 @@ import java.util.List;
 /**
  * Bypass Response value object class.
  * <p>
- * Provides the response of the security panel to the request from the IAS ACE client to bypass zones via a Bypass command.
- * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
@@ -29,7 +27,7 @@ import java.util.List;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class BypassResponse extends ZclCommand {
     /**
      * Bypass Result command message field.

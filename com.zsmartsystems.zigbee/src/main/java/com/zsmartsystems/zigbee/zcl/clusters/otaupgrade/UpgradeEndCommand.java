@@ -19,25 +19,6 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
 /**
  * Upgrade End Command value object class.
  * <p>
- * Upon reception all the image data, the client should verify the image to ensure its integrity and validity.
- * If the device requires signed images it shall examine the image and verify the signature. Clients may perform
- * additional manufacturer specific integrity checks to validate the image, for example, CRC check on the actual file data.
- * <br>
- * If the image fails any integrity checks, the client shall send an Upgrade End Request command to the
- * upgrade server with a status of INVALID_IMAGE. In this case, the client may reinitiate the upgrade
- * process in order to obtain a valid OTA upgrade image. The client shall not upgrade to the bad image
- * and shall discard the downloaded image data.
- * <br>
- * If the image passes all integrity checks and the client does not require additional OTA upgrade image
- * file, it shall send back an Upgrade End Request with a status of SUCCESS. However, if the client
- * requires multiple OTA upgrade image files before performing an upgrade, it shall send an Upgrade End
- * Request command with status REQUIRE_MORE_IMAGE. This shall indicate to the server that it
- * cannot yet upgrade the image it received.
- * <br>
- * If the client decides to cancel the download process for any other reasons, it has the option of sending
- * Upgrade End Request with status of ABORT at anytime during the download process. The client shall
- * then try to reinitiate the download process again at a later time.
- * <p>
  * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
  * <p>
@@ -62,7 +43,7 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class UpgradeEndCommand extends ZclCommand {
     /**
      * Status command message field.

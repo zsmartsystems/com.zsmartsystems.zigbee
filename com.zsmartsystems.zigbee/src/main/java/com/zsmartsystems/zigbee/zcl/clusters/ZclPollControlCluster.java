@@ -12,6 +12,12 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.CheckInCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.CheckInResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.FastPollStopCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.SetLongPollIntervalCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.SetShortPollIntervalCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import java.util.Map;
@@ -35,7 +41,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-23T21:55:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:20:19Z")
 public class ZclPollControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -55,10 +61,10 @@ public class ZclPollControlCluster extends ZclCluster {
      * server with the poll control client. The CheckinInterval is measured in quarter-seconds. A value of 0 indicates that the Poll Control
      * Server is turned off and the poll control server will not check-in with the poll control client. The Poll Control Server checks in with the
      * Poll Control Client by sending a Checkin command to the Client. This value SHOULDbe longer than the LongPoll Interval attribute. If the
-     * Client writes an invalid attribute value (Example: Out of Range as defined in Table 3-126 or a value smaller than the optional
-     * Check-inIntervalMinattribute value or a value smaller than the LongPollInterval attribute value), the Server SHOULD return Write
-     * Attributes Response with an error status not equal to ZCL_SUCCESS(0x00). The Poll Control Client will hold onto the actions or messages for
-     * the Poll Control Server at the application level until the Poll Control Server checks in with the Poll Control Client.
+     * Client writes an invalid attribute value (Example: Out of Range or a value smaller than the optional Check-inIntervalMinattribute value
+     * or a value smaller than the LongPollInterval attribute value), the Server SHOULD return Write Attributes Response with an error status not
+     * equal to ZCL_SUCCESS. The Poll Control Client will hold onto the actions or messages for the Poll Control Server at the application level
+     * until the Poll Control Server checks in with the Poll Control Client.
      */
     public static final int ATTR_CHECKININTERVAL = 0x0000;
     /**
@@ -81,12 +87,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * The FastPollTimeout attribute represents the number of quarterseconds that an end device will stay in fast poll mode by default. It is
      * suggested that the FastPollTimeoutattribute value be greater than 7.68 seconds.The Poll Control Cluster  Client MAYoverride  this  value 
      * by  indicating  a  different  value  in  the  Fast  Poll Duration argument in the Check-in Response command. If the Client writes a value out of range
-     * as defined in Table 3-126 or greater  than  the  optional FastPollTimeoutMax attribute  value  if  supported, the Server SHOULD return a  Write 
-     * Attributes  Response with a status of  INVALID_VALUE30.  An  end  device  that implements the  Poll Control server can be  put into a  fast poll  mode
-     * during  which it will send MAC Data Requests  to  its  parent  at  the  frequency  of  its  configured ShortPollInterval attribute.  During this 
-     * period  of time, fast polling is considered active. When the device goes into fast poll mode, it is required to send MAC DataRequests to its
-     * parent at an accelerated rate and is thus more responsive on the network and can receive data asynchronously from the device implementing
-     * the Poll Control Cluster Client.
+     * or greater  than  the  optional FastPollTimeoutMax attribute  value  if  supported, the Server SHOULD return a  Write  Attributes  Response with a
+     * status of  INVALID_VALUE30.  An  end  device  that implements the  Poll Control server can be  put into a  fast poll  mode during  which it will send MAC
+     * Data Requests  to  its  parent  at  the  frequency  of  its  configured ShortPollInterval attribute.  During this  period  of time, fast polling is
+     * considered active. When the device goes into fast poll mode, it is required to send MAC DataRequests to its parent at an accelerated rate and
+     * is thus more responsive on the network and can receive data asynchronously from the device implementing the Poll Control Cluster Client.
      */
     public static final int ATTR_FASTPOLLTIMEOUT = 0x0003;
     /**
@@ -139,10 +144,10 @@ public class ZclPollControlCluster extends ZclCluster {
      * server with the poll control client. The CheckinInterval is measured in quarter-seconds. A value of 0 indicates that the Poll Control
      * Server is turned off and the poll control server will not check-in with the poll control client. The Poll Control Server checks in with the
      * Poll Control Client by sending a Checkin command to the Client. This value SHOULDbe longer than the LongPoll Interval attribute. If the
-     * Client writes an invalid attribute value (Example: Out of Range as defined in Table 3-126 or a value smaller than the optional
-     * Check-inIntervalMinattribute value or a value smaller than the LongPollInterval attribute value), the Server SHOULD return Write
-     * Attributes Response with an error status not equal to ZCL_SUCCESS(0x00). The Poll Control Client will hold onto the actions or messages for
-     * the Poll Control Server at the application level until the Poll Control Server checks in with the Poll Control Client.
+     * Client writes an invalid attribute value (Example: Out of Range or a value smaller than the optional Check-inIntervalMinattribute value
+     * or a value smaller than the LongPollInterval attribute value), the Server SHOULD return Write Attributes Response with an error status not
+     * equal to ZCL_SUCCESS. The Poll Control Client will hold onto the actions or messages for the Poll Control Server at the application level
+     * until the Poll Control Server checks in with the Poll Control Client.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -164,10 +169,10 @@ public class ZclPollControlCluster extends ZclCluster {
      * server with the poll control client. The CheckinInterval is measured in quarter-seconds. A value of 0 indicates that the Poll Control
      * Server is turned off and the poll control server will not check-in with the poll control client. The Poll Control Server checks in with the
      * Poll Control Client by sending a Checkin command to the Client. This value SHOULDbe longer than the LongPoll Interval attribute. If the
-     * Client writes an invalid attribute value (Example: Out of Range as defined in Table 3-126 or a value smaller than the optional
-     * Check-inIntervalMinattribute value or a value smaller than the LongPollInterval attribute value), the Server SHOULD return Write
-     * Attributes Response with an error status not equal to ZCL_SUCCESS(0x00). The Poll Control Client will hold onto the actions or messages for
-     * the Poll Control Server at the application level until the Poll Control Server checks in with the Poll Control Client.
+     * Client writes an invalid attribute value (Example: Out of Range or a value smaller than the optional Check-inIntervalMinattribute value
+     * or a value smaller than the LongPollInterval attribute value), the Server SHOULD return Write Attributes Response with an error status not
+     * equal to ZCL_SUCCESS. The Poll Control Client will hold onto the actions or messages for the Poll Control Server at the application level
+     * until the Poll Control Server checks in with the Poll Control Client.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -188,10 +193,10 @@ public class ZclPollControlCluster extends ZclCluster {
      * server with the poll control client. The CheckinInterval is measured in quarter-seconds. A value of 0 indicates that the Poll Control
      * Server is turned off and the poll control server will not check-in with the poll control client. The Poll Control Server checks in with the
      * Poll Control Client by sending a Checkin command to the Client. This value SHOULDbe longer than the LongPoll Interval attribute. If the
-     * Client writes an invalid attribute value (Example: Out of Range as defined in Table 3-126 or a value smaller than the optional
-     * Check-inIntervalMinattribute value or a value smaller than the LongPollInterval attribute value), the Server SHOULD return Write
-     * Attributes Response with an error status not equal to ZCL_SUCCESS(0x00). The Poll Control Client will hold onto the actions or messages for
-     * the Poll Control Server at the application level until the Poll Control Server checks in with the Poll Control Client.
+     * Client writes an invalid attribute value (Example: Out of Range or a value smaller than the optional Check-inIntervalMinattribute value
+     * or a value smaller than the LongPollInterval attribute value), the Server SHOULD return Write Attributes Response with an error status not
+     * equal to ZCL_SUCCESS. The Poll Control Client will hold onto the actions or messages for the Poll Control Server at the application level
+     * until the Poll Control Server checks in with the Poll Control Client.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -224,10 +229,10 @@ public class ZclPollControlCluster extends ZclCluster {
      * server with the poll control client. The CheckinInterval is measured in quarter-seconds. A value of 0 indicates that the Poll Control
      * Server is turned off and the poll control server will not check-in with the poll control client. The Poll Control Server checks in with the
      * Poll Control Client by sending a Checkin command to the Client. This value SHOULDbe longer than the LongPoll Interval attribute. If the
-     * Client writes an invalid attribute value (Example: Out of Range as defined in Table 3-126 or a value smaller than the optional
-     * Check-inIntervalMinattribute value or a value smaller than the LongPollInterval attribute value), the Server SHOULD return Write
-     * Attributes Response with an error status not equal to ZCL_SUCCESS(0x00). The Poll Control Client will hold onto the actions or messages for
-     * the Poll Control Server at the application level until the Poll Control Server checks in with the Poll Control Client.
+     * Client writes an invalid attribute value (Example: Out of Range or a value smaller than the optional Check-inIntervalMinattribute value
+     * or a value smaller than the LongPollInterval attribute value), the Server SHOULD return Write Attributes Response with an error status not
+     * equal to ZCL_SUCCESS. The Poll Control Client will hold onto the actions or messages for the Poll Control Server at the application level
+     * until the Poll Control Server checks in with the Poll Control Client.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -392,12 +397,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * The FastPollTimeout attribute represents the number of quarterseconds that an end device will stay in fast poll mode by default. It is
      * suggested that the FastPollTimeoutattribute value be greater than 7.68 seconds.The Poll Control Cluster  Client MAYoverride  this  value 
      * by  indicating  a  different  value  in  the  Fast  Poll Duration argument in the Check-in Response command. If the Client writes a value out of range
-     * as defined in Table 3-126 or greater  than  the  optional FastPollTimeoutMax attribute  value  if  supported, the Server SHOULD return a  Write 
-     * Attributes  Response with a status of  INVALID_VALUE30.  An  end  device  that implements the  Poll Control server can be  put into a  fast poll  mode
-     * during  which it will send MAC Data Requests  to  its  parent  at  the  frequency  of  its  configured ShortPollInterval attribute.  During this 
-     * period  of time, fast polling is considered active. When the device goes into fast poll mode, it is required to send MAC DataRequests to its
-     * parent at an accelerated rate and is thus more responsive on the network and can receive data asynchronously from the device implementing
-     * the Poll Control Cluster Client.
+     * or greater  than  the  optional FastPollTimeoutMax attribute  value  if  supported, the Server SHOULD return a  Write  Attributes  Response with a
+     * status of  INVALID_VALUE30.  An  end  device  that implements the  Poll Control server can be  put into a  fast poll  mode during  which it will send MAC
+     * Data Requests  to  its  parent  at  the  frequency  of  its  configured ShortPollInterval attribute.  During this  period  of time, fast polling is
+     * considered active. When the device goes into fast poll mode, it is required to send MAC DataRequests to its parent at an accelerated rate and
+     * is thus more responsive on the network and can receive data asynchronously from the device implementing the Poll Control Cluster Client.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -415,12 +419,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * The FastPollTimeout attribute represents the number of quarterseconds that an end device will stay in fast poll mode by default. It is
      * suggested that the FastPollTimeoutattribute value be greater than 7.68 seconds.The Poll Control Cluster  Client MAYoverride  this  value 
      * by  indicating  a  different  value  in  the  Fast  Poll Duration argument in the Check-in Response command. If the Client writes a value out of range
-     * as defined in Table 3-126 or greater  than  the  optional FastPollTimeoutMax attribute  value  if  supported, the Server SHOULD return a  Write 
-     * Attributes  Response with a status of  INVALID_VALUE30.  An  end  device  that implements the  Poll Control server can be  put into a  fast poll  mode
-     * during  which it will send MAC Data Requests  to  its  parent  at  the  frequency  of  its  configured ShortPollInterval attribute.  During this 
-     * period  of time, fast polling is considered active. When the device goes into fast poll mode, it is required to send MAC DataRequests to its
-     * parent at an accelerated rate and is thus more responsive on the network and can receive data asynchronously from the device implementing
-     * the Poll Control Cluster Client.
+     * or greater  than  the  optional FastPollTimeoutMax attribute  value  if  supported, the Server SHOULD return a  Write  Attributes  Response with a
+     * status of  INVALID_VALUE30.  An  end  device  that implements the  Poll Control server can be  put into a  fast poll  mode during  which it will send MAC
+     * Data Requests  to  its  parent  at  the  frequency  of  its  configured ShortPollInterval attribute.  During this  period  of time, fast polling is
+     * considered active. When the device goes into fast poll mode, it is required to send MAC DataRequests to its parent at an accelerated rate and
+     * is thus more responsive on the network and can receive data asynchronously from the device implementing the Poll Control Cluster Client.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -450,12 +453,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * The FastPollTimeout attribute represents the number of quarterseconds that an end device will stay in fast poll mode by default. It is
      * suggested that the FastPollTimeoutattribute value be greater than 7.68 seconds.The Poll Control Cluster  Client MAYoverride  this  value 
      * by  indicating  a  different  value  in  the  Fast  Poll Duration argument in the Check-in Response command. If the Client writes a value out of range
-     * as defined in Table 3-126 or greater  than  the  optional FastPollTimeoutMax attribute  value  if  supported, the Server SHOULD return a  Write 
-     * Attributes  Response with a status of  INVALID_VALUE30.  An  end  device  that implements the  Poll Control server can be  put into a  fast poll  mode
-     * during  which it will send MAC Data Requests  to  its  parent  at  the  frequency  of  its  configured ShortPollInterval attribute.  During this 
-     * period  of time, fast polling is considered active. When the device goes into fast poll mode, it is required to send MAC DataRequests to its
-     * parent at an accelerated rate and is thus more responsive on the network and can receive data asynchronously from the device implementing
-     * the Poll Control Cluster Client.
+     * or greater  than  the  optional FastPollTimeoutMax attribute  value  if  supported, the Server SHOULD return a  Write  Attributes  Response with a
+     * status of  INVALID_VALUE30.  An  end  device  that implements the  Poll Control server can be  put into a  fast poll  mode during  which it will send MAC
+     * Data Requests  to  its  parent  at  the  frequency  of  its  configured ShortPollInterval attribute.  During this  period  of time, fast polling is
+     * considered active. When the device goes into fast poll mode, it is required to send MAC DataRequests to its parent at an accelerated rate and
+     * is thus more responsive on the network and can receive data asynchronously from the device implementing the Poll Control Cluster Client.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -600,5 +602,151 @@ public class ZclPollControlCluster extends ZclCluster {
         }
 
         return (Integer) readSync(attributes.get(ATTR_FASTPOLLTIMEOUTMIN));
+    }
+
+    /**
+     * The Check In Response
+     * <p>
+     * The Check-in Response is sent in response to the receipt of a Check-in command. The Check-in Response is used by the Poll Control Client to
+     * indicate whether it would like the device implementing the Poll Control Cluster Server to go into a fast poll mode and for how long. If the Poll
+     * Control Cluster Client indicates that it would like the device to go into a fast poll mode, it is responsible for telling the device to stop
+     * fast polling when it is done sending messages to the fast polling device.
+     * <br>
+     * If the Poll Control Server receives a Check-In Response from a client for which there is no binding (unbound), it SHOULD respond with a
+     * Default Response with a status value indicating ACTION_DENIED.
+     * <br>
+     * If the Poll Control Server receives a Check-In Response from a client for which there is a binding (bound) with an invalid fast poll interval
+     * it SHOULD respond with a Default Response with status INVALID_VALUE.
+     * <br>
+     * If the Poll Control Server receives a Check-In Response from a bound client after temporary fast poll mode is completed it SHOULD respond
+     * with a Default Response with a status value indicating TIMEOUT.
+     * <br>
+     * In all of the above cases, the Server SHALL respond with a Default Response not equal to ZCL_SUCCESS.
+     *
+     * @param startFastPolling {@link Boolean} Start Fast Polling
+     * @param fastPollTimeout {@link Integer} Fast Poll Timeout
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> checkInResponse(Boolean startFastPolling, Integer fastPollTimeout) {
+        CheckInResponse command = new CheckInResponse();
+
+        // Set the fields
+        command.setStartFastPolling(startFastPolling);
+        command.setFastPollTimeout(fastPollTimeout);
+
+        return send(command);
+    }
+
+    /**
+     * The Fast Poll Stop Command
+     * <p>
+     * The Fast Poll Stop command is used to stop the fast poll mode initiated by the Check-in response. The Fast Poll Stop command has no payload.
+     * <br>
+     * If the Poll Control Server receives a Fast Poll Stop from an unbound client it SHOULD send back a DefaultResponse with a value field
+     * indicating “ACTION_DENIED” . The Server SHALL respond with a DefaultResponse not equal to ZCL_SUCCESS.
+     * <br>
+     * If the Poll Control Server receives a Fast Poll Stop command from a bound client but it is unable to stop fast polling due to the fact that there
+     * is another bound client which has requested that polling continue it SHOULD respond with a Default Response with a status of
+     * “ACTION_DENIED”
+     * <br>
+     * If a Poll Control Server receives a Fast Poll Stop command from a bound client but it is not FastPolling it SHOULD respond with a Default
+     * Response with a status of ACTION_DENIED.
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> fastPollStopCommand() {
+        FastPollStopCommand command = new FastPollStopCommand();
+
+        return send(command);
+    }
+
+    /**
+     * The Set Long Poll Interval Command
+     * <p>
+     * The Set Long Poll Interval command is used to set the Read Only LongPollInterval attribute.
+     * <br>
+     * When the Poll Control Server receives the Set Long Poll Interval Command, it SHOULD check its internal minimal limit and the attributes
+     * relationship if the new Long Poll Interval is acceptable. If the new value is acceptable, the new value SHALL be saved to the
+     * LongPollInterval attribute. If the new value is not acceptable, the Poll Control Server SHALL send a default response of INVALID_VALUE and
+     * the LongPollInterval attribute value is not updated.
+     *
+     * @param newLongPollInterval {@link Integer} New Long Poll Interval
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setLongPollIntervalCommand(Integer newLongPollInterval) {
+        SetLongPollIntervalCommand command = new SetLongPollIntervalCommand();
+
+        // Set the fields
+        command.setNewLongPollInterval(newLongPollInterval);
+
+        return send(command);
+    }
+
+    /**
+     * The Set Short Poll Interval Command
+     * <p>
+     * The Set Short Poll Interval command is used to set the Read Only ShortPollInterval attribute.
+     * <br>
+     * When the Poll Control Server receives the Set Short Poll Interval Command, it SHOULD check its internal minimal limit and the attributes
+     * relationship if the new Short Poll Interval is acceptable. If the new value is acceptable, the new value SHALL be saved to the
+     * ShortPollInterval attribute. If the new value is not acceptable, the Poll Control Server SHALL send a default response of INVALID_VALUE
+     * and the ShortPollInterval attribute value is not updated.
+     *
+     * @param newShortPollInterval {@link Integer} New Short Poll Interval
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setShortPollIntervalCommand(Integer newShortPollInterval) {
+        SetShortPollIntervalCommand command = new SetShortPollIntervalCommand();
+
+        // Set the fields
+        command.setNewShortPollInterval(newShortPollInterval);
+
+        return send(command);
+    }
+
+    /**
+     * The Check In Command
+     * <p>
+     * The Poll Control Cluster server sends out a Check-in command to the devices to which it is paired based on the server’s Check-inInterval
+     * attribute. It does this to find out if any of the Poll Control Cluster Clients with which it is paired are interested in having it enter fast
+     * poll mode so that it can be managed. This request is sent out based on either the Check-inInterval, or the next Check-in value in the Fast Poll
+     * Stop Request generated by the Poll Control Cluster Client.
+     * <br>
+     * The Check-in command expects a Check-in Response command to be sent back from the Poll Control Client. If the Poll Control Server does not
+     * receive a Check-in response back from the Poll Control Client up to 7.68 seconds it is free to return to polling according to the
+     * LongPollInterval.
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> checkInCommand() {
+        CheckInCommand command = new CheckInCommand();
+
+        return send(command);
+    }
+
+    @Override
+    public ZclCommand getCommandFromId(int commandId) {
+        switch (commandId) {
+            case 0: // CHECK_IN_RESPONSE
+                return new CheckInResponse();
+            case 1: // FAST_POLL_STOP_COMMAND
+                return new FastPollStopCommand();
+            case 2: // SET_LONG_POLL_INTERVAL_COMMAND
+                return new SetLongPollIntervalCommand();
+            case 3: // SET_SHORT_POLL_INTERVAL_COMMAND
+                return new SetShortPollIntervalCommand();
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public ZclCommand getResponseFromId(int commandId) {
+        switch (commandId) {
+            case 0: // CHECK_IN_COMMAND
+                return new CheckInCommand();
+            default:
+                return null;
+        }
     }
 }

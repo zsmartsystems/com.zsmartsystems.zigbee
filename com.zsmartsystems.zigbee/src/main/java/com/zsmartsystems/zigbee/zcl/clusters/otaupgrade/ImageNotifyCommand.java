@@ -18,21 +18,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Image Notify Command value object class.
  * <p>
- * The purpose of sending Image Notify command is so the server has a way to notify client devices of
- * when the OTA upgrade images are available for them. It eliminates the need for ZR client devices
- * having to check with the server periodically of when the new images are available. However, all client
- * devices still need to send in Query Next Image Request command in order to officially start the OTA
- * upgrade process.
- * <br>
- * For ZR client devices, the upgrade server may send out a unicast, broadcast, or multicast indicating it
- * has the next upgrade image, via an Image Notify command. Since the command may not have APS
- * security (if it is broadcast or multicast), it is considered purely informational and not authoritative.
- * Even in the case of a unicast, ZR shall continue to perform the query process described in later section.
- * <br>
- * When the command is sent with payload type value of zero, it generally means the server wishes to
- * notify all clients disregard of their manufacturers, image types or file versions. Query jitter is needed
- * to protect the server from being flooded with clients’ queries for next image.
- * <p>
  * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
  * <p>
@@ -53,7 +38,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class ImageNotifyCommand extends ZclCommand {
     /**
      * Payload type command message field.

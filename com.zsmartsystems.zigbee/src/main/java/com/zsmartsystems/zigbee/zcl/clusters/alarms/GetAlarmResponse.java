@@ -18,12 +18,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Get Alarm Response value object class.
  * <p>
- * If there is at least one alarm record in the alarm table then the status field is set to SUCCESS.
- * The alarm code, cluster identifier and time stamp fields SHALL all be present and SHALL take their
- * values from the item in the alarm table that they are reporting.If there  are  no more  alarms logged
- * in the  alarm table  then the  status field is set  to NOT_FOUND  and the alarm code, cluster
- * identifier and time stamp fields SHALL be omitted.
- * <p>
  * Cluster: <b>Alarms</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Alarms cluster.
  * <p>
@@ -35,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class GetAlarmResponse extends ZclCommand {
     /**
      * Status command message field.

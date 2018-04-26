@@ -18,8 +18,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Identify Command value object class.
  * <p>
- * The identify command starts or stops the receiving device identifying itself.
- * <p>
  * Cluster: <b>Identify</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Identify cluster.
  * <p>
@@ -27,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class IdentifyCommand extends ZclCommand {
     /**
      * Identify Time command message field.

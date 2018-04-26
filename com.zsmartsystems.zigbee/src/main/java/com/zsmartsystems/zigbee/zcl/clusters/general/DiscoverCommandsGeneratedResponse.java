@@ -20,9 +20,6 @@ import java.util.List;
 /**
  * Discover Commands Generated Response value object class.
  * <p>
- * The Discover Commands Generated Response is generated in response to a Discover Commands Generated
- * command.
- * <p>
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
@@ -31,7 +28,7 @@ import java.util.List;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class DiscoverCommandsGeneratedResponse extends ZclCommand {
     /**
      * Discovery complete command message field.

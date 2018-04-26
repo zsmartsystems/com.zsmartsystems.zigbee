@@ -18,10 +18,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Zone Status Changed Command value object class.
  * <p>
- * This command updates ACE clients in the system of changes to zone status recorded by the ACE server (e.g., IAS CIE device).
- * An IAS ACE server SHOULD send a Zone Status Changed command upon a change to an IAS Zone device’s ZoneStatus that it manages (i.e.,
- * IAS ACE server SHOULD send a Zone Status Changed command upon receipt of a Zone Status Change Notification command).
- * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
@@ -31,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class ZoneStatusChangedCommand extends ZclCommand {
     /**
      * Zone ID command message field.

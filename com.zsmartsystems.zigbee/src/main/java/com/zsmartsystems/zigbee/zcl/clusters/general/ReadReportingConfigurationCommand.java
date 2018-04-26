@@ -21,9 +21,6 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 /**
  * Read Reporting Configuration Command value object class.
  * <p>
- * The Read Reporting Configuration command is used to read the configuration
- * details of the reporting mechanism for one or more of the attributes of a cluster.
- * <p>
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
@@ -32,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class ReadReportingConfigurationCommand extends ZclCommand {
     /**
      * Records command message field.

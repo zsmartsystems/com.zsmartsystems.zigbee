@@ -18,19 +18,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Upgrade End Response value object class.
  * <p>
- * When an upgrade server receives an Upgrade End Request command with a status of
- * INVALID_IMAGE, REQUIRE_MORE_IMAGE, or ABORT, no additional processing shall be done
- * in its part. If the upgrade server receives an Upgrade End Request command with a status of
- * SUCCESS, it shall generate an Upgrade End Response with the manufacturer code and image type
- * received in the Upgrade End Request along with the times indicating when the device should upgrade
- * to the new image.
- * <br>
- * The server may send an unsolicited Upgrade End Response command to the client. This may be used
- * for example if the server wants to synchronize the upgrade on multiple clients simultaneously. For
- * client devices, the upgrade server may unicast or broadcast Upgrade End Response command
- * indicating a single client device or multiple client devices shall switch to using their new images. The
- * command may not be reliably received by sleepy devices if it is sent unsolicited.
- * <p>
  * Cluster: <b>OTA Upgrade</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
  * <p>
@@ -49,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class UpgradeEndResponse extends ZclCommand {
     /**
      * Manufacturer code command message field.

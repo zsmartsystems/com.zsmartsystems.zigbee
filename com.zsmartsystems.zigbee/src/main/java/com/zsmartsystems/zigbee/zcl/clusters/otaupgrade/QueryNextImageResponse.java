@@ -19,20 +19,6 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
 /**
  * Query Next Image Response value object class.
  * <p>
- * The upgrade server sends a Query Next Image Response with one of the following status: SUCCESS,
- * NO_IMAGE_AVAILABLE or NOT_AUTHORIZED. When a SUCCESS status is sent, it is
- * considered to be the explicit authorization to a device by the upgrade server that the device may
- * upgrade to a specific software image.
- * <br>
- * A status of NO_IMAGE_AVAILABLE indicates that the server is authorized to upgrade the client but
- * it currently does not have the (new) OTA upgrade image available for the client. For all clients (both
- * ZR and ZED)9 , they shall continue sending Query Next Image Requests to the server periodically until
- * an image becomes available.
- * <br>
- * A status of NOT_AUTHORIZED indicates the server is not authorized to upgrade the client. In this
- * case, the client may perform discovery again to find another upgrade server. The client may implement
- * an intelligence to avoid querying the same unauthorized server.
- * <p>
  * Cluster: <b>OTA Upgrade</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
  * <p>
@@ -52,7 +38,7 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class QueryNextImageResponse extends ZclCommand {
     /**
      * Status command message field.

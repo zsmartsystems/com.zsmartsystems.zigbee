@@ -18,8 +18,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * View Scene Command value object class.
  * <p>
- * The View Scene command shall be addressed to a single device (not a group).
- * <p>
  * Cluster: <b>Scenes</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
  * <p>
@@ -27,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class ViewSceneCommand extends ZclCommand {
     /**
      * Group ID command message field.

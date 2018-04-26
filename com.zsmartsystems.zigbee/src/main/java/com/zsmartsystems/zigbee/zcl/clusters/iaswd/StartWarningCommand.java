@@ -18,12 +18,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Start Warning Command value object class.
  * <p>
- * This command starts the WD operation. The WD alerts the surrounding area by
- * audible (siren) and visual (strobe) signals.
- * <br>
- * A Start Warning command shall always terminate the effect of any previous
- * command that is still current.
- * <p>
  * Cluster: <b>IAS WD</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS WD cluster.
  * <p>
@@ -35,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class StartWarningCommand extends ZclCommand {
     /**
      * Header command message field.

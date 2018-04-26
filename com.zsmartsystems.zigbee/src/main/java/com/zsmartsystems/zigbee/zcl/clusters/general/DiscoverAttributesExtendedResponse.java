@@ -21,9 +21,6 @@ import com.zsmartsystems.zigbee.zcl.field.ExtendedAttributeInformation;
 /**
  * Discover Attributes Extended Response value object class.
  * <p>
- * The Discover Attributes Extended Response command is generated in response to a Discover Attributes
- * Extended command.
- * <p>
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
@@ -32,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.field.ExtendedAttributeInformation;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class DiscoverAttributesExtendedResponse extends ZclCommand {
     /**
      * Discovery complete command message field.

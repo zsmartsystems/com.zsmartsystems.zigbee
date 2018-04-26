@@ -18,18 +18,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Panel Status Changed Command value object class.
  * <p>
- * This command updates ACE clients in the system of changes to panel status recorded by the ACE server (e.g., IAS CIE
- * device).Sending the Panel Status Changed command (vs.the Get Panel Status and Get Panel Status Response method) is
- * generally useful only when there are IAS ACE clients that data poll within the retry timeout of the network (e.g., less than
- * 7.68 seconds).
- * <br>
- * An IAS ACE server SHALL send a Panel Status Changed command upon a change to the IAS CIE’s panel status (e.g.,
- * Disarmed to Arming Away/Stay/Night, Arming Away/Stay/Night to Armed, Armed to Disarmed) as defined in the Panel Status field.
- * <br>
- * When Panel Status is Arming Away/Stay/Night, an IAS ACE server SHOULD send Panel Status Changed commands every second in order to
- * update the Seconds Remaining. In some markets (e.g., North America), the final 10 seconds of the Arming Away/Stay/Night sequence
- * requires a separate audible notification (e.g., a double tone).
- * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
@@ -47,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class PanelStatusChangedCommand extends ZclCommand {
     /**
      * Panel Status command message field.
