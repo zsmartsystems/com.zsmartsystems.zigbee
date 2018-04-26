@@ -20,9 +20,6 @@ import java.util.List;
 /**
  * Set Bypassed Zone List Command value object class.
  * <p>
- * Sets the list of bypassed zones on the IAS ACE client. This command can be sent either as a response to the
- * GetBypassedZoneList command or unsolicited when the list of bypassed zones changes on the ACE server.
- * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
@@ -31,7 +28,7 @@ import java.util.List;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class SetBypassedZoneListCommand extends ZclCommand {
     /**
      * Zone ID command message field.

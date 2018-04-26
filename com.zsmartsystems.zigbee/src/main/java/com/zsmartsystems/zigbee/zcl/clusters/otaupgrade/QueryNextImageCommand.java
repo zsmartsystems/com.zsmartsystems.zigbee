@@ -18,20 +18,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Query Next Image Command value object class.
  * <p>
- * Client devices shall send a Query Next Image Request command to the server to see if there is new
- * OTA upgrade image available. ZR devices may send the command after receiving Image Notify
- * command. ZED device shall periodically wake up and send the command to the upgrade server. Client
- * devices query what the next image is, based on their own information.
- * <br>
- * The server takes the client’s information in the command and determines whether it has a suitable
- * image for the particular client. The decision should be based on specific policy that is specific to the
- * upgrade server and outside the scope of this document.. However, a recommended default policy is for
- * the server to send back a response that indicates the availability of an image that matches the
- * manufacturer code, image type, and the highest available file version of that image on the
- * server. However, the server may choose to upgrade, downgrade, or reinstall clients’ image, as its
- * policy dictates. If client’s hardware version is included in the command, the server shall examine the
- * value against the minimum and maximum hardware versions included in the OTA file header.
- * <p>
  * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
  * <p>
@@ -51,7 +37,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class QueryNextImageCommand extends ZclCommand {
     /**
      * Field control command message field.

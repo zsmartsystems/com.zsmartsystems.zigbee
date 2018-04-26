@@ -18,11 +18,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Arm Command value object class.
  * <p>
- * On receipt of this command, the receiving device sets its arm mode according to the value of the Arm Mode field,
- * as detailed in Table 8-13. It is not guaranteed that an Arm command will succeed. Based on the current state of
- * the IAS CIE, and its related devices, the command can be rejected. The device SHALL generate an Arm Response command
- * to indicate the resulting armed state
- * <p>
  * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
@@ -33,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class ArmCommand extends ZclCommand {
     /**
      * Arm Mode command message field.

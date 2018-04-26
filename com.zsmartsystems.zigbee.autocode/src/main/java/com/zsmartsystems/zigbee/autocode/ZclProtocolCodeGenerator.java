@@ -117,10 +117,17 @@ public class ZclProtocolCodeGenerator {
     }
 
     private static void copyFile(String source, String dest) throws IOException {
-        File f = new File(dest);
-        if (f.exists()) {
+        File target = new File(dest);
+
+        File parent = target.getParentFile();
+        if (!parent.exists() && !parent.mkdirs()) {
+            throw new IllegalStateException("Couldn't create dir: " + parent);
+        }
+
+        if (target.exists()) {
             Files.delete(new File(dest).toPath());
         }
+
         Files.copy(new File(source).toPath(), new File(dest).toPath());
     }
 
@@ -1008,11 +1015,6 @@ public class ZclProtocolCodeGenerator {
                     out.println();
                     out.println("/**");
                     out.println(" * " + command.commandLabel + " value object class.");
-
-                    if (command.commandDescription != null && command.commandDescription.size() != 0) {
-                        out.println(" * <p>");
-                        outputWithLinebreak(out, "", command.commandDescription);
-                    }
 
                     out.println(" * <p>");
                     out.println(" * Cluster: <b>" + cluster.clusterName + "</b>. Command is sent <b>"

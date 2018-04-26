@@ -19,16 +19,6 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
 /**
  * Query Specific File Response value object class.
  * <p>
- * The server sends Query Specific File Response after receiving Query Specific File Request from a
- * client. The server shall determine whether it first supports the Query Specific File Request command.
- * Then it shall determine whether it has the specific file being requested by the client using all the
- * information included in the request. The upgrade server sends a Query Specific File Response with
- * one of the following status: SUCCESS, NO_IMAGE_AVAILABLE or NOT_AUTHORIZED.
- * <br>
- * A status of NO_IMAGE_AVAILABLE indicates that the server currently does not have the device
- * specific file available for the client. A status of NOT_AUTHORIZED indicates the server is not
- * authorized to send the file to the client.
- * <p>
  * Cluster: <b>OTA Upgrade</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
  * <p>
@@ -44,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class QuerySpecificFileResponse extends ZclCommand {
     /**
      * Status command message field.

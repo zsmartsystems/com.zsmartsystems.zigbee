@@ -19,13 +19,6 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 /**
  * Query Specific File Command value object class.
  * <p>
- * Client devices shall send a Query Specific File Request command to the server to request for a file that
- * is specific and unique to it. Such file could contain non-firmware data such as security credential
- * (needed for upgrading from Smart Energy 1.1 to Smart Energy 2.0), configuration or log. When the
- * device decides to send the Query Specific File Request command is manufacturer specific. However,
- * one example is during upgrading from SE 1.1 to 2.0 where the client may have already obtained new
- * SE 2.0 image and now needs new SE 2.0 security credential data.
- * <p>
  * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
  * <p>
@@ -38,7 +31,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class QuerySpecificFileCommand extends ZclCommand {
     /**
      * Request node address command message field.

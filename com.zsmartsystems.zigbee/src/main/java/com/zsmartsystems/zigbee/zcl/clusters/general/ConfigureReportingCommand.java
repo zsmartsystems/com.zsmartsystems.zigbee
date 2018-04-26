@@ -21,13 +21,6 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 /**
  * Configure Reporting Command value object class.
  * <p>
- * The Configure Reporting command is used to configure the reporting mechanism
- * for one or more of the attributes of a cluster.
- * <br>
- * The individual cluster definitions specify which attributes shall be available to this
- * reporting mechanism, however specific implementations of a cluster may make
- * additional attributes available.
- * <p>
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
@@ -40,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class ConfigureReportingCommand extends ZclCommand {
     /**
      * Records command message field.

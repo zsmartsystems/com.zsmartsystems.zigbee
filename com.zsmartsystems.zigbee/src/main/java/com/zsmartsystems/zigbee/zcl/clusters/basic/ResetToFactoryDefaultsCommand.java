@@ -15,10 +15,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Reset to Factory Defaults Command value object class.
  * <p>
- * On receipt of this command, the device resets all the attributes of all its clusters
- * to their factory defaults. Note that ZigBee networking functionality,bindings, groups
- * or other persistent data are not affected by this command
- * <p>
  * Cluster: <b>Basic</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Basic cluster.
  * <p>
@@ -28,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class ResetToFactoryDefaultsCommand extends ZclCommand {
     /**
      * Default constructor.

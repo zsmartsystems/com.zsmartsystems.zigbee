@@ -18,11 +18,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Get Scene Membership Command value object class.
  * <p>
- * The Get Scene Membership command can be used to find an unused scene
- * number within the group when no commissioning tool is in the network, or for a
- * commissioning tool to get used scenes for a group on a single device or on all
- * devices in the group.
- * <p>
  * Cluster: <b>Scenes</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
  * <p>
@@ -33,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class GetSceneMembershipCommand extends ZclCommand {
     /**
      * Group ID command message field.

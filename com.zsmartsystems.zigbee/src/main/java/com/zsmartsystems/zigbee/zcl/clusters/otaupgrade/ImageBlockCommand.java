@@ -19,21 +19,6 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 /**
  * Image Block Command value object class.
  * <p>
- * The client device requests the image data at its leisure by sending Image Block Request command to
- * the upgrade server. The client knows the total number of request commands it needs to send from the
- * image size value received in Query Next Image Response command.
- * <br>
- * The client repeats Image Block Requests until it has successfully obtained all data. Manufacturer code,
- * image type and file version are included in all further queries regarding that image. The information
- * eliminates the need for the server to remember which OTA Upgrade Image is being used for each
- * download process.
- * <br>
- * If the client supports the BlockRequestDelay attribute it shall include the value of the attribute as the
- * BlockRequestDelay field of the Image Block Request message. The client shall ensure that it delays at
- * least BlockRequestDelay milliseconds after the previous Image Block Request was sent before sending
- * the next Image Block Request message. A client may delay its next Image Block Requests longer than
- * its BlockRequestDelay attribute.
- * <p>
  * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
  * <p>
@@ -54,7 +39,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class ImageBlockCommand extends ZclCommand {
     /**
      * Field control command message field.

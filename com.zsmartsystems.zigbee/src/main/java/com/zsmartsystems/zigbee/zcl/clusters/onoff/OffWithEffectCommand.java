@@ -18,8 +18,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Off With Effect Command value object class.
  * <p>
- * The Off With Effect command allows devices to be turned off using enhanced ways of fading.
- * <p>
  * Cluster: <b>On/Off</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the On/Off cluster.
  * <p>
@@ -27,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
 public class OffWithEffectCommand extends ZclCommand {
     /**
      * Effect Identifier command message field.

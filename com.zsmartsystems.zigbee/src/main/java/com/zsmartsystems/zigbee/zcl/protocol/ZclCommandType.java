@@ -94,6 +94,11 @@ import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.CheckInResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.CheckInCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.FastPollStopCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.SetLongPollIntervalCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.SetShortPollIntervalCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.UnlockDoorCommand;
@@ -176,7 +181,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtendedR
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-26T18:46:15Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T18:25:21Z")
 public enum ZclCommandType {
     /**
      * ADD_GROUP_COMMAND: Add Group Command
@@ -244,6 +249,18 @@ public enum ZclCommandType {
      * See {@link BypassResponse}
      */
     BYPASS_RESPONSE(0x0501, 7, BypassResponse.class, ZclCommandDirection.SERVER_TO_CLIENT),
+    /**
+     * CHECK_IN_COMMAND: Check In Command
+     * <p>
+     * See {@link CheckInCommand}
+     */
+    CHECK_IN_COMMAND(0x0020, 0, CheckInCommand.class, ZclCommandDirection.SERVER_TO_CLIENT),
+    /**
+     * CHECK_IN_RESPONSE: Check In Response
+     * <p>
+     * See {@link CheckInResponse}
+     */
+    CHECK_IN_RESPONSE(0x0020, 0, CheckInResponse.class, ZclCommandDirection.CLIENT_TO_SERVER),
     /**
      * CLEAR_WEEKLY_SCHEDULE: Clear Weekly Schedule
      * <p>
@@ -358,6 +375,12 @@ public enum ZclCommandType {
      * See {@link EnhancedStepHueCommand}
      */
     ENHANCED_STEP_HUE_COMMAND(0x0300, 65, EnhancedStepHueCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * FAST_POLL_STOP_COMMAND: Fast Poll Stop Command
+     * <p>
+     * See {@link FastPollStopCommand}
+     */
+    FAST_POLL_STOP_COMMAND(0x0020, 1, FastPollStopCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
     /**
      * FIRE_COMMAND: Fire Command
      * <p>
@@ -910,6 +933,18 @@ public enum ZclCommandType {
      * See {@link SetDeviceConfigurationCommand}
      */
     SET_DEVICE_CONFIGURATION_COMMAND(0x000B, 1, SetDeviceConfigurationCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * SET_LONG_POLL_INTERVAL_COMMAND: Set Long Poll Interval Command
+     * <p>
+     * See {@link SetLongPollIntervalCommand}
+     */
+    SET_LONG_POLL_INTERVAL_COMMAND(0x0020, 2, SetLongPollIntervalCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * SET_SHORT_POLL_INTERVAL_COMMAND: Set Short Poll Interval Command
+     * <p>
+     * See {@link SetShortPollIntervalCommand}
+     */
+    SET_SHORT_POLL_INTERVAL_COMMAND(0x0020, 3, SetShortPollIntervalCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
     /**
      * SET_WEEKLY_SCHEDULE: Set Weekly Schedule
      * <p>
