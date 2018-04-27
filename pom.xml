@@ -145,7 +145,7 @@
 					<failIfMissing>true</failIfMissing>
 					<strictCheck>true</strictCheck>
 					<includes>
-						<include>src/**/*.java</include>
+						<include>*/src/**/*.java</include>
 					</includes>
 					<properties>
 						<year>2018</year>
