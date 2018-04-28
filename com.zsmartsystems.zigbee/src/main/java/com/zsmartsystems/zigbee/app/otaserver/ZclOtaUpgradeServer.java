@@ -81,7 +81,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  * <li>Server sends <i>Image Block Response</i>
  * <li>... repeat to end of transfer
  * <li>Client sends <i>Upgrade End Request</i>. Status set to {@link ZigBeeOtaServerStatus#OTA_TRANSFER_COMPLETE}.
- * <li>Server waits for {@link #completeUpgrade()} to be called unless {@link ZigBeeOtaServer#autoUpgrade} is true.
+ * <li>Server waits for {@link #completeUpgrade()} to be called unless {@link ZclOtaUpgradeServer#autoUpgrade} is true.
  * <li>Server checks the client state. If it is {@link ImageUpgradeStatus.DOWNLOAD_COMPLETE} it sends <i>Upgrade End
  * Response</i>.
  * <li>Client should respond with the default response, but this may not always be implemented as the device may start
@@ -105,7 +105,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  *
  * @author Chris Jackson
  */
-public class ZigBeeOtaServer implements ZigBeeApplication {
+public class ZclOtaUpgradeServer implements ZigBeeApplication {
     /**
      * A static Thread pool is used here to ensure that we don't end up with large numbers of page requests
      * spawning multiple threads. This should ensure a level of pacing if we had a lot of devices on the network that
@@ -116,7 +116,7 @@ public class ZigBeeOtaServer implements ZigBeeApplication {
     /**
      * The logger.
      */
-    private final Logger logger = LoggerFactory.getLogger(ZigBeeOtaServer.class);
+    private final Logger logger = LoggerFactory.getLogger(ZclOtaUpgradeServer.class);
 
     /**
      * The current {@link ZigBeeOtaServerStatus} associated with this server.
@@ -225,7 +225,7 @@ public class ZigBeeOtaServer implements ZigBeeApplication {
     /**
      * Constructor
      */
-    public ZigBeeOtaServer() {
+    public ZclOtaUpgradeServer() {
         status = ZigBeeOtaServerStatus.OTA_UNINITIALISED;
 
         // queryJitter needs to be a random value between 1 and 100

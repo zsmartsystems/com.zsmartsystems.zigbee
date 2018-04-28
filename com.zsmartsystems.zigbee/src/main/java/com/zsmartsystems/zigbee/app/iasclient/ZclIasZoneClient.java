@@ -87,11 +87,11 @@ import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneTypeEnum;
  * @author Chris Jackson
  *
  */
-public class ZigBeeIasCieApp implements ZigBeeApplication {
+public class ZclIasZoneClient implements ZigBeeApplication {
     /**
      * The logger.
      */
-    private final Logger logger = LoggerFactory.getLogger(ZigBeeIasCieApp.class);
+    private final Logger logger = LoggerFactory.getLogger(ZclIasZoneClient.class);
 
     /**
      * The IAS cluster to which we're bound
@@ -116,7 +116,7 @@ public class ZigBeeIasCieApp implements ZigBeeApplication {
     /**
      * Constructor
      */
-    public ZigBeeIasCieApp(IeeeAddress ieeeAddress, int zone) {
+    public ZclIasZoneClient(IeeeAddress ieeeAddress, int zone) {
         this.ieeeAddress = ieeeAddress;
         this.zone = zone;
     }
@@ -152,6 +152,12 @@ public class ZigBeeIasCieApp implements ZigBeeApplication {
     public boolean appStartup(ZclCluster cluster) {
         iasZoneCluster = (ZclIasZoneCluster) cluster;
 
+        initialise();
+
+        return true;
+    }
+
+    private void initialise() {
         Integer currentState = iasZoneCluster.getZoneState(0);
         if (currentState != null) {
             ZoneStateEnum currentStateEnum = ZoneStateEnum.getByValue(currentState);
@@ -184,8 +190,6 @@ public class ZigBeeIasCieApp implements ZigBeeApplication {
             logger.debug("{}: IAS CIE zone type is 0x{}, {}", iasZoneCluster.getZigBeeAddress(),
                     String.format("%04X", zoneType), ZoneTypeEnum.getByValue(zoneType));
         }
-
-        return false;
     }
 
     @Override

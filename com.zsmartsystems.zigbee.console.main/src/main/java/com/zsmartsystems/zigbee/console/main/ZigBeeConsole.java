@@ -39,11 +39,12 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieApp;
+import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieExtension;
+import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
-import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServer;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServerStatus;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaStatusCallback;
+import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeReadCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
@@ -57,6 +58,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleInstallKeyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkJoinCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkLeaveCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNodeListCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleOtaUpgradeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingConfigCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingSubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingUnsubscribeCommand;
@@ -72,7 +74,6 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
-import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
@@ -129,6 +130,11 @@ public final class ZigBeeConsole {
     public ZigBeeConsole(final ZigBeeNetworkManager networkManager, final ZigBeeTransportTransmit dongle,
             List<Class<? extends ZigBeeConsoleCommand>> transportCommands) {
         this.dongle = dongle;
+        this.networkManager = networkManager;
+
+        // Add the extensions to the network
+        networkManager.addExtension(new ZigBeeIasCieExtension());
+        networkManager.addExtension(new ZigBeeOtaUpgradeExtension());
 
         createCommands(newCommands, transportCommands);
 
@@ -192,7 +198,8 @@ public final class ZigBeeConsole {
 
         newCommands.put("installkey", new ZigBeeConsoleInstallKeyCommand());
 
-        this.networkManager = networkManager;
+        newCommands.put("otaupgrade", new ZigBeeConsoleOtaUpgradeCommand());
+
         zigBeeApi = new ZigBeeApi(networkManager);
 
         networkManager.addNetworkStateListener(new ZigBeeNetworkStateListener() {
@@ -206,18 +213,6 @@ public final class ZigBeeConsole {
             @Override
             public void nodeAdded(ZigBeeNode node) {
                 print("Node Added " + node, System.out);
-
-                ZigBeeNode coordinator = networkManager.getNode(0);
-                for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
-                    if (endpoint.getInputCluster(ZclIasZoneCluster.CLUSTER_ID) != null) {
-                        endpoint.addApplication(new ZigBeeIasCieApp(coordinator.getIeeeAddress(), 0));
-                        break;
-                    }
-                    if (endpoint.getInputCluster(ZclOtaUpgradeCluster.CLUSTER_ID) != null) {
-                        endpoint.addApplication(new ZigBeeOtaServer());
-                        break;
-                    }
-                }
             }
 
             @Override
@@ -1183,10 +1178,11 @@ public final class ZigBeeConsole {
             }
 
             // Check if the OTA server is already set
-            ZigBeeOtaServer otaServer = (ZigBeeOtaServer) endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
+            ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint
+                    .getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
             if (otaServer == null) {
                 // Create and add the server
-                otaServer = new ZigBeeOtaServer();
+                otaServer = new ZclOtaUpgradeServer();
 
                 endpoint.addApplication(otaServer);
 

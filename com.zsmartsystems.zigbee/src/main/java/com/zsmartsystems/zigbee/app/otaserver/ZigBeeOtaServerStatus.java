@@ -8,7 +8,7 @@
 package com.zsmartsystems.zigbee.app.otaserver;
 
 /**
- * An enumeration defining the {@link ZigBeeOtaServer} status provided to the {@link ZigBeeStatusCallback}
+ * An enumeration defining the {@link ZclOtaUpgradeServer} status provided to the {@link ZigBeeStatusCallback}
  *
  * @author Chris Jackson
  *

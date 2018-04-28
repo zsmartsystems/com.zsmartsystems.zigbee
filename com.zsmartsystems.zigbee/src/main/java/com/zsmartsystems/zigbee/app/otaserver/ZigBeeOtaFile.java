@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  * Defines a ZigBee Over The Air upgrade file.
  * <p>
  * This class will read the file header, and each tag from the file and provide methods to read this data within the
- * {@link ZigBeeOtaServer}.
+ * {@link ZclOtaUpgradeServer}.
  * <p>
  * The OTA file format is composed of a header followed by a number of sub-elements. The header
  * describes general information about the file such as version, the manufacturer that created it, and the
