@@ -143,7 +143,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private String versionString = "Unknown";
 
     /**
-     * Create a {@link ZigBeeDongleEzsp} with the default ASH frame handler
+     * Create a {@link ZigBeeDongleEzsp} with the default ASH2 frame handler
      *
      * @param serialPort the {@link ZigBeePort} to use for the connection
      */
