@@ -68,7 +68,7 @@ public class NeighborTable {
         // Deserialize the fields
         extendedPanId = (ExtendedPanId) deserializer.readZigBeeType(ZclDataType.EXTENDED_PANID);
         extendedAddress = (IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
-        networkAddress = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        networkAddress = (Integer) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
 
         int temp = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         setDeviceType(temp & 0x03);
