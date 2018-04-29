@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.console;
 import java.io.PrintStream;
 import java.util.concurrent.ExecutionException;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
@@ -63,11 +64,30 @@ public class ZigBeeConsoleBindingTableCommand extends ZigBeeConsoleAbstractComma
             return;
         }
 
-        out.println("Src Address          | Dest Address         | Group | Mode | Cluster");
+        out.println("Src Address          | Dest Address         | Group | Mode    | Cluster");
         for (BindingTable entry : node.getBindingTable()) {
-            out.println(String.format("%s/%-3d | %s/%-3d | %5d | %4d | %04X:%s", entry.getSrcAddr().toString(),
-                    entry.getSrcEndpoint(), entry.getDstNodeAddr(), entry.getDstNodeEndpoint(), entry.getDstGroupAddr(),
-                    entry.getDstAddrMode(), entry.getClusterId(), ZclClusterType.getValueById(entry.getClusterId())));
+            out.println(String
+                    .format("%s | %20s | %5s | %-7s | %04X:%s", getAddress(entry.getSrcAddr(), entry.getSrcEndpoint()),
+                            entry.getDstAddrMode() == 3 ? getAddress(entry.getDstNodeAddr(), entry.getDstNodeEndpoint())
+                                    : "",
+                            entry.getDstAddrMode() == 1 ? Integer.toString(entry.getDstGroupAddr()) : "",
+                            getAddressMode(entry.getDstAddrMode()), entry.getClusterId(),
+                            ZclClusterType.getValueById(entry.getClusterId())));
+        }
+    }
+
+    private String getAddress(IeeeAddress address, int endpoint) {
+        return String.format("%s/%-3d", address, endpoint);
+    }
+
+    private String getAddressMode(int mode) {
+        switch (mode) {
+            case 1:
+                return "Group";
+            case 3:
+                return "Address";
+            default:
+                return Integer.toString(mode);
         }
     }
 }

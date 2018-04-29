@@ -55,6 +55,10 @@ public class ZigBeeConsoleBindCommand extends ZigBeeConsoleAbstractCommand {
         final ZigBeeEndpoint source = getEndpoint(networkManager, args[2]);
         ZclCluster cluster = source.getInputCluster(clusterId);
         if (cluster == null) {
+            cluster = source.getOutputCluster(clusterId);
+        }
+
+        if (cluster == null) {
             throw new IllegalArgumentException("Cluster '" + clusterId + "' not found.");
         }
 
