@@ -45,7 +45,7 @@ public class RoutingTable {
      */
     public void deserialize(ZigBeeDeserializer deserializer) {
         // Deserialize the fields
-        destinationAddress = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        destinationAddress = (Integer) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         int temp = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         switch (temp & 0x07) {
             case 0:
