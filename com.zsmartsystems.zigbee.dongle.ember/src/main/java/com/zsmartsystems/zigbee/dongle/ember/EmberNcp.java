@@ -10,10 +10,16 @@ package com.zsmartsystems.zigbee.dongle.ember;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspAddEndpointRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspAddEndpointResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspAddTransientLinkKeyRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspAddTransientLinkKeyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspAesMmoHashRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspAesMmoHashResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetChildDataRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetChildDataResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetConfigurationValueRequest;
@@ -44,7 +50,9 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetValueR
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspSetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberAesMmoHashContext;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberCurrentSecurityState;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyStruct;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberNetworkParameters;
@@ -436,6 +444,62 @@ public class EmberNcp {
         }
 
         return response.getValue();
+    }
+
+    /**
+     * Adds a transient link key to the NCP
+     *
+     * @param partner the {@link IeeeAddress} to set
+     * @param transientKey the {@link ZigBeeKey} to set
+     * @return the {@link EmberStatus} of the response
+     */
+    public EmberStatus addTransientLinkKey(IeeeAddress partner, ZigBeeKey transientKey) {
+        EmberKeyData emberKey = new EmberKeyData();
+        emberKey.setContents(transientKey.getValue());
+        EzspAddTransientLinkKeyRequest request = new EzspAddTransientLinkKeyRequest();
+        request.setPartner(partner);
+        request.setTransientKey(emberKey);
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
+                EzspAddTransientLinkKeyResponse.class);
+        ashHandler.sendEzspTransaction(transaction);
+        EzspAddTransientLinkKeyResponse response = (EzspAddTransientLinkKeyResponse) transaction.getResponse();
+        lastStatus = response.getStatus();
+        logger.debug(response.toString());
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error setting transient key: {}", response);
+        }
+
+        return response.getStatus();
+    }
+
+    /**
+     * This routine processes the passed chunk of data and updates the hash context based on it. If the 'finalize'
+     * parameter is not set, then the length of the data passed in must be a multiple of 16. If the 'finalize' parameter
+     * is set then the length can be any value up 1-16, and the final hash value will be calculated.
+     *
+     * @param code the integer array to hash
+     * @return the resulting {@link EmberAesMmoHashContext}
+     */
+    public EmberAesMmoHashContext mmoHash(int[] code) {
+        EmberAesMmoHashContext hashContext = new EmberAesMmoHashContext();
+        hashContext.setResult(new int[16]);
+        hashContext.setLength(0);
+        EzspAesMmoHashRequest request = new EzspAesMmoHashRequest();
+        request.setContext(hashContext);
+        request.setData(code);
+        request.setFinalize(true);
+        request.setLength(code.length);
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
+                EzspAesMmoHashResponse.class);
+        ashHandler.sendEzspTransaction(transaction);
+        EzspAesMmoHashResponse response = (EzspAesMmoHashResponse) transaction.getResponse();
+        lastStatus = response.getStatus();
+        logger.debug(response.toString());
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error performing AES MMO hash: {}", response);
+        }
+
+        return response.getReturnContext();
     }
 
 }

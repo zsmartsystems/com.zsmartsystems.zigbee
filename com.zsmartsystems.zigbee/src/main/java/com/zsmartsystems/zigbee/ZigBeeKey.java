@@ -68,10 +68,6 @@ public class ZigBeeKey {
      * @throws IllegalArgumentException
      */
     public ZigBeeKey(int[] key) {
-        if (key == null) {
-            this.key = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            return;
-        }
         if (key.length != 16) {
             throw new IllegalArgumentException("NetworkKey array length must be 16 hex bytes");
         }

@@ -20,6 +20,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
+import com.zsmartsystems.zigbee.ZigBeeNodeKey;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
@@ -507,6 +508,16 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                     case CONCENTRATOR_CONFIG:
                         configuration.setResult(option,
                                 setConcentrator((ConcentratorConfig) configuration.getValue(option)));
+                        break;
+
+                    case INSTALL_KEY:
+                        EmberNcp ncp = new EmberNcp(ashHandler);
+                        ZigBeeNodeKey nodeKey = (ZigBeeNodeKey) configuration.getValue(option);
+                        EmberStatus result = ncp.addTransientLinkKey(nodeKey.getAddress(), nodeKey.getKey());
+
+                        configuration.setResult(option,
+                                result == EmberStatus.EMBER_SUCCESS ? TransportConfigResult.SUCCESS
+                                        : TransportConfigResult.FAILURE);
                         break;
 
                     case TRUST_CENTRE_LINK_KEY:

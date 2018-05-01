@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.transport;
 import java.util.Collection;
 
 import com.zsmartsystems.zigbee.ZigBeeKey;
+import com.zsmartsystems.zigbee.ZigBeeNodeKey;
 
 /**
  * Enumeration defining all possible configuration options for the {@link ZigBeeTransportTransmit}. Configuration is
@@ -63,5 +64,13 @@ public enum TransportConfigOption {
      * <p>
      * Value must be a {@link Collection} of Integer defining the output clusters
      */
-    SUPPORTED_OUTPUT_CLUSTERS
+    SUPPORTED_OUTPUT_CLUSTERS,
+
+    /**
+     * Sets an installation key for the specified address. Using a blank key (ie all zeros) may be used to remove
+     * the install key. This is dongle specific if the key can be removed or if it will time out.
+     * <p>
+     * Value must be a {@link ZigBeeNodeKey}
+     */
+    INSTALL_KEY,
 }

@@ -8,7 +8,6 @@
 package com.zsmartsystems.zigbee;
 
 import java.math.BigInteger;
-import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -34,38 +33,35 @@ public class IeeeAddress implements Comparable<IeeeAddress> {
      * @param address the address as a {@link BigInteger}
      */
     public IeeeAddress(BigInteger address) {
-        this.address = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+        this();
 
-        long longVal = address.longValue();
-
-        this.address[0] = (int) (longVal & 0xff);
-        this.address[1] = (int) ((longVal >> 8) & 0xff);
-        this.address[2] = (int) ((longVal >> 16) & 0xff);
-        this.address[3] = (int) ((longVal >> 24) & 0xff);
-        this.address[4] = (int) ((longVal >> 32) & 0xff);
-        this.address[5] = (int) ((longVal >> 40) & 0xff);
-        this.address[6] = (int) ((longVal >> 48) & 0xff);
-        this.address[7] = (int) ((longVal >> 56) & 0xff);
+        setAddress(address.longValue());
     }
 
     /**
      * Create an {@link IeeeAddress} from a {@link String}
      *
      * @param address the address as a {@link String}
+     * @throws IllegalArgumentException
      */
     public IeeeAddress(String address) {
-        this(new BigInteger(address, 16));
+        this();
+        try {
+            setAddress(new BigInteger(address, 16).longValue());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("IeeeAddress string must contain valid hexadecimal value");
+        }
     }
 
     /**
      * Create an {@link IeeeAddress} from an int array
      *
      * @param address the address as an int array. Array length must be 8.
-     * @throws InvalidParameterException
+     * @throws IllegalArgumentException
      */
     public IeeeAddress(int[] address) {
         if (address.length != 8) {
-            throw new InvalidParameterException("IeeeAddress array length must be 8");
+            throw new IllegalArgumentException("IeeeAddress array length must be 8");
         }
         this.address = Arrays.copyOf(address, 8);
     }
@@ -129,5 +125,17 @@ public class IeeeAddress implements Comparable<IeeeAddress> {
             return other.getValue()[cnt] < address[cnt] ? 1 : -1;
         }
         return 0;
+    }
+
+    private void setAddress(long longVal) {
+        this.address[0] = (int) (longVal & 0xff);
+        this.address[1] = (int) ((longVal >> 8) & 0xff);
+        this.address[2] = (int) ((longVal >> 16) & 0xff);
+        this.address[3] = (int) ((longVal >> 24) & 0xff);
+        this.address[4] = (int) ((longVal >> 32) & 0xff);
+        this.address[5] = (int) ((longVal >> 40) & 0xff);
+        this.address[6] = (int) ((longVal >> 48) & 0xff);
+        this.address[7] = (int) ((longVal >> 56) & 0xff);
+
     }
 }
