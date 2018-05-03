@@ -327,7 +327,7 @@ public class AshFrameHandler {
         return null;
     }
 
-    private void handleReset(AshFrameRstAck rstAck) {
+    private synchronized void handleReset(AshFrameRstAck rstAck) {
         // If we are already connected, we need to reconnect
         if (stateConnected) {
             reconnect();
@@ -491,7 +491,7 @@ public class AshFrameHandler {
     /**
      * Connect to the ASH/EZSP NCP
      */
-    public void connect() {
+    public synchronized void connect() {
         stateConnected = false;
         AshFrame reset = new AshFrameRst();
 
@@ -534,9 +534,6 @@ public class AshFrameHandler {
 
         while (sentQueue.peek() != null && sentQueue.peek().getFrmNum() != ackNum) {
             AshFrameData ackedFrame = sentQueue.poll();
-            if (ackedFrame == null) {
-                logger.debug("ASH: Error nothing to remove from sent queue [{} -- {}]", this.ackNum, ackNum);
-            }
             logger.debug("ASH: Frame acked and removed {}", ackedFrame);
         }
     }
