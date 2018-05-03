@@ -92,6 +92,8 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     private ScheduledExecutorService pollingScheduler;
     private ScheduledFuture<?> pollingTimer = null;
 
+    private Object outputFrameSynchronisation = new Object();
+
     /**
      * Response timeout. The number of milliseconds to wait for a response before resending the request.
      */
@@ -168,16 +170,6 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
         pollingScheduler = Executors.newSingleThreadScheduledExecutor();
 
-        pollingTimer = pollingScheduler.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                if (stateConnected && sendQueue.isEmpty()) {
-                    doCallbackRequest.set(true);
-                    sendNextFrame();
-                }
-            }
-        }, 1000, pollRate, TimeUnit.MILLISECONDS);
-
         parserThread = new Thread("SpiFrameHandler") {
             @Override
             public void run() {
@@ -204,8 +196,6 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
                         if (exceptionCnt++ > 10) {
                             logger.error("SpiFrameHandler exception count exceeded");
-                            // if (!close) {
-                            // frameHandler.error(e);
                             closeHandler = true;
                         }
                     } catch (final Exception e) {
@@ -218,6 +208,8 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
         parserThread.setDaemon(true);
         parserThread.start();
+
+        restartPolling();
     }
 
     enum RxState {
@@ -399,6 +391,11 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                 frameHandler.handlePacket(ezspFrame);
             }
         }
+
+        // We restart polling to avoid polling too often.
+        // Rational here is that every EZSP frame contains a "Callback Pending" flag, so at this point
+        // in time, we don't need to poll as we know the state.
+        restartPolling();
     }
 
     @Override
@@ -467,19 +464,21 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     }
 
     // Synchronize this method to ensure a packet gets sent as a block
-    private synchronized void outputFrame(int[] outputData) {
-        lastFrameSent = outputData;
+    private void outputFrame(int[] outputData) {
+        synchronized (outputFrameSynchronisation) {
+            lastFrameSent = outputData;
 
-        logger.debug("--> TX SPI frame: {}", frameToString(outputData));
+            logger.debug("--> TX SPI frame: {}", frameToString(outputData));
 
-        // Send the data
-        for (int outByte : outputData) {
-            logger.trace("SPI TX: {}", String.format("%02X", outByte));
-            port.write(outByte);
+            // Send the data
+            for (int outByte : outputData) {
+                logger.trace("SPI TX: {}", String.format("%02X", outByte));
+                port.write(outByte);
+            }
+            port.write(SPI_FLAG_BYTE);
+
+            startRetryTimer();
         }
-        port.write(SPI_FLAG_BYTE);
-
-        startRetryTimer();
     }
 
     @Override
@@ -498,6 +497,22 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         sendQueue.clear();
 
         outputFrame(requestSpiVersion);
+    }
+
+    private void restartPolling() {
+        if (pollingTimer != null) {
+            pollingTimer.cancel(true);
+        }
+
+        pollingTimer = pollingScheduler.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                if (stateConnected && sendQueue.isEmpty()) {
+                    doCallbackRequest.set(true);
+                    sendNextFrame();
+                }
+            }
+        }, pollRate, pollRate, TimeUnit.MILLISECONDS);
     }
 
     private synchronized void startRetryTimer() {
@@ -527,29 +542,32 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     private class RetryTimer extends TimerTask {
         @Override
         public void run() {
-            logger.debug("SPI Timer task [{}].  {}", retries, frameToString(lastFrameSent));
+            synchronized (outputFrameSynchronisation) {
 
-            // Resend the last message sent if there is one
-            if (lastFrameSent == null) {
-                return;
-            }
+                logger.debug("SPI Timer task [{}].  {}", retries, frameToString(lastFrameSent));
 
-            if (retries++ > ACK_TIMEOUTS) {
-                // Too many retries.
-                // We should alert the upper layer so they can reset the link?
-                frameHandler.handleLinkStateChange(false);
+                // Resend the last message sent if there is one
+                if (lastFrameSent == null) {
+                    return;
+                }
 
-                logger.debug("Error: number of retries exceeded [{}].", retries);
-                // drop message
-                lastFrameSent = null;
-                retries = 0;
-                return;
-            }
+                if (retries++ > ACK_TIMEOUTS) {
+                    // Too many retries.
+                    // We should alert the upper layer so they can reset the link?
+                    frameHandler.handleLinkStateChange(false);
 
-            try {
-                outputFrame(lastFrameSent);
-            } catch (Exception e) {
-                logger.warn("Caught exception while attempting to retry message in SpiRetryTimer", e);
+                    logger.debug("Error: number of retries exceeded [{}].", retries);
+                    // drop message
+                    lastFrameSent = null;
+                    retries = 0;
+                    return;
+                }
+
+                try {
+                    outputFrame(lastFrameSent);
+                } catch (Exception e) {
+                    logger.warn("Caught exception while attempting to retry message in SpiRetryTimer", e);
+                }
             }
         }
     }
@@ -629,8 +647,8 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                 }
 
                 // response = request;
-                complete = true;
                 synchronized (this) {
+                    complete = true;
                     notify();
                 }
 
