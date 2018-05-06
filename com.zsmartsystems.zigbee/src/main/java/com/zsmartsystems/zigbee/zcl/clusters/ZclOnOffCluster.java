@@ -33,7 +33,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-06T20:31:44Z")
 public class ZclOnOffCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -51,12 +51,26 @@ public class ZclOnOffCluster extends ZclCluster {
      */
     public static final int ATTR_ONOFF = 0x0000;
     /**
+     * In order to support the use case where the user gets back the last setting of the devices (e.g. level settings for lamps), a global scene is
+     * introduced which is stored when the devices are turned off and recalled when the devices are turned on. The global scene is defined as the
+     * scene that is stored with group identifier 0 and scene identifier 0.
+     * <p>
+     * The GlobalSceneControl attribute is defined in order to prevent a second off command storing the all-devices-off situation as a global
+     * scene, and to prevent a second on command destroying the current settings by going back to the global scene.
+     * <p>
+     * The GlobalSceneControl attribute SHALL be set to TRUE after the reception of a command which causes the OnOff attribute to be set to TRUE,
+     * such as a standard On command, a Move to level (with on/off) command, a Recall scene command or a On with recall global scene command.
+     * <p>
+     * The GlobalSceneControl attribute is set to FALSE after reception of a Off with effect command.
      */
     public static final int ATTR_GLOBALSCENECONTROL = 0x4000;
     /**
      */
     public static final int ATTR_OFFTIME = 0x4001;
     /**
+     * The OffWaitTime attribute specifies the length of time (in 1/10ths second) that the “off” state SHALL be guarded to prevent an on command
+     * turning the device back to its “on” state (e.g., when leaving a room, the lights are turned off but an occupancy sensor detects the leaving
+     * person and attempts to turn the lights back on). If this attribute is set to 0x0000, the device SHALL remain in its current state.
      */
     public static final int ATTR_OFFWAITTIME = 0x4002;
 
@@ -65,9 +79,9 @@ public class ZclOnOffCluster extends ZclCluster {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(4);
 
         attributeMap.put(ATTR_ONOFF, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_ONOFF, "OnOff", ZclDataType.BOOLEAN, true, true, false, true));
-        attributeMap.put(ATTR_GLOBALSCENECONTROL, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_GLOBALSCENECONTROL, "GlobalSceneControl", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_OFFTIME, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_OFFTIME, "OffTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_OFFWAITTIME, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_OFFWAITTIME, "OffWaitTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_GLOBALSCENECONTROL, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_GLOBALSCENECONTROL, "GlobalSceneControl", ZclDataType.BOOLEAN, false, true, false, false));
+        attributeMap.put(ATTR_OFFTIME, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_OFFTIME, "OffTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_OFFWAITTIME, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_OFFWAITTIME, "OffWaitTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
 
         return attributeMap;
     }
@@ -142,21 +156,19 @@ public class ZclOnOffCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>GlobalSceneControl</i> attribute [attribute ID <b>16384</b>].
-     * <p>
-     * The attribute is of type {@link Boolean}.
-     * <p>
-     * The implementation of this attribute by a device is 
-     *
-     * @param globalSceneControl the {@link Boolean} attribute value to be set
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setGlobalSceneControl(final Object value) {
-        return write(attributes.get(ATTR_GLOBALSCENECONTROL), value);
-    }
-
-    /**
      * Get the <i>GlobalSceneControl</i> attribute [attribute ID <b>16384</b>].
+     * <p>
+     * In order to support the use case where the user gets back the last setting of the devices (e.g. level settings for lamps), a global scene is
+     * introduced which is stored when the devices are turned off and recalled when the devices are turned on. The global scene is defined as the
+     * scene that is stored with group identifier 0 and scene identifier 0.
+     * <p>
+     * The GlobalSceneControl attribute is defined in order to prevent a second off command storing the all-devices-off situation as a global
+     * scene, and to prevent a second on command destroying the current settings by going back to the global scene.
+     * <p>
+     * The GlobalSceneControl attribute SHALL be set to TRUE after the reception of a command which causes the OnOff attribute to be set to TRUE,
+     * such as a standard On command, a Move to level (with on/off) command, a Recall scene command or a On with recall global scene command.
+     * <p>
+     * The GlobalSceneControl attribute is set to FALSE after reception of a Off with effect command.
      * <p>
      * The attribute is of type {@link Boolean}.
      * <p>
@@ -170,6 +182,18 @@ public class ZclOnOffCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>GlobalSceneControl</i> attribute [attribute ID <b>16384</b>].
+     * <p>
+     * In order to support the use case where the user gets back the last setting of the devices (e.g. level settings for lamps), a global scene is
+     * introduced which is stored when the devices are turned off and recalled when the devices are turned on. The global scene is defined as the
+     * scene that is stored with group identifier 0 and scene identifier 0.
+     * <p>
+     * The GlobalSceneControl attribute is defined in order to prevent a second off command storing the all-devices-off situation as a global
+     * scene, and to prevent a second on command destroying the current settings by going back to the global scene.
+     * <p>
+     * The GlobalSceneControl attribute SHALL be set to TRUE after the reception of a command which causes the OnOff attribute to be set to TRUE,
+     * such as a standard On command, a Move to level (with on/off) command, a Recall scene command or a On with recall global scene command.
+     * <p>
+     * The GlobalSceneControl attribute is set to FALSE after reception of a Off with effect command.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -191,21 +215,6 @@ public class ZclOnOffCluster extends ZclCluster {
         }
 
         return (Boolean) readSync(attributes.get(ATTR_GLOBALSCENECONTROL));
-    }
-
-    /**
-     * Set reporting for the <i>GlobalSceneControl</i> attribute [attribute ID <b>16384</b>].
-     * <p>
-     * The attribute is of type {@link Boolean}.
-     * <p>
-     * The implementation of this attribute by a device is 
-     *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setGlobalSceneControlReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_GLOBALSCENECONTROL), minInterval, maxInterval);
     }
 
     /**
@@ -261,23 +270,11 @@ public class ZclOnOffCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>OffTime</i> attribute [attribute ID <b>16385</b>].
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is 
-     *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
-     * @param reportableChange {@link Object} delta required to trigger report
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setOffTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_OFFTIME), minInterval, maxInterval, reportableChange);
-    }
-
-    /**
      * Set the <i>OffWaitTime</i> attribute [attribute ID <b>16386</b>].
+     * <p>
+     * The OffWaitTime attribute specifies the length of time (in 1/10ths second) that the “off” state SHALL be guarded to prevent an on command
+     * turning the device back to its “on” state (e.g., when leaving a room, the lights are turned off but an occupancy sensor detects the leaving
+     * person and attempts to turn the lights back on). If this attribute is set to 0x0000, the device SHALL remain in its current state.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -293,6 +290,10 @@ public class ZclOnOffCluster extends ZclCluster {
     /**
      * Get the <i>OffWaitTime</i> attribute [attribute ID <b>16386</b>].
      * <p>
+     * The OffWaitTime attribute specifies the length of time (in 1/10ths second) that the “off” state SHALL be guarded to prevent an on command
+     * turning the device back to its “on” state (e.g., when leaving a room, the lights are turned off but an occupancy sensor detects the leaving
+     * person and attempts to turn the lights back on). If this attribute is set to 0x0000, the device SHALL remain in its current state.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is 
@@ -305,6 +306,10 @@ public class ZclOnOffCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>OffWaitTime</i> attribute [attribute ID <b>16386</b>].
+     * <p>
+     * The OffWaitTime attribute specifies the length of time (in 1/10ths second) that the “off” state SHALL be guarded to prevent an on command
+     * turning the device back to its “on” state (e.g., when leaving a room, the lights are turned off but an occupancy sensor detects the leaving
+     * person and attempts to turn the lights back on). If this attribute is set to 0x0000, the device SHALL remain in its current state.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -326,22 +331,6 @@ public class ZclOnOffCluster extends ZclCluster {
         }
 
         return (Integer) readSync(attributes.get(ATTR_OFFWAITTIME));
-    }
-
-    /**
-     * Set reporting for the <i>OffWaitTime</i> attribute [attribute ID <b>16386</b>].
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is 
-     *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
-     * @param reportableChange {@link Object} delta required to trigger report
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setOffWaitTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_OFFWAITTIME), minInterval, maxInterval, reportableChange);
     }
 
     /**

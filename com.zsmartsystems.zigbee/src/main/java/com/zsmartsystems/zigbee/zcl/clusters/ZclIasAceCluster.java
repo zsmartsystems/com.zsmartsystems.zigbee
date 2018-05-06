@@ -49,7 +49,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-10T07:30:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-06T20:50:13Z")
 public class ZclIasAceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -81,8 +81,8 @@ public class ZclIasAceCluster extends ZclCluster {
     /**
      * The Arm Command
      * <p>
-     * On receipt of this command, the receiving device sets its arm mode according to the value of the Arm Mode field,
-     * as detailed in Table 8-13. It is not guaranteed that an Arm command will succeed. Based on the current state of
+     * On receipt of this command, the receiving device sets its arm mode according to the value of the Arm Mode field. It
+     * is not guaranteed that an Arm command will succeed. Based on the current state of
      * the IAS CIE, and its related devices, the command can be rejected. The device SHALL generate an Arm Response command
      * to indicate the resulting armed state
      *

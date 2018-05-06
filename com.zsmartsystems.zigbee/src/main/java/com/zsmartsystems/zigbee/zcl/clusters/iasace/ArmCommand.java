@@ -21,14 +21,14 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
- * On receipt of this command, the receiving device sets its arm mode according to the value of the Arm Mode field,
- * as detailed in Table 8-13. It is not guaranteed that an Arm command will succeed. Based on the current state of
+ * On receipt of this command, the receiving device sets its arm mode according to the value of the Arm Mode field. It
+ * is not guaranteed that an Arm command will succeed. Based on the current state of
  * the IAS CIE, and its related devices, the command can be rejected. The device SHALL generate an Arm Response command
  * to indicate the resulting armed state
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-06T20:50:13Z")
 public class ArmCommand extends ZclCommand {
     /**
      * Arm Mode command message field.
@@ -54,7 +54,7 @@ public class ArmCommand extends ZclCommand {
     /**
      * Zone ID command message field.
      * <p>
-     * Zone ID is the index of the Zone in the CIE's zone table (Table 8-11). If none is programmed, the Zone
+     * Zone ID is the index of the Zone in the CIE's zone table. If none is programmed, the Zone
      * ID default value SHALL be indicated in this field.
      */
     private Integer zoneId;
@@ -130,7 +130,7 @@ public class ArmCommand extends ZclCommand {
     /**
      * Gets Zone ID.
      *
-     * Zone ID is the index of the Zone in the CIE's zone table (Table 8-11). If none is programmed, the Zone
+     * Zone ID is the index of the Zone in the CIE's zone table. If none is programmed, the Zone
      * ID default value SHALL be indicated in this field.
      *
      * @return the Zone ID
@@ -142,7 +142,7 @@ public class ArmCommand extends ZclCommand {
     /**
      * Sets Zone ID.
      *
-     * Zone ID is the index of the Zone in the CIE's zone table (Table 8-11). If none is programmed, the Zone
+     * Zone ID is the index of the Zone in the CIE's zone table. If none is programmed, the Zone
      * ID default value SHALL be indicated in this field.
      *
      * @param zoneId the Zone ID

@@ -922,14 +922,28 @@ Attributes and commands for switching devices between ‘On’ and ‘Off’ sta
 |Id     |Name                 |Type                       |Access     |Implement |Reporting |
 |-------|---------------------|---------------------------|-----------|----------|----------|
 |0x0000 |OnOff                |Boolean                    |Read Only  |Mandatory |Mandatory |
-|0x4000 |GlobalSceneControl   |Boolean                    |Read/Write |          |Mandatory |
-|0x4001 |OffTime              |Unsigned 16-bit integer    |Read/Write |          |Mandatory |
-|0x4002 |OffWaitTime          |Unsigned 16-bit integer    |Read/Write |          |Mandatory |
-
+|0x4000 |GlobalSceneControl   |Boolean                    |Read       |          |          |
+|0x4001 |OffTime              |Unsigned 16-bit integer    |Read/Write |          |          |
+|0x4002 |OffWaitTime          |Unsigned 16-bit integer    |Read/Write |          |          |
 
 
 #### OnOff Attribute
 The OnOff attribute has the following values: 0 = Off, 1 = On
+
+#### GlobalSceneControl Attribute
+In order to support the use case where the user gets back the last setting of the devices (e.g. level settings for lamps), a global scene is introduced which is stored when the devices are turned off and recalled when the devices are turned on. The global scene is defined as the scene that is stored with group identifier 0 and scene identifier 0.
+
+The GlobalSceneControl attribute is defined in order to prevent a second off command storing the all-devices-off situation as a global scene, and to prevent a second on command destroying the current settings by going back to the global scene.
+
+The GlobalSceneControl attribute SHALL be set to TRUE after the reception of a command which causes the OnOff attribute to be set to TRUE, such as a standard On command, a Move to level (with on/off) command, a Recall scene command or a On with recall global scene command.
+
+The GlobalSceneControl attribute is set to FALSE after reception of a Off with effect command.
+
+#### OnTime Attribute
+The OnTime attribute specifies the length of time (in 1/10ths second) that the “on” state SHALL be maintained before automatically transitioning to the “off” state when using the On with timed off command. If this attribute is set to 0x0000 or 0xffff, the device SHALL remain in its current state.
+
+#### OffWaitTime Attribute
+The OffWaitTime attribute specifies the length of time (in 1/10ths second) that the “off” state SHALL be guarded to prevent an on command turning the device back to its “on” state (e.g., when leaving a room, the lights are turned off but an occupancy sensor detects the leaving person and attempts to turn the lights back on). If this attribute is set to 0x0000, the device SHALL remain in its current state.
 
 ### Received
 
@@ -3120,7 +3134,7 @@ reports and supervision of the IAS network.
 |0x0001 |ZoneType                                    |16-bit Enumeration         |Read only  |Mandatory |          |
 |0x0002 |ZoneStatus                                  |16-bit Bitmap              |Read only  |Mandatory |          |
 |0x0010 |IASCIEAddress                               |IEEE Address               |Read/Write |Mandatory |          |
-|0x0011 |ZoneID                                      |Unsigned 8-bit Integer     |Read only  |Mandatory |          |
+|0x0011 |ZoneID                                      |Unsigned 8-bit Integer     |Read/Write |Mandatory |          |
 |0x0012 |NumberOfZoneSensitivityLevelsSupported      |Unsigned 8-bit Integer     |Read only  |Optional  |          |
 |0x0013 |CurrentZoneSensitivityLevel                 |Unsigned 8-bit Integer     |Read/Write |Optional  |          |
 
@@ -3166,6 +3180,24 @@ to implement some auto-detect for the CIE (example: by requesting the ZigBee
 cluster discovery service to locate a Zone Server cluster.) or require the
 intervention of a CT in order to configure this attribute during installation.
 
+#### ZoneID Attribute
+A unique reference number allocated by the CIE at zone enrollment time.
+
+Used by IAS devices to reference specific zones when communicating with the CIE. The ZoneID of each zone stays fixed until that zone is unenrolled.
+
+#### NumberOfZoneSensitivityLevelsSupported Attribute
+Provides the total number of sensitivity levels supported by the IAS Zone server. The purpose of this attribute is to support devices that can be configured to be more or less sensitive (e.g., motion sensor). It provides IAS Zone clients with the range of sensitivity levels that are supported so they MAY be presented to the user for configuration.
+
+The values 0x00 and 0x01 are reserved because a device that has zero or one sensitivity level SHOULD NOT support this attribute because no configuration of the IAS Zone server’s sensitivity level is possible.
+
+The meaning of each sensitivity level is manufacturer-specific. However, the sensitivity level of the IAS Zone server SHALL become more sensitive as they ascend. For example, if the server supports three sen- sitivity levels, then the value of this attribute would be 0x03 where 0x03 is more sensitive than 0x02, which is more sensitive than 0x01.
+
+#### CurrentZoneSensitivityLevel Attribute
+Allows an IAS Zone client to query and configure the IAS Zone server’s sensitivity level. Please see NumberOfZoneSensitivityLevelsSupported Attribute for more detail on how to interpret this attribute.
+
+The default value 0x00 is the device’s default sensitivity level as configured by the manufacturer. It MAY correspond to the same sensitivity as another value in the NumberOfZoneSensitivityLevelsSupported, but this is the default sensitivity to be used if the CurrentZoneSensitivityLevel attribute is not otherwise configured by an IAS Zone client.
+
+
 ### Received
 
 #### Zone Enroll Response Command [0x00]
@@ -3183,6 +3215,35 @@ intervention of a CT in order to configure this attribute during installation.
 |0x0002 |No Enroll Permit          |
 |0x0003 |Too Many Zones            |
 
+#### Initiate Normal Operation Mode Command [0x01]
+Used to tell the IAS Zone server to commence normal operation mode.
+
+Upon receipt, the IAS Zone server SHALL commence normal operational mode.
+
+Any configurations and changes made (e.g., CurrentZoneSensitivityLevel attribute) to the IAS Zone server SHALL be retained.
+
+Upon commencing normal operation mode, the IAS Zone server SHALL send a Zone Status Change Notification command updating the ZoneStatus attribute Test bit to zero (i.e., “operation mode”).
+
+
+#### Initiate Test Mode Command [0x02]
+Certain IAS Zone servers MAY have operational configurations that could be configured OTA or locally on the device. This command enables them to be remotely placed into a test mode so that the user or installer MAY configure their field of view, sensitivity, and other operational parameters. They MAY also verify the placement and proper operation of the IAS Zone server, which MAY have been placed in a difficult to reach location (i.e., making a physical input on the device impractical to trigger).
+
+Another use case for this command is large deployments, especially commercial and industrial, where placing the entire IAS system into test mode instead of a single IAS Zone server is infeasible due to the vulnerabilities that might arise. This command enables only a single IAS Zone server to be placed into test mode.
+
+The biggest limitation of this command is that most IAS Zone servers today are battery-powered sleepy nodes that cannot reliably receive commands. However, implementers MAY decide to program an IAS Zone server by factory default to maintain a limited duration of normal polling upon initialization/joining to a new network. Some IAS Zone servers MAY also have AC mains power and are able to receive commands. Some types of IAS Zone servers that MAY benefit from this command are: motion sensors and fire sensor/smoke alarm listeners (i.e., a device that listens for a non-communicating fire sensor to alarm and communicates this to the IAS CIE).
+
+|Field Name                     |Data Type                  |
+|-------------------------------|---------------------------|
+|Test Mode Duration             |Unsigned 8-bit Integer     |
+|Current Zone Sensitivity Level |Unsigned 8-bit Integer     |
+
+##### Test Mode Duration Field
+Specifies the duration, in seconds, for which the IAS Zone server SHALL operate in its test mode.
+
+##### Current Zone Sensitivity Level Field
+Specifies the sensitivity level the IAS Zone server SHALL use for the duration of the Test Mode and with which it must update its CurrentZoneSensitivityLevel attribute.
+
+The permitted values of Current Zone Sensitivity Level are shown defined for the CurrentZoneSensitivityLevel Attribute.
 
 ### Generated
 
@@ -3213,8 +3274,8 @@ level-2 user.
 ### Received
 
 #### Arm Command [0x00]
-On receipt of this command, the receiving device sets its arm mode according to the value of the Arm Mode field,
-as detailed in Table 8-13. It is not guaranteed that an Arm command will succeed. Based on the current state of
+On receipt of this command, the receiving device sets its arm mode according to the value of the Arm Mode field. It
+is not guaranteed that an Arm command will succeed. Based on the current state of
 the IAS CIE, and its related devices, the command can be rejected. The device SHALL generate an Arm Response command
 to indicate the resulting armed state
 
@@ -3247,7 +3308,7 @@ Arm/Disarm Code SHOULD be between four and eight alphanumeric characters in leng
 The string encoding SHALL be UTF-8.
 
 ##### Zone ID
-Zone ID is the index of the Zone in the CIE's zone table (Table 8-11). If none is programmed, the Zone
+Zone ID is the index of the Zone in the CIE's zone table. If none is programmed, the Zone
 ID default value SHALL be indicated in this field.
 
 #### Bypass Command [0x01]

@@ -23,10 +23,16 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-06T20:27:25Z")
 public class ZoneEnrollResponse extends ZclCommand {
     /**
      * Enroll response code command message field.
+     * <p>
+     * Specifies the duration, in seconds, for which the IAS Zone server SHALL operate in its test mode.
+     * Specifies the sensitivity level the IAS Zone server SHALL use for the duration of the Test Mode and with which it must update its
+     * CurrentZoneSensitivityLevel attribute.
+     * <p>
+     * The permitted values of Current Zone Sensitivity Level are shown defined for the CurrentZoneSensitivityLevel Attribute.
      */
     private Integer enrollResponseCode;
 
@@ -48,6 +54,11 @@ public class ZoneEnrollResponse extends ZclCommand {
     /**
      * Gets Enroll response code.
      *
+     * Specifies the duration, in seconds, for which the IAS Zone server SHALL operate in its test mode.
+     * Specifies the sensitivity level the IAS Zone server SHALL use for the duration of the Test Mode and with which it must update its CurrentZoneSensitivityLevel attribute.
+     * <p>
+     * The permitted values of Current Zone Sensitivity Level are shown defined for the CurrentZoneSensitivityLevel Attribute.
+     *
      * @return the Enroll response code
      */
     public Integer getEnrollResponseCode() {
@@ -56,6 +67,12 @@ public class ZoneEnrollResponse extends ZclCommand {
 
     /**
      * Sets Enroll response code.
+     *
+     * Specifies the duration, in seconds, for which the IAS Zone server SHALL operate in its test mode.
+     * Specifies the sensitivity level the IAS Zone server SHALL use for the duration of the Test Mode and with which it must update its
+     * CurrentZoneSensitivityLevel attribute.
+     * <p>
+     * The permitted values of Current Zone Sensitivity Level are shown defined for the CurrentZoneSensitivityLevel Attribute.
      *
      * @param enrollResponseCode the Enroll response code
      */
