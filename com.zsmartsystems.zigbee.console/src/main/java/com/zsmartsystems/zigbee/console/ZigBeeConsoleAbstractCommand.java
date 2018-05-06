@@ -52,17 +52,21 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
             throws IllegalArgumentException {
         try {
             Integer nwkAddress = Integer.parseInt(nodeId);
-            return networkManager.getNode(nwkAddress);
+            if (networkManager.getNode(nwkAddress) != null) {
+                return networkManager.getNode(nwkAddress);
+            }
         } catch (Exception e) {
         }
 
         try {
             IeeeAddress ieeeAddress = new IeeeAddress(nodeId);
-            return networkManager.getNode(ieeeAddress);
+            if (networkManager.getNode(ieeeAddress) != null) {
+                return networkManager.getNode(ieeeAddress);
+            }
         } catch (Exception e) {
         }
 
-        throw new IllegalArgumentException("Node '" + nodeId + "' is not found");
+        throw new IllegalArgumentException("Node '" + nodeId + "' is not found.");
     }
 
     /**
@@ -94,24 +98,39 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
      */
     protected Integer parseCluster(final String cluster) throws IllegalArgumentException {
         try {
-            return Integer.parseInt(cluster);
+            return getInteger(cluster);
         } catch (final NumberFormatException e) {
-            throw new IllegalArgumentException("Cluster '" + cluster + "' uses an invalid number format");
+            throw new IllegalArgumentException("Cluster '" + cluster + "' uses an invalid number format.");
         }
     }
 
     /**
      * Parses a attribute ID as a string to an integer
      *
-     * @param cluster a {@link String} name of the attribute
+     * @param attribute a {@link String} name of the attribute
      * @return the attribute ID as an integer
      * @throws IllegalArgumentException
      */
     protected Integer parseAttribute(final String attribute) throws IllegalArgumentException {
         try {
-            return Integer.parseInt(attribute);
+            return getInteger(attribute);
         } catch (final NumberFormatException e) {
-            throw new IllegalArgumentException("Attribute '" + attribute + "' uses an invalid number format");
+            throw new IllegalArgumentException("Attribute '" + attribute + "' uses an invalid number format.");
+        }
+    }
+
+    /**
+     * Parses an integer as a string to an integer
+     *
+     * @param integer a {@link String} of the integer
+     * @return the integer
+     * @throws IllegalArgumentException
+     */
+    protected Integer parseInteger(final String integer) throws IllegalArgumentException {
+        try {
+            return Integer.parseInt(integer);
+        } catch (final NumberFormatException e) {
+            throw new IllegalArgumentException("Integer '" + integer + "' uses an invalid number format.");
         }
     }
 
@@ -181,7 +200,7 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
                 value = Integer.parseInt(stringValue);
                 break;
             default:
-                throw new IllegalArgumentException("Data type " + zclDataType + " is not supported");
+                throw new IllegalArgumentException("Data type " + zclDataType + " is not supported.");
         }
         return value;
     }
@@ -198,4 +217,11 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
         return String.format("%-25s", dataType);
     }
 
+    private Integer getInteger(String string) {
+        if (string.startsWith("0x")) {
+            return Integer.parseInt(string.substring(2), 16);
+        } else {
+            return Integer.parseInt(string);
+        }
+    }
 }

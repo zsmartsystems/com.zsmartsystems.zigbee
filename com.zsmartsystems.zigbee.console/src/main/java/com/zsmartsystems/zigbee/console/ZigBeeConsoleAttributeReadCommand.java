@@ -61,8 +61,8 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
             if (cluster != null) {
                 out.println("Using output cluster");
             } else {
-                out.println("Cluster not found");
-                return;
+                throw new IllegalArgumentException(
+                        "Cluster " + String.format("%d [0x%04X]", clusterId, clusterId) + " not found");
             }
         }
 
