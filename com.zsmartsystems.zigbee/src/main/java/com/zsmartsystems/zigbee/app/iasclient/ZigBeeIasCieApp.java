@@ -171,7 +171,19 @@ public class ZigBeeIasCieApp implements ZigBeeApplication {
         }
 
         Integer currentZone = iasZoneCluster.getZoneId(0);
-        logger.debug("{}: IAS CIE zone is currently {}", iasZoneCluster.getZigBeeAddress(), currentZone);
+        if (currentZone == null) {
+            logger.debug("{}: IAS CIE zone ID request failed", iasZoneCluster.getZigBeeAddress());
+        } else {
+            logger.debug("{}: IAS CIE zone ID is currently {}", iasZoneCluster.getZigBeeAddress(), currentZone);
+        }
+
+        Integer zoneType = iasZoneCluster.getZoneType(Long.MAX_VALUE);
+        if (zoneType == null) {
+            logger.debug("{}: IAS CIE zone type request failed", iasZoneCluster.getZigBeeAddress());
+        } else {
+            logger.debug("{}: IAS CIE zone type is 0x{}, {}", iasZoneCluster.getZigBeeAddress(),
+                    String.format("%04X", zoneType), ZoneTypeEnum.getByValue(zoneType));
+        }
 
         return false;
     }
