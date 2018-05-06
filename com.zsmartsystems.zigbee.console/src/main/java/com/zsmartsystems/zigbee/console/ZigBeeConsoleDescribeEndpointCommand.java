@@ -59,9 +59,9 @@ public class ZigBeeConsoleDescribeEndpointCommand extends ZigBeeConsoleAbstractC
         out.println("Device Profile   : " + ZigBeeProfileType.getProfileType(endpoint.getProfileId())
                 + String.format(" (0x%04X)", endpoint.getProfileId()));
         out.println("Device Version   : " + endpoint.getDeviceVersion());
-        out.println("Input Clusters   : ");
+        out.println("Input Clusters   : (Server)");
         printClusters(endpoint, true, out);
-        out.println("Output Clusters  : ");
+        out.println("Output Clusters  : (Client)");
         printClusters(endpoint, false, out);
     }
 
@@ -85,7 +85,7 @@ public class ZigBeeConsoleDescribeEndpointCommand extends ZigBeeConsoleAbstractC
         }
 
         for (ZclCluster cluster : clusterTree.values()) {
-            out.println(printClusterId(cluster.getClusterId()) + " " + cluster.getClusterName());
+            out.println("   " + printClusterId(cluster.getClusterId()) + " " + cluster.getClusterName());
             printAttributes(cluster, out);
         }
     }
