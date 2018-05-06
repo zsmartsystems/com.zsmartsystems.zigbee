@@ -127,7 +127,9 @@ import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveToHueAndSa
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.ColorLoopSetCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneStatusChangeNotificationCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iaszone.InitiateNormalOperationModeCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iaszone.InitiateTestModeCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.ArmCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.ArmResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.BypassCommand;
@@ -181,7 +183,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtendedR
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T18:25:21Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-06T20:48:39Z")
 public enum ZclCommandType {
     /**
      * ADD_GROUP_COMMAND: Add Group Command
@@ -555,6 +557,18 @@ public enum ZclCommandType {
      * See {@link ImagePageCommand}
      */
     IMAGE_PAGE_COMMAND(0x0019, 4, ImagePageCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * INITIATE_NORMAL_OPERATION_MODE_COMMAND: Initiate Normal Operation Mode Command
+     * <p>
+     * See {@link InitiateNormalOperationModeCommand}
+     */
+    INITIATE_NORMAL_OPERATION_MODE_COMMAND(0x0500, 1, InitiateNormalOperationModeCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
+    /**
+     * INITIATE_TEST_MODE_COMMAND: Initiate Test Mode Command
+     * <p>
+     * See {@link InitiateTestModeCommand}
+     */
+    INITIATE_TEST_MODE_COMMAND(0x0500, 2, InitiateTestModeCommand.class, ZclCommandDirection.CLIENT_TO_SERVER),
     /**
      * LOCATION_DATA_NOTIFICATION_COMMAND: Location Data Notification Command
      * <p>
