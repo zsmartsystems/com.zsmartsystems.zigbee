@@ -98,7 +98,7 @@ public class TelegesisFrameHandler {
     /**
      * The maximum number of milliseconds to wait for the response from the stick once the request was sent
      */
-    private final int DEFAULT_TRANSACTION_TIMEOUT = 500;
+    private final int DEFAULT_TRANSACTION_TIMEOUT = 1000;
 
     /**
      * The maximum number of milliseconds to wait for the completion of the transaction after it's queued
