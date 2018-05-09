@@ -3155,7 +3155,7 @@ The Zone Type dictates the meaning of Alarm1 and Alarm2 bits of the ZoneStatus a
 |0x000D |Motion Sensor             |
 |0x0015 |Contact Switch            |
 |0x0028 |Fire Sensor               |
-|0x0028 |Water Sensor              |
+|0x002A |Water Sensor              |
 |0x002B |CO Sensor                 |
 |0x002C |Personal Emergency Device |
 |0x002D |Vibration Movement Sensor |
