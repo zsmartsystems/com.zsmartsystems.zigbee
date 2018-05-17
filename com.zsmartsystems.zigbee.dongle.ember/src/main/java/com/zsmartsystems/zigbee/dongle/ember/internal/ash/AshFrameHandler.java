@@ -10,13 +10,13 @@ package com.zsmartsystems.zigbee.dongle.ember.internal.ash;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
+import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
@@ -46,7 +47,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  * @author Chris Jackson
  *
  */
-public class AshFrameHandler {
+public class AshFrameHandler implements EzspProtocolHandler {
     /**
      * The logger.
      */
@@ -136,19 +137,13 @@ public class AshFrameHandler {
     /**
      * Construct the handler and provide the {@link EzspFrameHandler}
      *
-     * @param frameHandler
-     *            the packet handler
+     * @param frameHandler the {@link EzspFrameHandler} packet handler
      */
     public AshFrameHandler(final EzspFrameHandler frameHandler) {
         this.frameHandler = frameHandler;
     }
 
-    /**
-     * Starts the handler. Sets input stream where the packet is read from the and
-     * handler which further processes the received packet.
-     *
-     * @param port the {@link ZigBeePort}
-     */
+    @Override
     public void start(final ZigBeePort port) {
         this.port = port;
 
@@ -169,7 +164,7 @@ public class AshFrameHandler {
                         final AshFrame packet = AshFrame.createFromInput(packetData);
                         AshFrame responseFrame = null;
                         if (packet == null) {
-                            logger.error("<-- RX ASH error: BAD PACKET {}", AshFrame.frameToString(packetData));
+                            logger.error("<-- RX ASH error: BAD PACKET {}", frameToString(packetData));
 
                             // Send a NAK
                             responseFrame = new AshFrameNak(ackNum);
@@ -194,14 +189,15 @@ public class AshFrameHandler {
                                         // Frame was in sequence
 
                                         // Get the EZSP frame
-                                        EzspFrameResponse response = EzspFrame.createHandler(dataPacket);
-                                        logger.debug("RX EZSP: " + response);
+                                        EzspFrameResponse response = EzspFrame
+                                                .createHandler(dataPacket.getDataBuffer());
+                                        logger.debug("RX EZSP: {}", response);
                                         if (response == null) {
                                             logger.debug("ASH: No frame handler created for {}", packet);
                                         } else if (!notifyTransactionComplete(response)) {
                                             // No transactions owned this response, so we pass it to
                                             // our unhandled response handler
-                                            EzspFrame ezspFrame = EzspFrame.createHandler((dataPacket));
+                                            EzspFrame ezspFrame = EzspFrame.createHandler((dataPacket.getDataBuffer()));
                                             if (ezspFrame != null) {
                                                 frameHandler.handlePacket(ezspFrame);
                                             }
@@ -282,7 +278,7 @@ public class AshFrameHandler {
 
         while (!closeHandler) {
             int val = port.read();
-            logger.trace("ASH RX: " + String.format("%02X", val));
+            logger.trace("ASH RX: {}", String.format("%02X", val));
             switch (val) {
                 case ASH_CANCEL_BYTE:
                     // Cancel Byte: Terminates a frame in progress. A Cancel Byte causes all data received since the
@@ -353,17 +349,14 @@ public class AshFrameHandler {
         }
     }
 
-    /**
-     * Set the close flag to true.
-     */
+    @Override
     public void setClosing() {
         this.closeHandler = true;
     }
 
-    /**
-     * Requests parser thread to shutdown.
-     */
+    @Override
     public void close() {
+        logger.debug("AshFrameHandler close.");
         setClosing();
         stopRetryTimer();
 
@@ -372,15 +365,11 @@ public class AshFrameHandler {
             parserThread.join();
             logger.debug("AshFrameHandler close complete.");
         } catch (InterruptedException e) {
-            logger.warn("Interrupted in packet parser thread shutdown join.");
+            logger.warn("AshFrameHandler interrupted in packet parser thread shutdown join.");
         }
     }
 
-    /**
-     * Checks if parser thread is alive.
-     *
-     * @return true if parser thread is alive.
-     */
+    @Override
     public boolean isAlive() {
         return parserThread != null && parserThread.isAlive();
     }
@@ -391,7 +380,6 @@ public class AshFrameHandler {
     private synchronized boolean sendNextFrame() {
         // We're not allowed to send if we're not connected
         if (!stateConnected) {
-            logger.debug("ASH: Trying to send when not connected.");
             return false;
         }
 
@@ -464,8 +452,6 @@ public class AshFrameHandler {
             port.write(outByte);
         }
 
-        // logger.debug(result.toString());
-
         // Only start the timer for data frames
         if (ashFrame instanceof AshFrameData) {
             sentTime = System.nanoTime();
@@ -473,13 +459,7 @@ public class AshFrameHandler {
         }
     }
 
-    /**
-     * Add an EZSP frame to the send queue. The sendQueue is a FIFO queue.
-     * This method queues a {@link EzspFrameRequest} frame without waiting for a response and
-     * no transaction management is performed.
-     *
-     * @param request {@link EzspFrameRequest}
-     */
+    @Override
     public void queueFrame(EzspFrameRequest request) {
         sendQueue.add(request);
 
@@ -626,12 +606,7 @@ public class AshFrameHandler {
         }
     }
 
-    /**
-     * Sends an EZSP request to the NCP without waiting for the response.
-     *
-     * @param ezspTransaction Request {@link EzspTransaction}
-     * @return response {@link Future} {@link EzspFrame}
-     */
+    @Override
     public Future<EzspFrame> sendEzspRequestAsync(final EzspTransaction ezspTransaction) {
         class TransactionWaiter implements Callable<EzspFrame>, AshListener {
             // private EzspFrame response = null;
@@ -683,14 +658,7 @@ public class AshFrameHandler {
         return executor.submit(worker);
     }
 
-    /**
-     * Sends an EZSP request to the NCP and waits for the response. The response is correlated with the request and the
-     * returned {@link EzspFrame} contains the request and response data.
-     *
-     * @param ezspTransaction
-     *            Request {@link EzspFrame}
-     * @return response {@link EzspFrame}
-     */
+    @Override
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
         if (futureResponse == null) {
@@ -709,13 +677,9 @@ public class AshFrameHandler {
         return null;
     }
 
-    /**
-     * Get a map of statistics counters from the handler
-     *
-     * @return map of counters
-     */
+    @Override
     public synchronized Map<String, Long> getCounters() {
-        Map<String, Long> counters = new HashMap<String, Long>();
+        Map<String, Long> counters = new ConcurrentHashMap<String, Long>();
 
         counters.put("ASH_TX_DAT", statsTxData);
         counters.put("ASH_TX_NAK", statsTxNaks);
@@ -726,6 +690,17 @@ public class AshFrameHandler {
         counters.put("ASH_RX_ERR", statsRxErrs);
 
         return counters;
+    }
+
+    private String frameToString(int[] inputBuffer) {
+        if (inputBuffer == null || inputBuffer.length == 4) {
+            return "";
+        }
+        StringBuilder result = new StringBuilder();
+        for (int i = 1; i < inputBuffer.length - 2; i++) {
+            result.append(String.format("%02X ", inputBuffer[i]));
+        }
+        return result.toString();
     }
 
     interface AshListener {

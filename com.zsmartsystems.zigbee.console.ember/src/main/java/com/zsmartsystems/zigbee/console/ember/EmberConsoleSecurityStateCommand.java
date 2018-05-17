@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspPolicyI
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 
 /**
- * Console command that displays the current security configuration for the Ember NCP
+ * Console command that displays the current security configuration for the Ember NCP.
  *
  * @author Chris Jackson
  *

@@ -28,6 +28,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.EmberFirmwareUpdateHandler
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberNetworkInitialisation;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberStackConfiguration;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
+import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameRequest;
@@ -61,6 +62,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspPolicyI
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspStatus;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspSingleResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspTransaction;
+import com.zsmartsystems.zigbee.dongle.ember.internal.spi.SpiFrameHandler;
 import com.zsmartsystems.zigbee.transport.ConcentratorConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
@@ -91,9 +93,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private ZigBeePort serialPort;
 
     /**
-     * The ASH protocol handler used to send and receive EZSP packets
+     * The protocol handler used to send and receive EZSP packets
      */
-    private AshFrameHandler ashHandler;
+    private EzspProtocolHandler frameHandler;
 
     /**
      * The Ember bootload handler
@@ -131,12 +133,33 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private IeeeAddress ieeeAddress;
 
     /**
+     * The low level protocol to use for this dongle
+     */
+    private EmberSerialProtocol protocol;
+
+    /**
      * The Ember version used in this system. Set during initialisation and saved in case the client is interested.
      */
     private String versionString = "Unknown";
 
+    /**
+     * Create a {@link ZigBeeDongleEzsp} with the default ASH2 frame handler
+     *
+     * @param serialPort the {@link ZigBeePort} to use for the connection
+     */
     public ZigBeeDongleEzsp(final ZigBeePort serialPort) {
+        this(serialPort, EmberSerialProtocol.ASH2);
+    }
+
+    /**
+     * Create a {@link ZigBeeDongleEzsp} with the default ASH frame handler
+     *
+     * @param serialPort the {@link ZigBeePort} to use for the connection
+     * @param protocol the {@link EmberSerialProtocol} to use
+     */
+    public ZigBeeDongleEzsp(final ZigBeePort serialPort, final EmberSerialProtocol protocol) {
         this.serialPort = serialPort;
+        this.protocol = protocol;
 
         stackConfiguration = new HashMap<EzspConfigId, Integer>();
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE, 16);
@@ -168,7 +191,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public ZigBeeInitializeResponse initialize() {
-        logger.debug("EZSP dongle initialize.");
+        logger.debug("EZSP dongle initialize with protocol {}.", protocol);
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
@@ -177,7 +200,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         }
 
         // Perform any stack configuration
-        EmberStackConfiguration stackConfigurer = new EmberStackConfiguration(ashHandler);
+        EmberStackConfiguration stackConfigurer = new EmberStackConfiguration(frameHandler);
 
         Map<EzspConfigId, Integer> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
         for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
@@ -201,7 +224,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             logger.debug("Policy state {} = {}", policy.getKey(), policy.getValue());
         }
 
-        EmberNcp ncp = new EmberNcp(ashHandler);
+        EmberNcp ncp = new EmberNcp(frameHandler);
 
         ncp.getNetworkParameters();
 
@@ -210,7 +233,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // Now initialise the network
         EzspNetworkInitRequest networkInitRequest = new EzspNetworkInitRequest();
-        EzspTransaction networkInitTransaction = ashHandler.sendEzspTransaction(
+        EzspTransaction networkInitTransaction = frameHandler.sendEzspTransaction(
                 new EzspSingleResponseTransaction(networkInitRequest, EzspNetworkInitResponse.class));
         EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
         logger.debug(networkInitResponse.toString());
@@ -236,12 +259,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         logger.debug("EZSP dongle startup.");
 
         // If ashHandler is null then the serial port didn't initialise
-        if (ashHandler == null) {
-            logger.error("Initialising Ember Dongle but low level handle is not initialised.");
+        if (frameHandler == null) {
+            logger.error("Initialising Ember Dongle but low level handler is not initialised.");
             return false;
         }
 
-        EmberNcp ncp = new EmberNcp(ashHandler);
+        EmberNcp ncp = new EmberNcp(frameHandler);
 
         // Check if the network is initialised
         EmberNetworkStatus networkState = ncp.getNetworkState();
@@ -250,7 +273,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // If we want to reinitialize the network, then go...
         if (reinitialize) {
             logger.debug("Reinitialising Ember NCP and forming network.");
-            EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(ashHandler);
+            EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(frameHandler);
             netInitialiser.formNetwork(networkParameters, networkKey);
             ncp.getNetworkParameters();
         }
@@ -279,14 +302,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void shutdown() {
-        if (ashHandler == null) {
+        if (frameHandler == null) {
             return;
         }
 
-        ashHandler.setClosing();
+        frameHandler.setClosing();
         serialPort.close();
-        ashHandler.close();
-        ashHandler = null;
+        frameHandler.close();
+        frameHandler = null;
     }
 
     /**
@@ -295,7 +318,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * @return an instance of the {@link EmberNcp}
      */
     public EmberNcp getEmberNcp() {
-        return new EmberNcp(ashHandler);
+        return new EmberNcp(frameHandler);
     }
 
     @Override
@@ -305,7 +328,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void sendCommand(final ZigBeeApsFrame apsFrame) {
-        if (ashHandler == null) {
+        if (frameHandler == null) {
             return;
         }
         EzspFrameRequest emberCommand;
@@ -361,7 +384,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         }
 
         logger.debug(emberCommand.toString());
-        ashHandler.queueFrame(emberCommand);
+        frameHandler.queueFrame(emberCommand);
 
         // emberUnicast = (EzspSendUnicast) ashHandler.sendEzspRequestAsync(emberUnicast);
     }
@@ -511,7 +534,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                         break;
 
                     case INSTALL_KEY:
-                        EmberNcp ncp = new EmberNcp(ashHandler);
+                        EmberNcp ncp = new EmberNcp(frameHandler);
                         ZigBeeNodeKey nodeKey = (ZigBeeNodeKey) configuration.getValue(option);
                         EmberStatus result = ncp.addTransientLinkKey(nodeKey.getAddress(), nodeKey.getKey());
 
@@ -545,12 +568,23 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             logger.error("Unable to open Ember serial port");
             return false;
         }
-        ashHandler = new AshFrameHandler(this);
-        EmberNcp ncp = new EmberNcp(ashHandler);
+
+        switch (protocol) {
+            case ASH2:
+                frameHandler = new AshFrameHandler(this);
+                break;
+            case SPI:
+                frameHandler = new SpiFrameHandler(this);
+                break;
+            default:
+                logger.error("Unknown Ember serial protocol {}", protocol);
+                return false;
+        }
+        EmberNcp ncp = new EmberNcp(frameHandler);
 
         // Connect to the ASH handler and NCP
-        ashHandler.start(serialPort);
-        ashHandler.connect();
+        frameHandler.start(serialPort);
+        frameHandler.connect();
 
         // We MUST send the version command first.
         EzspVersionResponse version = ncp.getVersion(4);
@@ -587,7 +621,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public boolean updateFirmware(final InputStream firmware, final ZigBeeTransportFirmwareCallback callback) {
-        if (ashHandler != null) {
+        if (frameHandler != null) {
             logger.debug("ashHandler is operating in updateFirmware");
             return false;
         }
@@ -602,7 +636,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Send the bootload command, but ignore the response since there doesn't seem to be one
         // despite what the documentation seems to indicate
         EzspLaunchStandaloneBootloaderRequest bootloadCommand = new EzspLaunchStandaloneBootloaderRequest();
-        EzspTransaction bootloadTransaction = ashHandler.sendEzspTransaction(
+        EzspTransaction bootloadTransaction = frameHandler.sendEzspTransaction(
                 new EzspSingleResponseTransaction(bootloadCommand, EzspLaunchStandaloneBootloaderResponse.class));
         EzspLaunchStandaloneBootloaderResponse bootloadResponse = (EzspLaunchStandaloneBootloaderResponse) bootloadTransaction
                 .getResponse();
@@ -617,10 +651,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // Stop the handler and close the serial port
         logger.debug("EZSP closing frame handler");
-        ashHandler.setClosing();
+        frameHandler.setClosing();
         serialPort.close();
-        ashHandler.close();
-        ashHandler = null;
+        frameHandler.close();
+        frameHandler = null;
 
         bootloadHandler = new EmberFirmwareUpdateHandler(this, firmware, serialPort, callback);
         bootloadHandler.startBootload();
@@ -674,7 +708,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 break;
         }
 
-        EzspTransaction concentratorTransaction = ashHandler.sendEzspTransaction(
+        EzspTransaction concentratorTransaction = frameHandler.sendEzspTransaction(
                 new EzspSingleResponseTransaction(concentratorRequest, EzspSetConcentratorResponse.class));
         EzspSetConcentratorResponse concentratorResponse = (EzspSetConcentratorResponse) concentratorTransaction
                 .getResponse();
@@ -694,8 +728,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     public Map<String, Long> getCounters() {
         Map<String, Long> counters = new HashMap<String, Long>();
 
-        if (ashHandler != null) {
-            counters.putAll(ashHandler.getCounters());
+        if (frameHandler != null) {
+            counters.putAll(frameHandler.getCounters());
         }
 
         return counters;

@@ -13,7 +13,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspPolicyId;
@@ -25,15 +24,18 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspPolicyI
  *
  */
 public class EmberStackConfiguration {
-    private AshFrameHandler ashHandler;
+    /**
+     * The frame handler used to send the EZSP frames to the NCP
+     */
+    private EzspProtocolHandler protocolHandler;
 
     /**
-     * Constructor to set the {@link AshFrameHandler}
+     * Constructor to set the {@link EzspProtocolHandler}
      *
-     * @param ashHandler the {@link AshFrameHandler} used to communicate with the NCP
+     * @param frameHandler the {@link EzspProtocolHandler} used to communicate with the NCP
      */
-    public EmberStackConfiguration(AshFrameHandler ashHandler) {
-        this.ashHandler = ashHandler;
+    public EmberStackConfiguration(EzspProtocolHandler protocolHandler) {
+        this.protocolHandler = protocolHandler;
     }
 
     /**
@@ -46,7 +48,7 @@ public class EmberStackConfiguration {
     public boolean setConfiguration(Map<EzspConfigId, Integer> configuration) {
         boolean success = true;
 
-        EmberNcp ncp = new EmberNcp(ashHandler);
+        EmberNcp ncp = new EmberNcp(protocolHandler);
         for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
             if (!ncp.setConfiguration(config.getKey(), config.getValue())) {
                 success = false;
@@ -66,7 +68,7 @@ public class EmberStackConfiguration {
     public Map<EzspConfigId, Integer> getConfiguration(Set<EzspConfigId> configuration) {
         Map<EzspConfigId, Integer> response = new HashMap<EzspConfigId, Integer>();
 
-        EmberNcp ncp = new EmberNcp(ashHandler);
+        EmberNcp ncp = new EmberNcp(protocolHandler);
         for (EzspConfigId configId : configuration) {
             response.put(configId, ncp.getConfiguration(configId));
         }
@@ -84,7 +86,7 @@ public class EmberStackConfiguration {
     public boolean setPolicy(Map<EzspPolicyId, EzspDecisionId> policies) {
         boolean success = true;
 
-        EmberNcp ncp = new EmberNcp(ashHandler);
+        EmberNcp ncp = new EmberNcp(protocolHandler);
         for (Entry<EzspPolicyId, EzspDecisionId> policy : policies.entrySet()) {
             if (!ncp.setPolicy(policy.getKey(), policy.getValue())) {
                 success = false;
@@ -104,7 +106,7 @@ public class EmberStackConfiguration {
     public Map<EzspPolicyId, EzspDecisionId> getPolicy(Set<EzspPolicyId> policies) {
         Map<EzspPolicyId, EzspDecisionId> response = new HashMap<EzspPolicyId, EzspDecisionId>();
 
-        EmberNcp ncp = new EmberNcp(ashHandler);
+        EmberNcp ncp = new EmberNcp(protocolHandler);
         for (EzspPolicyId policyId : policies) {
             response.put(policyId, ncp.getPolicy(policyId));
         }

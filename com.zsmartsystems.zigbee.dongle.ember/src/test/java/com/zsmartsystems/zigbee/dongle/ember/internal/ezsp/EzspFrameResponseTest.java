@@ -8,9 +8,12 @@
 package com.zsmartsystems.zigbee.dongle.ember.internal.ezsp;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNoCallbacksResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionResponse;
 
 /**
@@ -37,5 +40,16 @@ public class EzspFrameResponseTest {
 
         assertEquals(5, response.getProtocolVersion());
         assertEquals(0x5A10, response.getStackVersion());
+    }
+
+    @Test
+    public void testResponse() {
+        EzspNoCallbacksResponse response = new EzspNoCallbacksResponse(new int[] { 0x2C, 0x88, 0x07 });
+        System.out.println(response);
+        assertFalse(response.isCallbackPending());
+
+        response = new EzspNoCallbacksResponse(new int[] { 0x2C, 0x8C, 0x07 });
+        System.out.println(response);
+        assertTrue(response.isCallbackPending());
     }
 }
