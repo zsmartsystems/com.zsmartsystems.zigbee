@@ -14,6 +14,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 
 /**
  * Unlock Door Command value object class.
@@ -23,12 +24,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-20T09:08:50Z")
 public class UnlockDoorCommand extends ZclCommand {
     /**
      * Pin code command message field.
      */
-    private String pinCode;
+    private ByteArray pinCode;
 
     /**
      * Default constructor.
@@ -45,7 +46,7 @@ public class UnlockDoorCommand extends ZclCommand {
      *
      * @return the Pin code
      */
-    public String getPinCode() {
+    public ByteArray getPinCode() {
         return pinCode;
     }
 
@@ -54,7 +55,7 @@ public class UnlockDoorCommand extends ZclCommand {
      *
      * @param pinCode the Pin code
      */
-    public void setPinCode(final String pinCode) {
+    public void setPinCode(final ByteArray pinCode) {
         this.pinCode = pinCode;
     }
 
@@ -65,7 +66,7 @@ public class UnlockDoorCommand extends ZclCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        pinCode = (String) deserializer.deserialize(ZclDataType.OCTET_STRING);
+        pinCode = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
     }
 
     @Override

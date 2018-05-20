@@ -17,6 +17,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.UnlockDoorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.UnlockDoorResponse;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -27,7 +28,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-20T09:08:50Z")
 public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -59,10 +60,10 @@ public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The Lock Door Command
      *
-     * @param pinCode {@link String} Pin code
+     * @param pinCode {@link ByteArray} Pin code
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> lockDoorCommand(String pinCode) {
+    public Future<CommandResult> lockDoorCommand(ByteArray pinCode) {
         LockDoorCommand command = new LockDoorCommand();
 
         // Set the fields
@@ -74,10 +75,10 @@ public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The Unlock Door Command
      *
-     * @param pinCode {@link String} Pin code
+     * @param pinCode {@link ByteArray} Pin code
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> unlockDoorCommand(String pinCode) {
+    public Future<CommandResult> unlockDoorCommand(ByteArray pinCode) {
         UnlockDoorCommand command = new UnlockDoorCommand();
 
         // Set the fields

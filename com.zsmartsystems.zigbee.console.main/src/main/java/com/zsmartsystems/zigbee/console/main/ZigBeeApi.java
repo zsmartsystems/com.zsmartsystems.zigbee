@@ -22,8 +22,6 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveToColorCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.doorlock.LockDoorCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.doorlock.UnlockDoorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupCommand;
@@ -170,36 +168,6 @@ public class ZigBeeApi {
 
         command.setLevel(l);
         command.setTransitionTime((int) (time * 10));
-
-        return networkManager.send(destination, command);
-    }
-
-    /**
-     * Locks door.
-     *
-     * @param destination the {@link ZigBeeAddress}
-     * @param pinCode the pin code
-     * @return the command result future.
-     */
-    public Future<CommandResult> lock(final ZigBeeAddress destination, final String pinCode) {
-        final LockDoorCommand command = new LockDoorCommand();
-
-        command.setPinCode(pinCode);
-
-        return networkManager.send(destination, command);
-    }
-
-    /**
-     * Unlocks door.
-     *
-     * @param destination the {@link ZigBeeAddress}
-     * @param pinCode the pin code
-     * @return the command result future.
-     */
-    public Future<CommandResult> unlock(final ZigBeeAddress destination, final String pinCode) {
-        final UnlockDoorCommand command = new UnlockDoorCommand();
-
-        command.setPinCode(pinCode);
 
         return networkManager.send(destination, command);
     }

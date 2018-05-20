@@ -124,7 +124,7 @@ public final class ZigBeeConsole {
      * Constructor which configures ZigBee API and constructs commands.
      *
      * @param dongle the dongle
-     * @param commands2
+     * @param transportCommands
      */
     public ZigBeeConsole(final ZigBeeNetworkManager networkManager, final ZigBeeTransportTransmit dongle,
             List<Class<? extends ZigBeeConsoleCommand>> transportCommands) {
@@ -159,8 +159,6 @@ public final class ZigBeeConsole {
         commands.put("lqi", new LqiCommand());
         commands.put("warn", new WarnCommand());
         commands.put("squawk", new SquawkCommand());
-        commands.put("lock", new DoorLockCommand());
-        commands.put("unlock", new DoorUnlockCommand());
         commands.put("enroll", new EnrollCommand());
 
         commands.put("firmware", new FirmwareCommand());
@@ -908,88 +906,6 @@ public final class ZigBeeConsole {
             }
 
             final CommandResult response = zigbeeApi.level(destination, level, time).get();
-            return defaultResponseProcessing(response, out);
-        }
-    }
-
-    /**
-     * Locks door.
-     */
-    private class DoorLockCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Locks door.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "lock DEVICEID PINCODE";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 3) {
-                return false;
-            }
-
-            final ZigBeeAddress destination = getDestination(zigbeeApi, args[1], out);
-            if (destination == null) {
-                return false;
-            }
-
-            final String pinCode = args[2];
-
-            final CommandResult response = zigbeeApi.lock(destination, pinCode).get();
-            return defaultResponseProcessing(response, out);
-        }
-    }
-
-    /**
-     * Locks door.
-     */
-    private class DoorUnlockCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Unlocks door.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "unlock DEVICEID PINCODE";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 3) {
-                return false;
-            }
-
-            final ZigBeeAddress destination = getDestination(zigbeeApi, args[1], out);
-            if (destination == null) {
-                return false;
-            }
-
-            final String pinCode = args[2];
-
-            final CommandResult response = zigbeeApi.unlock(destination, pinCode).get();
             return defaultResponseProcessing(response, out);
         }
     }
