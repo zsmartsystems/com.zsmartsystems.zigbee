@@ -97,7 +97,7 @@ public class ZclDataType {
         dataTypeMapping.put("ENUMERATION_16_BIT", new DataTypeMap("Integer", 0x31, 2, false, 0xffff));
         dataTypeMapping.put("ENUMERATION_8_BIT", new DataTypeMap("Integer", 0x30, 1, false, 0xff));
         dataTypeMapping.put("DATA_8_BIT", new DataTypeMap("Integer", 0x08, 1, false));
-        dataTypeMapping.put("OCTET_STRING", new DataTypeMap("String", 0x41, -1, false));
+        dataTypeMapping.put("OCTET_STRING", new DataTypeMap("ByteArray", 0x41, -1, false));
         dataTypeMapping.put("UTCTIME", new DataTypeMap("Calendar", 0xe2, 4, true, 0xffffffff));
         dataTypeMapping.put("ZDO_STATUS", new DataTypeMap("ZdoStatus", 0, 0, false));
         dataTypeMapping.put("ZCL_STATUS", new DataTypeMap("ZclStatus", 0, 0, false));

@@ -28,6 +28,21 @@ public class ByteArray {
     }
 
     /**
+     * Constructor taking part of an existing integer array
+     *
+     * @param payload the existing integer array
+     * @param from the start offset of the array
+     * @param to the end offset of the array
+     */
+    public ByteArray(int[] payload, int start, int finish) {
+        value = new byte[finish - start + 1];
+        int outCnt = 0;
+        for (int cnt = start; cnt <= finish; cnt++) {
+            value[outCnt++] = (byte) (payload[cnt] & 0xFF);
+        }
+    }
+
+    /**
      * Gets the byte array value.
      *
      * @return the value
@@ -42,19 +57,29 @@ public class ByteArray {
      * @return the length of the data in the array
      */
     public int size() {
-        if (value == null) {
-            return 0;
-        }
         return value.length;
     }
 
     /**
      * Sets the byte array value.
      *
-     * @param value the value
+     * @param value the value as a byte array
      */
     public void set(byte[] value) {
         this.value = value;
+    }
+
+    /**
+     * Sets the byte array value from an integer array.
+     *
+     * @param value the value as an integer array
+     */
+    public void set(int[] value) {
+        this.value = new byte[value.length];
+        int outCnt = 0;
+        for (int intValue : value) {
+            this.value[outCnt++] = (byte) (intValue & 0xFF);
+        }
     }
 
     @Override
@@ -83,7 +108,7 @@ public class ByteArray {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder(120);
-        builder.append("ByteArray: value=");
+        builder.append("ByteArray [value=");
         boolean first = true;
         for (byte val : value) {
             if (!first) {
@@ -91,7 +116,9 @@ public class ByteArray {
             }
             builder.append(String.format("%02X", val & 0xFF));
         }
+        builder.append(']');
 
         return builder.toString();
     }
+
 }
