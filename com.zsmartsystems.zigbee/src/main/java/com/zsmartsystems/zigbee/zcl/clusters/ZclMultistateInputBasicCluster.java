@@ -29,7 +29,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-26T18:19:06Z")
 public class ZclMultistateInputBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -135,12 +135,12 @@ public class ZclMultistateInputBasicCluster extends ZclCluster {
      * application usage for this cluster. (Note: This attribute has no BACnet equivalent).
      * ApplicationType is subdivided into Group, Type and an Index number, as follows.
      * <p>
-     * Group = Bits 24 -31 An indication of the cluster this attribute is part of.
+     * Group = Bits 24-31 An indication of the cluster this attribute is part of.
      * <p>
-     * Type = Bits 16 -23 For Analog clusters, the physical quantity that the Present Value attribute
+     * Type = Bits 16-23 For Analog clusters, the physical quantity that the Present Value attribute
      * of the cluster represents. For Binary and Multistate clusters, the application usage domain.
      * <p>
-     * Index = Bits 0 -15The specific application usage of the cluster.
+     * Index = Bits 0-15The specific application usage of the cluster.
      */
     public static final int ATTR_APPLICATIONTYPE = 0x0100;
 
@@ -722,12 +722,12 @@ public class ZclMultistateInputBasicCluster extends ZclCluster {
      * application usage for this cluster. (Note: This attribute has no BACnet equivalent).
      * ApplicationType is subdivided into Group, Type and an Index number, as follows.
      * <p>
-     * Group = Bits 24 -31 An indication of the cluster this attribute is part of.
+     * Group = Bits 24-31 An indication of the cluster this attribute is part of.
      * <p>
-     * Type = Bits 16 -23 For Analog clusters, the physical quantity that the Present Value attribute
+     * Type = Bits 16-23 For Analog clusters, the physical quantity that the Present Value attribute
      * of the cluster represents. For Binary and Multistate clusters, the application usage domain.
      * <p>
-     * Index = Bits 0 -15The specific application usage of the cluster.
+     * Index = Bits 0-15The specific application usage of the cluster.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -746,12 +746,12 @@ public class ZclMultistateInputBasicCluster extends ZclCluster {
      * application usage for this cluster. (Note: This attribute has no BACnet equivalent).
      * ApplicationType is subdivided into Group, Type and an Index number, as follows.
      * <p>
-     * Group = Bits 24 -31 An indication of the cluster this attribute is part of.
+     * Group = Bits 24-31 An indication of the cluster this attribute is part of.
      * <p>
-     * Type = Bits 16 -23 For Analog clusters, the physical quantity that the Present Value attribute
+     * Type = Bits 16-23 For Analog clusters, the physical quantity that the Present Value attribute
      * of the cluster represents. For Binary and Multistate clusters, the application usage domain.
      * <p>
-     * Index = Bits 0 -15The specific application usage of the cluster.
+     * Index = Bits 0-15The specific application usage of the cluster.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
