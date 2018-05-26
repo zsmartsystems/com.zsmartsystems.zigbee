@@ -43,6 +43,17 @@ public class ByteArray {
     }
 
     /**
+     * Constructor taking an existing integer array
+     *
+     * @param payload the existing integer array
+     * @param from the start offset of the array
+     * @param to the end offset of the array
+     */
+    public ByteArray(int[] payload) {
+        this(payload, 0, payload.length - 1);
+    }
+
+    /**
      * Gets the byte array value.
      *
      * @return the value
