@@ -1596,6 +1596,137 @@ No cluster specific commands.
 
 ## Binary Input (Basic) [0x000f]
 
+The Binary Input (Basic) cluster provides an interface for reading the value of a binary measurement and accessing various characteristics of that measurement. The cluster is typically used to implement a sensor that measures a two-state physical quantity.
+
+### Attributes
+|Id     |Name                  |Type                       |Access     |Implement |Reporting |
+|-------|----------------------|---------------------------|-----------|----------|----------|
+|0x0004 |ActiveText            |Character String           |Read/Write |Optional  |          |
+|0x001C |Description           |Character string           |Read/Write |Optional  |          |
+|0x002E |InactiveText          |Character string           |Read/Write |Optional  |          |
+|0x0051 |OutOfService          |Boolean                    |Read/Write |Mandatory |          |
+|0x0054 |Polarity              |8-bit Enumeration          |Read only  |Optional  |          |
+|0x0055 |PresentValue          |Boolean                    |Read/Write |Mandatory |Mandatory |
+|0x0067 |Reliability           |8-bit enumeration          |Read/Write |Optional  |          |
+|0x006F |StatusFlags           |8-bit bitmap               |Read only  |Mandatory |Mandatory |
+|0x0100 |ApplicationType       |Signed 32-bit integer      |Read only  |Optional  |          |
+
+#### ActiveText Attribute
+This attribute, of type Character string, MAY be used to hold a human readable description of the ACTIVE state of a binary PresentValue. For example, for a Binary Input cluster, if the physical input is a switch contact, then the ActiveText attribute might be assigned a value such as “Fan 1 On”. If either the ActiveText attribute or the InactiveText attribute are present, then both of them SHALL be present.
+
+The character set used SHALL be ASCII, and the attribute SHALL contain a maximum of 16 characters, which SHALL be printable but are otherwise unrestricted.
+
+
+#### Description Attribute
+The Description attribute, of type Character string, MAY be used to hold a description
+of the usage of the input, output or value, as appropriate to the cluster. The character
+set used SHALL be ASCII, and the attribute SHALL contain a maximum of 16 characters,
+which SHALL be printable but are otherwise unrestricted.
+
+#### InactiveText Attribute
+This attribute, of type Character string, MAY be used to hold a human readable description of the INACTIVE state of a binary PresentValue. For example, for a Binary Input cluster, if the physical input is a switch contact, then the InactiveText attribute might be assigned a value such as “Fan 1 Off”. If either the InactiveText attribute or the ActiveText attribute are present, then both of them SHALL be present.
+
+The character set used SHALL be ASCII, and the attribute SHALL contain a maximum of 16 characters, which SHALL be printable but are otherwise unrestricted.
+
+#### OutOfService Attribute
+The OutOfService attribute, of type Boolean, indicates whether (TRUE) or not (FALSE) the physical
+input, output or value that the cluster represents is not in service. For an Input cluster, when
+OutOfService is TRUE the PresentValue attribute is decoupled from the physical input and will
+not track changes to the  physical input. For an Output cluster, when OutOfService is TRUE the
+PresentValue attribute is decoupled from the physical output, so changes to PresentValue will not
+affect the physical output. For a Value cluster, when OutOfService is TRUE the PresentValue attribute
+MAY be written to freely by software local to the device that the cluster resides on.
+
+#### Polarity Attribute
+This attribute, of type enumeration, indicates the relationship between the physical state of the input (or output as appropriate for the cluster) and the logical state represented by a binary PresentValue attribute, when OutOfService is FALSE. If the Polarity attribute is NORMAL (0), then the ACTIVE (1) state of the PresentValue attribute is also the ACTIVE or ON state of the physical input (or output). If the Polarity attribute is REVERSE (1), then the ACTIVE (1) state of the PresentValue attribute is the INACTIVE or OFF state of the physical input (or output).
+
+Thus, when OutOfService is FALSE, for a constant physical input state a change in the Polarity attribute SHALL produce a change in the PresentValue attribute. If OutOfService is TRUE, then the Polarity attribute SHALL have no effect on the PresentValue attribute.
+
+#### PresentValue Attribute
+The PresentValue attribute indicates the current value of the input, output or
+value, as appropriate  for the cluster. For Analog clusters it is of type single precision, for Binary
+clusters it is of type  Boolean, and for multistate clusters it is of type Unsigned 16-bit integer. The
+PresentValue attribute of an input cluster SHALL be writable when OutOfService is TRUE. When the PriorityArray
+attribute is implemented, writing to PresentValue SHALL be equivalent to writing to element 16 of PriorityArray,
+i.e., with a priority of 16.
+
+#### Reliability Attribute
+The Reliability attribute, of type 8-bit enumeration, provides an indication of whether
+the PresentValueor the operation of the physical input, output or value in question (as
+appropriate for the cluster) is “reliable” as far as can be determined and, if not, why
+not. The Reliability attribute MAY have any of the following values:
+
+NO-FAULT-DETECTED (0)
+OVER-RANGE (2)
+UNDER-RANGE (3)
+OPEN-LOOP (4)
+SHORTED-LOOP (5)
+UNRELIABLE-OTHER (7)
+PROCESS-ERROR (8)
+MULTI-STATE-FAULT (9)
+CONFIGURATION-ERROR (10)
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0000 |NO-FAULT-DETECTED         |
+|0x0002 |OVER-RANGE                |
+|0x0003 |UNDER-RANGE               |
+|0x0004 |OPEN-LOOP                 |
+|0x0005 |SHORTED-LOOP              |
+|0x0007 |UNRELIABLE-OTHER          |
+|0x0008 |PROCESS-ERROR             |
+|0x0009 |MULTI-STATE-FAULT         |
+|0x000A |CONFIGURATION-ERROR       |
+
+#### StatusFlags Attribute
+This attribute, of type bitmap, represents four Boolean flags that indicate the general “health”
+of the analog sensor. Three of the flags are associated with the values of other optional attributes
+of this cluster. A more detailed status could be determined by reading the optional attributes (if
+supported) that are linked to these flags. The relationship between individual flags is not defined. 
+
+The four flags are Bit 0 = IN_ALARM, Bit 1 = FAULT, Bit 2 = OVERRIDDEN, Bit 3 = OUT OF SERVICE
+
+where:
+
+IN_ALARM -Logical FALSE (0) if the EventStateattribute has a value of NORMAL, otherwise logical TRUE (1).
+This bit is always 0 unless the cluster implementing the EventState attribute is implemented on the same
+endpoint.
+
+FAULT -Logical TRUE (1) if the Reliability attribute is present and does not have a value of NO FAULT DETECTED,
+otherwise logical FALSE (0).
+
+OVERRIDDEN -Logical TRUE (1) if the cluster has been overridden by some  mechanism local to the device. 
+Otherwise, the value is logical FALSE (0). In this context, for an input cluster, “overridden” is taken
+to mean that the PresentValue and Reliability(optional) attributes are no longer tracking changes to the
+physical input. For an Output cluster, “overridden” is taken to mean that the physical output is no longer
+tracking changes to the PresentValue attribute and the Reliability attribute is no longer a reflection of
+the physical output. For a Value cluster, “overridden” is taken to mean that the PresentValue attribute is
+not writeable.
+
+OUT OF SERVICE -Logical TRUE (1) if the OutOfService attribute has a value of TRUE, otherwise
+logical FALSE (0).
+
+|Id     |Name                      |
+|-------|--------------------------|
+|0x0001 |IN_ALARM                  |
+|0x0002 |FAULT                     |
+|0x0004 |OVERRIDDEN                |
+|0x0008 |OUT OF SERVICE            |
+
+
+#### ApplicationType Attribute
+The ApplicationType attribute is an unsigned 32 bit integer that indicates the specific
+application usage for this cluster. (Note: This attribute has no BACnet equivalent).
+ApplicationType is subdivided into Group, Type and an Index number, as follows.
+
+Group = Bits 24-31 An indication of the cluster this attribute is part of.
+
+Type = Bits 16-23 For Analog clusters, the physical quantity that the Present Value attribute
+of the cluster represents. For Binary and Multistate clusters, the application usage domain.
+
+Index = Bits 0-15The specific application usage of the cluster. 
+
+
 ### Received
 
 No cluster specific commands.
@@ -1747,12 +1878,12 @@ The ApplicationType attribute is an unsigned 32 bit integer that indicates the s
 application usage for this cluster. (Note: This attribute has no BACnet equivalent).
 ApplicationType is subdivided into Group, Type and an Index number, as follows.
 
-Group = Bits 24 -31 An indication of the cluster this attribute is part of.
+Group = Bits 24-31 An indication of the cluster this attribute is part of.
 
-Type = Bits 16 -23 For Analog clusters, the physical quantity that the Present Value attribute
+Type = Bits 16-23 For Analog clusters, the physical quantity that the Present Value attribute
 of the cluster represents. For Binary and Multistate clusters, the application usage domain.
 
-Index = Bits 0 -15The specific application usage of the cluster. 
+Index = Bits 0-15The specific application usage of the cluster. 
 
 ### Received
 
