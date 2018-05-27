@@ -47,7 +47,7 @@ public class ZigBeeConsoleReportingConfigCommand extends ZigBeeConsoleAbstractCo
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
-        if (args.length != 4) {
+        if (args.length != 5) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
@@ -65,6 +65,10 @@ public class ZigBeeConsoleReportingConfigCommand extends ZigBeeConsoleAbstractCo
 
         final int attributeId = parseAttribute(args[4]);
         final ZclAttribute attribute = cluster.getAttribute(attributeId);
+        if (attribute == null) {
+            throw new IllegalArgumentException(
+                    "Attribute " + attributeId + " was not found in cluster " + cluster.getClusterName());
+        }
 
         final CommandResult result = cluster.getReporting(attribute).get();
         if (result.isSuccess()) {

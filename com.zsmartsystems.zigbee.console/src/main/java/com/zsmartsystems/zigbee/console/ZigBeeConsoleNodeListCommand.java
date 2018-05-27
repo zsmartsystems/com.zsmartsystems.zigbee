@@ -69,7 +69,7 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
             boolean first = true;
             for (Integer endpointId : endpointIds) {
                 if (!first) {
-                    out.print("                                           ");
+                    out.print("                                             ");
                 }
                 first = false;
                 ZigBeeEndpoint endpoint = node.getEndpoint(endpointId);

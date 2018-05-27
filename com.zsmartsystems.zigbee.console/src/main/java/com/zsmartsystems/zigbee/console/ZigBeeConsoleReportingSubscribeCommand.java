@@ -78,9 +78,13 @@ public class ZigBeeConsoleReportingSubscribeCommand extends ZigBeeConsoleAbstrac
 
         final int attributeId = parseAttribute(args[4]);
         final ZclAttribute attribute = cluster.getAttribute(attributeId);
+        if (attribute == null) {
+            throw new IllegalArgumentException(
+                    "Attribute " + attributeId + " was not found in cluster " + cluster.getClusterName());
+        }
 
         final Object reportableChange;
-        if (args.length > 6) {
+        if (args.length > 7) {
             reportableChange = parseValue(args[7], attribute.getDataType());
         } else {
             reportableChange = null;
