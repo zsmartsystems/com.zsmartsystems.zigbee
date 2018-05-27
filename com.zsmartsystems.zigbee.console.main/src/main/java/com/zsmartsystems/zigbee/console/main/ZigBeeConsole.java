@@ -150,8 +150,6 @@ public final class ZigBeeConsole {
         commands.put("level", new LevelCommand());
         commands.put("listen", new ListenCommand());
         commands.put("unlisten", new UnlistenCommand());
-        commands.put("subscribe", new SubscribeCommand());
-        commands.put("unsubscribe", new UnsubscribeCommand());
 
         commands.put("ota", new OtaCommand());
         commands.put("otafile", new OtaFileCommand());
