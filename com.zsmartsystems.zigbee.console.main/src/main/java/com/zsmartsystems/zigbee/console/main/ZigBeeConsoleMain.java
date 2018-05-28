@@ -79,9 +79,7 @@ public class ZigBeeConsoleMain {
         final String serialPortName;
         final String dongleName;
         final Integer serialBaud;
-        Integer channel;
-        Integer pan;
-        ExtendedPanId extendedPan;
+
         final TransportConfig transportOptions = new TransportConfig();
         boolean resetNetwork;
         FlowControl flowControl = null;
@@ -247,6 +245,9 @@ public class ZigBeeConsoleMain {
         if (resetNetwork == true) {
             ZigBeeKey nwkKey;
             ZigBeeKey linkKey;
+            ExtendedPanId extendedPan;
+            Integer channel;
+            int pan;
 
             if (cmdline.hasOption("channel")) {
                 channel = parseDecimalOrHexInt(cmdline.getOptionValue("channel"));
@@ -303,11 +304,18 @@ public class ZigBeeConsoleMain {
             networkManager.setZigBeeLinkKey(linkKey);
         }
 
+        // Add the default ZigBeeAlliance09 HA link key
+
+        transportOptions.addOption(TransportConfigOption.TRUST_CENTRE_LINK_KEY, new ZigBeeKey(new int[] { 0x5A, 0x69,
+                0x67, 0x42, 0x65, 0x65, 0x41, 0x6C, 0x6C, 0x69, 0x61, 0x6E, 0x63, 0x65, 0x30, 0x39 }));
+        // transportOptions.addOption(TransportConfigOption.TRUST_CENTRE_LINK_KEY, new ZigBeeKey(new int[] { 0x41, 0x61,
+        // 0x8F, 0xC0, 0xC8, 0x3B, 0x0E, 0x14, 0xA5, 0x89, 0x95, 0x4B, 0x16, 0xE3, 0x14, 0x66 }));
+
         dongle.updateTransportConfig(transportOptions);
 
         if (networkManager.startup(resetNetwork) != ZigBeeStatus.SUCCESS) {
             System.out.println("ZigBee console starting up ... [FAIL]");
-            // return;
+            return;
         } else {
             System.out.println("ZigBee console starting up ... [OK]");
         }
