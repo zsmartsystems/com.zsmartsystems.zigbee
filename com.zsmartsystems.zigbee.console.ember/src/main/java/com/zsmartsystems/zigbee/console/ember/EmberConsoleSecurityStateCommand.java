@@ -18,10 +18,10 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberCurren
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyStruct;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyStructBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyType;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspPolicyId;
-import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 
 /**
  * Console command that displays the current security configuration for the Ember NCP.
@@ -53,11 +53,10 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException {
-        if (networkManager.getNetworkState() != ZigBeeTransportState.ONLINE) {
-            throw new IllegalStateException(
-                    "Network state is " + networkManager.getNetworkState() + ". Unable to show security data.");
-        }
+
         EmberNcp ncp = getEmberNcp(networkManager);
+
+        EmberNetworkStatus networkState = ncp.getNetworkState();
 
         Integer securityLevel = ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_SECURITY_LEVEL);
         Integer rejoinTimeout = ncp
@@ -84,7 +83,9 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
             }
         }
 
-        out.println("Trust Centre Address       : " + securityState.getTrustCenterLongAddress());
+        out.println("Current Network State      : " + networkState);
+        out.println("Trust Centre Address       : "
+                + (securityState == null ? "" : securityState.getTrustCenterLongAddress()));
         out.println("Security level             : " + securityLevel);
         out.println("Rejoin timeout             : " + rejoinTimeout);
         out.println("Key table size             : " + keyTableSize);
@@ -96,12 +97,14 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         out.println("Trust Centre Rejoin Policy : " + trustCentreRejoinPolicy);
         out.print("Security state flags       : ");
         boolean first = true;
-        for (EmberCurrentSecurityBitmask state : securityState.getBitmask()) {
-            if (!first) {
-                out.print("                           : ");
+        if (securityState != null) {
+            for (EmberCurrentSecurityBitmask state : securityState.getBitmask()) {
+                if (!first) {
+                    out.print("                           : ");
+                }
+                first = false;
+                out.println(state);
             }
-            first = false;
-            out.println(state);
         }
         if (first) {
             out.println();
@@ -110,8 +113,12 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         out.println(
                 "Key Type                        IEEE Address      Key Data                          In Cnt    Out Cnt   Seq");
 
-        out.println(printKey(linkKey));
-        out.println(printKey(networkKey));
+        if (linkKey != null) {
+            out.println(printKey(linkKey));
+        }
+        if (networkKey != null) {
+            out.println(printKey(networkKey));
+        }
 
         for (EmberKeyStruct key : keyTable) {
             out.println(printKey(key));
