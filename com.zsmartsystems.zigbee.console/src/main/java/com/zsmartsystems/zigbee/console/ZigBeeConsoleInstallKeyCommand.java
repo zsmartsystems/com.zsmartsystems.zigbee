@@ -12,6 +12,7 @@ import java.io.PrintStream;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.security.MmoHash;
 
 /**
  * Handles management of install keys
@@ -27,7 +28,7 @@ public class ZigBeeConsoleInstallKeyCommand extends ZigBeeConsoleAbstractCommand
 
     @Override
     public String getDescription() {
-        return "Adds an install key to the dongle";
+        return "Adds an install key to the dongle, computing the MMO Hash from the join code";
     }
 
     @Override
@@ -54,15 +55,18 @@ public class ZigBeeConsoleInstallKeyCommand extends ZigBeeConsoleAbstractCommand
             throw new IllegalArgumentException("Partner address is incorrect format.");
         }
 
+        MmoHash hash;
         ZigBeeKey installKey;
         try {
-            installKey = new ZigBeeKey(args[2]);
+            hash = new MmoHash(args[2]);
+            installKey = new ZigBeeKey(hash.getHash());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Install key is incorrect format.");
         }
 
         boolean result = networkManager.setZigBeeInstallKey(partner, installKey);
-        out.println("Ember transient key for address " + partner + " was " + (result ? "" : "not") + " set.");
+        out.println("Install key " + hash.toString() + " for address " + partner + " was " + (result ? "" : "not")
+                + " set.");
     }
 
 }
