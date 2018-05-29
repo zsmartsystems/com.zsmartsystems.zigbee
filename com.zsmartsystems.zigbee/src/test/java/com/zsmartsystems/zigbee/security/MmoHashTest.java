@@ -43,13 +43,4 @@ public class MmoHashTest {
         System.out.println(hash.toString());
         assertEquals("A833:A774:34F3:BFBD:7A7A:B979:4214:9287", hash.toString());
     }
-
-    @Test
-    public void testArray() {
-        MmoHash hash;
-
-        hash = new MmoHash(new int[] { 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x4A, 0xF7 });
-        assertEquals("4161:8FC0:C83B:0E14:A589:954B:16E3:1466", hash.toString());
-        System.out.println(hash.toString());
-    }
 }

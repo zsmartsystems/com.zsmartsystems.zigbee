@@ -48,7 +48,6 @@ public class EmberConsoleMmoHashCommand extends EmberConsoleAbstractCommand {
         }
 
         String hexString = args[1].replace(":", "").replace(" ", "");
-
         if (hexString.length() % 2 != 0) {
             throw new IllegalArgumentException("Code string must contain an even number of hexadecimal numbers");
         }

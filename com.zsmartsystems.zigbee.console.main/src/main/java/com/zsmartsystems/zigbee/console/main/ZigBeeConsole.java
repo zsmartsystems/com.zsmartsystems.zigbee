@@ -352,9 +352,9 @@ public final class ZigBeeConsole {
         if (newCommand != null) {
             try {
                 newCommand.process(networkManager, args, out);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | IllegalStateException e) {
                 out.println("Error executing command: " + e.getMessage());
-                out.println(newCommand.getSyntax());
+                out.println(newCommand.getCommand() + " " + newCommand.getSyntax());
             } catch (Exception e) {
                 out.println("Error executing command: " + e);
                 e.printStackTrace(out);
