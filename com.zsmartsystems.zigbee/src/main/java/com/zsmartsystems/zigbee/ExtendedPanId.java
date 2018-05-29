@@ -68,7 +68,7 @@ public class ExtendedPanId {
             return;
         }
         if (panId.length != 8) {
-            throw new InvalidParameterException("ExtendedPanId array length must be 8");
+            throw new IllegalArgumentException("ExtendedPanId array length must be 8");
         }
         this.panId = Arrays.copyOf(panId, 8);
     }

@@ -12,7 +12,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
-import java.security.InvalidParameterException;
 
 import org.junit.Test;
 
@@ -35,7 +34,7 @@ public class ExtendedPanIdTest {
         assertEquals("0017880100DC880B", address.toString());
     }
 
-    @Test(expected = InvalidParameterException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testConstructorArrayShort() {
         new ExtendedPanId(new int[] { 0x0b, 0x88, 0xdc, 0x00, 0x01, 0x88, 0x17 });
     }
