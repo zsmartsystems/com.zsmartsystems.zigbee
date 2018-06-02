@@ -27,6 +27,8 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetConfig
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetConfigurationValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetCurrentSecurityStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetCurrentSecurityStateResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetEui64Request;
+import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetEui64Response;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetKeyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetKeyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetKeyTableEntryRequest;
@@ -503,4 +505,17 @@ public class EmberNcp {
         return response.getReturnContext();
     }
 
+    /**
+     * Gets the {@link IeeeAddress} of the local node
+     *
+     * @return the {@link IeeeAddress} of the local node
+     */
+    public IeeeAddress getIeeeAddress() {
+        EzspGetEui64Request request = new EzspGetEui64Request();
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
+                EzspGetEui64Response.class);
+        protocolHandler.sendEzspTransaction(transaction);
+        EzspGetEui64Response response = (EzspGetEui64Response) transaction.getResponse();
+        return response.getEui64();
+    }
 }
