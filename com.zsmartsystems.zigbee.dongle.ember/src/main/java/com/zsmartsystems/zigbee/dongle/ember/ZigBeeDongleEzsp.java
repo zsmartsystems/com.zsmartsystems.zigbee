@@ -226,6 +226,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         EmberNcp ncp = new EmberNcp(frameHandler);
 
+        ieeeAddress = ncp.getIeeeAddress();
+        logger.debug("Ember local IEEE Address is {}", ieeeAddress);
+
         ncp.getNetworkParameters();
 
         // Add the endpoint
