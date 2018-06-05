@@ -303,7 +303,7 @@ public class ZigBeeDongleTelegesis
 
     /**
      * Constructor for Telegesis dongle.
-     * 
+     *
      * @param serialPort the {@link ZigBeePort} for communicating with the dongle
      */
     public ZigBeeDongleTelegesis(final ZigBeePort serialPort) {
@@ -444,6 +444,7 @@ public class ZigBeeDongleTelegesis
         if (frameHandler == null) {
             return;
         }
+        frameHandler.removeEventListener(this);
         frameHandler.setClosing();
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
         serialPort.close();
