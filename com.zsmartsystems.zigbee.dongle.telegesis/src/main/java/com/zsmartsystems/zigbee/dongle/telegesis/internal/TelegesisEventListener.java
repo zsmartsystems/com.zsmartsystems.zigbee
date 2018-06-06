@@ -18,9 +18,8 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEven
 public interface TelegesisEventListener {
     /**
      * Listeners are called when a new {@link TelegesisEvent} is received
-     * 
+     *
      * @param event the received {@link TelegesisEvent}
      */
     void telegesisEventReceived(TelegesisEvent event);
-
 }
