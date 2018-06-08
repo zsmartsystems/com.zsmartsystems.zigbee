@@ -74,7 +74,7 @@ The framework has been tested against many different devices - many lights, moti
 
 ## ZigBee Dongles and Chipsets
 
-The following table provides a summary of some of the dongles / chipsets that are available on the market nd their support within the library. Receive sensitivity and transmit power are the main parameters affecting RF performance - it should be noted that regulations may reduce transmit power in some areas of the world and other factors can also impact performance. 
+The following table provides a summary of some of the dongles / chipsets that are available on the market and their support within the library. Receive sensitivity and transmit power are the main parameters affecting RF performance - it should be noted that regulations may reduce transmit power in some areas of the world and other factors can also impact performance. 
 
 | Model                 | Support         | Receive     | Transmit     | Antenna  |
 |-----------------------|-----------------|-------------|--------------|----------|
