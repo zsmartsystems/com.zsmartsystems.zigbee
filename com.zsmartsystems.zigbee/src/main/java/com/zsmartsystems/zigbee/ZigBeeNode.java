@@ -30,12 +30,9 @@ import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeNodeServiceDiscoverer;
 import com.zsmartsystems.zigbee.internal.ZigBeeNodeServiceDiscoverer.NodeDiscoveryTask;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
-import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
-import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
@@ -617,43 +614,6 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         // Check if it's our address
         if (command.getSourceAddress().getAddress() != networkAddress) {
             return;
-        }
-
-        // If we have local servers matching the request, then we need to respond
-        if (command instanceof MatchDescriptorRequest) {
-            MatchDescriptorRequest matchRequest = (MatchDescriptorRequest) command;
-            if (matchRequest.getProfileId() != 0x104) {
-                // TODO: Remove this constant ?
-                return;
-            }
-
-            // We want to match any of our local servers (ie our input clusters) with any
-            // requested clusters in the requests cluster list
-            boolean matched = false;
-            for (ZigBeeEndpoint endpoint : endpoints.values()) {
-                for (int clusterId : matchRequest.getInClusterList()) {
-                    if (endpoint.getApplication(clusterId) != null) {
-                        matched = true;
-                        break;
-                    }
-                }
-                if (matched) {
-                    break;
-                }
-            }
-
-            if (!matched) {
-                return;
-            }
-
-            MatchDescriptorResponse matchResponse = new MatchDescriptorResponse();
-            matchResponse.setStatus(ZdoStatus.SUCCESS);
-            List<Integer> matchList = new ArrayList<Integer>();
-            matchList.add(1);
-            matchResponse.setMatchList(matchList);
-
-            matchResponse.setDestinationAddress(command.getSourceAddress());
-            networkManager.sendCommand(matchResponse);
         }
 
         if (!(command instanceof ZclCommand)) {

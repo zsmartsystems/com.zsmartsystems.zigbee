@@ -38,7 +38,7 @@ public class ZigBeeEndpoint {
     /**
      * The {@link Logger}.
      */
-    private final static Logger logger = LoggerFactory.getLogger(ZigBeeEndpoint.class);
+    private final Logger logger = LoggerFactory.getLogger(ZigBeeEndpoint.class);
 
     /**
      * The {@link ZigBeeNetworkManager} that manages this endpoint

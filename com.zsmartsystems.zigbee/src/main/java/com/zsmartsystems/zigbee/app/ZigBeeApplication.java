@@ -15,9 +15,12 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 /**
  * Defines the interface for a ZigBee Application
  * <p>
- * Applications provide specific functionality in the framework and can be instantiated and registered with a node.
+ * Applications provide specific functionality in the framework and can be instantiated and registered with an endpoint.
  * An application is registered with the {@link ZigBeeEndpoint}, and the endpoint will take care of starting and
  * stopping the application, and passing any received commands to the application.
+ * <p>
+ * Normally, this will be managed through a {@link ZigBeeNetworkExtension} which will manage the addition of the
+ * application to the endpoint when the node joins the network, along with responding to the service discovery requests.
  *
  * @author Chris Jackson
  *

@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -28,6 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
 import com.zsmartsystems.zigbee.internal.ClusterMatcher;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeNetworkDiscoverer;
@@ -54,8 +56,22 @@ import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
 
 /**
- * Implements functions for managing the ZigBee interfaces.
+ * ZigBeeNetworkManager implements functions for managing the ZigBee interfaces. The network manager is the central
+ * class of the framework. It provides the interface with the dongles to send and receive data, and application
+ * interfaces to provide listeners for system events (eg network status with the {@link ZigBeeNetworkStateListener} or
+ * changes to nodes with the {@link ZigBeeNetworkNodeListener} or to receive incoming commands with the
+ * {@link ZigBeeCommandListener}).
  * <p>
+ * The ZigBeeNetworkManager maintains a list of all {@link ZigBeeNode}s that are known on the network. Depending on the
+ * system configuration, different discovery methods may be utilised to maintain this list. A Coordinator may actively
+ * look for all nodes on the network while a Router implementation may only need to know about specific nodes that it is
+ * communicating with.
+ * <p>
+ * The ZigBeeNetworkManager also maintains a list of {@link ZigBeeNetworkExtension}s which allow the functionality of
+ * the network to be extended. Extensions may provide different levels of functionality - an extension may be as simple
+ * as configuring the framework to work with a specific feature, or could provide a detailed application.
+ * <p>
+ * <h2>Lifecycle</h2>
  * The ZigBeeNetworkManager lifecycle is as follows -:
  * <ul>
  * <li>Instantiate a {@link ZigBeeTransportTransmit} class
@@ -182,6 +198,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * The deserializer class used to deserialize commands from data packets
      */
     private Class<ZigBeeDeserializer> deserializerClass;
+
+    /**
+     * List of {@link ZigBeeNetworkExtension}s that are available to this network. Extensions are added
+     * with the {@link #addApplication(ZigBeeNetworkExtension extension)} method.
+     */
+    private final List<ZigBeeNetworkExtension> extensions = new CopyOnWriteArrayList<ZigBeeNetworkExtension>();
 
     /**
      * A ClusterMatcher used to respond to the {@link MatchDescriptorRequest} command.
@@ -447,6 +469,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         synchronized (this) {
             if (networkStateSerializer != null) {
                 networkStateSerializer.serialize(this);
+            }
+
+            for (ZigBeeNetworkExtension extension : extensions) {
+                extension.extensionShutdown();
             }
         }
 
@@ -1085,6 +1111,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
+    /**
+     * Adds a {@link ZigBeeNetworkNodeListener} that will be notified when node information changes
+     *
+     * @param networkNodeListener the {@link ZigBeeNetworkNodeListener} to add
+     */
     public void addNetworkNodeListener(final ZigBeeNetworkNodeListener networkNodeListener) {
         if (networkNodeListener == null) {
             return;
@@ -1097,6 +1128,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
+    /**
+     * Removes a {@link ZigBeeNetworkNodeListener} that will be notified when node information changes
+     *
+     * @param networkNodeListener the {@link ZigBeeNetworkNodeListener} to remove
+     */
     public void removeNetworkNodeListener(final ZigBeeNetworkNodeListener networkNodeListener) {
         synchronized (this) {
             final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<ZigBeeNetworkNodeListener>(
@@ -1302,6 +1338,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         clusterMatcher.addCluster(cluster);
+    }
+
+    /**
+     * Adds a functional extension to the network.
+     *
+     * @param extension the new {@link ZigBeeNetworkExtension}
+     */
+    public void addExtension(ZigBeeNetworkExtension extension) {
+        extensions.add(extension);
+        extension.extensionStartup(this);
     }
 
     /**

@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.otaserver;
+package com.zsmartsystems.zigbee.app.otaupgrade;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -32,8 +32,8 @@ import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
-import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServer;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServerStatus;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaStatusCallback;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
  * @author Chris Jackson
  *
  */
-public class ZigBeeOtaServerTest implements ZigBeeOtaStatusCallback {
+public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
     private List<ZigBeeOtaServerStatus> otaStatusCapture;
 
     @Test
@@ -100,7 +100,7 @@ public class ZigBeeOtaServerTest implements ZigBeeOtaStatusCallback {
 
         ZclOtaUpgradeCluster cluster = new ZclOtaUpgradeCluster(mockedNetworkManager, endpoint);
 
-        ZigBeeOtaServer server = new ZigBeeOtaServer();
+        ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
         assertTrue(server.appStartup(cluster));
         server.addListener(this);
 
