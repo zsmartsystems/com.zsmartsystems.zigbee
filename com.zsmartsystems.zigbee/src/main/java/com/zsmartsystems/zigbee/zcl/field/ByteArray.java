@@ -63,6 +63,20 @@ public class ByteArray {
     }
 
     /**
+     * Gets the byte array as an array of integers
+     *
+     * @return the integer array
+     */
+    public int[] getAsIntArray() {
+        int[] intArray = new int[value.length];
+        for (int cnt = 0; cnt < value.length; cnt++) {
+            intArray[cnt] = value[cnt] & 0xFF;
+        }
+
+        return intArray;
+    }
+
+    /**
      * Get the length of the underlying byte array
      *
      * @return the length of the data in the array
