@@ -956,29 +956,31 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Adds command listener and removes expired command listeners.
      *
-     * @param commandExecution the command execution
+     * @param commandExecution the {@link CommandExecution} to add
      */
     private void addCommandExecution(final CommandExecution commandExecution) {
+        final List<CommandExecution> expiredCommandExecutions = new ArrayList<CommandExecution>();
         synchronized (commandExecutions) {
-            final List<CommandExecution> expiredCommandExecutions = new ArrayList<CommandExecution>();
             for (final CommandExecution existingCommandExecution : commandExecutions) {
                 if (System.currentTimeMillis() - existingCommandExecution.getStartTime() > 8000) {
                     expiredCommandExecutions.add(existingCommandExecution);
                 }
             }
-            for (final CommandExecution expiredCommandExecution : expiredCommandExecutions) {
+            commandExecutions.add(commandExecution);
+            addCommandListener(commandExecution.getCommandListener());
+        }
+        for (final CommandExecution expiredCommandExecution : expiredCommandExecutions) {
+            synchronized (expiredCommandExecution.getFuture()) {
                 ((CommandResultFuture) expiredCommandExecution.getFuture()).set(new CommandResult());
                 removeCommandExecution(expiredCommandExecution);
             }
-            commandExecutions.add(commandExecution);
-            addCommandListener(commandExecution.getCommandListener());
         }
     }
 
     /**
      * Removes command execution.
      *
-     * @param expiredCommandExecution the command execution
+     * @param expiredCommandExecution the {@link CommandExecution} to remove
      */
     protected void removeCommandExecution(CommandExecution expiredCommandExecution) {
         synchronized (commandExecutions) {
