@@ -333,7 +333,7 @@ public class ZigBeeDongleTelegesis
         }
 
         // Create and start the frame handler
-        frameHandler = new TelegesisFrameHandler();
+        frameHandler = new TelegesisFrameHandler(this);
         frameHandler.start(serialPort);
         frameHandler.addEventListener(this);
 
@@ -862,6 +862,15 @@ public class ZigBeeDongleTelegesis
         }
 
         return TransportConfigResult.SUCCESS;
+    }
+
+    /**
+     * Callback method from the handler to notify if the handler goes on/off line
+     * 
+     * @param state true if the handler is online, false if offline
+     */
+    public void notifyStateUpdate(boolean state) {
+        zigbeeTransportReceive.setNetworkState(state ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
     }
 
 }

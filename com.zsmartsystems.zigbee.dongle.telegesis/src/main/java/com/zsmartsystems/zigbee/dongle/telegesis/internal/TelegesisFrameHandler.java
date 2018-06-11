@@ -25,7 +25,9 @@ import java.util.concurrent.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisplayNetworkInformationCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisFrame;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisStatusCode;
@@ -103,7 +105,7 @@ public class TelegesisFrameHandler {
     /**
      * The maximum number of milliseconds to wait for the completion of the transaction after it's queued
      */
-    private final int DEFAULT_COMMAND_TIMEOUT = 10000;
+    private final int DEFAULT_COMMAND_TIMEOUT = 3000;
 
     /**
      * The maximum number of milliseconds to wait for the response from the stick once the request was sent
@@ -115,11 +117,34 @@ public class TelegesisFrameHandler {
      */
     private int commandTimeout = DEFAULT_COMMAND_TIMEOUT;
 
+    /**
+     * Maximum number of consecutive timeouts allowed while waiting to receive the response
+     */
+    private final int ACK_TIMEOUTS = 2;
+    private int retries = 0;
+
+    private ScheduledExecutorService pollingScheduler;
+    private ScheduledFuture<?> pollingTimer = null;
+
+    /**
+     * The rate at which we will do a status poll if we've not sent any other messages within this period
+     */
+    private int pollRate = 1000;
+
+    /**
+     * The dongle instance to receive notifications
+     */
+    private final ZigBeeDongleTelegesis zigBeeDongleTelegesis;
+
     enum RxStateMachine {
         WAITING,
         RECEIVE_CMD,
         RECEIVE_ASCII,
         RECEIVE_BINARY
+    }
+
+    public TelegesisFrameHandler(ZigBeeDongleTelegesis zigBeeDongleTelegesis) {
+        this.zigBeeDongleTelegesis = zigBeeDongleTelegesis;
     }
 
     /**
@@ -131,7 +156,9 @@ public class TelegesisFrameHandler {
     public void start(final ZigBeePort serialPort) {
 
         this.serialPort = serialPort;
-        this.timeoutScheduler = Executors.newSingleThreadScheduledExecutor();
+
+        timeoutScheduler = Executors.newSingleThreadScheduledExecutor();
+        pollingScheduler = Executors.newSingleThreadScheduledExecutor();
 
         parserThread = new Thread("TelegesisFrameHandler") {
             @Override
@@ -162,6 +189,7 @@ public class TelegesisFrameHandler {
                         TelegesisEvent event = TelegesisEventFactory.getTelegesisFrame(responseData);
                         if (event != null) {
                             notifyEventReceived(event);
+                            scheduleNetworkStatePolling();
                             continue;
                         }
 
@@ -180,6 +208,7 @@ public class TelegesisFrameHandler {
                                 if (done) {
                                     // Command completed
                                     notifyTransactionComplete(sentCommand);
+                                    scheduleNetworkStatePolling();
                                     sentCommand = null;
                                 }
                             }
@@ -194,6 +223,8 @@ public class TelegesisFrameHandler {
 
         parserThread.setDaemon(true);
         parserThread.start();
+
+        scheduleNetworkStatePolling();
     }
 
     private int[] getPacket() {
@@ -294,6 +325,10 @@ public class TelegesisFrameHandler {
      */
     public void close() {
         setClosing();
+
+        timeoutScheduler.shutdown();
+        pollingScheduler.shutdown();
+
         try {
             parserThread.interrupt();
             parserThread.join();
@@ -610,8 +645,17 @@ public class TelegesisFrameHandler {
             @Override
             public void run() {
                 timeoutTimer = null;
-                logger.debug("TELEGESIS Timer: Timeout");
+                logger.debug("TELEGESIS Timer: Timeout {}", retries);
                 synchronized (commandLock) {
+                    if (retries++ >= ACK_TIMEOUTS) {
+                        // Too many retries.
+                        // We should alert the upper layer so they can reset the link?
+                        zigBeeDongleTelegesis.notifyStateUpdate(false);
+
+                        logger.debug("Error: number of retries exceeded [{}].", retries);
+                        return;
+                    }
+
                     if (sentCommand != null) {
                         sentCommand = null;
                         sendNextFrame();
@@ -632,4 +676,23 @@ public class TelegesisFrameHandler {
     interface TelegesisListener {
         boolean transactionEvent(TelegesisCommand response);
     }
+
+    private void scheduleNetworkStatePolling() {
+        if (pollingTimer != null) {
+            pollingTimer.cancel(true);
+        }
+
+        retries = 0;
+
+        pollingTimer = pollingScheduler.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                if (sendQueue.isEmpty()) {
+                    queueFrame(new TelegesisDisplayNetworkInformationCommand());
+                    sendNextFrame();
+                }
+            }
+        }, pollRate, pollRate, TimeUnit.MILLISECONDS);
+    }
+
 }

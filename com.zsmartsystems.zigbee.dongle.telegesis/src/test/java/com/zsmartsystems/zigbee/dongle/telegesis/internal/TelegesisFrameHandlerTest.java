@@ -41,7 +41,7 @@ public class TelegesisFrameHandlerTest {
     private String CRLF = "\r\n";
 
     private int[] getPacket(String packet) {
-        TelegesisFrameHandler frameHandler = new TelegesisFrameHandler();
+        TelegesisFrameHandler frameHandler = new TelegesisFrameHandler(null);
         ByteArrayInputStream stream = new ByteArrayInputStream(packet.getBytes());
 
         ZigBeePort port = new TestPort(stream, null);
@@ -106,7 +106,7 @@ public class TelegesisFrameHandlerTest {
 
     @Test
     public void testRunning() {
-        TelegesisFrameHandler frameHandler = new TelegesisFrameHandler();
+        TelegesisFrameHandler frameHandler = new TelegesisFrameHandler(null);
         frameHandler.start(null);
 
         assertTrue(frameHandler.isAlive());
@@ -125,7 +125,7 @@ public class TelegesisFrameHandlerTest {
     @Ignore
     @Test
     public void testEventWait() {
-        final TelegesisFrameHandler frameHandler = new TelegesisFrameHandler();
+        final TelegesisFrameHandler frameHandler = new TelegesisFrameHandler(null);
 
         final List<TelegesisEvent> eventCapture = new ArrayList<TelegesisEvent>();
 
