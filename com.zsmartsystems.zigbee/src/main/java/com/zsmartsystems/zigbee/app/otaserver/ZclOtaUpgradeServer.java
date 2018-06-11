@@ -229,7 +229,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
         status = ZigBeeOtaServerStatus.OTA_UNINITIALISED;
 
         // queryJitter needs to be a random value between 1 and 100
-        this.queryJitter = new Random().nextInt(100);
+        this.queryJitter = new Random().nextInt(100) + 1;
     }
 
     @Override
