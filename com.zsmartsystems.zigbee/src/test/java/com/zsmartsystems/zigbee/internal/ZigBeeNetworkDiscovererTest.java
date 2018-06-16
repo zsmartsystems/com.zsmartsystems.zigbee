@@ -25,13 +25,13 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import com.zsmartsystems.zigbee.CommandResult;
-import com.zsmartsystems.zigbee.CommandResultFuture;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -70,7 +70,7 @@ public class ZigBeeNetworkDiscovererTest {
             public Future<CommandResult> answer(InvocationOnMock invocation) {
                 ZigBeeCommand command = (ZigBeeCommand) invocation.getArguments()[0];
 
-                CommandResultFuture commandFuture = new CommandResultFuture(networkManager);
+                ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture();
                 CommandResult result = new CommandResult(responses.get(command.getClusterId()));
                 commandFuture.set(result);
                 return commandFuture;

@@ -8,7 +8,7 @@
 package com.zsmartsystems.zigbee.zcl;
 
 import com.zsmartsystems.zigbee.ZigBeeCommand;
-import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 
 /**
  * The ZCL transaction response matcher.

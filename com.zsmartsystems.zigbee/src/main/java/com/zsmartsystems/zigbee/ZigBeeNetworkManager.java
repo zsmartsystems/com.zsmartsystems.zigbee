@@ -32,9 +32,13 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
 import com.zsmartsystems.zigbee.internal.ClusterMatcher;
 import com.zsmartsystems.zigbee.internal.NotificationService;
+import com.zsmartsystems.zigbee.internal.ZigBeeCommandNotifier;
 import com.zsmartsystems.zigbee.internal.ZigBeeNetworkDiscoverer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.TransportConfigResult;
@@ -167,11 +171,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * interrogation of their capabilities.
      */
     private final ZigBeeNetworkDiscoverer networkDiscoverer;
-
-    /**
-     * The command listener creation times. Used to timeout queued commands.
-     */
-    private final Set<CommandExecution> commandExecutions = new HashSet<CommandExecution>();
 
     /**
      * The {@link ZigBeeCommandNotifier}. This is used for sending notifications asynchronously to listeners.
@@ -892,103 +891,31 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Sends ZCL command and uses the {@link ZigBeeTransactionMatcher} to match the response.
+     * Sends {@link ZigBeeCommand} command and uses the {@link ZigBeeTransactionMatcher} to match the response.
      *
-     * @param command
-     *            the {@link ZigBeeCommand}
-     * @param responseMatcher
-     *            the {@link ZigBeeTransactionMatcher}
-     * @return the command result future
+     * @param command the {@link ZigBeeCommand}
+     * @param responseMatcher the {@link ZigBeeTransactionMatcher}
+     * @return the {@link CommandResult} future.
      */
     public Future<CommandResult> unicast(final ZigBeeCommand command, final ZigBeeTransactionMatcher responseMatcher) {
-        synchronized (command) {
-            final CommandResultFuture future = new CommandResultFuture(this);
-            final CommandExecution commandExecution = new CommandExecution(System.currentTimeMillis(), command, future);
-            future.setCommandExecution(commandExecution);
-            final ZigBeeCommandListener commandListener = new ZigBeeCommandListener() {
-                @Override
-                public void commandReceived(ZigBeeCommand receivedCommand) {
-                    // Ensure that received command is not processed before command is sent
-                    // and hence transaction ID for the command set.
-                    synchronized (command) {
-                        if (responseMatcher.isTransactionMatch(command, receivedCommand)) {
-                            synchronized (future) {
-                                future.set(new CommandResult(receivedCommand));
-                                synchronized (future) {
-                                    future.notify();
-                                }
-                            }
-                            removeCommandExecution(commandExecution);
-                        }
-                    }
-                }
-            };
-
-            commandExecution.setCommandListener(commandListener);
-            addCommandExecution(commandExecution);
-            int transactionId = sendCommand(command);
-            if (command instanceof ZclCommand) {
-                ((ZclCommand) command).setTransactionId(transactionId);
-            }
-
-            return future;
-        }
+        ZigBeeTransaction transaction = new ZigBeeTransaction(this);
+        return transaction.sendTransaction(command, responseMatcher);
     }
 
     /**
      * Broadcasts command i.e. does not wait for response.
      *
-     * @param command
-     *            the command
-     * @return the command result future.
+     * @param command the {@link ZigBeeCommand}
+     * @return the {@link CommandResult} future.
      */
     private Future<CommandResult> broadcast(final ZigBeeCommand command) {
         synchronized (command) {
-            final CommandResultFuture future = new CommandResultFuture(this);
+            final ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
 
             sendCommand(command);
-            future.set(new CommandResult(new BroadcastResponse()));
+            transactionFuture.set(new CommandResult(new BroadcastResponse()));
 
-            return future;
-        }
-    }
-
-    /**
-     * Adds command listener and removes expired command listeners.
-     *
-     * @param commandExecution the {@link CommandExecution} to add
-     */
-    private void addCommandExecution(final CommandExecution commandExecution) {
-        final List<CommandExecution> expiredCommandExecutions = new ArrayList<CommandExecution>();
-        synchronized (commandExecutions) {
-            for (final CommandExecution existingCommandExecution : commandExecutions) {
-                if (System.currentTimeMillis() - existingCommandExecution.getStartTime() > 8000) {
-                    expiredCommandExecutions.add(existingCommandExecution);
-                }
-            }
-            commandExecutions.add(commandExecution);
-            addCommandListener(commandExecution.getCommandListener());
-        }
-        for (final CommandExecution expiredCommandExecution : expiredCommandExecutions) {
-            synchronized (expiredCommandExecution.getFuture()) {
-                ((CommandResultFuture) expiredCommandExecution.getFuture()).set(new CommandResult());
-                removeCommandExecution(expiredCommandExecution);
-            }
-        }
-    }
-
-    /**
-     * Removes command execution.
-     *
-     * @param expiredCommandExecution the {@link CommandExecution} to remove
-     */
-    protected void removeCommandExecution(CommandExecution expiredCommandExecution) {
-        synchronized (commandExecutions) {
-            commandExecutions.remove(expiredCommandExecution);
-            removeCommandListener(expiredCommandExecution.getCommandListener());
-            synchronized (expiredCommandExecution.getFuture()) {
-                expiredCommandExecution.getFuture().notify();
-            }
+            return transactionFuture;
         }
     }
 
