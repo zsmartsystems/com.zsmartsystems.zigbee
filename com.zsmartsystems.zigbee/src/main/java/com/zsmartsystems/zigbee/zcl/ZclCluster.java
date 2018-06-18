@@ -495,11 +495,13 @@ public abstract class ZclCluster {
     /**
      * Sends a default response to the client
      *
+     * @param transactionId the transaction ID to use in the response
      * @param commandIdentifier the command identifier to which this is a response
      * @param status the {@link ZclStatus} to send in the response
      */
-    public void sendDefaultResponse(Integer commandIdentifier, ZclStatus status) {
+    public void sendDefaultResponse(Integer transactionId, Integer commandIdentifier, ZclStatus status) {
         DefaultResponse defaultResponse = new DefaultResponse();
+        defaultResponse.setTransactionId(transactionId);
         defaultResponse.setCommandIdentifier(commandIdentifier);
         defaultResponse.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
         defaultResponse.setClusterId(clusterId);

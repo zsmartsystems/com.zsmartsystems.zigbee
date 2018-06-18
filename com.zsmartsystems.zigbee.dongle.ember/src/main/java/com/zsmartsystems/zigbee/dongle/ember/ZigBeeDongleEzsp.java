@@ -349,8 +349,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE && apsFrame.getDestinationAddress() < 0xfff8) {
             EzspSendUnicastRequest emberUnicast = new EzspSendUnicastRequest();
             emberUnicast.setIndexOrDestination(apsFrame.getDestinationAddress());
-            emberUnicast.setMessageTag(apsFrame.getSequence());
-            emberUnicast.setSequenceNumber(apsFrame.getSequence());
+            emberUnicast.setMessageTag(apsFrame.getApsCounter());
+            emberUnicast.setSequenceNumber(apsFrame.getApsCounter());
             emberUnicast.setType(EmberOutgoingMessageType.EMBER_OUTGOING_DIRECT);
             emberUnicast.setApsFrame(emberApsFrame);
             emberUnicast.setMessageContents(apsFrame.getPayload());
@@ -361,8 +361,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
             EzspSendBroadcastRequest emberBroadcast = new EzspSendBroadcastRequest();
             emberBroadcast.setDestination(apsFrame.getDestinationAddress());
-            emberBroadcast.setMessageTag(apsFrame.getSequence());
-            emberBroadcast.setSequenceNumber(apsFrame.getSequence());
+            emberBroadcast.setMessageTag(apsFrame.getApsCounter());
+            emberBroadcast.setSequenceNumber(apsFrame.getApsCounter());
             emberBroadcast.setApsFrame(emberApsFrame);
             emberBroadcast.setRadius(apsFrame.getRadius());
             emberBroadcast.setMessageContents(apsFrame.getPayload());
@@ -375,7 +375,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             emberMulticast.setApsFrame(emberApsFrame);
             emberMulticast.setHops(apsFrame.getRadius());
             emberMulticast.setNonmemberRadius(apsFrame.getNonMemberRadius());
-            emberMulticast.setMessageTag(apsFrame.getSequence());
+            emberMulticast.setMessageTag(apsFrame.getApsCounter());
             emberMulticast.setMessageContents(apsFrame.getPayload());
 
             emberCommand = emberMulticast;
@@ -412,7 +412,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             apsFrame.setProfile(emberApsFrame.getProfileId());
             apsFrame.setSourceEndpoint(emberApsFrame.getSourceEndpoint());
 
-            apsFrame.setSequence(incomingMessage.getSequenceNumber());
             apsFrame.setSourceAddress(incomingMessage.getSender());
             apsFrame.setPayload(incomingMessage.getMessageContents());
             zigbeeTransportReceive.receiveCommand(apsFrame);

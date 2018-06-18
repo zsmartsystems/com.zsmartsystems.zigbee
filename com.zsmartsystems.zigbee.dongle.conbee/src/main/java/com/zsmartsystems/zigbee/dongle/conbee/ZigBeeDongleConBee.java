@@ -283,7 +283,7 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
     public void sendCommand(final ZigBeeApsFrame apsFrame) {
         ConBeeEnqueueSendDataRequest request = new ConBeeEnqueueSendDataRequest();
 
-        request.setRequestId(apsFrame.getSequence());
+        request.setRequestId(apsFrame.getApsCounter());
         request.setClusterId(apsFrame.getCluster());
         switch (apsFrame.getAddressMode()) {
             case DEVICE:

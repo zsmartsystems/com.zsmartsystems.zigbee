@@ -76,7 +76,7 @@ public class ZigBeeDongleXBeeTest {
         apsFrame.setCluster(32774);
         apsFrame.setAddressMode(ZigBeeNwkAddressMode.DEVICE);
         apsFrame.setRadius(31);
-        apsFrame.setSequence(42);
+        apsFrame.setApsCounter(42);
         apsFrame.setPayload(new int[] { 0x00, 0x00, 0x2E, 0x5B, 0x01, 0x01 });
 
         System.out.println(command);

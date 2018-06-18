@@ -126,6 +126,11 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     private final ZigBeeNetworkManager networkManager;
 
     /**
+     * Broadcast endpoint definition
+     */
+    private final static int BROADCAST_ENDPOINT = 0xFF;
+
+    /**
      * Constructor
      *
      * @param networkManager the {@link ZigBeeNetworkManager}
@@ -623,12 +628,16 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         ZclCommand zclCommand = (ZclCommand) command;
         ZigBeeEndpointAddress endpointAddress = (ZigBeeEndpointAddress) zclCommand.getSourceAddress();
 
-        ZigBeeEndpoint endpoint = endpoints.get(endpointAddress.getEndpoint());
-        if (endpoint == null) {
-            return;
+        if (endpointAddress.getEndpoint() == BROADCAST_ENDPOINT) {
+            for (ZigBeeEndpoint endpoint : endpoints.values()) {
+                endpoint.commandReceived(zclCommand);
+            }
+        } else {
+            ZigBeeEndpoint endpoint = endpoints.get(endpointAddress.getEndpoint());
+            if (endpoint != null) {
+                endpoint.commandReceived(zclCommand);
+            }
         }
-
-        endpoint.commandReceived(zclCommand);
     }
 
     /**
