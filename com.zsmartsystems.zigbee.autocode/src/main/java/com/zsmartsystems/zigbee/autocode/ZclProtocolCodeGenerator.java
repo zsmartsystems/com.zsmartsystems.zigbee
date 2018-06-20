@@ -55,6 +55,7 @@ public class ZclProtocolCodeGenerator {
     static String packageZclCluster = packageZcl + ".clusters";
     static String packageZclProtocol = packageZcl + ".protocol";
     static String packageZclProtocolCommand = packageZclCluster;
+    static String packageTransactionPrefix = ".transaction";
 
     static String packageZdp = ".zdo";
     static String packageZdpField = packageZdp + ".field";
@@ -2111,7 +2112,8 @@ public class ZclProtocolCodeGenerator {
 
                     if (command.responseCommand != null && command.responseCommand.length() != 0) {
                         out.println("import " + packageRootPrefix + ".ZigBeeCommand;");
-                        out.println("import " + packageRootPrefix + ".ZigBeeTransactionMatcher;");
+                        out.println("import " + packageRootPrefix + packageTransactionPrefix
+                                + ".ZigBeeTransactionMatcher;");
                         out.println("import " + packageRootPrefix + packageZdpCommand + "." + command.responseCommand
                                 + ";");
                     }
@@ -2601,7 +2603,8 @@ public class ZclProtocolCodeGenerator {
                             "import " + packageRootPrefix + packageZdpCommand + "." + command.responseCommand + ";");
 
                     out.println("import " + packageRootPrefix + ".Command;");
-                    out.println("import " + packageRootPrefix + ".ZigBeeTransactionMatcher;");
+                    out.println(
+                            "import " + packageRootPrefix + packageTransactionPrefix + ".ZigBeeTransactionMatcher;");
                     // out.println("import " + packageRootPrefix + packageZdp + ".ZdoRequest;");
                     // out.println("import " + packageRootPrefix + packageZdp + ".ZdoResponse;");
 

@@ -12,7 +12,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
-import com.zsmartsystems.zigbee.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 import javax.annotation.Generated;
 

@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.transaction;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -17,15 +17,17 @@ import java.util.concurrent.TimeoutException;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.CommandResult;
+
 /**
  *
  * @author Chris Jackson
  *
  */
-public class CommandResultFutureTest {
+public class ZigBeeTransactionFutureTest {
     @Test
     public void testIsDone() {
-        CommandResultFuture future = new CommandResultFuture(null);
+        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture();
         assertFalse(future.isDone());
 
         CommandResult result = new CommandResult();
@@ -40,15 +42,12 @@ public class CommandResultFutureTest {
         }
     }
 
-    @Test(expected = UnsupportedOperationException.class)
     public void testCancel() {
-        CommandResultFuture future = new CommandResultFuture(null);
-        future.cancel(true);
+        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture();
+        assertFalse(future.isCancelled());
+        assertTrue(future.cancel(true));
+        assertFalse(future.cancel(true));
+        assertTrue(future.isCancelled());
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void testIsCancelled() {
-        CommandResultFuture future = new CommandResultFuture(null);
-        future.isCancelled();
-    }
 }

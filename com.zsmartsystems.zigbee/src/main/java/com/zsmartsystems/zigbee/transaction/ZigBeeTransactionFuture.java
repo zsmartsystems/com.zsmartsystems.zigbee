@@ -5,82 +5,64 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.transaction;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import com.zsmartsystems.zigbee.CommandResult;
+
 /**
- * Future implementation for asynchronous methods.
+ * Future implementation for asynchronous transactions.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
-public class CommandResultFuture implements Future<CommandResult> {
-
-    /**
-     * The ZigBee Network Manager
-     */
-    private ZigBeeNetworkManager networkManager;
-
-    /**
-     * The command execution.
-     */
-    private CommandExecution commandExecution;
-
+public class ZigBeeTransactionFuture implements Future<CommandResult> {
     /**
      * The result.
      */
     private CommandResult result;
 
-    /**
-     * Constructor which sets the {@link ZigBeeNetworkManager} to which this future belongs.
-     *
-     * @param {@link ZigBeeNetworkManager} the ZigBee network
-     */
-    public CommandResultFuture(ZigBeeNetworkManager zigBeeNetworkManager) {
-        this.networkManager = zigBeeNetworkManager;
-    }
+    private boolean cancelled = false;
+
+    private final static int TIMEOUT_MILLISECONDS = 10000;
 
     /**
-     * Sets the command execution.
+     * Sets the {@link CommandResult}.
      *
-     * @param commandExecution the command execution
-     */
-    public synchronized void setCommandExecution(CommandExecution commandExecution) {
-        this.commandExecution = commandExecution;
-    }
-
-    /**
-     * Sets result.
-     *
-     * @param result the result
+     * @param result the {@link CommandResult}
      */
     public synchronized void set(final CommandResult result) {
         this.result = result;
+        notify();
     }
 
     @Override
     public boolean cancel(boolean mayInterruptIfRunning) {
-        throw new UnsupportedOperationException();
+        if (result != null || cancelled) {
+            return false;
+        }
+        cancelled = true;
+        notify();
+        return true;
     }
 
     @Override
     public boolean isCancelled() {
-        throw new UnsupportedOperationException();
+        return cancelled;
     }
 
     @Override
     public synchronized boolean isDone() {
-        return result != null;
+        return cancelled | result != null;
     }
 
     @Override
     public CommandResult get() throws InterruptedException, ExecutionException {
         try {
-            return get(10000, TimeUnit.MILLISECONDS);
+            return get(TIMEOUT_MILLISECONDS, TimeUnit.MILLISECONDS);
         } catch (TimeoutException e) {
             return null;
         }
@@ -96,7 +78,6 @@ public class CommandResultFuture implements Future<CommandResult> {
             unit.timedWait(this, timeout);
             if (result == null) {
                 set(new CommandResult());
-                networkManager.removeCommandExecution(commandExecution);
             }
             return result;
         }

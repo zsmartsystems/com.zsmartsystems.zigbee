@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-26T20:56:16Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-06-16T10:09:49Z")
 public class ZclBinaryInputBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -164,9 +164,9 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
         attributeMap.put(ATTR_INACTIVETEXT, new ZclAttribute(ZclClusterType.BINARY_INPUT__BASIC, ATTR_INACTIVETEXT, "InactiveText", ZclDataType.CHARACTER_STRING, false, true, true, false));
         attributeMap.put(ATTR_OUTOFSERVICE, new ZclAttribute(ZclClusterType.BINARY_INPUT__BASIC, ATTR_OUTOFSERVICE, "OutOfService", ZclDataType.BOOLEAN, true, true, true, false));
         attributeMap.put(ATTR_POLARITY, new ZclAttribute(ZclClusterType.BINARY_INPUT__BASIC, ATTR_POLARITY, "Polarity", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_PRESENTVALUE, new ZclAttribute(ZclClusterType.BINARY_INPUT__BASIC, ATTR_PRESENTVALUE, "PresentValue", ZclDataType.BOOLEAN, true, true, true, false));
+        attributeMap.put(ATTR_PRESENTVALUE, new ZclAttribute(ZclClusterType.BINARY_INPUT__BASIC, ATTR_PRESENTVALUE, "PresentValue", ZclDataType.BOOLEAN, true, true, true, true));
         attributeMap.put(ATTR_RELIABILITY, new ZclAttribute(ZclClusterType.BINARY_INPUT__BASIC, ATTR_RELIABILITY, "Reliability", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
-        attributeMap.put(ATTR_STATUSFLAGS, new ZclAttribute(ZclClusterType.BINARY_INPUT__BASIC, ATTR_STATUSFLAGS, "StatusFlags", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_STATUSFLAGS, new ZclAttribute(ZclClusterType.BINARY_INPUT__BASIC, ATTR_STATUSFLAGS, "StatusFlags", ZclDataType.BITMAP_8_BIT, true, true, false, true));
         attributeMap.put(ATTR_APPLICATIONTYPE, new ZclAttribute(ZclClusterType.BINARY_INPUT__BASIC, ATTR_APPLICATIONTYPE, "ApplicationType", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
@@ -601,6 +601,28 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
     }
 
     /**
+     * Set reporting for the <i>PresentValue</i> attribute [attribute ID <b>85</b>].
+     * <p>
+     * The PresentValue attribute indicates the current value of the input, output or
+     * value, as appropriate  for the cluster. For Analog clusters it is of type single precision, for Binary
+     * clusters it is of type  Boolean, and for multistate clusters it is of type Unsigned 16-bit integer. The
+     * PresentValue attribute of an input cluster SHALL be writable when OutOfService is TRUE. When the PriorityArray
+     * attribute is implemented, writing to PresentValue SHALL be equivalent to writing to element 16 of PriorityArray,
+     * i.e., with a priority of 16.
+     * <p>
+     * The attribute is of type {@link Boolean}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval {@link int} minimum reporting period
+     * @param maxInterval {@link int} maximum reporting period
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setPresentValueReporting(final int minInterval, final int maxInterval) {
+        return setReporting(attributes.get(ATTR_PRESENTVALUE), minInterval, maxInterval);
+    }
+
+    /**
      * Set the <i>Reliability</i> attribute [attribute ID <b>103</b>].
      * <p>
      * The Reliability attribute, of type 8-bit enumeration, provides an indication of whether
@@ -787,6 +809,48 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
         }
 
         return (Integer) readSync(attributes.get(ATTR_STATUSFLAGS));
+    }
+
+    /**
+     * Set reporting for the <i>StatusFlags</i> attribute [attribute ID <b>111</b>].
+     * <p>
+     * This attribute, of type bitmap, represents four Boolean flags that indicate the general “health”
+     * of the analog sensor. Three of the flags are associated with the values of other optional attributes
+     * of this cluster. A more detailed status could be determined by reading the optional attributes (if
+     * supported) that are linked to these flags. The relationship between individual flags is not defined.
+     * <p>
+     * The four flags are Bit 0 = IN_ALARM, Bit 1 = FAULT, Bit 2 = OVERRIDDEN, Bit 3 = OUT OF SERVICE
+     * <p>
+     * where:
+     * <p>
+     * IN_ALARM -Logical FALSE (0) if the EventStateattribute has a value of NORMAL, otherwise logical TRUE (1).
+     * This bit is always 0 unless the cluster implementing the EventState attribute is implemented on the same
+     * endpoint.
+     * <p>
+     * FAULT -Logical TRUE (1) if the Reliability attribute is present and does not have a value of NO FAULT DETECTED,
+     * otherwise logical FALSE (0).
+     * <p>
+     * OVERRIDDEN -Logical TRUE (1) if the cluster has been overridden by some  mechanism local to the device.
+     * Otherwise, the value is logical FALSE (0). In this context, for an input cluster, “overridden” is taken
+     * to mean that the PresentValue and Reliability(optional) attributes are no longer tracking changes to the
+     * physical input. For an Output cluster, “overridden” is taken to mean that the physical output is no longer
+     * tracking changes to the PresentValue attribute and the Reliability attribute is no longer a reflection of
+     * the physical output. For a Value cluster, “overridden” is taken to mean that the PresentValue attribute is
+     * not writeable.
+     * <p>
+     * OUT OF SERVICE -Logical TRUE (1) if the OutOfService attribute has a value of TRUE, otherwise
+     * logical FALSE (0).
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval {@link int} minimum reporting period
+     * @param maxInterval {@link int} maximum reporting period
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setStatusFlagsReporting(final int minInterval, final int maxInterval) {
+        return setReporting(attributes.get(ATTR_STATUSFLAGS), minInterval, maxInterval);
     }
 
     /**

@@ -5,7 +5,9 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.transaction;
+
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 
 /**
  * Defines the interface for transaction matcher
