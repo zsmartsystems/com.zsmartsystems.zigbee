@@ -19,6 +19,7 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorResponse;
@@ -51,7 +52,7 @@ public class ClusterMatcher implements ZigBeeCommandListener {
      * @param networkManager the {@link ZigBeeNetworkManager} to which this matcher is linked
      */
     public ClusterMatcher(ZigBeeNetworkManager networkManager) {
-        logger.debug("{}: ClusterMatcher starting", networkManager.getZigBeeExtendedPanId());
+        logger.debug("ClusterMatcher starting");
         this.networkManager = networkManager;
 
         networkManager.addCommandListener(this);
@@ -63,7 +64,7 @@ public class ClusterMatcher implements ZigBeeCommandListener {
      * @param cluster the cluster to match
      */
     public void addCluster(int cluster) {
-        logger.debug("{}: ClusterMatcher adding cluster {}", networkManager.getZigBeeExtendedPanId(), cluster);
+        logger.debug("ClusterMatcher adding cluster {}", ZclClusterType.getValueById(cluster));
         clusters.add(cluster);
     }
 

@@ -539,8 +539,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         // Create the application frame
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
 
-        int sequence = sequenceNumber.getAndIncrement() & 0xff;
-        command.setTransactionId(sequence);
+        if (command.getTransactionId() == null) {
+            command.setTransactionId(sequenceNumber.getAndIncrement() & 0xff);
+        }
 
         // Set the source address - should probably be improved!
         // Note that the endpoint is set (currently!) in the transport layer
@@ -555,7 +556,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         // TODO: Set the source address correctly?
         apsFrame.setSourceAddress(0);
 
-        apsFrame.setSequence(sequence);
         apsFrame.setRadius(31);
 
         if (command.getDestinationAddress() instanceof ZigBeeEndpointAddress) {
@@ -612,7 +612,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             zclHeader.setFrameType(zclCommand.isGenericCommand() ? ZclFrameType.ENTIRE_PROFILE_COMMAND
                     : ZclFrameType.CLUSTER_SPECIFIC_COMMAND);
             zclHeader.setCommandId(zclCommand.getCommandId());
-            zclHeader.setSequenceNumber(sequence);
+            zclHeader.setSequenceNumber(command.getTransactionId());
             zclHeader.setDirection(zclCommand.getCommandDirection());
 
             command.serialize(fieldSerializer);
@@ -626,7 +626,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         transport.sendCommand(apsFrame);
 
-        return sequence;
+        return command.getTransactionId();
     }
 
     @Override

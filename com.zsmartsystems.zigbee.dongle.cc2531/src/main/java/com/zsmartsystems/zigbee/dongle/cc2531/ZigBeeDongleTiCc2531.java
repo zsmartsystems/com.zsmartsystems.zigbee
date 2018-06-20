@@ -259,10 +259,10 @@ public class ZigBeeDongleTiCc2531
             if (!groupCommand) {
                 networkManager.sendCommand(new AF_DATA_REQUEST(apsFrame.getDestinationAddress(),
                         (short) apsFrame.getDestinationEndpoint(), sender, apsFrame.getCluster(),
-                        apsFrame.getSequence(), (byte) 0x30, (byte) apsFrame.getRadius(), apsFrame.getPayload()));
+                        apsFrame.getApsCounter(), (byte) 0x30, (byte) apsFrame.getRadius(), apsFrame.getPayload()));
             } else {
                 networkManager.sendCommand(new AF_DATA_REQUEST_EXT(apsFrame.getDestinationAddress(), sender,
-                        apsFrame.getCluster(), apsFrame.getSequence(), (byte) (0), (byte) 0, apsFrame.getPayload()));
+                        apsFrame.getCluster(), apsFrame.getApsCounter(), (byte) (0), (byte) 0, apsFrame.getPayload()));
             }
         }
     }
@@ -282,7 +282,7 @@ public class ZigBeeDongleTiCc2531
 
         // nwkHeader.setDestinationAddress(clusterMessage.geta);
         apsFrame.setSourceAddress(clusterMessage.getSrcAddr());
-        apsFrame.setSequence(clusterMessage.getTransId());
+        apsFrame.setApsCounter(clusterMessage.getTransId());
 
         apsFrame.setPayload(clusterMessage.getData());
 

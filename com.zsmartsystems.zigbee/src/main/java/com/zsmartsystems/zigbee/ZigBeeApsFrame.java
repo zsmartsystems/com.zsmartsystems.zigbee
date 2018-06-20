@@ -126,8 +126,6 @@ public class ZigBeeApsFrame {
      */
     private int apsCounter;
 
-    private int sequence;
-
     /**
      * The APS payload.
      * <p>
@@ -171,14 +169,6 @@ public class ZigBeeApsFrame {
 
     public void setRadius(int radius) {
         this.radius = radius;
-    }
-
-    public int getSequence() {
-        return sequence;
-    }
-
-    public void setSequence(int sequence) {
-        this.sequence = sequence;
     }
 
     public boolean isSecurityEnable() {
@@ -288,8 +278,8 @@ public class ZigBeeApsFrame {
         builder.append(addressMode);
         builder.append(", radius=");
         builder.append(radius);
-        builder.append(", sequence=");
-        builder.append(sequence);
+        builder.append(", apsCounter=");
+        builder.append(apsCounter);
         builder.append(", payload=");
         if (payload != null) {
             for (int c = 0; c < payload.length; c++) {
