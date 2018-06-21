@@ -10,9 +10,9 @@ package com.zsmartsystems.zigbee.dongle.ember.internal;
 import java.util.Map;
 import java.util.concurrent.Future;
 
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspTransaction;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
+import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**

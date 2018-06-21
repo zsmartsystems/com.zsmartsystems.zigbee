@@ -30,13 +30,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCallbackRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameResponse;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspCallbackRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspTransaction;
+import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**

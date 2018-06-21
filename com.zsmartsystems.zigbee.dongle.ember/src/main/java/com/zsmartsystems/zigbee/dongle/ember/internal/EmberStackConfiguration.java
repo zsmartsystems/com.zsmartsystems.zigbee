@@ -13,9 +13,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspConfigId;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspDecisionId;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspPolicyId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
 
 /**
  * This class provides utility functions to configure, and read the configuration from the Ember stack.

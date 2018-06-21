@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.internal;
 
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 
 /**
  * Interface to exchange asynchronous packets and link state changes from the low level protocol handlers

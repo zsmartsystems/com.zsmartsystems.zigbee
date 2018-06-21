@@ -11,7 +11,7 @@ import java.io.PrintStream;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberCounterType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCounterType;
 
 /**
  *
