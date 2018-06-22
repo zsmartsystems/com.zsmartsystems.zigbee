@@ -1,0 +1,37 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+
+  <id>bin</id>
+  
+  <formats>
+    <format>dir</format>
+  </formats>
+  
+  <includeBaseDirectory>false</includeBaseDirectory>
+  
+  <moduleSets>
+    <moduleSet>
+      
+      <!-- Enable access to all projects in the current multimodule build! -->
+      <useAllReactorProjects>true</useAllReactorProjects>
+      
+      <!-- Now, select which artifacts to include in this module-set. -->
+      <excludes>
+	<exclude>com.zsmartsystems.zigbee:com.zsmartsystems.zigbee.console.main</exclude>
+	<exclude>com.zsmartsystems.zigbee:com.zsmartsystems.zigbee.test</exclude>
+	<exclude>com.zsmartsystems.zigbee:com.zsmartsystems.zigbee.autocode</exclude>
+      </excludes>
+
+      <!-- And put all selected files to a plugins directory -->
+      <binaries>
+	<outputDirectory>plugins</outputDirectory>
+	<unpack>false</unpack>
+	<includeDependencies>false</includeDependencies>
+      </binaries>
+      
+    </moduleSet>
+  </moduleSets>
+</assembly>
+  

@@ -44,6 +44,16 @@
 		<module>com.zsmartsystems.zigbee.serial</module>
 		<module>com.zsmartsystems.zigbee.test</module>
 	</modules>
+
+	<profiles>
+	  <profile>
+	    <!-- Profile generates p2 repo for built artifacts in releng/p2repo/target/repository -->
+	    <id>p2repo</id>
+	    <modules>
+	      <module>releng/p2repo</module>
+	    </modules>
+	  </profile>
+	</profiles>
     
     <reporting>
         <plugins>
