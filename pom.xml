@@ -43,6 +43,7 @@
         <module>com.zsmartsystems.zigbee.console.telegesis</module>
 		<module>com.zsmartsystems.zigbee.serial</module>
 		<module>com.zsmartsystems.zigbee.test</module>
+		<module>releng/p2repo</module>
 	</modules>
     
     <reporting>
