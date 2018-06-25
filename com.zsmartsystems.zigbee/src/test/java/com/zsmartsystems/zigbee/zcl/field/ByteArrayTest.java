@@ -38,8 +38,8 @@ public class ByteArrayTest {
         assertTrue(Arrays.equals(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, array.get()));
 
         array = new ByteArray(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 1, 7);
-        assertEquals(new ByteArray(new byte[] { 2, 3, 4, 5, 6, 7, 8 }), array);
+        assertEquals(new ByteArray(new byte[] { 2, 3, 4, 5, 6, 7 }), array);
 
-        assertTrue(Arrays.equals(new int[] { 2, 3, 4, 5, 6, 7, 8 }, array.getAsIntArray()));
+        assertTrue(Arrays.equals(new int[] { 2, 3, 4, 5, 6, 7 }, array.getAsIntArray()));
     }
 }
