@@ -31,13 +31,13 @@ public class ByteArray {
      * Constructor taking part of an existing integer array
      *
      * @param payload the existing integer array
-     * @param from the start offset of the array
-     * @param to the end offset of the array
+     * @param from the start offset of the array (inclusive)
+     * @param to the end offset of the array (exclusive)
      */
     public ByteArray(int[] payload, int start, int finish) {
-        value = new byte[finish - start + 1];
+        value = new byte[finish - start];
         int outCnt = 0;
-        for (int cnt = start; cnt <= finish; cnt++) {
+        for (int cnt = start; cnt < finish; cnt++) {
             value[outCnt++] = (byte) (payload[cnt] & 0xFF);
         }
     }
@@ -46,11 +46,11 @@ public class ByteArray {
      * Constructor taking an existing integer array
      *
      * @param payload the existing integer array
-     * @param from the start offset of the array
-     * @param to the end offset of the array
+     * @param from the start offset of the array (inclusive)
+     * @param to the end offset of the array (exclusive)
      */
     public ByteArray(int[] payload) {
-        this(payload, 0, payload.length - 1);
+        this(payload, 0, payload.length);
     }
 
     /**
@@ -139,6 +139,7 @@ public class ByteArray {
             if (!first) {
                 builder.append(' ');
             }
+            first = false;
             builder.append(String.format("%02X", val & 0xFF));
         }
         builder.append(']');

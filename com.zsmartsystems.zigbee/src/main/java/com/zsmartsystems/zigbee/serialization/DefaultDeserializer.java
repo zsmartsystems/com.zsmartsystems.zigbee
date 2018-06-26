@@ -73,7 +73,7 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 break;
             case OCTET_STRING:
                 int octetSize = payload[index++];
-                value[0] = new ByteArray(payload, index, octetSize);
+                value[0] = new ByteArray(payload, index, index + octetSize);
                 index += octetSize;
                 break;
             case CHARACTER_STRING:
