@@ -24,8 +24,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrame.FrameType;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**

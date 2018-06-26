@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrame;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 
 /**
  *

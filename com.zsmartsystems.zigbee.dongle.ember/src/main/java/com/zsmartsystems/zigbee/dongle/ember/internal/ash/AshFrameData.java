@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.dongle.ember.internal.ash;
 
 import java.util.Arrays;
 
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.EzspFrameRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 
 /**
  * ASH Data Frame

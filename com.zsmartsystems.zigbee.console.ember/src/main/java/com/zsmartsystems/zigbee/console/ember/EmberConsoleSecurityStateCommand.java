@@ -13,15 +13,15 @@ import java.util.List;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberCurrentSecurityBitmask;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberCurrentSecurityState;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyStruct;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyStructBitmask;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberKeyType;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EmberNetworkStatus;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspConfigId;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspDecisionId;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspPolicyId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityBitmask;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStructBitmask;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
 
 /**
  * Console command that displays the current security configuration for the Ember NCP.

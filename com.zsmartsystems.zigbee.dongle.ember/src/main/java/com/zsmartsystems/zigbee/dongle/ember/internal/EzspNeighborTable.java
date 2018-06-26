@@ -14,19 +14,19 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNeighborRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNeighborResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRouteTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRouteTableEntryResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNeighborCountRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNeighborCountResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameHandler;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetConfigurationValueRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetConfigurationValueResponse;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetNeighborRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetNeighborResponse;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetRouteTableEntryRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspGetRouteTableEntryResponse;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNeighborCountRequest;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.command.EzspNeighborCountResponse;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspConfigId;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspStatus;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspSingleResponseTransaction;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.transaction.EzspTransaction;
+import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
+import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 
 /**
  * Class uses the native Ember commands to retrieve the neighbor table

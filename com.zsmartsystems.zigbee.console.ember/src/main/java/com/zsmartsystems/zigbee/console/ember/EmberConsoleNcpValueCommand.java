@@ -15,7 +15,7 @@ import java.util.TreeMap;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ezsp.structure.EzspValueId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
 
 /**
  * Reads or writes an NCP {@link EzspValueId}
