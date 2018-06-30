@@ -770,10 +770,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         switch (protocol) {
             case ASH2:
-                frameHandler = new AshFrameHandler(this);
+                frameHandler = new AshFrameHandler(this, serialPort);
                 break;
             case SPI:
-                frameHandler = new SpiFrameHandler(this);
+                frameHandler = new SpiFrameHandler(this, serialPort);
                 break;
             default:
                 logger.error("Unknown Ember serial protocol {}", protocol);
@@ -782,7 +782,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         EmberNcp ncp = getEmberNcp();
 
         // Connect to the ASH handler and NCP
-        frameHandler.start(serialPort);
+        frameHandler.start();
         frameHandler.connect();
 
         // We MUST send the version command first.

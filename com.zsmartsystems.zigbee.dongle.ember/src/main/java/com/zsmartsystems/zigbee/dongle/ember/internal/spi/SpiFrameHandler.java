@@ -130,7 +130,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     /**
      * The port.
      */
-    private ZigBeePort port;
+    private final ZigBeePort port;
 
     /**
      * The parser parserThread.
@@ -152,10 +152,12 @@ public class SpiFrameHandler implements EzspProtocolHandler {
      * Construct the handler and provide the {@link EzspFrameHandler}
      *
      * @param frameHandler the {@link EzspFrameHandler} packet handler
+     * @param serialPort the {@link ZigBeePort} used for communications
      */
-    public SpiFrameHandler(final EzspFrameHandler frameHandler) {
+    public SpiFrameHandler(final EzspFrameHandler frameHandler, final ZigBeePort serialPort) {
         logger.debug("SpiFrameHandler created");
         this.frameHandler = frameHandler;
+        this.port = serialPort;
 
         errorMessages.put(SPI_CMD_RESET, "Reset");
         errorMessages.put(SPI_CMD_OVERSIZE, "Oversized Frame");
@@ -166,9 +168,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     }
 
     @Override
-    public void start(final ZigBeePort port) {
-        this.port = port;
-
+    public void start() {
         pollingScheduler = Executors.newSingleThreadScheduledExecutor();
 
         parserThread = new Thread("SpiFrameHandler") {

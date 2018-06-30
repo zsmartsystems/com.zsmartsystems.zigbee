@@ -120,7 +120,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     /**
      * The port.
      */
-    private ZigBeePort port;
+    private final ZigBeePort port;
 
     /**
      * The parser parserThread.
@@ -137,14 +137,15 @@ public class AshFrameHandler implements EzspProtocolHandler {
      * Construct the handler and provide the {@link EzspFrameHandler}
      *
      * @param frameHandler the {@link EzspFrameHandler} packet handler
+     * @param serialPort the {@link ZigBeePort} used for communications
      */
-    public AshFrameHandler(final EzspFrameHandler frameHandler) {
+    public AshFrameHandler(final EzspFrameHandler frameHandler, final ZigBeePort serialPort) {
         this.frameHandler = frameHandler;
+        this.port = serialPort;
     }
 
     @Override
-    public void start(final ZigBeePort port) {
-        this.port = port;
+    public void start() {
 
         parserThread = new Thread("AshFrameHandler") {
             @Override

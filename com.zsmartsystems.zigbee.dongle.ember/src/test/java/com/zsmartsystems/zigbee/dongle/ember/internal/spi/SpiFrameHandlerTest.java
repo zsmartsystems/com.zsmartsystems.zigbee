@@ -47,27 +47,22 @@ public class SpiFrameHandlerTest {
     private ArgumentCaptor<EzspFrame> responseCaptor;
 
     private int[] getPacket(int[] data) {
-        SpiFrameHandler frameHandler = new SpiFrameHandler(null);
         byte[] bytedata = new byte[data.length];
         int cnt = 0;
         for (int value : data) {
             bytedata[cnt++] = (byte) value;
         }
         ByteArrayInputStream stream = new ByteArrayInputStream(bytedata);
-        ZigBeePort port = new TestPort(stream, null);
+        SpiFrameHandler frameHandler = new SpiFrameHandler(null, new TestPort(stream, null));
 
         Method privateMethod;
         try {
-            Field field = frameHandler.getClass().getDeclaredField("port");
-            field.setAccessible(true);
-            field.set(frameHandler, port);
-
             privateMethod = SpiFrameHandler.class.getDeclaredMethod("getPacket");
             privateMethod.setAccessible(true);
 
             return (int[]) privateMethod.invoke(frameHandler);
         } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
-                | InvocationTargetException | NoSuchFieldException e) {
+                | InvocationTargetException e) {
             e.printStackTrace();
         }
 
@@ -116,8 +111,8 @@ public class SpiFrameHandlerTest {
         Mockito.doNothing().when(receiveHandler).handleLinkStateChange(stateCaptor.capture());
         Mockito.doNothing().when(receiveHandler).handlePacket(responseCaptor.capture());
 
-        SpiFrameHandler frameHandler = new SpiFrameHandler(receiveHandler);
-        frameHandler.start(new TestPort(null, null));
+        SpiFrameHandler frameHandler = new SpiFrameHandler(receiveHandler, new TestPort(null, null));
+        frameHandler.start();
 
         Method privateMethod;
         try {
@@ -182,8 +177,8 @@ public class SpiFrameHandlerTest {
 
     @Test
     public void testRunning() {
-        SpiFrameHandler frameHandler = new SpiFrameHandler(null);
-        frameHandler.start(null);
+        SpiFrameHandler frameHandler = new SpiFrameHandler(null, null);
+        frameHandler.start();
 
         assertTrue(frameHandler.isAlive());
         frameHandler.close();
@@ -255,9 +250,8 @@ public class SpiFrameHandlerTest {
     @Test
     public void testConnect() {
         portOutData = new ArrayList<>();
-        SpiFrameHandler handler = new SpiFrameHandler(null);
+        SpiFrameHandler handler = new SpiFrameHandler(null, new TestPort(null, null));
 
-        handler.start(new TestPort(null, null));
         handler.connect();
 
         // Verify the version command is sent
@@ -269,8 +263,7 @@ public class SpiFrameHandlerTest {
     @Test
     public void testSendEzspFrame() {
         portOutData = new ArrayList<>();
-        SpiFrameHandler handler = new SpiFrameHandler(null);
-        handler.start(new TestPort(null, null));
+        SpiFrameHandler handler = new SpiFrameHandler(null, new TestPort(null, null));
 
         EzspVersionRequest command = new EzspVersionRequest();
         command.setDesiredProtocolVersion(4);

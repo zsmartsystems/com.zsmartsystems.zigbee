@@ -13,7 +13,6 @@ import java.util.concurrent.Future;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
-import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
  * Interface for the EZSP protocol handler. The protocol handler manages the low level data transfer of EZSP frames.
@@ -24,12 +23,9 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
 public interface EzspProtocolHandler {
 
     /**
-     * Starts the handler. Sets input stream where the packet is read from the and
-     * handler which further processes the received packet.
-     *
-     * @param port the {@link ZigBeePort}
+     * Starts the handler.
      */
-    public void start(final ZigBeePort port);
+    public void start();
 
     /**
      * Set the close flag to true.

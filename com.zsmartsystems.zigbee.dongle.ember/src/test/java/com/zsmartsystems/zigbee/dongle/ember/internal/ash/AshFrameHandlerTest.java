@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
 public class AshFrameHandlerTest {
 
     private int[] getPacket(int[] data) {
-        AshFrameHandler frameHandler = new AshFrameHandler(null);
+        AshFrameHandler frameHandler = new AshFrameHandler(null, null);
         byte[] bytedata = new byte[data.length];
         int cnt = 0;
         for (int value : data) {
@@ -105,8 +105,8 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testRunning() {
-        AshFrameHandler frameHandler = new AshFrameHandler(null);
-        frameHandler.start(null);
+        AshFrameHandler frameHandler = new AshFrameHandler(null, null);
+        frameHandler.start();
 
         assertTrue(frameHandler.isAlive());
         frameHandler.close();
@@ -252,7 +252,7 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testGetCounters() {
-        AshFrameHandler frameHandler = new AshFrameHandler(null);
+        AshFrameHandler frameHandler = new AshFrameHandler(null, null);
 
         assertNotNull(frameHandler.getCounters());
 
