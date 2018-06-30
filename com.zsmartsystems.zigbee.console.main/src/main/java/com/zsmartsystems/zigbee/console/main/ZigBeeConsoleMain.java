@@ -29,7 +29,6 @@ import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpCountersCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpStateCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpValueCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpVersionCommand;
-import com.zsmartsystems.zigbee.console.ember.EmberConsoleNetworkStateCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleSecurityStateCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleTransientKeyCommand;
 import com.zsmartsystems.zigbee.console.telegesis.TelegesisConsoleSecurityStateCommand;
@@ -157,7 +156,6 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleNcpStateCommand.class);
             commands.add(EmberConsoleNcpValueCommand.class);
             commands.add(EmberConsoleNcpVersionCommand.class);
-            commands.add(EmberConsoleNetworkStateCommand.class);
             commands.add(EmberConsoleSecurityStateCommand.class);
         } else if (dongleName.toUpperCase().equals("XBEE")) {
             dongle = new ZigBeeDongleXBee(serialPort);

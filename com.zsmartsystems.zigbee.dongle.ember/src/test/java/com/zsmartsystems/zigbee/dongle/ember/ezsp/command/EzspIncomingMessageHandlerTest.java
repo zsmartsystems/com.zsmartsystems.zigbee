@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -20,7 +21,6 @@ import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberIncomingMessageType;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 
@@ -28,6 +28,20 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
  * @author Chris Jackson
  */
 public class EzspIncomingMessageHandlerTest extends EzspFrameTest {
+
+    private ZigBeeDongleEzsp getDongle() {
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
+
+        try {
+            Field field = dongle.getClass().getDeclaredField("nwkAddress");
+            field.setAccessible(true);
+            field.set(dongle, 0);
+        } catch (SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+        return dongle;
+    }
 
     @Test
     public void testReceive1() {
@@ -58,7 +72,7 @@ public class EzspIncomingMessageHandlerTest extends EzspFrameTest {
 
         Mockito.doNothing().when(transportReceiveMock).receiveCommand(apsFrame.capture());
 
-        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
+        ZigBeeDongleEzsp dongle = getDongle();
         dongle.setZigBeeTransportReceive(transportReceiveMock);
 
         dongle.handlePacket(incomingMessageHandler);

@@ -179,9 +179,9 @@ The following commands are available if the transport layer is using the Silabs 
 |ncpstate         |Gets the NCP network state                             |
 |ncpvalue         |Read or write an NCP memory value                      |
 |ncpversion       |Gets the NCP firmware version                          |
-|ncpnetworkparms  |Gets the current NCP network parameters                |
 |ncpsecuritystate |Gets the current NCP security state and configuration  |
 |ncptransientkey  |Adds a transient link key to the NCP                   |
+|ncpmmohash       |Uses the NCP to perform the MMO hash                   |
 
 ### Telegesis Commands
 The following commands are available if the transport layer is using the Telegesis dongle.
