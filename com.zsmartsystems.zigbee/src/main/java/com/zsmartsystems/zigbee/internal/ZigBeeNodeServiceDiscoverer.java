@@ -206,6 +206,16 @@ public class ZigBeeNodeServiceDiscoverer {
     }
 
     /**
+     * Stops service discovery and removes any scheduled tasks
+     */
+    public void stopDiscovery() {
+        if (futureTask != null) {
+            futureTask.cancel(true);
+        }
+        logger.debug("{}: Node SVC Discovery stopped", node.getIeeeAddress());
+    }
+
+    /**
      * @return the maxBackoff
      */
     public int getMaxBackoff() {
