@@ -150,6 +150,13 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     }
 
     /**
+     * Called when the node is removed from the network.
+     */
+    public void shutdown() {
+        serviceDiscoverer.stopDiscovery();
+    }
+
+    /**
      * Gets the {@link IeeeAddress} of the node
      *
      * @return the {@link IeeeAddress} of the node

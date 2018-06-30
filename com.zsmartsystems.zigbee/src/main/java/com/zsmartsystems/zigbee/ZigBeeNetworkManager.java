@@ -1149,6 +1149,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 });
             }
 
+            node.shutdown();
+
             if (networkStateSerializer != null) {
                 networkStateSerializer.serialize(this);
             }
