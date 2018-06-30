@@ -62,8 +62,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     private int receiveTimeout = T_RX_ACK_INIT;
 
     /**
-     * Maximum number of consecutive timeouts allowed while waiting to receive
-     * an ACK
+     * Maximum number of consecutive timeouts allowed while waiting to receive an ACK
      */
     private final int ACK_TIMEOUTS = 4;
     private int retries = 0;
@@ -343,7 +342,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
             frmNum = 0;
             sentQueue.clear();
             logger.debug("ASH: Connected");
-            frameHandler.handleLinkStateChange(false);
+            frameHandler.handleLinkStateChange(true);
         } else {
             logger.debug("ASH: Invalid version");
         }
@@ -365,7 +364,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
             parserThread.join();
             logger.debug("AshFrameHandler close complete.");
         } catch (InterruptedException e) {
-            logger.warn("AshFrameHandler interrupted in packet parser thread shutdown join.");
+            logger.debug("AshFrameHandler interrupted in packet parser thread shutdown join.");
         }
     }
 
@@ -452,8 +451,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
             port.write(outByte);
         }
 
-        // Only start the timer for data frames
-        if (ashFrame instanceof AshFrameData) {
+        // Only start the timer for data and reset frames
+        if (ashFrame instanceof AshFrameData || ashFrame instanceof AshFrameRst) {
             sentTime = System.nanoTime();
             startRetryTimer();
         }
@@ -471,6 +470,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     /**
      * Connect to the ASH/EZSP NCP
      */
+    @Override
     public synchronized void connect() {
         stateConnected = false;
         AshFrame reset = new AshFrameRst();
@@ -486,7 +486,10 @@ public class AshFrameHandler implements EzspProtocolHandler {
     }
 
     private void reconnect() {
-        frameHandler.handleLinkStateChange(false);
+        if (stateConnected) {
+            // stateConnected will be set to false in connect()
+            frameHandler.handleLinkStateChange(false);
+        }
 
         connect();
     }
@@ -525,6 +528,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         // Create the timer task
         timerTask = new AshRetryTimer();
         timer.schedule(timerTask, receiveTimeout);
+        logger.trace("ASH: Started retry timer");
     }
 
     private synchronized void stopRetryTimer() {
@@ -540,14 +544,20 @@ public class AshFrameHandler implements EzspProtocolHandler {
         @Override
         public void run() {
             // Resend the first message in the sentQueue
-            if (sentQueue.isEmpty()) {
+            if (stateConnected && sentQueue.isEmpty()) {
+                return;
+            }
+
+            // If we're not connected, then try again
+            if (!stateConnected) {
+                reconnect();
                 return;
             }
 
             if (retries++ > ACK_TIMEOUTS) {
                 // Too many retries.
                 // We should alert the upper layer so they can reset the link?
-                frameHandler.handleLinkStateChange(false);
+                reconnect();
 
                 logger.debug("ASH: Error number of retries exceeded [{}].", retries);
                 // drop message from queue
