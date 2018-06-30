@@ -13,11 +13,15 @@ import java.util.List;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificate283k1Data;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificateData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStructBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
@@ -75,6 +79,18 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         EmberKeyStruct networkKey = ncp.getKey(EmberKeyType.EMBER_CURRENT_NETWORK_KEY);
         EmberKeyStruct linkKey = ncp.getKey(EmberKeyType.EMBER_TRUST_CENTER_LINK_KEY);
 
+        boolean libraryEcc = ncp
+                .getLibraryStatus(EmberLibraryId.EMBER_ECC_LIBRARY) == EmberLibraryStatus.EMBER_LIBRARY_PRESENT;
+        boolean libraryCbke = ncp
+                .getLibraryStatus(EmberLibraryId.EMBER_CBKE_CORE_LIBRARY) == EmberLibraryStatus.EMBER_LIBRARY_PRESENT;
+        boolean libraryCbke163k1 = ncp
+                .getLibraryStatus(EmberLibraryId.EMBER_CBKE_LIBRARY) == EmberLibraryStatus.EMBER_LIBRARY_PRESENT;
+        boolean libraryCbke283k1 = ncp
+                .getLibraryStatus(EmberLibraryId.EMBER_CBKE_LIBRARY_283K1) == EmberLibraryStatus.EMBER_LIBRARY_PRESENT;
+
+        EmberCertificateData certificate163k1 = ncp.getCertificateData();
+        EmberCertificate283k1Data certificate283k1 = ncp.getCertificate283k1Data();
+
         List<EmberKeyStruct> keyTable = new ArrayList<>();
         for (int cnt = 0; cnt < keyTableSize; cnt++) {
             EmberKeyStruct key = ncp.getKeyTableEntry(cnt);
@@ -95,6 +111,14 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         out.println("Trust Centre Policy        : " + trustCentrePolicy);
         out.println("Trust Centre Key Policy    : " + trustCentreKeyPolicy);
         out.println("Trust Centre Rejoin Policy : " + trustCentreRejoinPolicy);
+        out.println("ECC Library Support        : " + libraryEcc);
+        out.println("CBKE Library Support       : " + libraryCbke);
+        out.println("CBKE 163k1 Library Support : " + libraryCbke163k1);
+        out.println("CBKE 163k1 Certificate     : "
+                + (certificate163k1 == null ? "No Certificate" : printArray(certificate163k1.getContents())));
+        out.println("CBKE 283k1 Library Support : " + libraryCbke283k1);
+        out.println("CBKE 283k1 Certificate     : "
+                + (certificate283k1 == null ? "No Certificate" : printArray(certificate283k1.getContents())));
         out.print("Security state flags       : ");
         boolean first = true;
         if (securityState != null) {
@@ -111,7 +135,7 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         }
         out.println();
         out.println(
-                "Key Type                        IEEE Address      Key Data                          In Cnt    Out Cnt   Seq");
+                "Key Type                        IEEE Address      Key Data                          In Cnt    Out Cnt   Seq  Auth  Sleep");
 
         if (linkKey != null) {
             out.println(printKey(linkKey));
@@ -119,7 +143,6 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         if (networkKey != null) {
             out.println(printKey(networkKey));
         }
-
         for (EmberKeyStruct key : keyTable) {
             out.println(printKey(key));
         }
@@ -154,9 +177,31 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         }
 
         if (key.getBitmask().contains(EmberKeyStructBitmask.EMBER_KEY_HAS_SEQUENCE_NUMBER)) {
-            builder.append(String.format("%3d", key.getSequenceNumber()));
+            builder.append(String.format("%3d  ", key.getSequenceNumber()));
         } else {
-            builder.append("   ");
+            builder.append("     ");
+        }
+
+        if (key.getBitmask().contains(EmberKeyStructBitmask.EMBER_KEY_IS_AUTHORIZED)) {
+            builder.append("Yes   ");
+        } else {
+            builder.append("No    ");
+        }
+
+        if (key.getBitmask().contains(EmberKeyStructBitmask.EMBER_KEY_PARTNER_IS_SLEEPY)) {
+            builder.append("Yes ");
+        } else {
+            builder.append("No  ");
+        }
+
+        return builder.toString();
+    }
+
+    private String printArray(int[] array) {
+        StringBuilder builder = new StringBuilder(110);
+
+        for (int value : array) {
+            builder.append(String.format("%02X", value));
         }
 
         return builder.toString();
