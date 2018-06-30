@@ -19,6 +19,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKe
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKeyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificate283k1Request;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificate283k1Response;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificateRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetChildDataRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetChildDataResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueRequest;
@@ -31,8 +35,12 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetKeyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetKeyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetKeyTableEntryRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetKeyTableEntryResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetLibraryStatusRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetLibraryStatusResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNodeIdRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNodeIdResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyRequest;
@@ -52,10 +60,14 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberAesMmoHashContext;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificate283k1Data;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificateData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
@@ -151,22 +163,14 @@ public class EmberNcp {
     /**
      * Gets the current network parameters, or an empty parameters class if there's an error
      *
-     * @return {@link EmberNetworkParameters}
+     * @return {@link EzspGetNetworkParametersResponse}
      */
-    public EmberNetworkParameters getNetworkParameters() {
+    public EzspGetNetworkParametersResponse getNetworkParameters() {
         EzspGetNetworkParametersRequest request = new EzspGetNetworkParametersRequest();
         EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
                 EzspGetNetworkParametersResponse.class);
         protocolHandler.sendEzspTransaction(transaction);
-        EzspGetNetworkParametersResponse response = (EzspGetNetworkParametersResponse) transaction.getResponse();
-        logger.debug(response.toString());
-        lastStatus = response.getStatus();
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS && response.getStatus() != EmberStatus.EMBER_NOT_JOINED) {
-            logger.debug("Error during retrieval of network parameters: {}", response);
-            return new EmberNetworkParameters();
-        }
-
-        return response.getParameters();
+        return (EzspGetNetworkParametersResponse) transaction.getResponse();
     }
 
     /**
@@ -476,6 +480,48 @@ public class EmberNcp {
     }
 
     /**
+     * Gets the {@link EmberCertificateData} certificate currently stored in the node.
+     * <p>
+     * This is the 163k1 certificate used in
+     *
+     * @return the {@link EmberCertificateData} certificate
+     */
+    public EmberCertificateData getCertificateData() {
+        EzspGetCertificateRequest request = new EzspGetCertificateRequest();
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
+                EzspGetCertificateResponse.class);
+        protocolHandler.sendEzspTransaction(transaction);
+        EzspGetCertificateResponse response = (EzspGetCertificateResponse) transaction.getResponse();
+        lastStatus = response.getStatus();
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error getting 163k1 certificate: {}", response);
+            return null;
+        }
+
+        return response.getLocalCert();
+    }
+
+    /**
+     * Gets the {@link EmberCertificate283k1Data} certificate currently stored in the node
+     *
+     * @return the {@link EmberCertificate283k1Data} certificate
+     */
+    public EmberCertificate283k1Data getCertificate283k1Data() {
+        EzspGetCertificate283k1Request request = new EzspGetCertificate283k1Request();
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
+                EzspGetCertificate283k1Response.class);
+        protocolHandler.sendEzspTransaction(transaction);
+        EzspGetCertificate283k1Response response = (EzspGetCertificate283k1Response) transaction.getResponse();
+        lastStatus = response.getStatus();
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error getting 283k1 certificate: {}", response);
+            return null;
+        }
+
+        return response.getLocalCert();
+    }
+
+    /**
      * This routine processes the passed chunk of data and updates the hash context based on it. If the 'finalize'
      * parameter is not set, then the length of the data passed in must be a multiple of 16. If the 'finalize' parameter
      * is set then the length can be any value up 1-16, and the final hash value will be calculated.
@@ -517,5 +563,34 @@ public class EmberNcp {
         protocolHandler.sendEzspTransaction(transaction);
         EzspGetEui64Response response = (EzspGetEui64Response) transaction.getResponse();
         return response.getEui64();
+    }
+
+    /**
+     * Gets the 16 bit network node id of the local node
+     *
+     * @return the network address of the local node
+     */
+    public int getNwkAddress() {
+        EzspGetNodeIdRequest request = new EzspGetNodeIdRequest();
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
+                EzspGetNodeIdResponse.class);
+        protocolHandler.sendEzspTransaction(transaction);
+        EzspGetNodeIdResponse response = (EzspGetNodeIdResponse) transaction.getResponse();
+        return response.getNodeId();
+    }
+
+    /**
+     * Gets the {@link EmberLibraryStatus} of the requested {@link EmberLibraryId}
+     *
+     * @return the {@link EmberLibraryStatus} of the local node
+     */
+    public EmberLibraryStatus getLibraryStatus(EmberLibraryId libraryId) {
+        EzspGetLibraryStatusRequest request = new EzspGetLibraryStatusRequest();
+        request.setLibraryId(libraryId);
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
+                EzspGetLibraryStatusResponse.class);
+        protocolHandler.sendEzspTransaction(transaction);
+        EzspGetLibraryStatusResponse response = (EzspGetLibraryStatusResponse) transaction.getResponse();
+        return response.getStatus();
     }
 }

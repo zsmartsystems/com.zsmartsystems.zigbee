@@ -133,6 +133,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private IeeeAddress ieeeAddress;
 
     /**
+     * The network address of the Ember NCP
+     */
+    private Integer nwkAddress;
+
+    /**
      * The low level protocol to use for this dongle
      */
     private EmberSerialProtocol protocol;
@@ -241,7 +246,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
         logger.debug(networkInitResponse.toString());
 
-        networkParameters = ncp.getNetworkParameters();
+        networkParameters = ncp.getNetworkParameters().getParameters();
         ncp.getCurrentSecurityState();
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
@@ -408,11 +413,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
             apsFrame.setApsCounter(emberApsFrame.getSequence());
             apsFrame.setCluster(emberApsFrame.getClusterId());
-            apsFrame.setDestinationEndpoint(emberApsFrame.getDestinationEndpoint());
             apsFrame.setProfile(emberApsFrame.getProfileId());
-            apsFrame.setSourceEndpoint(emberApsFrame.getSourceEndpoint());
+
+            apsFrame.setDestinationAddress(nwkAddress);
+            apsFrame.setDestinationEndpoint(emberApsFrame.getDestinationEndpoint());
 
             apsFrame.setSourceAddress(incomingMessage.getSender());
+            apsFrame.setSourceEndpoint(emberApsFrame.getSourceEndpoint());
+
             apsFrame.setPayload(incomingMessage.getMessageContents());
             zigbeeTransportReceive.receiveCommand(apsFrame);
 
@@ -425,9 +433,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 case EMBER_NETWORK_BUSY:
                     break;
                 case EMBER_NETWORK_DOWN:
-                    zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+                    handleLinkStateChange(false);
                     break;
                 case EMBER_NETWORK_UP:
+                    handleLinkStateChange(true);
                     break;
                 default:
                     break;
@@ -475,9 +484,22 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     }
 
     @Override
-    public void handleLinkStateChange(boolean linkState) {
-        // Handle link changes and notify framework or just reset link with dongle?
-        zigbeeTransportReceive.setNetworkState(linkState ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
+    public void handleLinkStateChange(final boolean linkState) {
+        new Thread() {
+            @Override
+            public void run() {
+                if (linkState) {
+                    EmberNcp ncp = new EmberNcp(frameHandler);
+                    int addr = ncp.getNwkAddress();
+                    if (addr != 0xFFFE) {
+                        nwkAddress = addr;
+                    }
+                }
+                // Handle link changes and notify framework or just reset link with dongle?
+                zigbeeTransportReceive
+                        .setNetworkState(linkState ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
+            }
+        }.start();
     }
 
     @Override

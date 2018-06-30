@@ -342,7 +342,6 @@ public class AshFrameHandler implements EzspProtocolHandler {
             frmNum = 0;
             sentQueue.clear();
             logger.debug("ASH: Connected");
-            frameHandler.handleLinkStateChange(true);
         } else {
             logger.debug("ASH: Invalid version");
         }
