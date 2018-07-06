@@ -128,7 +128,7 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
      */
     protected Integer parseInteger(final String integer) throws IllegalArgumentException {
         try {
-            return Integer.parseInt(integer);
+            return getInteger(integer);
         } catch (final NumberFormatException e) {
             throw new IllegalArgumentException("Integer '" + integer + "' uses an invalid number format.");
         }
