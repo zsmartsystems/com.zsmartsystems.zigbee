@@ -27,12 +27,25 @@ public class ZclAttributeNormalizer {
      */
     private Logger logger = LoggerFactory.getLogger(ZclAttributeNormalizer.class);
 
+    /**
+     * Normalize ZCL data
+     *
+     * @param dataType The {@link ZclDataType} used for the normalised output
+     * @param data the input data
+     * @return the normalised output data
+     */
     protected Object normalizeZclData(ZclDataType dataType, Object data) {
         switch (dataType) {
             case BOOLEAN:
                 if (data instanceof Integer) {
                     logger.debug("Normalizing data Integer {} to BOOLEAN", data);
                     return Boolean.valueOf(!((Integer) data).equals(0));
+                }
+                break;
+            case UNSIGNED_8_BIT_INTEGER:
+                if (data instanceof String) {
+                    logger.debug("Normalizing data String {} to UNSIGNED_8_BIT_INTEGER", data);
+                    return Integer.parseInt((String) data);
                 }
                 break;
             default:
