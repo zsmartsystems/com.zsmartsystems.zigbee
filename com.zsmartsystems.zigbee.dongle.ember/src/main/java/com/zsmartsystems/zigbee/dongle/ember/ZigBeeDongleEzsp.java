@@ -33,6 +33,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBo
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNoCallbacksResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendMulticastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
@@ -404,7 +405,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void handlePacket(EzspFrame response) {
-        logger.debug("RX: " + response.toString());
+        // Only trace-log in case of NoCallbacksResponse (which is due to SPI polling)
+        String logMessage = "RX: " + response.toString();
+        if (response instanceof EzspNoCallbacksResponse) {
+            logger.trace(logMessage);
+        } else {
+            logger.debug(logMessage);
+        }
 
         if (response instanceof EzspIncomingMessageHandler) {
             EzspIncomingMessageHandler incomingMessage = (EzspIncomingMessageHandler) response;
@@ -478,6 +485,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             zigbeeTransportReceive.nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN, joinHandler.getChildId(),
                     joinHandler.getChildEui64());
             return;
+        }
+        
+        if (response instanceof EzspNoCallbacksResponse) {
+        	// No handling needed for EzspNoCallbacksResponse
+        	return;
         }
 
         logger.debug("Unhandled EZSP Frame: {}", response.toString());

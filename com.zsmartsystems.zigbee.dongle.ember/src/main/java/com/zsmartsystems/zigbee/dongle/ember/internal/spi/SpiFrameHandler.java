@@ -34,6 +34,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCallbackRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNoCallbacksResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
@@ -298,9 +299,8 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     }
 
     private void processSpiCommand(int[] packetData) {
-        logger.debug("<-- RX SPI frame: {}", frameToString(packetData));
         if (lastFrameSent == null) {
-            logger.debug("<-- RX SPI frame when lastFrameSent is null");
+            logger.debug("<-- RX SPI frame when lastFrameSent is null: {}", frameToString(packetData));
             return;
         }
         switch (packetData[0]) {
@@ -311,11 +311,20 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                     logger.debug("<-- RX SPI frame type mismatch SPI_CMD_EZSP != {}",
                             String.format("%02X", lastFrameSent[0]));
                 }
+                
+                // Only trace-log in case of NoCallBacksResponse (which is due to polling)
+                String logMessage = String.format("<-- RX SPI frame: %s", frameToString(packetData));
+                if (EzspFrame.createHandler(Arrays.copyOfRange(packetData, 2, packetData.length)) instanceof EzspNoCallbacksResponse) {
+                	logger.trace(logMessage);
+                } else {
+                	logger.debug(logMessage);
+                }
 
                 processSpiEzsp(Arrays.copyOfRange(packetData, 2, packetData.length));
                 break;
 
             case SPI_CMD_BOOTLOADER:
+                logger.debug("<-- RX SPI frame: {}", frameToString(packetData));
                 if (lastFrameSent[0] == SPI_CMD_BOOTLOADER) {
                     spiTransactionComplete();
                 } else {
@@ -330,11 +339,13 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             case SPI_CMD_UNSUPPORTEDCMD:
             case SPI_CMD_RESET:
             case SPI_CMD_INVALID:
+                logger.debug("<-- RX SPI frame: {}", frameToString(packetData));
                 logger.debug("SPI frame: {}", errorMessages.get(packetData[0]));
                 spiErrors++;
                 break;
 
             default:
+                logger.debug("<-- RX SPI frame: {}", frameToString(packetData));
                 switch (lastFrameSent[0]) {
                     case SPI_CMD_SPIVERSION:
                         if ((packetData[0] & SPI_MASK) != SPI_MASK_VERSION) {
@@ -373,7 +384,14 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             logger.debug("No frame handler created for {}", frameToString(packetData));
             return;
         }
-        logger.debug("RX EZSP: {}", response);
+        
+        // Only trace-log for NoCallbacksResponse (which is due to polling)
+        String logMessage = String.format("RX EZSP: %s", response.toString());
+        if (response instanceof EzspNoCallbacksResponse) {
+        	logger.trace(logMessage);
+        } else {
+        	logger.debug(logMessage);
+        }
 
         // If there is a callback pending, then send a poll
         if (response.isCallbackPending()) {
@@ -435,10 +453,13 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         }
 
         EzspFrameRequest nextFrame;
+        boolean isCallbackRequest = false;
+        
         if (doCallbackRequest.getAndSet(false)) {
             // We need to poll for callbacks..
             // This takes priority to avoid overflow of the callback queue in the NCP
             nextFrame = new EzspCallbackRequest();
+            isCallbackRequest = true;
         } else {
             nextFrame = sendQueue.poll();
             if (nextFrame == null) {
@@ -447,9 +468,15 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             }
         }
 
-        // Encapsulate the EZSP frame into the SPI packet
-        logger.debug("TX EZSP: {}", nextFrame);
+        // Only trace-log for callback requests (which occur due to polling)
+        String logMessage = String.format("TX EZSP: %s", nextFrame.toString());
+        if (isCallbackRequest) {
+        	logger.trace(logMessage);
+        } else {
+        	logger.debug(logMessage);
+        }
 
+        // Encapsulate the EZSP frame into the SPI packet
         int[] serializedData = nextFrame.serialize();
         int[] outputData = new int[serializedData.length + 2];
         outputData[0] = SPI_CMD_EZSP;
@@ -458,17 +485,26 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         for (int outByte : serializedData) {
             outputData[cnt++] = outByte;
         }
-        outputFrame(outputData);
+        outputFrame(outputData, isCallbackRequest);
 
         return true;
     }
+    
+    private void outputFrame(int[] outputData) {
+    	this.outputFrame(outputData, false);
+    }
 
     // Synchronize this method to ensure a packet gets sent as a block
-    private void outputFrame(int[] outputData) {
+    private void outputFrame(int[] outputData, boolean tracelogFrame) {
         synchronized (outputFrameSynchronisation) {
             lastFrameSent = outputData;
 
-            logger.debug("--> TX SPI frame: {}", frameToString(outputData));
+            String logMessage = String.format("--> TX SPI frame: %s", frameToString(outputData));
+            if (tracelogFrame) {
+            	logger.trace(logMessage);
+            } else {
+            	logger.debug(logMessage);
+            }
 
             // Send the data
             for (int outByte : outputData) {
@@ -524,14 +560,12 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         // Stop any existing timer
         stopRetryTimer();
 
-        logger.debug("SPI Timer task start");
         // Create the timer task
         timerTask = new RetryTimer();
         timer.schedule(timerTask, receiveTimeout);
     }
 
     private synchronized void stopRetryTimer() {
-        logger.debug("SPI Timer task stop");
         // Stop any existing timer
         if (timerTask != null) {
             timerTask.cancel();
