@@ -70,7 +70,7 @@ public class MmoHash {
      * @param input string of data to update with
      */
     public void updateHash(String input) {
-        String hexString = input.replace(":", "").replace(" ", "");
+        String hexString = input.replaceAll("[:\\- ]", "");
 
         if (hexString.length() % 2 != 0) {
             throw new IllegalArgumentException("Code string must contain an even number of hexadecimal numbers");
