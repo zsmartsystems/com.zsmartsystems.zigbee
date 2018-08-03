@@ -42,5 +42,9 @@ public class MmoHashTest {
         hash = new MmoHash("83FED3407A939738c552");
         System.out.println(hash.toString());
         assertEquals("A833:A774:34F3:BFBD:7A7A:B979:4214:9287", hash.toString());
+
+        hash = new MmoHash("83FE-D340-7A93-9738-C552");
+        System.out.println(hash.toString());
+        assertEquals("A833:A774:34F3:BFBD:7A7A:B979:4214:9287", hash.toString());
     }
 }
