@@ -1003,7 +1003,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                             logger.debug("{}: No node found after successful leave command", leaveAddress);
                         }
                     } else {
-                    	logger.debug("{}: No successful response received to leave command (status code {})", leaveAddress, response.getStatusCode());
+                        logger.debug("{}: No successful response received to leave command (status code {})",
+                                leaveAddress, response.getStatusCode());
                     }
                 } catch (InterruptedException | ExecutionException e) {
                     logger.debug("Error sending leave command.", e);
