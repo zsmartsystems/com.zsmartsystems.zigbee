@@ -197,7 +197,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                                             // No transactions owned this response, so we pass it to
                                             // our unhandled response handler
                                             EzspFrame ezspFrame = EzspFrame.createHandler((dataPacket.getDataBuffer()));
-                                            if (ezspFrame != null) {
+                                            if (stateConnected && ezspFrame != null) {
                                                 frameHandler.handlePacket(ezspFrame);
                                             }
                                         }
