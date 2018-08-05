@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
-import com.zsmartsystems.zigbee.ZigBeeKey;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
 /**
  * Class to implement the XBee command <b>Set Link Key</b>.

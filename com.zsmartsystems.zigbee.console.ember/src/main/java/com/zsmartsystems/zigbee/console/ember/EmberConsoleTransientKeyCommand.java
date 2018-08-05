@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.console.ember;
 import java.io.PrintStream;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
 /**
  * Handles management of NCP transient link keys

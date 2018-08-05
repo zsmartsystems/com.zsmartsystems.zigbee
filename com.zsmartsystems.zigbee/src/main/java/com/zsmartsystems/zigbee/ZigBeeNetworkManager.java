@@ -34,6 +34,7 @@ import com.zsmartsystems.zigbee.internal.ClusterMatcher;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeCommandNotifier;
 import com.zsmartsystems.zigbee.internal.ZigBeeNetworkDiscoverer;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction;
@@ -429,15 +430,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Adds an installation key for the specified address.
+     * Adds an installation key for the specified address. The {@link ZigBeeKey} should have an address associated with
+     * it.
      *
-     * @param address {@link IeeeAddress} the address to which the install key relates
-     * @param key the install key as {@link ZigBeeKey} to be used for the specified address
+     * @param key the install key as {@link ZigBeeKey}
      * @return true if the key was set
      */
-    public boolean setZigBeeInstallKey(final IeeeAddress address, final ZigBeeKey key) {
-        ZigBeeNodeKey nodeKey = new ZigBeeNodeKey(address, key);
-        TransportConfig config = new TransportConfig(TransportConfigOption.INSTALL_KEY, nodeKey);
+    public boolean setZigBeeInstallKey(final ZigBeeKey key) {
+        TransportConfig config = new TransportConfig(TransportConfigOption.INSTALL_KEY, key);
         transport.updateTransportConfig(config);
 
         return (config.getResult(TransportConfigOption.INSTALL_KEY) == TransportConfigResult.SUCCESS);

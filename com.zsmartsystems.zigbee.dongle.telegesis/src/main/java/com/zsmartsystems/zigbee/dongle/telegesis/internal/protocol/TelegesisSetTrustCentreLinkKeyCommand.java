@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol;
 
-import com.zsmartsystems.zigbee.ZigBeeKey;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
 /**
  * Class to implement the Telegesis command <b>Set Trust Centre Link Key</b>.

@@ -5,13 +5,16 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.security;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  *
@@ -91,4 +94,35 @@ public class ZigBeeKeyTest {
         ZigBeeKey key = new ZigBeeKey("11223344556677889900AABBCCDDEEFF");
         assertEquals("11223344556677889900AABBCCDDEEFF", key.toString());
     }
+
+    @Test
+    public void testAddress() {
+        ZigBeeKey key = new ZigBeeKey("11223344556677889900AABBCCDDEEFF");
+        assertFalse(key.hasAddress());
+        assertNull(key.getAddress());
+        key.setAddress(new IeeeAddress("1234567890ABCDE"));
+        assertTrue(key.hasAddress());
+        assertEquals(new IeeeAddress("1234567890ABCDE"), key.getAddress());
+    }
+
+    @Test
+    public void testFrameCounter() {
+        ZigBeeKey key = new ZigBeeKey("11223344556677889900AABBCCDDEEFF");
+        assertFalse(key.hasFrameCounter());
+        assertNull(key.getFrameCounter());
+        key.setFrameCounter(1);
+        assertTrue(key.hasFrameCounter());
+        assertEquals(Integer.valueOf(1), key.getFrameCounter());
+    }
+
+    @Test
+    public void testSequenceCounter() {
+        ZigBeeKey key = new ZigBeeKey("11223344556677889900AABBCCDDEEFF");
+        assertFalse(key.hasSequenceCounter());
+        assertNull(key.getSequenceCounter());
+        key.setSequenceCounter(2);
+        assertTrue(key.hasSequenceCounter());
+        assertEquals(Integer.valueOf(2), key.getSequenceCounter());
+    }
+
 }

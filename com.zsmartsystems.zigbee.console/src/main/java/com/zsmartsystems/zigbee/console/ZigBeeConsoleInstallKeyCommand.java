@@ -10,9 +10,9 @@ package com.zsmartsystems.zigbee.console;
 import java.io.PrintStream;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.security.MmoHash;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
 /**
  * Handles management of install keys
@@ -64,7 +64,8 @@ public class ZigBeeConsoleInstallKeyCommand extends ZigBeeConsoleAbstractCommand
             throw new IllegalArgumentException("Install key is incorrect format.");
         }
 
-        boolean result = networkManager.setZigBeeInstallKey(partner, installKey);
+        installKey.setAddress(partner);
+        boolean result = networkManager.setZigBeeInstallKey(installKey);
         out.println("Install key " + hash.toString() + " for address " + partner + " was " + (result ? "" : "not")
                 + " set.");
     }

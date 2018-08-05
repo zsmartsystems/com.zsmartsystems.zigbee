@@ -13,7 +13,7 @@ import java.util.List;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeKey;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
 /**
  * Base class for all XBee frames. Provides methods to serialise and deserialise data.

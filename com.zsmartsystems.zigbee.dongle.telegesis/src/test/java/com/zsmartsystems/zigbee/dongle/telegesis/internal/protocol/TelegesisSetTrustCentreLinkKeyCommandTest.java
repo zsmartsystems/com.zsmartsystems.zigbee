@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.ZigBeeKey;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
 /**
  *
