@@ -303,6 +303,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             logger.debug("<-- RX SPI frame when lastFrameSent is null: {}", frameToString(packetData));
             return;
         }
+
         switch (packetData[0]) {
             case SPI_CMD_EZSP:
                 if (lastFrameSent[0] == SPI_CMD_EZSP) {
@@ -311,16 +312,18 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                     logger.debug("<-- RX SPI frame type mismatch SPI_CMD_EZSP != {}",
                             String.format("%02X", lastFrameSent[0]));
                 }
-                
+
+                int[] ezspPacketData = Arrays.copyOfRange(packetData, 2, packetData.length);
+
                 // Only trace-log in case of NoCallBacksResponse (which is due to polling)
                 String logMessage = String.format("<-- RX SPI frame: %s", frameToString(packetData));
-                if (EzspFrame.createHandler(Arrays.copyOfRange(packetData, 2, packetData.length)) instanceof EzspNoCallbacksResponse) {
-                	logger.trace(logMessage);
+                if (isEzspNoCallbacksResponse(ezspPacketData)) {
+                    logger.trace(logMessage);
                 } else {
-                	logger.debug(logMessage);
+                    logger.debug(logMessage);
                 }
 
-                processSpiEzsp(Arrays.copyOfRange(packetData, 2, packetData.length));
+                processSpiEzsp(ezspPacketData);
                 break;
 
             case SPI_CMD_BOOTLOADER:
@@ -377,6 +380,14 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         }
     }
 
+    /**
+     * Hard-code the check for 'NoCallbacksResponse' here, so that decision for trace/debug-level logging can be taken
+     * here without using {@link EzspFrame} code.
+     */
+    private boolean isEzspNoCallbacksResponse(int[] ezspPacketData) {
+        return ezspPacketData[2] == 0x07;
+    }
+
     private void processSpiEzsp(int[] packetData) {
         // Get the EZSP frame
         EzspFrameResponse response = EzspFrame.createHandler(packetData);
@@ -384,13 +395,13 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             logger.debug("No frame handler created for {}", frameToString(packetData));
             return;
         }
-        
+
         // Only trace-log for NoCallbacksResponse (which is due to polling)
         String logMessage = String.format("RX EZSP: %s", response.toString());
         if (response instanceof EzspNoCallbacksResponse) {
-        	logger.trace(logMessage);
+            logger.trace(logMessage);
         } else {
-        	logger.debug(logMessage);
+            logger.debug(logMessage);
         }
 
         // If there is a callback pending, then send a poll
@@ -404,9 +415,8 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         } else {
             // No transactions owned this response, so we pass it to
             // our unhandled response handler
-            EzspFrame ezspFrame = EzspFrame.createHandler(packetData);
-            if (ezspFrame != null) {
-                frameHandler.handlePacket(ezspFrame);
+            if (!(response instanceof EzspNoCallbacksResponse)) {
+                frameHandler.handlePacket(response);
             }
         }
 
@@ -454,7 +464,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
         EzspFrameRequest nextFrame;
         boolean isCallbackRequest = false;
-        
+
         if (doCallbackRequest.getAndSet(false)) {
             // We need to poll for callbacks..
             // This takes priority to avoid overflow of the callback queue in the NCP
@@ -471,9 +481,9 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         // Only trace-log for callback requests (which occur due to polling)
         String logMessage = String.format("TX EZSP: %s", nextFrame.toString());
         if (isCallbackRequest) {
-        	logger.trace(logMessage);
+            logger.trace(logMessage);
         } else {
-        	logger.debug(logMessage);
+            logger.debug(logMessage);
         }
 
         // Encapsulate the EZSP frame into the SPI packet
@@ -489,9 +499,9 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
         return true;
     }
-    
+
     private void outputFrame(int[] outputData) {
-    	this.outputFrame(outputData, false);
+        this.outputFrame(outputData, false);
     }
 
     // Synchronize this method to ensure a packet gets sent as a block
@@ -501,9 +511,9 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
             String logMessage = String.format("--> TX SPI frame: %s", frameToString(outputData));
             if (tracelogFrame) {
-            	logger.trace(logMessage);
+                logger.trace(logMessage);
             } else {
-            	logger.debug(logMessage);
+                logger.debug(logMessage);
             }
 
             // Send the data
