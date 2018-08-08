@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeEventListener;
@@ -50,6 +49,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetScanChannel
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetSoftwareResetCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetZigbeeStackProfileCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeTransmitRequestExplicitCommand;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.TransportConfigResult;

@@ -9,9 +9,9 @@ package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
 
-import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.security.MmoHash;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
 /**
  * Handles management of link keys

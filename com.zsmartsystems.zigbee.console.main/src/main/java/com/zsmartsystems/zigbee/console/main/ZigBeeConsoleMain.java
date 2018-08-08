@@ -17,7 +17,6 @@ import org.bouncycastle.util.encoders.Hex;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
-import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkMeshMonitor;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
@@ -37,6 +36,7 @@ import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.dongle.xbee.ZigBeeDongleXBee;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serial.ZigBeeSerialPort;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
@@ -84,7 +84,7 @@ public class ZigBeeConsoleMain {
         final int channel;
         final int pan;
         final ExtendedPanId extendedPan;
-        final int[] networkKey;
+        final int[] networkKeyData;
         final TransportConfig transportOptions = new TransportConfig();
         boolean resetNetwork;
         try {
@@ -97,17 +97,17 @@ public class ZigBeeConsoleMain {
 
             if (args[6].equals("00000000000000000000000000000000")) {
                 logger.info("ZigBee network key left as default according to command argument.");
-                networkKey = null;
+                networkKeyData = null;
             } else {
                 logger.info("ZigBee network key defined by command argument.");
                 byte[] key = Hex.decode(args[6]);
-                networkKey = new int[16];
+                networkKeyData = new int[16];
                 int cnt = 0;
                 for (byte value : key) {
-                    networkKey[cnt++] = value & 0xff;
+                    networkKeyData[cnt++] = value & 0xff;
                 }
             }
-            if (networkKey != null && networkKey.length != 16) {
+            if (networkKeyData != null && networkKeyData.length != 16) {
                 logger.warn("ZigBee network key length should be 16 bytes.");
                 return;
             }
@@ -207,9 +207,14 @@ public class ZigBeeConsoleMain {
             networkManager.setZigBeeChannel(channel);
             networkManager.setZigBeePanId(pan);
             networkManager.setZigBeeExtendedPanId(extendedPan);
-            if (networkKey != null) {
-                networkManager.setZigBeeNetworkKey(new ZigBeeKey(networkKey));
+            if (networkKeyData != null) {
+                ZigBeeKey networkKey = new ZigBeeKey(networkKeyData);
+                networkManager.setZigBeeNetworkKey(networkKey);
             }
+
+            ZigBeeKey linkKey = new ZigBeeKey(new int[] { 0x5A, 0x69, 0x67, 0x42, 0x65, 0x65, 0x41, 0x6C, 0x6C, 0x69,
+                    0x61, 0x6E, 0x63, 0x65, 0x30, 0x39 });
+            networkManager.setZigBeeLinkKey(linkKey);
         }
 
         dongle.updateTransportConfig(transportOptions);

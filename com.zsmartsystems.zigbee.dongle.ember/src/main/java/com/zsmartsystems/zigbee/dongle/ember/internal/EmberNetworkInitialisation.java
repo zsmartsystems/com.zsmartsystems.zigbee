@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
+import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspFormNetworkRequest;
@@ -42,9 +43,12 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParamete
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
+import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspMultiResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
 /**
  * This class provides utility functions to establish an Ember ZigBee network
@@ -80,9 +84,10 @@ public class EmberNetworkInitialisation {
      * If channel is set to 0, the quietest channel will be used.
      *
      * @param networkParameters the required {@link EmberNetworkParameters}
-     * @param networkKey the {@link EmberKeyData} with the network key. This can not be set to all 00 or all FF.
+     * @param linkKey the {@link ZigBeeKey} with the link key. This can not be set to all 00 or all FF.
+     * @param networkKey the {@link ZigBeeKey} with the network key. This can not be set to all 00 or all FF.
      */
-    public void formNetwork(EmberNetworkParameters networkParameters, EmberKeyData networkKey) {
+    public void formNetwork(EmberNetworkParameters networkParameters, ZigBeeKey linkKey, ZigBeeKey networkKey) {
         if (networkParameters.getExtendedPanId() == null) {
             networkParameters.setExtendedPanId(new ExtendedPanId());
         }
@@ -134,7 +139,7 @@ public class EmberNetworkInitialisation {
         }
 
         // Initialise security
-        setSecurityState(networkKey);
+        setSecurityState(linkKey, networkKey);
 
         // And now form the network
         doFormNetwork(networkParameters.getPanId(), networkParameters.getExtendedPanId(),
@@ -262,31 +267,32 @@ public class EmberNetworkInitialisation {
     /**
      * Sets the initial security state
      *
-     * @param networkKey the initial {@link EmberKeyData}
+     * @param linkKey the initial {@link ZigBeeKey}
+     * @param networkKey the initial {@link ZigBeeKey}
      * @return true if the security state was set successfully
      */
-    private boolean setSecurityState(EmberKeyData networkKey) {
-        // Define the ZigBeeAliance09 key for HA link-key
-        // This is used to encrypt the network key when it is transferred to a newly joining device.
-        EmberKeyData linkKey = new EmberKeyData();
-        linkKey.setContents(new int[] { 0x5A, 0x69, 0x67, 0x42, 0x65, 0x65, 0x41, 0x6C, 0x6C, 0x69, 0x61, 0x6E, 0x63,
-                0x65, 0x30, 0x39 });
-        // linkKey.setContents(new int[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-        // 0xFF, 0xFF, 0xFF });
-
+    private boolean setSecurityState(ZigBeeKey linkKey, ZigBeeKey networkKey) {
         EzspSetInitialSecurityStateRequest securityState = new EzspSetInitialSecurityStateRequest();
         EmberInitialSecurityState state = new EmberInitialSecurityState();
-        // state.addBitmask(EmberInitialSecurityBitmask.EMBER_STANDARD_SECURITY_MODE);
-        // state.addBitmask(EmberInitialSecurityBitmask.EMBER_DISTRIBUTED_TRUST_CENTER_MODE);//
-        // EMBER_TRUST_CENTER_GLOBAL_LINK_KEY);
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_TRUST_CENTER_GLOBAL_LINK_KEY);
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_HAVE_PRECONFIGURED_KEY);
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_HAVE_NETWORK_KEY);
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_NO_FRAME_COUNTER_RESET);
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_REQUIRE_ENCRYPTED_KEY);
-        state.setNetworkKey(networkKey);
-        state.setPreconfiguredKey(linkKey);
+
+        EmberKeyData networkKeyData = new EmberKeyData();
+        networkKeyData.setContents(networkKey.getValue());
+        state.setNetworkKey(networkKeyData);
+
+        EmberKeyData linkKeyData = new EmberKeyData();
+        linkKeyData.setContents(linkKey.getValue());
+        state.setPreconfiguredKey(linkKeyData);
         state.setPreconfiguredTrustCenterEui64(new IeeeAddress());
+
+        if (networkKey.hasSequenceCounter()) {
+            state.setNetworkKeySequenceNumber(networkKey.getSequenceCounter());
+        }
+
         securityState.setState(state);
         EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(securityState,
                 EzspSetInitialSecurityStateResponse.class);
@@ -297,6 +303,26 @@ public class EmberNetworkInitialisation {
         if (securityStateResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error during retrieval of network parameters: {}", securityStateResponse);
             return false;
+        }
+
+        if (!networkKey.hasFrameCounter() && !linkKey.hasFrameCounter()) {
+            return true;
+        }
+
+        EmberNcp ncp = new EmberNcp(protocolHandler);
+        if (networkKey.hasFrameCounter()) {
+            EzspSerializer serializer = new EzspSerializer();
+            serializer.serializeUInt32(networkKey.getFrameCounter());
+            if (!ncp.setValue(EzspValueId.EZSP_VALUE_NWK_FRAME_COUNTER, serializer.getPayload())) {
+                return false;
+            }
+        }
+        if (linkKey.hasFrameCounter()) {
+            EzspSerializer serializer = new EzspSerializer();
+            serializer.serializeUInt32(linkKey.getFrameCounter());
+            if (!ncp.setValue(EzspValueId.EZSP_VALUE_APS_FRAME_COUNTER, serializer.getPayload())) {
+                return false;
+            }
         }
 
         return true;

@@ -9,8 +9,7 @@ package com.zsmartsystems.zigbee.transport;
 
 import java.util.Collection;
 
-import com.zsmartsystems.zigbee.ZigBeeKey;
-import com.zsmartsystems.zigbee.ZigBeeNodeKey;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
 /**
  * Enumeration defining all possible configuration options for the {@link ZigBeeTransportTransmit}. Configuration is

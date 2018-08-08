@@ -5,9 +5,11 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.security;
 
 import java.util.Arrays;
+
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Represents a 128 bit ZigBee key
@@ -17,6 +19,9 @@ import java.util.Arrays;
  */
 public class ZigBeeKey {
     private int[] key;
+    private Integer frameCounter;
+    private Integer sequenceCounter;
+    private IeeeAddress address;
 
     /**
      * Default constructor. Creates a network key of 0
@@ -39,12 +44,12 @@ public class ZigBeeKey {
      * @param key the key as a {@link String}
      * @throws IllegalArgumentException
      */
-    public ZigBeeKey(String keyString) {
-        if (keyString == null) {
+    public ZigBeeKey(String key) {
+        if (key == null) {
             throw new IllegalArgumentException("Key string must not be null");
         }
 
-        String hexString = keyString.replace("0x", "");
+        String hexString = key.replace("0x", "");
         hexString = hexString.replace(",", "");
         hexString = hexString.replace(" ", "");
 
@@ -81,6 +86,75 @@ public class ZigBeeKey {
      */
     public int[] getValue() {
         return key;
+    }
+
+    /**
+     * Returns true if this key has a frame counter associated with it
+     *
+     * @return true if this key has a frame counter associated with it
+     */
+    public boolean hasFrameCounter() {
+        return frameCounter != null;
+    }
+
+    /**
+     * Returns true if this key has a sequence counter associated with it
+     *
+     * @return true if this key has a sequence counter associated with it
+     */
+    public boolean hasSequenceCounter() {
+        return sequenceCounter != null;
+    }
+
+    /**
+     * Returns true if this key has an address associated with it
+     *
+     * @return true if this key has an address associated with it
+     */
+    public boolean hasAddress() {
+        return address != null;
+    }
+
+    /**
+     * @return the {@link IeeeAddress}, or null if the key does not have an address associated with it
+     */
+    public IeeeAddress getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the {@link IeeeAddress} to set
+     */
+    public void setAddress(IeeeAddress address) {
+        this.address = address;
+    }
+
+    /**
+     * @return the frame counter, or null if the key does not have a frame counter associated with it
+     */
+    public Integer getFrameCounter() {
+        return frameCounter;
+    }
+
+    /**
+     * @param counter the frame counter as a {@link Integer} to set
+     */
+    public void setFrameCounter(Integer counter) {
+        this.frameCounter = counter;
+    }
+
+    /**
+     * @return the sequence counter, or null if the key does not have a sequence counter associated with it
+     */
+    public Integer getSequenceCounter() {
+        return sequenceCounter;
+    }
+
+    /**
+     * @param counter the sequence counter as a {@link Integer} to set
+     */
+    public void setSequenceCounter(Integer counter) {
+        this.sequenceCounter = counter;
     }
 
     /**

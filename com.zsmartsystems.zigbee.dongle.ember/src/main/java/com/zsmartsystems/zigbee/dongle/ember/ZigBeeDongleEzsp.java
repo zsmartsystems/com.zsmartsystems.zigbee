@@ -18,9 +18,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.ZigBeeKey;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
-import com.zsmartsystems.zigbee.ZigBeeNodeKey;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
@@ -45,7 +43,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
@@ -63,6 +60,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.spi.SpiFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.ConcentratorConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
@@ -118,9 +116,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private ZigBeeTransportReceive zigbeeTransportReceive;
 
     /**
-     * The current network key as {@link EmberKeyData}
+     * The current link key as {@link ZigBeeKey}
      */
-    private final EmberKeyData networkKey = new EmberKeyData();
+    private ZigBeeKey linkKey = new ZigBeeKey();
+
+    /**
+     * The current network key as {@link ZigBeeKey}
+     */
+    private ZigBeeKey networkKey = new ZigBeeKey();
 
     /**
      * The current network parameters as {@link EmberNetworkParameters}
@@ -146,6 +149,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * The Ember version used in this system. Set during initialisation and saved in case the client is interested.
      */
     private String versionString = "Unknown";
+
+    /**
+     * Boolean that is true when the network is UP
+     */
+    private boolean networkStateUp = false;
 
     /**
      * Create a {@link ZigBeeDongleEzsp} with the default ASH2 frame handler
@@ -191,7 +199,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         stackPolicies.put(EzspPolicyId.EZSP_BINDING_MODIFICATION_POLICY,
                 EzspDecisionId.EZSP_CHECK_BINDING_MODIFICATIONS_ARE_VALID_ENDPOINT_CLUSTERS);
 
-        networkKey.setContents(new int[16]);
+        networkKey = new ZigBeeKey();
     }
 
     @Override
@@ -282,7 +290,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (reinitialize) {
             logger.debug("Reinitialising Ember NCP and forming network.");
             EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(frameHandler);
-            netInitialiser.formNetwork(networkParameters, networkKey);
+            netInitialiser.formNetwork(networkParameters, linkKey, networkKey);
             ncp.getNetworkParameters();
         }
 
@@ -485,6 +493,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void handleLinkStateChange(final boolean linkState) {
+        if (networkStateUp == linkState) {
+            return;
+        }
+        networkStateUp = linkState;
+
         new Thread() {
             @Override
             public void run() {
@@ -537,13 +550,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public boolean setZigBeeNetworkKey(final ZigBeeKey key) {
-        networkKey.setContents(key.getValue());
-
+        networkKey = key;
         return false;
     }
 
     @Override
     public boolean setTcLinkKey(ZigBeeKey key) {
+        linkKey = key;
         return false;
     }
 
@@ -559,8 +572,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
                     case INSTALL_KEY:
                         EmberNcp ncp = new EmberNcp(frameHandler);
-                        ZigBeeNodeKey nodeKey = (ZigBeeNodeKey) configuration.getValue(option);
-                        EmberStatus result = ncp.addTransientLinkKey(nodeKey.getAddress(), nodeKey.getKey());
+                        ZigBeeKey nodeKey = (ZigBeeKey) configuration.getValue(option);
+                        if (!nodeKey.hasAddress()) {
+                            logger.debug("Attempt to set INSTALL_KEY without setting address");
+                            configuration.setResult(option, TransportConfigResult.FAILURE);
+                            break;
+                        }
+                        EmberStatus result = ncp.addTransientLinkKey(nodeKey.getAddress(), nodeKey);
 
                         configuration.setResult(option,
                                 result == EmberStatus.EMBER_SUCCESS ? TransportConfigResult.SUCCESS
@@ -568,6 +586,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                         break;
 
                     case TRUST_CENTRE_LINK_KEY:
+                        setTcLinkKey((ZigBeeKey) configuration.getValue(option));
+                        configuration.setResult(option, TransportConfigResult.SUCCESS);
+                        break;
 
                     case TRUST_CENTRE_JOIN_MODE:
 
