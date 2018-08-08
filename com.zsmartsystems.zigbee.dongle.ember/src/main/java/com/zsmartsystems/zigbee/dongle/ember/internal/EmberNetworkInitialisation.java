@@ -289,8 +289,8 @@ public class EmberNetworkInitialisation {
         state.setPreconfiguredKey(linkKeyData);
         state.setPreconfiguredTrustCenterEui64(new IeeeAddress());
 
-        if (networkKey.hasSequenceCounter()) {
-            state.setNetworkKeySequenceNumber(networkKey.getSequenceCounter());
+        if (networkKey.hasSequenceNumber()) {
+            state.setNetworkKeySequenceNumber(networkKey.getSequenceNumber());
         }
 
         securityState.setState(state);
@@ -305,21 +305,21 @@ public class EmberNetworkInitialisation {
             return false;
         }
 
-        if (!networkKey.hasFrameCounter() && !linkKey.hasFrameCounter()) {
+        if (!networkKey.hasOutgoingFrameCounter() && !linkKey.hasOutgoingFrameCounter()) {
             return true;
         }
 
         EmberNcp ncp = new EmberNcp(protocolHandler);
-        if (networkKey.hasFrameCounter()) {
+        if (networkKey.hasOutgoingFrameCounter()) {
             EzspSerializer serializer = new EzspSerializer();
-            serializer.serializeUInt32(networkKey.getFrameCounter());
+            serializer.serializeUInt32(networkKey.getOutgoingFrameCounter());
             if (!ncp.setValue(EzspValueId.EZSP_VALUE_NWK_FRAME_COUNTER, serializer.getPayload())) {
                 return false;
             }
         }
-        if (linkKey.hasFrameCounter()) {
+        if (linkKey.hasOutgoingFrameCounter()) {
             EzspSerializer serializer = new EzspSerializer();
-            serializer.serializeUInt32(linkKey.getFrameCounter());
+            serializer.serializeUInt32(linkKey.getOutgoingFrameCounter());
             if (!ncp.setValue(EzspValueId.EZSP_VALUE_APS_FRAME_COUNTER, serializer.getPayload())) {
                 return false;
             }

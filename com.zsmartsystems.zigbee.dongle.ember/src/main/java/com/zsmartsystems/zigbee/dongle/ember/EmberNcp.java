@@ -14,6 +14,8 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddOrUpdateKeyTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddOrUpdateKeyTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKeyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKeyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashRequest;
@@ -593,4 +595,32 @@ public class EmberNcp {
         EzspGetLibraryStatusResponse response = (EzspGetLibraryStatusResponse) transaction.getResponse();
         return response.getStatus();
     }
+
+    /**
+     * This function updates an existing entry in the key table or adds a new one. It first searches the table for an
+     * existing entrythat matches the passed EUI64 address. If no entry is found, it searches for the first free entry.
+     * If successful, it updates the key data and resets the associated incoming frame counter. If it fails to find an
+     * existing entry and no free one exists, it returns a failure.
+     *
+     * @param address
+     * @param key
+     * @param linkKey This indicates whether the key is a Link or a Master Key
+     * @return the returned {@link EmberStatus} of the request
+     */
+    public EmberStatus addOrUpdateKeyTableEntry(IeeeAddress address, ZigBeeKey key, boolean linkKey) {
+        EmberKeyData keyData = new EmberKeyData();
+        keyData.setContents(key.getValue());
+
+        EzspAddOrUpdateKeyTableEntryRequest request = new EzspAddOrUpdateKeyTableEntryRequest();
+        request.setAddress(address);
+        request.setKeyData(keyData);
+        request.setLinkKey(linkKey);
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
+                EzspAddOrUpdateKeyTableEntryResponse.class);
+        protocolHandler.sendEzspTransaction(transaction);
+        EzspAddOrUpdateKeyTableEntryResponse response = (EzspAddOrUpdateKeyTableEntryResponse) transaction
+                .getResponse();
+        return response.getStatus();
+    }
+
 }

@@ -20,12 +20,13 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.log4j.xml.DOMConfigurator;
-import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
+import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkMeshMonitor;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleMmoHashCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpChildrenCommand;
@@ -61,15 +62,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
  * @author Chris Jackson
  */
 public class ZigBeeConsoleMain {
-    /**
-     * The {@link org.slf4j.Logger}.
-     */
-    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ZigBeeConsoleMain.class);
-    /**
-     * The usage.
-     */
-    public static final String USAGE = "Syntax: java -jar com.zsmartsystems.zigbee.console.main.jar [EMBER|CC2531|TELEGESIS|CONBEE|XBEE] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET";
-
     /**
      * Private constructor to disable constructing main class.
      */
@@ -111,8 +103,12 @@ public class ZigBeeConsoleMain {
                 Option.builder("e").longOpt("epan").hasArg().argName("EPAN ID").desc("Set the ZigBee EPAN ID").build());
         options.addOption(Option.builder("n").longOpt("nwkkey").hasArg().argName("key")
                 .desc("Set the ZigBee Network key (defaults to randon value)").build());
+        options.addOption(Option.builder("o").longOpt("nwkkeyoutcnt").hasArg().argName("counter")
+                .desc("Set the ZigBee Network key outgoing frame counter").build());
         options.addOption(Option.builder("l").longOpt("linkkey").hasArg().argName("key")
                 .desc("Set the ZigBee Link key (defaults to well known ZHA key)").build());
+        options.addOption(Option.builder("t").longOpt("linkkeyoutcnt").hasArg().argName("counter")
+                .desc("Set the ZigBee Link key outgoing frame counter").build());
         options.addOption(Option.builder("r").longOpt("reset").desc("Reset the ZigBee dongle").build());
         options.addOption(Option.builder("?").longOpt("help").desc("Print usage information").build());
 
@@ -228,7 +224,6 @@ public class ZigBeeConsoleMain {
 
         if (dongle == null) {
             System.out.println("Dongle unable to be opened.");
-            System.out.println(USAGE);
             return;
         }
 
@@ -281,14 +276,27 @@ public class ZigBeeConsoleMain {
                         0x6E, 0x63, 0x65, 0x30, 0x39 });
             }
 
-            System.out.println("*** Resetting network");
-            System.out.println("  * Channel          = " + channel);
-            System.out.println("  * PAN ID           = " + pan);
-            System.out.println("  * Extended PAN ID  = " + extendedPan);
-            System.out.println("  * Link Key         = " + linkKey);
-            System.out.println("  * Network Key      = " + nwkKey);
+            if (cmdline.hasOption("nwkkeyoutcnt")) {
+                nwkKey.setOutgoingFrameCounter(parseDecimalOrHexInt(cmdline.getOptionValue("nwkkeyoutcnt")));
+            }
+            if (cmdline.hasOption("linkkeyoutcnt")) {
+                linkKey.setOutgoingFrameCounter(parseDecimalOrHexInt(cmdline.getOptionValue("linkkeyoutcnt")));
+            }
 
-            networkManager.setZigBeeChannel(channel);
+            System.out.println("*** Resetting network");
+            System.out.println("  * Channel                = " + channel);
+            System.out.println("  * PAN ID                 = " + pan);
+            System.out.println("  * Extended PAN ID        = " + extendedPan);
+            System.out.println("  * Link Key               = " + linkKey);
+            if (nwkKey.hasOutgoingFrameCounter()) {
+                System.out.println("  * Link Key Frame Cnt     = " + linkKey.getOutgoingFrameCounter());
+            }
+            System.out.println("  * Network Key            = " + nwkKey);
+            if (nwkKey.hasOutgoingFrameCounter()) {
+                System.out.println("  * Network Key Frame Cnt  = " + nwkKey.getOutgoingFrameCounter());
+            }
+
+            networkManager.setZigBeeChannel(ZigBeeChannel.create(channel));
             networkManager.setZigBeePanId(pan);
             networkManager.setZigBeeExtendedPanId(extendedPan);
             networkManager.setZigBeeNetworkKey(nwkKey);
@@ -297,7 +305,7 @@ public class ZigBeeConsoleMain {
 
         dongle.updateTransportConfig(transportOptions);
 
-        if (!networkManager.startup(resetNetwork)) {
+        if (networkManager.startup(resetNetwork) != ZigBeeStatus.SUCCESS) {
             System.out.println("ZigBee console starting up ... [FAIL]");
             // return;
         } else {

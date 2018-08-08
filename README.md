@@ -146,19 +146,21 @@ Command handlers take a set of arguments as provided by the user and will throw 
 ## Starting the Console
 The console application takes the following parameters -:
 
-| Option                   | Description                                                            |
-|----------------------|------------------------------|
-|-?,--help                  | Print usage information    |
-|-a,--pan <PAN ID>          | Set the ZigBee PAN ID    |
-|-b,--baud <baud>           | Set the port baud rate    |
-|-c,--channel <channel id>  | Set the ZigBee channel ID    |
-|-d,--dongle <dongle type>  | Set the dongle type to use (EMBER | CC2531 | TELEGESIS | CONBEE | XBEE)    |
-|-e,--epan <EPAN ID>        | Set the ZigBee EPAN ID    |
-|-f,--flow <type>           | Set the flow control (none | hardware | software)    |
-|-l,--linkkey <key>         | Set the ZigBee Link key (defaults to well known ZHA key)    |
-|-n,--nwkkey <key>          | Set the ZigBee Network key (defaults to randon value)    |
-|-p,--port <port name>      | Set the port    |
-|-r,--reset                 | Reset the ZigBee dongle    |
+| Option                      | Description                                                               |
+|-----------------------------|---------------------------------------------------------------------------|
+|-?,--help                    | Print usage information                                                   |
+|-a,--pan <PAN ID>            | Set the ZigBee PAN ID                                                     |
+|-b,--baud <baud>             | Set the port baud rate                                                    |
+|-c,--channel <channel id>    | Set the ZigBee channel ID                                                 |
+|-d,--dongle <dongle type>    | Set the dongle type to use (EMBER | CC2531 | TELEGESIS | CONBEE | XBEE)   |
+|-e,--epan <EPAN ID>          | Set the ZigBee EPAN ID                                                    |
+|-f,--flow <type>             | Set the flow control (NONE | HARDWARE | SOFTWARE)                         |
+|-l,--linkkey <key>           | Set the ZigBee Link key (defaults to well known ZHA key)                  |
+|-n,--nwkkey <key>            | Set the ZigBee Network key (defaults to randon value)                     |
+|-o,--nwkkeyoutcnt <counter>  | Set the ZigBee Network key outgoing frame counter                         |
+|-p,--port <port name>        | Set the port                                                              |
+|-t,--linkkeyoutcnt <counter> | Set the ZigBee Link key outgoing frame counter                            |
+|-r,--reset                   | Reset the ZigBee dongle                                                   |
 
 The ```-dongle``` and ```-port``` options are always required. Most dongles will also require ```-baud```, and may require ```-flow```, although this may be hard coded for dongles that do not have this option.
 

@@ -42,7 +42,6 @@ import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
-import com.zsmartsystems.zigbee.transport.TransportConfigResult;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
@@ -290,10 +289,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * <p>
      * Once all transport initialization is complete, {@link #startup} must be called.
      *
-     * @return {@link ZigBeeInitializeResponse}
+     * @return {@link ZigBeeStatus}
      */
-    public ZigBeeInitializeResponse initialize() {
-        ZigBeeInitializeResponse transportResponse = transport.initialize();
+    public ZigBeeStatus initialize() {
+        ZigBeeStatus transportResponse = transport.initialize();
 
         synchronized (this) {
             if (networkStateSerializer != null) {
@@ -330,27 +329,23 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Gets the current ZigBee RF channel.
      *
-     * @return the current channel or -1 on error
-     * @return
+     * @return the current {@link ZigBeeChannel} or {@link ZigBeeChannel.UNKNOWN} on error
      */
-    public int getZigBeeChannel() {
+    public ZigBeeChannel getZigBeeChannel() {
         return transport.getZigBeeChannel();
     }
 
     /**
-     * Sets the ZigBee RF channel. The allowable channel range is 11 to 26.
+     * Sets the ZigBee RF channel. The allowable channel range is 11 to 26 for 2.4GHz, however the transport
+     * implementation may allow any value it supports.
      * <p>
      * Note that this method may only be called following the {@link #initialize} call, and before the {@link #startup}
      * call.
      *
      * @param channel {@link int} defining the channel to use
-     * @return true if the channel was set
+     * @return {@link ZigBeeStatus} with the status of function
      */
-    public boolean setZigBeeChannel(int channel) {
-        if (channel < 11 || channel > 26) {
-            logger.debug("Can't set channel to {}", channel);
-            return false;
-        }
+    public ZigBeeStatus setZigBeeChannel(ZigBeeChannel channel) {
         return transport.setZigBeeChannel(channel);
     }
 
@@ -372,11 +367,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * call.
      *
      * @param panId the new PAN ID
-     * @return true if the PAN Id was set correctly
+     * @return {@link ZigBeeStatus} with the status of function
      */
-    public boolean setZigBeePanId(int panId) {
+    public ZigBeeStatus setZigBeePanId(int panId) {
         if (panId < 0 || panId > 0xfffe) {
-            return false;
+            return ZigBeeStatus.INVALID_ARGUMENTS;
         }
         return transport.setZigBeePanId(panId);
     }
@@ -397,9 +392,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * call.
      *
      * @param panId the new {@link ExtendedPanId}
-     * @return true if the PAN Id was set correctly
+     * @return {@link ZigBeeStatus} with the status of function
      */
-    public boolean setZigBeeExtendedPanId(ExtendedPanId panId) {
+    public ZigBeeStatus setZigBeeExtendedPanId(ExtendedPanId panId) {
         return transport.setZigBeeExtendedPanId(panId);
     }
 
@@ -410,10 +405,19 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * call.
      *
      * @param key the new network key as {@link ZigBeeKey}
-     * @return true if the key was set
+     * @return {@link ZigBeeStatus} with the status of function
      */
-    public boolean setZigBeeNetworkKey(final ZigBeeKey key) {
+    public ZigBeeStatus setZigBeeNetworkKey(final ZigBeeKey key) {
         return transport.setZigBeeNetworkKey(key);
+    }
+
+    /**
+     * Gets the current network key used by the system
+     *
+     * @return the current network {@link ZigBeeKey}
+     */
+    public ZigBeeKey getZigBeeNetworkKey() {
+        return transport.getZigBeeNetworkKey();
     }
 
     /**
@@ -423,24 +427,35 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * call.
      *
      * @param key the new link key as {@link ZigBeeKey}
-     * @return true if the key was set
+     * @return {@link ZigBeeStatus} with the status of function
      */
-    public boolean setZigBeeLinkKey(final ZigBeeKey key) {
+    public ZigBeeStatus setZigBeeLinkKey(final ZigBeeKey key) {
         return transport.setTcLinkKey(key);
+    }
+
+    /**
+     * Gets the current Trust Centre link key used by the system
+     *
+     * @return the current trust centre link {@link ZigBeeKey}
+     */
+    public ZigBeeKey getZigBeeLinkKey() {
+        return transport.getTcLinkKey();
     }
 
     /**
      * Adds an installation key for the specified address. The {@link ZigBeeKey} should have an address associated with
      * it.
      *
-     * @param key the install key as {@link ZigBeeKey}
-     * @return true if the key was set
+     * @param address {@link IeeeAddress} the address to which the install key relates
+     * @param key the install key as {@link ZigBeeKey} to be used for the specified address
+     * @return {@link ZigBeeStatus} with the status of function
      */
-    public boolean setZigBeeInstallKey(final ZigBeeKey key) {
+    public ZigBeeStatus setZigBeeInstallKey(final IeeeAddress address, final ZigBeeKey key) {
+        key.setAddress(address);
         TransportConfig config = new TransportConfig(TransportConfigOption.INSTALL_KEY, key);
         transport.updateTransportConfig(config);
 
-        return (config.getResult(TransportConfigOption.INSTALL_KEY) == TransportConfigResult.SUCCESS);
+        return config.getResult(TransportConfigOption.INSTALL_KEY);
     }
 
     /**
@@ -449,14 +464,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      *
      * @param reinitialize true if the provider is to reinitialise the network with the parameters configured since the
      *            {@link #initialize} method was called.
-     * @return true if startup was successful.
+     * @return {@link ZigBeeStatus} with the status of function
      */
-    public boolean startup(boolean reinitialize) {
-        if (!transport.startup(reinitialize)) {
-            return false;
-        }
-
-        return true;
+    public ZigBeeStatus startup(boolean reinitialize) {
+        return transport.startup(reinitialize);
     }
 
     /**
@@ -941,8 +952,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      *
      * @param duration sets the duration of the join enable. Setting this to 0 disables joining. As per ZigBee 3, a
      *            value of 255 is not permitted and will be ignored.
+     * @return {@link ZigBeeStatus} with the status of function
      */
-    public boolean permitJoin(final int duration) {
+    public ZigBeeStatus permitJoin(final int duration) {
         return permitJoin(new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_ROUTERS_AND_COORD.getKey()),
                 duration);
     }
@@ -956,11 +968,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param destination the {@link ZigBeeEndpointAddress} to send the join request to
      * @param duration sets the duration of the join enable. Setting this to 0 disables joining. As per ZigBee 3, a
      *            value of 255 is not permitted and will be ignored.
+     * @return {@link ZigBeeStatus} with the status of function
      */
-    public boolean permitJoin(final ZigBeeEndpointAddress destination, final int duration) {
+    public ZigBeeStatus permitJoin(final ZigBeeEndpointAddress destination, final int duration) {
         if (duration < 0 || duration >= 255) {
             logger.debug("Permit join to {} invalid period of {} seconds.", destination, duration);
-            return false;
+            return ZigBeeStatus.INVALID_ARGUMENTS;
         }
         logger.debug("Permit join to {} for {} seconds.", destination, duration);
 
@@ -984,7 +997,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             sendCommand(command);
         }
 
-        return true;
+        return ZigBeeStatus.SUCCESS;
     }
 
     /**

@@ -16,11 +16,12 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
-import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisEventListener;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFirmwareUpdateHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFrameHandler;
@@ -63,7 +64,6 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisStat
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
-import com.zsmartsystems.zigbee.transport.TransportConfigResult;
 import com.zsmartsystems.zigbee.transport.TrustCentreJoinMode;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
@@ -125,7 +125,7 @@ public class ZigBeeDongleTelegesis
     /**
      * The current radio channel
      */
-    private int radioChannel;
+    private ZigBeeChannel radioChannel;
 
     /**
      * The current pan ID
@@ -320,7 +320,7 @@ public class ZigBeeDongleTelegesis
     }
 
     @Override
-    public ZigBeeInitializeResponse initialize() {
+    public ZigBeeStatus initialize() {
         logger.debug("Telegesis dongle initialize.");
 
         bootloadHandler = null;
@@ -329,7 +329,7 @@ public class ZigBeeDongleTelegesis
 
         if (!serialPort.open()) {
             logger.error("Unable to open Telegesis serial port");
-            return ZigBeeInitializeResponse.FAILED;
+            return ZigBeeStatus.COMMUNICATION_ERROR;
         }
 
         // Create and start the frame handler
@@ -342,7 +342,7 @@ public class ZigBeeDongleTelegesis
         prompt1Function.setConfiguration(defaultS0E);
         if (frameHandler.sendRequest(prompt1Function) == null) {
             logger.debug("Error setting Telegesis Prompt 1 register");
-            return ZigBeeInitializeResponse.FAILED;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
 
         // Disable echo on the serial port
@@ -352,7 +352,7 @@ public class ZigBeeDongleTelegesis
         setRegister.setState(true);
         if (frameHandler.sendRequest(setRegister) == null) {
             logger.debug("Error setting Telegesis port echo");
-            return ZigBeeInitializeResponse.FAILED;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
 
         TelegesisSetMainFunctionCommand mainFunction = new TelegesisSetMainFunctionCommand();
@@ -360,19 +360,19 @@ public class ZigBeeDongleTelegesis
         mainFunction.setPassword(telegesisPassword);
         if (frameHandler.sendRequest(mainFunction) == null) {
             logger.debug("Error setting Telegesis Main Function register");
-            return ZigBeeInitializeResponse.FAILED;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
         TelegesisSetExtendedFunctionCommand extendedFunction = new TelegesisSetExtendedFunctionCommand();
         extendedFunction.setConfiguration(defaultS10);
         if (frameHandler.sendRequest(extendedFunction) == null) {
             logger.debug("Error setting Telegesis Extended Function register");
-            return ZigBeeInitializeResponse.FAILED;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
         TelegesisSetPromptEnable2Command prompt2Function = new TelegesisSetPromptEnable2Command();
         prompt2Function.setConfiguration(defaultS0F);
         if (frameHandler.sendRequest(prompt2Function) == null) {
             logger.debug("Error setting Telegesis Prompt 2 register");
-            return ZigBeeInitializeResponse.FAILED;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
 
         // Get the product information
@@ -391,26 +391,26 @@ public class ZigBeeDongleTelegesis
         // Get network information
         TelegesisDisplayNetworkInformationCommand networkInfo = new TelegesisDisplayNetworkInformationCommand();
         if (frameHandler.sendRequest(networkInfo) == null || networkInfo.getStatus() != TelegesisStatusCode.SUCCESS) {
-            return ZigBeeInitializeResponse.FAILED;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
         if (networkInfo.getDevice() != TelegesisDeviceType.COO) {
-            return ZigBeeInitializeResponse.NOT_JOINED;
+            return ZigBeeStatus.INVALID_STATE;
         }
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
-        return ZigBeeInitializeResponse.JOINED;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
-    public boolean startup(boolean reinitialize) {
+    public ZigBeeStatus startup(boolean reinitialize) {
         logger.debug("Telegesis dongle startup.");
 
         // If frameHandler is null then the serial port didn't initialise
         if (frameHandler == null) {
             logger.error("Initialising Telegesis Dongle but low level handler is not initialised.");
             zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
-            return false;
+            return ZigBeeStatus.INVALID_STATE;
         }
 
         // If we want to reinitialize the network, then go...
@@ -423,20 +423,15 @@ public class ZigBeeDongleTelegesis
         TelegesisDisplayNetworkInformationCommand networkInfo = new TelegesisDisplayNetworkInformationCommand();
         if (frameHandler.sendRequest(networkInfo) == null || networkInfo.getStatus() != TelegesisStatusCode.SUCCESS) {
             zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
-            return false;
-        }
-        if (networkInfo.getDevice() != TelegesisDeviceType.COO) {
-            logger.debug("Telegesis dongle is not the coordinator.");
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
-            return false;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
 
-        radioChannel = networkInfo.getChannel();
+        radioChannel = ZigBeeChannel.create(networkInfo.getChannel());
         panId = networkInfo.getPanId();
         extendedPanId = networkInfo.getEpanId();
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
-        return true;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
@@ -455,6 +450,11 @@ public class ZigBeeDongleTelegesis
     @Override
     public IeeeAddress getIeeeAddress() {
         return ieeeAddress;
+    }
+
+    @Override
+    public Integer getNwkAddress() {
+        return 0;
     }
 
     private void initialiseNetwork() {
@@ -621,12 +621,12 @@ public class ZigBeeDongleTelegesis
     }
 
     @Override
-    public int getZigBeeChannel() {
+    public ZigBeeChannel getZigBeeChannel() {
         return radioChannel;
     }
 
     @Override
-    public boolean setZigBeeChannel(int channel) {
+    public ZigBeeStatus setZigBeeChannel(ZigBeeChannel channel) {
         ZigBeeChannelMask channelMask = new ZigBeeChannelMask();
         channelMask.addChannel(channel);
 
@@ -634,18 +634,18 @@ public class ZigBeeDongleTelegesis
         maskCommand.setChannelMask(channelMask.getChannelMask() >> 11);
         if (frameHandler.sendRequest(maskCommand) == null || maskCommand.getStatus() != TelegesisStatusCode.SUCCESS) {
             zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
-            return false;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
 
         TelegesisChangeChannelCommand channelCommand = new TelegesisChangeChannelCommand();
-        channelCommand.setChannel(channel);
+        channelCommand.setChannel(channel.getChannel());
         if (frameHandler.sendRequest(channelCommand) == null
                 || channelCommand.getStatus() != TelegesisStatusCode.SUCCESS) {
             zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
-            return false;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
 
-        return false;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
@@ -654,11 +654,11 @@ public class ZigBeeDongleTelegesis
     }
 
     @Override
-    public boolean setZigBeePanId(int panId) {
+    public ZigBeeStatus setZigBeePanId(int panId) {
         // Note that Telegesis dongle will not set a PAN ID if it detects the same PAN is already in use.
         // This can cause issues when trying to create a new coordinator on the same PAN.
         this.panId = panId;
-        return true;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
@@ -667,16 +667,21 @@ public class ZigBeeDongleTelegesis
     }
 
     @Override
-    public boolean setZigBeeExtendedPanId(ExtendedPanId extendedPanId) {
+    public ZigBeeStatus setZigBeeExtendedPanId(ExtendedPanId extendedPanId) {
         this.extendedPanId = extendedPanId;
-        return false;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
-    public boolean setZigBeeNetworkKey(final ZigBeeKey key) {
+    public ZigBeeStatus setZigBeeNetworkKey(final ZigBeeKey key) {
         networkKey = key;
 
-        return false;
+        return ZigBeeStatus.SUCCESS;
+    }
+
+    @Override
+    public ZigBeeKey getZigBeeNetworkKey() {
+        return networkKey;
     }
 
     @Override
@@ -752,7 +757,7 @@ public class ZigBeeDongleTelegesis
     }
 
     @Override
-    public boolean setTcLinkKey(ZigBeeKey key) {
+    public ZigBeeStatus setTcLinkKey(ZigBeeKey key) {
         linkKey = key;
 
         TelegesisSetTrustCentreLinkKeyCommand linkKeyCommand = new TelegesisSetTrustCentreLinkKeyCommand();
@@ -760,10 +765,21 @@ public class ZigBeeDongleTelegesis
         linkKeyCommand.setPassword(telegesisPassword);
         if (frameHandler.sendRequest(linkKeyCommand) == null) {
             logger.debug("Error setting Telegesis link key");
-            return false;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
 
-        return true;
+        if (key.hasOutgoingFrameCounter()) {
+            TelegesisSetFrameCntCommand setCount = new TelegesisSetFrameCntCommand();
+            setCount.setFrameCnt((long) key.getOutgoingFrameCounter());
+        }
+
+        return ZigBeeStatus.SUCCESS;
+    }
+
+    @Override
+    public ZigBeeKey getTcLinkKey() {
+
+        return linkKey;
     }
 
     @SuppressWarnings("unchecked")
@@ -788,18 +804,16 @@ public class ZigBeeDongleTelegesis
                         break;
 
                     case TRUST_CENTRE_LINK_KEY:
-                        configuration.setResult(option,
-                                setTcLinkKey((ZigBeeKey) configuration.getValue(option)) ? TransportConfigResult.SUCCESS
-                                        : TransportConfigResult.FAILURE);
+                        configuration.setResult(option, setTcLinkKey((ZigBeeKey) configuration.getValue(option)));
                         break;
 
                     default:
-                        configuration.setResult(option, TransportConfigResult.ERROR_UNSUPPORTED);
+                        configuration.setResult(option, ZigBeeStatus.UNSUPPORTED);
                         logger.debug("Unsupported configuration option \"{}\" in Telegesis dongle", option);
                         break;
                 }
             } catch (ClassCastException e) {
-                configuration.setResult(option, TransportConfigResult.ERROR_INVALID_VALUE);
+                configuration.setResult(option, ZigBeeStatus.INVALID_ARGUMENTS);
             }
         }
     }
@@ -813,29 +827,29 @@ public class ZigBeeDongleTelegesis
         }
     }
 
-    private TransportConfigResult setSupportedInputClusters(Collection<Integer> supportedClusters) {
+    private ZigBeeStatus setSupportedInputClusters(Collection<Integer> supportedClusters) {
         TelegesisSetInputClustersCommand inputClusters = new TelegesisSetInputClustersCommand();
         inputClusters.setClusterList(supportedClusters);
         if (frameHandler.sendRequest(inputClusters) == null) {
             logger.debug("Error setting Telegesis input clusters");
-            return TransportConfigResult.ERROR_INVALID_VALUE;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
 
-        return TransportConfigResult.SUCCESS;
+        return ZigBeeStatus.SUCCESS;
     }
 
-    private TransportConfigResult setSupportedOutputClusters(Collection<Integer> supportedClusters) {
+    private ZigBeeStatus setSupportedOutputClusters(Collection<Integer> supportedClusters) {
         TelegesisSetOutputClustersCommand outputClusters = new TelegesisSetOutputClustersCommand();
         outputClusters.setClusterList(supportedClusters);
         if (frameHandler.sendRequest(outputClusters) == null) {
             logger.debug("Error setting Telegesis output clusters");
-            return TransportConfigResult.ERROR_INVALID_VALUE;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
 
-        return TransportConfigResult.SUCCESS;
+        return ZigBeeStatus.SUCCESS;
     }
 
-    private TransportConfigResult setTcJoinMode(TrustCentreJoinMode linkMode) {
+    private ZigBeeStatus setTcJoinMode(TrustCentreJoinMode linkMode) {
         logger.debug("Setting Telegesis trust centre link mode: {}", linkMode);
 
         TelegesisDisallowTcJoinCommand disallowJoinCommand = new TelegesisDisallowTcJoinCommand();
@@ -858,15 +872,15 @@ public class ZigBeeDongleTelegesis
                 break;
             default:
                 logger.info("Unknown trust centre link mode: {}", linkMode);
-                return TransportConfigResult.ERROR_INVALID_VALUE;
+                return ZigBeeStatus.INVALID_ARGUMENTS;
         }
 
-        return TransportConfigResult.SUCCESS;
+        return ZigBeeStatus.SUCCESS;
     }
 
     /**
      * Callback method from the handler to notify if the handler goes on/off line
-     * 
+     *
      * @param state true if the handler is online, false if offline
      */
     public void notifyStateUpdate(boolean state) {
