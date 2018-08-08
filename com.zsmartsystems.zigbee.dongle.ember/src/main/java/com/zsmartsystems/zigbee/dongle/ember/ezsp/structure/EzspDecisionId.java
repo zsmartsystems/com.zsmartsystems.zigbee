@@ -29,14 +29,6 @@ public enum EzspDecisionId {
     EZSP_ALLOW_JOINS(0x0000),
 
     /**
-     * Send the network key in the clear to all joining devices. Rejoining devices are sent the
-     * network key encrypted with their trust center link key. The trust center and any rejoining
-     * device are assumed to share a link key, either preconfigured or obtained under a previous
-     * policy.
-     */
-    EZSP_ALLOW_JOINS_REJOINS_HAVE_LINK_KEY(0x0004),
-
-    /**
      * Send the network key encrypted with the joining or rejoining device's trust center link key.
      * The trust center and any joining or rejoining device are assumed to share a link key, either
      * preconfigured or obtained under a previous policy. This is the default value for the
@@ -57,9 +49,24 @@ public enum EzspDecisionId {
     EZSP_DISALLOW_ALL_JOINS_AND_REJOINS(0x0003),
 
     /**
+     * Send the network key in the clear to all joining devices. Rejoining devices are sent the
+     * network key encrypted with their trust center link key. The trust center and any rejoining
+     * device are assumed to share a link key, either preconfigured or obtained under a previous
+     * policy.
+     */
+    EZSP_ALLOW_JOINS_REJOINS_HAVE_LINK_KEY(0x0004),
+
+    /**
      * Take no action on trust center rejoin attempts.
      */
     EZSP_IGNORE_TRUST_CENTER_REJOINS(0x0005),
+
+    /**
+     * Admit joins only if there is an entry in the transient key table. This corresponds to the Base
+     * Device Behavior specification where a Trust Center enforces all devices to join with an
+     * install code-derived link key.
+     */
+    EZSP_BDB_JOIN_USES_INSTALL_CODE_KEY(0x0006),
 
     /**
      * EZSP_BINDING_MODIFICATION_POLICY default decision. Do not allow the local binding table
