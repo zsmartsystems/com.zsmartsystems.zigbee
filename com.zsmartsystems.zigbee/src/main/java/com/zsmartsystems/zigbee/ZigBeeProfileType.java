@@ -7,8 +7,8 @@
  */
 package com.zsmartsystems.zigbee;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -24,6 +24,7 @@ public enum ZigBeeProfileType {
     UNKNOWN(-1, "Unknown Profile"),
     ZIGBEE_HOME_AUTOMATION(0x0104, "ZigBee Home Automation"),
     ZIGBEE_SMART_ENERGY(0x0109, "ZigBee Smart Energy"),
+    ZIGBEE_GREENPOWER(0xA1E0, "ZigBee Green Power"),
     ZIGBEE_LIGHT_LINK(0xC05E, "ZigBee Light Link"),
     MANUFACTURER_TELEGESIS(0xC091, "Manufacturer Telegesis"),
     MANUFACTURER_DIGI(0xC105, "Manufacturer Digi");
