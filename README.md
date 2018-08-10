@@ -138,8 +138,30 @@ Command handlers take a set of arguments as provided by the user and will throw 
 ## Starting the Console
 The console application takes the following parameters -:
 
+| Option                   | Description                                                            |
+|----------------------|------------------------------|
+|-?,--help                  | Print usage information    |
+|-a,--pan <PAN ID>          | Set the ZigBee PAN ID    |
+|-b,--baud <baud>           | Set the port baud rate    |
+|-c,--channel <channel id>  | Set the ZigBee channel ID    |
+|-d,--dongle <dongle type>  | Set the dongle type to use (EMBER | CC2531 | TELEGESIS | CONBEE | XBEE)    |
+|-e,--epan <EPAN ID>        | Set the ZigBee EPAN ID    |
+|-f,--flow <type>           | Set the flow control (none | hardware | software)    |
+|-l,--linkkey <key>         | Set the ZigBee Link key (defaults to well known ZHA key)    |
+|-n,--nwkkey <key>          | Set the ZigBee Network key (defaults to randon value)    |
+|-p,--port <port name>      | Set the port    |
+|-r,--reset                 | Reset the ZigBee dongle    |
+
+The ```-dongle``` and ```-port``` options are always required. Most dongles will also require ```-baud```, and may require ```-flow```, although this may be hard coded for dongles that do not have this option.
+
+If ```-reset``` is used, you should normally also set the ```-channel```, ```-pan```, ```-epan``` and ```-nwkkey``` options.  If not set, defaults will be used to allow the system to start, however these may be random and may not allow you to use a network sniffer or other tools where some of this information may be required. The ```-linkkey``` may also be set, but will default to the well known ZHA ```ZigBeeAlliance09``` key if not set.
+
+Decimal configuration values such as ```pan``` may be specified in decimal, or hexadecimal by prepending ```0x``` to the value (eg ```0x2000```).
+
+Example -:
+
 ```
-Syntax: [EMBER|CC2531|TELEGESIS|CONBEE|XBEE] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET
+-dongle EMBER -port /dev/tty.usbserial-FTD6C0AF -baud 115200 -flow software -channel 11 -pan 0x2000 -epan 987654321 -nwkkey AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -reset
 ```
 
 ## Console Commands
