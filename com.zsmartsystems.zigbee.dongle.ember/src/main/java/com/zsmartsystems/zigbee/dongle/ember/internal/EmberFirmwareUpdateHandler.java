@@ -20,7 +20,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 
 /**
- * Firmware update handler for the Telegesis dongle
+ * Firmware update handler for the Ember dongle
  *
  * @author Chris Jackson
  *
@@ -54,6 +54,11 @@ public class EmberFirmwareUpdateHandler {
     private boolean stopBootload = false;
 
     /**
+     * Flag to store the success of the transfer
+     */
+    private boolean bootloadOk = false;
+
+    /**
      * Reference to our master
      */
     private final ZigBeeDongleEzsp dongle;
@@ -81,30 +86,30 @@ public class EmberFirmwareUpdateHandler {
      *
      */
     public void startBootload() {
-        Thread firmwareThread = new Thread("TelegesisFirmwareUpdateHandler") {
+        Thread firmwareThread = new Thread("EmberFirmwareUpdateHandler") {
             @Override
             public void run() {
-                logger.debug("Telegesis bootloader: Starting.");
+                logger.debug("Ember bootloader: Starting.");
                 try {
                     sleep(1500);
                 } catch (InterruptedException e) {
                     // Eat me!
                 }
                 if (!serialPort.open(BOOTLOAD_BAUD_RATE, FlowControl.FLOWCONTROL_OUT_NONE)) {
-                    logger.debug("Telegesis bootloader: Failed to open serial port.");
+                    logger.debug("Ember bootloader: Failed to open serial port.");
                     transferComplete(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
                     return;
                 }
 
-                logger.debug("Telegesis bootloader: Serial port opened.");
+                logger.debug("Ember bootloader: Serial port opened.");
 
                 // Wait for the bootload menu prompt
                 if (!getBlPrompt()) {
-                    logger.debug("Telegesis bootloader: Failed waiting for menu before transfer.");
+                    logger.debug("Ember bootloader: Failed waiting for menu before transfer.");
                     transferComplete(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
                     return;
                 }
-                logger.debug("Telegesis bootloader: Got bootloader prompt.");
+                logger.debug("Ember bootloader: Got bootloader prompt.");
 
                 // Select option 1 to upload the file
                 serialPort.write('1');
@@ -117,12 +122,12 @@ public class EmberFirmwareUpdateHandler {
                 }
 
                 callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_TRANSFER_STARTED);
-                if (transferFile()) {
+                bootloadOk = transferFile();
+                if (bootloadOk) {
                     callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_TRANSFER_COMPLETE);
-                } else if (!stopBootload) {
-                    transferComplete(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
-                    serialPort.close();
-                    return;
+                    logger.debug("Ember bootloader: Transfer successful.");
+                } else {
+                    logger.debug("Ember bootloader: Transfer failed.");
                 }
 
                 // Short delay here to allow completion. This is mainly required if there was an abort.
@@ -135,17 +140,17 @@ public class EmberFirmwareUpdateHandler {
                 // Transfer was completed, or aborted. Either way all we can do is run the firmware and it should return
                 // to the main prompt
 
-                logger.debug("Telegesis bootloader: Waiting for menu.");
+                logger.debug("Ember bootloader: Waiting for menu.");
 
                 // Wait for the bootload menu prompt
                 if (!getBlPrompt()) {
-                    logger.debug("Telegesis bootloader: Failed waiting for menu after transfer.");
+                    logger.debug("Ember bootloader: Failed waiting for menu after transfer.");
                     transferComplete(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
                     return;
                 }
 
                 // Select 2 to run
-                logger.debug("Telegesis bootloader: Running firmware.");
+                logger.debug("Ember bootloader: Running firmware.");
                 serialPort.write('2');
 
                 // Short delay here to allow all bootloader to run.
@@ -155,10 +160,12 @@ public class EmberFirmwareUpdateHandler {
                     // Eat me!
                 }
 
-                logger.debug("Telegesis bootloader: Done.");
+                logger.debug("Ember bootloader: Done.");
 
                 // We're done - either we completed, or it was cancelled
-                if (stopBootload) {
+                if (!bootloadOk) {
+                    transferComplete(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
+                } else if (stopBootload) {
                     transferComplete(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_CANCELLED);
                 } else {
                     transferComplete(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_COMPLETE);
@@ -177,7 +184,7 @@ public class EmberFirmwareUpdateHandler {
     }
 
     /**
-     * Waits for the Telegesis bootloader "BL >" response
+     * Waits for the Ember bootloader "BL >" response
      *
      * @return true if the prompt is found
      */
@@ -216,7 +223,7 @@ public class EmberFirmwareUpdateHandler {
             }
 
             if (retryCount >= MENU_MAX_RETRIES) {
-                logger.debug("Telegesis bootloader: Unable to get bootloader prompt.");
+                logger.debug("Ember bootloader: Unable to get bootloader prompt.");
                 transferComplete(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
                 return false;
             }
@@ -241,15 +248,15 @@ public class EmberFirmwareUpdateHandler {
 
         // Clear all input in the input stream before starting the transfer
         try {
-            logger.debug("Telegesis bootloader: Clearing input stream...");
+            logger.debug("Ember bootloader: Clearing input stream...");
             serialPort.purgeRxBuffer();
 
-            logger.debug("Telegesis bootloader: Starting transfer.");
+            logger.debug("Ember bootloader: Starting transfer.");
             while (!stopBootload && !cancelTransfer) {
                 retries = 0;
 
                 do {
-                    logger.debug("Telegesis bootloader: Transfer frame {}, attempt {}.", frame, retries);
+                    logger.debug("Ember bootloader: Transfer frame {}, attempt {}.", frame, retries);
 
                     // Send SOH
                     serialPort.write(SOH);
@@ -286,9 +293,9 @@ public class EmberFirmwareUpdateHandler {
 
                     // Wait for the acknowledgment
                     response = getTransferResponse();
-                    logger.trace("Telegesis bootloader: Response {}.", response);
+                    logger.trace("Ember bootloader: Response {}.", response);
                     if (response == CAN) {
-                        logger.debug("Telegesis bootloader: Received CAN.");
+                        logger.debug("Ember bootloader: Received CAN.");
                         retries = XMODEM_MAX_RETRIES;
                         cancelTransfer = true;
                         break;
@@ -296,7 +303,7 @@ public class EmberFirmwareUpdateHandler {
                 } while (response != ACK);
 
                 if (done) {
-                    logger.debug("Telegesis bootloader: Transfer complete.");
+                    logger.debug("Ember bootloader: Transfer complete.");
                     serialPort.write(EOT);
                     return true;
                 }
@@ -304,7 +311,7 @@ public class EmberFirmwareUpdateHandler {
                 frame = (frame + 1) & 0xff;
             }
         } catch (IOException e) {
-            logger.debug("Telegesis bootloader: Transfer failed due IO error.");
+            logger.debug("Ember bootloader: Transfer failed due IO error.");
         }
 
         serialPort.write(EOT);
