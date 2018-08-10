@@ -1899,7 +1899,7 @@ public final class ZigBeeConsole {
                 return true;
             }
 
-            dongle.shutdown();
+            networkManager.shutdown();
 
             File firmwareFile = new File(args[1]);
             InputStream firmwareStream;
