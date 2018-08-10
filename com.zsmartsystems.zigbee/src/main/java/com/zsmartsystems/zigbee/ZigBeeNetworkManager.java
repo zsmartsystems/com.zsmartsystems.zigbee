@@ -466,6 +466,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         executorService.shutdownNow();
 
         synchronized (this) {
+            for (ZigBeeNode node : networkNodes.values()) {
+                node.shutdown();
+            }
+
             if (networkStateSerializer != null) {
                 networkStateSerializer.serialize(this);
             }
@@ -485,6 +489,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param runnableTask the {@link Runnable} to execute
      */
     public void executeTask(Runnable runnableTask) {
+        if (networkState != ZigBeeTransportState.ONLINE) {
+            return;
+        }
         executorService.execute(runnableTask);
     }
 
@@ -496,6 +503,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return the {@link ScheduledFuture} for the scheduled task
      */
     public ScheduledFuture<?> scheduleTask(Runnable runnableTask, long delay) {
+        if (networkState != ZigBeeTransportState.ONLINE) {
+            return null;
+        }
         return executorService.schedule(runnableTask, delay, TimeUnit.MILLISECONDS);
     }
 
@@ -510,6 +520,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public ScheduledFuture<?> rescheduleTask(ScheduledFuture<?> futureTask, Runnable runnableTask, long delay) {
         futureTask.cancel(false);
+        if (networkState != ZigBeeTransportState.ONLINE) {
+            return null;
+        }
+
         return executorService.schedule(runnableTask, delay, TimeUnit.MILLISECONDS);
     }
 
