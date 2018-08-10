@@ -355,8 +355,15 @@ public class AshFrameHandler implements EzspProtocolHandler {
     @Override
     public void close() {
         logger.debug("AshFrameHandler close.");
+        stateConnected = false;
         setClosing();
         stopRetryTimer();
+
+        synchronized (transactionListeners) {
+            for (AshListener listener : transactionListeners) {
+                listener.transactionComplete();
+            }
+        }
 
         try {
             parserThread.interrupt();
@@ -653,13 +660,18 @@ public class AshFrameHandler implements EzspProtocolHandler {
                     return false;
                 }
 
+                transactionComplete();
                 // response = request;
+
+                return true;
+            }
+
+            @Override
+            public void transactionComplete() {
                 synchronized (this) {
                     complete = true;
                     notify();
                 }
-
-                return true;
             }
         }
 
@@ -714,5 +726,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     interface AshListener {
         boolean transactionEvent(EzspFrameResponse ezspResponse);
+
+        void transactionComplete();
     }
 }

@@ -11,10 +11,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import java.util.Arrays;
 
-import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrame;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameData;
+import org.junit.Test;
 
 public class AshFrameTest {
 
@@ -30,6 +29,25 @@ public class AshFrameTest {
         assertEquals(1, dataPacket.getFrmNum());
         assertEquals(2, dataPacket.getAckNum());
         assertEquals(true, dataPacket.getReTx());
+    }
+
+    @Test
+    public void testLoopback() {
+        AshFrame outFrame = new AshFrameData(new int[] { 0x18, 0x00, 0xFF, 0x00, 0x34, 0x00, 0x87, 0x36, 0x00, 0x00,
+                0x21, 0x00, 0x00, 0x00, 0x40, 0x11, 0x00, 0x00, 0x18, 0x18, 0x16, 0x00, 0xA5, 0xFE, 0x09, 0x01, 0x00,
+                0x5B, 0xFD, 0x24, 0x01, 0x0F, 0x00, 0x03, 0x90, 0x9D, 0x38, 0xFE, 0xFF, 0x57, 0x0B, 0x00, 0x01 });
+
+        outFrame.setFrmNum(5);
+        outFrame.setAckNum(0);
+        int[] outBuffer = outFrame.getOutputBuffer();
+
+        // Remove the end flag
+        outBuffer = Arrays.copyOfRange(outBuffer, 0, outBuffer.length - 1);
+
+        AshFrame inFrame = AshFrame.createFromInput(outBuffer);
+
+        assertEquals(5, inFrame.getFrmNum());
+        assertEquals(0, inFrame.getAckNum());
     }
 
 }
