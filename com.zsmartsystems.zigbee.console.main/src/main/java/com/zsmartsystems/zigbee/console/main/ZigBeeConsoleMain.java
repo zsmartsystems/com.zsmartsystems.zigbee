@@ -12,8 +12,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.log4j.xml.DOMConfigurator;
-import org.bouncycastle.util.encoders.Hex;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
@@ -62,7 +68,7 @@ public class ZigBeeConsoleMain {
     /**
      * The usage.
      */
-    public static final String USAGE = "Syntax: java -jar zigbee4java-serialPort.jar [EMBER|CC2531|TELEGESIS|CONBEE|XBEE] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET";
+    public static final String USAGE = "Syntax: java -jar com.zsmartsystems.zigbee.console.main.jar [EMBER|CC2531|TELEGESIS|CONBEE|XBEE] SERIALPORT SERIALBAUD CHANNEL PAN EPAN NETWORK_KEY RESET";
 
     /**
      * Private constructor to disable constructing main class.
@@ -80,48 +86,93 @@ public class ZigBeeConsoleMain {
 
         final String serialPortName;
         final String dongleName;
-        final int serialBaud;
-        final int channel;
-        final int pan;
-        final ExtendedPanId extendedPan;
-        final int[] networkKeyData;
+        final Integer serialBaud;
+        Integer channel;
+        Integer pan;
+        ExtendedPanId extendedPan;
         final TransportConfig transportOptions = new TransportConfig();
         boolean resetNetwork;
-        try {
-            dongleName = args[0];
-            serialPortName = args[1];
-            serialBaud = Integer.parseInt(args[2]);
-            channel = Integer.parseInt(args[3]);
-            pan = parseDecimalOrHexInt(args[4]);
-            extendedPan = new ExtendedPanId(args[5]);
+        FlowControl flowControl = null;
 
-            if (args[6].equals("00000000000000000000000000000000")) {
-                logger.info("ZigBee network key left as default according to command argument.");
-                networkKeyData = null;
-            } else {
-                logger.info("ZigBee network key defined by command argument.");
-                byte[] key = Hex.decode(args[6]);
-                networkKeyData = new int[16];
-                int cnt = 0;
-                for (byte value : key) {
-                    networkKeyData[cnt++] = value & 0xff;
-                }
-            }
-            if (networkKeyData != null && networkKeyData.length != 16) {
-                logger.warn("ZigBee network key length should be 16 bytes.");
+        Options options = new Options();
+        options.addOption(Option.builder("d").longOpt("dongle").hasArg().argName("dongle type")
+                .desc("Set the dongle type to use (EMBER | CC2531 | TELEGESIS | CONBEE | XBEE)").required().build());
+        options.addOption(Option.builder("p").longOpt("port").argName("port name").hasArg().desc("Set the port")
+                .required().build());
+        options.addOption(
+                Option.builder("b").longOpt("baud").hasArg().argName("baud").desc("Set the port baud rate").build());
+        options.addOption(Option.builder("f").longOpt("flow").hasArg().argName("type")
+                .desc("Set the flow control (none | hardware | software)").build());
+        options.addOption(Option.builder("c").longOpt("channel").hasArg().argName("channel id")
+                .desc("Set the ZigBee channel ID").build());
+        options.addOption(
+                Option.builder("a").longOpt("pan").hasArg().argName("PAN ID").desc("Set the ZigBee PAN ID").build());
+        options.addOption(
+                Option.builder("e").longOpt("epan").hasArg().argName("EPAN ID").desc("Set the ZigBee EPAN ID").build());
+        options.addOption(Option.builder("n").longOpt("nwkkey").hasArg().argName("key")
+                .desc("Set the ZigBee Network key (defaults to randon value)").build());
+        options.addOption(Option.builder("l").longOpt("linkkey").hasArg().argName("key")
+                .desc("Set the ZigBee Link key (defaults to well known ZHA key)").build());
+        options.addOption(Option.builder("r").longOpt("reset").desc("Reset the ZigBee dongle").build());
+        options.addOption(Option.builder("?").longOpt("help").desc("Print usage information").build());
+
+        CommandLine cmdline;
+        try {
+            CommandLineParser parser = new DefaultParser();
+            cmdline = parser.parse(options, args);
+
+            if (cmdline.hasOption("help")) {
+                HelpFormatter formatter = new HelpFormatter();
+                formatter.printHelp("zigbeeconsole", options);
                 return;
             }
 
-            resetNetwork = args[7].equals("true");
-        } catch (final Throwable t) {
-            t.printStackTrace();
-            System.out.println(USAGE);
+            if (!cmdline.hasOption("dongle")) {
+                System.err.println("Dongle must be specified with the 'dongle' option");
+                return;
+            }
+            if (!cmdline.hasOption("port")) {
+                System.err.println("Serial port must be specified with the 'port' option");
+                return;
+            }
+
+            dongleName = cmdline.getOptionValue("dongle");
+            serialPortName = cmdline.getOptionValue("port");
+            serialBaud = parseDecimalOrHexInt(cmdline.getOptionValue("baud"));
+            resetNetwork = cmdline.hasOption("reset");
+
+            if (cmdline.hasOption("flow")) {
+                switch (cmdline.getOptionValue("flow").toLowerCase()) {
+                    case "software":
+                        flowControl = FlowControl.FLOWCONTROL_OUT_XONOFF;
+                        break;
+                    case "hardware":
+                        flowControl = FlowControl.FLOWCONTROL_OUT_RTSCTS;
+                        break;
+                    case "none":
+                        flowControl = FlowControl.FLOWCONTROL_OUT_NONE;
+                        break;
+                    default:
+                        System.err.println(
+                                "Unknown flow control option used: " + cmdline.getOptionValue("flow").toLowerCase());
+                        return;
+                }
+            }
+        } catch (ParseException exp) {
+            System.err.println("Parsing command line failed.  Reason: " + exp.getMessage());
             return;
         }
 
-        FlowControl flowControl = FlowControl.FLOWCONTROL_OUT_NONE;
-        if (dongleName.toUpperCase().equals("EMBER")) {
-            flowControl = FlowControl.FLOWCONTROL_OUT_RTSCTS;
+        // Default the flow control based on the dongle
+        if (flowControl == null) {
+            switch (dongleName.toUpperCase()) {
+                case "EMBER":
+                    flowControl = FlowControl.FLOWCONTROL_OUT_RTSCTS;
+                    break;
+                default:
+                    flowControl = FlowControl.FLOWCONTROL_OUT_NONE;
+                    break;
+            }
         }
 
         final ZigBeePort serialPort = new ZigBeeSerialPort(serialPortName, serialBaud, flowControl);
@@ -176,7 +227,7 @@ public class ZigBeeConsoleMain {
         }
 
         if (dongle == null) {
-            System.out.println("Dongle not opened.");
+            System.out.println("Dongle unable to be opened.");
             System.out.println(USAGE);
             return;
         }
@@ -199,21 +250,48 @@ public class ZigBeeConsoleMain {
         System.out.println("Channel         = " + networkManager.getZigBeeChannel());
 
         if (resetNetwork == true) {
+            ZigBeeKey nwkKey;
+            ZigBeeKey linkKey;
+
+            if (cmdline.hasOption("channel")) {
+                channel = parseDecimalOrHexInt(cmdline.getOptionValue("channel"));
+            } else {
+                channel = 11;
+            }
+            if (cmdline.hasOption("pan")) {
+                pan = parseDecimalOrHexInt(cmdline.getOptionValue("pan"));
+            } else {
+                pan = 1;
+            }
+            if (cmdline.hasOption("epan")) {
+                extendedPan = new ExtendedPanId(cmdline.getOptionValue("epan"));
+            } else {
+                extendedPan = new ExtendedPanId();
+            }
+
+            if (cmdline.hasOption("nwkkey")) {
+                nwkKey = new ZigBeeKey(cmdline.getOptionValue("nwkkey"));
+            } else {
+                nwkKey = ZigBeeKey.createRandom();
+            }
+            if (cmdline.hasOption("linkkey")) {
+                linkKey = new ZigBeeKey(cmdline.getOptionValue("linkkey"));
+            } else {
+                linkKey = new ZigBeeKey(new int[] { 0x5A, 0x69, 0x67, 0x42, 0x65, 0x65, 0x41, 0x6C, 0x6C, 0x69, 0x61,
+                        0x6E, 0x63, 0x65, 0x30, 0x39 });
+            }
+
             System.out.println("*** Resetting network");
             System.out.println("  * Channel          = " + channel);
             System.out.println("  * PAN ID           = " + pan);
             System.out.println("  * Extended PAN ID  = " + extendedPan);
+            System.out.println("  * Link Key         = " + linkKey);
+            System.out.println("  * Network Key      = " + nwkKey);
 
             networkManager.setZigBeeChannel(channel);
             networkManager.setZigBeePanId(pan);
             networkManager.setZigBeeExtendedPanId(extendedPan);
-            if (networkKeyData != null) {
-                ZigBeeKey networkKey = new ZigBeeKey(networkKeyData);
-                networkManager.setZigBeeNetworkKey(networkKey);
-            }
-
-            ZigBeeKey linkKey = new ZigBeeKey(new int[] { 0x5A, 0x69, 0x67, 0x42, 0x65, 0x65, 0x41, 0x6C, 0x6C, 0x69,
-                    0x61, 0x6E, 0x63, 0x65, 0x30, 0x39 });
+            networkManager.setZigBeeNetworkKey(nwkKey);
             networkManager.setZigBeeLinkKey(linkKey);
         }
 
