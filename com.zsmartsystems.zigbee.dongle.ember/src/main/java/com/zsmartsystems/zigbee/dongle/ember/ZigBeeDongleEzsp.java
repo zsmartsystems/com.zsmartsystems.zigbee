@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.dongle.ember;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -175,7 +176,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         this.serialPort = serialPort;
         this.protocol = protocol;
 
-        stackConfiguration = new TreeMap<EzspConfigId, Integer>();
+        // Define the default configuration
+        stackConfiguration = new LinkedHashMap<EzspConfigId, Integer>();
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE, 16);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SECURITY_LEVEL, 5);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_ADDRESS_TABLE_SIZE, 8);
@@ -184,11 +186,16 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_INDIRECT_TRANSMISSION_TIMEOUT, 7680);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_MAX_HOPS, 30);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_TX_POWER_MODE, 0);
-        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SUPPORTED_NETWORKS, 2);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SUPPORTED_NETWORKS, 1);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_KEY_TABLE_SIZE, 4);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS, 0x01);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_MAX_END_DEVICE_CHILDREN, 16);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_APS_UNICAST_MESSAGE_COUNT, 10);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_BROADCAST_TABLE_SIZE, 15);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_NEIGHBOR_TABLE_SIZE, 16);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_PACKET_BUFFER_COUNT, 255);
 
+        // Define the default policies
         stackPolicies = new TreeMap<EzspPolicyId, EzspDecisionId>();
         stackPolicies.put(EzspPolicyId.EZSP_TC_KEY_REQUEST_POLICY, EzspDecisionId.EZSP_GENERATE_NEW_TC_LINK_KEY);
         stackPolicies.put(EzspPolicyId.EZSP_TRUST_CENTER_POLICY, EzspDecisionId.EZSP_ALLOW_PRECONFIGURED_KEY_JOINS);
@@ -201,6 +208,41 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 EzspDecisionId.EZSP_CHECK_BINDING_MODIFICATIONS_ARE_VALID_ENDPOINT_CLUSTERS);
 
         networkKey = new ZigBeeKey();
+    }
+
+    /**
+     * Update the Ember configuration that will be sent to the dongle during the initialisation.
+     * <p>
+     * Note that this must be called prior to {@link #initialize()} for the configuration to be effective.
+     *
+     * @param configId the {@link EzspConfigId} to be updated.
+     * @param value the value to set (as {@link Integer}. Setting this to null will remove the configuration Id from the
+     *            list of configuration to be sent during NCP initialisation.
+     * @return the previously configured value, or null if no value was set for the {@link EzspConfigId}
+     */
+    public Integer updateDefaultConfiguration(EzspConfigId configId, Integer value) {
+        if (value == null) {
+            return stackConfiguration.remove(configId);
+        }
+        return stackConfiguration.put(configId, value);
+    }
+
+    /**
+     * Update the Ember policies that will be sent to the dongle during the initialisation.
+     * <p>
+     * Note that this must be called prior to {@link #initialize()} for the configuration to be effective.
+     *
+     * @param configId the {@link EzspPolicyId} to be updated
+     * @param value the (as {@link EzspDecisionId} to set. Setting this to null will remove the policy from
+     *            the list of policies to be sent during NCP initialisation.
+     * @return the previously configured {@link EzspDecisionId}, or null if no value was set for the
+     *         {@link EzspPolicyId}
+     */
+    public EzspDecisionId updateDefaultPolicy(EzspPolicyId policyId, EzspDecisionId decisionId) {
+        if (policyId == null) {
+            return stackPolicies.remove(policyId);
+        }
+        return stackPolicies.put(policyId, decisionId);
     }
 
     @Override
