@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.zsmartsystems.zigbee.ZigBeeStatus;
+
 /**
  * A class to hold {@link TransportConfigOption}s
  *
@@ -18,8 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  */
 public class TransportConfig {
-    private final Map<TransportConfigOption, Object> request = new ConcurrentHashMap<TransportConfigOption, Object>();
-    private final Map<TransportConfigOption, TransportConfigResult> response = new ConcurrentHashMap<TransportConfigOption, TransportConfigResult>();
+    private final Map<TransportConfigOption, Object> request = new ConcurrentHashMap<>();
+    private final Map<TransportConfigOption, ZigBeeStatus> response = new ConcurrentHashMap<>();
 
     /**
      * Creates a configuration and directly adds the option
@@ -81,13 +83,13 @@ public class TransportConfig {
     }
 
     /**
-     * Sets the {@link TransportConfigResult} for a configuration setting
+     * Sets the {@link ZigBeeStatus} for a configuration setting
      *
      * @param option the {@link TransportConfigOption} to set the result
-     * @param value the {@link TransportConfigResult}
+     * @param value the {@link ZigBeeStatus}
      * @return true if the result was set, false if the option did not exist or the result was already set
      */
-    public boolean setResult(TransportConfigOption option, TransportConfigResult value) {
+    public boolean setResult(TransportConfigOption option, ZigBeeStatus value) {
         if (request.get(option) == null || response.get(option) != null) {
             return false;
         }
@@ -99,14 +101,14 @@ public class TransportConfig {
      * Gets the the {@link TransportConfigResult} for a {@link TransportConfigOption} if it is configured
      *
      * @param option the {@link TransportConfigOption} to retrieve the result
-     * @return the result {@link TransportConfigResult} for the requested {@link TransportConfigOption}
+     * @return the result {@link ZigBeeStatus} for the requested {@link TransportConfigOption}
      */
-    public TransportConfigResult getResult(TransportConfigOption option) {
+    public ZigBeeStatus getResult(TransportConfigOption option) {
         if (request.get(option) == null) {
-            return TransportConfigResult.ERROR_REQUEST_NOT_SET;
+            return ZigBeeStatus.INVALID_ARGUMENTS;
         }
         if (response.get(option) == null) {
-            return TransportConfigResult.ERROR_NO_RESULT;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
         return response.get(option);
     }

@@ -106,23 +106,33 @@ public class ZigBeeKeyTest {
     }
 
     @Test
-    public void testFrameCounter() {
+    public void testOutgoingFrameCounter() {
         ZigBeeKey key = new ZigBeeKey("11223344556677889900AABBCCDDEEFF");
-        assertFalse(key.hasFrameCounter());
-        assertNull(key.getFrameCounter());
-        key.setFrameCounter(1);
-        assertTrue(key.hasFrameCounter());
-        assertEquals(Integer.valueOf(1), key.getFrameCounter());
+        assertFalse(key.hasOutgoingFrameCounter());
+        assertNull(key.getOutgoingFrameCounter());
+        key.setOutgoingFrameCounter(1);
+        assertTrue(key.hasOutgoingFrameCounter());
+        assertEquals(Integer.valueOf(1), key.getOutgoingFrameCounter());
     }
 
     @Test
-    public void testSequenceCounter() {
+    public void testIncomingFrameCounter() {
         ZigBeeKey key = new ZigBeeKey("11223344556677889900AABBCCDDEEFF");
-        assertFalse(key.hasSequenceCounter());
-        assertNull(key.getSequenceCounter());
-        key.setSequenceCounter(2);
-        assertTrue(key.hasSequenceCounter());
-        assertEquals(Integer.valueOf(2), key.getSequenceCounter());
+        assertFalse(key.hasIncomingFrameCounter());
+        assertNull(key.getIncomingFrameCounter());
+        key.setIncomingFrameCounter(1);
+        assertTrue(key.hasIncomingFrameCounter());
+        assertEquals(Integer.valueOf(1), key.getIncomingFrameCounter());
+    }
+
+    @Test
+    public void testSequenceNumber() {
+        ZigBeeKey key = new ZigBeeKey("11223344556677889900AABBCCDDEEFF");
+        assertFalse(key.hasSequenceNumber());
+        assertNull(key.getSequenceNumber());
+        key.setSequenceNumber(2);
+        assertTrue(key.hasSequenceNumber());
+        assertEquals(Integer.valueOf(2), key.getSequenceNumber());
     }
 
 }

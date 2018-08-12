@@ -31,6 +31,7 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.dao.ZclClusterDao;
 import com.zsmartsystems.zigbee.dao.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.dao.ZigBeeNodeDao;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.FrequencyBandType;
@@ -62,6 +63,7 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
 
     private XStream openStream() {
         XStream stream = new XStream(new StaxDriver());
+        stream.alias("ZigBeeKey", ZigBeeKey.class);
         stream.alias("ZigBeeNode", ZigBeeNodeDao.class);
         stream.alias("ZigBeeEndpoint", ZigBeeEndpointDao.class);
         stream.alias("ZclCluster", ZclClusterDao.class);
@@ -71,6 +73,8 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
         stream.alias("PowerSourceType", PowerSourceType.class);
         stream.alias("FrequencyBandType", FrequencyBandType.class);
         stream.alias("BindingTable", BindingTable.class);
+        stream.registerLocalConverter(ZigBeeKey.class, "key", new KeyArrayConverter());
+        stream.registerLocalConverter(ZigBeeKey.class, "address", new IeeeAddressConverter());
         stream.registerLocalConverter(BindingTable.class, "srcAddr", new IeeeAddressConverter());
         stream.registerLocalConverter(BindingTable.class, "dstAddr", new IeeeAddressConverter());
         return stream;
@@ -82,25 +86,30 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
      * @param networkState the network state
      */
     @Override
-    public void serialize(final ZigBeeNetworkManager networkState) {
+    public synchronized void serialize(final ZigBeeNetworkManager networkState) {
         XStream stream = openStream();
 
-        final List<ZigBeeNodeDao> destinations = new ArrayList<ZigBeeNodeDao>();
+        final List<Object> objects = new ArrayList<>();
+
+        // objects.add(networkState.getZigBeeNetworkKey());
+        // objects.add(networkState.getZigBeeLinkKey());
 
         for (ZigBeeNode node : networkState.getNodes()) {
             ZigBeeNodeDao nodeDao = node.getDao();
-            destinations.add(nodeDao);
+            objects.add(nodeDao);
         }
 
         final File file = new File(networkId);
 
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
-            stream.marshal(destinations, new PrettyPrintWriter(writer));
+
+            stream.marshal(objects, new PrettyPrintWriter(writer));
             writer.flush();
             writer.close();
         } catch (IOException e) {
             logger.error("Error writing network state", e);
+            return;
         }
 
         logger.info("ZigBee saving network state complete.");
@@ -112,7 +121,7 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
      * @param networkState the network state
      */
     @Override
-    public void deserialize(final ZigBeeNetworkManager networkState) {
+    public synchronized void deserialize(final ZigBeeNetworkManager networkState) {
         final File file = new File(networkId);
         boolean networkStateExists = file.exists();
         if (networkStateExists == false) {
@@ -121,12 +130,27 @@ public class ZigBeeNetworkStateSerializerImpl implements ZigBeeNetworkStateSeria
 
         logger.info("Loading network state...");
 
+        int keyCnt = 0;
         try {
             XStream stream = openStream();
             BufferedReader reader;
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
             final List<Object> objects = (List<Object>) stream.fromXML(reader);
             for (final Object object : objects) {
+                if (object instanceof ZigBeeKey) {
+                    switch (keyCnt) {
+                        case 0:
+                            networkState.setZigBeeNetworkKey((ZigBeeKey) object);
+                            break;
+                        case 1:
+                            networkState.setZigBeeLinkKey((ZigBeeKey) object);
+                            break;
+                        default:
+                            logger.error("Error - too many keys in persistence file");
+                            break;
+                    }
+                    keyCnt++;
+                }
                 if (object instanceof ZigBeeNodeDao) {
                     ZigBeeNodeDao nodeDao = (ZigBeeNodeDao) object;
                     ZigBeeNode node = new ZigBeeNode(networkState, new IeeeAddress(nodeDao.getIeeeAddress()));

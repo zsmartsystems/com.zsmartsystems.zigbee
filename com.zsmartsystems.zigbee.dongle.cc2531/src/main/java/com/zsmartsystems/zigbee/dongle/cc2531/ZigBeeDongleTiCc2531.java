@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
+import com.zsmartsystems.zigbee.ZigBeeChannel;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoActiveEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoCallbackIncoming;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoEndDeviceAnnounce;
@@ -43,7 +44,6 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER_SRSP
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
-import com.zsmartsystems.zigbee.transport.TransportConfigResult;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
@@ -116,7 +116,7 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
-    public ZigBeeInitializeResponse initialize() {
+    public ZigBeeStatus initialize() {
         logger.debug("CC2531 transport initialize");
 
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
@@ -124,12 +124,12 @@ public class ZigBeeDongleTiCc2531
         // This basically just initialises the hardware so we can communicate with the 2531
         versionString = networkManager.startup();
         if (versionString == null) {
-            return ZigBeeInitializeResponse.FAILED;
+            return ZigBeeStatus.COMMUNICATION_ERROR;
         }
 
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
-        return ZigBeeInitializeResponse.JOINED;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
@@ -138,13 +138,13 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
-    public int getZigBeeChannel() {
-        return networkManager.getCurrentChannel();
+    public ZigBeeChannel getZigBeeChannel() {
+        return ZigBeeChannel.create(networkManager.getCurrentChannel());
     }
 
     @Override
-    public boolean setZigBeeChannel(int channel) {
-        return networkManager.setZigBeeChannel(channel);
+    public ZigBeeStatus setZigBeeChannel(ZigBeeChannel channel) {
+        return networkManager.setZigBeeChannel(channel.getChannel()) ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
     }
 
     @Override
@@ -153,8 +153,8 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
-    public boolean setZigBeePanId(int panId) {
-        return networkManager.setZigBeePanId(panId);
+    public ZigBeeStatus setZigBeePanId(int panId) {
+        return networkManager.setZigBeePanId(panId) ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
     }
 
     @Override
@@ -163,23 +163,23 @@ public class ZigBeeDongleTiCc2531
     }
 
     @Override
-    public boolean setZigBeeExtendedPanId(ExtendedPanId panId) {
-        return networkManager.setZigBeeExtendedPanId(panId);
+    public ZigBeeStatus setZigBeeExtendedPanId(ExtendedPanId panId) {
+        return networkManager.setZigBeeExtendedPanId(panId) ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
     }
 
     @Override
-    public boolean setZigBeeNetworkKey(ZigBeeKey key) {
+    public ZigBeeStatus setZigBeeNetworkKey(ZigBeeKey key) {
         byte[] keyData = new byte[16];
         int cnt = 0;
         for (int keyVal : key.getValue()) {
             keyData[cnt] = (byte) keyVal;
         }
-        return networkManager.setNetworkKey(keyData);
+        return networkManager.setNetworkKey(keyData) ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
     }
 
     @Override
-    public boolean setTcLinkKey(ZigBeeKey key) {
-        return false;
+    public ZigBeeStatus setTcLinkKey(ZigBeeKey key) {
+        return ZigBeeStatus.FAILURE;
     }
 
     @Override
@@ -188,18 +188,18 @@ public class ZigBeeDongleTiCc2531
             try {
                 switch (option) {
                     default:
-                        configuration.setResult(option, TransportConfigResult.ERROR_UNSUPPORTED);
+                        configuration.setResult(option, ZigBeeStatus.UNSUPPORTED);
                         logger.debug("Unsupported configuration option \"{}\" in Telegesis dongle", option);
                         break;
                 }
             } catch (ClassCastException e) {
-                configuration.setResult(option, TransportConfigResult.ERROR_INVALID_VALUE);
+                configuration.setResult(option, ZigBeeStatus.INVALID_ARGUMENTS);
             }
         }
     }
 
     @Override
-    public boolean startup(boolean reinitialize) {
+    public ZigBeeStatus startup(boolean reinitialize) {
         logger.debug("CC2531 transport startup");
 
         // Add listeners for ZCL and ZDO received messages
@@ -208,7 +208,7 @@ public class ZigBeeDongleTiCc2531
 
         if (!networkManager.initializeZigBeeNetwork(reinitialize)) {
             zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
-            return false;
+            return ZigBeeStatus.INVALID_STATE;
         }
 
         while (true) {
@@ -217,13 +217,13 @@ public class ZigBeeDongleTiCc2531
             }
             if (networkManager.getDriverStatus() == DriverStatus.CLOSED) {
                 zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
-                return false;
+                return ZigBeeStatus.BAD_RESPONSE;
             }
             try {
                 Thread.sleep(50);
             } catch (final InterruptedException e) {
                 zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
-                return false;
+                return ZigBeeStatus.BAD_RESPONSE;
             }
         }
 
@@ -231,7 +231,7 @@ public class ZigBeeDongleTiCc2531
 
         zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.ONLINE);
 
-        return true;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
@@ -435,6 +435,21 @@ public class ZigBeeDongleTiCc2531
         logger.debug("Registered endpoint {} with profile: {}", endpointId, profileId);
 
         return endpointId;
+    }
+
+    @Override
+    public Integer getNwkAddress() {
+        return 0;
+    }
+
+    @Override
+    public ZigBeeKey getZigBeeNetworkKey() {
+        return null;
+    }
+
+    @Override
+    public ZigBeeKey getTcLinkKey() {
+        return null;
     }
 
 }

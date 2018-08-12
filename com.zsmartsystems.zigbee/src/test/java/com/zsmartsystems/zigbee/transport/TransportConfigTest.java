@@ -14,6 +14,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.ZigBeeStatus;
+
 /**
  *
  * @author Chris Jackson
@@ -39,14 +41,11 @@ public class TransportConfigTest {
         assertEquals(TrustCentreJoinMode.TC_JOIN_DENY, config.getOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE));
         assertNull(config.getOption(TransportConfigOption.TRUST_CENTRE_LINK_KEY));
 
-        assertTrue(config.setResult(TransportConfigOption.CONCENTRATOR_TYPE, TransportConfigResult.SUCCESS));
-        assertFalse(config.setResult(TransportConfigOption.TRUST_CENTRE_LINK_KEY, TransportConfigResult.SUCCESS));
-        assertFalse(config.setResult(TransportConfigOption.CONCENTRATOR_TYPE, TransportConfigResult.SUCCESS));
+        assertTrue(config.setResult(TransportConfigOption.CONCENTRATOR_TYPE, ZigBeeStatus.SUCCESS));
+        assertFalse(config.setResult(TransportConfigOption.TRUST_CENTRE_LINK_KEY, ZigBeeStatus.SUCCESS));
+        assertFalse(config.setResult(TransportConfigOption.CONCENTRATOR_TYPE, ZigBeeStatus.SUCCESS));
 
-        assertEquals(TransportConfigResult.SUCCESS, config.getResult(TransportConfigOption.CONCENTRATOR_TYPE));
-        assertEquals(TransportConfigResult.ERROR_NO_RESULT,
-                config.getResult(TransportConfigOption.TRUST_CENTRE_JOIN_MODE));
-        assertEquals(TransportConfigResult.ERROR_REQUEST_NOT_SET,
-                config.getResult(TransportConfigOption.TRUST_CENTRE_LINK_KEY));
+        assertEquals(ZigBeeStatus.BAD_RESPONSE, config.getResult(TransportConfigOption.TRUST_CENTRE_JOIN_MODE));
+        assertEquals(ZigBeeStatus.INVALID_ARGUMENTS, config.getResult(TransportConfigOption.TRUST_CENTRE_LINK_KEY));
     }
 }

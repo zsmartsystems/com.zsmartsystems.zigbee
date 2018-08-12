@@ -7,16 +7,15 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee;
 
-import java.util.Collection;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.ZigBeeNetworkManager.ZigBeeInitializeResponse;
+import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeEventListener;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeFrameHandler;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.EncryptionOptions;
@@ -52,7 +51,6 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeTransmitReques
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
-import com.zsmartsystems.zigbee.transport.TransportConfigResult;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
@@ -99,7 +97,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
     /**
      * The current radio channel
      */
-    private int radioChannel;
+    private ZigBeeChannel radioChannel;
 
     /**
      * The current pan ID
@@ -134,14 +132,14 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
     }
 
     @Override
-    public ZigBeeInitializeResponse initialize() {
+    public ZigBeeStatus initialize() {
         logger.debug("XBee dongle initialize.");
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
         if (!serialPort.open()) {
             logger.error("Unable to open XBee serial port");
-            return ZigBeeInitializeResponse.FAILED;
+            return ZigBeeStatus.COMMUNICATION_ERROR;
         }
 
         // Create and start the frame handler
@@ -157,7 +155,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         do {
             if (resetCount >= MAX_RESET_RETRIES) {
                 logger.info("XBee dongle reset failed after {} tries.", ++resetCount);
-                return ZigBeeInitializeResponse.FAILED;
+                return ZigBeeStatus.NO_RESPONSE;
             }
             logger.debug("XBee dongle reset {}.", ++resetCount);
             XBeeSetSoftwareResetCommand resetCommand = new XBeeSetSoftwareResetCommand();
@@ -194,7 +192,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
 
         if (ieeeHighResponse == null || ieeeLowCommand == null) {
             logger.error("Unable to get XBee IEEE address");
-            return ZigBeeInitializeResponse.FAILED;
+            return ZigBeeStatus.BAD_RESPONSE;
         }
 
         int[] tmpAddress = new int[8];
@@ -254,18 +252,18 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
-        return ZigBeeInitializeResponse.JOINED;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
-    public boolean startup(boolean reinitialize) {
+    public ZigBeeStatus startup(boolean reinitialize) {
         logger.debug("XBee dongle startup.");
 
         // If frameHandler is null then the serial port didn't initialise
         if (frameHandler == null) {
             logger.error("Initialising XBee Dongle but low level handler is not initialised.");
             zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
-            return false;
+            return ZigBeeStatus.INVALID_STATE;
         }
 
         // If we want to reinitialize the network, then go...
@@ -285,7 +283,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         if (coordinatorStarted) {
             zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
         }
-        return true;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
@@ -303,6 +301,12 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
     @Override
     public IeeeAddress getIeeeAddress() {
         return ieeeAddress;
+    }
+
+    @Override
+    public Integer getNwkAddress() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     private void initialiseNetwork() {
@@ -400,45 +404,27 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
             return;
         }
 
-        // if (event instanceof TelegesisDeviceLeftNetworkEvent) {
-        // TelegesisDeviceLeftNetworkEvent deviceLeftEvent = (TelegesisDeviceLeftNetworkEvent) event;
-
-        // zigbeeTransportReceive.nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, deviceLeftEvent.getNetworkAddress(),
-        // deviceLeftEvent.getIeeeAddress());
-        // return;
-        // }
-
-        // Handle link changes and notify framework or just reset link with dongle?
-        // if (event instanceof TelegesisNetworkLeftEvent | event instanceof TelegesisNetworkLostEvent) {
-        // zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
-        // return;
-        // }
-        // if (event instanceof TelegesisNetworkJoinedEvent) {
-        // zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
-        // return;
-        // }
-
         logger.debug("Unhandled XBee Frame: {}", event.toString());
     }
 
     @Override
-    public int getZigBeeChannel() {
+    public ZigBeeChannel getZigBeeChannel() {
         if (frameHandler == null) {
-            return 0;
+            return ZigBeeChannel.UNKNOWN;
         }
         XBeeGetOperatingChannelCommand request = new XBeeGetOperatingChannelCommand();
         XBeeOperatingChannelResponse response = (XBeeOperatingChannelResponse) frameHandler.sendRequest(request);
 
-        return response.getChannel();
+        return ZigBeeChannel.create(response.getChannel());
     }
 
     @Override
-    public boolean setZigBeeChannel(int channel) {
+    public ZigBeeStatus setZigBeeChannel(ZigBeeChannel channel) {
         XBeeSetScanChannelsCommand request = new XBeeSetScanChannelsCommand();
-        request.setChannels((1 << (channel - 11)));
+        request.setChannels((1 << (channel.getChannel() - 11)));
         frameHandler.sendRequest(request);
 
-        return false;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
@@ -447,11 +433,9 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
     }
 
     @Override
-    public boolean setZigBeePanId(int panId) {
-        // Note that Telegesis dongle will not set a PAN ID if it detects the same PAN is already in use.
-        // This can cause issues when trying to create a new coordinator on the same PAN.
+    public ZigBeeStatus setZigBeePanId(int panId) {
         this.panId = panId;
-        return true;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
@@ -460,16 +444,21 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
     }
 
     @Override
-    public boolean setZigBeeExtendedPanId(ExtendedPanId extendedPanId) {
+    public ZigBeeStatus setZigBeeExtendedPanId(ExtendedPanId extendedPanId) {
         this.extendedPanId = extendedPanId;
-        return false;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
-    public boolean setZigBeeNetworkKey(final ZigBeeKey key) {
+    public ZigBeeStatus setZigBeeNetworkKey(final ZigBeeKey key) {
         networkKey = key;
 
-        return false;
+        return ZigBeeStatus.SUCCESS;
+    }
+
+    @Override
+    public ZigBeeKey getZigBeeNetworkKey() {
+        return networkKey;
     }
 
     @Override
@@ -478,56 +467,35 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
     }
 
     @Override
-    public boolean setTcLinkKey(ZigBeeKey key) {
+    public ZigBeeStatus setTcLinkKey(ZigBeeKey key) {
         linkKey = key;
 
-        return true;
+        return ZigBeeStatus.SUCCESS;
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
+    public ZigBeeKey getTcLinkKey() {
+        return linkKey;
+    }
+
     @Override
     public void updateTransportConfig(TransportConfig configuration) {
         for (TransportConfigOption option : configuration.getOptions()) {
             try {
                 switch (option) {
-                    case SUPPORTED_INPUT_CLUSTERS:
-                        configuration.setResult(option,
-                                setSupportedInputClusters((Collection<Integer>) configuration.getValue(option)));
-                        break;
-
-                    case SUPPORTED_OUTPUT_CLUSTERS:
-                        configuration.setResult(option,
-                                setSupportedOutputClusters((Collection<Integer>) configuration.getValue(option)));
-                        break;
-
-                    case TRUST_CENTRE_JOIN_MODE:
-                        // configuration.setResult(option,
-                        // setTcJoinMode((TrustCentreJoinMode) configuration.getValue(option)));
-                        break;
-
                     case TRUST_CENTRE_LINK_KEY:
-                        configuration.setResult(option,
-                                setTcLinkKey((ZigBeeKey) configuration.getValue(option)) ? TransportConfigResult.SUCCESS
-                                        : TransportConfigResult.FAILURE);
+                        configuration.setResult(option, setTcLinkKey((ZigBeeKey) configuration.getValue(option)));
                         break;
 
                     default:
-                        configuration.setResult(option, TransportConfigResult.ERROR_UNSUPPORTED);
+                        configuration.setResult(option, ZigBeeStatus.UNSUPPORTED);
                         logger.debug("Unsupported configuration option \"{}\" in XBee dongle", option);
                         break;
                 }
             } catch (ClassCastException e) {
-                configuration.setResult(option, TransportConfigResult.ERROR_INVALID_VALUE);
+                configuration.setResult(option, ZigBeeStatus.INVALID_ARGUMENTS);
             }
         }
-    }
-
-    private TransportConfigResult setSupportedInputClusters(Collection<Integer> supportedClusters) {
-        return TransportConfigResult.SUCCESS;
-    }
-
-    private TransportConfigResult setSupportedOutputClusters(Collection<Integer> supportedClusters) {
-        return TransportConfigResult.SUCCESS;
     }
 
 }

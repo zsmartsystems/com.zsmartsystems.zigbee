@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.console;
 import java.io.PrintStream;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.security.MmoHash;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
@@ -62,8 +63,8 @@ public class ZigBeeConsoleLinkKeyCommand extends ZigBeeConsoleAbstractCommand {
             throw new IllegalArgumentException("Invalid arguments.");
         }
 
-        boolean result = networkManager.setZigBeeLinkKey(key);
-        out.println("Link key " + key.toString() + " was " + (result ? "" : "not") + " set.");
+        ZigBeeStatus result = networkManager.setZigBeeLinkKey(key);
+        out.println("Link key " + key.toString() + " was " + (result == ZigBeeStatus.SUCCESS ? "" : "not") + " set.");
     }
 
 }

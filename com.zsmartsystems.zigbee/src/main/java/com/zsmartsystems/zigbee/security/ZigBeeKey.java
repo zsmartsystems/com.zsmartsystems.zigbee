@@ -19,8 +19,9 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  */
 public class ZigBeeKey {
     private int[] key;
-    private Integer frameCounter;
-    private Integer sequenceCounter;
+    private Integer incomingFrameCounter;
+    private Integer outgoingFrameCounter;
+    private Integer sequenceNumber;
     private IeeeAddress address;
 
     /**
@@ -89,21 +90,30 @@ public class ZigBeeKey {
     }
 
     /**
-     * Returns true if this key has a frame counter associated with it
+     * Returns true if this key has an incoming frame counter associated with it
      *
-     * @return true if this key has a frame counter associated with it
+     * @return true if this key has an incoming frame counter associated with it
      */
-    public boolean hasFrameCounter() {
-        return frameCounter != null;
+    public boolean hasIncomingFrameCounter() {
+        return incomingFrameCounter != null;
     }
 
     /**
-     * Returns true if this key has a sequence counter associated with it
+     * Returns true if this key has an outgoing frame counter associated with it
      *
-     * @return true if this key has a sequence counter associated with it
+     * @return true if this key has an outgoing frame counter associated with it
      */
-    public boolean hasSequenceCounter() {
-        return sequenceCounter != null;
+    public boolean hasOutgoingFrameCounter() {
+        return outgoingFrameCounter != null;
+    }
+
+    /**
+     * Returns true if this key has a sequence number associated with it
+     *
+     * @return true if this key has a sequence number associated with it
+     */
+    public boolean hasSequenceNumber() {
+        return sequenceNumber != null;
     }
 
     /**
@@ -130,31 +140,45 @@ public class ZigBeeKey {
     }
 
     /**
-     * @return the frame counter, or null if the key does not have a frame counter associated with it
+     * @return the incoming frame counter, or null if the key does not have a frame counter associated with it
      */
-    public Integer getFrameCounter() {
-        return frameCounter;
+    public Integer getIncomingFrameCounter() {
+        return incomingFrameCounter;
     }
 
     /**
-     * @param counter the frame counter as a {@link Integer} to set
+     * @param counter the incoming frame counter as a {@link Integer} to set
      */
-    public void setFrameCounter(Integer counter) {
-        this.frameCounter = counter;
+    public void setIncomingFrameCounter(Integer counter) {
+        this.incomingFrameCounter = counter;
+    }
+
+    /**
+     * @return the outgoing frame counter, or null if the key does not have a frame counter associated with it
+     */
+    public Integer getOutgoingFrameCounter() {
+        return outgoingFrameCounter;
+    }
+
+    /**
+     * @param counter the outgoing frame counter as a {@link Integer} to set
+     */
+    public void setOutgoingFrameCounter(Integer counter) {
+        this.outgoingFrameCounter = counter;
     }
 
     /**
      * @return the sequence counter, or null if the key does not have a sequence counter associated with it
      */
-    public Integer getSequenceCounter() {
-        return sequenceCounter;
+    public Integer getSequenceNumber() {
+        return sequenceNumber;
     }
 
     /**
      * @param counter the sequence counter as a {@link Integer} to set
      */
-    public void setSequenceCounter(Integer counter) {
-        this.sequenceCounter = counter;
+    public void setSequenceNumber(Integer counter) {
+        this.sequenceNumber = counter;
     }
 
     /**

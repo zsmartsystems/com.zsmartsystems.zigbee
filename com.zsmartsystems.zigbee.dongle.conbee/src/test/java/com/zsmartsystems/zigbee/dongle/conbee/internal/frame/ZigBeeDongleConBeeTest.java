@@ -7,10 +7,11 @@
  */
 package com.zsmartsystems.zigbee.dongle.conbee.internal.frame;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
 
 /**
@@ -24,6 +25,6 @@ public class ZigBeeDongleConBeeTest {
     public void setZigBeePanId() {
         ZigBeeDongleConBee dongle = new ZigBeeDongleConBee(null);
 
-        assertFalse(dongle.setZigBeePanId(0));
+        assertEquals(ZigBeeStatus.UNSUPPORTED, dongle.setZigBeePanId(0));
     }
 }
