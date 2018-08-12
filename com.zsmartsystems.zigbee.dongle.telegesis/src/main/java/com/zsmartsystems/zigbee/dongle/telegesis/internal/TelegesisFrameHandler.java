@@ -105,7 +105,7 @@ public class TelegesisFrameHandler {
     /**
      * The maximum number of milliseconds to wait for the completion of the transaction after it's queued
      */
-    private final int DEFAULT_COMMAND_TIMEOUT = 3000;
+    private final int DEFAULT_COMMAND_TIMEOUT = 5000;
 
     /**
      * The maximum number of milliseconds to wait for the response from the stick once the request was sent
@@ -181,7 +181,7 @@ public class TelegesisFrameHandler {
 
                         StringBuilder builder = new StringBuilder();
                         for (int value : responseData) {
-                            builder.append(String.format(" %02X", value));
+                            builder.append(String.format("%c", value));
                         }
                         logger.debug("RX Telegesis Data:{}", builder.toString());
 
@@ -369,7 +369,7 @@ public class TelegesisFrameHandler {
             // Send the data
             StringBuilder builder = new StringBuilder();
             for (int sendByte : nextFrame.serialize()) {
-                builder.append(String.format(" %02X", sendByte));
+                builder.append(String.format("%c", sendByte));
                 serialPort.write(sendByte);
             }
             logger.debug("TX Telegesis Data:{}", builder.toString());
@@ -472,6 +472,11 @@ public class TelegesisFrameHandler {
         }
     }
 
+    /**
+     * Add a {@link TelegesisEventListener} to receive events from the dongle
+     *
+     * @param listener the {@link TelegesisEventListener} which will be notified of incoming events
+     */
     public void addEventListener(TelegesisEventListener listener) {
         synchronized (eventListeners) {
             if (eventListeners.contains(listener)) {
@@ -482,6 +487,11 @@ public class TelegesisFrameHandler {
         }
     }
 
+    /**
+     * Remove a {@link TelegesisEventListener}
+     *
+     * @param listener the {@link TelegesisEventListener}
+     */
     public void removeEventListener(TelegesisEventListener listener) {
         synchronized (eventListeners) {
             eventListeners.remove(listener);
