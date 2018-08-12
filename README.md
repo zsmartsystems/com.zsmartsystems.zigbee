@@ -40,15 +40,23 @@ A log viewer to decode the logs and present them in a usable format is available
 
 ## Dongles
 
-### Texas Instruments CC2531
-
-The library supports the Texas Instruments ZNP protocol over a serial interface.
-
 ### Silicon Labs Ember EM35x / EFR32
 
 The library supports the Silicon Labs EZSP protocol using ASH or SPI protocols over a serial interface. The implementation of the SPI protocol assumes that the SPI provides a TTY-like software interface to the application, or is otherwise abstracted via the ```ZigBeePort``` interface.  
 
-It is worth noting that EM3588 devices that have an embedded USB core will likely work with any baud rate, where dongles using external USB interface (eg CP2102 used with an EM3581) will likely require a specific baud rate. This has been noted on the HUSBZB-1 which embeds an EM3581 and requires a rate of 57600.
+It is worth noting that EM3588 devices that have an embedded USB core will likely work with any baud rate, where dongles using external USB interface (eg CP2102 used with an EM3581) will likely require a specific baud rate.
+
+Currently there are two main NCP images - one that supports hardware flow control with a baud rate of 115200, and one that supports software flow control with a rate of 57600.
+
+#### Ember NCP configuration
+
+The library provide a standard set of configuration constants to configure the NCP for use as a coordinator. There are two methods available in the Ember driver to manipulate the configuration maps ```updateDefaultConfiguration``` and ```updateDefaultPolicy```. The configuration is sent to the NCP during the initialisation sequence which is performed when calling the ```ZigBeeNetworkManager.initialize()``` method, so any changes to configuration must be performed prior to this.
+
+The Ember dongle driver includes a public method ```getEmberNcp()``` which returns a ```EmberNcp``` class. This class provides high level methods for interacting directly with the NCP.
+
+### Texas Instruments CC2531
+
+The library supports the Texas Instruments ZNP protocol over a serial interface.
 
 ### Telegesis ETRX3
 
