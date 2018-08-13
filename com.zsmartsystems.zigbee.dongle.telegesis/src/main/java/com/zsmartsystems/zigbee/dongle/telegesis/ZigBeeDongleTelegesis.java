@@ -25,8 +25,6 @@ import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisEventListener;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFirmwareUpdateHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFrameHandler;
-import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBecomeNetworkManagerCommand;
-import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBecomeTrustCentreCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBootloadCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisChangeChannelCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCommand;
@@ -39,11 +37,13 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisa
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisplayNetworkInformationCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisplayProductIdentificationCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
-import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisLeaveNetworkCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisGetChannelMaskCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisGetFrameCntCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkJoinedEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLeftEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLostEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisReceiveMessageEvent;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisRestoreFactoryDefaultsCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendMulticastCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendUnicastCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetChannelMaskCommand;
@@ -60,6 +60,7 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetP
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetRegisterBitCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetRegisterCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetTrustCentreLinkKeyCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSoftwareResetCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisStatusCode;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
@@ -146,6 +147,12 @@ public class ZigBeeDongleTelegesis
      * The Telegesis version used in this system.
      */
     private String versionString = "Unknown";
+
+    /**
+     * Flag to remember if startup has been completed, so that we don't inform the higher layers that the dongle is
+     * online before the higher layer has had the chance to initialise.
+     */
+    private boolean startupComplete = false;
 
     /**
      * S0A – Main Function
@@ -337,42 +344,19 @@ public class ZigBeeDongleTelegesis
         frameHandler.start(serialPort);
         frameHandler.addEventListener(this);
 
-        // Configure the dongle
-        TelegesisSetPromptEnable1Command prompt1Function = new TelegesisSetPromptEnable1Command();
-        prompt1Function.setConfiguration(defaultS0E);
-        if (frameHandler.sendRequest(prompt1Function) == null) {
-            logger.debug("Error setting Telegesis Prompt 1 register");
-            return ZigBeeStatus.BAD_RESPONSE;
+        // Software reset the stick so we are in a known state on startup!
+        // For the first command, we add a retry mechanism
+        // in case the serial port takes some time to get started
+        for (int retry = 0; retry < 3; retry++) {
+            TelegesisSoftwareResetCommand softwareReset = new TelegesisSoftwareResetCommand();
+            if (frameHandler.sendRequest(softwareReset) != null) {
+                break;
+            }
         }
 
-        // Disable echo on the serial port
-        TelegesisSetRegisterBitCommand setRegister = new TelegesisSetRegisterBitCommand();
-        setRegister.setRegister(0x12);
-        setRegister.setBit(4);
-        setRegister.setState(true);
-        if (frameHandler.sendRequest(setRegister) == null) {
-            logger.debug("Error setting Telegesis port echo");
-            return ZigBeeStatus.BAD_RESPONSE;
-        }
-
-        TelegesisSetMainFunctionCommand mainFunction = new TelegesisSetMainFunctionCommand();
-        mainFunction.setConfiguration(defaultS0A);
-        mainFunction.setPassword(telegesisPassword);
-        if (frameHandler.sendRequest(mainFunction) == null) {
-            logger.debug("Error setting Telegesis Main Function register");
-            return ZigBeeStatus.BAD_RESPONSE;
-        }
-        TelegesisSetExtendedFunctionCommand extendedFunction = new TelegesisSetExtendedFunctionCommand();
-        extendedFunction.setConfiguration(defaultS10);
-        if (frameHandler.sendRequest(extendedFunction) == null) {
-            logger.debug("Error setting Telegesis Extended Function register");
-            return ZigBeeStatus.BAD_RESPONSE;
-        }
-        TelegesisSetPromptEnable2Command prompt2Function = new TelegesisSetPromptEnable2Command();
-        prompt2Function.setConfiguration(defaultS0F);
-        if (frameHandler.sendRequest(prompt2Function) == null) {
-            logger.debug("Error setting Telegesis Prompt 2 register");
-            return ZigBeeStatus.BAD_RESPONSE;
+        if (!initialiseDongle()) {
+            logger.error("Unable to configure Telegesis dongle");
+            return ZigBeeStatus.FAILURE;
         }
 
         // Get the product information
@@ -416,7 +400,10 @@ public class ZigBeeDongleTelegesis
         // If we want to reinitialize the network, then go...
         if (reinitialize) {
             logger.debug("Reinitialising Telegesis dongle and forming network.");
-            initialiseNetwork();
+            if (!initialiseNetwork()) {
+                logger.error("Error while initialising Telegesis dongle and forming network.");
+                return ZigBeeStatus.FAILURE;
+            }
         }
 
         // Check if the network is now up
@@ -427,8 +414,18 @@ public class ZigBeeDongleTelegesis
         }
 
         radioChannel = ZigBeeChannel.create(networkInfo.getChannel());
+
+        TelegesisGetChannelMaskCommand channelMask = new TelegesisGetChannelMaskCommand();
+        if (frameHandler.sendRequest(channelMask) == null || channelMask.getStatus() != TelegesisStatusCode.SUCCESS) {
+            logger.debug("Telegesis failed to get current channel mask.");
+        } else {
+            logger.debug("Telegesis current channel mask: {}", channelMask);
+        }
+
         panId = networkInfo.getPanId();
         extendedPanId = networkInfo.getEpanId();
+
+        startupComplete = true;
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
         return ZigBeeStatus.SUCCESS;
@@ -457,22 +454,58 @@ public class ZigBeeDongleTelegesis
         return 0;
     }
 
-    private void initialiseNetwork() {
-        TelegesisDisplayNetworkInformationCommand networkInfo = new TelegesisDisplayNetworkInformationCommand();
-        if (frameHandler.sendRequest(networkInfo) == null || networkInfo.getStatus() != TelegesisStatusCode.SUCCESS) {
-            logger.debug("Error getting network information");
-        } else if (networkInfo.getStatus() == TelegesisStatusCode.SUCCESS
-                && networkInfo.getDevice() == TelegesisDeviceType.COO) {
-            // We are currently connected to a PAN - we need to leave.
-            TelegesisLeaveNetworkCommand leaveNetworkCommand = new TelegesisLeaveNetworkCommand();
-            if (frameHandler.sendRequest(leaveNetworkCommand) == null) {
-                logger.debug("Error leaving network");
-            }
+    private boolean initialiseDongle() {
+        // Disable echo on the serial port
+        TelegesisSetRegisterBitCommand setRegister = new TelegesisSetRegisterBitCommand();
+        setRegister.setRegister(0x12);
+        setRegister.setBit(4);
+        setRegister.setState(true);
+        if (frameHandler.sendRequest(setRegister) == null) {
+            logger.debug("Error setting Telegesis port echo");
+            return false;
+        }
 
-            // Wait for the "Network Left" event
-            if (frameHandler.eventWait(TelegesisNetworkLeftEvent.class) == null) {
-                logger.debug("Error leaving network: No event received");
-            }
+        // Configure the dongle
+        TelegesisSetPromptEnable1Command prompt1Function = new TelegesisSetPromptEnable1Command();
+        prompt1Function.setConfiguration(defaultS0E);
+        if (frameHandler.sendRequest(prompt1Function) == null) {
+            logger.debug("Error setting Telegesis Prompt 1 register");
+            return false;
+        }
+
+        TelegesisSetMainFunctionCommand mainFunction = new TelegesisSetMainFunctionCommand();
+        mainFunction.setConfiguration(defaultS0A);
+        mainFunction.setPassword(telegesisPassword);
+        if (frameHandler.sendRequest(mainFunction) == null) {
+            logger.debug("Error setting Telegesis Main Function register");
+            return false;
+        }
+        TelegesisSetExtendedFunctionCommand extendedFunction = new TelegesisSetExtendedFunctionCommand();
+        extendedFunction.setConfiguration(defaultS10);
+        if (frameHandler.sendRequest(extendedFunction) == null) {
+            logger.debug("Error setting Telegesis Extended Function register");
+            return false;
+        }
+        TelegesisSetPromptEnable2Command prompt2Function = new TelegesisSetPromptEnable2Command();
+        prompt2Function.setConfiguration(defaultS0F);
+        if (frameHandler.sendRequest(prompt2Function) == null) {
+            logger.debug("Error setting Telegesis Prompt 2 register");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean initialiseNetwork() {
+        TelegesisRestoreFactoryDefaultsCommand setDefaults = new TelegesisRestoreFactoryDefaultsCommand();
+        if (frameHandler.sendRequest(setDefaults) == null) {
+            logger.debug("Error setting Telegesis dongle to factory defaults");
+            return false;
+        }
+
+        if (!initialiseDongle()) {
+            logger.error("Unable to configure Telegesis dongle after hard reset");
+            return false;
         }
 
         TelegesisSetTrustCentreLinkKeyCommand linkKeyCommand = new TelegesisSetTrustCentreLinkKeyCommand();
@@ -480,6 +513,7 @@ public class ZigBeeDongleTelegesis
         linkKeyCommand.setPassword(telegesisPassword);
         if (frameHandler.sendRequest(linkKeyCommand) == null) {
             logger.debug("Error setting Telegesis link key");
+            return false;
         }
 
         TelegesisSetNetworkKeyCommand networkKeyCommand = new TelegesisSetNetworkKeyCommand();
@@ -487,18 +521,21 @@ public class ZigBeeDongleTelegesis
         networkKeyCommand.setPassword(telegesisPassword);
         if (frameHandler.sendRequest(networkKeyCommand) == null) {
             logger.debug("Error setting Telegesis network key");
+            return false;
         }
 
         TelegesisSetPanIdCommand panIdCommand = new TelegesisSetPanIdCommand();
         panIdCommand.setPanId(panId);
         if (frameHandler.sendRequest(panIdCommand) == null) {
             logger.debug("Error setting Telegesis PAN ID");
+            return false;
         }
 
         TelegesisSetEpanIdCommand epanIdCommand = new TelegesisSetEpanIdCommand();
         epanIdCommand.setEpanId(extendedPanId);
         if (frameHandler.sendRequest(epanIdCommand) == null) {
             logger.debug("Error setting Telegesis EPAN ID");
+            return false;
         }
 
         // Set the profile to HA
@@ -507,22 +544,20 @@ public class ZigBeeDongleTelegesis
         setRegister.setValue(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getId());
         if (frameHandler.sendRequest(setRegister) == null) {
             logger.debug("Error setting Telegesis profile ID");
+            return false;
         }
+
+        setZigBeeChannel(radioChannel);
 
         TelegesisCreatePanCommand createNetwork = new TelegesisCreatePanCommand();
-        if (frameHandler.sendRequest(createNetwork) == null) {
+        frameHandler.queueFrame(createNetwork);
+        if (frameHandler.eventWait(TelegesisNetworkJoinedEvent.class) == null) {
             logger.debug("Error creating Telegesis PAN");
+            return false;
         }
+        logger.debug("Telegesis PAN Created");
 
-        TelegesisBecomeTrustCentreCommand beTrustCentre = new TelegesisBecomeTrustCentreCommand();
-        if (frameHandler.sendRequest(beTrustCentre) == null) {
-            logger.debug("Error setting Telegesis trust center");
-        }
-
-        TelegesisBecomeNetworkManagerCommand beNetworkManager = new TelegesisBecomeNetworkManagerCommand();
-        if (frameHandler.sendRequest(beNetworkManager) == null) {
-            logger.debug("Error setting Telegesis network manager");
-        }
+        return true;
     }
 
     @Override
@@ -575,6 +610,11 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public void telegesisEventReceived(TelegesisEvent event) {
+        // Ignore events prior to the app starting - to avoid confusion!
+        if (!startupComplete) {
+            return;
+        }
+
         if (event instanceof TelegesisReceiveMessageEvent) {
             TelegesisReceiveMessageEvent rxMessage = (TelegesisReceiveMessageEvent) event;
 
@@ -627,6 +667,8 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public ZigBeeStatus setZigBeeChannel(ZigBeeChannel channel) {
+        radioChannel = channel;
+
         ZigBeeChannelMask channelMask = new ZigBeeChannelMask();
         channelMask.addChannel(channel);
 
@@ -676,11 +718,25 @@ public class ZigBeeDongleTelegesis
     public ZigBeeStatus setZigBeeNetworkKey(final ZigBeeKey key) {
         networkKey = key;
 
+        TelegesisSetNetworkKeyCommand networkKeyCommand = new TelegesisSetNetworkKeyCommand();
+        networkKeyCommand.setNetworkKey(networkKey);
+        networkKeyCommand.setPassword(telegesisPassword);
+        if (frameHandler.sendRequest(networkKeyCommand) == null) {
+            logger.debug("Error setting Telegesis network key");
+            return ZigBeeStatus.FAILURE;
+        }
         return ZigBeeStatus.SUCCESS;
     }
 
     @Override
     public ZigBeeKey getZigBeeNetworkKey() {
+        TelegesisGetFrameCntCommand frameCntCommand = new TelegesisGetFrameCntCommand();
+        if (frameHandler.sendRequest(frameCntCommand) == null) {
+            logger.debug("Error getting Telegesis frame counter");
+        } else {
+            networkKey.setOutgoingFrameCounter(frameCntCommand.getFrameCnt().intValue());
+        }
+
         return networkKey;
     }
 
