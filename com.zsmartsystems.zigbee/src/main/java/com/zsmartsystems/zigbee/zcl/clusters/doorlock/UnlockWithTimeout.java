@@ -1,0 +1,116 @@
+/**
+ * Copyright (c) 2016-2018 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
+package com.zsmartsystems.zigbee.zcl.clusters.doorlock;
+
+import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+
+/**
+ * Unlock With Timeout value object class.
+ * <p>
+ * Cluster: <b>Door Lock</b>. Command is sent <b>TO</b> the server.
+ * This command is a <b>specific</b> command used for the Door Lock cluster.
+ * <p>
+ * This command causes the lock device to unlock the door with a timeout parameter. After the
+ * time in seconds specified in the timeout field, the lock device will relock itself
+ * automatically. This timeout parameter is only temporary for this message transition only
+ * and overrides the default relock time as specified in the [Auto Relock Time attribute]
+ * attribute. If the door lock device is not capable of or does not want to support temporary
+ * Relock Timeout, it SHOULD not support this optional command.
+ * <p>
+ * Code is auto-generated. Modifications may be overwritten!
+ */
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-08-13T17:13:06Z")
+public class UnlockWithTimeout extends ZclCommand {
+    /**
+     * Timeout In Seconds command message field.
+     */
+    private Integer timeoutInSeconds;
+
+    /**
+     * PIN command message field.
+     */
+    private String pin;
+
+    /**
+     * Default constructor.
+     */
+    public UnlockWithTimeout() {
+        genericCommand = false;
+        clusterId = 0x0101;
+        commandId = 3;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Gets Timeout In Seconds.
+     *
+     * @return the Timeout In Seconds
+     */
+    public Integer getTimeoutInSeconds() {
+        return timeoutInSeconds;
+    }
+
+    /**
+     * Sets Timeout In Seconds.
+     *
+     * @param timeoutInSeconds the Timeout In Seconds
+     */
+    public void setTimeoutInSeconds(final Integer timeoutInSeconds) {
+        this.timeoutInSeconds = timeoutInSeconds;
+    }
+
+    /**
+     * Gets PIN.
+     *
+     * @return the PIN
+     */
+    public String getPin() {
+        return pin;
+    }
+
+    /**
+     * Sets PIN.
+     *
+     * @param pin the PIN
+     */
+    public void setPin(final String pin) {
+        this.pin = pin;
+    }
+
+    @Override
+    public void serialize(final ZclFieldSerializer serializer) {
+        serializer.serialize(timeoutInSeconds, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        serializer.serialize(pin, ZclDataType.CHARACTER_STRING);
+    }
+
+    @Override
+    public void deserialize(final ZclFieldDeserializer deserializer) {
+        timeoutInSeconds = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        pin = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder(79);
+        builder.append("UnlockWithTimeout [");
+        builder.append(super.toString());
+        builder.append(", timeoutInSeconds=");
+        builder.append(timeoutInSeconds);
+        builder.append(", pin=");
+        builder.append(pin);
+        builder.append(']');
+        return builder.toString();
+    }
+
+}
