@@ -16,22 +16,21 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Lock Door Response value object class.
+ * Unlock With Timeout Response value object class.
  * <p>
  * Cluster: <b>Door Lock</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Door Lock cluster.
  * <p>
- * This command is sent in response to a Lock command with one status byte payload. The Status
- * field SHALL be set to SUCCESS or FAILURE.
+ * This command is sent in response to an Unlock with Timeout command with one status byte
+ * payload. The Status field SHALL be set to SUCCESS or FAILURE.
  * <p>
- * The status byte only indicates if the message has received successfully. To determine the
- * lock and/or door status, the client SHOULD query to [Lock State attribute] and [Door State
- * attribute]
+ * The status byte only indicates if the message has received successfully. To determine
+ * status, the client SHOULD query to [Lock State attribute] and [Door State attribute].
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-08-13T16:25:39Z")
-public class LockDoorResponse extends ZclCommand {
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-08-13T17:13:06Z")
+public class UnlockWithTimeoutResponse extends ZclCommand {
     /**
      * Status command message field.
      */
@@ -40,10 +39,10 @@ public class LockDoorResponse extends ZclCommand {
     /**
      * Default constructor.
      */
-    public LockDoorResponse() {
+    public UnlockWithTimeoutResponse() {
         genericCommand = false;
         clusterId = 0x0101;
-        commandId = 0;
+        commandId = 3;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
@@ -67,18 +66,18 @@ public class LockDoorResponse extends ZclCommand {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(status, ZclDataType.ENUMERATION_8_BIT);
+        serializer.serialize(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        status = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(45);
-        builder.append("LockDoorResponse [");
+        final StringBuilder builder = new StringBuilder(54);
+        builder.append("UnlockWithTimeoutResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);

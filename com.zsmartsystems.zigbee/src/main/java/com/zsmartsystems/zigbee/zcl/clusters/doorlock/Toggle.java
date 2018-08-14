@@ -16,72 +16,69 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Lock Door Response value object class.
+ * Toggle value object class.
  * <p>
- * Cluster: <b>Door Lock</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Door Lock</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Door Lock cluster.
  * <p>
- * This command is sent in response to a Lock command with one status byte payload. The Status
- * field SHALL be set to SUCCESS or FAILURE.
- * <p>
- * The status byte only indicates if the message has received successfully. To determine the
- * lock and/or door status, the client SHOULD query to [Lock State attribute] and [Door State
- * attribute]
+ * Request the status of the lock. As of HA 1.2, this command includes an optional code for the
+ * lock. The door lock MAY require a code depending on the value of the [Require PIN for RF
+ * Operation attribute]
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-08-13T16:25:39Z")
-public class LockDoorResponse extends ZclCommand {
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-08-13T17:13:06Z")
+public class Toggle extends ZclCommand {
     /**
-     * Status command message field.
+     * PIN command message field.
      */
-    private Integer status;
+    private String pin;
 
     /**
      * Default constructor.
      */
-    public LockDoorResponse() {
+    public Toggle() {
         genericCommand = false;
         clusterId = 0x0101;
-        commandId = 0;
-        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+        commandId = 2;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Status.
+     * Gets PIN.
      *
-     * @return the Status
+     * @return the PIN
      */
-    public Integer getStatus() {
-        return status;
+    public String getPin() {
+        return pin;
     }
 
     /**
-     * Sets Status.
+     * Sets PIN.
      *
-     * @param status the Status
+     * @param pin the PIN
      */
-    public void setStatus(final Integer status) {
-        this.status = status;
+    public void setPin(final String pin) {
+        this.pin = pin;
     }
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(status, ZclDataType.ENUMERATION_8_BIT);
+        serializer.serialize(pin, ZclDataType.CHARACTER_STRING);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        pin = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(45);
-        builder.append("LockDoorResponse [");
+        final StringBuilder builder = new StringBuilder(32);
+        builder.append("Toggle [");
         builder.append(super.toString());
-        builder.append(", status=");
-        builder.append(status);
+        builder.append(", pin=");
+        builder.append(pin);
         builder.append(']');
         return builder.toString();
     }
