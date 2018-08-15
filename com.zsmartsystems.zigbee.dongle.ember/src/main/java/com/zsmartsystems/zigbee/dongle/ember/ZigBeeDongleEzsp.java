@@ -616,7 +616,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public ZigBeeStatus setTcLinkKey(ZigBeeKey key) {
         linkKey = key;
-        return ZigBeeStatus.FAILURE;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
