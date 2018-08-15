@@ -602,6 +602,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public ZigBeeStatus setZigBeeNetworkKey(final ZigBeeKey key) {
         networkKey = key;
+        if (networkStateUp) {
+            return ZigBeeStatus.INVALID_STATE;
+        }
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -616,6 +619,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public ZigBeeStatus setTcLinkKey(ZigBeeKey key) {
         linkKey = key;
+        if (networkStateUp) {
+            return ZigBeeStatus.INVALID_STATE;
+        }
         return ZigBeeStatus.SUCCESS;
     }
 
