@@ -171,11 +171,21 @@ public class ZigBeeApsFrame {
         this.radius = radius;
     }
 
-    public boolean isSecurityEnable() {
+    /**
+     * Gets APS security state
+     * 
+     * @return true if APS security is enabled
+     */
+    public boolean getSecurityEnabled() {
         return securityEnable;
     }
 
-    public void setSecurityEnable(boolean securityEnable) {
+    /**
+     * Sets APS security state
+     * 
+     * @param securityEnable true to enable APS security
+     */
+    public void setSecurityEnabled(boolean securityEnable) {
         this.securityEnable = securityEnable;
     }
 

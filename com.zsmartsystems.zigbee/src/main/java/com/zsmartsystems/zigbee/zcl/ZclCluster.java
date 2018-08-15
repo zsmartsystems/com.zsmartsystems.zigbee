@@ -134,6 +134,12 @@ public abstract class ZclCluster {
     private final ZclAttributeNormalizer normalizer;
 
     /**
+     * If this cluster requires all frames to have APS security applied, then this will be true. Any frames not secured
+     * with the link key will be rejected and all frames sent will use APS encryption.
+     */
+    private boolean apsSecurityRequired = false;
+
+    /**
      * Abstract method called when the cluster starts to initialise the list of attributes defined in this cluster by
      * the cluster library
      *
@@ -155,6 +161,8 @@ public abstract class ZclCluster {
         if (isClient()) {
             command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         }
+
+        command.setApsSecurity(apsSecurityRequired);
 
         return zigbeeManager.unicast(command, new ZclTransactionMatcher());
     }
@@ -434,6 +442,26 @@ public abstract class ZclCluster {
      */
     public boolean isClient() {
         return isClient;
+    }
+
+    /**
+     * Sets APS security requirement on or off for this cluster. If APS security is required, all outgoing frames will
+     * be APS secured, and any incoming frames without APS security will be ignored.
+     *
+     * @param requireApsSecurity true if APS security is required for this cluster
+     */
+    public void setApsSecurityRequired(boolean requireApsSecurity) {
+        this.apsSecurityRequired = requireApsSecurity;
+    }
+
+    /**
+     * If APS security is required, all outgoing frames will
+     * be APS secured, and any incoming frames without APS security will be ignored.
+     *
+     * @return true if APS security is required for this cluster
+     */
+    public boolean getApsSecurityRequired() {
+        return apsSecurityRequired;
     }
 
     /**
