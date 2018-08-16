@@ -50,6 +50,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindingTableCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommandsSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeEndpointCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeNodeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceInformationCommand;
@@ -188,6 +189,7 @@ public final class ZigBeeConsole {
         newCommands.put("write", new ZigBeeConsoleAttributeWriteCommand());
 
         newCommands.put("attsupported", new ZigBeeConsoleAttributeSupportedCommand());
+        newCommands.put("cmdsupported", new ZigBeeConsoleCommandsSupportedCommand());
 
         newCommands.put("info", new ZigBeeConsoleDeviceInformationCommand());
         newCommands.put("join", new ZigBeeConsoleNetworkJoinCommand());
