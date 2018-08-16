@@ -577,6 +577,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         apsFrame.setCluster(command.getClusterId());
         apsFrame.setApsCounter(apsCounter.getAndIncrement() & 0xff);
+        apsFrame.setSecurityEnabled(command.getApsSecurity());
 
         // TODO: Set the source address correctly?
         apsFrame.setSourceAddress(0);
@@ -704,6 +705,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setSourceAddress(new ZigBeeEndpointAddress(apsFrame.getSourceAddress(), apsFrame.getSourceEndpoint()));
         command.setDestinationAddress(
                 new ZigBeeEndpointAddress(apsFrame.getDestinationAddress(), apsFrame.getDestinationEndpoint()));
+        command.setApsSecurity(apsFrame.getSecurityEnabled());
 
         logger.debug("RX CMD: {}", command);
 

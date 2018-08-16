@@ -32,11 +32,11 @@ public class ZigBeeApsFrameTest {
     public void testSecurityEnable() {
         ZigBeeApsFrame frame = new ZigBeeApsFrame();
 
-        frame.setSecurityEnable(true);
-        assertTrue(frame.isSecurityEnable());
+        frame.setSecurityEnabled(true);
+        assertTrue(frame.getSecurityEnabled());
 
-        frame.setSecurityEnable(false);
-        assertFalse(frame.isSecurityEnable());
+        frame.setSecurityEnabled(false);
+        assertFalse(frame.getSecurityEnabled());
 
         System.out.println(frame);
     }

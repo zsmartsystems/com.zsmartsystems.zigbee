@@ -33,9 +33,11 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.command.BindRequest;
 import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
@@ -237,6 +239,38 @@ public class ZclClusterTest {
         assertTrue(cluster.isAttributeSupported(1));
         assertTrue(cluster.isAttributeSupported(2));
         assertFalse(cluster.isAttributeSupported(3));
+    }
+
+    @Test
+    public void send() {
+        createNetworkManager();
+
+        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress());
+        node.setNetworkAddress(1234);
+        ZigBeeEndpoint device = new ZigBeeEndpoint(networkManager, node, 5);
+        ZclOnOffCluster cluster = new ZclOnOffCluster(networkManager, device);
+
+        cluster.setApsSecurityRequired(true);
+        cluster.onCommand();
+        assertEquals(1, commandCapture.getAllValues().size());
+        ZigBeeCommand command = commandCapture.getValue();
+        assertNotNull(command);
+        System.out.println(command);
+        assertTrue(command instanceof OnCommand);
+        OnCommand onCommand = (OnCommand) command;
+        assertEquals(true, onCommand.getApsSecurity());
+        assertEquals(ZclCommandDirection.CLIENT_TO_SERVER, onCommand.getCommandDirection());
+
+        cluster.setApsSecurityRequired(false);
+        cluster.onCommand();
+        assertEquals(2, commandCapture.getAllValues().size());
+        command = commandCapture.getValue();
+        assertNotNull(command);
+        System.out.println(command);
+        assertTrue(command instanceof OnCommand);
+        onCommand = (OnCommand) command;
+        assertEquals(false, onCommand.getApsSecurity());
+        assertEquals(ZclCommandDirection.CLIENT_TO_SERVER, onCommand.getCommandDirection());
     }
 
 }

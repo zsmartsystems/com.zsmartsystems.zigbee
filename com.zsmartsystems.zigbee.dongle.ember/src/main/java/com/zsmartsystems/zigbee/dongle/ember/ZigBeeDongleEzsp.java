@@ -410,6 +410,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ROUTE_DISCOVERY);
         emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ADDRESS_DISCOVERY);
 
+        if (apsFrame.getSecurityEnabled()) {
+            emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENCRYPTION);
+        }
+
         if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE && apsFrame.getDestinationAddress() < 0xfff8) {
             EzspSendUnicastRequest emberUnicast = new EzspSendUnicastRequest();
             emberUnicast.setIndexOrDestination(apsFrame.getDestinationAddress());
@@ -473,6 +477,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             apsFrame.setApsCounter(emberApsFrame.getSequence());
             apsFrame.setCluster(emberApsFrame.getClusterId());
             apsFrame.setProfile(emberApsFrame.getProfileId());
+            apsFrame.setSecurityEnabled(emberApsFrame.getOptions().contains(EmberApsOption.EMBER_APS_OPTION_ENCRYPTION));
 
             apsFrame.setDestinationAddress(nwkAddress);
             apsFrame.setDestinationEndpoint(emberApsFrame.getDestinationEndpoint());
