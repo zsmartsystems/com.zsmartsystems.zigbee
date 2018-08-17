@@ -59,8 +59,7 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
 
         if (showGenerated(args)) {
             if (cluster.discoverCommandsGenerated(false).get()) {
-                out.println("Supported generated commands for " + (cluster.isServer() ? "server " : "client ")
-                        + cluster.getClusterName() + " cluster " + printClusterId(cluster.getClusterId()));
+                out.println("Supported generated commands for " + printCluster(cluster));
                 printCommands(out, cluster, cluster.getSupportedCommandsGenerated());
 
             } else {
@@ -71,8 +70,7 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
 
         if (showReceived(args)) {
             if (cluster.discoverCommandsReceived(false).get()) {
-                out.println("Supported received commands for " + (cluster.isServer() ? "server " : "client ")
-                        + cluster.getClusterName() + " cluster " + printClusterId(cluster.getClusterId()));
+                out.println("Supported received commands for " + printCluster(cluster));
                 printCommands(out, cluster, cluster.getSupportedCommandsReceived());
             } else {
                 out.println("Failed to retrieve supported received commands");
@@ -95,5 +93,11 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
 
     private boolean showReceived(String[] args) {
         return args.length < 4 || "rcv".equals(args[3]);
+    }
+
+    private String printCluster(ZclCluster cluster) {
+        String typePrefix = cluster.isServer() ? "server " : "client ";
+        return String.format("%s %s cluster %s", cluster.getClusterName(), typePrefix,
+                printClusterId(cluster.getClusterId()));
     }
 }

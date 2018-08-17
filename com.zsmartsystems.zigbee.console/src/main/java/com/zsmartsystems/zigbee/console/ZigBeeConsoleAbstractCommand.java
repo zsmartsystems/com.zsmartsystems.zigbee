@@ -133,7 +133,7 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
         boolean isOutput = clusterSpecifier.startsWith("out:") || clusterSpecifier.startsWith("client:");
 
         Integer clusterId = (isInput || isOutput)
-                ? parseClusterId(clusterSpecifier.substring(clusterSpecifier.indexOf(":") + 1))
+                ? parseClusterId(clusterSpecifier.substring(clusterSpecifier.indexOf(':') + 1))
                 : parseClusterId(clusterSpecifier);
 
         if (isInput) {
