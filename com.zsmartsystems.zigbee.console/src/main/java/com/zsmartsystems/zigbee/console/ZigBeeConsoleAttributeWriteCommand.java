@@ -52,7 +52,7 @@ public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCom
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
-        final int clusterId = parseCluster(args[3]);
+        final int clusterId = parseClusterId(args[3]);
         final int attributeId = parseAttribute(args[4]);
 
         final ZclCluster cluster;

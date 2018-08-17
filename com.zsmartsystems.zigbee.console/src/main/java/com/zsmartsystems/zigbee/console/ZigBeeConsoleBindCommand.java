@@ -50,7 +50,7 @@ public class ZigBeeConsoleBindCommand extends ZigBeeConsoleAbstractCommand {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
-        final int clusterId = parseCluster(args[1]);
+        final int clusterId = parseClusterId(args[1]);
 
         final ZigBeeEndpoint source = getEndpoint(networkManager, args[2]);
         ZclCluster cluster = source.getInputCluster(clusterId);

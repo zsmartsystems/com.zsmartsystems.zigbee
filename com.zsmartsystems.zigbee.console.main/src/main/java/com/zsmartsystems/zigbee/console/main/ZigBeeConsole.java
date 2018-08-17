@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.Future;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -126,7 +125,7 @@ public final class ZigBeeConsole {
     /**
      * Constructor which configures ZigBee API and constructs commands.
      *
-     * @param dongle the dongle
+     * @param dongle            the dongle
      * @param transportCommands
      */
     public ZigBeeConsole(final ZigBeeNetworkManager networkManager, final ZigBeeTransportTransmit dongle,
@@ -175,8 +174,6 @@ public final class ZigBeeConsole {
         commands.put("rediscover", new RediscoverCommand());
 
         commands.put("stress", new StressCommand());
-
-        commands.put("cmdsupported", new CmdSupportedCommand());
 
         newCommands.put("nodes", new ZigBeeConsoleNodeListCommand());
         newCommands.put("endpoint", new ZigBeeConsoleDescribeEndpointCommand());
@@ -295,7 +292,7 @@ public final class ZigBeeConsole {
      * Processes text input line.
      *
      * @param inputLine the input line
-     * @param out the output stream
+     * @param out       the output stream
      */
     public void processInputLine(final String inputLine, final PrintStream out) {
         if (inputLine.length() == 0) {
@@ -309,7 +306,7 @@ public final class ZigBeeConsole {
      * Processes input arguments.
      *
      * @param args the input arguments
-     * @param out the output stream
+     * @param out  the output stream
      */
     public void processArgs(final String[] args, final PrintStream out) {
         try {
@@ -332,8 +329,8 @@ public final class ZigBeeConsole {
      * Executes command.
      *
      * @param networkManager the {@link ZigBeeNetworkManager}
-     * @param args the arguments including the command
-     * @param out the output stream
+     * @param args           the arguments including the command
+     * @param out            the output stream
      */
     private void executeCommand(final ZigBeeNetworkManager networkManager, final String[] args, final PrintStream out) {
         final ConsoleCommand consoleCommand = commands.get(args[0].toLowerCase());
@@ -394,7 +391,7 @@ public final class ZigBeeConsole {
     /**
      * Gets destination by device identifier or group ID.
      *
-     * @param zigbeeApi the ZigBee API
+     * @param zigbeeApi             the ZigBee API
      * @param destinationIdentifier the device identifier or group ID
      * @return the device
      */
@@ -422,7 +419,7 @@ public final class ZigBeeConsole {
     /**
      * Gets device by device identifier.
      *
-     * @param zigbeeApi the ZigBee API
+     * @param zigbeeApi        the ZigBee API
      * @param deviceIdentifier the device identifier
      * @return the device
      */
@@ -459,8 +456,8 @@ public final class ZigBeeConsole {
          * Processes console command.
          *
          * @param zigbeeApi the ZigBee API
-         * @param args the command arguments
-         * @param out the output PrintStream
+         * @param args      the command arguments
+         * @param out       the output PrintStream
          * @return true if command syntax was correct.
          */
         boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception;
@@ -1251,84 +1248,6 @@ public final class ZigBeeConsole {
     }
 
     /**
-     * Reads the list of supported commands in a specific cluster of a device.
-     */
-    private class CmdSupportedCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Check what commands are supported.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "cmdsupported [DEVICE] [CLUSTER]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 3) {
-                return false;
-            }
-
-            final int clusterId;
-            try {
-                clusterId = Integer.parseInt(args[2]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-
-            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
-            if (device == null) {
-                print("Device not found.", out);
-                return false;
-            }
-
-            ZclCluster cluster = device.getInputCluster(clusterId);
-            if (cluster == null) {
-                cluster = device.getOutputCluster(clusterId);
-                if (cluster == null) {
-                    print("Cluster not found.", out);
-                    return false;
-                }
-            }
-
-            Future<Boolean> future = cluster.discoverCommandsReceived(false);
-            Boolean result = future.get();
-
-            if (result) {
-                for (Integer cmd : cluster.getSupportedCommandsReceived()) {
-                    out.println("Cluster " + cluster.getClusterId() + ", Command=" + cmd);
-                }
-            } else {
-                out.println("Error getting list of commands received");
-            }
-
-            future = cluster.discoverCommandsGenerated(false);
-            result = future.get();
-
-            if (result) {
-                for (Integer cmd : cluster.getSupportedCommandsGenerated()) {
-                    out.println("Cluster " + cluster.getClusterId() + ", Command=" + cmd);
-                }
-
-            } else {
-                out.println("Error getting list of commands generated");
-            }
-
-            return true;
-        }
-    }
-
-    /**
      * Writes an attribute to a device.
      */
     private class LqiCommand implements ConsoleCommand {
@@ -2076,7 +1995,7 @@ public final class ZigBeeConsole {
      * Default processing for command result.
      *
      * @param result the command result
-     * @param out the output
+     * @param out    the output
      * @return TRUE if result is success
      */
     private boolean defaultResponseProcessing(CommandResult result, PrintStream out) {

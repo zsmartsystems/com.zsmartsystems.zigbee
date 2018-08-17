@@ -51,18 +51,16 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
-        final Integer clusterId = parseCluster(args[2]);
-        ZclCluster cluster = getCluster(endpoint, clusterId);
+        ZclCluster cluster = getCluster(endpoint, args[2]);
 
         if (cluster == null) {
-            out.println("Cluster not found");
-            return;
+            throw new IllegalArgumentException("Could not find cluster specified by " + args[2]);
         }
 
         if (showGenerated(args)) {
             if (cluster.discoverCommandsGenerated(false).get()) {
-                out.println("Supported generated commands for " + cluster.getClusterName() + " cluster "
-                        + printClusterId(cluster.getClusterId()));
+                out.println("Supported generated commands for " + (cluster.isServer() ? "server " : "client ")
+                        + cluster.getClusterName() + " cluster " + printClusterId(cluster.getClusterId()));
                 printCommands(out, cluster, cluster.getSupportedCommandsGenerated());
 
             } else {
@@ -73,8 +71,8 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
 
         if (showReceived(args)) {
             if (cluster.discoverCommandsReceived(false).get()) {
-                out.println("Supported received commands for " + cluster.getClusterName() + " cluster "
-                        + printClusterId(cluster.getClusterId()));
+                out.println("Supported received commands for " + (cluster.isServer() ? "server " : "client ")
+                        + cluster.getClusterName() + " cluster " + printClusterId(cluster.getClusterId()));
                 printCommands(out, cluster, cluster.getSupportedCommandsReceived());
             } else {
                 out.println("Failed to retrieve supported received commands");
@@ -82,22 +80,12 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
         }
     }
 
-    private ZclCluster getCluster(ZigBeeEndpoint endpoint, Integer clusterId) {
-        ZclCluster result = endpoint.getInputCluster(clusterId);
-        if (result == null) {
-            result = endpoint.getOutputCluster(clusterId);
-        }
-        return result;
-    }
-
     private void printCommands(PrintStream out, ZclCluster cluster, Set<Integer> commandIds) {
         out.println("CommandId  Command");
         for (Integer commandId : commandIds) {
-            out.print(" ");
             ZclCommand command = cluster.getCommandFromId(commandId);
             String commandName = (command != null) ? command.getClass().getSimpleName() : "unknown";
-            out.print(String.format("%8d  %s", commandId, commandName));
-            out.println();
+            out.println(String.format("%8d  %s", commandId, commandName));
         }
     }
 

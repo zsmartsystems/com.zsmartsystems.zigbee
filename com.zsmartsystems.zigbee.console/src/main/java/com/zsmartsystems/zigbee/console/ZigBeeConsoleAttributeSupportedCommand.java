@@ -50,7 +50,7 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
-        final Integer clusterId = parseCluster(args[2]);
+        final Integer clusterId = parseClusterId(args[2]);
 
         ZclCluster cluster = endpoint.getInputCluster(clusterId);
         if (cluster != null) {

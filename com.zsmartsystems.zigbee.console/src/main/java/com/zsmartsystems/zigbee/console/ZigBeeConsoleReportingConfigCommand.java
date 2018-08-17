@@ -52,7 +52,7 @@ public class ZigBeeConsoleReportingConfigCommand extends ZigBeeConsoleAbstractCo
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
-        final int clusterId = parseCluster(args[3]);
+        final int clusterId = parseClusterId(args[3]);
         final ZclCluster cluster;
         final String direction = args[2].toUpperCase();
         if ("IN".equals(direction)) {
