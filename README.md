@@ -54,6 +54,14 @@ The library provide a standard set of configuration constants to configure the N
 
 The Ember dongle driver includes a public method ```getEmberNcp()``` which returns a ```EmberNcp``` class. This class provides high level methods for interacting directly with the NCP.
 
+#### Ember MfgLib use
+
+The library provides access to the ```mfglib``` functions in the NCP to facilitate device testing. To use this function, create the ```ZigBeeDongleEzsp``` and then call the ```getEmberMfglib(EmberMfglibListener)``` method to get the ```EmberMfglib``` class and also set the callback listener. The ```EmberMfglib``` class provides access to the ```mfglib``` functions.
+
+Note that this can only be used if the dongle is not configured for use in the network (ie ```initialize``` has not been called).
+
+The [com.zsmartsystems.zigbee.sniffer](https://github.com/zsmartsystems/com.zsmartsystems.zigbee.sniffer) project is an example of the use of these features to provide a network sniffer to route frames to [Wireshark](https://www.wireshark.org/).
+
 ### Texas Instruments CC2531
 
 The library supports the Texas Instruments ZNP protocol over a serial interface.
