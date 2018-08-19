@@ -32,6 +32,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildPara
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfglibRxHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
@@ -161,6 +162,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private boolean networkStateUp = false;
 
     /**
+     * If the dongle is being used with the manufacturing library, then this records the listener to be called when
+     * packets are received.
+     */
+    private EmberMfglibListener mfglibListener;
+
+    /**
      * Create a {@link ZigBeeDongleEzsp} with the default ASH2 frame handler
      *
      * @param serialPort the {@link ZigBeePort} to use for the connection
@@ -246,6 +253,23 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return stackPolicies.remove(policyId);
         }
         return stackPolicies.put(policyId, decisionId);
+    }
+
+    /**
+     * Gets an {@link EmberMfglib} instance that can be used for low level testing of the Ember dongle.
+     * <p>
+     * This may only be used if the {@link ZigBeeDongleEmber} instance has not been initialized on a ZigBee network.
+     *
+     * @return the {@link EmberMfglib} instance, or null on error
+     */
+    public EmberMfglib getEmberMfglib(EmberMfglibListener mfglibListener) {
+        if (!initialiseEzspProtocol()) {
+            return null;
+        }
+
+        this.mfglibListener = mfglibListener;
+
+        return new EmberMfglib(frameHandler);
     }
 
     @Override
@@ -544,6 +568,15 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return;
         }
 
+        if (response instanceof EzspMfglibRxHandler) {
+            if (mfglibListener != null) {
+                EzspMfglibRxHandler mfglibHandler = (EzspMfglibRxHandler) response;
+                mfglibListener.emberMfgLibPacketReceived(mfglibHandler.getLinkQuality(), mfglibHandler.getLinkQuality(),
+                        mfglibHandler.getPacketContents());
+            }
+            return;
+        }
+
         logger.debug("Unhandled EZSP Frame: {}", response.toString());
     }
 
@@ -686,6 +719,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     }
 
     private boolean initialiseEzspProtocol() {
+        if (frameHandler != null) {
+            logger.error("Attempt to initialise Ember dongle when already initialised");
+            return false;
+        }
         if (!serialPort.open()) {
             logger.error("Unable to open Ember serial port");
             return false;
