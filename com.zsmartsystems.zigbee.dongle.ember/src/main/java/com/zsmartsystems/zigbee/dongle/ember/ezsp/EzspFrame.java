@@ -111,7 +111,8 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_DELETE_BINDING = 0x2D;
     protected static final int FRAME_ID_ENERGY_SCAN_REQUEST = 0x9C;
     protected static final int FRAME_ID_ENERGY_SCAN_RESULT_HANDLER = 0x48;
-    protected static final int FRAME_ID_ERRASE_KEY_TABLE_ENTRY = 0x76;
+    protected static final int FRAME_ID_ERASE_KEY_TABLE_ENTRY = 0x76;
+    protected static final int FRAME_ID_FIND_AND_REJOIN_NETWORK = 0x21;
     protected static final int FRAME_ID_FIND_KEY_TABLE_ENTRY = 0x75;
     protected static final int FRAME_ID_FORM_NETWORK = 0x1E;
     protected static final int FRAME_ID_GENERATE_CBKE_KEYS = 0xA4;
@@ -243,7 +244,8 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_DELETE_BINDING, EzspDeleteBindingResponse.class);
         ezspHandlerMap.put(FRAME_ID_ENERGY_SCAN_REQUEST, EzspEnergyScanRequestResponse.class);
         ezspHandlerMap.put(FRAME_ID_ENERGY_SCAN_RESULT_HANDLER, EzspEnergyScanResultHandler.class);
-        ezspHandlerMap.put(FRAME_ID_ERRASE_KEY_TABLE_ENTRY, EzspErraseKeyTableEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_ERASE_KEY_TABLE_ENTRY, EzspEraseKeyTableEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_FIND_AND_REJOIN_NETWORK, EzspFindAndRejoinNetworkResponse.class);
         ezspHandlerMap.put(FRAME_ID_FIND_KEY_TABLE_ENTRY, EzspFindKeyTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_FORM_NETWORK, EzspFormNetworkResponse.class);
         ezspHandlerMap.put(FRAME_ID_GENERATE_CBKE_KEYS, EzspGenerateCbkeKeysResponse.class);
