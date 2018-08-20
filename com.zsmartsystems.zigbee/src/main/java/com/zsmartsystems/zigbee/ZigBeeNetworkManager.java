@@ -444,12 +444,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Adds an installation key for the specified address. The {@link ZigBeeKey} should have an address associated with
      * it.
      *
-     * @param address {@link IeeeAddress} the address to which the install key relates
-     * @param key the install key as {@link ZigBeeKey} to be used for the specified address
+     * @param key the install key as {@link ZigBeeKey} to be used. The key must contain a partner address.
      * @return {@link ZigBeeStatus} with the status of function
      */
-    public ZigBeeStatus setZigBeeInstallKey(final IeeeAddress address, final ZigBeeKey key) {
-        key.setAddress(address);
+    public ZigBeeStatus setZigBeeInstallKey(final ZigBeeKey key) {
+        if (!key.hasAddress()) {
+            return ZigBeeStatus.INVALID_ARGUMENTS;
+        }
         TransportConfig config = new TransportConfig(TransportConfigOption.INSTALL_KEY, key);
         transport.updateTransportConfig(config);
 

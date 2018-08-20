@@ -64,8 +64,9 @@ public class ZigBeeConsoleInstallKeyCommand extends ZigBeeConsoleAbstractCommand
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Install key is incorrect format.");
         }
+        installKey.setAddress(partner);
 
-        ZigBeeStatus result = networkManager.setZigBeeInstallKey(partner, installKey);
+        ZigBeeStatus result = networkManager.setZigBeeInstallKey(installKey);
         out.println("Install key " + hash.toString() + " for address " + partner + " was "
                 + (result == ZigBeeStatus.SUCCESS ? "" : "not") + " set.");
     }
