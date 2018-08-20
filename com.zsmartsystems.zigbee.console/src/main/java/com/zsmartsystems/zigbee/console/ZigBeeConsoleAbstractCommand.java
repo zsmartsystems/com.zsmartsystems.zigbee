@@ -8,7 +8,6 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
-import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -25,27 +24,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  */
 public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleCommand {
-    @Override
-    public abstract String getCommand();
-
-    @Override
-    public abstract String getDescription();
-
-    @Override
-    public abstract String getSyntax();
-
-    @Override
-    public abstract String getHelp();
-
-    @Override
-    public abstract void process(final ZigBeeNetworkManager networkManager, final String[] args, PrintStream out)
-            throws IllegalArgumentException, IllegalStateException, ExecutionException, InterruptedException;
 
     /**
      * Gets a {@link ZigBeeNode}
      *
      * @param networkManager the {@link ZigBeeNetworkManager}
-     * @param nodeId         a {@link String} with the node Id
+     * @param nodeId a {@link String} with the node Id
      * @return the {@link ZigBeeNode}
      * @throws IllegalArgumentException
      */
@@ -74,7 +58,7 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
      * Gets {@link ZigBeeEndpoint} by device identifier.
      *
      * @param networkManager the {@link ZigBeeNetworkManager}
-     * @param endpointId     the device identifier
+     * @param endpointId the device identifier
      * @return the {@link ZigBeeEndpoint}
      * @throws IllegalArgumentException
      */
@@ -122,7 +106,7 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
      * <li>server:11
      * </ul>
      *
-     * @param endpoint         the ZigBee endpoint to get the cluster from (must be non-null)
+     * @param endpoint the ZigBee endpoint to get the cluster from (must be non-null)
      * @param clusterSpecified a cluster specified as described above (must be non-null)
      * @return the specified cluster provided by the endpoint or null if no such cluster is found
      * @throws IllegalArgumentException if the clusterSpecifier uses an invalid number format
@@ -180,7 +164,7 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
      * Default processing for command result.
      *
      * @param result the command result
-     * @param out    the output
+     * @param out the output
      * @return true if result is success
      */
     protected boolean processDefaultResponse(CommandResult result, PrintStream out) {
