@@ -11,7 +11,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
 /**
- * Class to implement the Ember EZSP command <b>erraseKeyTableEntry</b>.
+ * Class to implement the Ember EZSP command <b>eraseKeyTableEntry</b>.
  * <p>
  * This function erases the data in the key table entry at the specified index. If the index is
  * invalid, falseis returned.
@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspErraseKeyTableEntryRequest extends EzspFrameRequest {
+public class EzspEraseKeyTableEntryRequest extends EzspFrameRequest {
     public static final int FRAME_ID = 0x76;
 
     /**
@@ -40,7 +40,7 @@ public class EzspErraseKeyTableEntryRequest extends EzspFrameRequest {
     /**
      * Request constructor
      */
-    public EzspErraseKeyTableEntryRequest() {
+    public EzspEraseKeyTableEntryRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
     }
@@ -77,8 +77,8 @@ public class EzspErraseKeyTableEntryRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(58);
-        builder.append("EzspErraseKeyTableEntryRequest [index=");
+        final StringBuilder builder = new StringBuilder(57);
+        builder.append("EzspEraseKeyTableEntryRequest [index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

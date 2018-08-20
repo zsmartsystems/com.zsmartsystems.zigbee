@@ -11,10 +11,18 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
- * Class to implement the Ember EZSP command <b>erraseKeyTableEntry</b>.
+ * Class to implement the Ember EZSP command <b>findAndRejoinNetwork</b>.
  * <p>
- * This function erases the data in the key table entry at the specified index. If the index is
- * invalid, falseis returned.
+ * The application may call this function when contact with the network has been lost. The most
+ * common usage case is when an end device can no longer communicate with its parent and wishes to
+ * find a new one. Another case is when a device has missed a Network Key update and no longer has
+ * the current Network Key. The stack will call ezspStackStatusHandler to indicate that the
+ * network is down, then try to re-establish contact with the network by performing an active
+ * scan, choosing a network with matching extended pan id, and sending a ZigBee network rejoin
+ * request. A sec- ond call to the ezspStackStatusHandler callback indicates either the
+ * success or the failure of the attempt. The process takes approximately 150 milliseconds per
+ * channel to complete. This call replaces the emberMobileNodeHasMoved API from EmberZNet
+ * 2.x, which used MAC association and consequently took half a second longer to complete.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -22,11 +30,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspErraseKeyTableEntryResponse extends EzspFrameResponse {
-    public static final int FRAME_ID = 0x76;
+public class EzspFindAndRejoinNetworkResponse extends EzspFrameResponse {
+    public static final int FRAME_ID = 0x21;
 
     /**
-     * The success or failure of the operation.
+     * An EmberStatus value indicating success or the reason for failure.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      */
@@ -35,7 +43,7 @@ public class EzspErraseKeyTableEntryResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspErraseKeyTableEntryResponse(int[] inputBuffer) {
+    public EzspFindAndRejoinNetworkResponse(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
@@ -44,7 +52,7 @@ public class EzspErraseKeyTableEntryResponse extends EzspFrameResponse {
     }
 
     /**
-     * The success or failure of the operation.
+     * An EmberStatus value indicating success or the reason for failure.
      * <p>
      * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      *
@@ -55,7 +63,7 @@ public class EzspErraseKeyTableEntryResponse extends EzspFrameResponse {
     }
 
     /**
-     * The success or failure of the operation.
+     * An EmberStatus value indicating success or the reason for failure.
      *
      * @param status the status to set as {@link EmberStatus}
      */
@@ -65,8 +73,8 @@ public class EzspErraseKeyTableEntryResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(59);
-        builder.append("EzspErraseKeyTableEntryResponse [status=");
+        final StringBuilder builder = new StringBuilder(60);
+        builder.append("EzspFindAndRejoinNetworkResponse [status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();
