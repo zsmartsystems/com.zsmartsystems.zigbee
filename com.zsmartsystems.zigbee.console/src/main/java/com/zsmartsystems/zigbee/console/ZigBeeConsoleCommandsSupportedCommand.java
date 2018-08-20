@@ -50,14 +50,14 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
-        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
-        ZclCluster cluster = getCluster(endpoint, args[2]);
+        String endpointParam = args[1];
+        String clusterSpecParam = args[2];
+        String genRcvParam = (args.length == 4) ? args[3] : null;
 
-        if (cluster == null) {
-            throw new IllegalArgumentException("Could not find cluster specified by " + args[2]);
-        }
+        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointParam);
+        ZclCluster cluster = getCluster(endpoint, clusterSpecParam);
 
-        if (showGenerated(args)) {
+        if (showGenerated(genRcvParam)) {
             if (cluster.discoverCommandsGenerated(false).get()) {
                 out.println("Supported generated commands for " + printCluster(cluster));
                 printCommands(out, cluster, cluster.getSupportedCommandsGenerated());
@@ -68,7 +68,7 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
             out.println();
         }
 
-        if (showReceived(args)) {
+        if (showReceived(genRcvParam)) {
             if (cluster.discoverCommandsReceived(false).get()) {
                 out.println("Supported received commands for " + printCluster(cluster));
                 printCommands(out, cluster, cluster.getSupportedCommandsReceived());
@@ -87,17 +87,11 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
         }
     }
 
-    private boolean showGenerated(String[] args) {
-        return args.length < 4 || "gen".equals(args[3]);
+    private boolean showGenerated(String genRcvParam) {
+        return genRcvParam == null || "gen".equals(genRcvParam);
     }
 
-    private boolean showReceived(String[] args) {
-        return args.length < 4 || "rcv".equals(args[3]);
-    }
-
-    private String printCluster(ZclCluster cluster) {
-        String typePrefix = cluster.isServer() ? "server " : "client ";
-        return String.format("%s %s cluster %s", cluster.getClusterName(), typePrefix,
-                printClusterId(cluster.getClusterId()));
+    private boolean showReceived(String genRcvParam) {
+        return genRcvParam == null || "rcv".equals(genRcvParam);
     }
 }

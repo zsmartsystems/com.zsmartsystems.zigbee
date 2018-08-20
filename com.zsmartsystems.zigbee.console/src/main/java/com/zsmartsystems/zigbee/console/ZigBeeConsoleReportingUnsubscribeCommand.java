@@ -36,7 +36,7 @@ public class ZigBeeConsoleReportingUnsubscribeCommand extends ZigBeeConsoleAbstr
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT IN|OUT CLUSTER ATTRIBUTE";
+        return "ENDPOINT CLUSTER ATTRIBUTE";
     }
 
     @Override
@@ -47,23 +47,18 @@ public class ZigBeeConsoleReportingUnsubscribeCommand extends ZigBeeConsoleAbstr
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
-        if (args.length != 6) {
+        if (args.length != 4) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
-        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
-        final int clusterId = parseClusterId(args[3]);
-        final ZclCluster cluster;
-        final String direction = args[2].toUpperCase();
-        if ("IN".equals(direction)) {
-            cluster = endpoint.getInputCluster(clusterId);
-        } else if ("OUT".equals(direction)) {
-            cluster = endpoint.getOutputCluster(clusterId);
-        } else {
-            throw new IllegalArgumentException("Cluster direction must be IN or OUT");
-        }
+        String endpointIdParam = args[1];
+        String clusterSpecParam = args[2];
+        String attributeIdParam = args[3];
 
-        final int attributeId = parseAttribute(args[4]);
+        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointIdParam);
+        final ZclCluster cluster = getCluster(endpoint, clusterSpecParam);
+
+        final int attributeId = parseAttribute(attributeIdParam);
         final ZclAttribute attribute = cluster.getAttribute(attributeId);
 
         final CommandResult result = cluster.setReporting(attribute, 0, 0xFFFF, null).get();

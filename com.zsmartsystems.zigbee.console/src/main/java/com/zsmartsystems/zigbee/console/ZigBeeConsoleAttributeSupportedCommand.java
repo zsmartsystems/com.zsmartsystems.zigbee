@@ -50,26 +50,12 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
-        final Integer clusterId = parseClusterId(args[2]);
-
-        ZclCluster cluster = endpoint.getInputCluster(clusterId);
-        if (cluster != null) {
-            out.println("Using input cluster");
-        } else {
-            cluster = endpoint.getOutputCluster(clusterId);
-            if (cluster != null) {
-                out.println("Using output cluster");
-            } else {
-                out.println("Cluster not found");
-                return;
-            }
-        }
+        ZclCluster cluster = getCluster(endpoint, args[2]);
 
         final Future<Boolean> future = cluster.discoverAttributes(false);
         Boolean result = future.get();
         if (result) {
-            out.println("Supported attributes for " + cluster.getClusterName() + " Cluster "
-                    + printClusterId(cluster.getClusterId()));
+            out.println("Supported attributes for " + printCluster(cluster));
             out.println("AttrId  Data Type                  Name");
             for (Integer attributeId : cluster.getSupportedAttributes()) {
                 out.print(" ");
