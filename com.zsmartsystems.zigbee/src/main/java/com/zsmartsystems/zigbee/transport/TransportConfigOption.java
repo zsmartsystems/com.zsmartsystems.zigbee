@@ -72,4 +72,11 @@ public enum TransportConfigOption {
      * Value must be a {@link ZigBeeNodeKey}
      */
     INSTALL_KEY,
+
+    /**
+     * Sets the device type used by the dongle. This allows to set the dongle as a coordinator or a router.
+     * <p>
+     * Value must be {@link DeviceType}
+     */
+    DEVICE_TYPE;
 }

@@ -36,8 +36,8 @@ public class NodeDescriptor {
     private boolean extendedSimpleDescriptorListAvailable;
     private int stackCompliance;
 
-    final private static int R21_BITMASK = 0xFE00;
-    final private static int R21_BITSHIFT = 9;
+    private final static int R21_BITMASK = 0xFE00;
+    private final static int R21_BITSHIFT = 9;
 
     public enum LogicalType {
         COORDINATOR,

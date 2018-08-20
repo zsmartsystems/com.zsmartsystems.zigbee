@@ -232,10 +232,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Constructor which configures serial port and ZigBee network.
      *
-     * @param transport
-     *            the dongle
-     * @param resetNetwork
-     *            whether network is to be reset
+     * @param transport the dongle
+     * @param resetNetwork whether network is to be reset
      */
     public ZigBeeNetworkManager(final ZigBeeTransportTransmit transport) {
         this.transport = transport;

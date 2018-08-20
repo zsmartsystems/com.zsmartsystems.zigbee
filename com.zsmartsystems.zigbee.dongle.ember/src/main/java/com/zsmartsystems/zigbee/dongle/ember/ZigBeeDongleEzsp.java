@@ -69,6 +69,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResp
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.ConcentratorConfig;
+import com.zsmartsystems.zigbee.transport.DeviceType;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
@@ -145,6 +146,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * The network address of the Ember NCP
      */
     private Integer nwkAddress;
+
+    /**
+     * Defines the type of device we want to be - normally this should be COORDINATOR
+     */
+    private DeviceType deviceType = DeviceType.COORDINATOR;
 
     /**
      * The low level protocol to use for this dongle
@@ -357,12 +363,18 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         logger.debug("EZSP networkStateResponse {}", networkState);
 
         // If we want to reinitialize the network, then go...
+        EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(frameHandler);
         if (reinitialize) {
-            logger.debug("Reinitialising Ember NCP and forming network.");
-            EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(frameHandler);
-            netInitialiser.formNetwork(networkParameters, linkKey, networkKey);
-            ncp.getNetworkParameters();
+            logger.debug("Reinitialising Ember NCP network.");
+            if (deviceType == DeviceType.COORDINATOR) {
+                netInitialiser.formNetwork(networkParameters, linkKey, networkKey);
+            } else {
+                netInitialiser.joinNetwork(networkParameters, linkKey);
+            }
+        } else if (deviceType == DeviceType.ROUTER) {
+            netInitialiser.rejoinNetwork();
         }
+        ncp.getNetworkParameters();
 
         // Check if the network is now up
         networkState = ncp.getNetworkState();
@@ -371,7 +383,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
         }
 
-        // Get the security state - mainly for debug
+        // Get the security state - mainly for information
         EmberCurrentSecurityState currentSecurityState = ncp.getCurrentSecurityState();
         logger.debug("Current Security State = {}", currentSecurityState);
 
@@ -501,7 +513,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             apsFrame.setApsCounter(emberApsFrame.getSequence());
             apsFrame.setCluster(emberApsFrame.getClusterId());
             apsFrame.setProfile(emberApsFrame.getProfileId());
-            apsFrame.setSecurityEnabled(emberApsFrame.getOptions().contains(EmberApsOption.EMBER_APS_OPTION_ENCRYPTION));
+            apsFrame.setSecurityEnabled(
+                    emberApsFrame.getOptions().contains(EmberApsOption.EMBER_APS_OPTION_ENCRYPTION));
 
             apsFrame.setDestinationAddress(nwkAddress);
             apsFrame.setDestinationEndpoint(emberApsFrame.getDestinationEndpoint());
@@ -693,6 +706,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
                         configuration.setResult(option,
                                 result == EmberStatus.EMBER_SUCCESS ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE);
+                        break;
+
+                    case DEVICE_TYPE:
+                        deviceType = (DeviceType) configuration.getValue(option);
                         break;
 
                     case TRUST_CENTRE_LINK_KEY:

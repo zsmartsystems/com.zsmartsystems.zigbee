@@ -11,11 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A class to hold a set of channels and methods to construct channel masks
  *
  * @author Chris Jackson
  *
  */
 public class ZigBeeChannelMask {
+    /**
+     * No channels selected
+     */
+    public final static int CHANNEL_MASK_NONE = 0x00000000;
     /**
      * All currently defined ZigBee channels in all bands
      */

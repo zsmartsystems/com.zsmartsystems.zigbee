@@ -57,6 +57,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleInstallKeyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleLinkKeyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkJoinCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkLeaveCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkStartCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNodeListCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleOtaUpgradeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingConfigCommand;
@@ -199,6 +200,8 @@ public final class ZigBeeConsole {
 
         newCommands.put("installkey", new ZigBeeConsoleInstallKeyCommand());
         newCommands.put("linkkey", new ZigBeeConsoleLinkKeyCommand());
+
+        newCommands.put("netstart", new ZigBeeConsoleNetworkStartCommand());
 
         newCommands.put("otaupgrade", new ZigBeeConsoleOtaUpgradeCommand());
 
