@@ -173,7 +173,7 @@ public class ZigBeeApsFrame {
 
     /**
      * Gets APS security state
-     * 
+     *
      * @return true if APS security is enabled
      */
     public boolean getSecurityEnabled() {
@@ -182,7 +182,7 @@ public class ZigBeeApsFrame {
 
     /**
      * Sets APS security state
-     * 
+     *
      * @param securityEnable true to enable APS security
      */
     public void setSecurityEnabled(boolean securityEnable) {
@@ -288,6 +288,8 @@ public class ZigBeeApsFrame {
         builder.append(addressMode);
         builder.append(", radius=");
         builder.append(radius);
+        builder.append(", apsSecurity=");
+        builder.append(securityEnable);
         builder.append(", apsCounter=");
         builder.append(apsCounter);
         builder.append(", payload=");
