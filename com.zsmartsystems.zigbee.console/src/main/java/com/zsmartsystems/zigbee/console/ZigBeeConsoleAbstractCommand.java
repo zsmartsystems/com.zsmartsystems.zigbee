@@ -107,7 +107,7 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
      * </ul>
      *
      * @param endpoint the ZigBee endpoint to get the cluster from (must be non-null)
-     * @param clusterSpecified a cluster specified as described above (must be non-null)
+     * @param clusterSpecifier a cluster specified as described above (must be non-null)
      * @return the specified cluster provided by the endpoint or null if no such cluster is found
      * @throws IllegalArgumentException if the clusterSpecifier uses an invalid number format, or if no cluster is found
      */
@@ -121,6 +121,13 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
             String prefix = clusterSpecifier.substring(0, clusterSpecifier.indexOf(':'));
             isInput = prefix.equalsIgnoreCase("in") || prefix.equalsIgnoreCase("server");
             isOutput = prefix.equalsIgnoreCase("out") || prefix.equalsIgnoreCase("client");
+
+            if (!(isInput || isOutput)) {
+                throw new IllegalArgumentException(
+                        "The prefix of the cluster specifier must be 'in', 'out', 'server', or 'client', but it was: "
+                                + prefix);
+            }
+
             clusterIdString = clusterSpecifier.substring(clusterSpecifier.indexOf(':') + 1);
         } else {
             isInput = false;
@@ -267,8 +274,8 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
      * @return a String containing information about the cluster, example 'OnOff server cluster 0x00A4'
      */
     protected String printCluster(ZclCluster cluster) {
-        String typePrefix = cluster.isServer() ? "server " : "client ";
-        return String.format("%s %s cluster %s", cluster.getClusterName(), typePrefix,
+        String typePrefix = cluster.isServer() ? "server" : "client";
+        return String.format("%s cluster %s (%s)", typePrefix, cluster.getClusterName(),
                 printClusterId(cluster.getClusterId()));
     }
 
