@@ -8,13 +8,13 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
-import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -24,21 +24,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  */
 public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleCommand {
-    @Override
-    public abstract String getCommand();
-
-    @Override
-    public abstract String getDescription();
-
-    @Override
-    public abstract String getSyntax();
-
-    @Override
-    public abstract String getHelp();
-
-    @Override
-    public abstract void process(final ZigBeeNetworkManager networkManager, final String[] args, PrintStream out)
-            throws IllegalArgumentException, IllegalStateException, ExecutionException, InterruptedException;
 
     /**
      * Gets a {@link ZigBeeNode}
@@ -90,17 +75,84 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
     }
 
     /**
-     * Parses a cluster ID as a string to an integer
+     * Parses a cluster ID as a string to an integer. The ID can be either a decimal or a hexadecimal literal (e..g, 11
+     * or 0xB).
      *
-     * @param cluster a {@link String} name of the cluster
+     * @param clusterId a {@link String} name of the cluster
      * @return the cluster ID as an integer
      * @throws IllegalArgumentException
      */
-    protected Integer parseCluster(final String cluster) throws IllegalArgumentException {
+    protected Integer parseClusterId(final String clusterId) throws IllegalArgumentException {
         try {
-            return getInteger(cluster);
+            return getInteger(clusterId);
         } catch (final NumberFormatException e) {
-            throw new IllegalArgumentException("Cluster '" + cluster + "' uses an invalid number format.");
+            throw new IllegalArgumentException("Cluster ID '" + clusterId + "' uses an invalid number format.");
+        }
+    }
+
+    /**
+     * Gets the cluster for a given endpoint, where the cluster is specified by a cluster specifier.
+     * <p>
+     * The cluster specifier consists of the cluster ID (either in decimal, or in hex prefixed with 0x), optionally
+     * prepended with any of the prefixes 'in', 'out', 'client', or 'server'. The prefix indicates whether an input or
+     * an output cluster shall be returned. If no prefix is provided, then the method first tries to return an input
+     * cluster with the given id, and, if none is found, to return an output cluster.
+     * <p>
+     * Examples for cluster specifiers:
+     * <ul>
+     * <li>0x0B
+     * <li>11
+     * <li>in:0xB
+     * <li>server:11
+     * </ul>
+     *
+     * @param endpoint the ZigBee endpoint to get the cluster from (must be non-null)
+     * @param clusterSpecifier a cluster specified as described above (must be non-null)
+     * @return the specified cluster provided by the endpoint or null if no such cluster is found
+     * @throws IllegalArgumentException if the clusterSpecifier uses an invalid number format, or if no cluster is found
+     */
+    protected ZclCluster getCluster(final ZigBeeEndpoint endpoint, final String clusterSpecifier)
+            throws IllegalArgumentException {
+        boolean isInput;
+        boolean isOutput;
+        String clusterIdString;
+
+        if (clusterSpecifier.contains(":")) {
+            String prefix = clusterSpecifier.substring(0, clusterSpecifier.indexOf(':'));
+            isInput = prefix.equalsIgnoreCase("in") || prefix.equalsIgnoreCase("server");
+            isOutput = prefix.equalsIgnoreCase("out") || prefix.equalsIgnoreCase("client");
+
+            if (!(isInput || isOutput)) {
+                throw new IllegalArgumentException(
+                        "The prefix of the cluster specifier must be 'in', 'out', 'server', or 'client', but it was: "
+                                + prefix);
+            }
+
+            clusterIdString = clusterSpecifier.substring(clusterSpecifier.indexOf(':') + 1);
+        } else {
+            isInput = false;
+            isOutput = false;
+            clusterIdString = clusterSpecifier;
+        }
+
+        Integer clusterId = parseClusterId(clusterIdString);
+
+        ZclCluster result;
+
+        if (isInput) {
+            result = endpoint.getInputCluster(clusterId);
+        } else if (isOutput) {
+            result = endpoint.getOutputCluster(clusterId);
+        } else {
+            ZclCluster cluster = endpoint.getInputCluster(clusterId);
+            result = (cluster != null) ? cluster : endpoint.getOutputCluster(clusterId);
+        }
+
+        if (result != null) {
+            return result;
+        } else {
+            throw new IllegalArgumentException("A cluster specified by " + clusterSpecifier
+                    + " is not found for endpoint " + endpoint.getEndpointId());
         }
     }
 
@@ -215,6 +267,16 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
 
     protected String printZclDataType(ZclDataType dataType) {
         return String.format("%-25s", dataType);
+    }
+
+    /**
+     * @param cluster a ZCL cluster
+     * @return a String containing information about the cluster, example 'OnOff server cluster 0x00A4'
+     */
+    protected String printCluster(ZclCluster cluster) {
+        String typePrefix = cluster.isServer() ? "server" : "client";
+        return String.format("%s cluster %s (%s)", typePrefix, cluster.getClusterName(),
+                printClusterId(cluster.getClusterId()));
     }
 
     private Integer getInteger(String string) {

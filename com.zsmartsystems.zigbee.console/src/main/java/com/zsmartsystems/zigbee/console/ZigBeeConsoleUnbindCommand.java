@@ -35,7 +35,7 @@ public class ZigBeeConsoleUnbindCommand extends ZigBeeConsoleAbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "CLUSTERID SOURCE [DESTINATION]";
+        return "CLUSTER SOURCE-ENDPOINT [DESTINATION-ENDPOINT]";
     }
 
     @Override
@@ -46,22 +46,21 @@ public class ZigBeeConsoleUnbindCommand extends ZigBeeConsoleAbstractCommand {
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
-        if (args.length < 3) {
+        if (args.length < 3 || args.length > 4) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
-        final int clusterId = parseCluster(args[1]);
+        String clusterSpecParam = args[1];
+        String sourceEndpointParam = args[2];
+        String destEndpointParam = (args.length == 4) ? args[3] : null;
 
-        final ZigBeeEndpoint source = getEndpoint(networkManager, args[2]);
-        ZclCluster cluster = source.getInputCluster(clusterId);
-        if (cluster == null) {
-            throw new IllegalArgumentException("Cluster '" + clusterId + "' not found.");
-        }
+        final ZigBeeEndpoint sourceEndpoint = getEndpoint(networkManager, sourceEndpointParam);
+        ZclCluster cluster = getCluster(sourceEndpoint, clusterSpecParam);
 
         IeeeAddress destAddress;
         int destEndpoint;
-        if (args.length >= 4) {
-            ZigBeeEndpoint destination = getEndpoint(networkManager, args[3]);
+        if (destEndpointParam != null) {
+            ZigBeeEndpoint destination = getEndpoint(networkManager, destEndpointParam);
             destAddress = destination.getIeeeAddress();
             destEndpoint = destination.getEndpointId();
         } else {

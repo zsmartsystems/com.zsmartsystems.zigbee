@@ -36,7 +36,7 @@ public class ZigBeeConsoleReportingSubscribeCommand extends ZigBeeConsoleAbstrac
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT IN|OUT CLUSTER ATTRIBUTE MIN-INTERVAL MAX-INTERVAL REPORTABLE-CHANGE";
+        return "ENDPOINT CLUSTER ATTRIBUTE MIN-INTERVAL MAX-INTERVAL REPORTABLE-CHANGE";
     }
 
     @Override
@@ -47,45 +47,43 @@ public class ZigBeeConsoleReportingSubscribeCommand extends ZigBeeConsoleAbstrac
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
-        if (args.length < 7) {
+        if (args.length < 6 || args.length > 7) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
-        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
-        final int clusterId = parseCluster(args[3]);
-        final ZclCluster cluster;
-        final String direction = args[2].toUpperCase();
-        if ("IN".equals(direction)) {
-            cluster = endpoint.getInputCluster(clusterId);
-        } else if ("OUT".equals(direction)) {
-            cluster = endpoint.getOutputCluster(clusterId);
-        } else {
-            throw new IllegalArgumentException("Cluster direction must be IN or OUT");
-        }
+        String endpointIdParam = args[1];
+        String clusterSpecParam = args[2];
+        String attributeIdParam = args[3];
+        String minIntervalParam = args[4];
+        String maxIntervalParam = args[5];
+        String reportableChangeParam = (args.length == 7) ? args[6] : null;
 
-        final int minInterval;
-        try {
-            minInterval = Integer.parseInt(args[5]);
-        } catch (final NumberFormatException e) {
-            throw new IllegalArgumentException("Min Interval has invalid format");
-        }
-        final int maxInterval;
-        try {
-            maxInterval = Integer.parseInt(args[6]);
-        } catch (final NumberFormatException e) {
-            throw new IllegalArgumentException("Max Interval has invalid format");
-        }
+        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointIdParam);
+        final ZclCluster cluster = getCluster(endpoint, clusterSpecParam);
 
-        final int attributeId = parseAttribute(args[4]);
+        final int attributeId = parseAttribute(attributeIdParam);
         final ZclAttribute attribute = cluster.getAttribute(attributeId);
         if (attribute == null) {
             throw new IllegalArgumentException(
                     "Attribute " + attributeId + " was not found in cluster " + cluster.getClusterName());
         }
 
+        final int minInterval;
+        try {
+            minInterval = Integer.parseInt(minIntervalParam);
+        } catch (final NumberFormatException e) {
+            throw new IllegalArgumentException("Min Interval has invalid format");
+        }
+        final int maxInterval;
+        try {
+            maxInterval = Integer.parseInt(maxIntervalParam);
+        } catch (final NumberFormatException e) {
+            throw new IllegalArgumentException("Max Interval has invalid format");
+        }
+
         final Object reportableChange;
-        if (args.length > 7) {
-            reportableChange = parseValue(args[7], attribute.getDataType());
+        if (reportableChangeParam != null) {
+            reportableChange = parseValue(reportableChangeParam, attribute.getDataType());
         } else {
             reportableChange = null;
         }

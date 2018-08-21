@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.Future;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -50,6 +49,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindingTableCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommandsSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeEndpointCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeNodeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceInformationCommand;
@@ -176,8 +176,6 @@ public final class ZigBeeConsole {
 
         commands.put("stress", new StressCommand());
 
-        commands.put("cmdsupported", new CmdSupportedCommand());
-
         newCommands.put("nodes", new ZigBeeConsoleNodeListCommand());
         newCommands.put("endpoint", new ZigBeeConsoleDescribeEndpointCommand());
         newCommands.put("node", new ZigBeeConsoleDescribeNodeCommand());
@@ -189,6 +187,7 @@ public final class ZigBeeConsole {
         newCommands.put("write", new ZigBeeConsoleAttributeWriteCommand());
 
         newCommands.put("attsupported", new ZigBeeConsoleAttributeSupportedCommand());
+        newCommands.put("cmdsupported", new ZigBeeConsoleCommandsSupportedCommand());
 
         newCommands.put("info", new ZigBeeConsoleDeviceInformationCommand());
         newCommands.put("join", new ZigBeeConsoleNetworkJoinCommand());
@@ -1247,84 +1246,6 @@ public final class ZigBeeConsole {
 
             ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
             print("OTA File: " + otaFile, out);
-            return true;
-        }
-    }
-
-    /**
-     * Reads the list of supported commands in a specific cluster of a device.
-     */
-    private class CmdSupportedCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Check what commands are supported.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "cmdsupported [DEVICE] [CLUSTER]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 3) {
-                return false;
-            }
-
-            final int clusterId;
-            try {
-                clusterId = Integer.parseInt(args[2]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-
-            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
-            if (device == null) {
-                print("Device not found.", out);
-                return false;
-            }
-
-            ZclCluster cluster = device.getInputCluster(clusterId);
-            if (cluster == null) {
-                cluster = device.getOutputCluster(clusterId);
-                if (cluster == null) {
-                    print("Cluster not found.", out);
-                    return false;
-                }
-            }
-
-            Future<Boolean> future = cluster.discoverCommandsReceived(false);
-            Boolean result = future.get();
-
-            if (result) {
-                for (Integer cmd : cluster.getSupportedCommandsReceived()) {
-                    out.println("Cluster " + cluster.getClusterId() + ", Command=" + cmd);
-                }
-            } else {
-                out.println("Error getting list of commands received");
-            }
-
-            future = cluster.discoverCommandsGenerated(false);
-            result = future.get();
-
-            if (result) {
-                for (Integer cmd : cluster.getSupportedCommandsGenerated()) {
-                    out.println("Cluster " + cluster.getClusterId() + ", Command=" + cmd);
-                }
-
-            } else {
-                out.println("Error getting list of commands generated");
-            }
-
             return true;
         }
     }

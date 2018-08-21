@@ -36,7 +36,7 @@ public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCom
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT IN|OUT CLUSTER ATTRIBUTE VALUE";
+        return "ENDPOINT CLUSTER ATTRIBUTE VALUE";
     }
 
     @Override
@@ -51,22 +51,22 @@ public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCom
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
-        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
-        final int clusterId = parseCluster(args[3]);
-        final int attributeId = parseAttribute(args[4]);
+        String endpointIdParam = args[1];
+        String clusterIdParam = args[2];
+        String attributeIdParam = args[3];
+        String attributeValueParam = args[4];
 
-        final ZclCluster cluster;
-        final String direction = args[2].toUpperCase();
-        if ("IN".equals(direction)) {
-            cluster = endpoint.getInputCluster(clusterId);
-        } else if ("OUT".equals(direction)) {
-            cluster = endpoint.getOutputCluster(clusterId);
-        } else {
-            throw new IllegalArgumentException("Cluster direction must be IN or OUT");
-        }
+        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointIdParam);
+        final ZclCluster cluster = getCluster(endpoint, clusterIdParam);
+
+        final int attributeId = parseAttribute(attributeIdParam);
 
         final ZclAttribute attribute = cluster.getAttribute(attributeId);
-        final Object value = parseValue(args[4], attribute.getDataType());
+        if (attribute == null) {
+            throw new IllegalArgumentException("Could not find attribute with ID " + attributeId);
+        }
+
+        final Object value = parseValue(attributeValueParam, attribute.getDataType());
         final CommandResult result = cluster.write(attribute, value).get();
         if (result.isSuccess()) {
             final WriteAttributesResponse response = result.getResponse();

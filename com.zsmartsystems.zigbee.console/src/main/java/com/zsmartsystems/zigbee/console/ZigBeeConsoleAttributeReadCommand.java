@@ -52,19 +52,7 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
-        final Integer clusterId = parseCluster(args[2]);
-        ZclCluster cluster = endpoint.getInputCluster(clusterId);
-        if (cluster != null) {
-            out.println("Using input cluster");
-        } else {
-            cluster = endpoint.getOutputCluster(clusterId);
-            if (cluster != null) {
-                out.println("Using output cluster");
-            } else {
-                throw new IllegalArgumentException(
-                        "Cluster " + String.format("%d [0x%04X]", clusterId, clusterId) + " not found");
-            }
-        }
+        ZclCluster cluster = getCluster(endpoint, args[2]);
 
         final Integer attributeId = parseAttribute(args[3]);
         String attributeName;
@@ -75,7 +63,7 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
             attributeName = attribute.getName();
         }
 
-        out.println("Reading " + cluster.getClusterName() + ", " + attributeName);
+        out.println("Reading " + printCluster(cluster) + ", " + attributeName);
 
         CommandResult result;
         result = cluster.read(attributeId).get();
