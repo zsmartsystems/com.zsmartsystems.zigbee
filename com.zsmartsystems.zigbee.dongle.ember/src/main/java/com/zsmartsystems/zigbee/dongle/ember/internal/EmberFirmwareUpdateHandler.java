@@ -80,9 +80,16 @@ public class EmberFirmwareUpdateHandler {
     }
 
     /**
-     * Starts the bootload.
+     * Starts the bootloader.
+     * <p>
      * The routine will open the serial port at 115200baud. It will send a CR up to 3 times waiting for the bootloader
      * prompt. It will then select the upload option, transfer the file, then run. The serial port will then be closed.
+     * <p>
+     * The bootloader will send the following the device data and prompt -:
+     * <li>EM3588 Serial Btl v5.8.0.0 b134
+     * <li>1. upload ebl
+     * <li>2. run
+     * <li>3. ebl info
      *
      */
     public void startBootload() {
