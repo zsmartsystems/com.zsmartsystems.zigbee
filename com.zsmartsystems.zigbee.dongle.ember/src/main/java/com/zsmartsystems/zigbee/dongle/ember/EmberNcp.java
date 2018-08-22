@@ -38,6 +38,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetKeyTableEntryRe
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetKeyTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetLibraryStatusRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetLibraryStatusResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMfgTokenRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMfgTokenResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNodeIdRequest;
@@ -74,6 +76,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspMfgTokenId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
@@ -598,7 +601,7 @@ public class EmberNcp {
 
     /**
      * This function updates an existing entry in the key table or adds a new one. It first searches the table for an
-     * existing entrythat matches the passed EUI64 address. If no entry is found, it searches for the first free entry.
+     * existing entry that matches the passed EUI64 address. If no entry is found, it searches for the first free entry.
      * If successful, it updates the key data and resets the associated incoming frame counter. If it fails to find an
      * existing entry and no free one exists, it returns a failure.
      *
@@ -623,4 +626,56 @@ public class EmberNcp {
         return response.getStatus();
     }
 
+    /**
+     * Gets the board name from the manufacturer information block on the NCP
+     *
+     * @return string containing the board name
+     */
+    public String getMfgBoardName() {
+        int[] response = getMfgToken(EzspMfgTokenId.EZSP_MFG_BOARD_NAME);
+
+        return intArrayToString(response);
+    }
+
+    /**
+     * Gets the manufacturer name from the manufacturer information block on the NCP
+     *
+     * @return string containing the manufacturer name
+     */
+    public String getMfgName() {
+        int[] response = getMfgToken(EzspMfgTokenId.EZSP_MFG_STRING);
+
+        return intArrayToString(response);
+    }
+
+    /**
+     * Gets the custom version from the manufacturer information block on the NCP
+     *
+     * @return integer containing the custom version
+     */
+    public int getMfgCustomVersion() {
+        int[] response = getMfgToken(EzspMfgTokenId.EZSP_MFG_CUSTOM_VERSION);
+
+        return response[0] << 8 + response[1];
+    }
+
+    private String intArrayToString(int[] payload) {
+        int length = payload.length;
+        for (int cnt = 0; cnt < length; cnt++) {
+            if (payload[cnt] == 0 || payload[cnt] == 255) {
+                length = cnt;
+            }
+        }
+        return new String(payload, 0, length);
+    }
+
+    private int[] getMfgToken(EzspMfgTokenId tokenId) {
+        EzspGetMfgTokenRequest request = new EzspGetMfgTokenRequest();
+        request.setTokenId(tokenId);
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
+                EzspGetMfgTokenResponse.class);
+        protocolHandler.sendEzspTransaction(transaction);
+        EzspGetMfgTokenResponse response = (EzspGetMfgTokenResponse) transaction.getResponse();
+        return response.getTokenData();
+    }
 }

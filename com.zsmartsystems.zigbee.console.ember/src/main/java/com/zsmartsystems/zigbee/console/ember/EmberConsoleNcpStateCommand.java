@@ -13,6 +13,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 
@@ -52,6 +53,12 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
         int nwkAddress = ncp.getNwkAddress();
         EzspGetNetworkParametersResponse nwkParameterResponse = ncp.getNetworkParameters();
         EmberNetworkParameters nwkParameters = nwkParameterResponse.getParameters();
+
+        String mfgName = ncp.getMfgName();
+        String mfgBoard = ncp.getMfgBoardName();
+        int customVersion = ncp.getMfgCustomVersion();
+        EzspVersionResponse version = ncp.getVersion(5);
+
         out.println("Ember NCP state    : " + status);
         out.println("Local Node Type    : " + nwkParameterResponse.getNodeType());
         out.println("IEEE Address       : " + ieeeAddress);
@@ -62,6 +69,21 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
         out.println("Network Manager Id : " + nwkParameters.getNwkManagerId());
         out.println("Radio TX Power     : " + nwkParameters.getRadioTxPower());
         out.println("Join Method        : " + nwkParameters.getJoinMethod());
+
+        out.println("Board Name         : " + mfgBoard);
+        out.println("Manufacturer Name  : " + mfgName);
+        out.println("Stack Version      : " + printVersion(version.getStackVersion()));
+        out.println("Custom Version     : " + printVersion(customVersion));
     }
 
+    private String printVersion(int version) {
+        StringBuilder builder = new StringBuilder(60);
+        for (int cnt = 3; cnt >= 0; cnt--) {
+            builder.append((version >> (cnt * 4)) & 0x0F);
+            if (cnt != 0) {
+                builder.append('.');
+            }
+        }
+        return builder.toString();
+    }
 }
