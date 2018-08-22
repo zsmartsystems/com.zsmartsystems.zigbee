@@ -132,6 +132,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GET_KEY = 0x6A;
     protected static final int FRAME_ID_GET_KEY_TABLE_ENTRY = 0x71;
     protected static final int FRAME_ID_GET_LIBRARY_STATUS = 0x01;
+    protected static final int FRAME_ID_GET_MFG_TOKEN = 0x0B;
     protected static final int FRAME_ID_GET_NEIGHBOR = 0x79;
     protected static final int FRAME_ID_GET_NETWORK_PARAMETERS = 0x28;
     protected static final int FRAME_ID_GET_NODE_ID = 0x27;
@@ -265,6 +266,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_KEY, EzspGetKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_KEY_TABLE_ENTRY, EzspGetKeyTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_LIBRARY_STATUS, EzspGetLibraryStatusResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_MFG_TOKEN, EzspGetMfgTokenResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_NEIGHBOR, EzspGetNeighborResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_NETWORK_PARAMETERS, EzspGetNetworkParametersResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_NODE_ID, EzspGetNodeIdResponse.class);
