@@ -34,7 +34,7 @@ public class ZigBeeConsoleNetworkStartCommand extends ZigBeeConsoleAbstractComma
 
     @Override
     public String getSyntax() {
-        return "FORM|JOIN PANID EPANID ";
+        return "FORM|JOIN PANID EPANID";
     }
 
     @Override
