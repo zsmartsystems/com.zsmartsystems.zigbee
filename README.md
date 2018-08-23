@@ -205,9 +205,10 @@ Note that the console is currently being refactored and this readme only documen
 |unsubscribe      |Unsubscribe from attribute reports                                    |
 |reportcfg        |Read the reporting configuration of an attribute                      |
 |otaupgrade       |Provides information about device Over The Air upgrade server status  |
-|installkey       |Adds an install key to the dongle                                     |
+|installkey       |Adds an install key to the dongle                                                      |
 |linkkey          |Sets the link key int the dongle, optionally computing the MMO Hash from the join code |
 |netstart         |Join or Form a network as a router or coordinator                                      |
+|netbackup        |Backup or restores the state of the dongle                                             |
 
 
 
