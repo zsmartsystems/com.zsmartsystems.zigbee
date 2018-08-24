@@ -428,6 +428,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
     @Override
     public void setClosing() {
+        executor.shutdown();
         closeHandler = true;
     }
 
@@ -439,8 +440,18 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         pollingScheduler.shutdown();
 
         logger.debug("SpiFrameHandler close.");
+
         setClosing();
         stopRetryTimer();
+
+        synchronized (transactionListeners) {
+            for (SpiListener listener : transactionListeners) {
+                listener.transactionComplete();
+            }
+        }
+
+        timer.cancel();
+        executor.shutdownNow();
 
         try {
             parserThread.interrupt();
@@ -698,6 +709,14 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
                 return true;
             }
+
+            @Override
+            public void transactionComplete() {
+                synchronized (this) {
+                    complete = true;
+                    notify();
+                }
+            }
         }
 
         Callable<EzspFrame> worker = new TransactionWaiter();
@@ -740,6 +759,8 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
     interface SpiListener {
         boolean transactionEvent(EzspFrameResponse ezspResponse);
+
+        void transactionComplete();
     }
 
     @Override
