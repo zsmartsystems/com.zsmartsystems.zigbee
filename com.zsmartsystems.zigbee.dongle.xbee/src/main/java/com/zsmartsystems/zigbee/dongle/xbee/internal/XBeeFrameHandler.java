@@ -304,7 +304,9 @@ public class XBeeFrameHandler {
      * Set the close flag to true.
      */
     public void setClosing() {
-        this.closeHandler = true;
+        closeHandler = true;
+        executor.shutdown();
+        timeoutScheduler.shutdown();
     }
 
     /**
@@ -312,12 +314,15 @@ public class XBeeFrameHandler {
      */
     public void close() {
         setClosing();
+        stopTimer();
         try {
             parserThread.interrupt();
             parserThread.join();
         } catch (InterruptedException e) {
             logger.debug("Interrupted in packet parser thread shutdown join.");
         }
+        executor.shutdownNow();
+        timeoutScheduler.shutdownNow();
         logger.debug("XBeeFrameHandler closed.");
     }
 
