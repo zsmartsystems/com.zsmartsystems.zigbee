@@ -100,7 +100,7 @@ public class EmberMfglib {
         EzspMfglibSetChannelRequest channelRequest = new EzspMfglibSetChannelRequest();
         channelRequest.setChannel(channel.getChannel());
         EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(channelRequest,
-                EzspMfglibEndResponse.class);
+                EzspMfglibSetChannelResponse.class);
         protocolHandler.sendEzspTransaction(transaction);
 
         EzspMfglibSetChannelResponse channelResponse = (EzspMfglibSetChannelResponse) transaction.getResponse();
@@ -112,4 +112,5 @@ public class EmberMfglib {
 
         return true;
     }
+
 }
