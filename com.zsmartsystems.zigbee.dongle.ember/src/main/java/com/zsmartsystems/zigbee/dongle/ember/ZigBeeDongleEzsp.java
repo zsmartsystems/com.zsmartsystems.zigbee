@@ -404,6 +404,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return;
         }
 
+        if (mfglibListener != null) {
+            mfglibListener = null;
+        }
+
         frameHandler.setClosing();
         serialPort.close();
         frameHandler.close();
