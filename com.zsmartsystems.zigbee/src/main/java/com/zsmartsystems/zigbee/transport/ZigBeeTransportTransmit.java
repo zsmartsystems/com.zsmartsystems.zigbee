@@ -53,6 +53,7 @@ public interface ZigBeeTransportTransmit {
      * Starts the transport interface.
      * <p>
      * This call will optionally reconfigure the interface if the reinitialize parameter is true.
+     * Startup would normally be called once after {@link #initialize()} on system start, and may be called again after
      *
      * @param reinitialize true if the provider is to reinitialise the network with the parameters configured since the
      *            {@link #initialize} method was called.
@@ -61,7 +62,8 @@ public interface ZigBeeTransportTransmit {
     ZigBeeStatus startup(boolean reinitialize);
 
     /**
-     * Shuts down a transport interface.
+     * Shuts down a transport interface. This method shall free all resources, and the interface may not be used again
+     * until {@link #initialize()} is called.
      */
     void shutdown();
 

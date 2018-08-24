@@ -29,8 +29,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParamete
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspJoinNetworkRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspJoinNetworkResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
@@ -116,7 +114,8 @@ public class EmberNetworkInitialisation {
 
         // Leave the current network so we can initialise a new network
         if (checkNetworkJoined()) {
-            doLeaveNetwork();
+            EmberNcp ncp = new EmberNcp(protocolHandler);
+            ncp.leaveNetwork();
         }
 
         // Perform an energy scan to find a clear channel
@@ -174,7 +173,8 @@ public class EmberNetworkInitialisation {
 
         // Leave the current network so we can initialise a new network
         if (checkNetworkJoined()) {
-            doLeaveNetwork();
+            EmberNcp ncp = new EmberNcp(protocolHandler);
+            ncp.leaveNetwork();
         }
 
         // Initialise security - no network key as we'll get that from the coordinator
@@ -202,17 +202,6 @@ public class EmberNetworkInitialisation {
         logger.debug("EZSP networkStateResponse {}", networkStateResponse.getStatus());
 
         return networkStateResponse.getStatus() == EmberNetworkStatus.EMBER_JOINED_NETWORK;
-    }
-
-    private boolean doLeaveNetwork() {
-        EzspLeaveNetworkRequest leaveNetworkRequest = new EzspLeaveNetworkRequest();
-        EzspTransaction leaveNetworkTransaction = protocolHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(leaveNetworkRequest, EzspLeaveNetworkResponse.class));
-        EzspLeaveNetworkResponse leaveNetworkResponse = (EzspLeaveNetworkResponse) leaveNetworkTransaction
-                .getResponse();
-        logger.debug(leaveNetworkResponse.toString());
-
-        return leaveNetworkResponse.getStatus() == EmberStatus.EMBER_SUCCESS;
     }
 
     /**

@@ -50,6 +50,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersRequest;
@@ -143,6 +147,39 @@ public class EmberNcp {
         lastStatus = null;
 
         return response;
+    }
+
+    /**
+     * Resume network operation after a reboot. The node retains its original type. This should be called on startup
+     * whether or not the node was previously part of a network. EMBER_NOT_JOINED is returned if the node is not part of
+     * a network.
+     *
+     * @return {@link EmberStatus} if success or failure
+     */
+    public EmberStatus networkInit() {
+        EzspNetworkInitRequest request = new EzspNetworkInitRequest();
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspNetworkInitResponse.class));
+        EzspNetworkInitResponse response = (EzspNetworkInitResponse) transaction.getResponse();
+        logger.debug(response.toString());
+
+        return response.getStatus();
+    }
+
+    /**
+     * Causes the stack to leave the current network. This generates a stackStatusHandler callback to indicate that the
+     * network is down. The radio will not be used until after sending a formNetwork or joinNetwork command.
+     *
+     * @return {@link EmberStatus} if success or failure
+     */
+    public EmberStatus leaveNetwork() {
+        EzspLeaveNetworkRequest request = new EzspLeaveNetworkRequest();
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspLeaveNetworkResponse.class));
+        EzspLeaveNetworkResponse response = (EzspLeaveNetworkResponse) transaction.getResponse();
+        logger.debug(response.toString());
+
+        return response.getStatus();
     }
 
     /**

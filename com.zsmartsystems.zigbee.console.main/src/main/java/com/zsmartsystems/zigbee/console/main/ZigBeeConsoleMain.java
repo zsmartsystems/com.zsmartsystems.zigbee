@@ -198,7 +198,6 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleTransientKeyCommand.class);
             commands.add(EmberConsoleMmoHashCommand.class);
             commands.add(EmberConsoleNcpStateCommand.class);
-            commands.add(EmberConsoleNcpStateCommand.class);
             commands.add(EmberConsoleNcpValueCommand.class);
             commands.add(EmberConsoleNcpVersionCommand.class);
             commands.add(EmberConsoleSecurityStateCommand.class);

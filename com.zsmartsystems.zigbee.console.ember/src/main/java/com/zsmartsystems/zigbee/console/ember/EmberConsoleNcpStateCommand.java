@@ -16,6 +16,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParamete
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
  *
@@ -30,12 +31,12 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
 
     @Override
     public String getDescription() {
-        return "Gets the NCP network state";
+        return "Gets the NCP network state. Optionally brings the NCP online or offline.";
     }
 
     @Override
     public String getSyntax() {
-        return "";
+        return "[ONLINE | OFFLINE]";
     }
 
     @Override
@@ -46,6 +47,42 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException {
+        if (args.length > 2) {
+            throw new IllegalArgumentException("Incorrect number of arguments.");
+        }
+
+        if (args.length == 1) {
+            ncpState(networkManager, out);
+            return;
+        }
+
+        switch (args[1].toLowerCase()) {
+            case "online":
+                ncpOnline(networkManager, out);
+                break;
+            case "offline":
+                ncpOffline(networkManager, out);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown option specified: " + args[1].toUpperCase());
+        }
+    }
+
+    private void ncpOnline(ZigBeeNetworkManager networkManager, PrintStream out) {
+        EmberNcp ncp = getEmberNcp(networkManager);
+        EmberStatus response = ncp.networkInit();
+
+        out.println("NCP network initialisation result was " + response);
+    }
+
+    private void ncpOffline(ZigBeeNetworkManager networkManager, PrintStream out) {
+        EmberNcp ncp = getEmberNcp(networkManager);
+        EmberStatus response = ncp.leaveNetwork();
+
+        out.println("NCP network leave result was " + response);
+    }
+
+    private void ncpState(ZigBeeNetworkManager networkManager, PrintStream out) {
         EmberNcp ncp = getEmberNcp(networkManager);
 
         EmberNetworkStatus status = ncp.getNetworkState();

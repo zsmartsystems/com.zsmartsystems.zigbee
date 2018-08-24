@@ -33,8 +33,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHan
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfglibRxHandler;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendMulticastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
@@ -324,22 +322,17 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         ncp.addEndpoint(1, 0, ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getId(), new int[] { 0 }, new int[] { 0 });
 
         // Now initialise the network
-        EzspNetworkInitRequest networkInitRequest = new EzspNetworkInitRequest();
-        EzspTransaction networkInitTransaction = frameHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(networkInitRequest, EzspNetworkInitResponse.class));
-        EzspNetworkInitResponse networkInitResponse = (EzspNetworkInitResponse) networkInitTransaction.getResponse();
-        logger.debug(networkInitResponse.toString());
+        EmberStatus initResponse = ncp.networkInit();
 
         networkParameters = ncp.getNetworkParameters().getParameters();
         ncp.getCurrentSecurityState();
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
-        logger.debug("EZSP dongle initialize done: Initialised {}",
-                networkInitResponse.getStatus() == EmberStatus.EMBER_NOT_JOINED);
+        logger.debug("EZSP dongle initialize done: Initialised {}", initResponse == EmberStatus.EMBER_NOT_JOINED);
 
         // Check if the network is initialised or if we're yet to join
-        if (networkInitResponse.getStatus() == EmberStatus.EMBER_NOT_JOINED) {
+        if (initResponse == EmberStatus.EMBER_NOT_JOINED) {
             return ZigBeeStatus.BAD_RESPONSE;
         }
 
