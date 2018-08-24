@@ -349,21 +349,25 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     @Override
     public void setClosing() {
-        this.closeHandler = true;
+        executor.shutdown();
+        closeHandler = true;
     }
 
     @Override
     public void close() {
         logger.debug("AshFrameHandler close.");
-        stateConnected = false;
         setClosing();
         stopRetryTimer();
+        stateConnected = false;
 
         synchronized (transactionListeners) {
             for (AshListener listener : transactionListeners) {
                 listener.transactionComplete();
             }
         }
+
+        timer.cancel();
+        executor.shutdownNow();
 
         try {
             parserThread.interrupt();
