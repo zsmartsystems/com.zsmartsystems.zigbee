@@ -81,7 +81,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     private final int ASH_OFF_BYTE = 0x13;
     private final int ASH_TIMEOUT = -1;
 
-    private final int ASH_MAX_LENGTH = 131;
+    private final int ASH_MAX_LENGTH = 220;
 
     private Integer ackNum = 0;
     private int frmNum = 0;
