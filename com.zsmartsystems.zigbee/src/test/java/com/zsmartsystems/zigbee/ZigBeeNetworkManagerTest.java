@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,6 +31,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
@@ -443,6 +445,30 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
                 "ZigBeeApsFrame [sourceAddress=29601/1, destinationAddress=0/1, profile=0104, cluster=1026, addressMode=null, radius=0, apsCounter=68, payload=18 00 0A 00 00 29 E5 09]");
         ZigBeeCommand command = getZigBeeCommand(apsFrame);
         assertTrue(command instanceof ReportAttributesCommand);
+    }
+
+    @Test
+    public void testNodeNetworkAddressUpdate() {
+        mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
+        mockedApsFrameListener = ArgumentCaptor.forClass(ZigBeeApsFrame.class);
+
+        ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
+        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress("12345678990ABCDEF"));
+        node.setNetworkAddress(12345);
+        ZigBeeEndpoint endpoint = new ZigBeeEndpoint(networkManager, node, 1);
+        ZclOnOffCluster cluster = new ZclOnOffCluster(networkManager, endpoint);
+
+        networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
+
+        Mockito.doNothing().when(mockedTransport).sendCommand(mockedApsFrameListener.capture());
+
+        Future<CommandResult> onCommand = cluster.onCommand();
+        assertEquals(12345, mockedApsFrameListener.getValue().getDestinationAddress());
+
+        node.setNetworkAddress(54321);
+
+        Future<CommandResult> offCommand = cluster.offCommand();
+        assertEquals(54321, mockedApsFrameListener.getValue().getDestinationAddress());
     }
 
     private ZigBeeCommand getZigBeeCommand(ZigBeeApsFrame apsFrame) {
