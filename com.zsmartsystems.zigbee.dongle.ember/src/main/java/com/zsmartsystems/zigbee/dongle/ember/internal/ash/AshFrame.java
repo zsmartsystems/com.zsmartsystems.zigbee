@@ -159,7 +159,7 @@ public class AshFrame {
         }
 
         // Remove byte stuffing
-        int[] unstuffedData = new int[131];
+        int[] unstuffedData = new int[buffer.length];
         int outLength = 0;
         boolean escape = false;
         for (int data : buffer) {

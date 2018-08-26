@@ -61,7 +61,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
  *
  */
 public class EzspDeserializer {
-    private int[] buffer = new int[131];
+    private int[] buffer = new int[220];
     private int position = 0;
 
     public EzspDeserializer(int[] inputBuffer) {
