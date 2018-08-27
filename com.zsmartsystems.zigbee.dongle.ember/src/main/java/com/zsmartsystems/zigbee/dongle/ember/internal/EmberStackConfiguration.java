@@ -16,6 +16,7 @@ import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 
 /**
  * This class provides utility functions to configure, and read the configuration from the Ember stack.
@@ -50,7 +51,7 @@ public class EmberStackConfiguration {
 
         EmberNcp ncp = new EmberNcp(protocolHandler);
         for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
-            if (!ncp.setConfiguration(config.getKey(), config.getValue())) {
+            if (ncp.setConfiguration(config.getKey(), config.getValue()) != EzspStatus.EZSP_SUCCESS) {
                 success = false;
             }
         }
@@ -88,7 +89,7 @@ public class EmberStackConfiguration {
 
         EmberNcp ncp = new EmberNcp(protocolHandler);
         for (Entry<EzspPolicyId, EzspDecisionId> policy : policies.entrySet()) {
-            if (!ncp.setPolicy(policy.getKey(), policy.getValue())) {
+            if (ncp.setPolicy(policy.getKey(), policy.getValue()) != EzspStatus.EZSP_SUCCESS) {
                 success = false;
             }
         }

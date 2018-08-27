@@ -46,6 +46,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNodeType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspMultiResponseTransaction;
@@ -352,14 +353,16 @@ public class EmberNetworkInitialisation {
         if (networkKey.hasOutgoingFrameCounter()) {
             EzspSerializer serializer = new EzspSerializer();
             serializer.serializeUInt32(networkKey.getOutgoingFrameCounter());
-            if (!ncp.setValue(EzspValueId.EZSP_VALUE_NWK_FRAME_COUNTER, serializer.getPayload())) {
+            if (ncp.setValue(EzspValueId.EZSP_VALUE_NWK_FRAME_COUNTER,
+                    serializer.getPayload()) != EzspStatus.EZSP_SUCCESS) {
                 return false;
             }
         }
         if (linkKey.hasOutgoingFrameCounter()) {
             EzspSerializer serializer = new EzspSerializer();
             serializer.serializeUInt32(linkKey.getOutgoingFrameCounter());
-            if (!ncp.setValue(EzspValueId.EZSP_VALUE_APS_FRAME_COUNTER, serializer.getPayload())) {
+            if (ncp.setValue(EzspValueId.EZSP_VALUE_APS_FRAME_COUNTER,
+                    serializer.getPayload()) != EzspStatus.EZSP_SUCCESS) {
                 return false;
             }
         }
