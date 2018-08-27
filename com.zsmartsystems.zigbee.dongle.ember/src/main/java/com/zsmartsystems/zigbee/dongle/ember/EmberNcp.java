@@ -381,9 +381,9 @@ public class EmberNcp {
      *
      * @param configId the {@link EzspConfigId} to set
      * @param value the value to set
-     * @return true if the configuration returns success
+     * @return the {@link EzspStatus} of the response
      */
-    public boolean setConfiguration(EzspConfigId configId, Integer value) {
+    public EzspStatus setConfiguration(EzspConfigId configId, Integer value) {
         EzspSetConfigurationValueRequest request = new EzspSetConfigurationValueRequest();
         request.setConfigId(configId);
         request.setValue(value);
@@ -395,7 +395,7 @@ public class EmberNcp {
         lastStatus = null;
         logger.debug(response.toString());
 
-        return response.getStatus() == EzspStatus.EZSP_SUCCESS;
+        return response.getStatus();
     }
 
     /**
@@ -403,9 +403,9 @@ public class EmberNcp {
      *
      * @param policyId the {@link EzspPolicyId} to set
      * @param decisionId the {@link EzspDecisionId} to set to
-     * @return true if the policy setting was successful
+     * @return the {@link EzspStatus} of the response
      */
-    public boolean setPolicy(EzspPolicyId policyId, EzspDecisionId decisionId) {
+    public EzspStatus setPolicy(EzspPolicyId policyId, EzspDecisionId decisionId) {
         EzspSetPolicyRequest setPolicyRequest = new EzspSetPolicyRequest();
         setPolicyRequest.setPolicyId(policyId);
         setPolicyRequest.setDecisionId(decisionId);
@@ -417,10 +417,9 @@ public class EmberNcp {
         logger.debug(setPolicyResponse.toString());
         if (setPolicyResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error during setting policy: {}", setPolicyResponse);
-            return false;
         }
 
-        return true;
+        return setPolicyResponse.getStatus();
     }
 
     /**
@@ -452,9 +451,9 @@ public class EmberNcp {
      *
      * @param valueId the {@link EzspValueId} to set
      * @param value the value to set to
-     * @return true if the value setting was successful
+     * @return the {@link EzspStatus} of the response
      */
-    public boolean setValue(EzspValueId valueId, int[] value) {
+    public EzspStatus setValue(EzspValueId valueId, int[] value) {
         EzspSetValueRequest request = new EzspSetValueRequest();
         request.setValueId(valueId);
         request.setValue(value);
@@ -466,10 +465,9 @@ public class EmberNcp {
         logger.debug(response.toString());
         if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error setting value: {}", response);
-            return false;
         }
 
-        return true;
+        return response.getStatus();
     }
 
     /**

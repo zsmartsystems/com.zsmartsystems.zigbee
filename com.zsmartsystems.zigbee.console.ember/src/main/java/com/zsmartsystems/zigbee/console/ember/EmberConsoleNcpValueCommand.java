@@ -15,6 +15,7 @@ import java.util.TreeMap;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
 
 /**
@@ -90,9 +91,9 @@ public class EmberConsoleNcpValueCommand extends EmberConsoleAbstractCommand {
             if (value == null) {
                 throw new IllegalArgumentException("Unable to convert data to value array");
             }
-            boolean response = ncp.setValue(valueId, value);
-            out.println(
-                    "Writing Ember NCP value " + valueId.toString() + " was " + (response ? "" : "un") + "successful.");
+            EzspStatus response = ncp.setValue(valueId, value);
+            out.println("Writing Ember NCP value " + valueId.toString() + " was "
+                    + (response == EzspStatus.EZSP_SUCCESS ? "" : "un") + "successful.");
         }
     }
 

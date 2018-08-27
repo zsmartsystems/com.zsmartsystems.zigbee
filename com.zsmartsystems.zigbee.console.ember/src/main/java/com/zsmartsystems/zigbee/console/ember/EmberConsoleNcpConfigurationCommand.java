@@ -43,7 +43,7 @@ public class EmberConsoleNcpConfigurationCommand extends EmberConsoleAbstractCom
     public String getHelp() {
         return "CONFIGID is the Ember NCP configuration enumeration\n" + "VALUE is the value to write\n"
                 + "If VALUE is not defined, then the memory will be read.\n"
-                + "If no arguments are supplied then all configiration will be displayed.";
+                + "If no arguments are supplied then all configuration values will be displayed.";
     }
 
     @Override
@@ -88,9 +88,29 @@ public class EmberConsoleNcpConfigurationCommand extends EmberConsoleAbstractCom
         } else {
             try {
                 Integer value = Integer.parseInt(args[2]);
-                boolean response = ncp.setConfiguration(configId, value);
-                out.println("Writing Ember NCP configuration " + configId.toString() + " was " + (response ? "" : "un")
-                        + "successful.");
+                String result;
+                switch (ncp.setConfiguration(configId, value)) {
+                    case EZSP_SUCCESS:
+                        result = "successful.";
+                        break;
+                    case EZSP_ERROR_OUT_OF_MEMORY:
+                        result = "unsuccessful. NCP is out of memory.";
+                        break;
+                    case EZSP_ERROR_INVALID_VALUE:
+                        result = "unsuccessful. Specified value was out of bounds.";
+                        break;
+                    case EZSP_ERROR_INVALID_ID:
+                        result = "unsuccessful. Config ID is unknown.";
+                        break;
+                    case EZSP_ERROR_INVALID_CALL:
+                        result = "unsuccessful. Configuration can not be modified in current NCP state.";
+                        break;
+                    default:
+                        result = "UNKNOWN";
+                        break;
+                }
+                out.println("Writing Ember NCP configuration " + configId.toString() + " was " + result);
+
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Unable to convert data to integer");
             }
