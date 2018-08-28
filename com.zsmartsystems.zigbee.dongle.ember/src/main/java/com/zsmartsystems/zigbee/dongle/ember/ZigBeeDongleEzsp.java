@@ -386,6 +386,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             ncp.getChildInformation(childId);
         }
 
+        EmberStatus txPowerResponse = ncp.setRadioPower(networkParameters.getRadioTxPower());
+        if (txPowerResponse != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Setting TX Power to {} resulted in {}", networkParameters.getRadioTxPower(), txPowerResponse);
+        }
+
         logger.debug("EZSP dongle startup done.");
 
         return ZigBeeStatus.SUCCESS;
@@ -489,8 +494,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         logger.debug(emberCommand.toString());
         frameHandler.queueFrame(emberCommand);
-
-        // emberUnicast = (EzspSendUnicast) ashHandler.sendEzspRequestAsync(emberUnicast);
     }
 
     @Override
@@ -705,8 +708,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                                 result == EmberStatus.EMBER_SUCCESS ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE);
                         break;
 
+                    case RADIO_TX_POWER:
+                        configuration.setResult(option, setEmberTxPower((int) configuration.getValue(option)));
+                        break;
+
                     case DEVICE_TYPE:
                         deviceType = (DeviceType) configuration.getValue(option);
+                        configuration.setResult(option, ZigBeeStatus.SUCCESS);
                         break;
 
                     case TRUST_CENTRE_LINK_KEY:
@@ -891,6 +899,20 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return ZigBeeStatus.SUCCESS;
         }
         return ZigBeeStatus.FAILURE;
+    }
+
+    /**
+     * Set the Ember Radio transmitter power
+     *
+     * @param txPower the power in dBm
+     * @return {@link ZigBeeStatus}
+     */
+    private ZigBeeStatus setEmberTxPower(int txPower) {
+        networkParameters.setRadioTxPower(txPower);
+
+        EmberNcp ncp = getEmberNcp();
+        return (ncp.setRadioPower(txPower) == EmberStatus.EMBER_SUCCESS) ? ZigBeeStatus.SUCCESS
+                : ZigBeeStatus.BAD_RESPONSE;
     }
 
     /**

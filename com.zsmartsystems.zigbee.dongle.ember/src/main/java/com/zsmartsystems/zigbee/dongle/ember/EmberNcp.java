@@ -62,6 +62,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationVa
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioPowerRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioPowerResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
@@ -617,6 +619,26 @@ public class EmberNcp {
         protocolHandler.sendEzspTransaction(transaction);
         EzspGetNodeIdResponse response = (EzspGetNodeIdResponse) transaction.getResponse();
         return response.getNodeId();
+    }
+
+    /**
+     * Sets the radio output power at which a node is operating. Ember radios have discrete power settings. For a list
+     * of available power settings, see the technical specification for the RF communication module in your Developer
+     * Kit. Note: Care should be taken when using this API on a running network, as it will directly impact the
+     * established link qualities neighboring nodes have with the node on which it is called. This can lead to
+     * disruption of existing routes and erratic network behavior.
+     *
+     * @param power Desired radio output power, in dBm.
+     * @return the response {@link EmberStatus} of the request
+     */
+    public EmberStatus setRadioPower(int power) {
+        EzspSetRadioPowerRequest request = new EzspSetRadioPowerRequest();
+        request.setPower(power);
+        EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(request,
+                EzspSetRadioPowerResponse.class);
+        protocolHandler.sendEzspTransaction(transaction);
+        EzspSetRadioPowerResponse response = (EzspSetRadioPowerResponse) transaction.getResponse();
+        return response.getStatus();
     }
 
     /**

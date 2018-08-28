@@ -181,6 +181,8 @@ public class ZigBeeConsoleMain {
         } else if (dongleName.toUpperCase().equals("EMBER")) {
             dongle = new ZigBeeDongleEzsp(serialPort);
 
+            transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 8);
+
             // Configure the concentrator
             // Max Hops defaults to system max
             ConcentratorConfig concentratorConfig = new ConcentratorConfig();

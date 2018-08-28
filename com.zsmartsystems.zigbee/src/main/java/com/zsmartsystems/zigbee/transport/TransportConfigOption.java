@@ -78,5 +78,12 @@ public enum TransportConfigOption {
      * <p>
      * Value must be {@link DeviceType}
      */
-    DEVICE_TYPE;
+    DEVICE_TYPE,
+
+    /**
+     * Sets the device radio power. Power level is defined in dBm.
+     * <p>
+     * Value must be {@link Integer}
+     */
+    RADIO_TX_POWER;
 }
