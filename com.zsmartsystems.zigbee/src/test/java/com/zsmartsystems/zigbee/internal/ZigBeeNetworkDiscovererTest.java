@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -36,6 +37,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsResponse;
+import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
 import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
 import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.command.PowerDescriptorResponse;
@@ -75,8 +77,8 @@ public class ZigBeeNetworkDiscovererTest {
                 commandFuture.set(result);
                 return commandFuture;
             }
-        }).when(networkManager).unicast(org.mockito.Matchers.any(ZigBeeCommand.class),
-                org.mockito.Matchers.any(ZigBeeTransactionMatcher.class));
+        }).when(networkManager).unicast(ArgumentMatchers.any(ZigBeeCommand.class),
+                ArgumentMatchers.any(ZigBeeTransactionMatcher.class));
 
         Mockito.doAnswer(new Answer<Void>() {
             @Override
@@ -85,7 +87,7 @@ public class ZigBeeNetworkDiscovererTest {
                 new Thread(runnable).start();
                 return null;
             }
-        }).when(networkManager).executeTask(org.mockito.Matchers.any(Runnable.class));
+        }).when(networkManager).executeTask(ArgumentMatchers.any(Runnable.class));
     }
 
     @Ignore
@@ -167,5 +169,23 @@ public class ZigBeeNetworkDiscovererTest {
         assertEquals(Integer.valueOf(0), node.getNetworkAddress());
         assertEquals(new IeeeAddress("1234567890ABCDEF"), node.getIeeeAddress());
         assertEquals(1, node.getEndpoints().size());
+    }
+
+    @Test
+    public void testNodeAddressUpdate() {
+        IeeeAddress ieeeAddress = new IeeeAddress("123456890ABCDEF");
+
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);// new ZigBeeNode(networkManager, ieeeAddress);
+        Mockito.doReturn(node).when(networkManager).getNode(ArgumentMatchers.any(IeeeAddress.class));
+
+        DeviceAnnounce announce = new DeviceAnnounce();
+        announce.setIeeeAddr(ieeeAddress);
+        announce.setNwkAddrOfInterest(12345);
+
+        ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
+        discoverer.commandReceived(announce);
+
+        Mockito.verify(node, Mockito.times(1)).setNetworkAddress(ArgumentMatchers.anyInt());
+
     }
 }

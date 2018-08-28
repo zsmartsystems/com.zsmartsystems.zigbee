@@ -114,12 +114,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * The nodes in the ZigBee network - maps {@link IeeeAddress} to {@link ZigBeeNode}
      */
-    private final Map<IeeeAddress, ZigBeeNode> networkNodes = new ConcurrentHashMap<IeeeAddress, ZigBeeNode>();
+    private final Map<IeeeAddress, ZigBeeNode> networkNodes = new ConcurrentHashMap<>();
 
     /**
      * The groups in the ZigBee network.
      */
-    private final Map<Integer, ZigBeeGroupAddress> networkGroups = new TreeMap<Integer, ZigBeeGroupAddress>();
+    private final Map<Integer, ZigBeeGroupAddress> networkGroups = new TreeMap<>();
 
     /**
      * The node listeners of the ZigBee network. Registered listeners will be
@@ -202,7 +202,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * List of {@link ZigBeeNetworkExtension}s that are available to this network. Extensions are added
      * with the {@link #addApplication(ZigBeeNetworkExtension extension)} method.
      */
-    private final List<ZigBeeNetworkExtension> extensions = new CopyOnWriteArrayList<ZigBeeNetworkExtension>();
+    private final List<ZigBeeNetworkExtension> extensions = new CopyOnWriteArrayList<>();
 
     /**
      * A ClusterMatcher used to respond to the {@link MatchDescriptorRequest} command.
@@ -1127,7 +1127,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Gets a node given the 16 bit network address
      *
      * @param networkAddress the 16 bit network address as {@link Integer}
-     * @return the {@link ZigBeeNode}
+     * @return the {@link ZigBeeNode} or null if the node with the requested network address was not found
      */
     public ZigBeeNode getNode(final Integer networkAddress) {
         synchronized (networkNodes) {

@@ -164,7 +164,7 @@ public class ZigBeeNetworkDiscoverer
             case SECURED_REJOIN:
             case UNSECURED_REJOIN:
                 // We only care about devices that have joined or rejoined
-                // startNodeDiscovery(networkAddress);
+                logger.debug("{}: Device status updated. NWK={}", ieeeAddress, networkAddress);
                 addNode(ieeeAddress, networkAddress);
                 break;
             default:
@@ -187,8 +187,9 @@ public class ZigBeeNetworkDiscoverer
         // Node has been announced.
         if (command instanceof DeviceAnnounce) {
             final DeviceAnnounce announce = (DeviceAnnounce) command;
-            // startNodeDiscovery(address.getNwkAddrOfInterest());
 
+            logger.debug("{}: Device announce received. NWK={}", announce.getIeeeAddr(),
+                    announce.getNwkAddrOfInterest());
             addNode(announce.getIeeeAddr(), announce.getNwkAddrOfInterest());
         }
     }
@@ -361,15 +362,19 @@ public class ZigBeeNetworkDiscoverer
     }
 
     /**
-     * Updates {@link ZigBeeNode} and completes discovery if all devices are discovered in
-     * this node.
+     * Updates {@link ZigBeeNode} and adds it to the {@link ZigBeeNetworkManager}
      *
-     * @param node the {@link ZigBeeNode} to add
+     * @param ieeeAddress the {@link IeeeAddress} of the newly announced node
+     * @param networkAddress the network address of the newly announced node
      */
     private void addNode(final IeeeAddress ieeeAddress, int networkAddress) {
         ZigBeeNode node = networkManager.getNode(ieeeAddress);
         if (node != null) {
+            if (node.getNetworkAddress() != networkAddress) {
+                logger.debug("{}: Network address updated to {}", ieeeAddress, networkAddress);
+            }
             node.setNetworkAddress(networkAddress);
+            networkManager.updateNode(node);
             return;
         }
 
