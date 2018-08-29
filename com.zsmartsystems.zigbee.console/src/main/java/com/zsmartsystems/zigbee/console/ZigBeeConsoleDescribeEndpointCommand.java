@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.zsmartsystems.zigbee.ZigBeeDeviceType;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
@@ -53,11 +54,16 @@ public class ZigBeeConsoleDescribeEndpointCommand extends ZigBeeConsoleAbstractC
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
 
+        ZigBeeProfileType profile = ZigBeeProfileType.getByValue(endpoint.getProfileId());
+        ZigBeeDeviceType device = ZigBeeDeviceType.getByValue(endpoint.getDeviceId());
+
         out.println("IEEE Address     : " + endpoint.getIeeeAddress());
         out.println("Network Address  : " + endpoint.getParentNode().getNetworkAddress());
         out.println("Endpoint         : " + endpoint.getEndpointId());
-        out.println("Device Profile   : " + ZigBeeProfileType.getByValue(endpoint.getProfileId())
-                + String.format(" (0x%04X)", endpoint.getProfileId()));
+        out.println("Device Profile   : " + String.format("0x%04X, ", endpoint.getProfileId())
+                + (profile == null ? "Unknown" : profile.toString()));
+        out.println("Device Type      : " + String.format("0x%04X, ", endpoint.getDeviceId())
+                + (device == null ? "Unknown" : device.toString()));
         out.println("Device Version   : " + endpoint.getDeviceVersion());
         out.println("Input Clusters   : (Server)");
         printClusters(endpoint, true, out);
