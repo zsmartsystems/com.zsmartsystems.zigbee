@@ -538,11 +538,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Schedules a runnable task for execution. This uses a fixed size scheduler to limit thread execution.
+     * Schedules a runnable task for periodic execution. This uses a fixed size scheduler to limit thread execution
+     * resources.
      *
      * @param runnableTask the {@link Runnable} to execute
      * @param initialDelay the delay in milliseconds before the task will be executed
-     * @period the period in milliseconds between each subsequent execution
+     * @param period the period in milliseconds between each subsequent execution
      * @return the {@link ScheduledFuture} for the scheduled task
      */
     public ScheduledFuture<?> scheduleTask(Runnable runnableTask, long initialDelay, long period) {
