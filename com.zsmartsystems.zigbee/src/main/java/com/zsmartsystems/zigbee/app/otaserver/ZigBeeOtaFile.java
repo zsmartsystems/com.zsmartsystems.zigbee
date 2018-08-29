@@ -228,7 +228,7 @@ public class ZigBeeOtaFile {
         fileVersion = readUnsigned32();
 
         // Unsigned 16-bit integer, ZigBee Stack version
-        stackVersion = ZigBeeStackType.getStackType(readUnsigned16());
+        stackVersion = ZigBeeStackType.getByValue(readUnsigned16());
 
         // Character string [32], OTA Header string
         byte[] stringBytes = Arrays.copyOfRange(fileData, filePointer, filePointer + 32);

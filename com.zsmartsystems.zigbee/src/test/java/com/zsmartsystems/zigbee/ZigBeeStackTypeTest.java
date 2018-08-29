@@ -19,8 +19,8 @@ import org.junit.Test;
 public class ZigBeeStackTypeTest {
     @Test
     public void testTypes() {
-        assertEquals(ZigBeeStackType.ZIGBEE_2006, ZigBeeStackType.getStackType(0));
-        assertEquals(ZigBeeStackType.ZIGBEE_2007, ZigBeeStackType.getStackType(1));
-        assertEquals(ZigBeeStackType.ZIGBEE_PRO, ZigBeeStackType.getStackType(2));
+        assertEquals(ZigBeeStackType.ZIGBEE_2006, ZigBeeStackType.getByValue(0));
+        assertEquals(ZigBeeStackType.ZIGBEE_2007, ZigBeeStackType.getByValue(1));
+        assertEquals(ZigBeeStackType.ZIGBEE_PRO, ZigBeeStackType.getByValue(2));
     }
 }
