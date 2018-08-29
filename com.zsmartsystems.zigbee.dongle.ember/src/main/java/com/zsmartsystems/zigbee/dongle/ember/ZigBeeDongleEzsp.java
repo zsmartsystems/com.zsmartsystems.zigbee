@@ -319,7 +319,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         ncp.getNetworkParameters();
 
         // Add the endpoint
-        ncp.addEndpoint(1, 0, ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getId(), new int[] { 0 }, new int[] { 0 });
+        ncp.addEndpoint(1, 0, ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey(), new int[] { 0 }, new int[] { 0 });
 
         // Now initialise the network
         EmberStatus initResponse = ncp.networkInit();

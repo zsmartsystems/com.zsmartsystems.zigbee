@@ -56,7 +56,7 @@ public class ZigBeeConsoleDescribeEndpointCommand extends ZigBeeConsoleAbstractC
         out.println("IEEE Address     : " + endpoint.getIeeeAddress());
         out.println("Network Address  : " + endpoint.getParentNode().getNetworkAddress());
         out.println("Endpoint         : " + endpoint.getEndpointId());
-        out.println("Device Profile   : " + ZigBeeProfileType.getProfileType(endpoint.getProfileId())
+        out.println("Device Profile   : " + ZigBeeProfileType.getByValue(endpoint.getProfileId())
                 + String.format(" (0x%04X)", endpoint.getProfileId()));
         out.println("Device Version   : " + endpoint.getDeviceVersion());
         out.println("Input Clusters   : (Server)");

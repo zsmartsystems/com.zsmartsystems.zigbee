@@ -74,7 +74,7 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
                 first = false;
                 ZigBeeEndpoint endpoint = node.getEndpoint(endpointId);
                 out.println(String.format("%-3d  %s", endpoint.getEndpointId(),
-                        ZigBeeProfileType.getProfileType(endpoint.getProfileId())));
+                        ZigBeeProfileType.getByValue(endpoint.getProfileId())));
             }
             if (first) {
                 out.println();
