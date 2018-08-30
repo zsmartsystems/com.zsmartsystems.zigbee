@@ -179,7 +179,7 @@ public class EmberNetworkInitialisation {
         }
 
         // Initialise security - no network key as we'll get that from the coordinator
-        setSecurityState(null, linkKey);
+        setSecurityState(linkKey, null);
 
         doJoinNetwork(networkParameters);
     }
@@ -313,25 +313,24 @@ public class EmberNetworkInitialisation {
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_TRUST_CENTER_GLOBAL_LINK_KEY);
 
         EmberKeyData networkKeyData = new EmberKeyData();
-        networkKeyData.setContents(networkKey.getValue());
         if (networkKey != null) {
+            networkKeyData.setContents(networkKey.getValue());
             state.addBitmask(EmberInitialSecurityBitmask.EMBER_HAVE_NETWORK_KEY);
-            state.setNetworkKey(networkKeyData);
+            if (networkKey.hasSequenceNumber()) {
+                state.setNetworkKeySequenceNumber(networkKey.getSequenceNumber());
+            }
         }
+        state.setNetworkKey(networkKeyData);
 
         EmberKeyData linkKeyData = new EmberKeyData();
         if (linkKey != null) {
+            linkKeyData.setContents(linkKey.getValue());
             state.addBitmask(EmberInitialSecurityBitmask.EMBER_HAVE_PRECONFIGURED_KEY);
             state.addBitmask(EmberInitialSecurityBitmask.EMBER_REQUIRE_ENCRYPTED_KEY);
-            linkKeyData.setContents(linkKey.getValue());
         }
         state.setPreconfiguredKey(linkKeyData);
 
         state.setPreconfiguredTrustCenterEui64(new IeeeAddress());
-
-        if (networkKey.hasSequenceNumber()) {
-            state.setNetworkKeySequenceNumber(networkKey.getSequenceNumber());
-        }
 
         securityState.setState(state);
         EzspSingleResponseTransaction transaction = new EzspSingleResponseTransaction(securityState,
@@ -345,12 +344,8 @@ public class EmberNetworkInitialisation {
             return false;
         }
 
-        if (!networkKey.hasOutgoingFrameCounter() && !linkKey.hasOutgoingFrameCounter()) {
-            return true;
-        }
-
         EmberNcp ncp = new EmberNcp(protocolHandler);
-        if (networkKey.hasOutgoingFrameCounter()) {
+        if (networkKey != null && networkKey.hasOutgoingFrameCounter()) {
             EzspSerializer serializer = new EzspSerializer();
             serializer.serializeUInt32(networkKey.getOutgoingFrameCounter());
             if (ncp.setValue(EzspValueId.EZSP_VALUE_NWK_FRAME_COUNTER,
@@ -358,7 +353,7 @@ public class EmberNetworkInitialisation {
                 return false;
             }
         }
-        if (linkKey.hasOutgoingFrameCounter()) {
+        if (linkKey != null && linkKey.hasOutgoingFrameCounter()) {
             EzspSerializer serializer = new EzspSerializer();
             serializer.serializeUInt32(linkKey.getOutgoingFrameCounter());
             if (ncp.setValue(EzspValueId.EZSP_VALUE_APS_FRAME_COUNTER,
