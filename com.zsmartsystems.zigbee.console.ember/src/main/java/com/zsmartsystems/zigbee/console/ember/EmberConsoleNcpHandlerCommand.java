@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.console.ember;
 import java.io.PrintStream;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleArgument;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
 
@@ -25,6 +26,12 @@ public class EmberConsoleNcpHandlerCommand extends EmberConsoleAbstractCommand {
     @Override
     public String getCommand() {
         return "ncphandler";
+    }
+
+    @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override

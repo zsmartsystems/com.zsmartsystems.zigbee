@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleArgument;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificate283k1Data;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificateData;
@@ -35,6 +36,11 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  *
  */
 public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractCommand {
+    @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
     @Override
     public String getCommand() {
         return "ncpsecuritystate";

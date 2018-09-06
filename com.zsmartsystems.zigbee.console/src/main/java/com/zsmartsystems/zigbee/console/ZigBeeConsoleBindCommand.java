@@ -24,18 +24,26 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
  */
 public class ZigBeeConsoleBindCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        ZigBeeConsoleArgument option = ZigBeeConsoleArgumentBuilder.create(ZigBeeConsoleArgumentType.ENDPOINT)
+                .withName("SOURCE-ENDPOINT").withDescription("The source endpoint to bind to").build();
+        option.chain(ZigBeeConsoleArgumentBuilder.create(ZigBeeConsoleArgumentType.CLUSTER)
+                .withDescription("The cluster to bind to").build());
+        option.chain(ZigBeeConsoleArgumentBuilder.create(ZigBeeConsoleArgumentType.ENDPOINT)
+                .withName("DESTINATION-ENDPOINT")
+                .withDescription("The destination endpoint to bind to (defaults to local node)").isOptional().build());
+
+        return option;
+    }
+
+    @Override
     public String getCommand() {
         return "bind";
     }
 
     @Override
     public String getDescription() {
-        return "Binds a device to another device. If destination is not specified, the coordinator will be used.";
-    }
-
-    @Override
-    public String getSyntax() {
-        return "CLUSTER SOURCE-ENDPOINT [DESTINATION-ENDPOINT]";
+        return "Binds a device to another device. If destination is not specified, the local node will be used.";
     }
 
     @Override

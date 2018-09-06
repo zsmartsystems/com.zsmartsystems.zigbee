@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleArgument;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
@@ -25,6 +26,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
  *
  */
 public class EmberConsoleNcpValueCommand extends EmberConsoleAbstractCommand {
+    @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
     @Override
     public String getCommand() {
         return "ncpvalue";

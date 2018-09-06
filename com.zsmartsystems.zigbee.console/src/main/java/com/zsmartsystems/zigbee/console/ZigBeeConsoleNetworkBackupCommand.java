@@ -30,6 +30,11 @@ import com.zsmartsystems.zigbee.transport.DeviceType;
  */
 public class ZigBeeConsoleNetworkBackupCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "netbackup";
     }

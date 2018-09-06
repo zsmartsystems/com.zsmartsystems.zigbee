@@ -22,18 +22,22 @@ import com.zsmartsystems.zigbee.security.ZigBeeKey;
  */
 public class ZigBeeConsoleLinkKeyCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        ZigBeeConsoleArgument option = ZigBeeConsoleArgumentBuilder.create(ZigBeeConsoleArgumentType.CONSTANT)
+                .withName("MMO").withDescription("Specified KEYDATA is a join code").isOptional().build();
+        option.chain(ZigBeeConsoleArgumentBuilder.create(ZigBeeConsoleArgumentType.KEY).build());
+
+        return option;
+    }
+
+    @Override
     public String getCommand() {
         return "linkkey";
     }
 
     @Override
     public String getDescription() {
-        return "Sets the link key int the dongle, optionally computing the MMO Hash from the join code";
-    }
-
-    @Override
-    public String getSyntax() {
-        return "[MMO] KEYDATA";
+        return "Sets the link key in the dongle, optionally computing the MMO Hash from the join code";
     }
 
     @Override

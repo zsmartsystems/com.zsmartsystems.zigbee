@@ -23,6 +23,11 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
  */
 public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "attsupported";
     }

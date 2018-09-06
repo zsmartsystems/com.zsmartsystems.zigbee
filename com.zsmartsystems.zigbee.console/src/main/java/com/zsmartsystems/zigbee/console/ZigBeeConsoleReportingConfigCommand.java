@@ -25,6 +25,11 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
  */
 public class ZigBeeConsoleReportingConfigCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "reportcfg";
     }

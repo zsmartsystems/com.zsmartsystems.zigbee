@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.console.ember;
 import java.io.PrintStream;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleArgument;
 import com.zsmartsystems.zigbee.dongle.ember.EmberMfglib;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 
@@ -19,6 +20,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
  *
  */
 public class EmberConsoleNcpMfglibCommand extends EmberConsoleAbstractCommand {
+    @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
     @Override
     public String getCommand() {
         return "ncpmfglib";
@@ -118,4 +124,5 @@ public class EmberConsoleNcpMfglibCommand extends EmberConsoleAbstractCommand {
 
         return mfglib;
     }
+
 }

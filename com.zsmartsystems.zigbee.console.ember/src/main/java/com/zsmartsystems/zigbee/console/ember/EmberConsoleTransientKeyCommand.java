@@ -11,6 +11,7 @@ import java.io.PrintStream;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleArgument;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
@@ -22,6 +23,11 @@ import com.zsmartsystems.zigbee.security.ZigBeeKey;
  *
  */
 public class EmberConsoleTransientKeyCommand extends EmberConsoleAbstractCommand {
+    @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
     @Override
     public String getCommand() {
         return "ncptransientkey";

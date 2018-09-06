@@ -24,6 +24,11 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
  */
 public class ZigBeeConsoleUnbindCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "unbind";
     }

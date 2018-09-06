@@ -30,6 +30,11 @@ import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractCommand {
 
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "read";
     }

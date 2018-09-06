@@ -22,6 +22,11 @@ import com.zsmartsystems.zigbee.ZigBeeStatus;
  */
 public class ZigBeeConsoleChannelCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "channel";
     }

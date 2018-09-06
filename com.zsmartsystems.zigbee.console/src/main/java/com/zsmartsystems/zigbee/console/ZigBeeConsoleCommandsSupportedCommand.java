@@ -23,6 +23,10 @@ import com.zsmartsystems.zigbee.zcl.ZclFrameType;
  * @author Henning Sudbrock
  */
 public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstractCommand {
+    @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
 
     @Override
     public String getCommand() {

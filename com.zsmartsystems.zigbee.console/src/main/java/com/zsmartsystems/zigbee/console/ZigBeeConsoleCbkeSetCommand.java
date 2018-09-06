@@ -28,6 +28,12 @@ public class ZigBeeConsoleCbkeSetCommand extends ZigBeeConsoleAbstractCommand {
     }
 
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public String getDescription() {
         return "Sets the CBKE certificate key int the from the join code";
     }

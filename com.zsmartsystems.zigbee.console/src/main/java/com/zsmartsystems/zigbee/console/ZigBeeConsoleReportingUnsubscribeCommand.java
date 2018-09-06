@@ -25,6 +25,11 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
  */
 public class ZigBeeConsoleReportingUnsubscribeCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "unsubscribe";
     }
