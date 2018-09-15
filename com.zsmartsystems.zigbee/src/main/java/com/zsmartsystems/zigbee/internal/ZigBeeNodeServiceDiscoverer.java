@@ -421,9 +421,11 @@ public class ZigBeeNodeServiceDiscoverer {
             }
 
             if (neighborResponse.getStatus() == ZdoStatus.NOT_SUPPORTED) {
+                logger.debug("{}: Node SVC Discovery ManagementLqiRequest not supported", node.getIeeeAddress());
                 supportsManagementLqi = false;
                 return true;
             } else if (neighborResponse.getStatus() != ZdoStatus.SUCCESS) {
+                logger.debug("{}: Node SVC Discovery ManagementLqiRequest failed", node.getIeeeAddress());
                 return false;
             }
 
@@ -441,6 +443,8 @@ public class ZigBeeNodeServiceDiscoverer {
             totalNeighbors = neighborResponse.getNeighborTableEntries();
         } while (startIndex < totalNeighbors);
 
+        logger.debug("{}: Node SVC Discovery ManagementLqiRequest complete [{} neighbors]", node.getIeeeAddress(),
+                neighbors.size());
         node.setNeighbors(neighbors);
 
         return true;
@@ -472,9 +476,11 @@ public class ZigBeeNodeServiceDiscoverer {
             }
 
             if (routingResponse.getStatus() == ZdoStatus.NOT_SUPPORTED) {
+                logger.debug("{}: Node SVC Discovery ManagementLqiRequest not supported", node.getIeeeAddress());
                 supportsManagementRouting = false;
                 return true;
             } else if (routingResponse.getStatus() != ZdoStatus.SUCCESS) {
+                logger.debug("{}: Node SVC Discovery ManagementLqiRequest failed", node.getIeeeAddress());
                 return false;
             }
 
@@ -486,6 +492,8 @@ public class ZigBeeNodeServiceDiscoverer {
             totalRoutes = routingResponse.getRoutingTableEntries();
         } while (startIndex < totalRoutes);
 
+        logger.debug("{}: Node SVC Discovery ManagementLqiRequest complete [{} routes]", node.getIeeeAddress(),
+                routes.size());
         node.setRoutes(routes);
 
         return true;
