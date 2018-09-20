@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.zcl.protocol;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +28,7 @@ import com.zsmartsystems.zigbee.zcl.field.NeighborInformation;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 import com.zsmartsystems.zigbee.zdo.field.ComplexDescriptor;
@@ -95,7 +95,7 @@ public enum ZclDataType {
     COLLECTION_BAG(null, 0x51, false),
     TIME_OF_DAY(null, 0xE0, true),
     DATE(null, 0xE1, true),
-    UTCTIME(Calendar.class, 0xE2, true),
+    UTCTIME(ZigBeeUtcTime.class, 0xE2, true),
     CLUSTERID(Integer.class, 0xE8, false),
     ATTRIBUTEID(null, 0xE9, false),
     BACNET_OID(null, 0xEA, false),

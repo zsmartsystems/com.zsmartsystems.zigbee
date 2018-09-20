@@ -7,13 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.prepayment;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -28,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class ChangeDebt extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -68,7 +67,7 @@ public class ChangeDebt extends ZclPrepaymentCommand {
     /**
      * Debt Recovery Start Time command message field.
      */
-    private Calendar debtRecoveryStartTime;
+    private ZigBeeUtcTime debtRecoveryStartTime;
 
     /**
      * Debt Recovery Collection Time command message field.
@@ -111,7 +110,7 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      * @param debtAmount {@link Integer} Debt Amount
      * @param debtRecoveryMethod {@link Integer} Debt Recovery Method
      * @param debtAmountType {@link Integer} Debt Amount Type
-     * @param debtRecoveryStartTime {@link Calendar} Debt Recovery Start Time
+     * @param debtRecoveryStartTime {@link ZigBeeUtcTime} Debt Recovery Start Time
      * @param debtRecoveryCollectionTime {@link Integer} Debt Recovery Collection Time
      * @param debtRecoveryFrequency {@link Integer} Debt Recovery Frequency
      * @param debtRecoveryAmount {@link Integer} Debt Recovery Amount
@@ -123,7 +122,7 @@ public class ChangeDebt extends ZclPrepaymentCommand {
             Integer debtAmount,
             Integer debtRecoveryMethod,
             Integer debtAmountType,
-            Calendar debtRecoveryStartTime,
+            ZigBeeUtcTime debtRecoveryStartTime,
             Integer debtRecoveryCollectionTime,
             Integer debtRecoveryFrequency,
             Integer debtRecoveryAmount,
@@ -251,7 +250,7 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      *
      * @return the Debt Recovery Start Time
      */
-    public Calendar getDebtRecoveryStartTime() {
+    public ZigBeeUtcTime getDebtRecoveryStartTime() {
         return debtRecoveryStartTime;
     }
 
@@ -262,7 +261,7 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setDebtRecoveryStartTime(final Calendar debtRecoveryStartTime) {
+    public void setDebtRecoveryStartTime(final ZigBeeUtcTime debtRecoveryStartTime) {
         this.debtRecoveryStartTime = debtRecoveryStartTime;
     }
 

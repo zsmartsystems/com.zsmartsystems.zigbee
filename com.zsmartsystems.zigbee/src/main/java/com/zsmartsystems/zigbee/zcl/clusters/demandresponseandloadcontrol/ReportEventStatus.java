@@ -7,13 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -25,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -61,7 +60,7 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * UTC Timestamp representing when the event status occurred. This field shall not use the
      * value of 0x00000000.
      */
-    private Calendar eventStatusTime;
+    private ZigBeeUtcTime eventStatusTime;
 
     /**
      * Criticality Level Applied command message field.
@@ -147,7 +146,7 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      *
      * @param issuerEventId {@link Integer} Issuer Event ID
      * @param eventStatus {@link Integer} Event Status
-     * @param eventStatusTime {@link Calendar} Event Status Time
+     * @param eventStatusTime {@link ZigBeeUtcTime} Event Status Time
      * @param criticalityLevelApplied {@link Integer} Criticality Level Applied
      * @param coolingTemperatureSetPointApplied {@link Integer} Cooling Temperature Set Point Applied
      * @param heatingTemperatureSetPointApplied {@link Integer} Heating Temperature Set Point Applied
@@ -160,7 +159,7 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
     public ReportEventStatus(
             Integer issuerEventId,
             Integer eventStatus,
-            Calendar eventStatusTime,
+            ZigBeeUtcTime eventStatusTime,
             Integer criticalityLevelApplied,
             Integer coolingTemperatureSetPointApplied,
             Integer heatingTemperatureSetPointApplied,
@@ -252,7 +251,7 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      *
      * @return the Event Status Time
      */
-    public Calendar getEventStatusTime() {
+    public ZigBeeUtcTime getEventStatusTime() {
         return eventStatusTime;
     }
 
@@ -266,7 +265,7 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setEventStatusTime(final Calendar eventStatusTime) {
+    public void setEventStatusTime(final ZigBeeUtcTime eventStatusTime) {
         this.eventStatusTime = eventStatusTime;
     }
 

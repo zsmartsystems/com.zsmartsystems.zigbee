@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.metering;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -26,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class GetSnapshot extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -45,7 +44,7 @@ public class GetSnapshot extends ZclMeteringCommand {
      * corresponding Publish Snapshot command. Snapshots with a time stamp equal to or
      * greater than the specified Earliest Start Time shall be returned.
      */
-    private Calendar earliestStartTime;
+    private ZigBeeUtcTime earliestStartTime;
 
     /**
      * Latest End Time command message field.
@@ -54,7 +53,7 @@ public class GetSnapshot extends ZclMeteringCommand {
      * corresponding Publish Snapshot command. Snapshots with a time stamp less than the
      * specified Latest End Time shall be returned.
      */
-    private Calendar latestEndTime;
+    private ZigBeeUtcTime latestEndTime;
 
     /**
      * Snapshot Offset command message field.
@@ -91,14 +90,14 @@ public class GetSnapshot extends ZclMeteringCommand {
     /**
      * Constructor providing all required parameters.
      *
-     * @param earliestStartTime {@link Calendar} Earliest Start Time
-     * @param latestEndTime {@link Calendar} Latest End Time
+     * @param earliestStartTime {@link ZigBeeUtcTime} Earliest Start Time
+     * @param latestEndTime {@link ZigBeeUtcTime} Latest End Time
      * @param snapshotOffset {@link Integer} Snapshot Offset
      * @param snapshotCause {@link Integer} Snapshot Cause
      */
     public GetSnapshot(
-            Calendar earliestStartTime,
-            Calendar latestEndTime,
+            ZigBeeUtcTime earliestStartTime,
+            ZigBeeUtcTime latestEndTime,
             Integer snapshotOffset,
             Integer snapshotCause) {
 
@@ -122,7 +121,7 @@ public class GetSnapshot extends ZclMeteringCommand {
      *
      * @return the Earliest Start Time
      */
-    public Calendar getEarliestStartTime() {
+    public ZigBeeUtcTime getEarliestStartTime() {
         return earliestStartTime;
     }
 
@@ -137,7 +136,7 @@ public class GetSnapshot extends ZclMeteringCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setEarliestStartTime(final Calendar earliestStartTime) {
+    public void setEarliestStartTime(final ZigBeeUtcTime earliestStartTime) {
         this.earliestStartTime = earliestStartTime;
     }
 
@@ -150,7 +149,7 @@ public class GetSnapshot extends ZclMeteringCommand {
      *
      * @return the Latest End Time
      */
-    public Calendar getLatestEndTime() {
+    public ZigBeeUtcTime getLatestEndTime() {
         return latestEndTime;
     }
 
@@ -165,7 +164,7 @@ public class GetSnapshot extends ZclMeteringCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setLatestEndTime(final Calendar latestEndTime) {
+    public void setLatestEndTime(final ZigBeeUtcTime latestEndTime) {
         this.latestEndTime = latestEndTime;
     }
 

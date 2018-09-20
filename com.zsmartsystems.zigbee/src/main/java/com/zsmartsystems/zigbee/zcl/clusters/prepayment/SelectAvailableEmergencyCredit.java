@@ -7,13 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.prepayment;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -28,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class SelectAvailableEmergencyCredit extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -43,7 +42,7 @@ public class SelectAvailableEmergencyCredit extends ZclPrepaymentCommand {
     /**
      * Command Issue Date Time command message field.
      */
-    private Calendar commandIssueDateTime;
+    private ZigBeeUtcTime commandIssueDateTime;
 
     /**
      * Originating Device command message field.
@@ -76,13 +75,13 @@ public class SelectAvailableEmergencyCredit extends ZclPrepaymentCommand {
     /**
      * Constructor providing all required parameters.
      *
-     * @param commandIssueDateTime {@link Calendar} Command Issue Date Time
+     * @param commandIssueDateTime {@link ZigBeeUtcTime} Command Issue Date Time
      * @param originatingDevice {@link Integer} Originating Device
      * @param siteId {@link ByteArray} Site ID
      * @param meterSerialNumber {@link ByteArray} Meter Serial Number
      */
     public SelectAvailableEmergencyCredit(
-            Calendar commandIssueDateTime,
+            ZigBeeUtcTime commandIssueDateTime,
             Integer originatingDevice,
             ByteArray siteId,
             ByteArray meterSerialNumber) {
@@ -103,7 +102,7 @@ public class SelectAvailableEmergencyCredit extends ZclPrepaymentCommand {
      *
      * @return the Command Issue Date Time
      */
-    public Calendar getCommandIssueDateTime() {
+    public ZigBeeUtcTime getCommandIssueDateTime() {
         return commandIssueDateTime;
     }
 
@@ -114,7 +113,7 @@ public class SelectAvailableEmergencyCredit extends ZclPrepaymentCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setCommandIssueDateTime(final Calendar commandIssueDateTime) {
+    public void setCommandIssueDateTime(final ZigBeeUtcTime commandIssueDateTime) {
         this.commandIssueDateTime = commandIssueDateTime;
     }
 

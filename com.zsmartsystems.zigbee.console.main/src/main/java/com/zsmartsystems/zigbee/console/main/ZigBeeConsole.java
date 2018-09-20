@@ -78,6 +78,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleSmartEnergyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchLevelCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOffCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOnCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleTimeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleTrustCentreCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleWindowCoveringCommand;
@@ -206,6 +207,7 @@ public final class ZigBeeConsole {
 
         newCommands.put("otaupgrade", new ZigBeeConsoleOtaUpgradeCommand());
         newCommands.put("channel", new ZigBeeConsoleChannelCommand());
+        newCommands.put("time", new ZigBeeConsoleTimeCommand());
 
         newCommands.put("smartenergy", new ZigBeeConsoleSmartEnergyCommand());
         newCommands.put("cbke", new ZigBeeConsoleCbkeCommand());

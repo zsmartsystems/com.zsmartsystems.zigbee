@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.prepayment;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -26,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class EmergencyCreditSetup extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -46,7 +45,7 @@ public class EmergencyCreditSetup extends ZclPrepaymentCommand {
     /**
      * Start Time command message field.
      */
-    private Calendar startTime;
+    private ZigBeeUtcTime startTime;
 
     /**
      * Emergency Credit Limit command message field.
@@ -75,13 +74,13 @@ public class EmergencyCreditSetup extends ZclPrepaymentCommand {
      * Constructor providing all required parameters.
      *
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param emergencyCreditLimit {@link Integer} Emergency Credit Limit
      * @param emergencyCreditThreshold {@link Integer} Emergency Credit Threshold
      */
     public EmergencyCreditSetup(
             Integer issuerEventId,
-            Calendar startTime,
+            ZigBeeUtcTime startTime,
             Integer emergencyCreditLimit,
             Integer emergencyCreditThreshold) {
 
@@ -121,7 +120,7 @@ public class EmergencyCreditSetup extends ZclPrepaymentCommand {
      *
      * @return the Start Time
      */
-    public Calendar getStartTime() {
+    public ZigBeeUtcTime getStartTime() {
         return startTime;
     }
 
@@ -132,7 +131,7 @@ public class EmergencyCreditSetup extends ZclPrepaymentCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStartTime(final Calendar startTime) {
+    public void setStartTime(final ZigBeeUtcTime startTime) {
         this.startTime = startTime;
     }
 

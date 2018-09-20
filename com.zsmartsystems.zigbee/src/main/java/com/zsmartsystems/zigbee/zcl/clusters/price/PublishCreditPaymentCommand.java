@@ -7,13 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.price;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -31,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class PublishCreditPaymentCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -69,7 +68,7 @@ public class PublishCreditPaymentCommand extends ZclPriceCommand {
      * <p>
      * A UTCTime field containing the time that the next credit payment is due.
      */
-    private Calendar creditPaymentDueDate;
+    private ZigBeeUtcTime creditPaymentDueDate;
 
     /**
      * Credit Payment Overdue Amount command message field.
@@ -99,7 +98,7 @@ public class PublishCreditPaymentCommand extends ZclPriceCommand {
      * <p>
      * A UTCTime field containing the time at which the last credit payment was made.
      */
-    private Calendar creditPaymentDate;
+    private ZigBeeUtcTime creditPaymentDate;
 
     /**
      * Credit Payment Ref command message field.
@@ -127,21 +126,21 @@ public class PublishCreditPaymentCommand extends ZclPriceCommand {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param creditPaymentDueDate {@link Calendar} Credit Payment Due Date
+     * @param creditPaymentDueDate {@link ZigBeeUtcTime} Credit Payment Due Date
      * @param creditPaymentOverdueAmount {@link Integer} Credit Payment Overdue Amount
      * @param creditPaymentStatus {@link Integer} Credit Payment Status
      * @param creditPayment {@link Integer} Credit Payment
-     * @param creditPaymentDate {@link Calendar} Credit Payment Date
+     * @param creditPaymentDate {@link ZigBeeUtcTime} Credit Payment Date
      * @param creditPaymentRef {@link ByteArray} Credit Payment Ref
      */
     public PublishCreditPaymentCommand(
             Integer providerId,
             Integer issuerEventId,
-            Calendar creditPaymentDueDate,
+            ZigBeeUtcTime creditPaymentDueDate,
             Integer creditPaymentOverdueAmount,
             Integer creditPaymentStatus,
             Integer creditPayment,
-            Calendar creditPaymentDate,
+            ZigBeeUtcTime creditPaymentDate,
             ByteArray creditPaymentRef) {
 
         clusterId = CLUSTER_ID;
@@ -228,7 +227,7 @@ public class PublishCreditPaymentCommand extends ZclPriceCommand {
      *
      * @return the Credit Payment Due Date
      */
-    public Calendar getCreditPaymentDueDate() {
+    public ZigBeeUtcTime getCreditPaymentDueDate() {
         return creditPaymentDueDate;
     }
 
@@ -241,7 +240,7 @@ public class PublishCreditPaymentCommand extends ZclPriceCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setCreditPaymentDueDate(final Calendar creditPaymentDueDate) {
+    public void setCreditPaymentDueDate(final ZigBeeUtcTime creditPaymentDueDate) {
         this.creditPaymentDueDate = creditPaymentDueDate;
     }
 
@@ -328,7 +327,7 @@ public class PublishCreditPaymentCommand extends ZclPriceCommand {
      *
      * @return the Credit Payment Date
      */
-    public Calendar getCreditPaymentDate() {
+    public ZigBeeUtcTime getCreditPaymentDate() {
         return creditPaymentDate;
     }
 
@@ -341,7 +340,7 @@ public class PublishCreditPaymentCommand extends ZclPriceCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setCreditPaymentDate(final Calendar creditPaymentDate) {
+    public void setCreditPaymentDate(final ZigBeeUtcTime creditPaymentDate) {
         this.creditPaymentDate = creditPaymentDate;
     }
 

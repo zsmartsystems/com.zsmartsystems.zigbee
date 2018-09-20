@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
@@ -26,6 +25,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol.LoadCo
 import com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol.ReportEventStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol.ZclDemandResponseAndLoadControlCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -46,7 +46,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-12-09T01:34:23Z")
 public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -184,7 +184,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      *
      * @param issuerEventId {@link Integer} Issuer Event ID
      * @param eventStatus {@link Integer} Event Status
-     * @param eventStatusTime {@link Calendar} Event Status Time
+     * @param eventStatusTime {@link ZigBeeUtcTime} Event Status Time
      * @param criticalityLevelApplied {@link Integer} Criticality Level Applied
      * @param coolingTemperatureSetPointApplied {@link Integer} Cooling Temperature Set Point Applied
      * @param heatingTemperatureSetPointApplied {@link Integer} Heating Temperature Set Point Applied
@@ -204,7 +204,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new reportEventStatus(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> reportEventStatus(Integer issuerEventId, Integer eventStatus, Calendar eventStatusTime, Integer criticalityLevelApplied, Integer coolingTemperatureSetPointApplied, Integer heatingTemperatureSetPointApplied, Integer averageLoadAdjustmentPercentageApplied, Integer dutyCycleApplied, Integer eventControl, Integer signatureType, ByteArray signature) {
+    public Future<CommandResult> reportEventStatus(Integer issuerEventId, Integer eventStatus, ZigBeeUtcTime eventStatusTime, Integer criticalityLevelApplied, Integer coolingTemperatureSetPointApplied, Integer heatingTemperatureSetPointApplied, Integer averageLoadAdjustmentPercentageApplied, Integer dutyCycleApplied, Integer eventControl, Integer signatureType, ByteArray signature) {
         ReportEventStatus command = new ReportEventStatus();
 
         // Set the fields
@@ -231,7 +231,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * the Server, one or more Load Control Event commands will be sent covering both active and
      * scheduled Load Control Events.
      *
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param numberOfEvents {@link Integer} Number Of Events
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -244,7 +244,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getScheduledEvents(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getScheduledEvents(Calendar startTime, Integer numberOfEvents) {
+    public Future<CommandResult> getScheduledEvents(ZigBeeUtcTime startTime, Integer numberOfEvents) {
         GetScheduledEvents command = new GetScheduledEvents();
 
         // Set the fields
@@ -260,7 +260,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * @param issuerEventId {@link Integer} Issuer Event ID
      * @param deviceClass {@link Integer} Device Class
      * @param utilityEnrollmentGroup {@link Integer} Utility Enrollment Group
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param durationInMinutes {@link Integer} Duration In Minutes
      * @param criticalityLevel {@link Integer} Criticality Level
      * @param coolingTemperatureOffset {@link Integer} Cooling Temperature Offset
@@ -281,7 +281,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new loadControlEventCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> loadControlEventCommand(Integer issuerEventId, Integer deviceClass, Integer utilityEnrollmentGroup, Calendar startTime, Integer durationInMinutes, Integer criticalityLevel, Integer coolingTemperatureOffset, Integer heatingTemperatureOffset, Integer coolingTemperatureSetPoint, Integer heatingTemperatureSetPoint, Integer averageLoadAdjustmentPercentage, Integer dutyCycle, Integer eventControl) {
+    public Future<CommandResult> loadControlEventCommand(Integer issuerEventId, Integer deviceClass, Integer utilityEnrollmentGroup, ZigBeeUtcTime startTime, Integer durationInMinutes, Integer criticalityLevel, Integer coolingTemperatureOffset, Integer heatingTemperatureOffset, Integer coolingTemperatureSetPoint, Integer heatingTemperatureSetPoint, Integer averageLoadAdjustmentPercentage, Integer dutyCycle, Integer eventControl) {
         LoadControlEventCommand command = new LoadControlEventCommand();
 
         // Set the fields
@@ -309,7 +309,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * @param deviceClass {@link Integer} Device Class
      * @param utilityEnrollmentGroup {@link Integer} Utility Enrollment Group
      * @param cancelControl {@link Integer} Cancel Control
-     * @param effectiveTime {@link Calendar} Effective Time
+     * @param effectiveTime {@link ZigBeeUtcTime} Effective Time
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
      * Use extended ZclCommand class constructors to instantiate the command
@@ -321,7 +321,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new cancelLoadControlEvent(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> cancelLoadControlEvent(Integer issuerEventId, Integer deviceClass, Integer utilityEnrollmentGroup, Integer cancelControl, Calendar effectiveTime) {
+    public Future<CommandResult> cancelLoadControlEvent(Integer issuerEventId, Integer deviceClass, Integer utilityEnrollmentGroup, Integer cancelControl, ZigBeeUtcTime effectiveTime) {
         CancelLoadControlEvent command = new CancelLoadControlEvent();
 
         // Set the fields

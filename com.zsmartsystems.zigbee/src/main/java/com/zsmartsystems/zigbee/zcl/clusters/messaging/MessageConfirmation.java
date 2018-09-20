@@ -7,13 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.messaging;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -30,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class MessageConfirmation extends ZclMessagingCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -54,7 +53,7 @@ public class MessageConfirmation extends ZclMessagingCommand {
      * <p>
      * UTCTime of user confirmation of message.
      */
-    private Calendar confirmationTime;
+    private ZigBeeUtcTime confirmationTime;
 
     /**
      * Message Confirmation Control command message field.
@@ -90,13 +89,13 @@ public class MessageConfirmation extends ZclMessagingCommand {
      * Constructor providing all required parameters.
      *
      * @param messageId {@link Integer} Message ID
-     * @param confirmationTime {@link Calendar} Confirmation Time
+     * @param confirmationTime {@link ZigBeeUtcTime} Confirmation Time
      * @param messageConfirmationControl {@link Integer} Message Confirmation Control
      * @param messageConfirmationResponse {@link ByteArray} Message Confirmation Response
      */
     public MessageConfirmation(
             Integer messageId,
-            Calendar confirmationTime,
+            ZigBeeUtcTime confirmationTime,
             Integer messageConfirmationControl,
             ByteArray messageConfirmationResponse) {
 
@@ -142,7 +141,7 @@ public class MessageConfirmation extends ZclMessagingCommand {
      *
      * @return the Confirmation Time
      */
-    public Calendar getConfirmationTime() {
+    public ZigBeeUtcTime getConfirmationTime() {
         return confirmationTime;
     }
 
@@ -155,7 +154,7 @@ public class MessageConfirmation extends ZclMessagingCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setConfirmationTime(final Calendar confirmationTime) {
+    public void setConfirmationTime(final ZigBeeUtcTime confirmationTime) {
         this.confirmationTime = confirmationTime;
     }
 
