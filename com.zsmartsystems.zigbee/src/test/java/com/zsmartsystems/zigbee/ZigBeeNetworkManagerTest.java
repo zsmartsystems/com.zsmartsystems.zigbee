@@ -40,6 +40,7 @@ import org.mockito.Mockito;
 import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
+import com.zsmartsystems.zigbee.app.time.ZigBeeTimeExtension;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
@@ -1079,6 +1080,17 @@ public class ZigBeeNetworkManagerTest
         TestUtilities.setField(ZigBeeNetworkManager.class, manager, "networkState", ZigBeeNetworkState.INITIALISING);
 
         assertEquals(ZigBeeStatus.SUCCESS, manager.addExtension(new ZigBeeOtaUpgradeExtension()));
+        returnedExtension = manager.getExtension(ZigBeeOtaUpgradeExtension.class);
+        assertTrue(returnedExtension instanceof ZigBeeOtaUpgradeExtension);
+
+        returnedExtension = manager.getExtension(ZigBeeTimeExtension.class);
+        assertNull(returnedExtension);
+
+        manager.addExtension(new ZigBeeTimeExtension());
+
+        returnedExtension = manager.getExtension(ZigBeeTimeExtension.class);
+        assertTrue(returnedExtension instanceof ZigBeeTimeExtension);
+
         returnedExtension = manager.getExtension(ZigBeeOtaUpgradeExtension.class);
         assertTrue(returnedExtension instanceof ZigBeeOtaUpgradeExtension);
 

@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.price;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -36,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class PublishBlockPeriodCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -88,7 +87,7 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
      * and where Duration Control is set to End of Timebase, the Block Period Start Time shall be
      * set to 23:59:59 on the applicable date.
      */
-    private Calendar blockPeriodStartTime;
+    private ZigBeeUtcTime blockPeriodStartTime;
 
     /**
      * Block Period Duration command message field.
@@ -167,7 +166,7 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param blockPeriodStartTime {@link Calendar} Block Period Start Time
+     * @param blockPeriodStartTime {@link ZigBeeUtcTime} Block Period Start Time
      * @param blockPeriodDuration {@link Integer} Block Period Duration
      * @param blockPeriodControl {@link Integer} Block Period Control
      * @param blockPeriodDurationType {@link Integer} Block Period Duration Type
@@ -177,7 +176,7 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
     public PublishBlockPeriodCommand(
             Integer providerId,
             Integer issuerEventId,
-            Calendar blockPeriodStartTime,
+            ZigBeeUtcTime blockPeriodStartTime,
             Integer blockPeriodDuration,
             Integer blockPeriodControl,
             Integer blockPeriodDurationType,
@@ -283,7 +282,7 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
      *
      * @return the Block Period Start Time
      */
-    public Calendar getBlockPeriodStartTime() {
+    public ZigBeeUtcTime getBlockPeriodStartTime() {
         return blockPeriodStartTime;
     }
 
@@ -309,7 +308,7 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setBlockPeriodStartTime(final Calendar blockPeriodStartTime) {
+    public void setBlockPeriodStartTime(final ZigBeeUtcTime blockPeriodStartTime) {
         this.blockPeriodStartTime = blockPeriodStartTime;
     }
 

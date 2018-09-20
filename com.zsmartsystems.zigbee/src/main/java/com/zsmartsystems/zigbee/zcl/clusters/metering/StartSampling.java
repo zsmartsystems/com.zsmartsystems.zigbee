@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.metering;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -29,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class StartSampling extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -63,7 +62,7 @@ public class StartSampling extends ZclMeteringCommand {
      * Date/Time of 0xFFFFFFFF shall cause an existing StartSampling command with the same
      * Issuer Event ID to be cancelled.
      */
-    private Calendar startSamplingTime;
+    private ZigBeeUtcTime startSamplingTime;
 
     /**
      * Sample Type command message field.
@@ -103,14 +102,14 @@ public class StartSampling extends ZclMeteringCommand {
      * Constructor providing all required parameters.
      *
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startSamplingTime {@link Calendar} Start Sampling Time
+     * @param startSamplingTime {@link ZigBeeUtcTime} Start Sampling Time
      * @param sampleType {@link Integer} Sample Type
      * @param sampleRequestInterval {@link Integer} Sample Request Interval
      * @param maxNumberOfSamples {@link Integer} Max Number Of Samples
      */
     public StartSampling(
             Integer issuerEventId,
-            Calendar startSamplingTime,
+            ZigBeeUtcTime startSamplingTime,
             Integer sampleType,
             Integer sampleRequestInterval,
             Integer maxNumberOfSamples) {
@@ -175,7 +174,7 @@ public class StartSampling extends ZclMeteringCommand {
      *
      * @return the Start Sampling Time
      */
-    public Calendar getStartSamplingTime() {
+    public ZigBeeUtcTime getStartSamplingTime() {
         return startSamplingTime;
     }
 
@@ -191,7 +190,7 @@ public class StartSampling extends ZclMeteringCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStartSamplingTime(final Calendar startSamplingTime) {
+    public void setStartSamplingTime(final ZigBeeUtcTime startSamplingTime) {
         this.startSamplingTime = startSamplingTime;
     }
 

@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.metering;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -26,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class RequestFastPollModeResponse extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -58,7 +57,7 @@ public class RequestFastPollModeResponse extends ZclMeteringCommand {
      * poll mode. The intent is that the fast poll mode will not be extended since this scenario
      * would make it possible to be in fast poll mode longer than 15 minutes.
      */
-    private Calendar fastPollModeEndtime;
+    private ZigBeeUtcTime fastPollModeEndtime;
 
     /**
      * Default constructor.
@@ -77,11 +76,11 @@ public class RequestFastPollModeResponse extends ZclMeteringCommand {
      * Constructor providing all required parameters.
      *
      * @param appliedUpdatePeriod {@link Integer} Applied Update Period
-     * @param fastPollModeEndtime {@link Calendar} Fast Poll Mode Endtime
+     * @param fastPollModeEndtime {@link ZigBeeUtcTime} Fast Poll Mode Endtime
      */
     public RequestFastPollModeResponse(
             Integer appliedUpdatePeriod,
-            Calendar fastPollModeEndtime) {
+            ZigBeeUtcTime fastPollModeEndtime) {
 
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
@@ -135,7 +134,7 @@ public class RequestFastPollModeResponse extends ZclMeteringCommand {
      *
      * @return the Fast Poll Mode Endtime
      */
-    public Calendar getFastPollModeEndtime() {
+    public ZigBeeUtcTime getFastPollModeEndtime() {
         return fastPollModeEndtime;
     }
 
@@ -152,7 +151,7 @@ public class RequestFastPollModeResponse extends ZclMeteringCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setFastPollModeEndtime(final Calendar fastPollModeEndtime) {
+    public void setFastPollModeEndtime(final ZigBeeUtcTime fastPollModeEndtime) {
         this.fastPollModeEndtime = fastPollModeEndtime;
     }
 

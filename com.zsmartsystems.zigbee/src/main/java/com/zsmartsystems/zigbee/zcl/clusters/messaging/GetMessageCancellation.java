@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.messaging;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -28,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class GetMessageCancellation extends ZclMessagingCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -46,7 +45,7 @@ public class GetMessageCancellation extends ZclMessagingCommand {
      * UTC Timestamp indicating the earliest implementation time of a Cancel All Messages
      * command to be returned.
      */
-    private Calendar earliestImplementationTime;
+    private ZigBeeUtcTime earliestImplementationTime;
 
     /**
      * Default constructor.
@@ -64,10 +63,10 @@ public class GetMessageCancellation extends ZclMessagingCommand {
     /**
      * Constructor providing all required parameters.
      *
-     * @param earliestImplementationTime {@link Calendar} Earliest Implementation Time
+     * @param earliestImplementationTime {@link ZigBeeUtcTime} Earliest Implementation Time
      */
     public GetMessageCancellation(
-            Calendar earliestImplementationTime) {
+            ZigBeeUtcTime earliestImplementationTime) {
 
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
@@ -85,7 +84,7 @@ public class GetMessageCancellation extends ZclMessagingCommand {
      *
      * @return the Earliest Implementation Time
      */
-    public Calendar getEarliestImplementationTime() {
+    public ZigBeeUtcTime getEarliestImplementationTime() {
         return earliestImplementationTime;
     }
 
@@ -99,7 +98,7 @@ public class GetMessageCancellation extends ZclMessagingCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setEarliestImplementationTime(final Calendar earliestImplementationTime) {
+    public void setEarliestImplementationTime(final ZigBeeUtcTime earliestImplementationTime) {
         this.earliestImplementationTime = earliestImplementationTime;
     }
 

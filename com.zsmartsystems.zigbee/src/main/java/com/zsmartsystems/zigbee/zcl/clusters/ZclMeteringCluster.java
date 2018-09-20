@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
@@ -53,6 +52,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.metering.TakeSnapshot;
 import com.zsmartsystems.zigbee.zcl.clusters.metering.TakeSnapshotResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.metering.ZclMeteringCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -67,7 +67,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:58:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class ZclMeteringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -4000,7 +4000,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * CurrentMaxDemandDelivered, and CurrentMaxDemandReceived attributes that are
      * supported by the device were updated.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -4027,21 +4027,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getReadingSnapshotTime(final long refreshPeriod) {
+    public ZigBeeUtcTime getReadingSnapshotTime(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_READINGSNAPSHOTTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_READINGSNAPSHOTTIME).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_READINGSNAPSHOTTIME).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_READINGSNAPSHOTTIME));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_READINGSNAPSHOTTIME));
     }
 
     /**
@@ -4052,7 +4052,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * CurrentMaxDemandDelivered, and CurrentMaxDemandReceived attributes that are
      * supported by the device were updated.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -4073,7 +4073,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * The CurrentMaxDemandDeliveredTime attribute represents the time when
      * CurrentMaxDemandDelivered reading was captured.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -4098,21 +4098,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCurrentMaxDemandDeliveredTime(final long refreshPeriod) {
+    public ZigBeeUtcTime getCurrentMaxDemandDeliveredTime(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CURRENTMAXDEMANDDELIVEREDTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CURRENTMAXDEMANDDELIVEREDTIME).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CURRENTMAXDEMANDDELIVEREDTIME).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CURRENTMAXDEMANDDELIVEREDTIME));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CURRENTMAXDEMANDDELIVEREDTIME));
     }
 
     /**
@@ -4121,7 +4121,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * The CurrentMaxDemandDeliveredTime attribute represents the time when
      * CurrentMaxDemandDelivered reading was captured.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -4142,7 +4142,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * The CurrentMaxDemandReceivedTime attribute represents the time when
      * CurrentMaxDemandReceived reading was captured.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -4167,21 +4167,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCurrentMaxDemandReceivedTime(final long refreshPeriod) {
+    public ZigBeeUtcTime getCurrentMaxDemandReceivedTime(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CURRENTMAXDEMANDRECEIVEDTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CURRENTMAXDEMANDRECEIVEDTIME).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CURRENTMAXDEMANDRECEIVEDTIME).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CURRENTMAXDEMANDRECEIVEDTIME));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CURRENTMAXDEMANDRECEIVEDTIME));
     }
 
     /**
@@ -4190,7 +4190,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * The CurrentMaxDemandReceivedTime attribute represents the time when
      * CurrentMaxDemandReceived reading was captured.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -5449,7 +5449,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * value will not change but the LastBlockSwitchTime attribute shall be updated to
      * indicate this change.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -5484,21 +5484,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getLastBlockSwitchTime(final long refreshPeriod) {
+    public ZigBeeUtcTime getLastBlockSwitchTime(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_LASTBLOCKSWITCHTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_LASTBLOCKSWITCHTIME).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_LASTBLOCKSWITCHTIME).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_LASTBLOCKSWITCHTIME));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_LASTBLOCKSWITCHTIME));
     }
 
     /**
@@ -8318,7 +8318,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * CurrentPartialProfileIntervalStartTimeDelivered represents the start time of the
      * current Load Profile interval being accumulated for commodity delivered.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -8343,21 +8343,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCurrentPartialProfileIntervalStartTimeDelivered(final long refreshPeriod) {
+    public ZigBeeUtcTime getCurrentPartialProfileIntervalStartTimeDelivered(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED));
     }
 
     /**
@@ -8366,7 +8366,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * CurrentPartialProfileIntervalStartTimeDelivered represents the start time of the
      * current Load Profile interval being accumulated for commodity delivered.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -8387,7 +8387,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * CurrentPartialProfileIntervalStartTimeReceived represents the start time of the
      * current Load Profile interval being accumulated for commodity received.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -8412,21 +8412,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCurrentPartialProfileIntervalStartTimeReceived(final long refreshPeriod) {
+    public ZigBeeUtcTime getCurrentPartialProfileIntervalStartTimeReceived(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED));
     }
 
     /**
@@ -8435,7 +8435,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * CurrentPartialProfileIntervalStartTimeReceived represents the start time of the
      * current Load Profile interval being accumulated for commodity received.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -13907,7 +13907,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * The UTC timestamp when the associated BillToDateDelivered attribute was last
      * updated.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -13932,21 +13932,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getBillToDateTimeStampDelivered(final long refreshPeriod) {
+    public ZigBeeUtcTime getBillToDateTimeStampDelivered(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_BILLTODATETIMESTAMPDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_BILLTODATETIMESTAMPDELIVERED).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_BILLTODATETIMESTAMPDELIVERED).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_BILLTODATETIMESTAMPDELIVERED));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_BILLTODATETIMESTAMPDELIVERED));
     }
 
     /**
@@ -13955,7 +13955,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * The UTC timestamp when the associated BillToDateDelivered attribute was last
      * updated.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -14051,7 +14051,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * The UTC timestamp when the associated ProjectedBillDelivered attribute was last
      * updated.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -14076,21 +14076,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getProjectedBillTimeStampDelivered(final long refreshPeriod) {
+    public ZigBeeUtcTime getProjectedBillTimeStampDelivered(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPDELIVERED).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPDELIVERED).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPDELIVERED));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPDELIVERED));
     }
 
     /**
@@ -14099,7 +14099,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * The UTC timestamp when the associated ProjectedBillDelivered attribute was last
      * updated.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -14268,7 +14268,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * The UTC timestamp when the associated BillToDateReceived attribute was last updated.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -14292,21 +14292,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getBillToDateTimeStampReceived(final long refreshPeriod) {
+    public ZigBeeUtcTime getBillToDateTimeStampReceived(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_BILLTODATETIMESTAMPRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_BILLTODATETIMESTAMPRECEIVED).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_BILLTODATETIMESTAMPRECEIVED).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_BILLTODATETIMESTAMPRECEIVED));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_BILLTODATETIMESTAMPRECEIVED));
     }
 
     /**
@@ -14314,7 +14314,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * The UTC timestamp when the associated BillToDateReceived attribute was last updated.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -14410,7 +14410,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * The UTC timestamp when the associated ProjectedBillReceived attribute was last
      * updated.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -14435,21 +14435,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getProjectedBillTimeStampReceived(final long refreshPeriod) {
+    public ZigBeeUtcTime getProjectedBillTimeStampReceived(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPRECEIVED).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPRECEIVED).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPRECEIVED));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPRECEIVED));
     }
 
     /**
@@ -14458,7 +14458,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * The UTC timestamp when the associated ProjectedBillReceived attribute was last
      * updated.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -14557,7 +14557,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * proposed change to the supply is to be implemented. If there is no change of supply
      * pending, this attribute will be set to 0xFFFFFFFF.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -14583,21 +14583,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getProposedChangeSupplyImplementationTime(final long refreshPeriod) {
+    public ZigBeeUtcTime getProposedChangeSupplyImplementationTime(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_PROPOSEDCHANGESUPPLYIMPLEMENTATIONTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_PROPOSEDCHANGESUPPLYIMPLEMENTATIONTIME).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_PROPOSEDCHANGESUPPLYIMPLEMENTATIONTIME).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_PROPOSEDCHANGESUPPLYIMPLEMENTATIONTIME));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_PROPOSEDCHANGESUPPLYIMPLEMENTATIONTIME));
     }
 
     /**
@@ -14607,7 +14607,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * proposed change to the supply is to be implemented. If there is no change of supply
      * pending, this attribute will be set to 0xFFFFFFFF.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -15521,7 +15521,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * start time of the current Load Profile interval being accumulated for commodity
      * delivered.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -15547,21 +15547,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCurrentAlternativePartialProfileIntervalStartTimeDelivered(final long refreshPeriod) {
+    public ZigBeeUtcTime getCurrentAlternativePartialProfileIntervalStartTimeDelivered(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED));
     }
 
     /**
@@ -15571,7 +15571,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * start time of the current Load Profile interval being accumulated for commodity
      * delivered.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -15593,7 +15593,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * start time of the current Load Profile interval being accumulated for commodity
      * received.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -15619,21 +15619,21 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCurrentAlternativePartialProfileIntervalStartTimeReceived(final long refreshPeriod) {
+    public ZigBeeUtcTime getCurrentAlternativePartialProfileIntervalStartTimeReceived(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED));
     }
 
     /**
@@ -15643,7 +15643,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * start time of the current Load Profile interval being accumulated for commodity
      * received.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
@@ -17135,7 +17135,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * captured Energy, Gas or water consumption for profiling purposes.
      *
      * @param intervalChannel {@link Integer} Interval Channel
-     * @param endTime {@link Calendar} End Time
+     * @param endTime {@link ZigBeeUtcTime} End Time
      * @param numberOfPeriods {@link Integer} Number Of Periods
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -17148,7 +17148,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getProfile(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getProfile(Integer intervalChannel, Calendar endTime, Integer numberOfPeriods) {
+    public Future<CommandResult> getProfile(Integer intervalChannel, ZigBeeUtcTime endTime, Integer numberOfPeriods) {
         GetProfile command = new GetProfile();
 
         // Set the fields
@@ -17305,8 +17305,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This command is used to request snapshot data from the cluster server.
      *
-     * @param earliestStartTime {@link Calendar} Earliest Start Time
-     * @param latestEndTime {@link Calendar} Latest End Time
+     * @param earliestStartTime {@link ZigBeeUtcTime} Earliest Start Time
+     * @param latestEndTime {@link ZigBeeUtcTime} Latest End Time
      * @param snapshotOffset {@link Integer} Snapshot Offset
      * @param snapshotCause {@link Integer} Snapshot Cause
      * @return the {@link Future<CommandResult>} command result future
@@ -17320,7 +17320,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getSnapshot(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getSnapshot(Calendar earliestStartTime, Calendar latestEndTime, Integer snapshotOffset, Integer snapshotCause) {
+    public Future<CommandResult> getSnapshot(ZigBeeUtcTime earliestStartTime, ZigBeeUtcTime latestEndTime, Integer snapshotOffset, Integer snapshotCause) {
         GetSnapshot command = new GetSnapshot();
 
         // Set the fields
@@ -17341,7 +17341,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * different sampling rate.
      *
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startSamplingTime {@link Calendar} Start Sampling Time
+     * @param startSamplingTime {@link ZigBeeUtcTime} Start Sampling Time
      * @param sampleType {@link Integer} Sample Type
      * @param sampleRequestInterval {@link Integer} Sample Request Interval
      * @param maxNumberOfSamples {@link Integer} Max Number Of Samples
@@ -17356,7 +17356,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new startSampling(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> startSampling(Integer issuerEventId, Calendar startSamplingTime, Integer sampleType, Integer sampleRequestInterval, Integer maxNumberOfSamples) {
+    public Future<CommandResult> startSampling(Integer issuerEventId, ZigBeeUtcTime startSamplingTime, Integer sampleType, Integer sampleRequestInterval, Integer maxNumberOfSamples) {
         StartSampling command = new StartSampling();
 
         // Set the fields
@@ -17377,7 +17377,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * held in a single command payload.
      *
      * @param sampleId {@link Integer} Sample ID
-     * @param earliestSampleTime {@link Calendar} Earliest Sample Time
+     * @param earliestSampleTime {@link ZigBeeUtcTime} Earliest Sample Time
      * @param sampleType {@link Integer} Sample Type
      * @param numberOfSamples {@link Integer} Number Of Samples
      * @return the {@link Future<CommandResult>} command result future
@@ -17391,7 +17391,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getSampledData(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getSampledData(Integer sampleId, Calendar earliestSampleTime, Integer sampleType, Integer numberOfSamples) {
+    public Future<CommandResult> getSampledData(Integer sampleId, ZigBeeUtcTime earliestSampleTime, Integer sampleType, Integer numberOfSamples) {
         GetSampledData command = new GetSampledData();
 
         // Set the fields
@@ -17469,8 +17469,8 @@ public class ZclMeteringCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param requestDateTime {@link Calendar} Request Date Time
-     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param requestDateTime {@link ZigBeeUtcTime} Request Date Time
+     * @param implementationDateTime {@link ZigBeeUtcTime} Implementation Date Time
      * @param proposedSupplyStatus {@link Integer} Proposed Supply Status
      * @param supplyControlBits {@link Integer} Supply Control Bits
      * @return the {@link Future<CommandResult>} command result future
@@ -17484,7 +17484,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new changeSupply(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> changeSupply(Integer providerId, Integer issuerEventId, Calendar requestDateTime, Calendar implementationDateTime, Integer proposedSupplyStatus, Integer supplyControlBits) {
+    public Future<CommandResult> changeSupply(Integer providerId, Integer issuerEventId, ZigBeeUtcTime requestDateTime, ZigBeeUtcTime implementationDateTime, Integer proposedSupplyStatus, Integer supplyControlBits) {
         ChangeSupply command = new ChangeSupply();
 
         // Set the fields
@@ -17608,7 +17608,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * <p>
      * This command is sent when the Client command GetProfile is received.
      *
-     * @param endTime {@link Calendar} End Time
+     * @param endTime {@link ZigBeeUtcTime} End Time
      * @param status {@link Integer} Status
      * @param profileIntervalPeriod {@link Integer} Profile Interval Period
      * @param numberOfPeriodsDelivered {@link Integer} Number Of Periods Delivered
@@ -17624,7 +17624,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getProfileResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getProfileResponse(Calendar endTime, Integer status, Integer profileIntervalPeriod, Integer numberOfPeriodsDelivered, Integer intervals) {
+    public Future<CommandResult> getProfileResponse(ZigBeeUtcTime endTime, Integer status, Integer profileIntervalPeriod, Integer numberOfPeriodsDelivered, Integer intervals) {
         GetProfileResponse command = new GetProfileResponse();
 
         // Set the fields
@@ -17683,7 +17683,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * This command is generated when the client command Request Fast Poll Mode is received.
      *
      * @param appliedUpdatePeriod {@link Integer} Applied Update Period
-     * @param fastPollModeEndtime {@link Calendar} Fast Poll Mode Endtime
+     * @param fastPollModeEndtime {@link ZigBeeUtcTime} Fast Poll Mode Endtime
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
      * Use extended ZclCommand class constructors to instantiate the command
@@ -17695,7 +17695,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new requestFastPollModeResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> requestFastPollModeResponse(Integer appliedUpdatePeriod, Calendar fastPollModeEndtime) {
+    public Future<CommandResult> requestFastPollModeResponse(Integer appliedUpdatePeriod, ZigBeeUtcTime fastPollModeEndtime) {
         RequestFastPollModeResponse command = new RequestFastPollModeResponse();
 
         // Set the fields
@@ -17770,7 +17770,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * single snapshot to the client.
      *
      * @param snapshotId {@link Integer} Snapshot ID
-     * @param snapshotTime {@link Calendar} Snapshot Time
+     * @param snapshotTime {@link ZigBeeUtcTime} Snapshot Time
      * @param totalSnapshotsFound {@link Integer} Total Snapshots Found
      * @param commandIndex {@link Integer} Command Index
      * @param totalNumberOfCommands {@link Integer} Total Number Of Commands
@@ -17788,7 +17788,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishSnapshot(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishSnapshot(Integer snapshotId, Calendar snapshotTime, Integer totalSnapshotsFound, Integer commandIndex, Integer totalNumberOfCommands, Integer snapshotCause, Integer snapshotPayloadType, Integer snapshotPayload) {
+    public Future<CommandResult> publishSnapshot(Integer snapshotId, ZigBeeUtcTime snapshotTime, Integer totalSnapshotsFound, Integer commandIndex, Integer totalNumberOfCommands, Integer snapshotCause, Integer snapshotPayloadType, Integer snapshotPayload) {
         PublishSnapshot command = new PublishSnapshot();
 
         // Set the fields
@@ -17811,7 +17811,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * generated in response to a GetSampledData command.
      *
      * @param sampleId {@link Integer} Sample ID
-     * @param sampleStartTime {@link Calendar} Sample Start Time
+     * @param sampleStartTime {@link ZigBeeUtcTime} Sample Start Time
      * @param sampleType {@link Integer} Sample Type
      * @param sampleRequestInterval {@link Integer} Sample Request Interval
      * @param numberOfSamples {@link Integer} Number Of Samples
@@ -17827,7 +17827,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getSampledDataResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getSampledDataResponse(Integer sampleId, Calendar sampleStartTime, Integer sampleType, Integer sampleRequestInterval, Integer numberOfSamples, Integer samples) {
+    public Future<CommandResult> getSampledDataResponse(Integer sampleId, ZigBeeUtcTime sampleStartTime, Integer sampleType, Integer sampleRequestInterval, Integer numberOfSamples, Integer samples) {
         GetSampledDataResponse command = new GetSampledDataResponse();
 
         // Set the fields
@@ -17979,7 +17979,7 @@ public class ZclMeteringCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param implementationDateTime {@link ZigBeeUtcTime} Implementation Date Time
      * @param supplyStatus {@link Integer} Supply Status
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -17992,7 +17992,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new supplyStatusResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> supplyStatusResponse(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer supplyStatus) {
+    public Future<CommandResult> supplyStatusResponse(Integer providerId, Integer issuerEventId, ZigBeeUtcTime implementationDateTime, Integer supplyStatus) {
         SupplyStatusResponse command = new SupplyStatusResponse();
 
         // Set the fields

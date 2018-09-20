@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
-import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
@@ -55,6 +54,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.price.PublishTariffInformationComma
 import com.zsmartsystems.zigbee.zcl.clusters.price.PublishTierLabelsCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.price.ZclPriceCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -72,7 +72,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T20:58:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2024-05-18T21:19:38Z")
 public class ZclPriceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -6730,7 +6730,7 @@ public class ZclPriceCluster extends ZclCluster {
      * The StartofBlockPeriod attribute represents the start time of the current block
      * tariff period. A change indicates that a new Block Period is in effect.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -6755,21 +6755,21 @@ public class ZclPriceCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getStartOfBlockPeriod(final long refreshPeriod) {
+    public ZigBeeUtcTime getStartOfBlockPeriod(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_STARTOFBLOCKPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_STARTOFBLOCKPERIOD).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_STARTOFBLOCKPERIOD).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_STARTOFBLOCKPERIOD));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_STARTOFBLOCKPERIOD));
     }
 
     /**
@@ -8710,7 +8710,7 @@ public class ZclPriceCluster extends ZclCluster {
      * The CurrentBillingPeriodStart attribute represents the start time of the current
      * billing period.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -8735,21 +8735,21 @@ public class ZclPriceCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCurrentBillingPeriodStart(final long refreshPeriod) {
+    public ZigBeeUtcTime getCurrentBillingPeriodStart(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CURRENTBILLINGPERIODSTART).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CURRENTBILLINGPERIODSTART).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CURRENTBILLINGPERIODSTART).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CURRENTBILLINGPERIODSTART));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CURRENTBILLINGPERIODSTART));
     }
 
     /**
@@ -8806,7 +8806,7 @@ public class ZclPriceCluster extends ZclCluster {
      * The LastBillingPeriodStart attribute represents the start time of the last billing
      * period.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -8831,21 +8831,21 @@ public class ZclPriceCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getLastBillingPeriodStart(final long refreshPeriod) {
+    public ZigBeeUtcTime getLastBillingPeriodStart(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_LASTBILLINGPERIODSTART).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_LASTBILLINGPERIODSTART).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_LASTBILLINGPERIODSTART).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_LASTBILLINGPERIODSTART));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_LASTBILLINGPERIODSTART));
     }
 
     /**
@@ -8956,7 +8956,7 @@ public class ZclPriceCluster extends ZclCluster {
      * The CreditPaymentDueDate attribute indicates the date and time when the next credit
      * payment is due to be paid by the consumer to the supplier.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -8981,21 +8981,21 @@ public class ZclPriceCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCreditPaymentDueDate(final long refreshPeriod) {
+    public ZigBeeUtcTime getCreditPaymentDueDate(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CREDITPAYMENTDUEDATE).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CREDITPAYMENTDUEDATE).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CREDITPAYMENTDUEDATE).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITPAYMENTDUEDATE));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CREDITPAYMENTDUEDATE));
     }
 
     /**
@@ -9231,7 +9231,7 @@ public class ZclPriceCluster extends ZclCluster {
     /**
      * Get the <i>Credit Card Payment Date 1</i> attribute [attribute ID <b>0x0811</b>].
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -9253,21 +9253,21 @@ public class ZclPriceCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCreditCardPaymentDate1(final long refreshPeriod) {
+    public ZigBeeUtcTime getCreditCardPaymentDate1(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE1).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE1).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE1).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE1));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE1));
     }
 
     /**
@@ -9357,7 +9357,7 @@ public class ZclPriceCluster extends ZclCluster {
     /**
      * Get the <i>Credit Card Payment Date 2</i> attribute [attribute ID <b>0x0821</b>].
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -9379,21 +9379,21 @@ public class ZclPriceCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCreditCardPaymentDate2(final long refreshPeriod) {
+    public ZigBeeUtcTime getCreditCardPaymentDate2(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE2).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE2).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE2).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE2));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE2));
     }
 
     /**
@@ -9483,7 +9483,7 @@ public class ZclPriceCluster extends ZclCluster {
     /**
      * Get the <i>Credit Card Payment Date 3</i> attribute [attribute ID <b>0x0831</b>].
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -9505,21 +9505,21 @@ public class ZclPriceCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCreditCardPaymentDate3(final long refreshPeriod) {
+    public ZigBeeUtcTime getCreditCardPaymentDate3(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE3).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE3).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE3).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE3));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE3));
     }
 
     /**
@@ -9609,7 +9609,7 @@ public class ZclPriceCluster extends ZclCluster {
     /**
      * Get the <i>Credit Card Payment Date 4</i> attribute [attribute ID <b>0x0841</b>].
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -9631,21 +9631,21 @@ public class ZclPriceCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCreditCardPaymentDate4(final long refreshPeriod) {
+    public ZigBeeUtcTime getCreditCardPaymentDate4(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE4).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE4).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE4).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE4));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE4));
     }
 
     /**
@@ -9735,7 +9735,7 @@ public class ZclPriceCluster extends ZclCluster {
     /**
      * Get the <i>Credit Card Payment Date 5</i> attribute [attribute ID <b>0x0851</b>].
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -9757,21 +9757,21 @@ public class ZclPriceCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getCreditCardPaymentDate5(final long refreshPeriod) {
+    public ZigBeeUtcTime getCreditCardPaymentDate5(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE5).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE5).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE5).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE5));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE5));
     }
 
     /**
@@ -9932,7 +9932,7 @@ public class ZclPriceCluster extends ZclCluster {
     /**
      * Get the <i>Received Start Of Block Period</i> attribute [attribute ID <b>0x8200</b>].
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -9954,21 +9954,21 @@ public class ZclPriceCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getReceivedStartOfBlockPeriod(final long refreshPeriod) {
+    public ZigBeeUtcTime getReceivedStartOfBlockPeriod(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD));
     }
 
     /**
@@ -11210,7 +11210,7 @@ public class ZclPriceCluster extends ZclCluster {
     /**
      * Get the <i>Received Current Billing Period Start</i> attribute [attribute ID <b>0x8700</b>].
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -11232,21 +11232,21 @@ public class ZclPriceCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getReceivedCurrentBillingPeriodStart(final long refreshPeriod) {
+    public ZigBeeUtcTime getReceivedCurrentBillingPeriodStart(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART));
     }
 
     /**
@@ -11294,7 +11294,7 @@ public class ZclPriceCluster extends ZclCluster {
     /**
      * Get the <i>Received Last Billing Period Start</i> attribute [attribute ID <b>0x8702</b>].
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
@@ -11316,21 +11316,21 @@ public class ZclPriceCluster extends ZclCluster {
      * <p>
      * This method will block until the response is received or a timeout occurs unless the current value is returned.
      * <p>
-     * The attribute is of type {@link Calendar}.
+     * The attribute is of type {@link ZigBeeUtcTime}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Calendar} attribute value, or null on error
+     * @return the {@link ZigBeeUtcTime} attribute value, or null on error
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Calendar getReceivedLastBillingPeriodStart(final long refreshPeriod) {
+    public ZigBeeUtcTime getReceivedLastBillingPeriodStart(final long refreshPeriod) {
         if (serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART).getLastValue();
+            return (ZigBeeUtcTime) serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART).getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART));
+        return (ZigBeeUtcTime) readSync(serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART));
     }
 
     /**
@@ -11453,7 +11453,7 @@ public class ZclPriceCluster extends ZclCluster {
      * command, the device shall send a PublishPrice command for the currently scheduled
      * time.
      *
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param numberOfEvents {@link Integer} Number Of Events
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -11466,7 +11466,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getScheduledPricesCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getScheduledPricesCommand(Calendar startTime, Integer numberOfEvents) {
+    public Future<CommandResult> getScheduledPricesCommand(ZigBeeUtcTime startTime, Integer numberOfEvents) {
         GetScheduledPricesCommand command = new GetScheduledPricesCommand();
 
         // Set the fields
@@ -11485,7 +11485,7 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param priceAckTime {@link Calendar} Price Ack Time
+     * @param priceAckTime {@link ZigBeeUtcTime} Price Ack Time
      * @param control {@link Integer} Control
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -11498,7 +11498,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new priceAcknowledgementCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> priceAcknowledgementCommand(Integer providerId, Integer issuerEventId, Calendar priceAckTime, Integer control) {
+    public Future<CommandResult> priceAcknowledgementCommand(Integer providerId, Integer issuerEventId, ZigBeeUtcTime priceAckTime, Integer control) {
         PriceAcknowledgementCommand command = new PriceAcknowledgementCommand();
 
         // Set the fields
@@ -11518,7 +11518,7 @@ public class ZclPriceCluster extends ZclCluster {
      * current period and a period to be activated in the near future. <br> A ZCL Default
      * response with status NOT_FOUND shall be returned if there are no events available.
      *
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param numberOfEvents {@link Integer} Number Of Events
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
@@ -11532,7 +11532,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getBlockPeriodCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getBlockPeriodCommand(Calendar startTime, Integer numberOfEvents, Integer tariffType) {
+    public Future<CommandResult> getBlockPeriodCommand(ZigBeeUtcTime startTime, Integer numberOfEvents, Integer tariffType) {
         GetBlockPeriodCommand command = new GetBlockPeriodCommand();
 
         // Set the fields
@@ -11552,7 +11552,7 @@ public class ZclPriceCluster extends ZclCluster {
      * <br> A ZCL Default response with status NOT_FOUND shall be returned if there are no
      * conversion factor updates available
      *
-     * @param earliestStartTime {@link Calendar} Earliest Start Time
+     * @param earliestStartTime {@link ZigBeeUtcTime} Earliest Start Time
      * @param minIssuerEventId {@link Integer} Min . Issuer Event ID
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @return the {@link Future<CommandResult>} command result future
@@ -11566,7 +11566,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getConversionFactorCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getConversionFactorCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands) {
+    public Future<CommandResult> getConversionFactorCommand(ZigBeeUtcTime earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands) {
         GetConversionFactorCommand command = new GetConversionFactorCommand();
 
         // Set the fields
@@ -11586,7 +11586,7 @@ public class ZclPriceCluster extends ZclCluster {
      * Default response with status NOT_FOUND shall be returned if there are no conversion
      * factor updates available
      *
-     * @param earliestStartTime {@link Calendar} Earliest Start Time
+     * @param earliestStartTime {@link ZigBeeUtcTime} Earliest Start Time
      * @param minIssuerEventId {@link Integer} Min . Issuer Event ID
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @return the {@link Future<CommandResult>} command result future
@@ -11600,7 +11600,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getCalorificValueCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getCalorificValueCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands) {
+    public Future<CommandResult> getCalorificValueCommand(ZigBeeUtcTime earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands) {
         GetCalorificValueCommand command = new GetCalorificValueCommand();
 
         // Set the fields
@@ -11622,7 +11622,7 @@ public class ZclPriceCluster extends ZclCluster {
      * must be sent using the start time and IssuerTariffID obtained from the appropriate
      * PublishTariffInformation command.
      *
-     * @param earliestStartTime {@link Calendar} Earliest Start Time
+     * @param earliestStartTime {@link ZigBeeUtcTime} Earliest Start Time
      * @param minIssuerEventId {@link Integer} Min . Issuer Event ID
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @param tariffType {@link Integer} Tariff Type
@@ -11637,7 +11637,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getTariffInformationCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getTariffInformationCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
+    public Future<CommandResult> getTariffInformationCommand(ZigBeeUtcTime earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
         GetTariffInformationCommand command = new GetTariffInformationCommand();
 
         // Set the fields
@@ -11714,7 +11714,7 @@ public class ZclPriceCluster extends ZclCluster {
      * factor updates. A server device shall be capable of storing at least two instances,
      * current and (if available) next instance to be activated in the future.
      *
-     * @param earliestStartTime {@link Calendar} Earliest Start Time
+     * @param earliestStartTime {@link ZigBeeUtcTime} Earliest Start Time
      * @param minIssuerEventId {@link Integer} Min . Issuer Event ID
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @param tariffType {@link Integer} Tariff Type
@@ -11729,7 +11729,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getCo2ValueCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getCo2ValueCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
+    public Future<CommandResult> getCo2ValueCommand(ZigBeeUtcTime earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
         GetCo2ValueCommand command = new GetCo2ValueCommand();
 
         // Set the fields
@@ -11774,7 +11774,7 @@ public class ZclPriceCluster extends ZclCluster {
      * This command initiates one or more PublishBillingPeriod commands for currently
      * scheduled billing periods.
      *
-     * @param earliestStartTime {@link Calendar} Earliest Start Time
+     * @param earliestStartTime {@link ZigBeeUtcTime} Earliest Start Time
      * @param minIssuerEventId {@link Integer} Min . Issuer Event ID
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @param tariffType {@link Integer} Tariff Type
@@ -11789,7 +11789,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getBillingPeriodCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getBillingPeriodCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
+    public Future<CommandResult> getBillingPeriodCommand(ZigBeeUtcTime earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
         GetBillingPeriodCommand command = new GetBillingPeriodCommand();
 
         // Set the fields
@@ -11807,7 +11807,7 @@ public class ZclPriceCluster extends ZclCluster {
      * This command initiates one or more PublishConsolidatedBill commands with the
      * requested billing information.
      *
-     * @param earliestStartTime {@link Calendar} Earliest Start Time
+     * @param earliestStartTime {@link ZigBeeUtcTime} Earliest Start Time
      * @param minIssuerEventId {@link Integer} Min . Issuer Event ID
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @param tariffType {@link Integer} Tariff Type
@@ -11822,7 +11822,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getConsolidatedBillCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getConsolidatedBillCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
+    public Future<CommandResult> getConsolidatedBillCommand(ZigBeeUtcTime earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
         GetConsolidatedBillCommand command = new GetConsolidatedBillCommand();
 
         // Set the fields
@@ -11869,7 +11869,7 @@ public class ZclPriceCluster extends ZclCluster {
      * This command initiates PublishCreditPayment commands for the requested credit
      * payment information.
      *
-     * @param latestEndTime {@link Calendar} Latest End Time
+     * @param latestEndTime {@link ZigBeeUtcTime} Latest End Time
      * @param numberOfRecords {@link Integer} Number Of Records
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -11882,7 +11882,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getCreditPaymentCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getCreditPaymentCommand(Calendar latestEndTime, Integer numberOfRecords) {
+    public Future<CommandResult> getCreditPaymentCommand(ZigBeeUtcTime latestEndTime, Integer numberOfRecords) {
         GetCreditPaymentCommand command = new GetCreditPaymentCommand();
 
         // Set the fields
@@ -11966,12 +11966,12 @@ public class ZclPriceCluster extends ZclCluster {
      * @param providerId {@link Integer} Provider ID
      * @param rateLabel {@link ByteArray} Rate Label
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param currentTime {@link Calendar} Current Time
+     * @param currentTime {@link ZigBeeUtcTime} Current Time
      * @param unitOfMeasure {@link Integer} Unit Of Measure
      * @param currency {@link Integer} Currency
      * @param priceTrailingDigitAndTier {@link Integer} Price Trailing Digit And Tier
      * @param numberOfPriceTiers {@link Integer} Number Of Price Tiers
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param duration {@link Integer} Duration
      * @param price {@link Integer} Price
      * @param priceRatio {@link Integer} Price Ratio
@@ -11998,7 +11998,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishPriceCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishPriceCommand(Integer providerId, ByteArray rateLabel, Integer issuerEventId, Calendar currentTime, Integer unitOfMeasure, Integer currency, Integer priceTrailingDigitAndTier, Integer numberOfPriceTiers, Calendar startTime, Integer duration, Integer price, Integer priceRatio, Integer generationPrice, Integer generationPriceRatio, Integer alternateCostDelivered, Integer alternateCostUnit, Integer alternateCostTrailingDigit, Integer numberOfBlockThresholds, Integer priceControl, Integer numberOfGenerationTiers, Integer generationTier, Integer extendedNumberOfPriceTiers, Integer extendedPriceTier, Integer extendedRegisterTier) {
+    public Future<CommandResult> publishPriceCommand(Integer providerId, ByteArray rateLabel, Integer issuerEventId, ZigBeeUtcTime currentTime, Integer unitOfMeasure, Integer currency, Integer priceTrailingDigitAndTier, Integer numberOfPriceTiers, ZigBeeUtcTime startTime, Integer duration, Integer price, Integer priceRatio, Integer generationPrice, Integer generationPriceRatio, Integer alternateCostDelivered, Integer alternateCostUnit, Integer alternateCostTrailingDigit, Integer numberOfBlockThresholds, Integer priceControl, Integer numberOfGenerationTiers, Integer generationTier, Integer extendedNumberOfPriceTiers, Integer extendedPriceTier, Integer extendedRegisterTier) {
         PublishPriceCommand command = new PublishPriceCommand();
 
         // Set the fields
@@ -12048,7 +12048,7 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param blockPeriodStartTime {@link Calendar} Block Period Start Time
+     * @param blockPeriodStartTime {@link ZigBeeUtcTime} Block Period Start Time
      * @param blockPeriodDuration {@link Integer} Block Period Duration
      * @param blockPeriodControl {@link Integer} Block Period Control
      * @param blockPeriodDurationType {@link Integer} Block Period Duration Type
@@ -12065,7 +12065,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishBlockPeriodCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishBlockPeriodCommand(Integer providerId, Integer issuerEventId, Calendar blockPeriodStartTime, Integer blockPeriodDuration, Integer blockPeriodControl, Integer blockPeriodDurationType, Integer tariffType, Integer tariffResolutionPeriod) {
+    public Future<CommandResult> publishBlockPeriodCommand(Integer providerId, Integer issuerEventId, ZigBeeUtcTime blockPeriodStartTime, Integer blockPeriodDuration, Integer blockPeriodControl, Integer blockPeriodDurationType, Integer tariffType, Integer tariffResolutionPeriod) {
         PublishBlockPeriodCommand command = new PublishBlockPeriodCommand();
 
         // Set the fields
@@ -12090,7 +12090,7 @@ public class ZclPriceCluster extends ZclCluster {
      * one.
      *
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param conversionFactor {@link Integer} Conversion Factor
      * @param conversionFactorTrailingDigit {@link Integer} Conversion Factor Trailing Digit
      * @return the {@link Future<CommandResult>} command result future
@@ -12104,7 +12104,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishConversionFactorCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishConversionFactorCommand(Integer issuerEventId, Calendar startTime, Integer conversionFactor, Integer conversionFactorTrailingDigit) {
+    public Future<CommandResult> publishConversionFactorCommand(Integer issuerEventId, ZigBeeUtcTime startTime, Integer conversionFactor, Integer conversionFactorTrailingDigit) {
         PublishConversionFactorCommand command = new PublishConversionFactorCommand();
 
         // Set the fields
@@ -12124,7 +12124,7 @@ public class ZclPriceCluster extends ZclCluster {
      * instances of the Calorific Value, the currently active one and the next one.
      *
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param calorificValue {@link Integer} Calorific Value
      * @param calorificValueUnit {@link Integer} Calorific Value Unit
      * @param calorificValueTrailingDigit {@link Integer} Calorific Value Trailing Digit
@@ -12139,7 +12139,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishCalorificValueCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishCalorificValueCommand(Integer issuerEventId, Calendar startTime, Integer calorificValue, Integer calorificValueUnit, Integer calorificValueTrailingDigit) {
+    public Future<CommandResult> publishCalorificValueCommand(Integer issuerEventId, ZigBeeUtcTime startTime, Integer calorificValue, Integer calorificValueUnit, Integer calorificValueTrailingDigit) {
         PublishCalorificValueCommand command = new PublishCalorificValueCommand();
 
         // Set the fields
@@ -12168,7 +12168,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
      * @param issuerTariffId {@link Integer} Issuer Tariff ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param tariffType {@link Integer} Tariff Type
      * @param tariffLabel {@link ByteArray} Tariff Label
      * @param numberOfPriceTiers {@link Integer} Number Of Price Tiers
@@ -12191,7 +12191,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishTariffInformationCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishTariffInformationCommand(Integer providerId, Integer issuerEventId, Integer issuerTariffId, Calendar startTime, Integer tariffType, ByteArray tariffLabel, Integer numberOfPriceTiers, Integer numberOfBlockThresholds, Integer unitOfMeasure, Integer currency, Integer priceTrailingDigit, Integer standingCharge, Integer tierBlockMode, Integer blockThresholdMultiplier, Integer blockThresholdDivisor) {
+    public Future<CommandResult> publishTariffInformationCommand(Integer providerId, Integer issuerEventId, Integer issuerTariffId, ZigBeeUtcTime startTime, Integer tariffType, ByteArray tariffLabel, Integer numberOfPriceTiers, Integer numberOfBlockThresholds, Integer unitOfMeasure, Integer currency, Integer priceTrailingDigit, Integer standingCharge, Integer tierBlockMode, Integer blockThresholdMultiplier, Integer blockThresholdDivisor) {
         PublishTariffInformationCommand command = new PublishTariffInformationCommand();
 
         // Set the fields
@@ -12235,7 +12235,7 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param issuerTariffId {@link Integer} Issuer Tariff ID
      * @param commandIndex {@link Integer} Command Index
      * @param totalNumberOfCommands {@link Integer} Total Number Of Commands
@@ -12252,7 +12252,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishPriceMatrixCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishPriceMatrixCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer issuerTariffId, Integer commandIndex, Integer totalNumberOfCommands, Integer subPayloadControl, PriceMatrixSubPayload priceMatrixSubPayload) {
+    public Future<CommandResult> publishPriceMatrixCommand(Integer providerId, Integer issuerEventId, ZigBeeUtcTime startTime, Integer issuerTariffId, Integer commandIndex, Integer totalNumberOfCommands, Integer subPayloadControl, PriceMatrixSubPayload priceMatrixSubPayload) {
         PublishPriceMatrixCommand command = new PublishPriceMatrixCommand();
 
         // Set the fields
@@ -12287,7 +12287,7 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param issuerTariffId {@link Integer} Issuer Tariff ID
      * @param commandIndex {@link Integer} Command Index
      * @param totalNumberOfCommands {@link Integer} Total Number Of Commands
@@ -12304,7 +12304,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishBlockThresholdsCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishBlockThresholdsCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer issuerTariffId, Integer commandIndex, Integer totalNumberOfCommands, Integer subPayloadControl, BlockThresholdSubPayload blockThresholdSubPayload) {
+    public Future<CommandResult> publishBlockThresholdsCommand(Integer providerId, Integer issuerEventId, ZigBeeUtcTime startTime, Integer issuerTariffId, Integer commandIndex, Integer totalNumberOfCommands, Integer subPayloadControl, BlockThresholdSubPayload blockThresholdSubPayload) {
         PublishBlockThresholdsCommand command = new PublishBlockThresholdsCommand();
 
         // Set the fields
@@ -12329,7 +12329,7 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param tariffType {@link Integer} Tariff Type
      * @param co2Value {@link Integer} CO2 Value
      * @param co2ValueUnit {@link Integer} CO2 Value Unit
@@ -12345,7 +12345,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishCo2ValueCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishCo2ValueCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer tariffType, Integer co2Value, Integer co2ValueUnit, Integer co2ValueTrailingDigit) {
+    public Future<CommandResult> publishCo2ValueCommand(Integer providerId, Integer issuerEventId, ZigBeeUtcTime startTime, Integer tariffType, Integer co2Value, Integer co2ValueUnit, Integer co2ValueTrailingDigit) {
         PublishCo2ValueCommand command = new PublishCo2ValueCommand();
 
         // Set the fields
@@ -12414,7 +12414,7 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param billingPeriodStartTime {@link Calendar} Billing Period Start Time
+     * @param billingPeriodStartTime {@link ZigBeeUtcTime} Billing Period Start Time
      * @param billingPeriodDuration {@link Integer} Billing Period Duration
      * @param billingPeriodDurationType {@link Integer} Billing Period Duration Type
      * @param tariffType {@link Integer} Tariff Type
@@ -12429,7 +12429,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishBillingPeriodCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishBillingPeriodCommand(Integer providerId, Integer issuerEventId, Calendar billingPeriodStartTime, Integer billingPeriodDuration, Integer billingPeriodDurationType, Integer tariffType) {
+    public Future<CommandResult> publishBillingPeriodCommand(Integer providerId, Integer issuerEventId, ZigBeeUtcTime billingPeriodStartTime, Integer billingPeriodDuration, Integer billingPeriodDurationType, Integer tariffType) {
         PublishBillingPeriodCommand command = new PublishBillingPeriodCommand();
 
         // Set the fields
@@ -12457,7 +12457,7 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param billingPeriodStartTime {@link Calendar} Billing Period Start Time
+     * @param billingPeriodStartTime {@link ZigBeeUtcTime} Billing Period Start Time
      * @param billingPeriodDuration {@link Integer} Billing Period Duration
      * @param billingPeriodDurationType {@link Integer} Billing Period Duration Type
      * @param tariffType {@link Integer} Tariff Type
@@ -12475,7 +12475,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishConsolidatedBillCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishConsolidatedBillCommand(Integer providerId, Integer issuerEventId, Calendar billingPeriodStartTime, Integer billingPeriodDuration, Integer billingPeriodDurationType, Integer tariffType, Integer consolidatedBill, Integer currency, Integer billTrailingDigit) {
+    public Future<CommandResult> publishConsolidatedBillCommand(Integer providerId, Integer issuerEventId, ZigBeeUtcTime billingPeriodStartTime, Integer billingPeriodDuration, Integer billingPeriodDurationType, Integer tariffType, Integer consolidatedBill, Integer currency, Integer billTrailingDigit) {
         PublishConsolidatedBillCommand command = new PublishConsolidatedBillCommand();
 
         // Set the fields
@@ -12506,7 +12506,7 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param durationInMinutes {@link Integer} Duration In Minutes
      * @param tariffType {@link Integer} Tariff Type
      * @param cppPriceTier {@link Integer} Cpp Price Tier
@@ -12522,7 +12522,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishCppEventCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishCppEventCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer durationInMinutes, Integer tariffType, Integer cppPriceTier, Integer cppAuth) {
+    public Future<CommandResult> publishCppEventCommand(Integer providerId, Integer issuerEventId, ZigBeeUtcTime startTime, Integer durationInMinutes, Integer tariffType, Integer cppPriceTier, Integer cppAuth) {
         PublishCppEventCommand command = new PublishCppEventCommand();
 
         // Set the fields
@@ -12548,11 +12548,11 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param creditPaymentDueDate {@link Calendar} Credit Payment Due Date
+     * @param creditPaymentDueDate {@link ZigBeeUtcTime} Credit Payment Due Date
      * @param creditPaymentOverdueAmount {@link Integer} Credit Payment Overdue Amount
      * @param creditPaymentStatus {@link Integer} Credit Payment Status
      * @param creditPayment {@link Integer} Credit Payment
-     * @param creditPaymentDate {@link Calendar} Credit Payment Date
+     * @param creditPaymentDate {@link ZigBeeUtcTime} Credit Payment Date
      * @param creditPaymentRef {@link ByteArray} Credit Payment Ref
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -12565,7 +12565,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishCreditPaymentCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishCreditPaymentCommand(Integer providerId, Integer issuerEventId, Calendar creditPaymentDueDate, Integer creditPaymentOverdueAmount, Integer creditPaymentStatus, Integer creditPayment, Calendar creditPaymentDate, ByteArray creditPaymentRef) {
+    public Future<CommandResult> publishCreditPaymentCommand(Integer providerId, Integer issuerEventId, ZigBeeUtcTime creditPaymentDueDate, Integer creditPaymentOverdueAmount, Integer creditPaymentStatus, Integer creditPayment, ZigBeeUtcTime creditPaymentDate, ByteArray creditPaymentRef) {
         PublishCreditPaymentCommand command = new PublishCreditPaymentCommand();
 
         // Set the fields
@@ -12589,7 +12589,7 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
-     * @param startTime {@link Calendar} Start Time
+     * @param startTime {@link ZigBeeUtcTime} Start Time
      * @param oldCurrency {@link Integer} Old Currency
      * @param newCurrency {@link Integer} New Currency
      * @param conversionFactor {@link Integer} Conversion Factor
@@ -12606,7 +12606,7 @@ public class ZclPriceCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new publishCurrencyConversionCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> publishCurrencyConversionCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer oldCurrency, Integer newCurrency, Integer conversionFactor, Integer conversionFactorTrailingDigit, Integer currencyChangeControlFlags) {
+    public Future<CommandResult> publishCurrencyConversionCommand(Integer providerId, Integer issuerEventId, ZigBeeUtcTime startTime, Integer oldCurrency, Integer newCurrency, Integer conversionFactor, Integer conversionFactorTrailingDigit, Integer currencyChangeControlFlags) {
         PublishCurrencyConversionCommand command = new PublishCurrencyConversionCommand();
 
         // Set the fields
