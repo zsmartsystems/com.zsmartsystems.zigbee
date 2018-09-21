@@ -415,7 +415,12 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         XBeeGetOperatingChannelCommand request = new XBeeGetOperatingChannelCommand();
         XBeeOperatingChannelResponse response = (XBeeOperatingChannelResponse) frameHandler.sendRequest(request);
 
-        return ZigBeeChannel.create(response.getChannel());
+        int channel = response.getChannel();
+        int count;
+        
+        for(count = 0; (channel & 0x01) == 0 && count < (Integer.SIZE*8); channel >>= 1, count ++);
+        
+        return ZigBeeChannel.create(count + 11);
     }
 
     @Override
