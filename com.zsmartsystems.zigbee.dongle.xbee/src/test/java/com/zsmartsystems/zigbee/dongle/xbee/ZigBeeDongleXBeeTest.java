@@ -88,8 +88,8 @@ public class ZigBeeDongleXBeeTest {
         sentCommand.setFrameId(32);
         System.out.println(sentCommand);
 
-        int[] payload = new int[] { 0, 26, 17, 32, 0, 13, 111, 0, 5, 124, 247, 198, 183, 98, 0, 0, 128, 6, 0, 0, 0, 32,
-                0, 0, 46, 91, 1, 1, 202 };
+        int[] payload = new int[] { 0, 26, 17, 32, 0, 13, 111, 0, 5, 124, 247, 198, 183, 98, 0, 0, 128, 6, 0, 0, 0, 0,
+                0, 0, 46, 91, 1, 1, 234 };
 
         int[] output = sentCommand.serialize();
         assertTrue(Arrays.equals(payload, output));
