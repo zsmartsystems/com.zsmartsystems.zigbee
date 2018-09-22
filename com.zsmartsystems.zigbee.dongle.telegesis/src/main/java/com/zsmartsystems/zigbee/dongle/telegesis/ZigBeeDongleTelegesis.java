@@ -372,15 +372,6 @@ public class ZigBeeDongleTelegesis
             ieeeAddress = productInfo.getIeeeAddress();
         }
 
-        // Get network information
-        TelegesisDisplayNetworkInformationCommand networkInfo = new TelegesisDisplayNetworkInformationCommand();
-        if (frameHandler.sendRequest(networkInfo) == null || networkInfo.getStatus() != TelegesisStatusCode.SUCCESS) {
-            return ZigBeeStatus.BAD_RESPONSE;
-        }
-        if (networkInfo.getDevice() != TelegesisDeviceType.COO) {
-            return ZigBeeStatus.INVALID_STATE;
-        }
-
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
         return ZigBeeStatus.SUCCESS;
@@ -411,6 +402,9 @@ public class ZigBeeDongleTelegesis
         if (frameHandler.sendRequest(networkInfo) == null || networkInfo.getStatus() != TelegesisStatusCode.SUCCESS) {
             zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
             return ZigBeeStatus.BAD_RESPONSE;
+        }
+        if (networkInfo.getDevice() != TelegesisDeviceType.COO) {
+            return ZigBeeStatus.INVALID_STATE;
         }
 
         radioChannel = ZigBeeChannel.create(networkInfo.getChannel());

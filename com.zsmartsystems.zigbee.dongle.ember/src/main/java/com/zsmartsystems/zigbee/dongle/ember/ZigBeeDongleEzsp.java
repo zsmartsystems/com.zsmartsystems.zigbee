@@ -329,12 +329,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
-        logger.debug("EZSP dongle initialize done: Initialised {}", initResponse == EmberStatus.EMBER_NOT_JOINED);
-
-        // Check if the network is initialised or if we're yet to join
-        if (initResponse == EmberStatus.EMBER_NOT_JOINED) {
-            return ZigBeeStatus.BAD_RESPONSE;
-        }
+        logger.debug("EZSP dongle initialize done: Initialised {}", initResponse != EmberStatus.EMBER_NOT_JOINED);
 
         return ZigBeeStatus.SUCCESS;
     }
