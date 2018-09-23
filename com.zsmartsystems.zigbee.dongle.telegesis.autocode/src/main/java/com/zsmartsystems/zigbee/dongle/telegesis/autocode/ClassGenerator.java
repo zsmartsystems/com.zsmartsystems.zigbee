@@ -105,7 +105,7 @@ public abstract class ClassGenerator {
 
     protected void outputCopywrite(final PrintWriter out) {
         out.println("/**");
-        out.println(" * Copyright (c) 2016-2017 by the respective copyright holders.");
+        out.println(" * Copyright (c) 2016-2018 by the respective copyright holders.");
         out.println(" * All rights reserved. This program and the accompanying materials");
         out.println(" * are made available under the terms of the Eclipse Public License v1.0");
         out.println(" * which accompanies this distribution, and is available at");

@@ -718,6 +718,36 @@
 	</command>
 
 	<command>
+		<name>Set Output Power</name>
+		<description>Sets the device’s transmit power level in dBm.</description>
+		<command_parameters>
+			<prompt>ATS01=</prompt>
+			<parameter>
+				<data_type>SInt8</data_type>
+				<name>power level</name>
+				<description></description>
+				<display></display>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>Get Output Power</name>
+		<description>Gets the device’s transmit power level in dBm.</description>
+		<command_parameters>
+			<prompt>ATS01?</prompt>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>SInt8</data_type>
+				<name>power level</name>
+				<description></description>
+				<display></display>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>Set Pan ID</name>
 		<description>Sets the preferred  PAN ID</description>
 		<command_parameters>

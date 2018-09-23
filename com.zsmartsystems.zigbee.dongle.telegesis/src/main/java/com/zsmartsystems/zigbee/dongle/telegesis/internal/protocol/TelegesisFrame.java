@@ -256,6 +256,15 @@ public class TelegesisFrame {
         }
     }
 
+    /**
+     * Serialises the signed 8 bit integer
+     * 
+     * @param value
+     */
+    protected void serializeSInt8(Integer value) {
+        serializeString(value.toString());
+    }
+
     protected void serializeBoolean(boolean value) {
         buffer[length++] = value ? '1' : '0';
     }
