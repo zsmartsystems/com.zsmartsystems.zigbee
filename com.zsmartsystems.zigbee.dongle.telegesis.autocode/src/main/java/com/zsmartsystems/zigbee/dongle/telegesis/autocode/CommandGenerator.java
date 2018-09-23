@@ -1099,7 +1099,7 @@ public class CommandGenerator extends ClassGenerator {
             case "String":
                 return "String";
             case "ZigBeeKey":
-                addImport(zigbeePackage + ".ZigBeeKey");
+                addImport(zigbeePackage + ".security.ZigBeeKey");
                 return "ZigBeeKey";
             case "IeeeAddress":
                 addImport(zigbeePackage + ".IeeeAddress");
