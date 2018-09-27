@@ -38,7 +38,7 @@ public enum TransportConfigOption {
     /**
      * Configures the trust centre join mode.
      * <p>
-     * Value must be one of {@link TrustCentreLinkMode} enumeration.
+     * Value must be one of {@link TrustCentreJoinMode} enumeration.
      */
     TRUST_CENTRE_JOIN_MODE,
 

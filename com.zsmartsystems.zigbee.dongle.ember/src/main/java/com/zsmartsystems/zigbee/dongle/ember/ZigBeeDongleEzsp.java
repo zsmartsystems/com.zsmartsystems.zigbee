@@ -70,6 +70,7 @@ import com.zsmartsystems.zigbee.transport.ConcentratorConfig;
 import com.zsmartsystems.zigbee.transport.DeviceType;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
+import com.zsmartsystems.zigbee.transport.TrustCentreJoinMode;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
@@ -311,7 +312,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             logger.debug("Policy state {} = {}", policy.getKey(), policy.getValue());
         }
 
-        EmberNcp ncp = new EmberNcp(frameHandler);
+        EmberNcp ncp = getEmberNcp();
 
         ieeeAddress = ncp.getIeeeAddress();
         logger.debug("Ember local IEEE Address is {}", ieeeAddress);
@@ -344,7 +345,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return ZigBeeStatus.INVALID_STATE;
         }
 
-        EmberNcp ncp = new EmberNcp(frameHandler);
+        EmberNcp ncp = getEmberNcp();
 
         // Check if the network is initialised
         EmberNetworkStatus networkState = ncp.getNetworkState();
@@ -599,7 +600,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             @Override
             public void run() {
                 if (linkState) {
-                    EmberNcp ncp = new EmberNcp(frameHandler);
+                    EmberNcp ncp = getEmberNcp();
                     int addr = ncp.getNwkAddress();
                     if (addr != 0xFFFE) {
                         nwkAddress = addr;
@@ -690,7 +691,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                         break;
 
                     case INSTALL_KEY:
-                        EmberNcp ncp = new EmberNcp(frameHandler);
+                        EmberNcp ncp = getEmberNcp();
                         ZigBeeKey nodeKey = (ZigBeeKey) configuration.getValue(option);
                         if (!nodeKey.hasAddress()) {
                             logger.debug("Attempt to set INSTALL_KEY without setting address");
@@ -718,6 +719,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                         break;
 
                     case TRUST_CENTRE_JOIN_MODE:
+                        configuration.setResult(option,
+                                setTcJoinMode((TrustCentreJoinMode) configuration.getValue(option)));
+                        break;
 
                     default:
                         configuration.setResult(option, ZigBeeStatus.UNSUPPORTED);
@@ -728,6 +732,28 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 configuration.setResult(option, ZigBeeStatus.INVALID_ARGUMENTS);
             }
         }
+    }
+
+    private ZigBeeStatus setTcJoinMode(TrustCentreJoinMode joinMode) {
+        EmberNcp ncp = getEmberNcp();
+
+        EzspDecisionId emberJoinMode;
+        switch (joinMode) {
+            case TC_JOIN_INSECURE:
+                emberJoinMode = EzspDecisionId.EZSP_ALLOW_JOINS;
+                break;
+            case TC_JOIN_SECURE:
+                emberJoinMode = EzspDecisionId.EZSP_ALLOW_PRECONFIGURED_KEY_JOINS;
+                break;
+            case TC_JOIN_DENY:
+                emberJoinMode = EzspDecisionId.EZSP_DISALLOW_ALL_JOINS_AND_REJOINS;
+                break;
+            default:
+                return ZigBeeStatus.INVALID_ARGUMENTS;
+        }
+        return (ncp.setPolicy(EzspPolicyId.EZSP_TRUST_CENTER_POLICY, emberJoinMode) == EzspStatus.EZSP_SUCCESS)
+                ? ZigBeeStatus.SUCCESS
+                : ZigBeeStatus.FAILURE;
     }
 
     @Override
@@ -756,7 +782,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 logger.error("Unknown Ember serial protocol {}", protocol);
                 return false;
         }
-        EmberNcp ncp = new EmberNcp(frameHandler);
+        EmberNcp ncp = getEmberNcp();
 
         // Connect to the ASH handler and NCP
         frameHandler.start(serialPort);
