@@ -735,8 +735,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     }
 
     private ZigBeeStatus setTcJoinMode(TrustCentreJoinMode joinMode) {
-        EmberNcp ncp = getEmberNcp();
-
         EzspDecisionId emberJoinMode;
         switch (joinMode) {
             case TC_JOIN_INSECURE:
@@ -751,9 +749,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             default:
                 return ZigBeeStatus.INVALID_ARGUMENTS;
         }
-        return (ncp.setPolicy(EzspPolicyId.EZSP_TRUST_CENTER_POLICY, emberJoinMode) == EzspStatus.EZSP_SUCCESS)
-                ? ZigBeeStatus.SUCCESS
-                : ZigBeeStatus.FAILURE;
+        return (getEmberNcp().setPolicy(EzspPolicyId.EZSP_TRUST_CENTER_POLICY,
+                emberJoinMode) == EzspStatus.EZSP_SUCCESS) ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
     }
 
     @Override

@@ -168,8 +168,9 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_MFGLIB_SET_POWER = 0x8C;
     protected static final int FRAME_ID_MFGLIB_START = 0x83;
     protected static final int FRAME_ID_MFGLIB_START_STREAM = 0x87;
-    protected static final int FRAME_ID_MFGLIB_START_TONE = 0x86;
+    protected static final int FRAME_ID_MFGLIB_START_TONE = 0x85;
     protected static final int FRAME_ID_MFGLIB_STOP_STREAM = 0x88;
+    protected static final int FRAME_ID_MFGLIB_STOP_TONE = 0x86;
     protected static final int FRAME_ID_NEIGHBOR_COUNT = 0x7A;
     protected static final int FRAME_ID_NETWORK_FOUND_HANDLER = 0x1B;
     protected static final int FRAME_ID_NETWORK_INIT = 0x17;
@@ -304,6 +305,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_MFGLIB_START_STREAM, EzspMfglibStartStreamResponse.class);
         ezspHandlerMap.put(FRAME_ID_MFGLIB_START_TONE, EzspMfglibStartToneResponse.class);
         ezspHandlerMap.put(FRAME_ID_MFGLIB_STOP_STREAM, EzspMfglibStopStreamResponse.class);
+        ezspHandlerMap.put(FRAME_ID_MFGLIB_STOP_TONE, EzspMfglibStopToneResponse.class);
         ezspHandlerMap.put(FRAME_ID_NEIGHBOR_COUNT, EzspNeighborCountResponse.class);
         ezspHandlerMap.put(FRAME_ID_NETWORK_FOUND_HANDLER, EzspNetworkFoundHandler.class);
         ezspHandlerMap.put(FRAME_ID_NETWORK_INIT, EzspNetworkInitResponse.class);

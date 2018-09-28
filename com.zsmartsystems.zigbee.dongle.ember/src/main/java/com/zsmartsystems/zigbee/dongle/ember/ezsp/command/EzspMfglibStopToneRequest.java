@@ -11,12 +11,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
 /**
- * Class to implement the Ember EZSP command <b>mfglibStartTone</b>.
+ * Class to implement the Ember EZSP command <b>mfglibStopTone</b>.
  * <p>
- * Starts transmitting an unmodulated tone on the currently set channel and power level. Upon
- * successful return, the tone will be transmitting. To stop transmitting tone, application
- * must call mfglibStopTone(), allowing it the flexibility to determine its own criteria for
- * tone duration (time, event, etc.)
+ * Stops transmitting tone started by mfglibStartTone().
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -24,8 +21,8 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspMfglibStartToneRequest extends EzspFrameRequest {
-    public static final int FRAME_ID = 0x85;
+public class EzspMfglibStopToneRequest extends EzspFrameRequest {
+    public static final int FRAME_ID = 0x86;
 
     /**
      * Serialiser used to seialise to binary line data
@@ -35,7 +32,7 @@ public class EzspMfglibStartToneRequest extends EzspFrameRequest {
     /**
      * Request constructor
      */
-    public EzspMfglibStartToneRequest() {
+    public EzspMfglibStopToneRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
     }
@@ -51,6 +48,6 @@ public class EzspMfglibStartToneRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspMfglibStartToneRequest []";
+        return "EzspMfglibStopToneRequest []";
     }
 }
