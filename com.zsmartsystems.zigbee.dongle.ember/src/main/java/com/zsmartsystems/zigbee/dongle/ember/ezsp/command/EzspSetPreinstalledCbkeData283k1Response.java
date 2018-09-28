@@ -14,7 +14,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
  * Class to implement the Ember EZSP command <b>setPreinstalledCbkeData283k1</b>.
  * <p>
  * Sets the device's 283k1 curve CA public key, local certificate, and static private key on the
- * NCP associated with this node.
+ * NCP associated with this node. The associated data needs to be set via the setValue method
+ * before calling this method.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

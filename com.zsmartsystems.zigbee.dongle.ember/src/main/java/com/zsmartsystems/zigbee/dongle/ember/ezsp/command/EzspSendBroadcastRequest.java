@@ -64,7 +64,7 @@ public class EzspSendBroadcastRequest extends EzspFrameRequest {
     private int[] messageContents;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 

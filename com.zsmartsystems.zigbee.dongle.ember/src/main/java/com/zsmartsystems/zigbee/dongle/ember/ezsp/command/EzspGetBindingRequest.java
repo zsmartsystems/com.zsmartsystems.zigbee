@@ -32,7 +32,7 @@ public class EzspGetBindingRequest extends EzspFrameRequest {
     private int index;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 

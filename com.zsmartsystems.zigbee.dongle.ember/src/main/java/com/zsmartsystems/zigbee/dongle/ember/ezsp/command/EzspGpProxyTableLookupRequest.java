@@ -33,7 +33,7 @@ public class EzspGpProxyTableLookupRequest extends EzspFrameRequest {
     private EmberGpAddress addr;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 
