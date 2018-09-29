@@ -52,7 +52,7 @@ public class EzspCalculateSmacs283k1Request extends EzspFrameRequest {
     private EmberPublicKey283k1Data partnerEphemeralPublicKey;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 

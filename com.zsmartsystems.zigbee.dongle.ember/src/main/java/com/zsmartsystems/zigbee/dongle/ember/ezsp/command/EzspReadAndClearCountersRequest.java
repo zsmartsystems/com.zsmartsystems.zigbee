@@ -26,7 +26,7 @@ public class EzspReadAndClearCountersRequest extends EzspFrameRequest {
     public static final int FRAME_ID = 0x65;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 

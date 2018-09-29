@@ -25,7 +25,7 @@ public class EzspStopScanRequest extends EzspFrameRequest {
     public static final int FRAME_ID = 0x1D;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 

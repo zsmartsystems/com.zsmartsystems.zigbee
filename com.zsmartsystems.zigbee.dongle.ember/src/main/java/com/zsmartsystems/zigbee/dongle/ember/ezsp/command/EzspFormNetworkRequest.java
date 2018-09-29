@@ -33,7 +33,7 @@ public class EzspFormNetworkRequest extends EzspFrameRequest {
     private EmberNetworkParameters parameters;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 

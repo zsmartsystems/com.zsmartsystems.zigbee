@@ -25,7 +25,7 @@ public class EzspResetToFactoryDefaultsRequest extends EzspFrameRequest {
     public static final int FRAME_ID = 0xCC;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 

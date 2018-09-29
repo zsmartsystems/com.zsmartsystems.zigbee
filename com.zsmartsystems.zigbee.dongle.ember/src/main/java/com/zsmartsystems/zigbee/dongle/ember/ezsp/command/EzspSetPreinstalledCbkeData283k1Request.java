@@ -8,16 +8,14 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificate283k1Data;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberPrivateKey283k1Data;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberPublicKey283k1Data;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
 /**
  * Class to implement the Ember EZSP command <b>setPreinstalledCbkeData283k1</b>.
  * <p>
  * Sets the device's 283k1 curve CA public key, local certificate, and static private key on the
- * NCP associated with this node.
+ * NCP associated with this node. The associated data needs to be set via the setValue method
+ * before calling this method.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -29,28 +27,7 @@ public class EzspSetPreinstalledCbkeData283k1Request extends EzspFrameRequest {
     public static final int FRAME_ID = 0xED;
 
     /**
-     * The Certificate Authority's public key.
-     * <p>
-     * EZSP type is <i>EmberPublicKey283k1Data</i> - Java type is {@link EmberPublicKey283k1Data}
-     */
-    private EmberPublicKey283k1Data caCert;
-
-    /**
-     * The node's new certificate signed by the CA.
-     * <p>
-     * EZSP type is <i>EmberCertificate283k1Data</i> - Java type is {@link EmberCertificate283k1Data}
-     */
-    private EmberCertificate283k1Data myCert;
-
-    /**
-     * The node's new static private key.
-     * <p>
-     * EZSP type is <i>EmberPrivateKey283k1Data</i> - Java type is {@link EmberPrivateKey283k1Data}
-     */
-    private EmberPrivateKey283k1Data myKey;
-
-    /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 
@@ -62,88 +39,17 @@ public class EzspSetPreinstalledCbkeData283k1Request extends EzspFrameRequest {
         serializer = new EzspSerializer();
     }
 
-    /**
-     * The Certificate Authority's public key.
-     * <p>
-     * EZSP type is <i>EmberPublicKey283k1Data</i> - Java type is {@link EmberPublicKey283k1Data}
-     *
-     * @return the current caCert as {@link EmberPublicKey283k1Data}
-     */
-    public EmberPublicKey283k1Data getCaCert() {
-        return caCert;
-    }
-
-    /**
-     * The Certificate Authority's public key.
-     *
-     * @param caCert the caCert to set as {@link EmberPublicKey283k1Data}
-     */
-    public void setCaCert(EmberPublicKey283k1Data caCert) {
-        this.caCert = caCert;
-    }
-
-    /**
-     * The node's new certificate signed by the CA.
-     * <p>
-     * EZSP type is <i>EmberCertificate283k1Data</i> - Java type is {@link EmberCertificate283k1Data}
-     *
-     * @return the current myCert as {@link EmberCertificate283k1Data}
-     */
-    public EmberCertificate283k1Data getMyCert() {
-        return myCert;
-    }
-
-    /**
-     * The node's new certificate signed by the CA.
-     *
-     * @param myCert the myCert to set as {@link EmberCertificate283k1Data}
-     */
-    public void setMyCert(EmberCertificate283k1Data myCert) {
-        this.myCert = myCert;
-    }
-
-    /**
-     * The node's new static private key.
-     * <p>
-     * EZSP type is <i>EmberPrivateKey283k1Data</i> - Java type is {@link EmberPrivateKey283k1Data}
-     *
-     * @return the current myKey as {@link EmberPrivateKey283k1Data}
-     */
-    public EmberPrivateKey283k1Data getMyKey() {
-        return myKey;
-    }
-
-    /**
-     * The node's new static private key.
-     *
-     * @param myKey the myKey to set as {@link EmberPrivateKey283k1Data}
-     */
-    public void setMyKey(EmberPrivateKey283k1Data myKey) {
-        this.myKey = myKey;
-    }
-
     @Override
     public int[] serialize() {
         // Serialize the header
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeEmberPublicKey283k1Data(caCert);
-        serializer.serializeEmberCertificate283k1Data(myCert);
-        serializer.serializeEmberPrivateKey283k1Data(myKey);
         return serializer.getPayload();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(117);
-        builder.append("EzspSetPreinstalledCbkeData283k1Request [caCert=");
-        builder.append(caCert);
-        builder.append(", myCert=");
-        builder.append(myCert);
-        builder.append(", myKey=");
-        builder.append(myKey);
-        builder.append(']');
-        return builder.toString();
+        return "EzspSetPreinstalledCbkeData283k1Request []";
     }
 }

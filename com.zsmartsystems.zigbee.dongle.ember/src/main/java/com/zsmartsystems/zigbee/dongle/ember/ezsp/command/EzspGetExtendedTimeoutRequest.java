@@ -34,7 +34,7 @@ public class EzspGetExtendedTimeoutRequest extends EzspFrameRequest {
     private IeeeAddress remoteEui64;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 
