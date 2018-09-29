@@ -420,7 +420,7 @@ public class ZigBeeDongleTiCc2531
 
         AF_REGISTER_SRSP result;
         result = networkManager.sendAFRegister(
-                new AF_REGISTER(endpointId, profileId, (short) 0, (byte) 0, new int[] {}, new int[] {}));
+                new AF_REGISTER(endpointId, profileId, (short) 0, (byte) 0, new int[] {}, new int[] {0x500}));
         // FIX We should retry only when Status != 0xb8 ( Z_APS_DUPLICATE_ENTRY )
         if (result.getStatus() != 0) {
             // TODO We should provide a workaround for the maximum number of registered EndPoint
