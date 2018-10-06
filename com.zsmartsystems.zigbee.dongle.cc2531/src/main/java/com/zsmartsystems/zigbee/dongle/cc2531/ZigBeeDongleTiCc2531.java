@@ -214,18 +214,12 @@ public class ZigBeeDongleTiCc2531
     }
 
     private ZigBeeStatus setSupportedInputClusters(ArrayList<Integer> supportedClusters) {
-        this.supportedInputClusters = new int[supportedClusters.size()];
-        for (int i = 0; i < supportedClusters.size(); i++) {
-            this.supportedInputClusters[i] = supportedClusters.get(i);
-        }
+        supportedInputClusters = supportedClusters.stream().mapToInt(Integer::intValue).toArray();
         return ZigBeeStatus.SUCCESS;
     }
 
     private ZigBeeStatus setSupportedOutputClusters(ArrayList<Integer> supportedClusters) {
-        this.supportedOutputClusters = new int[supportedClusters.size()];
-        for (int i = 0; i < supportedClusters.size(); i++) {
-            this.supportedOutputClusters[i] = supportedClusters.get(i);
-        }
+        supportedOutputClusters = supportedClusters.stream().mapToInt(Integer::intValue).toArray();
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -451,7 +445,7 @@ public class ZigBeeDongleTiCc2531
 
         AF_REGISTER_SRSP result;
         result = networkManager.sendAFRegister(new AF_REGISTER(endpointId, profileId, (short) 0, (byte) 0,
-                this.supportedInputClusters, this.supportedOutputClusters));
+                supportedInputClusters, supportedOutputClusters));
         // FIX We should retry only when Status != 0xb8 ( Z_APS_DUPLICATE_ENTRY )
         if (result.getStatus() != 0) {
             // TODO We should provide a workaround for the maximum number of registered EndPoint
