@@ -70,7 +70,7 @@ public class EzspAddEndpointRequest extends EzspFrameRequest {
     private int[] outputClusterList;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 

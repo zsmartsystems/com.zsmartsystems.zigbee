@@ -33,7 +33,7 @@ public class EzspGetValueRequest extends EzspFrameRequest {
     private EzspValueId valueId;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 

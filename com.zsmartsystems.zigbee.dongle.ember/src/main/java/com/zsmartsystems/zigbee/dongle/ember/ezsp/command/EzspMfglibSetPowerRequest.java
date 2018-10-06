@@ -43,7 +43,7 @@ public class EzspMfglibSetPowerRequest extends EzspFrameRequest {
     private int power;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 

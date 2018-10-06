@@ -37,7 +37,7 @@ public class EzspSetRadioChannelRequest extends EzspFrameRequest {
     private int channel;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 

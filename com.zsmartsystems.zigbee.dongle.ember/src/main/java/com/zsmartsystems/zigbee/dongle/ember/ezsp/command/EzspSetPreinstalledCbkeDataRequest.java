@@ -50,7 +50,7 @@ public class EzspSetPreinstalledCbkeDataRequest extends EzspFrameRequest {
     private EmberPrivateKeyData myKey;
 
     /**
-     * Serialiser used to seialise to binary line data
+     * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
 
