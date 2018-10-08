@@ -34,7 +34,6 @@ public class AshFrame {
     protected int[] dataBuffer;
 
     protected AshFrame() {
-
     }
 
     /**
@@ -288,17 +287,6 @@ public class AshFrame {
         RST,
         RSTACK,
         ERROR
-    }
-
-    public static String frameToString(int[] inputBuffer) {
-        if (inputBuffer == null || inputBuffer.length == 0) {
-            return "";
-        }
-        StringBuilder result = new StringBuilder();
-        for (int i = 1; i < inputBuffer.length - 2; i++) {
-            result.append(String.format("%02X ", inputBuffer[i]));
-        }
-        return result.toString();
     }
 
     public FrameType getFrameType() {
