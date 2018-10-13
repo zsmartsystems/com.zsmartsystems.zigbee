@@ -7,7 +7,9 @@
  */
 package com.zsmartsystems.zigbee.serialization;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
@@ -82,13 +84,21 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                     value[0] = null;
                     break;
                 }
+                byte[] bytes = new byte[stringSize];
                 int length = stringSize;
                 for (int cnt = 0; cnt < stringSize; cnt++) {
+                    bytes[cnt] = (byte) payload[index + cnt];
                     if (payload[index + cnt] == 0) {
                         length = cnt;
+                        break;
                     }
                 }
-                value[0] = new String(payload, index, length);
+                try {
+                    value[0] = new String(Arrays.copyOfRange(bytes, 0, length), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    value[0] = null;
+                    break;
+                }
                 index += stringSize;
                 break;
             case ENDPOINT:
