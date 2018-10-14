@@ -198,6 +198,9 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                     value[0] = Integer.valueOf(s & 0xFFFF);
                 }
                 break;
+            case UNSIGNED_24_BIT_INTEGER:
+                value[0] = payload[index++] + (payload[index++] << 8) + (payload[index++] << 16);
+                break;
             case BITMAP_32_BIT:
             case SIGNED_32_BIT_INTEGER:
             case UNSIGNED_32_BIT_INTEGER:

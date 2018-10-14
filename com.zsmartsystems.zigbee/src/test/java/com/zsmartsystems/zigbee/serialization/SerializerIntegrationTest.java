@@ -170,6 +170,12 @@ public class SerializerIntegrationTest {
     }
 
     @Test
+    public void testDeserialize_UNSIGNED_24_BIT_INTEGER() {
+        int valIn = 0x997186;
+        testSerializer(valIn, ZclDataType.UNSIGNED_24_BIT_INTEGER);
+    }
+
+    @Test
     public void testDeserialize_SIGNED_32_BIT_INTEGER() {
         int valIn = -2345;
         testSerializer(valIn, ZclDataType.SIGNED_32_BIT_INTEGER);
