@@ -163,11 +163,20 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 break;
             case BITMAP_32_BIT:
             case UNSIGNED_32_BIT_INTEGER:
-                final int uintValue = (Integer) data;
-                buffer[length++] = uintValue & 0xFF;
-                buffer[length++] = (uintValue >> 8) & 0xFF;
-                buffer[length++] = (uintValue >> 16) & 0xFF;
-                buffer[length++] = (uintValue >> 24) & 0xFF;
+                final int uint32Value = (Integer) data;
+                buffer[length++] = uint32Value & 0xFF;
+                buffer[length++] = (uint32Value >> 8) & 0xFF;
+                buffer[length++] = (uint32Value >> 16) & 0xFF;
+                buffer[length++] = (uint32Value >> 24) & 0xFF;
+                break;
+            case UNSIGNED_48_BIT_INTEGER:
+                final long uint48Value = (Long) data;
+                buffer[length++] = (int) (uint48Value & 0xFF);
+                buffer[length++] = (int) ((uint48Value >> 8) & 0xFF);
+                buffer[length++] = (int) ((uint48Value >> 16) & 0xFF);
+                buffer[length++] = (int) ((uint48Value >> 24) & 0xFF);
+                buffer[length++] = (int) ((uint48Value >> 32) & 0xFF);
+                buffer[length++] = (int) ((uint48Value >> 40) & 0xFF);
                 break;
             case UTCTIME:
                 break;
