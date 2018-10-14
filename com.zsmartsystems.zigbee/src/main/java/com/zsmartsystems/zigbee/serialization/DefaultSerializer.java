@@ -154,6 +154,12 @@ public class DefaultSerializer implements ZigBeeSerializer {
                     buffer[length++] = strByte;
                 }
                 break;
+            case UNSIGNED_24_BIT_INTEGER:
+                final int uint24Value = (Integer) data;
+                buffer[length++] = uint24Value & 0xFF;
+                buffer[length++] = (uint24Value >> 8) & 0xFF;
+                buffer[length++] = (uint24Value >> 16) & 0xFF;
+                break;
             case SIGNED_32_BIT_INTEGER:
                 final int intValue = (Integer) data;
                 buffer[length++] = intValue & 0xFF;
