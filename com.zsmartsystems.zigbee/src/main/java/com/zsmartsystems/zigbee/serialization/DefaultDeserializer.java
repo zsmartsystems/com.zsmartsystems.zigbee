@@ -204,6 +204,11 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 value[0] = payload[index++] + (payload[index++] << 8) + (payload[index++] << 16)
                         + (payload[index++] << 24);
                 break;
+            case UNSIGNED_48_BIT_INTEGER:
+                value[0] = (payload[index++]) + ((long) (payload[index++]) << 8) + ((long) (payload[index++]) << 16)
+                        + ((long) (payload[index++]) << 24) + ((long) (payload[index++]) << 32)
+                        + ((long) (payload[index++]) << 40);
+                break;
             case SIGNED_8_BIT_INTEGER:
                 value[0] = Integer.valueOf((byte) payload[index++]);
                 break;
