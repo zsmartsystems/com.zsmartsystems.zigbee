@@ -214,6 +214,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     private ZigBeeTransportState networkState;
 
+    /**
+     * Our local {@link IeeeAddress}
+     */
+    private IeeeAddress localIeeeAddress;
+
+    /**
+     * Our local network address
+     */
+    private int localNwkAddress = 0;
+
     public enum ZigBeeInitializeResponse {
         /**
          * Device is initialized successfully and is currently joined to a network
@@ -298,21 +308,26 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             }
         }
 
-        IeeeAddress address = transport.getIeeeAddress();
-        if (address != null) {
-            ZigBeeNode node = getNode(address);
-            if (node == null) {
-                logger.debug("{}: Adding local coordinator node to network", address);
-                node = new ZigBeeNode(this, address);
-                node.setNetworkAddress(0);
-
-                addNode(node);
-            }
-        }
+        addLocalNode();
 
         networkDiscoverer.startup();
 
         return transportResponse;
+    }
+
+    private void addLocalNode() {
+        Integer nwkAddress = transport.getNwkAddress();
+        IeeeAddress ieeeAddress = transport.getIeeeAddress();
+        if (nwkAddress != null && ieeeAddress != null) {
+            ZigBeeNode node = getNode(ieeeAddress);
+            if (node == null) {
+                logger.debug("{}: Adding local node to network", ieeeAddress);
+                node = new ZigBeeNode(this, ieeeAddress);
+                node.setNetworkAddress(nwkAddress);
+
+                addNode(node);
+            }
+        }
     }
 
     /**
@@ -571,7 +586,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         // Set the source address - should probably be improved!
         // Note that the endpoint is set (currently!) in the transport layer
         // TODO: Use only a single endpoint for HA and fix this here
-        command.setSourceAddress(new ZigBeeEndpointAddress(0));
+        command.setSourceAddress(new ZigBeeEndpointAddress(localNwkAddress));
 
         logger.debug("TX CMD: {}", command);
 
@@ -580,7 +595,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         apsFrame.setSecurityEnabled(command.getApsSecurity());
 
         // TODO: Set the source address correctly?
-        apsFrame.setSourceAddress(0);
+        apsFrame.setSourceAddress(localNwkAddress);
 
         apsFrame.setRadius(31);
 
@@ -868,20 +883,27 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     @Override
     public void setNetworkState(final ZigBeeTransportState state) {
+        NotificationService.execute(new Runnable() {
+            @Override
+            public void run() {
+                setNetworkStateRunnable(state);
+            }
+        });
+    }
+
+    private void setNetworkStateRunnable(final ZigBeeTransportState state) {
         networkState = state;
 
         synchronized (this) {
-            // Notify the listeners
-            for (final ZigBeeNetworkStateListener stateListener : stateListeners) {
-                NotificationService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        stateListener.networkStateUpdated(state);
-                    }
-                });
-            }
-
+            // If the state has changed to online, then we need to add any pending nodes,
+            // and ensure that the local node is added
             if (state == ZigBeeTransportState.ONLINE) {
+                localNwkAddress = transport.getNwkAddress();
+                localIeeeAddress = transport.getIeeeAddress();
+
+                // Make sure that we know the local node, and that the network address is correct.
+                addLocalNode();
+
                 for (final ZigBeeNode node : networkNodes.values()) {
                     for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
                         NotificationService.execute(new Runnable() {
@@ -896,6 +918,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 for (ZigBeeNode node : networkNodes.values()) {
                     node.startDiscovery();
                 }
+            }
+
+            // Now that everything is added, notify the listeners
+            for (final ZigBeeNetworkStateListener stateListener : stateListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        stateListener.networkStateUpdated(state);
+                    }
+                });
             }
         }
     }
@@ -1323,5 +1355,23 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public ZigBeeTransportState getNetworkState() {
         return networkState;
+    }
+
+    /**
+     * Get's the {@link IeeeAddress} of the local node.
+     *
+     * @return the {@link IeeeAddress} of the local node.
+     */
+    public IeeeAddress getLocalIeeeAddress() {
+        return localIeeeAddress;
+    }
+
+    /**
+     * Gets the network address of the local node.
+     *
+     * @return the network address of the local node.
+     */
+    public Integer getLocalNwkAddress() {
+        return localNwkAddress;
     }
 }
