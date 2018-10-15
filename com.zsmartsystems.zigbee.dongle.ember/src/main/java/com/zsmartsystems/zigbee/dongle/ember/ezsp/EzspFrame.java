@@ -14,8 +14,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.*;
 
 /**
@@ -60,17 +58,12 @@ public abstract class EzspFrame {
     /**
      * The maximum supported version of EZSP
      */
-    private static final int EZSP_MAX_VERSION = 6;
+    private static final int EZSP_MAX_VERSION = 7;
 
     /**
      * The current version of EZSP being used
      */
     protected static int ezspVersion = EZSP_MIN_VERSION;
-
-    /**
-     * The maximum supported version of EZSP
-     */
-    private static final int MAX_EZSP_VERSION = 6;
 
     /**
      * Legacy frame ID for EZSP 5+
