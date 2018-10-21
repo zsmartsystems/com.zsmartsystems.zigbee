@@ -321,7 +321,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (nwkAddress != null && ieeeAddress != null) {
             ZigBeeNode node = getNode(ieeeAddress);
             if (node == null) {
-                logger.debug("{}: Adding local node to network", ieeeAddress);
+                logger.debug("{}: Adding local node to network, NWK={}", ieeeAddress, nwkAddress);
                 node = new ZigBeeNode(this, ieeeAddress);
                 node.setNetworkAddress(nwkAddress);
 
@@ -892,17 +892,20 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     private void setNetworkStateRunnable(final ZigBeeTransportState state) {
-        networkState = state;
-
         synchronized (this) {
+            logger.debug("Network state is updated to {}", state);
+
             // If the state has changed to online, then we need to add any pending nodes,
             // and ensure that the local node is added
-            if (state == ZigBeeTransportState.ONLINE) {
+            if (state != networkState && state == ZigBeeTransportState.ONLINE) {
                 localNwkAddress = transport.getNwkAddress();
                 localIeeeAddress = transport.getIeeeAddress();
 
                 // Make sure that we know the local node, and that the network address is correct.
                 addLocalNode();
+
+                // Globally update the state
+                networkState = state;
 
                 for (final ZigBeeNode node : networkNodes.values()) {
                     for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
@@ -925,7 +928,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 }
             }
 
-            // Now that everything is added, notify the listeners
+            // Now that everything is added and started, notify the listeners that the state has updated
             for (final ZigBeeNetworkStateListener stateListener : stateListeners) {
                 NotificationService.execute(new Runnable() {
                     @Override
@@ -1251,11 +1254,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             networkNodes.put(node.getIeeeAddress(), node);
         }
 
-        if (networkState != ZigBeeTransportState.ONLINE) {
-            return;
-        }
-
         synchronized (this) {
+            if (networkState != ZigBeeTransportState.ONLINE) {
+                return;
+            }
+
             for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
                 NotificationService.execute(new Runnable() {
                     @Override
@@ -1269,6 +1272,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 networkStateSerializer.serialize(this);
             }
         }
+
+        node.startDiscovery();
     }
 
     /**
