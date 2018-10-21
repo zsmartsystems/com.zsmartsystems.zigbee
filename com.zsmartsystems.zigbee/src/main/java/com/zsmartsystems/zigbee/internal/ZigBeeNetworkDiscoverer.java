@@ -399,7 +399,7 @@ public class ZigBeeNetworkDiscoverer
     @Override
     public void networkStateUpdated(ZigBeeTransportState state) {
         if (state == ZigBeeTransportState.ONLINE && !initialized) {
-            logger.debug("Network discovery task: initialzed");
+            logger.debug("Network discovery task: initialized");
             initialized = true;
 
             networkManager.addCommandListener(this);
@@ -407,7 +407,7 @@ public class ZigBeeNetworkDiscoverer
 
             // Start discovery from root node.
             startNodeDiscovery(0);
-        } else if (initialized) {
+        } else if (state != ZigBeeTransportState.ONLINE && initialized) {
             logger.debug("Network discovery task: uninitialzed");
             initialized = false;
 
