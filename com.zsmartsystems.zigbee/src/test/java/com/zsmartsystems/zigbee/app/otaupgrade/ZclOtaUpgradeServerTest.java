@@ -19,7 +19,7 @@ import java.util.concurrent.Future;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Matchers;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -31,6 +31,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServerStatus;
@@ -70,7 +71,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         Set<ZigBeeEndpoint> devices = new HashSet<ZigBeeEndpoint>();
         devices.add(endpoint);
 
-        Mockito.when(mockedNetworkManager.getNode((IeeeAddress) Matchers.anyObject())).thenReturn(node);
+        Mockito.when(mockedNetworkManager.getNode((IeeeAddress) ArgumentMatchers.anyObject())).thenReturn(node);
         // Mockito.when(mockedNetworkManager.getDevice((ZigBeeAddress) Matchers.anyObject())).thenReturn(endpoint);
         // Mockito.when(mockedNetworkManager.getNodeDevices((IeeeAddress) Matchers.anyObject())).thenReturn(devices);
 
@@ -96,12 +97,12 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
                 return null;
             }
         }).when(mockedNetworkManager).unicast(mockedCommandCaptor.capture(),
-                (ZigBeeTransactionMatcher) Matchers.anyObject());
+                (ZigBeeTransactionMatcher) ArgumentMatchers.anyObject());
 
         ZclOtaUpgradeCluster cluster = new ZclOtaUpgradeCluster(mockedNetworkManager, endpoint);
 
         ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
-        assertTrue(server.appStartup(cluster));
+        assertEquals(ZigBeeStatus.SUCCESS, server.appStartup(cluster));
         server.addListener(this);
 
         ZigBeeOtaFile otaFile = Mockito.mock(ZigBeeOtaFile.class);

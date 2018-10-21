@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.app;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 
 /**
@@ -32,9 +33,9 @@ public interface ZigBeeApplication {
      * the application is registered.
      *
      * @param cluster The {@link ZclCluster} which is the client we are using
-     * @return true if the application started successfully
+     * @return {@link ZigBeeStatus#SUCCESS} if the application started successfully
      */
-    public boolean appStartup(final ZclCluster cluster);
+    public ZigBeeStatus appStartup(final ZclCluster cluster);
 
     /**
      * Shuts down an application. The application should perform any shutdown and cleanup as required.

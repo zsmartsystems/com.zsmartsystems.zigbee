@@ -918,6 +918,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 for (ZigBeeNode node : networkNodes.values()) {
                     node.startDiscovery();
                 }
+
+                // Start the extensions
+                for (ZigBeeNetworkExtension extension : extensions) {
+                    extension.extensionStartup();
+                }
             }
 
             // Now that everything is added, notify the listeners
@@ -1343,7 +1348,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public void addExtension(ZigBeeNetworkExtension extension) {
         extensions.add(extension);
-        extension.extensionStartup(this);
+        extension.extensionInitialize(this);
     }
 
     /**

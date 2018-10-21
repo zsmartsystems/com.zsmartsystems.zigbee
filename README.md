@@ -140,6 +140,12 @@ An example of a simple extension is the ```ZigBeeOtaUpgradeExtension``` which si
 
 A more complex extension could for example handle the CIE IAS zones, providing a cross device implementation to coordinate the allocation of zones and handling of alarms.
 
+The lifecycle of an extension is as follows -:
+
+* ```extensionInitialize``` is called when the extension is first registered
+* ```extensionStartup``` is called when the network is online and the extension may run operationally.
+* ```extensionShutdown``` is called when the extension is closed. The framework will do this when it is shutting down.
+
 Extensions should normally register as a ```ZigBeeNetworkNodeListener``` to get notified when a node is discovered or removed from the network so that they can add support to the node. The extension will then register a client or server application with the endpoint. The client/server application may register for callbacks with the endpoint (or node).
 
 Extension may want to register a supported cluster with the ```ZigBeeNetworkManager.addSupportedCluster()``` method so that the services provided are discoverable.
