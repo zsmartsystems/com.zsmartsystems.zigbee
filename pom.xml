@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.zsmartsystems</groupId>
@@ -21,45 +23,45 @@
 
 	<distributionManagement>
 		<repository>
-            <id>bintray-zsmartsystems-com.zsmartsystems</id>
-            <name>zsmartsystems-com.zsmartsystems</name>
-            <url>https://api.bintray.com/maven/zsmartsystems/com.zsmartsystems/zigbee/;publish=1</url>
+			<id>bintray-zsmartsystems-com.zsmartsystems</id>
+			<name>zsmartsystems-com.zsmartsystems</name>
+			<url>https://api.bintray.com/maven/zsmartsystems/com.zsmartsystems/zigbee/;publish=1</url>
 		</repository>
 	</distributionManagement>
 
 	<modules>
-        <module>com.zsmartsystems.zigbee</module>
-        <module>com.zsmartsystems.zigbee.autocode</module>
-        <module>com.zsmartsystems.zigbee.dongle.xbee</module>
-        <module>com.zsmartsystems.zigbee.dongle.xbee.autocode</module>
+		<module>com.zsmartsystems.zigbee</module>
+		<module>com.zsmartsystems.zigbee.autocode</module>
+		<module>com.zsmartsystems.zigbee.dongle.xbee</module>
+		<module>com.zsmartsystems.zigbee.dongle.xbee.autocode</module>
 		<module>com.zsmartsystems.zigbee.dongle.cc2531</module>
 		<module>com.zsmartsystems.zigbee.dongle.ember</module>
 		<module>com.zsmartsystems.zigbee.dongle.conbee</module>
-        <module>com.zsmartsystems.zigbee.dongle.telegesis</module>
-        <module>com.zsmartsystems.zigbee.dongle.telegesis.autocode</module>
-        <module>com.zsmartsystems.zigbee.console</module>
-        <module>com.zsmartsystems.zigbee.console.ember</module>
-        <module>com.zsmartsystems.zigbee.console.main</module>
-        <module>com.zsmartsystems.zigbee.console.telegesis</module>
+		<module>com.zsmartsystems.zigbee.dongle.telegesis</module>
+		<module>com.zsmartsystems.zigbee.dongle.telegesis.autocode</module>
+		<module>com.zsmartsystems.zigbee.console</module>
+		<module>com.zsmartsystems.zigbee.console.ember</module>
+		<module>com.zsmartsystems.zigbee.console.main</module>
+		<module>com.zsmartsystems.zigbee.console.telegesis</module>
 		<module>com.zsmartsystems.zigbee.serial</module>
 		<module>com.zsmartsystems.zigbee.test</module>
 		<module>releng/p2repo</module>
 	</modules>
-    
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.5</version>
-                <configuration>
-                    <failOnError>false</failOnError>
-                    <xmlOutput>true</xmlOutput>
-                    <xmlOutputDirectory>${basedir}/target/site</xmlOutputDirectory>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.5</version>
+				<configuration>
+					<failOnError>false</failOnError>
+					<xmlOutput>true</xmlOutput>
+					<xmlOutputDirectory>${basedir}/target/site</xmlOutputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 
 	<build>
 		<plugins>
@@ -80,15 +82,15 @@
 				<configuration>
 					<failOnError>false</failOnError>
 				</configuration>
-                <executions>
-                    <execution>
-                        <id>javadoc-jar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
+				<executions>
+					<execution>
+						<id>javadoc-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
@@ -114,12 +116,12 @@
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 				</configuration>
 			</plugin>
-            
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.5</version>
-            </plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.5</version>
+			</plugin>
 
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -148,6 +150,9 @@
 					<includes>
 						<include>*/src/**/*.java</include>
 					</includes>
+					<excludes>
+						<exclude>*/src/**/package-info.java</exclude>
+					</excludes>
 					<properties>
 						<year>2018</year>
 					</properties>
@@ -162,50 +167,50 @@
 				</executions>
 			</plugin>
 
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
-                <configuration>
-                    <archive>
-                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>
-                </configuration>
-            </plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<archive>
+						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
 
-            <plugin>
+			<plugin>
 				<groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <version>3.5.0</version>
-                <executions>
-                    <execution>
-                        <id>bundle-manifest</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>manifest</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <instructions>
-                        <Bundle-Name>${project.artifactId}</Bundle-Name>
-                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Bundle-Description>${pom.name}</Bundle-Description>
-                    </instructions>
-                </configuration>
-            </plugin>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>3.5.0</version>
+				<executions>
+					<execution>
+						<id>bundle-manifest</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<instructions>
+						<Bundle-Name>${project.artifactId}</Bundle-Name>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Description>${pom.name}</Bundle-Description>
+					</instructions>
+				</configuration>
+			</plugin>
 
 		</plugins>
 
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>3.7</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.7</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
 	</build>
 
 	<dependencies>

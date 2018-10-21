@@ -114,7 +114,7 @@ public class ZigBeeNetworkDiscoverer
      * Starts up ZigBee network discoverer. This adds a listener to wait for the network to go online.
      */
     public void startup() {
-        logger.debug("Network discovery task starting");
+        logger.debug("Network discovery task: starting");
         networkManager.addNetworkStateListener(this);
     }
 
@@ -122,7 +122,7 @@ public class ZigBeeNetworkDiscoverer
      * Shuts down ZigBee network discoverer.
      */
     public void shutdown() {
-        logger.debug("Network discovery task shutdown");
+        logger.debug("Network discovery task: shutdown");
         networkManager.removeCommandListener(this);
         networkManager.removeAnnounceListener(this);
         networkManager.removeNetworkStateListener(this);
@@ -200,6 +200,11 @@ public class ZigBeeNetworkDiscoverer
      * @param nodeAddress the network address of the node to discover
      */
     public void rediscoverNode(final int nodeAddress) {
+        if (!initialized) {
+            logger.debug("Network discovery task: can't perform rediscovery on {} until initialization complete.",
+                    nodeAddress);
+            return;
+        }
         startNodeDiscovery(nodeAddress);
     }
 
@@ -210,6 +215,12 @@ public class ZigBeeNetworkDiscoverer
      * @param ieeeAddress the {@link IeeeAddress} of the node to discover
      */
     public void rediscoverNode(final IeeeAddress ieeeAddress) {
+        if (!initialized) {
+            logger.debug("Network discovery task: can't perform rediscovery on {} until initialization complete.",
+                    ieeeAddress);
+            return;
+        }
+
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -388,6 +399,7 @@ public class ZigBeeNetworkDiscoverer
     @Override
     public void networkStateUpdated(ZigBeeTransportState state) {
         if (state == ZigBeeTransportState.ONLINE && !initialized) {
+            logger.debug("Network discovery task: initialzed");
             initialized = true;
 
             networkManager.addCommandListener(this);
@@ -395,6 +407,12 @@ public class ZigBeeNetworkDiscoverer
 
             // Start discovery from root node.
             startNodeDiscovery(0);
+        } else if (initialized) {
+            logger.debug("Network discovery task: uninitialzed");
+            initialized = false;
+
+            networkManager.removeCommandListener(this);
+            networkManager.removeAnnounceListener(this);
         }
     }
 }

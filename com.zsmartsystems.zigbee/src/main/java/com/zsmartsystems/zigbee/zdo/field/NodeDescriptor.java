@@ -368,7 +368,8 @@ public class NodeDescriptor {
     }
 
     /**
-     * Get the stack compliance level
+     * Get the stack compliance level. Note that this was added at R21, and will be 0 for devices that are older than
+     * R21.
      *
      * @return the stack compliance level
      */
