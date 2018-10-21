@@ -300,13 +300,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return {@link ZigBeeStatus}
      */
     public ZigBeeStatus initialize() {
-        ZigBeeStatus transportResponse = transport.initialize();
-
         synchronized (this) {
             if (networkStateSerializer != null) {
                 networkStateSerializer.deserialize(this);
             }
         }
+
+        ZigBeeStatus transportResponse = transport.initialize();
 
         addLocalNode();
 
@@ -1264,8 +1264,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 networkStateSerializer.serialize(this);
             }
         }
-
-        node.startDiscovery();
     }
 
     /**
