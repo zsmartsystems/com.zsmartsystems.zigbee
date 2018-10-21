@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
@@ -149,12 +150,12 @@ public class ZclIasZoneClient implements ZigBeeApplication {
     }
 
     @Override
-    public boolean appStartup(ZclCluster cluster) {
+    public ZigBeeStatus appStartup(ZclCluster cluster) {
         iasZoneCluster = (ZclIasZoneCluster) cluster;
 
         initialise();
 
-        return true;
+        return ZigBeeStatus.SUCCESS;
     }
 
     private void initialise() {

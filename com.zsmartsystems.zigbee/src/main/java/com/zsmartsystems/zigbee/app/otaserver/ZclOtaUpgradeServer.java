@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
@@ -233,10 +234,10 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
     }
 
     @Override
-    public boolean appStartup(final ZclCluster cluster) {
+    public ZigBeeStatus appStartup(final ZclCluster cluster) {
         this.cluster = (ZclOtaUpgradeCluster) cluster;
 
-        return true;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override

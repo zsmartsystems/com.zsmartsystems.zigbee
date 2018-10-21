@@ -11,6 +11,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 
@@ -27,12 +28,17 @@ public class ZigBeeOtaUpgradeExtension implements ZigBeeNetworkExtension, ZigBee
     private ZigBeeNetworkManager networkManager;
 
     @Override
-    public boolean extensionStartup(ZigBeeNetworkManager networkManager) {
+    public ZigBeeStatus extensionInitialize(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
 
         networkManager.addSupportedCluster(ZclOtaUpgradeCluster.CLUSTER_ID);
         networkManager.addNetworkNodeListener(this);
-        return false;
+        return ZigBeeStatus.SUCCESS;
+    }
+
+    @Override
+    public ZigBeeStatus extensionStartup() {
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
