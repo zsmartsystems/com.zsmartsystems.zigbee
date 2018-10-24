@@ -239,7 +239,7 @@ public class ZigBeeNetworkDiscoverer
                         request.setDestinationAddress(
                                 new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_RX_ON.getKey()));
                         CommandResult response;
-                        response = networkManager.unicast(request, request).get();
+                        response = networkManager.sendTransaction(request, request).get();
 
                         final NetworkAddressResponse nwkAddressResponse = response.getResponse();
                         if (nwkAddressResponse != null && nwkAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
@@ -340,7 +340,7 @@ public class ZigBeeNetworkDiscoverer
                 ieeeAddressRequest.setRequestType(1);
                 ieeeAddressRequest.setStartIndex(startIndex);
                 ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
-                CommandResult response = networkManager.unicast(ieeeAddressRequest, ieeeAddressRequest).get();
+                CommandResult response = networkManager.sendTransaction(ieeeAddressRequest, ieeeAddressRequest).get();
                 if (response.isError()) {
                     return false;
                 }

@@ -374,7 +374,7 @@ public class ZigBeeNodeTest {
         node.setNodeDescriptor(descriptor);
         assertFalse(node.isDiscovered());
 
-        node.addEndpoint(new ZigBeeEndpoint(Mockito.mock(ZigBeeNetworkManager.class), node, 1));
+        node.addEndpoint(new ZigBeeEndpoint(node, 1));
         assertTrue(node.isDiscovered());
     }
 }

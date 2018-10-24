@@ -460,8 +460,8 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
         ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress("12345678990ABCDEF"));
         node.setNetworkAddress(12345);
-        ZigBeeEndpoint endpoint = new ZigBeeEndpoint(networkManager, node, 1);
-        ZclOnOffCluster cluster = new ZclOnOffCluster(networkManager, endpoint);
+        ZigBeeEndpoint endpoint = new ZigBeeEndpoint(node, 1);
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
 
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
 

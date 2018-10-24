@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.doorlock;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  * Lock Door Response value object class.
@@ -21,16 +21,9 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * Cluster: <b>Door Lock</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Door Lock cluster.
  * <p>
- * This command is sent in response to a Lock command with one status byte payload. The Status
- * field SHALL be set to SUCCESS or FAILURE.
- * <p>
- * The status byte only indicates if the message has received successfully. To determine the
- * lock and/or door status, the client SHOULD query to [Lock State attribute] and [Door State
- * attribute]
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-08-13T16:25:39Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:39:59Z")
 public class LockDoorResponse extends ZclCommand {
     /**
      * Status command message field.
@@ -42,7 +35,7 @@ public class LockDoorResponse extends ZclCommand {
      */
     public LockDoorResponse() {
         genericCommand = false;
-        clusterId = 0x0101;
+        clusterId = 257;
         commandId = 0;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }

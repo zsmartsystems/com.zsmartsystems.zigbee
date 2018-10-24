@@ -77,7 +77,7 @@ public class ZigBeeNetworkDiscovererTest {
                 commandFuture.set(result);
                 return commandFuture;
             }
-        }).when(networkManager).unicast(ArgumentMatchers.any(ZigBeeCommand.class),
+        }).when(networkManager).sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class),
                 ArgumentMatchers.any(ZigBeeTransactionMatcher.class));
 
         Mockito.doAnswer(new Answer<Void>() {

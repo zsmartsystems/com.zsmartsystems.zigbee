@@ -27,7 +27,6 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
-import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dao.ZclClusterDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
@@ -64,11 +63,6 @@ public abstract class ZclCluster {
      * The logger
      */
     private Logger logger = LoggerFactory.getLogger(ZclCluster.class);
-
-    /**
-     * The {@link ZigBeeNetworkManager} to which this device belongs
-     */
-    private final ZigBeeNetworkManager zigbeeManager;
 
     /**
      * The {@link ZigBeeEndpoint} to which this cluster belongs
@@ -147,9 +141,7 @@ public abstract class ZclCluster {
      */
     protected abstract Map<Integer, ZclAttribute> initializeAttributes();
 
-    public ZclCluster(ZigBeeNetworkManager zigbeeManager, ZigBeeEndpoint zigbeeEndpoint, int clusterId,
-            String clusterName) {
-        this.zigbeeManager = zigbeeManager;
+    public ZclCluster(ZigBeeEndpoint zigbeeEndpoint, int clusterId, String clusterName) {
         this.zigbeeEndpoint = zigbeeEndpoint;
         this.clusterId = clusterId;
         this.clusterName = clusterName;
@@ -157,14 +149,13 @@ public abstract class ZclCluster {
     }
 
     protected Future<CommandResult> send(ZclCommand command) {
-        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
         if (isClient()) {
             command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         }
 
         command.setApsSecurity(apsSecurityRequired);
 
-        return zigbeeManager.unicast(command, new ZclTransactionMatcher());
+        return zigbeeEndpoint.sendTransaction(command, new ZclTransactionMatcher());
     }
 
     /**
@@ -480,16 +471,7 @@ public abstract class ZclCluster {
         command.setDstAddrMode(3); // 64 bit addressing
         command.setDstAddress(address);
         command.setDstEndpoint(endpointId);
-        return zigbeeManager.unicast(command, new BindRequest());
-    }
-
-    /**
-     * Adds a binding from the cluster to the local destination..
-     *
-     * @return Command future
-     */
-    public Future<CommandResult> bind() {
-        return bind(zigbeeManager.getNode(0).getIeeeAddress(), 1);
+        return zigbeeEndpoint.sendTransaction(command, new BindRequest());
     }
 
     /**
@@ -508,16 +490,7 @@ public abstract class ZclCluster {
         command.setDstAddrMode(3); // 64 bit addressing
         command.setDstAddress(address);
         command.setDstEndpoint(endpointId);
-        return zigbeeManager.unicast(command, new UnbindRequest());
-    }
-
-    /**
-     * Removes a binding from the cluster to the local destination..
-     *
-     * @return Command future
-     */
-    public Future<CommandResult> unbind() {
-        return unbind(zigbeeManager.getNode(0).getIeeeAddress(), 1);
+        return zigbeeEndpoint.sendTransaction(command, new UnbindRequest());
     }
 
     /**
@@ -535,7 +508,7 @@ public abstract class ZclCluster {
         defaultResponse.setClusterId(clusterId);
         defaultResponse.setStatusCode(status);
 
-        zigbeeManager.sendCommand(defaultResponse);
+        zigbeeEndpoint.sendTransaction(defaultResponse);
     }
 
     /**

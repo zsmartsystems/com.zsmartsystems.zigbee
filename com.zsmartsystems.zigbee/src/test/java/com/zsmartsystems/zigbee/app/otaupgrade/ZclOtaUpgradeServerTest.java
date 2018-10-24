@@ -60,7 +60,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         ZigBeeNode node = new ZigBeeNode(mockedNetworkManager, ieeeAddress);
         node.setNetworkAddress(networkAddress.getAddress());
         node.setNodeDescriptor(nodeDescriptor);
-        ZigBeeEndpoint endpoint = new ZigBeeEndpoint(mockedNetworkManager, node, networkAddress.getEndpoint());
+        ZigBeeEndpoint endpoint = new ZigBeeEndpoint(node, networkAddress.getEndpoint());
         // device.setIeeeAddress(ieeeAddress);
         List<Integer> outClusters = new ArrayList<Integer>();
         outClusters.add(ZclOtaUpgradeCluster.CLUSTER_ID);
@@ -96,10 +96,10 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
             public Future<CommandResult> answer(InvocationOnMock invocation) {
                 return null;
             }
-        }).when(mockedNetworkManager).unicast(mockedCommandCaptor.capture(),
+        }).when(mockedNetworkManager).sendTransaction(mockedCommandCaptor.capture(),
                 (ZigBeeTransactionMatcher) ArgumentMatchers.anyObject());
 
-        ZclOtaUpgradeCluster cluster = new ZclOtaUpgradeCluster(mockedNetworkManager, endpoint);
+        ZclOtaUpgradeCluster cluster = new ZclOtaUpgradeCluster(endpoint);
 
         ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
         assertEquals(ZigBeeStatus.SUCCESS, server.appStartup(cluster));

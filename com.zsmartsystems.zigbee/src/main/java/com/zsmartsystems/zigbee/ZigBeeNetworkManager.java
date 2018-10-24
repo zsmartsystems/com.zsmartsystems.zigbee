@@ -36,6 +36,7 @@ import com.zsmartsystems.zigbee.internal.ClusterMatcher;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeCommandNotifier;
 import com.zsmartsystems.zigbee.internal.ZigBeeNetworkDiscoverer;
+import com.zsmartsystems.zigbee.internal.ZigBeeNodeServiceDiscoverer;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
@@ -189,6 +190,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * A Set used to remember if node discovery has been completed. This is used to manage the lifecycle notifications.
      */
     private Set<IeeeAddress> nodeDiscoveryComplete = Collections.synchronizedSet(new HashSet<IeeeAddress>());
+
+    /**
+     *
+     */
+    private final Map<IeeeAddress, ZigBeeNodeServiceDiscoverer> nodeDiscovery = new HashMap<>();
 
     /**
      * The serializer class used to serialize commands to data packets
@@ -606,7 +612,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         return transport.getVersionString();
     }
 
-    @Override
     public int sendCommand(ZigBeeCommand command) {
         // Create the application frame
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
@@ -958,9 +963,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                     }
                 }
 
-                for (ZigBeeNode node : networkNodes.values()) {
-                    node.startDiscovery();
-                }
+                // TODO:
+                // for (ZigBeeNode node : networkNodes.values()) {
+                // node.startDiscovery();
+                // }
 
                 // Start the extensions
                 for (ZigBeeNetworkExtension extension : extensions) {
@@ -993,20 +999,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             return broadcast(command);
         } else {
             final ZigBeeTransactionMatcher responseMatcher = new ZclTransactionMatcher();
-            return unicast(command, responseMatcher);
+            return sendTransaction(command, responseMatcher);
         }
-    }
-
-    /**
-     * Sends {@link ZigBeeCommand} command and uses the {@link ZigBeeTransactionMatcher} to match the response.
-     *
-     * @param command the {@link ZigBeeCommand}
-     * @param responseMatcher the {@link ZigBeeTransactionMatcher}
-     * @return the {@link CommandResult} future.
-     */
-    public Future<CommandResult> unicast(final ZigBeeCommand command, final ZigBeeTransactionMatcher responseMatcher) {
-        ZigBeeTransaction transaction = new ZigBeeTransaction(this);
-        return transaction.sendTransaction(command, responseMatcher);
     }
 
     /**
@@ -1103,7 +1097,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             @Override
             public void run() {
                 try {
-                    CommandResult response = unicast(command, command).get();
+                    CommandResult response = sendTransaction(command, command).get();
                     if (response.getStatusCode() == 0) {
                         ZigBeeNode node = getNode(leaveAddress);
                         if (node != null) {
@@ -1313,7 +1307,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             }
         }
 
-        node.startDiscovery();
+        ZigBeeNodeServiceDiscoverer nodeDiscoverer = new ZigBeeNodeServiceDiscoverer(this, node);
+        nodeDiscovery.put(node.getIeeeAddress(), nodeDiscoverer);
+        nodeDiscoverer.startDiscovery();
     }
 
     /**
@@ -1438,5 +1434,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public Integer getLocalNwkAddress() {
         return localNwkAddress;
+    }
+
+    @Override
+    public void sendTransaction(ZigBeeCommand command) {
+        sendCommand(command);
+    }
+
+    @Override
+    public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
+        ZigBeeTransaction transaction = new ZigBeeTransaction(this);
+        return transaction.sendTransaction(command, responseMatcher);
     }
 }

@@ -124,7 +124,7 @@ public class ZigBeeEndpointTest {
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
         ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress());
         node.setNetworkAddress(1234);
-        return new ZigBeeEndpoint(networkManager, node, 5);
+        return new ZigBeeEndpoint(node, 5);
     }
 
 }

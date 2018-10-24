@@ -44,6 +44,8 @@ import com.zsmartsystems.zigbee.zdo.command.PowerDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.CurrentPowerModeType;
 import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
 
@@ -166,7 +168,7 @@ public class ZigBeeNodeServiceDiscoverer {
      *
      * @param newTasks a set of {@link NodeDiscoveryTask}s to be performed
      */
-    public void startDiscovery(Set<NodeDiscoveryTask> newTasks) {
+    private void startDiscovery(Set<NodeDiscoveryTask> newTasks) {
         // Tasks are managed in a queue. The worker thread will only remove the task from the queue once the task is
         // complete. When no tasks are left in the queue, the worker thread will exit.
         synchronized (discoveryTasks) {
@@ -244,7 +246,7 @@ public class ZigBeeNodeServiceDiscoverer {
         networkAddressRequest.setDestinationAddress(
                 new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_ALL_DEVICES.getKey()));
 
-        CommandResult response = networkManager.unicast(networkAddressRequest, networkAddressRequest).get();
+        CommandResult response = networkManager.sendTransaction(networkAddressRequest, networkAddressRequest).get();
         final NetworkAddressResponse networkAddressResponse = (NetworkAddressResponse) response.getResponse();
         logger.debug("{}: Node SVC Discovery NetworkAddressRequest returned {}", node.getNetworkAddress(),
                 networkAddressResponse);
@@ -280,7 +282,7 @@ public class ZigBeeNodeServiceDiscoverer {
             ieeeAddressRequest.setRequestType(1);
             ieeeAddressRequest.setStartIndex(startIndex);
             ieeeAddressRequest.setNwkAddrOfInterest(node.getNetworkAddress());
-            CommandResult response = networkManager.unicast(ieeeAddressRequest, ieeeAddressRequest).get();
+            CommandResult response = networkManager.sendTransaction(ieeeAddressRequest, ieeeAddressRequest).get();
 
             final IeeeAddressResponse ieeeAddressResponse = response.getResponse();
             logger.debug("{}: Node SVC Discovery IeeeAddressResponse returned {}", node.getIeeeAddress(),
@@ -310,7 +312,7 @@ public class ZigBeeNodeServiceDiscoverer {
         nodeDescriptorRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
         nodeDescriptorRequest.setNwkAddrOfInterest(node.getNetworkAddress());
 
-        CommandResult response = networkManager.unicast(nodeDescriptorRequest, nodeDescriptorRequest).get();
+        CommandResult response = networkManager.sendTransaction(nodeDescriptorRequest, nodeDescriptorRequest).get();
         final NodeDescriptorResponse nodeDescriptorResponse = (NodeDescriptorResponse) response.getResponse();
         logger.debug("{}: Node SVC Discovery NodeDescriptorResponse returned {}", node.getIeeeAddress(),
                 nodeDescriptorResponse);
@@ -339,7 +341,7 @@ public class ZigBeeNodeServiceDiscoverer {
         powerDescriptorRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
         powerDescriptorRequest.setNwkAddrOfInterest(node.getNetworkAddress());
 
-        CommandResult response = networkManager.unicast(powerDescriptorRequest, powerDescriptorRequest).get();
+        CommandResult response = networkManager.sendTransaction(powerDescriptorRequest, powerDescriptorRequest).get();
         final PowerDescriptorResponse powerDescriptorResponse = (PowerDescriptorResponse) response.getResponse();
         logger.debug("{}: Node SVC Discovery PowerDescriptorResponse returned {}", node.getIeeeAddress(),
                 powerDescriptorResponse);
@@ -370,7 +372,7 @@ public class ZigBeeNodeServiceDiscoverer {
         activeEndpointsRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
         activeEndpointsRequest.setNwkAddrOfInterest(node.getNetworkAddress());
 
-        CommandResult response = networkManager.unicast(activeEndpointsRequest, activeEndpointsRequest).get();
+        CommandResult response = networkManager.sendTransaction(activeEndpointsRequest, activeEndpointsRequest).get();
         final ActiveEndpointsResponse activeEndpointsResponse = (ActiveEndpointsResponse) response.getResponse();
         logger.debug("{}: Node SVC Discovery ActiveEndpointsResponse returned {}", node.getIeeeAddress(), response);
         if (activeEndpointsResponse == null) {
@@ -413,7 +415,7 @@ public class ZigBeeNodeServiceDiscoverer {
             neighborRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
             neighborRequest.setStartIndex(startIndex);
 
-            CommandResult response = networkManager.unicast(neighborRequest, neighborRequest).get();
+            CommandResult response = networkManager.sendTransaction(neighborRequest, neighborRequest).get();
             final ManagementLqiResponse neighborResponse = response.getResponse();
             logger.debug("{}: Node SVC Discovery ManagementLqiRequest response {}", node.getIeeeAddress(), response);
             if (neighborResponse == null) {
@@ -467,7 +469,7 @@ public class ZigBeeNodeServiceDiscoverer {
             routeRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
             routeRequest.setStartIndex(startIndex);
 
-            CommandResult response = networkManager.unicast(routeRequest, routeRequest).get();
+            CommandResult response = networkManager.sendTransaction(routeRequest, routeRequest).get();
             final ManagementRoutingResponse routingResponse = response.getResponse();
             logger.debug("{}: Node SVC Discovery ManagementRoutingRequest returned {}", node.getIeeeAddress(),
                     response);
@@ -513,7 +515,7 @@ public class ZigBeeNodeServiceDiscoverer {
         simpleDescriptorRequest.setNwkAddrOfInterest(node.getNetworkAddress());
         simpleDescriptorRequest.setEndpoint(endpointId);
 
-        CommandResult response = networkManager.unicast(simpleDescriptorRequest, simpleDescriptorRequest).get();
+        CommandResult response = networkManager.sendTransaction(simpleDescriptorRequest, simpleDescriptorRequest).get();
 
         final SimpleDescriptorResponse simpleDescriptorResponse = (SimpleDescriptorResponse) response.getResponse();
         logger.debug("{}: Node SVC Discovery SimpleDescriptorResponse returned {}", node.getIeeeAddress(),
@@ -523,7 +525,7 @@ public class ZigBeeNodeServiceDiscoverer {
         }
 
         if (simpleDescriptorResponse.getStatus() == ZdoStatus.SUCCESS) {
-            ZigBeeEndpoint endpoint = new ZigBeeEndpoint(networkManager, node, endpointId);
+            ZigBeeEndpoint endpoint = new ZigBeeEndpoint(node, endpointId);
             SimpleDescriptor simpleDescriptor = simpleDescriptorResponse.getSimpleDescriptor();
             endpoint.setProfileId(simpleDescriptor.getProfileId());
             endpoint.setDeviceId(simpleDescriptor.getDeviceId());
@@ -611,5 +613,46 @@ public class ZigBeeNodeServiceDiscoverer {
                 logger.error("{}: Node SVC Discovery exception: ", node.getIeeeAddress(), e);
             }
         }
+    }
+
+    /**
+     * Starts service discovery for the node.
+     */
+    public void startDiscovery() {
+        Set<NodeDiscoveryTask> tasks = new HashSet<NodeDiscoveryTask>();
+
+        // Always request the network address - in case it's changed
+        tasks.add(NodeDiscoveryTask.NWK_ADDRESS);
+
+        if (node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN) {
+            tasks.add(NodeDiscoveryTask.NODE_DESCRIPTOR);
+        }
+
+        if (node.getPowerDescriptor().getCurrentPowerMode() == CurrentPowerModeType.UNKNOWN) {
+            tasks.add(NodeDiscoveryTask.POWER_DESCRIPTOR);
+        }
+
+        if (node.getEndpoints().size() == 0 && node.getNetworkAddress() != 0) {
+            tasks.add(NodeDiscoveryTask.ACTIVE_ENDPOINTS);
+        }
+
+        tasks.add(NodeDiscoveryTask.NEIGHBORS);
+
+        startDiscovery(tasks);
+    }
+
+    /**
+     * Starts service discovery for the node in order to update the mesh
+     */
+    public void updateMesh() {
+        Set<NodeDiscoveryTask> tasks = new HashSet<NodeDiscoveryTask>();
+
+        tasks.add(NodeDiscoveryTask.NEIGHBORS);
+
+        if (node.getNodeDescriptor().getLogicalType() != LogicalType.END_DEVICE) {
+            tasks.add(NodeDiscoveryTask.ROUTES);
+        }
+
+        startDiscovery(tasks);
     }
 }

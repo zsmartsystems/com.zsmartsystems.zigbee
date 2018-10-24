@@ -1588,7 +1588,6 @@ public class ZclProtocolCodeGenerator {
 
                 // imports.add(packageRoot + ".ZigBeeDestination");
                 imports.add(packageRoot + ".ZigBeeEndpoint");
-                imports.add(packageRoot + ".ZigBeeNetworkManager");
                 if (!cluster.attributes.isEmpty() | !commands.isEmpty()) {
                     imports.add(packageRoot + ".CommandResult");
                 }
@@ -1690,12 +1689,10 @@ public class ZclProtocolCodeGenerator {
                 out.println("    /**");
                 out.println("     * Default constructor to create a " + cluster.clusterName + " cluster.");
                 out.println("     *");
-                out.println("     * @param zigbeeManager {@link ZigBeeNetworkManager}");
                 out.println("     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}");
                 out.println("     */");
-                out.println("    public " + className
-                        + "(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {");
-                out.println("        super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);");
+                out.println("    public " + className + "(final ZigBeeEndpoint zigbeeEndpoint) {");
+                out.println("        super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);");
                 out.println("    }");
 
                 for (final Attribute attribute : cluster.attributes.values()) {

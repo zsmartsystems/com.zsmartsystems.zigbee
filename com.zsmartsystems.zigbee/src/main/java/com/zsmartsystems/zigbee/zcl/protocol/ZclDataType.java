@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-20T09:08:50Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:39:59Z")
 public enum ZclDataType {
     BITMAP_16_BIT("16-bit Bitmap", Integer.class, 0x19, false),
     BITMAP_32_BIT("32-bit Bitmap", Integer.class, 0x1B, false),

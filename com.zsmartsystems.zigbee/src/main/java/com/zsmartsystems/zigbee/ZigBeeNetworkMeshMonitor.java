@@ -73,7 +73,7 @@ public class ZigBeeNetworkMeshMonitor implements ZigBeeCommandListener {
             @Override
             public void run() {
                 for (ZigBeeNode node : networkManager.getNodes()) {
-                    node.updateMesh();
+                    // node.updateMesh();
                 }
             }
         };
