@@ -202,8 +202,8 @@ public abstract class ZclCluster {
      * @return command future {@link CommandResult}
      */
     public Future<CommandResult> write(final int attribute, final ZclDataType dataType, final Object value) {
-        logger.debug("{}: Writing cluster {}, attribute {}, value {}, as dataType {}", clusterId, attribute, value,
-                dataType);
+        logger.debug("{}: Writing cluster {}, attribute {}, value {}, as dataType {}", zigbeeEndpoint.getIeeeAddress(),
+                clusterId, attribute, value, dataType);
 
         final WriteAttributesCommand command = new WriteAttributesCommand();
 
