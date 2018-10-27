@@ -185,7 +185,9 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
                                     // Check for out of sequence frame number
                                     if (packet.getFrmNum() == ackNum) {
-                                        // Frame was in sequence
+                                        // Frame was in sequence - prepare the response
+                                        ackNum = (ackNum + 1) & 0x07;
+                                        responseFrame = new AshFrameAck(ackNum);
 
                                         // Get the EZSP frame
                                         EzspFrameResponse response = EzspFrame
@@ -196,18 +198,12 @@ public class AshFrameHandler implements EzspProtocolHandler {
                                         } else if (!notifyTransactionComplete(response)) {
                                             // No transactions owned this response, so we pass it to
                                             // our unhandled response handler
-                                            EzspFrame ezspFrame = EzspFrame.createHandler((dataPacket.getDataBuffer()));
-                                            if (stateConnected && ezspFrame != null) {
-                                                frameHandler.handlePacket(ezspFrame);
-                                            }
+                                            handleIncomingFrame(EzspFrame.createHandler((dataPacket.getDataBuffer())));
                                         }
-
-                                        // Update our next expected data frame
-                                        ackNum = (ackNum + 1) & 0x07;
-
-                                        responseFrame = new AshFrameAck(ackNum);
                                     } else if (!dataPacket.getReTx()) {
                                         // Send a NAK - this is out of sequence and not a retransmission
+                                        logger.debug("ASH: Frame out of sequence - expected {}, received {}", ackNum,
+                                                packet.getFrmNum());
                                         responseFrame = new AshFrameNak(ackNum);
                                     } else {
                                         // Send an ACK - this was out of sequence but was a retransmission
@@ -320,6 +316,16 @@ public class AshFrameHandler implements EzspProtocolHandler {
         }
 
         return null;
+    }
+
+    private void handleIncomingFrame(EzspFrame ezspFrame) {
+        if (stateConnected && ezspFrame != null) {
+            try {
+                frameHandler.handlePacket(ezspFrame);
+            } catch (final Exception e) {
+                logger.error("AshFrameHandler Exception processing EZSP frame: ", e);
+            }
+        }
     }
 
     private synchronized void handleReset(AshFrameRstAck rstAck) {
@@ -565,11 +571,12 @@ public class AshFrameHandler implements EzspProtocolHandler {
             }
 
             if (retries++ > ACK_TIMEOUTS) {
+                logger.debug("ASH: Error number of retries exceeded [{}].", retries);
+
                 // Too many retries.
                 // We should alert the upper layer so they can reset the link?
                 reconnect();
 
-                logger.debug("ASH: Error number of retries exceeded [{}].", retries);
                 // drop message from queue
                 sentQueue.poll();
                 retries = 0;
