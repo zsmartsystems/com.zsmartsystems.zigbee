@@ -502,6 +502,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         logger.debug("RX: " + response.toString());
 
         if (response instanceof EzspIncomingMessageHandler) {
+            if (nwkAddress == null) {
+                logger.debug("Ignoring received frame as stack still initialising");
+                return;
+            }
             EzspIncomingMessageHandler incomingMessage = (EzspIncomingMessageHandler) response;
             EmberApsFrame emberApsFrame = incomingMessage.getApsFrame();
 
