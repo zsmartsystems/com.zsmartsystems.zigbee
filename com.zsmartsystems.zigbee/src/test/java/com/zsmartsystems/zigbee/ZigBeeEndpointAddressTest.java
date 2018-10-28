@@ -87,13 +87,13 @@ public class ZigBeeEndpointAddressTest {
         ZigBeeEndpointAddress address2 = new ZigBeeEndpointAddress("25000/33");
         assertEquals(0, address1.compareTo(address2));
         ZigBeeEndpointAddress address3 = new ZigBeeEndpointAddress("25001/33");
-        assertTrue(address1.compareTo(address3) > 0);
+        assertTrue(address1.compareTo(address3) < 0);
         ZigBeeEndpointAddress address4 = new ZigBeeEndpointAddress("24999/33");
-        assertTrue(address1.compareTo(address4) < 0);
+        assertTrue(address1.compareTo(address4) > 0);
         ZigBeeEndpointAddress address5 = new ZigBeeEndpointAddress("25000/30");
-        assertTrue(address1.compareTo(address5) < 0);
+        assertTrue(address1.compareTo(address5) > 0);
         ZigBeeEndpointAddress address6 = new ZigBeeEndpointAddress("25000/36");
-        assertTrue(address1.compareTo(address6) > 0);
+        assertTrue(address1.compareTo(address6) < 0);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class ZigBeeEndpointAddressTest {
         ZigBeeEndpointAddress address2 = new ZigBeeEndpointAddress(25000);
         assertEquals(0, address1.compareTo(address2));
         ZigBeeEndpointAddress address3 = new ZigBeeEndpointAddress("25001");
-        assertEquals(1, address1.compareTo(address3));
+        assertEquals(-1, address1.compareTo(address3));
     }
 
     @Test

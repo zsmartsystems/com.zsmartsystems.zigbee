@@ -124,10 +124,10 @@ public class ZigBeeEndpointAddress extends ZigBeeAddress {
         }
 
         if (thatAddr.getAddress() == getAddress()) {
-            return thatAddr.getEndpoint() - getEndpoint();
+            return getEndpoint() - thatAddr.getEndpoint();
         }
 
-        return thatAddr.getAddress() - getAddress();
+        return getAddress() - thatAddr.getAddress();
     }
 
     @Override
