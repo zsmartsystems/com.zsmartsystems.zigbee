@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import com.zsmartsystems.zigbee.ZigBeeDeviceType;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
@@ -56,10 +57,10 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
         }
 
         Collections.sort(nodeIds);
-        out.println("Network Addr  IEEE Address      Device Type  EP   Profile");
+        out.println("Network Addr  IEEE Address      Logical Type  EP   Profile                    Device Type");
         for (Integer nodeId : nodeIds) {
             ZigBeeNode node = networkManager.getNode(nodeId);
-            out.print(String.format("%-6d  %04X  %s  %-11s  ", node.getNetworkAddress(), node.getNetworkAddress(),
+            out.print(String.format("%-6d  %04X  %s  %-12s  ", node.getNetworkAddress(), node.getNetworkAddress(),
                     node.getIeeeAddress(), node.getLogicalType()));
             List<Integer> endpointIds = new ArrayList<Integer>();
             for (final ZigBeeEndpoint endpoint : node.getEndpoints()) {
@@ -73,8 +74,9 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
                 }
                 first = false;
                 ZigBeeEndpoint endpoint = node.getEndpoint(endpointId);
-                out.println(String.format("%-3d  %s", endpoint.getEndpointId(),
-                        ZigBeeProfileType.getByValue(endpoint.getProfileId())));
+                out.println(String.format("%-3d  %-25s  %s", endpoint.getEndpointId(),
+                        ZigBeeProfileType.getByValue(endpoint.getProfileId()),
+                        ZigBeeDeviceType.getByValue(endpoint.getDeviceId())));
             }
             if (first) {
                 out.println();
