@@ -1357,6 +1357,23 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
+     * Gets a functional extension that has been registered with the network.
+     *
+     * @param <T> {@link ZigBeeNetworkExtension}
+     * @param requestedExtension the {@link ZigBeeNetworkExtension} to get
+     * @return the requested {@link ZigBeeNetworkExtension} if it exists, or null
+     */
+    public <T extends ZigBeeNetworkExtension> ZigBeeNetworkExtension getExtension(Class<T> requestedExtension) {
+        for (ZigBeeNetworkExtension extensionCheck : extensions) {
+            if (requestedExtension.isInstance(extensionCheck)) {
+                return extensionCheck;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Gets the current {@link ZigBeeTransportState}
      *
      * @return the current {@link ZigBeeTransportState}

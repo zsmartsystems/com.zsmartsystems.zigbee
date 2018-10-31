@@ -24,6 +24,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
+import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
@@ -529,4 +531,15 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         System.out.println(apsFrame);
         return apsFrame;
     }
+
+    @Test
+    public void testExtensions() {
+        ZigBeeNetworkManager manager = new ZigBeeNetworkManager(Mockito.mock(ZigBeeTransportTransmit.class));
+
+        manager.addExtension(new ZigBeeOtaUpgradeExtension());
+
+        ZigBeeNetworkExtension returnedExtension = manager.getExtension(ZigBeeOtaUpgradeExtension.class);
+        assertTrue(returnedExtension instanceof ZigBeeOtaUpgradeExtension);
+    }
+
 }
