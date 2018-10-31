@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.internal;
+package com.zsmartsystems.zigbee.app.discovery;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -25,10 +25,8 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
-import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
-import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
@@ -47,8 +45,7 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressResponse;
  *
  * @author Chris Jackson
  */
-public class ZigBeeNetworkDiscoverer
-        implements ZigBeeCommandListener, ZigBeeAnnounceListener, ZigBeeNetworkStateListener {
+public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnnounceListener {
     /**
      * The logger.
      */
@@ -105,7 +102,7 @@ public class ZigBeeNetworkDiscoverer
      *
      * @param networkManager the {@link ZigBeeNetworkManager}
      */
-    public ZigBeeNetworkDiscoverer(final ZigBeeNetworkManager networkManager) {
+    protected ZigBeeNetworkDiscoverer(final ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
 
     }
@@ -113,19 +110,26 @@ public class ZigBeeNetworkDiscoverer
     /**
      * Starts up ZigBee network discoverer. This adds a listener to wait for the network to go online.
      */
-    public void startup() {
+    protected void startup() {
         logger.debug("Network discovery task: starting");
-        networkManager.addNetworkStateListener(this);
+
+        initialized = true;
+
+        networkManager.addCommandListener(this);
+        networkManager.addAnnounceListener(this);
+
+        // Start discovery from root node.
+        startNodeDiscovery(0);
     }
 
     /**
      * Shuts down ZigBee network discoverer.
      */
-    public void shutdown() {
+    protected void shutdown() {
         logger.debug("Network discovery task: shutdown");
         networkManager.removeCommandListener(this);
         networkManager.removeAnnounceListener(this);
-        networkManager.removeNetworkStateListener(this);
+        initialized = false;
     }
 
     /**
@@ -134,7 +138,7 @@ public class ZigBeeNetworkDiscoverer
      *
      * @param retryPeriod the period in milliseconds between retries
      */
-    public void setRetryPeriod(int retryPeriod) {
+    protected void setRetryPeriod(int retryPeriod) {
         this.retryPeriod = retryPeriod;
     }
 
@@ -143,7 +147,7 @@ public class ZigBeeNetworkDiscoverer
      *
      * @param retryCount the maximum number of retries.
      */
-    public void setRetryCount(int retryCount) {
+    protected void setRetryCount(int retryCount) {
         this.retryCount = retryCount;
     }
 
@@ -152,7 +156,7 @@ public class ZigBeeNetworkDiscoverer
      *
      * @param requeryPeriod the requery period in milliseconds
      */
-    public void setRequeryPeriod(int requeryPeriod) {
+    protected void setRequeryPeriod(int requeryPeriod) {
         this.requeryPeriod = requeryPeriod;
     }
 
@@ -182,6 +186,8 @@ public class ZigBeeNetworkDiscoverer
                 ZigBeeEndpointAddress address = (ZigBeeEndpointAddress) zclCommand.getSourceAddress();
                 startNodeDiscovery(address.getAddress());
             }
+
+            return;
         }
 
         // Node has been announced.
@@ -199,7 +205,7 @@ public class ZigBeeNetworkDiscoverer
      *
      * @param nodeAddress the network address of the node to discover
      */
-    public void rediscoverNode(final int nodeAddress) {
+    protected void rediscoverNode(final int nodeAddress) {
         if (!initialized) {
             logger.debug("Network discovery task: can't perform rediscovery on {} until initialization complete.",
                     nodeAddress);
@@ -214,7 +220,7 @@ public class ZigBeeNetworkDiscoverer
      *
      * @param ieeeAddress the {@link IeeeAddress} of the node to discover
      */
-    public void rediscoverNode(final IeeeAddress ieeeAddress) {
+    protected void rediscoverNode(final IeeeAddress ieeeAddress) {
         if (!initialized) {
             logger.debug("Network discovery task: can't perform rediscovery on {} until initialization complete.",
                     ieeeAddress);
@@ -394,25 +400,5 @@ public class ZigBeeNetworkDiscoverer
 
         // Add the node to the network...
         networkManager.addNode(node);
-    }
-
-    @Override
-    public void networkStateUpdated(ZigBeeTransportState state) {
-        if (state == ZigBeeTransportState.ONLINE && !initialized) {
-            logger.debug("Network discovery task: initialized");
-            initialized = true;
-
-            networkManager.addCommandListener(this);
-            networkManager.addAnnounceListener(this);
-
-            // Start discovery from root node.
-            startNodeDiscovery(0);
-        } else if (state != ZigBeeTransportState.ONLINE && initialized) {
-            logger.debug("Network discovery task: uninitialzed");
-            initialized = false;
-
-            networkManager.removeCommandListener(this);
-            networkManager.removeAnnounceListener(this);
-        }
     }
 }

@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.internal;
+package com.zsmartsystems.zigbee.app.discovery;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -33,7 +33,6 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
-import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsResponse;
@@ -150,12 +149,6 @@ public class ZigBeeNetworkDiscovererTest {
 
         discoverer.setRetryPeriod(1);
         discoverer.startup();
-
-        // Check that the listener registers for startup notifications
-        Mockito.verify(networkManager).addNetworkStateListener(discoverer);
-
-        // Put the system online so it initialises
-        discoverer.networkStateUpdated(ZigBeeTransportState.ONLINE);
 
         // Check it registers listeners
         Mockito.verify(networkManager).addCommandListener(discoverer);

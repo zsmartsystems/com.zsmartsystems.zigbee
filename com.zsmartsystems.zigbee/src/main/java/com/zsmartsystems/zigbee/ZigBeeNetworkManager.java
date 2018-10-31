@@ -32,11 +32,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
+import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
 import com.zsmartsystems.zigbee.internal.ClusterMatcher;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeCommandNotifier;
-import com.zsmartsystems.zigbee.internal.ZigBeeNetworkDiscoverer;
-import com.zsmartsystems.zigbee.internal.ZigBeeNodeServiceDiscoverer;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
@@ -173,7 +172,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * responsible for monitoring the network for new devices and the initial
      * interrogation of their capabilities.
      */
-    private final ZigBeeNetworkDiscoverer networkDiscoverer;
+    // private final ZigBeeNetworkDiscoverer networkDiscoverer;
 
     /**
      * The {@link ZigBeeCommandNotifier}. This is used for sending notifications asynchronously to listeners.
@@ -190,11 +189,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * A Set used to remember if node discovery has been completed. This is used to manage the lifecycle notifications.
      */
     private Set<IeeeAddress> nodeDiscoveryComplete = Collections.synchronizedSet(new HashSet<IeeeAddress>());
-
-    /**
-     *
-     */
-    private final Map<IeeeAddress, ZigBeeNodeServiceDiscoverer> nodeDiscovery = new HashMap<>();
 
     /**
      * The serializer class used to serialize commands to data packets
@@ -272,7 +266,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         validStateTransitions = Collections.unmodifiableMap(new HashMap<>(transitions));
 
         this.transport = transport;
-        this.networkDiscoverer = new ZigBeeNetworkDiscoverer(this);
+        // this.networkDiscoverer = new ZigBeeNetworkDiscoverer(this);
 
         transport.setZigBeeTransportReceive(this);
     }
@@ -342,7 +336,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         addLocalNode();
 
-        networkDiscoverer.startup();
+        // networkDiscoverer.startup();
 
         return ZigBeeStatus.SUCCESS;
     }
@@ -542,7 +536,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             }
         }
 
-        networkDiscoverer.shutdown();
+        // networkDiscoverer.shutdown();
         transport.shutdown();
     }
 
@@ -952,6 +946,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 // Make sure that we know the local node, and that the network address is correct.
                 addLocalNode();
 
+                // Globally update the state
+                networkState = state;
+
+                // Start the extensions
+                for (ZigBeeNetworkExtension extension : extensions) {
+                    extension.extensionStartup();
+                }
+
                 for (final ZigBeeNode node : networkNodes.values()) {
                     for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
                         NotificationService.execute(new Runnable() {
@@ -961,16 +963,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                             }
                         });
                     }
-                }
-
-                // TODO:
-                // for (ZigBeeNode node : networkNodes.values()) {
-                // node.startDiscovery();
-                // }
-
-                // Start the extensions
-                for (ZigBeeNetworkExtension extension : extensions) {
-                    extension.extensionStartup();
                 }
             }
 
@@ -1184,6 +1176,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param ieeeAddress the {@link IeeeAddress} of the node to rediscover
      */
     public void rediscoverNode(IeeeAddress address) {
+        ZigBeeDiscoveryExtension networkDiscoverer = (ZigBeeDiscoveryExtension) getExtension(
+                ZigBeeDiscoveryExtension.class);
+        if (networkDiscoverer == null) {
+            return;
+        }
         networkDiscoverer.rediscoverNode(address);
     }
 
@@ -1306,10 +1303,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 networkStateSerializer.serialize(this);
             }
         }
-
-        ZigBeeNodeServiceDiscoverer nodeDiscoverer = new ZigBeeNodeServiceDiscoverer(this, node);
-        nodeDiscovery.put(node.getIeeeAddress(), nodeDiscoverer);
-        nodeDiscoverer.startDiscovery();
     }
 
     /**
@@ -1342,7 +1335,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         final boolean updated = nodeDiscoveryComplete.contains(node.getIeeeAddress());
-        if (!updated && node.isDiscovered()) {
+        if (!updated && node.isDiscovered() || node.getIeeeAddress().equals(localIeeeAddress)) {
             nodeDiscoveryComplete.add(node.getIeeeAddress());
         }
 

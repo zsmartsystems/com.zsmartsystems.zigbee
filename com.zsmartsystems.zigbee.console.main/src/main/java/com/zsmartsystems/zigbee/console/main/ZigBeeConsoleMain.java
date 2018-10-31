@@ -24,7 +24,6 @@ import org.apache.log4j.xml.DOMConfigurator;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
-import com.zsmartsystems.zigbee.ZigBeeNetworkMeshMonitor;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
@@ -320,10 +319,6 @@ public class ZigBeeConsoleMain {
         } else {
             System.out.println("ZigBee console starting up ... [OK]");
         }
-
-        // Start the mesh monitor
-        ZigBeeNetworkMeshMonitor meshMonitor = new ZigBeeNetworkMeshMonitor(networkManager);
-        meshMonitor.startup(60);
 
         networkManager.addSupportedCluster(ZclIasZoneCluster.CLUSTER_ID);
 

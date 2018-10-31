@@ -40,6 +40,11 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
 
+/**
+ *
+ * @author Chris Jackson
+ *
+ */
 public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigBeeNetworkStateListener,
         ZigBeeNetworkEndpointListener, ZigBeeCommandListener {
     private ZigBeeNetworkNodeListener mockedNodeListener;

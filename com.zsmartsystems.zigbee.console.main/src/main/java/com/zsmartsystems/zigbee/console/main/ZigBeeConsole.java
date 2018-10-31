@@ -37,6 +37,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
 import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieExtension;
 import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
@@ -56,6 +57,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceInformationCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleInstallKeyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleLinkKeyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkBackupCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkDiscoveryCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkJoinCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkLeaveCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkStartCommand;
@@ -127,8 +129,8 @@ public final class ZigBeeConsole {
     /**
      * Constructor which configures ZigBee API and constructs commands.
      *
-     * @param dongle the dongle
-     * @param transportCommands
+     * @param dongle the {@link ZigBeeTransportTransmit}
+     * @param transportCommands list of {@link ZigBeeConsoleCommand} to send to the transport
      */
     public ZigBeeConsole(final ZigBeeNetworkManager networkManager, final ZigBeeTransportTransmit dongle,
             List<Class<? extends ZigBeeConsoleCommand>> transportCommands) {
@@ -138,6 +140,10 @@ public final class ZigBeeConsole {
         // Add the extensions to the network
         networkManager.addExtension(new ZigBeeIasCieExtension());
         networkManager.addExtension(new ZigBeeOtaUpgradeExtension());
+
+        ZigBeeDiscoveryExtension discoveryExtension = new ZigBeeDiscoveryExtension();
+        discoveryExtension.setUpdatePeriod(60);
+        networkManager.addExtension(discoveryExtension);
 
         createCommands(newCommands, transportCommands);
 
@@ -203,6 +209,7 @@ public final class ZigBeeConsole {
 
         newCommands.put("netstart", new ZigBeeConsoleNetworkStartCommand());
         newCommands.put("netbackup", new ZigBeeConsoleNetworkBackupCommand());
+        newCommands.put("discovery", new ZigBeeConsoleNetworkDiscoveryCommand());
 
         newCommands.put("otaupgrade", new ZigBeeConsoleOtaUpgradeCommand());
 
