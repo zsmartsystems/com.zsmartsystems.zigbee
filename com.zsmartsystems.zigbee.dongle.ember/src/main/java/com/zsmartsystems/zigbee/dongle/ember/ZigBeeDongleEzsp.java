@@ -595,6 +595,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void handleLinkStateChange(final boolean linkState) {
+        // Only act on changes
         if (networkStateUp == linkState) {
             return;
         }
@@ -610,7 +611,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                         nwkAddress = addr;
                     }
                 }
-                // Handle link changes and notify framework or just reset link with dongle?
+                // Handle link changes and notify framework
                 zigbeeTransportReceive
                         .setNetworkState(linkState ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
             }
@@ -783,11 +784,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 logger.error("Unknown Ember serial protocol {}", protocol);
                 return false;
         }
-        EmberNcp ncp = getEmberNcp();
 
         // Connect to the ASH handler and NCP
         frameHandler.start(serialPort);
         frameHandler.connect();
+
+        EmberNcp ncp = getEmberNcp();
 
         // We MUST send the version command first.
         EzspVersionResponse version = ncp.getVersion(4);

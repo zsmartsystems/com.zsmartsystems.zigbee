@@ -223,7 +223,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
                                     handleReset((AshFrameRstAck) packet);
                                     break;
                                 case ERROR:
-                                    statsRxErrs++;
+                                    // Stack has entered FAILED state
+                                    handleError((AshFrameError) packet);
                                     break;
                                 default:
                                     break;
@@ -331,7 +332,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
     private synchronized void handleReset(AshFrameRstAck rstAck) {
         // If we are already connected, we need to reconnect
         if (stateConnected) {
-            reconnect();
+            logger.debug("ASH: RESET received while connected. Disconnecting.");
+            disconnect();
             return;
         }
 
@@ -353,6 +355,12 @@ public class AshFrameHandler implements EzspProtocolHandler {
         }
     }
 
+    private void handleError(AshFrameError packet) {
+        logger.debug("ASH: ERROR received (code {}). Disconnecting.", packet.getErrorCode());
+        statsRxErrs++;
+        disconnect();
+    }
+
     @Override
     public void setClosing() {
         executor.shutdown();
@@ -366,11 +374,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         stopRetryTimer();
         stateConnected = false;
 
-        synchronized (transactionListeners) {
-            for (AshListener listener : transactionListeners) {
-                listener.transactionComplete();
-            }
-        }
+        clearTransactionQueue();
 
         timer.cancel();
         executor.shutdownNow();
@@ -501,13 +505,18 @@ public class AshFrameHandler implements EzspProtocolHandler {
         sendFrame(reset);
     }
 
-    private void reconnect() {
-        if (stateConnected) {
-            // stateConnected will be set to false in connect()
-            frameHandler.handleLinkStateChange(false);
-        }
+    private void disconnect() {
+        logger.debug("ASH: Disconnected!");
+        stateConnected = false;
 
-        connect();
+        clearTransactionQueue();
+
+        sentQueue.clear();
+        sendQueue.clear();
+
+        stopRetryTimer();
+
+        frameHandler.handleLinkStateChange(false);
     }
 
     /**
@@ -566,7 +575,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
             // If we're not connected, then try again
             if (!stateConnected) {
-                reconnect();
+                stopRetryTimer();
+                connect();
                 return;
             }
 
@@ -575,11 +585,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
                 // Too many retries.
                 // We should alert the upper layer so they can reset the link?
-                reconnect();
-
-                // drop message from queue
-                sentQueue.poll();
-                retries = 0;
+                disconnect();
+                return;
             }
 
             // If a DATA frame acknowledgement is not received within the current timeout value,
@@ -593,6 +600,17 @@ public class AshFrameHandler implements EzspProtocolHandler {
                 sendRetry();
             } catch (Exception e) {
                 logger.warn("Caught exception while attempting to retry message in AshRetryTimer", e);
+            }
+        }
+    }
+
+    /**
+     * Aborts all waiting transactions
+     */
+    private void clearTransactionQueue() {
+        synchronized (transactionListeners) {
+            for (AshListener listener : transactionListeners) {
+                listener.transactionComplete();
             }
         }
     }
