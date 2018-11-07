@@ -8,8 +8,8 @@
 package com.zsmartsystems.zigbee.app.discovery;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
 import org.slf4j.Logger;
@@ -50,7 +50,7 @@ public class ZigBeeDiscoveryExtension
     /**
      *
      */
-    private final Map<IeeeAddress, ZigBeeNodeServiceDiscoverer> nodeDiscovery = new HashMap<>();
+    private final Map<IeeeAddress, ZigBeeNodeServiceDiscoverer> nodeDiscovery = new ConcurrentHashMap<>();
 
     /**
      * Refresh period for the mesh update - in seconds
@@ -71,6 +71,8 @@ public class ZigBeeDiscoveryExtension
 
     @Override
     public ZigBeeStatus extensionStartup() {
+        logger.debug("DISCOVERY Extension: Startup");
+
         networkManager.addNetworkNodeListener(this);
         networkManager.addCommandListener(this);
 
@@ -98,23 +100,41 @@ public class ZigBeeDiscoveryExtension
         if (futureTask != null) {
             futureTask.cancel(true);
         }
+        logger.debug("DISCOVERY Extension: Shutdown");
     }
 
     /**
      * Sets the update period for the mesh update service. This is the number of seconds between
-     * subsequent mesh updates.
+     * subsequent mesh updates. Setting the period to 0 will disable mesh updates.
      *
-     * @param updatePeriod number of seconds between mesh updates
+     * @param updatePeriod number of seconds between mesh updates. Setting to 0 will stop updates.
      */
     public void setUpdatePeriod(final int updatePeriod) {
         this.updatePeriod = updatePeriod;
 
-        if (extensionStarted == false) {
+        if (!extensionStarted) {
             return;
         }
 
         logger.debug("DISCOVERY Extension: Set mesh update interval to {} seconds", updatePeriod);
+
+        if (updatePeriod == 0) {
+            stopScheduler();
+            return;
+        }
+
         startScheduler(updatePeriod);
+    }
+
+    /**
+     * Gets the current period at which the mesh data is being updated (in seconds). A return value of 0 indicates that
+     * automatic updates are currently disabled.
+     *
+     * @return number of seconds between mesh updates. 0 indicates no automatic updates.
+     *
+     */
+    public int getUpdatePeriod() {
+        return updatePeriod;
     }
 
     /**
@@ -144,10 +164,12 @@ public class ZigBeeDiscoveryExtension
 
     @Override
     public void nodeUpdated(ZigBeeNode node) {
+        // Not used
     }
 
     @Override
     public void nodeRemoved(ZigBeeNode node) {
+        logger.debug("DISCOVERY Extension: Removing discoverer for {}", node.getIeeeAddress());
         nodeDiscovery.remove(node.getIeeeAddress());
     }
 
@@ -179,15 +201,22 @@ public class ZigBeeDiscoveryExtension
         networkDiscoverer.rediscoverNode(ieeeAddress);
     }
 
-    private void startScheduler(int initialPeriod) {
+    private void stopScheduler() {
         if (futureTask != null) {
             futureTask.cancel(true);
+            futureTask = null;
         }
+    }
+
+    private void startScheduler(int initialPeriod) {
+        stopScheduler();
 
         Runnable meshUpdateThread = new Runnable() {
             @Override
             public void run() {
+                logger.debug("DISCOVERY Extension: Starting mesh update");
                 for (ZigBeeNodeServiceDiscoverer node : nodeDiscovery.values()) {
+                    logger.debug("DISCOVERY Extension: Starting mesh update for {}", node.getNode().getIeeeAddress());
                     node.updateMesh();
                 }
             }
@@ -199,4 +228,5 @@ public class ZigBeeDiscoveryExtension
     public Collection<ZigBeeNodeServiceDiscoverer> getNodeDiscoverers() {
         return nodeDiscovery.values();
     }
+
 }

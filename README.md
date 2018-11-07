@@ -127,6 +127,8 @@ The framework includes optional functional applications to support higher layer 
 
 Currently implemented extensions include -:
 
+* Discovery Extension (```ZigBeeDiscoveryExtension```)
+* Network Mesh Monitor Extension (```ZigBeeDiscoveryExtension```)
 * IAS CIE client (```ZigBeeIasCieExtension```)
 * OTA Upgrade Server (```ZigBeeOtaUpgradeExtension```)
 

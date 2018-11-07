@@ -7,6 +7,7 @@
  */
 package com.zsmartsystems.zigbee.app.discovery;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -61,7 +62,8 @@ import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
  * <p>
  * This class provides a centralised helper, used for discovering and updating information about the {@link ZigBeeNode}
  * <p>
- * A random exponential backoff is used for retries to reduce congestion.
+ * A random exponential backoff is used for retries to reduce congestion. If the device replies that a command is not
+ * supported, then this will not be issued again on subsequent requests.
  * <p>
  * Once the discovery update is complete the {@link ZigBeeNetworkManager#updateNode(ZigBeeNode)} is called to alert
  * users.
@@ -126,6 +128,16 @@ public class ZigBeeNodeServiceDiscoverer {
      * The task being run
      */
     private ScheduledFuture<?> futureTask;
+
+    /**
+     * Record of the last time we started a service discovery or update
+     */
+    private Instant lastDiscoveryStarted;
+
+    /**
+     * Record of the last time we completed a service discovery or update
+     */
+    private Instant lastDiscoveryCompleted;
 
     /**
      *
@@ -198,7 +210,8 @@ public class ZigBeeNodeServiceDiscoverer {
 
             if (!startWorker) {
                 logger.debug("{}: Node SVC Discovery: already scheduled or running", node.getIeeeAddress());
-                return;
+            } else {
+                lastDiscoveryStarted = Instant.now();
             }
         }
 
@@ -554,6 +567,7 @@ public class ZigBeeNodeServiceDiscoverer {
                     discoveryTask = discoveryTasks.peek();
                 }
                 if (discoveryTask == null) {
+                    lastDiscoveryCompleted = Instant.now();
                     logger.debug("{}: Node SVC Discovery: complete", node.getIeeeAddress());
                     networkManager.updateNode(node);
                     return;
@@ -587,6 +601,7 @@ public class ZigBeeNodeServiceDiscoverer {
                         break;
                 }
 
+                retryCnt++;
                 int retryDelay = 0;
                 if (success) {
                     synchronized (discoveryTasks) {
@@ -596,8 +611,15 @@ public class ZigBeeNodeServiceDiscoverer {
                             node.getIeeeAddress(), discoveryTask, discoveryTasks.peek());
 
                     retryCnt = 0;
+                } else if (retryCnt > maxBackoff) {
+                    logger.debug("{}: Node SVC Discovery: request {} failed after {} attempts.", node.getIeeeAddress(),
+                            discoveryTask, retryCnt);
+                    synchronized (discoveryTasks) {
+                        discoveryTasks.remove(discoveryTask);
+                    }
+
+                    retryCnt = 0;
                 } else {
-                    retryCnt++;
                     retryMin = retryCnt / 4;
 
                     // We failed with the last request. Wait a bit then retry.
@@ -644,10 +666,12 @@ public class ZigBeeNodeServiceDiscoverer {
     }
 
     /**
-     * Starts service discovery for the node in order to update the mesh
+     * Starts service discovery for the node in order to update the mesh. This adds the
+     * {@link NodeDiscoveryTask#NEIGHBORS} and {@link NodeDiscoveryTask#ROUTES} tasks to the task list. Note that
+     * {@link NodeDiscoveryTask#ROUTES} is not added for end devices.
      */
     public void updateMesh() {
-        logger.debug("{}: Node SVC Discovery: update mesh", node.getIeeeAddress());
+        logger.debug("{}: Node SVC Discovery: Update mesh", node.getIeeeAddress());
         Set<NodeDiscoveryTask> tasks = new HashSet<NodeDiscoveryTask>();
 
         tasks.add(NodeDiscoveryTask.NEIGHBORS);
@@ -659,15 +683,39 @@ public class ZigBeeNodeServiceDiscoverer {
         startDiscovery(tasks);
     }
 
+    /**
+     * Gets the collection of {@link NodeDiscoveryTask}s that are currently outstanding for this discoverer
+     *
+     * @return collection of {@link NodeDiscoveryTask}s
+     */
     public Collection<NodeDiscoveryTask> getTasks() {
         return discoveryTasks;
     }
 
+    /**
+     * Gets the {@link ZigBeeNode} to which this service discoverer is associated
+     *
+     * @return the {@link ZigBeeNode}
+     */
     public ZigBeeNode getNode() {
         return node;
     }
 
-    public int getRetryPeriod() {
-        return retryPeriod;
+    /**
+     * Gets the time the last discovery was started.
+     *
+     * @return the {@link Instant} that the last discovery was started
+     */
+    public Instant getLastDiscoveryStarted() {
+        return lastDiscoveryStarted;
+    }
+
+    /**
+     * Gets the time the last discovery was completed.
+     *
+     * @return the {@link Instant} that the last discovery was completed
+     */
+    public Instant getLastDiscoveryCompleted() {
+        return lastDiscoveryCompleted;
     }
 }

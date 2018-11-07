@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
+import org.awaitility.Awaitility;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
@@ -112,7 +113,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
 
         assertEquals(1, mockedCommandCaptor.getAllValues().size());
 
-        org.awaitility.Awaitility.await().until(otaListenerUpdated(), org.hamcrest.Matchers.equalTo(1));
+        Awaitility.await().until(() -> otaListenerUpdated());
 
         assertEquals(1, otaStatusCapture.size());
         ZigBeeOtaServerStatus status = otaStatusCapture.get(0);

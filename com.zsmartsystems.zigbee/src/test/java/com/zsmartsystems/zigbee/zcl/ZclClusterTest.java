@@ -26,7 +26,6 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
-import com.zsmartsystems.zigbee.ZigBeeNetwork;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
@@ -54,9 +53,9 @@ public class ZclClusterTest {
     private ArgumentCaptor<ZigBeeTransactionMatcher> matcherCapture;
 
     private void createEndpoint() {
-        node = new ZigBeeNode(Mockito.mock(ZigBeeNetwork.class), new IeeeAddress());
-        node.setNetworkAddress(1234);
-        endpoint = new ZigBeeEndpoint(node, 5);
+        endpoint = Mockito.mock(ZigBeeEndpoint.class);
+        Mockito.when(endpoint.getEndpointId()).thenReturn(5);
+        Mockito.when(endpoint.getEndpointAddress()).thenReturn(new ZigBeeEndpointAddress(1234, 5));
         commandCapture = ArgumentCaptor.forClass(ZigBeeCommand.class);
         matcherCapture = ArgumentCaptor.forClass(ZigBeeTransactionMatcher.class);
         Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(null);

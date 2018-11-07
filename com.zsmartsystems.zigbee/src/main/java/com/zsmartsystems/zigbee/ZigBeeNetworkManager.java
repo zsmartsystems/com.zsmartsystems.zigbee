@@ -96,11 +96,15 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
  * includes -:
  * <ul>
  * <li>{@link #getZigBeeChannel}
- * <li>{@link #setZigBeeChannel}
+ * <li>{@link #setZigBeeChannel(ZigBeeChannel)}
  * <li>{@link #getZigBeePanId}
- * <li>{@link #setZigBeePanId}
+ * <li>{@link #setZigBeePanId(int)}
  * <li>{@link #getZigBeeExtendedPanId}
- * <li>{@link #setZigBeeExtendedPanId}
+ * <li>{@link #setZigBeeExtendedPanId(ExtendedPanId)}
+ * <li>{@link #getZigBeeNetworkKey()}
+ * <li>{@link #setZigBeeNetworkKey(ZigBeeKey)}
+ * <li>{@link #getZigBeeLinkKey()}
+ * <li>{@link #setZigBeeLinkKey(ZigBeeKey)}
  * </ul>
  * <p>
  * Once all transport initialization is complete, {@link #startup} must be called.
@@ -166,13 +170,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * interface (eg a Dongle).
      */
     private final ZigBeeTransportTransmit transport;
-
-    /**
-     * The ZigBee network {@link ZigBeeNetworkDiscoverer}. The discover is
-     * responsible for monitoring the network for new devices and the initial
-     * interrogation of their capabilities.
-     */
-    // private final ZigBeeNetworkDiscoverer networkDiscoverer;
 
     /**
      * The {@link ZigBeeCommandNotifier}. This is used for sending notifications asynchronously to listeners.
@@ -266,7 +263,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         validStateTransitions = Collections.unmodifiableMap(new HashMap<>(transitions));
 
         this.transport = transport;
-        // this.networkDiscoverer = new ZigBeeNetworkDiscoverer(this);
 
         transport.setZigBeeTransportReceive(this);
     }
@@ -335,8 +331,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         setNetworkState(ZigBeeTransportState.INITIALISING);
 
         addLocalNode();
-
-        // networkDiscoverer.startup();
 
         return ZigBeeStatus.SUCCESS;
     }
@@ -536,7 +530,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             }
         }
 
-        // networkDiscoverer.shutdown();
         transport.shutdown();
     }
 
@@ -1364,7 +1357,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * cluster here is only required in order to respond to this request. Typically the application should provide
      * further support for such clusters.
      *
-     * @param int cluster
+     * @param cluster the supported cluster ID
      */
     public void addSupportedCluster(int cluster) {
         logger.debug("Adding supported cluster {}", cluster);
@@ -1380,9 +1373,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      *
      * @param extension the new {@link ZigBeeNetworkExtension}
      */
-    public void addExtension(ZigBeeNetworkExtension extension) {
+    public synchronized void addExtension(ZigBeeNetworkExtension extension) {
         extensions.add(extension);
         extension.extensionInitialize(this);
+
+        // If the network is online, start the extension
+        if (networkState == ZigBeeTransportState.ONLINE) {
+            extension.extensionStartup();
+        }
     }
 
     /**
@@ -1392,7 +1390,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param requestedExtension the {@link ZigBeeNetworkExtension} to get
      * @return the requested {@link ZigBeeNetworkExtension} if it exists, or null
      */
-    public <T extends ZigBeeNetworkExtension> ZigBeeNetworkExtension getExtension(Class<T> requestedExtension) {
+    public synchronized <T extends ZigBeeNetworkExtension> ZigBeeNetworkExtension getExtension(
+            Class<T> requestedExtension) {
         for (ZigBeeNetworkExtension extensionCheck : extensions) {
             if (requestedExtension.isInstance(extensionCheck)) {
                 return extensionCheck;
