@@ -6,12 +6,12 @@ bin/
 *.json
 .metadata
 local.properties
+
 # Eclipse project specific
 .classpath
 .settings
 .recommenders
 RemoteSystemsTempFiles/
-
 
 # Temporary
 travis.yml
@@ -19,6 +19,18 @@ settings.xml
 com.zsmartsystems.zigbee/doc
 simple-network.xml
 
+# Output Files
+*.jar
+*.war
+
+# ZigBee Files
 *.ota
 *.ebl
 *.gbl
+*.s37
+
+# Gradle
+.gradle
+build/
+.gradletasknamecache
+!gradle-wrapper.jar
