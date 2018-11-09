@@ -167,6 +167,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private boolean networkStateUp = false;
 
     /**
+     * Boolean to hold initialisation state. Set to true after {@link #startup()} completes.
+     */
+    private boolean initialised = false;
+
+    /**
      * If the dongle is being used with the manufacturing library, then this records the listener to be called when
      * packets are received.
      */
@@ -281,8 +286,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     public ZigBeeStatus initialize() {
         logger.debug("EZSP dongle initialize with protocol {}.", protocol);
 
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
-
         if (!initialiseEzspProtocol()) {
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
@@ -328,8 +331,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         networkParameters = ncp.getNetworkParameters().getParameters();
         ncp.getCurrentSecurityState();
 
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
-
         logger.debug("EZSP dongle initialize done: Initialised {}", initResponse != EmberStatus.EMBER_NOT_JOINED);
 
         return ZigBeeStatus.SUCCESS;
@@ -368,9 +369,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Check if the network is now up
         networkState = ncp.getNetworkState();
         logger.debug("EZSP networkStateResponse {}", networkState);
-        if (networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK) {
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
-        }
 
         // Get the security state - mainly for information
         EmberCurrentSecurityState currentSecurityState = ncp.getCurrentSecurityState();
@@ -387,9 +385,15 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             logger.debug("Setting TX Power to {} resulted in {}", networkParameters.getRadioTxPower(), txPowerResponse);
         }
 
-        logger.debug("EZSP dongle startup done.");
+        int address = ncp.getNwkAddress();
+        if (address != 0xFFFE) {
+            nwkAddress = address;
+        }
 
-        return ZigBeeStatus.SUCCESS;
+        initialised = true;
+
+        return (networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK) ? ZigBeeStatus.SUCCESS
+                : ZigBeeStatus.BAD_RESPONSE;
     }
 
     @Override
@@ -595,8 +599,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void handleLinkStateChange(final boolean linkState) {
-        // Only act on changes
-        if (networkStateUp == linkState) {
+        // Only act on changes once we have completed initialisation
+        if (!initialised || networkStateUp == linkState) {
             return;
         }
         networkStateUp = linkState;

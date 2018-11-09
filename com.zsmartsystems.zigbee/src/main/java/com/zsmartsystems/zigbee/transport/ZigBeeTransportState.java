@@ -14,6 +14,14 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
  * <p>
  * This is used to provide status updates to higher layer listeners registered through the
  * {@link ZigBeeNetworkStateListener} interface.
+ * <p>
+ * Valid state transitions are -:
+ * <ul>
+ * <li>UNITIALISED to INITIALISING or OFFLINE
+ * <li>INITIALISING to ONLINE or OFFLINE
+ * <li>ONLINE to OFFLINE
+ * <li>OFFLINE to ONLINE
+ * </ul
  *
  * @author Chris Jackson
  *

@@ -7,10 +7,10 @@
  */
 package com.zsmartsystems.zigbee.dongle.cc2531;
 
-import java.util.ArrayList;
 import java.lang.reflect.Field;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +48,6 @@ import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
-import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zdo.SynchronousResponse;
 
@@ -123,15 +122,11 @@ public class ZigBeeDongleTiCc2531
     public ZigBeeStatus initialize() {
         logger.debug("CC2531 transport initialize");
 
-        zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
-
         // This basically just initialises the hardware so we can communicate with the 2531
         versionString = networkManager.startup();
         if (versionString == null) {
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
-
-        zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
 
         return ZigBeeStatus.SUCCESS;
     }
@@ -232,7 +227,6 @@ public class ZigBeeDongleTiCc2531
         networkManager.addAsynchronousCommandListener(this);
 
         if (!networkManager.initializeZigBeeNetwork(reinitialize)) {
-            zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
             return ZigBeeStatus.INVALID_STATE;
         }
 
@@ -241,20 +235,16 @@ public class ZigBeeDongleTiCc2531
                 break;
             }
             if (networkManager.getDriverStatus() == DriverStatus.CLOSED) {
-                zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
                 return ZigBeeStatus.BAD_RESPONSE;
             }
             try {
                 Thread.sleep(50);
             } catch (final InterruptedException e) {
-                zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
                 return ZigBeeStatus.BAD_RESPONSE;
             }
         }
 
         createEndPoint(1, 0x104);
-
-        zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.ONLINE);
 
         return ZigBeeStatus.SUCCESS;
     }

@@ -50,14 +50,16 @@ public interface ZigBeeTransportTransmit {
     ZigBeeStatus initialize();
 
     /**
-     * Starts the transport interface.
+     * Starts the transport interface and brings the transport state {@link ZigBeeTransportState#ONLINE}.
      * <p>
      * This call will optionally reconfigure the interface if the reinitialize parameter is true.
-     * Startup would normally be called once after {@link #initialize()} on system start, and may be called again after
+     * Startup would normally be called once after {@link #initialize()} on system start, and may be called again
+     * subsequently if the dongle is taken offline.
      *
      * @param reinitialize true if the provider is to reinitialise the network with the parameters configured since the
      *            {@link #initialize} method was called.
-     * @return {@link ZigBeeStatus} with the status of function
+     * @return {@link ZigBeeStatus} with the return status. If the dongle is online, {@link ZigBeeStatus#SUCCESS} will
+     *         be returned and the network state will be set to {@link ZigBeeTransportState#ONLINE}.
      */
     ZigBeeStatus startup(boolean reinitialize);
 
