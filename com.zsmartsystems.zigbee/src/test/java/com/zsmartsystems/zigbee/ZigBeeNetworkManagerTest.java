@@ -235,12 +235,15 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
     public void testNetworkStateListener() {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
+        // This will be ignored as an illegal state transition
         networkManager.setNetworkState(ZigBeeTransportState.INITIALISING);
+
+        networkManager.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
         org.awaitility.Awaitility.await().until(networkStateUpdatedSize(), org.hamcrest.Matchers.equalTo(1));
 
         assertEquals(1, networkStateListenerCapture.size());
-        assertEquals(ZigBeeTransportState.INITIALISING, networkStateListenerCapture.get(0));
+        assertEquals(ZigBeeTransportState.UNINITIALISED, networkStateListenerCapture.get(0));
 
         networkManager.removeNetworkStateListener(mockedStateListener);
     }

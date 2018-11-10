@@ -10,7 +10,9 @@ package com.zsmartsystems.zigbee;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -215,6 +217,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private ZigBeeTransportState networkState;
 
     /**
+     * Map of allowable state transitions
+     */
+    private final Map<ZigBeeTransportState, Set<ZigBeeTransportState>> validStateTransitions;
+
+    /**
      * Our local {@link IeeeAddress}
      */
     private IeeeAddress localIeeeAddress;
@@ -246,6 +253,18 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param resetNetwork whether network is to be reset
      */
     public ZigBeeNetworkManager(final ZigBeeTransportTransmit transport) {
+        Map<ZigBeeTransportState, Set<ZigBeeTransportState>> transitions = new HashMap<ZigBeeTransportState, Set<ZigBeeTransportState>>();
+
+        transitions.put(null, new HashSet<>(Arrays.asList(ZigBeeTransportState.UNINITIALISED)));
+        transitions.put(ZigBeeTransportState.UNINITIALISED,
+                new HashSet<>(Arrays.asList(ZigBeeTransportState.INITIALISING, ZigBeeTransportState.OFFLINE)));
+        transitions.put(ZigBeeTransportState.INITIALISING,
+                new HashSet<>(Arrays.asList(ZigBeeTransportState.ONLINE, ZigBeeTransportState.OFFLINE)));
+        transitions.put(ZigBeeTransportState.ONLINE, new HashSet<>(Arrays.asList(ZigBeeTransportState.OFFLINE)));
+        transitions.put(ZigBeeTransportState.OFFLINE, new HashSet<>(Arrays.asList(ZigBeeTransportState.ONLINE)));
+
+        validStateTransitions = Collections.unmodifiableMap(new HashMap<>(transitions));
+
         this.transport = transport;
         this.networkDiscoverer = new ZigBeeNetworkDiscoverer(this);
 
@@ -300,6 +319,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return {@link ZigBeeStatus}
      */
     public ZigBeeStatus initialize() {
+        setNetworkState(ZigBeeTransportState.UNINITIALISED);
+
         synchronized (this) {
             if (networkStateSerializer != null) {
                 networkStateSerializer.deserialize(this);
@@ -307,12 +328,17 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         ZigBeeStatus transportResponse = transport.initialize();
+        if (transportResponse != ZigBeeStatus.SUCCESS) {
+            setNetworkState(ZigBeeTransportState.OFFLINE);
+            return transportResponse;
+        }
+        setNetworkState(ZigBeeTransportState.INITIALISING);
 
         addLocalNode();
 
         networkDiscoverer.startup();
 
-        return transportResponse;
+        return ZigBeeStatus.SUCCESS;
     }
 
     private void addLocalNode() {
@@ -481,7 +507,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return {@link ZigBeeStatus} with the status of function
      */
     public ZigBeeStatus startup(boolean reinitialize) {
-        return transport.startup(reinitialize);
+        ZigBeeStatus status = transport.startup(reinitialize);
+        if (status != ZigBeeStatus.SUCCESS) {
+            setNetworkState(ZigBeeTransportState.OFFLINE);
+            return status;
+        }
+        setNetworkState(ZigBeeTransportState.ONLINE);
+        return ZigBeeStatus.SUCCESS;
     }
 
     /**
@@ -893,19 +925,27 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     private void setNetworkStateRunnable(final ZigBeeTransportState state) {
         synchronized (this) {
+            // Only notify users of state changes
+            if (state.equals(networkState)) {
+                return;
+            }
+
+            if (!validStateTransitions.get(networkState).contains(state)) {
+                logger.debug("Ignoring invalid network state transition from {} to {}", networkState, state);
+                return;
+            }
+            networkState = state;
+
             logger.debug("Network state is updated to {}", state);
 
             // If the state has changed to online, then we need to add any pending nodes,
             // and ensure that the local node is added
-            if (state != networkState && state == ZigBeeTransportState.ONLINE) {
+            if (state == ZigBeeTransportState.ONLINE) {
                 localNwkAddress = transport.getNwkAddress();
                 localIeeeAddress = transport.getIeeeAddress();
 
                 // Make sure that we know the local node, and that the network address is correct.
                 addLocalNode();
-
-                // Globally update the state
-                networkState = state;
 
                 for (final ZigBeeNode node : networkNodes.values()) {
                     for (final ZigBeeNetworkNodeListener listener : nodeListeners) {

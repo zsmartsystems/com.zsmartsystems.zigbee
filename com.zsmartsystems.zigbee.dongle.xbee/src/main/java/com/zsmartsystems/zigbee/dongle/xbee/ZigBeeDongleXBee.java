@@ -135,8 +135,6 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
     public ZigBeeStatus initialize() {
         logger.debug("XBee dongle initialize.");
 
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
-
         if (!serialPort.open()) {
             logger.error("Unable to open XBee serial port");
             return ZigBeeStatus.COMMUNICATION_ERROR;
@@ -250,8 +248,6 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         XBeeExtendedPanIdResponse epanIdResponse = (XBeeExtendedPanIdResponse) frameHandler.sendRequest(getEPanId);
         extendedPanId = epanIdResponse.getExtendedPanId();
 
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
-
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -262,7 +258,6 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         // If frameHandler is null then the serial port didn't initialise
         if (frameHandler == null) {
             logger.error("Initialising XBee Dongle but low level handler is not initialised.");
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
             return ZigBeeStatus.INVALID_STATE;
         }
 
@@ -280,10 +275,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
 
         initialisationComplete = true;
 
-        if (coordinatorStarted) {
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
-        }
-        return ZigBeeStatus.SUCCESS;
+        return coordinatorStarted ? ZigBeeStatus.SUCCESS : ZigBeeStatus.BAD_RESPONSE;
     }
 
     @Override
@@ -375,19 +367,17 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
             return;
         }
 
-        // Handle devices joining and leaving
+        // Handle dongle status messages
         if (event instanceof XBeeModemStatusEvent) {
             XBeeModemStatusEvent modemStatus = (XBeeModemStatusEvent) event;
 
             switch (modemStatus.getStatus()) {
                 case COORDINATOR_STARTED:
                     coordinatorStarted = true;
-                    if (initialisationComplete) {
-                        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
-                    }
+                    setNetworkState(ZigBeeTransportState.ONLINE);
                     break;
                 case DISASSOCIATED:
-                    zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+                    setNetworkState(ZigBeeTransportState.OFFLINE);
                     break;
                 case HARDWARE_RESET:
                     break;
@@ -405,6 +395,12 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         }
 
         logger.debug("Unhandled XBee Frame: {}", event.toString());
+    }
+
+    private void setNetworkState(ZigBeeTransportState state) {
+        if (initialisationComplete) {
+            zigbeeTransportReceive.setNetworkState(state);
+        }
     }
 
     @Override

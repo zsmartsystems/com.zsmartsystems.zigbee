@@ -333,8 +333,6 @@ public class ZigBeeDongleTelegesis
 
         bootloadHandler = null;
 
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
-
         if (!serialPort.open()) {
             logger.error("Unable to open Telegesis serial port");
             return ZigBeeStatus.COMMUNICATION_ERROR;
@@ -373,8 +371,6 @@ public class ZigBeeDongleTelegesis
             ieeeAddress = productInfo.getIeeeAddress();
         }
 
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.INITIALISING);
-
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -385,7 +381,6 @@ public class ZigBeeDongleTelegesis
         // If frameHandler is null then the serial port didn't initialise
         if (frameHandler == null) {
             logger.error("Initialising Telegesis Dongle but low level handler is not initialised.");
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
             return ZigBeeStatus.INVALID_STATE;
         }
 
@@ -425,7 +420,6 @@ public class ZigBeeDongleTelegesis
         // Check if the network is now up
         TelegesisDisplayNetworkInformationCommand networkInfo = new TelegesisDisplayNetworkInformationCommand();
         if (frameHandler.sendRequest(networkInfo) == null || networkInfo.getStatus() != TelegesisStatusCode.SUCCESS) {
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
             return ZigBeeStatus.BAD_RESPONSE;
         }
         if (networkInfo.getDevice() != TelegesisDeviceType.COO) {
@@ -446,7 +440,6 @@ public class ZigBeeDongleTelegesis
 
         startupComplete = true;
 
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -694,7 +687,6 @@ public class ZigBeeDongleTelegesis
         TelegesisSetChannelMaskCommand maskCommand = new TelegesisSetChannelMaskCommand();
         maskCommand.setChannelMask(channelMask.getChannelMask() >> 11);
         if (frameHandler.sendRequest(maskCommand) == null || maskCommand.getStatus() != TelegesisStatusCode.SUCCESS) {
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
             return ZigBeeStatus.BAD_RESPONSE;
         }
 
@@ -702,7 +694,6 @@ public class ZigBeeDongleTelegesis
         channelCommand.setChannel(channel.getChannel());
         if (frameHandler.sendRequest(channelCommand) == null
                 || channelCommand.getStatus() != TelegesisStatusCode.SUCCESS) {
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
             return ZigBeeStatus.BAD_RESPONSE;
         }
 
@@ -959,6 +950,9 @@ public class ZigBeeDongleTelegesis
      * @param state true if the handler is online, false if offline
      */
     public void notifyStateUpdate(boolean state) {
+        if (!startupComplete) {
+            return;
+        }
         zigbeeTransportReceive.setNetworkState(state ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
     }
 
