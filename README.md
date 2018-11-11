@@ -258,7 +258,7 @@ The following commands are available if the transport layer is using the Teleges
 * Contributions must be your own and you must agree with the license.
 * You must sign the PR and commits and must agree to the [Contributor License Agreement](https://cla-assistant.io/zsmartsystems/com.zsmartsystems.zigbee).
 
-## Maven goals
+## Maven
 
 * To build: ```mvn clean install```
 * To prepeare a new release: ```mvn release:prepare```
@@ -266,6 +266,21 @@ The following commands are available if the transport layer is using the Teleges
 * To bump the version: ```mvn release:update-versions```
 * To format the license header: ```mvn license:format```
 * To produce the findbugs (etc) reports: ```mvn site```
+
+## Gradle
+
+```
+gradlew clean build
+```
+
+Gradle build dependencies:
+
+```
+dependencies
+{
+    compile 'ccom.zsmartsystems.zigbee:com.zsmartsystems.zigbee:1.x.x'
+}
+```
 
 # License
 
