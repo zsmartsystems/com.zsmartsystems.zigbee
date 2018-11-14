@@ -47,12 +47,17 @@ public class ZigBeeKeyTest {
         key = new ZigBeeKey("11,22,33,44,55,66,77,88,99,00,AA,BB,CC,DD,EE,FF");
         assertEquals("11223344556677889900AABBCCDDEEFF", key.toString());
 
+        key = new ZigBeeKey("11:22:33:44:55:66:77:88:99:00:AA:BB:CC:DD:EE:FF");
+        assertEquals("11223344556677889900AABBCCDDEEFF", key.toString());
+
         key = new ZigBeeKey("0x11 0x22 0x33 0x44 0x55 0x66 0x77 0x88 0x99 0x00 0xAA 0xBB 0xCC 0xDD 0xEE 0xFF");
         assertEquals("11223344556677889900AABBCCDDEEFF", key.toString());
 
         key = new ZigBeeKey("0x11,0x22,0x33,0x44,0x55,0x66,0x77,0x88,0x99,0x00,0xAA,0xBB,0xCC,0xDD,0xEE,0xFF");
         assertEquals("11223344556677889900AABBCCDDEEFF", key.toString());
 
+        key = new ZigBeeKey("0x11:0x22:0x33:0x44:0x55:0x66:0x77:0x88:0x99:0x00:0xAA:0xBB:0xCC:0xDD:0xEE:0xFF");
+        assertEquals("11223344556677889900AABBCCDDEEFF", key.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
