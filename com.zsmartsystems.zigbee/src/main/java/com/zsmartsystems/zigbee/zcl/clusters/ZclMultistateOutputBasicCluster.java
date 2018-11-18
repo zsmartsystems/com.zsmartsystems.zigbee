@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee.zcl.clusters;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
-import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
@@ -27,7 +26,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-18T20:43:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
 public class ZclMultistateOutputBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -167,11 +166,10 @@ public class ZclMultistateOutputBasicCluster extends ZclCluster {
     /**
      * Default constructor to create a Multistate Output (Basic) cluster.
      *
-     * @param zigbeeManager {@link ZigBeeNetworkManager}
      * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
      */
-    public ZclMultistateOutputBasicCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
-        super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    public ZclMultistateOutputBasicCluster(final ZigBeeEndpoint zigbeeEndpoint) {
+        super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
     /**

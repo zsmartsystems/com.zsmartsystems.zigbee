@@ -27,8 +27,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.dao.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.dao.ZigBeeNodeDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
-import com.zsmartsystems.zigbee.internal.ZigBeeNodeServiceDiscoverer;
-import com.zsmartsystems.zigbee.internal.ZigBeeNodeServiceDiscoverer.NodeDiscoveryTask;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindResponse;
@@ -40,8 +39,8 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.ServerCapabilitiesType;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.CurrentPowerModeType;
 import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
+import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
 
 /**
  * Defines a ZigBee Node. A node is a physical entity on the network and will
@@ -108,12 +107,6 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     private final Map<Integer, ZigBeeEndpoint> endpoints = new ConcurrentHashMap<Integer, ZigBeeEndpoint>();
 
     /**
-     * The node service discoverer that is responsible for the discovery of services, and periodic update or routes and
-     * Neighbors
-     */
-    private final ZigBeeNodeServiceDiscoverer serviceDiscoverer;
-
-    /**
      * The endpoint listeners of the ZigBee network. Registered listeners will be
      * notified of additions, deletions and changes to {@link ZigBeeEndpoint}s.
      */
@@ -121,9 +114,9 @@ public class ZigBeeNode implements ZigBeeCommandListener {
             .unmodifiableList(new ArrayList<ZigBeeNetworkEndpointListener>());
 
     /**
-     * The {@link ZigBeeNetworkManager} that manages this node
+     * The {@link ZigBeeNetwork} that manages this node
      */
-    private final ZigBeeNetworkManager networkManager;
+    private final ZigBeeNetwork network;
 
     /**
      * Broadcast endpoint definition
@@ -133,27 +126,25 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     /**
      * Constructor
      *
-     * @param networkManager the {@link ZigBeeNetworkManager}
+     * @param network the {@link ZigBeeNetwork}
      * @param ieeeAddress the {@link IeeeAddress} of the node
      * @throws {@link IllegalArgumentException} if ieeeAddress is null
      */
-    public ZigBeeNode(ZigBeeNetworkManager networkManager, IeeeAddress ieeeAddress) {
+    public ZigBeeNode(ZigBeeNetwork network, IeeeAddress ieeeAddress) {
         if (ieeeAddress == null) {
             throw new IllegalArgumentException("IeeeAddress can't be null when creating ZigBeeNode");
         }
 
-        this.networkManager = networkManager;
+        this.network = network;
         this.ieeeAddress = ieeeAddress;
-        this.serviceDiscoverer = new ZigBeeNodeServiceDiscoverer(networkManager, this);
 
-        networkManager.addCommandListener(this);
+        network.addCommandListener(this);
     }
 
     /**
      * Called when the node is removed from the network.
      */
     public void shutdown() {
-        serviceDiscoverer.stopDiscovery();
     }
 
     /**
@@ -241,7 +232,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         command.setDestinationAddress(new ZigBeeEndpointAddress(0));
         command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
-        networkManager.sendCommand(command);
+        network.sendTransaction(command);
     }
 
     /**
@@ -363,7 +354,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
                     bindingRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
                     bindingRequest.setStartIndex(index);
 
-                    CommandResult result = networkManager.unicast(bindingRequest, new ManagementBindRequest()).get();
+                    CommandResult result = network.sendTransaction(bindingRequest, new ManagementBindRequest()).get();
                     if (result.isError()) {
                         return false;
                     }
@@ -648,48 +639,8 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     }
 
     /**
-     * Starts service discovery for the node.
-     */
-    public void startDiscovery() {
-        Set<NodeDiscoveryTask> tasks = new HashSet<NodeDiscoveryTask>();
-
-        // Always request the network address - in case it's changed
-        tasks.add(NodeDiscoveryTask.NWK_ADDRESS);
-
-        if (nodeDescriptor.getLogicalType() == LogicalType.UNKNOWN) {
-            tasks.add(NodeDiscoveryTask.NODE_DESCRIPTOR);
-        }
-
-        if (powerDescriptor.getCurrentPowerMode() == CurrentPowerModeType.UNKNOWN) {
-            tasks.add(NodeDiscoveryTask.POWER_DESCRIPTOR);
-        }
-
-        if (endpoints.size() == 0 && networkAddress != 0) {
-            tasks.add(NodeDiscoveryTask.ACTIVE_ENDPOINTS);
-        }
-
-        tasks.add(NodeDiscoveryTask.NEIGHBORS);
-
-        serviceDiscoverer.startDiscovery(tasks);
-    }
-
-    /**
-     * Starts service discovery for the node in order to update the mesh
-     */
-    public void updateMesh() {
-        Set<NodeDiscoveryTask> tasks = new HashSet<NodeDiscoveryTask>();
-
-        tasks.add(NodeDiscoveryTask.NEIGHBORS);
-
-        if (nodeDescriptor.getLogicalType() != LogicalType.END_DEVICE) {
-            tasks.add(NodeDiscoveryTask.ROUTES);
-        }
-
-        serviceDiscoverer.startDiscovery(tasks);
-    }
-
-    /**
-     * Checks if basic device discovery is complete.
+     * Checks if basic device discovery is complete. This ensures that we have received the {@link NodeDescriptor} and
+     * the {@link SimpleDescriptor} so that we know the endpoints.
      *
      * @return true if basic device information is known
      */
@@ -798,10 +749,30 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         }
 
         for (ZigBeeEndpointDao endpointDao : dao.getEndpoints()) {
-            ZigBeeEndpoint endpoint = new ZigBeeEndpoint(networkManager, this, endpointDao.getEndpointId());
+            ZigBeeEndpoint endpoint = new ZigBeeEndpoint(this, endpointDao.getEndpointId());
             endpoint.setDao(endpointDao);
             endpoints.put(endpoint.getEndpointId(), endpoint);
         }
+    }
+
+    /**
+     * Sends ZigBee command without waiting for response.
+     *
+     * @param command the {@link ZigBeeCommand} to send
+     */
+    public void sendTransaction(ZigBeeCommand command) {
+        network.sendTransaction(command);
+    }
+
+    /**
+     * Sends {@link ZigBeeCommand} command and uses the {@link ZigBeeTransactionMatcher} to match the response.
+     *
+     * @param command the {@link ZigBeeCommand} to send
+     * @param responseMatcher the {@link ZigBeeTransactionMatcher} used to match the response to the request
+     * @return the {@link CommandResult} future.
+     */
+    public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
+        return network.sendTransaction(command, responseMatcher);
     }
 
     @Override

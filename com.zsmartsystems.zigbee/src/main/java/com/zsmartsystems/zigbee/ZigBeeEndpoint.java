@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.dao.ZclClusterDao;
 import com.zsmartsystems.zigbee.dao.ZigBeeEndpointDao;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
@@ -39,11 +41,6 @@ public class ZigBeeEndpoint {
      * The {@link Logger}.
      */
     private final Logger logger = LoggerFactory.getLogger(ZigBeeEndpoint.class);
-
-    /**
-     * The {@link ZigBeeNetworkManager} that manages this endpoint
-     */
-    private final ZigBeeNetworkManager networkManager;
 
     /**
      * Link to the parent {@link ZigBeeNode} to which this endpoint belongs
@@ -92,12 +89,10 @@ public class ZigBeeEndpoint {
     /**
      * Constructor
      *
-     * @param networkManager the {@link ZigBeeNetworkManager} to which the endpoint belongs
      * @param node the parent {@link ZigBeeNode}
      * @param endpoint the endpoint number within the {@link ZigBeeNode}
      */
-    public ZigBeeEndpoint(ZigBeeNetworkManager networkManager, ZigBeeNode node, int endpoint) {
-        this.networkManager = networkManager;
+    public ZigBeeEndpoint(ZigBeeNode node, int endpoint) {
         this.node = node;
         this.endpointId = endpoint;
     }
@@ -278,11 +273,9 @@ public class ZigBeeEndpoint {
         // Create a cluster class
         ZclCluster cluster = null;
         Constructor<? extends ZclCluster> constructor;
-        // try {
         try {
-            constructor = clusterType.getClusterClass().getConstructor(ZigBeeNetworkManager.class,
-                    ZigBeeEndpoint.class);
-            cluster = constructor.newInstance(networkManager, this);
+            constructor = clusterType.getClusterClass().getConstructor(ZigBeeEndpoint.class);
+            cluster = constructor.newInstance(this);
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
             logger.debug("{}: Error instantiating cluster {}", getEndpointAddress(), clusterType);
@@ -485,6 +478,27 @@ public class ZigBeeEndpoint {
                 outputClusters.put(clusterDao.getClusterId(), cluster);
             }
         }
+    }
+
+    /**
+     * Sends ZigBee command without waiting for response.
+     *
+     * @param command the {@link ZigBeeCommand} to send
+     */
+    public void sendTransaction(ZigBeeCommand command) {
+        command.setDestinationAddress(getEndpointAddress());
+    }
+
+    /**
+     * Sends {@link ZigBeeCommand} command and uses the {@link ZigBeeTransactionMatcher} to match the response.
+     *
+     * @param command the {@link ZigBeeCommand} to send
+     * @param responseMatcher the {@link ZigBeeTransactionMatcher} used to match the response to the request
+     * @return the {@link CommandResult} future.
+     */
+    public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
+        command.setDestinationAddress(getEndpointAddress());
+        return node.sendTransaction(command, responseMatcher);
     }
 
     @Override

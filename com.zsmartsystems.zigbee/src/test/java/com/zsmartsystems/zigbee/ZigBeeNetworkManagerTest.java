@@ -16,8 +16,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
 
+import org.awaitility.Awaitility;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -40,17 +40,20 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
 
+/**
+ * Tests for {@link ZigBeeNetworkManager}
+ * 
+ * @author Chris Jackson
+ *
+ */
 public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigBeeNetworkStateListener,
         ZigBeeNetworkEndpointListener, ZigBeeCommandListener {
     private ZigBeeNetworkNodeListener mockedNodeListener;
     private List<ZigBeeNode> nodeNodeListenerCapture;
-    private ZigBeeNetworkEndpointListener mockedDeviceListener;
-    private List<ZigBeeEndpoint> nodeDeviceListenerCapture;
     private ArgumentCaptor<ZigBeeApsFrame> mockedApsFrameListener;
     private List<ZigBeeTransportState> networkStateListenerCapture;
 
     private ZigBeeTransportTransmit mockedTransport;
-    private ZigBeeCommandListener mockedCommandListener;
     private ZigBeeNetworkStateListener mockedStateListener;
     private List<ZigBeeCommand> commandListenerCapture;
 
@@ -221,7 +224,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         apsFrame.setPayload(zclHeader.serialize(fieldSerializer, new int[] {}));
 
         networkManager.receiveCommand(apsFrame);
-        org.awaitility.Awaitility.await().until(commandListenerUpdated(), org.hamcrest.Matchers.equalTo(1));
+        Awaitility.await().until(() -> commandListenerUpdated());
 
         ReadAttributesCommand response = (ReadAttributesCommand) commandListenerCapture.get(0);
 
@@ -240,7 +243,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         networkManager.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
-        org.awaitility.Awaitility.await().until(networkStateUpdatedSize(), org.hamcrest.Matchers.equalTo(1));
+        Awaitility.await().until(() -> networkStateUpdatedSize());
 
         assertEquals(1, networkStateListenerCapture.size());
         assertEquals(ZigBeeTransportState.UNINITIALISED, networkStateListenerCapture.get(0));
@@ -298,26 +301,15 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         mockedStateListener = Mockito.mock(ZigBeeNetworkStateListener.class);
         mockedNodeListener = Mockito.mock(ZigBeeNetworkNodeListener.class);
         nodeNodeListenerCapture = new ArrayList<ZigBeeNode>();
-        mockedDeviceListener = Mockito.mock(ZigBeeNetworkEndpointListener.class);
-        // nodeDeviceListenerCapture = ArgumentCaptor.forClass(ZigBeeDevice.class);
-        // networkStateListenerCapture = ArgumentCaptor.forClass(ZigBeeTransportState.class);
         networkStateListenerCapture = new ArrayList<ZigBeeTransportState>();
 
         final ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
 
-        mockedCommandListener = Mockito.mock(ZigBeeCommandListener.class);
         commandListenerCapture = new ArrayList<>();
 
         networkManager.addNetworkNodeListener(this);
         networkManager.addNetworkStateListener(this);
-        // networkManager.addNetworkDeviceListener(this);
         networkManager.addCommandListener(this);
-
-        // Mockito.doNothing().when(mockedNodeListener).nodeAdded(nodeNodeListenerCapture.capture());
-        // Mockito.doNothing().when(mockedNodeListener).nodeUpdated(nodeNodeListenerCapture.capture());
-        // Mockito.doNothing().when(mockedNodeListener).nodeRemoved(nodeNodeListenerCapture.capture());
-        // Mockito.doNothing().when(mockedCommandListener).commandReceived(commandListenerCapture.capture());
-        // Mockito.doNothing().when(mockedStateListener).networkStateUpdated(networkStateListenerCapture.capture());
 
         Mockito.when(mockedTransport.setZigBeeChannel(ArgumentMatchers.any(ZigBeeChannel.class)))
                 .thenReturn(ZigBeeStatus.SUCCESS);
@@ -330,10 +322,6 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         Mockito.when(mockedTransport.getZigBeeExtendedPanId()).thenReturn(new ExtendedPanId("1"));
 
         mockedApsFrameListener = ArgumentCaptor.forClass(ZigBeeApsFrame.class);
-
-        // final ZigBeeDevice device = new ZigBeeDevice(networkManager);
-        // device.setDeviceAddress(new ZigBeeDeviceAddress(1234, 5));
-        // networkManager.addDevice(device);
 
         Mockito.doNothing().when(mockedTransport).sendCommand(mockedApsFrameListener.capture());
 
@@ -460,19 +448,19 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
         ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress("12345678990ABCDEF"));
         node.setNetworkAddress(12345);
-        ZigBeeEndpoint endpoint = new ZigBeeEndpoint(networkManager, node, 1);
-        ZclOnOffCluster cluster = new ZclOnOffCluster(networkManager, endpoint);
+        ZigBeeEndpoint endpoint = new ZigBeeEndpoint(node, 1);
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
 
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
 
         Mockito.doNothing().when(mockedTransport).sendCommand(mockedApsFrameListener.capture());
 
-        Future<CommandResult> onCommand = cluster.onCommand();
+        cluster.onCommand();
         assertEquals(12345, mockedApsFrameListener.getValue().getDestinationAddress());
 
         node.setNetworkAddress(54321);
 
-        Future<CommandResult> offCommand = cluster.offCommand();
+        cluster.offCommand();
         assertEquals(54321, mockedApsFrameListener.getValue().getDestinationAddress());
     }
 
@@ -481,7 +469,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
 
         networkManager.receiveCommand(apsFrame);
-        org.awaitility.Awaitility.await().until(commandListenerUpdated(), org.hamcrest.Matchers.equalTo(1));
+        Awaitility.await().until(() -> commandListenerUpdated());
 
         return commandListenerCapture.get(0);
     }

@@ -227,7 +227,7 @@ public class ZigBeeApi {
 
         command.setDestinationAddress(device.getEndpointAddress());
 
-        return networkManager.unicast(command, new ZclTransactionMatcher());
+        return networkManager.sendTransaction(command, new ZclTransactionMatcher());
     }
 
     /**
@@ -243,7 +243,7 @@ public class ZigBeeApi {
         command.setGroupList(Collections.<Integer> emptyList());
         command.setDestinationAddress(device.getEndpointAddress());
 
-        return networkManager.unicast(command, new ZclTransactionMatcher());
+        return networkManager.sendTransaction(command, new ZclTransactionMatcher());
     }
 
     /**
@@ -259,7 +259,7 @@ public class ZigBeeApi {
 
         command.setDestinationAddress(device.getEndpointAddress());
 
-        return networkManager.unicast(command, new ZclTransactionMatcher());
+        return networkManager.sendTransaction(command, new ZclTransactionMatcher());
     }
 
     /**
@@ -275,6 +275,6 @@ public class ZigBeeApi {
 
         command.setDestinationAddress(device.getEndpointAddress());
 
-        return networkManager.unicast(command, new ZclTransactionMatcher());
+        return networkManager.sendTransaction(command, new ZclTransactionMatcher());
     }
 }

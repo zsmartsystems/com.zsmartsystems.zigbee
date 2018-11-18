@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * Code is auto-generated. Modifications may be overwritten!
  */
 
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:39:59Z")
 public class SimpleDescriptorRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * NWKAddrOfInterest command message field.
@@ -104,10 +104,10 @@ public class SimpleDescriptorRequest extends ZdoRequest implements ZigBeeTransac
             return false;
         }
 
-        return (((SimpleDescriptorRequest) request).getNwkAddrOfInterest()
-                .equals(((SimpleDescriptorResponse) response).getNwkAddrOfInterest()))
-                && (((SimpleDescriptorRequest) request).getEndpoint()
-                .equals(((SimpleDescriptorResponse) response).getSimpleDescriptor().getEndpoint()));
+        return (((SimpleDescriptorRequest) request).getEndpoint()
+                .equals(((SimpleDescriptorResponse) response).getSimpleDescriptor().getEndpoint()))
+                && (((SimpleDescriptorRequest) request).getNwkAddrOfInterest()
+                .equals(((SimpleDescriptorResponse) response).getNwkAddrOfInterest()));
     }
 
     @Override

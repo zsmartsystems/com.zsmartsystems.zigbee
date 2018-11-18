@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee.zcl.clusters;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
-import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
@@ -24,7 +23,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
 public class ZclTemperatureMeasurementCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -91,11 +90,10 @@ public class ZclTemperatureMeasurementCluster extends ZclCluster {
     /**
      * Default constructor to create a Temperature measurement cluster.
      *
-     * @param zigbeeManager {@link ZigBeeNetworkManager}
      * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
      */
-    public ZclTemperatureMeasurementCluster(final ZigBeeNetworkManager zigbeeManager, final ZigBeeEndpoint zigbeeEndpoint) {
-        super(zigbeeManager, zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    public ZclTemperatureMeasurementCluster(final ZigBeeEndpoint zigbeeEndpoint) {
+        super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
     /**

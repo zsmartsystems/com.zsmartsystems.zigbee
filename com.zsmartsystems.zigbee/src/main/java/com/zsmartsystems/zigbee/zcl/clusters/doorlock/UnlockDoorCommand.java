@@ -10,11 +10,11 @@ package com.zsmartsystems.zigbee.zcl.clusters.doorlock;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.field.ByteArray;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 
 /**
  * Unlock Door Command value object class.
@@ -22,20 +22,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * Cluster: <b>Door Lock</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Door Lock cluster.
  * <p>
- * This command causes the lock device to unlock the door. As of HA 1.2, this command includes an
- * optional code for the lock. The door lock MAY require a code depending on the value of the
- * [Require PIN for RF Operation attribute].
- * <p>
- * * <p>
- * <b>Note:</b> If the attribute AutoRelockTime is supported the lock will close when the auto relock time
- * has expired
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-08-13T16:25:39Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:39:59Z")
 public class UnlockDoorCommand extends ZclCommand {
     /**
-     * PIN Code command message field.
+     * Pin code command message field.
      */
     private ByteArray pinCode;
 
@@ -44,24 +36,24 @@ public class UnlockDoorCommand extends ZclCommand {
      */
     public UnlockDoorCommand() {
         genericCommand = false;
-        clusterId = 0x0101;
+        clusterId = 257;
         commandId = 1;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets PIN Code.
+     * Gets Pin code.
      *
-     * @return the PIN Code
+     * @return the Pin code
      */
     public ByteArray getPinCode() {
         return pinCode;
     }
 
     /**
-     * Sets PIN Code.
+     * Sets Pin code.
      *
-     * @param pinCode the PIN Code
+     * @param pinCode the Pin code
      */
     public void setPinCode(final ByteArray pinCode) {
         this.pinCode = pinCode;
