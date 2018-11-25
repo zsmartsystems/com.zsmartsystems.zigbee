@@ -343,6 +343,8 @@ public class ZigBeeDongleTelegesis
         frameHandler.start(serialPort);
         frameHandler.addEventListener(this);
 
+        initialiseCriticalConfiguration();
+
         // Software reset the stick so we are in a known state on startup!
         // For the first command, we add a retry mechanism
         // in case the serial port takes some time to get started
@@ -466,16 +468,39 @@ public class ZigBeeDongleTelegesis
         return 0;
     }
 
-    private boolean initialiseDongle() {
+    /**
+     * This method configures the Telegesis dongle registers into a state that is required
+     * for the transactions to work correctly.
+     * <p>
+     * This includes -:
+     * <ul>
+     * <li>Disable echo
+     * <li>Enable OK responses
+     * <li>Enable ERROR responses
+     */
+    private void initialiseCriticalConfiguration() {
         // Disable echo on the serial port
         TelegesisSetRegisterBitCommand setRegister = new TelegesisSetRegisterBitCommand();
         setRegister.setRegister(0x12);
         setRegister.setBit(4);
         setRegister.setState(true);
-        if (frameHandler.sendRequest(setRegister) == null) {
-            logger.debug("Error setting Telegesis port echo");
-            return false;
-        }
+        frameHandler.sendRequest(setRegister);
+
+        setRegister = new TelegesisSetRegisterBitCommand();
+        setRegister.setRegister(0x0E);
+        setRegister.setBit(1);
+        setRegister.setState(false);
+        frameHandler.sendRequest(setRegister);
+
+        setRegister = new TelegesisSetRegisterBitCommand();
+        setRegister.setRegister(0x0E);
+        setRegister.setBit(0);
+        setRegister.setState(false);
+        frameHandler.sendRequest(setRegister);
+    }
+
+    private boolean initialiseDongle() {
+        initialiseCriticalConfiguration();
 
         // Configure the dongle
         TelegesisSetPromptEnable1Command prompt1Function = new TelegesisSetPromptEnable1Command();

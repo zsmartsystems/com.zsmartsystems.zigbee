@@ -697,7 +697,7 @@ public class TelegesisFrameHandler {
         pollingTimer = pollingScheduler.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                if (sendQueue.isEmpty()) {
+                if (sendQueue.isEmpty() && sentCommand == null) {
                     queueFrame(new TelegesisDisplayNetworkInformationCommand());
                     sendNextFrame();
                 }
