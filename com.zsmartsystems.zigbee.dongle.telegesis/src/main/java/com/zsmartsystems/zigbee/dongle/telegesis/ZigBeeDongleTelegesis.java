@@ -715,6 +715,14 @@ public class ZigBeeDongleTelegesis
             return ZigBeeStatus.BAD_RESPONSE;
         }
 
+        TelegesisDisplayNetworkInformationCommand netInfoCommand = new TelegesisDisplayNetworkInformationCommand();
+        if (frameHandler.sendRequest(netInfoCommand) == null
+                || netInfoCommand.getStatus() != TelegesisStatusCode.SUCCESS
+                || netInfoCommand.getDevice() == TelegesisDeviceType.NOPAN) {
+            // If we are not connected to the network, there is no need to change the channel and we can return now
+            return ZigBeeStatus.SUCCESS;
+        }
+
         TelegesisChangeChannelCommand channelCommand = new TelegesisChangeChannelCommand();
         channelCommand.setChannel(channel.getChannel());
         if (frameHandler.sendRequest(channelCommand) == null
