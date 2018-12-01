@@ -129,6 +129,16 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         assertTrue(notifyCommand.getQueryJitter() >= 1 && notifyCommand.getQueryJitter() <= 100);
     }
 
+    @Test
+    public void getCurrentFileVersion() {
+        ZclOtaUpgradeCluster cluster = Mockito.mock(ZclOtaUpgradeCluster.class);
+        Mockito.when(cluster.getCurrentFileVersion(ArgumentMatchers.anyLong())).thenReturn(1234);
+
+        ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
+        server.appStartup(cluster);
+        assertEquals(Integer.valueOf(1234), server.getCurrentFileVersion());
+    }
+
     @Override
     public void otaStatusUpdate(ZigBeeOtaServerStatus status, int percent) {
         otaStatusCapture.add(status);

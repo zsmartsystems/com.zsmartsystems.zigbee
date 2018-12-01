@@ -461,6 +461,19 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
     }
 
     /**
+     * The file version of the running firmware image on the device. The information is available for the server to
+     * query via ZCL read attribute command. The attribute is optional on the client.
+     * <p>
+     * This calls the synchronous method in the cluster, and always performs an update (ie will not use cached data) to
+     * ensure it is updated following any OTA upgrade operation.
+     *
+     * @return the current firmware version on the remote device
+     */
+    public Integer getCurrentFileVersion() {
+        return cluster.getCurrentFileVersion(Long.MAX_VALUE);
+    }
+
+    /**
      * Send an updated status on OTA progress to the listeners
      *
      * @param updatedStatus the new {@link ZigBeeOtaServerStatus}
