@@ -91,7 +91,7 @@ public class ZigBeeConsoleReportingSubscribeCommand extends ZigBeeConsoleAbstrac
         final CommandResult result = cluster.setReporting(attribute, minInterval, maxInterval, reportableChange).get();
         if (result.isSuccess()) {
             final ConfigureReportingResponse response = result.getResponse();
-            final ZclStatus statusCode = response.getRecords().get(0).getStatus();
+            final ZclStatus statusCode = response.getStatus();
             if (statusCode == ZclStatus.SUCCESS) {
                 out.println("Attribute value configure reporting success.");
             } else {
