@@ -428,7 +428,7 @@ public class ZigBeeNetworkManager {
             }
         }
         if (networkKey != null) {
-            logger.debug("Setting NETWORK_KEY.");
+            logger.debug("Setting NETWORK_KEY to {}.", networkKey);
             if (!dongleSetNetworkKey()) {
                 logger.error("Unable to set NETWORK_KEY for ZigBee Network");
                 return false;

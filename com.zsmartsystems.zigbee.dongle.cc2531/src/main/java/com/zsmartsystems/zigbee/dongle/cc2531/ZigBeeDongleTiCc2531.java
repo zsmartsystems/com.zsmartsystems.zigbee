@@ -199,7 +199,7 @@ public class ZigBeeDongleTiCc2531
 
                     default:
                         configuration.setResult(option, ZigBeeStatus.UNSUPPORTED);
-                        logger.debug("Unsupported configuration option \"{}\" in Telegesis dongle", option);
+                        logger.debug("Unsupported configuration option \"{}\" in CC2531 dongle", option);
                         break;
                 }
             } catch (ClassCastException e) {
