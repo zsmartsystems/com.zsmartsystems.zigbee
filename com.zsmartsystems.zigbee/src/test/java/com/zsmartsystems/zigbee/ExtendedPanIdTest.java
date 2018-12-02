@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
@@ -81,5 +82,13 @@ public class ExtendedPanIdTest {
     public void testToString() {
         ExtendedPanId address = new ExtendedPanId("17880100dc880b");
         assertEquals("0017880100DC880B", address.toString());
+    }
+
+    @Test
+    public void createRandom() {
+        // Ok, technically this can fail, but the probability is VERY low
+        ExtendedPanId pan1 = ExtendedPanId.createRandom();
+        ExtendedPanId pan2 = ExtendedPanId.createRandom();
+        assertNotEquals(pan1, pan2);
     }
 }
