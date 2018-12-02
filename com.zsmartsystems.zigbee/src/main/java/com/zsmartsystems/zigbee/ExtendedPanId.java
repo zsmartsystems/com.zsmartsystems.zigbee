@@ -140,4 +140,19 @@ public class ExtendedPanId {
 
         return builder.toString();
     }
+
+    /**
+     * Create an {@link ExtendedPanId} with a random value
+     *
+     * @return {@link ExtendedPanId} containing a random value
+     */
+    public static ExtendedPanId createRandom() {
+        int key[] = new int[8];
+        for (int cnt = 0; cnt < 8; cnt++) {
+            key[cnt] = (int) Math.floor((Math.random() * 255));
+        }
+
+        return new ExtendedPanId(key);
+    }
+
 }

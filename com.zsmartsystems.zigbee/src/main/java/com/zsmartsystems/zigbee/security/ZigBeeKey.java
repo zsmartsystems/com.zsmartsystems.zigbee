@@ -240,7 +240,7 @@ public class ZigBeeKey {
     }
 
     /**
-     * Create a random key
+     * Create a {@link ZigBeeKey} with a random key
      *
      * @return {@link ZigBeeKey} containing a random 128 bit key
      */
