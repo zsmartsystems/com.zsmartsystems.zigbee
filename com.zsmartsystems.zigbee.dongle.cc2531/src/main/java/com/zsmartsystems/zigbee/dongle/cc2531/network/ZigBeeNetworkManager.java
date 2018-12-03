@@ -1060,7 +1060,7 @@ public class ZigBeeNetworkManager {
         }
 
         if (!waitForHardware()) {
-            logger.info("Failed to reach the {} level: getIeeeAddress() failed", DriverStatus.HARDWARE_READY);
+            logger.debug("Failed to reach the {} level: getIeeeAddress() failed", DriverStatus.HARDWARE_READY);
             return -1;
         }
 
@@ -1099,7 +1099,7 @@ public class ZigBeeNetworkManager {
     }
 
     /**
-     * Gets the current ZigBee channe number
+     * Gets the current ZigBee channel number
      *
      * @return the current channel as an int, or -1 on failure
      */
