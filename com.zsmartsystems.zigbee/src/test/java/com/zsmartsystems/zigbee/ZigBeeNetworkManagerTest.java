@@ -42,7 +42,7 @@ import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
 
 /**
  * Tests for {@link ZigBeeNetworkManager}
- * 
+ *
  * @author Chris Jackson
  *
  */
@@ -264,7 +264,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
         assertEquals(ZigBeeStatus.SUCCESS, networkManager.setZigBeePanId(10));
-        assertEquals(999, networkManager.getZigBeePanId());
+        assertEquals(0xABCD, networkManager.getZigBeePanId());
     }
 
     @Test
@@ -317,7 +317,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         Mockito.when(mockedTransport.setZigBeeExtendedPanId(ArgumentMatchers.any(ExtendedPanId.class)))
                 .thenReturn(ZigBeeStatus.SUCCESS);
 
-        Mockito.when(mockedTransport.getZigBeePanId()).thenReturn(999);
+        Mockito.when(mockedTransport.getZigBeePanId()).thenReturn(0xFFFFABCD);
         Mockito.when(mockedTransport.getZigBeeChannel()).thenReturn(ZigBeeChannel.CHANNEL_11);
         Mockito.when(mockedTransport.getZigBeeExtendedPanId()).thenReturn(new ExtendedPanId("1"));
 

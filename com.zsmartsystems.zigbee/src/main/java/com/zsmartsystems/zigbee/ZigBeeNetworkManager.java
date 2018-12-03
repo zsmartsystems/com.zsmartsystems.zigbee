@@ -388,7 +388,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return the PAN ID
      */
     public int getZigBeePanId() {
-        return transport.getZigBeePanId();
+        return (transport.getZigBeePanId() & 0xFFFF);
     }
 
     /**
