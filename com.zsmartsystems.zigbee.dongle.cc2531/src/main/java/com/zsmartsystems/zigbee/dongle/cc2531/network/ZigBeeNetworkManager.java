@@ -30,6 +30,7 @@ package com.zsmartsystems.zigbee.dongle.cc2531.network;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -66,6 +67,7 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STARTUP_FRO
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STATE_CHANGE_IND;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.Integers;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
 /**
  * The ZigBee network manager implementation.
@@ -1142,31 +1144,14 @@ public class ZigBeeNetworkManager {
         }
     }
 
-    public byte[] getZigBeeNetworkKey() {
+    public ZigBeeKey getZigBeeNetworkKey() {
         ZB_READ_CONFIGURATION_RSP response = (ZB_READ_CONFIGURATION_RSP) sendSynchronous(
                 new ZB_READ_CONFIGURATION(ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_PRECFGKEY));
         if (response != null && response.Status == 0) {
-            byte[] readNetworkKey = new byte[16];
-            readNetworkKey[0] = (byte) response.Value[0];
-            readNetworkKey[1] = (byte) response.Value[1];
-            readNetworkKey[2] = (byte) response.Value[2];
-            readNetworkKey[3] = (byte) response.Value[3];
-            readNetworkKey[4] = (byte) response.Value[4];
-            readNetworkKey[5] = (byte) response.Value[5];
-            readNetworkKey[6] = (byte) response.Value[6];
-            readNetworkKey[7] = (byte) response.Value[7];
-            readNetworkKey[8] = (byte) response.Value[8];
-            readNetworkKey[9] = (byte) response.Value[9];
-            readNetworkKey[10] = (byte) response.Value[10];
-            readNetworkKey[11] = (byte) response.Value[11];
-            readNetworkKey[12] = (byte) response.Value[12];
-            readNetworkKey[13] = (byte) response.Value[13];
-            readNetworkKey[14] = (byte) response.Value[14];
-            readNetworkKey[15] = (byte) response.Value[15];
-            return readNetworkKey;
+            return new ZigBeeKey(Arrays.copyOfRange(response.Value, 0, 16));
         } else {
             logger.error("Error reading zigbee network key: " + ResponseStatus.getStatus(response.Status));
-            return null;
+            return new ZigBeeKey();
         }
     }
 

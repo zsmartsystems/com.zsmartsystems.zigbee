@@ -173,14 +173,24 @@ public class ZigBeeDongleTiCc2531
         byte[] keyData = new byte[16];
         int cnt = 0;
         for (int keyVal : key.getValue()) {
-            keyData[cnt] = (byte) keyVal;
+            keyData[cnt++] = (byte) keyVal;
         }
         return networkManager.setNetworkKey(keyData) ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
     }
 
     @Override
+    public ZigBeeKey getZigBeeNetworkKey() {
+        return networkManager.getZigBeeNetworkKey();
+    }
+
+    @Override
     public ZigBeeStatus setTcLinkKey(ZigBeeKey key) {
         return ZigBeeStatus.FAILURE;
+    }
+
+    @Override
+    public ZigBeeKey getTcLinkKey() {
+        return new ZigBeeKey();
     }
 
     @SuppressWarnings("unchecked")
@@ -457,16 +467,6 @@ public class ZigBeeDongleTiCc2531
     @Override
     public Integer getNwkAddress() {
         return 0;
-    }
-
-    @Override
-    public ZigBeeKey getZigBeeNetworkKey() {
-        return null;
-    }
-
-    @Override
-    public ZigBeeKey getTcLinkKey() {
-        return null;
     }
 
 }
