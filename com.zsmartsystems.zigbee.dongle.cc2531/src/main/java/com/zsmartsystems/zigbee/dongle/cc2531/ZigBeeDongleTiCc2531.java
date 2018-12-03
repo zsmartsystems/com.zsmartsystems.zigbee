@@ -85,21 +85,21 @@ public class ZigBeeDongleTiCc2531
 
     private int[] supportedInputClusters = new int[] {};
     private int[] supportedOutputClusters = new int[] {};
+
     /**
-     * The IeeeAddress of the Ember NCP
+     * The IeeeAddress of the local device
      */
     private IeeeAddress ieeeAddress;
 
     /**
-     * The Ember version used in this system. Set during initialisation and saved in case the client is interested.
+     * The firmware version used in this system. Set during initialisation and saved in case the client is interested.
      */
     private String versionString = "Unknown";
 
     /**
      * Constructor to configure the port interface.
      *
-     * @param serialPort
-     *            the serial port
+     * @param serialPort the serial port
      */
     public ZigBeeDongleTiCc2531(final ZigBeePort serialPort) {
         networkManager = new ZigBeeNetworkManager(new CommandInterfaceImpl(serialPort), NetworkMode.Coordinator, 2500L);
@@ -127,6 +127,8 @@ public class ZigBeeDongleTiCc2531
         if (versionString == null) {
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
+
+        ieeeAddress = new IeeeAddress(Long.toHexString(networkManager.getIeeeAddress()));
 
         return ZigBeeStatus.SUCCESS;
     }
