@@ -62,7 +62,7 @@ public class ZigBeeTransaction implements ZigBeeCommandListener {
             final ZigBeeTransactionMatcher responseMatcher) {
         this.command = command;
         this.responseMatcher = responseMatcher;
-        synchronized (command) {
+        synchronized (this.command) {
             transactionFuture = new ZigBeeTransactionFuture();
 
             // Schedule a task to timeout the transaction
