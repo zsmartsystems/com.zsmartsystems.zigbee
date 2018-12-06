@@ -13,6 +13,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +37,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHan
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfglibRxHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendMulticastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
@@ -170,6 +175,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * Boolean to hold initialisation state. Set to true after {@link #startup()} completes.
      */
     private boolean initialised = false;
+
+    private ScheduledExecutorService pollingScheduler;
+    private ScheduledFuture<?> pollingTimer = null;
+
+    /**
+     * The rate at which we will do a status poll if we've not sent any other messages within this period
+     */
+    private int pollRate = 1000;
 
     /**
      * If the dongle is being used with the manufacturing library, then this records the listener to be called when
@@ -329,7 +342,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         EmberStatus initResponse = ncp.networkInit();
 
         networkParameters = ncp.getNetworkParameters().getParameters();
-        ncp.getCurrentSecurityState();
+        // TODO: this is not used: ncp.getCurrentSecurityState();
+
+        pollingScheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduleNetworkStatePolling();
 
         logger.debug("EZSP dongle initialize done: Initialised {}", initResponse != EmberStatus.EMBER_NOT_JOINED);
 
@@ -396,6 +412,19 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 : ZigBeeStatus.BAD_RESPONSE;
     }
 
+    private void scheduleNetworkStatePolling() {
+        if (pollingTimer != null) {
+            pollingTimer.cancel(true);
+        }
+
+        pollingTimer = pollingScheduler.scheduleWithFixedDelay(new Runnable() {
+            @Override
+            public void run() {
+                frameHandler.queueFrame(new EzspNetworkStateRequest());
+            }
+        }, pollRate, pollRate, TimeUnit.MILLISECONDS);
+    }
+
     @Override
     public void shutdown() {
         if (frameHandler == null) {
@@ -404,6 +433,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         if (mfglibListener != null) {
             mfglibListener = null;
+        }
+
+        if (pollingScheduler != null) {
+            pollingScheduler.shutdown();
         }
 
         frameHandler.setClosing();
@@ -503,7 +536,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void handlePacket(EzspFrame response) {
-        logger.debug("RX: " + response.toString());
+        if (response.getFrameId() != EzspNetworkStateRequest.FRAME_ID) {
+            logger.debug("RX: " + response.toString());
+        }
 
         if (response instanceof EzspIncomingMessageHandler) {
             if (nwkAddress == null) {
@@ -594,13 +629,16 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return;
         }
 
-        logger.debug("Unhandled EZSP Frame: {}", response.toString());
+        if (response.getFrameId() != EzspNetworkStateRequest.FRAME_ID) {
+            logger.debug("Unhandled EZSP Frame: {}", response.toString());
+        }
     }
 
     @Override
     public void handleLinkStateChange(final boolean linkState) {
-        // Only act on changes once we have completed initialisation
-        if (!initialised || networkStateUp == linkState) {
+        // Only act on changes to OFFLINE once we have completed initialisation
+        // changes to ONLINE have to work during init because they mark the end of the initialisation
+        if (!initialised && linkState == false || linkState == networkStateUp) {
             return;
         }
         networkStateUp = linkState;

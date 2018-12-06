@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
@@ -65,7 +66,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
      * Maximum number of consecutive timeouts allowed while waiting to receive an ACK
      */
     private final int ACK_TIMEOUTS = 4;
-    private int retries = 0;
+    private volatile int retries = 0;
 
     /**
      * Maximum number of DATA frames we can transmit without an ACK
@@ -168,7 +169,9 @@ public class AshFrameHandler implements EzspProtocolHandler {
                             // Send a NAK
                             responseFrame = new AshFrameNak(ackNum);
                         } else {
-                            logger.debug("<-- RX ASH frame: {}", packet.toString());
+                            if (!isStatusRequest(packet)) {
+                                logger.debug("<-- RX ASH frame: {}", packet.toString());
+                            }
 
                             // Reset the exception counter
                             exceptionCnt = 0;
@@ -192,10 +195,12 @@ public class AshFrameHandler implements EzspProtocolHandler {
                                         // Get the EZSP frame
                                         EzspFrameResponse response = EzspFrame
                                                 .createHandler(dataPacket.getDataBuffer());
-                                        logger.debug("RX EZSP: {}", response);
                                         if (response == null) {
                                             logger.debug("ASH: No frame handler created for {}", packet);
                                         } else if (!notifyTransactionComplete(response)) {
+                                            if (response.getFrameId() != EzspNetworkStateRequest.FRAME_ID) {
+                                                logger.debug("RX EZSP: {}", response);
+                                            }
                                             // No transactions owned this response, so we pass it to
                                             // our unhandled response handler
                                             handleIncomingFrame(EzspFrame.createHandler((dataPacket.getDataBuffer())));
@@ -371,6 +376,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     public void close() {
         logger.debug("AshFrameHandler close.");
         setClosing();
+
         stopRetryTimer();
         stateConnected = false;
 
@@ -417,8 +423,11 @@ public class AshFrameHandler implements EzspProtocolHandler {
             return false;
         }
 
+        // only log packets that differ from status request polling
+        if (nextFrame.getFrameId() != EzspNetworkStateRequest.FRAME_ID) {
+            logger.debug("TX EZSP: {}", nextFrame);
+        }
         // Encapsulate the EZSP frame into the ASH packet
-        logger.debug("TX EZSP: {}", nextFrame);
         AshFrameData ashFrame = new AshFrameData(nextFrame);
 
         sendFrame(ashFrame);
@@ -461,10 +470,35 @@ public class AshFrameHandler implements EzspProtocolHandler {
         outputFrame(ashFrame);
     }
 
+    private boolean isStatusRequest(AshFrame frame) {
+        int magicNumber = 126;
+        int[] buffer = frame.getOutputBuffer();
+
+        int[] rawDataBuffer = frame.dataBuffer;
+
+        // AshFrameAck
+        if (buffer.length == 4 && buffer[3] == magicNumber) {
+            return true;
+        }
+
+        // AshFrameData
+        if (rawDataBuffer != null) {
+            if (rawDataBuffer.length == 3 && rawDataBuffer[2] == EzspNetworkStateRequest.FRAME_ID) {
+                return true;
+            }
+            if (rawDataBuffer.length == 4 && rawDataBuffer[2] == EzspNetworkStateRequest.FRAME_ID) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Synchronize this method to ensure a packet gets sent as a block
     private synchronized void outputFrame(AshFrame ashFrame) {
         ashFrame.setAckNum(ackNum);
-        logger.debug("--> TX ASH frame: {}", ashFrame);
+        if (!isStatusRequest(ashFrame)) {
+            logger.debug("--> TX ASH frame: {}", ashFrame);
+        }
 
         // Send the data
         for (int outByte : ashFrame.getOutputBuffer()) {
@@ -481,8 +515,9 @@ public class AshFrameHandler implements EzspProtocolHandler {
     @Override
     public void queueFrame(EzspFrameRequest request) {
         sendQueue.add(request);
-
-        logger.debug("ASH: TX EZSP queue: {}", sendQueue.size());
+        if (request.getFrameId() != EzspNetworkStateRequest.FRAME_ID) {
+            logger.debug("ASH: TX EZSP queue: {}", sendQueue.size());
+        }
 
         sendNextFrame();
     }
@@ -515,6 +550,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         sendQueue.clear();
 
         stopRetryTimer();
+        retries = 0;
 
         frameHandler.handleLinkStateChange(false);
     }
@@ -542,7 +578,9 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
         while (sentQueue.peek() != null && sentQueue.peek().getFrmNum() != ackNum) {
             AshFrameData ackedFrame = sentQueue.poll();
-            logger.debug("ASH: Frame acked and removed {}", ackedFrame);
+            if (!isStatusRequest(ackedFrame)) {
+                logger.debug("ASH: Frame acked and removed {}", ackedFrame);
+            }
         }
     }
 
@@ -562,7 +600,6 @@ public class AshFrameHandler implements EzspProtocolHandler {
             timerTask.cancel();
             timerTask = null;
         }
-        retries = 0;
     }
 
     private class AshRetryTimer extends TimerTask {
