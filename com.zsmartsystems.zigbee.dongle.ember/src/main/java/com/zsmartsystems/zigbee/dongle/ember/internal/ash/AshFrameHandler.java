@@ -65,7 +65,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
      * Maximum number of consecutive timeouts allowed while waiting to receive an ACK
      */
     private final int ACK_TIMEOUTS = 4;
-    private int retries = 0;
+    private volatile int retries = 0;
 
     /**
      * Maximum number of DATA frames we can transmit without an ACK
@@ -371,6 +371,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     public void close() {
         logger.debug("AshFrameHandler close.");
         setClosing();
+
         stopRetryTimer();
         stateConnected = false;
 
@@ -515,6 +516,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         sendQueue.clear();
 
         stopRetryTimer();
+        retries = 0;
 
         frameHandler.handleLinkStateChange(false);
     }
@@ -562,7 +564,6 @@ public class AshFrameHandler implements EzspProtocolHandler {
             timerTask.cancel();
             timerTask = null;
         }
-        retries = 0;
     }
 
     private class AshRetryTimer extends TimerTask {
