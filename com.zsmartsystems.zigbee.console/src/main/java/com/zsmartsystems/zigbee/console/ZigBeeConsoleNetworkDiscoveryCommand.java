@@ -8,8 +8,8 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -29,8 +29,7 @@ public class ZigBeeConsoleNetworkDiscoveryCommand extends ZigBeeConsoleAbstractC
     private final static String NONE = "None";
     private final static String NEVER = "Never";
 
-    private static final DateTimeFormatter dfIso8601 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
-            .withZone(ZoneOffset.UTC);
+    private static final DateFormat dfIso8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     @Override
     public String getCommand() {
@@ -116,10 +115,10 @@ public class ZigBeeConsoleNetworkDiscoveryCommand extends ZigBeeConsoleAbstractC
         for (ZigBeeNodeServiceDiscoverer discoverer : extension.getNodeDiscoverers()) {
             ZigBeeNode node = discoverer.getNode();
             out.println(String.format("%s  %-5d  %20s  %20s  %s", node.getIeeeAddress(), node.getNetworkAddress(),
-                    discoverer.getLastDiscoveryStarted() == null ? NEVER
-                            : dfIso8601.format(discoverer.getLastDiscoveryStarted()),
-                    discoverer.getLastDiscoveryCompleted() == null ? NEVER
-                            : dfIso8601.format(discoverer.getLastDiscoveryCompleted()),
+                    // discoverer.getLastDiscoveryStarted() == null ? NEVER
+                    // : dfIso8601.format(discoverer.getLastDiscoveryStarted()),
+                    // discoverer.getLastDiscoveryCompleted() == null ? NEVER
+                    // : dfIso8601.format(discoverer.getLastDiscoveryCompleted()),
                     tasksToString(discoverer.getTasks())));
         }
     }
@@ -127,7 +126,7 @@ public class ZigBeeConsoleNetworkDiscoveryCommand extends ZigBeeConsoleAbstractC
     private void displayNodeMesh(ZigBeeNode node, ZigBeeNodeServiceDiscoverer discoverer, PrintStream out) {
         out.println("IEEE Address             : " + node.getIeeeAddress().toString());
         out.println("NWK Address              : " + node.getNetworkAddress().toString());
-        out.println("Last discovery started   : " + discoverer.getLastDiscoveryStarted() == null ? NEVER
+        out.println("Last discovery started : " + discoverer.getLastDiscoveryStarted() == null ? NEVER
                 : dfIso8601.format(discoverer.getLastDiscoveryStarted()));
         out.println("Last discovery completed : " + discoverer.getLastDiscoveryCompleted() == null ? NEVER
                 : dfIso8601.format(discoverer.getLastDiscoveryStarted()));
