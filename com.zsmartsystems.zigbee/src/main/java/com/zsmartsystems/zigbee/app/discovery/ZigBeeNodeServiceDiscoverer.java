@@ -7,8 +7,8 @@
  */
 package com.zsmartsystems.zigbee.app.discovery;
 
-import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -132,12 +132,12 @@ public class ZigBeeNodeServiceDiscoverer {
     /**
      * Record of the last time we started a service discovery or update
      */
-    private Instant lastDiscoveryStarted;
+    private Calendar lastDiscoveryStarted;
 
     /**
      * Record of the last time we completed a service discovery or update
      */
-    private Instant lastDiscoveryCompleted;
+    private Calendar lastDiscoveryCompleted;
 
     /**
      *
@@ -211,7 +211,7 @@ public class ZigBeeNodeServiceDiscoverer {
             if (!startWorker) {
                 logger.debug("{}: Node SVC Discovery: already scheduled or running", node.getIeeeAddress());
             } else {
-                lastDiscoveryStarted = Instant.now();
+                lastDiscoveryStarted = Calendar.getInstance();
             }
         }
 
@@ -567,7 +567,7 @@ public class ZigBeeNodeServiceDiscoverer {
                     discoveryTask = discoveryTasks.peek();
                 }
                 if (discoveryTask == null) {
-                    lastDiscoveryCompleted = Instant.now();
+                    lastDiscoveryCompleted = Calendar.getInstance();
                     logger.debug("{}: Node SVC Discovery: complete", node.getIeeeAddress());
                     networkManager.updateNode(node);
                     return;
@@ -704,18 +704,18 @@ public class ZigBeeNodeServiceDiscoverer {
     /**
      * Gets the time the last discovery was started.
      *
-     * @return the {@link Instant} that the last discovery was started
+     * @return the {@link Calendar} that the last discovery was started
      */
-    public Instant getLastDiscoveryStarted() {
+    public Calendar getLastDiscoveryStarted() {
         return lastDiscoveryStarted;
     }
 
     /**
      * Gets the time the last discovery was completed.
      *
-     * @return the {@link Instant} that the last discovery was completed
+     * @return the {@link Calendar} that the last discovery was completed
      */
-    public Instant getLastDiscoveryCompleted() {
+    public Calendar getLastDiscoveryCompleted() {
         return lastDiscoveryCompleted;
     }
 }
