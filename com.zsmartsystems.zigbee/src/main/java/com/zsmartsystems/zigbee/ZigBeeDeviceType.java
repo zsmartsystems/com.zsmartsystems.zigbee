@@ -6,11 +6,11 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 package com.zsmartsystems.zigbee;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Generated;
-
 
 /**
  * ZigBee Device Type value enumeration.
@@ -169,6 +169,16 @@ public enum ZigBeeDeviceType {
      * Window Covering Controller
      */
     WINDOW_COVERING_CONTROLLER(0x0203),
+
+    /**
+     * Extended Color Light
+     */
+    EXTENDED_COLOR_LIGHT(0x0210),
+
+    /**
+     * Color Temperature Light
+     */
+    COLOR_TEMPERATURE_LIGHT(0x0220),
 
     /**
      * Heating/Cooling Unit
