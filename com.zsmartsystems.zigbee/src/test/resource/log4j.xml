@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="null" threshold="null">
+
+    <appender class="org.apache.log4j.ConsoleAppender" name="StdOut">
+        <param name="Threshold" value="debug" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-5p  %d{HH:mm:ss.SSS}  %m%n"/>
+        </layout>
+    </appender>
+
+    <logger additivity="true" name="com.zsmartsystems.zigbee">
+        <level value="debug"/>
+        <appender-ref ref="StdOut" />
+    </logger>
+
+</log4j:configuration>
