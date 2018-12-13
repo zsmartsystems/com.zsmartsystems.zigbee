@@ -93,7 +93,9 @@ public class ZigBeeDiscoveryExtension
         networkManager.removeNetworkNodeListener(this);
         networkManager.removeCommandListener(this);
 
-        networkDiscoverer.shutdown();
+        if (networkDiscoverer != null) {
+            networkDiscoverer.shutdown();
+        }
 
         extensionStarted = false;
 
