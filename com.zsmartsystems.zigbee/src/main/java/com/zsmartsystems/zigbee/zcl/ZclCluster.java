@@ -855,14 +855,7 @@ public abstract class ZclCluster {
      */
     public void handleAttributeReport(List<AttributeReport> reports) {
         for (AttributeReport report : reports) {
-            ZclAttribute attribute = attributes.get(report.getAttributeIdentifier());
-            if (attribute == null) {
-                logger.debug("{}: Unknown attribute {} in cluster {}", zigbeeEndpoint.getEndpointAddress(),
-                        report.getAttributeIdentifier(), clusterId);
-            } else {
-                attribute.updateValue(normalizer.normalizeZclData(attribute.getDataType(), report.getAttributeValue()));
-                notifyAttributeListener(attribute);
-            }
+            updateAttribute(report.getAttributeIdentifier(), report.getAttributeValue());
         }
     }
 
@@ -879,14 +872,18 @@ public abstract class ZclCluster {
                 continue;
             }
 
-            ZclAttribute attribute = attributes.get(record.getAttributeIdentifier());
-            if (attribute == null) {
-                logger.debug("{}: Unknown attribute {} in cluster {}", zigbeeEndpoint.getEndpointAddress(),
-                        record.getAttributeIdentifier(), clusterId);
-            } else {
-                attribute.updateValue(normalizer.normalizeZclData(attribute.getDataType(), record.getAttributeValue()));
-                notifyAttributeListener(attribute);
-            }
+            updateAttribute(record.getAttributeIdentifier(), record.getAttributeValue());
+        }
+    }
+
+    private void updateAttribute(int attributeId, Object attributeValue) {
+        ZclAttribute attribute = attributes.get(attributeId);
+        if (attribute == null) {
+            logger.debug("{}: Unknown attribute {} in cluster {}", zigbeeEndpoint.getEndpointAddress(), attributeId,
+                    clusterId);
+        } else {
+            attribute.updateValue(normalizer.normalizeZclData(attribute.getDataType(), attributeValue));
+            notifyAttributeListener(attribute);
         }
     }
 
