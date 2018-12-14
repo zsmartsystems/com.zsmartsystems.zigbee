@@ -162,7 +162,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * We use a {@link Executors.newScheduledThreadPool} to provide a fixed number of threads as otherwise this could
      * result in a large number of simultaneous threads in large networks.
      */
-    private ScheduledExecutorService executorService;
+    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(6);
 
     /**
      * The {@link ZigBeeTransportTransmit} implementation. This provides the interface
@@ -315,9 +315,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return {@link ZigBeeStatus}
      */
     public ZigBeeStatus initialize() {
-
-        executorService = Executors.newScheduledThreadPool(6);
-
         setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
         synchronized (this) {
@@ -517,9 +514,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Shuts down ZigBee manager components.
      */
     public void shutdown() {
-        if (executorService != null) {
-            executorService.shutdownNow();
-        }
+        executorService.shutdownNow();
 
         synchronized (this) {
             for (ZigBeeNode node : networkNodes.values()) {
