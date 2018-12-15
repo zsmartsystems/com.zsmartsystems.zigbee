@@ -163,7 +163,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                         final AshFrame packet = AshFrame.createFromInput(packetData);
                         AshFrame responseFrame = null;
                         if (packet == null) {
-                            logger.error("<-- RX ASH error: BAD PACKET {}", frameToString(packetData));
+                            logger.debug("<-- RX ASH error: BAD PACKET {}", frameToString(packetData));
 
                             // Send a NAK
                             responseFrame = new AshFrameNak(ackNum);
@@ -356,7 +356,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     }
 
     private void handleError(AshFrameError packet) {
-        logger.debug("ASH: ERROR received (code {}). Disconnecting.", packet.getErrorCode());
+        logger.warn("ASH: ERROR received (code {}). Disconnecting.", packet.getErrorCode());
         statsRxErrs++;
         disconnect();
     }
