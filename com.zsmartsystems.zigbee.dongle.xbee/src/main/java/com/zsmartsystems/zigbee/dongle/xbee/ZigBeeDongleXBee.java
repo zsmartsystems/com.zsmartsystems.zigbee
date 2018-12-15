@@ -297,12 +297,11 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
 
     @Override
     public Integer getNwkAddress() {
-        // TODO Auto-generated method stub
-        return null;
+        return 0;
     }
 
     private void initialiseNetwork() {
-
+        // TODO
     }
 
     @Override
