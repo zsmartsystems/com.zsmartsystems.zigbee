@@ -42,7 +42,7 @@ public class XBeeSetEncryptionOptionsCommand extends XBeeFrame implements XBeeCo
 
     /**
      *
-     * @param encryptionOptions the encryptionOptions to add to the {@link Set} as {@link EncryptionOptions}
+     * @param encryptionOptions the encryptionOptions to add to the Set as {@link EncryptionOptions}
      */
     public void addEncryptionOptions(EncryptionOptions encryptionOptions) {
         this.encryptionOptions.add(encryptionOptions);
@@ -50,7 +50,7 @@ public class XBeeSetEncryptionOptionsCommand extends XBeeFrame implements XBeeCo
 
     /**
      *
-     * @param encryptionOptions the encryptionOptions to remove to the {@link Set} as {@link EncryptionOptions}
+     * @param encryptionOptions the encryptionOptions to remove to the Set as {@link EncryptionOptions}
      */
     public void removeEncryptionOptions(EncryptionOptions encryptionOptions) {
         this.encryptionOptions.remove(encryptionOptions);
@@ -58,7 +58,7 @@ public class XBeeSetEncryptionOptionsCommand extends XBeeFrame implements XBeeCo
 
     /**
      *
-     * @param encryptionOptions the encryptionOptions to set to the {@link Set} as {@link EncryptionOptions}
+     * @param encryptionOptions the encryptionOptions to set to the Set as {@link EncryptionOptions}
      */
     public void setEncryptionOptions(Collection<EncryptionOptions> encryptionOptions) {
         this.encryptionOptions.addAll(encryptionOptions);

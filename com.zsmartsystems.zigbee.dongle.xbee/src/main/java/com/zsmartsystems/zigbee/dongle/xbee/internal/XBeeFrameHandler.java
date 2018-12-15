@@ -430,7 +430,7 @@ public class XBeeFrameHandler {
      * Sets the transaction timeout. This is the number of milliseconds to wait for a response from the stick once the
      * command has been initially queued.
      *
-     * @param commandTimeout the number of milliseconds to wait for a response from the stick once the
+     * @param transactionTimeout the number of milliseconds to wait for a response from the stick once the
      *            command has been initially queued.
      */
     public void setTransactionTimeout(int transactionTimeout) {

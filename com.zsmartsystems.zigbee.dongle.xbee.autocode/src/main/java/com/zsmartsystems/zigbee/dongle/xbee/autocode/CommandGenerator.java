@@ -31,6 +31,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.autocode.xml.Value;
  */
 public class CommandGenerator extends ClassGenerator {
     final String zigbeePackage = "com.zsmartsystems.zigbee";
+    final String zigbeeSecurityPackage = "com.zsmartsystems.zigbee.security";
     final String internalPackage = "com.zsmartsystems.zigbee.dongle.xbee.internal";
     final String commandPackage = "com.zsmartsystems.zigbee.dongle.xbee.internal.protocol";
     final String enumPackage = "com.zsmartsystems.zigbee.dongle.xbee.internal.protocol";
@@ -250,8 +251,8 @@ public class CommandGenerator extends ClassGenerator {
             if (Boolean.TRUE.equals(group.multiple)) {
                 out.println("    /**");
                 out.println("     *");
-                out.println("     * @return the " + stringToLowerCamelCase(group.name)
-                        + "s as a {@link List} of {@link " + stringToUpperCamelCase(group.name) + "}");
+                out.println("     * @return the " + stringToLowerCamelCase(group.name) + "s as a List of {@link "
+                        + stringToUpperCamelCase(group.name) + "}");
                 out.println("     */");
                 out.println("    public List<" + stringToUpperCamelCase(group.name) + "> get"
                         + stringToUpperCamelCase(group.name) + "s() {");
@@ -524,8 +525,8 @@ public class CommandGenerator extends ClassGenerator {
             }
             out.println(indent + " *");
             if (parameter.multiple) {
-                out.println(indent + " * @return the " + stringToLowerCamelCase(parameter.name)
-                        + " as {@link List} of {@link " + getTypeClass(parameter.data_type) + "}");
+                out.println(indent + " * @return the " + stringToLowerCamelCase(parameter.name) + " as List of {@link "
+                        + getTypeClass(parameter.data_type) + "}");
             } else {
                 out.println(indent + " * @return the " + stringToLowerCamelCase(parameter.name) + " as {@link "
                         + getTypeClass(parameter.data_type) + "}");
@@ -564,7 +565,7 @@ public class CommandGenerator extends ClassGenerator {
             if (parameter.multiple | parameter.bitfield) {
                 addImport("java.util.Collection");
                 out.println(indent + " * @param " + stringToLowerCamelCase(parameter.name) + " the "
-                        + stringToLowerCamelCase(parameter.name) + " to add to the {@link Set} as {@link "
+                        + stringToLowerCamelCase(parameter.name) + " to add to the Set as {@link "
                         + getTypeClass(parameter.data_type) + "}");
                 out.println(indent + " */");
                 out.println(indent + "public void add" + stringToUpperCamelCase(parameter.name) + "("
@@ -579,7 +580,7 @@ public class CommandGenerator extends ClassGenerator {
                 }
                 out.println(indent + " *");
                 out.println(indent + " * @param " + stringToLowerCamelCase(parameter.name) + " the "
-                        + stringToLowerCamelCase(parameter.name) + " to remove to the {@link Set} as {@link "
+                        + stringToLowerCamelCase(parameter.name) + " to remove to the Set as {@link "
                         + getTypeClass(parameter.data_type) + "}");
                 out.println(indent + " */");
                 out.println(indent + "public void remove" + stringToUpperCamelCase(parameter.name) + "("
@@ -594,7 +595,7 @@ public class CommandGenerator extends ClassGenerator {
                 }
                 out.println(indent + " *");
                 out.println(indent + " * @param " + stringToLowerCamelCase(parameter.name) + " the "
-                        + stringToLowerCamelCase(parameter.name) + " to set to the {@link Set} as {@link "
+                        + stringToLowerCamelCase(parameter.name) + " to set to the Set as {@link "
                         + getTypeClass(parameter.data_type) + "}");
                 out.println(indent + " */");
                 out.println(indent + "public void set" + stringToUpperCamelCase(parameter.name) + "(Collection<"
@@ -1123,7 +1124,7 @@ public class CommandGenerator extends ClassGenerator {
             case "String":
                 return "String";
             case "ZigBeeKey":
-                addImport(zigbeePackage + ".ZigBeeKey");
+                addImport(zigbeeSecurityPackage + ".ZigBeeKey");
                 return "ZigBeeKey";
             case "IeeeAddress":
                 addImport(zigbeePackage + ".IeeeAddress");

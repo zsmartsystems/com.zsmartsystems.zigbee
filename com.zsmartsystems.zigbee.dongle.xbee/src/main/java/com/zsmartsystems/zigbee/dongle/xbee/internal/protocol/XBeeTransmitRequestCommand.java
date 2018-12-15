@@ -104,7 +104,7 @@ public class XBeeTransmitRequestCommand extends XBeeFrame implements XBeeCommand
      * bit causes the stack to set the extended transmission timeout for the destination address.
      * See Transmission, addressing, and routing. All unused and unsupported bits must be set to 0.
      *
-     * @param options the options to add to the {@link Set} as {@link TransmitOptions}
+     * @param options the options to add to the Set as {@link TransmitOptions}
      */
     public void addOptions(TransmitOptions options) {
         this.options.add(options);
@@ -117,7 +117,7 @@ public class XBeeTransmitRequestCommand extends XBeeFrame implements XBeeCommand
      * bit causes the stack to set the extended transmission timeout for the destination address.
      * See Transmission, addressing, and routing. All unused and unsupported bits must be set to 0.
      *
-     * @param options the options to remove to the {@link Set} as {@link TransmitOptions}
+     * @param options the options to remove to the Set as {@link TransmitOptions}
      */
     public void removeOptions(TransmitOptions options) {
         this.options.remove(options);
@@ -130,7 +130,7 @@ public class XBeeTransmitRequestCommand extends XBeeFrame implements XBeeCommand
      * bit causes the stack to set the extended transmission timeout for the destination address.
      * See Transmission, addressing, and routing. All unused and unsupported bits must be set to 0.
      *
-     * @param options the options to set to the {@link Set} as {@link TransmitOptions}
+     * @param options the options to set to the Set as {@link TransmitOptions}
      */
     public void setOptions(Collection<TransmitOptions> options) {
         this.options.addAll(options);
