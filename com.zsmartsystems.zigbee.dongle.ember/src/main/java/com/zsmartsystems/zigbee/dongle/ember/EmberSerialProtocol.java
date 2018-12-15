@@ -15,6 +15,10 @@ package com.zsmartsystems.zigbee.dongle.ember;
  */
 public enum EmberSerialProtocol {
     /**
+     * No protocol - used for testing
+     */
+    NONE,
+    /**
      * Serial Peripheral Interface
      */
     SPI,

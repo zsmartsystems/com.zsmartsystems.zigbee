@@ -301,12 +301,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     public ZigBeeStatus initialize() {
         logger.debug("EZSP dongle initialize with protocol {}.", protocol);
 
-        if (!initialiseEzspProtocol()) {
+        if (protocol != EmberSerialProtocol.NONE && !initialiseEzspProtocol()) {
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
 
         // Perform any stack configuration
-        EmberStackConfiguration stackConfigurer = new EmberStackConfiguration(frameHandler);
+        EmberStackConfiguration stackConfigurer = new EmberStackConfiguration(getEmberNcp());
 
         Map<EzspConfigId, Integer> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
         for (Entry<EzspConfigId, Integer> config : configuration.entrySet()) {
@@ -829,6 +829,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             case SPI:
                 frameHandler = new SpiFrameHandler(this);
                 break;
+            case NONE:
+                return true;
             default:
                 logger.error("Unknown Ember serial protocol {}", protocol);
                 return false;
