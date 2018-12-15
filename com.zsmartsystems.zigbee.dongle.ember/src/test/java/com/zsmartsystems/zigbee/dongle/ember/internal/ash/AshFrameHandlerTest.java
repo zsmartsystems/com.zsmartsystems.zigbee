@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.dongle.ember.internal.ash;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
@@ -19,13 +20,23 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
+import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrame.FrameType;
+import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
+import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
@@ -124,11 +135,10 @@ public class AshFrameHandlerTest {
 
     class TestPort implements ZigBeePort {
         InputStream input;
-        OutputStream output;
+        List<Integer> outputData = new ArrayList<>();
 
         TestPort(InputStream input, OutputStream output) {
             this.input = input;
-            this.output = output;
         }
 
         @Override
@@ -142,6 +152,7 @@ public class AshFrameHandlerTest {
 
         @Override
         public void write(int value) {
+            outputData.add(value);
         }
 
         @Override
@@ -151,6 +162,9 @@ public class AshFrameHandlerTest {
 
         @Override
         public int read() {
+            if (input == null) {
+                return -1;
+            }
             try {
                 return input.read();
             } catch (IOException e) {
@@ -170,6 +184,10 @@ public class AshFrameHandlerTest {
 
         @Override
         public void purgeRxBuffer() {
+        }
+
+        public List<Integer> getOutputData() {
+            return outputData;
         }
     }
 
@@ -265,5 +283,47 @@ public class AshFrameHandlerTest {
         assertEquals(Long.valueOf(0), counters.get("ASH_RX_NAK"));
         assertEquals(Long.valueOf(0), counters.get("ASH_TX_NAK"));
         assertEquals(Long.valueOf(0), counters.get("ASH_RX_ERR"));
+    }
+
+    void setField(Object object, String fieldName, Object newValue) throws Exception {
+        Field field = object.getClass().getDeclaredField(fieldName);
+
+        field.setAccessible(true);
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+        field.set(object, newValue);
+    }
+
+    @Test
+    public void testTimeout() throws NoSuchFieldException, SecurityException, Exception {
+        ZigBeePort port = new TestPort(null, null);
+
+        EzspFrameHandler ezspHandler = Mockito.mock(EzspFrameHandler.class);
+        AshFrameHandler frameHandler = new AshFrameHandler(ezspHandler);
+
+        setField(frameHandler, "port", port);
+        setField(frameHandler, "T_RX_ACK_MIN", 0);
+        setField(frameHandler, "T_RX_ACK_INIT", 0);
+        setField(frameHandler, "T_RX_ACK_MAX", 0);
+        setField(frameHandler, "receiveTimeout", 0);
+        setField(frameHandler, "stateConnected", true);
+
+        ArgumentCaptor<Boolean> stateCapture = ArgumentCaptor.forClass(Boolean.class);
+        Mockito.doNothing().when(ezspHandler).handleLinkStateChange(stateCapture.capture());
+
+        EzspVersionRequest request = new EzspVersionRequest();
+        request.setSequenceNumber(3);
+        request.setDesiredProtocolVersion(4);
+
+        EzspTransaction transaction = frameHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspVersionResponse.class));
+
+        assertNull(transaction.getResponse());
+
+        Mockito.verify(ezspHandler, Mockito.timeout(1000).times(1))
+                .handleLinkStateChange(ArgumentMatchers.anyBoolean());
+        assertFalse(stateCapture.getValue());
     }
 }

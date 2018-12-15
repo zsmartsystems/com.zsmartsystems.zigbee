@@ -421,6 +421,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         logger.debug("TX EZSP: {}", nextFrame);
         AshFrameData ashFrame = new AshFrameData(nextFrame);
 
+        retries = 0;
         sendFrame(ashFrame);
         return true;
     }
@@ -562,7 +563,6 @@ public class AshFrameHandler implements EzspProtocolHandler {
             timerTask.cancel();
             timerTask = null;
         }
-        retries = 0;
     }
 
     private class AshRetryTimer extends TimerTask {
