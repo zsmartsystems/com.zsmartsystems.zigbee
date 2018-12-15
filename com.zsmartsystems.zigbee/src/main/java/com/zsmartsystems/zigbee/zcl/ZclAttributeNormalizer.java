@@ -35,22 +35,46 @@ public class ZclAttributeNormalizer {
      * @return the normalised output data
      */
     protected Object normalizeZclData(ZclDataType dataType, Object data) {
+        try {
+            switch (dataType) {
+                case BOOLEAN:
+                    if (data instanceof Integer) {
+                        logger.debug("Normalizing data Integer {} to BOOLEAN", data);
+                        return Boolean.valueOf(!((Integer) data).equals(0));
+                    }
+                    break;
+                case UNSIGNED_8_BIT_INTEGER:
+                    if (data instanceof String) {
+                        logger.debug("Normalizing data String {} to UNSIGNED_8_BIT_INTEGER", data);
+                        return Integer.parseInt((String) data);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return data;
+        } catch (NumberFormatException e) {
+            logger.warn("Exception normalizing data: Returning default value of {}", dataType);
+            return getDefaultValue(dataType);
+        }
+    }
+
+    /**
+     * Gets a default value of the specified {@link ZclDataType} which is used in the event that the normalizer fails to
+     * convert the data.
+     *
+     * @param dataType the {@link ZclDataType} to return
+     * @return an {@link Object} of the {@link ZclDataType}, or null if no conversion is provided
+     */
+    private Object getDefaultValue(ZclDataType dataType) {
         switch (dataType) {
             case BOOLEAN:
-                if (data instanceof Integer) {
-                    logger.debug("Normalizing data Integer {} to BOOLEAN", data);
-                    return Boolean.valueOf(!((Integer) data).equals(0));
-                }
-                break;
+                return Boolean.FALSE;
             case UNSIGNED_8_BIT_INTEGER:
-                if (data instanceof String) {
-                    logger.debug("Normalizing data String {} to UNSIGNED_8_BIT_INTEGER", data);
-                    return Integer.parseInt((String) data);
-                }
-                break;
+            case UNSIGNED_16_BIT_INTEGER:
+                return Integer.valueOf(0);
             default:
-                break;
+                return null;
         }
-        return data;
     }
 }

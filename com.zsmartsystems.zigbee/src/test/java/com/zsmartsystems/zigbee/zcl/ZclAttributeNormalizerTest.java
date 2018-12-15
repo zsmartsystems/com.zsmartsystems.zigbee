@@ -20,11 +20,20 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  */
 public class ZclAttributeNormalizerTest {
     @Test
-    public void testNormalizeBoolean() {
+    public void testNormalizeBOOLEAN() {
         ZclAttributeNormalizer normalizer = new ZclAttributeNormalizer();
 
         assertEquals(Boolean.TRUE, normalizer.normalizeZclData(ZclDataType.BOOLEAN, Integer.valueOf(1)));
         assertEquals(Boolean.TRUE, normalizer.normalizeZclData(ZclDataType.BOOLEAN, Integer.valueOf(100)));
         assertEquals(Boolean.FALSE, normalizer.normalizeZclData(ZclDataType.BOOLEAN, Integer.valueOf(0)));
+    }
+
+    @Test
+    public void testNormalizeUNSIGNED_8_BIT_INTEGER() {
+        ZclAttributeNormalizer normalizer = new ZclAttributeNormalizer();
+
+        assertEquals(Integer.valueOf(123), normalizer.normalizeZclData(ZclDataType.UNSIGNED_8_BIT_INTEGER, "123"));
+        assertEquals(Integer.valueOf(0), normalizer.normalizeZclData(ZclDataType.UNSIGNED_8_BIT_INTEGER,
+                String.valueOf(new char[] { 1, 2, 3 })));
     }
 }
