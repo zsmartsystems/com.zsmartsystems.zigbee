@@ -22,7 +22,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +33,6 @@ import org.mockito.Mockito;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
-import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrame.FrameType;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
@@ -117,7 +115,7 @@ public class AshFrameHandlerTest {
     @Test
     public void testRunning() {
         AshFrameHandler frameHandler = new AshFrameHandler(null);
-        frameHandler.start(null);
+        frameHandler.start(Mockito.mock(ZigBeePort.class));
 
         assertTrue(frameHandler.isAlive());
         frameHandler.close();
@@ -192,83 +190,6 @@ public class AshFrameHandlerTest {
     }
 
     @Test
-    public void testAshFrameAck() {
-        AshFrameAck frame;
-        AshFrame inFrame;
-
-        frame = new AshFrameAck(4);
-        System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 132, 48, 252, 126 }, frame.getOutputBuffer()));
-
-        inFrame = AshFrame.createFromInput(new int[] { 132, 48, 252 });
-        assertTrue(inFrame instanceof AshFrameAck);
-        assertEquals(4, inFrame.getAckNum());
-
-        frame = new AshFrameAck(7);
-        System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 135, 0, 159, 126 }, frame.getOutputBuffer()));
-
-        inFrame = AshFrame.createFromInput(new int[] { 135, 0, 159 });
-        assertTrue(inFrame instanceof AshFrameAck);
-        assertEquals(7, inFrame.getAckNum());
-    }
-
-    @Test
-    public void testAshFrameNak() {
-        AshFrameNak frame;
-        frame = new AshFrameNak(0);
-        System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 255, 255, 126 }, frame.getOutputBuffer()));
-    }
-
-    @Test
-    public void testAshFrameRst() {
-        AshFrameRst frame;
-        frame = new AshFrameRst();
-        System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 26, 192, 56, 188, 126 }, frame.getOutputBuffer()));
-
-        AshFrame inFrame = AshFrame.createFromInput(new int[] { 192, 56, 188 });
-        assertTrue(inFrame instanceof AshFrameRst);
-    }
-
-    @Test
-    public void testAshFrameData() {
-        AshFrameData frame;
-        EzspVersionRequest request = new EzspVersionRequest();
-        request.setSequenceNumber(1);
-        request.setDesiredProtocolVersion(4);
-        frame = new AshFrameData(request);
-        System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 0, 67, 33, 168, 80, 155, 152, 126 }, frame.getOutputBuffer()));
-
-        request = new EzspVersionRequest();
-        request.setSequenceNumber(2);
-        request.setDesiredProtocolVersion(4);
-        frame = new AshFrameData(request);
-        frame.setAckNum(3);
-        frame.setFrmNum(4);
-        System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 67, 64, 33, 168, 80, 255, 254, 126 }, frame.getOutputBuffer()));
-
-        request = new EzspVersionRequest();
-        request.setSequenceNumber(3);
-        request.setDesiredProtocolVersion(4);
-        frame = new AshFrameData(request);
-        frame.setAckNum(6);
-        frame.setFrmNum(2);
-        frame.setReTx();
-        System.out.println(frame);
-        assertTrue(Arrays.equals(new int[] { 46, 65, 33, 168, 80, 177, 236, 126 }, frame.getOutputBuffer()));
-
-        AshFrame inFrame = AshFrame.createFromInput(new int[] { 46, 65, 33, 168, 80, 177, 236 });
-        assertTrue(inFrame instanceof AshFrameData);
-        assertEquals(6, inFrame.getAckNum());
-        assertEquals(2, inFrame.getFrmNum());
-        assertEquals(FrameType.DATA, inFrame.getFrameType());
-    }
-
-    @Test
     public void testGetCounters() {
         AshFrameHandler frameHandler = new AshFrameHandler(null);
 
@@ -325,5 +246,25 @@ public class AshFrameHandlerTest {
         Mockito.verify(ezspHandler, Mockito.timeout(1000).times(1))
                 .handleLinkStateChange(ArgumentMatchers.anyBoolean());
         assertFalse(stateCapture.getValue());
+    }
+
+    @Test
+    public void testErrorToOffline() {
+        int[] data = new int[] { 0xC2, 0x02, 0x52, 0x98, 0xDE, 0x7E };
+
+        byte[] bytedata = new byte[data.length];
+        int cnt = 0;
+        for (int value : data) {
+            bytedata[cnt++] = (byte) value;
+        }
+        ByteArrayInputStream stream = new ByteArrayInputStream(bytedata);
+        ZigBeePort port = new TestPort(stream, null);
+
+        EzspFrameHandler ezspHandler = Mockito.mock(EzspFrameHandler.class);
+        AshFrameHandler frameHandler = new AshFrameHandler(ezspHandler);
+
+        frameHandler.start(port);
+        Mockito.verify(ezspHandler, Mockito.timeout(1000).times(1))
+                .handleLinkStateChange(ArgumentMatchers.anyBoolean());
     }
 }
