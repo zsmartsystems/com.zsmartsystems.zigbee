@@ -227,6 +227,11 @@ public class ZigBeeDiscoveryExtension
         futureTask = networkManager.scheduleTask(meshUpdateThread, initialPeriod, updatePeriod * 1000);
     }
 
+    /**
+     * Gets the Collection of {@link ZigBeeNodeServiceDiscoverer} for all nodes
+     * 
+     * @return Collection of {@link ZigBeeNodeServiceDiscoverer}
+     */
     public Collection<ZigBeeNodeServiceDiscoverer> getNodeDiscoverers() {
         return nodeDiscovery.values();
     }
