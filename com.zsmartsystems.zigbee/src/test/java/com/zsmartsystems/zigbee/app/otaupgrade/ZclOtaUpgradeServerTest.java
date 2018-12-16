@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.awaitility.Awaitility;
 import org.junit.Test;
@@ -40,6 +41,7 @@ import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaStatusCallback;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageCommand;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 
 /**
@@ -113,7 +115,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
 
         assertEquals(1, mockedCommandCaptor.getAllValues().size());
 
-        Awaitility.await().until(() -> otaListenerUpdated());
+        Awaitility.await().atMost(1000, TimeUnit.MILLISECONDS).until(() -> otaListenerUpdated());
 
         assertEquals(1, otaStatusCapture.size());
         ZigBeeOtaServerStatus status = otaStatusCapture.get(0);
@@ -127,6 +129,10 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         ImageNotifyCommand notifyCommand = (ImageNotifyCommand) command;
         assertEquals(new ZigBeeEndpointAddress(1234, 56), notifyCommand.getDestinationAddress());
         assertTrue(notifyCommand.getQueryJitter() >= 1 && notifyCommand.getQueryJitter() <= 100);
+
+        server.removeListener(this);
+
+        System.out.println(server.toString());
     }
 
     @Test
@@ -137,6 +143,54 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
         server.appStartup(cluster);
         assertEquals(Integer.valueOf(1234), server.getCurrentFileVersion());
+    }
+
+    @Test
+    public void cancelUpgrade() {
+        otaStatusCapture = new ArrayList<ZigBeeOtaServerStatus>();
+
+        ZclOtaUpgradeCluster cluster = Mockito.mock(ZclOtaUpgradeCluster.class);
+        ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
+        assertEquals(ZigBeeStatus.SUCCESS, server.appStartup(cluster));
+        server.addListener(this);
+        server.setDataSize(30);
+        server.setAutoUpgrade(false);
+        server.setAllowExistingFile(true);
+        server.setTransferTimeoutPeriod(Integer.MAX_VALUE);
+
+        server.cancelUpgrade();
+        assertEquals(0, otaStatusCapture.size());
+
+        ZigBeeOtaFile otaFile = Mockito.mock(ZigBeeOtaFile.class);
+        Mockito.when(otaFile.getManufacturerCode()).thenReturn(123);
+        Mockito.when(otaFile.getImageType()).thenReturn(987);
+
+        server.setFirmware(otaFile);
+        assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING));
+
+        QueryNextImageCommand query = new QueryNextImageCommand();
+        query.setApsSecurity(true);
+        query.setClusterId(ZclOtaUpgradeCluster.CLUSTER_ID);
+        query.setManufacturerCode(123);
+        query.setImageType(987);
+
+        server.commandReceived(query);
+        assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS));
+
+        otaStatusCapture.clear();
+        server.cancelUpgrade();
+        Awaitility.await().atMost(1000, TimeUnit.MILLISECONDS).until(() -> otaListenerUpdated());
+
+        assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_CANCELLED));
+
+        assertEquals(ZigBeeOtaServerStatus.OTA_CANCELLED, server.getServerStatus());
+    }
+
+    @Test
+    public void getClusterId() {
+        ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
+        // Use static number for independent check of cluster ID!
+        assertEquals(25, server.getClusterId());
     }
 
     @Override
