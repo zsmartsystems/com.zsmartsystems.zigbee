@@ -27,7 +27,6 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
@@ -43,6 +42,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  *
  */
 public class AshFrameHandlerTest {
+    private static int TIMEOUT = 5000;
 
     private int[] getPacket(int[] data) {
         AshFrameHandler frameHandler = new AshFrameHandler(null);
@@ -232,7 +232,6 @@ public class AshFrameHandlerTest {
         setField(frameHandler, "stateConnected", true);
 
         ArgumentCaptor<Boolean> stateCapture = ArgumentCaptor.forClass(Boolean.class);
-        Mockito.doNothing().when(ezspHandler).handleLinkStateChange(stateCapture.capture());
 
         EzspVersionRequest request = new EzspVersionRequest();
         request.setSequenceNumber(3);
@@ -243,8 +242,7 @@ public class AshFrameHandlerTest {
 
         assertNull(transaction.getResponse());
 
-        Mockito.verify(ezspHandler, Mockito.timeout(1000).times(1))
-                .handleLinkStateChange(ArgumentMatchers.anyBoolean());
+        Mockito.verify(ezspHandler, Mockito.timeout(TIMEOUT).times(1)).handleLinkStateChange(stateCapture.capture());
         assertFalse(stateCapture.getValue());
     }
 
@@ -259,12 +257,53 @@ public class AshFrameHandlerTest {
         }
         ByteArrayInputStream stream = new ByteArrayInputStream(bytedata);
         ZigBeePort port = new TestPort(stream, null);
+        ArgumentCaptor<Boolean> stateCapture = ArgumentCaptor.forClass(Boolean.class);
 
         EzspFrameHandler ezspHandler = Mockito.mock(EzspFrameHandler.class);
         AshFrameHandler frameHandler = new AshFrameHandler(ezspHandler);
 
         frameHandler.start(port);
-        Mockito.verify(ezspHandler, Mockito.timeout(1000).times(1))
-                .handleLinkStateChange(ArgumentMatchers.anyBoolean());
+        frameHandler.connect();
+        Mockito.verify(ezspHandler, Mockito.timeout(TIMEOUT).times(1)).handleLinkStateChange(stateCapture.capture());
+    }
+
+    @Test
+    public void handleReset() throws Exception {
+        // PoR reset is ignored
+        // Software Reset V1 ignored
+        // Software Reset V2 goes online and state to connected
+        // PoR reset while connected goes offline
+        int[] dataCorrupt = new int[] { 0xC1, 0x02, 0x02, 0x9B, 0x7C, 0x7E };
+        int[] dataPOR = new int[] { 0xC1, 0x02, 0x02, 0x9B, 0x7B, 0x7E };
+        int[] dataSWV1 = new int[] { 0xC1, 0x01, 0x0B, 0x5F, 0x01, 0x7E };
+        int[] dataSWV2 = new int[] { 0xC1, 0x02, 0x0B, 0x0A, 0x52, 0x7E };
+
+        byte[] bytedata = new byte[dataPOR.length * 5];
+        int cnt = 0;
+        for (int value : dataCorrupt) {
+            bytedata[cnt++] = (byte) value;
+        }
+        for (int value : dataPOR) {
+            bytedata[cnt++] = (byte) value;
+        }
+        for (int value : dataSWV1) {
+            bytedata[cnt++] = (byte) value;
+        }
+        for (int value : dataSWV2) {
+            bytedata[cnt++] = (byte) value;
+        }
+        for (int value : dataPOR) {
+            bytedata[cnt++] = (byte) value;
+        }
+        ByteArrayInputStream stream = new ByteArrayInputStream(bytedata);
+        ZigBeePort port = new TestPort(stream, null);
+        ArgumentCaptor<Boolean> stateCapture = ArgumentCaptor.forClass(Boolean.class);
+
+        EzspFrameHandler ezspHandler = Mockito.mock(EzspFrameHandler.class);
+        AshFrameHandler frameHandler = new AshFrameHandler(ezspHandler);
+
+        frameHandler.start(port);
+
+        Mockito.verify(ezspHandler, Mockito.timeout(TIMEOUT)).handleLinkStateChange(stateCapture.capture());
     }
 }
