@@ -274,11 +274,11 @@ public class ZigBeeApsFrame {
         StringBuilder builder = new StringBuilder();
         builder.append("ZigBeeApsFrame [sourceAddress=");
         builder.append(sourceAddress);
-        builder.append("/");
+        builder.append('/');
         builder.append(sourceEndpoint);
         builder.append(", destinationAddress=");
         builder.append(destinationAddress);
-        builder.append("/");
+        builder.append('/');
         builder.append(destinationEndpoint);
         builder.append(", profile=");
         builder.append(String.format("%04X", profile));
@@ -296,12 +296,12 @@ public class ZigBeeApsFrame {
         if (payload != null) {
             for (int c = 0; c < payload.length; c++) {
                 if (c != 0) {
-                    builder.append(" ");
+                    builder.append(' ');
                 }
                 builder.append(String.format("%02X", payload[c]));
             }
         }
-        builder.append("]");
+        builder.append(']');
         return builder.toString();
     }
 
