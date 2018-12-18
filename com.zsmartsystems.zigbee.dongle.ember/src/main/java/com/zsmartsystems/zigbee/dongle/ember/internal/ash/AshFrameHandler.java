@@ -29,6 +29,8 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
@@ -198,7 +200,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                                         } else if (!notifyTransactionComplete(response)) {
                                             // No transactions owned this response, so we pass it to
                                             // our unhandled response handler
-                                            handleIncomingFrame(EzspFrame.createHandler((dataPacket.getDataBuffer())));
+                                            handleIncomingFrame(response);
                                         }
                                     } else if (!dataPacket.getReTx()) {
                                         // Send a NAK - this is out of sequence and not a retransmission
@@ -630,6 +632,12 @@ public class AshFrameHandler implements EzspProtocolHandler {
                     processed = true;
                 }
             }
+        }
+
+        // For responses to higher level commands, we still want to pass these up so we can provide the
+        // update the transaction progress.
+        if (response instanceof EzspSendUnicastResponse || response instanceof EzspSendBroadcastResponse) {
+            processed = false;
         }
 
         return processed;

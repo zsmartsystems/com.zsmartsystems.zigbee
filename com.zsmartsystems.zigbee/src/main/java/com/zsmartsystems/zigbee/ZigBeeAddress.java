@@ -20,14 +20,14 @@ public abstract class ZigBeeAddress implements Comparable<ZigBeeAddress> {
     /**
      * Gets the network address for this address.
      *
-     * @return network address as {@link int}
+     * @return network address as int
      */
     public abstract int getAddress();
 
     /**
      * Sets the network address for this address
      *
-     * @param address the network address as {@link int}
+     * @param address the network address as int
      */
     public abstract void setAddress(final int address);
 

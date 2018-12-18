@@ -9,8 +9,12 @@ package com.zsmartsystems.zigbee.transaction;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -25,8 +29,17 @@ import com.zsmartsystems.zigbee.CommandResult;
  *
  */
 public class ZigBeeTransactionFutureTest {
+    protected void setField(Class clazz, Object object, String fieldName, Object newValue) throws Exception {
+        Field field = clazz.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+        field.set(object, newValue);
+    }
+
     @Test
-    public void testIsDone() {
+    public void testIsDone() throws InterruptedException, ExecutionException, TimeoutException {
         ZigBeeTransactionFuture future = new ZigBeeTransactionFuture();
         assertFalse(future.isDone());
 
@@ -34,14 +47,36 @@ public class ZigBeeTransactionFutureTest {
         future.set(result);
         assertTrue(future.isDone());
 
-        try {
-            assertEquals(result, future.get());
-            assertEquals(result, future.get(1, TimeUnit.MICROSECONDS));
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            e.printStackTrace();
-        }
+        assertEquals(result, future.get());
+        assertEquals(result, future.get(0, TimeUnit.MICROSECONDS));
     }
 
+    @Test
+    public void testDefaultTimeout() throws Exception {
+        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture();
+        assertFalse(future.isDone());
+
+        setField(ZigBeeTransactionFuture.class, future, "TIMEOUT_MILLISECONDS", (long) 0);
+
+        CommandResult result = future.get();
+        assertNull(result.getResponse());
+    }
+
+    @Test
+    public void testTimeout() throws InterruptedException, ExecutionException, TimeoutException {
+        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture();
+        assertFalse(future.isDone());
+
+        assertNotNull(future.get(0, TimeUnit.MICROSECONDS));
+        assertTrue(future.isDone());
+
+        CommandResult result = future.get();
+        assertNull(result.getResponse());
+
+        assertFalse(future.cancel(true));
+    }
+
+    @Test
     public void testCancel() {
         ZigBeeTransactionFuture future = new ZigBeeTransactionFuture();
         assertFalse(future.isCancelled());

@@ -39,11 +39,12 @@ import com.zsmartsystems.zigbee.internal.ZigBeeCommandNotifier;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
-import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
@@ -172,6 +173,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private final ZigBeeTransportTransmit transport;
 
     /**
+     * The {@link ZigBeeTransactionManager} responsible for queueing and sending commands, and correlating transactions.
+     */
+    private ZigBeeTransactionManager transactionManager;
+
+    /**
      * The {@link ZigBeeCommandNotifier}. This is used for sending notifications asynchronously to listeners.
      */
     private final ZigBeeCommandNotifier commandNotifier = new ZigBeeCommandNotifier();
@@ -247,7 +253,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Constructor which configures serial port and ZigBee network.
      *
      * @param transport the dongle
-     * @param resetNetwork whether network is to be reset
      */
     public ZigBeeNetworkManager(final ZigBeeTransportTransmit transport) {
         Map<ZigBeeTransportState, Set<ZigBeeTransportState>> transitions = new HashMap<ZigBeeTransportState, Set<ZigBeeTransportState>>();
@@ -265,6 +270,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         this.transport = transport;
 
         transport.setZigBeeTransportReceive(this);
+
+        transactionManager = new ZigBeeTransactionManager(this);
     }
 
     /**
@@ -599,6 +606,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         return transport.getVersionString();
     }
 
+    /**
+     * Sends a command directly to the ZigBeeTransportTransmit} interface
+     *
+     * @param command the {@link ZigBeeCommand} to send
+     * @return
+     */
     public int sendCommand(ZigBeeCommand command) {
         // Create the application frame
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
@@ -745,6 +758,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setDestinationAddress(
                 new ZigBeeEndpointAddress(apsFrame.getDestinationAddress(), apsFrame.getDestinationEndpoint()));
         command.setApsSecurity(apsFrame.getSecurityEnabled());
+
+        // Pass the command to the transaction manager for processing
+        // If the transaction manager wants to drop this command, it returns null
+        command = transactionManager.receive(command);
+        if (command == null) {
+            return;
+        }
 
         logger.debug("RX CMD: {}", command);
 
@@ -1432,12 +1452,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     @Override
     public void sendTransaction(ZigBeeCommand command) {
-        sendCommand(command);
+        transactionManager.sendTransaction(command);
     }
 
     @Override
     public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
-        ZigBeeTransaction transaction = new ZigBeeTransaction(this);
-        return transaction.sendTransaction(command, responseMatcher);
+        return transactionManager.sendTransaction(command, responseMatcher);
+    }
+
+    @Override
+    public void receiveCommandStatus(int transactionId, ZigBeeTransportProgressState status) {
+        transactionManager.receiveCommandStatus(transactionId, status);
     }
 }

@@ -37,7 +37,7 @@ public class CommandResult {
      * Constructor for timeout situations.
      */
     public CommandResult() {
-        this.response = null;
+        response = null;
     }
 
     /**
@@ -59,9 +59,9 @@ public class CommandResult {
     }
 
     /**
-     * Checks if message status code was received in default response.
+     * Checks if command was successful, or resulted in an error.
      *
-     * @return the message status code
+     * @return true if the command resulted in an error
      */
     public boolean isError() {
         if (hasStatusCode()) {
@@ -87,7 +87,7 @@ public class CommandResult {
     /**
      * Gets status code received in default response.
      *
-     * @return the status code
+     * @return the status code as {@link Integer}
      */
     public Integer getStatusCode() {
         if (hasStatusCode()) {

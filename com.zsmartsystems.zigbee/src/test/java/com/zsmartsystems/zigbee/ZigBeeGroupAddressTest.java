@@ -12,10 +12,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
-
 /**
- *
+ * Tests for {@link ZigBeeGroupAddress}
+ * 
  * @author Chris Jackson
  *
  */
@@ -44,5 +43,7 @@ public class ZigBeeGroupAddressTest {
 
         group2.setGroupId(2);
         assertEquals(1, group1.compareTo(group2));
+
+        System.out.println(group2);
     }
 }

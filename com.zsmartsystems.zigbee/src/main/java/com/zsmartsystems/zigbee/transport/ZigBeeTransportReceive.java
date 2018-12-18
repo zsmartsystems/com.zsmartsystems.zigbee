@@ -69,4 +69,14 @@ public interface ZigBeeTransportReceive {
      */
     void nodeStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
             final IeeeAddress ieeeAddress);
+
+    /**
+     * A callback called by the {@link ZigBeeTransportTransmit} when a transaction sent using
+     * {@link ZigBeeTransportTransmit#sendCommand(ZigBeeApsFrame)} is received.
+     *
+     * @param transactionId the transaction ID to which a response has been received
+     * @param status the acknowledge status
+     */
+    void receiveCommandStatus(int transactionId, ZigBeeTransportProgressState status);
+
 }

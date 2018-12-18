@@ -35,6 +35,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCallbackRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNoCallbacksResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
@@ -642,6 +644,12 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                     processed = true;
                 }
             }
+        }
+
+        // For responses to higher level commands, we still want to pass these up so we can provide the
+        // update the transaction progress.
+        if (response instanceof EzspSendUnicastResponse || response instanceof EzspSendBroadcastResponse) {
+            processed = false;
         }
 
         return processed;

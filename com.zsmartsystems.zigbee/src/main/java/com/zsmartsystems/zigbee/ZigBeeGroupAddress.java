@@ -36,8 +36,7 @@ public class ZigBeeGroupAddress extends ZigBeeAddress {
     /**
      * Constructor which sets group ID.
      *
-     * @param groupId
-     *            the group ID
+     * @param groupId the group ID
      */
     public ZigBeeGroupAddress(final int groupId) {
         this.groupId = groupId;
@@ -46,10 +45,8 @@ public class ZigBeeGroupAddress extends ZigBeeAddress {
     /**
      * Constructor which sets group ID and label.
      *
-     * @param groupId
-     *            the group ID
-     * @param label
-     *            the group label
+     * @param groupId the group ID
+     * @param label the group label
      */
     public ZigBeeGroupAddress(final int groupId, final String label) {
         this.groupId = groupId;
@@ -78,8 +75,7 @@ public class ZigBeeGroupAddress extends ZigBeeAddress {
     /**
      * Sets group ID.
      *
-     * @param groupId
-     *            the group ID
+     * @param groupId the group ID
      */
     public void setGroupId(final int groupId) {
         this.groupId = groupId;
@@ -97,8 +93,7 @@ public class ZigBeeGroupAddress extends ZigBeeAddress {
     /**
      * Sets group name.
      *
-     * @param label
-     *            the group label
+     * @param label the group label
      */
     public void setLabel(final String label) {
         this.label = label;
@@ -139,5 +134,10 @@ public class ZigBeeGroupAddress extends ZigBeeAddress {
         }
         final ZigBeeGroupAddress other = (ZigBeeGroupAddress) obj;
         return other.getGroupId() == getGroupId();
+    }
+
+    @Override
+    public String toString() {
+        return "ZigBeeGroupAddress [groupId=" + groupId + ", label=" + label + "]";
     }
 }
