@@ -96,7 +96,7 @@ public class EzspSendBroadcastResponse extends EzspFrameResponse {
         builder.append("EzspSendBroadcastResponse [status=");
         builder.append(status);
         builder.append(", sequence=");
-        builder.append(sequence);
+        builder.append(String.format("%02X", sequence));
         builder.append(']');
         return builder.toString();
     }

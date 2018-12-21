@@ -227,7 +227,7 @@ public class EzspSendUnicastRequest extends EzspFrameRequest {
         builder.append(", apsFrame=");
         builder.append(apsFrame);
         builder.append(", messageTag=");
-        builder.append(messageTag);
+        builder.append(String.format("%02X", messageTag));
         builder.append(", messageContents=");
         for (int c = 0; c < messageContents.length; c++) {
             if (c > 0) {

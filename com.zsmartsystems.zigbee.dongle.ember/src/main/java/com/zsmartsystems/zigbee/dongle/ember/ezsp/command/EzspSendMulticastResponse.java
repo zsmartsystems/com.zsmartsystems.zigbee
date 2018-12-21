@@ -115,7 +115,7 @@ public class EzspSendMulticastResponse extends EzspFrameResponse {
         builder.append("EzspSendMulticastResponse [status=");
         builder.append(status);
         builder.append(", sequence=");
-        builder.append(sequence);
+        builder.append(String.format("%02X", sequence));
         builder.append(']');
         return builder.toString();
     }
