@@ -281,7 +281,7 @@ public class EmberApsFrame {
         builder.append(", groupId=");
         builder.append(groupId);
         builder.append(", sequence=");
-        builder.append(sequence);
+        builder.append(String.format("%02X", sequence));
         builder.append(']');
         return builder.toString();
     }

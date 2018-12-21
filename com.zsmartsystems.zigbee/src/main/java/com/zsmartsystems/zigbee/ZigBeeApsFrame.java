@@ -291,7 +291,7 @@ public class ZigBeeApsFrame {
         builder.append(", apsSecurity=");
         builder.append(securityEnable);
         builder.append(", apsCounter=");
-        builder.append(apsCounter);
+        builder.append(String.format("%02X", apsCounter));
         builder.append(", payload=");
         if (payload != null) {
             for (int c = 0; c < payload.length; c++) {

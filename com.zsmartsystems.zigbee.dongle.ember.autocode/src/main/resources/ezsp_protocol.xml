@@ -1307,6 +1307,7 @@
 				<data_type>uint8_t</data_type>
 				<name>messageTag</name>
 				<description>A value chosen by the Host. This value is used in the ezspMessageSentHandler response to refer to this message.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -1330,6 +1331,7 @@
 				<data_type>uint8_t</data_type>
 				<name>sequence</name>
 				<description>The sequence number that will be used when this message is transmitted.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1358,6 +1360,7 @@
 				<data_type>uint8_t</data_type>
 				<name>messageTag</name>
 				<description>A value chosen by the Host. This value is used in the ezspMessageSentHandler response to refer to this message.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -1381,6 +1384,7 @@
 				<data_type>uint8_t</data_type>
 				<name>sequence</name>
 				<description>The sequence number that will be used when this message is transmitted.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1404,6 +1408,7 @@
 				<data_type>uint8_t</data_type>
 				<name>messageTag</name>
 				<description>A value chosen by the Host. This value is used in the ezspMessageSentHandler response to refer to this message.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -1450,6 +1455,7 @@
 				<data_type>uint8_t</data_type>
 				<name>messageTag</name>
 				<description>A value chosen by the Host. This value is used in the ezspMessageSentHandler response to refer to this message.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -1473,6 +1479,7 @@
 				<data_type>uint8_t</data_type>
 				<name>sequence</name>
 				<description>The sequence number that will be used when this message is transmitted.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1504,6 +1511,7 @@
 				<data_type>uint8_t</data_type>
 				<name>messageTag</name>
 				<description>The value supplied by the Host in the ezspSendUnicast, ezspSendBroadcast or ezspSendMulticast command.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberStatus</data_type>
@@ -3412,6 +3420,7 @@
 				<data_type>uint8_t</data_type>
 				<name>sequence</name>
 				<description>The sequence number.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>

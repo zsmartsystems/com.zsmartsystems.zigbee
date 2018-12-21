@@ -230,7 +230,7 @@ public class EzspMessageSentHandler extends EzspFrameResponse {
         builder.append(", apsFrame=");
         builder.append(apsFrame);
         builder.append(", messageTag=");
-        builder.append(messageTag);
+        builder.append(String.format("%02X", messageTag));
         builder.append(", status=");
         builder.append(status);
         builder.append(", messageContents=");
