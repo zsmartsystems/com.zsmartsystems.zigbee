@@ -280,18 +280,15 @@ public class ZigBeeApsFrame {
         builder.append(destinationAddress);
         builder.append('/');
         builder.append(destinationEndpoint);
-        builder.append(", profile=");
-        builder.append(String.format("%04X", profile));
-        builder.append(", cluster=");
-        builder.append(cluster);
+        builder.append(String.format(", profile=%04X", profile));
+        builder.append(String.format(", cluster=%04X", cluster));
         builder.append(", addressMode=");
         builder.append(addressMode);
         builder.append(", radius=");
         builder.append(radius);
         builder.append(", apsSecurity=");
         builder.append(securityEnable);
-        builder.append(", apsCounter=");
-        builder.append(String.format("%02X", apsCounter));
+        builder.append(String.format(", apsCounter=%02X", apsCounter));
         builder.append(", payload=");
         if (payload != null) {
             for (int c = 0; c < payload.length; c++) {
