@@ -13,12 +13,16 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.awaitility.Awaitility;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
@@ -48,6 +52,8 @@ import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
  */
 public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigBeeNetworkStateListener,
         ZigBeeNetworkEndpointListener, ZigBeeCommandListener {
+    private static int TIMEOUT = 5000;
+
     private ZigBeeNetworkNodeListener mockedNodeListener;
     private List<ZigBeeNode> nodeNodeListenerCapture;
     private ArgumentCaptor<ZigBeeApsFrame> mockedApsFrameListener;
@@ -57,36 +63,58 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
     private ZigBeeNetworkStateListener mockedStateListener;
     private List<ZigBeeCommand> commandListenerCapture;
 
-    @Ignore
+    protected void setField(Class clazz, Object object, String fieldName, Object newValue) throws Exception {
+        Field field = clazz.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+        field.set(object, newValue);
+    }
+
     @Test
-    public void testAddRemoveNode() {
+    public void testAddRemoveNode() throws Exception {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
-        ZigBeeNode node1 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
+        ZigBeeNode node1 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class),
+                new IeeeAddress("1234567890ABCDEF"));
         node1.setNetworkAddress(1234);
         ZigBeeNode node2 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class),
                 new IeeeAddress("123456789ABCDEF0"));
         node2.setNetworkAddress(5678);
 
         // Add a node and make sure it's in the list
+        setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeTransportState.ONLINE);
+
         networkManager.addNode(node1);
         assertEquals(1, networkManager.getNodes().size());
-        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(1));
+        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT)).nodeAdded(node1);
 
-        // Add it again to make sure it's not duplicated
+        // Add it again to make sure it's not duplicated, but we get the added callback again as discovery is incomplete
         networkManager.addNode(node1);
         assertEquals(1, networkManager.getNodes().size());
-        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(1));
+        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(2)).nodeAdded(node1);
+        Mockito.verify(mockedNodeListener, Mockito.times(0)).nodeUpdated(node1);
 
-        // Add a null node to make sure it's not added
+        Set<Object> completeList = Collections.synchronizedSet(new HashSet<>());
+        completeList.add(new IeeeAddress("1234567890ABCDEF"));
+        setField(ZigBeeNetworkManager.class, networkManager, "nodeDiscoveryComplete", completeList);
+
+        // Add it again to make sure it's not duplicated and we get the updated callback
+        networkManager.addNode(node1);
+        assertEquals(1, networkManager.getNodes().size());
+        Mockito.verify(mockedNodeListener, Mockito.times(2)).nodeAdded(node1);
+        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT)).nodeUpdated(node1);
+
+        // Add a null node to make sure it's not added and we get the updated callback
         networkManager.addNode(null);
         assertEquals(1, networkManager.getNodes().size());
-        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(1));
+        Mockito.verify(mockedNodeListener, Mockito.times(2)).nodeAdded(node1);
 
         // Add a new node to make sure it's added
         networkManager.addNode(node2);
         assertEquals(2, networkManager.getNodes().size());
-        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(2));
+        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT)).nodeAdded(node2);
 
         ZigBeeNode foundNode = networkManager.getNode(1234);
         assertNotNull(foundNode);
@@ -95,25 +123,21 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         // Remove it and make sure it's gone
         networkManager.removeNode(node1);
         assertEquals(1, networkManager.getNodes().size());
-        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(3));
+        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT)).nodeRemoved(node1);
 
         // Remove again to make sure we're ok
         networkManager.removeNode(node1);
         assertEquals(1, networkManager.getNodes().size());
-        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(3));
+        Mockito.verify(mockedNodeListener, Mockito.times(1)).nodeRemoved(node1);
 
         // Remove a null node to make sure we're ok
         networkManager.removeNode(null);
         assertEquals(1, networkManager.getNodes().size());
-        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(3));
+        Mockito.verify(mockedNodeListener, Mockito.times(1)).nodeRemoved(node1);
 
         // Really check it's gone
         foundNode = networkManager.getNode(1234);
         assertNull(networkManager.getNode(1234));
-
-        networkManager.updateNode(node2);
-        org.awaitility.Awaitility.await().until(nodeListenerUpdated(), org.hamcrest.Matchers.equalTo(3));
-        assertEquals(1, networkManager.getNodes().size());
 
         // Check we can also get using the IEEE address
         foundNode = networkManager.getNode(new IeeeAddress("123456789ABCDEF0"));
@@ -127,6 +151,8 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         networkManager.addNetworkNodeListener(null);
         networkManager.removeNetworkNodeListener(null);
         networkManager.removeNetworkNodeListener(mockedNodeListener);
+
+        networkManager.shutdown();
     }
 
     @Test
@@ -238,15 +264,25 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
     public void testNetworkStateListener() {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
+        ZigBeeNetworkStateListener stateListener = Mockito.mock(ZigBeeNetworkStateListener.class);
+        networkManager.addNetworkStateListener(stateListener);
+
         // This will be ignored as an illegal state transition
         networkManager.setNetworkState(ZigBeeTransportState.INITIALISING);
 
         networkManager.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
-        Awaitility.await().until(() -> networkStateUpdatedSize());
+        // Awaitility.await().until(() -> networkStateUpdatedSize());
+        Mockito.verify(stateListener, Mockito.timeout(TIMEOUT)).networkStateUpdated(ZigBeeTransportState.UNINITIALISED);
 
-        assertEquals(1, networkStateListenerCapture.size());
-        assertEquals(ZigBeeTransportState.UNINITIALISED, networkStateListenerCapture.get(0));
+        // assertEquals(1, networkStateListenerCapture.size());
+        // assertEquals(ZigBeeTransportState.UNINITIALISED, networkStateListenerCapture.get(0));
+
+        networkManager.setNetworkState(ZigBeeTransportState.INITIALISING);
+        Mockito.verify(stateListener, Mockito.timeout(TIMEOUT)).networkStateUpdated(ZigBeeTransportState.INITIALISING);
+
+        networkManager.setNetworkState(ZigBeeTransportState.ONLINE);
+        Mockito.verify(stateListener, Mockito.timeout(TIMEOUT)).networkStateUpdated(ZigBeeTransportState.ONLINE);
 
         networkManager.removeNetworkStateListener(mockedStateListener);
     }
@@ -304,6 +340,8 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         networkStateListenerCapture = new ArrayList<ZigBeeTransportState>();
 
         final ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
+
+        networkManager.addNetworkNodeListener(mockedNodeListener);
 
         commandListenerCapture = new ArrayList<>();
 
@@ -531,6 +569,63 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         ZigBeeNetworkExtension returnedExtension = manager.getExtension(ZigBeeOtaUpgradeExtension.class);
         assertTrue(returnedExtension instanceof ZigBeeOtaUpgradeExtension);
+
+        manager.shutdown();
+    }
+
+    @Test
+    public void initialize() {
+        ZigBeeTransportTransmit transport = Mockito.mock(ZigBeeTransportTransmit.class);
+        Mockito.when(transport.initialize()).thenReturn(ZigBeeStatus.COMMUNICATION_ERROR);
+        ZigBeeNetworkManager manager = new ZigBeeNetworkManager(transport);
+
+        ZigBeeStatus response = manager.initialize();
+        assertEquals(ZigBeeStatus.COMMUNICATION_ERROR, response);
+
+        transport = Mockito.mock(ZigBeeTransportTransmit.class);
+        Mockito.when(transport.initialize()).thenReturn(ZigBeeStatus.SUCCESS);
+        Mockito.when(transport.getNwkAddress()).thenReturn(Integer.valueOf(123));
+        Mockito.when(transport.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
+        manager = new ZigBeeNetworkManager(transport);
+
+        response = manager.initialize();
+        assertEquals(ZigBeeStatus.SUCCESS, response);
+
+        ZigBeeNode node = manager.getNode(new IeeeAddress("1234567890ABCDEF"));
+        assertNotNull(node);
+        assertEquals(Integer.valueOf(123), node.getNetworkAddress());
+
+        manager.shutdown();
+        Mockito.verify(transport, Mockito.times(1)).shutdown();
+    }
+
+    @Test
+    public void startup() {
+        ZigBeeTransportTransmit transport = Mockito.mock(ZigBeeTransportTransmit.class);
+        Mockito.when(transport.initialize()).thenReturn(ZigBeeStatus.COMMUNICATION_ERROR);
+        ZigBeeNetworkManager manager = new ZigBeeNetworkManager(transport);
+
+        assertEquals(transport, manager.getZigBeeTransport());
+
+        Mockito.when(transport.startup(false)).thenReturn(ZigBeeStatus.COMMUNICATION_ERROR);
+        Mockito.when(transport.startup(true)).thenReturn(ZigBeeStatus.SUCCESS);
+
+        assertEquals(ZigBeeStatus.COMMUNICATION_ERROR, manager.startup(false));
+        Mockito.verify(transport, Mockito.times(1)).startup(false);
+
+        assertEquals(ZigBeeStatus.SUCCESS, manager.startup(true));
+        Mockito.verify(transport, Mockito.times(1)).startup(true);
+    }
+
+    @Test
+    public void getTransportVersionString() {
+        ZigBeeTransportTransmit transport = Mockito.mock(ZigBeeTransportTransmit.class);
+        Mockito.when(transport.initialize()).thenReturn(ZigBeeStatus.COMMUNICATION_ERROR);
+        ZigBeeNetworkManager manager = new ZigBeeNetworkManager(transport);
+
+        Mockito.when(transport.getVersionString()).thenReturn("Version!");
+
+        assertEquals("Version!", manager.getTransportVersionString());
     }
 
 }
