@@ -1,0 +1,37 @@
+# This file contains commands that will be parsed, and processed in the tests.
+# The format must be two lines, with a ZigBeeApsFrame frame followed by the ZigBeeCommand it translates to
+# Comments can be added with the # on the first character and empty lines are allowed
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=28592/3, profile=0104, cluster=0300, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=3C, payload=00 3C 00 00 00]
+ReadAttributesCommand [Color Control: 0/0 -> 28592/3, cluster=0300, TID=3C, identifiers=[0]]
+
+ZigBeeApsFrame [sourceAddress=47113/0, destinationAddress=0/0, profile=0000, cluster=8031, addressMode=null, radius=0, apsSecurity=false, apsCounter=22, payload=00 00 16 12 03 8F 39 65 98 FE E6 CF 6D 0B 28 09 00 00 26 18 84 C7 6D 25 01 02 18 8F 39 65 98 FE E6 CF 6D 0A 09 0B 00 00 26 18 84 8F 9D 25 01 02 18 8F 39 65 98 FE E6 CF 6D EE CD 00 12 00 6F 0D 00 00 00 24 01 02 2A]
+ManagementLqiResponse [47113/0 -> 0/0, cluster=8031, TID=22, status=SUCCESS, neighborTableEntries=22, startIndex=18, neighborTableList=[NeighborTable [extendedPanId=6DCFE6FE9865398F, extendedAddress=841826000009280B, networkAddress=28103, deviceType=ROUTER, rxOnWhenIdle=RX_ON, relationship=SIBLING, permitJoining=ENABLED, depth=2, lqi=24], NeighborTable [extendedPanId=6DCFE6FE9865398F, extendedAddress=84182600000B090A, networkAddress=40335, deviceType=ROUTER, rxOnWhenIdle=RX_ON, relationship=SIBLING, permitJoining=ENABLED, depth=2, lqi=24], NeighborTable [extendedPanId=6DCFE6FE9865398F, extendedAddress=000D6F001200CDEE, networkAddress=0, deviceType=COORDINATOR, rxOnWhenIdle=RX_ON, relationship=SIBLING, permitJoining=ENABLED, depth=2, lqi=42]]]
+
+ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=40335/0, profile=0000, cluster=0021, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=3E, payload=00 0A 09 0B 00 00 26 18 84 03 06 00 03 EE CD 00 12 00 6F 0D 00 01]
+BindRequest [0/0 -> 40335/3, cluster=0021, TID=3E, srcAddress=84182600000B090A, srcEndpoint=3, bindCluster=6, dstAddrMode=3, dstAddress=000D6F001200CDEE, dstEndpoint=1]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=29303/3, profile=0104, cluster=0006, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=51, payload=00 51 06 00 00 00 10 01 00 20 1C]
+ConfigureReportingCommand [On/Off: 0/0 -> 29303/3, cluster=0006, TID=51, records=[AttributeReportingConfigurationRecord: [attributeDataType=BOOLEAN, attributeIdentifier=0, direction=0, minimumReportingInterval=1, maximumReportingInterval=7200]]]
+
+ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=35000/0, profile=0000, cluster=0032, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=91, payload=00 00]
+ManagementRoutingRequest [0/0 -> 35000/0, cluster=0032, TID=91, startIndex=0]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=17784/4, profile=0104, cluster=0019, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=D9, payload=09 D9 05 00 94 27 01 01 30 00 00 00 C4 38 03 00 24 80 02 79 00 02 12 11 C0 82 C0 83 7A 00 79 00 12 23 EA D2 87 90 61 96 74 06 F0 D0 83 D0 82 02 12 11 FF FF FF]
+ImageBlockResponse [OTA Upgrade: 0/0 -> 17784/4, cluster=0019, TID=D9, status=SUCCESS, manufacturerCode=10132, imageType=257, fileVersion=48, fileOffset=211140, imageData=ByteArray [value=80 02 79 00 02 12 11 C0 82 C0 83 7A 00 79 00 12 23 EA D2 87 90 61 96 74 06 F0 D0 83 D0 82 02 12 11 FF FF FF]]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=18314/3, profile=0104, cluster=0006, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=20, payload=01 20 00]
+OffCommand [On/Off: 0/0 -> 18314/3, cluster=0006, TID=20]
+
+ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=65535/0, profile=0000, cluster=0000, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=13, payload=00 02 00 00 00 00 08 22 00 00 00]
+NetworkAddressRequest [0/0 -> 65535/0, cluster=0000, TID=13, ieeeAddr=0022080000000002, requestType=0, startIndex=0]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=18314/3, profile=0104, cluster=0006, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=15, payload=00 15 0C 00 00 0A]
+DiscoverAttributesCommand [On/Off: 0/0 -> 18314/3, cluster=0006, TID=15, startAttributeIdentifier=0, maximumAttributeIdentifiers=10]
+
+ZigBeeApsFrame [sourceAddress=18314/3, destinationAddress=0/1, profile=0104, cluster=0006, addressMode=null, radius=0, apsSecurity=false, apsCounter=17, payload=18 15 0D 01 00 00 10 00 40 10 01 40 21 02 40 21]
+DiscoverAttributesResponse [On/Off: 18314/3 -> 0/1, cluster=0006, TID=15, discoveryComplete=true, attributeInformation=[Attribute Information [dataType=BOOLEAN, identifier=0], Attribute Information [dataType=BOOLEAN, identifier=16384], Attribute Information [dataType=UNSIGNED_16_BIT_INTEGER, identifier=16385], Attribute Information [dataType=UNSIGNED_16_BIT_INTEGER, identifier=16386]]]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=18314/3, profile=0104, cluster=0006, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=11, payload=00 11 11 00 14]
+DiscoverCommandsReceived [On/Off: 0/0 -> 18314/3, cluster=0006, TID=11, startCommandIdentifier=0, maximumCommandIdentifiers=20]
+

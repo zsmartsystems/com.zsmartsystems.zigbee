@@ -13,12 +13,21 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -34,15 +43,13 @@ import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
-import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
 
 /**
  * Tests for {@link ZigBeeNetworkManager}
@@ -407,15 +414,6 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         nodeNodeListenerCapture.add(node);
     }
 
-    private Callable<Integer> nodeListenerUpdated() {
-        return new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return nodeNodeListenerCapture.size(); // The condition that must be fulfilled
-            }
-        };
-    }
-
     @Override
     public void commandReceived(ZigBeeCommand command) {
         commandListenerCapture.add(command);
@@ -428,54 +426,6 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
                 return commandListenerCapture.size(); // The condition that must be fulfilled
             }
         };
-    }
-
-    @Test
-    public void testFrame1() {
-        ZigBeeApsFrame apsFrame = getApsFrame(
-                "ZigBeeApsFrame [sourceAddress=19/11, destinationAddress=0/1, profile=0104, cluster=768, addressMode=null, radius=0, apsCounter=213, payload=18 D5 0D 00 00 00 20 01 00 20 02 00 21 03 00 21 04 00 21 08 00 30 10 00 20 11 00 21 12 00 21 13 00 20 15 00 21 16 00 21 17 00 20 19 00 21 1A 00 21 1B 00 20 30 00 21 31 00 21 32 00 21 33]");
-        ZigBeeCommand command = getZigBeeCommand(apsFrame);
-        assertTrue(command instanceof DiscoverAttributesResponse);
-    }
-
-    @Test
-    public void testFrame2() {
-        ZigBeeApsFrame apsFrame = getApsFrame(
-                "ZigBeeApsFrame [sourceAddress=18/0, destinationAddress=0/0, profile=0000, cluster=32772, addressMode=null, radius=0, apsCounter=210, payload=00 00 12 00 1C 0B 5E C0 10 02 02 09 00 00 03 00 04 00 05 00 06 00 08 00 00 03 00 10 01 FC 01 19 00]");
-        ZigBeeCommand command = getZigBeeCommand(apsFrame);
-        assertTrue(command instanceof SimpleDescriptorResponse);
-    }
-
-    @Test
-    public void testFrame3() {
-        ZigBeeApsFrame apsFrame = getApsFrame(
-                "ZigBeeApsFrame [sourceAddress=29601/1, destinationAddress=0/1, profile=0104, cluster=0, addressMode=null, radius=0, apsCounter=58, payload=18 01 0A 01 FF 42 25 01 21 EF 0B 04 21 A8 01 05 21 0A 00 06 24 01 00 00 00 00 64 29 9F 08 65 21 C4 19 66 2B 67 8A 01 00 0A 21 00 00]");
-        ZigBeeCommand command = getZigBeeCommand(apsFrame);
-        assertTrue(command instanceof ReportAttributesCommand);
-    }
-
-    @Test
-    public void testFrame4() {
-        ZigBeeApsFrame apsFrame = getApsFrame(
-                "ZigBeeApsFrame [sourceAddress=29601/1, destinationAddress=0/1, profile=0104, cluster=1027, addressMode=null, radius=0, apsCounter=68, payload=18 02 0A 00 00 29 F1 03 14 00 28 FF 10 00 29 6D 27]");
-        ZigBeeCommand command = getZigBeeCommand(apsFrame);
-        assertTrue(command instanceof ReportAttributesCommand);
-    }
-
-    @Test
-    public void testFrame5() {
-        ZigBeeApsFrame apsFrame = getApsFrame(
-                "ZigBeeApsFrame [sourceAddress=29601/1, destinationAddress=0/1, profile=0104, cluster=1029, addressMode=null, radius=0, apsCounter=68, payload=18 01 0A 00 00 21 88 1B]");
-        ZigBeeCommand command = getZigBeeCommand(apsFrame);
-        assertTrue(command instanceof ReportAttributesCommand);
-    }
-
-    @Test
-    public void testFrame6() {
-        ZigBeeApsFrame apsFrame = getApsFrame(
-                "ZigBeeApsFrame [sourceAddress=29601/1, destinationAddress=0/1, profile=0104, cluster=1026, addressMode=null, radius=0, apsCounter=68, payload=18 00 0A 00 00 29 E5 09]");
-        ZigBeeCommand command = getZigBeeCommand(apsFrame);
-        assertTrue(command instanceof ReportAttributesCommand);
     }
 
     @Test
@@ -508,7 +458,9 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         networkManager.receiveCommand(apsFrame);
         Awaitility.await().until(() -> commandListenerUpdated());
-
+        if (commandListenerCapture.size() == 0) {
+            return null;
+        }
         return commandListenerCapture.get(0);
     }
 
@@ -516,7 +468,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
      * Return a ZigBeeApsFrame from a log entry for an APS frame
      *
      * @param log the log line
-     * @return the ZigBeeApsFrame
+     * @return the {@link ZigBeeApsFrame}
      */
     private ZigBeeApsFrame getApsFrame(String log) {
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
@@ -524,6 +476,9 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         String[] segments = log.substring(16, log.length() - 1).split(", ");
         for (String segment : segments) {
             String[] key = segment.split("=");
+            if (key.length == 1 || key[1] == null || key[1].equals("null")) {
+                continue;
+            }
             switch (key[0]) {
                 case "sourceAddress":
                     String[] sourceAddress = key[1].split("/");
@@ -539,10 +494,20 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
                     apsFrame.setProfile(Integer.parseInt(key[1], 16));
                     break;
                 case "cluster":
-                    apsFrame.setCluster(Integer.parseInt(key[1]));
+                    apsFrame.setCluster(Integer.parseInt(key[1], 16));
+                    break;
+                case "addressMode":
+                    ZigBeeNwkAddressMode addressMode = ZigBeeNwkAddressMode.valueOf(key[1]);
+                    apsFrame.setAddressMode(addressMode);
+                    break;
+                case "radius":
+                    apsFrame.setRadius(Integer.parseInt(key[1]));
+                    break;
+                case "apsSecurity":
+                    apsFrame.setSecurityEnabled(Boolean.valueOf(key[1]));
                     break;
                 case "apsCounter":
-                    apsFrame.setApsCounter(Integer.parseInt(key[1]));
+                    apsFrame.setApsCounter(Integer.parseInt(key[1], 16));
                     break;
                 case "payload":
                     String split[] = key[1].trim().split(" ");
@@ -557,7 +522,6 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
             }
         }
 
-        System.out.println(apsFrame);
         return apsFrame;
     }
 
@@ -626,6 +590,154 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         Mockito.when(transport.getVersionString()).thenReturn("Version!");
 
         assertEquals("Version!", manager.getTransportVersionString());
+    }
+
+    private Map<String, String> splitPacket(String packet) {
+        Map<String, String> tokens = new HashMap<>();
+        int start = 0;
+        while (start < packet.length()) {
+            for (int pos = start; pos < packet.length(); pos++) {
+                if (packet.charAt(pos) != ' ') {
+                    start = pos;
+                    break;
+                }
+            }
+
+            int end = start;
+            for (int pos = start; pos < packet.length(); pos++) {
+                if (packet.charAt(pos) == '=') {
+                    end = pos;
+                    break;
+                }
+            }
+
+            String key = packet.substring(start, end);
+            start = end + 1;
+
+            int bracket = 0;
+            end = packet.length();
+            for (int pos = start; pos < packet.length(); pos++) {
+                if (packet.charAt(pos) == '[') {
+                    bracket++;
+                }
+                if (packet.charAt(pos) == ']') {
+                    bracket--;
+                }
+
+                if ((packet.charAt(pos) == ',' && bracket == 0) || pos == packet.length()) {
+                    end = pos;
+                    break;
+                }
+            }
+
+            tokens.put(key, packet.substring(start, end));
+            start = end + 1;
+        }
+
+        return tokens;
+    }
+
+    private Map<String, String> getZclFrameTokens(String log) {
+        Map<String, String> tokens = new HashMap<>();
+
+        tokens.put("class", log.substring(0, log.indexOf(' ')));
+        String packet = (log.substring(log.indexOf(" [") + 2, log.length() - 1));
+        tokens.putAll(splitPacket(packet.substring(packet.indexOf(", ") + 2)));
+
+        // String[] segments = log.substring(log.indexOf(" [") + 2, log.length() - 1).split(", ");
+        // for (String segment : segments) {
+        // String[] key = segment.split("=");
+        // if (key.length == 2) {
+        // tokens.put(key[0], key[1]);
+        // }
+        // }
+
+        return tokens;
+    }
+
+    private String uppercaseFirst(String input) {
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
+    }
+
+    public void processLogEntry(String apsString, String zclString) throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        ZigBeeApsFrame apsFrame = getApsFrame(apsString);
+        ZigBeeCommand command = getZigBeeCommand(apsFrame);
+
+        System.out.println(apsFrame);
+        System.out.println(command);
+
+        assertNotNull(apsFrame);
+        assertNotNull(command);
+
+        Map<String, String> tokens = getZclFrameTokens(zclString);
+
+        assertEquals(command.getClass().getSimpleName(), tokens.get("class"));
+        if (command instanceof ZclCommand) {
+            assertEquals((Integer) Integer.parseInt(tokens.get("TID"), 16), command.getTransactionId());
+        }
+        assertEquals((Integer) Integer.parseInt(tokens.get("cluster"), 16), command.getClusterId());
+
+        tokens.remove("class");
+        tokens.remove("TID");
+        tokens.remove("cluster");
+
+        for (String token : tokens.keySet()) {
+            System.out.println("---> get" + uppercaseFirst(token));
+            Method method = command.getClass().getMethod("get" + uppercaseFirst(token));
+            assertEquals(method.getName(), "get" + uppercaseFirst(token));
+            Object data = method.invoke(command);
+
+            Object convertedData = convertData(tokens.get(token), data.getClass());
+            if (convertedData == null) {
+                System.out.println("No data conversion in " + data.getClass().getSimpleName() + " "
+                        + command.getClass().getSimpleName() + ".get" + uppercaseFirst(token) + "(). Data is "
+                        + tokens.get(token) + ". Using obj.toString().equals();");
+                assertEquals(tokens.get(token), data.toString());
+            } else {
+                assertEquals(convertedData, data);
+            }
+        }
+    }
+
+    private Object convertData(String data, Class clazz) {
+        return null;
+    }
+
+    @Test
+    public void processLogs() throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException {
+        File dir = FileSystems.getDefault().getPath("./src/test/resource/logs").toFile();
+
+        // File dir = new File(file.toFile());
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing != null) {
+            for (File file : directoryListing) {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                String apsString = null;
+                String zclString = null;
+                while ((line = br.readLine()) != null) {
+                    if (line.startsWith("#") || line.length() == 0) {
+                        continue;
+                    }
+
+                    if (apsString == null) {
+                        apsString = line;
+                        continue;
+                    }
+                    if (zclString == null) {
+                        zclString = line;
+
+                        processLogEntry(apsString, zclString);
+
+                        apsString = null;
+                        zclString = null;
+                    }
+                }
+                br.close();
+            }
+        }
     }
 
 }
