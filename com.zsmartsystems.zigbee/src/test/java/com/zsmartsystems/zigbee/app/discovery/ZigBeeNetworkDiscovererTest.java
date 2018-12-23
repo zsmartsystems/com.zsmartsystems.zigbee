@@ -31,6 +31,7 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
@@ -159,6 +160,7 @@ public class ZigBeeNetworkDiscovererTest {
 
         ZigBeeNode node = nodeCapture.getValue();
         assertNotNull(node);
+        assertEquals(ZigBeeNodeState.ONLINE, node.getNodeState());
         assertEquals(Integer.valueOf(0), node.getNetworkAddress());
         assertEquals(new IeeeAddress("1234567890ABCDEF"), node.getIeeeAddress());
         assertEquals(1, node.getEndpoints().size());

@@ -2,9 +2,9 @@
 
 # Overview
 
-This project aims to provide a ZigBee Framework written in Java. It provides a ZigBee Cluster Library implementation, and network management functions, aiming to provide a full featured ZigBee framework that can be implemented within end systems.
+This project aims to provide a ZigBee compatible framework written in Java and compatible with Android. It provides a ZigBee Cluster Library implementation, and network management functions, aiming to provide a full featured ZigBee framework that can be implemented within end systems. This repository aims to provide a high quality framework, with quality documentation and a thorough set of test cases to ensure against regression.
 
-Packages are broken down to provide the main ZigBee  framework, separate packages for dongles, and a console application that allows full use of the framework. The bundles include OSGi headers for use within an OSGi framework.
+Packages are broken down to provide the main ZigBee framework, separate packages for dongles, and a console application that allows full use of the framework. The bundles include OSGi headers for use within an OSGi framework.
 
 Minimum Android support is currently API19, Android 4.4 (KitKat). It is highly recommended to move to Android 8 as this may become the minimum requirement in the future to allow the framework to use the newer classes available from API26.
  
@@ -169,6 +169,7 @@ Command handlers for commands specific to each dongle implementation are in the 
 Command handlers take a set of arguments as provided by the user and will throw ```IllegalArgumentException``` if there are any errors with arguments, or ```IllegalStateException``` if there are any issues with the network state that prevent the command execution.
 
 ## Starting the Console
+
 The console application takes the following parameters -:
 
 | Option                      | Description                                                               |
@@ -202,6 +203,7 @@ Example -:
 ## Console Commands
 
 ### General Commands
+
 Note that the console is currently being refactored and this readme only documents the commands that have been migrated. For a full list of commands, use the _help_ command in the console.
 
 | Command         | Description                                                          |
@@ -229,6 +231,7 @@ Note that the console is currently being refactored and this readme only documen
 
 
 ### Ember NCP Commands
+
 The following commands are available if the transport layer is using the Silabs Ember NCP.
 
 | Command         | Description                                           |
@@ -244,6 +247,7 @@ The following commands are available if the transport layer is using the Silabs 
 |ncpmmohash       |Uses the NCP to perform the MMO hash                   |
 
 ### Telegesis Commands
+
 The following commands are available if the transport layer is using the Telegesis dongle.
 
 | Command         | Description                                           |
@@ -257,7 +261,7 @@ The following commands are available if the transport layer is using the Teleges
 * Run the findBugs goal and check that you have not introduced any bugs into your code. FindBugs reports are generated with the ```mvn site``` goal, and reports are located in the ```target/site/findbugs.html``` file.
 * Please consider raising issues before working on an enhancement to provide some coordination with other contributors.
 * Keep PRs short - try and keep a single PR per enhancement. This makes tracking and reviewing easier.
-* Contributions must be supported with tests.
+* Contributions must be supported with tests. Ideally, you should aim to acheive full coverage of the code changes. Code coverage reports are located in the ```com.zsmartsystems.zigbee.test/target/site/jacoco-aggregate``` folder and opening the ```index.html``` file.
 * Code must be formatted using the Eclipse code formatter provided in the project.
 * Contributions must be your own and you must agree with the license.
 * You must sign the PR and commits and must agree to the [Contributor License Agreement](https://cla-assistant.io/zsmartsystems/com.zsmartsystems.zigbee).
@@ -313,6 +317,7 @@ dependencies
 ```
 
 ## Note: 
+
 Change 1.x.x to desired/latest version (24.12.2018 1.x.x -> 1.1.7)
 
 # License
