@@ -59,7 +59,7 @@ public class EmberMfglib {
     /**
      * Constructor for {@link EmberMfglib} taking an instance of the {@link EzspProtocolHandler} that has been opened to
      * communicate with the Ember dongle.
-     * 
+     *
      * @param protocolHandler an instance of {@link EzspProtocolHandler} to communicate with the dongle
      */
     public EmberMfglib(EzspProtocolHandler protocolHandler) {
@@ -103,11 +103,11 @@ public class EmberMfglib {
         protocolHandler.sendEzspTransaction(transaction);
 
         EzspMfglibEndResponse response = (EzspMfglibEndResponse) transaction.getResponse();
-        logger.debug(response.toString());
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+        if (response == null || response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error with mfgEnd: {}", response);
             return false;
         }
+        logger.debug(response.toString());
 
         return true;
     }
@@ -126,11 +126,11 @@ public class EmberMfglib {
         protocolHandler.sendEzspTransaction(transaction);
 
         EzspMfglibStartToneResponse response = (EzspMfglibStartToneResponse) transaction.getResponse();
-        logger.debug(response.toString());
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+        if (response == null || response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error with mfgStartTone: {}", response);
             return false;
         }
+        logger.debug(response.toString());
 
         return true;
     }
@@ -147,11 +147,11 @@ public class EmberMfglib {
         protocolHandler.sendEzspTransaction(transaction);
 
         EzspMfglibStopToneResponse response = (EzspMfglibStopToneResponse) transaction.getResponse();
-        logger.debug(response.toString());
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+        if (response == null || response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error with mfgStopTone: {}", response);
             return false;
         }
+        logger.debug(response.toString());
 
         return true;
     }
@@ -168,11 +168,11 @@ public class EmberMfglib {
         protocolHandler.sendEzspTransaction(transaction);
 
         EzspMfglibStartStreamResponse response = (EzspMfglibStartStreamResponse) transaction.getResponse();
-        logger.debug(response.toString());
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+        if (response == null || response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error with mfgStartStream: {}", response);
             return false;
         }
+        logger.debug(response.toString());
 
         return true;
     }
@@ -189,11 +189,11 @@ public class EmberMfglib {
         protocolHandler.sendEzspTransaction(transaction);
 
         EzspMfglibStopStreamResponse response = (EzspMfglibStopStreamResponse) transaction.getResponse();
-        logger.debug(response.toString());
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+        if (response == null || response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error with mfgStopStream: {}", response);
             return false;
         }
+        logger.debug(response.toString());
 
         return true;
     }
@@ -212,11 +212,11 @@ public class EmberMfglib {
         protocolHandler.sendEzspTransaction(transaction);
 
         EzspMfglibSetChannelResponse response = (EzspMfglibSetChannelResponse) transaction.getResponse();
-        logger.debug(response.toString());
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+        if (response == null || response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error with mfgSetChannel: {}", response);
             return false;
         }
+        logger.debug(response.toString());
 
         return true;
     }
@@ -233,6 +233,10 @@ public class EmberMfglib {
         protocolHandler.sendEzspTransaction(transaction);
 
         EzspMfglibGetChannelResponse response = (EzspMfglibGetChannelResponse) transaction.getResponse();
+        if (response == null) {
+            logger.debug("Error with mfglibGetChannel: {}", response);
+            return ZigBeeChannel.UNKNOWN;
+        }
         logger.debug(response.toString());
         return ZigBeeChannel.create(response.getChannel());
     }
@@ -256,11 +260,11 @@ public class EmberMfglib {
         protocolHandler.sendEzspTransaction(transaction);
 
         EzspMfglibSetPowerResponse response = (EzspMfglibSetPowerResponse) transaction.getResponse();
-        logger.debug(response.toString());
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+        if (response == null || response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error with mfgSetPower: {}", response);
             return false;
         }
+        logger.debug(response.toString());
 
         return true;
     }
@@ -277,6 +281,10 @@ public class EmberMfglib {
         protocolHandler.sendEzspTransaction(transaction);
 
         EzspMfglibGetPowerResponse response = (EzspMfglibGetPowerResponse) transaction.getResponse();
+        if (response == null) {
+            logger.debug("Error with mfglibGetTxPower: {}", response);
+            return 0;
+        }
         logger.debug(response.toString());
         return response.getPower();
     }
@@ -298,11 +306,11 @@ public class EmberMfglib {
         protocolHandler.sendEzspTransaction(transaction);
 
         EzspMfglibSendPacketResponse response = (EzspMfglibSendPacketResponse) transaction.getResponse();
-        logger.debug(response.toString());
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+        if (response == null || response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error with mfgSendPacket: {}", response);
             return false;
         }
+        logger.debug(response.toString());
 
         return true;
     }
