@@ -185,7 +185,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * A Set used to remember if node discovery has been completed. This is used to manage the lifecycle notifications.
      */
-    private Set<IeeeAddress> nodeDiscoveryComplete = Collections.synchronizedSet(new HashSet<IeeeAddress>());
+    private Set<IeeeAddress> nodeDiscoveryComplete = Collections.synchronizedSet(new HashSet<>());
 
     /**
      * The serializer class used to serialize commands to data packets
@@ -906,7 +906,17 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     @Override
-    public void setNetworkState(final ZigBeeTransportState state) {
+    public synchronized void setNetworkState(final ZigBeeTransportState state) {
+        // Only notify users of state changes
+        if (state.equals(networkState)) {
+            return;
+        }
+
+        if (!validStateTransitions.get(networkState).contains(state)) {
+            logger.debug("Ignoring invalid network state transition from {} to {}", networkState, state);
+            return;
+        }
+
         NotificationService.execute(new Runnable() {
             @Override
             public void run() {
@@ -917,15 +927,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     private void setNetworkStateRunnable(final ZigBeeTransportState state) {
         synchronized (this) {
-            // Only notify users of state changes
-            if (state.equals(networkState)) {
-                return;
-            }
 
-            if (!validStateTransitions.get(networkState).contains(state)) {
-                logger.debug("Ignoring invalid network state transition from {} to {}", networkState, state);
-                return;
-            }
             networkState = state;
 
             logger.debug("Network state is updated to {}", state);
