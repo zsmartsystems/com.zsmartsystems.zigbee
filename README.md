@@ -312,6 +312,9 @@ dependencies
 }
 ```
 
+## Note: 
+Change 1.x.x to desired/latest version (24.12.2018 1.x.x -> 1.1.7)
+
 # License
 
 The code is licensed under [Eclipse Public License](https://www.eclipse.org/legal/epl-v10.html). Refer to the [license file](LICENSE) for further information.
