@@ -1,0 +1,6 @@
+# This file contains commands that will be parsed, and processed in the tests.
+# The format must be two lines, with a ZigBeeApsFrame frame followed by the ZigBeeCommand it translates to
+# Comments can be added with the # on the first character and empty lines are allowed
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=17784/4, profile=0104, cluster=0019, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=D9, payload=09 D9 05 00 94 27 01 01 30 00 00 00 C4 38 03 00 24 80 02 79 00 02 12 11 C0 82 C0 83 7A 00 79 00 12 23 EA D2 87 90 61 96 74 06 F0 D0 83 D0 82 02 12 11 FF FF FF]
+ImageBlockResponse [OTA Upgrade: 0/0 -> 17784/4, cluster=0019, TID=D9, status=SUCCESS, manufacturerCode=10132, imageType=257, fileVersion=48, fileOffset=211140, imageData=ByteArray [value=80 02 79 00 02 12 11 C0 82 C0 83 7A 00 79 00 12 23 EA D2 87 90 61 96 74 06 F0 D0 83 D0 82 02 12 11 FF FF FF]]

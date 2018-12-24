@@ -651,6 +651,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         ZigBeeApsFrame apsFrame = getApsFrame(apsString);
         ZigBeeCommand command = getZigBeeCommand(apsFrame);
 
+        System.out.println("---> Processing log");
         System.out.println(apsFrame);
         System.out.println(command);
 
@@ -670,14 +671,14 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         tokens.remove("cluster");
 
         for (String token : tokens.keySet()) {
-            System.out.println("---> get" + uppercaseFirst(token));
+            System.out.println("   get" + uppercaseFirst(token));
             Method method = command.getClass().getMethod("get" + uppercaseFirst(token));
             assertEquals(method.getName(), "get" + uppercaseFirst(token));
             Object data = method.invoke(command);
 
             Object convertedData = convertData(tokens.get(token), data.getClass());
             if (convertedData == null) {
-                System.out.println("No data conversion in " + data.getClass().getSimpleName() + " "
+                System.out.println("     No data conversion in " + data.getClass().getSimpleName() + " "
                         + command.getClass().getSimpleName() + ".get" + uppercaseFirst(token) + "(). Data is "
                         + tokens.get(token) + ". Using obj.toString().equals();");
                 assertEquals(tokens.get(token), data.toString());
@@ -700,6 +701,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null) {
             for (File file : directoryListing) {
+                System.out.println("-> Processing log file " + file.toString());
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String line;
                 String apsString = null;
