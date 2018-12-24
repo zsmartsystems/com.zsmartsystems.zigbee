@@ -283,7 +283,7 @@ The repositories below may be used for the RELEASE and SNAPSHOT versions respect
 <dependency>
     <groupId>com.zsmartsystems.zigbee</groupId>
     <artifactId>com.zsmartsystems.zigbee</artifactId>
-    <version>1.1.5</version>
+    <version>1.x.x</version>
     <type>pom</type>
 </dependency>
 ```
@@ -308,7 +308,7 @@ Gradle build dependencies:
 ```
 dependencies
 {
-    compile 'ccom.zsmartsystems.zigbee:com.zsmartsystems.zigbee:1.x.x'
+    compile 'com.zsmartsystems.zigbee:com.zsmartsystems.zigbee:1.x.x'
 }
 ```
 
