@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
 import com.zsmartsystems.zigbee.internal.ClusterMatcher;
@@ -836,24 +837,24 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Add a {@link ZigBeeAnnounceListener} that will be notified whenever a new device is detected
      * on the network.
      *
-     * @param statusListener the new {@link ZigBeeAnnounceListener} to add
+     * @param announceListener the new {@link ZigBeeAnnounceListener} to add
      */
-    public void addAnnounceListener(ZigBeeAnnounceListener statusListener) {
+    public void addAnnounceListener(ZigBeeAnnounceListener announceListener) {
         final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<ZigBeeAnnounceListener>(
                 announceListeners);
-        modifiedStateListeners.add(statusListener);
+        modifiedStateListeners.add(announceListener);
         announceListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
 
     /**
      * Remove a {@link ZigBeeAnnounceListener}
      *
-     * @param statusListener the new {@link ZigBeeAnnounceListener} to remove
+     * @param announceListener the new {@link ZigBeeAnnounceListener} to remove
      */
-    public void removeAnnounceListener(ZigBeeAnnounceListener statusListener) {
+    public void removeAnnounceListener(ZigBeeAnnounceListener announceListener) {
         final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<ZigBeeAnnounceListener>(
                 announceListeners);
-        modifiedStateListeners.remove(statusListener);
+        modifiedStateListeners.remove(announceListener);
         announceListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
 
@@ -865,16 +866,24 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         // This method should only be called when the transport layer has authoritative information about
         // a devices status. Therefore, we should update the network manager view of a device as appropriate.
+        // A coordinator/router may ask a device to leave the network and rejoin. In this case, we do not want
+        // to remove the node - otherwise we would have to perform the rediscovery of services etc.
+        // Instead, we mark the node status as OFFLINE, and leave it to the application to remove the node from
+        // the network manager.
         switch (deviceStatus) {
             // Device has gone - lets remove it
             case DEVICE_LEFT:
                 // Find the node
-                ZigBeeNode node = getNode(networkAddress);
+                ZigBeeNode node = getNode(ieeeAddress);
+                if (node == null) {
+                    node = getNode(networkAddress);
+                }
                 if (node == null) {
                     logger.debug("{}: Node has left, but wasn't found in the network.", networkAddress);
                 } else {
-                    // Remove the node from the network
-                    removeNode(node);
+                    // Mark the node as OFFLINE
+                    node.setNodeState(ZigBeeNodeState.OFFLINE);
+                    updateNode(node);
                 }
                 break;
 

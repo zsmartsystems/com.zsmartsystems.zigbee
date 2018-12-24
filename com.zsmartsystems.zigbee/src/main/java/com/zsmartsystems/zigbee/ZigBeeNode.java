@@ -56,22 +56,24 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     private final Logger logger = LoggerFactory.getLogger(ZigBeeNode.class);
 
     /**
-     * The extended {@link IeeeAddress} for the node
+     * The extended {@link IeeeAddress} for the node. The {@link IeeeAddress} is always fixed for a node and may not
+     * change. The {@link IeeeAddress} is universally unique.
      */
     private IeeeAddress ieeeAddress;
 
     /**
-     * The 16 bit network address for the node
+     * The 16 bit network address for the node. The network address may change if the device connects to a different
+     * parent, or there is a network address conflict.
      */
     private Integer networkAddress;
 
     /**
-     * The {@link NodeDescriptor} for the node
+     * The {@link NodeDescriptor} for the node.
      */
     private NodeDescriptor nodeDescriptor = new NodeDescriptor();
 
     /**
-     * The {@link PowerDescriptor} for the node
+     * The {@link PowerDescriptor} for the node.
      */
     private PowerDescriptor powerDescriptor = new PowerDescriptor();
 
@@ -82,7 +84,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     private Date lastUpdateTime = null;
 
     /**
-     * List of associated devices for the node, specified in a {@link List} {@link Integer}
+     * List of associated devices for the node, specified in a {@link List} {@link Integer}.
      */
     private final Set<Integer> associatedDevices = new HashSet<Integer>();
 
@@ -114,14 +116,28 @@ public class ZigBeeNode implements ZigBeeCommandListener {
             .unmodifiableList(new ArrayList<ZigBeeNetworkEndpointListener>());
 
     /**
-     * The {@link ZigBeeNetwork} that manages this node
+     * The {@link ZigBeeNetwork} that manages this node.
      */
     private final ZigBeeNetwork network;
 
-    /**
-     * Broadcast endpoint definition
-     */
-    private final static int BROADCAST_ENDPOINT = 0xFF;
+    private ZigBeeNodeState nodeState = ZigBeeNodeState.UNKNOWN;
+
+    public enum ZigBeeNodeState {
+        /**
+         * Node state is not currently known.
+         */
+        UNKNOWN,
+
+        /**
+         * The node is online and believed to be connected to the network.
+         */
+        ONLINE,
+
+        /**
+         * The node is offline - it has left the network.
+         */
+        OFFLINE
+    }
 
     /**
      * Constructor
@@ -626,15 +642,9 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         ZclCommand zclCommand = (ZclCommand) command;
         ZigBeeEndpointAddress endpointAddress = (ZigBeeEndpointAddress) zclCommand.getSourceAddress();
 
-        if (endpointAddress.getEndpoint() == BROADCAST_ENDPOINT) {
-            for (ZigBeeEndpoint endpoint : endpoints.values()) {
-                endpoint.commandReceived(zclCommand);
-            }
-        } else {
-            ZigBeeEndpoint endpoint = endpoints.get(endpointAddress.getEndpoint());
-            if (endpoint != null) {
-                endpoint.commandReceived(zclCommand);
-            }
+        ZigBeeEndpoint endpoint = endpoints.get(endpointAddress.getEndpoint());
+        if (endpoint != null) {
+            endpoint.commandReceived(zclCommand);
         }
     }
 
@@ -775,14 +785,48 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         return network.sendTransaction(command, responseMatcher);
     }
 
+    /**
+     * Set the node {@link ZigBeeNodeState}
+     *
+     * @param state the new {@link ZigBeeNodeState} for this node
+     * @return true if the node state changed
+     */
+    public boolean setNodeState(ZigBeeNodeState state) {
+        if (nodeState.equals(state)) {
+            return false;
+        }
+        logger.debug("{}: Node state updated from {} to {}", ieeeAddress, nodeState, state);
+        nodeState = state;
+        return true;
+    }
+
+    /**
+     * Gets the current {@link ZigBeeNodeState} for the node
+     *
+     * @return the current {@link ZigBeeNodeState} for the node
+     */
+    public ZigBeeNodeState getNodeState() {
+        return nodeState;
+    }
+
     @Override
     public String toString() {
-        if (nodeDescriptor == null) {
-            return "ZigBeeNode [IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + "]";
+        StringBuilder builder = new StringBuilder(100);
+
+        builder.append("ZigBeeNode [state");
+        builder.append(nodeState);
+        builder.append(", IEEE=");
+        builder.append(ieeeAddress);
+        builder.append(String.format(", NWK=%04X", networkAddress));
+
+        if (nodeDescriptor != null) {
+            builder.append(", Type=");
+            builder.append(nodeDescriptor.getLogicalType());
         }
 
-        return "ZigBeeNode [IEEE=" + ieeeAddress + ", NWK=" + String.format("%04X", networkAddress) + ", Type="
-                + nodeDescriptor.getLogicalType() + "]";
+        builder.append(']');
+
+        return builder.toString();
     }
 
 }

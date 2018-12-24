@@ -26,6 +26,7 @@ import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -390,6 +391,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
             if (node.getNetworkAddress() != networkAddress) {
                 logger.debug("{}: Network address updated to {}", ieeeAddress, networkAddress);
             }
+            node.setNodeState(ZigBeeNodeState.ONLINE);
             node.setNetworkAddress(networkAddress);
             networkManager.updateNode(node);
             return;

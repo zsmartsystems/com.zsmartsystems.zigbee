@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
@@ -428,5 +429,15 @@ public class ZigBeeNodeTest {
         node.commandReceived(unicast);
         Mockito.verify(endpoint1, Mockito.times(1)).commandReceived(unicast);
         Mockito.verify(endpoint2, Mockito.times(0)).commandReceived(unicast);
+    }
+
+    @Test
+    public void setNodeState() {
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+
+        assertFalse(node.setNodeState(ZigBeeNodeState.UNKNOWN));
+        assertTrue(node.setNodeState(ZigBeeNodeState.ONLINE));
+        assertTrue(node.setNodeState(ZigBeeNodeState.OFFLINE));
+        assertFalse(node.setNodeState(ZigBeeNodeState.OFFLINE));
     }
 }
