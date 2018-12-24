@@ -10,7 +10,6 @@ package com.zsmartsystems.zigbee.transaction;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import com.zsmartsystems.zigbee.CommandResult;
 
@@ -21,13 +20,14 @@ import com.zsmartsystems.zigbee.CommandResult;
  */
 public class ZigBeeTransactionFuture implements Future<CommandResult> {
     /**
-     * The result.
+     * The {@link CommandResult}
      */
     private CommandResult result;
 
     private boolean cancelled = false;
 
-    private final static int TIMEOUT_MILLISECONDS = 10000;
+    // Not final for tests
+    private static long TIMEOUT_MILLISECONDS = 12000;
 
     /**
      * Sets the {@link CommandResult}.
@@ -40,7 +40,7 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
     }
 
     @Override
-    public boolean cancel(boolean mayInterruptIfRunning) {
+    public synchronized boolean cancel(boolean mayInterruptIfRunning) {
         if (result != null || cancelled) {
             return false;
         }
@@ -63,14 +63,14 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
     public CommandResult get() throws InterruptedException, ExecutionException {
         try {
             return get(TIMEOUT_MILLISECONDS, TimeUnit.MILLISECONDS);
-        } catch (TimeoutException e) {
-            return null;
+        } catch (InterruptedException e) {
+            set(new CommandResult());
+            return result;
         }
     }
 
     @Override
-    public CommandResult get(long timeout, TimeUnit unit)
-            throws InterruptedException, ExecutionException, TimeoutException {
+    public CommandResult get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException {
         synchronized (this) {
             if (result != null) {
                 return result;

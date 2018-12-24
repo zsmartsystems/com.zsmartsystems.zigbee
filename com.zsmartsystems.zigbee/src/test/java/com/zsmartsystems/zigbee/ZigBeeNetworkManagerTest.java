@@ -279,11 +279,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         networkManager.setNetworkState(ZigBeeTransportState.UNINITIALISED);
 
-        // Awaitility.await().until(() -> networkStateUpdatedSize());
         Mockito.verify(stateListener, Mockito.timeout(TIMEOUT)).networkStateUpdated(ZigBeeTransportState.UNINITIALISED);
-
-        // assertEquals(1, networkStateListenerCapture.size());
-        // assertEquals(ZigBeeTransportState.UNINITIALISED, networkStateListenerCapture.get(0));
 
         networkManager.setNetworkState(ZigBeeTransportState.INITIALISING);
         Mockito.verify(stateListener, Mockito.timeout(TIMEOUT)).networkStateUpdated(ZigBeeTransportState.INITIALISING);
@@ -388,15 +384,6 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
     @Override
     public void networkStateUpdated(ZigBeeTransportState state) {
         networkStateListenerCapture.add(state);
-    }
-
-    private Callable<Integer> networkStateUpdatedSize() {
-        return new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return networkStateListenerCapture.size(); // The condition that must be fulfilled
-            }
-        };
     }
 
     @Override

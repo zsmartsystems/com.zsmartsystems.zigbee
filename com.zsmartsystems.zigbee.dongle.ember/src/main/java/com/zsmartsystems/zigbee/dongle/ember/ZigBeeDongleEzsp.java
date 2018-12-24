@@ -36,11 +36,14 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildPara
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMfglibRxHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendMulticastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConcentratorRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConcentratorResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
@@ -80,6 +83,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
@@ -571,6 +575,44 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             apsFrame.setPayload(incomingMessage.getMessageContents());
             zigbeeTransportReceive.receiveCommand(apsFrame);
 
+            return;
+        }
+
+        // Message has been transferred to the NCP
+        if (response instanceof EzspSendUnicastResponse) {
+            // If this is SUCCESS, then do nothing as the command is still not transmitted.
+            // If there was an error, then we let the system know we've failed already
+            EzspSendUnicastResponse sendResponse = (EzspSendUnicastResponse) response;
+            if (sendResponse.getStatus() == EmberStatus.EMBER_SUCCESS) {
+                return;
+            }
+            zigbeeTransportReceive.receiveCommandStatus(sendResponse.getSequence(),
+                    ZigBeeTransportProgressState.TX_NAK);
+            return;
+        }
+
+        if (response instanceof EzspSendBroadcastResponse) {
+            // If this is SUCCESS, then do nothing as the command is still not transmitted.
+            // If there was an error, then we let the system know we've failed already
+            EzspSendBroadcastResponse sendResponse = (EzspSendBroadcastResponse) response;
+            if (sendResponse.getStatus() == EmberStatus.EMBER_SUCCESS) {
+                return;
+            }
+            zigbeeTransportReceive.receiveCommandStatus(sendResponse.getSequence(),
+                    ZigBeeTransportProgressState.TX_NAK);
+            return;
+        }
+
+        // Message has been transmitted by the NCP
+        if (response instanceof EzspMessageSentHandler) {
+            EzspMessageSentHandler sentHandler = (EzspMessageSentHandler) response;
+            ZigBeeTransportProgressState sentHandlerState;
+            if (sentHandler.getStatus() == EmberStatus.EMBER_SUCCESS) {
+                sentHandlerState = ZigBeeTransportProgressState.TX_ACK;
+            } else {
+                sentHandlerState = ZigBeeTransportProgressState.TX_NAK;
+            }
+            zigbeeTransportReceive.receiveCommandStatus(sentHandler.getMessageTag(), sentHandlerState);
             return;
         }
 

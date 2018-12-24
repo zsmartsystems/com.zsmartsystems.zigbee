@@ -35,3 +35,9 @@ DiscoverAttributesResponse [On/Off: 18314/3 -> 0/1, cluster=0006, TID=15, discov
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=18314/3, profile=0104, cluster=0006, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=11, payload=00 11 11 00 14]
 DiscoverCommandsReceived [On/Off: 0/0 -> 18314/3, cluster=0006, TID=11, startCommandIdentifier=0, maximumCommandIdentifiers=20]
 
+ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=65532/0, profile=0000, cluster=0036, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=0A, payload=00 6F 01]
+ManagementPermitJoiningRequest [0/0 -> 65532/0, cluster=0036, TID=0A, permitDuration=111, tcSignificance=true]
+
+ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=0/0, profile=0000, cluster=8036, addressMode=null, radius=0, apsSecurity=false, apsCounter=00, payload=00 00]
+ManagementPermitJoiningResponse [0/0 -> 0/0, cluster=8036, TID=NULL, status=SUCCESS]
+

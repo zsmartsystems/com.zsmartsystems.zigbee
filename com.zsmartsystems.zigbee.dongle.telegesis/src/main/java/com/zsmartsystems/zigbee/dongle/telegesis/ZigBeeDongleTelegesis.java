@@ -9,6 +9,8 @@ package com.zsmartsystems.zigbee.dongle.telegesis;
 
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,7 @@ import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisEventListener;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFirmwareUpdateHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFrameHandler;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisAckMessageEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisBootloadCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisChangeChannelCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCommand;
@@ -39,6 +42,7 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisp
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisGetChannelMaskCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisGetFrameCntCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNackMessageEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkJoinedEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLeftEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLostEvent;
@@ -71,6 +75,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
@@ -308,6 +313,11 @@ public class ZigBeeDongleTelegesis
      * + Bit 0: Set: Don’t attach EUI64 to NWK frame when sending a message.
      */
     private final int defaultS10 = 0x56A9;
+
+    /**
+     * Map used to correlate the Telegesis sequence IDs with the APS counter we use to correlate messages in the stack
+     */
+    private Map<Integer, Integer> messageIdMap = new ConcurrentHashMap<>();
 
     /**
      * Constructor for Telegesis dongle.
@@ -637,7 +647,27 @@ public class ZigBeeDongleTelegesis
         }
 
         logger.debug("Telegesis send: {}", command.toString());
-        frameHandler.queueFrame(command);
+
+        // We need to get the Telegesis SEQ number for the transaction so we can correlate the transaction ID
+        // This is done by spawning a new thread to send the transaction so we get the response.
+        new Thread() {
+            @Override
+            public void run() {
+                frameHandler.sendRequest(command);
+
+                // Let the stack know the frame is sent
+                zigbeeTransportReceive.receiveCommandStatus(apsFrame.getApsCounter(),
+                        command.getStatus() == TelegesisStatusCode.SUCCESS ? ZigBeeTransportProgressState.TX_ACK
+                                : ZigBeeTransportProgressState.TX_NAK);
+
+                // Multicast doesn't have a sequence returned, so nothing more to do here
+                if (command instanceof TelegesisSendMulticastCommand) {
+                    return;
+                }
+
+                messageIdMap.put(((TelegesisSendUnicastCommand) command).getMessageId(), apsFrame.getApsCounter());
+            }
+        }.start();
     }
 
     @Override
@@ -665,6 +695,30 @@ public class ZigBeeDongleTelegesis
             apsFrame.setSourceAddress(rxMessage.getNetworkAddress());
             apsFrame.setPayload(rxMessage.getMessageData());
             zigbeeTransportReceive.receiveCommand(apsFrame);
+            return;
+        }
+
+        if (event instanceof TelegesisAckMessageEvent) {
+            TelegesisAckMessageEvent ackEvent = (TelegesisAckMessageEvent) event;
+            if (messageIdMap.get(ackEvent.getMessageId()) == null) {
+                logger.debug("No sequence correlated for ACK messageId {}", ackEvent.getMessageId());
+                return;
+            }
+
+            zigbeeTransportReceive.receiveCommandStatus(messageIdMap.remove(ackEvent.getMessageId()),
+                    ZigBeeTransportProgressState.RX_ACK);
+            return;
+        }
+
+        if (event instanceof TelegesisNackMessageEvent) {
+            TelegesisNackMessageEvent nackEvent = (TelegesisNackMessageEvent) event;
+
+            if (messageIdMap.get(nackEvent.getMessageId()) == null) {
+                logger.debug("No sequence correlated for NAK messageId {}", nackEvent.getMessageId());
+                return;
+            }
+            zigbeeTransportReceive.receiveCommandStatus(messageIdMap.remove(nackEvent.getMessageId()),
+                    ZigBeeTransportProgressState.RX_NAK);
             return;
         }
 
