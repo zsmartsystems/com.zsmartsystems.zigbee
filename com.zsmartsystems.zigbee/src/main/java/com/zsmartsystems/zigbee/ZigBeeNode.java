@@ -480,6 +480,12 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         }
     }
 
+    /**
+     * Adds a {@link ZigBeeNetworkEndpointListener} to the node. The listener will be notified of any addition or
+     * removal of endpoints in the node.
+     *
+     * @param networkDeviceListener the {@link ZigBeeNetworkEndpointListener} to add
+     */
     public void addNetworkEndpointListener(final ZigBeeNetworkEndpointListener networkDeviceListener) {
         synchronized (this) {
             final List<ZigBeeNetworkEndpointListener> modifiedListeners = new ArrayList<ZigBeeNetworkEndpointListener>(
@@ -489,6 +495,11 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         }
     }
 
+    /**
+     * Removes the {@link ZigBeeNetworkEndpointListener}
+     * 
+     * @param networkDeviceListener the {@link ZigBeeNetworkEndpointListener} to remove
+     */
     public void removeNetworkEndpointListener(final ZigBeeNetworkEndpointListener networkDeviceListener) {
         synchronized (this) {
             final List<ZigBeeNetworkEndpointListener> modifiedListeners = new ArrayList<ZigBeeNetworkEndpointListener>(
@@ -813,7 +824,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     public String toString() {
         StringBuilder builder = new StringBuilder(100);
 
-        builder.append("ZigBeeNode [state");
+        builder.append("ZigBeeNode [state=");
         builder.append(nodeState);
         builder.append(", IEEE=");
         builder.append(ieeeAddress);
