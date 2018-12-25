@@ -426,7 +426,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         }
 
         // Encapsulate the EZSP frame into the ASH packet
-        logger.trace("ASH TX EZSP: {}", nextFrame);
+        logger.trace("TX ASH EZSP: {}", nextFrame);
         AshFrameData ashFrame = new AshFrameData(nextFrame);
 
         retries = 0;

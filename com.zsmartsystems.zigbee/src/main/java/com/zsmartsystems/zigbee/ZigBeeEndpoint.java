@@ -438,7 +438,7 @@ public class ZigBeeEndpoint {
         // Get the cluster
         ZclCluster cluster = getReceiveCluster(command.getClusterId(), command.getCommandDirection());
         if (cluster == null) {
-            logger.debug("{}: Cluster {} not found for attribute response", getEndpointAddress(),
+            logger.debug("{}: Cluster {} not found for received endpoint command", getEndpointAddress(),
                     command.getClusterId());
             return;
         }

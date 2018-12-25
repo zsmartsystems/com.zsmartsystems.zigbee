@@ -13,8 +13,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -22,6 +21,7 @@ import java.util.concurrent.TimeoutException;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.TestUtilities;
 
 /**
  *
@@ -29,14 +29,7 @@ import com.zsmartsystems.zigbee.CommandResult;
  *
  */
 public class ZigBeeTransactionFutureTest {
-    protected void setField(Class clazz, Object object, String fieldName, Object newValue) throws Exception {
-        Field field = clazz.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        Field modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-        field.set(object, newValue);
-    }
+    private static int TIMEOUT = 5000;
 
     @Test
     public void testIsDone() throws InterruptedException, ExecutionException, TimeoutException {
@@ -56,7 +49,7 @@ public class ZigBeeTransactionFutureTest {
         ZigBeeTransactionFuture future = new ZigBeeTransactionFuture();
         assertFalse(future.isDone());
 
-        setField(ZigBeeTransactionFuture.class, future, "TIMEOUT_MILLISECONDS", (long) 0);
+        TestUtilities.setField(ZigBeeTransactionFuture.class, future, "TIMEOUT_MILLISECONDS", (long) 0);
 
         CommandResult result = future.get();
         assertNull(result.getResponse());
@@ -83,6 +76,54 @@ public class ZigBeeTransactionFutureTest {
         assertTrue(future.cancel(true));
         assertFalse(future.cancel(true));
         assertTrue(future.isCancelled());
+    }
+
+    @Test
+    public void testMultipleThreadIsDone() throws InterruptedException, ExecutionException, TimeoutException {
+        // Tests that multiple threads waiting on the same future will be notified when it completes
+        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture();
+        assertFalse(future.isDone());
+
+        CountDownLatch startLatch = new CountDownLatch(2);
+        CountDownLatch finishLatch = new CountDownLatch(2);
+
+        Thread thread1 = new Thread() {
+            @Override
+            public void run() {
+                startLatch.countDown();
+                try {
+                    future.get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+                finishLatch.countDown();
+            }
+        };
+        Thread thread2 = new Thread() {
+            @Override
+            public void run() {
+                startLatch.countDown();
+                try {
+                    future.get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+                finishLatch.countDown();
+            }
+        };
+
+        thread1.start();
+        thread2.start();
+        assertTrue(startLatch.await(TIMEOUT, TimeUnit.MILLISECONDS));
+
+        CommandResult result = new CommandResult();
+        future.set(result);
+        assertTrue(future.isDone());
+
+        assertEquals(result, future.get());
+        assertEquals(result, future.get(0, TimeUnit.MICROSECONDS));
+
+        assertTrue(finishLatch.await(TIMEOUT, TimeUnit.MILLISECONDS));
     }
 
 }

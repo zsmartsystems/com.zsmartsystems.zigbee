@@ -23,16 +23,22 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
+import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTrustCenterJoinHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberDeviceUpdate;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
@@ -148,17 +154,99 @@ public class ZigBeeDongleEzspTest {
         TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
 
         EzspStackStatusHandler response = Mockito.mock(EzspStackStatusHandler.class);
+        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_BUSY);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(0))
+                .setNetworkState(ArgumentMatchers.any(ZigBeeTransportState.class));
+
+        response = Mockito.mock(EzspStackStatusHandler.class);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_UP);
         dongle.handlePacket(response);
-
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setNetworkState(ZigBeeTransportState.ONLINE);
         assertEquals(Integer.valueOf(1243), dongle.getNwkAddress());
 
         response = Mockito.mock(EzspStackStatusHandler.class);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_DOWN);
         dongle.handlePacket(response);
-
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setNetworkState(ZigBeeTransportState.OFFLINE);
+    }
+
+    @Test
+    public void testEzspTrustCenterJoinHandler() throws Exception {
+        ZigBeeTransportReceive transport = Mockito.mock(ZigBeeTransportReceive.class);
+
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        Mockito.when(ncp.getNwkAddress()).thenReturn(1243);
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+        dongle.setZigBeeTransportReceive(transport);
+
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
+
+        EzspTrustCenterJoinHandler response = Mockito.mock(EzspTrustCenterJoinHandler.class);
+        Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_HIGH_SECURITY_UNSECURED_JOIN);
+        Mockito.when(response.getNewNodeId()).thenReturn(123);
+        Mockito.when(response.getNewNodeEui64()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
+        dongle.handlePacket(response);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN,
+                123, new IeeeAddress("1234567890ABCDEF"));
+
+        Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_STANDARD_SECURITY_UNSECURED_JOIN);
+        dongle.handlePacket(response);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(2)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN,
+                123, new IeeeAddress("1234567890ABCDEF"));
+
+        Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_HIGH_SECURITY_UNSECURED_REJOIN);
+        dongle.handlePacket(response);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_REJOIN,
+                123, new IeeeAddress("1234567890ABCDEF"));
+
+        Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_STANDARD_SECURITY_UNSECURED_REJOIN);
+        dongle.handlePacket(response);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(2)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_REJOIN,
+                123, new IeeeAddress("1234567890ABCDEF"));
+
+        Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_HIGH_SECURITY_SECURED_REJOIN);
+        dongle.handlePacket(response);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.SECURED_REJOIN,
+                123, new IeeeAddress("1234567890ABCDEF"));
+
+        Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_STANDARD_SECURITY_SECURED_REJOIN);
+        dongle.handlePacket(response);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(2)).nodeStatusUpdate(ZigBeeNodeStatus.SECURED_REJOIN,
+                123, new IeeeAddress("1234567890ABCDEF"));
+
+        Mockito.when(response.getStatus()).thenReturn(EmberDeviceUpdate.EMBER_DEVICE_LEFT);
+        dongle.handlePacket(response);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 123,
+                new IeeeAddress("1234567890ABCDEF"));
+    }
+
+    @Test
+    public void testEzspChildJoinHandler() throws Exception {
+        ZigBeeTransportReceive transport = Mockito.mock(ZigBeeTransportReceive.class);
+
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        Mockito.when(ncp.getNwkAddress()).thenReturn(1243);
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+        dongle.setZigBeeTransportReceive(transport);
+
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
+
+        EzspChildJoinHandler response = Mockito.mock(EzspChildJoinHandler.class);
+        Mockito.when(response.getChildId()).thenReturn(123);
+        Mockito.when(response.getChildEui64()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
+        dongle.handlePacket(response);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN,
+                123, new IeeeAddress("1234567890ABCDEF"));
     }
 
     @Test
@@ -189,14 +277,14 @@ public class ZigBeeDongleEzspTest {
         Mockito.when(response.getMessageTag()).thenReturn(231);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_SUCCESS);
         dongle.handlePacket(response);
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandStatus(231,
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandState(231,
                 ZigBeeTransportProgressState.TX_ACK);
 
         response = Mockito.mock(EzspMessageSentHandler.class);
         Mockito.when(response.getMessageTag()).thenReturn(231);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_DOWN);
         dongle.handlePacket(response);
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandStatus(231,
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandState(231,
                 ZigBeeTransportProgressState.TX_NAK);
     }
 
@@ -239,7 +327,7 @@ public class ZigBeeDongleEzspTest {
         apsFrame.setRadius(30);
         apsFrame.setPayload(new int[] {});
 
-        dongle.sendCommand(apsFrame);
+        dongle.sendCommand(1, apsFrame);
         Mockito.verify(handler, Mockito.timeout(TIMEOUT).times(1))
                 .sendEzspTransaction(ArgumentMatchers.any(EzspTransaction.class));
     }
@@ -263,7 +351,7 @@ public class ZigBeeDongleEzspTest {
         apsFrame.setRadius(30);
         apsFrame.setPayload(new int[] {});
 
-        dongle.sendCommand(apsFrame);
+        dongle.sendCommand(1, apsFrame);
         Mockito.verify(handler, Mockito.timeout(TIMEOUT).times(1))
                 .sendEzspTransaction(ArgumentMatchers.any(EzspTransaction.class));
     }
@@ -303,6 +391,8 @@ public class ZigBeeDongleEzspTest {
         TestUtilities.invokeMethod(ZigBeeDongleEzsp.class, dongle, "scheduleNetworkStatePolling");
         Mockito.verify(frameHandler, Mockito.timeout(TIMEOUT).atLeast(1))
                 .queueFrame(ArgumentMatchers.any(EzspFrameRequest.class));
+
+        dongle.handlePacket(new EzspNetworkStateRequest());
     }
 
     @Test

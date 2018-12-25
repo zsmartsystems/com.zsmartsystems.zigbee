@@ -149,8 +149,12 @@ public class ZigBeeCommand {
         builder.append(sourceAddress);
         builder.append(" -> ");
         builder.append(destinationAddress);
-        builder.append("");
-        builder.append(String.format(", cluster=%04X, TID=%02X", clusterId, transactionId));
+        builder.append(String.format(", cluster=%04X", clusterId));
+        if (transactionId == null) {
+            builder.append(", TID=--");
+        } else {
+            builder.append(String.format(", TID=%02X", transactionId));
+        }
         return builder.toString();
     }
 }

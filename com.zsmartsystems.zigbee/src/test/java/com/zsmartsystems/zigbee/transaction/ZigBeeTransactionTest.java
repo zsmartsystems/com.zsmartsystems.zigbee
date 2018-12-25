@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.transaction;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.ScheduledFuture;
@@ -20,6 +21,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 
 /**
@@ -44,9 +46,12 @@ public class ZigBeeTransactionTest {
         Mockito.when(transactionManager.scheduleTask(timerCaptor.capture(), ArgumentMatchers.anyLong()))
                 .thenReturn(timerFuture);
 
-        transaction.send();
-        Mockito.verify(transactionManager, Mockito.times(1)).addTransactionListener(transaction);
-        Mockito.verify(transactionManager, Mockito.times(1)).send(command);
+        assertEquals(0, transaction.getSendCnt());
+        assertEquals(command, transaction.startTransaction());
+        Mockito.verify(transactionManager, Mockito.times(1)).scheduleTask(ArgumentMatchers.any(Runnable.class),
+                ArgumentMatchers.eq(10000L));
+
+        assertEquals(1, transaction.getSendCnt());
 
         Runnable timeout = timerCaptor.getValue();
         assertNotNull(timeout);
@@ -55,10 +60,11 @@ public class ZigBeeTransactionTest {
         assertFalse(transactionFuture.isCancelled());
 
         timeout.run();
-        Mockito.verify(transactionManager, Mockito.times(1)).removeTransactionListener(transaction);
+        Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction, TransactionState.FAILED);
 
-        assertTrue(transactionFuture.isDone());
-        assertTrue(transactionFuture.isCancelled());
+        // A timeout doesn't complete the transaction - this is done by the queue so it can account for retries
+        assertFalse(transactionFuture.isDone());
+        assertFalse(transactionFuture.isCancelled());
     }
 
     @Test
@@ -73,24 +79,31 @@ public class ZigBeeTransactionTest {
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
         transaction.setFuture(transactionFuture);
 
-        transaction.send();
+        transaction.resetTransaction();
+
+        assertEquals(command, transaction.startTransaction());
         Mockito.verify(transactionManager, Mockito.times(1)).scheduleTask(ArgumentMatchers.any(Runnable.class),
                 ArgumentMatchers.anyLong());
-        Mockito.verify(transactionManager, Mockito.times(1)).addTransactionListener(transaction);
-        Mockito.verify(transactionManager, Mockito.times(1)).send(ArgumentMatchers.any(ZigBeeCommand.class));
 
         // Wrong TID so gets ignored
-        transaction.commandStatusReceived(ZigBeeTransportProgressState.TX_NAK, 123);
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_NAK, 123);
         assertFalse(transactionFuture.isDone());
         assertFalse(transactionFuture.isCancelled());
 
         // Correct TID
-        transaction.commandStatusReceived(ZigBeeTransportProgressState.TX_NAK, 12);
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_NAK, 12);
 
-        Mockito.verify(transactionManager, Mockito.times(1)).removeTransactionListener(transaction);
+        Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction, TransactionState.FAILED);
 
+        // Doesn't complete the transaction - this is done by the queue so it can account for retries
+        assertFalse(transactionFuture.isDone());
+        assertFalse(transactionFuture.isCancelled());
+
+        transaction.cancel();
         assertTrue(transactionFuture.isDone());
         assertTrue(transactionFuture.isCancelled());
+
+        System.out.println(transaction.toString());
     }
 
     @Test
@@ -105,23 +118,23 @@ public class ZigBeeTransactionTest {
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
         transaction.setFuture(transactionFuture);
 
-        transaction.send();
+        // transaction.startTimer();
+        assertEquals(command, transaction.startTransaction());
         Mockito.verify(transactionManager, Mockito.times(1)).scheduleTask(ArgumentMatchers.any(Runnable.class),
                 ArgumentMatchers.anyLong());
-        Mockito.verify(transactionManager, Mockito.times(1)).addTransactionListener(transaction);
-        Mockito.verify(transactionManager, Mockito.times(1)).send(command);
 
-        transaction.commandStatusReceived(ZigBeeTransportProgressState.TX_ACK, 12);
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_ACK, 12);
 
-        Mockito.verify(transactionManager, Mockito.times(2)).scheduleTask(ArgumentMatchers.any(Runnable.class),
-                ArgumentMatchers.anyLong());
+        Mockito.verify(transactionManager, Mockito.times(1)).scheduleTask(ArgumentMatchers.any(Runnable.class),
+                ArgumentMatchers.eq(8000L));
 
-        transaction.commandStatusReceived(ZigBeeTransportProgressState.RX_NAK, 12);
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.RX_NAK, 12);
 
-        Mockito.verify(transactionManager, Mockito.times(1)).removeTransactionListener(transaction);
+        Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction, TransactionState.FAILED);
 
-        assertTrue(transactionFuture.isDone());
-        assertTrue(transactionFuture.isCancelled());
+        // Doesn't complete the transaction - this is done by the queue so it can account for retries
+        assertFalse(transactionFuture.isDone());
+        assertFalse(transactionFuture.isCancelled());
     }
 
     @Test
@@ -135,21 +148,23 @@ public class ZigBeeTransactionTest {
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, null);
         transaction.setFuture(transactionFuture);
 
-        transaction.send();
+        // transaction.startTimer();
+        assertEquals(command, transaction.startTransaction());
         Mockito.verify(transactionManager, Mockito.times(1)).scheduleTask(ArgumentMatchers.any(Runnable.class),
                 ArgumentMatchers.anyLong());
-        Mockito.verify(transactionManager, Mockito.times(1)).send(command);
-        Mockito.verify(transactionManager, Mockito.times(0)).addTransactionListener(transaction);
+
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.RX_ACK, 12);
 
         // Wrong TID so gets ignored
-        transaction.commandStatusReceived(ZigBeeTransportProgressState.TX_NAK, 123);
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_NAK, 123);
         assertFalse(transactionFuture.isDone());
         assertFalse(transactionFuture.isCancelled());
 
         // Correct TID
-        transaction.commandStatusReceived(ZigBeeTransportProgressState.TX_ACK, 12);
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_ACK, 12);
 
-        Mockito.verify(transactionManager, Mockito.times(0)).removeTransactionListener(transaction);
+        Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction,
+                TransactionState.COMPLETE);
 
         assertTrue(transactionFuture.isDone());
         assertFalse(transactionFuture.isCancelled());
@@ -185,9 +200,18 @@ public class ZigBeeTransactionTest {
     @Test
     public void getTimeout() {
         ZigBeeTransaction transaction = new ZigBeeTransaction(null, null, null);
+        System.out.println(transaction);
+        assertNull(transaction.getQueueTime());
+        transaction.setQueueTime();
+        System.out.println(transaction);
+        assertNotNull(transaction.getQueueTime());
 
-        int timeout = transaction.getTimeout();
-        transaction.setTimeout(timeout + 23);
-        assertEquals(timeout + 23, transaction.getTimeout());
+        int timeout1 = transaction.getTimerPeriod1();
+        transaction.setTimerPeriod1(timeout1 + 23);
+        assertEquals(timeout1 + 23, transaction.getTimerPeriod1());
+
+        int timeout2 = transaction.getTimerPeriod1();
+        transaction.setTimerPeriod1(timeout2 + 23);
+        assertEquals(timeout2 + 23, transaction.getTimerPeriod1());
     }
 }

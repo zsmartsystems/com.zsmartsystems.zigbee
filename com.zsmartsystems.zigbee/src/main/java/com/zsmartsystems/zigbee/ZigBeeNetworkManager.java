@@ -40,7 +40,6 @@ import com.zsmartsystems.zigbee.internal.ZigBeeCommandNotifier;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
-import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
@@ -54,7 +53,6 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
-import com.zsmartsystems.zigbee.zcl.ZclTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandType;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
@@ -143,11 +141,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     private List<ZigBeeAnnounceListener> announceListeners = Collections
             .unmodifiableList(new ArrayList<ZigBeeAnnounceListener>());
-
-    /**
-     * {@link AtomicInteger} used to generate transaction sequence numbers
-     */
-    private final static AtomicInteger sequenceNumber = new AtomicInteger();
 
     /**
      * {@link AtomicInteger} used to generate APS header counters
@@ -629,15 +622,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         // Create the application frame
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
 
-        if (command.getTransactionId() == null) {
-            command.setTransactionId(sequenceNumber.getAndIncrement() & 0xff);
-        }
-
-        // Set the source address - should probably be improved!
-        // Note that the endpoint is set (currently!) in the transport layer
-        // TODO: Use only a single endpoint for HA and fix this here
-        command.setSourceAddress(new ZigBeeEndpointAddress(localNwkAddress));
-
         logger.debug("TX CMD: {}", command);
 
         apsFrame.setCluster(command.getClusterId());
@@ -715,7 +699,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
         logger.debug("TX APS: {}", apsFrame);
 
-        transport.sendCommand(apsFrame);
+        transport.sendCommand(command.getTransactionId(), apsFrame);
 
         return command.getTransactionId();
     }
@@ -1012,40 +996,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Sends {@link ZclCommand} command to {@link ZigBeeAddress}.
-     *
-     * @param destination the destination
-     * @param command the {@link ZclCommand}
-     * @return the command result future
-     */
-    public Future<CommandResult> send(ZigBeeAddress destination, ZclCommand command) {
-        command.setDestinationAddress(destination);
-        if (destination.isGroup()) {
-            return broadcast(command);
-        } else {
-            final ZigBeeTransactionMatcher responseMatcher = new ZclTransactionMatcher();
-            return sendTransaction(command, responseMatcher);
-        }
-    }
-
-    /**
-     * Broadcasts command i.e. does not wait for response.
-     *
-     * @param command the {@link ZigBeeCommand}
-     * @return the {@link CommandResult} future.
-     */
-    private Future<CommandResult> broadcast(final ZigBeeCommand command) {
-        synchronized (command) {
-            final ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
-
-            sendCommand(command);
-            transactionFuture.set(new CommandResult(new BroadcastResponse()));
-
-            return transactionFuture;
-        }
-    }
-
-    /**
      * Enables or disables devices to join the whole network.
      * <p>
      * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
@@ -1084,18 +1034,18 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setDestinationAddress(destination);
         command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
-        sendCommand(command);
+        sendTransaction(command);
 
         // If this is a broadcast, then we send it to our own address as well
         // This seems to be required for some stacks (eg ZNP)
-        if (ZigBeeBroadcastDestination.getBroadcastDestination(destination.getAddress()) != null) {
+        if (ZigBeeBroadcastDestination.isBroadcast(destination.getAddress())) {
             command = new ManagementPermitJoiningRequest();
             command.setPermitDuration(duration);
             command.setTcSignificance(true);
             command.setDestinationAddress(new ZigBeeEndpointAddress(0));
             command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
-            sendCommand(command);
+            sendTransaction(command);
         }
 
         return ZigBeeStatus.SUCCESS;
@@ -1500,18 +1450,33 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         return localNwkAddress;
     }
 
+    /**
+     * Finalises the command in preparation for sending. This adds the local source address to an outgoing command.
+     *
+     * @param command the {@link ZigBeeCommand} that is being sent
+     */
+    private void finaliseOutgoingCommand(ZigBeeCommand command) {
+        // Set the source address - should probably be improved!
+        // Note that the endpoint is set (currently!) in the transport layer
+        // TODO: Use only a single endpoint for HA and fix this here
+        command.setSourceAddress(new ZigBeeEndpointAddress(localNwkAddress));
+    }
+
     @Override
     public void sendTransaction(ZigBeeCommand command) {
+        finaliseOutgoingCommand(command);
         transactionManager.sendTransaction(command);
     }
 
     @Override
     public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
+        finaliseOutgoingCommand(command);
         return transactionManager.sendTransaction(command, responseMatcher);
     }
 
     @Override
-    public void receiveCommandStatus(int transactionId, ZigBeeTransportProgressState status) {
-        transactionManager.receiveCommandStatus(transactionId, status);
+    public void receiveCommandState(int msgTag, ZigBeeTransportProgressState state) {
+        logger.debug("RX STA: msgTag={} state={}", String.format("%02X", msgTag), state);
+        transactionManager.receiveCommandState(msgTag, state);
     }
 }

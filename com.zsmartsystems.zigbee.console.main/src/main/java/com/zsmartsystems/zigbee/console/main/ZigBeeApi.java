@@ -20,16 +20,13 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclTransactionMatcher;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveToColorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.iaswd.SquawkCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.iaswd.StartWarningCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.MoveToLevelWithOnOffCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
 
 /**
  * ZigBee API. This API is experimental and under development.
@@ -110,8 +107,17 @@ public class ZigBeeApi {
      * @return the command result future.
      */
     public Future<CommandResult> off(final ZigBeeAddress destination) {
-        final OffCommand command = new OffCommand();
-        return networkManager.send(destination, command);
+        if (!(destination instanceof ZigBeeEndpointAddress)) {
+            return null;
+        }
+        ZigBeeEndpointAddress endpointAddress = (ZigBeeEndpointAddress) destination;
+        ZigBeeEndpoint endpoint = networkManager.getNode(endpointAddress.getAddress())
+                .getEndpoint(endpointAddress.getEndpoint());
+        if (endpoint == null) {
+            return null;
+        }
+        ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint.getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+        return cluster.offCommand();
     }
 
     /**
@@ -126,7 +132,6 @@ public class ZigBeeApi {
      */
     public Future<CommandResult> color(final ZigBeeAddress destination, final double red, final double green,
             final double blue, double time) {
-        final MoveToColorCommand command = new MoveToColorCommand();
 
         final Cie cie = Cie.rgb2cie(red, green, blue);
 
@@ -139,11 +144,18 @@ public class ZigBeeApi {
             y = 65279;
         }
 
-        command.setColorX(x);
-        command.setColorY(y);
-        command.setTransitionTime((int) (time * 10));
-
-        return networkManager.send(destination, command);
+        if (!(destination instanceof ZigBeeEndpointAddress)) {
+            return null;
+        }
+        ZigBeeEndpointAddress endpointAddress = (ZigBeeEndpointAddress) destination;
+        ZigBeeEndpoint endpoint = networkManager.getNode(endpointAddress.getAddress())
+                .getEndpoint(endpointAddress.getEndpoint());
+        if (endpoint == null) {
+            return null;
+        }
+        ZclColorControlCluster cluster = (ZclColorControlCluster) endpoint
+                .getInputCluster(ZclColorControlCluster.CLUSTER_ID);
+        return cluster.moveToColorCommand(x, y, (int) (time * 10));
     }
 
     /**
@@ -156,8 +168,6 @@ public class ZigBeeApi {
      */
     public Future<CommandResult> level(final ZigBeeAddress destination, final double level, final double time) {
 
-        final MoveToLevelWithOnOffCommand command = new MoveToLevelWithOnOffCommand();
-
         int l = (int) (level * 254);
         if (l > 254) {
             l = 254;
@@ -166,50 +176,18 @@ public class ZigBeeApi {
             l = 0;
         }
 
-        command.setLevel(l);
-        command.setTransitionTime((int) (time * 10));
-
-        return networkManager.send(destination, command);
-    }
-
-    /**
-     * This command uses the WD capabilities to emit a quick audible/visible pulse called a "squawk".
-     *
-     * @param destination the {@link ZigBeeAddress}
-     * @param mode the mode
-     * @param strobe the strobe
-     * @param level the level
-     * @return the command result future
-     */
-    public Future<CommandResult> squawk(final ZigBeeAddress destination, final int mode, final int strobe,
-            final int level) {
-        final SquawkCommand command = new SquawkCommand();
-
-        final int header = (level << 6) | (strobe << 4) | mode;
-
-        command.setHeader(header);
-
-        return networkManager.send(destination, command);
-    }
-
-    /**
-     * Starts warning.
-     *
-     * @param destination the {@link ZigBeeAddress}
-     * @param mode the mode
-     * @param strobe the strobe
-     * @param duration the duration
-     * @return the command result future
-     */
-    public Future<CommandResult> warn(final ZigBeeAddress destination, final int mode, final int strobe,
-            final int duration) {
-        final StartWarningCommand command = new StartWarningCommand();
-
-        final int header = (strobe << 4) | mode;
-        command.setHeader(header);
-        command.setWarningDuration(duration);
-
-        return networkManager.send(destination, command);
+        if (!(destination instanceof ZigBeeEndpointAddress)) {
+            return null;
+        }
+        ZigBeeEndpointAddress endpointAddress = (ZigBeeEndpointAddress) destination;
+        ZigBeeEndpoint endpoint = networkManager.getNode(endpointAddress.getAddress())
+                .getEndpoint(endpointAddress.getEndpoint());
+        if (endpoint == null) {
+            return null;
+        }
+        ZclLevelControlCluster cluster = (ZclLevelControlCluster) endpoint
+                .getInputCluster(ZclLevelControlCluster.CLUSTER_ID);
+        return cluster.moveToLevelWithOnOffCommand(l, (int) (time * 10));
     }
 
     /**
