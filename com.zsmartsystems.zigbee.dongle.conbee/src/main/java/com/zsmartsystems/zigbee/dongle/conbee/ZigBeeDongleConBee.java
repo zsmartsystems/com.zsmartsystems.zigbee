@@ -295,7 +295,7 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
     }
 
     @Override
-    public void sendCommand(final ZigBeeApsFrame apsFrame) {
+    public void sendCommand(final int msgTag, final ZigBeeApsFrame apsFrame) {
         ConBeeEnqueueSendDataRequest request = new ConBeeEnqueueSendDataRequest();
 
         request.setRequestId(apsFrame.getApsCounter());

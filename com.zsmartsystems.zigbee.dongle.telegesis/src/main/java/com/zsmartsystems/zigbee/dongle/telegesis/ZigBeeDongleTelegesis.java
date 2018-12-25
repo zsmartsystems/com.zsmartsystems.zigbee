@@ -609,7 +609,7 @@ public class ZigBeeDongleTelegesis
     }
 
     @Override
-    public void sendCommand(final ZigBeeApsFrame apsFrame) {
+    public void sendCommand(final int msgTag, final ZigBeeApsFrame apsFrame) {
         if (frameHandler == null) {
             logger.debug("Telegesis frame handler not set for send.");
             return;
@@ -658,7 +658,7 @@ public class ZigBeeDongleTelegesis
                 frameHandler.sendRequest(command);
 
                 // Let the stack know the frame is sent
-                zigbeeTransportReceive.receiveCommandStatus(apsFrame.getApsCounter(),
+                zigbeeTransportReceive.receiveCommandState(msgTag,
                         command.getStatus() == TelegesisStatusCode.SUCCESS ? ZigBeeTransportProgressState.TX_ACK
                                 : ZigBeeTransportProgressState.TX_NAK);
 
@@ -667,7 +667,7 @@ public class ZigBeeDongleTelegesis
                     return;
                 }
 
-                messageIdMap.put(((TelegesisSendUnicastCommand) command).getMessageId(), apsFrame.getApsCounter());
+                messageIdMap.put(((TelegesisSendUnicastCommand) command).getMessageId(), msgTag);
             }
         }.start();
     }
@@ -707,7 +707,7 @@ public class ZigBeeDongleTelegesis
                 return;
             }
 
-            zigbeeTransportReceive.receiveCommandStatus(messageIdMap.remove(ackEvent.getMessageId()),
+            zigbeeTransportReceive.receiveCommandState(messageIdMap.remove(ackEvent.getMessageId()),
                     ZigBeeTransportProgressState.RX_ACK);
             return;
         }
@@ -719,7 +719,7 @@ public class ZigBeeDongleTelegesis
                 logger.debug("No sequence correlated for NAK messageId {}", nackEvent.getMessageId());
                 return;
             }
-            zigbeeTransportReceive.receiveCommandStatus(messageIdMap.remove(nackEvent.getMessageId()),
+            zigbeeTransportReceive.receiveCommandState(messageIdMap.remove(nackEvent.getMessageId()),
                     ZigBeeTransportProgressState.RX_NAK);
             return;
         }

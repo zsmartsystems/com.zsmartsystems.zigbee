@@ -14,7 +14,8 @@ import java.util.concurrent.TimeUnit;
 import com.zsmartsystems.zigbee.CommandResult;
 
 /**
- * Future implementation for asynchronous transactions.
+ * Future implementation for asynchronous transactions. Multiple threads may listen for the completion of the
+ * transaction.
  *
  * @author Chris Jackson
  */
@@ -36,7 +37,7 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
      */
     public synchronized void set(final CommandResult result) {
         this.result = result;
-        notify();
+        notifyAll();
     }
 
     @Override
@@ -45,7 +46,7 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
             return false;
         }
         cancelled = true;
-        notify();
+        notifyAll();
         return true;
     }
 

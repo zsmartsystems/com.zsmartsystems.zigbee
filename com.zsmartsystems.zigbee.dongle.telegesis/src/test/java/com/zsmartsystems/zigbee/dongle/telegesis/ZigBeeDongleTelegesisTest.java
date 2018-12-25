@@ -89,7 +89,7 @@ public class ZigBeeDongleTelegesisTest {
         Mockito.when(response.getMessageId()).thenReturn(123);
 
         dongle.telegesisEventReceived(response);
-        Mockito.verify(transport, Mockito.times(0)).receiveCommandStatus(ArgumentMatchers.anyInt(),
+        Mockito.verify(transport, Mockito.times(0)).receiveCommandState(ArgumentMatchers.anyInt(),
                 ArgumentMatchers.any(ZigBeeTransportProgressState.class));
 
         Map<Integer, Integer> messageIdMap = new ConcurrentHashMap<>();
@@ -97,7 +97,7 @@ public class ZigBeeDongleTelegesisTest {
         TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "messageIdMap", messageIdMap);
 
         dongle.telegesisEventReceived(response);
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandStatus(44,
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandState(44,
                 ZigBeeTransportProgressState.RX_ACK);
     }
 
@@ -114,7 +114,7 @@ public class ZigBeeDongleTelegesisTest {
         Mockito.when(response.getMessageId()).thenReturn(123);
 
         dongle.telegesisEventReceived(response);
-        Mockito.verify(transport, Mockito.times(0)).receiveCommandStatus(ArgumentMatchers.anyInt(),
+        Mockito.verify(transport, Mockito.times(0)).receiveCommandState(ArgumentMatchers.anyInt(),
                 ArgumentMatchers.any(ZigBeeTransportProgressState.class));
 
         Map<Integer, Integer> messageIdMap = new ConcurrentHashMap<>();
@@ -122,7 +122,7 @@ public class ZigBeeDongleTelegesisTest {
         TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "messageIdMap", messageIdMap);
 
         dongle.telegesisEventReceived(response);
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandStatus(44,
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandState(44,
                 ZigBeeTransportProgressState.RX_NAK);
     }
 
@@ -223,7 +223,7 @@ public class ZigBeeDongleTelegesisTest {
         apsFrame.setRadius(30);
         apsFrame.setPayload(new int[] {});
 
-        dongle.sendCommand(apsFrame);
+        dongle.sendCommand(1, apsFrame);
         Mockito.verify(handler, Mockito.timeout(TIMEOUT).times(1))
                 .sendRequest(ArgumentMatchers.any(TelegesisSendUnicastCommand.class));
     }
@@ -244,7 +244,7 @@ public class ZigBeeDongleTelegesisTest {
         apsFrame.setRadius(30);
         apsFrame.setPayload(new int[] {});
 
-        dongle.sendCommand(apsFrame);
+        dongle.sendCommand(1, apsFrame);
         Mockito.verify(handler, Mockito.timeout(TIMEOUT).times(1))
                 .sendRequest(ArgumentMatchers.any(TelegesisSendMulticastCommand.class));
     }

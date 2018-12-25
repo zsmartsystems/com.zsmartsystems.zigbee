@@ -82,7 +82,7 @@ public class ZigBeeDongleXBeeTest {
         System.out.println(command);
         System.out.println(apsFrame);
 
-        dongle.sendCommand(apsFrame);
+        dongle.sendCommand(1, apsFrame);
         assertEquals(1, commandCapture.getAllValues().size());
         XBeeTransmitRequestExplicitCommand sentCommand = (XBeeTransmitRequestExplicitCommand) commandCapture.getValue();
         sentCommand.setFrameId(32);

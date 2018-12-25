@@ -496,7 +496,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     }
 
     @Override
-    public void sendCommand(final ZigBeeApsFrame apsFrame) {
+    public void sendCommand(final int msgTag, final ZigBeeApsFrame apsFrame) {
         if (frameHandler == null) {
             return;
         }
@@ -523,7 +523,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 && !ZigBeeBroadcastDestination.isBroadcast(apsFrame.getDestinationAddress())) {
             EzspSendUnicastRequest emberUnicast = new EzspSendUnicastRequest();
             emberUnicast.setIndexOrDestination(apsFrame.getDestinationAddress());
-            emberUnicast.setMessageTag(messageTag);
+            emberUnicast.setMessageTag(msgTag);
             emberUnicast.setSequenceNumber(apsFrame.getApsCounter());
             emberUnicast.setType(EmberOutgoingMessageType.EMBER_OUTGOING_DIRECT);
             emberUnicast.setApsFrame(emberApsFrame);
@@ -535,7 +535,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
             EzspSendBroadcastRequest emberBroadcast = new EzspSendBroadcastRequest();
             emberBroadcast.setDestination(apsFrame.getDestinationAddress());
-            emberBroadcast.setMessageTag(messageTag);
+            emberBroadcast.setMessageTag(msgTag);
             emberBroadcast.setSequenceNumber(apsFrame.getApsCounter());
             emberBroadcast.setApsFrame(emberApsFrame);
             emberBroadcast.setRadius(apsFrame.getRadius());
@@ -549,7 +549,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             emberMulticast.setApsFrame(emberApsFrame);
             emberMulticast.setHops(apsFrame.getRadius());
             emberMulticast.setNonmemberRadius(apsFrame.getNonMemberRadius());
-            emberMulticast.setMessageTag(messageTag);
+            emberMulticast.setMessageTag(msgTag);
             emberMulticast.setMessageContents(apsFrame.getPayload());
 
             transaction = new EzspSingleResponseTransaction(emberMulticast, EzspSendMulticastResponse.class);
@@ -565,10 +565,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         executorService.schedule(new Runnable() {
             @Override
             public void run() {
-                logger.debug("TX EZSP: {}", transaction.getRequest());
-
                 frameHandler.sendEzspTransaction(transaction);
-                logger.debug("TX EZSP: {}", transaction.getResponse());
 
                 EmberStatus status = null;
                 if (transaction.getResponse() instanceof EzspSendUnicastResponse) {
@@ -588,7 +585,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 if (status == EmberStatus.EMBER_SUCCESS) {
                     return;
                 }
-                zigbeeTransportReceive.receiveCommandStatus(messageTag, ZigBeeTransportProgressState.TX_NAK);
+                zigbeeTransportReceive.receiveCommandState(msgTag, ZigBeeTransportProgressState.TX_NAK);
             }
         }, 0, TimeUnit.MILLISECONDS);
     }
@@ -640,7 +637,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             } else {
                 sentHandlerState = ZigBeeTransportProgressState.TX_NAK;
             }
-            zigbeeTransportReceive.receiveCommandStatus(sentHandler.getMessageTag(), sentHandlerState);
+            zigbeeTransportReceive.receiveCommandState(sentHandler.getMessageTag(), sentHandlerState);
             return;
         }
 

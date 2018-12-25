@@ -16,16 +16,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.dao.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclAlarmsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclDoorLockCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclScenesCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
  *
@@ -114,6 +121,41 @@ public class ZigBeeEndpointTest {
 
         endpoint.setDeviceVersion(123);
         assertEquals(123, endpoint.getDeviceVersion());
+    }
+
+    @Test
+    public void commandReceived() {
+        ZigBeeEndpoint endpoint = getEndpoint();
+
+        ZclCommand command = mockZclCommand(ZclCommand.class);
+        endpoint.commandReceived(command);
+
+        List<Integer> clusterIds = new ArrayList<>();
+        clusterIds.add(0);
+        endpoint.setInputClusterIds(clusterIds);
+        endpoint.commandReceived(command);
+
+        command = mockZclCommand(ReportAttributesCommand.class);
+        endpoint.commandReceived(command);
+
+        ZigBeeApplication application = Mockito.mock(ZigBeeApplication.class);
+        Mockito.when(application.getClusterId()).thenReturn(0);
+        endpoint.addApplication(application);
+        Mockito.verify(application, Mockito.times(1)).appStartup(ArgumentMatchers.any(ZclCluster.class));
+
+        command = mockZclCommand(ReadAttributesResponse.class);
+        endpoint.commandReceived(command);
+        Mockito.verify(application, Mockito.times(1)).commandReceived(ArgumentMatchers.any(ZclCommand.class));
+    }
+
+    private ZclCommand mockZclCommand(Class<?> clazz) {
+        ZclCommand command = (ZclCommand) Mockito.mock(clazz);
+        ZigBeeEndpointAddress sourceAddress = new ZigBeeEndpointAddress(1234, 5);
+        Mockito.when(command.getSourceAddress()).thenReturn(sourceAddress);
+        Mockito.when(command.getClusterId()).thenReturn(0);
+        Mockito.when(command.getCommandDirection()).thenReturn(ZclCommandDirection.SERVER_TO_CLIENT);
+
+        return command;
     }
 
     @Test
