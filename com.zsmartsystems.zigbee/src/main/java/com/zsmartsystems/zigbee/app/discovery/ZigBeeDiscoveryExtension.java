@@ -21,6 +21,7 @@ import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
 import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
@@ -97,6 +98,10 @@ public class ZigBeeDiscoveryExtension
             networkDiscoverer.shutdown();
         }
 
+        for (ZigBeeNodeServiceDiscoverer nodeDiscoverer : nodeDiscovery.values()) {
+            nodeDiscoverer.stopDiscovery();
+        }
+
         extensionStarted = false;
 
         if (futureTask != null) {
@@ -159,20 +164,25 @@ public class ZigBeeDiscoveryExtension
 
         logger.debug("DISCOVERY Extension: Adding discoverer for {}", node.getIeeeAddress());
 
-        ZigBeeNodeServiceDiscoverer nodeDiscoverer = new ZigBeeNodeServiceDiscoverer(networkManager, node);
-        nodeDiscovery.put(node.getIeeeAddress(), nodeDiscoverer);
-        nodeDiscoverer.startDiscovery();
+        startDiscovery(node);
     }
 
     @Override
     public void nodeUpdated(ZigBeeNode node) {
-        // Not used
+        // We need to handle the cases where the node changes to ONLINE, or to OFFLINE
+        if (node.getNodeState() == ZigBeeNodeState.ONLINE && !nodeDiscovery.containsKey(node.getIeeeAddress())) {
+            // If the state is ONLINE, then ensure discovery is running
+            startDiscovery(node);
+        } else if (node.getNodeState() != ZigBeeNodeState.ONLINE && nodeDiscovery.containsKey(node.getIeeeAddress())) {
+            // If state is not ONLINE, then stop discovery
+            stopDiscovery(node);
+        }
     }
 
     @Override
     public void nodeRemoved(ZigBeeNode node) {
         logger.debug("DISCOVERY Extension: Removing discoverer for {}", node.getIeeeAddress());
-        nodeDiscovery.remove(node.getIeeeAddress());
+        stopDiscovery(node);
     }
 
     @Override
@@ -203,14 +213,27 @@ public class ZigBeeDiscoveryExtension
         networkDiscoverer.rediscoverNode(ieeeAddress);
     }
 
-    private void stopScheduler() {
+    protected void startDiscovery(ZigBeeNode node) {
+        ZigBeeNodeServiceDiscoverer nodeDiscoverer = new ZigBeeNodeServiceDiscoverer(networkManager, node);
+        nodeDiscovery.put(node.getIeeeAddress(), nodeDiscoverer);
+        nodeDiscoverer.startDiscovery();
+    }
+
+    protected void stopDiscovery(ZigBeeNode node) {
+        ZigBeeNodeServiceDiscoverer discoverer = nodeDiscovery.remove(node.getIeeeAddress());
+        if (discoverer != null) {
+            discoverer.stopDiscovery();
+        }
+    }
+
+    protected void stopScheduler() {
         if (futureTask != null) {
             futureTask.cancel(true);
             futureTask = null;
         }
     }
 
-    private void startScheduler(int initialPeriod) {
+    protected void startScheduler(int initialPeriod) {
         stopScheduler();
 
         Runnable meshUpdateThread = new Runnable() {
@@ -228,8 +251,8 @@ public class ZigBeeDiscoveryExtension
     }
 
     /**
-     * Gets the Collection of {@link ZigBeeNodeServiceDiscoverer} for all nodes
-     * 
+     * Gets the Collection of {@link ZigBeeNodeServiceDiscoverer}s for all nodes
+     *
      * @return Collection of {@link ZigBeeNodeServiceDiscoverer}
      */
     public Collection<ZigBeeNodeServiceDiscoverer> getNodeDiscoverers() {

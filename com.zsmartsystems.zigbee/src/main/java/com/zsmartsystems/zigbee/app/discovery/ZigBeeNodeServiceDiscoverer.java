@@ -232,6 +232,8 @@ public class ZigBeeNodeServiceDiscoverer {
     }
 
     /**
+     * Gets the maximum backoff counter. If this number of retries are sent, the request will fail.
+     *
      * @return the maxBackoff
      */
     public int getMaxBackoff() {
@@ -239,6 +241,8 @@ public class ZigBeeNodeServiceDiscoverer {
     }
 
     /**
+     * Sets the maximum backoff counter. If this number of retries are sent, the request will fail.
+     *
      * @param maxBackoff the maxBackoff to set
      */
     public void setMaxBackoff(int maxBackoff) {
@@ -560,9 +564,7 @@ public class ZigBeeNodeServiceDiscoverer {
         @Override
         public void run() {
             try {
-                logger.debug("{}: Node SVC Discovery: running", node.getIeeeAddress());
                 NodeDiscoveryTask discoveryTask;
-
                 synchronized (discoveryTasks) {
                     discoveryTask = discoveryTasks.peek();
                 }
@@ -572,6 +574,7 @@ public class ZigBeeNodeServiceDiscoverer {
                     networkManager.updateNode(node);
                     return;
                 }
+                logger.debug("{}: Node SVC Discovery: running {}", node.getIeeeAddress(), discoveryTask);
 
                 boolean success = false;
                 switch (discoveryTask) {
@@ -607,9 +610,8 @@ public class ZigBeeNodeServiceDiscoverer {
                     synchronized (discoveryTasks) {
                         discoveryTasks.remove(discoveryTask);
                     }
-                    logger.debug("{}: Node SVC Discovery: request {} successful. Advanced to {}.",
+                    logger.debug("{}: Node SVC Discovery: request {} successful. Advancing to {}.",
                             node.getIeeeAddress(), discoveryTask, discoveryTasks.peek());
-
                     retryCnt = 0;
                 } else if (retryCnt > maxBackoff) {
                     logger.debug("{}: Node SVC Discovery: request {} failed after {} attempts.", node.getIeeeAddress(),
@@ -667,8 +669,9 @@ public class ZigBeeNodeServiceDiscoverer {
 
     /**
      * Starts service discovery for the node in order to update the mesh. This adds the
-     * {@link NodeDiscoveryTask#NEIGHBORS} and {@link NodeDiscoveryTask#ROUTES} tasks to the task list. Note that
-     * {@link NodeDiscoveryTask#ROUTES} is not added for end devices.
+     * {@link NodeDiscoveryTask#NEIGHBORS} and {@link NodeDiscoveryTask#ROUTES} tasks to the task list.
+     * <p>
+     * Note that {@link NodeDiscoveryTask#ROUTES} is not added for end devices.
      */
     public void updateMesh() {
         logger.debug("{}: Node SVC Discovery: Update mesh", node.getIeeeAddress());
