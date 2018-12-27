@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
@@ -496,7 +497,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENCRYPTION);
         }
 
-        if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE && apsFrame.getDestinationAddress() < 0xfff8) {
+        if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE
+                && !ZigBeeBroadcastDestination.isBroadcast(apsFrame.getDestinationAddress())) {
             EzspSendUnicastRequest emberUnicast = new EzspSendUnicastRequest();
             emberUnicast.setIndexOrDestination(apsFrame.getDestinationAddress());
             emberUnicast.setMessageTag(apsFrame.getApsCounter());
@@ -507,7 +509,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
             emberCommand = emberUnicast;
         } else if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE
-                && apsFrame.getDestinationAddress() >= 0xfff8) {
+                && ZigBeeBroadcastDestination.isBroadcast(apsFrame.getDestinationAddress())) {
 
             EzspSendBroadcastRequest emberBroadcast = new EzspSendBroadcastRequest();
             emberBroadcast.setDestination(apsFrame.getDestinationAddress());
