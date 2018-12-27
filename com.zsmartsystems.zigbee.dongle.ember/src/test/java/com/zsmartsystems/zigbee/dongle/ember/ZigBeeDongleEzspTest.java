@@ -12,20 +12,25 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
+import com.zsmartsystems.zigbee.TestUtilities;
+import com.zsmartsystems.zigbee.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
+import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
@@ -48,15 +53,6 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
  */
 public class ZigBeeDongleEzspTest {
     private static int TIMEOUT = 5000;
-
-    protected void setField(Class clazz, Object object, String fieldName, Object newValue) throws Exception {
-        Field field = clazz.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        Field modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-        field.set(object, newValue);
-    }
 
     @Test
     public void setZigBeeExtendedPanId() {
@@ -147,7 +143,7 @@ public class ZigBeeDongleEzspTest {
         };
         dongle.setZigBeeTransportReceive(transport);
 
-        setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
 
         EzspStackStatusHandler response = Mockito.mock(EzspStackStatusHandler.class);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_UP);
@@ -172,7 +168,7 @@ public class ZigBeeDongleEzspTest {
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
         dongle.setZigBeeTransportReceive(transport);
 
-        setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
 
         EzspSendUnicastResponse response = Mockito.mock(EzspSendUnicastResponse.class);
         Mockito.when(response.getSequence()).thenReturn(123);
@@ -197,7 +193,7 @@ public class ZigBeeDongleEzspTest {
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
         dongle.setZigBeeTransportReceive(transport);
 
-        setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
 
         EzspSendBroadcastResponse response = Mockito.mock(EzspSendBroadcastResponse.class);
         Mockito.when(response.getSequence()).thenReturn(123);
@@ -222,7 +218,7 @@ public class ZigBeeDongleEzspTest {
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
         dongle.setZigBeeTransportReceive(transport);
 
-        setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
 
         EzspMessageSentHandler response = Mockito.mock(EzspMessageSentHandler.class);
         Mockito.when(response.getMessageTag()).thenReturn(231);
@@ -252,10 +248,50 @@ public class ZigBeeDongleEzspTest {
         EzspProtocolHandler handler = Mockito.mock(EzspProtocolHandler.class);
         Mockito.when(handler.getCounters()).thenReturn(counters);
 
-        setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", handler);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", handler);
 
         assertNotNull(dongle.getCounters());
         assertEquals(1, dongle.getCounters().size());
         assertEquals(Long.valueOf(1), dongle.getCounters().get("A"));
+    }
+
+    @Test
+    public void sendCommandUnicast() throws Exception {
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
+        EzspProtocolHandler handler = Mockito.mock(EzspProtocolHandler.class);
+
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", handler);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setCluster(0);
+        apsFrame.setProfile(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey());
+        apsFrame.setAddressMode(ZigBeeNwkAddressMode.DEVICE);
+        apsFrame.setDestinationAddress(1234);
+        apsFrame.setApsCounter(1);
+        apsFrame.setRadius(30);
+        apsFrame.setPayload(new int[] {});
+
+        dongle.sendCommand(apsFrame);
+        Mockito.verify(handler, Mockito.times(1)).queueFrame(ArgumentMatchers.any(EzspSendUnicastRequest.class));
+    }
+
+    @Test
+    public void sendCommandBroadcast() throws Exception {
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
+        EzspProtocolHandler handler = Mockito.mock(EzspProtocolHandler.class);
+
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", handler);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setCluster(0);
+        apsFrame.setProfile(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey());
+        apsFrame.setAddressMode(ZigBeeNwkAddressMode.DEVICE);
+        apsFrame.setDestinationAddress(0xfff9);
+        apsFrame.setApsCounter(1);
+        apsFrame.setRadius(30);
+        apsFrame.setPayload(new int[] {});
+
+        dongle.sendCommand(apsFrame);
+        Mockito.verify(handler, Mockito.times(1)).queueFrame(ArgumentMatchers.any(EzspSendBroadcastRequest.class));
     }
 }

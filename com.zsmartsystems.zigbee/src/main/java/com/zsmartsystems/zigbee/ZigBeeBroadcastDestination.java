@@ -72,26 +72,33 @@ public enum ZigBeeBroadcastDestination {
     }
 
     /**
-     * Lookup function based on the EmberApsOption type code. Returns null
-     * if the code does not exist.
+     * Lookup function based on the broadcast address. Returns null if the address does not exist.
      *
-     * @param i
-     *            the code to lookup
-     * @return enumeration value of the alarm type.
+     * @param address the address to lookup
+     * @return enumeration value of the broadcast address.
      */
-    public static ZigBeeBroadcastDestination getBroadcastDestination(int i) {
+    public static ZigBeeBroadcastDestination getBroadcastDestination(int address) {
         if (codeMapping == null) {
             initMapping();
         }
 
-        return codeMapping.get(i);
+        return codeMapping.get(address);
     }
 
     /**
-     * @return the key
+     * @return the broadcast address to be sent over the air
      */
     public int getKey() {
         return key;
     }
 
+    /**
+     * Tests the supplied address to determine if it is a broadcast address
+     *
+     * @param address the address to test
+     * @return true if the address is in the broadcast address range
+     */
+    public static boolean isBroadcast(int address) {
+        return (address >= BROADCAST_RESERVED_FFF8.getKey() && address <= BROADCAST_ALL_DEVICES.getKey());
+    }
 }

@@ -9,8 +9,6 @@ package com.zsmartsystems.zigbee.dongle.telegesis;
 
 import static org.junit.Assert.assertEquals;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,7 +18,12 @@ import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.TestUtilities;
+import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
+import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
+import com.zsmartsystems.zigbee.ZigBeeProfileType;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFrameHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisAckMessageEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceJoinedNetworkEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceLeftNetworkEvent;
@@ -28,6 +31,8 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNack
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkJoinedEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLeftEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLostEvent;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendMulticastCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSendUnicastCommand;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
@@ -40,15 +45,6 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
  */
 public class ZigBeeDongleTelegesisTest {
     private static int TIMEOUT = 5000;
-
-    protected void setField(Class clazz, Object object, String fieldName, Object newValue) throws Exception {
-        Field field = clazz.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        Field modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-        field.set(object, newValue);
-    }
 
     @Test
     public void setZigBeeExtendedPanId() {
@@ -87,7 +83,7 @@ public class ZigBeeDongleTelegesisTest {
         ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
         dongle.setZigBeeTransportReceive(transport);
 
-        setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
 
         TelegesisAckMessageEvent response = Mockito.mock(TelegesisAckMessageEvent.class);
         Mockito.when(response.getMessageId()).thenReturn(123);
@@ -98,7 +94,7 @@ public class ZigBeeDongleTelegesisTest {
 
         Map<Integer, Integer> messageIdMap = new ConcurrentHashMap<>();
         messageIdMap.put(123, 44);
-        setField(ZigBeeDongleTelegesis.class, dongle, "messageIdMap", messageIdMap);
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "messageIdMap", messageIdMap);
 
         dongle.telegesisEventReceived(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandStatus(44,
@@ -112,7 +108,7 @@ public class ZigBeeDongleTelegesisTest {
         ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
         dongle.setZigBeeTransportReceive(transport);
 
-        setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
 
         TelegesisNackMessageEvent response = Mockito.mock(TelegesisNackMessageEvent.class);
         Mockito.when(response.getMessageId()).thenReturn(123);
@@ -123,7 +119,7 @@ public class ZigBeeDongleTelegesisTest {
 
         Map<Integer, Integer> messageIdMap = new ConcurrentHashMap<>();
         messageIdMap.put(123, 44);
-        setField(ZigBeeDongleTelegesis.class, dongle, "messageIdMap", messageIdMap);
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "messageIdMap", messageIdMap);
 
         dongle.telegesisEventReceived(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandStatus(44,
@@ -137,7 +133,7 @@ public class ZigBeeDongleTelegesisTest {
         ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
         dongle.setZigBeeTransportReceive(transport);
 
-        setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
 
         TelegesisDeviceJoinedNetworkEvent response = Mockito.mock(TelegesisDeviceJoinedNetworkEvent.class);
         Mockito.when(response.getNetworkAddress()).thenReturn(123);
@@ -155,7 +151,7 @@ public class ZigBeeDongleTelegesisTest {
         ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
         dongle.setZigBeeTransportReceive(transport);
 
-        setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
 
         TelegesisDeviceLeftNetworkEvent response = Mockito.mock(TelegesisDeviceLeftNetworkEvent.class);
         Mockito.when(response.getNetworkAddress()).thenReturn(123);
@@ -173,7 +169,7 @@ public class ZigBeeDongleTelegesisTest {
         ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
         dongle.setZigBeeTransportReceive(transport);
 
-        setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
 
         TelegesisNetworkLeftEvent response = Mockito.mock(TelegesisNetworkLeftEvent.class);
         dongle.telegesisEventReceived(response);
@@ -188,7 +184,7 @@ public class ZigBeeDongleTelegesisTest {
         ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
         dongle.setZigBeeTransportReceive(transport);
 
-        setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
 
         TelegesisNetworkLostEvent response = Mockito.mock(TelegesisNetworkLostEvent.class);
         dongle.telegesisEventReceived(response);
@@ -203,11 +199,53 @@ public class ZigBeeDongleTelegesisTest {
         ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
         dongle.setZigBeeTransportReceive(transport);
 
-        setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "startupComplete", true);
 
         TelegesisNetworkJoinedEvent response = Mockito.mock(TelegesisNetworkJoinedEvent.class);
         dongle.telegesisEventReceived(response);
 
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setNetworkState(ZigBeeTransportState.ONLINE);
+    }
+
+    @Test
+    public void sendCommandUnicast() throws Exception {
+        ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
+        TelegesisFrameHandler handler = Mockito.mock(TelegesisFrameHandler.class);
+
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "frameHandler", handler);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setCluster(0);
+        apsFrame.setProfile(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey());
+        apsFrame.setAddressMode(ZigBeeNwkAddressMode.DEVICE);
+        apsFrame.setDestinationAddress(1234);
+        apsFrame.setApsCounter(1);
+        apsFrame.setRadius(30);
+        apsFrame.setPayload(new int[] {});
+
+        dongle.sendCommand(apsFrame);
+        Mockito.verify(handler, Mockito.timeout(TIMEOUT).times(1))
+                .sendRequest(ArgumentMatchers.any(TelegesisSendUnicastCommand.class));
+    }
+
+    @Test
+    public void sendCommandBroadcast() throws Exception {
+        ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
+        TelegesisFrameHandler handler = Mockito.mock(TelegesisFrameHandler.class);
+
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "frameHandler", handler);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setCluster(0);
+        apsFrame.setProfile(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey());
+        apsFrame.setAddressMode(ZigBeeNwkAddressMode.DEVICE);
+        apsFrame.setDestinationAddress(0xfff9);
+        apsFrame.setApsCounter(1);
+        apsFrame.setRadius(30);
+        apsFrame.setPayload(new int[] {});
+
+        dongle.sendCommand(apsFrame);
+        Mockito.verify(handler, Mockito.timeout(TIMEOUT).times(1))
+                .sendRequest(ArgumentMatchers.any(TelegesisSendMulticastCommand.class));
     }
 }

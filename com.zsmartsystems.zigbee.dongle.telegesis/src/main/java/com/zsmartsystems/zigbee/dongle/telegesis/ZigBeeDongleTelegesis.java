@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
@@ -615,7 +616,8 @@ public class ZigBeeDongleTelegesis
         }
 
         TelegesisCommand command;
-        if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE && apsFrame.getDestinationAddress() < 0xfff8) {
+        if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE
+                && !ZigBeeBroadcastDestination.isBroadcast(apsFrame.getDestinationAddress())) {
             // Unicast command
             TelegesisSendUnicastCommand unicastCommand = new TelegesisSendUnicastCommand();
             unicastCommand.setAddress(apsFrame.getDestinationAddress());
@@ -626,7 +628,7 @@ public class ZigBeeDongleTelegesis
             unicastCommand.setMessageData(apsFrame.getPayload());
             command = unicastCommand;
         } else if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE
-                && apsFrame.getDestinationAddress() >= 0xfff8) {
+                && ZigBeeBroadcastDestination.isBroadcast(apsFrame.getDestinationAddress())) {
             // Broadcast command
             TelegesisSendMulticastCommand multicastCommand = new TelegesisSendMulticastCommand();
             multicastCommand.setAddress(apsFrame.getDestinationAddress());
