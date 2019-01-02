@@ -1,0 +1,6 @@
+# This file contains commands that will be parsed, and processed in the tests.
+# The format must be two lines, with a ZigBeeApsFrame frame followed by the ZigBeeCommand it translates to
+# Comments can be added with the # on the first character and empty lines are allowed
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=40125/1, profile=0104, cluster=0008, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=71, payload=01 71 04 FE 0A 00]
+MoveToLevelWithOnOffCommand [Level Control: 0/0 -> 40125/1, cluster=0008, TID=71, level=254, transitionTime=10]
