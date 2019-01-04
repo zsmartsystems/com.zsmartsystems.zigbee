@@ -20,7 +20,6 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +28,8 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.TestUtilities;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
@@ -114,12 +115,18 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testRunning() {
-        AshFrameHandler frameHandler = new AshFrameHandler(null);
+        EzspFrameHandler ezspHandler = Mockito.mock(EzspFrameHandler.class);
+        AshFrameHandler frameHandler = new AshFrameHandler(ezspHandler);
         frameHandler.start(Mockito.mock(ZigBeePort.class));
 
         assertTrue(frameHandler.isAlive());
         frameHandler.close();
         assertFalse(frameHandler.isAlive());
+        Mockito.verify(ezspHandler, Mockito.times(1)).handleLinkStateChange(false);
+
+        // No further transmissions are allowed
+        frameHandler.queueFrame(Mockito.mock(EzspFrameRequest.class));
+        assertNull(frameHandler.sendEzspRequestAsync(Mockito.mock(EzspTransaction.class)));
     }
 
     @Test
@@ -206,17 +213,6 @@ public class AshFrameHandlerTest {
         assertEquals(Long.valueOf(0), counters.get("ASH_RX_ERR"));
     }
 
-    void setField(Object object, String fieldName, Object newValue) throws Exception {
-        Field field = object.getClass().getDeclaredField(fieldName);
-
-        field.setAccessible(true);
-        Field modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-        field.set(object, newValue);
-    }
-
     @Test
     public void testTimeout() throws NoSuchFieldException, SecurityException, Exception {
         ZigBeePort port = new TestPort(null, null);
@@ -224,12 +220,13 @@ public class AshFrameHandlerTest {
         EzspFrameHandler ezspHandler = Mockito.mock(EzspFrameHandler.class);
         AshFrameHandler frameHandler = new AshFrameHandler(ezspHandler);
 
-        setField(frameHandler, "port", port);
-        setField(frameHandler, "T_RX_ACK_MIN", 0);
-        setField(frameHandler, "T_RX_ACK_INIT", 0);
-        setField(frameHandler, "T_RX_ACK_MAX", 0);
-        setField(frameHandler, "receiveTimeout", 0);
-        setField(frameHandler, "stateConnected", true);
+        frameHandler.start(port);
+
+        TestUtilities.setField(AshFrameHandler.class, frameHandler, "T_RX_ACK_MIN", 0);
+        TestUtilities.setField(AshFrameHandler.class, frameHandler, "T_RX_ACK_INIT", 0);
+        TestUtilities.setField(AshFrameHandler.class, frameHandler, "T_RX_ACK_MAX", 0);
+        TestUtilities.setField(AshFrameHandler.class, frameHandler, "receiveTimeout", 0);
+        TestUtilities.setField(AshFrameHandler.class, frameHandler, "stateConnected", true);
 
         ArgumentCaptor<Boolean> stateCapture = ArgumentCaptor.forClass(Boolean.class);
 

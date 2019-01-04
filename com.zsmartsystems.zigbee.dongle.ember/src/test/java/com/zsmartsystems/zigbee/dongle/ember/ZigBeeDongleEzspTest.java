@@ -14,6 +14,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -27,6 +29,7 @@ import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastResponse;
@@ -293,5 +296,36 @@ public class ZigBeeDongleEzspTest {
 
         dongle.sendCommand(apsFrame);
         Mockito.verify(handler, Mockito.times(1)).queueFrame(ArgumentMatchers.any(EzspSendBroadcastRequest.class));
+    }
+
+    @Test
+    public void getFirmwareVersion() throws Exception {
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
+
+        assertEquals("", dongle.getFirmwareVersion());
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "versionString", "Stack Version=123.456");
+        assertEquals("123.456", dongle.getFirmwareVersion());
+    }
+
+    @Test
+    public void scheduleNetworkStatePolling() throws Exception {
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
+
+        ScheduledExecutorService pollingScheduler = Executors.newSingleThreadScheduledExecutor();
+
+        EzspProtocolHandler frameHandler = Mockito.mock(EzspProtocolHandler.class);
+
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "pollRate", 1);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", frameHandler);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "pollingScheduler", pollingScheduler);
+
+        TestUtilities.invokeMethod(ZigBeeDongleEzsp.class, dongle, "scheduleNetworkStatePolling");
+        Mockito.verify(frameHandler, Mockito.timeout(TIMEOUT).times(0))
+                .queueFrame(ArgumentMatchers.any(EzspFrameRequest.class));
+
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "networkStateUp", true);
+        TestUtilities.invokeMethod(ZigBeeDongleEzsp.class, dongle, "scheduleNetworkStatePolling");
+        Mockito.verify(frameHandler, Mockito.timeout(TIMEOUT).atLeast(1))
+                .queueFrame(ArgumentMatchers.any(EzspFrameRequest.class));
     }
 }
