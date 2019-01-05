@@ -432,6 +432,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         pollingTimer = pollingScheduler.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
+                // Don't poll the state if the network is down
+                if (!networkStateUp) {
+                    return;
+                }
                 frameHandler.queueFrame(new EzspNetworkStateRequest());
             }
         }, pollRate, pollRate, TimeUnit.MILLISECONDS);

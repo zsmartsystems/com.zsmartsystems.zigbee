@@ -45,6 +45,10 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  * and the handler will return with the completed result.
  * <p>
  * UG101: UART GATEWAY PROTOCOL REFERENCE: FOR THE EMBER® EZSP NETWORK CO-PROCESSOR
+ * <p>
+ * Any errors in this class will be reported to the next layer by setting the handler OFFLINE (reported through the
+ * {@link EzspFrameHandler#handleLinkStateChange(boolean)} method). The application is then responsible to reconfigure
+ * and restart the connection.
  *
  * @author Chris Jackson
  *
@@ -378,6 +382,11 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
         clearTransactionQueue();
 
+        sentQueue.clear();
+        sendQueue.clear();
+
+        frameHandler.handleLinkStateChange(false);
+
         timer.cancel();
         executor.shutdownNow();
 
@@ -483,6 +492,10 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     @Override
     public void queueFrame(EzspFrameRequest request) {
+        if (closeHandler) {
+            logger.debug("ASH: Handler is closed");
+            return;
+        }
         sendQueue.add(request);
 
         logger.debug("ASH: TX EZSP queue: {}", sendQueue.size());
@@ -510,16 +523,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     private void disconnect() {
         logger.debug("ASH: Disconnected!");
-        stateConnected = false;
 
-        clearTransactionQueue();
-
-        sentQueue.clear();
-        sendQueue.clear();
-
-        stopRetryTimer();
-
-        frameHandler.handleLinkStateChange(false);
+        close();
     }
 
     /**
@@ -661,6 +666,11 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     @Override
     public Future<EzspFrame> sendEzspRequestAsync(final EzspTransaction ezspTransaction) {
+        if (closeHandler) {
+            logger.debug("ASH: Handler is closed");
+            return null;
+        }
+
         class TransactionWaiter implements Callable<EzspFrame>, AshListener {
             // private EzspFrame response = null;
             private boolean complete = false;
