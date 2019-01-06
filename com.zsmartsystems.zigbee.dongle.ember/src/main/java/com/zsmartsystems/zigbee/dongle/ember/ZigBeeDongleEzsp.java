@@ -26,12 +26,12 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
+import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
@@ -43,6 +43,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateReques
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendMulticastRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendMulticastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConcentratorRequest;
@@ -183,7 +184,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      */
     private boolean initialised = false;
 
-    private ScheduledExecutorService pollingScheduler;
+    private ScheduledExecutorService executorService;
     private ScheduledFuture<?> pollingTimer = null;
 
     /**
@@ -352,7 +353,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // print current security state to debug logs
         ncp.getCurrentSecurityState();
 
-        pollingScheduler = Executors.newSingleThreadScheduledExecutor();
+        executorService = Executors.newScheduledThreadPool(6);
         scheduleNetworkStatePolling();
 
         logger.debug("EZSP dongle initialize done: Initialised {}", initResponse != EmberStatus.EMBER_NOT_JOINED);
@@ -429,7 +430,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             pollingTimer.cancel(true);
         }
 
-        pollingTimer = pollingScheduler.scheduleWithFixedDelay(new Runnable() {
+        pollingTimer = executorService.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
                 // Don't poll the state if the network is down
@@ -451,8 +452,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             mfglibListener = null;
         }
 
-        if (pollingScheduler != null) {
-            pollingScheduler.shutdown();
+        if (pollingTimer != null) {
+            pollingTimer.cancel(true);
+        }
+
+        if (executorService != null) {
+            executorService.shutdown();
         }
 
         frameHandler.setClosing();
@@ -485,7 +490,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (frameHandler == null) {
             return;
         }
-        EzspFrameRequest emberCommand;
+        int messageTag = apsFrame.getApsCounter();
+        EzspTransaction transaction;
 
         EmberApsFrame emberApsFrame = new EmberApsFrame();
         emberApsFrame.setClusterId(apsFrame.getCluster());
@@ -505,25 +511,25 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 && !ZigBeeBroadcastDestination.isBroadcast(apsFrame.getDestinationAddress())) {
             EzspSendUnicastRequest emberUnicast = new EzspSendUnicastRequest();
             emberUnicast.setIndexOrDestination(apsFrame.getDestinationAddress());
-            emberUnicast.setMessageTag(apsFrame.getApsCounter());
+            emberUnicast.setMessageTag(messageTag);
             emberUnicast.setSequenceNumber(apsFrame.getApsCounter());
             emberUnicast.setType(EmberOutgoingMessageType.EMBER_OUTGOING_DIRECT);
             emberUnicast.setApsFrame(emberApsFrame);
             emberUnicast.setMessageContents(apsFrame.getPayload());
 
-            emberCommand = emberUnicast;
+            transaction = new EzspSingleResponseTransaction(emberUnicast, EzspSendUnicastResponse.class);
         } else if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE
                 && ZigBeeBroadcastDestination.isBroadcast(apsFrame.getDestinationAddress())) {
 
             EzspSendBroadcastRequest emberBroadcast = new EzspSendBroadcastRequest();
             emberBroadcast.setDestination(apsFrame.getDestinationAddress());
-            emberBroadcast.setMessageTag(apsFrame.getApsCounter());
+            emberBroadcast.setMessageTag(messageTag);
             emberBroadcast.setSequenceNumber(apsFrame.getApsCounter());
             emberBroadcast.setApsFrame(emberApsFrame);
             emberBroadcast.setRadius(apsFrame.getRadius());
             emberBroadcast.setMessageContents(apsFrame.getPayload());
 
-            emberCommand = emberBroadcast;
+            transaction = new EzspSingleResponseTransaction(emberBroadcast, EzspSendBroadcastResponse.class);
         } else if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.GROUP) {
             emberApsFrame.setGroupId(apsFrame.getGroupAddress());
 
@@ -531,10 +537,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             emberMulticast.setApsFrame(emberApsFrame);
             emberMulticast.setHops(apsFrame.getRadius());
             emberMulticast.setNonmemberRadius(apsFrame.getNonMemberRadius());
-            emberMulticast.setMessageTag(apsFrame.getApsCounter());
+            emberMulticast.setMessageTag(messageTag);
             emberMulticast.setMessageContents(apsFrame.getPayload());
 
-            emberCommand = emberMulticast;
+            transaction = new EzspSingleResponseTransaction(emberMulticast, EzspSendMulticastResponse.class);
         } else {
             logger.debug("EZSP message not sent: {}, {}", apsFrame);
             // ZigBeeGroupAddress groupAddress = (ZigBeeGroupAddress) zclCommand.getDestinationAddress();
@@ -542,8 +548,37 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return;
         }
 
-        logger.debug(emberCommand.toString());
-        frameHandler.queueFrame(emberCommand);
+        // The response from the SendXxxcast messages returns the network layer sequence number
+        // We need to correlate this with the messageTag
+        executorService.schedule(new Runnable() {
+            @Override
+            public void run() {
+                logger.debug("TX EZSP: {}", transaction.getRequest());
+
+                frameHandler.sendEzspTransaction(transaction);
+                logger.debug("TX EZSP: {}", transaction.getResponse());
+
+                EmberStatus status = null;
+                if (transaction.getResponse() instanceof EzspSendUnicastResponse) {
+                    status = ((EzspSendUnicastResponse) transaction.getResponse()).getStatus();
+                } else if (transaction.getResponse() instanceof EzspSendBroadcastResponse) {
+                    status = ((EzspSendBroadcastResponse) transaction.getResponse()).getStatus();
+                } else if (transaction.getResponse() instanceof EzspSendMulticastResponse) {
+                    status = ((EzspSendMulticastResponse) transaction.getResponse()).getStatus();
+                } else {
+                    logger.debug("Unable to get response from {} :: ", transaction.getRequest(),
+                            transaction.getResponse());
+                    return;
+                }
+
+                // If this is EMBER_SUCCESS, then do nothing as the command is still not transmitted.
+                // If there was an error, then we let the system know we've failed already!
+                if (status == EmberStatus.EMBER_SUCCESS) {
+                    return;
+                }
+                zigbeeTransportReceive.receiveCommandStatus(messageTag, ZigBeeTransportProgressState.TX_NAK);
+            }
+        }, 0, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -554,7 +589,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public void handlePacket(EzspFrame response) {
         if (response.getFrameId() != POLL_FRAME_ID) {
-            logger.debug("RX: " + response.toString());
+            logger.debug("RX EZSP: " + response.toString());
         }
 
         if (response instanceof EzspIncomingMessageHandler) {
@@ -584,32 +619,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return;
         }
 
-        // Message has been transferred to the NCP
-        if (response instanceof EzspSendUnicastResponse) {
-            // If this is SUCCESS, then do nothing as the command is still not transmitted.
-            // If there was an error, then we let the system know we've failed already
-            EzspSendUnicastResponse sendResponse = (EzspSendUnicastResponse) response;
-            if (sendResponse.getStatus() == EmberStatus.EMBER_SUCCESS) {
-                return;
-            }
-            zigbeeTransportReceive.receiveCommandStatus(sendResponse.getSequence(),
-                    ZigBeeTransportProgressState.TX_NAK);
-            return;
-        }
-
-        if (response instanceof EzspSendBroadcastResponse) {
-            // If this is SUCCESS, then do nothing as the command is still not transmitted.
-            // If there was an error, then we let the system know we've failed already
-            EzspSendBroadcastResponse sendResponse = (EzspSendBroadcastResponse) response;
-            if (sendResponse.getStatus() == EmberStatus.EMBER_SUCCESS) {
-                return;
-            }
-            zigbeeTransportReceive.receiveCommandStatus(sendResponse.getSequence(),
-                    ZigBeeTransportProgressState.TX_NAK);
-            return;
-        }
-
-        // Message has been transmitted by the NCP
+        // Message has been completed by the NCP
         if (response instanceof EzspMessageSentHandler) {
             EzspMessageSentHandler sentHandler = (EzspMessageSentHandler) response;
             ZigBeeTransportProgressState sentHandlerState;
@@ -683,10 +693,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             }
             return;
         }
-
-        if (response.getFrameId() != POLL_FRAME_ID) {
-            logger.debug("Unhandled EZSP Frame: {}", response.toString());
-        }
     }
 
     @Override
@@ -722,6 +728,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public ZigBeeStatus setZigBeeChannel(ZigBeeChannel channel) {
+        if ((ZigBeeChannelMask.CHANNEL_MASK_2GHZ & channel.getMask()) == 0) {
+            logger.debug("Unable to set channel outside of 2.4GHz channels: {}", channel);
+            return ZigBeeStatus.INVALID_ARGUMENTS;
+        }
         networkParameters.setRadioChannel(channel.getChannel());
         return ZigBeeStatus.SUCCESS;
     }

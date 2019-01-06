@@ -29,8 +29,6 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
@@ -198,12 +196,11 @@ public class AshFrameHandler implements EzspProtocolHandler {
                                         // Get the EZSP frame
                                         EzspFrameResponse response = EzspFrame
                                                 .createHandler(dataPacket.getDataBuffer());
-                                        logger.debug("RX EZSP: {}", response);
+                                        logger.trace("ASH RX EZSP: {}", response);
                                         if (response == null) {
                                             logger.debug("ASH: No frame handler created for {}", packet);
-                                        } else if (!notifyTransactionComplete(response)) {
-                                            // No transactions owned this response, so we pass it to
-                                            // our unhandled response handler
+                                        } else {
+                                            notifyTransactionComplete(response);
                                             handleIncomingFrame(response);
                                         }
                                     } else if (!dataPacket.getReTx()) {
@@ -429,7 +426,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         }
 
         // Encapsulate the EZSP frame into the ASH packet
-        logger.debug("TX EZSP: {}", nextFrame);
+        logger.trace("ASH TX EZSP: {}", nextFrame);
         AshFrameData ashFrame = new AshFrameData(nextFrame);
 
         retries = 0;
@@ -498,7 +495,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         }
         sendQueue.add(request);
 
-        logger.debug("ASH: TX EZSP queue: {}", sendQueue.size());
+        logger.debug("ASH: TX EZSP queue size: {}", sendQueue.size());
 
         sendNextFrame();
     }
@@ -639,12 +636,6 @@ public class AshFrameHandler implements EzspProtocolHandler {
             }
         }
 
-        // For responses to higher level commands, we still want to pass these up so we can provide the
-        // update the transaction progress.
-        if (response instanceof EzspSendUnicastResponse || response instanceof EzspSendBroadcastResponse) {
-            processed = false;
-        }
-
         return processed;
     }
 
@@ -728,6 +719,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     @Override
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
+        logger.debug("TX EZSP: {}", ezspTransaction.getRequest());
+
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
         if (futureResponse == null) {
             logger.debug("ASH: Error sending EZSP transaction: Future is null");
