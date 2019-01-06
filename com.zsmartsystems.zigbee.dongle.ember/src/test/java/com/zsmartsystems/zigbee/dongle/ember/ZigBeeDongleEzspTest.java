@@ -25,22 +25,20 @@ import org.mockito.Mockito;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
+import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.TrustCentreJoinMode;
@@ -163,53 +161,16 @@ public class ZigBeeDongleEzspTest {
     }
 
     @Test
-    public void testEzspSendUnicastResponse() throws Exception {
-        ZigBeeTransportReceive transport = Mockito.mock(ZigBeeTransportReceive.class);
-
-        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
-        Mockito.when(ncp.getNwkAddress()).thenReturn(1243);
+    public void setZigBeeChannel() {
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
-        dongle.setZigBeeTransportReceive(transport);
 
-        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
+        assertEquals(ZigBeeStatus.INVALID_ARGUMENTS, dongle.setZigBeeChannel(ZigBeeChannel.CHANNEL_03));
 
-        EzspSendUnicastResponse response = Mockito.mock(EzspSendUnicastResponse.class);
-        Mockito.when(response.getSequence()).thenReturn(123);
-        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_SUCCESS);
-        dongle.handlePacket(response);
+        assertEquals(ZigBeeStatus.SUCCESS, dongle.setZigBeeChannel(ZigBeeChannel.CHANNEL_11));
+        assertEquals(ZigBeeChannel.CHANNEL_11, dongle.getZigBeeChannel());
 
-        response = Mockito.mock(EzspSendUnicastResponse.class);
-        Mockito.when(response.getSequence()).thenReturn(123);
-        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_DOWN);
-        dongle.handlePacket(response);
-
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandStatus(123,
-                ZigBeeTransportProgressState.TX_NAK);
-    }
-
-    @Test
-    public void testEzspSendBroadcastResponse() throws Exception {
-        ZigBeeTransportReceive transport = Mockito.mock(ZigBeeTransportReceive.class);
-
-        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
-        Mockito.when(ncp.getNwkAddress()).thenReturn(1243);
-        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
-        dongle.setZigBeeTransportReceive(transport);
-
-        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
-
-        EzspSendBroadcastResponse response = Mockito.mock(EzspSendBroadcastResponse.class);
-        Mockito.when(response.getSequence()).thenReturn(123);
-        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_SUCCESS);
-        dongle.handlePacket(response);
-
-        response = Mockito.mock(EzspSendBroadcastResponse.class);
-        Mockito.when(response.getSequence()).thenReturn(123);
-        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_DOWN);
-        dongle.handlePacket(response);
-
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandStatus(123,
-                ZigBeeTransportProgressState.TX_NAK);
+        assertEquals(ZigBeeStatus.SUCCESS, dongle.setZigBeeChannel(ZigBeeChannel.CHANNEL_24));
+        assertEquals(ZigBeeChannel.CHANNEL_24, dongle.getZigBeeChannel());
     }
 
     @Test
@@ -261,9 +222,12 @@ public class ZigBeeDongleEzspTest {
     @Test
     public void sendCommandUnicast() throws Exception {
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
-        EzspProtocolHandler handler = Mockito.mock(EzspProtocolHandler.class);
 
+        EzspProtocolHandler handler = Mockito.mock(EzspProtocolHandler.class);
         TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", handler);
+
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "executorService", executorService);
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setCluster(0);
@@ -275,15 +239,19 @@ public class ZigBeeDongleEzspTest {
         apsFrame.setPayload(new int[] {});
 
         dongle.sendCommand(apsFrame);
-        Mockito.verify(handler, Mockito.times(1)).queueFrame(ArgumentMatchers.any(EzspSendUnicastRequest.class));
+        Mockito.verify(handler, Mockito.timeout(TIMEOUT).times(1))
+                .sendEzspTransaction(ArgumentMatchers.any(EzspTransaction.class));
     }
 
     @Test
     public void sendCommandBroadcast() throws Exception {
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
-        EzspProtocolHandler handler = Mockito.mock(EzspProtocolHandler.class);
 
+        EzspProtocolHandler handler = Mockito.mock(EzspProtocolHandler.class);
         TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", handler);
+
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "executorService", executorService);
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setCluster(0);
@@ -295,7 +263,8 @@ public class ZigBeeDongleEzspTest {
         apsFrame.setPayload(new int[] {});
 
         dongle.sendCommand(apsFrame);
-        Mockito.verify(handler, Mockito.times(1)).queueFrame(ArgumentMatchers.any(EzspSendBroadcastRequest.class));
+        Mockito.verify(handler, Mockito.timeout(TIMEOUT).times(1))
+                .sendEzspTransaction(ArgumentMatchers.any(EzspTransaction.class));
     }
 
     @Test
@@ -311,13 +280,13 @@ public class ZigBeeDongleEzspTest {
     public void scheduleNetworkStatePolling() throws Exception {
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
 
-        ScheduledExecutorService pollingScheduler = Executors.newSingleThreadScheduledExecutor();
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
         EzspProtocolHandler frameHandler = Mockito.mock(EzspProtocolHandler.class);
 
         TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "pollRate", 1);
         TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", frameHandler);
-        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "pollingScheduler", pollingScheduler);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "executorService", executorService);
 
         TestUtilities.invokeMethod(ZigBeeDongleEzsp.class, dongle, "scheduleNetworkStatePolling");
         Mockito.verify(frameHandler, Mockito.timeout(TIMEOUT).times(0))
