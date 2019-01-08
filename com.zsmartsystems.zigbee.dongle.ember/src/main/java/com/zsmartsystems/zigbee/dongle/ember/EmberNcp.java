@@ -145,6 +145,10 @@ public class EmberNcp {
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspVersionResponse.class));
         EzspVersionResponse response = (EzspVersionResponse) transaction.getResponse();
+        if (response == null) {
+            logger.debug("No response from ezspVersion command");
+            return null;
+        }
         logger.debug(response.toString());
         lastStatus = null;
 

@@ -506,7 +506,6 @@ public class AshFrameHandler implements EzspProtocolHandler {
     @Override
     public synchronized void connect() {
         stateConnected = false;
-        AshFrame reset = new AshFrameRst();
 
         ackNum = 0;
         frmNum = 0;
@@ -515,7 +514,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
         receiveTimeout = T_RX_ACK_INIT;
 
-        sendFrame(reset);
+        sendFrame(new AshFrameRst());
     }
 
     private void disconnect() {
@@ -590,6 +589,12 @@ public class AshFrameHandler implements EzspProtocolHandler {
                 // Too many retries.
                 // We should alert the upper layer so they can reset the link?
                 disconnect();
+                return;
+            }
+
+            // If we're not connected, then try the reset again
+            if (!stateConnected) {
+                sendFrame(new AshFrameRst());
                 return;
             }
 
