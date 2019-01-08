@@ -236,7 +236,13 @@ public class ZigBeeConsoleMain {
         final ZigBeeConsole console = new ZigBeeConsole(networkManager, dongle, commands);
 
         // Initialise the network
-        networkManager.initialize();
+        ZigBeeStatus initResponse = networkManager.initialize();
+        System.out.println("networkManager.initialize returned " + initResponse);
+        if (initResponse != ZigBeeStatus.SUCCESS) {
+            console.start();
+            System.out.println("Console closed.");
+            return;
+        }
 
         System.out.println("PAN ID          = " + networkManager.getZigBeePanId());
         System.out.println("Extended PAN ID = " + networkManager.getZigBeeExtendedPanId());

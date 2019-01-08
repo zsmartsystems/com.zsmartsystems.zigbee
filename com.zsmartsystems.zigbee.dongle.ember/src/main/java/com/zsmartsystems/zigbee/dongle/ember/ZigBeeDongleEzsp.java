@@ -901,8 +901,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         EmberNcp ncp = getEmberNcp();
 
         // We MUST send the version command first.
+        // Any failure to respond here indicates a failure of the ASH or EZSP layers to initialise
         EzspVersionResponse version = ncp.getVersion(4);
-        logger.debug(version.toString());
+        if (version == null) {
+            logger.debug("Version returned null. ASH/EZSP not initialised.");
+            return false;
+        }
 
         if (version.getProtocolVersion() != EzspFrame.getEzspVersion()) {
             // The device supports a different version that we current have set
@@ -940,29 +944,28 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return false;
         }
 
-        if (!initialiseEzspProtocol()) {
-            return false;
-        }
-
         zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
         callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);
 
-        // Send the bootload command, but ignore the response since there doesn't seem to be one
-        // despite what the documentation seems to indicate
-        EzspLaunchStandaloneBootloaderRequest bootloadCommand = new EzspLaunchStandaloneBootloaderRequest();
-        EzspTransaction bootloadTransaction = frameHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(bootloadCommand, EzspLaunchStandaloneBootloaderResponse.class));
-        EzspLaunchStandaloneBootloaderResponse bootloadResponse = (EzspLaunchStandaloneBootloaderResponse) bootloadTransaction
-                .getResponse();
-        logger.debug(bootloadResponse.toString());
-        logger.debug("EZSP bootloadResponse {}", bootloadResponse.getStatus());
+        // Initialise the EZSP protocol so we can start the bootloader
+        // If this fails, then we continue on the assumption that the bootloader may already be running
+        if (initialiseEzspProtocol()) {
+            // Send the bootload command, but ignore the response since there doesn't seem to be one
+            // despite what the documentation seems to indicate
+            EzspLaunchStandaloneBootloaderRequest bootloadCommand = new EzspLaunchStandaloneBootloaderRequest();
+            EzspTransaction bootloadTransaction = frameHandler.sendEzspTransaction(
+                    new EzspSingleResponseTransaction(bootloadCommand, EzspLaunchStandaloneBootloaderResponse.class));
+            EzspLaunchStandaloneBootloaderResponse bootloadResponse = (EzspLaunchStandaloneBootloaderResponse) bootloadTransaction
+                    .getResponse();
+            logger.debug(bootloadResponse.toString());
+            logger.debug("EZSP bootloadResponse {}", bootloadResponse.getStatus());
 
-        if (bootloadResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
-            callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
-            logger.debug("EZSP bootload failed: bootloadResponse {}", bootloadResponse.getStatus());
-            return false;
+            if (bootloadResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
+                callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
+                logger.debug("EZSP bootload failed: bootloadResponse {}", bootloadResponse.getStatus());
+                return false;
+            }
         }
-
         // Stop the handler and close the serial port
         logger.debug("EZSP closing frame handler");
         frameHandler.setClosing();

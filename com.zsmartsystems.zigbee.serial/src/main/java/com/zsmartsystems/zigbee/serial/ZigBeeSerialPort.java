@@ -214,7 +214,6 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
             }
             return -1;
         } catch (InterruptedException e) {
-            e.printStackTrace();
         }
         return -1;
     }
