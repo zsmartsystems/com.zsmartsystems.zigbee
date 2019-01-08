@@ -336,16 +336,23 @@ public class ZclHeader {
                 break;
         }
 
+        frameControl |= manufacturerSpecific ? MASK_MANUFACTURER_SPECIFIC : 0b00000000;
         frameControl |= direction == ZclCommandDirection.SERVER_TO_CLIENT ? MASK_DIRECTION : 0b00000000;
         frameControl |= disableDefaultResponse ? MASK_DEFAULT_RESPONSE : 0b00000000;
 
-        int[] zclFrame = new int[payload.length + 3];
+        int manufacturerCodeLength = manufacturerSpecific ? 2 : 0;
+
+        int[] zclFrame = new int[payload.length + 3 + manufacturerCodeLength];
         zclFrame[0] = frameControl;
-        zclFrame[1] = sequenceNumber;
-        zclFrame[2] = commandId;
+        if (manufacturerSpecific) {
+            zclFrame[1] = manufacturerCode & 0xFF; // low byte of manufacturer code
+            zclFrame[2] = (manufacturerCode >> 8) & 0xFF; // high byte of manufacturer code
+        }
+        zclFrame[1 + manufacturerCodeLength] = sequenceNumber;
+        zclFrame[2 + manufacturerCodeLength] = commandId;
 
         for (int cnt = 0; cnt < payload.length; cnt++) {
-            zclFrame[cnt + 3] = payload[cnt];
+            zclFrame[cnt + 3 + manufacturerCodeLength] = payload[cnt];
         }
         return zclFrame;
     }

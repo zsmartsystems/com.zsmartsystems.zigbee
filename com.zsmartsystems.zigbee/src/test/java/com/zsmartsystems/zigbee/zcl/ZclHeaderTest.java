@@ -63,4 +63,25 @@ public class ZclHeaderTest extends CommandTest {
         ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);
         assertTrue(Arrays.equals(packet, zclHeader.serialize(fieldSerializer, new int[] {})));
     }
+
+    @Test
+    public void testDeserializeManufacturerSpecific() {
+        int[] packet = getPacketData("0C 4E 10 99 88");
+
+        DefaultDeserializer deserializer = new DefaultDeserializer(packet);
+        ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
+        ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
+        System.out.println(zclHeader);
+
+        assertEquals(0x88, zclHeader.getCommandId());
+        assertEquals(ZclFrameType.ENTIRE_PROFILE_COMMAND, zclHeader.getFrameType());
+        assertEquals(true, zclHeader.isManufacturerSpecific());
+        assertEquals(false, zclHeader.isDisableDefaultResponse());
+        assertEquals(0x99, zclHeader.getSequenceNumber());
+        assertEquals(0x104E, zclHeader.getManufacturerCode());
+
+        DefaultSerializer serializer = new DefaultSerializer();
+        ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);
+        assertTrue(Arrays.equals(packet, zclHeader.serialize(fieldSerializer, new int[] {})));
+    }
 }
