@@ -31,6 +31,7 @@ import com.zsmartsystems.zigbee.console.ember.EmberConsoleMmoHashCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpChildrenCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpConfigurationCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpCountersCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpScanCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpStateCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpValueCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpVersionCommand;
@@ -202,6 +203,7 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleNcpValueCommand.class);
             commands.add(EmberConsoleNcpVersionCommand.class);
             commands.add(EmberConsoleSecurityStateCommand.class);
+            commands.add(EmberConsoleNcpScanCommand.class);
         } else if (dongleName.toUpperCase().equals("XBEE")) {
             dongle = new ZigBeeDongleXBee(serialPort);
         } else if (dongleName.toUpperCase().equals("CONBEE")) {
@@ -321,7 +323,6 @@ public class ZigBeeConsoleMain {
 
         if (networkManager.startup(resetNetwork) != ZigBeeStatus.SUCCESS) {
             System.out.println("ZigBee console starting up ... [FAIL]");
-            return;
         } else {
             System.out.println("ZigBee console starting up ... [OK]");
         }
