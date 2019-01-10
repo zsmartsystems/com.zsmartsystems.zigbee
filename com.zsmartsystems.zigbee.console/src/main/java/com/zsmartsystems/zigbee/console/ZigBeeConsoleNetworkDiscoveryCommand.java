@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.TimeZone;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -60,6 +61,9 @@ public class ZigBeeConsoleNetworkDiscoveryCommand extends ZigBeeConsoleAbstractC
             throw new IllegalStateException("Discovery extension not found");
         }
 
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        dfIso8601.setTimeZone(tz);
+
         if (args.length == 1) {
             outputDiscoveryTasks(extension, out);
             return;
@@ -89,6 +93,14 @@ public class ZigBeeConsoleNetworkDiscoveryCommand extends ZigBeeConsoleAbstractC
         }
 
         switch (args[2].toLowerCase()) {
+            case "rediscover":
+                extension.rediscoverNode(node.getIeeeAddress());
+                out.println("Rediscovery for " + node.getIeeeAddress().toString() + " has been started.");
+                break;
+            case "start":
+                discoverer.startDiscovery();
+                out.println("Discovery for " + node.getIeeeAddress().toString() + " has been started.");
+                return;
             case "update":
                 discoverer.updateMesh();
                 out.println("Network mesh update for " + node.getIeeeAddress().toString() + " has been started.");
@@ -114,11 +126,11 @@ public class ZigBeeConsoleNetworkDiscoveryCommand extends ZigBeeConsoleAbstractC
         out.println("Address           Nwk    Last Start            Last Complete         Current Tasks");
         for (ZigBeeNodeServiceDiscoverer discoverer : extension.getNodeDiscoverers()) {
             ZigBeeNode node = discoverer.getNode();
-            out.println(String.format("%s  %-5d  %20s  %20s  %s", node.getIeeeAddress(), node.getNetworkAddress(),
-                    // discoverer.getLastDiscoveryStarted() == null ? NEVER
-                    // : dfIso8601.format(discoverer.getLastDiscoveryStarted()),
-                    // discoverer.getLastDiscoveryCompleted() == null ? NEVER
-                    // : dfIso8601.format(discoverer.getLastDiscoveryCompleted()),
+            out.println(String.format("%s  %-5d  %-20s  %-20s  %s", node.getIeeeAddress(), node.getNetworkAddress(),
+                    discoverer.getLastDiscoveryStarted() == null ? NEVER
+                            : dfIso8601.format(discoverer.getLastDiscoveryStarted().getTime()),
+                    discoverer.getLastDiscoveryCompleted() == null ? NEVER
+                            : dfIso8601.format(discoverer.getLastDiscoveryCompleted().getTime()),
                     tasksToString(discoverer.getTasks())));
         }
     }
@@ -127,9 +139,9 @@ public class ZigBeeConsoleNetworkDiscoveryCommand extends ZigBeeConsoleAbstractC
         out.println("IEEE Address             : " + node.getIeeeAddress().toString());
         out.println("NWK Address              : " + node.getNetworkAddress().toString());
         out.println("Last discovery started : " + discoverer.getLastDiscoveryStarted() == null ? NEVER
-                : dfIso8601.format(discoverer.getLastDiscoveryStarted()));
+                : dfIso8601.format(discoverer.getLastDiscoveryStarted().getTime()));
         out.println("Last discovery completed : " + discoverer.getLastDiscoveryCompleted() == null ? NEVER
-                : dfIso8601.format(discoverer.getLastDiscoveryStarted()));
+                : dfIso8601.format(discoverer.getLastDiscoveryStarted().getTime()));
         out.println("Current tasks            : " + tasksToString(discoverer.getTasks()));
     }
 

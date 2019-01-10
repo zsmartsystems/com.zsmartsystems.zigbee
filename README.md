@@ -206,53 +206,55 @@ Example -:
 
 Note that the console is currently being refactored and this readme only documents the commands that have been migrated. For a full list of commands, use the _help_ command in the console.
 
-| Command         | Description                                                          |
-|-----------------|----------------------------------------------------------------------|
-|join             |Enable or disable network join                                        |
-|leave            |Remove a node from the network                                        |
-|nodelist         |Lists the known nodes in the network                                  |
-|node             |Provides detailed information about a node                            |
-|endpoint         |Provides detailed information about an endpoint                       |
-|info             |Get basic info about a device                                         |
-|read             |Read an attribute                                                     |
-|write            |Write an attribute                                                    |
-|bind             |Binds a device to another device                                      |
-|unbind           |Unbinds a device from another device                                  |
-|bindtable        |Reads and displays the binding table from a node                      |
-|attsupported     |Check what attributes are supported within a cluster                  |
-|subscribe        |Subscribe to attribute reports                                        |
-|unsubscribe      |Unsubscribe from attribute reports                                    |
-|reportcfg        |Read the reporting configuration of an attribute                      |
-|otaupgrade       |Provides information about device Over The Air upgrade server status  |
+| Command         | Description                                                                           |
+|-----------------|---------------------------------------------------------------------------------------|
+|join             |Enable or disable network join                                                         |
+|leave            |Remove a node from the network                                                         |
+|nodelist         |Lists the known nodes in the network                                                   |
+|node             |Provides detailed information about a node                                             |
+|endpoint         |Provides detailed information about an endpoint                                        |
+|info             |Get basic info about a device                                                          |
+|read             |Read an attribute                                                                      |
+|write            |Write an attribute                                                                     |
+|bind             |Binds a device to another device                                                       |
+|unbind           |Unbinds a device from another device                                                   |
+|bindtable        |Reads and displays the binding table from a node                                       |
+|attsupported     |Check what attributes are supported within a cluster                                   |
+|subscribe        |Subscribe to attribute reports                                                         |
+|unsubscribe      |Unsubscribe from attribute reports                                                     |
+|reportcfg        |Read the reporting configuration of an attribute                                       |
+|otaupgrade       |Provides information about device Over The Air upgrade server status                   |
 |installkey       |Adds an install key to the dongle                                                      |
 |linkkey          |Sets the link key int the dongle, optionally computing the MMO Hash from the join code |
 |netstart         |Join or Form a network as a router or coordinator                                      |
 |netbackup        |Backup or restores the state of the dongle                                             |
+|discovery        |Gets information on the network discovery tasks                                        |
 
 
 ### Ember NCP Commands
 
 The following commands are available if the transport layer is using the Silabs Ember NCP.
 
-| Command         | Description                                           |
-|-----------------|-------------------------------------------------------|
-|ncpchildren      |Gets the NCP child information                         |
-|ncpconfig        |Read or write an NCP configuration value               |
-|ncpcounters      |Gets the NCP debug counters                            |
-|ncpstate         |Gets the NCP network state and optionally brings the network up or down     |
-|ncpvalue         |Read or write an NCP memory value                      |
-|ncpversion       |Gets the NCP firmware version                          |
-|ncpsecuritystate |Gets the current NCP security state and configuration  |
-|ncptransientkey  |Adds a transient link key to the NCP                   |
-|ncpmmohash       |Uses the NCP to perform the MMO hash                   |
+| Command         | Description                                                                  |
+|-----------------|------------------------------------------------------------------------------|
+|ncpchildren      |Gets the NCP child information                                                |
+|ncpconfig        |Read or write an NCP configuration value                                      |
+|ncpscan          |Performs a scan, looking for other networks, or energy levels on each channel |
+|ncpcounters      |Gets the NCP debug counters                                                   |
+|ncpstate         |Gets the NCP network state and optionally brings the network up or down       |
+|ncpvalue         |Read or write an NCP memory value                                             |
+|ncpversion       |Gets the NCP firmware version                                                 |
+|ncpsecuritystate |Gets the current NCP security state and configuration                         |
+|ncptransientkey  |Adds a transient link key to the NCP                                          |
+|ncpmmohash       |Uses the NCP to perform the MMO hash                                          |
 
 ### Telegesis Commands
 
 The following commands are available if the transport layer is using the Telegesis dongle.
 
-| Command         | Description                                           |
-|-----------------|-------------------------------------------------------|
-|ncpsecuritystate |Gets the current NCP security state and configuration  |
+| Command         | Description                                                                  |
+|-----------------|------------------------------------------------------------------------------|
+|ncpsecuritystate |Gets the current NCP security state and configuration                         |
 
 # Contributing
 
