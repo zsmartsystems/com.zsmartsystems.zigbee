@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.app.discovery;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.app.discovery.ZigBeeNodeServiceDiscoverer.NodeDiscoveryTask;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
@@ -102,6 +104,8 @@ public class ZigBeeNodeServiceDiscovererTest {
             }
         }).when(networkManager).rescheduleTask(ArgumentMatchers.any(), ArgumentMatchers.any(Runnable.class),
                 ArgumentMatchers.any(long.class));
+
+        Mockito.when(networkManager.getLocalNwkAddress()).thenReturn(0);
     }
 
     @Test
@@ -208,6 +212,8 @@ public class ZigBeeNodeServiceDiscovererTest {
 
         discoverer.startDiscovery();
 
+        assertTrue(discoverer.getTasks().contains(NodeDiscoveryTask.ACTIVE_ENDPOINTS));
+
         Mockito.verify(node, Mockito.timeout(TIMEOUT).times(1)).addEndpoint(endpointCapture.capture());
 
         // Then wait for the node to be updated
@@ -216,5 +222,28 @@ public class ZigBeeNodeServiceDiscovererTest {
         ZigBeeEndpoint endpoint = endpointCapture.getValue();
         assertEquals(1, endpoint.getEndpointId());
         assertEquals(node, endpoint.getParentNode());
+    }
+
+    @Test
+    public void testLocal() throws Exception {
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        ZigBeeNodeServiceDiscoverer discoverer = new ZigBeeNodeServiceDiscoverer(networkManager, node);
+
+        TestUtilities.setField(ZigBeeNodeServiceDiscoverer.class, discoverer, "retryPeriod", 1);
+
+        NodeDescriptor initialNodeDescriptor = Mockito.mock(NodeDescriptor.class);
+        Mockito.when(initialNodeDescriptor.getLogicalType()).thenReturn(LogicalType.UNKNOWN);
+        Mockito.when(node.getNodeDescriptor()).thenReturn(initialNodeDescriptor);
+
+        PowerDescriptor initialPowerDescriptor = Mockito.mock(PowerDescriptor.class);
+        Mockito.when(initialPowerDescriptor.getCurrentPowerMode()).thenReturn(CurrentPowerModeType.UNKNOWN);
+        Mockito.when(node.getPowerDescriptor()).thenReturn(initialPowerDescriptor);
+
+        // Use node 0 and we should not try and get the local endpoints
+        Mockito.when(node.getNetworkAddress()).thenReturn(0);
+
+        discoverer.startDiscovery();
+
+        assertFalse(discoverer.getTasks().contains(NodeDiscoveryTask.ACTIVE_ENDPOINTS));
     }
 }
