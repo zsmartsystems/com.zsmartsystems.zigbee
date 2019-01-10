@@ -7,10 +7,8 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.internal;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +17,6 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspFindAndRejoinNetworkRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspFindAndRejoinNetworkResponse;
@@ -29,14 +26,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParamete
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspJoinNetworkRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspJoinNetworkResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurityStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurityStateResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
@@ -45,11 +38,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParamete
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNodeType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
-import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspMultiResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
@@ -113,18 +104,19 @@ public class EmberNetworkInitialisation {
 
         logger.debug("Initialising Ember network with configuration {}", networkParameters);
 
+        EmberNcp ncp = new EmberNcp(protocolHandler);
+
         // Leave the current network so we can initialise a new network
         if (checkNetworkJoined()) {
-            EmberNcp ncp = new EmberNcp(protocolHandler);
             ncp.leaveNetwork();
         }
 
         // Perform an energy scan to find a clear channel
-        int quietestChannel = doEnergyScan(scanDuration);
+        int quietestChannel = doEnergyScan(ncp, scanDuration);
         logger.debug("Energy scan reports quietest channel is {}", quietestChannel);
 
         // Check if any current networks were found and avoid those channels, PAN ID and especially Extended PAN ID
-        doActiveScan(scanDuration);
+        ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, scanDuration);
 
         // Read the current network parameters
         getNetworkParameters();
@@ -208,76 +200,29 @@ public class EmberNetworkInitialisation {
     /**
      * Performs an energy scan and returns the quietest channel
      *
+     * @param ncp {@link EmberNcp}
      * @param scanDuration duration of the scan on each channel
      * @return the quietest channel, or null on error
      */
-    private Integer doEnergyScan(int scanDuration) {
-        EzspStartScanRequest energyScan = new EzspStartScanRequest();
-        energyScan.setChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ);
-        energyScan.setDuration(scanDuration);
-        energyScan.setScanType(EzspNetworkScanType.EZSP_ENERGY_SCAN);
+    private Integer doEnergyScan(EmberNcp ncp, int scanDuration) {
+        List<EzspEnergyScanResultHandler> channels = ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ,
+                scanDuration);
 
-        Set<Class<?>> relatedResponses = new HashSet<Class<?>>(Arrays.asList(EzspStartScanResponse.class,
-                EzspNetworkFoundHandler.class, EzspEnergyScanResultHandler.class));
-        EzspMultiResponseTransaction scanTransaction = new EzspMultiResponseTransaction(energyScan,
-                EzspScanCompleteHandler.class, relatedResponses);
-        protocolHandler.sendEzspTransaction(scanTransaction);
-
-        EzspScanCompleteHandler scanCompleteResponse = (EzspScanCompleteHandler) scanTransaction.getResponse();
-        logger.debug(scanCompleteResponse.toString());
-
-        if (scanCompleteResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
-            logger.debug("Error during energy scan: {}", scanCompleteResponse);
-            // TODO: Error handling
-
+        if (channels == null) {
+            logger.debug("Error during energy scan: {}", ncp.getLastStatus());
             return null;
         }
-        logger.debug("Energy scan completed: {}", scanCompleteResponse);
 
         int lowestRSSI = 999;
         int lowestChannel = 11;
-        for (EzspFrameResponse response : scanTransaction.getResponses()) {
-            if (!(response instanceof EzspEnergyScanResultHandler)) {
-                continue;
-            }
-
-            EzspEnergyScanResultHandler energyResponse = (EzspEnergyScanResultHandler) response;
-            if (energyResponse.getMaxRssiValue() < lowestRSSI) {
-                lowestRSSI = energyResponse.getMaxRssiValue();
-                lowestChannel = energyResponse.getChannel();
+        for (EzspEnergyScanResultHandler channel : channels) {
+            if (channel.getMaxRssiValue() < lowestRSSI) {
+                lowestRSSI = channel.getMaxRssiValue();
+                lowestChannel = channel.getChannel();
             }
         }
 
         return lowestChannel;
-    }
-
-    /**
-     * Perform an active scan of all channels
-     *
-     * @param scanDuration Sets the exponent of the number of scan periods, where a scan period is 960 symbols. The scan
-     *            will occur for ((2^duration) + 1) scan periods.
-     * @return true if the security state was set successfully
-     */
-    private boolean doActiveScan(int scanDuration) {
-        // Now do an active scan to see if there are other networks operating
-        EzspStartScanRequest activeScan = new EzspStartScanRequest();
-        activeScan.setChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ);
-        activeScan.setDuration(scanDuration);
-        activeScan.setScanType(EzspNetworkScanType.EZSP_ACTIVE_SCAN);
-
-        Set<Class<?>> relatedResponses = new HashSet<Class<?>>(Arrays.asList(EzspStartScanResponse.class,
-                EzspNetworkFoundHandler.class, EzspEnergyScanResultHandler.class));
-        EzspMultiResponseTransaction transaction = new EzspMultiResponseTransaction(activeScan,
-                EzspScanCompleteHandler.class, relatedResponses);
-        protocolHandler.sendEzspTransaction(transaction);
-        EzspScanCompleteHandler activeScanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
-        logger.debug(activeScanCompleteResponse.toString());
-
-        if (activeScanCompleteResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
-            logger.debug("Error during active scan: {}", activeScanCompleteResponse);
-            return false;
-        }
-        return true;
     }
 
     /**
