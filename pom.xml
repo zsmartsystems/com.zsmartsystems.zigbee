@@ -8,6 +8,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
+        <license.year>2019</license.year>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
@@ -158,7 +159,7 @@
 						<exclude>*/src/**/package-info.java</exclude>
 					</excludes>
 					<properties>
-						<year>2018</year>
+                        <year>${license.year}</year>
 					</properties>
 					<encoding>UTF-8</encoding>
 				</configuration>
