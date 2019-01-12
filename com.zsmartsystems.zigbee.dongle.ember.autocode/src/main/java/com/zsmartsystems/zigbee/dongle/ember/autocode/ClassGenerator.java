@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2018 by the respective copyright holders.
+ * Copyright (c) 2016-2019 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,9 +7,12 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.autocode;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -126,14 +129,40 @@ public abstract class ClassGenerator {
         }
     }
 
-    protected void outputCopywrite(final PrintWriter out) {
-        out.println("/**");
-        out.println(" * Copyright (c) 2016-2018 by the respective copyright holders.");
-        out.println(" * All rights reserved. This program and the accompanying materials");
-        out.println(" * are made available under the terms of the Eclipse Public License v1.0");
-        out.println(" * which accompanies this distribution, and is available at");
-        out.println(" * http://www.eclipse.org/legal/epl-v10.html");
-        out.println(" */");
+    protected void outputCopywrite(PrintWriter out) {
+        String year = "XXXX";
+
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader("../pom.xml"));
+            String line = br.readLine();
+            while (line != null) {
+                if (line.contains("<license.year>") && line.contains("</license.year>")) {
+                    year = line.substring(line.indexOf("<license.year>") + 14, line.indexOf("</license.year>"));
+                    break;
+                }
+                line = br.readLine();
+            }
+
+            br.close();
+
+            br = new BufferedReader(new FileReader("../src/etc/header.txt"));
+            line = br.readLine();
+
+            out.println("/**");
+            while (line != null) {
+                out.println(" * " + line.replaceFirst("\\$\\{year\\}", year));
+                line = br.readLine();
+            }
+            out.println(" */");
+            br.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     protected String getDataType(String dataType) {
