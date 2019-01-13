@@ -392,6 +392,7 @@ public class ZigBeeEndpoint {
         if (!command.getSourceAddress().equals(getEndpointAddress())) {
             return;
         }
+        logger.trace("{}: ZigBeeEndpoint.commandReceived({})", getEndpointAddress(), command);
 
         // Pass all commands received from this endpoint to any registered applications
         synchronized (applications) {

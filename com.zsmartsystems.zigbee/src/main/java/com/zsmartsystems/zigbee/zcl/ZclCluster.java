@@ -816,6 +816,7 @@ public abstract class ZclCluster {
      * @param listener the {@link ZclCommandListener} to add
      */
     public void addCommandListener(ZclCommandListener listener) {
+        logger.trace("{}: ZclCluster.addCommandListener({})", zigbeeEndpoint.getEndpointAddress(), listener);
         // Don't add more than once.
         if (commandListeners.contains(listener)) {
             return;
@@ -829,6 +830,7 @@ public abstract class ZclCluster {
      * @param listener callback listener implementing {@link ZclCommandListener} to remove
      */
     public void removeCommandListener(final ZclCommandListener listener) {
+        logger.trace("{}: ZclCluster.removeCommandListener({})", zigbeeEndpoint.getEndpointAddress(), listener);
         commandListeners.remove(listener);
     }
 
@@ -894,6 +896,7 @@ public abstract class ZclCluster {
      * @param command the received {@link ZclCommand}
      */
     public void handleCommand(ZclCommand command) {
+        logger.trace("{}: ZclCluster.handleCommand({})", zigbeeEndpoint.getEndpointAddress(), command);
         notifyCommandListener(command);
     }
 
