@@ -212,9 +212,7 @@ public class BindingTable {
                 builder.append(", Unknown destination mode");
                 break;
         }
-        builder.append(", clusterId=");
-        builder.append(clusterId);
-        builder.append(']');
+        builder.append(String.format(", clusterId=%04X]", clusterId));
         return builder.toString();
     }
 }
