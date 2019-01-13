@@ -497,7 +497,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
     /**
      * Removes the {@link ZigBeeNetworkEndpointListener}
-     * 
+     *
      * @param networkDeviceListener the {@link ZigBeeNetworkEndpointListener} to remove
      */
     public void removeNetworkEndpointListener(final ZigBeeNetworkEndpointListener networkDeviceListener) {
@@ -649,6 +649,8 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         if (!(command instanceof ZclCommand)) {
             return;
         }
+
+        logger.trace("{}: ZigBeeEndpoint.commandReceived({})", ieeeAddress, command);
 
         ZclCommand zclCommand = (ZclCommand) command;
         ZigBeeEndpointAddress endpointAddress = (ZigBeeEndpointAddress) zclCommand.getSourceAddress();

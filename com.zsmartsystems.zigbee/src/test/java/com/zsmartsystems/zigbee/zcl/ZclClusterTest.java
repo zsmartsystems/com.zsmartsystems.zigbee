@@ -166,6 +166,7 @@ public class ZclClusterTest {
         ZclAttributeListener listenerMock = Mockito.mock(ZclAttributeListener.class);
         ArgumentCaptor<ZclAttribute> attributeCapture = ArgumentCaptor.forClass(ZclAttribute.class);
         cluster.addAttributeListener(listenerMock);
+        cluster.addAttributeListener(listenerMock);
         List<AttributeReport> attributeList = new ArrayList<AttributeReport>();
         AttributeReport report;
         report = new AttributeReport();
@@ -185,6 +186,25 @@ public class ZclClusterTest {
         assertEquals(ZclDataType.BOOLEAN, attribute.getDataType());
         assertEquals(0, attribute.getId());
         assertEquals(true, attribute.getLastValue());
+
+        cluster.removeAttributeListener(listenerMock);
+    }
+
+    @Test
+    public void handleCommandReport() {
+        createEndpoint();
+
+        ZclCluster cluster = new ZclOnOffCluster(endpoint);
+
+        ZclCommand command = Mockito.mock(ZclCommand.class);
+        ZclCommandListener listenerMock = Mockito.mock(ZclCommandListener.class);
+        cluster.addCommandListener(listenerMock);
+        cluster.addCommandListener(listenerMock);
+        cluster.handleCommand(command);
+
+        Mockito.verify(listenerMock, Mockito.timeout(1000).times(1)).commandReceived(command);
+
+        cluster.removeCommandListener(listenerMock);
     }
 
     private void setSupportedClusters(ZclCluster cluster, Set<Integer> supportedAttributes) {
