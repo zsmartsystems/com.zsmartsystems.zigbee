@@ -760,14 +760,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 new ZigBeeEndpointAddress(apsFrame.getDestinationAddress(), apsFrame.getDestinationEndpoint()));
         command.setApsSecurity(apsFrame.getSecurityEnabled());
 
+        logger.debug("RX CMD: {}", command);
+
         // Pass the command to the transaction manager for processing
         // If the transaction manager wants to drop this command, it returns null
         command = transactionManager.receive(command);
         if (command == null) {
             return;
         }
-
-        logger.debug("RX CMD: {}", command);
 
         // Notify the listeners
         commandNotifier.notifyCommandListeners(command);

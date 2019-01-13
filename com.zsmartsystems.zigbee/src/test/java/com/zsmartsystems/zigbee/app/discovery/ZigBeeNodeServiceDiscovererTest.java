@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledFuture;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -242,7 +243,12 @@ public class ZigBeeNodeServiceDiscovererTest {
         // Use node 0 and we should not try and get the local endpoints
         Mockito.when(node.getNetworkAddress()).thenReturn(0);
 
+        ScheduledFuture<?> futureTask = Mockito.mock(ScheduledFuture.class);
+        TestUtilities.setField(ZigBeeNodeServiceDiscoverer.class, discoverer, "futureTask", futureTask);
+
         discoverer.startDiscovery();
+
+        Mockito.verify(futureTask, Mockito.times(1)).cancel(true);
 
         assertFalse(discoverer.getTasks().contains(NodeDiscoveryTask.ACTIVE_ENDPOINTS));
     }
