@@ -159,7 +159,7 @@ public class ZigBeeNodeServiceDiscoverer {
     private final Queue<NodeDiscoveryTask> discoveryTasks = new LinkedList<NodeDiscoveryTask>();
 
     /**
-     * Creates the discovery class
+     * Creates the discoverer
      *
      * @param networkManager the {@link ZigBeeNetworkManager} for the network
      * @param node the {@link ZigBeeNode} whose services we want to discover
@@ -169,6 +169,8 @@ public class ZigBeeNodeServiceDiscoverer {
         this.node = node;
 
         retryPeriod = DEFAULT_RETRY_PERIOD + new Random().nextInt(RETRY_RANDOM_TIME);
+
+        logger.debug("{}: Node SVC Discovery: created discoverer", node.getIeeeAddress());
     }
 
     /**
@@ -213,12 +215,15 @@ public class ZigBeeNodeServiceDiscoverer {
             } else {
                 lastDiscoveryStarted = Calendar.getInstance();
             }
+
+            logger.debug("{}: Node SVC Discovery: scheduled {}", node.getIeeeAddress(), discoveryTasks);
+            final Runnable runnable = new NodeServiceDiscoveryTask();
+
+            if (futureTask != null) {
+                futureTask.cancel(true);
+            }
+            futureTask = networkManager.scheduleTask(runnable, new Random().nextInt(retryPeriod));
         }
-
-        logger.debug("{}: Node SVC Discovery: scheduled {}", node.getIeeeAddress(), discoveryTasks);
-        final Runnable runnable = new NodeServiceDiscoveryTask();
-
-        futureTask = networkManager.scheduleTask(runnable, new Random().nextInt(retryPeriod));
     }
 
     /**
