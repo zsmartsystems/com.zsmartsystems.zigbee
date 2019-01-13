@@ -749,12 +749,15 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
     public void processLogEntry(String apsString, String zclString) throws NoSuchMethodException, SecurityException,
             IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        ZigBeeApsFrame apsFrame = getApsFrame(apsString);
-        ZigBeeCommand command = getZigBeeCommand(apsFrame);
-
         System.out.println("---> Processing log");
-        System.out.println(apsFrame);
-        System.out.println(command);
+        System.out.println("  -> " + apsString);
+        System.out.println("  -> " + zclString);
+
+        ZigBeeApsFrame apsFrame = getApsFrame(apsString);
+        System.out.println("  <- " + apsFrame);
+
+        ZigBeeCommand command = getZigBeeCommand(apsFrame);
+        System.out.println("  <- " + command);
 
         assertNotNull(apsFrame);
         assertNotNull(command);
@@ -777,15 +780,22 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
             assertEquals(method.getName(), "get" + uppercaseFirst(token));
             Object data = method.invoke(command);
 
-            Object convertedData = convertData(tokens.get(token), data.getClass());
-            if (convertedData == null) {
-                System.out.println("     No data conversion in " + data.getClass().getSimpleName() + " "
-                        + command.getClass().getSimpleName() + ".get" + uppercaseFirst(token) + "(). Data is "
-                        + tokens.get(token) + ". Using obj.toString().equals();");
-                assertEquals(tokens.get(token), data.toString());
+            Object convertedData;
+            if (data == null) {
+                convertedData = null;
             } else {
-                assertEquals(convertedData, data);
+                convertedData = convertData(tokens.get(token), data.getClass());
+
+                if (convertedData == null) {
+                    System.out.println("     No data conversion in " + data.getClass().getSimpleName() + " "
+                            + command.getClass().getSimpleName() + ".get" + uppercaseFirst(token) + "(). Data is "
+                            + tokens.get(token) + ". Using obj.toString().equals();");
+                    convertedData = tokens.get(token);
+                    data = data.toString();
+                }
             }
+
+            assertEquals(convertedData, data);
         }
     }
 

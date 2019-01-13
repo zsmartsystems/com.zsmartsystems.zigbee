@@ -49,9 +49,20 @@ SimpleDescriptorResponse [31259/0 -> 0/0, cluster=8004, TID=NULL, status=SUCCESS
 ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=65535/0, profile=0000, cluster=0000, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=1F, payload=00 43 1D A5 00 AA 3E B0 7C 00 00]
 NetworkAddressRequest [0/0 -> 65535/0, cluster=0000, TID=1F, ieeeAddr=7CB03EAA00A51D43, requestType=0, startIndex=0]
 
-#ZigBeeApsFrame [sourceAddress=31259/0, destinationAddress=0/0, profile=0000, cluster=8000, addressMode=null, radius=0, apsSecurity=false, apsCounter=00, payload=00 00 43 1D A5 00 AA 3E B0 7C 1B 7A]
+#ZigBeeApsFrame [sourceAddress=31259/0, destinationAddress=0/0, profile=0000, cluster=8000, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=00, payload=00 00 43 1D A5 00 AA 3E B0 7C 1B 7A]
 #NetworkAddressResponse [31259/0 -> 0/0, cluster=8000, TID=NULL, status=SUCCESS, ieeeAddrRemoteDev=7CB03EAA00A51D43, nwkAddrRemoteDev=31259, startIndex=null, nwkAddrAssocDevList=[]]
 
+ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=37410/0, profile=0000, cluster=0021, addressMode=DEVICE, radius=31, sequence=44, payload=00 D1 A0 00 01 00 97 6D 28 01 04 0B 03 49 58 D2 0E 00 6F 0D 00 01]
+BindRequest [0/0 -> 37410/0, cluster=0021, TID=2C, srcAddress=286D97000100A0D1, srcEndpoint=1, bindCluster=2820, dstAddrMode=3, dstAddress=000D6F000ED25849, dstEndpoint=1]
+
+ZigBeeApsFrame [sourceAddress=37410/0, destinationAddress=0/0, profile=0000, cluster=8021, addressMode=DEVICE, radius=0, sequence=0, payload=00 00]
+BindResponse [37410/0 -> 0/0, cluster=8021, TID=NULL, status=SUCCESS]
+
+ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=37410/0, profile=0000, cluster=0033, addressMode=DEVICE, radius=31, sequence=60, payload=00 00]
+ManagementBindRequest [0/0 -> 37410/0, cluster=0033, TID=3C, startIndex=0]
+
+#ZigBeeApsFrame [sourceAddress=37410/0, destinationAddress=0/0, profile=0000, cluster=8033, addressMode=DEVICE, radius=0, sequence=0, payload=00 00 02 00 02 D1 A0 00 01 00 97 6D 28 01 04 0B 03 49 58 D2 0E 00 6F 0D 00 01 D1 A0 00 01 00 97 6D 28 01 08 00 03 49 58 D2 0E 00 6F 0D 00 01]
+#ManagementBindResponse [37410/0 -> 0/0, cluster=8033, TID=NULL, status=SUCCESS, bindingTableEntries=2, startIndex=0, bindingTableList=[BindingTable [srcAddr=286D97000100A0D1/1, dstAddr=000D6F000ED25849/1, clusterId=2820], BindingTable [srcAddr=286D97000100A0D1/1, dstAddr=000D6F000ED25849/1, clusterId=8]]]
 
 
 
