@@ -88,10 +88,14 @@ public class ZigBeeConsoleDescribeNodeCommand extends ZigBeeConsoleAbstractComma
         out.println("                 : Device Type " + String.format("%04X ", endpoint.getDeviceId())
                 + com.zsmartsystems.zigbee.ZigBeeDeviceType.getByValue(endpoint.getDeviceId()).toString());
         for (Integer clusterId : endpoint.getInputClusterIds()) {
-            out.println("                   -> " + ZclClusterType.getValueById(clusterId));
+            ZclClusterType clusterType = ZclClusterType.getValueById(clusterId);
+            String clusterTypeLabel = clusterType != null ? clusterType.toString() : String.format("0x%04X", clusterId);
+            out.println("                   -> " + clusterTypeLabel);
         }
         for (Integer clusterId : endpoint.getOutputClusterIds()) {
-            out.println("                   <- " + ZclClusterType.getValueById(clusterId));
+            ZclClusterType clusterType = ZclClusterType.getValueById(clusterId);
+            String clusterTypeLabel = clusterType != null ? clusterType.toString() : String.format("0x%04X", clusterId);
+            out.println("                   <- " + clusterTypeLabel);
         }
     }
 }
