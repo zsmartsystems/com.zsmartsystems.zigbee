@@ -7,16 +7,14 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.Calendar;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 /**
  *
@@ -37,15 +35,18 @@ public class ZclAttributeTest {
         assertEquals(false, attribute.isWritable());
         assertEquals(false, attribute.isReadable());
         assertEquals(false, attribute.isReportable());
+        assertEquals(false, attribute.isManufacturerSpecific());
         System.out.println(attribute.toString());
 
-        attribute = new ZclAttribute(ZclClusterType.ON_OFF, 0, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, true,
-                true, true, true);
+        attribute = new ZclAttribute(ZclClusterType.ON_OFF, 0, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER,
+                true, true, true, true, 0x1234);
 
         assertEquals(true, attribute.isMandatory());
         assertEquals(true, attribute.isWritable());
         assertEquals(true, attribute.isReadable());
         assertEquals(true, attribute.isReportable());
+        assertEquals(true, attribute.isManufacturerSpecific());
+        assertEquals(Integer.valueOf(0x1234), attribute.getManufacturerCode());
         System.out.println(attribute.toString());
     }
 

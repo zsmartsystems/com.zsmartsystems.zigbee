@@ -103,6 +103,11 @@ public class ZclAttribute {
     private int reportingTimeout;
 
     /**
+     * The manufacturer code of this attribute. If null, the attribute is not manufacturer-specific.
+     */
+    private Integer manufacturerCode;
+
+    /**
      * Records the last time a report was received
      */
     private Calendar lastReportTime;
@@ -113,7 +118,7 @@ public class ZclAttribute {
     private Object lastValue;
 
     /**
-     * Constructor used to set the static information
+     * Constructor used to set the static information (for non-manufacturer-specific attribute)
      *
      * @param cluster
      * @param id
@@ -133,6 +138,32 @@ public class ZclAttribute {
         this.readable = readable;
         this.writeable = writeable;
         this.reportable = reportable;
+    }
+
+    /**
+     * Constructor used to set the static information (for manufacturer-specific attribute)
+     *
+     * @param cluster
+     * @param id
+     * @param dataType
+     * @param mandatory
+     * @param readable
+     * @param writeable
+     * @param reportable
+     * @param manufacturerCode
+     */
+    public ZclAttribute(final ZclClusterType cluster, final int id, final String name, final ZclDataType dataType,
+            final boolean mandatory, final boolean readable, final boolean writeable, final boolean reportable,
+            final int manufacturerCode) {
+        this.cluster = cluster;
+        this.id = id;
+        this.name = name;
+        this.dataType = dataType;
+        this.mandatory = mandatory;
+        this.readable = readable;
+        this.writeable = writeable;
+        this.reportable = reportable;
+        this.manufacturerCode = manufacturerCode;
     }
 
     /**
@@ -264,6 +295,20 @@ public class ZclAttribute {
      */
     public int getReportingTimeout() {
         return reportingTimeout;
+    }
+
+    /**
+     * @return whether this is a manufacturer-specific attribute
+     */
+    public boolean isManufacturerSpecific() {
+        return manufacturerCode != null;
+    }
+
+    /**
+     * @return the manufacturer code of this attribute (null for attributes that are not manufacturer-specific)
+     */
+    public Integer getManufacturerCode() {
+        return manufacturerCode;
     }
 
     /**

@@ -71,7 +71,7 @@ public class ZigBeeZclClusterTypeGenerator extends ZigBeeBaseClassGenerator {
         out.println("/**");
         out.println(" * Enumeration of ZigBee Clusters\n" + " * <p>\n"
                 + " * Code is auto-generated. Modifications may be overwritten!\n" + " *\n"
-                + " * @author Chris Jackson\n");
+                + " * @author Chris Jackson");
         out.println(" */");
         outputClassGenerated(out);
         out.println("public enum " + className + " {");

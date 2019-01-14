@@ -66,13 +66,15 @@ public class ZigBeeConsoleBindingTableCommand extends ZigBeeConsoleAbstractComma
 
         out.println("Src Address          | Dest Address         | Group | Mode    | Cluster");
         for (BindingTable entry : node.getBindingTable()) {
+            ZclClusterType clusterType = ZclClusterType.getValueById(entry.getClusterId());
+            String clusterTypeLabel = clusterType != null ? clusterType.toString()
+                    : String.format("0x%04X", entry.getClusterId());
             out.println(String
                     .format("%s | %20s | %5s | %-7s | %04X:%s", getAddress(entry.getSrcAddr(), entry.getSrcEndpoint()),
                             entry.getDstAddrMode() == 3 ? getAddress(entry.getDstNodeAddr(), entry.getDstNodeEndpoint())
                                     : "",
                             entry.getDstAddrMode() == 1 ? Integer.toString(entry.getDstGroupAddr()) : "",
-                            getAddressMode(entry.getDstAddrMode()), entry.getClusterId(),
-                            ZclClusterType.getValueById(entry.getClusterId())));
+                            getAddressMode(entry.getDstAddrMode()), entry.getClusterId(), clusterTypeLabel));
         }
     }
 
