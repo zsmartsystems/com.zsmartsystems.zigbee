@@ -153,6 +153,22 @@ public class ZigBeeEndpoint {
     }
 
     /**
+     * Adds a specific {@link ZclCluster} to the input clusters in this endpoint.
+     *
+     * @param cluster the {@link ZclCluster} to add
+     * @return true if the cluster was added, false if there was an error (eg the cluster was already included in the
+     *         endpoint)
+     */
+    public boolean addInputCluster(ZclCluster cluster) {
+        if (inputClusters.containsKey(cluster.getClusterId())) {
+            return false;
+        }
+
+        inputClusters.put(cluster.getClusterId(), cluster);
+        return true;
+    }
+
+    /**
      * Gets an input cluster
      *
      * @deprecated Use {@link #getInputCluster}
@@ -186,13 +202,13 @@ public class ZigBeeEndpoint {
     }
 
     /**
-     * Sets input cluster IDs.
+     * Sets input cluster IDs. This will add any new clusters in the list, and remove any that are no longer in the
+     * list.
      *
-     * @param inputClusterIds
-     *            the input cluster IDs
+     * @param inputClusterIds the input cluster IDs
      */
     public void setInputClusterIds(List<Integer> inputClusterIds) {
-        this.inputClusters.clear();
+        inputClusters.clear();
 
         logger.debug("{}: Setting input clusters {}", getEndpointAddress(), inputClusterIds);
 
@@ -228,17 +244,33 @@ public class ZigBeeEndpoint {
     }
 
     /**
-     * Sets output cluster IDs.
+     * Sets output cluster IDs. This will add any new clusters in the list, and remove any that are no longer in the
+     * list.
      *
-     * @param outputClusterIds
-     *            the output cluster IDs
+     * @param outputClusterIds the output cluster IDs
      */
     public void setOutputClusterIds(List<Integer> outputClusterIds) {
-        this.outputClusters.clear();
+        outputClusters.clear();
 
         logger.debug("{}: Setting output clusters {}", getEndpointAddress(), outputClusterIds);
 
         updateClusters(outputClusters, outputClusterIds, false);
+    }
+
+    /**
+     * Adds a specific {@link ZclCluster} to the output clusters in this endpoint.
+     *
+     * @param cluster the {@link ZclCluster} to add
+     * @return true if the cluster was added, false if there was an error (eg the cluster was already included in the
+     *         endpoint)
+     */
+    public boolean addOutputCluster(ZclCluster cluster) {
+        if (outputClusters.containsKey(cluster.getClusterId())) {
+            return false;
+        }
+
+        outputClusters.put(cluster.getClusterId(), cluster);
+        return true;
     }
 
     /**
@@ -309,6 +341,8 @@ public class ZigBeeEndpoint {
                 // Get the cluster type
                 ZclCluster clusterClass = getClusterClass(id);
                 if (clusterClass == null) {
+                    logger.debug("{}: Cluster {} not found cluster {}", getEndpointAddress(),
+                            String.format("%04X", id));
                     continue;
                 }
 

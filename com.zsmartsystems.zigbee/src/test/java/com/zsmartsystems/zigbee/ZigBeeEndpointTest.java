@@ -25,6 +25,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclDoorLockCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclScenesCluster;
 
 /**
  *
@@ -35,7 +36,7 @@ public class ZigBeeEndpointTest {
 
     @Test
     public void testOutputClusterIds() {
-        ZigBeeEndpoint device = getEndpoint();
+        ZigBeeEndpoint endpoint = getEndpoint();
 
         List<Integer> clusterIdList = new ArrayList<Integer>();
         clusterIdList.add(ZclAlarmsCluster.CLUSTER_ID);
@@ -43,25 +44,31 @@ public class ZigBeeEndpointTest {
         clusterIdList.add(ZclColorControlCluster.CLUSTER_ID);
         clusterIdList.add(ZclDoorLockCluster.CLUSTER_ID);
         clusterIdList.add(ZclLevelControlCluster.CLUSTER_ID);
-        device.setOutputClusterIds(clusterIdList);
+        endpoint.setOutputClusterIds(clusterIdList);
 
-        assertEquals(5, device.getOutputClusterIds().size());
+        assertEquals(5, endpoint.getOutputClusterIds().size());
 
-        assertNotNull(device.getOutputCluster(ZclAlarmsCluster.CLUSTER_ID));
-        assertTrue(device.getOutputCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
-        assertFalse(device.getOutputCluster(ZclAlarmsCluster.CLUSTER_ID).isServer());
+        assertNotNull(endpoint.getOutputCluster(ZclAlarmsCluster.CLUSTER_ID));
+        assertTrue(endpoint.getOutputCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
+        assertFalse(endpoint.getOutputCluster(ZclAlarmsCluster.CLUSTER_ID).isServer());
 
-        assertNotNull(device.getOutputCluster(ZclLevelControlCluster.CLUSTER_ID));
-        assertTrue(device.getOutputCluster(ZclLevelControlCluster.CLUSTER_ID).isClient());
-        assertFalse(device.getOutputCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
+        assertNotNull(endpoint.getOutputCluster(ZclLevelControlCluster.CLUSTER_ID));
+        assertTrue(endpoint.getOutputCluster(ZclLevelControlCluster.CLUSTER_ID).isClient());
+        assertFalse(endpoint.getOutputCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
 
         clusterIdList = new ArrayList<Integer>();
         clusterIdList.add(ZclAlarmsCluster.CLUSTER_ID);
         clusterIdList.add(ZclBasicCluster.CLUSTER_ID);
-        assertTrue(device.getOutputCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
-        assertFalse(device.getOutputCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
+        assertTrue(endpoint.getOutputCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
+        assertFalse(endpoint.getOutputCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
 
-        System.out.println(device.toString());
+        assertTrue(endpoint.addOutputCluster(new ZclScenesCluster(endpoint)));
+        assertFalse(endpoint.addOutputCluster(new ZclScenesCluster(endpoint)));
+        assertTrue(endpoint.getOutputClusterIds().contains(ZclScenesCluster.CLUSTER_ID));
+
+        assertTrue(endpoint.getInputClusterIds().isEmpty());
+
+        System.out.println(endpoint.toString());
     }
 
     @Test
@@ -85,6 +92,12 @@ public class ZigBeeEndpointTest {
         assertNotNull(endpoint.getInputCluster(ZclLevelControlCluster.CLUSTER_ID));
         assertFalse(endpoint.getInputCluster(ZclLevelControlCluster.CLUSTER_ID).isClient());
         assertTrue(endpoint.getInputCluster(ZclLevelControlCluster.CLUSTER_ID).isServer());
+
+        assertTrue(endpoint.addInputCluster(new ZclScenesCluster(endpoint)));
+        assertFalse(endpoint.addInputCluster(new ZclScenesCluster(endpoint)));
+        assertTrue(endpoint.getInputClusterIds().contains(ZclScenesCluster.CLUSTER_ID));
+
+        assertTrue(endpoint.getOutputClusterIds().isEmpty());
     }
 
     @Test
@@ -126,5 +139,4 @@ public class ZigBeeEndpointTest {
         node.setNetworkAddress(1234);
         return new ZigBeeEndpoint(node, 5);
     }
-
 }
