@@ -64,5 +64,9 @@ ManagementBindRequest [0/0 -> 37410/0, cluster=0033, TID=3C, startIndex=0]
 #ZigBeeApsFrame [sourceAddress=37410/0, destinationAddress=0/0, profile=0000, cluster=8033, addressMode=DEVICE, radius=0, sequence=0, payload=00 00 02 00 02 D1 A0 00 01 00 97 6D 28 01 04 0B 03 49 58 D2 0E 00 6F 0D 00 01 D1 A0 00 01 00 97 6D 28 01 08 00 03 49 58 D2 0E 00 6F 0D 00 01]
 #ManagementBindResponse [37410/0 -> 0/0, cluster=8033, TID=NULL, status=SUCCESS, bindingTableEntries=2, startIndex=0, bindingTableList=[BindingTable [srcAddr=286D97000100A0D1/1, dstAddr=000D6F000ED25849/1, clusterId=2820], BindingTable [srcAddr=286D97000100A0D1/1, dstAddr=000D6F000ED25849/1, clusterId=8]]]
 
+ZigBeeApsFrame [sourceAddress=6254/0, destinationAddress=0/0, profile=0000, cluster=0006, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=03, payload=00 00 00 09 01 01 00 08 01 00 08]
+MatchDescriptorRequest [6254/0 -> 0/0, cluster=0006, TID=03, nwkAddrOfInterest=0, profileId=265, inClusterList=[2048], outClusterList=[2048]]
 
+ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=6254/0, profile=0000, cluster=8006, addressMode=null, radius=0, apsSecurity=false, apsCounter=57, payload=00 00 00 00 03 01 02 03]
+MatchDescriptorResponse [0/0 -> 6254/0, cluster=8006, TID=NULL, status=SUCCESS, nwkAddrOfInterest=0, matchList=[1, 2, 3]]
 
