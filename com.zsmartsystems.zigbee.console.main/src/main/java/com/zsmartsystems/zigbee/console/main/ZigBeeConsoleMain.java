@@ -178,6 +178,7 @@ public class ZigBeeConsoleMain {
         final ZigBeeTransportTransmit dongle;
         if (dongleName.toUpperCase().equals("CC2531")) {
             dongle = new ZigBeeDongleTiCc2531(serialPort);
+            transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 3);
         } else if (dongleName.toUpperCase().equals("EMBER")) {
             dongle = new ZigBeeDongleEzsp(serialPort);
 

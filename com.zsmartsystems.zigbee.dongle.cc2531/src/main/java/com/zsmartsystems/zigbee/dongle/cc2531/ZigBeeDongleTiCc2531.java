@@ -209,6 +209,11 @@ public class ZigBeeDongleTiCc2531
                                 new ArrayList<Integer>((Collection<Integer>) configuration.getValue(option))));
                         break;
 
+                    case RADIO_TX_POWER:
+                        configuration.setResult(option,
+                                networkManager.setTxPower((int) configuration.getValue(option)));
+                        break;
+
                     default:
                         configuration.setResult(option, ZigBeeStatus.UNSUPPORTED);
                         logger.debug("Unsupported configuration option \"{}\" in CC2531 dongle", option);

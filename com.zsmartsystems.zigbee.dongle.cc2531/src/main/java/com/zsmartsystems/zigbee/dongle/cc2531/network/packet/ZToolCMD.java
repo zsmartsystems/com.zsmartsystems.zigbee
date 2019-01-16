@@ -32,6 +32,7 @@ package com.zsmartsystems.zigbee.dongle.cc2531.network.packet;
 
 /**
  * @author <a href="mailto:alfiva@aaa.upv.es">Alvaro Fides Valero</a>
+ * @author Chris Jackson
  */
 public class ZToolCMD {
 
@@ -377,6 +378,18 @@ public class ZToolCMD {
      * Test the physical interface
      */
     public static final int SYS_TEST_LOOPBACK = 0x2141;
+    /**
+     * This command is used by the application processor to set the ZNP radio transmit power. The
+     * returned TX power is the actual setting applied to the radio – nearest characterized value for the
+     * specific radio and PA/LNA (if used).
+     */
+    public static final int SYS_SET_TX_POWER = 0x2114;
+    /**
+     * This command is used by the application processor to set the ZNP radio transmit power. The
+     * returned TX power is the actual setting applied to the radio – nearest characterized value for the
+     * specific radio and PA/LNA (if used).
+     */
+    public static final int SYS_SET_TX_POWER_RESPONSE = 0x6114;
     /**
      * Response to SYS_GPIO
      */
