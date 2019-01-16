@@ -63,6 +63,8 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_SET_TX_P
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_SET_TX_POWER_RESPONSE;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_VERSION;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_VERSION_RESPONSE;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.util.UTIL_LED_CONTROL;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.util.UTIL_LED_CONTROL_RESPONSE;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MSG_CB_REGISTER;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MSG_CB_REGISTER_SRSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_STARTUP_FROM_APP;
@@ -559,6 +561,13 @@ public class ZigBeeNetworkManager {
 
     public ZigBeeStatus setTxPower(int txPower) {
         return dongleSetTxPower(txPower) ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
+    }
+
+    public ZigBeeStatus setLedMode(int ledId, boolean mode) {
+        UTIL_LED_CONTROL_RESPONSE response = (UTIL_LED_CONTROL_RESPONSE) sendSynchronous(
+                new UTIL_LED_CONTROL(ledId, mode));
+
+        return (response != null && response.Status == 0) ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
     }
 
     public void addAsynchronousCommandListener(final AsynchronousCommandListener asynchronousCommandListener) {

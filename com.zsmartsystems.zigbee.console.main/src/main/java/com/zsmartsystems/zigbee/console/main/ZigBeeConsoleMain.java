@@ -330,6 +330,12 @@ public class ZigBeeConsoleMain {
 
         networkManager.addSupportedCluster(ZclIasZoneCluster.CLUSTER_ID);
 
+        if (dongleName.toUpperCase().equals("CC2531")) {
+            ZigBeeDongleTiCc2531 tiDongle = (ZigBeeDongleTiCc2531) dongle;
+            tiDongle.setLedMode(1, false);
+            tiDongle.setLedMode(2, false);
+        }
+
         console.start();
 
         System.out.println("Console closed.");
