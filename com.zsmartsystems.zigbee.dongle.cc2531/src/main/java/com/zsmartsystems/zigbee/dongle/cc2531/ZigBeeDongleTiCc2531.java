@@ -474,4 +474,8 @@ public class ZigBeeDongleTiCc2531
         return 0;
     }
 
+    public ZigBeeStatus setLedMode(int ledId, boolean mode) {
+        return networkManager.setLedMode(ledId, mode);
+    }
+
 }
