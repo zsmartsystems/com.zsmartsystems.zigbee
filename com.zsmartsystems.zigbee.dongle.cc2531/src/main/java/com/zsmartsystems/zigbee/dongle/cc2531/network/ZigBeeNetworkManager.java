@@ -38,6 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.BlockingCommandReceiver;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ResponseStatus;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
@@ -58,6 +59,8 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.simple.ZB_WRITE_CON
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.simple.ZB_WRITE_CONFIGURATION_RSP;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_RESET;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_RESET_RESPONSE;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_SET_TX_POWER;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_SET_TX_POWER_RESPONSE;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_VERSION;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.system.SYS_VERSION_RESPONSE;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.zdo.ZDO_MSG_CB_REGISTER;
@@ -554,6 +557,10 @@ public class ZigBeeNetworkManager {
         return dongleSetSecurityMode();
     }
 
+    public ZigBeeStatus setTxPower(int txPower) {
+        return dongleSetTxPower(txPower) ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
+    }
+
     public void addAsynchronousCommandListener(final AsynchronousCommandListener asynchronousCommandListener) {
         commandInterface.addAsynchronousCommandListener(asynchronousCommandListener);
     }
@@ -821,6 +828,12 @@ public class ZigBeeNetworkManager {
                 ZB_WRITE_CONFIGURATION.CONFIG_ID.ZCD_NV_SECURITY_MODE, new int[] { securityMode }));
 
         return response != null && response.Status == 0;
+    }
+
+    private boolean dongleSetTxPower(int txPower) {
+        SYS_SET_TX_POWER_RESPONSE response = (SYS_SET_TX_POWER_RESPONSE) sendSynchronous(new SYS_SET_TX_POWER(txPower));
+
+        return response != null;
     }
 
     /**
