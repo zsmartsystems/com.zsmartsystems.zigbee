@@ -223,7 +223,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
      */
     protected void rediscoverNode(final IeeeAddress ieeeAddress) {
         if (!initialized) {
-            logger.debug("Network discovery task: can't perform rediscovery on {} until initialization complete.",
+            logger.debug("NWK discovery task: can't perform rediscovery on {} until initialization complete.",
                     ieeeAddress);
             return;
         }
@@ -250,6 +250,8 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
 
                         final NetworkAddressResponse nwkAddressResponse = response.getResponse();
                         if (nwkAddressResponse != null && nwkAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
+                            addNode(nwkAddressResponse.getIeeeAddrRemoteDev(),
+                                    nwkAddressResponse.getNwkAddrRemoteDev());
                             startNodeDiscovery(nwkAddressResponse.getNwkAddrRemoteDev());
                             break;
                         }
@@ -304,7 +306,6 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
                         }
 
                         success = getIeeeAddress(nodeNetworkAddress);
-
                         if (success) {
                             break;
                         }
@@ -386,10 +387,11 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
      * @param networkAddress the network address of the newly announced node
      */
     private void addNode(final IeeeAddress ieeeAddress, int networkAddress) {
+        logger.debug("{}: NWK Discovery add node {}", ieeeAddress, networkAddress);
         ZigBeeNode node = networkManager.getNode(ieeeAddress);
         if (node != null) {
             if (node.getNetworkAddress() != networkAddress) {
-                logger.debug("{}: Network address updated to {}", ieeeAddress, networkAddress);
+                logger.debug("{}: NWK Discovery updated network address to {}", ieeeAddress, networkAddress);
             }
             node.setNodeState(ZigBeeNodeState.ONLINE);
             node.setNetworkAddress(networkAddress);
