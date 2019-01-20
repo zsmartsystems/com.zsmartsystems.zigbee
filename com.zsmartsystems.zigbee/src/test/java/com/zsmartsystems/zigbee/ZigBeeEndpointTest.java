@@ -18,7 +18,7 @@ import java.util.List;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.zsmartsystems.zigbee.dao.ZigBeeEndpointDao;
+import com.zsmartsystems.zigbee.database.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclAlarmsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;

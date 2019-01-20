@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.dao;
+package com.zsmartsystems.zigbee.database;
 
 import java.util.List;
 import java.util.Set;
@@ -26,7 +26,7 @@ public class ZigBeeNodeDao {
     /**
      * The extended {@link IeeeAddress} for the node
      */
-    private String ieeeAddress;
+    private IeeeAddress ieeeAddress;
 
     /**
      * The 16 bit network address for the node
@@ -50,11 +50,11 @@ public class ZigBeeNodeDao {
 
     private Set<BindingTable> bindingTable;
 
-    public String getIeeeAddress() {
+    public IeeeAddress getIeeeAddress() {
         return ieeeAddress;
     }
 
-    public void setIeeeAddress(String ieeeAddress) {
+    public void setIeeeAddress(IeeeAddress ieeeAddress) {
         this.ieeeAddress = ieeeAddress;
     }
 

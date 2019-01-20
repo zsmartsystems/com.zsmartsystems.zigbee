@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
-import com.zsmartsystems.zigbee.dao.ZclClusterDao;
+import com.zsmartsystems.zigbee.database.ZclClusterDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;

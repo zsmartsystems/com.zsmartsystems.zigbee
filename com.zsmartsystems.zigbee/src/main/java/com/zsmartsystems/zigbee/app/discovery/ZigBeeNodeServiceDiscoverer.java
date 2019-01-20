@@ -670,7 +670,7 @@ public class ZigBeeNodeServiceDiscoverer {
             tasks.add(NodeDiscoveryTask.POWER_DESCRIPTOR);
         }
 
-        if (node.getEndpoints().size() == 0 && node.getNetworkAddress() != networkManager.getLocalNwkAddress()) {
+        if (node.getEndpoints().size() == 0 && !node.getNetworkAddress().equals(networkManager.getLocalNwkAddress())) {
             tasks.add(NodeDiscoveryTask.ACTIVE_ENDPOINTS);
         }
 
