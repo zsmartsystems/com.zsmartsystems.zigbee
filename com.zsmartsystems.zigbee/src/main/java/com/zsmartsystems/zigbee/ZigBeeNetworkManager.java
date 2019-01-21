@@ -898,15 +898,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         // Notify the listeners
-        synchronized (this) {
-            for (final ZigBeeAnnounceListener announceListener : announceListeners) {
-                NotificationService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        announceListener.deviceStatusUpdate(deviceStatus, networkAddress, ieeeAddress);
-                    }
-                });
-            }
+        for (final ZigBeeAnnounceListener announceListener : announceListeners) {
+            NotificationService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    announceListener.deviceStatusUpdate(deviceStatus, networkAddress, ieeeAddress);
+                }
+            });
         }
     }
 
@@ -1171,12 +1169,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (networkNodeListener == null) {
             return;
         }
-        synchronized (this) {
-            final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<ZigBeeNetworkNodeListener>(
-                    nodeListeners);
-            modifiedListeners.add(networkNodeListener);
-            nodeListeners = Collections.unmodifiableList(modifiedListeners);
-        }
+        final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<ZigBeeNetworkNodeListener>(
+                nodeListeners);
+        modifiedListeners.add(networkNodeListener);
+        nodeListeners = Collections.unmodifiableList(modifiedListeners);
     }
 
     /**
@@ -1185,12 +1181,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param networkNodeListener the {@link ZigBeeNetworkNodeListener} to remove
      */
     public void removeNetworkNodeListener(final ZigBeeNetworkNodeListener networkNodeListener) {
-        synchronized (this) {
-            final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<ZigBeeNetworkNodeListener>(
-                    nodeListeners);
-            modifiedListeners.remove(networkNodeListener);
-            nodeListeners = Collections.unmodifiableList(modifiedListeners);
-        }
+        final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<ZigBeeNetworkNodeListener>(
+                nodeListeners);
+        modifiedListeners.remove(networkNodeListener);
+        nodeListeners = Collections.unmodifiableList(modifiedListeners);
     }
 
     /**
