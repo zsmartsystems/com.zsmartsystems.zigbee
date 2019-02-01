@@ -198,12 +198,22 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
     /**
      * Default transfer timeout period in milliseconds
      */
-    private final long TRANSFER_TIMEOUT_PERIOD = 30000;
+    private static final long TRANSFER_TIMEOUT_PERIOD = 300000;
 
     /**
      * Transfer timeout period in milliseconds
      */
     private long transferTimeoutPeriod = TRANSFER_TIMEOUT_PERIOD;
+
+    /**
+     * The amount of retries to get the current firmware version
+     */
+    private static final int AMOUNT_OF_RETRIES_TO_REQUEST_CURRENT_FW_VERSION = 10;
+
+    /**
+     * The sleep time before trying to request the current firmware version
+     */
+    private static final long SLEEP_TIME_BEFORE_REQUESTING_CURRENT_FW_VERSION = 10000;
 
     /**
      * Field control value of 0x01 (bit 0 set) means that the client’s IEEE address is included in the payload. This
@@ -436,8 +446,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
 
                     // Attempt to get the current firmware version. As the device will be restarting, which could take
                     // some time to complete, we retry this a few times.
-                    for (int cnt = 0; cnt < 10; cnt++) {
-                        Thread.sleep(3000);
+                    for (int cnt = 0; cnt < AMOUNT_OF_RETRIES_TO_REQUEST_CURRENT_FW_VERSION; cnt++) {
+                        Thread.sleep(SLEEP_TIME_BEFORE_REQUESTING_CURRENT_FW_VERSION);
                         Integer fileVersion = cluster.getCurrentFileVersion(0);
                         if (fileVersion == null) {
                             continue;
