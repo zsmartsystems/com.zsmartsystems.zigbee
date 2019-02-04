@@ -138,10 +138,10 @@ public class ZigBeeConsoleNetworkDiscoveryCommand extends ZigBeeConsoleAbstractC
     private void displayNodeMesh(ZigBeeNode node, ZigBeeNodeServiceDiscoverer discoverer, PrintStream out) {
         out.println("IEEE Address             : " + node.getIeeeAddress().toString());
         out.println("NWK Address              : " + node.getNetworkAddress().toString());
-        out.println("Last discovery started : " + discoverer.getLastDiscoveryStarted() == null ? NEVER
-                : dfIso8601.format(discoverer.getLastDiscoveryStarted().getTime()));
-        out.println("Last discovery completed : " + discoverer.getLastDiscoveryCompleted() == null ? NEVER
-                : dfIso8601.format(discoverer.getLastDiscoveryStarted().getTime()));
+        out.println("Last discovery started : " + (discoverer.getLastDiscoveryStarted() == null ? NEVER
+                : dfIso8601.format(discoverer.getLastDiscoveryStarted().getTime())));
+        out.println("Last discovery completed : " + (discoverer.getLastDiscoveryCompleted() == null ? NEVER
+                : dfIso8601.format(discoverer.getLastDiscoveryStarted().getTime())));
         out.println("Current tasks            : " + tasksToString(discoverer.getTasks()));
     }
 

@@ -25,7 +25,7 @@ public interface ZigBeeTransportFirmwareUpdate {
      * Entry conditions are that the port should be closed. This means that any previous use of the transport interfaces
      * should first be stopped.
      *
-     * @param firmware the device specific {@link InputStream} containing the dongle firmware
+     * @param firmwareFile the device specific {@link InputStream} containing the dongle firmware
      * @param callback the {@link ZigBeeTransportFirmwareCallback} to be called when the update is complete
      * @return true if the firmware update was started.
      */

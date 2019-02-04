@@ -31,9 +31,9 @@ public class EmberStackConfiguration {
     private EmberNcp ncp;
 
     /**
-     * Constructor to set the {@link EzspProtocolHandler}
+     * Constructor to set the {@link EmberNcp}
      *
-     * @param frameHandler the {@link EzspProtocolHandler} used to communicate with the NCP
+     * @param ncp the {@link EmberNcp} used to communicate with the NCP
      */
     public EmberStackConfiguration(EmberNcp ncp) {
         this.ncp = ncp;
@@ -66,7 +66,7 @@ public class EmberStackConfiguration {
      *         occurred.
      */
     public Map<EzspConfigId, Integer> getConfiguration(Set<EzspConfigId> configuration) {
-        Map<EzspConfigId, Integer> response = new HashMap<EzspConfigId, Integer>();
+        Map<EzspConfigId, Integer> response = new HashMap<>();
 
         for (EzspConfigId configId : configuration) {
             response.put(configId, ncp.getConfiguration(configId));
@@ -102,7 +102,7 @@ public class EmberStackConfiguration {
      *         error occurred.
      */
     public Map<EzspPolicyId, EzspDecisionId> getPolicy(Set<EzspPolicyId> policies) {
-        Map<EzspPolicyId, EzspDecisionId> response = new HashMap<EzspPolicyId, EzspDecisionId>();
+        Map<EzspPolicyId, EzspDecisionId> response = new HashMap<>();
 
         for (EzspPolicyId policyId : policies) {
             response.put(policyId, ncp.getPolicy(policyId));

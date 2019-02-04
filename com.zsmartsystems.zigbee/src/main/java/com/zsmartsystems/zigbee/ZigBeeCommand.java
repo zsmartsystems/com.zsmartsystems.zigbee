@@ -109,7 +109,7 @@ public class ZigBeeCommand {
 
     /**
      * Gets the state of APS security for this command
-     * 
+     *
      * @return true if the command uses APS security, false if not using APS security
      */
     public boolean getApsSecurity() {
@@ -137,7 +137,7 @@ public class ZigBeeCommand {
     /**
      * Deserialize the command from the format required by the transport layer and into the command class.
      *
-     * @param serializer the {@link ZclFieldSerializer} to use
+     * @param deserializer the {@link ZclFieldDeserializer} to use
      */
     public void deserialize(final ZclFieldDeserializer deserializer) {
         // Default implementation does nothing - overridden by each class

@@ -493,7 +493,7 @@ public class CommandGenerator extends ClassGenerator {
 
             // If it's an array, then we want to print hex data
             if (parameter.data_type.contains("[")) {
-                out.println("        builder.append(\"{\");");
+                out.println("        builder.append('{');");
                 out.println("        if (" + parameter.name + " == null) {");
                 out.println("            builder.append(\"null\");");
                 out.println("        } else {");
@@ -505,7 +505,7 @@ public class CommandGenerator extends ClassGenerator {
                         + "[cnt]));");
                 out.println("            }");
                 out.println("        }");
-                out.println("        builder.append(\"}\");");
+                out.println("        builder.append('}');");
             } else {
                 out.println("        builder.append(" + formatParameterString(parameter) + ");");
             }

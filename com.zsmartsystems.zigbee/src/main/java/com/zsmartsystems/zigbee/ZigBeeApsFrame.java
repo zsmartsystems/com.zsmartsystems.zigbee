@@ -271,7 +271,7 @@ public class ZigBeeApsFrame {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(164);
         builder.append("ZigBeeApsFrame [sourceAddress=");
         builder.append(sourceAddress);
         builder.append('/');

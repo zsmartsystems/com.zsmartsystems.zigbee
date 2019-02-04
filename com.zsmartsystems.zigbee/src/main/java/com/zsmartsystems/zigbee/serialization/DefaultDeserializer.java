@@ -55,8 +55,8 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
     }
 
     @Override
-    public void skip(int n) {
-        index += n;
+    public void skip(int cnt) {
+        index += cnt;
     }
 
     @Override
@@ -191,11 +191,11 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
             case ENUMERATION_16_BIT:
             case SIGNED_16_BIT_INTEGER:
             case UNSIGNED_16_BIT_INTEGER:
-                short s = (short) (payload[index++] + (payload[index++] << 8));
+                short shortVal = (short) (payload[index++] + (payload[index++] << 8));
                 if (type == ZclDataType.SIGNED_16_BIT_INTEGER) {
-                    value[0] = Integer.valueOf(s);
+                    value[0] = Integer.valueOf(shortVal);
                 } else {
-                    value[0] = Integer.valueOf(s & 0xFFFF);
+                    value[0] = Integer.valueOf(shortVal & 0xFFFF);
                 }
                 break;
             case UNSIGNED_24_BIT_INTEGER:

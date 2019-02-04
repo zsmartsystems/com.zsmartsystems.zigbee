@@ -170,10 +170,7 @@ public class RoutingTable {
         if (routeRecordRequired != other.routeRecordRequired) {
             return false;
         }
-        if (status != other.status) {
-            return false;
-        }
-        return true;
+        return status == other.status;
     }
 
     @Override

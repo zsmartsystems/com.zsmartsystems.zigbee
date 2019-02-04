@@ -31,8 +31,8 @@ public class ByteArray {
      * Constructor taking part of an existing integer array
      *
      * @param payload the existing integer array
-     * @param from the start offset of the array (inclusive)
-     * @param to the end offset of the array (exclusive)
+     * @param start the start offset of the array (inclusive)
+     * @param finish the end offset of the array (exclusive)
      */
     public ByteArray(int[] payload, int start, int finish) {
         value = new byte[finish - start];
@@ -46,8 +46,6 @@ public class ByteArray {
      * Constructor taking an existing integer array
      *
      * @param payload the existing integer array
-     * @param from the start offset of the array (inclusive)
-     * @param to the end offset of the array (exclusive)
      */
     public ByteArray(int[] payload) {
         this(payload, 0, payload.length);

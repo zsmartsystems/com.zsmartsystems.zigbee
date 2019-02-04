@@ -279,7 +279,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
      * Performs the top level node discovery. This discovers node level attributes such as the endpoints and
      * descriptors.
      *
-     * @param networkAddress the network address to start a discovery on
+     * @param nodeNetworkAddress the network address to start a discovery on
      */
     private void startNodeDiscovery(final int nodeNetworkAddress) {
         // Check if we need to do a rediscovery on this node first...

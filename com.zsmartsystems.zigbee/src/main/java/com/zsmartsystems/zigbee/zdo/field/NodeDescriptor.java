@@ -361,10 +361,7 @@ public class NodeDescriptor {
         } else if (!serverCapabilities.equals(other.serverCapabilities)) {
             return false;
         }
-        if (userDescriptorAvailable != other.userDescriptorAvailable) {
-            return false;
-        }
-        return true;
+        return userDescriptorAvailable == other.userDescriptorAvailable;
     }
 
     /**

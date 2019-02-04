@@ -232,7 +232,7 @@ public class EmberZigbeeNetwork {
         builder.append(", panId=");
         builder.append(panId);
         builder.append(", extendedPanId=");
-        builder.append("{");
+        builder.append('{');
         if (extendedPanId == null) {
             builder.append("null");
         } else {
@@ -243,7 +243,7 @@ public class EmberZigbeeNetwork {
                 builder.append(String.format("%02X", extendedPanId[cnt]));
             }
         }
-        builder.append("}");
+        builder.append('}');
         builder.append(", allowingJoin=");
         builder.append(allowingJoin);
         builder.append(", stackProfile=");

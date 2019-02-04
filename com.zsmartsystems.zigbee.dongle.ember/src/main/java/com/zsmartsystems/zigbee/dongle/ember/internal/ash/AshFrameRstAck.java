@@ -20,9 +20,9 @@ public class AshFrameRstAck extends AshFrame {
     private final AshErrorCode errorCode;
 
     /**
-     * Constructor to create an ASH frame from a byte buffer.
+     * Constructor taking an incoming data buffer
      *
-     * @param buffer
+     * @param frameBuffer the incoming data buffer
      */
     public AshFrameRstAck(int[] frameBuffer) {
         this.frameType = FrameType.RSTACK;
@@ -46,7 +46,7 @@ public class AshFrameRstAck extends AshFrame {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(64);
         builder.append("AshFrameRstAck [version=");
         builder.append(version);
         builder.append(", resetCode=");

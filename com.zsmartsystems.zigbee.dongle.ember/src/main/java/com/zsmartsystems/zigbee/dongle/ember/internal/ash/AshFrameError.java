@@ -18,9 +18,9 @@ public class AshFrameError extends AshFrame {
     private final int errorCode;
 
     /**
-     * Constructor to create an ASH frame from a byte buffer.
+     * Constructor taking an incoming data buffer
      *
-     * @param buffer
+     * @param frameBuffer the incoming data buffer
      */
     public AshFrameError(int[] frameBuffer) {
         this.frameType = FrameType.ERROR;

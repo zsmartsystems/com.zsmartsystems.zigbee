@@ -83,7 +83,7 @@ public class EmberSmacData {
     public String toString() {
         final StringBuilder builder = new StringBuilder(41);
         builder.append("EmberSmacData [contents=");
-        builder.append("{");
+        builder.append('{');
         if (contents == null) {
             builder.append("null");
         } else {
@@ -94,7 +94,7 @@ public class EmberSmacData {
                 builder.append(String.format("%02X", contents[cnt]));
             }
         }
-        builder.append("}");
+        builder.append('}');
         builder.append(']');
         return builder.toString();
     }

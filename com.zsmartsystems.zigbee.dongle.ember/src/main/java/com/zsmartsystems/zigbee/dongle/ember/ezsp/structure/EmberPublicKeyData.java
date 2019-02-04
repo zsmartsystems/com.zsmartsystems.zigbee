@@ -83,7 +83,7 @@ public class EmberPublicKeyData {
     public String toString() {
         final StringBuilder builder = new StringBuilder(46);
         builder.append("EmberPublicKeyData [contents=");
-        builder.append("{");
+        builder.append('{');
         if (contents == null) {
             builder.append("null");
         } else {
@@ -94,7 +94,7 @@ public class EmberPublicKeyData {
                 builder.append(String.format("%02X", contents[cnt]));
             }
         }
-        builder.append("}");
+        builder.append('}');
         builder.append(']');
         return builder.toString();
     }

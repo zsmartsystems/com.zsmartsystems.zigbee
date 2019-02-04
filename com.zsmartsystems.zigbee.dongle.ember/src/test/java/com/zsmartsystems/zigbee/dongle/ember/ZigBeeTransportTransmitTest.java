@@ -12,6 +12,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
@@ -62,7 +63,7 @@ public class ZigBeeTransportTransmitTest extends ZigBeeTransportTransmitAbstract
             }
         };
 
-        setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", Mockito.mock(EzspProtocolHandler.class));
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", Mockito.mock(EzspProtocolHandler.class));
 
         transport = dongle;
     }

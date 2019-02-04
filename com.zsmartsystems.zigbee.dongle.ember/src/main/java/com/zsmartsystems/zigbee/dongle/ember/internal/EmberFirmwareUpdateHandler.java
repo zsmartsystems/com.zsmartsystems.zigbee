@@ -54,11 +54,6 @@ public class EmberFirmwareUpdateHandler {
     private boolean stopBootload = false;
 
     /**
-     * Flag to store the success of the transfer
-     */
-    private boolean bootloadOk = false;
-
-    /**
      * Reference to our master
      */
     private final ZigBeeDongleEzsp dongle;
@@ -129,7 +124,7 @@ public class EmberFirmwareUpdateHandler {
                 }
 
                 callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_TRANSFER_STARTED);
-                bootloadOk = transferFile();
+                boolean bootloadOk = transferFile();
                 if (bootloadOk) {
                     callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_TRANSFER_COMPLETE);
                     logger.debug("Ember bootloader: Transfer successful.");

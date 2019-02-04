@@ -47,8 +47,6 @@ public class AshFrame {
      * <li>A Flag Byte is added after the CRC.
      * </ol>
      *
-     * @param frmNum
-     * @param ackNum
      * @return integer array of data to be sent
      */
     public int[] getOutputBuffer() {

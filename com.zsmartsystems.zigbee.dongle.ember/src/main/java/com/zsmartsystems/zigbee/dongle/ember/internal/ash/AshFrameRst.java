@@ -16,13 +16,16 @@ package com.zsmartsystems.zigbee.dongle.ember.internal.ash;
 public class AshFrameRst extends AshFrame {
     /**
      * Constructor to create an ASH Reset frame.
-     *
-     * @param buffer
      */
     public AshFrameRst() {
         this.frameType = FrameType.RST;
     }
 
+    /**
+     * Constructor taking an incoming data buffer
+     *
+     * @param frameBuffer the incoming data buffer
+     */
     public AshFrameRst(int[] frameBuffer) {
         this();
     }

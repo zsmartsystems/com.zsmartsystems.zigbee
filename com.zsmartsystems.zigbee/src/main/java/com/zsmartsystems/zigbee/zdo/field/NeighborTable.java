@@ -259,10 +259,7 @@ public class NeighborTable {
         if (relationship != other.relationship) {
             return false;
         }
-        if (rxOnWhenIdle != other.rxOnWhenIdle) {
-            return false;
-        }
-        return true;
+        return rxOnWhenIdle == other.rxOnWhenIdle;
     }
 
     @Override

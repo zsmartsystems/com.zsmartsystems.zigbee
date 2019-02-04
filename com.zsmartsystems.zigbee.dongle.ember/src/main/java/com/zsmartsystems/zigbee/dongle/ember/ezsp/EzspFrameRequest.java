@@ -44,8 +44,6 @@ public abstract class EzspFrameRequest extends EzspFrame {
 
     /**
      * Constructor used to create an outgoing frame
-     *
-     * @param frameId
      */
     protected EzspFrameRequest() {
         sequenceNumber = (int) sequence.getAndIncrement();

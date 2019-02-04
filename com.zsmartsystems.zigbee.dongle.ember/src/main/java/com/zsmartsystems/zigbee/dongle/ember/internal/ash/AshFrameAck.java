@@ -17,13 +17,18 @@ public class AshFrameAck extends AshFrame {
     /**
      * Constructor to create an ASH ACK frame.
      *
-     * @param buffer
+     * @param ackNum the frame number to acknowledge
      */
     public AshFrameAck(int ackNum) {
         this.frameType = FrameType.ACK;
         this.ackNum = ackNum;
     }
 
+    /**
+     * Constructor taking an incoming data buffer
+     * 
+     * @param frameBuffer the incoming data buffer
+     */
     public AshFrameAck(int[] frameBuffer) {
         this.frameType = FrameType.ACK;
         processHeader(frameBuffer);

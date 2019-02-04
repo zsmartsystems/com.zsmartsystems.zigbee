@@ -21,7 +21,7 @@ public class AshFrameData extends AshFrame {
     /**
      * Constructor to create an ASH Data frame for sending.
      *
-     * @param buffer
+     * @param ezspRequestFrame the {@link EzspFrameRequest} to send
      */
     public AshFrameData(EzspFrameRequest ezspRequestFrame) {
         frameType = FrameType.DATA;
@@ -29,9 +29,9 @@ public class AshFrameData extends AshFrame {
     }
 
     /**
-     * Create frame from incoming data
+     * Constructor taking an incoming data buffer
      *
-     * @param frameBuffer
+     * @param frameBuffer the incoming data buffer
      */
     public AshFrameData(int[] frameBuffer) {
         frameType = FrameType.DATA;
@@ -54,7 +54,7 @@ public class AshFrameData extends AshFrame {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder(96);
         result.append("AshFrameData [frmNum=");
         result.append(frmNum);
         result.append(", ackNum=");
@@ -65,7 +65,7 @@ public class AshFrameData extends AshFrame {
 
         for (int i = 0; i < dataBuffer.length; i++) {
             if (i != 0) {
-                result.append(" ");
+                result.append(' ');
             }
             result.append(String.format("%02X", dataBuffer[i]));
         }

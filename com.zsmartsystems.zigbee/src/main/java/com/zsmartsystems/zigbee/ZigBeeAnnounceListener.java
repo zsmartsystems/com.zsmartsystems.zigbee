@@ -20,7 +20,9 @@ public interface ZigBeeAnnounceListener {
     /**
      * Called when a new device is heard on the network.
      *
-     * @param address the network address of the newly announced device
+     * @param deviceStatus the {@link ZigBeeNodeStatus} of the newly announced device
+     * @param networkAddress the network address of the newly announced device
+     * @param ieeeAddress the {@link IeeeAddress} of the newly announced device
      */
     void deviceStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
             final IeeeAddress ieeeAddress);

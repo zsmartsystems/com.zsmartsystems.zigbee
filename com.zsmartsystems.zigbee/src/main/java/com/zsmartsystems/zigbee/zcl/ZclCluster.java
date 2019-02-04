@@ -853,7 +853,7 @@ public abstract class ZclCluster {
     /**
      * Processes a list of attribute reports for this cluster
      *
-     * @param reports {@List} of {@link AttributeReport}
+     * @param reports List of {@link AttributeReport}
      */
     public void handleAttributeReport(List<AttributeReport> reports) {
         for (AttributeReport report : reports) {
@@ -864,7 +864,7 @@ public abstract class ZclCluster {
     /**
      * Processes a list of attribute status reports for this cluster
      *
-     * @param reports {@List} of {@link ReadAttributeStatusRecord}
+     * @param records List of {@link ReadAttributeStatusRecord}
      */
     public void handleAttributeStatus(List<ReadAttributeStatusRecord> records) {
         for (ReadAttributeStatusRecord record : records) {
