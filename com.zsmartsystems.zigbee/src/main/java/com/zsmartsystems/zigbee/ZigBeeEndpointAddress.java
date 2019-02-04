@@ -87,7 +87,7 @@ public class ZigBeeEndpointAddress extends ZigBeeAddress {
     /**
      * Sets the endpoint number
      *
-     * @param the endpoint number
+     * @param endpoint the endpoint number
      */
     public void setEndpoint(final int endpoint) {
         this.endpoint = endpoint;

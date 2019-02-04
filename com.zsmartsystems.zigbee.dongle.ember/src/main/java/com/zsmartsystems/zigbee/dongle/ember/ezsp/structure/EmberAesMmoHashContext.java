@@ -112,7 +112,7 @@ public class EmberAesMmoHashContext {
     public String toString() {
         final StringBuilder builder = new StringBuilder(75);
         builder.append("EmberAesMmoHashContext [result=");
-        builder.append("{");
+        builder.append('{');
         if (result == null) {
             builder.append("null");
         } else {
@@ -123,7 +123,7 @@ public class EmberAesMmoHashContext {
                 builder.append(String.format("%02X", result[cnt]));
             }
         }
-        builder.append("}");
+        builder.append('}');
         builder.append(", length=");
         builder.append(length);
         builder.append(']');

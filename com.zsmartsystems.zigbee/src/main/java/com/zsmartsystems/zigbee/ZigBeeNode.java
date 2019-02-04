@@ -563,8 +563,8 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * This method checks to see if there have been "significant" changes to the neighbors list so that we can avoid
      * bothering higher layers if nothing noteworthy has changed.
      *
-     * @param neighbors list of neighbors as a {@link NeighborTable}. Setting to null will remove all neighbors.
-     * @return true if the neighbor table was updated
+     * @param associatedDevices list of associated devices
+     * @return true if the associated device list was updated
      */
     public boolean setAssociatedDevices(Set<Integer> associatedDevices) {
         if (this.associatedDevices.equals(associatedDevices)) {

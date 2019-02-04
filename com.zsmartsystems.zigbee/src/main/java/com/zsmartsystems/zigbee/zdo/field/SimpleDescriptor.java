@@ -157,10 +157,7 @@ public class SimpleDescriptor {
         } else if (!outputClusterList.equals(other.outputClusterList)) {
             return false;
         }
-        if (profileId != other.profileId) {
-            return false;
-        }
-        return true;
+        return profileId == other.profileId;
     }
 
     @Override

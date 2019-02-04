@@ -17,13 +17,18 @@ public class AshFrameNak extends AshFrame {
     /**
      * Constructor to create an ASH NAK frame.
      *
-     * @param buffer
+     * @param ackNum the frame number to acknowledge
      */
     public AshFrameNak(int ackNum) {
         this.frameType = FrameType.NAK;
         this.ackNum = ackNum;
     }
 
+    /**
+     * Constructor taking an incoming data buffer
+     *
+     * @param frameBuffer the incoming data buffer
+     */
     public AshFrameNak(int[] frameBuffer) {
         this.frameType = FrameType.NAK;
         processHeader(frameBuffer);

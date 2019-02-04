@@ -10,9 +10,6 @@ package com.zsmartsystems.zigbee.transport;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ZigBeeStatus;
@@ -26,15 +23,6 @@ import com.zsmartsystems.zigbee.ZigBeeStatus;
  */
 public abstract class ZigBeeTransportTransmitAbstractTest {
     protected ZigBeeTransportTransmit transport;
-
-    protected void setField(Class clazz, Object object, String fieldName, Object newValue) throws Exception {
-        Field field = clazz.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        Field modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-        field.set(object, newValue);
-    }
 
     /**
      * Tests that after {@link ZigBeeTransportTransmit#initialize()} has been called,

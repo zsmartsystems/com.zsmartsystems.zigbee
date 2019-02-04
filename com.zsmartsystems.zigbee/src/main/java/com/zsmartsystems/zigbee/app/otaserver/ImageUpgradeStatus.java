@@ -93,7 +93,7 @@ public enum ImageUpgradeStatus {
     /**
      * Get a {@link ImageUpgradeStatus} from an integer
      *
-     * @param stackTypeValue integer value defining the status type
+     * @param statusValue integer value defining the status type
      * @return {@link ImageUpgradeStatus} or {@link #UNKNOWN} if the value could not be converted
      */
     public static ImageUpgradeStatus getStatus(int statusValue) {

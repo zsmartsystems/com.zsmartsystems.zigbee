@@ -644,7 +644,7 @@ public class ZigBeeDongleTelegesis
             TelegesisSendMulticastCommand multicastCommand = new TelegesisSendMulticastCommand();
             command = multicastCommand;
         } else {
-            logger.debug("Telegesis message not sent: {}, {}", apsFrame);
+            logger.debug("Telegesis message not sent: {}", apsFrame);
             return;
         }
 

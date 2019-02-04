@@ -83,7 +83,7 @@ public class EmberCertificate283k1Data {
     public String toString() {
         final StringBuilder builder = new StringBuilder(53);
         builder.append("EmberCertificate283k1Data [contents=");
-        builder.append("{");
+        builder.append('{');
         if (contents == null) {
             builder.append("null");
         } else {
@@ -94,7 +94,7 @@ public class EmberCertificate283k1Data {
                 builder.append(String.format("%02X", contents[cnt]));
             }
         }
-        builder.append("}");
+        builder.append('}');
         builder.append(']');
         return builder.toString();
     }

@@ -8,11 +8,11 @@
 package com.zsmartsystems.zigbee.dongle.ember;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -273,8 +273,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * <p>
      * Note that this must be called prior to {@link #initialize()} for the configuration to be effective.
      *
-     * @param configId the {@link EzspPolicyId} to be updated
-     * @param value the (as {@link EzspDecisionId} to set. Setting this to null will remove the policy from
+     * @param policyId the {@link EzspPolicyId} to be updated
+     * @param decisionId the (as {@link EzspDecisionId} to set. Setting this to null will remove the policy from
      *            the list of policies to be sent during NCP initialisation.
      * @return the previously configured {@link EzspDecisionId}, or null if no value was set for the
      *         {@link EzspPolicyId}
@@ -1057,7 +1057,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * @return map of counters
      */
     public Map<String, Long> getCounters() {
-        Map<String, Long> counters = new HashMap<String, Long>();
+        Map<String, Long> counters = new ConcurrentHashMap<String, Long>();
 
         if (frameHandler != null) {
             counters.putAll(frameHandler.getCounters());
