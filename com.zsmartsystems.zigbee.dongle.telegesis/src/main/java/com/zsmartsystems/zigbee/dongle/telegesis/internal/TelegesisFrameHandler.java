@@ -457,7 +457,7 @@ public class TelegesisFrameHandler {
     /**
      * Notify any event listeners when we receive an event.
      *
-     * @param response the {@link TelegesisEvent} received
+     * @param event the {@link TelegesisEvent} received
      */
     private void notifyEventReceived(final TelegesisEvent event) {
         logger.debug("RX Telegesis: {}", event);
