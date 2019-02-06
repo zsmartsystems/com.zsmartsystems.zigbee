@@ -149,13 +149,10 @@ public class ZToolPacketStream implements IIntArrayInputStream {
             logger.error("Packet parsing failed due to exception.", e);
             exception = e;
         }
+
         final ZToolPacket exceptionResponse = new ErrorPacket();
-
-        if (exception != null) {
-            exceptionResponse.setError(true);
-            exceptionResponse.setErrorMsg(exception.getMessage());
-        }
-
+        exceptionResponse.setError(true);
+        exceptionResponse.setErrorMsg(exception.getMessage());
         return exceptionResponse;
     }
 
