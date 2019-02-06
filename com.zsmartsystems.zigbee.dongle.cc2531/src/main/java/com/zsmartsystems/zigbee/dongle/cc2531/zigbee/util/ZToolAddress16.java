@@ -94,13 +94,16 @@ public class ZToolAddress16 extends ZToolAddress {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object other) {
+        if (!(other instanceof ZToolAddress16)) {
+            return false;
+        }
 
-        if (this == o) {
+        if (this == other) {
             return true;
         } else {
             try {
-                ZToolAddress16 addr = (ZToolAddress16) o;
+                ZToolAddress16 addr = (ZToolAddress16) other;
 
                 return (this.getLsb() == addr.getLsb() && this.getMsb() == addr.getMsb());
             } catch (Exception e) {

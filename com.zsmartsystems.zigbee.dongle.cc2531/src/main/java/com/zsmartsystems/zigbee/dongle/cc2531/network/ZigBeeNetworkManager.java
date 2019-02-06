@@ -618,9 +618,8 @@ public class ZigBeeNetworkManager {
             Thread requestor;
             while ((requestor = conversation3Way.get(clz)) != null) {
                 if (!requestor.isAlive()) {
-                    logger.error("Thread {} whom requested {} DIED before unlocking the conversation");
-                    logger.debug(
-                            "The thread {} who was waiting for {} to complete DIED, so we have to remove the lock");
+                    logger.error("Thread {} whom requested {} DIED before unlocking the conversation", requestor,
+                            request);
                     conversation3Way.put(clz, null);
                     break;
                 }

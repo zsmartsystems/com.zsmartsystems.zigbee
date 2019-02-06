@@ -94,6 +94,9 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
      * @param port the ZigBee transport implementation.
      */
     public CommandInterfaceImpl(ZigBeePort port) {
+        if (port == null) {
+            throw new IllegalArgumentException("Port may not be null");
+        }
         this.port = port;
     }
 
@@ -120,9 +123,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
             if (parser != null) {
                 parser.setClosing();
             }
-            if (port != null) {
-                port.close();
-            }
+            port.close();
             if (parser != null) {
                 parser.close();
             }
