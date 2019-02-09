@@ -7,39 +7,40 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
-import javax.annotation.Generated;
 
 /**
  * IEEE Address Request value object class.
  * <p>
- * The IEEE_addr_req is generated from a Local Device wishing to inquire as to the
- * 64-bit IEEE address of the Remote Device based on their known 16-bit address.
- * The destination addressing on this command shall be unicast.
+ * <p>
+ * The IEEE_addr_req is generated from a Local Device wishing to inquire as to the 64-bit IEEE
+ * address of the Remote Device based on their known 16-bit address. The destination
+ * addressing on this command shall be unicast.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
-     * NWKAddrOfInterest command message field.
+     * NWK Addr Of Interest command message field.
      */
     private Integer nwkAddrOfInterest;
 
     /**
-     * RequestType command message field.
+     * Request Type command message field.
      */
     private Integer requestType;
 
     /**
-     * StartIndex command message field.
+     * Start Index command message field.
      */
     private Integer startIndex;
 
@@ -51,54 +52,54 @@ public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionM
     }
 
     /**
-     * Gets NWKAddrOfInterest.
+     * Gets NWK Addr Of Interest.
      *
-     * @return the NWKAddrOfInterest
+     * @return the NWK Addr Of Interest
      */
     public Integer getNwkAddrOfInterest() {
         return nwkAddrOfInterest;
     }
 
     /**
-     * Sets NWKAddrOfInterest.
+     * Sets NWK Addr Of Interest.
      *
-     * @param nwkAddrOfInterest the NWKAddrOfInterest
+     * @param nwkAddrOfInterest the NWK Addr Of Interest
      */
     public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
 
     /**
-     * Gets RequestType.
+     * Gets Request Type.
      *
-     * @return the RequestType
+     * @return the Request Type
      */
     public Integer getRequestType() {
         return requestType;
     }
 
     /**
-     * Sets RequestType.
+     * Sets Request Type.
      *
-     * @param requestType the RequestType
+     * @param requestType the Request Type
      */
     public void setRequestType(final Integer requestType) {
         this.requestType = requestType;
     }
 
     /**
-     * Gets StartIndex.
+     * Gets Start Index.
      *
-     * @return the StartIndex
+     * @return the Start Index
      */
     public Integer getStartIndex() {
         return startIndex;
     }
 
     /**
-     * Sets StartIndex.
+     * Sets Start Index.
      *
-     * @param startIndex the StartIndex
+     * @param startIndex the Start Index
      */
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;

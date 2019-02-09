@@ -7,45 +7,44 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import java.util.List;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
-
-import java.util.List;
-import java.util.ArrayList;
-import javax.annotation.Generated;
 
 /**
  * Backup Source Bind Request value object class.
  * <p>
- * The Backup_Source_Bind_req is generated from a local primary binding table
- * cache and sent to a remote backup binding table cache device to request backup
- * storage of its entire source table. The destination addressing mode for this request
- * is unicast.
+ * <p>
+ * The Backup_Source_Bind_req is generated from a local primary binding table cache and sent
+ * to a remote backup binding table cache device to request backup storage of its entire source
+ * table. The destination addressing mode for this request is unicast.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:19:25Z")
 public class BackupSourceBindRequest extends ZdoRequest {
     /**
-     * SourceTableEntries command message field.
+     * Source Table Entries command message field.
      */
     private Integer sourceTableEntries;
 
     /**
-     * StartIndex command message field.
+     * Start Index command message field.
      */
     private Integer startIndex;
 
     /**
-     * SourceTableListCount command message field.
+     * Source Table List Count command message field.
      */
     private Integer sourceTableListCount;
 
     /**
-     * SourceTableList command message field.
+     * Source Table List command message field.
      */
     private List<Long> sourceTableList;
 
@@ -57,72 +56,72 @@ public class BackupSourceBindRequest extends ZdoRequest {
     }
 
     /**
-     * Gets SourceTableEntries.
+     * Gets Source Table Entries.
      *
-     * @return the SourceTableEntries
+     * @return the Source Table Entries
      */
     public Integer getSourceTableEntries() {
         return sourceTableEntries;
     }
 
     /**
-     * Sets SourceTableEntries.
+     * Sets Source Table Entries.
      *
-     * @param sourceTableEntries the SourceTableEntries
+     * @param sourceTableEntries the Source Table Entries
      */
     public void setSourceTableEntries(final Integer sourceTableEntries) {
         this.sourceTableEntries = sourceTableEntries;
     }
 
     /**
-     * Gets StartIndex.
+     * Gets Start Index.
      *
-     * @return the StartIndex
+     * @return the Start Index
      */
     public Integer getStartIndex() {
         return startIndex;
     }
 
     /**
-     * Sets StartIndex.
+     * Sets Start Index.
      *
-     * @param startIndex the StartIndex
+     * @param startIndex the Start Index
      */
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }
 
     /**
-     * Gets SourceTableListCount.
+     * Gets Source Table List Count.
      *
-     * @return the SourceTableListCount
+     * @return the Source Table List Count
      */
     public Integer getSourceTableListCount() {
         return sourceTableListCount;
     }
 
     /**
-     * Sets SourceTableListCount.
+     * Sets Source Table List Count.
      *
-     * @param sourceTableListCount the SourceTableListCount
+     * @param sourceTableListCount the Source Table List Count
      */
     public void setSourceTableListCount(final Integer sourceTableListCount) {
         this.sourceTableListCount = sourceTableListCount;
     }
 
     /**
-     * Gets SourceTableList.
+     * Gets Source Table List.
      *
-     * @return the SourceTableList
+     * @return the Source Table List
      */
     public List<Long> getSourceTableList() {
         return sourceTableList;
     }
 
     /**
-     * Sets SourceTableList.
+     * Sets Source Table List.
      *
-     * @param sourceTableList the SourceTableList
+     * @param sourceTableList the Source Table List
      */
     public void setSourceTableList(final List<Long> sourceTableList) {
         this.sourceTableList = sourceTableList;

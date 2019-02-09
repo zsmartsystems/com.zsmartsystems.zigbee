@@ -7,30 +7,31 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
-import javax.annotation.Generated;
 
 /**
  * Simple Descriptor Request value object class.
  * <p>
- * The Simple_Desc_req command is generated from a local device wishing to
- * inquire as to the simple descriptor of a remote device on a specified endpoint. This
- * command shall be unicast either to the remote device itself or to an alternative
- * device that contains the discovery information of the remote device.
+ * <p>
+ * The Simple_Desc_req command is generated from a local device wishing to inquire as to the
+ * simple descriptor of a remote device on a specified endpoint. This command shall be unicast
+ * either to the remote device itself or to an alternative device that contains the discovery
+ * information of the remote device.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:39:59Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class SimpleDescriptorRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
-     * NWKAddrOfInterest command message field.
+     * NWK Addr Of Interest command message field.
      */
     private Integer nwkAddrOfInterest;
 
@@ -47,18 +48,18 @@ public class SimpleDescriptorRequest extends ZdoRequest implements ZigBeeTransac
     }
 
     /**
-     * Gets NWKAddrOfInterest.
+     * Gets NWK Addr Of Interest.
      *
-     * @return the NWKAddrOfInterest
+     * @return the NWK Addr Of Interest
      */
     public Integer getNwkAddrOfInterest() {
         return nwkAddrOfInterest;
     }
 
     /**
-     * Sets NWKAddrOfInterest.
+     * Sets NWK Addr Of Interest.
      *
-     * @param nwkAddrOfInterest the NWKAddrOfInterest
+     * @param nwkAddrOfInterest the NWK Addr Of Interest
      */
     public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;

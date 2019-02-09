@@ -214,15 +214,11 @@ public class TelegesisFirmwareUpdateHandler {
                 }
             }
 
-            if (retryCount >= MENU_MAX_RETRIES) {
-                logger.debug("Telegesis bootloader: Unable to get bootloader prompt.");
-                transferComplete(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
-                return false;
-            }
-
             retryCount++;
         }
 
+        logger.debug("Telegesis bootloader: Unable to get bootloader prompt.");
+        transferComplete(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_FAILED);
         return false;
     }
 

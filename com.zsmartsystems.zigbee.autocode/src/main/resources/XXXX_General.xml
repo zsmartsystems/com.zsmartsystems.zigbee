@@ -1,0 +1,219 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0xFFFF">
+    <name>General</name>
+    <command code="0x00" source="client">
+        <name>Read Attributes Command</name>
+        <description>The read attributes command is generated when a device wishes to determine the values of one or more attributes located on another device. Each attribute identifier field shall contain the identifier of the attribute to be read.</description>
+        <field type="N_X_ATTRIBUTE_IDENTIFIER">
+            <name>Identifiers</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Read Attributes Response</name>
+        <description>The read attributes response command is generated in response to a read attributes or read attributes structured command. The command frame shall contain a read attribute status record for each attribute identifier specified in the original read attributes or read attributes structured command. For each read attribute status record, the attribute identifier field shall contain the identifier specified in the original read attributes or read attributes structured command.</description>
+        <field type="N_X_READ_ATTRIBUTE_STATUS_RECORD">
+            <name>Records</name>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Write Attributes Command</name>
+        <description>The write attributes command is generated when a device wishes to change the values of one or more attributes located on another device. Each write attribute record shall contain the identifier and the actual value of the attribute to be written.</description>
+        <field type="N_X_WRITE_ATTRIBUTE_RECORD">
+            <name>Records</name>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Write Attributes Undivided Command</name>
+        <description>The write attributes undivided command is generated when a device wishes to change the values of one or more attributes located on another device, in such a way that if any attribute cannot be written (e.g. if an attribute is not implemented on the device, or a value to be written is outside its valid range), no attribute values are changed. &lt;br&gt; In all other respects, including generation of a write attributes response command, the format and operation of the command is the same as that of the write attributes command, except that the command identifier field shall be set to indicate the write attributes undivided command.</description>
+        <field type="N_X_WRITE_ATTRIBUTE_RECORD">
+            <name>Records</name>
+        </field>
+    </command>
+    <command code="0x04" source="client">
+        <name>Write Attributes Response</name>
+        <description>The write attributes response command is generated in response to a write attributes command.</description>
+        <field type="N_X_WRITE_ATTRIBUTE_STATUS_RECORD">
+            <name>Records</name>
+        </field>
+    </command>
+    <command code="0x05" source="client">
+        <name>Write Attributes No Response</name>
+        <description>The write attributes no response command is generated when a device wishes to change the value of one or more attributes located on another device but does not require a response. Each write attribute record shall contain the identifier and the actual value of the attribute to be written.</description>
+        <field type="N_X_WRITE_ATTRIBUTE_RECORD">
+            <name>Records</name>
+        </field>
+    </command>
+    <command code="0x06" source="client">
+        <name>Configure Reporting Command</name>
+        <description>The Configure Reporting command is used to configure the reporting mechanism for one or more of the attributes of a cluster. &lt;br&gt; The individual cluster definitions specify which attributes shall be available to this reporting mechanism, however specific implementations of a cluster may make additional attributes available.</description>
+        <field type="N_X_ATTRIBUTE_REPORTING_CONFIGURATION_RECORD">
+            <name>Records</name>
+        </field>
+    </command>
+    <command code="0x07" source="client">
+        <name>Configure Reporting Response</name>
+        <description>The Configure Reporting Response command is generated in response to a Configure Reporting command.</description>
+        <field type="ZCL_STATUS">
+            <name>Status</name>
+            <description>Status is only provided if the command was successful, and the attribute status records are not included for successfully written attributes, in order to save bandwidth.</description>
+            <conditional>
+                <value>statusResponse</value>
+            </conditional>
+        </field>
+        <field type="N_X_ATTRIBUTE_STATUS_RECORD">
+            <name>Records</name>
+            <description>Note that attribute status records are not included for successfully configured attributes in order to save bandwidth.  In the case of successful configuration of all attributes, only a single attribute status record SHALL be included in the command, with the status field set to SUCCESS and the direction and attribute identifier fields omitted.</description>
+        </field>
+    </command>
+    <command code="0x08" source="client">
+        <name>Read Reporting Configuration Command</name>
+        <description>The Read Reporting Configuration command is used to read the configuration details of the reporting mechanism for one or more of the attributes of a cluster.</description>
+        <field type="N_X_ATTRIBUTE_RECORD">
+            <name>Records</name>
+        </field>
+    </command>
+    <command code="0x09" source="client">
+        <name>Read Reporting Configuration Response</name>
+        <description>The Read Reporting Configuration Response command is used to respond to a Read Reporting Configuration command.</description>
+        <field type="N_X_ATTRIBUTE_REPORTING_CONFIGURATION_RECORD">
+            <name>Records</name>
+        </field>
+    </command>
+    <command code="0x0A" source="client">
+        <name>Report Attributes Command</name>
+        <description>The report attributes command is used by a device to report the values of one or more of its attributes to another device, bound a priori. Individual clusters, defined elsewhere in the ZCL, define which attributes are to be reported and at what interval.</description>
+        <field type="N_X_ATTRIBUTE_REPORT">
+            <name>Reports</name>
+        </field>
+    </command>
+    <command code="0x0B" source="client">
+        <name>Default Response</name>
+        <description>The default response command is generated when a device receives a unicast command, there is no other relevant response specified for the command, and either an error results or the Disable default response bit of its Frame control field is set to 0.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Command Identifier</name>
+        </field>
+        <field type="ZCL_STATUS">
+            <name>Status Code</name>
+        </field>
+    </command>
+    <command code="0x0C" source="client">
+        <name>Discover Attributes Command</name>
+        <description>The discover attributes command is generated when a remote device wishes to discover the identifiers and types of the attributes on a device which are supported within the cluster to which this command is directed.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Start Attribute Identifier</name>
+            <description>The start attribute identifier field is 16 bits in length and specifies the value of the identifier at which to begin the attribute discovery.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Maximum Attribute Identifiers</name>
+            <description>The  maximum attribute identifiers field is 8 bits in length and specifies the maximum number of attribute identifiers that are to be returned in the resulting Discover Attributes Response command.</description>
+        </field>
+    </command>
+    <command code="0x0D" source="client">
+        <name>Discover Attributes Response</name>
+        <description>The discover attributes response command is generated in response to a discover attributes command.</description>
+        <field type="BOOLEAN">
+            <name>Discovery Complete</name>
+            <description>The discovery complete field is a Boolean field. A value of 0 indicates that there are more attributes to be discovered that have an attribute identifier value greater than the last attribute identifier in the last attribute information field. A value of 1 indicates that there are no more attributes to be discovered. The attribute identifier field SHALL contain the identifier of a discovered attribute. Attributes SHALL be included in ascending order, starting with the lowest attribute identifier that is greater than or equal to the start attribute identifier field of the received Discover Attributes command.</description>
+        </field>
+        <field type="N_X_ATTRIBUTE_INFORMATION">
+            <name>Attribute Information</name>
+        </field>
+    </command>
+    <command code="0x0E" source="client">
+        <name>Read Attributes Structured Command</name>
+        <description>The read attributes command is generated when a device wishes to determine the values of one or more attributes, or elements of attributes, located on another device. Each attribute identifier field shall contain the identifier of the attribute to be read.</description>
+        <field type="N_X_ATTRIBUTE_SELECTOR">
+            <name>Attribute Selectors</name>
+        </field>
+    </command>
+    <command code="0x0F" source="client">
+        <name>Write Attributes Structured Command</name>
+        <description>The write attributes structured command is generated when a device wishes to change the values of one or more attributes located on another device. Each write attribute record shall contain the identifier and the actual value of the attribute, or element thereof, to be written.</description>
+        <field type="ZCL_STATUS">
+            <name>Status</name>
+            <description>Status is only provided if the command was successful, and the attribute selector records are not included for successfully written attributes, in order to save bandwidth.</description>
+            <conditional>
+                <value>statusResponse</value>
+            </conditional>
+        </field>
+        <field type="N_X_ATTRIBUTE_SELECTOR">
+            <name>Attribute Selectors</name>
+            <description>Note that write attribute status records are not included for successfully written attributes, in order to save bandwidth. In the case of successful writing of all attributes, only a single  write attribute status record SHALL be included in the command, with the status field set to SUCCESS and the attribute identifier and selector fields omitted.</description>
+        </field>
+    </command>
+    <command code="0x10" source="client">
+        <name>Write Attributes Structured Response</name>
+        <description>The write attributes structured response command is generated in response to a write attributes structured command.</description>
+        <field type="ZCL_STATUS">
+            <name>Status</name>
+            <description>Status is only provided if the command was successful, and the write attribute status records are not included for successfully written attributes, in order to save bandwidth.</description>
+            <conditional>
+                <value>statusResponse</value>
+            </conditional>
+        </field>
+        <field type="N_X_WRITE_ATTRIBUTE_STATUS_RECORD">
+            <name>Records</name>
+            <description>Note that write attribute status records are not included for successfully written attributes, in order to save bandwidth.  In the case of successful writing of all attributes, only a single write attribute status record SHALL be included in the command, with the status field set to SUCCESS and the attribute identifier field omitted.</description>
+        </field>
+    </command>
+    <command code="0x11" source="client">
+        <name>Discover Commands Received</name>
+        <description>The Discover Commands Received command is generated when a remote device wishes to discover the optional and mandatory commands the cluster to which this command is sent can process.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Start Command Identifier</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Maximum Command Identifiers</name>
+        </field>
+    </command>
+    <command code="0x12" source="client">
+        <name>Discover Commands Received Response</name>
+        <description>The Discover Commands Received Response is generated in response to a Discover Commands Received command.</description>
+        <field type="BOOLEAN">
+            <name>Discovery Complete</name>
+        </field>
+        <field type="X_UNSIGNED_8_BIT_INTEGER">
+            <name>Command Identifiers</name>
+        </field>
+    </command>
+    <command code="0x13" source="client">
+        <name>Discover Commands Generated</name>
+        <description>The Discover Commands Generated command is generated when a remote device wishes to discover the commands that a cluster may generate on the device to which this command is directed.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Start Command Identifier</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Maximum Command Identifiers</name>
+        </field>
+    </command>
+    <command code="0x14" source="client">
+        <name>Discover Commands Generated Response</name>
+        <description>The Discover Commands Generated Response is generated in response to a Discover Commands Generated command.</description>
+        <field type="BOOLEAN">
+            <name>Discovery Complete</name>
+        </field>
+        <field type="X_UNSIGNED_8_BIT_INTEGER">
+            <name>Command Identifiers</name>
+        </field>
+    </command>
+    <command code="0x15" source="client">
+        <name>Discover Attributes Extended</name>
+        <description>The Discover Attributes Extended command is generated when a remote device wishes to discover the identifiers and types of the attributes on a device which are supported within the cluster to which this command is directed, including whether the attribute is readable, writeable or reportable.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Start Attribute Identifier</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Maximum Attribute Identifiers</name>
+        </field>
+    </command>
+    <command code="0x16" source="client">
+        <name>Discover Attributes Extended Response</name>
+        <description>The Discover Attributes Extended Response command is generated in response to a Discover Attributes Extended command.</description>
+        <field type="BOOLEAN">
+            <name>Discovery Complete</name>
+        </field>
+        <field type="N_X_EXTENDED_ATTRIBUTE_INFORMATION">
+            <name>Attribute Information</name>
+        </field>
+    </command>
+</cluster>

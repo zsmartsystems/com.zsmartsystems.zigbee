@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.colorcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Move Saturation Command value object class.
@@ -23,10 +23,10 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class MoveSaturationCommand extends ZclCommand {
     /**
-     * Move mode command message field.
+     * Move Mode command message field.
      */
     private Integer moveMode;
 
@@ -40,24 +40,24 @@ public class MoveSaturationCommand extends ZclCommand {
      */
     public MoveSaturationCommand() {
         genericCommand = false;
-        clusterId = 768;
+        clusterId = 0x0300;
         commandId = 4;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Move mode.
+     * Gets Move Mode.
      *
-     * @return the Move mode
+     * @return the Move Mode
      */
     public Integer getMoveMode() {
         return moveMode;
     }
 
     /**
-     * Sets Move mode.
+     * Sets Move Mode.
      *
-     * @param moveMode the Move mode
+     * @param moveMode the Move Mode
      */
     public void setMoveMode(final Integer moveMode) {
         this.moveMode = moveMode;

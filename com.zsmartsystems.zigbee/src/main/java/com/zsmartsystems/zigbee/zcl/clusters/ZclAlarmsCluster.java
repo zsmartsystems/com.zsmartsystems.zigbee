@@ -7,6 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
@@ -20,10 +26,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.alarms.ResetAlarmLogCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.alarms.ResetAllAlarmsCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-import javax.annotation.Generated;
 
 /**
  * <b>Alarms</b> cluster implementation (<i>Cluster ID 0x0009</i>).
@@ -31,19 +33,19 @@ import javax.annotation.Generated;
  * Attributes and commands for sending alarm notifications and configuring alarm
  * functionality.
  * <p>
- * Alarm conditions and their respective alarm codes are described in individual
- * clusters, along with an alarm mask field. Where not masked, alarm notifications
- * are reported to subscribed targets using binding.
+ * Alarm conditions and their respective alarm codes are described in individual clusters,
+ * along with an alarm mask field. Where not masked, alarm notifications are reported to
+ * subscribed targets using binding.
  * <p>
- * Where an alarm table is implemented, all alarms, masked or otherwise, are
- * recorded and may be retrieved on demand.
+ * Where an alarm table is implemented, all alarms, masked or otherwise, are recorded and may be
+ * retrieved on demand.
  * <p>
- * Alarms may either reset automatically when the conditions that cause are no
- * longer active, or may need to be explicitly reset.
+ * Alarms may either reset automatically when the conditions that cause are no longer active,
+ * or may need to be explicitly reset.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ZclAlarmsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -58,19 +60,19 @@ public class ZclAlarmsCluster extends ZclCluster {
     // Attribute constants
     /**
      * The AlarmCount attribute is 16-bits in length and specifies the number of entries
-     * currently in the alarm table. This attribute shall be specified in the range 0x00 to
-     * the maximum defined in the profile using this cluster.
+     * currently in the alarm table. This attribute shall be specified in the range 0x00 to the
+     * maximum defined in the profile using this cluster.
      * <p>
-     * If alarm logging is not implemented this attribute shall always take the value
-     * 0x00.
+     * If alarm logging is not implemented this attribute shall always take the value 0x00.
      */
     public static final int ATTR_ALARMCOUNT = 0x0000;
 
     // Attribute initialisation
+    @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(1);
 
-        attributeMap.put(ATTR_ALARMCOUNT, new ZclAttribute(ZclClusterType.ALARMS, ATTR_ALARMCOUNT, "AlarmCount", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ALARMCOUNT, new ZclAttribute(ZclClusterType.ALARMS, ATTR_ALARMCOUNT, "Alarm Count", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
     }
@@ -78,21 +80,20 @@ public class ZclAlarmsCluster extends ZclCluster {
     /**
      * Default constructor to create a Alarms cluster.
      *
-     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint} this cluster is contained within
      */
     public ZclAlarmsCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
     /**
-     * Get the <i>AlarmCount</i> attribute [attribute ID <b>0</b>].
+     * Get the <i>Alarm Count</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The AlarmCount attribute is 16-bits in length and specifies the number of entries
-     * currently in the alarm table. This attribute shall be specified in the range 0x00 to
-     * the maximum defined in the profile using this cluster.
+     * currently in the alarm table. This attribute shall be specified in the range 0x00 to the
+     * maximum defined in the profile using this cluster.
      * <p>
-     * If alarm logging is not implemented this attribute shall always take the value
-     * 0x00.
+     * If alarm logging is not implemented this attribute shall always take the value 0x00.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -105,14 +106,13 @@ public class ZclAlarmsCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>AlarmCount</i> attribute [attribute ID <b>0</b>].
+     * Synchronously get the <i>Alarm Count</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The AlarmCount attribute is 16-bits in length and specifies the number of entries
-     * currently in the alarm table. This attribute shall be specified in the range 0x00 to
-     * the maximum defined in the profile using this cluster.
+     * currently in the alarm table. This attribute shall be specified in the range 0x00 to the
+     * maximum defined in the profile using this cluster.
      * <p>
-     * If alarm logging is not implemented this attribute shall always take the value
-     * 0x00.
+     * If alarm logging is not implemented this attribute shall always take the value 0x00.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -138,9 +138,14 @@ public class ZclAlarmsCluster extends ZclCluster {
 
     /**
      * The Reset Alarm Command
+     * <p>
+     * This command resets a specific alarm. This is needed for some alarms that do not reset
+     * automatically. If the alarm condition being reset was in fact still active then a new
+     * notification will be generated and, where implemented, a new record added to the alarm
+     * log.
      *
-     * @param alarmCode {@link Integer} Alarm code
-     * @param clusterIdentifier {@link Integer} Cluster identifier
+     * @param alarmCode {@link Integer} Alarm Code
+     * @param clusterIdentifier {@link Integer} Cluster Identifier
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> resetAlarmCommand(Integer alarmCode, Integer clusterIdentifier) {
@@ -155,48 +160,52 @@ public class ZclAlarmsCluster extends ZclCluster {
 
     /**
      * The Reset All Alarms Command
+     * <p>
+     * This command resets all alarms. Any alarm conditions that were in fact still active will
+     * cause a new notification to be generated and, where implemented, a new record added to
+     * the alarm log.
      *
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> resetAllAlarmsCommand() {
-        ResetAllAlarmsCommand command = new ResetAllAlarmsCommand();
-
-        return send(command);
+        return send(new ResetAllAlarmsCommand());
     }
 
     /**
      * The Get Alarm Command
+     * <p>
+     * This command causes the alarm with the earliest generated alarm entry in the alarm table
+     * to be reported in a get alarm response command. This command enables the reading of
+     * logged alarm conditions from the alarm table. Once an alarm condition has been reported
+     * the corresponding entry in the table is removed.
      *
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> getAlarmCommand() {
-        GetAlarmCommand command = new GetAlarmCommand();
-
-        return send(command);
+        return send(new GetAlarmCommand());
     }
 
     /**
      * The Reset Alarm Log Command
+     * <p>
+     * This command causes the alarm table to be cleared.
      *
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> resetAlarmLogCommand() {
-        ResetAlarmLogCommand command = new ResetAlarmLogCommand();
-
-        return send(command);
+        return send(new ResetAlarmLogCommand());
     }
 
     /**
      * The Alarm Command
      * <p>
-     * The alarm command signals an alarm situation on the sending device.
-     * <br>
-     * An alarm command is generated when a  cluster  which has alarm functionality detects an alarm
-     * condition, e.g., an attribute has taken on a value that is outside a ‘safe’ range. The details
-     * are given by individual cluster specifications.
+     * The alarm command signals an alarm situation on the sending device. <br> An alarm
+     * command is generated when a cluster which has alarm functionality detects an alarm
+     * condition, e.g., an attribute has taken on a value that is outside a ‘safe’ range. The
+     * details are given by individual cluster specifications.
      *
-     * @param alarmCode {@link Integer} Alarm code
-     * @param clusterIdentifier {@link Integer} Cluster identifier
+     * @param alarmCode {@link Integer} Alarm Code
+     * @param clusterIdentifier {@link Integer} Cluster Identifier
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> alarmCommand(Integer alarmCode, Integer clusterIdentifier) {
@@ -212,15 +221,16 @@ public class ZclAlarmsCluster extends ZclCluster {
     /**
      * The Get Alarm Response
      * <p>
-     * If there is at least one alarm record in the alarm table then the status field is set to SUCCESS.
-     * The alarm code, cluster identifier and time stamp fields SHALL all be present and SHALL take their
-     * values from the item in the alarm table that they are reporting.If there  are  no more  alarms logged
-     * in the  alarm table  then the  status field is set  to NOT_FOUND  and the alarm code, cluster
-     * identifier and time stamp fields SHALL be omitted.
+     * If there is at least one alarm record in the alarm table then the status field is set to
+     * SUCCESS. The alarm code, cluster identifier and time stamp fields shall all be present
+     * and shall take their values from the item in the alarm table that they are reporting.If
+     * there are no more alarms logged in the alarm table then the status field is set to
+     * NOT_FOUND and the alarm code, cluster identifier and time stamp fields shall be
+     * omitted.
      *
      * @param status {@link Integer} Status
-     * @param alarmCode {@link Integer} Alarm code
-     * @param clusterIdentifier {@link Integer} Cluster identifier
+     * @param alarmCode {@link Integer} Alarm Code
+     * @param clusterIdentifier {@link Integer} Cluster Identifier
      * @param timestamp {@link Integer} Timestamp
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -239,13 +249,13 @@ public class ZclAlarmsCluster extends ZclCluster {
     @Override
     public ZclCommand getCommandFromId(int commandId) {
         switch (commandId) {
-            case 0: // RESET_ALARM_COMMAND
+            case 0x00: // RESET_ALARM_COMMAND
                 return new ResetAlarmCommand();
-            case 1: // RESET_ALL_ALARMS_COMMAND
+            case 0x01: // RESET_ALL_ALARMS_COMMAND
                 return new ResetAllAlarmsCommand();
-            case 2: // GET_ALARM_COMMAND
+            case 0x02: // GET_ALARM_COMMAND
                 return new GetAlarmCommand();
-            case 3: // RESET_ALARM_LOG_COMMAND
+            case 0x03: // RESET_ALARM_LOG_COMMAND
                 return new ResetAlarmLogCommand();
             default:
                 return null;
@@ -255,9 +265,9 @@ public class ZclAlarmsCluster extends ZclCluster {
     @Override
     public ZclCommand getResponseFromId(int commandId) {
         switch (commandId) {
-            case 0: // ALARM_COMMAND
+            case 0x00: // ALARM_COMMAND
                 return new AlarmCommand();
-            case 1: // GET_ALARM_RESPONSE
+            case 0x01: // GET_ALARM_RESPONSE
                 return new GetAlarmResponse();
             default:
                 return null;

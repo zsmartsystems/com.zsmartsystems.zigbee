@@ -9,81 +9,80 @@ package com.zsmartsystems.zigbee.zcl.clusters.otaupgrade;
 
 import javax.annotation.Generated;
 
-import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Image Page Command value object class.
  * <p>
- * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
+ * Cluster: <b>Ota Upgrade</b>. Command is sent <b>TO</b> the server.
+ * This command is a <b>specific</b> command used for the Ota Upgrade cluster.
  * <p>
- * The support for the command is optional. The client device may choose to request OTA upgrade data
- * in one page size at a time from upgrade server. Using Image Page Request reduces the numbers of
- * requests sent from the client to the upgrade server, compared to using Image Block Request command.
- * In order to conserve battery life a device may use the Image Page Request command. Using the Image
- * Page Request command eliminates the need for the client device to send Image Block Request
- * command for every data block it needs; possibly saving the transmission of hundreds or thousands of
- * messages depending on the image size.
- * <br>
- * The client keeps track of how much data it has received by keeping a cumulative count of each data
- * size it has received in each Image Block Response. Once the count has reach the value of the page size
- * requested, it shall repeat Image Page Requests until it has successfully obtained all pages. Note that the
- * client may choose to switch between using Image Block Request and Image Page Request during the
- * upgrade process. For example, if the client does not receive all data requested in one Image Page
- * Request, the client may choose to request the missing block of data using Image Block Request
- * command, instead of requesting the whole page again.
+ * The support for the command is optional. The client device may choose to request OTA upgrade
+ * data in one page size at a time from upgrade server. Using Image Page Request reduces the
+ * numbers of requests sent from the client to the upgrade server, compared to using Image Block
+ * Request command. In order to conserve battery life a device may use the Image Page Request
+ * command. Using the Image Page Request command eliminates the need for the client device to
+ * send Image Block Request command for every data block it needs; possibly saving the
+ * transmission of hundreds or thousands of messages depending on the image size. <br> The
+ * client keeps track of how much data it has received by keeping a cumulative count of each data
+ * size it has received in each Image Block Response. Once the count has reach the value of the
+ * page size requested, it shall repeat Image Page Requests until it has successfully obtained
+ * all pages. Note that the client may choose to switch between using Image Block Request and
+ * Image Page Request during the upgrade process. For example, if the client does not receive
+ * all data requested in one Image Page Request, the client may choose to request the missing
+ * block of data using Image Block Request command, instead of requesting the whole page again.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ImagePageCommand extends ZclCommand {
     /**
-     * Field control command message field.
+     * Field Control command message field.
      */
     private Integer fieldControl;
 
     /**
-     * Manufacturer code command message field.
+     * Manufacturer Code command message field.
      */
     private Integer manufacturerCode;
 
     /**
-     * Image type command message field.
+     * Image Type command message field.
      */
     private Integer imageType;
 
     /**
-     * File version command message field.
+     * File Version command message field.
      */
     private Integer fileVersion;
 
     /**
-     * File offset command message field.
+     * File Offset command message field.
      */
     private Integer fileOffset;
 
     /**
-     * Maximum data size command message field.
+     * Maximum Data Size command message field.
      */
     private Integer maximumDataSize;
 
     /**
-     * Page size command message field.
+     * Page Size command message field.
      */
     private Integer pageSize;
 
     /**
-     * Response spacing command message field.
+     * Response Spacing command message field.
      */
     private Integer responseSpacing;
 
     /**
-     * Request node address command message field.
+     * Request Node Address command message field.
      */
     private IeeeAddress requestNodeAddress;
 
@@ -92,168 +91,168 @@ public class ImagePageCommand extends ZclCommand {
      */
     public ImagePageCommand() {
         genericCommand = false;
-        clusterId = 25;
+        clusterId = 0x0019;
         commandId = 4;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Field control.
+     * Gets Field Control.
      *
-     * @return the Field control
+     * @return the Field Control
      */
     public Integer getFieldControl() {
         return fieldControl;
     }
 
     /**
-     * Sets Field control.
+     * Sets Field Control.
      *
-     * @param fieldControl the Field control
+     * @param fieldControl the Field Control
      */
     public void setFieldControl(final Integer fieldControl) {
         this.fieldControl = fieldControl;
     }
 
     /**
-     * Gets Manufacturer code.
+     * Gets Manufacturer Code.
      *
-     * @return the Manufacturer code
+     * @return the Manufacturer Code
      */
     public Integer getManufacturerCode() {
         return manufacturerCode;
     }
 
     /**
-     * Sets Manufacturer code.
+     * Sets Manufacturer Code.
      *
-     * @param manufacturerCode the Manufacturer code
+     * @param manufacturerCode the Manufacturer Code
      */
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
 
     /**
-     * Gets Image type.
+     * Gets Image Type.
      *
-     * @return the Image type
+     * @return the Image Type
      */
     public Integer getImageType() {
         return imageType;
     }
 
     /**
-     * Sets Image type.
+     * Sets Image Type.
      *
-     * @param imageType the Image type
+     * @param imageType the Image Type
      */
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;
     }
 
     /**
-     * Gets File version.
+     * Gets File Version.
      *
-     * @return the File version
+     * @return the File Version
      */
     public Integer getFileVersion() {
         return fileVersion;
     }
 
     /**
-     * Sets File version.
+     * Sets File Version.
      *
-     * @param fileVersion the File version
+     * @param fileVersion the File Version
      */
     public void setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
     }
 
     /**
-     * Gets File offset.
+     * Gets File Offset.
      *
-     * @return the File offset
+     * @return the File Offset
      */
     public Integer getFileOffset() {
         return fileOffset;
     }
 
     /**
-     * Sets File offset.
+     * Sets File Offset.
      *
-     * @param fileOffset the File offset
+     * @param fileOffset the File Offset
      */
     public void setFileOffset(final Integer fileOffset) {
         this.fileOffset = fileOffset;
     }
 
     /**
-     * Gets Maximum data size.
+     * Gets Maximum Data Size.
      *
-     * @return the Maximum data size
+     * @return the Maximum Data Size
      */
     public Integer getMaximumDataSize() {
         return maximumDataSize;
     }
 
     /**
-     * Sets Maximum data size.
+     * Sets Maximum Data Size.
      *
-     * @param maximumDataSize the Maximum data size
+     * @param maximumDataSize the Maximum Data Size
      */
     public void setMaximumDataSize(final Integer maximumDataSize) {
         this.maximumDataSize = maximumDataSize;
     }
 
     /**
-     * Gets Page size.
+     * Gets Page Size.
      *
-     * @return the Page size
+     * @return the Page Size
      */
     public Integer getPageSize() {
         return pageSize;
     }
 
     /**
-     * Sets Page size.
+     * Sets Page Size.
      *
-     * @param pageSize the Page size
+     * @param pageSize the Page Size
      */
     public void setPageSize(final Integer pageSize) {
         this.pageSize = pageSize;
     }
 
     /**
-     * Gets Response spacing.
+     * Gets Response Spacing.
      *
-     * @return the Response spacing
+     * @return the Response Spacing
      */
     public Integer getResponseSpacing() {
         return responseSpacing;
     }
 
     /**
-     * Sets Response spacing.
+     * Sets Response Spacing.
      *
-     * @param responseSpacing the Response spacing
+     * @param responseSpacing the Response Spacing
      */
     public void setResponseSpacing(final Integer responseSpacing) {
         this.responseSpacing = responseSpacing;
     }
 
     /**
-     * Gets Request node address.
+     * Gets Request Node Address.
      *
-     * @return the Request node address
+     * @return the Request Node Address
      */
     public IeeeAddress getRequestNodeAddress() {
         return requestNodeAddress;
     }
 
     /**
-     * Sets Request node address.
+     * Sets Request Node Address.
      *
-     * @param requestNodeAddress the Request node address
+     * @param requestNodeAddress the Request Node Address
      */
     public void setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
         this.requestNodeAddress = requestNodeAddress;

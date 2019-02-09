@@ -7,32 +7,33 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.CommandResult;
-import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.iaswd.SquawkCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iaswd.Squawk;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.StartWarningCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-import javax.annotation.Generated;
 
 /**
  * <b>IAS WD</b> cluster implementation (<i>Cluster ID 0x0502</i>).
  * <p>
- * The IAS WD cluster provides an interface to the functionality of any Warning
- * Device equipment of the IAS system. Using this cluster, a ZigBee enabled CIE
- * device can access a ZigBee enabled IAS WD device and issue alarm warning
- * indications (siren, strobe lighting, etc.) when a system alarm condition is detected.
+ * The IAS WD cluster provides an interface to the functionality of any Warning Device
+ * equipment of the IAS system. Using this cluster, a ZigBee enabled CIE device can access a
+ * ZigBee enabled IAS WD device and issue alarm warning indications (siren, strobe lighting,
+ * etc.) when a system alarm condition is detected.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ZclIasWdCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -46,28 +47,17 @@ public class ZclIasWdCluster extends ZclCluster {
 
     // Attribute constants
     /**
-     * The MaxDuration attribute specifies the maximum time in seconds that the siren
-     * will sound continuously, regardless of start/stop commands.
+     * The MaxDuration attribute specifies the maximum time in seconds that the siren will
+     * sound continuously, regardless of start/stop commands.
      */
     public static final int ATTR_MAXDURATION = 0x0000;
-    /**
-     */
-    public static final int ATTR_ZONETYPE = 0x0001;
-    /**
-     */
-    public static final int ATTR_ZONESTATUS = 0x0002;
-    /**
-     */
-    public static final int ATTR_IAS_CIE_ADDRESS = 0x0010;
 
     // Attribute initialisation
+    @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(4);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(1);
 
-        attributeMap.put(ATTR_MAXDURATION, new ZclAttribute(ZclClusterType.IAS_WD, ATTR_MAXDURATION, "MaxDuration", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
-        attributeMap.put(ATTR_ZONETYPE, new ZclAttribute(ZclClusterType.IAS_WD, ATTR_ZONETYPE, "ZoneType", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ZONESTATUS, new ZclAttribute(ZclClusterType.IAS_WD, ATTR_ZONESTATUS, "ZoneStatus", ZclDataType.BITMAP_16_BIT, true, true, false, false));
-        attributeMap.put(ATTR_IAS_CIE_ADDRESS, new ZclAttribute(ZclClusterType.IAS_WD, ATTR_IAS_CIE_ADDRESS, "IAS_CIE_Address", ZclDataType.IEEE_ADDRESS, true, true, true, false));
+        attributeMap.put(ATTR_MAXDURATION, new ZclAttribute(ZclClusterType.IAS_WD, ATTR_MAXDURATION, "Max Duration", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
 
         return attributeMap;
     }
@@ -75,17 +65,17 @@ public class ZclIasWdCluster extends ZclCluster {
     /**
      * Default constructor to create a IAS WD cluster.
      *
-     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint} this cluster is contained within
      */
     public ZclIasWdCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
     /**
-     * Set the <i>MaxDuration</i> attribute [attribute ID <b>0</b>].
+     * Set the <i>Max Duration</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
-     * The MaxDuration attribute specifies the maximum time in seconds that the siren
-     * will sound continuously, regardless of start/stop commands.
+     * The MaxDuration attribute specifies the maximum time in seconds that the siren will
+     * sound continuously, regardless of start/stop commands.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -94,15 +84,15 @@ public class ZclIasWdCluster extends ZclCluster {
      * @param maxDuration the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setMaxDuration(final Object value) {
+    public Future<CommandResult> setMaxDuration(final Integer value) {
         return write(attributes.get(ATTR_MAXDURATION), value);
     }
 
     /**
-     * Get the <i>MaxDuration</i> attribute [attribute ID <b>0</b>].
+     * Get the <i>Max Duration</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
-     * The MaxDuration attribute specifies the maximum time in seconds that the siren
-     * will sound continuously, regardless of start/stop commands.
+     * The MaxDuration attribute specifies the maximum time in seconds that the siren will
+     * sound continuously, regardless of start/stop commands.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -115,10 +105,10 @@ public class ZclIasWdCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>MaxDuration</i> attribute [attribute ID <b>0</b>].
+     * Synchronously get the <i>Max Duration</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
-     * The MaxDuration attribute specifies the maximum time in seconds that the siren
-     * will sound continuously, regardless of start/stop commands.
+     * The MaxDuration attribute specifies the maximum time in seconds that the siren will
+     * sound continuously, regardless of start/stop commands.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -143,144 +133,33 @@ public class ZclIasWdCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ZoneType</i> attribute [attribute ID <b>1</b>].
+     * Set reporting for the <i>Max Duration</i> attribute [attribute ID <b>0x0000</b>].
+     * <p>
+     * The MaxDuration attribute specifies the maximum time in seconds that the siren will
+     * sound continuously, regardless of start/stop commands.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getZoneTypeAsync() {
-        return read(attributes.get(ATTR_ZONETYPE));
-    }
-
-    /**
-     * Synchronously get the <i>ZoneType</i> attribute [attribute ID <b>1</b>].
-     * <p>
-     * This method can return cached data if the attribute has already been received.
-     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
-     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
-     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
-     * <p>
-     * This method will block until the response is received or a timeout occurs unless the current value is returned.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Integer} attribute value, or null on error
-     */
-    public Integer getZoneType(final long refreshPeriod) {
-        if (attributes.get(ATTR_ZONETYPE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ZONETYPE).getLastValue();
-        }
-
-        return (Integer) readSync(attributes.get(ATTR_ZONETYPE));
-    }
-
-    /**
-     * Get the <i>ZoneStatus</i> attribute [attribute ID <b>2</b>].
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> getZoneStatusAsync() {
-        return read(attributes.get(ATTR_ZONESTATUS));
-    }
-
-    /**
-     * Synchronously get the <i>ZoneStatus</i> attribute [attribute ID <b>2</b>].
-     * <p>
-     * This method can return cached data if the attribute has already been received.
-     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
-     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
-     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
-     * <p>
-     * This method will block until the response is received or a timeout occurs unless the current value is returned.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Integer} attribute value, or null on error
-     */
-    public Integer getZoneStatus(final long refreshPeriod) {
-        if (attributes.get(ATTR_ZONESTATUS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ZONESTATUS).getLastValue();
-        }
-
-        return (Integer) readSync(attributes.get(ATTR_ZONESTATUS));
-    }
-
-    /**
-     * Set the <i>IAS_CIE_Address</i> attribute [attribute ID <b>16</b>].
-     * <p>
-     * The attribute is of type {@link IeeeAddress}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @param iasCieAddress the {@link IeeeAddress} attribute value to be set
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setIasCieAddress(final Object value) {
-        return write(attributes.get(ATTR_IAS_CIE_ADDRESS), value);
-    }
-
-    /**
-     * Get the <i>IAS_CIE_Address</i> attribute [attribute ID <b>16</b>].
-     * <p>
-     * The attribute is of type {@link IeeeAddress}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> getIasCieAddressAsync() {
-        return read(attributes.get(ATTR_IAS_CIE_ADDRESS));
-    }
-
-    /**
-     * Synchronously get the <i>IAS_CIE_Address</i> attribute [attribute ID <b>16</b>].
-     * <p>
-     * This method can return cached data if the attribute has already been received.
-     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
-     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
-     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
-     * <p>
-     * This method will block until the response is received or a timeout occurs unless the current value is returned.
-     * <p>
-     * The attribute is of type {@link IeeeAddress}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link IeeeAddress} attribute value, or null on error
-     */
-    public IeeeAddress getIasCieAddress(final long refreshPeriod) {
-        if (attributes.get(ATTR_IAS_CIE_ADDRESS).isLastValueCurrent(refreshPeriod)) {
-            return (IeeeAddress) attributes.get(ATTR_IAS_CIE_ADDRESS).getLastValue();
-        }
-
-        return (IeeeAddress) readSync(attributes.get(ATTR_IAS_CIE_ADDRESS));
+    public Future<CommandResult> setMaxDurationReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_MAXDURATION), minInterval, maxInterval, reportableChange);
     }
 
     /**
      * The Start Warning Command
      * <p>
-     * This command starts the WD operation. The WD alerts the surrounding area by
-     * audible (siren) and visual (strobe) signals.
-     * <br>
-     * A Start Warning command shall always terminate the effect of any previous
-     * command that is still current.
+     * This command starts the WD operation. The WD alerts the surrounding area by audible
+     * (siren) and visual (strobe) signals. <br> A Start Warning command shall always
+     * terminate the effect of any previous command that is still current.
      *
      * @param header {@link Integer} Header
-     * @param warningDuration {@link Integer} Warning duration
+     * @param warningDuration {@link Integer} Warning Duration
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> startWarningCommand(Integer header, Integer warningDuration) {
@@ -294,27 +173,27 @@ public class ZclIasWdCluster extends ZclCluster {
     }
 
     /**
-     * The Squawk Command
+     * The Squawk
+     * <p>
+     * This command uses the WD capabilities to emit a quick audible/visible pulse called a
+     * "squawk". The squawk command has no effect if the WD is currently active (warning in
+     * progress).
      *
-     * @param header {@link Integer} Header
+     * @param squawkInfo {@link Integer} Squawk Info
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> squawkCommand(Integer header) {
-        SquawkCommand command = new SquawkCommand();
+    public Future<CommandResult> squawk(Integer squawkInfo) {
+        Squawk command = new Squawk();
 
         // Set the fields
-        command.setHeader(header);
+        command.setSquawkInfo(squawkInfo);
 
         return send(command);
     }
 
     @Override
-    public ZclCommand getCommandFromId(int commandId) {
+    public ZclCommand getResponseFromId(int commandId) {
         switch (commandId) {
-            case 0: // START_WARNING_COMMAND
-                return new StartWarningCommand();
-            case 2: // SQUAWK_COMMAND
-                return new SquawkCommand();
             default:
                 return null;
         }

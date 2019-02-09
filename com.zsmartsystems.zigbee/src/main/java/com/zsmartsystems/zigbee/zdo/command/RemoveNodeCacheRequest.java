@@ -7,23 +7,24 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * Remove Node Cache Request value object class.
  * <p>
- * The Remove_node_cache_req is provided to enable ZigBee devices on the
- * network to request removal of discovery cache information for a specified ZigBee
- * end device from a Primary Discovery Cache device. The effect of a successful
- * Remove_node_cache_req is to undo a previously successful Discovery_store_req
- * and additionally remove any cache information stored on behalf of the specified
- * ZigBee end device on the Primary Discovery Cache device.
+ * <p>
+ * The Remove_node_cache_req is provided to enable ZigBee devices on the network to request
+ * removal of discovery cache information for a specified ZigBee end device from a Primary
+ * Discovery Cache device. The effect of a successful Remove_node_cache_req is to undo a
+ * previously successful Discovery_store_req and additionally remove any cache
+ * information stored on behalf of the specified ZigBee end device on the Primary Discovery
+ * Cache device.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class RemoveNodeCacheRequest extends ZdoRequest {
     /**
      * Default constructor.

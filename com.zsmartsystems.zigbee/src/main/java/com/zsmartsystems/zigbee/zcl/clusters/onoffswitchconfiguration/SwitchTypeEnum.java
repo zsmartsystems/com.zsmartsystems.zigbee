@@ -13,16 +13,26 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 /**
- * Enumeration of On/off Switch Configuration attribute SwitchType options.
+ * Switch Type value enumeration.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- *
- * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
 public enum SwitchTypeEnum {
+
+    /**
+     * Toggle
+     */
     TOGGLE(0x0000),
+
+    /**
+     * Momentary
+     */
     MOMENTARY(0x0001),
+
+    /**
+     * Multifunction
+     */
     MULTIFUNCTION(0x0002);
 
     /**
@@ -39,7 +49,7 @@ public enum SwitchTypeEnum {
 
     private final int key;
 
-    SwitchTypeEnum(final int key) {
+    private SwitchTypeEnum(final int key) {
         this.key = key;
     }
 

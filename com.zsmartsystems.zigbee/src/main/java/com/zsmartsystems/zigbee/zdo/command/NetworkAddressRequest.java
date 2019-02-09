@@ -7,46 +7,44 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import com.zsmartsystems.zigbee.zdo.command.NetworkAddressResponse;
-import javax.annotation.Generated;
-import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Network Address Request value object class.
  * <p>
- * The NWK_addr_req is generated from a Local Device wishing to inquire as to the
- * 16-bit address of the Remote Device based on its known IEEE address. The
- * destination addressing on this command shall be unicast or broadcast to all
- * devices for which macRxOnWhenIdle = TRUE.
+ * <p>
+ * The NWK_addr_req is generated from a Local Device wishing to inquire as to the 16-bit address
+ * of the Remote Device based on its known IEEE address. The destination addressing on this
+ * command shall be unicast or broadcast to all devices for which macRxOnWhenIdle = TRUE.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-23T21:55:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class NetworkAddressRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
-     * IEEEAddr command message field.
+     * IEEE Addr command message field.
      */
     private IeeeAddress ieeeAddr;
 
     /**
-     * RequestType command message field.
+     * Request Type command message field.
      * <p>
-     * Request type for this command:
-     * 0x00 – Single device response
-     * 0x01 – Extended response
+     * Request type for this command: 0x00 – Single device response 0x01 – Extended response
      * 0x02-0xFF – reserved
      */
     private Integer requestType;
 
     /**
-     * StartIndex command message field.
+     * Start Index command message field.
      */
     private Integer startIndex;
 
@@ -58,64 +56,60 @@ public class NetworkAddressRequest extends ZdoRequest implements ZigBeeTransacti
     }
 
     /**
-     * Gets IEEEAddr.
+     * Gets IEEE Addr.
      *
-     * @return the IEEEAddr
+     * @return the IEEE Addr
      */
     public IeeeAddress getIeeeAddr() {
         return ieeeAddr;
     }
 
     /**
-     * Sets IEEEAddr.
+     * Sets IEEE Addr.
      *
-     * @param ieeeAddr the IEEEAddr
+     * @param ieeeAddr the IEEE Addr
      */
     public void setIeeeAddr(final IeeeAddress ieeeAddr) {
         this.ieeeAddr = ieeeAddr;
     }
 
     /**
-     * Gets RequestType.
+     * Gets Request Type.
      * <p>
-     * Request type for this command:
-     * 0x00 – Single device response
-     * 0x01 – Extended response
+     * Request type for this command: 0x00 – Single device response 0x01 – Extended response
      * 0x02-0xFF – reserved
      *
-     * @return the RequestType
+     * @return the Request Type
      */
     public Integer getRequestType() {
         return requestType;
     }
 
     /**
-     * Sets RequestType.
+     * Sets Request Type.
      * <p>
-     * Request type for this command:
-     * 0x00 – Single device response
-     * 0x01 – Extended response
+     * Request type for this command: 0x00 – Single device response 0x01 – Extended response
      * 0x02-0xFF – reserved
      *
-     * @param requestType the RequestType
+     * @param requestType the Request Type
      */
     public void setRequestType(final Integer requestType) {
         this.requestType = requestType;
     }
 
     /**
-     * Gets StartIndex.
+     * Gets Start Index.
      *
-     * @return the StartIndex
+     * @return the Start Index
      */
     public Integer getStartIndex() {
         return startIndex;
     }
 
     /**
-     * Sets StartIndex.
+     * Sets Start Index.
      *
-     * @param startIndex the StartIndex
+     * @param startIndex the Start Index
      */
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;

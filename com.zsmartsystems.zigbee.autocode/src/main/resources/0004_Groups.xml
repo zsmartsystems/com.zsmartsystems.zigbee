@@ -1,0 +1,107 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0004">
+    <name>Groups</name>
+    <description>The ZigBee specification provides the capability for group addressing. That is, any endpoint on any device may be assigned to one or more groups, each labeled with a 16-bit identifier (0x0001 &#8211; 0xfff7), which acts for all intents and purposes like a network address. Once a group is established, frames, sent using the APSDE-DATA.request primitive and having a DstAddrMode of 0x01, denoting group addressing, will be delivered to every endpoint assigned to the group address named in the DstAddr parameter of the outgoing APSDE-DATA.request primitive on every device in the network for which there are such endpoints.</description>
+    <description>Management of group membership on each device and endpoint is implemented by the APS, but the over-the-air messages that allow for remote management and commissioning of groups are defined here in the cluster library on the theory that, while the basic group addressing facilities are integral to the operation of the stack, not every device will need or want to implement this management cluster. Furthermore, the placement of the management commands here allows developers of proprietary profiles to avoid implementing the library cluster but still exploit group addressing</description>
+    <description>In order to ensure that only authorized devices are able to set up groups (particularly if application link keys are to be used) the following approach SHOULD be employed. The security Permissions Configuration Table provides a mechanism by which certain commands can be restricted to specified authorized devices. Configuration of groups via the Groups cluster SHOULD use the ApplicationSettings permissions entry of this table to specify from which devices group configuration commands MAY be received, and whether a link key is required.</description>
+    <command code="0x00" source="client">
+        <name>Add Group Command</name>
+        <description>The Add Group command allows the sending device to add group membership in a particular group for one or more endpoints on the receiving device.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Group Name</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>View Group Command</name>
+        <description>The view group command allows the sending device to request that the receiving entity or entities respond with a view group response command containing the application name string for a particular group.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Get Group Membership Command</name>
+        <description>The get group membership command allows the sending device to inquire about the group membership of the receiving device and endpoint in a number of ways.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Group Count</name>
+        </field>
+        <field type="N_X_UNSIGNED_16_BIT_INTEGER">
+            <name>Group List</name>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Remove Group Command</name>
+        <description>The remove group command allows the sender to request that the receiving entity or entities remove their membership, if any, in a particular group.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+    </command>
+    <command code="0x04" source="client">
+        <name>Remove All Groups Command</name>
+        <description>The remove all groups command allows the sending device to direct the receiving entity or entities to remove all group associations.</description>
+    </command>
+    <command code="0x05" source="client">
+        <name>Add Group If Identifying Command</name>
+        <description>The add group if identifying command allows the sending device to add group membership in a particular group for one or more endpoints on the receiving device, on condition that it is identifying itself. Identifying functionality is controlled using the identify cluster.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Group Name</name>
+        </field>
+    </command>
+    <command code="0x00" source="server">
+        <name>Add Group Response</name>
+        <description>The add group response is sent by the groups cluster server in response to an add group command.</description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>View Group Response</name>
+        <description>The view group response command is sent by the groups cluster server in response to a view group command.</description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Group Name</name>
+        </field>
+    </command>
+    <command code="0x02" source="server">
+        <name>Get Group Membership Response</name>
+        <description>The get group membership response command is sent by the groups cluster server in response to a get group membership command.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Capacity</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Group Count</name>
+        </field>
+        <field type="N_X_UNSIGNED_16_BIT_INTEGER">
+            <name>Group List</name>
+        </field>
+    </command>
+    <command code="0x03" source="server">
+        <name>Remove Group Response</name>
+        <description>The remove group response command is generated by an application entity in response to the receipt of a remove group command.</description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+    </command>
+    
+    <attribute code="0x0000" type="BITMAP_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Name Support</name>
+        <description>The most significant bit of the NameSupport attribute indicates whether or not group names are supported. A value of 1 indicates that they are supported, and a value of 0 indicates that they are not supported.</description>
+    </attribute>
+    
+</cluster>

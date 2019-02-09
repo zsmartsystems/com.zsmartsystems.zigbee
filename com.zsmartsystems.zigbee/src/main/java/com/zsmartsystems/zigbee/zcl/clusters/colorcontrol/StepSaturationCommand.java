@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.colorcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Step Saturation Command value object class.
@@ -23,20 +23,20 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class StepSaturationCommand extends ZclCommand {
     /**
-     * Step mode command message field.
+     * Step Mode command message field.
      */
     private Integer stepMode;
 
     /**
-     * Step size command message field.
+     * Step Size command message field.
      */
     private Integer stepSize;
 
     /**
-     * Transition time command message field.
+     * Transition Time command message field.
      */
     private Integer transitionTime;
 
@@ -45,60 +45,60 @@ public class StepSaturationCommand extends ZclCommand {
      */
     public StepSaturationCommand() {
         genericCommand = false;
-        clusterId = 768;
+        clusterId = 0x0300;
         commandId = 5;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Step mode.
+     * Gets Step Mode.
      *
-     * @return the Step mode
+     * @return the Step Mode
      */
     public Integer getStepMode() {
         return stepMode;
     }
 
     /**
-     * Sets Step mode.
+     * Sets Step Mode.
      *
-     * @param stepMode the Step mode
+     * @param stepMode the Step Mode
      */
     public void setStepMode(final Integer stepMode) {
         this.stepMode = stepMode;
     }
 
     /**
-     * Gets Step size.
+     * Gets Step Size.
      *
-     * @return the Step size
+     * @return the Step Size
      */
     public Integer getStepSize() {
         return stepSize;
     }
 
     /**
-     * Sets Step size.
+     * Sets Step Size.
      *
-     * @param stepSize the Step size
+     * @param stepSize the Step Size
      */
     public void setStepSize(final Integer stepSize) {
         this.stepSize = stepSize;
     }
 
     /**
-     * Gets Transition time.
+     * Gets Transition Time.
      *
-     * @return the Transition time
+     * @return the Transition Time
      */
     public Integer getTransitionTime() {
         return transitionTime;
     }
 
     /**
-     * Sets Transition time.
+     * Sets Transition Time.
      *
-     * @param transitionTime the Transition time
+     * @param transitionTime the Transition Time
      */
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;

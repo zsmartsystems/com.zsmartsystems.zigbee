@@ -7,36 +7,37 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * Management Network Discovery value object class.
  * <p>
- * The Mgmt_NWK_Disc_req is generated from a Local Device requesting that the
- * Remote Device execute a Scan to report back networks in the vicinity of the Local
- * Device. The destination addressing on this command shall be unicast.
+ * <p>
+ * The Mgmt_NWK_Disc_req is generated from a Local Device requesting that the Remote Device
+ * execute a Scan to report back networks in the vicinity of the Local Device. The destination
+ * addressing on this command shall be unicast.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
-public class ManagementNetworkDiscovery extends ZdoResponse {
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+public class ManagementNetworkDiscovery extends ZdoRequest {
     /**
-     * ScanChannels command message field.
+     * Scan Channels command message field.
      */
     private Integer scanChannels;
 
     /**
-     * ScanDuration command message field.
+     * Scan Duration command message field.
      */
     private Integer scanDuration;
 
     /**
-     * StartIndex command message field.
+     * Start Index command message field.
      */
     private Integer startIndex;
 
@@ -48,54 +49,54 @@ public class ManagementNetworkDiscovery extends ZdoResponse {
     }
 
     /**
-     * Gets ScanChannels.
+     * Gets Scan Channels.
      *
-     * @return the ScanChannels
+     * @return the Scan Channels
      */
     public Integer getScanChannels() {
         return scanChannels;
     }
 
     /**
-     * Sets ScanChannels.
+     * Sets Scan Channels.
      *
-     * @param scanChannels the ScanChannels
+     * @param scanChannels the Scan Channels
      */
     public void setScanChannels(final Integer scanChannels) {
         this.scanChannels = scanChannels;
     }
 
     /**
-     * Gets ScanDuration.
+     * Gets Scan Duration.
      *
-     * @return the ScanDuration
+     * @return the Scan Duration
      */
     public Integer getScanDuration() {
         return scanDuration;
     }
 
     /**
-     * Sets ScanDuration.
+     * Sets Scan Duration.
      *
-     * @param scanDuration the ScanDuration
+     * @param scanDuration the Scan Duration
      */
     public void setScanDuration(final Integer scanDuration) {
         this.scanDuration = scanDuration;
     }
 
     /**
-     * Gets StartIndex.
+     * Gets Start Index.
      *
-     * @return the StartIndex
+     * @return the Start Index
      */
     public Integer getStartIndex() {
         return startIndex;
     }
 
     /**
-     * Sets StartIndex.
+     * Sets Start Index.
      *
-     * @param startIndex the StartIndex
+     * @param startIndex the Start Index
      */
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;

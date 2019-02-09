@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.groups;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * View Group Command value object class.
@@ -21,9 +21,13 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Groups</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Groups cluster.
  * <p>
+ * The view group command allows the sending device to request that the receiving entity or
+ * entities respond with a view group response command containing the application name string
+ * for a particular group.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ViewGroupCommand extends ZclCommand {
     /**
      * Group ID command message field.
@@ -35,7 +39,7 @@ public class ViewGroupCommand extends ZclCommand {
      */
     public ViewGroupCommand() {
         genericCommand = false;
-        clusterId = 4;
+        clusterId = 0x0004;
         commandId = 1;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }

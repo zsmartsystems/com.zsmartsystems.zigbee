@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.colorcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Move Color Command value object class.
@@ -23,15 +23,15 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class MoveColorCommand extends ZclCommand {
     /**
-     * RateX command message field.
+     * Rate X command message field.
      */
     private Integer rateX;
 
     /**
-     * RateY command message field.
+     * Rate Y command message field.
      */
     private Integer rateY;
 
@@ -40,42 +40,42 @@ public class MoveColorCommand extends ZclCommand {
      */
     public MoveColorCommand() {
         genericCommand = false;
-        clusterId = 768;
+        clusterId = 0x0300;
         commandId = 8;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets RateX.
+     * Gets Rate X.
      *
-     * @return the RateX
+     * @return the Rate X
      */
     public Integer getRateX() {
         return rateX;
     }
 
     /**
-     * Sets RateX.
+     * Sets Rate X.
      *
-     * @param rateX the RateX
+     * @param rateX the Rate X
      */
     public void setRateX(final Integer rateX) {
         this.rateX = rateX;
     }
 
     /**
-     * Gets RateY.
+     * Gets Rate Y.
      *
-     * @return the RateY
+     * @return the Rate Y
      */
     public Integer getRateY() {
         return rateY;
     }
 
     /**
-     * Sets RateY.
+     * Sets Rate Y.
      *
-     * @param rateY the RateY
+     * @param rateY the Rate Y
      */
     public void setRateY(final Integer rateY) {
         this.rateY = rateY;

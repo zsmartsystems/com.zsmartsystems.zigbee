@@ -7,6 +7,13 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
@@ -29,28 +36,22 @@ import com.zsmartsystems.zigbee.zcl.clusters.scenes.ViewSceneResponse;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-import javax.annotation.Generated;
 
 /**
  * <b>Scenes</b> cluster implementation (<i>Cluster ID 0x0005</i>).
  * <p>
- * The scenes cluster provides attributes and commands for setting up and recalling
- * scenes. Each scene corresponds to a set of stored values of specified attributes for
- * one or more clusters on the same end point as the scenes cluster.
+ * The scenes cluster provides attributes and commands for setting up and recalling scenes.
+ * Each scene corresponds to a set of stored values of specified attributes for one or more
+ * clusters on the same end point as the scenes cluster.
  * <p>
- * In most cases scenes are associated with a particular group ID. Scenes may also
- * exist without a group, in which case the value 0x0000 replaces the group ID. Note
- * that extra care is required in these cases to avoid a scene ID collision, and that
- * commands related to scenes without a group may only be unicast, i.e.: they may
- * not be multicast or broadcast.
+ * In most cases scenes are associated with a particular group ID. Scenes may also exist without
+ * a group, in which case the value 0x0000 replaces the group ID. Note that extra care is required
+ * in these cases to avoid a scene ID collision, and that commands related to scenes without a
+ * group may only be unicast, i.e.: they may not be multicast or broadcast.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ZclScenesCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -73,30 +74,29 @@ public class ZclScenesCluster extends ZclCluster {
      */
     public static final int ATTR_CURRENTSCENE = 0x0001;
     /**
-     * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
-     * 0x0000 if the scene last invoked is not associated with a group.
+     * The CurrentGroup attribute holds the Group ID of the scene last invoked, or 0x0000 if the
+     * scene last invoked is not associated with a group.
      */
     public static final int ATTR_CURRENTGROUP = 0x0002;
     /**
-     * The SceneValid attribute indicates whether the state of the device corresponds to
-     * that associated with the CurrentScene and CurrentGroup attributes. TRUE
-     * indicates that these attributes are valid, FALSE indicates that they are not valid.
+     * The SceneValid attribute indicates whether the state of the device corresponds to that
+     * associated with the CurrentScene and CurrentGroup attributes. TRUE indicates that
+     * these attributes are valid, FALSE indicates that they are not valid.
      * <p>
      * Before a scene has been stored or recalled, this attribute is set to FALSE. After a
-     * successful Store Scene or Recall Scene command it is set to TRUE. If, after a
-     * scene is stored or recalled, the state of the device is modified, this attribute is set to
-     * FALSE.
+     * successful Store Scene or Recall Scene command it is set to TRUE. If, after a scene is
+     * stored or recalled, the state of the device is modified, this attribute is set to FALSE.
      */
     public static final int ATTR_SCENEVALID = 0x0003;
     /**
-     * The most significant bit of the NameSupport attribute indicates whether or not
-     * scene names are supported. A value of 1 indicates that they are supported, and a
-     * value of 0 indicates that they are not supported.
+     * The most significant bit of the NameSupport attribute indicates whether or not scene
+     * names are supported. A value of 1 indicates that they are supported, and a value of 0
+     * indicates that they are not supported.
      */
     public static final int ATTR_NAMESUPPORT = 0x0004;
     /**
-     * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address
-     * of the device that last configured the scene table.
+     * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address of
+     * the device that last configured the scene table.
      * <p>
      * The value 0xffffffffffffffff indicates that the device has not been configured, or
      * that the address of the device that last configured the scenes cluster is not known.
@@ -104,15 +104,16 @@ public class ZclScenesCluster extends ZclCluster {
     public static final int ATTR_LASTCONFIGUREDBY = 0x0005;
 
     // Attribute initialisation
+    @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(6);
 
-        attributeMap.put(ATTR_SCENECOUNT, new ZclAttribute(ZclClusterType.SCENES, ATTR_SCENECOUNT, "SceneCount", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTSCENE, new ZclAttribute(ZclClusterType.SCENES, ATTR_CURRENTSCENE, "CurrentScene", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTGROUP, new ZclAttribute(ZclClusterType.SCENES, ATTR_CURRENTGROUP, "CurrentGroup", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_SCENEVALID, new ZclAttribute(ZclClusterType.SCENES, ATTR_SCENEVALID, "SceneValid", ZclDataType.BOOLEAN, true, true, false, false));
-        attributeMap.put(ATTR_NAMESUPPORT, new ZclAttribute(ZclClusterType.SCENES, ATTR_NAMESUPPORT, "NameSupport", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_LASTCONFIGUREDBY, new ZclAttribute(ZclClusterType.SCENES, ATTR_LASTCONFIGUREDBY, "LastConfiguredBy", ZclDataType.IEEE_ADDRESS, false, true, false, false));
+        attributeMap.put(ATTR_SCENECOUNT, new ZclAttribute(ZclClusterType.SCENES, ATTR_SCENECOUNT, "Scene Count", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTSCENE, new ZclAttribute(ZclClusterType.SCENES, ATTR_CURRENTSCENE, "Current Scene", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTGROUP, new ZclAttribute(ZclClusterType.SCENES, ATTR_CURRENTGROUP, "Current Group", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_SCENEVALID, new ZclAttribute(ZclClusterType.SCENES, ATTR_SCENEVALID, "Scene Valid", ZclDataType.BOOLEAN, true, true, false, false));
+        attributeMap.put(ATTR_NAMESUPPORT, new ZclAttribute(ZclClusterType.SCENES, ATTR_NAMESUPPORT, "Name Support", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_LASTCONFIGUREDBY, new ZclAttribute(ZclClusterType.SCENES, ATTR_LASTCONFIGUREDBY, "Last Configured By", ZclDataType.IEEE_ADDRESS, false, true, false, false));
 
         return attributeMap;
     }
@@ -120,14 +121,14 @@ public class ZclScenesCluster extends ZclCluster {
     /**
      * Default constructor to create a Scenes cluster.
      *
-     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint} this cluster is contained within
      */
     public ZclScenesCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
     /**
-     * Get the <i>SceneCount</i> attribute [attribute ID <b>0</b>].
+     * Get the <i>Scene Count</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The SceneCount attribute specifies the number of scenes currently in the device's
      * scene table.
@@ -143,7 +144,7 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>SceneCount</i> attribute [attribute ID <b>0</b>].
+     * Synchronously get the <i>Scene Count</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The SceneCount attribute specifies the number of scenes currently in the device's
      * scene table.
@@ -171,7 +172,26 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>CurrentScene</i> attribute [attribute ID <b>1</b>].
+     * Set reporting for the <i>Scene Count</i> attribute [attribute ID <b>0x0000</b>].
+     * <p>
+     * The SceneCount attribute specifies the number of scenes currently in the device's
+     * scene table.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setSceneCountReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_SCENECOUNT), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Get the <i>Current Scene</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
      * The CurrentScene attribute holds the Scene ID of the scene last invoked.
      * <p>
@@ -186,7 +206,7 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>CurrentScene</i> attribute [attribute ID <b>1</b>].
+     * Synchronously get the <i>Current Scene</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
      * The CurrentScene attribute holds the Scene ID of the scene last invoked.
      * <p>
@@ -213,10 +233,28 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>CurrentGroup</i> attribute [attribute ID <b>2</b>].
+     * Set reporting for the <i>Current Scene</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
-     * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
-     * 0x0000 if the scene last invoked is not associated with a group.
+     * The CurrentScene attribute holds the Scene ID of the scene last invoked.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setCurrentSceneReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_CURRENTSCENE), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Get the <i>Current Group</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The CurrentGroup attribute holds the Group ID of the scene last invoked, or 0x0000 if the
+     * scene last invoked is not associated with a group.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -229,10 +267,10 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>CurrentGroup</i> attribute [attribute ID <b>2</b>].
+     * Synchronously get the <i>Current Group</i> attribute [attribute ID <b>0x0002</b>].
      * <p>
-     * The CurrentGroup attribute holds the Group ID of the scene last invoked, or
-     * 0x0000 if the scene last invoked is not associated with a group.
+     * The CurrentGroup attribute holds the Group ID of the scene last invoked, or 0x0000 if the
+     * scene last invoked is not associated with a group.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -257,16 +295,34 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>SceneValid</i> attribute [attribute ID <b>3</b>].
+     * Set reporting for the <i>Current Group</i> attribute [attribute ID <b>0x0002</b>].
      * <p>
-     * The SceneValid attribute indicates whether the state of the device corresponds to
-     * that associated with the CurrentScene and CurrentGroup attributes. TRUE
-     * indicates that these attributes are valid, FALSE indicates that they are not valid.
+     * The CurrentGroup attribute holds the Group ID of the scene last invoked, or 0x0000 if the
+     * scene last invoked is not associated with a group.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setCurrentGroupReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_CURRENTGROUP), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Get the <i>Scene Valid</i> attribute [attribute ID <b>0x0003</b>].
+     * <p>
+     * The SceneValid attribute indicates whether the state of the device corresponds to that
+     * associated with the CurrentScene and CurrentGroup attributes. TRUE indicates that
+     * these attributes are valid, FALSE indicates that they are not valid.
      * <p>
      * Before a scene has been stored or recalled, this attribute is set to FALSE. After a
-     * successful Store Scene or Recall Scene command it is set to TRUE. If, after a
-     * scene is stored or recalled, the state of the device is modified, this attribute is set to
-     * FALSE.
+     * successful Store Scene or Recall Scene command it is set to TRUE. If, after a scene is
+     * stored or recalled, the state of the device is modified, this attribute is set to FALSE.
      * <p>
      * The attribute is of type {@link Boolean}.
      * <p>
@@ -279,16 +335,15 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>SceneValid</i> attribute [attribute ID <b>3</b>].
+     * Synchronously get the <i>Scene Valid</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
-     * The SceneValid attribute indicates whether the state of the device corresponds to
-     * that associated with the CurrentScene and CurrentGroup attributes. TRUE
-     * indicates that these attributes are valid, FALSE indicates that they are not valid.
+     * The SceneValid attribute indicates whether the state of the device corresponds to that
+     * associated with the CurrentScene and CurrentGroup attributes. TRUE indicates that
+     * these attributes are valid, FALSE indicates that they are not valid.
      * <p>
      * Before a scene has been stored or recalled, this attribute is set to FALSE. After a
-     * successful Store Scene or Recall Scene command it is set to TRUE. If, after a
-     * scene is stored or recalled, the state of the device is modified, this attribute is set to
-     * FALSE.
+     * successful Store Scene or Recall Scene command it is set to TRUE. If, after a scene is
+     * stored or recalled, the state of the device is modified, this attribute is set to FALSE.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -313,11 +368,34 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>NameSupport</i> attribute [attribute ID <b>4</b>].
+     * Set reporting for the <i>Scene Valid</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
-     * The most significant bit of the NameSupport attribute indicates whether or not
-     * scene names are supported. A value of 1 indicates that they are supported, and a
-     * value of 0 indicates that they are not supported.
+     * The SceneValid attribute indicates whether the state of the device corresponds to that
+     * associated with the CurrentScene and CurrentGroup attributes. TRUE indicates that
+     * these attributes are valid, FALSE indicates that they are not valid.
+     * <p>
+     * Before a scene has been stored or recalled, this attribute is set to FALSE. After a
+     * successful Store Scene or Recall Scene command it is set to TRUE. If, after a scene is
+     * stored or recalled, the state of the device is modified, this attribute is set to FALSE.
+     * <p>
+     * The attribute is of type {@link Boolean}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setSceneValidReporting(final int minInterval, final int maxInterval) {
+        return setReporting(attributes.get(ATTR_SCENEVALID), minInterval, maxInterval);
+    }
+
+    /**
+     * Get the <i>Name Support</i> attribute [attribute ID <b>0x0004</b>].
+     * <p>
+     * The most significant bit of the NameSupport attribute indicates whether or not scene
+     * names are supported. A value of 1 indicates that they are supported, and a value of 0
+     * indicates that they are not supported.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -330,11 +408,11 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>NameSupport</i> attribute [attribute ID <b>4</b>].
+     * Synchronously get the <i>Name Support</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
-     * The most significant bit of the NameSupport attribute indicates whether or not
-     * scene names are supported. A value of 1 indicates that they are supported, and a
-     * value of 0 indicates that they are not supported.
+     * The most significant bit of the NameSupport attribute indicates whether or not scene
+     * names are supported. A value of 1 indicates that they are supported, and a value of 0
+     * indicates that they are not supported.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -359,10 +437,29 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>LastConfiguredBy</i> attribute [attribute ID <b>5</b>].
+     * Set reporting for the <i>Name Support</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
-     * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address
-     * of the device that last configured the scene table.
+     * The most significant bit of the NameSupport attribute indicates whether or not scene
+     * names are supported. A value of 1 indicates that they are supported, and a value of 0
+     * indicates that they are not supported.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setNameSupportReporting(final int minInterval, final int maxInterval) {
+        return setReporting(attributes.get(ATTR_NAMESUPPORT), minInterval, maxInterval);
+    }
+
+    /**
+     * Get the <i>Last Configured By</i> attribute [attribute ID <b>0x0005</b>].
+     * <p>
+     * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address of
+     * the device that last configured the scene table.
      * <p>
      * The value 0xffffffffffffffff indicates that the device has not been configured, or
      * that the address of the device that last configured the scenes cluster is not known.
@@ -378,10 +475,10 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>LastConfiguredBy</i> attribute [attribute ID <b>5</b>].
+     * Synchronously get the <i>Last Configured By</i> attribute [attribute ID <b>0x0005</b>].
      * <p>
-     * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address
-     * of the device that last configured the scene table.
+     * The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address of
+     * the device that last configured the scene table.
      * <p>
      * The value 0xffffffffffffffff indicates that the device has not been configured, or
      * that the address of the device that last configured the scenes cluster is not known.
@@ -415,9 +512,9 @@ public class ZclScenesCluster extends ZclCluster {
      *
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
-     * @param transitionTime {@link Integer} Transition time
+     * @param transitionTime {@link Integer} Transition Time
      * @param sceneName {@link String} Scene Name
-     * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension field sets
+     * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> addSceneCommand(Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
@@ -529,10 +626,9 @@ public class ZclScenesCluster extends ZclCluster {
     /**
      * The Get Scene Membership Command
      * <p>
-     * The Get Scene Membership command can be used to find an unused scene
-     * number within the group when no commissioning tool is in the network, or for a
-     * commissioning tool to get used scenes for a group on a single device or on all
-     * devices in the group.
+     * The Get Scene Membership command can be used to find an unused scene number within the
+     * group when no commissioning tool is in the network, or for a commissioning tool to get
+     * used scenes for a group on a single device or on all devices in the group.
      *
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
@@ -571,9 +667,9 @@ public class ZclScenesCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
-     * @param transitionTime {@link Integer} Transition time
+     * @param transitionTime {@link Integer} Transition Time
      * @param sceneName {@link String} Scene Name
-     * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension field sets
+     * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> viewSceneResponse(Integer status, Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
@@ -651,8 +747,8 @@ public class ZclScenesCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @param capacity {@link Integer} Capacity
      * @param groupId {@link Integer} Group ID
-     * @param sceneCount {@link Integer} Scene count
-     * @param sceneList {@link List<Integer>} Scene list
+     * @param sceneCount {@link Integer} Scene Count
+     * @param sceneList {@link List<Integer>} Scene List
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> getSceneMembershipResponse(Integer status, Integer capacity, Integer groupId, Integer sceneCount, List<Integer> sceneList) {
@@ -671,19 +767,19 @@ public class ZclScenesCluster extends ZclCluster {
     @Override
     public ZclCommand getCommandFromId(int commandId) {
         switch (commandId) {
-            case 0: // ADD_SCENE_COMMAND
+            case 0x00: // ADD_SCENE_COMMAND
                 return new AddSceneCommand();
-            case 1: // VIEW_SCENE_COMMAND
+            case 0x01: // VIEW_SCENE_COMMAND
                 return new ViewSceneCommand();
-            case 2: // REMOVE_SCENE_COMMAND
+            case 0x02: // REMOVE_SCENE_COMMAND
                 return new RemoveSceneCommand();
-            case 3: // REMOVE_ALL_SCENES_COMMAND
+            case 0x03: // REMOVE_ALL_SCENES_COMMAND
                 return new RemoveAllScenesCommand();
-            case 4: // STORE_SCENE_COMMAND
+            case 0x04: // STORE_SCENE_COMMAND
                 return new StoreSceneCommand();
-            case 5: // RECALL_SCENE_COMMAND
+            case 0x05: // RECALL_SCENE_COMMAND
                 return new RecallSceneCommand();
-            case 6: // GET_SCENE_MEMBERSHIP_COMMAND
+            case 0x06: // GET_SCENE_MEMBERSHIP_COMMAND
                 return new GetSceneMembershipCommand();
             default:
                 return null;
@@ -693,17 +789,17 @@ public class ZclScenesCluster extends ZclCluster {
     @Override
     public ZclCommand getResponseFromId(int commandId) {
         switch (commandId) {
-            case 0: // ADD_SCENE_RESPONSE
+            case 0x00: // ADD_SCENE_RESPONSE
                 return new AddSceneResponse();
-            case 1: // VIEW_SCENE_RESPONSE
+            case 0x01: // VIEW_SCENE_RESPONSE
                 return new ViewSceneResponse();
-            case 2: // REMOVE_SCENE_RESPONSE
+            case 0x02: // REMOVE_SCENE_RESPONSE
                 return new RemoveSceneResponse();
-            case 3: // REMOVE_ALL_SCENES_RESPONSE
+            case 0x03: // REMOVE_ALL_SCENES_RESPONSE
                 return new RemoveAllScenesResponse();
-            case 4: // STORE_SCENE_RESPONSE
+            case 0x04: // STORE_SCENE_RESPONSE
                 return new StoreSceneResponse();
-            case 5: // GET_SCENE_MEMBERSHIP_RESPONSE
+            case 0x05: // GET_SCENE_MEMBERSHIP_RESPONSE
                 return new GetSceneMembershipResponse();
             default:
                 return null;

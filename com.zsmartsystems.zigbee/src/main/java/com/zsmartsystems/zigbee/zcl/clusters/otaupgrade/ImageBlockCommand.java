@@ -9,75 +9,73 @@ package com.zsmartsystems.zigbee.zcl.clusters.otaupgrade;
 
 import javax.annotation.Generated;
 
-import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Image Block Command value object class.
  * <p>
- * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
+ * Cluster: <b>Ota Upgrade</b>. Command is sent <b>TO</b> the server.
+ * This command is a <b>specific</b> command used for the Ota Upgrade cluster.
  * <p>
- * The client device requests the image data at its leisure by sending Image Block Request command to
- * the upgrade server. The client knows the total number of request commands it needs to send from the
- * image size value received in Query Next Image Response command.
- * <br>
- * The client repeats Image Block Requests until it has successfully obtained all data. Manufacturer code,
- * image type and file version are included in all further queries regarding that image. The information
- * eliminates the need for the server to remember which OTA Upgrade Image is being used for each
- * download process.
- * <br>
- * If the client supports the BlockRequestDelay attribute it shall include the value of the attribute as the
- * BlockRequestDelay field of the Image Block Request message. The client shall ensure that it delays at
- * least BlockRequestDelay milliseconds after the previous Image Block Request was sent before sending
- * the next Image Block Request message. A client may delay its next Image Block Requests longer than
- * its BlockRequestDelay attribute.
+ * The client device requests the image data at its leisure by sending Image Block Request
+ * command to the upgrade server. The client knows the total number of request commands it needs
+ * to send from the image size value received in Query Next Image Response command. <br> The
+ * client repeats Image Block Requests until it has successfully obtained all data.
+ * Manufacturer code, image type and file version are included in all further queries
+ * regarding that image. The information eliminates the need for the server to remember which
+ * OTA Upgrade Image is being used for each download process. <br> If the client supports the
+ * BlockRequestDelay attribute it shall include the value of the attribute as the
+ * BlockRequestDelay field of the Image Block Request message. The client shall ensure that it
+ * delays at least BlockRequestDelay milliseconds after the previous Image Block Request was
+ * sent before sending the next Image Block Request message. A client may delay its next Image
+ * Block Requests longer than its BlockRequestDelay attribute.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ImageBlockCommand extends ZclCommand {
     /**
-     * Field control command message field.
+     * Field Control command message field.
      */
     private Integer fieldControl;
 
     /**
-     * Manufacturer code command message field.
+     * Manufacturer Code command message field.
      */
     private Integer manufacturerCode;
 
     /**
-     * Image type command message field.
+     * Image Type command message field.
      */
     private Integer imageType;
 
     /**
-     * File version command message field.
+     * File Version command message field.
      */
     private Integer fileVersion;
 
     /**
-     * File offset command message field.
+     * File Offset command message field.
      */
     private Integer fileOffset;
 
     /**
-     * Maximum data size command message field.
+     * Maximum Data Size command message field.
      */
     private Integer maximumDataSize;
 
     /**
-     * Request node address command message field.
+     * Request Node Address command message field.
      */
     private IeeeAddress requestNodeAddress;
 
     /**
-     * BlockRequestDelay command message field.
+     * Block Request Delay command message field.
      */
     private Integer blockRequestDelay;
 
@@ -86,150 +84,150 @@ public class ImageBlockCommand extends ZclCommand {
      */
     public ImageBlockCommand() {
         genericCommand = false;
-        clusterId = 25;
+        clusterId = 0x0019;
         commandId = 3;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Field control.
+     * Gets Field Control.
      *
-     * @return the Field control
+     * @return the Field Control
      */
     public Integer getFieldControl() {
         return fieldControl;
     }
 
     /**
-     * Sets Field control.
+     * Sets Field Control.
      *
-     * @param fieldControl the Field control
+     * @param fieldControl the Field Control
      */
     public void setFieldControl(final Integer fieldControl) {
         this.fieldControl = fieldControl;
     }
 
     /**
-     * Gets Manufacturer code.
+     * Gets Manufacturer Code.
      *
-     * @return the Manufacturer code
+     * @return the Manufacturer Code
      */
     public Integer getManufacturerCode() {
         return manufacturerCode;
     }
 
     /**
-     * Sets Manufacturer code.
+     * Sets Manufacturer Code.
      *
-     * @param manufacturerCode the Manufacturer code
+     * @param manufacturerCode the Manufacturer Code
      */
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
 
     /**
-     * Gets Image type.
+     * Gets Image Type.
      *
-     * @return the Image type
+     * @return the Image Type
      */
     public Integer getImageType() {
         return imageType;
     }
 
     /**
-     * Sets Image type.
+     * Sets Image Type.
      *
-     * @param imageType the Image type
+     * @param imageType the Image Type
      */
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;
     }
 
     /**
-     * Gets File version.
+     * Gets File Version.
      *
-     * @return the File version
+     * @return the File Version
      */
     public Integer getFileVersion() {
         return fileVersion;
     }
 
     /**
-     * Sets File version.
+     * Sets File Version.
      *
-     * @param fileVersion the File version
+     * @param fileVersion the File Version
      */
     public void setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
     }
 
     /**
-     * Gets File offset.
+     * Gets File Offset.
      *
-     * @return the File offset
+     * @return the File Offset
      */
     public Integer getFileOffset() {
         return fileOffset;
     }
 
     /**
-     * Sets File offset.
+     * Sets File Offset.
      *
-     * @param fileOffset the File offset
+     * @param fileOffset the File Offset
      */
     public void setFileOffset(final Integer fileOffset) {
         this.fileOffset = fileOffset;
     }
 
     /**
-     * Gets Maximum data size.
+     * Gets Maximum Data Size.
      *
-     * @return the Maximum data size
+     * @return the Maximum Data Size
      */
     public Integer getMaximumDataSize() {
         return maximumDataSize;
     }
 
     /**
-     * Sets Maximum data size.
+     * Sets Maximum Data Size.
      *
-     * @param maximumDataSize the Maximum data size
+     * @param maximumDataSize the Maximum Data Size
      */
     public void setMaximumDataSize(final Integer maximumDataSize) {
         this.maximumDataSize = maximumDataSize;
     }
 
     /**
-     * Gets Request node address.
+     * Gets Request Node Address.
      *
-     * @return the Request node address
+     * @return the Request Node Address
      */
     public IeeeAddress getRequestNodeAddress() {
         return requestNodeAddress;
     }
 
     /**
-     * Sets Request node address.
+     * Sets Request Node Address.
      *
-     * @param requestNodeAddress the Request node address
+     * @param requestNodeAddress the Request Node Address
      */
     public void setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
         this.requestNodeAddress = requestNodeAddress;
     }
 
     /**
-     * Gets BlockRequestDelay.
+     * Gets Block Request Delay.
      *
-     * @return the BlockRequestDelay
+     * @return the Block Request Delay
      */
     public Integer getBlockRequestDelay() {
         return blockRequestDelay;
     }
 
     /**
-     * Sets BlockRequestDelay.
+     * Sets Block Request Delay.
      *
-     * @param blockRequestDelay the BlockRequestDelay
+     * @param blockRequestDelay the Block Request Delay
      */
     public void setBlockRequestDelay(final Integer blockRequestDelay) {
         this.blockRequestDelay = blockRequestDelay;

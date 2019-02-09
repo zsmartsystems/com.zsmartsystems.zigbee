@@ -10,41 +10,40 @@ package com.zsmartsystems.zigbee.zcl.clusters.otaupgrade;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Upgrade End Response value object class.
  * <p>
- * Cluster: <b>OTA Upgrade</b>. Command is sent <b>FROM</b> the server.
- * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
+ * Cluster: <b>Ota Upgrade</b>. Command is sent <b>FROM</b> the server.
+ * This command is a <b>specific</b> command used for the Ota Upgrade cluster.
  * <p>
  * When an upgrade server receives an Upgrade End Request command with a status of
- * INVALID_IMAGE, REQUIRE_MORE_IMAGE, or ABORT, no additional processing shall be done
- * in its part. If the upgrade server receives an Upgrade End Request command with a status of
+ * INVALID_IMAGE, REQUIRE_MORE_IMAGE, or ABORT, no additional processing shall be done in
+ * its part. If the upgrade server receives an Upgrade End Request command with a status of
  * SUCCESS, it shall generate an Upgrade End Response with the manufacturer code and image type
- * received in the Upgrade End Request along with the times indicating when the device should upgrade
- * to the new image.
- * <br>
- * The server may send an unsolicited Upgrade End Response command to the client. This may be used
- * for example if the server wants to synchronize the upgrade on multiple clients simultaneously. For
- * client devices, the upgrade server may unicast or broadcast Upgrade End Response command
- * indicating a single client device or multiple client devices shall switch to using their new images. The
- * command may not be reliably received by sleepy devices if it is sent unsolicited.
+ * received in the Upgrade End Request along with the times indicating when the device should
+ * upgrade to the new image. <br> The server may send an unsolicited Upgrade End Response
+ * command to the client. This may be used for example if the server wants to synchronize the
+ * upgrade on multiple clients simultaneously. For client devices, the upgrade server may
+ * unicast or broadcast Upgrade End Response command indicating a single client device or
+ * multiple client devices shall switch to using their new images. The command may not be
+ * reliably received by sleepy devices if it is sent unsolicited.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class UpgradeEndResponse extends ZclCommand {
     /**
-     * Manufacturer code command message field.
+     * Manufacturer Code command message field.
      */
     private Integer manufacturerCode;
 
     /**
-     * Image type command message field.
+     * Image Type command message field.
      */
     private Integer imageType;
 
@@ -68,42 +67,42 @@ public class UpgradeEndResponse extends ZclCommand {
      */
     public UpgradeEndResponse() {
         genericCommand = false;
-        clusterId = 25;
+        clusterId = 0x0019;
         commandId = 7;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     /**
-     * Gets Manufacturer code.
+     * Gets Manufacturer Code.
      *
-     * @return the Manufacturer code
+     * @return the Manufacturer Code
      */
     public Integer getManufacturerCode() {
         return manufacturerCode;
     }
 
     /**
-     * Sets Manufacturer code.
+     * Sets Manufacturer Code.
      *
-     * @param manufacturerCode the Manufacturer code
+     * @param manufacturerCode the Manufacturer Code
      */
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
 
     /**
-     * Gets Image type.
+     * Gets Image Type.
      *
-     * @return the Image type
+     * @return the Image Type
      */
     public Integer getImageType() {
         return imageType;
     }
 
     /**
-     * Sets Image type.
+     * Sets Image Type.
      *
-     * @param imageType the Image type
+     * @param imageType the Image Type
      */
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;

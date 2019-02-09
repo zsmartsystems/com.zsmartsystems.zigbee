@@ -7,15 +7,15 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.iasace;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Set Bypassed Zone List Command value object class.
@@ -23,19 +23,21 @@ import java.util.List;
  * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
- * Sets the list of bypassed zones on the IAS ACE client. This command can be sent either as a response to the
- * GetBypassedZoneList command or unsolicited when the list of bypassed zones changes on the ACE server.
+ * Sets the list of bypassed zones on the IAS ACE client. This command can be sent either as a
+ * response to the GetBypassedZoneList command or unsolicited when the list of bypassed zones
+ * changes on the ACE server.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:19:25Z")
 public class SetBypassedZoneListCommand extends ZclCommand {
     /**
      * Zone ID command message field.
      * <p>
-     * Zone ID is the index of the Zone in the CIE's zone table and is an array of Zone IDs for each zone that is bypassed
-     * where X is equal to the value of the Number of Zones field. There is no order imposed by the numbering of the Zone ID
-     * field in this command payload. IAS ACE servers SHOULD provide the array of Zone IDs in ascending order.
+     * Zone ID is the index of the Zone in the CIE's zone table and is an array of Zone IDs for each
+     * zone that is bypassed where X is equal to the value of the Number of Zones field. There is no
+     * order imposed by the numbering of the Zone ID field in this command payload. IAS ACE
+     * servers should provide the array of Zone IDs in ascending order.
      */
     private List<Integer> zoneId;
 
@@ -44,17 +46,18 @@ public class SetBypassedZoneListCommand extends ZclCommand {
      */
     public SetBypassedZoneListCommand() {
         genericCommand = false;
-        clusterId = 1281;
+        clusterId = 0x0501;
         commandId = 6;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     /**
      * Gets Zone ID.
-     *
-     * Zone ID is the index of the Zone in the CIE's zone table and is an array of Zone IDs for each zone that is bypassed
-     * where X is equal to the value of the Number of Zones field. There is no order imposed by the numbering of the Zone ID
-     * field in this command payload. IAS ACE servers SHOULD provide the array of Zone IDs in ascending order.
+     * <p>
+     * Zone ID is the index of the Zone in the CIE's zone table and is an array of Zone IDs for each
+     * zone that is bypassed where X is equal to the value of the Number of Zones field. There is no
+     * order imposed by the numbering of the Zone ID field in this command payload. IAS ACE
+     * servers should provide the array of Zone IDs in ascending order.
      *
      * @return the Zone ID
      */
@@ -64,10 +67,11 @@ public class SetBypassedZoneListCommand extends ZclCommand {
 
     /**
      * Sets Zone ID.
-     *
-     * Zone ID is the index of the Zone in the CIE's zone table and is an array of Zone IDs for each zone that is bypassed
-     * where X is equal to the value of the Number of Zones field. There is no order imposed by the numbering of the Zone ID
-     * field in this command payload. IAS ACE servers SHOULD provide the array of Zone IDs in ascending order.
+     * <p>
+     * Zone ID is the index of the Zone in the CIE's zone table and is an array of Zone IDs for each
+     * zone that is bypassed where X is equal to the value of the Number of Zones field. There is no
+     * order imposed by the numbering of the Zone ID field in this command payload. IAS ACE
+     * servers should provide the array of Zone IDs in ascending order.
      *
      * @param zoneId the Zone ID
      */

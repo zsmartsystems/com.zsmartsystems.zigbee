@@ -7,30 +7,31 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
-import javax.annotation.Generated;
 
 /**
  * Management LQI Request value object class.
  * <p>
- * The Mgmt_Lqi_req is generated from a Local Device wishing to obtain a
- * neighbor list for the Remote Device along with associated LQI values to each
- * neighbor. The destination addressing on this command shall be unicast only and
- * the destination address must be that of a ZigBee Coordinator or ZigBee Router.
+ * <p>
+ * The Mgmt_Lqi_req is generated from a Local Device wishing to obtain a neighbor list for the
+ * Remote Device along with associated LQI values to each neighbor. The destination
+ * addressing on this command shall be unicast only and the destination address must be that of a
+ * ZigBee Coordinator or ZigBee Router.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ManagementLqiRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
-     * StartIndex command message field.
+     * Start Index command message field.
      */
     private Integer startIndex;
 
@@ -42,18 +43,18 @@ public class ManagementLqiRequest extends ZdoRequest implements ZigBeeTransactio
     }
 
     /**
-     * Gets StartIndex.
+     * Gets Start Index.
      *
-     * @return the StartIndex
+     * @return the Start Index
      */
     public Integer getStartIndex() {
         return startIndex;
     }
 
     /**
-     * Sets StartIndex.
+     * Sets Start Index.
      *
-     * @param startIndex the StartIndex
+     * @param startIndex the Start Index
      */
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;

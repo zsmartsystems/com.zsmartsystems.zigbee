@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.thermostat;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Setpoint Raise/Lower Command value object class.
@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class SetpointRaiseLowerCommand extends ZclCommand {
     /**
      * Mode command message field.
@@ -40,7 +40,7 @@ public class SetpointRaiseLowerCommand extends ZclCommand {
      */
     public SetpointRaiseLowerCommand() {
         genericCommand = false;
-        clusterId = 513;
+        clusterId = 0x0201;
         commandId = 0;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }

@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.rssilocation;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * RSSI Ping Command value object class.
@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class RssiPingCommand extends ZclCommand {
     /**
      * Location Type command message field.
@@ -35,7 +35,7 @@ public class RssiPingCommand extends ZclCommand {
      */
     public RssiPingCommand() {
         genericCommand = false;
-        clusterId = 11;
+        clusterId = 0x000B;
         commandId = 4;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }

@@ -1,0 +1,38 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0502">
+    <name>IAS WD</name>
+    <description>The IAS WD cluster provides an interface to the functionality of any Warning Device equipment of the IAS system. Using this cluster, a ZigBee enabled CIE device can access a ZigBee enabled IAS WD device and issue alarm warning indications (siren, strobe lighting, etc.) when a system alarm condition is detected.</description>
+    <command code="0x00" source="client">
+        <name>Start Warning Command</name>
+        <description>This command starts the WD operation. The WD alerts the surrounding area by audible (siren) and visual (strobe) signals. &lt;br&gt; A Start Warning command shall always terminate the effect of any previous command that is still current.</description>
+        <field type="DATA_8_BIT" class="WarningInfoEnum">
+            <name>Header</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Warning Duration</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Squawk</name>
+        <description>This command uses the WD capabilities to emit a quick audible/visible pulse called a "squawk". The squawk command has no effect if the WD is currently active (warning in progress).</description>
+        <field type="BITMAP_8_BIT" class="SquawkInfoBitmap">
+            <name>Squawk Info</name>
+        </field>
+    </command>
+
+    <attribute code="0x0000" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="true" reportable="false" minimum="0x0000" maximum="0xFFFE" default="0x00F0">
+        <name>Max Duration</name>
+        <description>The MaxDuration attribute specifies the maximum time in seconds that the siren will sound continuously, regardless of start/stop commands.</description>
+    </attribute>
+
+    <constant type="BITMAP_8_BIT" class="SquawkInfoBitmap">
+        <name>Squawk Info</name>
+        <value code="0x03" name="Level">
+        </value>
+        <value code="0x08" name="Strobe">
+        </value>
+        <value code="0xF0" name="Mode">
+        </value>
+    </constant>
+
+</cluster>

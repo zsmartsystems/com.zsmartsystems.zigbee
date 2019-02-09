@@ -7,16 +7,16 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.scenes;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * View Scene Response value object class.
@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:19:25Z")
 public class ViewSceneResponse extends ZclCommand {
     /**
      * Status command message field.
@@ -44,7 +44,7 @@ public class ViewSceneResponse extends ZclCommand {
     private Integer sceneId;
 
     /**
-     * Transition time command message field.
+     * Transition Time command message field.
      */
     private Integer transitionTime;
 
@@ -54,7 +54,7 @@ public class ViewSceneResponse extends ZclCommand {
     private String sceneName;
 
     /**
-     * Extension field sets command message field.
+     * Extension Field Sets command message field.
      */
     private List<ExtensionFieldSet> extensionFieldSets;
 
@@ -63,7 +63,7 @@ public class ViewSceneResponse extends ZclCommand {
      */
     public ViewSceneResponse() {
         genericCommand = false;
-        clusterId = 5;
+        clusterId = 0x0005;
         commandId = 1;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
@@ -123,18 +123,18 @@ public class ViewSceneResponse extends ZclCommand {
     }
 
     /**
-     * Gets Transition time.
+     * Gets Transition Time.
      *
-     * @return the Transition time
+     * @return the Transition Time
      */
     public Integer getTransitionTime() {
         return transitionTime;
     }
 
     /**
-     * Sets Transition time.
+     * Sets Transition Time.
      *
-     * @param transitionTime the Transition time
+     * @param transitionTime the Transition Time
      */
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
@@ -159,18 +159,18 @@ public class ViewSceneResponse extends ZclCommand {
     }
 
     /**
-     * Gets Extension field sets.
+     * Gets Extension Field Sets.
      *
-     * @return the Extension field sets
+     * @return the Extension Field Sets
      */
     public List<ExtensionFieldSet> getExtensionFieldSets() {
         return extensionFieldSets;
     }
 
     /**
-     * Sets Extension field sets.
+     * Sets Extension Field Sets.
      *
-     * @param extensionFieldSets the Extension field sets
+     * @param extensionFieldSets the Extension Field Sets
      */
     public void setExtensionFieldSets(final List<ExtensionFieldSet> extensionFieldSets) {
         this.extensionFieldSets = extensionFieldSets;

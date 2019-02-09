@@ -10,41 +10,41 @@ package com.zsmartsystems.zigbee.zcl.clusters.otaupgrade;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Image Block Response value object class.
  * <p>
- * Cluster: <b>OTA Upgrade</b>. Command is sent <b>FROM</b> the server.
- * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
+ * Cluster: <b>Ota Upgrade</b>. Command is sent <b>FROM</b> the server.
+ * This command is a <b>specific</b> command used for the Ota Upgrade cluster.
  * <p>
- * Upon receipt of an Image Block Request command the server shall generate an Image Block Response.
- * If the server is able to retrieve the data for the client and does not wish to change the image download
- * rate, it will respond with a status of SUCCESS and it will include all the fields in the payload. The use
- * of file offset allows the server to send packets with variable data size during the upgrade process. This
- * allows the server to support a case when the network topology of a client may change during the
- * upgrade process, for example, mobile client may move around during the upgrade process. If the client
- * has moved a few hops away, the data size shall be smaller. Moreover, using file offset eliminates the
- * need for data padding since each Image Block Response command may contain different data size. A
- * simple server implementation may choose to only support largest possible data size for the worst-case
- * scenario in order to avoid supporting sending packets with variable data size.
- * <br>
- * The server shall respect the maximum data size value requested by the client and shall not send the data
- * with length greater than that value. The server may send the data with length smaller than the value
- * depending on the network topology of the client. For example, the client may be able to receive 100
- * bytes of data at once so it sends the request with 100 as maximum data size. But after considering all
- * the security headers (perhaps from both APS and network levels) and source routing overhead (for
- * example, the client is five hops away), the largest possible data size that the server can send to the
- * client shall be smaller than 100 bytes.
+ * Upon receipt of an Image Block Request command the server shall generate an Image Block
+ * Response. If the server is able to retrieve the data for the client and does not wish to change
+ * the image download rate, it will respond with a status of SUCCESS and it will include all the
+ * fields in the payload. The use of file offset allows the server to send packets with variable
+ * data size during the upgrade process. This allows the server to support a case when the
+ * network topology of a client may change during the upgrade process, for example, mobile
+ * client may move around during the upgrade process. If the client has moved a few hops away, the
+ * data size shall be smaller. Moreover, using file offset eliminates the need for data padding
+ * since each Image Block Response command may contain different data size. A simple server
+ * implementation may choose to only support largest possible data size for the worst-case
+ * scenario in order to avoid supporting sending packets with variable data size. <br> The
+ * server shall respect the maximum data size value requested by the client and shall not send
+ * the data with length greater than that value. The server may send the data with length smaller
+ * than the value depending on the network topology of the client. For example, the client may be
+ * able to receive 100 bytes of data at once so it sends the request with 100 as maximum data size.
+ * But after considering all the security headers (perhaps from both APS and network levels)
+ * and source routing overhead (for example, the client is five hops away), the largest
+ * possible data size that the server can send to the client shall be smaller than 100 bytes.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ImageBlockResponse extends ZclCommand {
     /**
      * Status command message field.
@@ -52,12 +52,12 @@ public class ImageBlockResponse extends ZclCommand {
     private ZclStatus status;
 
     /**
-     * Manufacturer code command message field.
+     * Manufacturer Code command message field.
      */
     private Integer manufacturerCode;
 
     /**
-     * Image type command message field.
+     * Image Type command message field.
      */
     private Integer imageType;
 
@@ -67,7 +67,7 @@ public class ImageBlockResponse extends ZclCommand {
     private Integer fileVersion;
 
     /**
-     * File offset command message field.
+     * File Offset command message field.
      */
     private Integer fileOffset;
 
@@ -81,7 +81,7 @@ public class ImageBlockResponse extends ZclCommand {
      */
     public ImageBlockResponse() {
         genericCommand = false;
-        clusterId = 25;
+        clusterId = 0x0019;
         commandId = 5;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
@@ -105,36 +105,36 @@ public class ImageBlockResponse extends ZclCommand {
     }
 
     /**
-     * Gets Manufacturer code.
+     * Gets Manufacturer Code.
      *
-     * @return the Manufacturer code
+     * @return the Manufacturer Code
      */
     public Integer getManufacturerCode() {
         return manufacturerCode;
     }
 
     /**
-     * Sets Manufacturer code.
+     * Sets Manufacturer Code.
      *
-     * @param manufacturerCode the Manufacturer code
+     * @param manufacturerCode the Manufacturer Code
      */
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
 
     /**
-     * Gets Image type.
+     * Gets Image Type.
      *
-     * @return the Image type
+     * @return the Image Type
      */
     public Integer getImageType() {
         return imageType;
     }
 
     /**
-     * Sets Image type.
+     * Sets Image Type.
      *
-     * @param imageType the Image type
+     * @param imageType the Image Type
      */
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;
@@ -159,18 +159,18 @@ public class ImageBlockResponse extends ZclCommand {
     }
 
     /**
-     * Gets File offset.
+     * Gets File Offset.
      *
-     * @return the File offset
+     * @return the File Offset
      */
     public Integer getFileOffset() {
         return fileOffset;
     }
 
     /**
-     * Sets File offset.
+     * Sets File Offset.
      *
-     * @param fileOffset the File offset
+     * @param fileOffset the File Offset
      */
     public void setFileOffset(final Integer fileOffset) {
         this.fileOffset = fileOffset;

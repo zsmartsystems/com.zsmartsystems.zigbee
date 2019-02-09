@@ -188,7 +188,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         XBeeIeeeAddressLowResponse ieeeLowResponse = (XBeeIeeeAddressLowResponse) frameHandler
                 .sendRequest(ieeeLowCommand);
 
-        if (ieeeHighResponse == null || ieeeLowCommand == null) {
+        if (ieeeHighResponse == null || ieeeLowResponse == null) {
             logger.error("Unable to get XBee IEEE address");
             return ZigBeeStatus.BAD_RESPONSE;
         }

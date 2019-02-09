@@ -7,27 +7,27 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
-import javax.annotation.Generated;
 
 /**
  * Recover Source Bind Request value object class.
  * <p>
- * The Recover_Source_Bind_req is generated from a local primary binding table
- * cache and sent to the remote backup binding table cache device when it wants a
- * complete restore of the source binding table. The destination addressing mode for
- * this request is unicast.
+ * <p>
+ * The Recover_Source_Bind_req is generated from a local primary binding table cache and sent
+ * to the remote backup binding table cache device when it wants a complete restore of the source
+ * binding table. The destination addressing mode for this request is unicast.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class RecoverSourceBindRequest extends ZdoRequest {
     /**
-     * StartIndex command message field.
+     * Start Index command message field.
      */
     private Integer startIndex;
 
@@ -39,18 +39,18 @@ public class RecoverSourceBindRequest extends ZdoRequest {
     }
 
     /**
-     * Gets StartIndex.
+     * Gets Start Index.
      *
-     * @return the StartIndex
+     * @return the Start Index
      */
     public Integer getStartIndex() {
         return startIndex;
     }
 
     /**
-     * Sets StartIndex.
+     * Sets Start Index.
      *
-     * @param startIndex the StartIndex
+     * @param startIndex the Start Index
      */
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;

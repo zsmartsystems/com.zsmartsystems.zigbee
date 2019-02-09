@@ -1,0 +1,14 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0202">
+    <name>Fan Control</name>
+    <description>This cluster specifies an interface to control the speed of a fan as part of a heating / cooling system.</description>
+    <attribute code="0x0000" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x05">
+        <name>Fan Mode</name>
+        <description>The FanMode attribute is an 8-bit value that specifies the current speed of the fan.</description>
+    </attribute>
+    <attribute code="0x0001" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x02">
+        <name>Fan Mode Sequence</name>
+        <description>The FanModeSequence attribute is an 8-bit value that specifies the possible fan speeds that the thermostat can set.</description>
+    </attribute>
+
+</cluster>

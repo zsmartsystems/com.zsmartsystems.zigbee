@@ -7,22 +7,22 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * Remove Backup Bind Table Request value object class.
  * <p>
- * The Remove_Bkup_Bind_Entry_req is generated from a local primary binding
- * table cache and sent to a remote backup binding table cache device to request
- * removal of the entry from backup storage. It will be generated whenever a binding
- * table entry has been unbound by the primary binding table cache. The destination
- * addressing mode for this request is unicast.
+ * <p>
+ * The Remove_Bkup_Bind_Entry_req is generated from a local primary binding table cache and
+ * sent to a remote backup binding table cache device to request removal of the entry from backup
+ * storage. It will be generated whenever a binding table entry has been unbound by the primary
+ * binding table cache. The destination addressing mode for this request is unicast.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class RemoveBackupBindTableRequest extends ZdoRequest {
     /**
      * Default constructor.

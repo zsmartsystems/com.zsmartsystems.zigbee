@@ -7,30 +7,30 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
-import javax.annotation.Generated;
 
 /**
  * Extended Simple Descriptor Request value object class.
  * <p>
- * The Extended_Simple_Desc_req command is generated from a local device
- * wishing to inquire as to the simple descriptor of a remote device on a specified
- * endpoint. This command shall be unicast either to the remote device itself or to an
- * alternative device that contains the discovery information of the remote device.
- * The Extended_Simple_Desc_req is intended for use with devices which employ a
- * larger number of application input or output clusters than can be described by the
- * Simple_Desc_req.
+ * <p>
+ * The Extended_Simple_Desc_req command is generated from a local device wishing to inquire
+ * as to the simple descriptor of a remote device on a specified endpoint. This command shall be
+ * unicast either to the remote device itself or to an alternative device that contains the
+ * discovery information of the remote device. The Extended_Simple_Desc_req is intended for
+ * use with devices which employ a larger number of application input or output clusters than
+ * can be described by the Simple_Desc_req.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
     /**
-     * NWKAddrOfInterest command message field.
+     * NWK Addr Of Interest command message field.
      */
     private Integer nwkAddrOfInterest;
 
@@ -40,7 +40,7 @@ public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
     private Integer endpoint;
 
     /**
-     * StartIndex command message field.
+     * Start Index command message field.
      */
     private Integer startIndex;
 
@@ -52,18 +52,18 @@ public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
     }
 
     /**
-     * Gets NWKAddrOfInterest.
+     * Gets NWK Addr Of Interest.
      *
-     * @return the NWKAddrOfInterest
+     * @return the NWK Addr Of Interest
      */
     public Integer getNwkAddrOfInterest() {
         return nwkAddrOfInterest;
     }
 
     /**
-     * Sets NWKAddrOfInterest.
+     * Sets NWK Addr Of Interest.
      *
-     * @param nwkAddrOfInterest the NWKAddrOfInterest
+     * @param nwkAddrOfInterest the NWK Addr Of Interest
      */
     public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
@@ -88,18 +88,18 @@ public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
     }
 
     /**
-     * Gets StartIndex.
+     * Gets Start Index.
      *
-     * @return the StartIndex
+     * @return the Start Index
      */
     public Integer getStartIndex() {
         return startIndex;
     }
 
     /**
-     * Sets StartIndex.
+     * Sets Start Index.
      *
-     * @param startIndex the StartIndex
+     * @param startIndex the Start Index
      */
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;

@@ -1,0 +1,108 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0008">
+    <name>Level Control</name>
+    <description>This cluster provides an interface for controlling a characteristic of a device that can be set to a level, for example the brightness of a light, the degree of closure of a door, or the power output of a heater.</description>
+    <description>For many applications, a close relationship between this cluster and the OnOff cluster is needed. This section describes the dependencies that are required when an endpoint that implements the Level Control server cluster also implements the On/Off server cluster.</description>
+    <description>The OnOff attribute of the On/Off cluster and the CurrentLevel attribute of the Level Control cluster are intrinsically independent variables, as they are on different clusters. However, when both clusters are implemented on the same endpoint, dependencies MAY be introduced between them. Facilities are provided to introduce dependencies if required.</description>
+    <description>There are two sets of commands provided in the Level Control cluster. These are identical, except that the first set (Move to Level, Move and Step) SHALL NOT affect the OnOff attribute, whereas the second set ('with On/Off' variants) SHALL.</description>
+    <command code="0x00" source="client">
+        <name>Move To Level Command</name>
+        <description>On receipt of this command, a device SHALL move from its current level to the value given in the Level field. The meaning of &#8216;level&#8217; is device dependent &#8211;e.g., for a light it MAY mean brightness level.The movement SHALL be as continuous as technically practical, i.e., not a step function, and the time taken to move to the new level SHALL be equal to the value of the Transition time field, in tenths of a second, or as close to this as the device is able.If the Transition time field takes the value 0xffff then the time taken to move to the new level SHALL instead be determined by the OnOffTransitionTimeattribute. If OnOffTransitionTime, which is an optional attribute, is not present, the device SHALL move to its new level as fast as it is able.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Level</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Move Command</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Move Mode</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Rate</name>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Step Command</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Step Mode</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Step Size</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Stop Command</name>
+        <description>Upon receipt of this command, any Move to Level, Move or Step command (and their 'with On/Off' variants) currently in process SHALL be terminated. The value of CurrentLevel SHALL be left at its value upon receipt of the Stop command, and RemainingTime SHALL be set to zero.</description>
+    </command>
+    <command code="0x04" source="client">
+        <name>Move To Level (with On/Off) Command</name>
+        <description>On receipt of this command, a device SHALL move from its current level to the value given in the Level field. The meaning of &#8216;level&#8217; is device dependent &#8211;e.g., for a light it MAY mean brightness level.The movement SHALL be as continuous as technically practical, i.e., not a step function, and the time taken to move to the new level SHALL be equal to the value of the Transition time field, in tenths of a second, or as close to this as the device is able.If the Transition time field takes the value 0xffff then the time taken to move to the new level SHALL instead be determined by the OnOffTransitionTimeattribute. If OnOffTransitionTime, which is an optional attribute, is not present, the device SHALL move to its new level as fast as it is able.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Level</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x05" source="client">
+        <name>Move (with On/Off) Command</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Move Mode</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Rate</name>
+        </field>
+    </command>
+    <command code="0x06" source="client">
+        <name>Step (with On/Off) Command</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Step Mode</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Step Size</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x07" source="client">
+        <name>Stop 2 Command</name>
+    </command>
+
+    <attribute code="0x0000" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true">
+        <name>Current Level</name>
+        <description>The CurrentLevel attribute represents the current level of this device. The meaning of &apos;level&apos; is device dependent. Value is between 0 and 254.</description>
+    </attribute>
+    <attribute code="0x0001" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Remaining Time</name>
+        <description>The RemainingTime attribute represents the time remaining until the current command is complete - it is specified in 1/10ths of a second.</description>
+    </attribute>
+    <attribute code="0x0010" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false">
+        <name>On Off Transition Time</name>
+        <description>The OnOffTransitionTime attribute represents the time taken to move to or from the target level when On of Off commands are received by an On/Off cluster on the same endpoint. It is specified in 1/10ths of a second.</description>
+        <description>The actual time taken should be as close to OnOffTransitionTime as the device is able. N.B. If the device is not able to move at a variable rate, the OnOffTransitionTime attribute should not be implemented.</description>
+    </attribute>
+    <attribute code="0x0011" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false">
+        <name>On Level</name>
+        <description>The OnLevel attribute determines the value that the CurrentLevel attribute is set to when the OnOff attribute of an On/Off cluster on the same endpoint is set to On. If the OnLevel attribute is not implemented, or is set to 0xff, it has no effect.</description>
+    </attribute>
+    <attribute code="0x0012" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false">
+        <name>On Transition Time</name>
+        <description>The OnTransitionTime attribute represents the time taken to move the current level from the minimum level to the maximum level when an On command is received by an On/Off cluster on the same endpoint.  It is specified in 10ths of a second.  If this command is not implemented, or contains a value of 0xffff, the OnOffTransitionTime will be used instead.</description>
+    </attribute>
+    <attribute code="0x0013" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false">
+        <name>Off Transition Time</name>
+        <description>The OffTransitionTime attribute represents the time taken to move the current level from the maximum level to the minimum level when an Off command is received by an On/Off cluster on the same endpoint.  It is specified in 10ths of a second.  If this command is not implemented, or contains a value of 0xffff, the OnOffTransitionTime will be used instead.</description>
+    </attribute>
+    <attribute code="0x0014" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false">
+        <name>Default Move Rate</name>
+        <description>The DefaultMoveRate attribute determines the movement rate, in units per second, when a Move command is received with a Rate parameter of 0xFF.</description>
+    </attribute>
+
+</cluster>

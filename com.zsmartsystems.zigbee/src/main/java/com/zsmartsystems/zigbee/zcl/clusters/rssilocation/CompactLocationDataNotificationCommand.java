@@ -20,14 +20,14 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class CompactLocationDataNotificationCommand extends ZclCommand {
     /**
      * Default constructor.
      */
     public CompactLocationDataNotificationCommand() {
         genericCommand = false;
-        clusterId = 11;
+        clusterId = 0x000B;
         commandId = 3;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
