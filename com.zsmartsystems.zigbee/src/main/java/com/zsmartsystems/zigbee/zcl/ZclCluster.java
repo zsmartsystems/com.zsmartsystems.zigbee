@@ -471,7 +471,10 @@ public abstract class ZclCluster {
         command.setDstAddrMode(3); // 64 bit addressing
         command.setDstAddress(address);
         command.setDstEndpoint(endpointId);
-        return zigbeeEndpoint.sendTransaction(command, new BindRequest());
+        // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
+        // Hence calling here zigbeeEndpoint.getParentNode().sendTransaction() instead of
+        // zigbeeEndpoint.sendTransaction()
+        return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
     }
 
     /**
@@ -490,7 +493,10 @@ public abstract class ZclCluster {
         command.setDstAddrMode(3); // 64 bit addressing
         command.setDstAddress(address);
         command.setDstEndpoint(endpointId);
-        return zigbeeEndpoint.sendTransaction(command, new UnbindRequest());
+        // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
+        // Hence calling here zigbeeEndpoint.getParentNode().sendTransaction() instead of
+        // zigbeeEndpoint.sendTransaction()
+        return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
     }
 
     /**
