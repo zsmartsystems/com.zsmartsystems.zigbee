@@ -1,0 +1,112 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0000">
+	<name>Basic</name>
+	<description>This cluster supports an interface to the node or physical device. It provides attributes and commands for determining basic information, setting user information such as location, and resetting to factory defaults.</description>
+	<command code="0x00" source="client">
+		<name>Reset To Factory Defaults Command</name>
+		<description>On receipt of this command, the device resets all the attributes of all its clusters to their factory defaults. Note that ZigBee networking functionality,bindings, groups or other persistent data are not affected by this command</description>
+	</command>
+	<attribute code="0x0000" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false"
+		reportable="false">
+		<name>ZCL Version</name>
+		<description>The ZCLVersion attribute is 8 bits in length and specifies the version number of the ZigBee Cluster Library that all clusters on this endpoint conform to.</description>
+	</attribute>
+	<attribute code="0x0001" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false"
+		reportable="false">
+		<name>Application Version</name>
+		<description>The ApplicationVersion attribute is 8 bits in length and specifies the version number of the application software contained in the device. The usage of this attribute is manufacturer dependent.</description>
+	</attribute>
+	<attribute code="0x0002" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false"
+		reportable="false">
+		<name>Stack Version</name>
+		<description>The StackVersion attribute is 8 bits in length and specifies the version number of the implementation of the ZigBee stack contained in the device. The usage of this attribute is manufacturer dependent.</description>
+	</attribute>
+	<attribute code="0x0003" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false"
+		reportable="false">
+		<name>HW Version</name>
+		<description>The HWVersion attribute is 8 bits in length and specifies the version number of the hardware of the device. The usage of this attribute is manufacturer dependent.</description>
+	</attribute>
+	<attribute code="0x0004" type="CHARACTER_STRING" side="server" optional="false" writable="false"
+		reportable="false">
+		<name>Manufacturer Name</name>
+		<description>The ManufacturerName attribute is a maximum of 32 bytes in length and specifies the name of the manufacturer as a ZigBee character string.</description>
+	</attribute>
+	<attribute code="0x0005" type="CHARACTER_STRING" side="server" optional="false" writable="false"
+		reportable="false">
+		<name>Model Identifier</name>
+		<description>The ModelIdentifier attribute is a maximum of 32 bytes in length and specifies the model number (or other identifier) assigned by the manufacturer as a ZigBee character string.</description>
+	</attribute>
+	<attribute code="0x0006" type="CHARACTER_STRING" side="server" optional="false" writable="false"
+		reportable="false">
+		<name>Date Code</name>
+		<description>The DateCode attribute is a ZigBee character string with a maximum length of 16 bytes. The first 8 characters specify the date of manufacturer of the device in international date notation according to ISO 8601, i.e. YYYYMMDD, e.g. 20060814.</description>
+	</attribute>
+	<attribute code="0x0007" type="ENUMERATION_8_BIT" side="server" class="PowerSourceEnum" optional="false"
+		writable="false" reportable="false">
+		<name>Power Source</name>
+		<description>The PowerSource attribute is 8 bits in length and specifies the source(s) of power available to the device. Bits b0&#8211;b6 of this attribute represent the primary power source of the device and bit b7 indicates whether the device has a secondary power source in the form of a battery backup.</description>
+	</attribute>
+	<attribute code="0x0010" type="CHARACTER_STRING" side="server" optional="false" writable="true"
+		reportable="false">
+		<name>Location Description</name>
+		<description>The LocationDescription attribute is a maximum of 16 bytes in length and describes the physical location of the device as a ZigBee character string.</description>
+	</attribute>
+	<attribute code="0x0011" type="ENUMERATION_8_BIT" side="server" class="PhysicalEnvironmentEnum"
+		optional="false" writable="true" reportable="false">
+		<name>Physical Environment</name>
+		<description>The PhysicalEnvironment attribute is 8 bits in length and specifies the type of physical environment in which the device will operate.</description>
+	</attribute>
+	<attribute code="0x0012" type="BOOLEAN" side="server" optional="false" writable="true" reportable="false">
+		<name>Device Enabled</name>
+		<description>The DeviceEnabled attribute is a boolean and specifies whether the device is enabled or disabled.</description>
+	</attribute>
+	<attribute code="0x0013" type="BITMAP_8_BIT" side="server" optional="false" writable="true"
+		reportable="false">
+		<name>Alarm Mask</name>
+		<description>The AlarmMask attribute is 8 bits in length and specifies which of a number of general alarms may be generated.</description>
+	</attribute>
+	<attribute code="0x0014" type="BITMAP_8_BIT" side="server" optional="false" writable="true"
+		reportable="false">
+		<name>Disable Local Config</name>
+		<description>The DisableLocalConfig attribute allows a number of local device configuration functions to be disabled.</description>
+		<description>The intention of this attribute is to allow disabling of any local configuration user interface, for example to prevent reset or binding buttons being activated by unauthorised persons in a public building.</description>
+	</attribute>
+	<attribute code="0x4000" type="CHARACTER_STRING" side="server" optional="true" writable="false"
+		reportable="false">
+		<name>SW Build ID</name>
+		<description>The SWBuildIDattribute represents a detailed, manufacturer-specific reference to the version of the software.</description>
+	</attribute>
+
+	<constant class="PowerSourceEnum">
+		<name>Power Source</name>
+		<value code="0x00" name="Unknown">
+        </value>
+		<value code="0x01" name="Mains Single Phase">
+        </value>
+		<value code="0x02" name="Mains Three Phase">
+        </value>
+		<value code="0x03" name="Battery">
+        </value>
+		<value code="0x04" name="DC Source">
+        </value>
+		<value code="0x05" name="Emergency Mains Constant">
+        </value>
+		<value code="0x06" name="Emergency Mains Changeover">
+        </value>
+	</constant>
+	<constant class="PhysicalEnvironmentEnum">
+		<name>Physical Environment</name>
+		<value code="0x00" name="Unknown">
+        </value>
+		<value code="0x01" name="Atrium">
+        </value>
+		<value code="0x02" name="Bar">
+        </value>
+		<value code="0x03" name="Courtyard">
+        </value>
+		<value code="0x04" name="Bathroom">
+        </value>
+		<value code="0x05" name="Bedroom">
+        </value>
+	</constant>
+</cluster>

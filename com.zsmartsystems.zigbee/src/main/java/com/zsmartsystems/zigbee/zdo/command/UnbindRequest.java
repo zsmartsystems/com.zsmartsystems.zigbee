@@ -7,76 +7,73 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import com.zsmartsystems.zigbee.zdo.command.UnbindResponse;
-import javax.annotation.Generated;
-import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Unbind Request value object class.
  * <p>
- * The Unbind_req is generated from a Local Device wishing to remove a Binding
- * Table entry for the source and destination addresses contained as parameters. The
- * destination addressing on this command shall be unicast only and the destination
- * address must be that of the a Primary binding table cache or the SrcAddress.
+ * <p>
+ * The Unbind_req is generated from a Local Device wishing to remove a Binding Table entry for
+ * the source and destination addresses contained as parameters. The destination addressing
+ * on this command shall be unicast only and the destination address must be that of the a Primary
+ * binding table cache or the SrcAddress.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-23T21:55:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class UnbindRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
-     * SrcAddress command message field.
+     * Src Address command message field.
      * <p>
      * The IEEE address for the source.
      */
     private IeeeAddress srcAddress;
 
     /**
-     * SrcEndpoint command message field.
+     * Src Endpoint command message field.
      * <p>
      * The source endpoint for the binding entry.
      */
     private Integer srcEndpoint;
 
     /**
-     * BindCluster command message field.
+     * Bind Cluster command message field.
      * <p>
      * The identifier of the cluster on the source device that is bound to the destination.
      */
     private Integer bindCluster;
 
     /**
-     * DstAddrMode command message field.
+     * DST Addr Mode command message field.
      * <p>
-     * The addressing mode for the destination address used in this command. This field
-     * can take one of the non-reserved values from the following list:
-     * 0x00 = reserved
-     * 0x01 = 16-bit group address for DstAddress and DstEndp not present
-     * 0x02 = reserved
-     * 0x03 = 64-bit extended address for DstAddress and DstEndp present
-     * 0x04 – 0xff = reserved
+     * The addressing mode for the destination address used in this command. This field can
+     * take one of the non-reserved values from the following list: 0x00 = reserved 0x01 =
+     * 16-bit group address for DstAddress and DstEndp not present 0x02 = reserved 0x03 =
+     * 64-bit extended address for DstAddress and DstEndp present 0x04 – 0xff = reserved
      */
     private Integer dstAddrMode;
 
     /**
-     * DstAddress command message field.
+     * DST Address command message field.
      * <p>
      * The destination address for the binding entry.
      */
     private IeeeAddress dstAddress;
 
     /**
-     * DstEndpoint command message field.
+     * DST Endpoint command message field.
      * <p>
-     * This field shall be present only if the DstAddrMode field has a value of 0x03 and,
-     * if present, shall be the destination endpoint for the binding entry.
+     * This field shall be present only if the DstAddrMode field has a value of 0x03 and, if
+     * present, shall be the destination endpoint for the binding entry.
      */
     private Integer dstEndpoint;
 
@@ -88,146 +85,140 @@ public class UnbindRequest extends ZdoRequest implements ZigBeeTransactionMatche
     }
 
     /**
-     * Gets SrcAddress.
+     * Gets Src Address.
      * <p>
      * The IEEE address for the source.
      *
-     * @return the SrcAddress
+     * @return the Src Address
      */
     public IeeeAddress getSrcAddress() {
         return srcAddress;
     }
 
     /**
-     * Sets SrcAddress.
+     * Sets Src Address.
      * <p>
      * The IEEE address for the source.
      *
-     * @param srcAddress the SrcAddress
+     * @param srcAddress the Src Address
      */
     public void setSrcAddress(final IeeeAddress srcAddress) {
         this.srcAddress = srcAddress;
     }
 
     /**
-     * Gets SrcEndpoint.
+     * Gets Src Endpoint.
      * <p>
      * The source endpoint for the binding entry.
      *
-     * @return the SrcEndpoint
+     * @return the Src Endpoint
      */
     public Integer getSrcEndpoint() {
         return srcEndpoint;
     }
 
     /**
-     * Sets SrcEndpoint.
+     * Sets Src Endpoint.
      * <p>
      * The source endpoint for the binding entry.
      *
-     * @param srcEndpoint the SrcEndpoint
+     * @param srcEndpoint the Src Endpoint
      */
     public void setSrcEndpoint(final Integer srcEndpoint) {
         this.srcEndpoint = srcEndpoint;
     }
 
     /**
-     * Gets BindCluster.
+     * Gets Bind Cluster.
      * <p>
      * The identifier of the cluster on the source device that is bound to the destination.
      *
-     * @return the BindCluster
+     * @return the Bind Cluster
      */
     public Integer getBindCluster() {
         return bindCluster;
     }
 
     /**
-     * Sets BindCluster.
+     * Sets Bind Cluster.
      * <p>
      * The identifier of the cluster on the source device that is bound to the destination.
      *
-     * @param bindCluster the BindCluster
+     * @param bindCluster the Bind Cluster
      */
     public void setBindCluster(final Integer bindCluster) {
         this.bindCluster = bindCluster;
     }
 
     /**
-     * Gets DstAddrMode.
+     * Gets DST Addr Mode.
      * <p>
-     * The addressing mode for the destination address used in this command. This field
-     * can take one of the non-reserved values from the following list:
-     * 0x00 = reserved
-     * 0x01 = 16-bit group address for DstAddress and DstEndp not present
-     * 0x02 = reserved
-     * 0x03 = 64-bit extended address for DstAddress and DstEndp present
-     * 0x04 – 0xff = reserved
+     * The addressing mode for the destination address used in this command. This field can
+     * take one of the non-reserved values from the following list: 0x00 = reserved 0x01 =
+     * 16-bit group address for DstAddress and DstEndp not present 0x02 = reserved 0x03 =
+     * 64-bit extended address for DstAddress and DstEndp present 0x04 – 0xff = reserved
      *
-     * @return the DstAddrMode
+     * @return the DST Addr Mode
      */
     public Integer getDstAddrMode() {
         return dstAddrMode;
     }
 
     /**
-     * Sets DstAddrMode.
+     * Sets DST Addr Mode.
      * <p>
-     * The addressing mode for the destination address used in this command. This field
-     * can take one of the non-reserved values from the following list:
-     * 0x00 = reserved
-     * 0x01 = 16-bit group address for DstAddress and DstEndp not present
-     * 0x02 = reserved
-     * 0x03 = 64-bit extended address for DstAddress and DstEndp present
-     * 0x04 – 0xff = reserved
+     * The addressing mode for the destination address used in this command. This field can
+     * take one of the non-reserved values from the following list: 0x00 = reserved 0x01 =
+     * 16-bit group address for DstAddress and DstEndp not present 0x02 = reserved 0x03 =
+     * 64-bit extended address for DstAddress and DstEndp present 0x04 – 0xff = reserved
      *
-     * @param dstAddrMode the DstAddrMode
+     * @param dstAddrMode the DST Addr Mode
      */
     public void setDstAddrMode(final Integer dstAddrMode) {
         this.dstAddrMode = dstAddrMode;
     }
 
     /**
-     * Gets DstAddress.
+     * Gets DST Address.
      * <p>
      * The destination address for the binding entry.
      *
-     * @return the DstAddress
+     * @return the DST Address
      */
     public IeeeAddress getDstAddress() {
         return dstAddress;
     }
 
     /**
-     * Sets DstAddress.
+     * Sets DST Address.
      * <p>
      * The destination address for the binding entry.
      *
-     * @param dstAddress the DstAddress
+     * @param dstAddress the DST Address
      */
     public void setDstAddress(final IeeeAddress dstAddress) {
         this.dstAddress = dstAddress;
     }
 
     /**
-     * Gets DstEndpoint.
+     * Gets DST Endpoint.
      * <p>
-     * This field shall be present only if the DstAddrMode field has a value of 0x03 and,
-     * if present, shall be the destination endpoint for the binding entry.
+     * This field shall be present only if the DstAddrMode field has a value of 0x03 and, if
+     * present, shall be the destination endpoint for the binding entry.
      *
-     * @return the DstEndpoint
+     * @return the DST Endpoint
      */
     public Integer getDstEndpoint() {
         return dstEndpoint;
     }
 
     /**
-     * Sets DstEndpoint.
+     * Sets DST Endpoint.
      * <p>
-     * This field shall be present only if the DstAddrMode field has a value of 0x03 and,
-     * if present, shall be the destination endpoint for the binding entry.
+     * This field shall be present only if the DstAddrMode field has a value of 0x03 and, if
+     * present, shall be the destination endpoint for the binding entry.
      *
-     * @param dstEndpoint the DstEndpoint
+     * @param dstEndpoint the DST Endpoint
      */
     public void setDstEndpoint(final Integer dstEndpoint) {
         this.dstEndpoint = dstEndpoint;
@@ -259,11 +250,8 @@ public class UnbindRequest extends ZdoRequest implements ZigBeeTransactionMatche
 
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
-        if (!(response instanceof UnbindResponse)) {
-            return false;
-        }
-
-        return ((ZdoRequest) request).getDestinationAddress().equals(((UnbindResponse) response).getSourceAddress());
+        return (response instanceof UnbindResponse)
+                & ((ZdoRequest) request).getDestinationAddress().equals(((UnbindResponse) response).getSourceAddress());
     }
 
     @Override

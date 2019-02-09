@@ -51,7 +51,7 @@ public class ZigBeeConsoleLinkKeyCommand extends ZigBeeConsoleAbstractCommand {
         ZigBeeKey key;
         if (args.length == 2) {
             key = new ZigBeeKey(args[1]);
-        } else if (args.length == 3 && args[1].equalsIgnoreCase("mmo")) {
+        } else if (args[1].equalsIgnoreCase("mmo")) {
             MmoHash hash;
             try {
                 hash = new MmoHash(args[2]);

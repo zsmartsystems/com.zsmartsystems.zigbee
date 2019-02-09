@@ -1,0 +1,191 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0005">
+    <name>Scenes</name>
+    <description>The scenes cluster provides attributes and commands for setting up and recalling scenes. Each scene corresponds to a set of stored values of specified attributes for one or more clusters on the same end point as the scenes cluster.</description>
+    <description>In most cases scenes are associated with a particular group ID. Scenes may also exist without a group, in which case the value 0x0000 replaces the group ID. Note that extra care is required in these cases to avoid a scene ID collision, and that commands related to scenes without a group may only be unicast, i.e.: they may not be multicast or broadcast.</description>
+    <command code="0x00" source="client">
+        <name>Add Scene Command</name>
+        <description>The Add Scene command shall be addressed to a single device (not a group).</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Scene Name</name>
+        </field>
+        <field type="N_X_EXTENSION_FIELD_SET">
+            <name>Extension Field Sets</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>View Scene Command</name>
+        <description>The View Scene command shall be addressed to a single device (not a group).</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Remove Scene Command</name>
+        <description>The Remove All Scenes may be addressed to a single device or to a group.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Remove All Scenes Command</name>
+        <description>The Remove All Scenes may be addressed to a single device or to a group.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+    </command>
+    <command code="0x04" source="client">
+        <name>Store Scene Command</name>
+        <description>The Store Scene command may be addressed to a single device or to a group.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+    </command>
+    <command code="0x05" source="client">
+        <name>Recall Scene Command</name>
+        <description>The Recall Scene command may be addressed to a single device or to a group.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+    </command>
+    <command code="0x06" source="client">
+        <name>Get Scene Membership Command</name>
+        <description>The Get Scene Membership command can be used to find an unused scene number within the group when no commissioning tool is in the network, or for a commissioning tool to get used scenes for a group on a single device or on all devices in the group.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+    </command>
+    <command code="0x00" source="server">
+        <name>Add Scene Response</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>View Scene Response</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Scene Name</name>
+        </field>
+        <field type="N_X_EXTENSION_FIELD_SET">
+            <name>Extension Field Sets</name>
+        </field>
+    </command>
+    <command code="0x02" source="server">
+        <name>Remove Scene Response</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+    </command>
+    <command code="0x03" source="server">
+        <name>Remove All Scenes Response</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+    </command>
+    <command code="0x04" source="server">
+        <name>Store Scene Response</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+    </command>
+    <command code="0x05" source="server">
+        <name>Get Scene Membership Response</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Capacity</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene Count</name>
+        </field>
+        <field type="N_X_UNSIGNED_8_BIT_INTEGER">
+            <name>Scene List</name>
+        </field>
+    </command>
+    
+    <attribute code="0x0000" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Scene Count</name>
+        <description>The SceneCount attribute specifies the number of scenes currently in the device&apos;s scene table.</description>
+    </attribute>
+    <attribute code="0x0001" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Current Scene</name>
+        <description>The CurrentScene attribute holds the Scene ID of the scene last invoked.</description>
+    </attribute>
+    <attribute code="0x0002" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Current Group</name>
+        <description>The CurrentGroup attribute holds the Group ID of the scene last invoked, or 0x0000 if the scene last invoked is not associated with a group.</description>
+    </attribute>
+    <attribute code="0x0003" type="BOOLEAN" side="server" optional="false" writable="false" reportable="false">
+        <name>Scene Valid</name>
+        <description>The SceneValid attribute indicates whether the state of the device corresponds to that associated with the CurrentScene and CurrentGroup attributes. TRUE indicates that these attributes are valid, FALSE indicates that they are not valid.</description>
+        <description>Before a scene has been stored or recalled, this attribute is set to FALSE. After a successful Store Scene or Recall Scene command it is set to TRUE. If, after a scene is stored or recalled, the state of the device is modified, this attribute is set to FALSE.</description>
+    </attribute>
+    <attribute code="0x0004" type="BITMAP_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Name Support</name>
+        <description>The most significant bit of the NameSupport attribute indicates whether or not scene names are supported. A value of 1 indicates that they are supported, and a value of 0 indicates that they are not supported.</description>
+    </attribute>
+    <attribute code="0x0005" type="IEEE_ADDRESS" side="server" optional="true" writable="false" reportable="false">
+        <name>Last Configured By</name>
+        <description>The LastConfiguredBy attribute is 64-bits in length and specifies the IEEE address of the device that last configured the scene table.</description>
+        <description>The value 0xffffffffffffffff indicates that the device has not been configured, or that the address of the device that last configured the scenes cluster is not known.</description>
+    </attribute>
+
+</cluster>

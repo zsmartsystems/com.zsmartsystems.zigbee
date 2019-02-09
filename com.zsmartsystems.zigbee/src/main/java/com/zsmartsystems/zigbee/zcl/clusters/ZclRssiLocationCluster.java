@@ -7,6 +7,13 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
@@ -31,18 +38,17 @@ import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SetDeviceConfiguration
 import com.zsmartsystems.zigbee.zcl.field.NeighborInformation;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-import javax.annotation.Generated;
 
 /**
  * <b>RSSI Location</b> cluster implementation (<i>Cluster ID 0x000B</i>).
  * <p>
+ * This cluster provides a means for exchanging Received Signal Strength Indication (RSSI)
+ * information among one hop devices as well as messages to report RSSI data to a centralized
+ * device that collects all the RSSI data in the network.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T16:51:35Z")
 public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -59,68 +65,65 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The LocationType attribute is 8 bits long and is divided into bit fields.
      */
     public static final int ATTR_LOCATIONTYPE = 0x0000;
-    /**
-     */
     public static final int ATTR_LOCATIONMETHOD = 0x0001;
     /**
-     * The LocationAge attribute indicates the amount of time, measured in seconds, that
-     * has transpired since the location information was last calculated. This attribute is
-     * not valid if the Absolute bit of the LocationType attribute is set to one.
+     * The LocationAge attribute indicates the amount of time, measured in seconds, that has
+     * transpired since the location information was last calculated. This attribute is not
+     * valid if the Absolute bit of the LocationType attribute is set to one.
      */
     public static final int ATTR_LOCATIONAGE = 0x0002;
     /**
-     * The QualityMeasure attribute is a measure of confidence in the corresponding
-     * location information. The higher the value, the more confident the transmitting
-     * device is in the location information. A value of 0x64 indicates complete (100%)
-     * confidence and a value of 0x00 indicates zero confidence. (Note: no fixed
-     * confidence metric is mandated – the metric may be application and manufacturer
-     * dependent).
+     * The QualityMeasure attribute is a measure of confidence in the corresponding location
+     * information. The higher the value, the more confident the transmitting device is in the
+     * location information. A value of 0x64 indicates complete (100%) confidence and a value
+     * of 0x00 indicates zero confidence. (Note: no fixed confidence metric is mandated – the
+     * metric may be application and manufacturer dependent).
      * <p>
      * This field is not valid if the Absolute bit of the LocationType attribute is set to one.
      */
     public static final int ATTR_QUALITYMEASURE = 0x0003;
     /**
-     * The NumberOfDevices attribute is the number of devices whose location data
-     * were used to calculate the last location value. This attribute is related to the
-     * QualityMeasure attribute.
+     * The NumberOfDevices attribute is the number of devices whose location data were used to
+     * calculate the last location value. This attribute is related to the QualityMeasure
+     * attribute.
      */
     public static final int ATTR_NUMBEROFDEVICES = 0x0004;
     /**
-     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
      * <p>
-     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
-     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
-     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
      */
     public static final int ATTR_COORDINATE1 = 0x0010;
     /**
-     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
      * <p>
-     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
-     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
-     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
      */
     public static final int ATTR_COORDINATE2 = 0x0011;
     /**
-     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
      * <p>
-     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
-     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
-     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
      */
     public static final int ATTR_COORDINATE3 = 0x0012;
     /**
-     * The Power attribute specifies the value of the average power P0, measured in
-     * dBm, received at a reference distance of one meter from the transmitter.
+     * The Power attribute specifies the value of the average power P0, measured in dBm,
+     * received at a reference distance of one meter from the transmitter.
      * <p>
      * P0 = Power / 100
      * <p>
@@ -128,9 +131,9 @@ public class ZclRssiLocationCluster extends ZclCluster {
      */
     public static final int ATTR_POWER = 0x0013;
     /**
-     * The PathLossExponent attribute specifies the value of the Path Loss Exponent n,
-     * an exponent that describes the rate at which the signal power decays with
-     * increasing distance from the transmitter.
+     * The PathLossExponent attribute specifies the value of the Path Loss Exponent n, an
+     * exponent that describes the rate at which the signal power decays with increasing
+     * distance from the transmitter.
      * <p>
      * n = PathLossExponent / 100
      * <p>
@@ -139,10 +142,10 @@ public class ZclRssiLocationCluster extends ZclCluster {
     public static final int ATTR_PATHLOSSEXPONENT = 0x0014;
     /**
      * The ReportingPeriod attribute specifies the time in seconds between successive
-     * reports of the device's location by means of the Location Data Notification
-     * command. The minimum value this attribute can take is specified by the profile in
-     * use. If ReportingPeriod is zero, the device does not automatically report its
-     * location. Note that location information can always be polled at any time.
+     * reports of the device's location by means of the Location Data Notification command.
+     * The minimum value this attribute can take is specified by the profile in use. If
+     * ReportingPeriod is zero, the device does not automatically report its location. Note
+     * that location information can always be polled at any time.
      */
     public static final int ATTR_REPORTINGPERIOD = 0x0015;
     /**
@@ -153,30 +156,30 @@ public class ZclRssiLocationCluster extends ZclCluster {
      */
     public static final int ATTR_CALCULATIONPERIOD = 0x0016;
     /**
-     * The NumberRSSIMeasurements attribute specifies the number of RSSI
-     * measurements to be used to generate one location estimate. The measurements are
-     * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
-     * equal to 1.
+     * The NumberRSSIMeasurements attribute specifies the number of RSSI measurements to be
+     * used to generate one location estimate. The measurements are averaged to improve
+     * accuracy. NumberRSSIMeasurements must be greater than or equal to 1.
      */
     public static final int ATTR_NUMBERRSSIMEASUREMENTS = 0x0017;
 
     // Attribute initialisation
+    @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(13);
 
-        attributeMap.put(ATTR_LOCATIONTYPE, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_LOCATIONTYPE, "LocationType", ZclDataType.DATA_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_LOCATIONMETHOD, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_LOCATIONMETHOD, "LocationMethod", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_LOCATIONAGE, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_LOCATIONAGE, "LocationAge", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_QUALITYMEASURE, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_QUALITYMEASURE, "QualityMeasure", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_NUMBEROFDEVICES, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_NUMBEROFDEVICES, "NumberOfDevices", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_COORDINATE1, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_COORDINATE1, "Coordinate1", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, true, false));
-        attributeMap.put(ATTR_COORDINATE2, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_COORDINATE2, "Coordinate2", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, true, false));
-        attributeMap.put(ATTR_COORDINATE3, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_COORDINATE3, "Coordinate3", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_LOCATIONTYPE, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_LOCATIONTYPE, "Location Type", ZclDataType.DATA_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_LOCATIONMETHOD, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_LOCATIONMETHOD, "Location Method", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_LOCATIONAGE, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_LOCATIONAGE, "Location Age", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_QUALITYMEASURE, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_QUALITYMEASURE, "Quality Measure", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_NUMBEROFDEVICES, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_NUMBEROFDEVICES, "Number Of Devices", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COORDINATE1, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_COORDINATE1, "Coordinate 1", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_COORDINATE2, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_COORDINATE2, "Coordinate 2", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_COORDINATE3, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_COORDINATE3, "Coordinate 3", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_POWER, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_POWER, "Power", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, true, false));
-        attributeMap.put(ATTR_PATHLOSSEXPONENT, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_PATHLOSSEXPONENT, "PathLossExponent", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, true, false));
-        attributeMap.put(ATTR_REPORTINGPERIOD, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_REPORTINGPERIOD, "ReportingPeriod", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_CALCULATIONPERIOD, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_CALCULATIONPERIOD, "CalculationPeriod", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_NUMBERRSSIMEASUREMENTS, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_NUMBERRSSIMEASUREMENTS, "NumberRSSIMeasurements", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_PATHLOSSEXPONENT, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_PATHLOSSEXPONENT, "Path Loss Exponent", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_REPORTINGPERIOD, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_REPORTINGPERIOD, "Reporting Period", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_CALCULATIONPERIOD, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_CALCULATIONPERIOD, "Calculation Period", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_NUMBERRSSIMEASUREMENTS, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_NUMBERRSSIMEASUREMENTS, "Number RSSI Measurements", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
 
         return attributeMap;
     }
@@ -184,14 +187,14 @@ public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * Default constructor to create a RSSI Location cluster.
      *
-     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint} this cluster is contained within
      */
     public ZclRssiLocationCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
     /**
-     * Get the <i>LocationType</i> attribute [attribute ID <b>0</b>].
+     * Get the <i>Location Type</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The LocationType attribute is 8 bits long and is divided into bit fields.
      * <p>
@@ -206,7 +209,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>LocationType</i> attribute [attribute ID <b>0</b>].
+     * Synchronously get the <i>Location Type</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The LocationType attribute is 8 bits long and is divided into bit fields.
      * <p>
@@ -233,7 +236,24 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>LocationMethod</i> attribute [attribute ID <b>1</b>].
+     * Set reporting for the <i>Location Type</i> attribute [attribute ID <b>0x0000</b>].
+     * <p>
+     * The LocationType attribute is 8 bits long and is divided into bit fields.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setLocationTypeReporting(final int minInterval, final int maxInterval) {
+        return setReporting(attributes.get(ATTR_LOCATIONTYPE), minInterval, maxInterval);
+    }
+
+    /**
+     * Get the <i>Location Method</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -246,7 +266,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>LocationMethod</i> attribute [attribute ID <b>1</b>].
+     * Synchronously get the <i>Location Method</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -271,11 +291,26 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>LocationAge</i> attribute [attribute ID <b>2</b>].
+     * Set reporting for the <i>Location Method</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
-     * The LocationAge attribute indicates the amount of time, measured in seconds, that
-     * has transpired since the location information was last calculated. This attribute is
-     * not valid if the Absolute bit of the LocationType attribute is set to one.
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setLocationMethodReporting(final int minInterval, final int maxInterval) {
+        return setReporting(attributes.get(ATTR_LOCATIONMETHOD), minInterval, maxInterval);
+    }
+
+    /**
+     * Get the <i>Location Age</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The LocationAge attribute indicates the amount of time, measured in seconds, that has
+     * transpired since the location information was last calculated. This attribute is not
+     * valid if the Absolute bit of the LocationType attribute is set to one.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -288,11 +323,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>LocationAge</i> attribute [attribute ID <b>2</b>].
+     * Synchronously get the <i>Location Age</i> attribute [attribute ID <b>0x0002</b>].
      * <p>
-     * The LocationAge attribute indicates the amount of time, measured in seconds, that
-     * has transpired since the location information was last calculated. This attribute is
-     * not valid if the Absolute bit of the LocationType attribute is set to one.
+     * The LocationAge attribute indicates the amount of time, measured in seconds, that has
+     * transpired since the location information was last calculated. This attribute is not
+     * valid if the Absolute bit of the LocationType attribute is set to one.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -317,14 +352,13 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>QualityMeasure</i> attribute [attribute ID <b>3</b>].
+     * Get the <i>Quality Measure</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
-     * The QualityMeasure attribute is a measure of confidence in the corresponding
-     * location information. The higher the value, the more confident the transmitting
-     * device is in the location information. A value of 0x64 indicates complete (100%)
-     * confidence and a value of 0x00 indicates zero confidence. (Note: no fixed
-     * confidence metric is mandated – the metric may be application and manufacturer
-     * dependent).
+     * The QualityMeasure attribute is a measure of confidence in the corresponding location
+     * information. The higher the value, the more confident the transmitting device is in the
+     * location information. A value of 0x64 indicates complete (100%) confidence and a value
+     * of 0x00 indicates zero confidence. (Note: no fixed confidence metric is mandated – the
+     * metric may be application and manufacturer dependent).
      * <p>
      * This field is not valid if the Absolute bit of the LocationType attribute is set to one.
      * <p>
@@ -339,14 +373,13 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>QualityMeasure</i> attribute [attribute ID <b>3</b>].
+     * Synchronously get the <i>Quality Measure</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
-     * The QualityMeasure attribute is a measure of confidence in the corresponding
-     * location information. The higher the value, the more confident the transmitting
-     * device is in the location information. A value of 0x64 indicates complete (100%)
-     * confidence and a value of 0x00 indicates zero confidence. (Note: no fixed
-     * confidence metric is mandated – the metric may be application and manufacturer
-     * dependent).
+     * The QualityMeasure attribute is a measure of confidence in the corresponding location
+     * information. The higher the value, the more confident the transmitting device is in the
+     * location information. A value of 0x64 indicates complete (100%) confidence and a value
+     * of 0x00 indicates zero confidence. (Note: no fixed confidence metric is mandated – the
+     * metric may be application and manufacturer dependent).
      * <p>
      * This field is not valid if the Absolute bit of the LocationType attribute is set to one.
      * <p>
@@ -373,11 +406,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>NumberOfDevices</i> attribute [attribute ID <b>4</b>].
+     * Get the <i>Number Of Devices</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
-     * The NumberOfDevices attribute is the number of devices whose location data
-     * were used to calculate the last location value. This attribute is related to the
-     * QualityMeasure attribute.
+     * The NumberOfDevices attribute is the number of devices whose location data were used to
+     * calculate the last location value. This attribute is related to the QualityMeasure
+     * attribute.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -390,11 +423,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>NumberOfDevices</i> attribute [attribute ID <b>4</b>].
+     * Synchronously get the <i>Number Of Devices</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
-     * The NumberOfDevices attribute is the number of devices whose location data
-     * were used to calculate the last location value. This attribute is related to the
-     * QualityMeasure attribute.
+     * The NumberOfDevices attribute is the number of devices whose location data were used to
+     * calculate the last location value. This attribute is related to the QualityMeasure
+     * attribute.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -419,16 +452,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>Coordinate1</i> attribute [attribute ID <b>16</b>].
+     * Set the <i>Coordinate 1</i> attribute [attribute ID <b>0x0010</b>].
      * <p>
-     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
      * <p>
-     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
-     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
-     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -437,21 +470,21 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param coordinate1 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setCoordinate1(final Object value) {
+    public Future<CommandResult> setCoordinate1(final Integer value) {
         return write(attributes.get(ATTR_COORDINATE1), value);
     }
 
     /**
-     * Get the <i>Coordinate1</i> attribute [attribute ID <b>16</b>].
+     * Get the <i>Coordinate 1</i> attribute [attribute ID <b>0x0010</b>].
      * <p>
-     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
      * <p>
-     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
-     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
-     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -464,16 +497,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Coordinate1</i> attribute [attribute ID <b>16</b>].
+     * Synchronously get the <i>Coordinate 1</i> attribute [attribute ID <b>0x0010</b>].
      * <p>
-     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
      * <p>
-     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
-     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
-     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -498,16 +531,41 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>Coordinate2</i> attribute [attribute ID <b>17</b>].
+     * Set reporting for the <i>Coordinate 1</i> attribute [attribute ID <b>0x0010</b>].
      * <p>
-     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
      * <p>
-     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
-     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
-     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setCoordinate1Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_COORDINATE1), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Coordinate 2</i> attribute [attribute ID <b>0x0011</b>].
+     * <p>
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * <p>
+     * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
+     * <p>
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -516,21 +574,21 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param coordinate2 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setCoordinate2(final Object value) {
+    public Future<CommandResult> setCoordinate2(final Integer value) {
         return write(attributes.get(ATTR_COORDINATE2), value);
     }
 
     /**
-     * Get the <i>Coordinate2</i> attribute [attribute ID <b>17</b>].
+     * Get the <i>Coordinate 2</i> attribute [attribute ID <b>0x0011</b>].
      * <p>
-     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
      * <p>
-     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
-     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
-     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -543,16 +601,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Coordinate2</i> attribute [attribute ID <b>17</b>].
+     * Synchronously get the <i>Coordinate 2</i> attribute [attribute ID <b>0x0011</b>].
      * <p>
-     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
      * <p>
-     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
-     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
-     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -577,16 +635,41 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>Coordinate3</i> attribute [attribute ID <b>18</b>].
+     * Set reporting for the <i>Coordinate 2</i> attribute [attribute ID <b>0x0011</b>].
      * <p>
-     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
      * <p>
-     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
-     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
-     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setCoordinate2Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_COORDINATE2), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Coordinate 3</i> attribute [attribute ID <b>0x0012</b>].
+     * <p>
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * <p>
+     * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
+     * <p>
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -595,21 +678,21 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param coordinate3 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setCoordinate3(final Object value) {
+    public Future<CommandResult> setCoordinate3(final Integer value) {
         return write(attributes.get(ATTR_COORDINATE3), value);
     }
 
     /**
-     * Get the <i>Coordinate3</i> attribute [attribute ID <b>18</b>].
+     * Get the <i>Coordinate 3</i> attribute [attribute ID <b>0x0012</b>].
      * <p>
-     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
      * <p>
-     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
-     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
-     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -622,16 +705,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Coordinate3</i> attribute [attribute ID <b>18</b>].
+     * Synchronously get the <i>Coordinate 3</i> attribute [attribute ID <b>0x0012</b>].
      * <p>
-     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit
-     * integers, and represent orthogonal linear coordinates x, y, z in meters as follows.
+     * The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers,
+     * and represent orthogonal linear coordinates x, y, z in meters as follows.
      * <p>
      * x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10
      * <p>
-     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1
-     * between 0x8001 and 0x7fff. The same range applies to y and z. A value of
-     * 0x8000 for any of the coordinates indicates that the coordinate is unknown.
+     * The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001
+     * and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates
+     * indicates that the coordinate is unknown.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -656,10 +739,10 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>Power</i> attribute [attribute ID <b>19</b>].
+     * Set the <i>Power</i> attribute [attribute ID <b>0x0013</b>].
      * <p>
-     * The Power attribute specifies the value of the average power P0, measured in
-     * dBm, received at a reference distance of one meter from the transmitter.
+     * The Power attribute specifies the value of the average power P0, measured in dBm,
+     * received at a reference distance of one meter from the transmitter.
      * <p>
      * P0 = Power / 100
      * <p>
@@ -672,15 +755,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param power the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setPower(final Object value) {
+    public Future<CommandResult> setPower(final Integer value) {
         return write(attributes.get(ATTR_POWER), value);
     }
 
     /**
-     * Get the <i>Power</i> attribute [attribute ID <b>19</b>].
+     * Get the <i>Power</i> attribute [attribute ID <b>0x0013</b>].
      * <p>
-     * The Power attribute specifies the value of the average power P0, measured in
-     * dBm, received at a reference distance of one meter from the transmitter.
+     * The Power attribute specifies the value of the average power P0, measured in dBm,
+     * received at a reference distance of one meter from the transmitter.
      * <p>
      * P0 = Power / 100
      * <p>
@@ -697,10 +780,10 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Power</i> attribute [attribute ID <b>19</b>].
+     * Synchronously get the <i>Power</i> attribute [attribute ID <b>0x0013</b>].
      * <p>
-     * The Power attribute specifies the value of the average power P0, measured in
-     * dBm, received at a reference distance of one meter from the transmitter.
+     * The Power attribute specifies the value of the average power P0, measured in dBm,
+     * received at a reference distance of one meter from the transmitter.
      * <p>
      * P0 = Power / 100
      * <p>
@@ -729,11 +812,34 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>PathLossExponent</i> attribute [attribute ID <b>20</b>].
+     * Set reporting for the <i>Power</i> attribute [attribute ID <b>0x0013</b>].
      * <p>
-     * The PathLossExponent attribute specifies the value of the Path Loss Exponent n,
-     * an exponent that describes the rate at which the signal power decays with
-     * increasing distance from the transmitter.
+     * The Power attribute specifies the value of the average power P0, measured in dBm,
+     * received at a reference distance of one meter from the transmitter.
+     * <p>
+     * P0 = Power / 100
+     * <p>
+     * A value of 0x8000 indicates that Power is unknown.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setPowerReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_POWER), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Path Loss Exponent</i> attribute [attribute ID <b>0x0014</b>].
+     * <p>
+     * The PathLossExponent attribute specifies the value of the Path Loss Exponent n, an
+     * exponent that describes the rate at which the signal power decays with increasing
+     * distance from the transmitter.
      * <p>
      * n = PathLossExponent / 100
      * <p>
@@ -746,16 +852,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param pathLossExponent the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setPathLossExponent(final Object value) {
+    public Future<CommandResult> setPathLossExponent(final Integer value) {
         return write(attributes.get(ATTR_PATHLOSSEXPONENT), value);
     }
 
     /**
-     * Get the <i>PathLossExponent</i> attribute [attribute ID <b>20</b>].
+     * Get the <i>Path Loss Exponent</i> attribute [attribute ID <b>0x0014</b>].
      * <p>
-     * The PathLossExponent attribute specifies the value of the Path Loss Exponent n,
-     * an exponent that describes the rate at which the signal power decays with
-     * increasing distance from the transmitter.
+     * The PathLossExponent attribute specifies the value of the Path Loss Exponent n, an
+     * exponent that describes the rate at which the signal power decays with increasing
+     * distance from the transmitter.
      * <p>
      * n = PathLossExponent / 100
      * <p>
@@ -772,11 +878,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>PathLossExponent</i> attribute [attribute ID <b>20</b>].
+     * Synchronously get the <i>Path Loss Exponent</i> attribute [attribute ID <b>0x0014</b>].
      * <p>
-     * The PathLossExponent attribute specifies the value of the Path Loss Exponent n,
-     * an exponent that describes the rate at which the signal power decays with
-     * increasing distance from the transmitter.
+     * The PathLossExponent attribute specifies the value of the Path Loss Exponent n, an
+     * exponent that describes the rate at which the signal power decays with increasing
+     * distance from the transmitter.
      * <p>
      * n = PathLossExponent / 100
      * <p>
@@ -805,13 +911,37 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>ReportingPeriod</i> attribute [attribute ID <b>21</b>].
+     * Set reporting for the <i>Path Loss Exponent</i> attribute [attribute ID <b>0x0014</b>].
+     * <p>
+     * The PathLossExponent attribute specifies the value of the Path Loss Exponent n, an
+     * exponent that describes the rate at which the signal power decays with increasing
+     * distance from the transmitter.
+     * <p>
+     * n = PathLossExponent / 100
+     * <p>
+     * A value of 0xffff indicates that PathLossExponent is unknown.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setPathLossExponentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_PATHLOSSEXPONENT), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Reporting Period</i> attribute [attribute ID <b>0x0015</b>].
      * <p>
      * The ReportingPeriod attribute specifies the time in seconds between successive
-     * reports of the device's location by means of the Location Data Notification
-     * command. The minimum value this attribute can take is specified by the profile in
-     * use. If ReportingPeriod is zero, the device does not automatically report its
-     * location. Note that location information can always be polled at any time.
+     * reports of the device's location by means of the Location Data Notification command.
+     * The minimum value this attribute can take is specified by the profile in use. If
+     * ReportingPeriod is zero, the device does not automatically report its location. Note
+     * that location information can always be polled at any time.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -820,18 +950,18 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param reportingPeriod the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setReportingPeriod(final Object value) {
+    public Future<CommandResult> setReportingPeriod(final Integer value) {
         return write(attributes.get(ATTR_REPORTINGPERIOD), value);
     }
 
     /**
-     * Get the <i>ReportingPeriod</i> attribute [attribute ID <b>21</b>].
+     * Get the <i>Reporting Period</i> attribute [attribute ID <b>0x0015</b>].
      * <p>
      * The ReportingPeriod attribute specifies the time in seconds between successive
-     * reports of the device's location by means of the Location Data Notification
-     * command. The minimum value this attribute can take is specified by the profile in
-     * use. If ReportingPeriod is zero, the device does not automatically report its
-     * location. Note that location information can always be polled at any time.
+     * reports of the device's location by means of the Location Data Notification command.
+     * The minimum value this attribute can take is specified by the profile in use. If
+     * ReportingPeriod is zero, the device does not automatically report its location. Note
+     * that location information can always be polled at any time.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -844,13 +974,13 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ReportingPeriod</i> attribute [attribute ID <b>21</b>].
+     * Synchronously get the <i>Reporting Period</i> attribute [attribute ID <b>0x0015</b>].
      * <p>
      * The ReportingPeriod attribute specifies the time in seconds between successive
-     * reports of the device's location by means of the Location Data Notification
-     * command. The minimum value this attribute can take is specified by the profile in
-     * use. If ReportingPeriod is zero, the device does not automatically report its
-     * location. Note that location information can always be polled at any time.
+     * reports of the device's location by means of the Location Data Notification command.
+     * The minimum value this attribute can take is specified by the profile in use. If
+     * ReportingPeriod is zero, the device does not automatically report its location. Note
+     * that location information can always be polled at any time.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -875,7 +1005,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>CalculationPeriod</i> attribute [attribute ID <b>22</b>].
+     * Set the <i>Calculation Period</i> attribute [attribute ID <b>0x0016</b>].
      * <p>
      * The CalculationPeriod attribute specifies the time in seconds between successive
      * calculations of the device's location. If CalculationPeriod is less than the
@@ -889,12 +1019,12 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param calculationPeriod the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setCalculationPeriod(final Object value) {
+    public Future<CommandResult> setCalculationPeriod(final Integer value) {
         return write(attributes.get(ATTR_CALCULATIONPERIOD), value);
     }
 
     /**
-     * Get the <i>CalculationPeriod</i> attribute [attribute ID <b>22</b>].
+     * Get the <i>Calculation Period</i> attribute [attribute ID <b>0x0016</b>].
      * <p>
      * The CalculationPeriod attribute specifies the time in seconds between successive
      * calculations of the device's location. If CalculationPeriod is less than the
@@ -912,7 +1042,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>CalculationPeriod</i> attribute [attribute ID <b>22</b>].
+     * Synchronously get the <i>Calculation Period</i> attribute [attribute ID <b>0x0016</b>].
      * <p>
      * The CalculationPeriod attribute specifies the time in seconds between successive
      * calculations of the device's location. If CalculationPeriod is less than the
@@ -942,12 +1072,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>NumberRSSIMeasurements</i> attribute [attribute ID <b>23</b>].
+     * Set the <i>Number RSSI Measurements</i> attribute [attribute ID <b>0x0017</b>].
      * <p>
-     * The NumberRSSIMeasurements attribute specifies the number of RSSI
-     * measurements to be used to generate one location estimate. The measurements are
-     * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
-     * equal to 1.
+     * The NumberRSSIMeasurements attribute specifies the number of RSSI measurements to be
+     * used to generate one location estimate. The measurements are averaged to improve
+     * accuracy. NumberRSSIMeasurements must be greater than or equal to 1.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -956,17 +1085,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param numberRssiMeasurements the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setNumberRssiMeasurements(final Object value) {
+    public Future<CommandResult> setNumberRssiMeasurements(final Integer value) {
         return write(attributes.get(ATTR_NUMBERRSSIMEASUREMENTS), value);
     }
 
     /**
-     * Get the <i>NumberRSSIMeasurements</i> attribute [attribute ID <b>23</b>].
+     * Get the <i>Number RSSI Measurements</i> attribute [attribute ID <b>0x0017</b>].
      * <p>
-     * The NumberRSSIMeasurements attribute specifies the number of RSSI
-     * measurements to be used to generate one location estimate. The measurements are
-     * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
-     * equal to 1.
+     * The NumberRSSIMeasurements attribute specifies the number of RSSI measurements to be
+     * used to generate one location estimate. The measurements are averaged to improve
+     * accuracy. NumberRSSIMeasurements must be greater than or equal to 1.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -979,12 +1107,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>NumberRSSIMeasurements</i> attribute [attribute ID <b>23</b>].
+     * Synchronously get the <i>Number RSSI Measurements</i> attribute [attribute ID <b>0x0017</b>].
      * <p>
-     * The NumberRSSIMeasurements attribute specifies the number of RSSI
-     * measurements to be used to generate one location estimate. The measurements are
-     * averaged to improve accuracy. NumberRSSIMeasurements must be greater than or
-     * equal to 1.
+     * The NumberRSSIMeasurements attribute specifies the number of RSSI measurements to be
+     * used to generate one location estimate. The measurements are averaged to improve
+     * accuracy. NumberRSSIMeasurements must be greater than or equal to 1.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1248,9 +1375,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> compactLocationDataNotificationCommand() {
-        CompactLocationDataNotificationCommand command = new CompactLocationDataNotificationCommand();
-
-        return send(command);
+        return send(new CompactLocationDataNotificationCommand());
     }
 
     /**
@@ -1274,16 +1399,14 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> rssiRequestCommand() {
-        RssiRequestCommand command = new RssiRequestCommand();
-
-        return send(command);
+        return send(new RssiRequestCommand());
     }
 
     /**
      * The Report RSSI Measurements Command
      *
      * @param reportingAddress {@link IeeeAddress} Reporting Address
-     * @param numberOfNeighbors {@link Integer} Number of Neighbors
+     * @param numberOfNeighbors {@link Integer} Number Of Neighbors
      * @param neighborsInformation {@link List<NeighborInformation>} Neighbors Information
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -1316,19 +1439,19 @@ public class ZclRssiLocationCluster extends ZclCluster {
     @Override
     public ZclCommand getCommandFromId(int commandId) {
         switch (commandId) {
-            case 0: // SET_ABSOLUTE_LOCATION_COMMAND
+            case 0x00: // SET_ABSOLUTE_LOCATION_COMMAND
                 return new SetAbsoluteLocationCommand();
-            case 1: // SET_DEVICE_CONFIGURATION_COMMAND
+            case 0x01: // SET_DEVICE_CONFIGURATION_COMMAND
                 return new SetDeviceConfigurationCommand();
-            case 2: // GET_DEVICE_CONFIGURATION_COMMAND
+            case 0x02: // GET_DEVICE_CONFIGURATION_COMMAND
                 return new GetDeviceConfigurationCommand();
-            case 3: // GET_LOCATION_DATA_COMMAND
+            case 0x03: // GET_LOCATION_DATA_COMMAND
                 return new GetLocationDataCommand();
-            case 4: // RSSI_RESPONSE
+            case 0x04: // RSSI_RESPONSE
                 return new RssiResponse();
-            case 5: // SEND_PINGS_COMMAND
+            case 0x05: // SEND_PINGS_COMMAND
                 return new SendPingsCommand();
-            case 6: // ANCHOR_NODE_ANNOUNCE_COMMAND
+            case 0x06: // ANCHOR_NODE_ANNOUNCE_COMMAND
                 return new AnchorNodeAnnounceCommand();
             default:
                 return null;
@@ -1338,21 +1461,21 @@ public class ZclRssiLocationCluster extends ZclCluster {
     @Override
     public ZclCommand getResponseFromId(int commandId) {
         switch (commandId) {
-            case 0: // DEVICE_CONFIGURATION_RESPONSE
+            case 0x00: // DEVICE_CONFIGURATION_RESPONSE
                 return new DeviceConfigurationResponse();
-            case 1: // LOCATION_DATA_RESPONSE
+            case 0x01: // LOCATION_DATA_RESPONSE
                 return new LocationDataResponse();
-            case 2: // LOCATION_DATA_NOTIFICATION_COMMAND
+            case 0x02: // LOCATION_DATA_NOTIFICATION_COMMAND
                 return new LocationDataNotificationCommand();
-            case 3: // COMPACT_LOCATION_DATA_NOTIFICATION_COMMAND
+            case 0x03: // COMPACT_LOCATION_DATA_NOTIFICATION_COMMAND
                 return new CompactLocationDataNotificationCommand();
-            case 4: // RSSI_PING_COMMAND
+            case 0x04: // RSSI_PING_COMMAND
                 return new RssiPingCommand();
-            case 5: // RSSI_REQUEST_COMMAND
+            case 0x05: // RSSI_REQUEST_COMMAND
                 return new RssiRequestCommand();
-            case 6: // REPORT_RSSI_MEASUREMENTS_COMMAND
+            case 0x06: // REPORT_RSSI_MEASUREMENTS_COMMAND
                 return new ReportRssiMeasurementsCommand();
-            case 7: // REQUEST_OWN_LOCATION_COMMAND
+            case 0x07: // REQUEST_OWN_LOCATION_COMMAND
                 return new RequestOwnLocationCommand();
             default:
                 return null;

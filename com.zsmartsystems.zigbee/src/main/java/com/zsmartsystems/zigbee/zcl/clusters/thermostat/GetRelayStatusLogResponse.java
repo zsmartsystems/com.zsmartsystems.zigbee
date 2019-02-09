@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.thermostat;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Get Relay Status Log Response value object class.
@@ -23,10 +23,10 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class GetRelayStatusLogResponse extends ZclCommand {
     /**
-     * Time of day command message field.
+     * Time Of Day command message field.
      */
     private Integer timeOfDay;
 
@@ -60,24 +60,24 @@ public class GetRelayStatusLogResponse extends ZclCommand {
      */
     public GetRelayStatusLogResponse() {
         genericCommand = false;
-        clusterId = 513;
+        clusterId = 0x0201;
         commandId = 1;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     /**
-     * Gets Time of day.
+     * Gets Time Of Day.
      *
-     * @return the Time of day
+     * @return the Time Of Day
      */
     public Integer getTimeOfDay() {
         return timeOfDay;
     }
 
     /**
-     * Sets Time of day.
+     * Sets Time Of Day.
      *
-     * @param timeOfDay the Time of day
+     * @param timeOfDay the Time Of Day
      */
     public void setTimeOfDay(final Integer timeOfDay) {
         this.timeOfDay = timeOfDay;

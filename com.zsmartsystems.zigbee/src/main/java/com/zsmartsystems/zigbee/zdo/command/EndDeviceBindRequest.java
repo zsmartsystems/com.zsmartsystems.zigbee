@@ -7,57 +7,57 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
-
-import java.util.List;
-import java.util.ArrayList;
-import javax.annotation.Generated;
-import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * End Device Bind Request value object class.
  * <p>
- * The End_Device_Bind_req is generated from a Local Device wishing to perform
- * End Device Bind with a Remote Device. The End_Device_Bind_req is generated,
- * typically based on some user action like a button press. The destination addressing
- * on this command shall be unicast, and the destination address shall be that of the
- * ZigBee Coordinator.
+ * <p>
+ * The End_Device_Bind_req is generated from a Local Device wishing to perform End Device Bind
+ * with a Remote Device. The End_Device_Bind_req is generated, typically based on some user
+ * action like a button press. The destination addressing on this command shall be unicast, and
+ * the destination address shall be that of the ZigBee Coordinator.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class EndDeviceBindRequest extends ZdoRequest {
     /**
-     * BindingTarget command message field.
+     * Binding Target command message field.
      */
     private Integer bindingTarget;
 
     /**
-     * SrcAddress command message field.
+     * Src Address command message field.
      */
     private IeeeAddress srcAddress;
 
     /**
-     * SrcEndpoint command message field.
+     * Src Endpoint command message field.
      */
     private Integer srcEndpoint;
 
     /**
-     * ProfileID command message field.
+     * Profile ID command message field.
      */
     private Integer profileId;
 
     /**
-     * InClusterList command message field.
+     * In Cluster List command message field.
      */
     private List<Integer> inClusterList;
 
     /**
-     * OutClusterList command message field.
+     * Out Cluster List command message field.
      */
     private List<Integer> outClusterList;
 
@@ -69,108 +69,108 @@ public class EndDeviceBindRequest extends ZdoRequest {
     }
 
     /**
-     * Gets BindingTarget.
+     * Gets Binding Target.
      *
-     * @return the BindingTarget
+     * @return the Binding Target
      */
     public Integer getBindingTarget() {
         return bindingTarget;
     }
 
     /**
-     * Sets BindingTarget.
+     * Sets Binding Target.
      *
-     * @param bindingTarget the BindingTarget
+     * @param bindingTarget the Binding Target
      */
     public void setBindingTarget(final Integer bindingTarget) {
         this.bindingTarget = bindingTarget;
     }
 
     /**
-     * Gets SrcAddress.
+     * Gets Src Address.
      *
-     * @return the SrcAddress
+     * @return the Src Address
      */
     public IeeeAddress getSrcAddress() {
         return srcAddress;
     }
 
     /**
-     * Sets SrcAddress.
+     * Sets Src Address.
      *
-     * @param srcAddress the SrcAddress
+     * @param srcAddress the Src Address
      */
     public void setSrcAddress(final IeeeAddress srcAddress) {
         this.srcAddress = srcAddress;
     }
 
     /**
-     * Gets SrcEndpoint.
+     * Gets Src Endpoint.
      *
-     * @return the SrcEndpoint
+     * @return the Src Endpoint
      */
     public Integer getSrcEndpoint() {
         return srcEndpoint;
     }
 
     /**
-     * Sets SrcEndpoint.
+     * Sets Src Endpoint.
      *
-     * @param srcEndpoint the SrcEndpoint
+     * @param srcEndpoint the Src Endpoint
      */
     public void setSrcEndpoint(final Integer srcEndpoint) {
         this.srcEndpoint = srcEndpoint;
     }
 
     /**
-     * Gets ProfileID.
+     * Gets Profile ID.
      *
-     * @return the ProfileID
+     * @return the Profile ID
      */
     public Integer getProfileId() {
         return profileId;
     }
 
     /**
-     * Sets ProfileID.
+     * Sets Profile ID.
      *
-     * @param profileId the ProfileID
+     * @param profileId the Profile ID
      */
     public void setProfileId(final Integer profileId) {
         this.profileId = profileId;
     }
 
     /**
-     * Gets InClusterList.
+     * Gets In Cluster List.
      *
-     * @return the InClusterList
+     * @return the In Cluster List
      */
     public List<Integer> getInClusterList() {
         return inClusterList;
     }
 
     /**
-     * Sets InClusterList.
+     * Sets In Cluster List.
      *
-     * @param inClusterList the InClusterList
+     * @param inClusterList the In Cluster List
      */
     public void setInClusterList(final List<Integer> inClusterList) {
         this.inClusterList = inClusterList;
     }
 
     /**
-     * Gets OutClusterList.
+     * Gets Out Cluster List.
      *
-     * @return the OutClusterList
+     * @return the Out Cluster List
      */
     public List<Integer> getOutClusterList() {
         return outClusterList;
     }
 
     /**
-     * Sets OutClusterList.
+     * Sets Out Cluster List.
      *
-     * @param outClusterList the OutClusterList
+     * @param outClusterList the Out Cluster List
      */
     public void setOutClusterList(final List<Integer> outClusterList) {
         this.outClusterList = outClusterList;

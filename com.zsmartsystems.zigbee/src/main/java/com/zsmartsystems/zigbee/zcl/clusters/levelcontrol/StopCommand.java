@@ -18,16 +18,20 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Level Control</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Level Control cluster.
  * <p>
+ * Upon receipt of this command, any Move to Level, Move or Step command (and their 'with On/Off'
+ * variants) currently in process shall be terminated. The value of CurrentLevel shall be left
+ * at its value upon receipt of the Stop command, and RemainingTime shall be set to zero.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class StopCommand extends ZclCommand {
     /**
      * Default constructor.
      */
     public StopCommand() {
         genericCommand = false;
-        clusterId = 8;
+        clusterId = 0x0008;
         commandId = 3;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }

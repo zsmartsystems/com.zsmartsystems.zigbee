@@ -18,25 +18,23 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>IAS Zone</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS Zone cluster.
  * <p>
- * Used to tell the IAS Zone server to commence normal operation mode.
- * <br>
- * Upon receipt, the IAS Zone server SHALL commence normal operational mode.
- * <br>
- * Any configurations and changes made (e.g., CurrentZoneSensitivityLevel attribute) to the IAS Zone server SHALL be retained.
- * <br>
- * Upon commencing normal operation mode, the IAS Zone server SHALL send a Zone Status Change Notification command updating the ZoneStatus
- * attribute Test bit to zero (i.e., “operation mode”).
+ * Used to tell the IAS Zone server to commence normal operation mode. <br> Upon receipt, the IAS
+ * Zone server shall commence normal operational mode. <br> Any configurations and changes
+ * made (e.g., CurrentZoneSensitivityLevel attribute) to the IAS Zone server shall be
+ * retained. <br> Upon commencing normal operation mode, the IAS Zone server shall send a Zone
+ * Status Change Notification command updating the ZoneStatus attribute Test bit to zero
+ * (i.e., “operation mode”).
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-06T20:48:39Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class InitiateNormalOperationModeCommand extends ZclCommand {
     /**
      * Default constructor.
      */
     public InitiateNormalOperationModeCommand() {
         genericCommand = false;
-        clusterId = 1280;
+        clusterId = 0x0500;
         commandId = 1;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }

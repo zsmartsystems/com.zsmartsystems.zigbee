@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.groups;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Remove Group Command value object class.
@@ -21,9 +21,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Groups</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Groups cluster.
  * <p>
+ * The remove group command allows the sender to request that the receiving entity or entities
+ * remove their membership, if any, in a particular group.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class RemoveGroupCommand extends ZclCommand {
     /**
      * Group ID command message field.
@@ -35,7 +38,7 @@ public class RemoveGroupCommand extends ZclCommand {
      */
     public RemoveGroupCommand() {
         genericCommand = false;
-        clusterId = 4;
+        clusterId = 0x0004;
         commandId = 3;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }

@@ -7,16 +7,16 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Configure Reporting Command value object class.
@@ -24,16 +24,14 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The Configure Reporting command is used to configure the reporting mechanism
- * for one or more of the attributes of a cluster.
- * <br>
- * The individual cluster definitions specify which attributes shall be available to this
- * reporting mechanism, however specific implementations of a cluster may make
- * additional attributes available.
+ * The Configure Reporting command is used to configure the reporting mechanism for one or more
+ * of the attributes of a cluster. <br> The individual cluster definitions specify which
+ * attributes shall be available to this reporting mechanism, however specific
+ * implementations of a cluster may make additional attributes available.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:19:25Z")
 public class ConfigureReportingCommand extends ZclCommand {
     /**
      * Records command message field.

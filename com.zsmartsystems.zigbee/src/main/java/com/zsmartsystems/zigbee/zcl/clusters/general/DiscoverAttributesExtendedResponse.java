@@ -7,16 +7,16 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.ExtendedAttributeInformation;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Discover Attributes Extended Response value object class.
@@ -24,15 +24,15 @@ import com.zsmartsystems.zigbee.zcl.field.ExtendedAttributeInformation;
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The Discover Attributes Extended Response command is generated in response to a Discover Attributes
- * Extended command.
+ * The Discover Attributes Extended Response command is generated in response to a Discover
+ * Attributes Extended command.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:19:25Z")
 public class DiscoverAttributesExtendedResponse extends ZclCommand {
     /**
-     * Discovery complete command message field.
+     * Discovery Complete command message field.
      */
     private Boolean discoveryComplete;
 
@@ -64,18 +64,18 @@ public class DiscoverAttributesExtendedResponse extends ZclCommand {
     }
 
     /**
-     * Gets Discovery complete.
+     * Gets Discovery Complete.
      *
-     * @return the Discovery complete
+     * @return the Discovery Complete
      */
     public Boolean getDiscoveryComplete() {
         return discoveryComplete;
     }
 
     /**
-     * Sets Discovery complete.
+     * Sets Discovery Complete.
      *
-     * @param discoveryComplete the Discovery complete
+     * @param discoveryComplete the Discovery Complete
      */
     public void setDiscoveryComplete(final Boolean discoveryComplete) {
         this.discoveryComplete = discoveryComplete;

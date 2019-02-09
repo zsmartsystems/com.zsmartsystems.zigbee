@@ -1,0 +1,77 @@
+<zigbee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd">
+	<constant class="ZigBeeDeviceType">
+		<name>ZigBee Device Type</name>
+        <value code="0x0000" name="On/Off Switch" />
+		<value code="0x0001" name="Level Control Switch" />
+		<value code="0x0002" name="On/Off Output" />
+		<value code="0x0003" name="Level Controllable Output" />
+		<value code="0x0004" name="Scene Selector" />
+		<value code="0x0005" name="Configuration Tool" />
+		<value code="0x0006" name="Remote Control" />
+		<value code="0x0007" name="Combined Interface" />
+		<value code="0x0008" name="Range Extender" />
+		<value code="0x0009" name="Mains Power Outlet" />
+		<value code="0x000A" name="Door Lock" />
+		<value code="0x000B" name="Door Lock Controller" />
+		<value code="0x000C" name="Simple Sensor" />
+		<value code="0x000D" name="Consumption Awareness Device" />
+		<value code="0x0050" name="Home Gateway" />
+		<value code="0x0051" name="Smart Plug" />
+		<value code="0x0052" name="White Goods" />
+		<value code="0x0053" name="Meter Interface" />
+		<value code="0x0100" name="On/Off Light" />
+		<value code="0x0101" name="Dimmable Light" />
+		<value code="0x0102" name="Color Dimmable Light" />
+		<value code="0x0103" name="On/Off Light Switch" />
+		<value code="0x0104" name="Dimmer Switch" />
+		<value code="0x0105" name="Color Dimmer Switch" />
+		<value code="0x0106" name="Light Sensor" />
+		<value code="0x0107" name="Occupancy Sensor" />
+		<value code="0x0200" name="Shade" />
+		<value code="0x0201" name="Shade Controller" />
+		<value code="0x0202" name="Window Covering Device" />
+		<value code="0x0203" name="Window Covering Controller" />
+		<value code="0x0210" name="Extended Color Light" />
+		<value code="0x0220" name="Color Temperature Light" />
+		<value code="0x0300" name="Heating/Cooling Unit" />
+		<value code="0x0301" name="Thermostat" />
+		<value code="0x0302" name="Temperature Sensor" />
+		<value code="0x0303" name="Pump" />
+		<value code="0x0304" name="Pump Controller" />
+		<value code="0x0305" name="Pressure Sensor" />
+		<value code="0x0306" name="Flow Sensor" />
+		<value code="0x0307" name="Mini Split AC" />
+		<value code="0x0400" name="IAS Control and Indicating Equipment" />
+		<value code="0x0401" name="IAS Ancillary Control Equipment" />
+		<value code="0x0402" name="IAS Zone" />
+		<value code="0x0403" name="IAS Warning Device" />
+		<value code="0x0500" name="Energy Service Interface" />
+		<value code="0x0501" name="Metering Device" />
+		<value code="0x0502" name="In-Home Display" />
+		<value code="0x0503" name="Programmable Communicating Thermostat" />
+		<value code="0x0504" name="Load Control Device" />
+		<value code="0x0505" name="Smart Appliance" />
+		<value code="0x0506" name="Prepayment Terminal" />
+		<value code="0x0507" name="Physical Device" />
+		<value code="0x0508" name="Remote Communications Device" />
+	</constant>
+	<constant class="ZigBeeProfileType">
+		<name>ZigBee Profile Type</name>
+		<description></description>
+		<value code="0x0104" name="ZigBee Home Automation" />
+		<value code="0x0109" name="ZigBee Smart Energy" />
+		<value code="0xA10E" name="ZigBee Green Power" />
+		<value code="0xC05E" name="ZigBee Light Link" />
+		<value code="0xC059" name="Manufacturer Telegesis" />
+		<value code="0xC105" name="Manufacturer Digi" />
+	</constant>
+	<constant class="ZigBeeStackType">
+		<name>ZigBee Stack Type</name>
+		<description></description>
+		<value code="0x00" name="ZigBee 2006" />
+		<value code="0x01" name="ZigBee 2007" />
+		<value code="0x02" name="ZigBee Pro" />
+		<value code="0x03" name="ZigBee IP" />
+	</constant>
+</zigbee>

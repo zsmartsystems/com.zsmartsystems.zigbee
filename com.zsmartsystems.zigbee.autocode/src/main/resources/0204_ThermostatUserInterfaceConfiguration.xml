@@ -1,0 +1,19 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0204">
+    <name>Thermostat User Interface Configuration</name>
+    <description>This cluster provides an interface to allow configuration of the user interface for a thermostat, or a thermostat controller device, that supports a keypad and LCD screen.</description>
+    <attribute code="0x0000" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x00">
+        <name>Temperature Display Mode</name>
+        <description>The TemperatureDisplayMode attribute specifies the units of the temperature displayed on the thermostat screen.</description>
+    </attribute>
+    <attribute code="0x0001" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x00">
+        <name>Keypad Lockout</name>
+        <description>The KeypadLockout attribute specifies the level of functionality that is available to the user via the keypad.</description>
+    </attribute>
+    <attribute code="0x0002" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="true">
+        <name>Schedule Programming Visibility</name>
+        <description>The ScheduleProgrammingVisibility attribute is used to hide the weekly schedule programming functionality or menu on a thermostat from a user to prevent local user programming of the weekly schedule. The schedule programming MAY still be performed via a remote interface, and the thermostat MAY operate in schedule programming mode.</description>
+        <description>This command is designed to prevent local tampering with or disabling of schedules that MAY have been programmed by users or service providers via a more capable remote interface. The programming schedule SHALL continue to run even though it is not visible to the user locally at the thermostat.</description>
+    </attribute>
+
+</cluster>

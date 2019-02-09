@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.pollcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Set Short Poll Interval Command value object class.
@@ -21,16 +21,17 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Poll Control</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Poll Control cluster.
  * <p>
- * The Set Short Poll Interval command is used to set the Read Only ShortPollInterval attribute.
- * <br>
- * When the Poll Control Server receives the Set Short Poll Interval Command, it SHOULD check its internal minimal limit and the attributes
- * relationship if the new Short Poll Interval is acceptable. If the new value is acceptable, the new value SHALL be saved to the
- * ShortPollInterval attribute. If the new value is not acceptable, the Poll Control Server SHALL send a default response of INVALID_VALUE
- * and the ShortPollInterval attribute value is not updated.
+ * The Set Short Poll Interval command is used to set the Read Only ShortPollInterval
+ * attribute. <br> When the Poll Control Server receives the Set Short Poll Interval Command,
+ * it should check its internal minimal limit and the attributes relationship if the new Short
+ * Poll Interval is acceptable. If the new value is acceptable, the new value shall be saved to
+ * the ShortPollInterval attribute. If the new value is not acceptable, the Poll Control
+ * Server shall send a default response of INVALID_VALUE and the ShortPollInterval attribute
+ * value is not updated.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class SetShortPollIntervalCommand extends ZclCommand {
     /**
      * New Short Poll Interval command message field.
@@ -42,7 +43,7 @@ public class SetShortPollIntervalCommand extends ZclCommand {
      */
     public SetShortPollIntervalCommand() {
         genericCommand = false;
-        clusterId = 32;
+        clusterId = 0x0020;
         commandId = 3;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }

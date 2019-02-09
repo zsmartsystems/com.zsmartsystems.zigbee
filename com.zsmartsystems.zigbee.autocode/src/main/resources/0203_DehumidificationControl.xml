@@ -1,0 +1,38 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0203">
+    <name>Dehumidification Control</name>
+    <description>This cluster provides an interface to dehumidification functionality.</description>
+    <attribute code="0x0000" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00" maximum="0x64">
+        <name>Relative Humidity</name>
+        <description>The RelativeHumidity attribute is an 8-bit value that represents the current relative humidity (in %) measured by a local or remote sensor. The valid range ix 0x00 – 0x64 (0% to 100%).</description>
+    </attribute>
+    <attribute code="0x0001" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00">
+        <name>Dehumidification Cooling</name>
+        <description>The DehumidificationCooling attribute is an 8-bit value that specifies the current dehumidification cooling output (in %). The valid range is 0 to DehumidificationMaxCool.</description>
+    </attribute>
+    <attribute code="0x0010" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x1E" maximum="0x64" default="0x32">
+        <name>Rh Dehumidification Setpoint</name>
+        <description>The RHDehumidificationSetpoint attribute is an 8-bit value that represents the relative humidity (in %) at which dehumidification occurs. The valid range ix 0x1E – 0x64 (30% to 100%).</description>
+    </attribute>
+    <attribute code="0x0011" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x00">
+        <name>Relative Humidity Mode</name>
+        <description>The RelativeHumidityMode attribute is an 8-bit value that specifies how the RelativeHumidity value is being updated.</description>
+    </attribute>
+    <attribute code="0x0012" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x01">
+        <name>Dehumidification Lockout</name>
+        <description>The DehumidificationLockout attribute is an 8-bit value that specifies whether dehumidification is allowed or not.</description>
+    </attribute>
+    <attribute code="0x0013" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x02" maximum="0x14" default="0x02">
+        <name>Dehumidification Hysteresis</name>
+        <description>The DehumidificationHysteresis attribute is an 8-bit value that specifies the hysteresis (in %) associated with RelativeHumidity value.</description>
+    </attribute>
+    <attribute code="0x0014" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x14" maximum="0x64" default="0x14">
+        <name>Dehumidification Max Cool</name>
+        <description>The DehumidificationMaxCool attribute is an 8-bit value that specifies the maximum dehumidification cooling output (in %). The valid range ix 0x14 – 0x64 (20% to 100%).</description>
+    </attribute>
+    <attribute code="0x0015" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x00">
+        <name>Relative Humidity Display</name>
+        <description>The RelativeHumidityDisplay attribute is an 8-bit value that specifies whether the RelativeHumidity value is displayed to the user or not.</description>
+    </attribute>
+
+</cluster>

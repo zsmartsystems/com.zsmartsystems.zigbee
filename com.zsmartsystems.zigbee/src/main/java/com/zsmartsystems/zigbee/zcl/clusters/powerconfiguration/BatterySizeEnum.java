@@ -13,23 +13,61 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 /**
- * Enumeration of Power configuration attribute BatterySize options.
+ * Battery Size value enumeration.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- *
- * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
 public enum BatterySizeEnum {
+
+    /**
+     * No Battery
+     */
     NO_BATTERY(0x0000),
+
+    /**
+     * Build In
+     */
     BUILD_IN(0x0001),
+
+    /**
+     * Other
+     */
     OTHER(0x0002),
-    AA__CELL(0x0003),
+
+    /**
+     * AA Cell
+     */
+    AA_CELL(0x0003),
+
+    /**
+     * AAA Cell
+     */
     AAA_CELL(0x0004),
+
+    /**
+     * C Cell
+     */
     C_CELL(0x0005),
+
+    /**
+     * D Cell
+     */
     D_CELL(0x0006),
-    CR2_CELL(0x0007),
-    CR123A_CELL(0x0008),
+
+    /**
+     * CR 2 Cell
+     */
+    CR_2_CELL(0x0007),
+
+    /**
+     * CR 123 A Cell
+     */
+    CR_123_A_CELL(0x0008),
+
+    /**
+     * Unknown
+     */
     UNKNOWN(0x00FF);
 
     /**
@@ -46,7 +84,7 @@ public enum BatterySizeEnum {
 
     private final int key;
 
-    BatterySizeEnum(final int key) {
+    private BatterySizeEnum(final int key) {
         this.key = key;
     }
 

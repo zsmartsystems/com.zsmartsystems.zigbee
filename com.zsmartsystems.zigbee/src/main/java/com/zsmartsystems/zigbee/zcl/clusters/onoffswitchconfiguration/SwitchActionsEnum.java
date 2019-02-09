@@ -13,16 +13,26 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 /**
- * Enumeration of On/off Switch Configuration attribute SwitchActions options.
+ * Switch Actions value enumeration.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- *
- * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
 public enum SwitchActionsEnum {
+
+    /**
+     * On
+     */
     ON(0x0000),
+
+    /**
+     * Off
+     */
     OFF(0x0001),
+
+    /**
+     * Toggle
+     */
     TOGGLE(0x0002);
 
     /**
@@ -39,7 +49,7 @@ public enum SwitchActionsEnum {
 
     private final int key;
 
-    SwitchActionsEnum(final int key) {
+    private SwitchActionsEnum(final int key) {
         this.key = key;
     }
 

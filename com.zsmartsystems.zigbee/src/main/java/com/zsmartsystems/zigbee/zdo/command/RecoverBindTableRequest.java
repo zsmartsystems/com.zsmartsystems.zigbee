@@ -7,21 +7,21 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * Recover Bind Table Request value object class.
  * <p>
- * The Recover_Bind_Table_req is generated from a local primary binding table
- * cache and sent to a remote backup binding table cache device when it wants a
- * complete restore of the binding table. The destination addressing mode for this
- * request is unicast.
+ * <p>
+ * The Recover_Bind_Table_req is generated from a local primary binding table cache and sent
+ * to a remote backup binding table cache device when it wants a complete restore of the binding
+ * table. The destination addressing mode for this request is unicast.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class RecoverBindTableRequest extends ZdoRequest {
     /**
      * Default constructor.

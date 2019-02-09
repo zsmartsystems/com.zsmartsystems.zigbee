@@ -9,42 +9,43 @@ package com.zsmartsystems.zigbee.zcl.clusters.otaupgrade;
 
 import javax.annotation.Generated;
 
-import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Query Specific File Command value object class.
  * <p>
- * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
+ * Cluster: <b>Ota Upgrade</b>. Command is sent <b>TO</b> the server.
+ * This command is a <b>specific</b> command used for the Ota Upgrade cluster.
  * <p>
- * Client devices shall send a Query Specific File Request command to the server to request for a file that
- * is specific and unique to it. Such file could contain non-firmware data such as security credential
- * (needed for upgrading from Smart Energy 1.1 to Smart Energy 2.0), configuration or log. When the
- * device decides to send the Query Specific File Request command is manufacturer specific. However,
- * one example is during upgrading from SE 1.1 to 2.0 where the client may have already obtained new
- * SE 2.0 image and now needs new SE 2.0 security credential data.
+ * Client devices shall send a Query Specific File Request command to the server to request for a
+ * file that is specific and unique to it. Such file could contain non-firmware data such as
+ * security credential (needed for upgrading from Smart Energy 1.1 to Smart Energy 2.0),
+ * configuration or log. When the device decides to send the Query Specific File Request
+ * command is manufacturer specific. However, one example is during upgrading from SE 1.1 to
+ * 2.0 where the client may have already obtained new SE 2.0 image and now needs new SE 2.0
+ * security credential data.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class QuerySpecificFileCommand extends ZclCommand {
     /**
-     * Request node address command message field.
+     * Request Node Address command message field.
      */
     private IeeeAddress requestNodeAddress;
 
     /**
-     * Manufacturer code command message field.
+     * Manufacturer Code command message field.
      */
     private Integer manufacturerCode;
 
     /**
-     * Image type command message field.
+     * Image Type command message field.
      */
     private Integer imageType;
 
@@ -63,60 +64,60 @@ public class QuerySpecificFileCommand extends ZclCommand {
      */
     public QuerySpecificFileCommand() {
         genericCommand = false;
-        clusterId = 25;
+        clusterId = 0x0019;
         commandId = 8;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Request node address.
+     * Gets Request Node Address.
      *
-     * @return the Request node address
+     * @return the Request Node Address
      */
     public IeeeAddress getRequestNodeAddress() {
         return requestNodeAddress;
     }
 
     /**
-     * Sets Request node address.
+     * Sets Request Node Address.
      *
-     * @param requestNodeAddress the Request node address
+     * @param requestNodeAddress the Request Node Address
      */
     public void setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
         this.requestNodeAddress = requestNodeAddress;
     }
 
     /**
-     * Gets Manufacturer code.
+     * Gets Manufacturer Code.
      *
-     * @return the Manufacturer code
+     * @return the Manufacturer Code
      */
     public Integer getManufacturerCode() {
         return manufacturerCode;
     }
 
     /**
-     * Sets Manufacturer code.
+     * Sets Manufacturer Code.
      *
-     * @param manufacturerCode the Manufacturer code
+     * @param manufacturerCode the Manufacturer Code
      */
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
 
     /**
-     * Gets Image type.
+     * Gets Image Type.
      *
-     * @return the Image type
+     * @return the Image Type
      */
     public Integer getImageType() {
         return imageType;
     }
 
     /**
-     * Sets Image type.
+     * Sets Image Type.
      *
-     * @param imageType the Image type
+     * @param imageType the Image Type
      */
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;

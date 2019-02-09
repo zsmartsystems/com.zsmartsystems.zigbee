@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.iaszone;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Zone Enroll Request Command value object class.
@@ -21,13 +21,13 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>IAS Zone</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS Zone cluster.
  * <p>
- * The Zone Enroll Request command is generated when a device embodying the Zone server cluster wishes
- * to be  enrolled as an active  alarm device. It  must do this immediately it has joined the network
- * (during commissioning).
+ * The Zone Enroll Request command is generated when a device embodying the Zone server cluster
+ * wishes to be enrolled as an active alarm device. It must do this immediately it has joined the
+ * network (during commissioning).
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ZoneEnrollRequestCommand extends ZclCommand {
     /**
      * Zone Type command message field.
@@ -44,7 +44,7 @@ public class ZoneEnrollRequestCommand extends ZclCommand {
      */
     public ZoneEnrollRequestCommand() {
         genericCommand = false;
-        clusterId = 1280;
+        clusterId = 0x0500;
         commandId = 1;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }

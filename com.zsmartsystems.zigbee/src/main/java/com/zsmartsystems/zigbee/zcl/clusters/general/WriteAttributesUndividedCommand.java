@@ -7,16 +7,16 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Write Attributes Undivided Command value object class.
@@ -24,20 +24,17 @@ import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The write attributes undivided command is generated when a device wishes to
- * change the values of one or more attributes located on another device, in such a
- * way that if any attribute cannot be written (e.g. if an attribute is not implemented
- * on the device, or a value to be written is outside its valid range), no attribute
- * values are changed.
- * <br>
- * In all other respects, including generation of a write attributes response command,
- * the format and operation of the command is the same as that of the write attributes
- * command, except that the command identifier field shall be set to indicate the
- * write attributes undivided command.
+ * The write attributes undivided command is generated when a device wishes to change the
+ * values of one or more attributes located on another device, in such a way that if any attribute
+ * cannot be written (e.g. if an attribute is not implemented on the device, or a value to be
+ * written is outside its valid range), no attribute values are changed. <br> In all other
+ * respects, including generation of a write attributes response command, the format and
+ * operation of the command is the same as that of the write attributes command, except that the
+ * command identifier field shall be set to indicate the write attributes undivided command.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:19:25Z")
 public class WriteAttributesUndividedCommand extends ZclCommand {
     /**
      * Records command message field.

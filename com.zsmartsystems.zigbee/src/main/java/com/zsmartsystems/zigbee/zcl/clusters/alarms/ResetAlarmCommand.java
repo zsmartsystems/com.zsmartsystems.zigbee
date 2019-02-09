@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.alarms;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Reset Alarm Command value object class.
@@ -21,17 +21,21 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Alarms</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Alarms cluster.
  * <p>
+ * This command resets a specific alarm. This is needed for some alarms that do not reset
+ * automatically. If the alarm condition being reset was in fact still active then a new
+ * notification will be generated and, where implemented, a new record added to the alarm log.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ResetAlarmCommand extends ZclCommand {
     /**
-     * Alarm code command message field.
+     * Alarm Code command message field.
      */
     private Integer alarmCode;
 
     /**
-     * Cluster identifier command message field.
+     * Cluster Identifier command message field.
      */
     private Integer clusterIdentifier;
 
@@ -40,42 +44,42 @@ public class ResetAlarmCommand extends ZclCommand {
      */
     public ResetAlarmCommand() {
         genericCommand = false;
-        clusterId = 9;
+        clusterId = 0x0009;
         commandId = 0;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Alarm code.
+     * Gets Alarm Code.
      *
-     * @return the Alarm code
+     * @return the Alarm Code
      */
     public Integer getAlarmCode() {
         return alarmCode;
     }
 
     /**
-     * Sets Alarm code.
+     * Sets Alarm Code.
      *
-     * @param alarmCode the Alarm code
+     * @param alarmCode the Alarm Code
      */
     public void setAlarmCode(final Integer alarmCode) {
         this.alarmCode = alarmCode;
     }
 
     /**
-     * Gets Cluster identifier.
+     * Gets Cluster Identifier.
      *
-     * @return the Cluster identifier
+     * @return the Cluster Identifier
      */
     public Integer getClusterIdentifier() {
         return clusterIdentifier;
     }
 
     /**
-     * Sets Cluster identifier.
+     * Sets Cluster Identifier.
      *
-     * @param clusterIdentifier the Cluster identifier
+     * @param clusterIdentifier the Cluster Identifier
      */
     public void setClusterIdentifier(final Integer clusterIdentifier) {
         this.clusterIdentifier = clusterIdentifier;

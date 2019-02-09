@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.onoff;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Off With Effect Command value object class.
@@ -25,15 +25,23 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class OffWithEffectCommand extends ZclCommand {
     /**
      * Effect Identifier command message field.
+     * <p>
+     * The Effect Identifier field is 8-bits in length and specifies the fading effect to use
+     * when switching the device off.
      */
     private Integer effectIdentifier;
 
     /**
      * Effect Variant command message field.
+     * <p>
+     * The Effect Variant field is 8-bits in length and is used to indicate which variant of the
+     * effect, indicated in the Effect Identifier field, should be triggered. If a device does
+     * not support the given variant, it shall use the default variant. This field is dependent
+     * on the value of the Effect Identifier field.
      */
     private Integer effectVariant;
 
@@ -42,13 +50,16 @@ public class OffWithEffectCommand extends ZclCommand {
      */
     public OffWithEffectCommand() {
         genericCommand = false;
-        clusterId = 6;
+        clusterId = 0x0006;
         commandId = 64;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
      * Gets Effect Identifier.
+     * <p>
+     * The Effect Identifier field is 8-bits in length and specifies the fading effect to use
+     * when switching the device off.
      *
      * @return the Effect Identifier
      */
@@ -58,6 +69,9 @@ public class OffWithEffectCommand extends ZclCommand {
 
     /**
      * Sets Effect Identifier.
+     * <p>
+     * The Effect Identifier field is 8-bits in length and specifies the fading effect to use
+     * when switching the device off.
      *
      * @param effectIdentifier the Effect Identifier
      */
@@ -67,6 +81,11 @@ public class OffWithEffectCommand extends ZclCommand {
 
     /**
      * Gets Effect Variant.
+     * <p>
+     * The Effect Variant field is 8-bits in length and is used to indicate which variant of the
+     * effect, indicated in the Effect Identifier field, should be triggered. If a device does
+     * not support the given variant, it shall use the default variant. This field is dependent
+     * on the value of the Effect Identifier field.
      *
      * @return the Effect Variant
      */
@@ -76,6 +95,11 @@ public class OffWithEffectCommand extends ZclCommand {
 
     /**
      * Sets Effect Variant.
+     * <p>
+     * The Effect Variant field is 8-bits in length and is used to indicate which variant of the
+     * effect, indicated in the Effect Identifier field, should be triggered. If a device does
+     * not support the given variant, it shall use the default variant. This field is dependent
+     * on the value of the Effect Identifier field.
      *
      * @param effectVariant the Effect Variant
      */

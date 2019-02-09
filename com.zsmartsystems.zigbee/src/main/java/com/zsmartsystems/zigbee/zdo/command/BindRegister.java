@@ -7,21 +7,22 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * Bind Register value object class.
  * <p>
- * The Bind_Register_req is generated from a Local Device and sent to a primary
- * binding table cache device to register that the local device wishes to hold its own
- * binding table entries. The destination addressing mode for this request is unicast.
+ * <p>
+ * The Bind_Register_req is generated from a Local Device and sent to a primary binding table
+ * cache device to register that the local device wishes to hold its own binding table entries.
+ * The destination addressing mode for this request is unicast.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
-public class BindRegister extends ZdoResponse {
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+public class BindRegister extends ZdoRequest {
     /**
      * Default constructor.
      */

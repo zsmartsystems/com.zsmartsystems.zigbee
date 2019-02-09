@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="cluster">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element type="xs:string" name="name" />
+				<xs:element type="xs:string" name="description" maxOccurs="unbounded" minOccurs="0" />
+				<xs:element name="command" maxOccurs="unbounded" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:string" name="name" />
+							<xs:element type="xs:string" name="description" maxOccurs="unbounded" minOccurs="0" />
+							<xs:element name="field" maxOccurs="unbounded" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="name" />
+										<xs:element type="xs:string" name="description" maxOccurs="unbounded" minOccurs="0" />
+										<xs:element name="conditional" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element type="xs:string" name="field" />
+													<xs:element type="xs:string" name="operator" />
+													<xs:element type="xs:string" name="value" />
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element type="xs:string" name="sizer" maxOccurs="1" minOccurs="0" />
+									</xs:sequence>
+									<xs:attribute type="xs:string" name="type" use="optional" />
+									<xs:attribute type="xs:string" name="class" use="optional" />
+									<xs:attribute type="xs:boolean" name="completeOnZero" use="optional" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="response" minOccurs="0">
+								<xs:complexType mixed="true">
+									<xs:sequence>
+										<xs:element name="matcher" maxOccurs="unbounded" minOccurs="0">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute type="xs:string" name="commandField" use="optional" />
+														<xs:attribute type="xs:string" name="responseField" use="optional" />
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute type="xs:string" name="command" use="optional" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute type="xs:string" name="code" use="optional" />
+						<xs:attribute type="xs:string" name="source" use="optional" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="attribute" maxOccurs="unbounded" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:string" name="name" />
+							<xs:element type="xs:string" name="description" maxOccurs="unbounded" minOccurs="0" />
+						</xs:sequence>
+						<xs:attribute type="xs:string" name="code" use="optional" />
+						<xs:attribute type="xs:string" name="type" use="optional" />
+						<xs:attribute type="xs:string" name="class" use="optional" />
+						<xs:attribute type="xs:string" name="side" use="optional" />
+						<xs:attribute type="xs:string" name="minimum" use="optional" />
+						<xs:attribute type="xs:string" name="maximum" use="optional" />
+						<xs:attribute type="xs:string" name="optional" use="optional" />
+						<xs:attribute type="xs:string" name="writable" use="optional" />
+						<xs:attribute type="xs:string" name="reportable" use="optional" />
+						<xs:attribute type="xs:integer" name="arraystart" use="optional" />
+						<xs:attribute type="xs:integer" name="arraycount" use="optional" />
+						<xs:attribute type="xs:integer" name="arraystep" use="optional" />
+						<xs:attribute type="xs:string" name="default" use="optional" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="constant" maxOccurs="unbounded" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:string" name="name" />
+							<xs:element type="xs:string" name="description" maxOccurs="unbounded" minOccurs="0" />
+							<xs:element name="value" maxOccurs="unbounded" minOccurs="0">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute type="xs:string" name="code" use="optional" />
+											<xs:attribute type="xs:string" name="name" use="optional" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute type="xs:string" name="type" />
+						<xs:attribute type="xs:string" name="class" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="struct" maxOccurs="unbounded" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:string" name="name" minOccurs="0" />
+							<xs:element name="field" maxOccurs="unbounded" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="name" />
+										<xs:element type="xs:string" name="description" minOccurs="0" />
+									</xs:sequence>
+									<xs:attribute type="xs:string" name="type" use="optional" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute type="xs:string" name="class" use="optional" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute type="xs:string" name="code" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="zigbee">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="constant" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="name"/>
+              <xs:element type="xs:string" name="description" minOccurs="0"/>
+              <xs:element name="value" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="code" use="optional"/>
+                      <xs:attribute type="xs:string" name="name" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="class" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.scenes;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Get Scene Membership Command value object class.
@@ -21,14 +21,13 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Scenes</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
  * <p>
- * The Get Scene Membership command can be used to find an unused scene
- * number within the group when no commissioning tool is in the network, or for a
- * commissioning tool to get used scenes for a group on a single device or on all
- * devices in the group.
+ * The Get Scene Membership command can be used to find an unused scene number within the group
+ * when no commissioning tool is in the network, or for a commissioning tool to get used scenes
+ * for a group on a single device or on all devices in the group.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class GetSceneMembershipCommand extends ZclCommand {
     /**
      * Group ID command message field.
@@ -40,7 +39,7 @@ public class GetSceneMembershipCommand extends ZclCommand {
      */
     public GetSceneMembershipCommand() {
         genericCommand = false;
-        clusterId = 5;
+        clusterId = 0x0005;
         commandId = 6;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }

@@ -7,28 +7,27 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * User Descriptor Set Request value object class.
  * <p>
- * The User_Desc_set command is generated from a local device wishing to
- * configure the user descriptor on a remote device. This command shall be unicast
- * either to the remote device itself or to an alternative device that contains the
- * discovery information of the remote device.
- * <br>
- * The local device shall generate the User_Desc_set command using the format
- * illustrated in Table 2.55. The NWKAddrOfInterest field shall contain the network
- * address of the remote device for which the user descriptor is to be configured and
- * the UserDescription field shall contain the ASCII character string that is to be
- * configured in the user descriptor. Characters with ASCII codes numbered 0x00
- * through 0x1f are not permitted to be included in this string.
+ * <p>
+ * The User_Desc_set command is generated from a local device wishing to configure the user
+ * descriptor on a remote device. This command shall be unicast either to the remote device
+ * itself or to an alternative device that contains the discovery information of the remote
+ * device. <br> The local device shall generate the User_Desc_set command using the format
+ * illustrated in Table 2.55. The NWKAddrOfInterest field shall contain the network address
+ * of the remote device for which the user descriptor is to be configured and the
+ * UserDescription field shall contain the ASCII character string that is to be configured in
+ * the user descriptor. Characters with ASCII codes numbered 0x00 through 0x1f are not
+ * permitted to be included in this string.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class UserDescriptorSetRequest extends ZdoRequest {
     /**
      * Default constructor.

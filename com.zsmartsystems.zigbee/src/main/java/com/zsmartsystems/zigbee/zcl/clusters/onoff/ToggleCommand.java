@@ -18,16 +18,22 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>On/Off</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the On/Off cluster.
  * <p>
+ * On receipt of this command, if a device is in its ‘Off’ state it shall enter its ‘On’ state.
+ * Otherwise, if it is in its ‘On’ state it shall enter its ‘Off’ state. On receipt of the Toggle
+ * command, if the value of the OnOff attribute is equal to 0x00 and if the value of the OnTime
+ * attribute is equal to 0x0000, the device shall set the OffWaitTime attribute to 0x0000. If
+ * the value of the OnOff attribute is equal to 0x01, the OnTime attribute shall be set to 0x0000.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ToggleCommand extends ZclCommand {
     /**
      * Default constructor.
      */
     public ToggleCommand() {
         genericCommand = false;
-        clusterId = 6;
+        clusterId = 0x0006;
         commandId = 2;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }

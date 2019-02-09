@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.general;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Read Attributes Structured Command value object class.
@@ -21,17 +21,16 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The read attributes command is generated when a device wishes to determine the
- * values of one or more attributes, or elements of attributes, located on another
- * device. Each attribute identifier field shall contain the identifier of the attribute to
- * be read.
+ * The read attributes command is generated when a device wishes to determine the values of one
+ * or more attributes, or elements of attributes, located on another device. Each attribute
+ * identifier field shall contain the identifier of the attribute to be read.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ReadAttributesStructuredCommand extends ZclCommand {
     /**
-     * Attribute selectors command message field.
+     * Attribute Selectors command message field.
      */
     private Object attributeSelectors;
 
@@ -58,18 +57,18 @@ public class ReadAttributesStructuredCommand extends ZclCommand {
     }
 
     /**
-     * Gets Attribute selectors.
+     * Gets Attribute Selectors.
      *
-     * @return the Attribute selectors
+     * @return the Attribute Selectors
      */
     public Object getAttributeSelectors() {
         return attributeSelectors;
     }
 
     /**
-     * Sets Attribute selectors.
+     * Sets Attribute Selectors.
      *
-     * @param attributeSelectors the Attribute selectors
+     * @param attributeSelectors the Attribute Selectors
      */
     public void setAttributeSelectors(final Object attributeSelectors) {
         this.attributeSelectors = attributeSelectors;

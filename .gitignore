@@ -4,6 +4,8 @@ bin/
 *.log
 *.log.*
 *.json
+*.sh
+*.zip
 .metadata
 local.properties
 

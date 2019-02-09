@@ -7,31 +7,31 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindResponse;
-import javax.annotation.Generated;
 
 /**
  * Management Bind Request value object class.
  * <p>
- * The Mgmt_Bind_req is generated from a Local Device wishing to retrieve the
- * contents of the Binding Table from the Remote Device. The destination
- * addressing on this command shall be unicast only and the destination address
- * must be that of a Primary binding table cache or source device holding its own
- * binding table.
+ * <p>
+ * The Mgmt_Bind_req is generated from a Local Device wishing to retrieve the contents of the
+ * Binding Table from the Remote Device. The destination addressing on this command shall be
+ * unicast only and the destination address must be that of a Primary binding table cache or
+ * source device holding its own binding table.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ManagementBindRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
-     * StartIndex command message field.
+     * Start Index command message field.
      */
     private Integer startIndex;
 
@@ -43,18 +43,18 @@ public class ManagementBindRequest extends ZdoRequest implements ZigBeeTransacti
     }
 
     /**
-     * Gets StartIndex.
+     * Gets Start Index.
      *
-     * @return the StartIndex
+     * @return the Start Index
      */
     public Integer getStartIndex() {
         return startIndex;
     }
 
     /**
-     * Sets StartIndex.
+     * Sets Start Index.
      *
-     * @param startIndex the StartIndex
+     * @param startIndex the Start Index
      */
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
@@ -76,11 +76,8 @@ public class ManagementBindRequest extends ZdoRequest implements ZigBeeTransacti
 
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
-        if (!(response instanceof ManagementBindResponse)) {
-            return false;
-        }
-
-        return ((ZdoRequest) request).getDestinationAddress().equals(((ManagementBindResponse) response).getSourceAddress());
+        return (response instanceof ManagementBindResponse)
+                & ((ZdoRequest) request).getDestinationAddress().equals(((ManagementBindResponse) response).getSourceAddress());
     }
 
     @Override

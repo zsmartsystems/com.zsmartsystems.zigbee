@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.scenes;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Recall Scene Command value object class.
@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class RecallSceneCommand extends ZclCommand {
     /**
      * Group ID command message field.
@@ -42,7 +42,7 @@ public class RecallSceneCommand extends ZclCommand {
      */
     public RecallSceneCommand() {
         genericCommand = false;
-        clusterId = 5;
+        clusterId = 0x0005;
         commandId = 5;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }

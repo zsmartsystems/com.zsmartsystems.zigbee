@@ -1,0 +1,227 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0704">
+    <name>Smart Energy Tunneling</name>
+    <description>The tunneling cluster provides an interface for tunneling protocols. It is comprised of commands and attributes required to transport any existing metering communication protocol within the payload of standard ZigBee frames (including the handling of issues such as addressing, fragmentation and flow control). Examples for such protocols are DLMS/COSEM, IEC61107, ANSI C12, M-Bus, ClimateTalk etc.</description>
+    <description>The tunneling foresees the roles of a server and a CLIENT taking part in the data exchange. Their roles are defined as follows:</description>
+    <description>CLIENT: Requests a tunnel from the server and closes the tunnel if it is no longer needed.</description>
+    <description>Server: Provides and manages tunnels to the clients.</description>
+    <description>The data exchange through the tunnel is symmetric. This means both CLIENT and server provide the commands to transfer data (TransferData). And both must make sure that only the partner to which the tunnel has been built up is granted read/write access to it (e.g. tunnel identifier protection through checking the MAC address).</description>
+    <description>Sleepy devices either close the tunnel immediately after they have pushed their data through it, or leave it open in which case an attribute in the server (CloseTunnelTimeout) decides whether the tunnel is closed from the server side during the sleeping phase or not. It is recommended that battery-powered (sleepy) devices fulfil the role of the Tunneling cluster CLIENT (and therefore have control over when they request a tunnel from the server).</description>
+    <command code="0x00" source="client">
+        <name>Request Tunnel</name>
+        <description>RequestTunnel is the client command used to setup a tunnel association with the server. The request payload specifies the protocol identifier for the requested tunnel, a manufacturer code in case of proprietary protocols and the use of flow control for streaming protocols.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Protocol ID</name>
+            <description>An enumeration representing the identifier of the metering communication protocol for which the tunnel is requested.</description>
+            <description>The values above 199 may be used for manufacturer specific protocols.</description>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+            <description>A code that is allocated by the ZigBee Alliance, relating the manufacturer to a device and – for the tunneling - a manufacturer specific protocol. The parameter is ignored when the ProtocolID value is less than 200. This allows for 55 manufacturer-defined protocols for each manufacturer to be defined. A value of 0xFFFF indicates that the Manufacturer Code is not used.</description>
+        </field>
+        <field type="BOOLEAN">
+            <name>Flow Control Support</name>
+            <description>A boolean type parameter that indicates whether flow control support is requested from the tunnel (TRUE) or not (FALSE). The default value is FALSE (no flow control).</description>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Maximum Incoming Transfer Size</name>
+            <description>A value that defines the size, in octets, of the maximum data packet that can be transferred to the client in the payload of a single TransferData command.</description>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Close Tunnel</name>
+        <description>Client command used to close the tunnel with the server. The parameter in the payload specifies the tunnel identifier of the tunnel that has to be closed. The server leaves the tunnel open and the assigned resources allocated until the client sends the CloseTunnel command or the CloseTunnelTimeout fires.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Tunnel ID</name>
+            <description>The identifier of the tunnel that shall be closed. It is the same number that has been previously returned in the response to a RequestTunnel command. Valid numbers range between 0..65535 and must correspond to a tunnel that is still active and maintained by the server.</description>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Transfer Data Client To Server</name>
+        <description>Command that indicates (if received) that the client has sent data to the server. The data itself is contained within the payload.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Tunnel ID</name>
+            <description>A number between 0..65535 that uniquely identifies the tunnel that has been allocated in the server triggered through the RequestTunnel command. This ID must be used to send data through the tunnel or passed with any commands concerning that specific tunnel.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Data</name>
+            <description>Octet containing the data to be transferred through the tunnel in the format of the communication protocol for which the tunnel has been requested and opened. The payload contains the assembled data exactly as it was sent by the client. Theoretically, its length is solely limited through the fragmentation algorithm and the RX/TX transfer buffer sizes within the communication partners. The content of the payload is up to the application sending the data. It is neither guaranteed, that it contains a complete PDU nor is any other assumption on its internal format made. This is left up to the implementer of the specific protocol tunnel behavior.</description>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Transfer Data Error Client To Server</name>
+        <description>This command is generated by the receiver of a TransferData command if the tunnel status indicates that something is wrong. There are two three cases in which TransferDataError is sent:</description>
+        <description>The TransferData received contains a TunnelID that does not match to any of the active tunnels of the receiving device. This could happen if a (sleeping) device sends a TransferData command to a tunnel that has been closed by the server after the CloseTunnelTimeout.</description>
+        <description>The TransferData received contains a proper TunnelID of an active tunnel, but the device sending the data does not match to it.</description>
+        <description>The TransferData received contains more data than indicated by the MaximumIncomingTransferSize of the receiving device.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Tunnel ID</name>
+            <description>A number between 0..65535 that uniquely identifies the tunnel that has been allocated in the server triggered through the RequestTunnel command. This ID must be used for the data transfer through the tunnel or passed with any commands concerning that specific tunnel.</description>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="TransferDataStatusEnum">
+            <name>Transfer Data Status</name>
+            <description>The TransferDataStatus parameter indicates the error that occurred within the receiver after the last TransferData command.</description>
+        </field>
+    </command>
+    <command code="0x04" source="client">
+        <name>Ack Transfer Data Client To Server</name>
+        <description>Command sent in response to each TransferData command in case - and only in case - flow control has been requested by the client in the TunnelRequest command and is supported by both tunnel endpoints. The response payload indicates the number of octets that may still be received by the receiver.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Tunnel ID</name>
+            <description>A number between 0..65535 that uniquely identifies the tunnel that has been allocated in the server triggered through the RequestTunnel command. This ID must be used for the data transfer through the tunnel or passed with any commands concerning that specific tunnel.</description>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Number Of Bytes Left</name>
+            <description>Indicates the number of bytes that may still be received by the initiator of this command (receiver). It is most likely the remaining size of the buffer holding the data that is sent over TransferData. As an example: A value of 150 indicates that the next TransferData command must not contain more than 150 bytes of payload or data will get lost. A value of 0 indicates that there is no more space left in the receiver and the sender should completely stop sending data. After the reception of a ReadyData command, the sender may continue its data transfer.</description>
+        </field>
+    </command>
+    <command code="0x05" source="client">
+        <name>Ready Data Client To Server</name>
+        <description>The ReadyData command is generated - after a receiver had to stop the dataflow using the AckTransferData(0) command - to indicate that the device is now ready to continue receiving data. The parameter NumberOfOctetsLeft gives a hint on how much space is left for the next data transfer. The ReadyData command is only issued if flow control is enabled.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Tunnel ID</name>
+            <description>A number between 0..65535 that uniquely identifies the tunnel that has been allocated in the server triggered through the RequestTunnel command. This ID must be used for the data transfer through the tunnel or passed with any commands concerning that specific tunnel.</description>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Number Of Octets Left</name>
+            <description>Indicates the number of octets that may be received by the initiator of this command (receiver). It is most likely the remaining size of the buffer holding the data that is sent over TransferData. As an example: A value of 150 indicates that the next TransferData command must not contain more than 150 bytes of payload or data will get lost. The value must be larger than 0. As for its exact value, it is up to the implementer of the cluster to decide what flow control algorithm shall be applied.</description>
+        </field>
+    </command>
+    <command code="0x06" source="client">
+        <name>Get Supported Tunnel Protocols</name>
+        <description>Get Supported Tunnel Protocols is the client command used to determine the Tunnel protocols supported on another device.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Protocol Offset</name>
+            <description>Where there are more protocols supported than can be returned in a single Supported Tunnel Protocols Response command, this field allows an offset to be specified on subsequent Get Supported Tunnel Protocols commands. An offset of zero (0x00) should be used for an initial (or only) Get Supported Tunnel Protocols command (indicating that the returned list of protocols should commence with first available protocol). As a further example, if 10 protocols had previously been returned, the next Get Supported Tunnel Protocols command should use an offset of 10 (0x0A) to indicate the 11th available protocol should be the first returned in the next response.</description>
+        </field>
+    </command>
+    <command code="0x00" source="server">
+        <name>Request Tunnel Response</name>
+        <description>RequestTunnelResponse is sent by the server in response to a RequestTunnel command previously received from the client. The response contains the status of the RequestTunnel command and a tunnel identifier corresponding to the tunnel that has been set-up in the server in case of success.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Tunnel ID</name>
+            <description>A number between 0..65535 that uniquely identifies the tunnel that has been allocated in the server triggered through the RequestTunnel command. This ID must now be used to send data through this tunnel (TunnelID, TransferData) and is also required to close the tunnel again (CloseTunnel). If the command has failed, the TunnelStatus contains the reason of the error and the TunnelID is set to 0xFFFF.</description>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="TunnelStatusEnum">
+            <name>Tunnel Status</name>
+            <description>The TunnelStatus parameter indicates the server’s internal status after the execution of a RequestTunnel command.</description>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Maximum Incoming Transfer Size</name>
+            <description>A value that defines the size, in octets, of the maximum data packet that can be transferred to the server in the payload of a single TransferData command.</description>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Transfer Data Server To Client</name>
+        <description>Command that transfers data from server to the client. The data itself has to be placed within the payload.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Tunnel ID</name>
+            <description>A number between 0..65535 that uniquely identifies the tunnel that has been allocated in the server triggered through the RequestTunnel command. This ID must now be used to send data through this tunnel (TunnelID, TransferData) and is also required to close the tunnel again (CloseTunnel). If the command has failed, the TunnelStatus contains the reason of the error and the TunnelID is set to 0xFFFF.</description>
+        </field>
+        <field type="OCTET_STRING">
+            <name>Data</name>
+            <description>Octets containing the data to be transferred through the tunnel in the format of the communication protocol for which the tunnel has been requested and opened. The payload containing the assembled data exactly as it has been sent away by the client. Theoretically, its length is solely limited through the fragmentation algorithm and the RX/TX transfer buffer sizes within the communication partners. The content of the payload is up to the application sending the data. It is not guaranteed that it contains a complete PDU, nor is any assumption to be made on its internal format (which is left up to the implementer of the specific tunnel protocol).</description>
+        </field>
+    </command>
+    <command code="0x02" source="server">
+        <name>Transfer Data Error Server To Client</name>
+        <description>This command is generated by the receiver of a TransferData command if the tunnel status indicates that something is wrong. There are two three cases in which TransferDataError is sent:</description>
+        <description>The TransferData received contains a TunnelID that does not match to any of the active tunnels of the receiving device. This could happen if a (sleeping) device sends a TransferData command to a tunnel that has been closed by the server after the CloseTunnelTimeout.</description>
+        <description>The TransferData received contains a proper TunnelID of an active tunnel, but the device sending the data does not match to it.</description>
+        <description>The TransferData received contains more data than indicated by the MaximumIncomingTransferSize of the receiving device.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Tunnel ID</name>
+            <description>A number between 0..65535 that uniquely identifies the tunnel that has been allocated in the server triggered through the RequestTunnel command. This ID must be used for the data transfer through the tunnel or passed with any commands concerning that specific tunnel.</description>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="TransferDataStatusEnum">
+            <name>Transfer Data Status</name>
+            <description>The TransferDataStatus parameter indicates the error that occurred within the receiver after the last TransferData command.</description>
+        </field>
+    </command>
+    <command code="0x03" source="server">
+        <name>Ack Transfer Data Server To Client</name>
+        <description>Command sent in response to each TransferData command in case - and only in case - flow control has been requested by the client in the TunnelRequest command and is supported by both tunnel endpoints. The response payload indicates the number of octets that may still be received by the receiver.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Tunnel ID</name>
+            <description>A number between 0..65535 that uniquely identifies the tunnel that has been allocated in the server triggered through the RequestTunnel command. This ID must be used for the data transfer through the tunnel or passed with any commands concerning that specific tunnel.</description>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Number Of Bytes Left</name>
+            <description>Indicates the number of bytes that may still be received by the initiator of this command (receiver). It is most likely the remaining size of the buffer holding the data that is sent over TransferData. As an example: A value of 150 indicates that the next TransferData command must not contain more than 150 bytes of payload or data will get lost. A value of 0 indicates that there is no more space left in the receiver and the sender should completely stop sending data. After the reception of a ReadyData command, the sender may continue its data transfer.</description>
+        </field>
+    </command>
+    <command code="0x04" source="server">
+        <name>Ready Data Server To Client</name>
+        <description>The ReadyData command is generated - after a receiver had to stop the dataflow using the AckTransferData(0) command - to indicate that the device is now ready to continue receiving data. The parameter NumberOfOctetsLeft gives a hint on how much space is left for the next data transfer. The ReadyData command is only issued if flow control is enabled.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Tunnel ID</name>
+            <description>A number between 0..65535 that uniquely identifies the tunnel that has been allocated in the server triggered through the RequestTunnel command. This ID must be used for the data transfer through the tunnel or passed with any commands concerning that specific tunnel.</description>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Number Of Octets Left</name>
+            <description>Indicates the number of octets that may be received by the initiator of this command (receiver). It is most likely the remaining size of the buffer holding the data that is sent over TransferData. As an example: A value of 150 indicates that the next TransferData command must not contain more than 150 bytes of payload or data will get lost. The value must be larger than 0. As for its exact value, it is up to the implementer of the cluster to decide what flow control algorithm shall be applied.</description>
+        </field>
+    </command>
+    <command code="0x05" source="server">
+        <name>Supported Tunnel Protocols Response</name>
+        <description>Supported Tunnel Protocol Response is sent in response to a Get Supported Tunnel Protocols command previously received. The response contains a list of Tunnel protocols supported by the device; the payload of the response should be capable of holding up to 16 protocols.</description>
+        <field type="BOOLEAN">
+            <name>Protocol List Complete</name>
+            <description>The Protocol List Complete field is a Boolean; a value of 0 indicates that there are more supported protocols available (if more than 16 protocols are supported). A value of 1 indicates that the list of supported protocols is complete.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Protocol Count</name>
+            <description>The number of Protocol fields contained in the response.</description>
+        </field>
+        <field class="Protocol">
+            <name>Protocol List</name>
+        </field>
+    </command>
+    <command code="0x06" source="server">
+        <name>Tunnel Closure Notification</name>
+        <description>TunnelClosureNotification is sent by the server to indicate that a tunnel has been closed due to expiration of a CloseTunnelTimeout.</description>
+        <description>The command is sent by a server when a tunnel is closed due to expiration of CloseTunnelTimeout. It is sent unicast to the client that had originally requested that tunnel.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Tunnel ID</name>
+            <description>The identifier of the tunnel that has been closed. It is the same number that has been previously returned in the response to a RequestTunnel command. Valid numbers range between 0..65535 and must correspond to a tunnel that was still active and maintained by the server.</description>
+        </field>
+    </command>
+    
+    <attribute code="0x0000" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0xFFFF">
+        <name>Close Tunnel Timeout</name>
+        <description>CloseTunnelTimeout defines the minimum number of seconds that the server waits on an inactive tunnel before closing it on its own and freeing its resources (without waiting for the CloseTunnel command from the client). Inactive means here that the timer is re-started with each new reception of a command.0x0000 is an invalid value.</description>
+    </attribute>
+
+    <constant type="ENUMERATION_8_BIT" class="TransferDataStatusEnum">
+        <name>Transfer Data Status</name>
+        <value code="0x00" name="No Such Tunnel">
+        </value>
+        <value code="0x01" name="Wrong Device">
+        </value>
+        <value code="0x02" name="Data Overflow">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="TunnelStatusEnum">
+        <name>Tunnel Status</name>
+        <value code="0x00" name="Success">
+        </value>
+        <value code="0x01" name="Busy">
+        </value>
+        <value code="0x02" name="No More Tunnel Ids">
+        </value>
+        <value code="0x03" name="Protocol Not Supported">
+        </value>
+        <value code="0x04" name="Flow Control Not Supported">
+        </value>
+    </constant>
+    
+    <struct class="Protocol">
+        <name>Protocol</name>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Protocol ID</name>
+        </field>
+    </struct>
+</cluster>

@@ -196,10 +196,8 @@ public class ByteUtils {
             return Integer.toHexString(b).substring(6).toUpperCase();
         } else if (b < 0x10) {
             return "0" + Integer.toHexString(b).toUpperCase();
-        } else if (b >= 0x10) {
-            return Integer.toHexString(b).toUpperCase();
         } else {
-            throw new IllegalArgumentException("Unable to recognize the value " + b);
+            return Integer.toHexString(b).toUpperCase();
         }
     }
 

@@ -542,7 +542,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
             transaction = new EzspSingleResponseTransaction(emberMulticast, EzspSendMulticastResponse.class);
         } else {
-            logger.debug("EZSP message not sent: {}, {}", apsFrame);
+            logger.debug("EZSP message not sent: {}", apsFrame);
             // ZigBeeGroupAddress groupAddress = (ZigBeeGroupAddress) zclCommand.getDestinationAddress();
             // apsFrame.setGroupId(groupAddress.getGroupId());
             return;
@@ -566,7 +566,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 } else if (transaction.getResponse() instanceof EzspSendMulticastResponse) {
                     status = ((EzspSendMulticastResponse) transaction.getResponse()).getStatus();
                 } else {
-                    logger.debug("Unable to get response from {} :: ", transaction.getRequest(),
+                    logger.debug("Unable to get response from {} :: {}", transaction.getRequest(),
                             transaction.getResponse());
                     return;
                 }

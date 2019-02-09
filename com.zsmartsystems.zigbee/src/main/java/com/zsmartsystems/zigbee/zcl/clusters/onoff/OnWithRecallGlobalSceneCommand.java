@@ -18,18 +18,19 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>On/Off</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the On/Off cluster.
  * <p>
- * The On With Recall Global Scene command allows the recall of the settings when the device was turned off.
+ * The On With Recall Global Scene command allows the recall of the settings when the device was
+ * turned off.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class OnWithRecallGlobalSceneCommand extends ZclCommand {
     /**
      * Default constructor.
      */
     public OnWithRecallGlobalSceneCommand() {
         genericCommand = false;
-        clusterId = 6;
+        clusterId = 0x0006;
         commandId = 65;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }

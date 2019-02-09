@@ -7,30 +7,30 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
-import javax.annotation.Generated;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 
 /**
  * Management Permit Joining Response value object class.
  * <p>
+ * <p>
  * The Mgmt_Permit_Joining_rsp is generated in response to a unicast
- * Mgmt_Permit_Joining_req. In the description which follows, note that no
- * response shall be sent if the Mgmt_Permit_Joining_req was received as a
- * broadcast to all routers. If this management command is not permitted by the
- * requesting device, a status of INVALID_REQUEST shall be returned. Upon
- * receipt and after support for Mgmt_Permit_Joining_req has been verified, the
- * Remote Device shall execute the NLME-PERMIT-JOINING.request. The
+ * Mgmt_Permit_Joining_req. In the description which follows, note that no response shall be
+ * sent if the Mgmt_Permit_Joining_req was received as a broadcast to all routers. If this
+ * management command is not permitted by the requesting device, a status of INVALID_REQUEST
+ * shall be returned. Upon receipt and after support for Mgmt_Permit_Joining_req has been
+ * verified, the Remote Device shall execute the NLME-PERMIT-JOINING.request. The
  * Mgmt_Permit-Joining_rsp shall contain the same status that was contained in the
  * NLME-PERMIT-JOINING.confirm primitive.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T17:07:08Z")
 public class ManagementPermitJoiningResponse extends ZdoResponse {
     /**
      * Default constructor.

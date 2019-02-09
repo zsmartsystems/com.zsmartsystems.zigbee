@@ -1,0 +1,425 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0019">
+    <name>Ota Upgrade</name>
+    <description>The cluster provides a standard way to upgrade devices in the network via OTA messages. Thus the upgrade process MAY be performed between two devices from different manufacturers. Devices are required to have application bootloader and additional memory space in order to successfully implement the cluster.</description>
+    <description>It is the responsibility of the server to indicate to the clients when update images are available. The client MAY be upgraded or downgraded64. The upgrade server knows which client devices to upgrade and to what file version. The upgrade server MAY be notified of such information via the backend system. For ZR clients, the server MAY send a message to notify the device when an updated image is available. It is assumed that ZED clients will not be awake to receive an unsolicited notification of an available image. All clients (ZR and ZED) SHALL query (poll) the server periodically to determine whether the server has an image update for them. Image Notify is optional.</description>
+    <description>The cluster is implemented in such a way that the client service works on both ZED and ZR devices. Being able to handle polling is mandatory for all server devices while being able to send a notify is optional. Hence, all client devices must be able to use a &#8216;poll&#8217; mechanism to send query message to the server in order to see if the server has any new file for it. The polling mechanism also puts fewer resources on the upgrade server. It is ideal to have the server maintain as little state as possible since this will scale when there are hundreds of clients in the network. The upgrade server is not required to keep track of what pieces of an image that a particular client has received; instead the client SHALL do that. Lastly poll makes more sense for devices that MAY need to perform special setup to get ready to receive an image, such as unlocking flash or allocating space for the new image.</description>
+    <command code="0x00" source="server">
+        <name>Image Notify Command</name>
+        <description>The purpose of sending Image Notify command is so the server has a way to notify client devices of when the OTA upgrade images are available for them. It eliminates the need for ZR client devices having to check with the server periodically of when the new images are available. However, all client devices still need to send in Query Next Image Request command in order to officially start the OTA upgrade process. &lt;br&gt; For ZR client devices, the upgrade server may send out a unicast, broadcast, or multicast indicating it has the next upgrade image, via an Image Notify command. Since the command may not have APS security (if it is broadcast or multicast), it is considered purely informational and not authoritative. Even in the case of a unicast, ZR shall continue to perform the query process described in later section. &lt;br&gt; When the command is sent with payload type value of zero, it generally means the server wishes to notify all clients disregard of their manufacturers, image types or file versions. Query jitter is needed to protect the server from being flooded with clients&#8217; queries for next image.</description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Payload Type</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Query Jitter</name>
+            <conditional>
+                <field>payloadType</field>
+                <operator>GREATER_THAN_OR_EQUAL</operator>
+                <value>0</value>
+            </conditional>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+            <conditional>
+                <field>payloadType</field>
+                <operator>GREATER_THAN_OR_EQUAL</operator>
+                <value>1</value>
+            </conditional>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Image Type</name>
+            <conditional>
+                <field>payloadType</field>
+                <operator>GREATER_THAN_OR_EQUAL</operator>
+                <value>2</value>
+            </conditional>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>New File Version</name>
+            <conditional>
+                <field>payloadType</field>
+                <operator>GREATER_THAN_OR_EQUAL</operator>
+                <value>3</value>
+            </conditional>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Query Next Image Command</name>
+        <description>Client devices shall send a Query Next Image Request command to the server to see if there is new OTA upgrade image available. ZR devices may send the command after receiving Image Notify command. ZED device shall periodically wake up and send the command to the upgrade server. Client devices query what the next image is, based on their own information. &lt;br&gt; The server takes the client&#8217;s information in the command and determines whether it has a suitable image for the particular client. The decision should be based on specific policy that is specific to the upgrade server and outside the scope of this document.. However, a recommended default policy is for the server to send back a response that indicates the availability of an image that matches the manufacturer code, image type, and the highest available file version of that image on the server. However, the server may choose to upgrade, downgrade, or reinstall clients&#8217; image, as its policy dictates. If client&#8217;s hardware version is included in the command, the server shall examine the value against the minimum and maximum hardware versions included in the OTA file header.</description>
+        <field type="BITMAP_8_BIT">
+            <name>Field Control</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Image Type</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>File Version</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Hardware Version</name>
+            <conditional>
+                <field>fieldControl</field>
+                <operator>LOGIC_AND</operator>
+                <value>0x01</value>
+            </conditional>
+        </field>
+    </command>
+    <command code="0x02" source="server">
+        <name>Query Next Image Response</name>
+        <description>The upgrade server sends a Query Next Image Response with one of the following status: SUCCESS, NO_IMAGE_AVAILABLE or NOT_AUTHORIZED. When a SUCCESS status is sent, it is considered to be the explicit authorization to a device by the upgrade server that the device may upgrade to a specific software image. &lt;br&gt; A status of NO_IMAGE_AVAILABLE indicates that the server is authorized to upgrade the client but it currently does not have the (new) OTA upgrade image available for the client. For all clients (both ZR and ZED)9 , they shall continue sending Query Next Image Requests to the server periodically until an image becomes available. &lt;br&gt; A status of NOT_AUTHORIZED indicates the server is not authorized to upgrade the client. In this case, the client may perform discovery again to find another upgrade server. The client may implement an intelligence to avoid querying the same unauthorized server.</description>
+        <field type="ZCL_STATUS" class="StatusEnum">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+            <conditional>
+                <field>status</field>
+                <operator>EQUAL</operator>
+                <value>ZclStatus.SUCCESS</value>
+            </conditional>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Image Type</name>
+            <conditional>
+                <field>status</field>
+                <operator>EQUAL</operator>
+                <value>ZclStatus.SUCCESS</value>
+            </conditional>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>File Version</name>
+            <conditional>
+                <field>status</field>
+                <operator>EQUAL</operator>
+                <value>ZclStatus.SUCCESS</value>
+            </conditional>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Image Size</name>
+            <conditional>
+                <field>status</field>
+                <operator>EQUAL</operator>
+                <value>ZclStatus.SUCCESS</value>
+            </conditional>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Image Block Command</name>
+        <description>The client device requests the image data at its leisure by sending Image Block Request command to the upgrade server. The client knows the total number of request commands it needs to send from the image size value received in Query Next Image Response command. &lt;br&gt; The client repeats Image Block Requests until it has successfully obtained all data. Manufacturer code, image type and file version are included in all further queries regarding that image. The information eliminates the need for the server to remember which OTA Upgrade Image is being used for each download process. &lt;br&gt; If the client supports the BlockRequestDelay attribute it shall include the value of the attribute as the BlockRequestDelay field of the Image Block Request message. The client shall ensure that it delays at least BlockRequestDelay milliseconds after the previous Image Block Request was sent before sending the next Image Block Request message. A client may delay its next Image Block Requests longer than its BlockRequestDelay attribute.</description>
+        <field type="BITMAP_8_BIT">
+            <name>Field Control</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Image Type</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>File Version</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>File Offset</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Maximum Data Size</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Request Node Address</name>
+            <conditional>
+                <field>fieldControl</field>
+                <operator>LOGIC_AND</operator>
+                <value>0x01</value>
+            </conditional>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Block Request Delay</name>
+            <conditional>
+                <field>fieldControl</field>
+                <operator>LOGIC_AND</operator>
+                <value>0x02</value>
+            </conditional>
+        </field>
+    </command>
+    <command code="0x04" source="client">
+        <name>Image Page Command</name>
+        <description>The support for the command is optional. The client device may choose to request OTA upgrade data in one page size at a time from upgrade server. Using Image Page Request reduces the numbers of requests sent from the client to the upgrade server, compared to using Image Block Request command. In order to conserve battery life a device may use the Image Page Request command. Using the Image Page Request command eliminates the need for the client device to send Image Block Request command for every data block it needs; possibly saving the transmission of hundreds or thousands of messages depending on the image size. &lt;br&gt; The client keeps track of how much data it has received by keeping a cumulative count of each data size it has received in each Image Block Response. Once the count has reach the value of the page size requested, it shall repeat Image Page Requests until it has successfully obtained all pages. Note that the client may choose to switch between using Image Block Request and Image Page Request during the upgrade process. For example, if the client does not receive all data requested in one Image Page Request, the client may choose to request the missing block of data using Image Block Request command, instead of requesting the whole page again.</description>
+        <field type="BITMAP_8_BIT">
+            <name>Field Control</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Image Type</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>File Version</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>File Offset</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Maximum Data Size</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Page Size</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Response Spacing</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Request Node Address</name>
+            <conditional>
+                <field>fieldControl</field>
+                <operator>LOGIC_AND</operator>
+                <value>0x01</value>
+            </conditional>
+        </field>
+    </command>
+    <command code="0x05" source="server">
+        <name>Image Block Response</name>
+        <description>Upon receipt of an Image Block Request command the server shall generate an Image Block Response. If the server is able to retrieve the data for the client and does not wish to change the image download rate, it will respond with a status of SUCCESS and it will include all the fields in the payload. The use of file offset allows the server to send packets with variable data size during the upgrade process. This allows the server to support a case when the network topology of a client may change during the upgrade process, for example, mobile client may move around during the upgrade process. If the client has moved a few hops away, the data size shall be smaller. Moreover, using file offset eliminates the need for data padding since each Image Block Response command may contain different data size. A simple server implementation may choose to only support largest possible data size for the worst-case scenario in order to avoid supporting sending packets with variable data size. &lt;br&gt; The server shall respect the maximum data size value requested by the client and shall not send the data with length greater than that value. The server may send the data with length smaller than the value depending on the network topology of the client. For example, the client may be able to receive 100 bytes of data at once so it sends the request with 100 as maximum data size. But after considering all the security headers (perhaps from both APS and network levels) and source routing overhead (for example, the client is five hops away), the largest possible data size that the server can send to the client shall be smaller than 100 bytes.</description>
+        <field type="ZCL_STATUS" class="StatusEnum">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Image Type</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>File Version</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>File Offset</name>
+        </field>
+        <field type="BYTE_ARRAY">
+            <name>Image Data</name>
+        </field>
+    </command>
+    <command code="0x06" source="client">
+        <name>Upgrade End Command</name>
+        <description>Upon reception all the image data, the client should verify the image to ensure its integrity and validity. If the device requires signed images it shall examine the image and verify the signature. Clients may perform additional manufacturer specific integrity checks to validate the image, for example, CRC check on the actual file data. &lt;br&gt; If the image fails any integrity checks, the client shall send an Upgrade End Request command to the upgrade server with a status of INVALID_IMAGE. In this case, the client may reinitiate the upgrade process in order to obtain a valid OTA upgrade image. The client shall not upgrade to the bad image and shall discard the downloaded image data. &lt;br&gt; If the image passes all integrity checks and the client does not require additional OTA upgrade image file, it shall send back an Upgrade End Request with a status of SUCCESS. However, if the client requires multiple OTA upgrade image files before performing an upgrade, it shall send an Upgrade End Request command with status REQUIRE_MORE_IMAGE. This shall indicate to the server that it cannot yet upgrade the image it received. &lt;br&gt; If the client decides to cancel the download process for any other reasons, it has the option of sending Upgrade End Request with status of ABORT at anytime during the download process. The client shall then try to reinitiate the download process again at a later time.</description>
+        <field type="ZCL_STATUS" class="StatusEnum">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Image Type</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>File Version</name>
+        </field>
+    </command>
+    <command code="0x07" source="server">
+        <name>Upgrade End Response</name>
+        <description>When an upgrade server receives an Upgrade End Request command with a status of INVALID_IMAGE, REQUIRE_MORE_IMAGE, or ABORT, no additional processing shall be done in its part. If the upgrade server receives an Upgrade End Request command with a status of SUCCESS, it shall generate an Upgrade End Response with the manufacturer code and image type received in the Upgrade End Request along with the times indicating when the device should upgrade to the new image. &lt;br&gt; The server may send an unsolicited Upgrade End Response command to the client. This may be used for example if the server wants to synchronize the upgrade on multiple clients simultaneously. For client devices, the upgrade server may unicast or broadcast Upgrade End Response command indicating a single client device or multiple client devices shall switch to using their new images. The command may not be reliably received by sleepy devices if it is sent unsolicited.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Image Type</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>File Version</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Current Time</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Upgrade Time</name>
+        </field>
+    </command>
+    <command code="0x08" source="client">
+        <name>Query Specific File Command</name>
+        <description>Client devices shall send a Query Specific File Request command to the server to request for a file that is specific and unique to it. Such file could contain non-firmware data such as security credential (needed for upgrading from Smart Energy 1.1 to Smart Energy 2.0), configuration or log. When the device decides to send the Query Specific File Request command is manufacturer specific. However, one example is during upgrading from SE 1.1 to 2.0 where the client may have already obtained new SE 2.0 image and now needs new SE 2.0 security credential data.</description>
+        <field type="IEEE_ADDRESS">
+            <name>Request Node Address</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Image Type</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>File Version</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Zigbee Stack Version</name>
+        </field>
+    </command>
+    <command code="0x09" source="server">
+        <name>Query Specific File Response</name>
+        <description>The server sends Query Specific File Response after receiving Query Specific File Request from a client. The server shall determine whether it first supports the Query Specific File Request command. Then it shall determine whether it has the specific file being requested by the client using all the information included in the request. The upgrade server sends a Query Specific File Response with one of the following status: SUCCESS, NO_IMAGE_AVAILABLE or NOT_AUTHORIZED. &lt;br&gt; A status of NO_IMAGE_AVAILABLE indicates that the server currently does not have the device specific file available for the client. A status of NOT_AUTHORIZED indicates the server is not authorized to send the file to the client.</description>
+        <field type="ZCL_STATUS" class="StatusEnum">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+            <conditional>
+                <field>status</field>
+                <operator>EQUAL</operator>
+                <value>ZclStatus.SUCCESS</value>
+            </conditional>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Image Type</name>
+            <conditional>
+                <field>status</field>
+                <operator>EQUAL</operator>
+                <value>ZclStatus.SUCCESS</value>
+            </conditional>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>File Version</name>
+            <conditional>
+                <field>status</field>
+                <operator>EQUAL</operator>
+                <value>ZclStatus.SUCCESS</value>
+            </conditional>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Image Size</name>
+            <conditional>
+                <field>status</field>
+                <operator>EQUAL</operator>
+                <value>ZclStatus.SUCCESS</value>
+            </conditional>
+        </field>
+    </command>
+    
+    <attribute code="0x0000" type="IEEE_ADDRESS" side="client" optional="false" writable="false" reportable="false" default="">
+        <name>Upgrade Server ID</name>
+        <description>The attribute is used to store the IEEE address of the upgrade server resulted from the discovery of the up- grade server’s identity. If the value is set to a non-zero value and corresponds to an IEEE address of a device that is no longer accessible, a device MAY choose to discover a new Upgrade Server depending on its own security policies.</description>
+    </attribute>
+    <attribute code="0x0001" type="UNSIGNED_32_BIT_INTEGER" side="client" optional="false" writable="false" reportable="false" default="0xFFFFFFFF">
+        <name>File Offset</name>
+        <description>The parameter indicates the current location in the OTA upgrade image. It is essentially the (start of the) address of the image data that is being transferred from the OTA server to the client. The attribute is optional on the client and is made available in a case where the server wants to track the upgrade process of a particular client.</description>
+    </attribute>
+    <attribute code="0x0002" type="UNSIGNED_32_BIT_INTEGER" side="client" optional="false" writable="false" reportable="false" default="0xFFFFFFFF">
+        <name>Current File Version</name>
+        <description>The file version of the running firmware image on the device. The information is available for the server to query via ZCL read attribute command. The attribute is optional on the client.</description>
+    </attribute>
+    <attribute code="0x0003" type="UNSIGNED_16_BIT_INTEGER" side="client" optional="false" writable="false" reportable="false" default="0xFFFF">
+        <name>Current ZigBee Stack Version</name>
+        <description>The ZigBee stack version of the running image on the device. The information is available for the server to query via ZCL read attribute command.</description>
+    </attribute>
+    <attribute code="0x0004" type="UNSIGNED_32_BIT_INTEGER" side="client" optional="false" writable="false" reportable="false" default="0xFFFFFFFF">
+        <name>Downloaded File Version</name>
+        <description>The file version of the downloaded image on additional memory space on the device. The information is available for the server to query via ZCL read attribute command. The information is useful for the OTA upgrade management, so the server MAY ensure that each client has downloaded the correct file version before initiate the upgrade. The attribute is optional on the client.</description>
+    </attribute>
+    <attribute code="0x0005" type="UNSIGNED_16_BIT_INTEGER" side="client" optional="false" writable="false" reportable="false" default="0xFFFF">
+        <name>Downloaded ZigBee Stack Version</name>
+        <description>The ZigBee stack version of the downloaded image on additional memory space on the device. The information is available for the server to query via ZCL read attribute command. The information is useful for the OTA upgrade management, so the server SHALL ensure that each client has downloaded the correct ZigBee stack version before initiate the upgrade. The attribute is optional on the client.</description>
+    </attribute>
+    <attribute code="0x0006" type="ENUMERATION_8_BIT" side="client" optional="false" writable="false" reportable="false" default="0x00">
+        <name>Image Upgrade Status</name>
+        <description>The upgrade status of the client device. The status indicates where the client device is at in terms of the download and upgrade process. The status helps to indicate whether the client has completed the download process and whether it is ready to upgrade to the new image. The status MAY be queried by the server via ZCL read attribute command. Hence, the server MAY not be able to reliably query the status of ZED client since the device MAY have its radio off.</description>
+    </attribute>
+    <attribute code="0x0007" type="UNSIGNED_16_BIT_INTEGER" side="client" optional="false" writable="false" reportable="false">
+        <name>Manufacturer ID</name>
+        <description>This attribute SHALL reflect the ZigBee assigned value for the manufacturer of the device.</description>
+    </attribute>
+    <attribute code="0x0008" type="UNSIGNED_16_BIT_INTEGER" side="client" optional="false" writable="false" reportable="false">
+        <name>Image Type ID</name>
+        <description>This attribute SHALL indicate the image type identifier of the file that the client is currently downloading, or a file that has been completely downloaded but not upgraded to yet. The value of this attribute SHALL be 0xFFFF when the client is not downloading a file or is not waiting to apply an upgrade.</description>
+    </attribute>
+    <attribute code="0x0009" type="UNSIGNED_16_BIT_INTEGER" side="client" optional="false" writable="false" reportable="false">
+        <name>Minimum Block Request Period</name>
+        <description>This attribute acts as a rate limiting feature for the server to slow down the client download and prevent saturating the network with block requests. The attribute lives on the client but can be changed during a download if rate limiting is supported by both devices.</description>
+    </attribute>
+    <attribute code="0x000A" type="UNSIGNED_32_BIT_INTEGER" side="client" optional="false" writable="false" reportable="false">
+        <name>Image Stamp</name>
+        <description>This attribute acts as a second verification to identify the image in the case that sometimes developers of the application have forgotten to increase the firmware version attribute. It is a 32 bits value and has a valid range from 0x00000000 to 0xFFFFFFFF. This attribute value must be consistent during the lifetime of the same image and also must be unique for each different build of the image. This attribute value SHOULD not be hardcoded or generated by any manual process. This attribute value SHOULD be generated by performing a hash or checksum on the entire image. There are two possible methods to generate this checksum. It can be generated dynamically during runtime of the application or it can be generated during compile time of the application.</description>
+    </attribute>
+
+    <constant type="UNSIGNED_8_BIT_INTEGER" class="StatusEnum">
+        <name>Status</name>
+        <value code="0x00" name="Success">
+        </value>
+        <value code="0x01" name="Failure">
+        </value>
+        <value code="0x70" name="Request_Denied">
+        </value>
+        <value code="0x71" name="Multiple_Request_Not_Allowed">
+        </value>
+        <value code="0x72" name="Indication_Redirection_To_Ap">
+        </value>
+        <value code="0x73" name="Preference_Denied">
+        </value>
+        <value code="0x74" name="Preference_Ignored">
+        </value>
+        <value code="0x7E" name="Not_Authorized">
+        </value>
+        <value code="0x7F" name="Reserved_Field_Not_Zero">
+        </value>
+        <value code="0x80" name="Malformed_Command">
+        </value>
+        <value code="0x81" name="Unsup_Cluster_Command">
+        </value>
+        <value code="0x82" name="Unsup_General_Command">
+        </value>
+        <value code="0x83" name="Unsup_Manuf_Cluster_Command">
+        </value>
+        <value code="0x84" name="Unsup_Manuf_General_Command">
+        </value>
+        <value code="0x85" name="Invalid_Field">
+        </value>
+        <value code="0x86" name="Unsupported_Attribute">
+        </value>
+        <value code="0x87" name="Invalid_Value">
+        </value>
+        <value code="0x88" name="Read_Only">
+        </value>
+        <value code="0x89" name="Insufficient_Space">
+        </value>
+        <value code="0x8A" name="Duplicate_Exists">
+        </value>
+        <value code="0x8B" name="Not_Found">
+        </value>
+        <value code="0x8C" name="Unreportable_Attribute">
+        </value>
+        <value code="0x8D" name="Invalid_Data_Type">
+        </value>
+        <value code="0x8E" name="Invalid_Selector">
+        </value>
+        <value code="0x8F" name="Write_Only">
+        </value>
+        <value code="0x90" name="Inconsistent_Startup_State">
+        </value>
+        <value code="0x91" name="Defined_Out_Of_Band">
+        </value>
+        <value code="0x92" name="Inconsistent">
+        </value>
+        <value code="0x93" name="Action_Denied">
+        </value>
+        <value code="0x94" name="Timeout">
+        </value>
+        <value code="0x95" name="Abort">
+        </value>
+        <value code="0x96" name="Invalid_Image">
+        </value>
+        <value code="0x97" name="Wait_For_Data">
+        </value>
+        <value code="0x98" name="No_Image_Available">
+        </value>
+        <value code="0x99" name="Require_More_Image">
+        </value>
+        <value code="0xC0" name="Hardware_Failure">
+        </value>
+        <value code="0xC1" name="Software_Failure">
+        </value>
+        <value code="0xC2" name="Calibration_Error">
+        </value>
+        <value code="0xC3" name="Unsupported_Cluster">
+        </value>
+    </constant>
+</cluster>

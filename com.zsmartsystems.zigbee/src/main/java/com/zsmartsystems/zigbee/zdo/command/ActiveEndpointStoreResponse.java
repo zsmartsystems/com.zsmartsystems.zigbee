@@ -7,23 +7,23 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
 /**
  * Active Endpoint Store Response value object class.
  * <p>
- * The Active_EP_store_rsp is provided to notify a Local Device of the request
- * status from a Primary Discovery Cache device. Included in the response is a status
- * code to notify the Local Device whether the request is successful (the Primary
- * Cache Device has space to store the discovery cache data for the Local Device),
- * the request is not supported (meaning the Remote Device is not a Primary
- * Discovery Cache device), or insufficient space exists.
+ * <p>
+ * The Active_EP_store_rsp is provided to notify a Local Device of the request status from a
+ * Primary Discovery Cache device. Included in the response is a status code to notify the Local
+ * Device whether the request is successful (the Primary Cache Device has space to store the
+ * discovery cache data for the Local Device), the request is not supported (meaning the Remote
+ * Device is not a Primary Discovery Cache device), or insufficient space exists.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ActiveEndpointStoreResponse extends ZdoResponse {
     /**
      * Default constructor.

@@ -18,16 +18,18 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Alarms</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Alarms cluster.
  * <p>
+ * This command causes the alarm table to be cleared.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ResetAlarmLogCommand extends ZclCommand {
     /**
      * Default constructor.
      */
     public ResetAlarmLogCommand() {
         genericCommand = false;
-        clusterId = 9;
+        clusterId = 0x0009;
         commandId = 3;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }

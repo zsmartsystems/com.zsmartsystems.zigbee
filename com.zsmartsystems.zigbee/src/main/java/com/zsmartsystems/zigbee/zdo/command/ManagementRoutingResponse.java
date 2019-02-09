@@ -7,42 +7,43 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
-
-import java.util.List;
-import java.util.ArrayList;
-import javax.annotation.Generated;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 
 /**
  * Management Routing Response value object class.
  * <p>
- * The Mgmt_Rtg_rsp is generated in response to an Mgmt_Rtg_req. If this
- * management command is not supported, a status of NOT_SUPPORTED shall be
- * returned and all parameter fields after the Status field shall be omitted. Otherwise,
- * the Remote Device shall implement the following processing.
+ * <p>
+ * The Mgmt_Rtg_rsp is generated in response to an Mgmt_Rtg_req. If this management command is
+ * not supported, a status of NOT_SUPPORTED shall be returned and all parameter fields after
+ * the Status field shall be omitted. Otherwise, the Remote Device shall implement the
+ * following processing.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T17:07:08Z")
 public class ManagementRoutingResponse extends ZdoResponse {
     /**
-     * RoutingTableEntries command message field.
+     * Routing Table Entries command message field.
      */
     private Integer routingTableEntries;
 
     /**
-     * StartIndex command message field.
+     * Start Index command message field.
      */
     private Integer startIndex;
 
     /**
-     * RoutingTableList command message field.
+     * Routing Table List command message field.
      */
     private List<RoutingTable> routingTableList;
 
@@ -54,54 +55,54 @@ public class ManagementRoutingResponse extends ZdoResponse {
     }
 
     /**
-     * Gets RoutingTableEntries.
+     * Gets Routing Table Entries.
      *
-     * @return the RoutingTableEntries
+     * @return the Routing Table Entries
      */
     public Integer getRoutingTableEntries() {
         return routingTableEntries;
     }
 
     /**
-     * Sets RoutingTableEntries.
+     * Sets Routing Table Entries.
      *
-     * @param routingTableEntries the RoutingTableEntries
+     * @param routingTableEntries the Routing Table Entries
      */
     public void setRoutingTableEntries(final Integer routingTableEntries) {
         this.routingTableEntries = routingTableEntries;
     }
 
     /**
-     * Gets StartIndex.
+     * Gets Start Index.
      *
-     * @return the StartIndex
+     * @return the Start Index
      */
     public Integer getStartIndex() {
         return startIndex;
     }
 
     /**
-     * Sets StartIndex.
+     * Sets Start Index.
      *
-     * @param startIndex the StartIndex
+     * @param startIndex the Start Index
      */
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }
 
     /**
-     * Gets RoutingTableList.
+     * Gets Routing Table List.
      *
-     * @return the RoutingTableList
+     * @return the Routing Table List
      */
     public List<RoutingTable> getRoutingTableList() {
         return routingTableList;
     }
 
     /**
-     * Sets RoutingTableList.
+     * Sets Routing Table List.
      *
-     * @param routingTableList the RoutingTableList
+     * @param routingTableList the Routing Table List
      */
     public void setRoutingTableList(final List<RoutingTable> routingTableList) {
         this.routingTableList = routingTableList;
