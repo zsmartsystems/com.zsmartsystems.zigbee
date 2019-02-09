@@ -53,11 +53,14 @@ public class ZclClusterTest {
     private ArgumentCaptor<ZigBeeTransactionMatcher> matcherCapture;
 
     private void createEndpoint() {
+        node = Mockito.mock(ZigBeeNode.class);
         endpoint = Mockito.mock(ZigBeeEndpoint.class);
         Mockito.when(endpoint.getEndpointId()).thenReturn(5);
         Mockito.when(endpoint.getEndpointAddress()).thenReturn(new ZigBeeEndpointAddress(1234, 5));
         commandCapture = ArgumentCaptor.forClass(ZigBeeCommand.class);
         matcherCapture = ArgumentCaptor.forClass(ZigBeeTransactionMatcher.class);
+        Mockito.when(node.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(null);
+        Mockito.when(endpoint.getParentNode()).thenReturn(node);
         Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(null);
     }
 
