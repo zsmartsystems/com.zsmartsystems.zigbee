@@ -18,16 +18,21 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>Alarms</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Alarms cluster.
  * <p>
+ * This command causes the alarm with the earliest generated alarm entry in the alarm table to be
+ * reported in a get alarm response command. This command enables the reading of logged alarm
+ * conditions from the alarm table. Once an alarm condition has been reported the
+ * corresponding entry in the table is removed.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class GetAlarmCommand extends ZclCommand {
     /**
      * Default constructor.
      */
     public GetAlarmCommand() {
         genericCommand = false;
-        clusterId = 9;
+        clusterId = 0x0009;
         commandId = 2;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }

@@ -9,12 +9,12 @@ package com.zsmartsystems.zigbee.zcl.clusters.iasace;
 
 import javax.annotation.Generated;
 
-import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Get Zone Information Response value object class.
@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class GetZoneInformationResponse extends ZclCommand {
     /**
      * Zone ID command message field.
@@ -37,18 +37,19 @@ public class GetZoneInformationResponse extends ZclCommand {
     private Integer zoneType;
 
     /**
-     * IEEE address command message field.
+     * IEEE Address command message field.
      */
     private IeeeAddress ieeeAddress;
 
     /**
      * Zone Label command message field.
      * <p>
-     * Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server SHALL transmit a string with a length
-     * of zero.There is no minimum or maximum length to the Zone Label field; however, the Zone Label SHOULD be between 16 to 24
-     * alphanumeric characters in length.
+     * Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server
+     * shall transmit a string with a length of zero.There is no minimum or maximum length to the
+     * Zone Label field; however, the Zone Label should be between 16 to 24 alphanumeric
+     * characters in length.
      * <p>
-     * The string encoding SHALL be UTF-8.
+     * The string encoding shall be UTF-8.
      */
     private String zoneLabel;
 
@@ -57,7 +58,7 @@ public class GetZoneInformationResponse extends ZclCommand {
      */
     public GetZoneInformationResponse() {
         genericCommand = false;
-        clusterId = 1281;
+        clusterId = 0x0501;
         commandId = 2;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
@@ -99,18 +100,18 @@ public class GetZoneInformationResponse extends ZclCommand {
     }
 
     /**
-     * Gets IEEE address.
+     * Gets IEEE Address.
      *
-     * @return the IEEE address
+     * @return the IEEE Address
      */
     public IeeeAddress getIeeeAddress() {
         return ieeeAddress;
     }
 
     /**
-     * Sets IEEE address.
+     * Sets IEEE Address.
      *
-     * @param ieeeAddress the IEEE address
+     * @param ieeeAddress the IEEE Address
      */
     public void setIeeeAddress(final IeeeAddress ieeeAddress) {
         this.ieeeAddress = ieeeAddress;
@@ -118,12 +119,13 @@ public class GetZoneInformationResponse extends ZclCommand {
 
     /**
      * Gets Zone Label.
-     *
-     * Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server SHALL transmit a string with a length
-     * of zero.There is no minimum or maximum length to the Zone Label field; however, the Zone Label SHOULD be between 16 to 24
-     * alphanumeric characters in length.
      * <p>
-     * The string encoding SHALL be UTF-8.
+     * Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server
+     * shall transmit a string with a length of zero.There is no minimum or maximum length to the
+     * Zone Label field; however, the Zone Label should be between 16 to 24 alphanumeric
+     * characters in length.
+     * <p>
+     * The string encoding shall be UTF-8.
      *
      * @return the Zone Label
      */
@@ -133,12 +135,13 @@ public class GetZoneInformationResponse extends ZclCommand {
 
     /**
      * Sets Zone Label.
-     *
-     * Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server SHALL transmit a string with a length
-     * of zero.There is no minimum or maximum length to the Zone Label field; however, the Zone Label SHOULD be between 16 to 24
-     * alphanumeric characters in length.
      * <p>
-     * The string encoding SHALL be UTF-8.
+     * Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server
+     * shall transmit a string with a length of zero.There is no minimum or maximum length to the
+     * Zone Label field; however, the Zone Label should be between 16 to 24 alphanumeric
+     * characters in length.
+     * <p>
+     * The string encoding shall be UTF-8.
      *
      * @param zoneLabel the Zone Label
      */

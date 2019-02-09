@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.iasace;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Arm Command value object class.
@@ -21,14 +21,14 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
- * On receipt of this command, the receiving device sets its arm mode according to the value of the Arm Mode field. It
- * is not guaranteed that an Arm command will succeed. Based on the current state of
- * the IAS CIE, and its related devices, the command can be rejected. The device SHALL generate an Arm Response command
- * to indicate the resulting armed state
+ * On receipt of this command, the receiving device sets its arm mode according to the value of
+ * the Arm Mode field. It is not guaranteed that an Arm command will succeed. Based on the current
+ * state of the IAS CIE, and its related devices, the command can be rejected. The device shall
+ * generate an Arm Response command to indicate the resulting armed state
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-06T20:50:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ArmCommand extends ZclCommand {
     /**
      * Arm Mode command message field.
@@ -38,24 +38,25 @@ public class ArmCommand extends ZclCommand {
     /**
      * Arm/Disarm Code command message field.
      * <p>
-     * The Arm/DisarmCode SHALL be a code entered into the ACE client (e.g., security keypad) or system by the
-     * user upon arming/disarming. The server MAY validate the Arm/Disarm Code received from the IAS ACE client
-     * in Arm command payload before arming or disarming the system. If the client does not have the capability
-     * to input an Arm/Disarm Code (e.g., keyfob),or the system does not require one, the client SHALL a transmit
-     * a string with a length of zero.
+     * The Arm/DisarmCode shall be a code entered into the ACE client (e.g., security keypad)
+     * or system by the user upon arming/disarming. The server may validate the Arm/Disarm
+     * Code received from the IAS ACE client in Arm command payload before arming or disarming
+     * the system. If the client does not have the capability to input an Arm/Disarm Code (e.g.,
+     * keyfob),or the system does not require one, the client shall a transmit a string with a
+     * length of zero.
      * <p>
-     * There is no minimum or maximum length to the Arm/Disarm Code; however, the
-     * Arm/Disarm Code SHOULD be between four and eight alphanumeric characters in length.
+     * There is no minimum or maximum length to the Arm/Disarm Code; however, the Arm/Disarm
+     * Code should be between four and eight alphanumeric characters in length.
      * <p>
-     * The string encoding SHALL be UTF-8.
+     * The string encoding shall be UTF-8.
      */
     private String armDisarmCode;
 
     /**
      * Zone ID command message field.
      * <p>
-     * Zone ID is the index of the Zone in the CIE's zone table. If none is programmed, the Zone
-     * ID default value SHALL be indicated in this field.
+     * Zone ID is the index of the Zone in the CIE's zone table. If none is programmed, the Zone ID
+     * default value shall be indicated in this field.
      */
     private Integer zoneId;
 
@@ -64,7 +65,7 @@ public class ArmCommand extends ZclCommand {
      */
     public ArmCommand() {
         genericCommand = false;
-        clusterId = 1281;
+        clusterId = 0x0501;
         commandId = 0;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
@@ -89,17 +90,18 @@ public class ArmCommand extends ZclCommand {
 
     /**
      * Gets Arm/Disarm Code.
-     *
-     * The Arm/DisarmCode SHALL be a code entered into the ACE client (e.g., security keypad) or system by the
-     * user upon arming/disarming. The server MAY validate the Arm/Disarm Code received from the IAS ACE client
-     * in Arm command payload before arming or disarming the system. If the client does not have the capability
-     * to input an Arm/Disarm Code (e.g., keyfob),or the system does not require one, the client SHALL a transmit
-     * a string with a length of zero.
      * <p>
-     * There is no minimum or maximum length to the Arm/Disarm Code; however, the
-     * Arm/Disarm Code SHOULD be between four and eight alphanumeric characters in length.
+     * The Arm/DisarmCode shall be a code entered into the ACE client (e.g., security keypad)
+     * or system by the user upon arming/disarming. The server may validate the Arm/Disarm
+     * Code received from the IAS ACE client in Arm command payload before arming or disarming
+     * the system. If the client does not have the capability to input an Arm/Disarm Code (e.g.,
+     * keyfob),or the system does not require one, the client shall a transmit a string with a
+     * length of zero.
      * <p>
-     * The string encoding SHALL be UTF-8.
+     * There is no minimum or maximum length to the Arm/Disarm Code; however, the Arm/Disarm
+     * Code should be between four and eight alphanumeric characters in length.
+     * <p>
+     * The string encoding shall be UTF-8.
      *
      * @return the Arm/Disarm Code
      */
@@ -109,17 +111,18 @@ public class ArmCommand extends ZclCommand {
 
     /**
      * Sets Arm/Disarm Code.
-     *
-     * The Arm/DisarmCode SHALL be a code entered into the ACE client (e.g., security keypad) or system by the
-     * user upon arming/disarming. The server MAY validate the Arm/Disarm Code received from the IAS ACE client
-     * in Arm command payload before arming or disarming the system. If the client does not have the capability
-     * to input an Arm/Disarm Code (e.g., keyfob),or the system does not require one, the client SHALL a transmit
-     * a string with a length of zero.
      * <p>
-     * There is no minimum or maximum length to the Arm/Disarm Code; however, the
-     * Arm/Disarm Code SHOULD be between four and eight alphanumeric characters in length.
+     * The Arm/DisarmCode shall be a code entered into the ACE client (e.g., security keypad)
+     * or system by the user upon arming/disarming. The server may validate the Arm/Disarm
+     * Code received from the IAS ACE client in Arm command payload before arming or disarming
+     * the system. If the client does not have the capability to input an Arm/Disarm Code (e.g.,
+     * keyfob),or the system does not require one, the client shall a transmit a string with a
+     * length of zero.
      * <p>
-     * The string encoding SHALL be UTF-8.
+     * There is no minimum or maximum length to the Arm/Disarm Code; however, the Arm/Disarm
+     * Code should be between four and eight alphanumeric characters in length.
+     * <p>
+     * The string encoding shall be UTF-8.
      *
      * @param armDisarmCode the Arm/Disarm Code
      */
@@ -129,9 +132,9 @@ public class ArmCommand extends ZclCommand {
 
     /**
      * Gets Zone ID.
-     *
-     * Zone ID is the index of the Zone in the CIE's zone table. If none is programmed, the Zone
-     * ID default value SHALL be indicated in this field.
+     * <p>
+     * Zone ID is the index of the Zone in the CIE's zone table. If none is programmed, the Zone ID
+     * default value shall be indicated in this field.
      *
      * @return the Zone ID
      */
@@ -141,9 +144,9 @@ public class ArmCommand extends ZclCommand {
 
     /**
      * Sets Zone ID.
-     *
-     * Zone ID is the index of the Zone in the CIE's zone table. If none is programmed, the Zone
-     * ID default value SHALL be indicated in this field.
+     * <p>
+     * Zone ID is the index of the Zone in the CIE's zone table. If none is programmed, the Zone ID
+     * default value shall be indicated in this field.
      *
      * @param zoneId the Zone ID
      */

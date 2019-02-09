@@ -7,6 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
@@ -21,17 +27,15 @@ import com.zsmartsystems.zigbee.zcl.clusters.thermostat.SetWeeklySchedule;
 import com.zsmartsystems.zigbee.zcl.clusters.thermostat.SetpointRaiseLowerCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-import javax.annotation.Generated;
 
 /**
  * <b>Thermostat</b> cluster implementation (<i>Cluster ID 0x0201</i>).
  * <p>
+ * This cluster provides an interface to the functionality of a thermostat.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-15T23:41:21Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -45,11 +49,13 @@ public class ZclThermostatCluster extends ZclCluster {
 
     // Attribute constants
     /**
-     * LocalTemperature represents the temperature in degrees Celsius, as measured locally.
+     * LocalTemperature represents the temperature in degrees Celsius, as measured
+     * locally.
      */
     public static final int ATTR_LOCALTEMPERATURE = 0x0000;
     /**
-     * OutdoorTemperature represents the temperature in degrees Celsius, as measured locally.
+     * OutdoorTemperature represents the temperature in degrees Celsius, as measured
+     * locally.
      */
     public static final int ATTR_OUTDOORTEMPERATURE = 0x0001;
     /**
@@ -57,121 +63,84 @@ public class ZclThermostatCluster extends ZclCluster {
      */
     public static final int ATTR_OCCUPANCY = 0x0002;
     /**
-     * The MinHeatSetpointLimit attribute specifies the absolute minimum level that the heating setpoint MAY be
-     * set to. This is a limitation imposed by the manufacturer.
+     * The MinHeatSetpointLimit attribute specifies the absolute minimum level that the
+     * heating setpoint may be set to. This is a limitation imposed by the manufacturer.
      */
     public static final int ATTR_ABSMINHEATSETPOINTLIMIT = 0x0003;
     /**
-     * The MaxHeatSetpointLimit attribute specifies the absolute maximum level that the heating setpoint MAY be
-     * set to. This is a limitation imposed by the manufacturer.
+     * The MaxHeatSetpointLimit attribute specifies the absolute maximum level that the
+     * heating setpoint may be set to. This is a limitation imposed by the manufacturer.
      */
     public static final int ATTR_ABSMAXHEATSETPOINTLIMIT = 0x0004;
     /**
-     * The MinCoolSetpointLimit attribute specifies the absolute minimum level that the cooling setpoint MAY be
-     * set to. This is a limitation imposed by the manufacturer.
+     * The MinCoolSetpointLimit attribute specifies the absolute minimum level that the
+     * cooling setpoint may be set to. This is a limitation imposed by the manufacturer.
      */
     public static final int ATTR_ABSMINCOOLSETPOINTLIMIT = 0x0005;
     /**
-     * The MaxCoolSetpointLimit attribute specifies the absolute maximum level that the cooling setpoint MAY be
-     * set to. This is a limitation imposed by the manufacturer.
+     * The MaxCoolSetpointLimit attribute specifies the absolute maximum level that the
+     * cooling setpoint may be set to. This is a limitation imposed by the manufacturer.
      */
     public static final int ATTR_ABSMAXCOOLSETPOINTLIMIT = 0x0006;
     /**
-     * The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling demanded by the PI
-     * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
-     * thermostat is in “off” or “heating” mode.
+     * The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling
+     * demanded by the PI (proportional integral) control loop in use by the thermostat (if
+     * any), in percent. This value is 0 when the thermostat is in “off” or “heating” mode.
      */
     public static final int ATTR_PICOOLINGDEMAND = 0x0007;
     /**
-     * The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating demanded by the PI
-     * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
-     * thermostat is in “off” or “cooling” mode.
+     * The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating
+     * demanded by the PI (proportional integral) control loop in use by the thermostat (if
+     * any), in percent. This value is 0 when the thermostat is in “off” or “cooling” mode.
      */
     public static final int ATTR_PIHEATINGDEMAND = 0x0008;
-    /**
-     */
     public static final int ATTR_HVACSYSTEMTYPECONFIGURATION = 0x0009;
-    /**
-     */
     public static final int ATTR_LOCALTEMPERATURECALIBRATION = 0x0010;
-    /**
-     */
     public static final int ATTR_OCCUPIEDCOOLINGSETPOINT = 0x0011;
-    /**
-     */
     public static final int ATTR_OCCUPIEDHEATINGSETPOINT = 0x0012;
-    /**
-     */
     public static final int ATTR_UNOCCUPIEDCOOLINGSETPOINT = 0x0013;
-    /**
-     */
     public static final int ATTR_UNOCCUPIEDHEATINGSETPOINT = 0x0014;
-    /**
-     */
     public static final int ATTR_MINHEATSETPOINTLIMIT = 0x0015;
-    /**
-     */
     public static final int ATTR_MAXHEATSETPOINTLIMIT = 0x0016;
-    /**
-     */
     public static final int ATTR_MINCOOLSETPOINTLIMIT = 0x0017;
-    /**
-     */
     public static final int ATTR_MAXCOOLSETPOINTLIMIT = 0x0018;
-    /**
-     */
     public static final int ATTR_MINSETPOINTDEADBAND = 0x0019;
-    /**
-     */
     public static final int ATTR_REMOTESENSING = 0x001A;
-    /**
-     */
     public static final int ATTR_CONTROLSEQUENCEOFOPERATION = 0x001B;
-    /**
-     */
     public static final int ATTR_SYSTEMMODE = 0x001C;
-    /**
-     */
     public static final int ATTR_ALARMMASK = 0x001D;
-    /**
-     */
     public static final int ATTR_THERMOSTATRUNNINGMODE = 0x001E;
-    /**
-     * This indicates the type of errors encountered within the Mini Split AC. Error values are reported with four bytes
-     * values. Each bit within the four bytes indicates the unique error.
-     */
-    public static final int ATTR_ACERRORCODE = 0x0044;
 
     // Attribute initialisation
+    @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(26);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(25);
 
-        attributeMap.put(ATTR_LOCALTEMPERATURE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_LOCALTEMPERATURE, "LocalTemperature", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
-        attributeMap.put(ATTR_OUTDOORTEMPERATURE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_OUTDOORTEMPERATURE, "OutdoorTemperature", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_LOCALTEMPERATURE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_LOCALTEMPERATURE, "Local Temperature", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, false, true));
+        attributeMap.put(ATTR_OUTDOORTEMPERATURE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_OUTDOORTEMPERATURE, "Outdoor Temperature", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_OCCUPANCY, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_OCCUPANCY, "Occupancy", ZclDataType.BITMAP_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_ABSMINHEATSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ABSMINHEATSETPOINTLIMIT, "AbsMinHeatSetpointLimit", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_ABSMAXHEATSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ABSMAXHEATSETPOINTLIMIT, "AbsMaxHeatSetpointLimit", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_ABSMINCOOLSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ABSMINCOOLSETPOINTLIMIT, "AbsMinCoolSetpointLimit", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_ABSMAXCOOLSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ABSMAXCOOLSETPOINTLIMIT, "AbsMaxCoolSetpointLimit", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_PICOOLINGDEMAND, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_PICOOLINGDEMAND, "PICoolingDemand", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
-        attributeMap.put(ATTR_PIHEATINGDEMAND, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_PIHEATINGDEMAND, "PIHeatingDemand", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
-        attributeMap.put(ATTR_HVACSYSTEMTYPECONFIGURATION, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_HVACSYSTEMTYPECONFIGURATION, "HVACSystemTypeConfiguration", ZclDataType.BITMAP_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_LOCALTEMPERATURECALIBRATION, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_LOCALTEMPERATURECALIBRATION, "LocalTemperatureCalibration", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_OCCUPIEDCOOLINGSETPOINT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_OCCUPIEDCOOLINGSETPOINT, "OccupiedCoolingSetpoint", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_OCCUPIEDHEATINGSETPOINT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_OCCUPIEDHEATINGSETPOINT, "OccupiedHeatingSetpoint", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_UNOCCUPIEDCOOLINGSETPOINT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_UNOCCUPIEDCOOLINGSETPOINT, "UnoccupiedCoolingSetpoint", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_UNOCCUPIEDHEATINGSETPOINT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_UNOCCUPIEDHEATINGSETPOINT, "UnoccupiedHeatingSetpoint", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_MINHEATSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_MINHEATSETPOINTLIMIT, "MinHeatSetpointLimit", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_MAXHEATSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_MAXHEATSETPOINTLIMIT, "MaxHeatSetpointLimit", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_MINCOOLSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_MINCOOLSETPOINTLIMIT, "MinCoolSetpointLimit", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_MAXCOOLSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_MAXCOOLSETPOINTLIMIT, "MaxCoolSetpointLimit", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_MINSETPOINTDEADBAND, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_MINSETPOINTDEADBAND, "MinSetpointDeadBand", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_REMOTESENSING, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_REMOTESENSING, "RemoteSensing", ZclDataType.BITMAP_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_CONTROLSEQUENCEOFOPERATION, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_CONTROLSEQUENCEOFOPERATION, "ControlSequenceOfOperation", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_SYSTEMMODE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_SYSTEMMODE, "SystemMode", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ALARMMASK, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ALARMMASK, "AlarmMask", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_THERMOSTATRUNNINGMODE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_THERMOSTATRUNNINGMODE, "ThermostatRunningMode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_ACERRORCODE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ACERRORCODE, "ACErrorCode", ZclDataType.BITMAP_32_BIT, false, true, false, false));
+        attributeMap.put(ATTR_ABSMINHEATSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ABSMINHEATSETPOINTLIMIT, "Abs Min Heat Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ABSMAXHEATSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ABSMAXHEATSETPOINTLIMIT, "Abs Max Heat Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ABSMINCOOLSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ABSMINCOOLSETPOINTLIMIT, "Abs Min Cool Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ABSMAXCOOLSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ABSMAXCOOLSETPOINTLIMIT, "Abs Max Cool Setpoint Limit", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_PICOOLINGDEMAND, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_PICOOLINGDEMAND, "Pi Cooling Demand", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
+        attributeMap.put(ATTR_PIHEATINGDEMAND, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_PIHEATINGDEMAND, "Pi Heating Demand", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
+        attributeMap.put(ATTR_HVACSYSTEMTYPECONFIGURATION, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_HVACSYSTEMTYPECONFIGURATION, "Hvac System Type Configuration", ZclDataType.BITMAP_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_LOCALTEMPERATURECALIBRATION, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_LOCALTEMPERATURECALIBRATION, "Local Temperature Calibration", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_OCCUPIEDCOOLINGSETPOINT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_OCCUPIEDCOOLINGSETPOINT, "Occupied Cooling Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_OCCUPIEDHEATINGSETPOINT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_OCCUPIEDHEATINGSETPOINT, "Occupied Heating Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_UNOCCUPIEDCOOLINGSETPOINT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_UNOCCUPIEDCOOLINGSETPOINT, "Unoccupied Cooling Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_UNOCCUPIEDHEATINGSETPOINT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_UNOCCUPIEDHEATINGSETPOINT, "Unoccupied Heating Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_MINHEATSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_MINHEATSETPOINTLIMIT, "Min Heat Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_MAXHEATSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_MAXHEATSETPOINTLIMIT, "Max Heat Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_MINCOOLSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_MINCOOLSETPOINTLIMIT, "Min Cool Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_MAXCOOLSETPOINTLIMIT, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_MAXCOOLSETPOINTLIMIT, "Max Cool Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_MINSETPOINTDEADBAND, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_MINSETPOINTDEADBAND, "Min Setpoint Dead Band", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_REMOTESENSING, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_REMOTESENSING, "Remote Sensing", ZclDataType.BITMAP_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_CONTROLSEQUENCEOFOPERATION, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_CONTROLSEQUENCEOFOPERATION, "Control Sequence Of Operation", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_SYSTEMMODE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_SYSTEMMODE, "System Mode", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_ALARMMASK, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_ALARMMASK, "Alarm Mask", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_THERMOSTATRUNNINGMODE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_THERMOSTATRUNNINGMODE, "Thermostat Running Mode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
 
         return attributeMap;
     }
@@ -179,16 +148,17 @@ public class ZclThermostatCluster extends ZclCluster {
     /**
      * Default constructor to create a Thermostat cluster.
      *
-     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint} this cluster is contained within
      */
     public ZclThermostatCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
     /**
-     * Get the <i>LocalTemperature</i> attribute [attribute ID <b>0</b>].
+     * Get the <i>Local Temperature</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
-     * LocalTemperature represents the temperature in degrees Celsius, as measured locally.
+     * LocalTemperature represents the temperature in degrees Celsius, as measured
+     * locally.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -201,9 +171,10 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>LocalTemperature</i> attribute [attribute ID <b>0</b>].
+     * Synchronously get the <i>Local Temperature</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
-     * LocalTemperature represents the temperature in degrees Celsius, as measured locally.
+     * LocalTemperature represents the temperature in degrees Celsius, as measured
+     * locally.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -228,16 +199,17 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>LocalTemperature</i> attribute [attribute ID <b>0</b>].
+     * Set reporting for the <i>Local Temperature</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
-     * LocalTemperature represents the temperature in degrees Celsius, as measured locally.
+     * LocalTemperature represents the temperature in degrees Celsius, as measured
+     * locally.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -246,9 +218,10 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>OutdoorTemperature</i> attribute [attribute ID <b>1</b>].
+     * Get the <i>Outdoor Temperature</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
-     * OutdoorTemperature represents the temperature in degrees Celsius, as measured locally.
+     * OutdoorTemperature represents the temperature in degrees Celsius, as measured
+     * locally.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -261,9 +234,10 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>OutdoorTemperature</i> attribute [attribute ID <b>1</b>].
+     * Synchronously get the <i>Outdoor Temperature</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
-     * OutdoorTemperature represents the temperature in degrees Celsius, as measured locally.
+     * OutdoorTemperature represents the temperature in degrees Celsius, as measured
+     * locally.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -288,7 +262,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Occupancy</i> attribute [attribute ID <b>2</b>].
+     * Get the <i>Occupancy</i> attribute [attribute ID <b>0x0002</b>].
      * <p>
      * Occupancy specifies whether the heated/cooled space is occupied or not
      * <p>
@@ -303,7 +277,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Occupancy</i> attribute [attribute ID <b>2</b>].
+     * Synchronously get the <i>Occupancy</i> attribute [attribute ID <b>0x0002</b>].
      * <p>
      * Occupancy specifies whether the heated/cooled space is occupied or not
      * <p>
@@ -330,10 +304,10 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>AbsMinHeatSetpointLimit</i> attribute [attribute ID <b>3</b>].
+     * Get the <i>Abs Min Heat Setpoint Limit</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
-     * The MinHeatSetpointLimit attribute specifies the absolute minimum level that the heating setpoint MAY be
-     * set to. This is a limitation imposed by the manufacturer.
+     * The MinHeatSetpointLimit attribute specifies the absolute minimum level that the
+     * heating setpoint may be set to. This is a limitation imposed by the manufacturer.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -346,10 +320,10 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>AbsMinHeatSetpointLimit</i> attribute [attribute ID <b>3</b>].
+     * Synchronously get the <i>Abs Min Heat Setpoint Limit</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
-     * The MinHeatSetpointLimit attribute specifies the absolute minimum level that the heating setpoint MAY be
-     * set to. This is a limitation imposed by the manufacturer.
+     * The MinHeatSetpointLimit attribute specifies the absolute minimum level that the
+     * heating setpoint may be set to. This is a limitation imposed by the manufacturer.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -374,10 +348,10 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>AbsMaxHeatSetpointLimit</i> attribute [attribute ID <b>4</b>].
+     * Get the <i>Abs Max Heat Setpoint Limit</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
-     * The MaxHeatSetpointLimit attribute specifies the absolute maximum level that the heating setpoint MAY be
-     * set to. This is a limitation imposed by the manufacturer.
+     * The MaxHeatSetpointLimit attribute specifies the absolute maximum level that the
+     * heating setpoint may be set to. This is a limitation imposed by the manufacturer.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -390,10 +364,10 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>AbsMaxHeatSetpointLimit</i> attribute [attribute ID <b>4</b>].
+     * Synchronously get the <i>Abs Max Heat Setpoint Limit</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
-     * The MaxHeatSetpointLimit attribute specifies the absolute maximum level that the heating setpoint MAY be
-     * set to. This is a limitation imposed by the manufacturer.
+     * The MaxHeatSetpointLimit attribute specifies the absolute maximum level that the
+     * heating setpoint may be set to. This is a limitation imposed by the manufacturer.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -418,10 +392,10 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>AbsMinCoolSetpointLimit</i> attribute [attribute ID <b>5</b>].
+     * Get the <i>Abs Min Cool Setpoint Limit</i> attribute [attribute ID <b>0x0005</b>].
      * <p>
-     * The MinCoolSetpointLimit attribute specifies the absolute minimum level that the cooling setpoint MAY be
-     * set to. This is a limitation imposed by the manufacturer.
+     * The MinCoolSetpointLimit attribute specifies the absolute minimum level that the
+     * cooling setpoint may be set to. This is a limitation imposed by the manufacturer.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -434,10 +408,10 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>AbsMinCoolSetpointLimit</i> attribute [attribute ID <b>5</b>].
+     * Synchronously get the <i>Abs Min Cool Setpoint Limit</i> attribute [attribute ID <b>0x0005</b>].
      * <p>
-     * The MinCoolSetpointLimit attribute specifies the absolute minimum level that the cooling setpoint MAY be
-     * set to. This is a limitation imposed by the manufacturer.
+     * The MinCoolSetpointLimit attribute specifies the absolute minimum level that the
+     * cooling setpoint may be set to. This is a limitation imposed by the manufacturer.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -462,10 +436,10 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>AbsMaxCoolSetpointLimit</i> attribute [attribute ID <b>6</b>].
+     * Get the <i>Abs Max Cool Setpoint Limit</i> attribute [attribute ID <b>0x0006</b>].
      * <p>
-     * The MaxCoolSetpointLimit attribute specifies the absolute maximum level that the cooling setpoint MAY be
-     * set to. This is a limitation imposed by the manufacturer.
+     * The MaxCoolSetpointLimit attribute specifies the absolute maximum level that the
+     * cooling setpoint may be set to. This is a limitation imposed by the manufacturer.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -478,10 +452,10 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>AbsMaxCoolSetpointLimit</i> attribute [attribute ID <b>6</b>].
+     * Synchronously get the <i>Abs Max Cool Setpoint Limit</i> attribute [attribute ID <b>0x0006</b>].
      * <p>
-     * The MaxCoolSetpointLimit attribute specifies the absolute maximum level that the cooling setpoint MAY be
-     * set to. This is a limitation imposed by the manufacturer.
+     * The MaxCoolSetpointLimit attribute specifies the absolute maximum level that the
+     * cooling setpoint may be set to. This is a limitation imposed by the manufacturer.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -506,11 +480,11 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>PICoolingDemand</i> attribute [attribute ID <b>7</b>].
+     * Get the <i>Pi Cooling Demand</i> attribute [attribute ID <b>0x0007</b>].
      * <p>
-     * The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling demanded by the PI
-     * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
-     * thermostat is in “off” or “heating” mode.
+     * The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling
+     * demanded by the PI (proportional integral) control loop in use by the thermostat (if
+     * any), in percent. This value is 0 when the thermostat is in “off” or “heating” mode.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -523,11 +497,11 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>PICoolingDemand</i> attribute [attribute ID <b>7</b>].
+     * Synchronously get the <i>Pi Cooling Demand</i> attribute [attribute ID <b>0x0007</b>].
      * <p>
-     * The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling demanded by the PI
-     * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
-     * thermostat is in “off” or “heating” mode.
+     * The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling
+     * demanded by the PI (proportional integral) control loop in use by the thermostat (if
+     * any), in percent. This value is 0 when the thermostat is in “off” or “heating” mode.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -552,31 +526,11 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>PICoolingDemand</i> attribute [attribute ID <b>7</b>].
+     * Get the <i>Pi Heating Demand</i> attribute [attribute ID <b>0x0008</b>].
      * <p>
-     * The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling demanded by the PI
-     * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
-     * thermostat is in “off” or “heating” mode.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
-     * @param reportableChange {@link Object} delta required to trigger report
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setPiCoolingDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PICOOLINGDEMAND), minInterval, maxInterval, reportableChange);
-    }
-
-    /**
-     * Get the <i>PIHeatingDemand</i> attribute [attribute ID <b>8</b>].
-     * <p>
-     * The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating demanded by the PI
-     * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
-     * thermostat is in “off” or “cooling” mode.
+     * The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating
+     * demanded by the PI (proportional integral) control loop in use by the thermostat (if
+     * any), in percent. This value is 0 when the thermostat is in “off” or “cooling” mode.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -589,11 +543,11 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>PIHeatingDemand</i> attribute [attribute ID <b>8</b>].
+     * Synchronously get the <i>Pi Heating Demand</i> attribute [attribute ID <b>0x0008</b>].
      * <p>
-     * The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating demanded by the PI
-     * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
-     * thermostat is in “off” or “cooling” mode.
+     * The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating
+     * demanded by the PI (proportional integral) control loop in use by the thermostat (if
+     * any), in percent. This value is 0 when the thermostat is in “off” or “cooling” mode.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -618,27 +572,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>PIHeatingDemand</i> attribute [attribute ID <b>8</b>].
-     * <p>
-     * The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating demanded by the PI
-     * (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the
-     * thermostat is in “off” or “cooling” mode.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
-     * @param reportableChange {@link Object} delta required to trigger report
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setPiHeatingDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PIHEATINGDEMAND), minInterval, maxInterval, reportableChange);
-    }
-
-    /**
-     * Get the <i>HVACSystemTypeConfiguration</i> attribute [attribute ID <b>9</b>].
+     * Get the <i>Hvac System Type Configuration</i> attribute [attribute ID <b>0x0009</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -651,7 +585,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>HVACSystemTypeConfiguration</i> attribute [attribute ID <b>9</b>].
+     * Synchronously get the <i>Hvac System Type Configuration</i> attribute [attribute ID <b>0x0009</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -676,7 +610,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>LocalTemperatureCalibration</i> attribute [attribute ID <b>16</b>].
+     * Get the <i>Local Temperature Calibration</i> attribute [attribute ID <b>0x0010</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -689,7 +623,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>LocalTemperatureCalibration</i> attribute [attribute ID <b>16</b>].
+     * Synchronously get the <i>Local Temperature Calibration</i> attribute [attribute ID <b>0x0010</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -714,7 +648,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>OccupiedCoolingSetpoint</i> attribute [attribute ID <b>17</b>].
+     * Get the <i>Occupied Cooling Setpoint</i> attribute [attribute ID <b>0x0011</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -727,7 +661,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>OccupiedCoolingSetpoint</i> attribute [attribute ID <b>17</b>].
+     * Synchronously get the <i>Occupied Cooling Setpoint</i> attribute [attribute ID <b>0x0011</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -752,7 +686,23 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>OccupiedHeatingSetpoint</i> attribute [attribute ID <b>18</b>].
+     * Set reporting for the <i>Occupied Cooling Setpoint</i> attribute [attribute ID <b>0x0011</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setOccupiedCoolingSetpointReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Get the <i>Occupied Heating Setpoint</i> attribute [attribute ID <b>0x0012</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -765,7 +715,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>OccupiedHeatingSetpoint</i> attribute [attribute ID <b>18</b>].
+     * Synchronously get the <i>Occupied Heating Setpoint</i> attribute [attribute ID <b>0x0012</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -790,7 +740,23 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>UnoccupiedCoolingSetpoint</i> attribute [attribute ID <b>19</b>].
+     * Set reporting for the <i>Occupied Heating Setpoint</i> attribute [attribute ID <b>0x0012</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setOccupiedHeatingSetpointReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Get the <i>Unoccupied Cooling Setpoint</i> attribute [attribute ID <b>0x0013</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -803,7 +769,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>UnoccupiedCoolingSetpoint</i> attribute [attribute ID <b>19</b>].
+     * Synchronously get the <i>Unoccupied Cooling Setpoint</i> attribute [attribute ID <b>0x0013</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -828,7 +794,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>UnoccupiedHeatingSetpoint</i> attribute [attribute ID <b>20</b>].
+     * Get the <i>Unoccupied Heating Setpoint</i> attribute [attribute ID <b>0x0014</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -841,7 +807,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>UnoccupiedHeatingSetpoint</i> attribute [attribute ID <b>20</b>].
+     * Synchronously get the <i>Unoccupied Heating Setpoint</i> attribute [attribute ID <b>0x0014</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -866,7 +832,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>MinHeatSetpointLimit</i> attribute [attribute ID <b>21</b>].
+     * Get the <i>Min Heat Setpoint Limit</i> attribute [attribute ID <b>0x0015</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -879,7 +845,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>MinHeatSetpointLimit</i> attribute [attribute ID <b>21</b>].
+     * Synchronously get the <i>Min Heat Setpoint Limit</i> attribute [attribute ID <b>0x0015</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -904,7 +870,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>MaxHeatSetpointLimit</i> attribute [attribute ID <b>22</b>].
+     * Get the <i>Max Heat Setpoint Limit</i> attribute [attribute ID <b>0x0016</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -917,7 +883,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>MaxHeatSetpointLimit</i> attribute [attribute ID <b>22</b>].
+     * Synchronously get the <i>Max Heat Setpoint Limit</i> attribute [attribute ID <b>0x0016</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -942,7 +908,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>MinCoolSetpointLimit</i> attribute [attribute ID <b>23</b>].
+     * Get the <i>Min Cool Setpoint Limit</i> attribute [attribute ID <b>0x0017</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -955,7 +921,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>MinCoolSetpointLimit</i> attribute [attribute ID <b>23</b>].
+     * Synchronously get the <i>Min Cool Setpoint Limit</i> attribute [attribute ID <b>0x0017</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -980,7 +946,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>MaxCoolSetpointLimit</i> attribute [attribute ID <b>24</b>].
+     * Get the <i>Max Cool Setpoint Limit</i> attribute [attribute ID <b>0x0018</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -993,7 +959,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>MaxCoolSetpointLimit</i> attribute [attribute ID <b>24</b>].
+     * Synchronously get the <i>Max Cool Setpoint Limit</i> attribute [attribute ID <b>0x0018</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1018,7 +984,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>MinSetpointDeadBand</i> attribute [attribute ID <b>25</b>].
+     * Get the <i>Min Setpoint Dead Band</i> attribute [attribute ID <b>0x0019</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1031,7 +997,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>MinSetpointDeadBand</i> attribute [attribute ID <b>25</b>].
+     * Synchronously get the <i>Min Setpoint Dead Band</i> attribute [attribute ID <b>0x0019</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1056,7 +1022,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>RemoteSensing</i> attribute [attribute ID <b>26</b>].
+     * Get the <i>Remote Sensing</i> attribute [attribute ID <b>0x001A</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1069,7 +1035,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>RemoteSensing</i> attribute [attribute ID <b>26</b>].
+     * Synchronously get the <i>Remote Sensing</i> attribute [attribute ID <b>0x001A</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1094,7 +1060,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ControlSequenceOfOperation</i> attribute [attribute ID <b>27</b>].
+     * Get the <i>Control Sequence Of Operation</i> attribute [attribute ID <b>0x001B</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1107,7 +1073,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ControlSequenceOfOperation</i> attribute [attribute ID <b>27</b>].
+     * Synchronously get the <i>Control Sequence Of Operation</i> attribute [attribute ID <b>0x001B</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1132,7 +1098,22 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>SystemMode</i> attribute [attribute ID <b>28</b>].
+     * Set reporting for the <i>Control Sequence Of Operation</i> attribute [attribute ID <b>0x001B</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setControlSequenceOfOperationReporting(final int minInterval, final int maxInterval) {
+        return setReporting(attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION), minInterval, maxInterval);
+    }
+
+    /**
+     * Get the <i>System Mode</i> attribute [attribute ID <b>0x001C</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1145,7 +1126,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>SystemMode</i> attribute [attribute ID <b>28</b>].
+     * Synchronously get the <i>System Mode</i> attribute [attribute ID <b>0x001C</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1170,7 +1151,22 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>AlarmMask</i> attribute [attribute ID <b>29</b>].
+     * Set reporting for the <i>System Mode</i> attribute [attribute ID <b>0x001C</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setSystemModeReporting(final int minInterval, final int maxInterval) {
+        return setReporting(attributes.get(ATTR_SYSTEMMODE), minInterval, maxInterval);
+    }
+
+    /**
+     * Get the <i>Alarm Mask</i> attribute [attribute ID <b>0x001D</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1183,7 +1179,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>AlarmMask</i> attribute [attribute ID <b>29</b>].
+     * Synchronously get the <i>Alarm Mask</i> attribute [attribute ID <b>0x001D</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1208,7 +1204,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ThermostatRunningMode</i> attribute [attribute ID <b>30</b>].
+     * Get the <i>Thermostat Running Mode</i> attribute [attribute ID <b>0x001E</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1221,7 +1217,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ThermostatRunningMode</i> attribute [attribute ID <b>30</b>].
+     * Synchronously get the <i>Thermostat Running Mode</i> attribute [attribute ID <b>0x001E</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1246,50 +1242,6 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ACErrorCode</i> attribute [attribute ID <b>68</b>].
-     * <p>
-     * This indicates the type of errors encountered within the Mini Split AC. Error values are reported with four bytes
-     * values. Each bit within the four bytes indicates the unique error.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> getAcErrorCodeAsync() {
-        return read(attributes.get(ATTR_ACERRORCODE));
-    }
-
-    /**
-     * Synchronously get the <i>ACErrorCode</i> attribute [attribute ID <b>68</b>].
-     * <p>
-     * This indicates the type of errors encountered within the Mini Split AC. Error values are reported with four bytes
-     * values. Each bit within the four bytes indicates the unique error.
-     * <p>
-     * This method can return cached data if the attribute has already been received.
-     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
-     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
-     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
-     * <p>
-     * This method will block until the response is received or a timeout occurs unless the current value is returned.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Integer} attribute value, or null on error
-     */
-    public Integer getAcErrorCode(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACERRORCODE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACERRORCODE).getLastValue();
-        }
-
-        return (Integer) readSync(attributes.get(ATTR_ACERRORCODE));
-    }
-
-    /**
      * The Setpoint Raise/Lower Command
      *
      * @param mode {@link Integer} Mode
@@ -1309,17 +1261,18 @@ public class ZclThermostatCluster extends ZclCluster {
     /**
      * The Set Weekly Schedule
      * <p>
-     * The set weekly schedule command is used to update the thermostat weekly set point schedule from a management system.
-     * If the thermostat already has a weekly set point schedule programmed then it SHOULD replace each daily set point set
-     * as it receives the updates from the management system. For example if the thermostat has 4 set points for every day of
-     * the week and is sent a Set Weekly Schedule command with one set point for Saturday then the thermostat SHOULD remove
-     * all 4 set points for Saturday and replace those with the updated set point but leave all other days unchanged.
-     * <br>
-     * If the schedule is larger than what fits in one ZigBee frame or contains more than 10 transitions, the schedule SHALL
-     * then be sent using multipleSet Weekly Schedule Commands.
+     * The set weekly schedule command is used to update the thermostat weekly set point
+     * schedule from a management system. If the thermostat already has a weekly set point
+     * schedule programmed then it should replace each daily set point set as it receives the
+     * updates from the management system. For example if the thermostat has 4 set points for
+     * every day of the week and is sent a Set Weekly Schedule command with one set point for
+     * Saturday then the thermostat should remove all 4 set points for Saturday and replace
+     * those with the updated set point but leave all other days unchanged. <br> If the schedule
+     * is larger than what fits in one ZigBee frame or contains more than 10 transitions, the
+     * schedule shall then be sent using multipleSet Weekly Schedule Commands.
      *
-     * @param numberOfTransitions {@link Integer} Number of Transitions
-     * @param dayOfWeek {@link Integer} Day of Week
+     * @param numberOfTransitions {@link Integer} Number Of Transitions
+     * @param dayOfWeek {@link Integer} Day Of Week
      * @param mode {@link Integer} Mode
      * @param transition {@link Integer} Transition
      * @param heatSet {@link Integer} Heat Set
@@ -1363,45 +1316,37 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> clearWeeklySchedule() {
-        ClearWeeklySchedule command = new ClearWeeklySchedule();
-
-        return send(command);
+        return send(new ClearWeeklySchedule());
     }
 
     /**
      * The Get Relay Status Log
      * <p>
-     * The Get Relay Status Log command is used to query the thermostat internal relay status log. This command has no payload.
-     * <br>
-     * The log storing order is First in First Out (FIFO) when the log is generated and stored into the Queue.
-     * <br>
-     * The first record in the log (i.e., the oldest) one, is the first to be replaced when there is a new record and there is
-     * no more space in the log. Thus, the newest record will overwrite the oldest one if there is no space left.
-     * <br>
-     * The log storing order is Last In First Out (LIFO) when the log is being retrieved from the Queue by a client device.
-     * Once the "Get Relay Status Log Response" frame is sent by the Server, the "Unread Entries" attribute
-     * SHOULD be decremented to indicate the number of unread records that remain in the queue.
-     * <br>
-     * If the "Unread Entries"attribute reaches zero and the Client sends a new "Get Relay Status Log Request", the Server
-     * MAY send one of the following items as a response:
-     * <br>
-     * i) resend the last Get Relay Status Log Response
-     * or
-     * ii) generate new log record at the time of request and send Get Relay Status Log Response with the new data
+     * The Get Relay Status Log command is used to query the thermostat internal relay status
+     * log. This command has no payload. <br> The log storing order is First in First Out (FIFO)
+     * when the log is generated and stored into the Queue. <br> The first record in the log
+     * (i.e., the oldest) one, is the first to be replaced when there is a new record and there is
+     * no more space in the log. Thus, the newest record will overwrite the oldest one if there is
+     * no space left. <br> The log storing order is Last In First Out (LIFO) when the log is being
+     * retrieved from the Queue by a client device. Once the "Get Relay Status Log Response"
+     * frame is sent by the Server, the "Unread Entries" attribute should be decremented to
+     * indicate the number of unread records that remain in the queue. <br> If the "Unread
+     * Entries"attribute reaches zero and the Client sends a new "Get Relay Status Log
+     * Request", the Server may send one of the following items as a response: <br> i) resend the
+     * last Get Relay Status Log Response or ii) generate new log record at the time of request
+     * and send Get Relay Status Log Response with the new data
      *
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> getRelayStatusLog() {
-        GetRelayStatusLog command = new GetRelayStatusLog();
-
-        return send(command);
+        return send(new GetRelayStatusLog());
     }
 
     /**
      * The Get Weekly Schedule Response
      *
-     * @param numberOfTransitions {@link Integer} Number of Transitions
-     * @param dayOfWeek {@link Integer} Day of Week
+     * @param numberOfTransitions {@link Integer} Number Of Transitions
+     * @param dayOfWeek {@link Integer} Day Of Week
      * @param mode {@link Integer} Mode
      * @param transition {@link Integer} Transition
      * @param heatSet {@link Integer} Heat Set
@@ -1425,7 +1370,7 @@ public class ZclThermostatCluster extends ZclCluster {
     /**
      * The Get Relay Status Log Response
      *
-     * @param timeOfDay {@link Integer} Time of day
+     * @param timeOfDay {@link Integer} Time Of Day
      * @param relayStatus {@link Integer} Relay Status
      * @param localTemperature {@link Integer} Local Temperature
      * @param humidity {@link Integer} Humidity
@@ -1450,15 +1395,15 @@ public class ZclThermostatCluster extends ZclCluster {
     @Override
     public ZclCommand getCommandFromId(int commandId) {
         switch (commandId) {
-            case 0: // SETPOINT_RAISE_LOWER_COMMAND
+            case 0x00: // SETPOINT_RAISE_LOWER_COMMAND
                 return new SetpointRaiseLowerCommand();
-            case 1: // SET_WEEKLY_SCHEDULE
+            case 0x01: // SET_WEEKLY_SCHEDULE
                 return new SetWeeklySchedule();
-            case 2: // GET_WEEKLY_SCHEDULE
+            case 0x02: // GET_WEEKLY_SCHEDULE
                 return new GetWeeklySchedule();
-            case 3: // CLEAR_WEEKLY_SCHEDULE
+            case 0x03: // CLEAR_WEEKLY_SCHEDULE
                 return new ClearWeeklySchedule();
-            case 4: // GET_RELAY_STATUS_LOG
+            case 0x04: // GET_RELAY_STATUS_LOG
                 return new GetRelayStatusLog();
             default:
                 return null;
@@ -1468,9 +1413,9 @@ public class ZclThermostatCluster extends ZclCluster {
     @Override
     public ZclCommand getResponseFromId(int commandId) {
         switch (commandId) {
-            case 0: // GET_WEEKLY_SCHEDULE_RESPONSE
+            case 0x00: // GET_WEEKLY_SCHEDULE_RESPONSE
                 return new GetWeeklyScheduleResponse();
-            case 1: // GET_RELAY_STATUS_LOG_RESPONSE
+            case 0x01: // GET_RELAY_STATUS_LOG_RESPONSE
                 return new GetRelayStatusLogResponse();
             default:
                 return null;

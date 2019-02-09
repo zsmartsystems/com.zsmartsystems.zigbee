@@ -7,42 +7,43 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
-
-import java.util.List;
-import java.util.ArrayList;
-import javax.annotation.Generated;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 
 /**
  * Management Bind Response value object class.
  * <p>
- * The Mgmt_Bind_rsp is generated in response to a Mgmt_Bind_req. If this
- * management command is not supported, a status of NOT_SUPPORTED shall be
- * returned and all parameter fields after the Status field shall be omitted. Otherwise,
- * the Remote Device shall implement the following processing.
+ * <p>
+ * The Mgmt_Bind_rsp is generated in response to a Mgmt_Bind_req. If this management command
+ * is not supported, a status of NOT_SUPPORTED shall be returned and all parameter fields after
+ * the Status field shall be omitted. Otherwise, the Remote Device shall implement the
+ * following processing.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T17:07:08Z")
 public class ManagementBindResponse extends ZdoResponse {
     /**
-     * BindingTableEntries command message field.
+     * Binding Table Entries command message field.
      */
     private Integer bindingTableEntries;
 
     /**
-     * StartIndex command message field.
+     * Start Index command message field.
      */
     private Integer startIndex;
 
     /**
-     * BindingTableList command message field.
+     * Binding Table List command message field.
      */
     private List<BindingTable> bindingTableList;
 
@@ -54,54 +55,54 @@ public class ManagementBindResponse extends ZdoResponse {
     }
 
     /**
-     * Gets BindingTableEntries.
+     * Gets Binding Table Entries.
      *
-     * @return the BindingTableEntries
+     * @return the Binding Table Entries
      */
     public Integer getBindingTableEntries() {
         return bindingTableEntries;
     }
 
     /**
-     * Sets BindingTableEntries.
+     * Sets Binding Table Entries.
      *
-     * @param bindingTableEntries the BindingTableEntries
+     * @param bindingTableEntries the Binding Table Entries
      */
     public void setBindingTableEntries(final Integer bindingTableEntries) {
         this.bindingTableEntries = bindingTableEntries;
     }
 
     /**
-     * Gets StartIndex.
+     * Gets Start Index.
      *
-     * @return the StartIndex
+     * @return the Start Index
      */
     public Integer getStartIndex() {
         return startIndex;
     }
 
     /**
-     * Sets StartIndex.
+     * Sets Start Index.
      *
-     * @param startIndex the StartIndex
+     * @param startIndex the Start Index
      */
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }
 
     /**
-     * Gets BindingTableList.
+     * Gets Binding Table List.
      *
-     * @return the BindingTableList
+     * @return the Binding Table List
      */
     public List<BindingTable> getBindingTableList() {
         return bindingTableList;
     }
 
     /**
-     * Sets BindingTableList.
+     * Sets Binding Table List.
      *
-     * @param bindingTableList the BindingTableList
+     * @param bindingTableList the Binding Table List
      */
     public void setBindingTableList(final List<BindingTable> bindingTableList) {
         this.bindingTableList = bindingTableList;

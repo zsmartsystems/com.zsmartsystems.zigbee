@@ -7,33 +7,33 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
-import javax.annotation.Generated;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 
 /**
  * Remove Backup Bind Entry Response value object class.
  * <p>
- * The Remove_Bkup_Bind_Entry_rsp is generated from a backup binding table
- * cache device in response to a Remove_Bkup_Bind_Entry_req from the primary
- * binding table cache and contains the status of the request. This command shall be
- * unicast to the requesting device. If the remote device is not a backup binding table
- * cache, it shall return a status of NOT_SUPPORTED. If the originator of the
- * request is not recognized as a primary binding table cache, it shall return a status
- * of INV_REQUESTTYPE. Otherwise, the backup binding table cache shall delete
- * the binding entry from its binding table and return a status of SUCCESS. If the
- * entry is not found, it shall return a status of NO_ENTRY.
+ * <p>
+ * The Remove_Bkup_Bind_Entry_rsp is generated from a backup binding table cache device in
+ * response to a Remove_Bkup_Bind_Entry_req from the primary binding table cache and
+ * contains the status of the request. This command shall be unicast to the requesting device.
+ * If the remote device is not a backup binding table cache, it shall return a status of
+ * NOT_SUPPORTED. If the originator of the request is not recognized as a primary binding table
+ * cache, it shall return a status of INV_REQUESTTYPE. Otherwise, the backup binding table
+ * cache shall delete the binding entry from its binding table and return a status of SUCCESS. If
+ * the entry is not found, it shall return a status of NO_ENTRY.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T17:07:08Z")
 public class RemoveBackupBindEntryResponse extends ZdoResponse {
     /**
-     * EntryCount command message field.
+     * Entry Count command message field.
      */
     private Integer entryCount;
 
@@ -45,18 +45,18 @@ public class RemoveBackupBindEntryResponse extends ZdoResponse {
     }
 
     /**
-     * Gets EntryCount.
+     * Gets Entry Count.
      *
-     * @return the EntryCount
+     * @return the Entry Count
      */
     public Integer getEntryCount() {
         return entryCount;
     }
 
     /**
-     * Sets EntryCount.
+     * Sets Entry Count.
      *
-     * @param entryCount the EntryCount
+     * @param entryCount the Entry Count
      */
     public void setEntryCount(final Integer entryCount) {
         this.entryCount = entryCount;

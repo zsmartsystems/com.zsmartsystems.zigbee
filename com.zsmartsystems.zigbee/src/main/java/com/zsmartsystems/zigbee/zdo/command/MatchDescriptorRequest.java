@@ -7,47 +7,47 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
-
-import java.util.List;
-import java.util.ArrayList;
-import javax.annotation.Generated;
 
 /**
  * Match Descriptor Request value object class.
  * <p>
- * The Match_Desc_req command is generated from a local device wishing to find
- * remote devices supporting a specific simple descriptor match criterion. This
- * command shall either be broadcast to all devices for which macRxOnWhenIdle =
- * TRUE, or unicast. If the command is unicast, it shall be directed either to the
- * remote device itself or to an alternative device that contains the discovery
- * information of the remote device.
+ * <p>
+ * The Match_Desc_req command is generated from a local device wishing to find remote devices
+ * supporting a specific simple descriptor match criterion. This command shall either be
+ * broadcast to all devices for which macRxOnWhenIdle = TRUE, or unicast. If the command is
+ * unicast, it shall be directed either to the remote device itself or to an alternative device
+ * that contains the discovery information of the remote device.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class MatchDescriptorRequest extends ZdoRequest {
     /**
-     * NWKAddrOfInterest command message field.
+     * NWK Addr Of Interest command message field.
      */
     private Integer nwkAddrOfInterest;
 
     /**
-     * ProfileID command message field.
+     * Profile ID command message field.
      */
     private Integer profileId;
 
     /**
-     * InClusterList command message field.
+     * In Cluster List command message field.
      */
     private List<Integer> inClusterList;
 
     /**
-     * OutClusterList command message field.
+     * Out Cluster List command message field.
      */
     private List<Integer> outClusterList;
 
@@ -59,72 +59,72 @@ public class MatchDescriptorRequest extends ZdoRequest {
     }
 
     /**
-     * Gets NWKAddrOfInterest.
+     * Gets NWK Addr Of Interest.
      *
-     * @return the NWKAddrOfInterest
+     * @return the NWK Addr Of Interest
      */
     public Integer getNwkAddrOfInterest() {
         return nwkAddrOfInterest;
     }
 
     /**
-     * Sets NWKAddrOfInterest.
+     * Sets NWK Addr Of Interest.
      *
-     * @param nwkAddrOfInterest the NWKAddrOfInterest
+     * @param nwkAddrOfInterest the NWK Addr Of Interest
      */
     public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
 
     /**
-     * Gets ProfileID.
+     * Gets Profile ID.
      *
-     * @return the ProfileID
+     * @return the Profile ID
      */
     public Integer getProfileId() {
         return profileId;
     }
 
     /**
-     * Sets ProfileID.
+     * Sets Profile ID.
      *
-     * @param profileId the ProfileID
+     * @param profileId the Profile ID
      */
     public void setProfileId(final Integer profileId) {
         this.profileId = profileId;
     }
 
     /**
-     * Gets InClusterList.
+     * Gets In Cluster List.
      *
-     * @return the InClusterList
+     * @return the In Cluster List
      */
     public List<Integer> getInClusterList() {
         return inClusterList;
     }
 
     /**
-     * Sets InClusterList.
+     * Sets In Cluster List.
      *
-     * @param inClusterList the InClusterList
+     * @param inClusterList the In Cluster List
      */
     public void setInClusterList(final List<Integer> inClusterList) {
         this.inClusterList = inClusterList;
     }
 
     /**
-     * Gets OutClusterList.
+     * Gets Out Cluster List.
      *
-     * @return the OutClusterList
+     * @return the Out Cluster List
      */
     public List<Integer> getOutClusterList() {
         return outClusterList;
     }
 
     /**
-     * Sets OutClusterList.
+     * Sets Out Cluster List.
      *
-     * @param outClusterList the OutClusterList
+     * @param outClusterList the Out Cluster List
      */
     public void setOutClusterList(final List<Integer> outClusterList) {
         this.outClusterList = outClusterList;

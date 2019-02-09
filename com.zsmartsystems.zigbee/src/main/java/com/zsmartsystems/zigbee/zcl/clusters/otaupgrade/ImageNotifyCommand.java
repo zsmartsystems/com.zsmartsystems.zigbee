@@ -10,53 +10,52 @@ package com.zsmartsystems.zigbee.zcl.clusters.otaupgrade;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Image Notify Command value object class.
  * <p>
- * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
+ * Cluster: <b>Ota Upgrade</b>. Command is sent <b>FROM</b> the server.
+ * This command is a <b>specific</b> command used for the Ota Upgrade cluster.
  * <p>
- * The purpose of sending Image Notify command is so the server has a way to notify client devices of
- * when the OTA upgrade images are available for them. It eliminates the need for ZR client devices
- * having to check with the server periodically of when the new images are available. However, all client
- * devices still need to send in Query Next Image Request command in order to officially start the OTA
- * upgrade process.
- * <br>
- * For ZR client devices, the upgrade server may send out a unicast, broadcast, or multicast indicating it
- * has the next upgrade image, via an Image Notify command. Since the command may not have APS
- * security (if it is broadcast or multicast), it is considered purely informational and not authoritative.
- * Even in the case of a unicast, ZR shall continue to perform the query process described in later section.
- * <br>
- * When the command is sent with payload type value of zero, it generally means the server wishes to
- * notify all clients disregard of their manufacturers, image types or file versions. Query jitter is needed
- * to protect the server from being flooded with clients’ queries for next image.
+ * The purpose of sending Image Notify command is so the server has a way to notify client devices
+ * of when the OTA upgrade images are available for them. It eliminates the need for ZR client
+ * devices having to check with the server periodically of when the new images are available.
+ * However, all client devices still need to send in Query Next Image Request command in order to
+ * officially start the OTA upgrade process. <br> For ZR client devices, the upgrade server may
+ * send out a unicast, broadcast, or multicast indicating it has the next upgrade image, via an
+ * Image Notify command. Since the command may not have APS security (if it is broadcast or
+ * multicast), it is considered purely informational and not authoritative. Even in the case
+ * of a unicast, ZR shall continue to perform the query process described in later section. <br>
+ * When the command is sent with payload type value of zero, it generally means the server wishes
+ * to notify all clients disregard of their manufacturers, image types or file versions. Query
+ * jitter is needed to protect the server from being flooded with clients’ queries for next
+ * image.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ImageNotifyCommand extends ZclCommand {
     /**
-     * Payload type command message field.
+     * Payload Type command message field.
      */
     private Integer payloadType;
 
     /**
-     * Query jitter command message field.
+     * Query Jitter command message field.
      */
     private Integer queryJitter;
 
     /**
-     * Manufacturer code command message field.
+     * Manufacturer Code command message field.
      */
     private Integer manufacturerCode;
 
     /**
-     * Image type command message field.
+     * Image Type command message field.
      */
     private Integer imageType;
 
@@ -70,78 +69,78 @@ public class ImageNotifyCommand extends ZclCommand {
      */
     public ImageNotifyCommand() {
         genericCommand = false;
-        clusterId = 25;
+        clusterId = 0x0019;
         commandId = 0;
-        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     /**
-     * Gets Payload type.
+     * Gets Payload Type.
      *
-     * @return the Payload type
+     * @return the Payload Type
      */
     public Integer getPayloadType() {
         return payloadType;
     }
 
     /**
-     * Sets Payload type.
+     * Sets Payload Type.
      *
-     * @param payloadType the Payload type
+     * @param payloadType the Payload Type
      */
     public void setPayloadType(final Integer payloadType) {
         this.payloadType = payloadType;
     }
 
     /**
-     * Gets Query jitter.
+     * Gets Query Jitter.
      *
-     * @return the Query jitter
+     * @return the Query Jitter
      */
     public Integer getQueryJitter() {
         return queryJitter;
     }
 
     /**
-     * Sets Query jitter.
+     * Sets Query Jitter.
      *
-     * @param queryJitter the Query jitter
+     * @param queryJitter the Query Jitter
      */
     public void setQueryJitter(final Integer queryJitter) {
         this.queryJitter = queryJitter;
     }
 
     /**
-     * Gets Manufacturer code.
+     * Gets Manufacturer Code.
      *
-     * @return the Manufacturer code
+     * @return the Manufacturer Code
      */
     public Integer getManufacturerCode() {
         return manufacturerCode;
     }
 
     /**
-     * Sets Manufacturer code.
+     * Sets Manufacturer Code.
      *
-     * @param manufacturerCode the Manufacturer code
+     * @param manufacturerCode the Manufacturer Code
      */
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
 
     /**
-     * Gets Image type.
+     * Gets Image Type.
      *
-     * @return the Image type
+     * @return the Image Type
      */
     public Integer getImageType() {
         return imageType;
     }
 
     /**
-     * Sets Image type.
+     * Sets Image Type.
      *
-     * @param imageType the Image type
+     * @param imageType the Image Type
      */
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;

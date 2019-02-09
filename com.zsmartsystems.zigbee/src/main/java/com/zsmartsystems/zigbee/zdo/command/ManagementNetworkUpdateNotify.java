@@ -7,56 +7,58 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zdo.ZdoResponse;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 
 /**
  * Management Network Update Notify value object class.
  * <p>
- * The Mgmt_NWK_Update_notify is provided to enable ZigBee devices to report
- * the condition on local channels to a network manager. The scanned channel list is
- * the report of channels scanned and it is followed by a list of records, one for each
- * channel scanned, each record including one byte of the energy level measured
- * during the scan, or 0xff if there is too much interference on this channel.
- * <br>
- * When sent in response to a Mgmt_NWK_Update_req command the status field
- * shall represent the status of the request. When sent unsolicited the status field
- * shall be set to SUCCESS.
- * A Status of NOT_SUPPORTED indicates that the request was directed to a device
- * which was not the ZigBee Coordinator or that the ZigBee Coordinator does not
- * support End Device Binding. Otherwise, End_Device_Bind_req processing is
- * performed as described below, including transmission of the
- * End_Device_Bind_rsp.
+ * <p>
+ * The Mgmt_NWK_Update_notify is provided to enable ZigBee devices to report the condition on
+ * local channels to a network manager. The scanned channel list is the report of channels
+ * scanned and it is followed by a list of records, one for each channel scanned, each record
+ * including one byte of the energy level measured during the scan, or 0xff if there is too much
+ * interference on this channel. <br> When sent in response to a Mgmt_NWK_Update_req command
+ * the status field shall represent the status of the request. When sent unsolicited the status
+ * field shall be set to SUCCESS. A Status of NOT_SUPPORTED indicates that the request was
+ * directed to a device which was not the ZigBee Coordinator or that the ZigBee Coordinator does
+ * not support End Device Binding. Otherwise, End_Device_Bind_req processing is performed
+ * as described below, including transmission of the End_Device_Bind_rsp.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
-public class ManagementNetworkUpdateNotify extends ZdoResponse {
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+public class ManagementNetworkUpdateNotify extends ZdoRequest {
     /**
-     * ScannedChannels command message field.
+     * Status command message field.
+     */
+    private ZdoStatus status;
+
+    /**
+     * Scanned Channels command message field.
      */
     private Integer scannedChannels;
 
     /**
-     * TotalTransmissions command message field.
+     * Total Transmissions command message field.
      */
     private Integer totalTransmissions;
 
     /**
-     * TransmissionFailures command message field.
+     * Transmission Failures command message field.
      */
     private Integer transmissionFailures;
 
     /**
-     * EnergyValues command message field.
+     * Energy Values command message field.
      */
     private List<Integer> energyValues;
 
@@ -68,72 +70,90 @@ public class ManagementNetworkUpdateNotify extends ZdoResponse {
     }
 
     /**
-     * Gets ScannedChannels.
+     * Gets Status.
      *
-     * @return the ScannedChannels
+     * @return the Status
+     */
+    public ZdoStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets Status.
+     *
+     * @param status the Status
+     */
+    public void setStatus(final ZdoStatus status) {
+        this.status = status;
+    }
+
+    /**
+     * Gets Scanned Channels.
+     *
+     * @return the Scanned Channels
      */
     public Integer getScannedChannels() {
         return scannedChannels;
     }
 
     /**
-     * Sets ScannedChannels.
+     * Sets Scanned Channels.
      *
-     * @param scannedChannels the ScannedChannels
+     * @param scannedChannels the Scanned Channels
      */
     public void setScannedChannels(final Integer scannedChannels) {
         this.scannedChannels = scannedChannels;
     }
 
     /**
-     * Gets TotalTransmissions.
+     * Gets Total Transmissions.
      *
-     * @return the TotalTransmissions
+     * @return the Total Transmissions
      */
     public Integer getTotalTransmissions() {
         return totalTransmissions;
     }
 
     /**
-     * Sets TotalTransmissions.
+     * Sets Total Transmissions.
      *
-     * @param totalTransmissions the TotalTransmissions
+     * @param totalTransmissions the Total Transmissions
      */
     public void setTotalTransmissions(final Integer totalTransmissions) {
         this.totalTransmissions = totalTransmissions;
     }
 
     /**
-     * Gets TransmissionFailures.
+     * Gets Transmission Failures.
      *
-     * @return the TransmissionFailures
+     * @return the Transmission Failures
      */
     public Integer getTransmissionFailures() {
         return transmissionFailures;
     }
 
     /**
-     * Sets TransmissionFailures.
+     * Sets Transmission Failures.
      *
-     * @param transmissionFailures the TransmissionFailures
+     * @param transmissionFailures the Transmission Failures
      */
     public void setTransmissionFailures(final Integer transmissionFailures) {
         this.transmissionFailures = transmissionFailures;
     }
 
     /**
-     * Gets EnergyValues.
+     * Gets Energy Values.
      *
-     * @return the EnergyValues
+     * @return the Energy Values
      */
     public List<Integer> getEnergyValues() {
         return energyValues;
     }
 
     /**
-     * Sets EnergyValues.
+     * Sets Energy Values.
      *
-     * @param energyValues the EnergyValues
+     * @param energyValues the Energy Values
      */
     public void setEnergyValues(final List<Integer> energyValues) {
         this.energyValues = energyValues;

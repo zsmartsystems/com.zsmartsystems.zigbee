@@ -7,42 +7,43 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
-
-import java.util.List;
-import java.util.ArrayList;
-import javax.annotation.Generated;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 
 /**
  * Management LQI Response value object class.
  * <p>
- * The Mgmt_Lqi_rsp is generated in response to an Mgmt_Lqi_req. If this
- * management command is not supported, a status of NOT_SUPPORTED shall be
- * returned and all parameter fields after the Status field shall be omitted. Otherwise,
- * the Remote Device shall implement the following processing.
+ * <p>
+ * The Mgmt_Lqi_rsp is generated in response to an Mgmt_Lqi_req. If this management command is
+ * not supported, a status of NOT_SUPPORTED shall be returned and all parameter fields after
+ * the Status field shall be omitted. Otherwise, the Remote Device shall implement the
+ * following processing.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T17:07:08Z")
 public class ManagementLqiResponse extends ZdoResponse {
     /**
-     * NeighborTableEntries command message field.
+     * Neighbor Table Entries command message field.
      */
     private Integer neighborTableEntries;
 
     /**
-     * StartIndex command message field.
+     * Start Index command message field.
      */
     private Integer startIndex;
 
     /**
-     * NeighborTableList command message field.
+     * Neighbor Table List command message field.
      */
     private List<NeighborTable> neighborTableList;
 
@@ -54,54 +55,54 @@ public class ManagementLqiResponse extends ZdoResponse {
     }
 
     /**
-     * Gets NeighborTableEntries.
+     * Gets Neighbor Table Entries.
      *
-     * @return the NeighborTableEntries
+     * @return the Neighbor Table Entries
      */
     public Integer getNeighborTableEntries() {
         return neighborTableEntries;
     }
 
     /**
-     * Sets NeighborTableEntries.
+     * Sets Neighbor Table Entries.
      *
-     * @param neighborTableEntries the NeighborTableEntries
+     * @param neighborTableEntries the Neighbor Table Entries
      */
     public void setNeighborTableEntries(final Integer neighborTableEntries) {
         this.neighborTableEntries = neighborTableEntries;
     }
 
     /**
-     * Gets StartIndex.
+     * Gets Start Index.
      *
-     * @return the StartIndex
+     * @return the Start Index
      */
     public Integer getStartIndex() {
         return startIndex;
     }
 
     /**
-     * Sets StartIndex.
+     * Sets Start Index.
      *
-     * @param startIndex the StartIndex
+     * @param startIndex the Start Index
      */
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }
 
     /**
-     * Gets NeighborTableList.
+     * Gets Neighbor Table List.
      *
-     * @return the NeighborTableList
+     * @return the Neighbor Table List
      */
     public List<NeighborTable> getNeighborTableList() {
         return neighborTableList;
     }
 
     /**
-     * Sets NeighborTableList.
+     * Sets Neighbor Table List.
      *
-     * @param neighborTableList the NeighborTableList
+     * @param neighborTableList the Neighbor Table List
      */
     public void setNeighborTableList(final List<NeighborTable> neighborTableList) {
         this.neighborTableList = neighborTableList;

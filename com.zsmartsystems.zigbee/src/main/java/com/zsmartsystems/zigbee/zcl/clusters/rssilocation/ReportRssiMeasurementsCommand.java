@@ -7,17 +7,17 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.rssilocation;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
-import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
-import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.NeighborInformation;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Report RSSI Measurements Command value object class.
@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.field.NeighborInformation;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:19:25Z")
 public class ReportRssiMeasurementsCommand extends ZclCommand {
     /**
      * Reporting Address command message field.
@@ -35,7 +35,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
     private IeeeAddress reportingAddress;
 
     /**
-     * Number of Neighbors command message field.
+     * Number Of Neighbors command message field.
      */
     private Integer numberOfNeighbors;
 
@@ -49,7 +49,7 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
      */
     public ReportRssiMeasurementsCommand() {
         genericCommand = false;
-        clusterId = 11;
+        clusterId = 0x000B;
         commandId = 6;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
@@ -73,18 +73,18 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
     }
 
     /**
-     * Gets Number of Neighbors.
+     * Gets Number Of Neighbors.
      *
-     * @return the Number of Neighbors
+     * @return the Number Of Neighbors
      */
     public Integer getNumberOfNeighbors() {
         return numberOfNeighbors;
     }
 
     /**
-     * Sets Number of Neighbors.
+     * Sets Number Of Neighbors.
      *
-     * @param numberOfNeighbors the Number of Neighbors
+     * @param numberOfNeighbors the Number Of Neighbors
      */
     public void setNumberOfNeighbors(final Integer numberOfNeighbors) {
         this.numberOfNeighbors = numberOfNeighbors;

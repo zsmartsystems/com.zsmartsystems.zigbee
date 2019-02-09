@@ -7,22 +7,22 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * Store Backup Bind Entry Request value object class.
  * <p>
- * The Store_Bkup_Bind_Entry_req is generated from a local primary binding table
- * cache and sent to a remote backup binding table cache device to request backup
- * storage of the entry. It will be generated whenever a new binding table entry has
- * been created by the primary binding table cache. The destination addressing mode
- * for this request is unicast.
+ * <p>
+ * The Store_Bkup_Bind_Entry_req is generated from a local primary binding table cache and
+ * sent to a remote backup binding table cache device to request backup storage of the entry. It
+ * will be generated whenever a new binding table entry has been created by the primary binding
+ * table cache. The destination addressing mode for this request is unicast.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class StoreBackupBindEntryRequest extends ZdoRequest {
     /**
      * Default constructor.

@@ -7,15 +7,15 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Read Attributes Command value object class.
@@ -23,13 +23,13 @@ import java.util.List;
  * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The read attributes command is generated when a device wishes to determine the
- * values of one or more attributes located on another device. Each attribute
- * identifier field shall contain the identifier of the attribute to be read.
+ * The read attributes command is generated when a device wishes to determine the values of one
+ * or more attributes located on another device. Each attribute identifier field shall
+ * contain the identifier of the attribute to be read.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:19:25Z")
 public class ReadAttributesCommand extends ZclCommand {
     /**
      * Identifiers command message field.

@@ -7,15 +7,15 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.iasace;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Bypass Command value object class.
@@ -24,34 +24,36 @@ import java.util.List;
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
  * Provides IAS ACE clients with a method to send zone bypass requests to the IAS ACE server.
- * Bypassed zones MAYbe faulted or in alarm but will not trigger the security system to go into alarm.
- * For example, a user MAYwish to allow certain windows in his premises protected by an IAS Zone server to
- * be left open while the user leaves the premises. The user could bypass the IAS Zone server protecting
- * the window on his IAS ACE client (e.g., security keypad), and if the IAS ACE server indicates that zone is
- * successfully by-passed, arm his security system while he is away.
+ * Bypassed zones may be faulted or in alarm but will not trigger the security system to go into
+ * alarm. For example, a user MAYwish to allow certain windows in his premises protected by an
+ * IAS Zone server to be left open while the user leaves the premises. The user could bypass the
+ * IAS Zone server protecting the window on his IAS ACE client (e.g., security keypad), and if
+ * the IAS ACE server indicates that zone is successfully by-passed, arm his security system
+ * while he is away.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:19:25Z")
 public class BypassCommand extends ZclCommand {
     /**
-     * Number of Zones command message field.
+     * Number Of Zones command message field.
      */
     private Integer numberOfZones;
 
     /**
      * Zone IDs command message field.
      */
-    private List<Integer> zoneIDs;
+    private List<Integer> zoneIds;
 
     /**
      * Arm/Disarm Code command message field.
      * <p>
-     * The Arm/DisarmCode SHALL be a code entered into the ACE client (e.g., security keypad) or system by the
-     * user upon arming/disarming. The server MAY validate the Arm/Disarm Code received from the IAS ACE client
-     * in Arm command payload before arming or disarming the system. If the client does not have the capability
-     * to input an Arm/Disarm Code (e.g., keyfob),or the system does not require one, the client SHALL a transmit
-     * a string with a length of zero.
+     * The Arm/DisarmCode shall be a code entered into the ACE client (e.g., security keypad)
+     * or system by the user upon arming/disarming. The server may validate the Arm/Disarm
+     * Code received from the IAS ACE client in Arm command payload before arming or disarming
+     * the system. If the client does not have the capability to input an Arm/Disarm Code (e.g.,
+     * keyfob),or the system does not require one, the client shall a transmit a string with a
+     * length of zero.
      */
     private String armDisarmCode;
 
@@ -60,24 +62,24 @@ public class BypassCommand extends ZclCommand {
      */
     public BypassCommand() {
         genericCommand = false;
-        clusterId = 1281;
+        clusterId = 0x0501;
         commandId = 1;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Number of Zones.
+     * Gets Number Of Zones.
      *
-     * @return the Number of Zones
+     * @return the Number Of Zones
      */
     public Integer getNumberOfZones() {
         return numberOfZones;
     }
 
     /**
-     * Sets Number of Zones.
+     * Sets Number Of Zones.
      *
-     * @param numberOfZones the Number of Zones
+     * @param numberOfZones the Number Of Zones
      */
     public void setNumberOfZones(final Integer numberOfZones) {
         this.numberOfZones = numberOfZones;
@@ -88,27 +90,28 @@ public class BypassCommand extends ZclCommand {
      *
      * @return the Zone IDs
      */
-    public List<Integer> getZoneIDs() {
-        return zoneIDs;
+    public List<Integer> getZoneIds() {
+        return zoneIds;
     }
 
     /**
      * Sets Zone IDs.
      *
-     * @param zoneIDs the Zone IDs
+     * @param zoneIds the Zone IDs
      */
-    public void setZoneIDs(final List<Integer> zoneIDs) {
-        this.zoneIDs = zoneIDs;
+    public void setZoneIds(final List<Integer> zoneIds) {
+        this.zoneIds = zoneIds;
     }
 
     /**
      * Gets Arm/Disarm Code.
-     *
-     * The Arm/DisarmCode SHALL be a code entered into the ACE client (e.g., security keypad) or system by the
-     * user upon arming/disarming. The server MAY validate the Arm/Disarm Code received from the IAS ACE client
-     * in Arm command payload before arming or disarming the system. If the client does not have the capability
-     * to input an Arm/Disarm Code (e.g., keyfob),or the system does not require one, the client SHALL a transmit
-     * a string with a length of zero.
+     * <p>
+     * The Arm/DisarmCode shall be a code entered into the ACE client (e.g., security keypad)
+     * or system by the user upon arming/disarming. The server may validate the Arm/Disarm
+     * Code received from the IAS ACE client in Arm command payload before arming or disarming
+     * the system. If the client does not have the capability to input an Arm/Disarm Code (e.g.,
+     * keyfob),or the system does not require one, the client shall a transmit a string with a
+     * length of zero.
      *
      * @return the Arm/Disarm Code
      */
@@ -118,12 +121,13 @@ public class BypassCommand extends ZclCommand {
 
     /**
      * Sets Arm/Disarm Code.
-     *
-     * The Arm/DisarmCode SHALL be a code entered into the ACE client (e.g., security keypad) or system by the
-     * user upon arming/disarming. The server MAY validate the Arm/Disarm Code received from the IAS ACE client
-     * in Arm command payload before arming or disarming the system. If the client does not have the capability
-     * to input an Arm/Disarm Code (e.g., keyfob),or the system does not require one, the client SHALL a transmit
-     * a string with a length of zero.
+     * <p>
+     * The Arm/DisarmCode shall be a code entered into the ACE client (e.g., security keypad)
+     * or system by the user upon arming/disarming. The server may validate the Arm/Disarm
+     * Code received from the IAS ACE client in Arm command payload before arming or disarming
+     * the system. If the client does not have the capability to input an Arm/Disarm Code (e.g.,
+     * keyfob),or the system does not require one, the client shall a transmit a string with a
+     * length of zero.
      *
      * @param armDisarmCode the Arm/Disarm Code
      */
@@ -134,14 +138,14 @@ public class BypassCommand extends ZclCommand {
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(numberOfZones, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(zoneIDs, ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(zoneIds, ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(armDisarmCode, ZclDataType.CHARACTER_STRING);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         numberOfZones = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        zoneIDs = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        zoneIds = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
         armDisarmCode = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
     }
 
@@ -152,8 +156,8 @@ public class BypassCommand extends ZclCommand {
         builder.append(super.toString());
         builder.append(", numberOfZones=");
         builder.append(numberOfZones);
-        builder.append(", zoneIDs=");
-        builder.append(zoneIDs);
+        builder.append(", zoneIds=");
+        builder.append(zoneIds);
         builder.append(", armDisarmCode=");
         builder.append(armDisarmCode);
         builder.append(']');

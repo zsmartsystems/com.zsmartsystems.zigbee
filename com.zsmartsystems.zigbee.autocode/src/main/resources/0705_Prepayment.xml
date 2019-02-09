@@ -1,0 +1,980 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0705">
+    <name>Prepayment</name>
+    <description>The Prepayment Cluster provides the facility to pass messages relating to the accounting functionality of a meter between devices on the HAN. It allows for the implementation of a system conforming to the set of standards relating to Payment Electricity Meters (IEC 62055) and also for the case where the accounting function is remote from the meter. Prepayment is used in situations where the supply of a service may be interrupted or enabled under the control of the meter or system in relation to a payment tariff. The accounting process may be within the meter or elsewhere in the system. The amount of available credit is decremented as the service is consumed and is incremented through payments made by the consumer. Such a system allows the consumer to better manage their energy consumption and reduces the risk of bad debt owing to the supplier.</description>
+    <description>In the case where the accounting process resides within the meter, credit updates are sent to the meter from the ESI. Such messages are out of scope of this cluster. The cluster allows credit status to be made available to other devices on the HAN for example to enable the consumers to view their status on an IHD. It also allows them to select emergency credit if running low and also, where local markets allow, restoring their supply remotely from within the HAN.</description>
+    <command code="0x00" source="client">
+        <name>Select Available Emergency Credit</name>
+        <description>FIXME: This command is sent to the Metering Device to activate the use of any Emergency Credit available on the Metering Device.</description>
+        <field type="UTCTIME">
+            <name>Command Issue Date Time</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="OriginatingDeviceEnum">
+            <name>Originating Device</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>Site ID</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>Meter Serial Number</name>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Change Debt</name>
+        <description>FIXME: The ChangeDebt command is send to the Metering Device to change the fuel or Non fuel debt values.</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Issuer Event ID</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>Debt Label</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Debt Amount</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="DebtRecoveryMethodEnum">
+            <name>Debt Recovery Method</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="DebtAmountTypeEnum">
+            <name>Debt Amount Type</name>
+        </field>
+        <field type="UTCTIME">
+            <name>Debt Recovery Start Time</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Debt Recovery Collection Time</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="DebtRecoveryFrequencyEnum">
+            <name>Debt Recovery Frequency</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Debt Recovery Amount</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Debt Recovery Balance Percentage</name>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Emergency Credit Setup</name>
+        <description>FIXME: This command is a method to set up the parameters for the emergency credit.</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Issuer Event ID</name>
+        </field>
+        <field type="UTCTIME">
+            <name>Start Time</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Emergency Credit Limit</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Emergency Credit Threshold</name>
+        </field>
+    </command>
+    <command code="0x04" source="client">
+        <name>Consumer Top Up</name>
+        <description>FIXME: The ConsumerTopUp command is used by the IPD and the ESI as a method of applying credit top up values to the prepayment meter.</description>
+        <field type="ENUMERATION_8_BIT" class="OriginatingDeviceEnum">
+            <name>Originating Device</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>Top Up Code</name>
+        </field>
+    </command>
+    <command code="0x05" source="client">
+        <name>Credit Adjustment</name>
+        <description>FIXME: The CreditAdjustment command is sent to update the accounting base for the Prepayment meter.</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Issuer Event ID</name>
+        </field>
+        <field type="UTCTIME">
+            <name>Start Time</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="CreditAdjustmentTypeEnum">
+            <name>Credit Adjustment Type</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Credit Adjustment Value</name>
+        </field>
+    </command>
+    <command code="0x06" source="client">
+        <name>Change Payment Mode</name>
+        <description>FIXME: This command is sent to a Metering Device to instruct it to change its mode of operation. i.e. from Credit to Prepayment.</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Provider ID</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Issuer Event ID</name>
+        </field>
+        <field type="UTCTIME">
+            <name>Implementation Date Time</name>
+        </field>
+        <field type="BITMAP_16_BIT" class="PaymentControlConfigurationBitmap">
+            <name>Proposed Payment Control Configuration</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Cut Off Value</name>
+        </field>
+    </command>
+    <command code="0x07" source="client">
+        <name>Get Prepay Snapshot</name>
+        <description>FIXME: This command is used to request the cluster server for snapshot data.</description>
+        <field type="UTCTIME">
+            <name>Earliest Start Time</name>
+        </field>
+        <field type="UTCTIME">
+            <name>Latest End Time</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Snapshot Offset</name>
+        </field>
+        <field type="BITMAP_32_BIT" class="PrepaySnapshotPayloadCauseBitmap">
+            <name>Snapshot Cause</name>
+        </field>
+    </command>
+    <command code="0x08" source="client">
+        <name>Get Top Up Log</name>
+        <description>FIXME: This command is sent to the Metering Device to retrieve the log of Top Up codes received by the meter.</description>
+        <field type="UTCTIME">
+            <name>Latest End Time</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number Of Records</name>
+        </field>
+    </command>
+    <command code="0x09" source="client">
+        <name>Set Low Credit Warning Level</name>
+        <description>FIXME: This command is sent from client to a Prepayment server to set the warning level for low credit.</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Low Credit Warning Level</name>
+        </field>
+    </command>
+    <command code="0x0A" source="client">
+        <name>Get Debt Repayment Log</name>
+        <description>FIXME: This command is used to request the contents of the repayment log.</description>
+        <field type="UTCTIME">
+            <name>Latest End Time</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number Of Debts</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="RepaymentDebtTypeEnum">
+            <name>Debt Type</name>
+        </field>
+    </command>
+    <command code="0x0B" source="client">
+        <name>Set Maximum Credit Limit</name>
+        <description>FIXME: This command is sent from a client to the Prepayment server to set the maximum credit level allowed in the meter.</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Provider ID</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Issuer Event ID</name>
+        </field>
+        <field type="UTCTIME">
+            <name>Implementation Date Time</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Maximum Credit Level</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Maximum Credit Per Top Up</name>
+        </field>
+    </command>
+    <command code="0x0C" source="client">
+        <name>Set Overall Debt Cap</name>
+        <description>FIXME: This command is sent from a client to the Prepayment server to set the overall debt cap allowed in the meter.</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Provider ID</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Issuer Event ID</name>
+        </field>
+        <field type="UTCTIME">
+            <name>Implementation Date Time</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Overall Debt Cap</name>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Publish Prepay Snapshot</name>
+        <description>FIXME: This command is generated in response to a GetPrepaySnapshot command. It is used to return a single snapshot to the client.</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Snapshot ID</name>
+        </field>
+        <field type="UTCTIME">
+            <name>Snapshot Time</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Total Snapshots Found</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Command Index</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Total Number Of Commands</name>
+        </field>
+        <field type="BITMAP_32_BIT" class="PrepaySnapshotPayloadCauseBitmap">
+            <name>Snapshot Cause</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="PrepaySnapshotPayloadTypeEnum">
+            <name>Snapshot Payload Type</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Snapshot Payload</name>
+        </field>
+    </command>
+    <command code="0x02" source="server">
+        <name>Change Payment Mode Response</name>
+        <description>FIXME: This command is send in response to the ChangePaymentMode Command.</description>
+        <field type="BITMAP_8_BIT" class="FriendlyCreditBitmap">
+            <name>Friendly Credit</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Friendly Credit Calendar ID</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Emergency Credit Limit</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Emergency Credit Threshold</name>
+        </field>
+    </command>
+    <command code="0x03" source="server">
+        <name>Consumer Top Up Response</name>
+        <description>FIXME: This command is send in response to the ConsumerTopUp Command.</description>
+        <field type="ENUMERATION_8_BIT" class="ResultTypeEnum">
+            <name>Result Type</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Top Up Value</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="OriginatingDeviceEnum">
+            <name>Source Of Top Up</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Credit Remaining</name>
+        </field>
+    </command>
+    <command code="0x05" source="server">
+        <name>Publish Top Up Log</name>
+        <description>FIXME: This command is used to send the Top Up Code Log entries to the client.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Command Index</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Total Number Of Commands</name>
+        </field>
+        <field class="TopUpPayload">
+            <name>Top Up Payload</name>
+        </field>
+    </command>
+    <command code="0x06" source="server">
+        <name>Publish Debt Log</name>
+        <description>FIXME: This command is used to send the contents of the Repayment Log.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Command Index</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Total Number Of Commands</name>
+        </field>
+        <field class="DebtPayload">
+            <name>Debt Payload</name>
+        </field>
+    </command>
+    <attribute code="0x0000" type="BITMAP_16_BIT" side="server" optional="false" writable="false" reportable="false" default="0x0000">
+        <name>Payment Control Configuration</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0001" type="SIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-7FFFFFFF" maximum="0x7FFFFFFF">
+        <name>Credit Remaining</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0002" type="SIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-7FFFFFFF" maximum="0x7FFFFFFF">
+        <name>Emergency Credit Remaining</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0003" type="BITMAP_8_BIT" side="server" optional="false" writable="false" reportable="false" default="0x00">
+        <name>Credit Status</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0004" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
+        <name>Credit Remaining Timestamp</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0005" type="SIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-7FFFFFFF" maximum="0x7FFFFFFF">
+        <name>Accumulated Debt</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0006" type="SIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-7FFFFFFF" maximum="0x7FFFFFFF">
+        <name>Overall Debt Cap</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0010" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>Emergency Credit Limit Allowance</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0011" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>Emergency Credit Threshold</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0020" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Total Credit Added</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0021" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>Max Credit Limit</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0022" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>Max Credit Per Top Up</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0030" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00" maximum="0xFF" default="0x0A">
+        <name>Friendly Credit Warning</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0031" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>Low Credit Warning Level</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0032" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>Ihd Low Credit Warning Level</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0033" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00" maximum="0xFF" default="0x3C">
+        <name>Interrupt Suspend Time</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0034" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF">
+        <name>Remaining Friendly Credit Time</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0035" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
+        <name>Next Friendly Credit Period</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0040" type="SIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-7FFFFFFF" maximum="0x7FFFFFFF">
+        <name>Cut Off Value</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0080" type="OCTET_STRING" side="server" optional="true" writable="true" reportable="true">
+        <name>Token Carrier ID</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0100" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Date / time #1</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0101" type="SIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-7FFFFFFF" maximum="0x7FFFFFFF">
+        <name>Top Up Amount #1</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0102" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Originating Device #1</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0103" type="OCTET_STRING" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Code #1</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0110" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Date /time #2</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0111" type="SIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-7FFFFFFF" maximum="0x7FFFFFFF">
+        <name>Top Up Amount #2</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0112" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Originating Device #2</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0113" type="OCTET_STRING" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Code #2</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0120" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Date /time #3</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0121" type="SIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-7FFFFFFF" maximum="0x7FFFFFFF">
+        <name>Top Up Amount #3</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0122" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Originating Device #3</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0123" type="OCTET_STRING" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Code #3</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0130" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Date /time #4</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0131" type="SIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-7FFFFFFF" maximum="0x7FFFFFFF">
+        <name>Top Up Amount #4</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0132" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Originating Device #4</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0133" type="OCTET_STRING" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Code #4</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0140" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Date /time #5</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0141" type="SIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-7FFFFFFF" maximum="0x7FFFFFFF">
+        <name>Top Up Amount #5</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0142" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Originating Device #5</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0143" type="OCTET_STRING" side="server" optional="false" writable="false" reportable="false">
+        <name>Top Up Code #5</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0210" type="OCTET_STRING" side="server" optional="false" writable="false" reportable="false">
+        <name>Debt Label 1</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0211" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>Debt Amount 1</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0212" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Debt Recovery Method 1</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0213" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
+        <name>Debt Recovery Start Time 1</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0214" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0x05A0" default="0x0000">
+        <name>Debt Recovery Collection Time 1</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0216" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Debt Recovery Frequency 1</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0217" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>Debt Recovery Amount 1</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0219" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0x2710" default="0x0000">
+        <name>Debt Recovery Top Up Percentage 1</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0220" type="OCTET_STRING" side="server" optional="false" writable="false" reportable="false">
+        <name>Debt Label 2</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0221" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>Debt Amount 2</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0222" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Debt Recovery Method 2</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0223" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
+        <name>Debt Recovery Start Time 2</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0224" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0x05A0" default="0x0000">
+        <name>Debt Recovery Collection Time 2</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0226" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Debt Recovery Frequency 2</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0227" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>Debt Recovery Amount 2</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0229" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0x2710" default="0x0000">
+        <name>Debt Recovery Top Up Percentage 2</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0230" type="OCTET_STRING" side="server" optional="false" writable="false" reportable="false">
+        <name>Debt Label 3</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0231" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>Debt Amount 3</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0232" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Debt Recovery Method 3</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0233" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
+        <name>Debt Recovery Start Time 3</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0234" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0x05A0" default="0x0000">
+        <name>Debt Recovery Collection Time 3</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0236" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Debt Recovery Frequency 3</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0237" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF">
+        <name>Debt Recovery Amount 3</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0239" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0x2710" default="0x0000">
+        <name>Debt Recovery Top Up Percentage 3</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0400" type="BITMAP_16_BIT" side="server" optional="true" writable="true" reportable="true" default="0xFFFF">
+        <name>Prepayment Alarm Status</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0401" type="BITMAP_16_BIT" side="server" optional="true" writable="true" reportable="true" default="0xFFFF">
+        <name>Prepay Generic Alarm Mask</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0402" type="BITMAP_16_BIT" side="server" optional="true" writable="true" reportable="true" default="0xFFFF">
+        <name>Prepay Switch Alarm Mask</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0403" type="BITMAP_16_BIT" side="server" optional="true" writable="true" reportable="true" default="0xFFFF">
+        <name>Prepay Event Alarm Mask</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0500" type="BITMAP_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Historical Cost Consumption Formatting</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0501" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false" default="0x00">
+        <name>Consumption Unit Of Measurement</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0502" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Currency Scaling Factor</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0503" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0x0FFF">
+        <name>Currency</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x051C" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Current Day Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x051D" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Current Day Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x051E" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x051F" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0520" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 2 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0521" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 2 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0522" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 3 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0523" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 3 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0524" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 4 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0525" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 4 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0526" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 5 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0527" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 5 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0528" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 6 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0529" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 6 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x052A" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 7 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x052B" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 7 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x052C" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 8 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x052D" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Day 8 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0530" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Current Week Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0531" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Current Week Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0532" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Week Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0533" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Week Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0534" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Week 2 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0535" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Week 2 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0536" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Week 3 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0537" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Week 3 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0538" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Week 4 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0539" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Week 4 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x053A" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Week 5 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x053B" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Week 5 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0540" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Current Month Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0541" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Current Month Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0542" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0543" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0544" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 2 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0545" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 2 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0546" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 3 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0547" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 3 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0548" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 4 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0549" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 4 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x054A" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 5 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x054B" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 5 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x054C" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 6 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x054D" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 6 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x054E" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 7 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x054F" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 7 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0550" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 8 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0551" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 8 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0552" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 9 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0553" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 9 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0554" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 10 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0555" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 10 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0556" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 11 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0557" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 11 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0558" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 12 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x0559" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 12 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x055A" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 13 Cost Consumption Delivered</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x055B" type="UNSIGNED_48_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
+        <name>Previous Month 13 Cost Consumption Received</name>
+        <description>ADDME</description>
+    </attribute>
+    <attribute code="0x055C" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0x173C" default="0x0000">
+        <name>Historical Freeze Time</name>
+        <description>ADDME</description>
+    </attribute>
+
+    <constant type="ENUMERATION_8_BIT" class="CreditAdjustmentTypeEnum">
+        <name>Credit Adjustment Type</name>
+        <value code="0x00" name="Credit Incremental">
+        </value>
+        <value code="0x01" name="Credit Absolute">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="DebtAmountTypeEnum">
+        <name>Debt Amount Type</name>
+        <value code="0x00" name="Type 1 Absolute">
+        </value>
+        <value code="0x01" name="Type 1 Incremental">
+        </value>
+        <value code="0x02" name="Type 2 Absolute">
+        </value>
+        <value code="0x03" name="Type 2 Incremental">
+        </value>
+        <value code="0x04" name="Type 3 Absolute">
+        </value>
+        <value code="0x05" name="Type 3 Incremental">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="DebtRecoveryFrequencyEnum">
+        <name>Debt Recovery Frequency</name>
+        <value code="0x00" name="Per Hour">
+        </value>
+        <value code="0x01" name="Per Day">
+        </value>
+        <value code="0x02" name="Per Week">
+        </value>
+        <value code="0x03" name="Per Month">
+        </value>
+        <value code="0x04" name="Per Quarter">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="DebtRecoveryMethodEnum">
+        <name>Debt Recovery Method</name>
+        <value code="0x00" name="Time Based">
+        </value>
+        <value code="0x01" name="Percentage Based">
+        </value>
+        <value code="0x02" name="Catch Up Based">
+        </value>
+    </constant>
+    <constant type="BITMAP_8_BIT" class="FriendlyCreditBitmap">
+        <name>Friendly Credit</name>
+        <value code="0x01" name="Friendly Credit Enabled">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="OriginatingDeviceEnum">
+        <name>Originating Device</name>
+        <value code="0x00" name="Energy Service Interface">
+        </value>
+        <value code="0x01" name="Meter">
+        </value>
+        <value code="0x02" name="In Home Display Device">
+        </value>
+    </constant>
+    <constant type="BITMAP_16_BIT" class="PaymentControlConfigurationBitmap">
+        <name>Payment Control Configuration</name>
+        <value code="0x0001" name="Disconnection Enabled">
+        </value>
+        <value code="0x0002" name="Prepayment Enabled">
+        </value>
+        <value code="0x0004" name="Credit Management Enabled">
+        </value>
+        <value code="0x0010" name="Credit Display Enabled">
+        </value>
+        <value code="0x0040" name="Account Base">
+        </value>
+        <value code="0x0080" name="Contactor Fitted">
+        </value>
+        <value code="0x0100" name="Standing Charge Configuration">
+        </value>
+        <value code="0x0200" name="Emergency Standing Charge Configuration">
+        </value>
+        <value code="0x0400" name="Debt Configuration">
+        </value>
+        <value code="0x0800" name="Emergency Debt Configuration">
+        </value>
+    </constant>
+    <constant type="BITMAP_32_BIT" class="PrepaySnapshotPayloadCauseBitmap">
+        <name>Prepay Snapshot Payload Cause</name>
+        <value code="0x00000001" name="General">
+        </value>
+        <value code="0x00000008" name="Change Of Tariff Information">
+        </value>
+        <value code="0x00000010" name="Change Of Price Matrix">
+        </value>
+        <value code="0x00000400" name="Manually Triggered From Client">
+        </value>
+        <value code="0x00001000" name="Change Of Tenancy">
+        </value>
+        <value code="0x00002000" name="Change Of Supplier">
+        </value>
+        <value code="0x00004000" name="Change Of Meter Mode">
+        </value>
+        <value code="0x00040000" name="Top Up Addition">
+        </value>
+        <value code="0x00080000" name="Debt Credit Addition">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="PrepaySnapshotPayloadTypeEnum">
+        <name>Prepay Snapshot Payload Type</name>
+        <value code="0x00" name="Debt Credit Status">
+        </value>
+        <value code="0xFF" name="Not Used">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="RepaymentDebtTypeEnum">
+        <name>Repayment Debt Type</name>
+        <value code="0x00" name="Debt 1">
+        </value>
+        <value code="0x01" name="Debt 2">
+        </value>
+        <value code="0x02" name="Debt 3">
+        </value>
+        <value code="0xFF" name="All Debts">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="ResultTypeEnum">
+        <name>Result Type</name>
+        <value code="0x00" name="Accepted">
+        </value>
+        <value code="0x01" name="Rejected Invalid Top Up">
+        </value>
+        <value code="0x02" name="Rejected Duplicate Top Up">
+        </value>
+        <value code="0x03" name="Rejected Error">
+        </value>
+        <value code="0x04" name="Rejected Max Credit Reached">
+        </value>
+        <value code="0x05" name="Rejected Keypad Lock">
+        </value>
+        <value code="0x06" name="Rejected Top Up Value Too Large">
+        </value>
+        <value code="0x10" name="Accepted Supply Enabled">
+        </value>
+        <value code="0x11" name="Accepted Supply Disabled">
+        </value>
+        <value code="0x12" name="Accepted Supply Armed">
+        </value>
+    </constant>
+    
+    <struct class="DebtPayload">
+        <name>Debt Payload</name>
+        <field type="UTCTIME">
+            <name>Collection Time</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Amount Collected</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Debt Type</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Outstanding Debt</name>
+        </field>
+    </struct>
+    <struct class="TopUpPayload">
+        <name>Top Up Payload</name>
+        <field type="OCTET_STRING">
+            <name>Top Up Code</name>
+        </field>
+        <field type="SIGNED_32_BIT_INTEGER">
+            <name>Top Up Amount</name>
+        </field>
+        <field type="UTCTIME">
+            <name>Top Up Time</name>
+        </field>
+    </struct>
+</cluster>

@@ -10,35 +10,33 @@ package com.zsmartsystems.zigbee.zcl.clusters.otaupgrade;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Query Next Image Response value object class.
  * <p>
- * Cluster: <b>OTA Upgrade</b>. Command is sent <b>FROM</b> the server.
- * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
+ * Cluster: <b>Ota Upgrade</b>. Command is sent <b>FROM</b> the server.
+ * This command is a <b>specific</b> command used for the Ota Upgrade cluster.
  * <p>
- * The upgrade server sends a Query Next Image Response with one of the following status: SUCCESS,
- * NO_IMAGE_AVAILABLE or NOT_AUTHORIZED. When a SUCCESS status is sent, it is
- * considered to be the explicit authorization to a device by the upgrade server that the device may
- * upgrade to a specific software image.
- * <br>
- * A status of NO_IMAGE_AVAILABLE indicates that the server is authorized to upgrade the client but
- * it currently does not have the (new) OTA upgrade image available for the client. For all clients (both
- * ZR and ZED)9 , they shall continue sending Query Next Image Requests to the server periodically until
- * an image becomes available.
- * <br>
- * A status of NOT_AUTHORIZED indicates the server is not authorized to upgrade the client. In this
- * case, the client may perform discovery again to find another upgrade server. The client may implement
- * an intelligence to avoid querying the same unauthorized server.
+ * The upgrade server sends a Query Next Image Response with one of the following status:
+ * SUCCESS, NO_IMAGE_AVAILABLE or NOT_AUTHORIZED. When a SUCCESS status is sent, it is
+ * considered to be the explicit authorization to a device by the upgrade server that the device
+ * may upgrade to a specific software image. <br> A status of NO_IMAGE_AVAILABLE indicates
+ * that the server is authorized to upgrade the client but it currently does not have the (new)
+ * OTA upgrade image available for the client. For all clients (both ZR and ZED)9 , they shall
+ * continue sending Query Next Image Requests to the server periodically until an image
+ * becomes available. <br> A status of NOT_AUTHORIZED indicates the server is not authorized
+ * to upgrade the client. In this case, the client may perform discovery again to find another
+ * upgrade server. The client may implement an intelligence to avoid querying the same
+ * unauthorized server.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class QueryNextImageResponse extends ZclCommand {
     /**
      * Status command message field.
@@ -46,12 +44,12 @@ public class QueryNextImageResponse extends ZclCommand {
     private ZclStatus status;
 
     /**
-     * Manufacturer code command message field.
+     * Manufacturer Code command message field.
      */
     private Integer manufacturerCode;
 
     /**
-     * Image type command message field.
+     * Image Type command message field.
      */
     private Integer imageType;
 
@@ -70,7 +68,7 @@ public class QueryNextImageResponse extends ZclCommand {
      */
     public QueryNextImageResponse() {
         genericCommand = false;
-        clusterId = 25;
+        clusterId = 0x0019;
         commandId = 2;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
@@ -94,36 +92,36 @@ public class QueryNextImageResponse extends ZclCommand {
     }
 
     /**
-     * Gets Manufacturer code.
+     * Gets Manufacturer Code.
      *
-     * @return the Manufacturer code
+     * @return the Manufacturer Code
      */
     public Integer getManufacturerCode() {
         return manufacturerCode;
     }
 
     /**
-     * Sets Manufacturer code.
+     * Sets Manufacturer Code.
      *
-     * @param manufacturerCode the Manufacturer code
+     * @param manufacturerCode the Manufacturer Code
      */
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
 
     /**
-     * Gets Image type.
+     * Gets Image Type.
      *
-     * @return the Image type
+     * @return the Image Type
      */
     public Integer getImageType() {
         return imageType;
     }
 
     /**
-     * Sets Image type.
+     * Sets Image Type.
      *
-     * @param imageType the Image type
+     * @param imageType the Image Type
      */
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;

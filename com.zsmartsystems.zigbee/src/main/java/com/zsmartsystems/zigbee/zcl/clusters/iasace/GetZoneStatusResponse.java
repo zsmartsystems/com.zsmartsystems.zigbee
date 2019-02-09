@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl.clusters.iasace;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Get Zone Status Response value object class.
@@ -21,38 +21,39 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
- * This command updates requesting IAS ACE clients in the system of changes to the IAS Zone server statuses recorded
- * by the ACE server (e.g., IAS CIE device).
+ * This command updates requesting IAS ACE clients in the system of changes to the IAS Zone
+ * server statuses recorded by the ACE server (e.g., IAS CIE device).
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class GetZoneStatusResponse extends ZclCommand {
     /**
      * Zone Status Complete command message field.
      * <p>
-     * Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone Status information to be obtained.
-     * A value of zero (i.e. FALSE) indicates there are additional Zone IDs for which Zone Status information is available and
-     * that the IAS ACE client SHOULD send another Get Zone Status command.A value of one (i.e. TRUE) indicates there are no
-     * more Zone IDs for the IAS ACE client to query and the IAS ACE client has received all the Zone Status information for all
-     * IAS Zones managed by the IAS ACE server.
+     * Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone
+     * Status information to be obtained. A value of zero (i.e. FALSE) indicates there are
+     * additional Zone IDs for which Zone Status information is available and that the IAS ACE
+     * client should send another Get Zone Status command.A value of one (i.e. TRUE) indicates
+     * there are no more Zone IDs for the IAS ACE client to query and the IAS ACE client has
+     * received all the Zone Status information for all IAS Zones managed by the IAS ACE server.
      * <p>
-     * The IAS ACE client SHOULD NOT typically send another Get Zone Status command.
+     * The IAS ACE client should NOT typically send another Get Zone Status command.
      */
     private Boolean zoneStatusComplete;
 
     /**
-     * Number of zones command message field.
+     * Number Of Zones command message field.
      */
     private Integer numberOfZones;
 
     /**
-     * Ias Ace Zone Status command message field.
+     * IAS ACE Zone Status command message field.
      */
     private Integer iasAceZoneStatus;
 
     /**
-     * Zone Id command message field.
+     * Zone ID command message field.
      */
     private Integer zoneId;
 
@@ -66,21 +67,22 @@ public class GetZoneStatusResponse extends ZclCommand {
      */
     public GetZoneStatusResponse() {
         genericCommand = false;
-        clusterId = 1281;
+        clusterId = 0x0501;
         commandId = 8;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     /**
      * Gets Zone Status Complete.
-     *
-     * Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone Status information to be obtained.
-     * A value of zero (i.e. FALSE) indicates there are additional Zone IDs for which Zone Status information is available and
-     * that the IAS ACE client SHOULD send another Get Zone Status command.A value of one (i.e. TRUE) indicates there are no
-     * more Zone IDs for the IAS ACE client to query and the IAS ACE client has received all the Zone Status information for all
-     * IAS Zones managed by the IAS ACE server.
      * <p>
-     * The IAS ACE client SHOULD NOT typically send another Get Zone Status command.
+     * Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone
+     * Status information to be obtained. A value of zero (i.e. FALSE) indicates there are
+     * additional Zone IDs for which Zone Status information is available and that the IAS ACE
+     * client should send another Get Zone Status command.A value of one (i.e. TRUE) indicates
+     * there are no more Zone IDs for the IAS ACE client to query and the IAS ACE client has
+     * received all the Zone Status information for all IAS Zones managed by the IAS ACE server.
+     * <p>
+     * The IAS ACE client should NOT typically send another Get Zone Status command.
      *
      * @return the Zone Status Complete
      */
@@ -90,14 +92,15 @@ public class GetZoneStatusResponse extends ZclCommand {
 
     /**
      * Sets Zone Status Complete.
-     *
-     * Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone Status information to be obtained.
-     * A value of zero (i.e. FALSE) indicates there are additional Zone IDs for which Zone Status information is available and
-     * that the IAS ACE client SHOULD send another Get Zone Status command.A value of one (i.e. TRUE) indicates there are no
-     * more Zone IDs for the IAS ACE client to query and the IAS ACE client has received all the Zone Status information for all
-     * IAS Zones managed by the IAS ACE server.
      * <p>
-     * The IAS ACE client SHOULD NOT typically send another Get Zone Status command.
+     * Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone
+     * Status information to be obtained. A value of zero (i.e. FALSE) indicates there are
+     * additional Zone IDs for which Zone Status information is available and that the IAS ACE
+     * client should send another Get Zone Status command.A value of one (i.e. TRUE) indicates
+     * there are no more Zone IDs for the IAS ACE client to query and the IAS ACE client has
+     * received all the Zone Status information for all IAS Zones managed by the IAS ACE server.
+     * <p>
+     * The IAS ACE client should NOT typically send another Get Zone Status command.
      *
      * @param zoneStatusComplete the Zone Status Complete
      */
@@ -106,54 +109,54 @@ public class GetZoneStatusResponse extends ZclCommand {
     }
 
     /**
-     * Gets Number of zones.
+     * Gets Number Of Zones.
      *
-     * @return the Number of zones
+     * @return the Number Of Zones
      */
     public Integer getNumberOfZones() {
         return numberOfZones;
     }
 
     /**
-     * Sets Number of zones.
+     * Sets Number Of Zones.
      *
-     * @param numberOfZones the Number of zones
+     * @param numberOfZones the Number Of Zones
      */
     public void setNumberOfZones(final Integer numberOfZones) {
         this.numberOfZones = numberOfZones;
     }
 
     /**
-     * Gets Ias Ace Zone Status.
+     * Gets IAS ACE Zone Status.
      *
-     * @return the Ias Ace Zone Status
+     * @return the IAS ACE Zone Status
      */
     public Integer getIasAceZoneStatus() {
         return iasAceZoneStatus;
     }
 
     /**
-     * Sets Ias Ace Zone Status.
+     * Sets IAS ACE Zone Status.
      *
-     * @param iasAceZoneStatus the Ias Ace Zone Status
+     * @param iasAceZoneStatus the IAS ACE Zone Status
      */
     public void setIasAceZoneStatus(final Integer iasAceZoneStatus) {
         this.iasAceZoneStatus = iasAceZoneStatus;
     }
 
     /**
-     * Gets Zone Id.
+     * Gets Zone ID.
      *
-     * @return the Zone Id
+     * @return the Zone ID
      */
     public Integer getZoneId() {
         return zoneId;
     }
 
     /**
-     * Sets Zone Id.
+     * Sets Zone ID.
      *
-     * @param zoneId the Zone Id
+     * @param zoneId the Zone ID
      */
     public void setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;

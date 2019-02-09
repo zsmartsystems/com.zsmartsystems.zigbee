@@ -7,47 +7,48 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
-import javax.annotation.Generated;
 
 /**
  * Network Update Request value object class.
  * <p>
- * This command is provided to allow updating of network configuration parameters
- * or to request information from devices on network conditions in the local
- * operating environment. The destination addressing on this primitive shall be
- * unicast or broadcast to all devices for which macRxOnWhenIdle = TRUE.
+ * <p>
+ * This command is provided to allow updating of network configuration parameters or to
+ * request information from devices on network conditions in the local operating
+ * environment. The destination addressing on this primitive shall be unicast or broadcast to
+ * all devices for which macRxOnWhenIdle = TRUE.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class NetworkUpdateRequest extends ZdoRequest {
     /**
-     * ScanChannels command message field.
+     * Scan Channels command message field.
      */
     private Integer scanChannels;
 
     /**
-     * ScanDuration command message field.
+     * Scan Duration command message field.
      */
     private Integer scanDuration;
 
     /**
-     * ScanCount command message field.
+     * Scan Count command message field.
      */
     private Integer scanCount;
 
     /**
-     * nwkUpdateId command message field.
+     * NWK Update ID command message field.
      */
     private Integer nwkUpdateId;
 
     /**
-     * nwkManagerAddr command message field.
+     * NWK Manager Addr command message field.
      */
     private Integer nwkManagerAddr;
 
@@ -59,90 +60,90 @@ public class NetworkUpdateRequest extends ZdoRequest {
     }
 
     /**
-     * Gets ScanChannels.
+     * Gets Scan Channels.
      *
-     * @return the ScanChannels
+     * @return the Scan Channels
      */
     public Integer getScanChannels() {
         return scanChannels;
     }
 
     /**
-     * Sets ScanChannels.
+     * Sets Scan Channels.
      *
-     * @param scanChannels the ScanChannels
+     * @param scanChannels the Scan Channels
      */
     public void setScanChannels(final Integer scanChannels) {
         this.scanChannels = scanChannels;
     }
 
     /**
-     * Gets ScanDuration.
+     * Gets Scan Duration.
      *
-     * @return the ScanDuration
+     * @return the Scan Duration
      */
     public Integer getScanDuration() {
         return scanDuration;
     }
 
     /**
-     * Sets ScanDuration.
+     * Sets Scan Duration.
      *
-     * @param scanDuration the ScanDuration
+     * @param scanDuration the Scan Duration
      */
     public void setScanDuration(final Integer scanDuration) {
         this.scanDuration = scanDuration;
     }
 
     /**
-     * Gets ScanCount.
+     * Gets Scan Count.
      *
-     * @return the ScanCount
+     * @return the Scan Count
      */
     public Integer getScanCount() {
         return scanCount;
     }
 
     /**
-     * Sets ScanCount.
+     * Sets Scan Count.
      *
-     * @param scanCount the ScanCount
+     * @param scanCount the Scan Count
      */
     public void setScanCount(final Integer scanCount) {
         this.scanCount = scanCount;
     }
 
     /**
-     * Gets nwkUpdateId.
+     * Gets NWK Update ID.
      *
-     * @return the nwkUpdateId
+     * @return the NWK Update ID
      */
     public Integer getNwkUpdateId() {
         return nwkUpdateId;
     }
 
     /**
-     * Sets nwkUpdateId.
+     * Sets NWK Update ID.
      *
-     * @param nwkUpdateId the nwkUpdateId
+     * @param nwkUpdateId the NWK Update ID
      */
     public void setNwkUpdateId(final Integer nwkUpdateId) {
         this.nwkUpdateId = nwkUpdateId;
     }
 
     /**
-     * Gets nwkManagerAddr.
+     * Gets NWK Manager Addr.
      *
-     * @return the nwkManagerAddr
+     * @return the NWK Manager Addr
      */
     public Integer getNwkManagerAddr() {
         return nwkManagerAddr;
     }
 
     /**
-     * Sets nwkManagerAddr.
+     * Sets NWK Manager Addr.
      *
-     * @param nwkManagerAddr the nwkManagerAddr
+     * @param nwkManagerAddr the NWK Manager Addr
      */
     public void setNwkManagerAddr(final Integer nwkManagerAddr) {
         this.nwkManagerAddr = nwkManagerAddr;

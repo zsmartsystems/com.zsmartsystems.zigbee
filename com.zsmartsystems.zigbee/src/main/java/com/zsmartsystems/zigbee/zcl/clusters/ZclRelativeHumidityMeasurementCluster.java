@@ -7,27 +7,29 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-import javax.annotation.Generated;
 
 /**
- * <b>Relative humidity measurement</b> cluster implementation (<i>Cluster ID 0x0405</i>).
+ * <b>Relative Humidity Measurement</b> cluster implementation (<i>Cluster ID 0x0405</i>).
  * <p>
- * The server cluster provides an interface to relative humidity measurement
- * functionality, including configuration and provision of notifications of relative
- * humidity measurements.
+ * The server cluster provides an interface to relative humidity measurement functionality,
+ * including configuration and provision of notifications of relative humidity
+ * measurements.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -37,7 +39,7 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster Name
      */
-    public static final String CLUSTER_NAME = "Relative humidity measurement";
+    public static final String CLUSTER_NAME = "Relative Humidity Measurement";
 
     // Attribute constants
     /**
@@ -45,8 +47,8 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * <p>
      * MeasuredValue = 100 x Relative humidity
      * <p>
-     * Where 0% <= Relative humidity <= 100%, corresponding to a MeasuredValue in
-     * the range 0 to 0x2710.
+     * Where 0% <= Relative humidity <= 100%, corresponding to a MeasuredValue in the range 0 to
+     * 0x2710.
      * <p>
      * The maximum resolution this format allows is 0.01%.
      * <p>
@@ -56,13 +58,13 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      */
     public static final int ATTR_MEASUREDVALUE = 0x0000;
     /**
-     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
-     * that can be measured. A value of 0xffff means this attribute is not defined
+     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue that can
+     * be measured. A value of 0xffff means this attribute is not defined
      */
     public static final int ATTR_MINMEASUREDVALUE = 0x0001;
     /**
-     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
-     * that can be measured. A value of 0xffff means this attribute is not defined.
+     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue that can
+     * be measured. A value of 0xffff means this attribute is not defined.
      * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <p>
@@ -71,41 +73,42 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
     public static final int ATTR_MAXMEASUREDVALUE = 0x0002;
     /**
      * The Tolerance attribute indicates the magnitude of the possible error that is
-     * associated with MeasuredValue . The true value is located in the range
-     * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
+     * associated with MeasuredValue . The true value is located in the range (MeasuredValue –
+     * Tolerance) to (MeasuredValue + Tolerance).
      */
     public static final int ATTR_TOLERANCE = 0x0003;
 
     // Attribute initialisation
+    @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(4);
 
-        attributeMap.put(ATTR_MEASUREDVALUE, new ZclAttribute(ZclClusterType.RELATIVE_HUMIDITY_MEASUREMENT, ATTR_MEASUREDVALUE, "MeasuredValue", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
-        attributeMap.put(ATTR_MINMEASUREDVALUE, new ZclAttribute(ZclClusterType.RELATIVE_HUMIDITY_MEASUREMENT, ATTR_MINMEASUREDVALUE, "MinMeasuredValue", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MAXMEASUREDVALUE, new ZclAttribute(ZclClusterType.RELATIVE_HUMIDITY_MEASUREMENT, ATTR_MAXMEASUREDVALUE, "MaxMeasuredValue", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MEASUREDVALUE, new ZclAttribute(ZclClusterType.RELATIVE_HUMIDITY_MEASUREMENT, ATTR_MEASUREDVALUE, "Measured Value", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
+        attributeMap.put(ATTR_MINMEASUREDVALUE, new ZclAttribute(ZclClusterType.RELATIVE_HUMIDITY_MEASUREMENT, ATTR_MINMEASUREDVALUE, "Min Measured Value", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MAXMEASUREDVALUE, new ZclAttribute(ZclClusterType.RELATIVE_HUMIDITY_MEASUREMENT, ATTR_MAXMEASUREDVALUE, "Max Measured Value", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_TOLERANCE, new ZclAttribute(ZclClusterType.RELATIVE_HUMIDITY_MEASUREMENT, ATTR_TOLERANCE, "Tolerance", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, true));
 
         return attributeMap;
     }
 
     /**
-     * Default constructor to create a Relative humidity measurement cluster.
+     * Default constructor to create a Relative Humidity Measurement cluster.
      *
-     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint} this cluster is contained within
      */
     public ZclRelativeHumidityMeasurementCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
     /**
-     * Get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
+     * Get the <i>Measured Value</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * MeasuredValue represents the relative humidity in % as follows:-
      * <p>
      * MeasuredValue = 100 x Relative humidity
      * <p>
-     * Where 0% <= Relative humidity <= 100%, corresponding to a MeasuredValue in
-     * the range 0 to 0x2710.
+     * Where 0% <= Relative humidity <= 100%, corresponding to a MeasuredValue in the range 0 to
+     * 0x2710.
      * <p>
      * The maximum resolution this format allows is 0.01%.
      * <p>
@@ -124,14 +127,14 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
+     * Synchronously get the <i>Measured Value</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * MeasuredValue represents the relative humidity in % as follows:-
      * <p>
      * MeasuredValue = 100 x Relative humidity
      * <p>
-     * Where 0% <= Relative humidity <= 100%, corresponding to a MeasuredValue in
-     * the range 0 to 0x2710.
+     * Where 0% <= Relative humidity <= 100%, corresponding to a MeasuredValue in the range 0 to
+     * 0x2710.
      * <p>
      * The maximum resolution this format allows is 0.01%.
      * <p>
@@ -162,14 +165,14 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
+     * Set reporting for the <i>Measured Value</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * MeasuredValue represents the relative humidity in % as follows:-
      * <p>
      * MeasuredValue = 100 x Relative humidity
      * <p>
-     * Where 0% <= Relative humidity <= 100%, corresponding to a MeasuredValue in
-     * the range 0 to 0x2710.
+     * Where 0% <= Relative humidity <= 100%, corresponding to a MeasuredValue in the range 0 to
+     * 0x2710.
      * <p>
      * The maximum resolution this format allows is 0.01%.
      * <p>
@@ -181,8 +184,8 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -191,10 +194,10 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
+     * Get the <i>Min Measured Value</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
-     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
-     * that can be measured. A value of 0xffff means this attribute is not defined
+     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue that can
+     * be measured. A value of 0xffff means this attribute is not defined
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -207,10 +210,10 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
+     * Synchronously get the <i>Min Measured Value</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
-     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
-     * that can be measured. A value of 0xffff means this attribute is not defined
+     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue that can
+     * be measured. A value of 0xffff means this attribute is not defined
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -235,10 +238,29 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
+     * Set reporting for the <i>Min Measured Value</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
-     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
-     * that can be measured. A value of 0xffff means this attribute is not defined.
+     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue that can
+     * be measured. A value of 0xffff means this attribute is not defined
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setMinMeasuredValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_MINMEASUREDVALUE), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Get the <i>Max Measured Value</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue that can
+     * be measured. A value of 0xffff means this attribute is not defined.
      * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <p>
@@ -255,10 +277,10 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
+     * Synchronously get the <i>Max Measured Value</i> attribute [attribute ID <b>0x0002</b>].
      * <p>
-     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
-     * that can be measured. A value of 0xffff means this attribute is not defined.
+     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue that can
+     * be measured. A value of 0xffff means this attribute is not defined.
      * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <p>
@@ -287,11 +309,34 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
+     * Set reporting for the <i>Max Measured Value</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue that can
+     * be measured. A value of 0xffff means this attribute is not defined.
+     * <p>
+     * MaxMeasuredValue shall be greater than MinMeasuredValue.
+     * <p>
+     * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> setMaxMeasuredValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_MAXMEASUREDVALUE), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Get the <i>Tolerance</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
      * The Tolerance attribute indicates the magnitude of the possible error that is
-     * associated with MeasuredValue . The true value is located in the range
-     * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
+     * associated with MeasuredValue . The true value is located in the range (MeasuredValue –
+     * Tolerance) to (MeasuredValue + Tolerance).
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -304,11 +349,11 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
+     * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
      * The Tolerance attribute indicates the magnitude of the possible error that is
-     * associated with MeasuredValue . The true value is located in the range
-     * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
+     * associated with MeasuredValue . The true value is located in the range (MeasuredValue –
+     * Tolerance) to (MeasuredValue + Tolerance).
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -330,25 +375,5 @@ public class ZclRelativeHumidityMeasurementCluster extends ZclCluster {
         }
 
         return (Integer) readSync(attributes.get(ATTR_TOLERANCE));
-    }
-
-    /**
-     * Set reporting for the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
-     * <p>
-     * The Tolerance attribute indicates the magnitude of the possible error that is
-     * associated with MeasuredValue . The true value is located in the range
-     * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
-     * @param reportableChange {@link Object} delta required to trigger report
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setToleranceReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOLERANCE), minInterval, maxInterval, reportableChange);
     }
 }

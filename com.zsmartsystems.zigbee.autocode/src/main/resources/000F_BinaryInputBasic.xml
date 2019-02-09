@@ -1,0 +1,87 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x000F">
+    <name>Binary Input (Basic)</name>
+    <description>The Binary Input (Basic) cluster provides an interface for reading the value of a binary measurement and accessing various characteristics of that measurement. The cluster is typically used to implement a sensor that measures a two-state physical quantity.</description>
+    <attribute code="0x0004" type="CHARACTER_STRING" side="server" optional="true" writable="true" reportable="false">
+        <name>Active Text</name>
+        <description>This attribute, of type Character string, MAY be used to hold a human readable description of the ACTIVE state of a binary PresentValue. For example, for a Binary Input cluster, if the physical input is a switch contact, then the ActiveText attribute might be assigned a value such as &#8220;Fan 1 On&#8221;. If either the ActiveText attribute or the InactiveText attribute are present, then both of them SHALL be present.</description>
+        <description>The character set used SHALL be ASCII, and the attribute SHALL contain a maximum of 16 characters, which SHALL be printable but are otherwise unrestricted.</description>
+    </attribute>
+    <attribute code="0x001C" type="CHARACTER_STRING" side="server" optional="true" writable="true" reportable="false">
+        <name>Description</name>
+        <description>The Description attribute, of type Character string, MAY be used to hold a description of the usage of the input, output or value, as appropriate to the cluster. The character set used SHALL be ASCII, and the attribute SHALL contain a maximum of 16 characters, which SHALL be printable but are otherwise unrestricted.</description>
+    </attribute>
+    <attribute code="0x002E" type="CHARACTER_STRING" side="server" optional="true" writable="true" reportable="false">
+        <name>Inactive Text</name>
+        <description>This attribute, of type Character string, MAY be used to hold a human readable description of the INACTIVE state of a binary PresentValue. For example, for a Binary Input cluster, if the physical input is a switch contact, then the InactiveText attribute might be assigned a value such as &#8220;Fan 1 Off&#8221;. If either the InactiveText attribute or the ActiveText attribute are present, then both of them SHALL be present.</description>
+        <description>The character set used SHALL be ASCII, and the attribute SHALL contain a maximum of 16 characters, which SHALL be printable but are otherwise unrestricted.</description>
+    </attribute>
+    <attribute code="0x0051" type="BOOLEAN" side="server" optional="false" writable="true" reportable="false">
+        <name>Out Of Service</name>
+        <description>The OutOfService attribute, of type Boolean, indicates whether (TRUE) or not (FALSE) the physical input, output or value that the cluster represents is not in service. For an Input cluster, when OutOfService is TRUE the PresentValue attribute is decoupled from the physical input and will not track changes to the  physical input. For an Output cluster, when OutOfService is TRUE the PresentValue attribute is decoupled from the physical output, so changes to PresentValue will not affect the physical output. For a Value cluster, when OutOfService is TRUE the PresentValue attribute MAY be written to freely by software local to the device that the cluster resides on.</description>
+    </attribute>
+    <attribute code="0x0054" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false">
+        <name>Polarity</name>
+        <description>This attribute, of type enumeration, indicates the relationship between the physical state of the input (or output as appropriate for the cluster) and the logical state represented by a binary PresentValue attribute, when OutOfService is FALSE. If the Polarity attribute is NORMAL (0), then the ACTIVE (1) state of the PresentValue attribute is also the ACTIVE or ON state of the physical input (or output). If the Polarity attribute is REVERSE (1), then the ACTIVE (1) state of the PresentValue attribute is the INACTIVE or OFF state of the physical input (or output).</description>
+        <description>Thus, when OutOfService is FALSE, for a constant physical input state a change in the Polarity attribute SHALL produce a change in the PresentValue attribute. If OutOfService is TRUE, then the Polarity attribute SHALL have no effect on the PresentValue attribute.</description>
+    </attribute>
+    <attribute code="0x0055" type="BOOLEAN" side="server" optional="false" writable="true" reportable="true">
+        <name>Present Value</name>
+        <description>The PresentValue attribute indicates the current value of the input, output or value, as appropriate  for the cluster. For Analog clusters it is of type single precision, for Binary clusters it is of type  Boolean, and for multistate clusters it is of type Unsigned 16-bit integer. The PresentValue attribute of an input cluster SHALL be writable when OutOfService is TRUE. When the PriorityArray attribute is implemented, writing to PresentValue SHALL be equivalent to writing to element 16 of PriorityArray, i.e., with a priority of 16.</description>
+    </attribute>
+    <attribute code="0x0067" type="ENUMERATION_8_BIT" side="server" class="BinaryInputReliabilityEnum" optional="true" writable="true" reportable="false">
+        <name>Reliability</name>
+        <description>The Reliability attribute, of type 8-bit enumeration, provides an indication of whether the PresentValueor the operation of the physical input, output or value in question (as appropriate for the cluster) is &#8220;reliable&#8221; as far as can be determined and, if not, why not. The Reliability attribute MAY have any of the following values:</description>
+        <description>NO-FAULT-DETECTED (0) OVER-RANGE (2) UNDER-RANGE (3) OPEN-LOOP (4) SHORTED-LOOP (5) UNRELIABLE-OTHER (7) PROCESS-ERROR (8) MULTI-STATE-FAULT (9) CONFIGURATION-ERROR (10)</description>
+    </attribute>
+    <attribute code="0x006F" type="BITMAP_8_BIT" side="server" class="BinaryInputStatusFlagsBitmap" optional="false" writable="false" reportable="true">
+        <name>Status Flags</name>
+        <description>This attribute, of type bitmap, represents four Boolean flags that indicate the general &#8220;health&#8221; of the analog sensor. Three of the flags are associated with the values of other optional attributes of this cluster. A more detailed status could be determined by reading the optional attributes (if supported) that are linked to these flags. The relationship between individual flags is not defined.</description>
+        <description>The four flags are Bit 0 = IN_ALARM, Bit 1 = FAULT, Bit 2 = OVERRIDDEN, Bit 3 = OUT OF SERVICE</description>
+        <description>where:</description>
+        <description>IN_ALARM -Logical FALSE (0) if the EventStateattribute has a value of NORMAL, otherwise logical TRUE (1). This bit is always 0 unless the cluster implementing the EventState attribute is implemented on the same endpoint.</description>
+        <description>FAULT -Logical TRUE (1) if the Reliability attribute is present and does not have a value of NO FAULT DETECTED, otherwise logical FALSE (0).</description>
+        <description>OVERRIDDEN -Logical TRUE (1) if the cluster has been overridden by some  mechanism local to the device. Otherwise, the value is logical FALSE (0). In this context, for an input cluster, &#8220;overridden&#8221; is taken to mean that the PresentValue and Reliability(optional) attributes are no longer tracking changes to the physical input. For an Output cluster, &#8220;overridden&#8221; is taken to mean that the physical output is no longer tracking changes to the PresentValue attribute and the Reliability attribute is no longer a reflection of the physical output. For a Value cluster, &#8220;overridden&#8221; is taken to mean that the PresentValue attribute is not writeable.</description>
+        <description>OUT OF SERVICE -Logical TRUE (1) if the OutOfService attribute has a value of TRUE, otherwise logical FALSE (0).</description>
+    </attribute>
+    <attribute code="0x0100" type="SIGNED_32_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Application Type</name>
+        <description>The ApplicationType attribute is an unsigned 32 bit integer that indicates the specific application usage for this cluster. (Note: This attribute has no BACnet equivalent). ApplicationType is subdivided into Group, Type and an Index number, as follows.</description>
+        <description>Group = Bits 24-31 An indication of the cluster this attribute is part of.</description>
+        <description>Type = Bits 16-23 For Analog clusters, the physical quantity that the Present Value attribute of the cluster represents. For Binary and Multistate clusters, the application usage domain.</description>
+        <description>Index = Bits 0-15The specific application usage of the cluster.</description>
+    </attribute>
+
+    <constant class="BinaryInputReliabilityEnum">
+        <name>Reliability</name>
+        <value code="0x00" name="No - Fault - Detected">
+        </value>
+        <value code="0x02" name="Over - Range">
+        </value>
+        <value code="0x03" name="Under - Range">
+        </value>
+        <value code="0x04" name="Open - Loop">
+        </value>
+        <value code="0x05" name="Shorted - Loop">
+        </value>
+        <value code="0x07" name="Unreliable - Other">
+        </value>
+        <value code="0x08" name="Process - Error">
+        </value>
+        <value code="0x09" name="Multi - State - Fault">
+        </value>
+        <value code="0x0A" name="Configuration - Error">
+        </value>
+    </constant>
+    <constant class="BinaryInputStatusFlagsBitmap">
+        <name>Status Flags</name>
+        <value code="0x01" name="In_Alarm">
+        </value>
+        <value code="0x02" name="Fault">
+        </value>
+        <value code="0x04" name="Overridden">
+        </value>
+        <value code="0x08" name="Out Of Service">
+        </value>
+    </constant>
+</cluster>

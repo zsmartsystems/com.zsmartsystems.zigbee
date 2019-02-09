@@ -7,20 +7,21 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * Cache Request value object class.
  * <p>
- * The Mgmt_Cache_req is provided to enable ZigBee devices on the network to
- * retrieve a list of ZigBee End Devices registered with a Primary Discovery Cache
- * device. The destination addressing on this primitive shall be unicast.
+ * <p>
+ * The Mgmt_Cache_req is provided to enable ZigBee devices on the network to retrieve a list of
+ * ZigBee End Devices registered with a Primary Discovery Cache device. The destination
+ * addressing on this primitive shall be unicast.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class CacheRequest extends ZdoRequest {
     /**
      * Default constructor.

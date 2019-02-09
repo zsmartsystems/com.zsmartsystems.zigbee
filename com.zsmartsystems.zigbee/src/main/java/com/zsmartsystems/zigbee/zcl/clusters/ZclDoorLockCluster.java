@@ -34,13 +34,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <b>Door Lock</b> cluster implementation (<i>Cluster ID 0x0101</i>).
  * <p>
  * The door lock cluster provides an interface to a generic way to secure a door. The physical
- * object that pro- vides the locking functionality is abstracted from the cluster. The
- * cluster has a small list of mandatory at- tributes and functions and a list of optional
- * features.
+ * object that provides the locking functionality is abstracted from the cluster. The cluster
+ * has a small list of mandatory attributes and functions and a list of optional features.
  * <p>
  * Generally the door lock itself implements the server side of this cluster. The attributes
  * and commands listed in this cluster were developed to be implemented by a door lock which has
- * the ability to keep track of mul- tiple users and schedules.
+ * the ability to keep track of multiple users and schedules.
  * <p>
  * The door lock cluster provides several alarms which can be sent when there is a critical state
  * on the door lock. The alarms available for the door lock cluster are listed in the section
@@ -57,7 +56,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -192,7 +191,7 @@ public class ZclDoorLockCluster extends ZclCluster {
     /**
      * This bitmap contains all operating bits of the Operating Mode Attribute supported by
      * the lock. The value of the enumeration in “Operating Mode” defines the related bit to be
-     * set, as shown in Table 7-16. All bits supported by a lock SHALL be set to zero.
+     * set, as shown in Table 7-16. All bits supported by a lock shall be set to zero.
      */
     public static final int ATTR_SUPPORTEDOPERATINGMODES = 0x0026;
     /**
@@ -202,7 +201,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * example: LED, Auto Lock, Sound Volume, and Operating Mode attributes).
      * <p>
      * This is a read-only attribute and is intended to allow clients to determine what changes
-     * MAY need to be made without having to query all the included attributes. It MAY be
+     * may need to be made without having to query all the included attributes. It may be
      * beneficial for the clients to know what the device’s original settings were in the event
      * that the device needs to be restored to factory default settings.
      */
@@ -246,11 +245,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * attribute determines the behavior of the server’s TX operation. If it is false, then it
      * is not ok for the device to send PIN in any messages over the air.
      * <p>
-     * The PIN field within any door lock cluster message SHALL keep the first octet unchanged
+     * The PIN field within any door lock cluster message shall keep the first octet unchanged
      * and masks the actual code by replacing with 0xFF. For example (PIN "1234" ): If the
-     * attribute value is True, 0x04 0x31 0x32 0x33 0x34 SHALL be used in the PIN field in any door
+     * attribute value is True, 0x04 0x31 0x32 0x33 0x34 shall be used in the PIN field in any door
      * lock cluster message payload. If the attribute value is False, 0x04 0xFF 0xFF 0xFF 0xFF
-     * SHALL be used.
+     * shall be used.
      */
     public static final int ATTR_SENDPINOVERTHEAIR = 0x0032;
     /**
@@ -260,9 +259,9 @@ public class ZclDoorLockCluster extends ZclCluster {
      */
     public static final int ATTR_REQUIREPINFORRFOPERATION = 0x0033;
     /**
-     * Door locks MAY sometimes wish to implement a higher level of security within the
+     * Door locks may sometimes wish to implement a higher level of security within the
      * application protocol in additional to the default network security. For instance a
-     * door lock MAY wish to use additional APS security for cluster transactions. This
+     * door lock may wish to use additional APS security for cluster transactions. This
      * protects the door lock against being controlled by any other devices which have access
      * to the network key.
      * <p>
@@ -318,115 +317,49 @@ public class ZclDoorLockCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(43);
 
-        attributeMap.put(ATTR_LOCKSTATE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LOCKSTATE, "Lock State",
-                ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_LOCKTYPE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LOCKTYPE, "Lock Type",
-                ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ACTUATORENABLED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ACTUATORENABLED,
-                "Actuator Enabled", ZclDataType.BOOLEAN, true, true, false, false));
-        attributeMap.put(ATTR_DOORSTATE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_DOORSTATE, "Door State",
-                ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_DOOROPENEVENTS, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_DOOROPENEVENTS,
-                "Door Open Events", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_DOORCLOSEDEVENTS, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_DOORCLOSEDEVENTS,
-                "Door Closed Events", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_OPENPERIOD, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_OPENPERIOD, "Open Period",
-                ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_NUMLOCKRECORDSSUPPORTED,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMLOCKRECORDSSUPPORTED, "Num Lock Records Supported",
-                        ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMTOTALUSERSSUPPORTED,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMTOTALUSERSSUPPORTED, "Num Total Users Supported",
-                        ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMPINUSERSSUPPORTED,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMPINUSERSSUPPORTED, "Num PIN Users Supported",
-                        ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMRFIDUSERSSUPPORTED,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMRFIDUSERSSUPPORTED, "Num RFID Users Supported",
-                        ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER,
-                        "Num Weekday Schedules Supported Per User", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true,
-                        false, false));
-        attributeMap.put(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER,
-                        "Num Yearday Schedules Supported Per User", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true,
-                        false, false));
-        attributeMap.put(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER,
-                        "Num Holiday Schedules Supported Per User", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true,
-                        false, false));
-        attributeMap.put(ATTR_MAXPINLENGTH, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MAXPINLENGTH,
-                "Max PIN Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MINPINLENGTH, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MINPINLENGTH,
-                "Min PIN Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MAXRFIDCODELENGTH, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MAXRFIDCODELENGTH,
-                "Max RFID Code Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MINRFIDCODELENGTH, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MINRFIDCODELENGTH,
-                "Min RFID Code Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_ENABLELOGGING, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ENABLELOGGING,
-                "Enable Logging", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_LANGUAGE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LANGUAGE, "Language",
-                ZclDataType.CHARACTER_STRING, false, true, true, true));
-        attributeMap.put(ATTR_LEDSETTINGS, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LEDSETTINGS, "LED Settings",
-                ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_AUTORELOCKTIME, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_AUTORELOCKTIME,
-                "Auto Relock Time", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_SOUNDVOLUME, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_SOUNDVOLUME, "Sound Volume",
-                ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_OPERATINGMODE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_OPERATINGMODE,
-                "Operating Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
-        attributeMap.put(ATTR_SUPPORTEDOPERATINGMODES,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_SUPPORTEDOPERATINGMODES, "Supported Operating Modes",
-                        ZclDataType.BITMAP_16_BIT, true, true, false, false));
-        attributeMap.put(ATTR_DEFAULTCONFIGURATIONREGISTER,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_DEFAULTCONFIGURATIONREGISTER,
-                        "Default Configuration Register", ZclDataType.BITMAP_16_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ENABLELOCALPROGRAMMING, new ZclAttribute(ZclClusterType.DOOR_LOCK,
-                ATTR_ENABLELOCALPROGRAMMING, "Enable Local Programming", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_ENABLEONETOUCHLOCKING, new ZclAttribute(ZclClusterType.DOOR_LOCK,
-                ATTR_ENABLEONETOUCHLOCKING, "Enable One Touch Locking", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_ENABLEINSIDESTATUSLED, new ZclAttribute(ZclClusterType.DOOR_LOCK,
-                ATTR_ENABLEINSIDESTATUSLED, "Enable Inside Status Led", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_ENABLEPRIVACYMODEBUTTON,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ENABLEPRIVACYMODEBUTTON, "Enable Privacy Mode Button",
-                        ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_WRONGCODEENTRYLIMIT, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_WRONGCODEENTRYLIMIT,
-                "Wrong Code Entry Limit", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_USERCODETEMPORARYDISABLETIME,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_USERCODETEMPORARYDISABLETIME,
-                        "User Code Temporary Disable Time", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true,
-                        true));
-        attributeMap.put(ATTR_SENDPINOVERTHEAIR, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_SENDPINOVERTHEAIR,
-                "Send PIN Over The Air", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_REQUIREPINFORRFOPERATION,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_REQUIREPINFORRFOPERATION,
-                        "Require PIN For RF Operation", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_ZIGBEESECURITYLEVEL, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ZIGBEESECURITYLEVEL,
-                "Zigbee Security Level", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ALARMMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ALARMMASK, "Alarm Mask",
-                ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_KEYPADOPERATIONEVENTMASK,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_KEYPADOPERATIONEVENTMASK, "Keypad Operation Event Mask",
-                        ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_RFOPERATIONEVENTMASK,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFOPERATIONEVENTMASK, "RF Operation Event Mask",
-                        ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_MANUALOPERATIONEVENTMASK,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MANUALOPERATIONEVENTMASK, "Manual Operation Event Mask",
-                        ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_RFIDOPERATIONEVENTMASK,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFIDOPERATIONEVENTMASK, "RFID Operation Event Mask",
-                        ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_KEYPADPROGRAMMINGEVENTMASK,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_KEYPADPROGRAMMINGEVENTMASK,
-                        "Keypad Programming Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_RFPROGRAMMINGEVENTMASK,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFPROGRAMMINGEVENTMASK, "RF Programming Event Mask",
-                        ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_RFIDPROGRAMMINGEVENTMASK,
-                new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFIDPROGRAMMINGEVENTMASK, "RFID Programming Event Mask",
-                        ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_LOCKSTATE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LOCKSTATE, "Lock State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_LOCKTYPE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LOCKTYPE, "Lock Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_ACTUATORENABLED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ACTUATORENABLED, "Actuator Enabled", ZclDataType.BOOLEAN, true, true, false, false));
+        attributeMap.put(ATTR_DOORSTATE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_DOORSTATE, "Door State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_DOOROPENEVENTS, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_DOOROPENEVENTS, "Door Open Events", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_DOORCLOSEDEVENTS, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_DOORCLOSEDEVENTS, "Door Closed Events", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_OPENPERIOD, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_OPENPERIOD, "Open Period", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_NUMLOCKRECORDSSUPPORTED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMLOCKRECORDSSUPPORTED, "Num Lock Records Supported", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMTOTALUSERSSUPPORTED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMTOTALUSERSSUPPORTED, "Num Total Users Supported", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMPINUSERSSUPPORTED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMPINUSERSSUPPORTED, "Num PIN Users Supported", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMRFIDUSERSSUPPORTED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMRFIDUSERSSUPPORTED, "Num RFID Users Supported", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER, "Num Weekday Schedules Supported Per User", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER, "Num Yearday Schedules Supported Per User", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER, "Num Holiday Schedules Supported Per User", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MAXPINLENGTH, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MAXPINLENGTH, "Max PIN Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MINPINLENGTH, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MINPINLENGTH, "Min PIN Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MAXRFIDCODELENGTH, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MAXRFIDCODELENGTH, "Max RFID Code Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MINRFIDCODELENGTH, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MINRFIDCODELENGTH, "Min RFID Code Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_ENABLELOGGING, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ENABLELOGGING, "Enable Logging", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_LANGUAGE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LANGUAGE, "Language", ZclDataType.CHARACTER_STRING, false, true, true, true));
+        attributeMap.put(ATTR_LEDSETTINGS, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LEDSETTINGS, "LED Settings", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_AUTORELOCKTIME, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_AUTORELOCKTIME, "Auto Relock Time", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_SOUNDVOLUME, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_SOUNDVOLUME, "Sound Volume", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_OPERATINGMODE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_OPERATINGMODE, "Operating Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
+        attributeMap.put(ATTR_SUPPORTEDOPERATINGMODES, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_SUPPORTEDOPERATINGMODES, "Supported Operating Modes", ZclDataType.BITMAP_16_BIT, true, true, false, false));
+        attributeMap.put(ATTR_DEFAULTCONFIGURATIONREGISTER, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_DEFAULTCONFIGURATIONREGISTER, "Default Configuration Register", ZclDataType.BITMAP_16_BIT, true, true, false, false));
+        attributeMap.put(ATTR_ENABLELOCALPROGRAMMING, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ENABLELOCALPROGRAMMING, "Enable Local Programming", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_ENABLEONETOUCHLOCKING, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ENABLEONETOUCHLOCKING, "Enable One Touch Locking", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_ENABLEINSIDESTATUSLED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ENABLEINSIDESTATUSLED, "Enable Inside Status Led", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_ENABLEPRIVACYMODEBUTTON, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ENABLEPRIVACYMODEBUTTON, "Enable Privacy Mode Button", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_WRONGCODEENTRYLIMIT, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_WRONGCODEENTRYLIMIT, "Wrong Code Entry Limit", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_USERCODETEMPORARYDISABLETIME, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_USERCODETEMPORARYDISABLETIME, "User Code Temporary Disable Time", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_SENDPINOVERTHEAIR, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_SENDPINOVERTHEAIR, "Send PIN Over The Air", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_REQUIREPINFORRFOPERATION, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_REQUIREPINFORRFOPERATION, "Require PIN For RF Operation", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_ZIGBEESECURITYLEVEL, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ZIGBEESECURITYLEVEL, "ZigBee Security Level", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_ALARMMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ALARMMASK, "Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_KEYPADOPERATIONEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_KEYPADOPERATIONEVENTMASK, "Keypad Operation Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_RFOPERATIONEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFOPERATIONEVENTMASK, "RF Operation Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_MANUALOPERATIONEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MANUALOPERATIONEVENTMASK, "Manual Operation Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_RFIDOPERATIONEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFIDOPERATIONEVENTMASK, "RFID Operation Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_KEYPADPROGRAMMINGEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_KEYPADPROGRAMMINGEVENTMASK, "Keypad Programming Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_RFPROGRAMMINGEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFPROGRAMMINGEVENTMASK, "RF Programming Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_RFIDPROGRAMMINGEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFIDPROGRAMMINGEVENTMASK, "RFID Programming Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
 
         return attributeMap;
     }
@@ -915,8 +848,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setNumLockRecordsSupportedReporting(final int minInterval, final int maxInterval,
-            final Object reportableChange) {
+    public Future<CommandResult> setNumLockRecordsSupportedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(attributes.get(ATTR_NUMLOCKRECORDSSUPPORTED), minInterval, maxInterval, reportableChange);
     }
 
@@ -979,8 +911,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setNumTotalUsersSupportedReporting(final int minInterval, final int maxInterval,
-            final Object reportableChange) {
+    public Future<CommandResult> setNumTotalUsersSupportedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(attributes.get(ATTR_NUMTOTALUSERSSUPPORTED), minInterval, maxInterval, reportableChange);
     }
 
@@ -1040,8 +971,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setNumPinUsersSupportedReporting(final int minInterval, final int maxInterval,
-            final Object reportableChange) {
+    public Future<CommandResult> setNumPinUsersSupportedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(attributes.get(ATTR_NUMPINUSERSSUPPORTED), minInterval, maxInterval, reportableChange);
     }
 
@@ -1101,8 +1031,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setNumRfidUsersSupportedReporting(final int minInterval, final int maxInterval,
-            final Object reportableChange) {
+    public Future<CommandResult> setNumRfidUsersSupportedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(attributes.get(ATTR_NUMRFIDUSERSSUPPORTED), minInterval, maxInterval, reportableChange);
     }
 
@@ -1162,10 +1091,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setNumWeekdaySchedulesSupportedPerUserReporting(final int minInterval,
-            final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER), minInterval, maxInterval,
-                reportableChange);
+    public Future<CommandResult> setNumWeekdaySchedulesSupportedPerUserReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1224,10 +1151,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setNumYeardaySchedulesSupportedPerUserReporting(final int minInterval,
-            final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER), minInterval, maxInterval,
-                reportableChange);
+    public Future<CommandResult> setNumYeardaySchedulesSupportedPerUserReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1286,10 +1211,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setNumHolidaySchedulesSupportedPerUserReporting(final int minInterval,
-            final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER), minInterval, maxInterval,
-                reportableChange);
+    public Future<CommandResult> setNumHolidaySchedulesSupportedPerUserReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(attributes.get(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1354,8 +1277,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setMaxPinLengthReporting(final int minInterval, final int maxInterval,
-            final Object reportableChange) {
+    public Future<CommandResult> setMaxPinLengthReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(attributes.get(ATTR_MAXPINLENGTH), minInterval, maxInterval, reportableChange);
     }
 
@@ -1421,8 +1343,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setMinPinLengthReporting(final int minInterval, final int maxInterval,
-            final Object reportableChange) {
+    public Future<CommandResult> setMinPinLengthReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(attributes.get(ATTR_MINPINLENGTH), minInterval, maxInterval, reportableChange);
     }
 
@@ -1491,8 +1412,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setMaxRfidCodeLengthReporting(final int minInterval, final int maxInterval,
-            final Object reportableChange) {
+    public Future<CommandResult> setMaxRfidCodeLengthReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(attributes.get(ATTR_MAXRFIDCODELENGTH), minInterval, maxInterval, reportableChange);
     }
 
@@ -1561,8 +1481,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setMinRfidCodeLengthReporting(final int minInterval, final int maxInterval,
-            final Object reportableChange) {
+    public Future<CommandResult> setMinRfidCodeLengthReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(attributes.get(ATTR_MINRFIDCODELENGTH), minInterval, maxInterval, reportableChange);
     }
 
@@ -1946,7 +1865,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * <p>
      * This bitmap contains all operating bits of the Operating Mode Attribute supported by
      * the lock. The value of the enumeration in “Operating Mode” defines the related bit to be
-     * set, as shown in Table 7-16. All bits supported by a lock SHALL be set to zero.
+     * set, as shown in Table 7-16. All bits supported by a lock shall be set to zero.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1963,7 +1882,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * <p>
      * This bitmap contains all operating bits of the Operating Mode Attribute supported by
      * the lock. The value of the enumeration in “Operating Mode” defines the related bit to be
-     * set, as shown in Table 7-16. All bits supported by a lock SHALL be set to zero.
+     * set, as shown in Table 7-16. All bits supported by a lock shall be set to zero.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1992,7 +1911,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * <p>
      * This bitmap contains all operating bits of the Operating Mode Attribute supported by
      * the lock. The value of the enumeration in “Operating Mode” defines the related bit to be
-     * set, as shown in Table 7-16. All bits supported by a lock SHALL be set to zero.
+     * set, as shown in Table 7-16. All bits supported by a lock shall be set to zero.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -2015,7 +1934,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * example: LED, Auto Lock, Sound Volume, and Operating Mode attributes).
      * <p>
      * This is a read-only attribute and is intended to allow clients to determine what changes
-     * MAY need to be made without having to query all the included attributes. It MAY be
+     * may need to be made without having to query all the included attributes. It may be
      * beneficial for the clients to know what the device’s original settings were in the event
      * that the device needs to be restored to factory default settings.
      * <p>
@@ -2038,7 +1957,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * example: LED, Auto Lock, Sound Volume, and Operating Mode attributes).
      * <p>
      * This is a read-only attribute and is intended to allow clients to determine what changes
-     * MAY need to be made without having to query all the included attributes. It MAY be
+     * may need to be made without having to query all the included attributes. It may be
      * beneficial for the clients to know what the device’s original settings were in the event
      * that the device needs to be restored to factory default settings.
      * <p>
@@ -2073,7 +1992,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * example: LED, Auto Lock, Sound Volume, and Operating Mode attributes).
      * <p>
      * This is a read-only attribute and is intended to allow clients to determine what changes
-     * MAY need to be made without having to query all the included attributes. It MAY be
+     * may need to be made without having to query all the included attributes. It may be
      * beneficial for the clients to know what the device’s original settings were in the event
      * that the device needs to be restored to factory default settings.
      * <p>
@@ -2085,8 +2004,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setDefaultConfigurationRegisterReporting(final int minInterval,
-            final int maxInterval) {
+    public Future<CommandResult> setDefaultConfigurationRegisterReporting(final int minInterval, final int maxInterval) {
         return setReporting(attributes.get(ATTR_DEFAULTCONFIGURATIONREGISTER), minInterval, maxInterval);
     }
 
@@ -2475,11 +2393,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * attribute determines the behavior of the server’s TX operation. If it is false, then it
      * is not ok for the device to send PIN in any messages over the air.
      * <p>
-     * The PIN field within any door lock cluster message SHALL keep the first octet unchanged
+     * The PIN field within any door lock cluster message shall keep the first octet unchanged
      * and masks the actual code by replacing with 0xFF. For example (PIN "1234" ): If the
-     * attribute value is True, 0x04 0x31 0x32 0x33 0x34 SHALL be used in the PIN field in any door
+     * attribute value is True, 0x04 0x31 0x32 0x33 0x34 shall be used in the PIN field in any door
      * lock cluster message payload. If the attribute value is False, 0x04 0xFF 0xFF 0xFF 0xFF
-     * SHALL be used.
+     * shall be used.
      * <p>
      * The attribute is of type {@link Boolean}.
      * <p>
@@ -2499,11 +2417,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * attribute determines the behavior of the server’s TX operation. If it is false, then it
      * is not ok for the device to send PIN in any messages over the air.
      * <p>
-     * The PIN field within any door lock cluster message SHALL keep the first octet unchanged
+     * The PIN field within any door lock cluster message shall keep the first octet unchanged
      * and masks the actual code by replacing with 0xFF. For example (PIN "1234" ): If the
-     * attribute value is True, 0x04 0x31 0x32 0x33 0x34 SHALL be used in the PIN field in any door
+     * attribute value is True, 0x04 0x31 0x32 0x33 0x34 shall be used in the PIN field in any door
      * lock cluster message payload. If the attribute value is False, 0x04 0xFF 0xFF 0xFF 0xFF
-     * SHALL be used.
+     * shall be used.
      * <p>
      * The attribute is of type {@link Boolean}.
      * <p>
@@ -2522,11 +2440,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * attribute determines the behavior of the server’s TX operation. If it is false, then it
      * is not ok for the device to send PIN in any messages over the air.
      * <p>
-     * The PIN field within any door lock cluster message SHALL keep the first octet unchanged
+     * The PIN field within any door lock cluster message shall keep the first octet unchanged
      * and masks the actual code by replacing with 0xFF. For example (PIN "1234" ): If the
-     * attribute value is True, 0x04 0x31 0x32 0x33 0x34 SHALL be used in the PIN field in any door
+     * attribute value is True, 0x04 0x31 0x32 0x33 0x34 shall be used in the PIN field in any door
      * lock cluster message payload. If the attribute value is False, 0x04 0xFF 0xFF 0xFF 0xFF
-     * SHALL be used.
+     * shall be used.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -2615,11 +2533,11 @@ public class ZclDoorLockCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Zigbee Security Level</i> attribute [attribute ID <b>0x0034</b>].
+     * Get the <i>ZigBee Security Level</i> attribute [attribute ID <b>0x0034</b>].
      * <p>
-     * Door locks MAY sometimes wish to implement a higher level of security within the
+     * Door locks may sometimes wish to implement a higher level of security within the
      * application protocol in additional to the default network security. For instance a
-     * door lock MAY wish to use additional APS security for cluster transactions. This
+     * door lock may wish to use additional APS security for cluster transactions. This
      * protects the door lock against being controlled by any other devices which have access
      * to the network key.
      * <p>
@@ -2637,11 +2555,11 @@ public class ZclDoorLockCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Zigbee Security Level</i> attribute [attribute ID <b>0x0034</b>].
+     * Synchronously get the <i>ZigBee Security Level</i> attribute [attribute ID <b>0x0034</b>].
      * <p>
-     * Door locks MAY sometimes wish to implement a higher level of security within the
+     * Door locks may sometimes wish to implement a higher level of security within the
      * application protocol in additional to the default network security. For instance a
-     * door lock MAY wish to use additional APS security for cluster transactions. This
+     * door lock may wish to use additional APS security for cluster transactions. This
      * protects the door lock against being controlled by any other devices which have access
      * to the network key.
      * <p>
@@ -2671,11 +2589,11 @@ public class ZclDoorLockCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Zigbee Security Level</i> attribute [attribute ID <b>0x0034</b>].
+     * Set reporting for the <i>ZigBee Security Level</i> attribute [attribute ID <b>0x0034</b>].
      * <p>
-     * Door locks MAY sometimes wish to implement a higher level of security within the
+     * Door locks may sometimes wish to implement a higher level of security within the
      * application protocol in additional to the default network security. For instance a
-     * door lock MAY wish to use additional APS security for cluster transactions. This
+     * door lock may wish to use additional APS security for cluster transactions. This
      * protects the door lock against being controlled by any other devices which have access
      * to the network key.
      * <p>
@@ -3192,7 +3110,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The Lock Door Command
      * <p>
      * This command causes the lock device to lock the door. As of HA 1.2, this command includes
-     * an optional code for the lock. The door lock MAY require a PIN depending on the value of the
+     * an optional code for the lock. The door lock may require a PIN depending on the value of the
      * [Require PIN for RF Operation attribute]
      *
      * @param pinCode {@link ByteArray} PIN Code
@@ -3211,7 +3129,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The Unlock Door Command
      * <p>
      * This command causes the lock device to unlock the door. As of HA 1.2, this command
-     * includes an optional code for the lock. The door lock MAY require a code depending on the
+     * includes an optional code for the lock. The door lock may require a code depending on the
      * value of the [Require PIN for RF Operation attribute].
      * <p>
      *
@@ -3235,7 +3153,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The Toggle
      * <p>
      * Request the status of the lock. As of HA 1.2, this command includes an optional code for
-     * the lock. The door lock MAY require a code depending on the value of the [Require PIN for RF
+     * the lock. The door lock may require a code depending on the value of the [Require PIN for RF
      * Operation attribute]
      *
      * @param pin {@link String} PIN
@@ -3258,7 +3176,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * automatically. This timeout parameter is only temporary for this message transition
      * only and overrides the default relock time as specified in the [Auto Relock Time
      * attribute] attribute. If the door lock device is not capable of or does not want to
-     * support temporary Relock Timeout, it SHOULD not support this optional command.
+     * support temporary Relock Timeout, it should not support this optional command.
      *
      * @param timeoutInSeconds {@link Integer} Timeout In Seconds
      * @param pin {@link String} PIN
@@ -3278,10 +3196,10 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The Lock Door Response
      * <p>
      * This command is sent in response to a Lock command with one status byte payload. The
-     * Status field SHALL be set to SUCCESS or FAILURE.
+     * Status field shall be set to SUCCESS or FAILURE.
      * <p>
      * The status byte only indicates if the message has received successfully. To determine
-     * the lock and/or door status, the client SHOULD query to [Lock State attribute] and [Door
+     * the lock and/or door status, the client should query to [Lock State attribute] and [Door
      * State attribute]
      *
      * @param status {@link Integer} Status
@@ -3300,10 +3218,10 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The Unlock Door Response
      * <p>
      * This command is sent in response to a Toggle command with one status byte payload. The
-     * Status field SHALL be set to SUCCESS or FAILURE.
+     * Status field shall be set to SUCCESS or FAILURE.
      * <p>
      * The status byte only indicates if the message has received successfully. To determine
-     * the lock and/or door status, the client SHOULD query to [Lock State attribute] and [Door
+     * the lock and/or door status, the client should query to [Lock State attribute] and [Door
      * State attribute].
      *
      * @param status {@link Integer} Status
@@ -3322,10 +3240,10 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The Toggle Response
      * <p>
      * This command is sent in response to a Toggle command with one status byte payload. The
-     * Status field SHALL be set to SUCCESS or FAILURE.
+     * Status field shall be set to SUCCESS or FAILURE.
      * <p>
      * The status byte only indicates if the message has received successfully. To determine
-     * the lock and/or door status, the client SHOULD query to [Lock State attribute] and [Door
+     * the lock and/or door status, the client should query to [Lock State attribute] and [Door
      * State attribute].
      *
      * @param status {@link Integer} Status
@@ -3344,10 +3262,10 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The Unlock With Timeout Response
      * <p>
      * This command is sent in response to an Unlock with Timeout command with one status byte
-     * payload. The Status field SHALL be set to SUCCESS or FAILURE.
+     * payload. The Status field shall be set to SUCCESS or FAILURE.
      * <p>
      * The status byte only indicates if the message has received successfully. To determine
-     * status, the client SHOULD query to [Lock State attribute] and [Door State attribute].
+     * status, the client should query to [Lock State attribute] and [Door State attribute].
      *
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future

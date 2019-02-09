@@ -1,0 +1,69 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0006">
+    <name>On/Off</name>
+    <description>Attributes and commands for switching devices between &#8216;On&#8217; and &#8216;Off&#8217; states.</description>
+    <command code="0x00" source="client">
+        <name>Off Command</name>
+        <description>On receipt of this command, a device SHALL enter its ‘Off’ state. This state is device dependent, but it is recommended that it is used for power off or similar functions. On receipt of the Off command, the OnTime attribute SHALL be set to 0x0000.</description>
+    </command>
+    <command code="0x01" source="client">
+        <name>On Command</name>
+        <description>On receipt of this command, a device SHALL enter its ‘On’ state. This state is device dependent, but it is recommended that it is used for power on or similar functions. On receipt of the On command, if the value of the OnTime attribute is equal to 0x0000, the device SHALL set the OffWaitTime attribute to 0x0000.</description>
+    </command>
+    <command code="0x02" source="client">
+        <name>Toggle Command</name>
+        <description>On receipt of this command, if a device is in its ‘Off’ state it SHALL enter its ‘On’ state. Otherwise, if it is in its ‘On’ state it SHALL enter its ‘Off’ state. On receipt of the Toggle command, if the value of the OnOff attribute is equal to 0x00 and if the value of the OnTime attribute is equal to 0x0000, the device SHALL set the OffWaitTime attribute to 0x0000. If the value of the OnOff attribute is equal to 0x01, the OnTime attribute SHALL be set to 0x0000.</description>
+    </command>
+    <command code="0x40" source="client">
+        <name>Off With Effect Command</name>
+        <description>The Off With Effect command allows devices to be turned off using enhanced ways of fading.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Effect Identifier</name>
+            <description>The Effect Identifier field is 8-bits in length and specifies the fading effect to use when switching the device off.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Effect Variant</name>
+            <description>The Effect Variant field is 8-bits in length and is used to indicate which variant of the effect, indicated in the Effect Identifier field, SHOULD be triggered. If a device does not support the given variant, it SHALL use the default variant. This field is dependent on the value of the Effect Identifier field.</description>
+        </field>
+    </command>
+    <command code="0x41" source="client">
+        <name>On With Recall Global Scene Command</name>
+        <description>The On With Recall Global Scene command allows the recall of the settings when the device was turned off.</description>
+    </command>
+    <command code="0x42" source="client">
+        <name>On With Timed Off Command</name>
+        <description>The On With Timed Off command allows devices to be turned on for a specific duration with a guarded off duration so that SHOULD the device be subsequently switched off, further On With Timed Off commands, received during this time, are prevented from turning the devices back on. Note that the device can be periodically re-kicked by subsequent On With Timed Off commands, e.g., from an on/off sensor.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>On Off Control</name>
+            <description>The On/Off Control field is 8-bits in length and contains information on how the device is to be operated.</description>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>On Time</name>
+            <description>The On Time field is 16 bits in length and specifies the length of time (in 1/10ths second) that the device is to remain  &#8220;on&#8221;,  i.e., with its OnOffattribute equal to 0x01, before automatically turning &#8220;off&#8221;. This field SHALL be specified in the range 0x0000&#8211;0xfffe. The Off Wait Time field is 16 bits in length and specifies the length of time (in 1/10ths second) that the device SHALL remain &#8220;off&#8221;, i.e., with its OnOffattribute equal to 0x00, and guarded to prevent an on command turning the device back &#8220;on&#8221;. This field SHALL be specified in the range 0x0000&#8211;0xfffe.</description>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Off Wait Time</name>
+        </field>
+    </command>
+
+    <attribute code="0x0000" type="BOOLEAN" side="server" optional="false" writable="false" reportable="true">
+        <name>On Off</name>
+        <description>The OnOff attribute has the following values: 0 = Off, 1 = On</description>
+    </attribute>
+    <attribute code="0x4000" type="BOOLEAN" side="server" optional="false" writable="false" reportable="false">
+        <name>Global Scene Control</name>
+        <description>In order to support the use case where the user gets back the last setting of the devices (e.g. level settings for lamps), a global scene is introduced which is stored when the devices are turned off and recalled when the devices are turned on. The global scene is defined as the scene that is stored with group identifier 0 and scene identifier 0.</description>
+        <description>The GlobalSceneControl attribute is defined in order to prevent a second off command storing the all-devices-off situation as a global scene, and to prevent a second on command destroying the current settings by going back to the global scene.</description>
+        <description>The GlobalSceneControl attribute SHALL be set to TRUE after the reception of a command which causes the OnOff attribute to be set to TRUE, such as a standard On command, a Move to level (with on/off) command, a Recall scene command or a On with recall global scene command.</description>
+        <description>The GlobalSceneControl attribute is set to FALSE after reception of a Off with effect command.</description>
+    </attribute>
+    <attribute code="0x4001" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="true" reportable="false">
+        <name>On Time</name>
+        <description>The OnTime attribute specifies the length of time (in 1/10ths second) that the &#8220;on&#8221; state SHALL be maintained before automatically transitioning to the &#8220;off&#8221; state when using the On with timed off command. If this attribute is set to 0x0000 or 0xffff, the device SHALL remain in its current state.</description>
+    </attribute>
+    <attribute code="0x4002" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="true" reportable="false">
+        <name>Off Wait Time</name>
+        <description>The OffWaitTime attribute specifies the length of time (in 1/10ths second) that the &#8220;off&#8221; state SHALL be guarded to prevent an on command turning the device back to its &#8220;on&#8221; state (e.g., when leaving a room, the lights are turned off but an occupancy sensor detects the leaving person and attempts to turn the lights back on). If this attribute is set to 0x0000, the device SHALL remain in its current state.</description>
+    </attribute>
+
+</cluster>

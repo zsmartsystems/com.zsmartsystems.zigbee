@@ -7,6 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
@@ -29,22 +35,18 @@ import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepSaturationCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-import javax.annotation.Generated;
 
 /**
  * <b>Color Control</b> cluster implementation (<i>Cluster ID 0x0300</i>).
  * <p>
- * This cluster provides an interface for changing the color of a light. Color is
- * specified according to the Commission Internationale de l'Éclairage (CIE)
- * specification CIE 1931 Color Space, [B4]. Color control is carried out in terms of
- * x,y values, as defined by this specification.
+ * This cluster provides an interface for changing the color of a light. Color is specified
+ * according to the Commission Internationale de l'Éclairage (CIE) specification CIE 1931
+ * Color Space, [B4]. Color control is carried out in terms of x,y values, as defined by this
+ * specification.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:39:00Z")
 public class ZclColorControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -58,35 +60,34 @@ public class ZclColorControlCluster extends ZclCluster {
 
     // Attribute constants
     /**
-     * The CurrentHue attribute contains the current hue value of the light. It is updated
-     * as fast as practical during commands that change the hue.
+     * The CurrentHue attribute contains the current hue value of the light. It is updated as
+     * fast as practical during commands that change the hue.
      * <p>
-     * The hue in degrees shall be related to the CurrentHue attribute by the relationship
-     * Hue = CurrentHue x 360 / 254 (CurrentHue in the range 0 - 254 inclusive)
+     * The hue in degrees shall be related to the CurrentHue attribute by the relationship Hue =
+     * CurrentHue x 360 / 254 (CurrentHue in the range 0 - 254 inclusive)
      * <p>
-     * If this attribute is implemented then the CurrentSaturation and ColorMode
-     * attributes shall also be implemented.
+     * If this attribute is implemented then the CurrentSaturation and ColorMode attributes
+     * shall also be implemented.
      */
     public static final int ATTR_CURRENTHUE = 0x0000;
     /**
      * The CurrentSaturation attribute holds the current saturation value of the light. It is
-     * updated as fast as practical during commands that change the saturation.
-     * The saturation shall be related to the CurrentSaturation attribute by the
-     * relationship
-     * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254 inclusive)
-     * If this attribute is implemented then the CurrentHue and ColorMode attributes
-     * shall also be implemented.
+     * updated as fast as practical during commands that change the saturation. The
+     * saturation shall be related to the CurrentSaturation attribute by the relationship
+     * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254
+     * inclusive) If this attribute is implemented then the CurrentHue and ColorMode
+     * attributes shall also be implemented.
      */
     public static final int ATTR_CURRENTSATURATION = 0x0001;
     /**
-     * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
-     * until the currently active command will be complete.
+     * The RemainingTime attribute holds the time remaining, in 1/10ths of a second, until the
+     * currently active command will be complete.
      */
     public static final int ATTR_REMAININGTIME = 0x0002;
     /**
      * The CurrentX attribute contains the current value of the normalized chromaticity
-     * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical
-     * during commands that change the color.
+     * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical during
+     * commands that change the color.
      * <p>
      * The value of x shall be related to the CurrentX attribute by the relationship
      * <p>
@@ -95,8 +96,8 @@ public class ZclColorControlCluster extends ZclCluster {
     public static final int ATTR_CURRENTX = 0x0003;
     /**
      * The CurrentY attribute contains the current value of the normalized chromaticity
-     * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical
-     * during commands that change the color.
+     * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical during
+     * commands that change the color.
      * <p>
      * The value of y shall be related to the CurrentY attribute by the relationship
      * <p>
@@ -109,121 +110,128 @@ public class ZclColorControlCluster extends ZclCluster {
      */
     public static final int ATTR_DRIFTCOMPENSATION = 0x0005;
     /**
-     * The CompensationText attribute holds a textual indication of what mechanism, if
-     * any, is in use to compensate for color/intensity drift over time.
+     * The CompensationText attribute holds a textual indication of what mechanism, if any,
+     * is in use to compensate for color/intensity drift over time.
      */
     public static final int ATTR_COMPENSATIONTEXT = 0x0006;
     /**
-     * The ColorTemperature attribute contains a scaled inverse of the current value of
-     * the color temperature. It is updated as fast as practical during commands that
-     * change the color.
+     * The ColorTemperature attribute contains a scaled inverse of the current value of the
+     * color temperature. It is updated as fast as practical during commands that change the
+     * color.
      * <p>
      * The color temperature value in Kelvins shall be related to the ColorTemperature
      * attribute by the relationship
      * <p>
-     * Color temperature = 1,000,000 / ColorTemperature (ColorTemperature in the
-     * range 1 to 65279 inclusive, giving a color temperature range from 1,000,000
-     * Kelvins to 15.32 Kelvins).
+     * Color temperature = 1,000,000 / ColorTemperature (ColorTemperature in the range 1 to
+     * 65279 inclusive, giving a color temperature range from 1,000,000 Kelvins to 15.32
+     * Kelvins).
      * <p>
      * The value ColorTemperature = 0 indicates an undefined value. The value
      * ColorTemperature = 65535 indicates an invalid value.
      */
     public static final int ATTR_COLORTEMPERATURE = 0x0007;
     /**
-     * The ColorMode attribute indicates which attributes are currently determining the color of the device.
-     * If either the CurrentHue or CurrentSaturation attribute is implemented, this attribute SHALL also be
-     * implemented, otherwise it is optional. The value of the ColorMode attribute cannot be written directly
-     * - it is set upon reception of another command in to the appropriate mode for that command.
+     * The ColorMode attribute indicates which attributes are currently determining the
+     * color of the device. If either the CurrentHue or CurrentSaturation attribute is
+     * implemented, this attribute shall also be implemented, otherwise it is optional. The
+     * value of the ColorMode attribute cannot be written directly - it is set upon reception of
+     * another command in to the appropriate mode for that command.
      */
     public static final int ATTR_COLORMODE = 0x0008;
     /**
-     * The EnhancedCurrentHueattribute represents non-equidistant steps along the CIE 1931 color
-     * triangle, and it provides 16-bits precision. The upper 8 bits of this attribute SHALL be
-     * used as an index in the implementation specific XY lookup table to provide the non-equidistance
-     * steps (see the ZLL test specification for an example).  The lower 8 bits SHALL be used to
-     * interpolate between these steps in a linear way in order to provide color zoom for the user.
+     * The EnhancedCurrentHueattribute represents non-equidistant steps along the CIE
+     * 1931 color triangle, and it provides 16-bits precision. The upper 8 bits of this
+     * attribute shall be used as an index in the implementation specific XY lookup table to
+     * provide the non-equidistance steps (see the ZLL test specification for an example).
+     * The lower 8 bits shall be used to interpolate between these steps in a linear way in order
+     * to provide color zoom for the user.
      */
     public static final int ATTR_ENHANCEDCURRENTHUE = 0x4000;
     /**
-     * The EnhancedColorModeattribute specifies which attributes are currently determining the color of the device.
-     * To provide compatibility with standard ZCL, the original ColorModeattribute SHALLindicate ‘CurrentHueand CurrentSaturation’
+     * The EnhancedColorModeattribute specifies which attributes are currently
+     * determining the color of the device. To provide compatibility with standard ZCL, the
+     * original ColorModeattribute SHALLindicate ‘CurrentHueand CurrentSaturation’
      * when the light uses the EnhancedCurrentHueattribute.
      */
     public static final int ATTR_ENHANCEDCOLORMODE = 0x4001;
     /**
      * The ColorLoopActive attribute specifies the current active status of the color loop.
-     * If this attribute has the value 0x00, the color loop SHALLnot be active. If this attribute
-     * has the value 0x01, the color loop SHALL be active. All other values (0x02 – 0xff) are reserved.
+     * If this attribute has the value 0x00, the color loop SHALLnot be active. If this
+     * attribute has the value 0x01, the color loop shall be active. All other values (0x02 –
+     * 0xff) are reserved.
      */
     public static final int ATTR_COLORLOOPACTIVE = 0x4002;
     /**
      * The ColorLoopDirection attribute specifies the current direction of the color loop.
-     * If this attribute has the value 0x00, the EnhancedCurrentHue attribute SHALL be decremented.
-     * If this attribute has the value 0x01, the EnhancedCurrentHue attribute SHALL be incremented.
-     * All other values (0x02 – 0xff) are reserved.
+     * If this attribute has the value 0x00, the EnhancedCurrentHue attribute shall be
+     * decremented. If this attribute has the value 0x01, the EnhancedCurrentHue attribute
+     * shall be incremented. All other values (0x02 – 0xff) are reserved.
      */
     public static final int ATTR_COLORLOOPDIRECTION = 0x4003;
     /**
-     * The ColorLoopTime attribute specifies the number of seconds it SHALL take to perform a full
-     * color loop, i.e.,to cycle all values of the EnhancedCurrentHue attribute (between 0x0000 and 0xffff).
+     * The ColorLoopTime attribute specifies the number of seconds it shall take to perform a
+     * full color loop, i.e.,to cycle all values of the EnhancedCurrentHue attribute
+     * (between 0x0000 and 0xffff).
      */
     public static final int ATTR_COLORLOOPTIME = 0x4004;
     /**
-     * The ColorLoopStartEnhancedHueattribute specifies the value of the EnhancedCurrentHue attribute
-     * from which the color loop SHALL be started.
+     * The ColorLoopStartEnhancedHueattribute specifies the value of the
+     * EnhancedCurrentHue attribute from which the color loop shall be started.
      */
     public static final int ATTR_COLORLOOPSTARTHUE = 0x4005;
     /**
-     * The ColorLoopStoredEnhancedHue attribute specifies the value of the EnhancedCurrentHue attribute
-     * before the color loop was started. Once the color loop is complete, the EnhancedCurrentHue
-     * attribute SHALL be restored to this value.
+     * The ColorLoopStoredEnhancedHue attribute specifies the value of the
+     * EnhancedCurrentHue attribute before the color loop was started. Once the color loop is
+     * complete, the EnhancedCurrentHue attribute shall be restored to this value.
      */
     public static final int ATTR_COLORLOOPSTOREDHUE = 0x4006;
     /**
-     * The ColorCapabilitiesattribute specifies the color capabilities of the device supporting the
-     * color control cluster.
+     * The ColorCapabilitiesattribute specifies the color capabilities of the device
+     * supporting the color control cluster.
      * <p>
-     * Note:The support of the CurrentXand CurrentYattributes is mandatory regardless of color capabilities.
+     * Note:The support of the CurrentXand CurrentYattributes is mandatory regardless of
+     * color capabilities.
      */
     public static final int ATTR_COLORCAPABILITIES = 0x400A;
     /**
      * The ColorTempPhysicalMinMiredsattribute indicates the minimum mired value
      * supported by the hardware. ColorTempPhysicalMinMiredscorresponds to the maximum
-     * color temperature in kelvins supported by the hardware.
-     * ColorTempPhysicalMinMireds ≤ ColorTemperatureMireds
+     * color temperature in kelvins supported by the hardware. ColorTempPhysicalMinMireds
+     * ≤ ColorTemperatureMireds
      */
     public static final int ATTR_COLORTEMPERATUREMIN = 0x400B;
     /**
      * The ColorTempPhysicalMaxMiredsattribute indicates the maximum mired value
      * supported by the hard-ware. ColorTempPhysicalMaxMiredscorresponds to the minimum
-     * color temperature in kelvins supported by the hardware.
-     * ColorTemperatureMireds ≤ ColorTempPhysicalMaxMireds.
+     * color temperature in kelvins supported by the hardware. ColorTemperatureMireds ≤
+     * ColorTempPhysicalMaxMireds.
      */
     public static final int ATTR_COLORTEMPERATUREMAX = 0x400C;
 
     // Attribute initialisation
+    @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(19);
 
-        attributeMap.put(ATTR_CURRENTHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTHUE, "CurrentHue", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
-        attributeMap.put(ATTR_CURRENTSATURATION, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTSATURATION, "CurrentSaturation", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
-        attributeMap.put(ATTR_REMAININGTIME, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_REMAININGTIME, "RemainingTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_CURRENTX, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTX, "CurrentX", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
-        attributeMap.put(ATTR_CURRENTY, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTY, "CurrentY", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
-        attributeMap.put(ATTR_DRIFTCOMPENSATION, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_DRIFTCOMPENSATION, "DriftCompensation", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_COMPENSATIONTEXT, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COMPENSATIONTEXT, "CompensationText", ZclDataType.CHARACTER_STRING, false, true, false, false));
-        attributeMap.put(ATTR_COLORTEMPERATURE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORTEMPERATURE, "ColorTemperature", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, true));
-        attributeMap.put(ATTR_COLORMODE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORMODE, "ColorMode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_ENHANCEDCURRENTHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_ENHANCEDCURRENTHUE, "EnhancedCurrentHue", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, true));
-        attributeMap.put(ATTR_ENHANCEDCOLORMODE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_ENHANCEDCOLORMODE, "EnhancedColorMode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_COLORLOOPACTIVE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPACTIVE, "ColorLoopActive", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_COLORLOOPDIRECTION, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPDIRECTION, "ColorLoopDirection", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_COLORLOOPTIME, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPTIME, "ColorLoopTime", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_COLORLOOPSTARTHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPSTARTHUE, "ColorLoopStartHue", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_COLORLOOPSTOREDHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPSTOREDHUE, "ColorLoopStoredHue", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_COLORCAPABILITIES, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORCAPABILITIES, "ColorCapabilities", ZclDataType.BITMAP_16_BIT, false, true, false, false));
-        attributeMap.put(ATTR_COLORTEMPERATUREMIN, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORTEMPERATUREMIN, "ColorTemperatureMin", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_COLORTEMPERATUREMAX, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORTEMPERATUREMAX, "ColorTemperatureMax", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_CURRENTHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTHUE, "Current Hue", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
+        attributeMap.put(ATTR_CURRENTSATURATION, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTSATURATION, "Current Saturation", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
+        attributeMap.put(ATTR_REMAININGTIME, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_REMAININGTIME, "Remaining Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_CURRENTX, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTX, "Current X", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
+        attributeMap.put(ATTR_CURRENTY, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTY, "Current Y", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
+        attributeMap.put(ATTR_DRIFTCOMPENSATION, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_DRIFTCOMPENSATION, "Drift Compensation", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_COMPENSATIONTEXT, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COMPENSATIONTEXT, "Compensation Text", ZclDataType.CHARACTER_STRING, false, true, false, false));
+        attributeMap.put(ATTR_COLORTEMPERATURE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORTEMPERATURE, "Color Temperature", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, true));
+        attributeMap.put(ATTR_COLORMODE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORMODE, "Color Mode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_ENHANCEDCURRENTHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_ENHANCEDCURRENTHUE, "Enhanced Current Hue", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, true));
+        attributeMap.put(ATTR_ENHANCEDCOLORMODE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_ENHANCEDCOLORMODE, "Enhanced Color Mode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_COLORLOOPACTIVE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPACTIVE, "Color Loop Active", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COLORLOOPDIRECTION, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPDIRECTION, "Color Loop Direction", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COLORLOOPTIME, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPTIME, "Color Loop Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COLORLOOPSTARTHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPSTARTHUE, "Color Loop Start Hue", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COLORLOOPSTOREDHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORLOOPSTOREDHUE, "Color Loop Stored Hue", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COLORCAPABILITIES, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORCAPABILITIES, "Color Capabilities", ZclDataType.BITMAP_16_BIT, false, true, false, false));
+        attributeMap.put(ATTR_COLORTEMPERATUREMIN, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORTEMPERATUREMIN, "Color Temperature Min", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_COLORTEMPERATUREMAX, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORTEMPERATUREMAX, "Color Temperature Max", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
     }
@@ -231,23 +239,23 @@ public class ZclColorControlCluster extends ZclCluster {
     /**
      * Default constructor to create a Color Control cluster.
      *
-     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint} this cluster is contained within
      */
     public ZclColorControlCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
     /**
-     * Get the <i>CurrentHue</i> attribute [attribute ID <b>0</b>].
+     * Get the <i>Current Hue</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
-     * The CurrentHue attribute contains the current hue value of the light. It is updated
-     * as fast as practical during commands that change the hue.
+     * The CurrentHue attribute contains the current hue value of the light. It is updated as
+     * fast as practical during commands that change the hue.
      * <p>
-     * The hue in degrees shall be related to the CurrentHue attribute by the relationship
-     * Hue = CurrentHue x 360 / 254 (CurrentHue in the range 0 - 254 inclusive)
+     * The hue in degrees shall be related to the CurrentHue attribute by the relationship Hue =
+     * CurrentHue x 360 / 254 (CurrentHue in the range 0 - 254 inclusive)
      * <p>
-     * If this attribute is implemented then the CurrentSaturation and ColorMode
-     * attributes shall also be implemented.
+     * If this attribute is implemented then the CurrentSaturation and ColorMode attributes
+     * shall also be implemented.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -260,16 +268,16 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>CurrentHue</i> attribute [attribute ID <b>0</b>].
+     * Synchronously get the <i>Current Hue</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
-     * The CurrentHue attribute contains the current hue value of the light. It is updated
-     * as fast as practical during commands that change the hue.
+     * The CurrentHue attribute contains the current hue value of the light. It is updated as
+     * fast as practical during commands that change the hue.
      * <p>
-     * The hue in degrees shall be related to the CurrentHue attribute by the relationship
-     * Hue = CurrentHue x 360 / 254 (CurrentHue in the range 0 - 254 inclusive)
+     * The hue in degrees shall be related to the CurrentHue attribute by the relationship Hue =
+     * CurrentHue x 360 / 254 (CurrentHue in the range 0 - 254 inclusive)
      * <p>
-     * If this attribute is implemented then the CurrentSaturation and ColorMode
-     * attributes shall also be implemented.
+     * If this attribute is implemented then the CurrentSaturation and ColorMode attributes
+     * shall also be implemented.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -294,40 +302,14 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>CurrentHue</i> attribute [attribute ID <b>0</b>].
-     * <p>
-     * The CurrentHue attribute contains the current hue value of the light. It is updated
-     * as fast as practical during commands that change the hue.
-     * <p>
-     * The hue in degrees shall be related to the CurrentHue attribute by the relationship
-     * Hue = CurrentHue x 360 / 254 (CurrentHue in the range 0 - 254 inclusive)
-     * <p>
-     * If this attribute is implemented then the CurrentSaturation and ColorMode
-     * attributes shall also be implemented.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
-     * @param reportableChange {@link Object} delta required to trigger report
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setCurrentHueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTHUE), minInterval, maxInterval, reportableChange);
-    }
-
-    /**
-     * Get the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
+     * Get the <i>Current Saturation</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
      * The CurrentSaturation attribute holds the current saturation value of the light. It is
-     * updated as fast as practical during commands that change the saturation.
-     * The saturation shall be related to the CurrentSaturation attribute by the
-     * relationship
-     * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254 inclusive)
-     * If this attribute is implemented then the CurrentHue and ColorMode attributes
-     * shall also be implemented.
+     * updated as fast as practical during commands that change the saturation. The
+     * saturation shall be related to the CurrentSaturation attribute by the relationship
+     * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254
+     * inclusive) If this attribute is implemented then the CurrentHue and ColorMode
+     * attributes shall also be implemented.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -340,15 +322,14 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
+     * Synchronously get the <i>Current Saturation</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
      * The CurrentSaturation attribute holds the current saturation value of the light. It is
-     * updated as fast as practical during commands that change the saturation.
-     * The saturation shall be related to the CurrentSaturation attribute by the
-     * relationship
-     * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254 inclusive)
-     * If this attribute is implemented then the CurrentHue and ColorMode attributes
-     * shall also be implemented.
+     * updated as fast as practical during commands that change the saturation. The
+     * saturation shall be related to the CurrentSaturation attribute by the relationship
+     * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254
+     * inclusive) If this attribute is implemented then the CurrentHue and ColorMode
+     * attributes shall also be implemented.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -373,34 +354,10 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>CurrentSaturation</i> attribute [attribute ID <b>1</b>].
+     * Get the <i>Remaining Time</i> attribute [attribute ID <b>0x0002</b>].
      * <p>
-     * The CurrentSaturation attribute holds the current saturation value of the light. It is
-     * updated as fast as practical during commands that change the saturation.
-     * The saturation shall be related to the CurrentSaturation attribute by the
-     * relationship
-     * Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254 inclusive)
-     * If this attribute is implemented then the CurrentHue and ColorMode attributes
-     * shall also be implemented.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
-     * @param reportableChange {@link Object} delta required to trigger report
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setCurrentSaturationReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTSATURATION), minInterval, maxInterval, reportableChange);
-    }
-
-    /**
-     * Get the <i>RemainingTime</i> attribute [attribute ID <b>2</b>].
-     * <p>
-     * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
-     * until the currently active command will be complete.
+     * The RemainingTime attribute holds the time remaining, in 1/10ths of a second, until the
+     * currently active command will be complete.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -413,10 +370,10 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>RemainingTime</i> attribute [attribute ID <b>2</b>].
+     * Synchronously get the <i>Remaining Time</i> attribute [attribute ID <b>0x0002</b>].
      * <p>
-     * The RemainingTime attribute holds the time remaining, in 1/10ths of a second,
-     * until the currently active command will be complete.
+     * The RemainingTime attribute holds the time remaining, in 1/10ths of a second, until the
+     * currently active command will be complete.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -441,11 +398,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
+     * Get the <i>Current X</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
      * The CurrentX attribute contains the current value of the normalized chromaticity
-     * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical
-     * during commands that change the color.
+     * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical during
+     * commands that change the color.
      * <p>
      * The value of x shall be related to the CurrentX attribute by the relationship
      * <p>
@@ -462,11 +419,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
+     * Synchronously get the <i>Current X</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
      * The CurrentX attribute contains the current value of the normalized chromaticity
-     * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical
-     * during commands that change the color.
+     * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical during
+     * commands that change the color.
      * <p>
      * The value of x shall be related to the CurrentX attribute by the relationship
      * <p>
@@ -495,11 +452,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>CurrentX</i> attribute [attribute ID <b>3</b>].
+     * Set reporting for the <i>Current X</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
      * The CurrentX attribute contains the current value of the normalized chromaticity
-     * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical
-     * during commands that change the color.
+     * value x, as defined in the CIE xyY Color Space. It is updated as fast as practical during
+     * commands that change the color.
      * <p>
      * The value of x shall be related to the CurrentX attribute by the relationship
      * <p>
@@ -509,8 +466,8 @@ public class ZclColorControlCluster extends ZclCluster {
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -519,11 +476,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
+     * Get the <i>Current Y</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
      * The CurrentY attribute contains the current value of the normalized chromaticity
-     * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical
-     * during commands that change the color.
+     * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical during
+     * commands that change the color.
      * <p>
      * The value of y shall be related to the CurrentY attribute by the relationship
      * <p>
@@ -540,11 +497,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
+     * Synchronously get the <i>Current Y</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
      * The CurrentY attribute contains the current value of the normalized chromaticity
-     * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical
-     * during commands that change the color.
+     * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical during
+     * commands that change the color.
      * <p>
      * The value of y shall be related to the CurrentY attribute by the relationship
      * <p>
@@ -573,11 +530,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>CurrentY</i> attribute [attribute ID <b>4</b>].
+     * Set reporting for the <i>Current Y</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
      * The CurrentY attribute contains the current value of the normalized chromaticity
-     * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical
-     * during commands that change the color.
+     * value y, as defined in the CIE xyY Color Space. It is updated as fast as practical during
+     * commands that change the color.
      * <p>
      * The value of y shall be related to the CurrentY attribute by the relationship
      * <p>
@@ -587,8 +544,8 @@ public class ZclColorControlCluster extends ZclCluster {
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -597,7 +554,7 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>DriftCompensation</i> attribute [attribute ID <b>5</b>].
+     * Get the <i>Drift Compensation</i> attribute [attribute ID <b>0x0005</b>].
      * <p>
      * The DriftCompensation attribute indicates what mechanism, if any, is in use for
      * compensation for color/intensity drift over time.
@@ -613,7 +570,7 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>DriftCompensation</i> attribute [attribute ID <b>5</b>].
+     * Synchronously get the <i>Drift Compensation</i> attribute [attribute ID <b>0x0005</b>].
      * <p>
      * The DriftCompensation attribute indicates what mechanism, if any, is in use for
      * compensation for color/intensity drift over time.
@@ -641,10 +598,10 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>CompensationText</i> attribute [attribute ID <b>6</b>].
+     * Get the <i>Compensation Text</i> attribute [attribute ID <b>0x0006</b>].
      * <p>
-     * The CompensationText attribute holds a textual indication of what mechanism, if
-     * any, is in use to compensate for color/intensity drift over time.
+     * The CompensationText attribute holds a textual indication of what mechanism, if any,
+     * is in use to compensate for color/intensity drift over time.
      * <p>
      * The attribute is of type {@link String}.
      * <p>
@@ -657,10 +614,10 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>CompensationText</i> attribute [attribute ID <b>6</b>].
+     * Synchronously get the <i>Compensation Text</i> attribute [attribute ID <b>0x0006</b>].
      * <p>
-     * The CompensationText attribute holds a textual indication of what mechanism, if
-     * any, is in use to compensate for color/intensity drift over time.
+     * The CompensationText attribute holds a textual indication of what mechanism, if any,
+     * is in use to compensate for color/intensity drift over time.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -685,18 +642,18 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
+     * Get the <i>Color Temperature</i> attribute [attribute ID <b>0x0007</b>].
      * <p>
-     * The ColorTemperature attribute contains a scaled inverse of the current value of
-     * the color temperature. It is updated as fast as practical during commands that
-     * change the color.
+     * The ColorTemperature attribute contains a scaled inverse of the current value of the
+     * color temperature. It is updated as fast as practical during commands that change the
+     * color.
      * <p>
      * The color temperature value in Kelvins shall be related to the ColorTemperature
      * attribute by the relationship
      * <p>
-     * Color temperature = 1,000,000 / ColorTemperature (ColorTemperature in the
-     * range 1 to 65279 inclusive, giving a color temperature range from 1,000,000
-     * Kelvins to 15.32 Kelvins).
+     * Color temperature = 1,000,000 / ColorTemperature (ColorTemperature in the range 1 to
+     * 65279 inclusive, giving a color temperature range from 1,000,000 Kelvins to 15.32
+     * Kelvins).
      * <p>
      * The value ColorTemperature = 0 indicates an undefined value. The value
      * ColorTemperature = 65535 indicates an invalid value.
@@ -712,18 +669,18 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
+     * Synchronously get the <i>Color Temperature</i> attribute [attribute ID <b>0x0007</b>].
      * <p>
-     * The ColorTemperature attribute contains a scaled inverse of the current value of
-     * the color temperature. It is updated as fast as practical during commands that
-     * change the color.
+     * The ColorTemperature attribute contains a scaled inverse of the current value of the
+     * color temperature. It is updated as fast as practical during commands that change the
+     * color.
      * <p>
      * The color temperature value in Kelvins shall be related to the ColorTemperature
      * attribute by the relationship
      * <p>
-     * Color temperature = 1,000,000 / ColorTemperature (ColorTemperature in the
-     * range 1 to 65279 inclusive, giving a color temperature range from 1,000,000
-     * Kelvins to 15.32 Kelvins).
+     * Color temperature = 1,000,000 / ColorTemperature (ColorTemperature in the range 1 to
+     * 65279 inclusive, giving a color temperature range from 1,000,000 Kelvins to 15.32
+     * Kelvins).
      * <p>
      * The value ColorTemperature = 0 indicates an undefined value. The value
      * ColorTemperature = 65535 indicates an invalid value.
@@ -751,42 +708,13 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>ColorTemperature</i> attribute [attribute ID <b>7</b>].
+     * Get the <i>Color Mode</i> attribute [attribute ID <b>0x0008</b>].
      * <p>
-     * The ColorTemperature attribute contains a scaled inverse of the current value of
-     * the color temperature. It is updated as fast as practical during commands that
-     * change the color.
-     * <p>
-     * The color temperature value in Kelvins shall be related to the ColorTemperature
-     * attribute by the relationship
-     * <p>
-     * Color temperature = 1,000,000 / ColorTemperature (ColorTemperature in the
-     * range 1 to 65279 inclusive, giving a color temperature range from 1,000,000
-     * Kelvins to 15.32 Kelvins).
-     * <p>
-     * The value ColorTemperature = 0 indicates an undefined value. The value
-     * ColorTemperature = 65535 indicates an invalid value.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
-     * @param reportableChange {@link Object} delta required to trigger report
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setColorTemperatureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_COLORTEMPERATURE), minInterval, maxInterval, reportableChange);
-    }
-
-    /**
-     * Get the <i>ColorMode</i> attribute [attribute ID <b>8</b>].
-     * <p>
-     * The ColorMode attribute indicates which attributes are currently determining the color of the device.
-     * If either the CurrentHue or CurrentSaturation attribute is implemented, this attribute SHALL also be
-     * implemented, otherwise it is optional. The value of the ColorMode attribute cannot be written directly
-     * - it is set upon reception of another command in to the appropriate mode for that command.
+     * The ColorMode attribute indicates which attributes are currently determining the
+     * color of the device. If either the CurrentHue or CurrentSaturation attribute is
+     * implemented, this attribute shall also be implemented, otherwise it is optional. The
+     * value of the ColorMode attribute cannot be written directly - it is set upon reception of
+     * another command in to the appropriate mode for that command.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -799,12 +727,13 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ColorMode</i> attribute [attribute ID <b>8</b>].
+     * Synchronously get the <i>Color Mode</i> attribute [attribute ID <b>0x0008</b>].
      * <p>
-     * The ColorMode attribute indicates which attributes are currently determining the color of the device.
-     * If either the CurrentHue or CurrentSaturation attribute is implemented, this attribute SHALL also be
-     * implemented, otherwise it is optional. The value of the ColorMode attribute cannot be written directly
-     * - it is set upon reception of another command in to the appropriate mode for that command.
+     * The ColorMode attribute indicates which attributes are currently determining the
+     * color of the device. If either the CurrentHue or CurrentSaturation attribute is
+     * implemented, this attribute shall also be implemented, otherwise it is optional. The
+     * value of the ColorMode attribute cannot be written directly - it is set upon reception of
+     * another command in to the appropriate mode for that command.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -829,13 +758,14 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>EnhancedCurrentHue</i> attribute [attribute ID <b>16384</b>].
+     * Get the <i>Enhanced Current Hue</i> attribute [attribute ID <b>0x4000</b>].
      * <p>
-     * The EnhancedCurrentHueattribute represents non-equidistant steps along the CIE 1931 color
-     * triangle, and it provides 16-bits precision. The upper 8 bits of this attribute SHALL be
-     * used as an index in the implementation specific XY lookup table to provide the non-equidistance
-     * steps (see the ZLL test specification for an example).  The lower 8 bits SHALL be used to
-     * interpolate between these steps in a linear way in order to provide color zoom for the user.
+     * The EnhancedCurrentHueattribute represents non-equidistant steps along the CIE
+     * 1931 color triangle, and it provides 16-bits precision. The upper 8 bits of this
+     * attribute shall be used as an index in the implementation specific XY lookup table to
+     * provide the non-equidistance steps (see the ZLL test specification for an example).
+     * The lower 8 bits shall be used to interpolate between these steps in a linear way in order
+     * to provide color zoom for the user.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -848,13 +778,14 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>EnhancedCurrentHue</i> attribute [attribute ID <b>16384</b>].
+     * Synchronously get the <i>Enhanced Current Hue</i> attribute [attribute ID <b>0x4000</b>].
      * <p>
-     * The EnhancedCurrentHueattribute represents non-equidistant steps along the CIE 1931 color
-     * triangle, and it provides 16-bits precision. The upper 8 bits of this attribute SHALL be
-     * used as an index in the implementation specific XY lookup table to provide the non-equidistance
-     * steps (see the ZLL test specification for an example).  The lower 8 bits SHALL be used to
-     * interpolate between these steps in a linear way in order to provide color zoom for the user.
+     * The EnhancedCurrentHueattribute represents non-equidistant steps along the CIE
+     * 1931 color triangle, and it provides 16-bits precision. The upper 8 bits of this
+     * attribute shall be used as an index in the implementation specific XY lookup table to
+     * provide the non-equidistance steps (see the ZLL test specification for an example).
+     * The lower 8 bits shall be used to interpolate between these steps in a linear way in order
+     * to provide color zoom for the user.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -879,32 +810,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>EnhancedCurrentHue</i> attribute [attribute ID <b>16384</b>].
+     * Get the <i>Enhanced Color Mode</i> attribute [attribute ID <b>0x4001</b>].
      * <p>
-     * The EnhancedCurrentHueattribute represents non-equidistant steps along the CIE 1931 color
-     * triangle, and it provides 16-bits precision. The upper 8 bits of this attribute SHALL be
-     * used as an index in the implementation specific XY lookup table to provide the non-equidistance
-     * steps (see the ZLL test specification for an example).  The lower 8 bits SHALL be used to
-     * interpolate between these steps in a linear way in order to provide color zoom for the user.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
-     * @param reportableChange {@link Object} delta required to trigger report
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setEnhancedCurrentHueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ENHANCEDCURRENTHUE), minInterval, maxInterval, reportableChange);
-    }
-
-    /**
-     * Get the <i>EnhancedColorMode</i> attribute [attribute ID <b>16385</b>].
-     * <p>
-     * The EnhancedColorModeattribute specifies which attributes are currently determining the color of the device.
-     * To provide compatibility with standard ZCL, the original ColorModeattribute SHALLindicate ‘CurrentHueand CurrentSaturation’
+     * The EnhancedColorModeattribute specifies which attributes are currently
+     * determining the color of the device. To provide compatibility with standard ZCL, the
+     * original ColorModeattribute SHALLindicate ‘CurrentHueand CurrentSaturation’
      * when the light uses the EnhancedCurrentHueattribute.
      * <p>
      * The attribute is of type {@link Integer}.
@@ -918,10 +828,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>EnhancedColorMode</i> attribute [attribute ID <b>16385</b>].
+     * Synchronously get the <i>Enhanced Color Mode</i> attribute [attribute ID <b>0x4001</b>].
      * <p>
-     * The EnhancedColorModeattribute specifies which attributes are currently determining the color of the device.
-     * To provide compatibility with standard ZCL, the original ColorModeattribute SHALLindicate ‘CurrentHueand CurrentSaturation’
+     * The EnhancedColorModeattribute specifies which attributes are currently
+     * determining the color of the device. To provide compatibility with standard ZCL, the
+     * original ColorModeattribute SHALLindicate ‘CurrentHueand CurrentSaturation’
      * when the light uses the EnhancedCurrentHueattribute.
      * <p>
      * This method can return cached data if the attribute has already been received.
@@ -947,11 +858,12 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ColorLoopActive</i> attribute [attribute ID <b>16386</b>].
+     * Get the <i>Color Loop Active</i> attribute [attribute ID <b>0x4002</b>].
      * <p>
      * The ColorLoopActive attribute specifies the current active status of the color loop.
-     * If this attribute has the value 0x00, the color loop SHALLnot be active. If this attribute
-     * has the value 0x01, the color loop SHALL be active. All other values (0x02 – 0xff) are reserved.
+     * If this attribute has the value 0x00, the color loop SHALLnot be active. If this
+     * attribute has the value 0x01, the color loop shall be active. All other values (0x02 –
+     * 0xff) are reserved.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -964,11 +876,12 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ColorLoopActive</i> attribute [attribute ID <b>16386</b>].
+     * Synchronously get the <i>Color Loop Active</i> attribute [attribute ID <b>0x4002</b>].
      * <p>
      * The ColorLoopActive attribute specifies the current active status of the color loop.
-     * If this attribute has the value 0x00, the color loop SHALLnot be active. If this attribute
-     * has the value 0x01, the color loop SHALL be active. All other values (0x02 – 0xff) are reserved.
+     * If this attribute has the value 0x00, the color loop SHALLnot be active. If this
+     * attribute has the value 0x01, the color loop shall be active. All other values (0x02 –
+     * 0xff) are reserved.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -993,12 +906,12 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ColorLoopDirection</i> attribute [attribute ID <b>16387</b>].
+     * Get the <i>Color Loop Direction</i> attribute [attribute ID <b>0x4003</b>].
      * <p>
      * The ColorLoopDirection attribute specifies the current direction of the color loop.
-     * If this attribute has the value 0x00, the EnhancedCurrentHue attribute SHALL be decremented.
-     * If this attribute has the value 0x01, the EnhancedCurrentHue attribute SHALL be incremented.
-     * All other values (0x02 – 0xff) are reserved.
+     * If this attribute has the value 0x00, the EnhancedCurrentHue attribute shall be
+     * decremented. If this attribute has the value 0x01, the EnhancedCurrentHue attribute
+     * shall be incremented. All other values (0x02 – 0xff) are reserved.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1011,12 +924,12 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ColorLoopDirection</i> attribute [attribute ID <b>16387</b>].
+     * Synchronously get the <i>Color Loop Direction</i> attribute [attribute ID <b>0x4003</b>].
      * <p>
      * The ColorLoopDirection attribute specifies the current direction of the color loop.
-     * If this attribute has the value 0x00, the EnhancedCurrentHue attribute SHALL be decremented.
-     * If this attribute has the value 0x01, the EnhancedCurrentHue attribute SHALL be incremented.
-     * All other values (0x02 – 0xff) are reserved.
+     * If this attribute has the value 0x00, the EnhancedCurrentHue attribute shall be
+     * decremented. If this attribute has the value 0x01, the EnhancedCurrentHue attribute
+     * shall be incremented. All other values (0x02 – 0xff) are reserved.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1041,10 +954,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ColorLoopTime</i> attribute [attribute ID <b>16388</b>].
+     * Get the <i>Color Loop Time</i> attribute [attribute ID <b>0x4004</b>].
      * <p>
-     * The ColorLoopTime attribute specifies the number of seconds it SHALL take to perform a full
-     * color loop, i.e.,to cycle all values of the EnhancedCurrentHue attribute (between 0x0000 and 0xffff).
+     * The ColorLoopTime attribute specifies the number of seconds it shall take to perform a
+     * full color loop, i.e.,to cycle all values of the EnhancedCurrentHue attribute
+     * (between 0x0000 and 0xffff).
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1057,10 +971,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ColorLoopTime</i> attribute [attribute ID <b>16388</b>].
+     * Synchronously get the <i>Color Loop Time</i> attribute [attribute ID <b>0x4004</b>].
      * <p>
-     * The ColorLoopTime attribute specifies the number of seconds it SHALL take to perform a full
-     * color loop, i.e.,to cycle all values of the EnhancedCurrentHue attribute (between 0x0000 and 0xffff).
+     * The ColorLoopTime attribute specifies the number of seconds it shall take to perform a
+     * full color loop, i.e.,to cycle all values of the EnhancedCurrentHue attribute
+     * (between 0x0000 and 0xffff).
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1085,10 +1000,10 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ColorLoopStartHue</i> attribute [attribute ID <b>16389</b>].
+     * Get the <i>Color Loop Start Hue</i> attribute [attribute ID <b>0x4005</b>].
      * <p>
-     * The ColorLoopStartEnhancedHueattribute specifies the value of the EnhancedCurrentHue attribute
-     * from which the color loop SHALL be started.
+     * The ColorLoopStartEnhancedHueattribute specifies the value of the
+     * EnhancedCurrentHue attribute from which the color loop shall be started.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1101,10 +1016,10 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ColorLoopStartHue</i> attribute [attribute ID <b>16389</b>].
+     * Synchronously get the <i>Color Loop Start Hue</i> attribute [attribute ID <b>0x4005</b>].
      * <p>
-     * The ColorLoopStartEnhancedHueattribute specifies the value of the EnhancedCurrentHue attribute
-     * from which the color loop SHALL be started.
+     * The ColorLoopStartEnhancedHueattribute specifies the value of the
+     * EnhancedCurrentHue attribute from which the color loop shall be started.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1129,11 +1044,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ColorLoopStoredHue</i> attribute [attribute ID <b>16390</b>].
+     * Get the <i>Color Loop Stored Hue</i> attribute [attribute ID <b>0x4006</b>].
      * <p>
-     * The ColorLoopStoredEnhancedHue attribute specifies the value of the EnhancedCurrentHue attribute
-     * before the color loop was started. Once the color loop is complete, the EnhancedCurrentHue
-     * attribute SHALL be restored to this value.
+     * The ColorLoopStoredEnhancedHue attribute specifies the value of the
+     * EnhancedCurrentHue attribute before the color loop was started. Once the color loop is
+     * complete, the EnhancedCurrentHue attribute shall be restored to this value.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1146,11 +1061,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ColorLoopStoredHue</i> attribute [attribute ID <b>16390</b>].
+     * Synchronously get the <i>Color Loop Stored Hue</i> attribute [attribute ID <b>0x4006</b>].
      * <p>
-     * The ColorLoopStoredEnhancedHue attribute specifies the value of the EnhancedCurrentHue attribute
-     * before the color loop was started. Once the color loop is complete, the EnhancedCurrentHue
-     * attribute SHALL be restored to this value.
+     * The ColorLoopStoredEnhancedHue attribute specifies the value of the
+     * EnhancedCurrentHue attribute before the color loop was started. Once the color loop is
+     * complete, the EnhancedCurrentHue attribute shall be restored to this value.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1175,12 +1090,13 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ColorCapabilities</i> attribute [attribute ID <b>16394</b>].
+     * Get the <i>Color Capabilities</i> attribute [attribute ID <b>0x400A</b>].
      * <p>
-     * The ColorCapabilitiesattribute specifies the color capabilities of the device supporting the
-     * color control cluster.
+     * The ColorCapabilitiesattribute specifies the color capabilities of the device
+     * supporting the color control cluster.
      * <p>
-     * Note:The support of the CurrentXand CurrentYattributes is mandatory regardless of color capabilities.
+     * Note:The support of the CurrentXand CurrentYattributes is mandatory regardless of
+     * color capabilities.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1193,12 +1109,13 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ColorCapabilities</i> attribute [attribute ID <b>16394</b>].
+     * Synchronously get the <i>Color Capabilities</i> attribute [attribute ID <b>0x400A</b>].
      * <p>
-     * The ColorCapabilitiesattribute specifies the color capabilities of the device supporting the
-     * color control cluster.
+     * The ColorCapabilitiesattribute specifies the color capabilities of the device
+     * supporting the color control cluster.
      * <p>
-     * Note:The support of the CurrentXand CurrentYattributes is mandatory regardless of color capabilities.
+     * Note:The support of the CurrentXand CurrentYattributes is mandatory regardless of
+     * color capabilities.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1223,12 +1140,12 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ColorTemperatureMin</i> attribute [attribute ID <b>16395</b>].
+     * Get the <i>Color Temperature Min</i> attribute [attribute ID <b>0x400B</b>].
      * <p>
      * The ColorTempPhysicalMinMiredsattribute indicates the minimum mired value
      * supported by the hardware. ColorTempPhysicalMinMiredscorresponds to the maximum
-     * color temperature in kelvins supported by the hardware.
-     * ColorTempPhysicalMinMireds ≤ ColorTemperatureMireds
+     * color temperature in kelvins supported by the hardware. ColorTempPhysicalMinMireds
+     * ≤ ColorTemperatureMireds
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1241,12 +1158,12 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ColorTemperatureMin</i> attribute [attribute ID <b>16395</b>].
+     * Synchronously get the <i>Color Temperature Min</i> attribute [attribute ID <b>0x400B</b>].
      * <p>
      * The ColorTempPhysicalMinMiredsattribute indicates the minimum mired value
      * supported by the hardware. ColorTempPhysicalMinMiredscorresponds to the maximum
-     * color temperature in kelvins supported by the hardware.
-     * ColorTempPhysicalMinMireds ≤ ColorTemperatureMireds
+     * color temperature in kelvins supported by the hardware. ColorTempPhysicalMinMireds
+     * ≤ ColorTemperatureMireds
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1271,12 +1188,12 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>ColorTemperatureMax</i> attribute [attribute ID <b>16396</b>].
+     * Get the <i>Color Temperature Max</i> attribute [attribute ID <b>0x400C</b>].
      * <p>
      * The ColorTempPhysicalMaxMiredsattribute indicates the maximum mired value
      * supported by the hard-ware. ColorTempPhysicalMaxMiredscorresponds to the minimum
-     * color temperature in kelvins supported by the hardware.
-     * ColorTemperatureMireds ≤ ColorTempPhysicalMaxMireds.
+     * color temperature in kelvins supported by the hardware. ColorTemperatureMireds ≤
+     * ColorTempPhysicalMaxMireds.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1289,12 +1206,12 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>ColorTemperatureMax</i> attribute [attribute ID <b>16396</b>].
+     * Synchronously get the <i>Color Temperature Max</i> attribute [attribute ID <b>0x400C</b>].
      * <p>
      * The ColorTempPhysicalMaxMiredsattribute indicates the maximum mired value
      * supported by the hard-ware. ColorTempPhysicalMaxMiredscorresponds to the minimum
-     * color temperature in kelvins supported by the hardware.
-     * ColorTemperatureMireds ≤ ColorTempPhysicalMaxMireds.
+     * color temperature in kelvins supported by the hardware. ColorTemperatureMireds ≤
+     * ColorTempPhysicalMaxMireds.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1319,11 +1236,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * The Move to Hue Command
+     * The Move To Hue Command
      *
      * @param hue {@link Integer} Hue
      * @param direction {@link Integer} Direction
-     * @param transitionTime {@link Integer} Transition time
+     * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> moveToHueCommand(Integer hue, Integer direction, Integer transitionTime) {
@@ -1340,7 +1257,7 @@ public class ZclColorControlCluster extends ZclCluster {
     /**
      * The Move Hue Command
      *
-     * @param moveMode {@link Integer} Move mode
+     * @param moveMode {@link Integer} Move Mode
      * @param rate {@link Integer} Rate
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -1357,9 +1274,9 @@ public class ZclColorControlCluster extends ZclCluster {
     /**
      * The Step Hue Command
      *
-     * @param stepMode {@link Integer} Step mode
-     * @param stepSize {@link Integer} Step size
-     * @param transitionTime {@link Integer} Transition time
+     * @param stepMode {@link Integer} Step Mode
+     * @param stepSize {@link Integer} Step Size
+     * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> stepHueCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
@@ -1374,10 +1291,10 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * The Move to Saturation Command
+     * The Move To Saturation Command
      *
      * @param saturation {@link Integer} Saturation
-     * @param transitionTime {@link Integer} Transition time
+     * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> moveToSaturationCommand(Integer saturation, Integer transitionTime) {
@@ -1393,7 +1310,7 @@ public class ZclColorControlCluster extends ZclCluster {
     /**
      * The Move Saturation Command
      *
-     * @param moveMode {@link Integer} Move mode
+     * @param moveMode {@link Integer} Move Mode
      * @param rate {@link Integer} Rate
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -1410,9 +1327,9 @@ public class ZclColorControlCluster extends ZclCluster {
     /**
      * The Step Saturation Command
      *
-     * @param stepMode {@link Integer} Step mode
-     * @param stepSize {@link Integer} Step size
-     * @param transitionTime {@link Integer} Transition time
+     * @param stepMode {@link Integer} Step Mode
+     * @param stepSize {@link Integer} Step Size
+     * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> stepSaturationCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
@@ -1427,11 +1344,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * The Move to Hue and Saturation Command
+     * The Move To Hue And Saturation Command
      *
      * @param hue {@link Integer} Hue
      * @param saturation {@link Integer} Saturation
-     * @param transitionTime {@link Integer} Transition time
+     * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> moveToHueAndSaturationCommand(Integer hue, Integer saturation, Integer transitionTime) {
@@ -1446,11 +1363,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * The Move to Color Command
+     * The Move To Color Command
      *
-     * @param colorX {@link Integer} ColorX
-     * @param colorY {@link Integer} ColorY
-     * @param transitionTime {@link Integer} Transition time
+     * @param colorX {@link Integer} Color X
+     * @param colorY {@link Integer} Color Y
+     * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> moveToColorCommand(Integer colorX, Integer colorY, Integer transitionTime) {
@@ -1467,8 +1384,8 @@ public class ZclColorControlCluster extends ZclCluster {
     /**
      * The Move Color Command
      *
-     * @param rateX {@link Integer} RateX
-     * @param rateY {@link Integer} RateY
+     * @param rateX {@link Integer} Rate X
+     * @param rateY {@link Integer} Rate Y
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> moveColorCommand(Integer rateX, Integer rateY) {
@@ -1484,9 +1401,9 @@ public class ZclColorControlCluster extends ZclCluster {
     /**
      * The Step Color Command
      *
-     * @param stepX {@link Integer} StepX
-     * @param stepY {@link Integer} StepY
-     * @param transitionTime {@link Integer} Transition time
+     * @param stepX {@link Integer} Step X
+     * @param stepY {@link Integer} Step Y
+     * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> stepColorCommand(Integer stepX, Integer stepY, Integer transitionTime) {
@@ -1501,10 +1418,10 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * The Move to Color Temperature Command
+     * The Move To Color Temperature Command
      *
      * @param colorTemperature {@link Integer} Color Temperature
-     * @param transitionTime {@link Integer} Transition time
+     * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> moveToColorTemperatureCommand(Integer colorTemperature, Integer transitionTime) {
@@ -1522,7 +1439,7 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param hue {@link Integer} Hue
      * @param direction {@link Integer} Direction
-     * @param transitionTime {@link Integer} Transition time
+     * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> enhancedMoveToHueCommand(Integer hue, Integer direction, Integer transitionTime) {
@@ -1541,7 +1458,7 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param stepMode {@link Integer} Step Mode
      * @param stepSize {@link Integer} Step Size
-     * @param transitionTime {@link Integer} Transition time
+     * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> enhancedStepHueCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
@@ -1556,11 +1473,11 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
-     * The Enhanced Move To Hue and Saturation Command
+     * The Enhanced Move To Hue And Saturation Command
      *
      * @param hue {@link Integer} Hue
      * @param saturation {@link Integer} Saturation
-     * @param transitionTime {@link Integer} Transition time
+     * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> enhancedMoveToHueAndSaturationCommand(Integer hue, Integer saturation, Integer transitionTime) {
@@ -1580,7 +1497,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param updateFlags {@link Integer} Update Flags
      * @param action {@link Integer} Action
      * @param direction {@link Integer} Direction
-     * @param transitionTime {@link Integer} Transition time
+     * @param transitionTime {@link Integer} Transition Time
      * @param startHue {@link Integer} Start Hue
      * @return the {@link Future<CommandResult>} command result future
      */
@@ -1598,38 +1515,8 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     @Override
-    public ZclCommand getCommandFromId(int commandId) {
+    public ZclCommand getResponseFromId(int commandId) {
         switch (commandId) {
-            case 0: // MOVE_TO_HUE_COMMAND
-                return new MoveToHueCommand();
-            case 1: // MOVE_HUE_COMMAND
-                return new MoveHueCommand();
-            case 2: // STEP_HUE_COMMAND
-                return new StepHueCommand();
-            case 3: // MOVE_TO_SATURATION_COMMAND
-                return new MoveToSaturationCommand();
-            case 4: // MOVE_SATURATION_COMMAND
-                return new MoveSaturationCommand();
-            case 5: // STEP_SATURATION_COMMAND
-                return new StepSaturationCommand();
-            case 6: // MOVE_TO_HUE_AND_SATURATION_COMMAND
-                return new MoveToHueAndSaturationCommand();
-            case 7: // MOVE_TO_COLOR_COMMAND
-                return new MoveToColorCommand();
-            case 8: // MOVE_COLOR_COMMAND
-                return new MoveColorCommand();
-            case 9: // STEP_COLOR_COMMAND
-                return new StepColorCommand();
-            case 10: // MOVE_TO_COLOR_TEMPERATURE_COMMAND
-                return new MoveToColorTemperatureCommand();
-            case 64: // ENHANCED_MOVE_TO_HUE_COMMAND
-                return new EnhancedMoveToHueCommand();
-            case 65: // ENHANCED_STEP_HUE_COMMAND
-                return new EnhancedStepHueCommand();
-            case 66: // ENHANCED_MOVE_TO_HUE_AND_SATURATION_COMMAND
-                return new EnhancedMoveToHueAndSaturationCommand();
-            case 67: // COLOR_LOOP_SET_COMMAND
-                return new ColorLoopSetCommand();
             default:
                 return null;
         }

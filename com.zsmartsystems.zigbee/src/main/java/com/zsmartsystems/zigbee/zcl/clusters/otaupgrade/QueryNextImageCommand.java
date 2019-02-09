@@ -10,57 +10,57 @@ package com.zsmartsystems.zigbee.zcl.clusters.otaupgrade;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Query Next Image Command value object class.
  * <p>
- * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
+ * Cluster: <b>Ota Upgrade</b>. Command is sent <b>TO</b> the server.
+ * This command is a <b>specific</b> command used for the Ota Upgrade cluster.
  * <p>
- * Client devices shall send a Query Next Image Request command to the server to see if there is new
- * OTA upgrade image available. ZR devices may send the command after receiving Image Notify
- * command. ZED device shall periodically wake up and send the command to the upgrade server. Client
- * devices query what the next image is, based on their own information.
- * <br>
- * The server takes the client’s information in the command and determines whether it has a suitable
- * image for the particular client. The decision should be based on specific policy that is specific to the
- * upgrade server and outside the scope of this document.. However, a recommended default policy is for
- * the server to send back a response that indicates the availability of an image that matches the
- * manufacturer code, image type, and the highest available file version of that image on the
- * server. However, the server may choose to upgrade, downgrade, or reinstall clients’ image, as its
- * policy dictates. If client’s hardware version is included in the command, the server shall examine the
- * value against the minimum and maximum hardware versions included in the OTA file header.
+ * Client devices shall send a Query Next Image Request command to the server to see if there is
+ * new OTA upgrade image available. ZR devices may send the command after receiving Image
+ * Notify command. ZED device shall periodically wake up and send the command to the upgrade
+ * server. Client devices query what the next image is, based on their own information. <br> The
+ * server takes the client’s information in the command and determines whether it has a
+ * suitable image for the particular client. The decision should be based on specific policy
+ * that is specific to the upgrade server and outside the scope of this document.. However, a
+ * recommended default policy is for the server to send back a response that indicates the
+ * availability of an image that matches the manufacturer code, image type, and the highest
+ * available file version of that image on the server. However, the server may choose to
+ * upgrade, downgrade, or reinstall clients’ image, as its policy dictates. If client’s
+ * hardware version is included in the command, the server shall examine the value against the
+ * minimum and maximum hardware versions included in the OTA file header.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class QueryNextImageCommand extends ZclCommand {
     /**
-     * Field control command message field.
+     * Field Control command message field.
      */
     private Integer fieldControl;
 
     /**
-     * Manufacturer code command message field.
+     * Manufacturer Code command message field.
      */
     private Integer manufacturerCode;
 
     /**
-     * Image type command message field.
+     * Image Type command message field.
      */
     private Integer imageType;
 
     /**
-     * File version command message field.
+     * File Version command message field.
      */
     private Integer fileVersion;
 
     /**
-     * Hardware version command message field.
+     * Hardware Version command message field.
      */
     private Integer hardwareVersion;
 
@@ -69,96 +69,96 @@ public class QueryNextImageCommand extends ZclCommand {
      */
     public QueryNextImageCommand() {
         genericCommand = false;
-        clusterId = 25;
+        clusterId = 0x0019;
         commandId = 1;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Field control.
+     * Gets Field Control.
      *
-     * @return the Field control
+     * @return the Field Control
      */
     public Integer getFieldControl() {
         return fieldControl;
     }
 
     /**
-     * Sets Field control.
+     * Sets Field Control.
      *
-     * @param fieldControl the Field control
+     * @param fieldControl the Field Control
      */
     public void setFieldControl(final Integer fieldControl) {
         this.fieldControl = fieldControl;
     }
 
     /**
-     * Gets Manufacturer code.
+     * Gets Manufacturer Code.
      *
-     * @return the Manufacturer code
+     * @return the Manufacturer Code
      */
     public Integer getManufacturerCode() {
         return manufacturerCode;
     }
 
     /**
-     * Sets Manufacturer code.
+     * Sets Manufacturer Code.
      *
-     * @param manufacturerCode the Manufacturer code
+     * @param manufacturerCode the Manufacturer Code
      */
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
 
     /**
-     * Gets Image type.
+     * Gets Image Type.
      *
-     * @return the Image type
+     * @return the Image Type
      */
     public Integer getImageType() {
         return imageType;
     }
 
     /**
-     * Sets Image type.
+     * Sets Image Type.
      *
-     * @param imageType the Image type
+     * @param imageType the Image Type
      */
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;
     }
 
     /**
-     * Gets File version.
+     * Gets File Version.
      *
-     * @return the File version
+     * @return the File Version
      */
     public Integer getFileVersion() {
         return fileVersion;
     }
 
     /**
-     * Sets File version.
+     * Sets File Version.
      *
-     * @param fileVersion the File version
+     * @param fileVersion the File Version
      */
     public void setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
     }
 
     /**
-     * Gets Hardware version.
+     * Gets Hardware Version.
      *
-     * @return the Hardware version
+     * @return the Hardware Version
      */
     public Integer getHardwareVersion() {
         return hardwareVersion;
     }
 
     /**
-     * Sets Hardware version.
+     * Sets Hardware Version.
      *
-     * @param hardwareVersion the Hardware version
+     * @param hardwareVersion the Hardware Version
      */
     public void setHardwareVersion(final Integer hardwareVersion) {
         this.hardwareVersion = hardwareVersion;

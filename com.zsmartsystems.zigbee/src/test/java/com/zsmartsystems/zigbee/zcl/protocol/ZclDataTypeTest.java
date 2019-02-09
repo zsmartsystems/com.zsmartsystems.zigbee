@@ -34,12 +34,6 @@ public class ZclDataTypeTest {
     }
 
     @Test
-    public void getLabel() {
-        ZclDataType type = ZclDataType.BOOLEAN;
-        assertEquals("Boolean", type.getLabel());
-    }
-
-    @Test
     public void isAnalog() {
         ZclDataType type = ZclDataType.BOOLEAN;
         assertFalse(type.isAnalog());

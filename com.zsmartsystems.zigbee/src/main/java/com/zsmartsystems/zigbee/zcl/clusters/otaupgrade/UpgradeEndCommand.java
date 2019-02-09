@@ -10,40 +10,38 @@ package com.zsmartsystems.zigbee.zcl.clusters.otaupgrade;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Upgrade End Command value object class.
  * <p>
- * Cluster: <b>OTA Upgrade</b>. Command is sent <b>TO</b> the server.
- * This command is a <b>specific</b> command used for the OTA Upgrade cluster.
+ * Cluster: <b>Ota Upgrade</b>. Command is sent <b>TO</b> the server.
+ * This command is a <b>specific</b> command used for the Ota Upgrade cluster.
  * <p>
- * Upon reception all the image data, the client should verify the image to ensure its integrity and validity.
- * If the device requires signed images it shall examine the image and verify the signature. Clients may perform
- * additional manufacturer specific integrity checks to validate the image, for example, CRC check on the actual file data.
- * <br>
- * If the image fails any integrity checks, the client shall send an Upgrade End Request command to the
- * upgrade server with a status of INVALID_IMAGE. In this case, the client may reinitiate the upgrade
- * process in order to obtain a valid OTA upgrade image. The client shall not upgrade to the bad image
- * and shall discard the downloaded image data.
- * <br>
- * If the image passes all integrity checks and the client does not require additional OTA upgrade image
- * file, it shall send back an Upgrade End Request with a status of SUCCESS. However, if the client
- * requires multiple OTA upgrade image files before performing an upgrade, it shall send an Upgrade End
- * Request command with status REQUIRE_MORE_IMAGE. This shall indicate to the server that it
- * cannot yet upgrade the image it received.
- * <br>
- * If the client decides to cancel the download process for any other reasons, it has the option of sending
- * Upgrade End Request with status of ABORT at anytime during the download process. The client shall
- * then try to reinitiate the download process again at a later time.
+ * Upon reception all the image data, the client should verify the image to ensure its integrity
+ * and validity. If the device requires signed images it shall examine the image and verify the
+ * signature. Clients may perform additional manufacturer specific integrity checks to
+ * validate the image, for example, CRC check on the actual file data. <br> If the image fails any
+ * integrity checks, the client shall send an Upgrade End Request command to the upgrade server
+ * with a status of INVALID_IMAGE. In this case, the client may reinitiate the upgrade process
+ * in order to obtain a valid OTA upgrade image. The client shall not upgrade to the bad image and
+ * shall discard the downloaded image data. <br> If the image passes all integrity checks and
+ * the client does not require additional OTA upgrade image file, it shall send back an Upgrade
+ * End Request with a status of SUCCESS. However, if the client requires multiple OTA upgrade
+ * image files before performing an upgrade, it shall send an Upgrade End Request command with
+ * status REQUIRE_MORE_IMAGE. This shall indicate to the server that it cannot yet upgrade the
+ * image it received. <br> If the client decides to cancel the download process for any other
+ * reasons, it has the option of sending Upgrade End Request with status of ABORT at anytime
+ * during the download process. The client shall then try to reinitiate the download process
+ * again at a later time.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class UpgradeEndCommand extends ZclCommand {
     /**
      * Status command message field.
@@ -51,12 +49,12 @@ public class UpgradeEndCommand extends ZclCommand {
     private ZclStatus status;
 
     /**
-     * Manufacturer code command message field.
+     * Manufacturer Code command message field.
      */
     private Integer manufacturerCode;
 
     /**
-     * Image type command message field.
+     * Image Type command message field.
      */
     private Integer imageType;
 
@@ -70,7 +68,7 @@ public class UpgradeEndCommand extends ZclCommand {
      */
     public UpgradeEndCommand() {
         genericCommand = false;
-        clusterId = 25;
+        clusterId = 0x0019;
         commandId = 6;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
@@ -94,36 +92,36 @@ public class UpgradeEndCommand extends ZclCommand {
     }
 
     /**
-     * Gets Manufacturer code.
+     * Gets Manufacturer Code.
      *
-     * @return the Manufacturer code
+     * @return the Manufacturer Code
      */
     public Integer getManufacturerCode() {
         return manufacturerCode;
     }
 
     /**
-     * Sets Manufacturer code.
+     * Sets Manufacturer Code.
      *
-     * @param manufacturerCode the Manufacturer code
+     * @param manufacturerCode the Manufacturer Code
      */
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
 
     /**
-     * Gets Image type.
+     * Gets Image Type.
      *
-     * @return the Image type
+     * @return the Image Type
      */
     public Integer getImageType() {
         return imageType;
     }
 
     /**
-     * Sets Image type.
+     * Sets Image Type.
      *
-     * @param imageType the Image type
+     * @param imageType the Image Type
      */
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;

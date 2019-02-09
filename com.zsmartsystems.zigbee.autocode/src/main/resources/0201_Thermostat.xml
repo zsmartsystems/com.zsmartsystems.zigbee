@@ -1,0 +1,215 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0201">
+    <name>Thermostat</name>
+    <description>This cluster provides an interface to the functionality of a thermostat.</description>
+    <command code="0x00" source="client">
+        <name>Setpoint Raise/Lower Command</name>
+        <field type="ENUMERATION_8_BIT" class="SetpointAdjustModeEnum">
+            <name>Mode</name>
+        </field>
+        <field type="SIGNED_8_BIT_INTEGER">
+            <name>Amount</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Set Weekly Schedule</name>
+        <description>The set weekly schedule command is used to update the thermostat weekly set point schedule from a management system. If the thermostat already has a weekly set point schedule programmed then it SHOULD replace each daily set point set as it receives the updates from the management system. For example if the thermostat has 4 set points for every day of the week and is sent a Set Weekly Schedule command with one set point for Saturday then the thermostat SHOULD remove all 4 set points for Saturday and replace those with the updated set point but leave all other days unchanged. &lt;br&gt; If the schedule is larger than what fits in one ZigBee frame or contains more than 10 transitions, the schedule SHALL then be sent using multipleSet Weekly Schedule Commands.</description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Number Of Transitions</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="DayOfWeekEnum">
+            <name>Day Of Week</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="ModeForSequenceEnum">
+            <name>Mode</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Heat Set</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Cool Set</name>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Get Weekly Schedule</name>
+        <field type="BITMAP_8_BIT" class="DayOfWeekBitmap">
+            <name>Days To Return</name>
+        </field>
+        <field type="BITMAP_8_BIT" class="ModeForSequenceBitmap">
+            <name>Mode To Return</name>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Clear Weekly Schedule</name>
+    </command>
+    <command code="0x04" source="client">
+        <name>Get Relay Status Log</name>
+        <description>The Get Relay Status Log command is used to query the thermostat internal relay status log. This command has no payload. &lt;br&gt; The log storing order is First in First Out (FIFO) when the log is generated and stored into the Queue. &lt;br&gt; The first record in the log (i.e., the oldest) one, is the first to be replaced when there is a new record and there is no more space in the log. Thus, the newest record will overwrite the oldest one if there is no space left. &lt;br&gt; The log storing order is Last In First Out (LIFO) when the log is being retrieved from the Queue by a client device. Once the &quot;Get Relay Status Log Response&quot; frame is sent by the Server, the &quot;Unread Entries&quot; attribute SHOULD be decremented to indicate the number of unread records that remain in the queue. &lt;br&gt; If the &quot;Unread Entries&quot;attribute reaches zero and the Client sends a new &quot;Get Relay Status Log Request&quot;, the Server MAY send one of the following items as a response: &lt;br&gt; i) resend the last Get Relay Status Log Response or ii) generate new log record at the time of request and send Get Relay Status Log Response with the new data</description>
+    </command>
+    <command code="0x00" source="server">
+        <name>Get Weekly Schedule Response</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Number Of Transitions</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="DayOfWeekEnum">
+            <name>Day Of Week</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="ModeForSequenceEnum">
+            <name>Mode</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Heat Set</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Cool Set</name>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Get Relay Status Log Response</name>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Time Of Day</name>
+        </field>
+        <field type="BITMAP_8_BIT">
+            <name>Relay Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Local Temperature</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Humidity</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Setpoint</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Unread Entries</name>
+        </field>
+    </command>
+    
+    <attribute code="0x0000" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x954D" maximum="0x7FFF">
+        <name>Local Temperature</name>
+        <description>LocalTemperature represents the temperature in degrees Celsius, as measured locally.</description>
+    </attribute>
+    <attribute code="0x0001" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x954D" maximum="0x7FFF">
+        <name>Outdoor Temperature</name>
+        <description>OutdoorTemperature represents the temperature in degrees Celsius, as measured locally.</description>
+    </attribute>
+    <attribute code="0x0002" type="BITMAP_8_BIT" side="server" optional="true" writable="false" reportable="false" default="0x00">
+        <name>Occupancy</name>
+        <description>Occupancy specifies whether the heated/cooled space is occupied or not</description>
+    </attribute>
+    <attribute code="0x0003" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x954D" maximum="0x7FFF" default="0x02BC">
+        <name>Abs Min Heat Setpoint Limit</name>
+        <description>The MinHeatSetpointLimit attribute specifies the absolute minimum level that the heating setpoint MAY be set to. This is a limitation imposed by the manufacturer.</description>
+    </attribute>
+    <attribute code="0x0004" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x954D" maximum="0x7FFF" default="0x0BB8">
+        <name>Abs Max Heat Setpoint Limit</name>
+        <description>The MaxHeatSetpointLimit attribute specifies the absolute maximum level that the heating setpoint MAY be set to. This is a limitation imposed by the manufacturer.</description>
+    </attribute>
+    <attribute code="0x0005" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x954D" maximum="0x7FFF" default="0x0640">
+        <name>Abs Min Cool Setpoint Limit</name>
+        <description>The MinCoolSetpointLimit attribute specifies the absolute minimum level that the cooling setpoint MAY be set to. This is a limitation imposed by the manufacturer.</description>
+    </attribute>
+    <attribute code="0x0006" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x954D" maximum="0x7FFF" default="0x0C80">
+        <name>Abs Max Cool Setpoint Limit</name>
+        <description>The MaxCoolSetpointLimit attribute specifies the absolute maximum level that the cooling setpoint MAY be set to. This is a limitation imposed by the manufacturer.</description>
+    </attribute>
+    <attribute code="0x0007" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="true" minimum="0x00" maximum="0x64">
+        <name>Pi Cooling Demand</name>
+        <description>The PICoolingDemandattribute is 8 bits in length and specifies the level of cooling demanded by the PI (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the thermostat is in &#8220;off&#8221; or &#8220;heating&#8221; mode.</description>
+    </attribute>
+    <attribute code="0x0008" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="true" minimum="0x00" maximum="0x64">
+        <name>Pi Heating Demand</name>
+        <description>The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating demanded by the PI (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the thermostat is in &#8220;off&#8221; or &#8220;cooling&#8221; mode.</description>
+    </attribute>
+    <attribute code="0x0009" type="BITMAP_8_BIT" side="server" optional="true" writable="false" reportable="false">
+        <name>Hvac System Type Configuration</name>
+    </attribute>
+    <attribute code="0x0010" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0xE7" maximum="0x19" default="0x00">
+        <name>Local Temperature Calibration</name>
+    </attribute>
+    <attribute code="0x0011" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" default="0x0A28">
+        <name>Occupied Cooling Setpoint</name>
+    </attribute>
+    <attribute code="0x0012" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" default="0x07D0">
+        <name>Occupied Heating Setpoint</name>
+    </attribute>
+    <attribute code="0x0013" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" default="0x0A28">
+        <name>Unoccupied Cooling Setpoint</name>
+    </attribute>
+    <attribute code="0x0014" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" default="0x07D0">
+        <name>Unoccupied Heating Setpoint</name>
+    </attribute>
+    <attribute code="0x0015" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x954D" maximum="0x7FFF" default="0x02BC">
+        <name>Min Heat Setpoint Limit</name>
+    </attribute>
+    <attribute code="0x0016" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x954D" maximum="0x7FFF" default="0x0BB8">
+        <name>Max Heat Setpoint Limit</name>
+    </attribute>
+    <attribute code="0x0017" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x954D" maximum="0x7FFF" default="0x0640">
+        <name>Min Cool Setpoint Limit</name>
+    </attribute>
+    <attribute code="0x0018" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x954D" maximum="0x7FFF" default="0x0C80">
+        <name>Max Cool Setpoint Limit</name>
+    </attribute>
+    <attribute code="0x0019" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0A" maximum="0x19" default="0x19">
+        <name>Min Setpoint Dead Band</name>
+    </attribute>
+    <attribute code="0x001A" type="BITMAP_8_BIT" side="server" optional="true" writable="false" reportable="false" default="0x00">
+        <name>Remote Sensing</name>
+    </attribute>
+    <attribute code="0x001B" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false" default="0x04">
+        <name>Control Sequence Of Operation</name>
+    </attribute>
+    <attribute code="0x001C" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false" default="0x01">
+        <name>System Mode</name>
+    </attribute>
+    <attribute code="0x001D" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false" default="0x00">
+        <name>Alarm Mask</name>
+    </attribute>
+    <attribute code="0x001E" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false">
+        <name>Thermostat Running Mode</name>
+    </attribute>
+
+    <constant type="BITMAP_8_BIT" class="DayOfWeekBitmap">
+        <name>Day Of Week</name>
+        <value code="0x01" name="Sunday">
+        </value>
+        <value code="0x02" name="Monday">
+        </value>
+        <value code="0x04" name="Tuesday">
+        </value>
+        <value code="0x08" name="Wednesday">
+        </value>
+        <value code="0x10" name="Thursday">
+        </value>
+        <value code="0x20" name="Friday">
+        </value>
+        <value code="0x40" name="Saturday">
+        </value>
+        <value code="0x80" name="Away Or Vacation">
+        </value>
+    </constant>
+    <constant type="BITMAP_8_BIT" class="ModeForSequenceBitmap">
+        <name>Mode For Sequence</name>
+        <value code="0x01" name="Heat Setpoint Field Present">
+        </value>
+        <value code="0x02" name="Cool Setpoint Field Present">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="SetpointAdjustModeEnum">
+        <name>Setpoint Adjust Mode</name>
+        <value code="0x00" name="Heat Setpoint">
+        </value>
+        <value code="0x01" name="Cool Setpoint">
+        </value>
+        <value code="0x02" name="Heat And Cool Setpoints">
+        </value>
+    </constant>
+</cluster>

@@ -7,27 +7,29 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-import javax.annotation.Generated;
 
 /**
- * <b>Illuminance level sensing</b> cluster implementation (<i>Cluster ID 0x0401</i>).
+ * <b>Illuminance Level Sensing</b> cluster implementation (<i>Cluster ID 0x0401</i>).
  * <p>
- * The cluster provides an interface to illuminance level sensing functionality,
- * including configuration and provision of notifications of whether the illuminance
- * is within, above or below a target band.
+ * The cluster provides an interface to illuminance level sensing functionality, including
+ * configuration and provision of notifications of whether the illuminance is within, above
+ * or below a target band.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -37,7 +39,7 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster Name
      */
-    public static final String CLUSTER_NAME = "Illuminance level sensing";
+    public static final String CLUSTER_NAME = "Illuminance Level Sensing";
 
     // Attribute constants
     /**
@@ -51,45 +53,46 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     public static final int ATTR_LIGHTSENSORTYPE = 0x0001;
     /**
      * The IlluminanceTargetLevel attribute specifies the target illuminance level. This
-     * target level is taken as the centre of a 'dead band', which must be sufficient in
-     * width, with hysteresis bands at both top and bottom, to provide reliable
-     * notifications without 'chatter'. Such a dead band and hysteresis bands must be
-     * provided by any implementation of this cluster. (N.B. Manufacturer specific
-     * attributes may be provided to configure these).
+     * target level is taken as the centre of a 'dead band', which must be sufficient in width,
+     * with hysteresis bands at both top and bottom, to provide reliable notifications
+     * without 'chatter'. Such a dead band and hysteresis bands must be provided by any
+     * implementation of this cluster. (N.B. Manufacturer specific attributes may be
+     * provided to configure these).
      * <p>
      * IlluminanceTargetLevel represents illuminance in Lux (symbol lx) as follows:
      * <p>
      * IlluminanceTargetLevel = 10,000 x log10 Illuminance
      * <p>
-     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
-     * the range 0 to 0xfffe.
+     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in the range 0 to
+     * 0xfffe.
      * <p>
      * A value of 0xffff indicates that this attribute is not valid.
      */
     public static final int ATTR_ILLUMINANCETARGETLEVEL = 0x0010;
 
     // Attribute initialisation
+    @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(3);
 
-        attributeMap.put(ATTR_LEVELSTATUS, new ZclAttribute(ZclClusterType.ILLUMINANCE_LEVEL_SENSING, ATTR_LEVELSTATUS, "LevelStatus", ZclDataType.ENUMERATION_8_BIT, true, true, false, true));
-        attributeMap.put(ATTR_LIGHTSENSORTYPE, new ZclAttribute(ZclClusterType.ILLUMINANCE_LEVEL_SENSING, ATTR_LIGHTSENSORTYPE, "LightSensorType", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_ILLUMINANCETARGETLEVEL, new ZclAttribute(ZclClusterType.ILLUMINANCE_LEVEL_SENSING, ATTR_ILLUMINANCETARGETLEVEL, "IlluminanceTargetLevel", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_LEVELSTATUS, new ZclAttribute(ZclClusterType.ILLUMINANCE_LEVEL_SENSING, ATTR_LEVELSTATUS, "Level Status", ZclDataType.ENUMERATION_8_BIT, true, true, false, true));
+        attributeMap.put(ATTR_LIGHTSENSORTYPE, new ZclAttribute(ZclClusterType.ILLUMINANCE_LEVEL_SENSING, ATTR_LIGHTSENSORTYPE, "Light Sensor Type", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_ILLUMINANCETARGETLEVEL, new ZclAttribute(ZclClusterType.ILLUMINANCE_LEVEL_SENSING, ATTR_ILLUMINANCETARGETLEVEL, "Illuminance Target Level", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
     }
 
     /**
-     * Default constructor to create a Illuminance level sensing cluster.
+     * Default constructor to create a Illuminance Level Sensing cluster.
      *
-     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint} this cluster is contained within
      */
     public ZclIlluminanceLevelSensingCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
     /**
-     * Get the <i>LevelStatus</i> attribute [attribute ID <b>0</b>].
+     * Get the <i>Level Status</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The LevelStatus attribute indicates whether the measured illuminance is above,
      * below, or within a band around IlluminanceTargetLevel .
@@ -105,7 +108,7 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>LevelStatus</i> attribute [attribute ID <b>0</b>].
+     * Synchronously get the <i>Level Status</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The LevelStatus attribute indicates whether the measured illuminance is above,
      * below, or within a band around IlluminanceTargetLevel .
@@ -133,7 +136,7 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>LevelStatus</i> attribute [attribute ID <b>0</b>].
+     * Set reporting for the <i>Level Status</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The LevelStatus attribute indicates whether the measured illuminance is above,
      * below, or within a band around IlluminanceTargetLevel .
@@ -142,8 +145,8 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> setLevelStatusReporting(final int minInterval, final int maxInterval) {
@@ -151,7 +154,7 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>LightSensorType</i> attribute [attribute ID <b>1</b>].
+     * Get the <i>Light Sensor Type</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
      * The LightSensorType attribute specifies the electronic type of the light sensor.
      * <p>
@@ -166,7 +169,7 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>LightSensorType</i> attribute [attribute ID <b>1</b>].
+     * Synchronously get the <i>Light Sensor Type</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
      * The LightSensorType attribute specifies the electronic type of the light sensor.
      * <p>
@@ -193,21 +196,21 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>IlluminanceTargetLevel</i> attribute [attribute ID <b>16</b>].
+     * Get the <i>Illuminance Target Level</i> attribute [attribute ID <b>0x0010</b>].
      * <p>
      * The IlluminanceTargetLevel attribute specifies the target illuminance level. This
-     * target level is taken as the centre of a 'dead band', which must be sufficient in
-     * width, with hysteresis bands at both top and bottom, to provide reliable
-     * notifications without 'chatter'. Such a dead band and hysteresis bands must be
-     * provided by any implementation of this cluster. (N.B. Manufacturer specific
-     * attributes may be provided to configure these).
+     * target level is taken as the centre of a 'dead band', which must be sufficient in width,
+     * with hysteresis bands at both top and bottom, to provide reliable notifications
+     * without 'chatter'. Such a dead band and hysteresis bands must be provided by any
+     * implementation of this cluster. (N.B. Manufacturer specific attributes may be
+     * provided to configure these).
      * <p>
      * IlluminanceTargetLevel represents illuminance in Lux (symbol lx) as follows:
      * <p>
      * IlluminanceTargetLevel = 10,000 x log10 Illuminance
      * <p>
-     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
-     * the range 0 to 0xfffe.
+     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in the range 0 to
+     * 0xfffe.
      * <p>
      * A value of 0xffff indicates that this attribute is not valid.
      * <p>
@@ -222,21 +225,21 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>IlluminanceTargetLevel</i> attribute [attribute ID <b>16</b>].
+     * Synchronously get the <i>Illuminance Target Level</i> attribute [attribute ID <b>0x0010</b>].
      * <p>
      * The IlluminanceTargetLevel attribute specifies the target illuminance level. This
-     * target level is taken as the centre of a 'dead band', which must be sufficient in
-     * width, with hysteresis bands at both top and bottom, to provide reliable
-     * notifications without 'chatter'. Such a dead band and hysteresis bands must be
-     * provided by any implementation of this cluster. (N.B. Manufacturer specific
-     * attributes may be provided to configure these).
+     * target level is taken as the centre of a 'dead band', which must be sufficient in width,
+     * with hysteresis bands at both top and bottom, to provide reliable notifications
+     * without 'chatter'. Such a dead band and hysteresis bands must be provided by any
+     * implementation of this cluster. (N.B. Manufacturer specific attributes may be
+     * provided to configure these).
      * <p>
      * IlluminanceTargetLevel represents illuminance in Lux (symbol lx) as follows:
      * <p>
      * IlluminanceTargetLevel = 10,000 x log10 Illuminance
      * <p>
-     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
-     * the range 0 to 0xfffe.
+     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in the range 0 to
+     * 0xfffe.
      * <p>
      * A value of 0xffff indicates that this attribute is not valid.
      * <p>

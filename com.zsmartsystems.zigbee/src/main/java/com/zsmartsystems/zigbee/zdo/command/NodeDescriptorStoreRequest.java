@@ -7,22 +7,22 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * Node Descriptor Store Request value object class.
  * <p>
- * The Node_Desc_store_req is provided to enable ZigBee end devices on the
- * network to request storage of their Node Descriptor on a Primary Discovery
- * Cache device which has previously received a SUCCESS status from a
- * Discovery_store_req to the same Primary Discovery Cache device. Included in
- * this request is the Node Descriptor the Local Device wishes to cache.
+ * <p>
+ * The Node_Desc_store_req is provided to enable ZigBee end devices on the network to request
+ * storage of their Node Descriptor on a Primary Discovery Cache device which has previously
+ * received a SUCCESS status from a Discovery_store_req to the same Primary Discovery Cache
+ * device. Included in this request is the Node Descriptor the Local Device wishes to cache.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
 public class NodeDescriptorStoreRequest extends ZdoRequest {
     /**
      * Default constructor.

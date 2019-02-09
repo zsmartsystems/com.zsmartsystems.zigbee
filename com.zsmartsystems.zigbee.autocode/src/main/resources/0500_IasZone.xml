@@ -1,0 +1,203 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0500">
+    <name>IAS Zone</name>
+    <description>The IAS Zone cluster defines an interface to the functionality of an IAS security zone device. IAS Zone supports up to two alarm types per zone, low battery reports and supervision of the IAS network.</description>
+    <command code="0x00" source="client">
+        <name>Zone Enroll Response</name>
+        <field type="ENUMERATION_8_BIT" class="IasEnrollResponseCodeEnum">
+            <name>Enroll Response Code</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Zone ID</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Initiate Normal Operation Mode Command</name>
+        <description>Used to tell the IAS Zone server to commence normal operation mode. &lt;br&gt; Upon receipt, the IAS Zone server SHALL commence normal operational mode. &lt;br&gt; Any configurations and changes made (e.g., CurrentZoneSensitivityLevel attribute) to the IAS Zone server SHALL be retained. &lt;br&gt; Upon commencing normal operation mode, the IAS Zone server SHALL send a Zone Status Change Notification command updating the ZoneStatus attribute Test bit to zero (i.e., &#8220;operation mode&#8221;).</description>
+    </command>
+    <command code="0x02" source="client">
+        <name>Initiate Test Mode Command</name>
+        <description>Certain IAS Zone servers MAY have operational configurations that could be configured OTA or locally on the device. This command enables them to be remotely placed into a test mode so that the user or installer MAY configure their field of view, sensitivity, and other operational parameters. They MAY also verify the placement and proper operation of the IAS Zone server, which MAY have been placed in a difficult to reach location (i.e., making a physical input on the device impractical to trigger). &lt;br&gt; Another use case for this command is large deployments, especially commercial and industrial, where placing the entire IAS system into test mode instead of a single IAS Zone server is infeasible due to the vulnerabilities that might arise. This command enables only a single IAS Zone server to be placed into test mode. &lt;br&gt; The biggest limitation of this command is that most IAS Zone servers today are battery-powered sleepy nodes that cannot reliably receive commands. However, implementers MAY decide to program an IAS Zone server by factory default to maintain a limited duration of normal polling upon initialization/joining to a new network. Some IAS Zone servers MAY also have AC mains power and are able to receive commands. Some types of IAS Zone servers that MAY benefit from this command are: motion sensors and fire sensor/smoke alarm listeners (i.e., a device that listens for a non-communicating fire sensor to alarm and communicates this to the IAS CIE).</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Test Mode Duration</name>
+            <description>Specifies the duration, in seconds, for which the IAS Zone server SHALL operate in its test mode.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Current Zone Sensitivity Level</name>
+            <description>Specifies the sensitivity level the IAS Zone server SHALL use for the duration of the Test Mode and with which it must update its CurrentZoneSensitivityLevel attribute.</description>
+            <description>The permitted values of Current Zone Sensitivity Level are shown defined for the CurrentZoneSensitivityLevel Attribute.</description>
+        </field>
+    </command>
+    <command code="0x00" source="server">
+        <name>Zone Status Change Notification Command</name>
+        <description>The Zone Status Change Notification command is generated when a change takes place in one or more bits of the ZoneStatus attribute.</description>
+        <field type="ENUMERATION_16_BIT" class="IasZoneStatusEnum">
+            <name>Zone Status</name>
+            <description>The Zone Status field SHALL be the current value of the ZoneStatus attribute.</description>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Extended Status</name>
+            <description>The Extended Status field is reserved for additional status information and SHALL be set to zero.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Zone ID</name>
+            <description>Zone ID is the index of the Zone in the CIE's zone table.</description>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Delay</name>
+            <description>The Delay field is defined as the amount of time, in quarter-seconds, from the moment when a change takes place in one or more bits of the Zone Status attribute and the successful transmission of the Zone Status Change Notification. This is designed to help congested networks or offline servers quantify the amount of time from when an event was detected and when it could be reported to the client.</description>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Zone Enroll Request Command</name>
+        <description>The Zone Enroll Request command is generated when a device embodying the Zone server cluster wishes to be  enrolled as an active  alarm device. It  must do this immediately it has joined the network (during commissioning).</description>
+        <field type="ENUMERATION_16_BIT" class="IasZoneTypeEnum">
+            <name>Zone Type</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer Code</name>
+        </field>
+    </command>
+
+    <attribute code="0x0000" type="ENUMERATION_8_BIT" side="server" class="ZoneStateEnum" optional="false" writable="false" reportable="false" default="0x00">
+        <name>Zone State</name>
+        <description>The Zone State attribute defines if the device is currently enrolled with a CIE or not.</description>
+    </attribute>
+    <attribute code="0x0001" type="ENUMERATION_16_BIT" side="server" class="ZoneTypeEnum" optional="false" writable="false" reportable="false">
+        <name>Zone Type</name>
+        <description>The Zone Type dictates the meaning of Alarm1 and Alarm2 bits of the ZoneStatus attribute</description>
+    </attribute>
+    <attribute code="0x0002" type="BITMAP_16_BIT" side="server" optional="false" writable="false" reportable="false" default="0x0000">
+        <name>Zone Status</name>
+        <description>The ZoneStatus attribute is a bit map. Each bit defines the state of an alarm.</description>
+    </attribute>
+    <attribute code="0x0010" type="IEEE_ADDRESS" side="server" optional="false" writable="true" reportable="false">
+        <name>IAS CIE Address</name>
+        <description>The IAS CIE Address attribute specifies the address that commands generated by the server shall be sent to. All commands received by the server must also come from this address.</description>
+        <description>It is up to the zone&apos;s specific implementation to permit or deny change (write) of this attribute at specific times. Also, it is up to the zone&apos;s specific implementation to implement some auto-detect for the CIE (example: by requesting the ZigBee cluster discovery service to locate a Zone Server cluster.) or require the intervention of a CT in order to configure this attribute during installation.</description>
+    </attribute>
+    <attribute code="0x0011" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="true" reportable="false" default="0xFF">
+        <name>Zone ID</name>
+        <description>A unique reference number allocated by the CIE at zone enrollment time.</description>
+        <description>Used by IAS devices to reference specific zones when communicating with the CIE. The ZoneID of each zone stays fixed until that zone is unenrolled.</description>
+    </attribute>
+    <attribute code="0x0012" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" default="0x02">
+        <name>Number Of Zone Sensitivity Levels Supported</name>
+        <description>Provides the total number of sensitivity levels supported by the IAS Zone server. The purpose of this attribute is to support devices that can be configured to be more or less sensitive (e.g., motion sensor). It provides IAS Zone clients with the range of sensitivity levels that are supported so they MAY be presented to the user for configuration.</description>
+        <description>The values 0x00 and 0x01 are reserved because a device that has zero or one sensitivity level SHOULD NOT support this attribute because no configuration of the IAS Zone server&#8217;s sensitivity level is possible.</description>
+        <description>The meaning of each sensitivity level is manufacturer-specific. However, the sensitivity level of the IAS Zone server SHALL become more sensitive as they ascend. For example, if the server supports three sen- sitivity levels, then the value of this attribute would be 0x03 where 0x03 is more sensitive than 0x02, which is more sensitive than 0x01.</description>
+    </attribute>
+    <attribute code="0x0013" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" default="0x00">
+        <name>Current Zone Sensitivity Level</name>
+        <description>Allows an IAS Zone client to query and configure the IAS Zone server&#8217;s sensitivity level. Please see NumberOfZoneSensitivityLevelsSupported Attribute for more detail on how to interpret this attribute.</description>
+        <description>The default value 0x00 is the device&#8217;s default sensitivity level as configured by the manufacturer. It MAY correspond to the same sensitivity as another value in the NumberOfZoneSensitivityLevelsSupported, but this is the default sensitivity to be used if the CurrentZoneSensitivityLevel attribute is not otherwise configured by an IAS Zone client.</description>
+    </attribute>
+
+    <constant class="ZoneStateEnum">
+        <name>Zone State</name>
+        <value code="0x00" name="Not Enrolled">
+        </value>
+        <value code="0x01" name="Enrolled">
+        </value>
+    </constant>
+    <constant class="ZoneTypeEnum">
+        <name>Zone Type</name>
+        <value code="0x0000" name="Standard CIE">
+        </value>
+        <value code="0x000D" name="Motion Sensor">
+        </value>
+        <value code="0x0015" name="Contact Switch">
+        </value>
+        <value code="0x0028" name="Fire Sensor">
+        </value>
+        <value code="0x002A" name="Water Sensor">
+        </value>
+        <value code="0x002B" name="CO Sensor">
+        </value>
+        <value code="0x002C" name="Personal Emergency Device">
+        </value>
+        <value code="0x002D" name="Vibration Movement Sensor">
+        </value>
+        <value code="0x010F" name="Remote Control">
+        </value>
+        <value code="0x0115" name="Key Fob">
+        </value>
+        <value code="0x021D" name="Key Pad">
+        </value>
+        <value code="0x0225" name="Standard Warning Device">
+        </value>
+        <value code="0x0226" name="Glass Break Sensor">
+        </value>
+        <value code="0x0229" name="Security Repeater">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="IasEnrollResponseCodeEnum">
+        <name>IAS Enroll Response Code</name>
+        <value code="0x00" name="Success">
+        </value>
+        <value code="0x01" name="Not Supported">
+        </value>
+        <value code="0x02" name="No Enroll Permit">
+        </value>
+        <value code="0x03" name="Too Many Zones">
+        </value>
+    </constant>
+    <constant type="BITMAP_16_BIT" class="IasZoneStatusBitmap">
+        <name>IAS Zone Status</name>
+        <value code="0x0001" name="Alarm 1">
+        </value>
+        <value code="0x0002" name="Alarm 2">
+        </value>
+        <value code="0x0004" name="Tamper">
+        </value>
+        <value code="0x0008" name="Battery">
+        </value>
+        <value code="0x0010" name="Supervision Reports">
+        </value>
+        <value code="0x0020" name="Restore Reports">
+        </value>
+        <value code="0x0040" name="Trouble">
+        </value>
+        <value code="0x0080" name="AC">
+        </value>
+        <value code="0x0100" name="Test">
+        </value>
+        <value code="0x0200" name="Battery Defect">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_16_BIT" class="IasZoneTypeEnum">
+        <name>IAS Zone Type</name>
+        <value code="0x0000" name="Standard CIE">
+        </value>
+        <value code="0x000D" name="Motion Sensor">
+        </value>
+        <value code="0x0015" name="Contact Switch">
+        </value>
+        <value code="0x0028" name="Fire Sensor">
+        </value>
+        <value code="0x002A" name="Water Sensor">
+        </value>
+        <value code="0x002B" name="Gas Sensor">
+        </value>
+        <value code="0x002C" name="Personal Emergency Device">
+        </value>
+        <value code="0x002D" name="Vibration Movement Sensor">
+        </value>
+        <value code="0x010F" name="Remote Control">
+        </value>
+        <value code="0x0115" name="Key Fob">
+        </value>
+        <value code="0x021D" name="Keypad">
+        </value>
+        <value code="0x0225" name="Standard Warning Device">
+        </value>
+        <value code="0x0226" name="Glass Break Sensor">
+        </value>
+        <value code="0x0227" name="Carbon Monoxide Sensor">
+        </value>
+        <value code="0x0229" name="Security Repeater">
+        </value>
+        <value code="0xFFFF" name="Invalid Zone Type">
+        </value>
+    </constant>
+</cluster>

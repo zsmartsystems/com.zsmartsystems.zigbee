@@ -7,38 +7,39 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
-
-import java.util.List;
-import java.util.ArrayList;
-import javax.annotation.Generated;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 
 /**
  * Bind Register Response value object class.
  * <p>
- * The Bind_Register_rsp is generated from a primary binding table cache device in
- * response to a Bind_Register_req and contains the status of the request. This
- * command shall be unicast to the requesting device.
+ * <p>
+ * The Bind_Register_rsp is generated from a primary binding table cache device in response to
+ * a Bind_Register_req and contains the status of the request. This command shall be unicast to
+ * the requesting device.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T17:07:08Z")
 public class BindRegisterResponse extends ZdoResponse {
     /**
-     * BindingTableEntries command message field.
+     * Binding Table Entries command message field.
      */
     private Integer bindingTableEntries;
 
     /**
-     * BindingTableList command message field.
+     * Binding Table List command message field.
      */
-    private List<List<BindingTable>> bindingTableList;
+    private List<BindingTable> bindingTableList;
 
     /**
      * Default constructor.
@@ -48,38 +49,38 @@ public class BindRegisterResponse extends ZdoResponse {
     }
 
     /**
-     * Gets BindingTableEntries.
+     * Gets Binding Table Entries.
      *
-     * @return the BindingTableEntries
+     * @return the Binding Table Entries
      */
     public Integer getBindingTableEntries() {
         return bindingTableEntries;
     }
 
     /**
-     * Sets BindingTableEntries.
+     * Sets Binding Table Entries.
      *
-     * @param bindingTableEntries the BindingTableEntries
+     * @param bindingTableEntries the Binding Table Entries
      */
     public void setBindingTableEntries(final Integer bindingTableEntries) {
         this.bindingTableEntries = bindingTableEntries;
     }
 
     /**
-     * Gets BindingTableList.
+     * Gets Binding Table List.
      *
-     * @return the BindingTableList
+     * @return the Binding Table List
      */
-    public List<List<BindingTable>> getBindingTableList() {
+    public List<BindingTable> getBindingTableList() {
         return bindingTableList;
     }
 
     /**
-     * Sets BindingTableList.
+     * Sets Binding Table List.
      *
-     * @param bindingTableList the BindingTableList
+     * @param bindingTableList the Binding Table List
      */
-    public void setBindingTableList(final List<List<BindingTable>> bindingTableList) {
+    public void setBindingTableList(final List<BindingTable> bindingTableList) {
         this.bindingTableList = bindingTableList;
     }
 
@@ -91,7 +92,7 @@ public class BindRegisterResponse extends ZdoResponse {
         serializer.serialize(bindingTableEntries, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(bindingTableList.size(), ZclDataType.UNSIGNED_16_BIT_INTEGER);
         for (int cnt = 0; cnt < bindingTableList.size(); cnt++) {
-            serializer.serialize(bindingTableList.get(cnt), ZclDataType.N_X_BINDING_TABLE);
+            serializer.serialize(bindingTableList.get(cnt), ZclDataType.BINDING_TABLE);
         }
     }
 
@@ -100,7 +101,7 @@ public class BindRegisterResponse extends ZdoResponse {
         super.deserialize(deserializer);
 
         // Create lists
-        bindingTableList = new ArrayList<List<BindingTable>>();
+        bindingTableList = new ArrayList<BindingTable>();
 
         status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
         if (status != ZdoStatus.SUCCESS) {
@@ -111,7 +112,7 @@ public class BindRegisterResponse extends ZdoResponse {
         Integer bindingTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         if (bindingTableListCount != null) {
             for (int cnt = 0; cnt < bindingTableListCount; cnt++) {
-                bindingTableList.add((List<BindingTable>) deserializer.deserialize(ZclDataType.N_X_BINDING_TABLE));
+                bindingTableList.add((BindingTable) deserializer.deserialize(ZclDataType.BINDING_TABLE));
             }
         }
     }
