@@ -141,6 +141,13 @@ public abstract class ZclCluster {
      */
     protected abstract Map<Integer, ZclAttribute> initializeAttributes();
 
+    /**
+     * Creates a cluster
+     *
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint} to which the cluster belongs
+     * @param clusterId the 16 bit cluster identifier
+     * @param clusterName the cluster name
+     */
     public ZclCluster(ZigBeeEndpoint zigbeeEndpoint, int clusterId, String clusterName) {
         this.zigbeeEndpoint = zigbeeEndpoint;
         this.clusterId = clusterId;
@@ -148,6 +155,12 @@ public abstract class ZclCluster {
         this.normalizer = new ZclAttributeNormalizer();
     }
 
+    /**
+     * Sends a {@link ZclCommand}
+     *
+     * @param command the {@link ZclCommand} to send
+     * @return the command result future
+     */
     protected Future<CommandResult> send(ZclCommand command) {
         if (isClient()) {
             command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
@@ -159,19 +172,13 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Read an attribute
+     * Read an attribute given the attribute ID
      *
-     * @param attribute the attribute to read
+     * @param attribute the integer attribute ID to read
      * @return command future
      */
     public Future<CommandResult> read(final int attribute) {
-        final ReadAttributesCommand command = new ReadAttributesCommand();
-
-        command.setClusterId(clusterId);
-        command.setIdentifiers(Collections.singletonList(attribute));
-        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
-
-        return send(command);
+        return read(Collections.singletonList(attribute));
     }
 
     /**
@@ -182,6 +189,23 @@ public abstract class ZclCluster {
      */
     public Future<CommandResult> read(final ZclAttribute attribute) {
         return read(attribute.getId());
+    }
+
+    /**
+     * Read a number of attributes given a list of attribute IDs. Care must be taken not to request too many attributes
+     * so as to exceed the allowable frame length
+     *
+     * @param attributes List of attribute identifiers to read
+     * @return command future
+     */
+    public Future<CommandResult> read(final List<Integer> attributes) {
+        final ReadAttributesCommand command = new ReadAttributesCommand();
+
+        command.setClusterId(clusterId);
+        command.setIdentifiers(attributes);
+        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
+
+        return send(command);
     }
 
     /**
