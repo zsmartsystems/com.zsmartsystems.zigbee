@@ -31,6 +31,7 @@ import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
@@ -269,6 +270,42 @@ public class ZclClusterTest {
         onCommand = (OnCommand) command;
         assertEquals(false, onCommand.getApsSecurity());
         assertEquals(ZclCommandDirection.CLIENT_TO_SERVER, onCommand.getCommandDirection());
+    }
+
+    @Test
+    public void readAttribute() {
+        createEndpoint();
+
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+
+        cluster.read(1);
+        assertEquals(1, commandCapture.getAllValues().size());
+        assertTrue(commandCapture.getValue() instanceof ReadAttributesCommand);
+        ReadAttributesCommand command = (ReadAttributesCommand) commandCapture.getValue();
+        System.out.println(command);
+        assertEquals(1, command.getIdentifiers().size());
+        assertEquals(Integer.valueOf(1), command.getIdentifiers().get(0));
+
+        ZclAttribute attribute = new ZclAttribute(null, 2, null, null, false, false, false, false);
+        cluster.read(attribute);
+        assertTrue(commandCapture.getValue() instanceof ReadAttributesCommand);
+        command = (ReadAttributesCommand) commandCapture.getValue();
+        System.out.println(command);
+        assertEquals(1, command.getIdentifiers().size());
+        assertEquals(Integer.valueOf(2), command.getIdentifiers().get(0));
+
+        List<Integer> attributeIds = new ArrayList<>();
+        attributeIds.add(4);
+        attributeIds.add(5);
+        attributeIds.add(6);
+        cluster.read(attributeIds);
+        assertTrue(commandCapture.getValue() instanceof ReadAttributesCommand);
+        command = (ReadAttributesCommand) commandCapture.getValue();
+        System.out.println(command);
+        assertEquals(3, command.getIdentifiers().size());
+        assertEquals(Integer.valueOf(4), command.getIdentifiers().get(0));
+        assertEquals(Integer.valueOf(5), command.getIdentifiers().get(1));
+        assertEquals(Integer.valueOf(6), command.getIdentifiers().get(2));
     }
 
 }
