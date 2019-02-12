@@ -16,7 +16,7 @@ import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.iaszone.EnrollResponseCodeEnum;
+import com.zsmartsystems.zigbee.zcl.clusters.iaszone.IasEnrollResponseCodeEnum;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollRequestCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneStateEnum;
@@ -211,7 +211,7 @@ public class ZclIasZoneClient implements ZigBeeApplication {
      */
     private void handleZoneEnrollRequestCommand(ZoneEnrollRequestCommand command) {
         zoneType = command.getZoneType();
-        iasZoneCluster.zoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zone);
+        iasZoneCluster.zoneEnrollResponse(IasEnrollResponseCodeEnum.SUCCESS.getKey(), zone);
     }
 
     @Override
