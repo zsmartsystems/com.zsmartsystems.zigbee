@@ -30,7 +30,7 @@ public class AutoCodeMojo extends AbstractMojo {
     @Parameter(readonly = true, required = true)
     private File constantsInput;
 
-    @Parameter(readonly = true, required = true, defaultValue = "${project.build.directory}/generated-zcl")
+    @Parameter(readonly = true, required = true, defaultValue = "${project.build.directory}/generated-sources/zcl-autocoder")
     private String outputDirectory;
 
     @Parameter(readonly = true, required = true, defaultValue = "${project.parent.basedir}/src/etc/header.txt")
