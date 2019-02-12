@@ -7,19 +7,9 @@
  */
 package com.zsmartsystems.zigbee.autocode;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.zsmartsystems.zigbee.autocode.xml.*;
 
-import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlAttribute;
-import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCluster;
-import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCommand;
-import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlConstant;
-import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlField;
-import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlStructure;
+import java.util.*;
 
 /**
  *
@@ -27,21 +17,18 @@ import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlStructure;
  *
  */
 public class ZigBeeZclDependencyGenerator extends ZigBeeBaseClassGenerator {
+
     private Map<String, String> dependencies = new HashMap<>();
     private Set<String> zclTypes = new HashSet<>();
 
-    ZigBeeZclDependencyGenerator(List<ZigBeeXmlCluster> clusters) {
+    ZigBeeZclDependencyGenerator(String sourceRootPath, String licenseText, List<ZigBeeXmlCluster> clusters) {
+        super(sourceRootPath, licenseText);
         for (ZigBeeXmlCluster cluster : clusters) {
-            try {
-                generateZclClusterDependencies(cluster, packageRoot);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            generateZclClusterDependencies(cluster, packageRoot);
         }
     }
 
-    private void generateZclClusterDependencies(ZigBeeXmlCluster cluster, String packageRootPrefix) throws IOException {
+    private void generateZclClusterDependencies(ZigBeeXmlCluster cluster, String packageRootPrefix) {
         if (cluster.constants != null) {
             for (final ZigBeeXmlConstant constant : cluster.constants) {
                 final String packageRoot = packageRootPrefix + packageZclProtocolCommand + "."

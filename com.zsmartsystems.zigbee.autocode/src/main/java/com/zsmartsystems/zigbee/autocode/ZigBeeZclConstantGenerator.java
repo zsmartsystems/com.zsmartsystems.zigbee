@@ -26,8 +26,9 @@ import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlConstant;
  */
 public class ZigBeeZclConstantGenerator extends ZigBeeBaseClassGenerator {
 
-    ZigBeeZclConstantGenerator(List<ZigBeeXmlCluster> clusters, String generatedDate,
+    ZigBeeZclConstantGenerator(String sourceRootPath, String licenseText, List<ZigBeeXmlCluster> clusters, String generatedDate,
             Map<String, String> dependencies) {
+        super(sourceRootPath, licenseText);
         this.generatedDate = generatedDate;
         this.dependencies = dependencies;
 
@@ -41,7 +42,8 @@ public class ZigBeeZclConstantGenerator extends ZigBeeBaseClassGenerator {
         }
     }
 
-    ZigBeeZclConstantGenerator(ZigBeeXmlConstant constant, String generatedDate) {
+    ZigBeeZclConstantGenerator(String sourceRootPath, String licenseText, ZigBeeXmlConstant constant, String generatedDate) {
+        super(sourceRootPath, licenseText);
         this.generatedDate = generatedDate;
         String packageRoot = "com.zsmartsystems.zigbee";
 

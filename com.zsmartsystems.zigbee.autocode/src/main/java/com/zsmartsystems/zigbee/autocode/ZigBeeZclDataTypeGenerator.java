@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.zsmartsystems.zigbee.autocode.ZclDataType.DataTypeMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,7 +25,10 @@ import com.zsmartsystems.zigbee.autocode.ZclDataType.DataTypeMap;
  *
  */
 public class ZigBeeZclDataTypeGenerator extends ZigBeeBaseClassGenerator {
-    ZigBeeZclDataTypeGenerator(Set<String> types, String generatedDate) {
+    private final Logger log = LoggerFactory.getLogger(ZigBeeZclDataTypeGenerator.class);
+
+    ZigBeeZclDataTypeGenerator(String sourceRootPath, String licenseText, Set<String> types, String generatedDate) {
+        super(sourceRootPath, licenseText);
         try {
             this.generatedDate = generatedDate;
             generateZclDataTypeEnumeration(types);
@@ -98,7 +103,7 @@ public class ZigBeeZclDataTypeGenerator extends ZigBeeBaseClassGenerator {
         for (final String dataTypeString : sortedTypes) {
             DataTypeMap zclDataType = ZclDataType.getDataTypeMapping().get(dataTypeString);
             if (zclDataType == null) {
-                System.out.println("Unable to map data type \"" + dataTypeString + "\"");
+                log.warn("Unable to map data type \"{}\"", dataTypeString);
                 continue;
             }
 

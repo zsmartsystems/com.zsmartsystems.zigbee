@@ -24,8 +24,9 @@ import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCommand;
  */
 public class ZigBeeZclCommandTypeGenerator extends ZigBeeBaseClassGenerator {
 
-    ZigBeeZclCommandTypeGenerator(List<ZigBeeXmlCluster> clusters, String generatedDate,
+    ZigBeeZclCommandTypeGenerator(String sourceRootPath, String licenseText, List<ZigBeeXmlCluster> clusters, String generatedDate,
             Map<String, String> dependencies) {
+        super(sourceRootPath, licenseText);
         this.generatedDate = generatedDate;
         this.dependencies = dependencies;
 
