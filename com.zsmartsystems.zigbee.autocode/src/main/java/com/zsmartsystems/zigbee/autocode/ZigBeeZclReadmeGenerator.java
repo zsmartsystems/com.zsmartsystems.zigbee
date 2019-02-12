@@ -26,7 +26,8 @@ public class ZigBeeZclReadmeGenerator extends ZigBeeBaseClassGenerator {
     final String TABLE2 = "|----|---------|-------------|";
     final String README_MD = "../README.md";
 
-    ZigBeeZclReadmeGenerator(List<ZigBeeXmlCluster> clusters) {
+    ZigBeeZclReadmeGenerator(String sourceRootPath, String licenseText, List<ZigBeeXmlCluster> clusters) {
+        super(sourceRootPath, licenseText);
         FileInputStream fstream;
         try {
             fstream = new FileInputStream(README_MD);

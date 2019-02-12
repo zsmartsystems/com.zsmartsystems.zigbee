@@ -16,6 +16,8 @@ import java.util.TreeMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,6 +30,8 @@ import org.w3c.dom.NodeList;
  *
  */
 public class ZigBeeXmlParser {
+    private final Logger log = LoggerFactory.getLogger(ZigBeeXmlParser.class);
+
     List<String> files = new ArrayList<String>();
 
     public ZigBeeXmlParser() {
@@ -42,7 +46,7 @@ public class ZigBeeXmlParser {
 
         try {
             for (String file : files) {
-                System.out.println("Parsing cluster file: " + file);
+                log.debug("Parsing cluster file: {}", file);
                 // Load the class definitions
                 File fXmlFile = new File(file);
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -69,7 +73,7 @@ public class ZigBeeXmlParser {
 
         try {
             for (String file : files) {
-                System.out.println("Parsing globals file: " + file);
+                log.debug("Parsing globals file: {}", file);
                 // Load the class definitions
                 File fXmlFile = new File(file);
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -103,7 +107,7 @@ public class ZigBeeXmlParser {
                         global.constants.add((ZigBeeXmlConstant) processNode(nodes.item(temp)));
                     }
                 }
-                System.out.println("Done: Global");
+                log.info("Done: Global");
                 return global;
 
             case "cluster":
@@ -138,7 +142,7 @@ public class ZigBeeXmlParser {
                         cluster.structures.add((ZigBeeXmlStructure) processNode(nodes.item(temp)));
                     }
                 }
-                System.out.println("Done: Cluster - " + cluster.name);
+                log.info("Done: Cluster - {}", cluster.name);
                 return cluster;
 
             case "attribute":
@@ -203,7 +207,7 @@ public class ZigBeeXmlParser {
                         command.response = (ZigBeeXmlResponse) processNode(nodes.item(temp));
                     }
                 }
-                System.out.println("Done: Command - " + command.name);
+                log.info("Done: Command - {}", command.name);
                 return command;
 
             case "field":
@@ -213,8 +217,6 @@ public class ZigBeeXmlParser {
                 e = (Element) node;
                 if (e.getAttribute("completeOnZero").length() > 0) {
                     String x = e.getAttribute("completeOnZero");
-                    System.out.println(x);
-
                 }
                 field.type = e.getAttribute("type").trim();
                 field.completeOnZero = "true".equals(e.getAttribute("completeOnZero").trim());
@@ -234,7 +236,7 @@ public class ZigBeeXmlParser {
                         field.condition = (ZigBeeXmlCondition) processNode(nodes.item(temp));
                     }
                 }
-                System.out.println("Done: Field - " + field.name);
+                log.info("Done: Field - {}", field.name);
                 return field;
 
             case "constant":
@@ -285,7 +287,7 @@ public class ZigBeeXmlParser {
                         structure.fields.add((ZigBeeXmlField) processNode(nodes.item(temp)));
                     }
                 }
-                System.out.println("Done: Structure - " + structure.name);
+                log.info("Done: Structure - ", structure.name);
                 return structure;
 
             case "description":
@@ -317,7 +319,7 @@ public class ZigBeeXmlParser {
                         condition.value = nodes.item(temp).getTextContent().trim();
                     }
                 }
-                System.out.println("Done: Condition - " + condition.field);
+                log.info("Done: Condition - {}", condition.field);
                 return condition;
 
             case "response":
@@ -332,7 +334,7 @@ public class ZigBeeXmlParser {
                         response.matchers.add((ZigBeeXmlMatcher) processNode(nodes.item(temp)));
                     }
                 }
-                System.out.println("Done: Response - " + response.command);
+                log.info("Done: Response - {}", response.command);
                 return response;
 
             case "matcher":
@@ -342,7 +344,7 @@ public class ZigBeeXmlParser {
                 matcher.commandField = e.getAttribute("commandField").trim();
                 matcher.responseField = e.getAttribute("responseField").trim();
 
-                System.out.println("Done: Matcher - " + matcher.commandField);
+                log.info("Done: Matcher - {}", matcher.commandField);
                 return matcher;
         }
 

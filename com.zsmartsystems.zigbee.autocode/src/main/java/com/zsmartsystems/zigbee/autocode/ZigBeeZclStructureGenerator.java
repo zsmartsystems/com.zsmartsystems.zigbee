@@ -25,8 +25,9 @@ import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlStructure;
  */
 public class ZigBeeZclStructureGenerator extends ZigBeeBaseFieldGenerator {
 
-    ZigBeeZclStructureGenerator(List<ZigBeeXmlCluster> clusters, String generatedDate,
+    ZigBeeZclStructureGenerator(String sourceRootPath, String licenseText, List<ZigBeeXmlCluster> clusters, String generatedDate,
             Map<String, String> dependencies) {
+        super(sourceRootPath, licenseText);
         this.generatedDate = generatedDate;
         this.dependencies = dependencies;
 

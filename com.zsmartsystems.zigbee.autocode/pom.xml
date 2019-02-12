@@ -4,28 +4,22 @@
 
     <groupId>com.zsmartsystems.zigbee</groupId>
     <artifactId>com.zsmartsystems.zigbee.autocode</artifactId>
-    <packaging>jar</packaging>
+    <packaging>maven-plugin</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.main.skip>true</maven.main.skip>
     </properties>
     
     <parent>
         <groupId>com.zsmartsystems</groupId>
         <artifactId>zigbee</artifactId>
         <version>1.1.10-SNAPSHOT</version>
+        <relativePath>..</relativePath>
     </parent>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.5</version>
-            </plugin>
- 
            	<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -38,11 +32,45 @@
 					</execution>
 				</executions>
 			</plugin>
-
+            <plugin>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>default-descriptor</id>
+                        <phase>process-classes</phase>
+                    </execution>
+                    <!-- if you want to generate help goal -->
+                    <execution>
+                        <id>help-goal</id>
+                        <goals>
+                            <goal>helpmojo</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.6.0</version>
+            <optional>true</optional>
+            <scope>provided</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>commons-io</groupId>
@@ -55,8 +83,6 @@
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
         </dependency>
-
-
     </dependencies>
 
 </project>

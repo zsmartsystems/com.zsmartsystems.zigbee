@@ -25,6 +25,8 @@ import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlAttribute;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCluster;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlDescription;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -33,12 +35,15 @@ import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlField;
  */
 
 public abstract class ZigBeeBaseClassGenerator {
+    private final Logger log = LoggerFactory.getLogger(ZigBeeBaseClassGenerator.class);
+
     String generatedDate;
 
     Map<String, String> dependencies;
 
     int lineLen = 80;
-    String sourceRootPath = "target/src/main/java/";
+    String sourceRootPath;
+    private final String licenseText;
     List<String> importList = new ArrayList<String>();
 
     static String packageRoot = "com.zsmartsystems.zigbee";
@@ -119,6 +124,11 @@ public abstract class ZigBeeBaseClassGenerator {
         customTypes.put("ImageUpgradeStatus", packageRoot + packageZclField + ".ImageUpgradeStatus");
     }
 
+    ZigBeeBaseClassGenerator(String sourceRootPath, String licenseText) {
+        this.sourceRootPath = sourceRootPath;
+        this.licenseText = licenseText;
+    }
+
     protected String stringToConstantEnum(String value) {
         return stringToConstant(value).replaceAll("_", "");
     }
@@ -185,7 +195,7 @@ public abstract class ZigBeeBaseClassGenerator {
     protected PrintWriter getClassOut(File packageFile, String className) throws FileNotFoundException {
         packageFile.mkdirs();
         final File classFile = new File(packageFile + File.separator + className + ".java");
-        System.out.println("Generating: " + classFile.getAbsolutePath());
+        log.debug("Generating: {}", classFile.getAbsolutePath());
         final FileOutputStream fileOutputStream = new FileOutputStream(classFile, false);
         return new PrintWriter(fileOutputStream);
     }
@@ -286,39 +296,12 @@ public abstract class ZigBeeBaseClassGenerator {
     }
 
     protected void outputLicense(PrintWriter out) {
-        String year = "XXXX";
+        out.println("/**");
+        for (String line: licenseText.split("\n")) {
+            out.println(" * " + line);
 
-        BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader("../pom.xml"));
-            String line = br.readLine();
-            while (line != null) {
-                if (line.contains("<license.year>") && line.contains("</license.year>")) {
-                    year = line.substring(line.indexOf("<license.year>") + 14, line.indexOf("</license.year>"));
-                    break;
-                }
-                line = br.readLine();
-            }
-
-            br.close();
-
-            br = new BufferedReader(new FileReader("../src/etc/header.txt"));
-            line = br.readLine();
-
-            out.println("/**");
-            while (line != null) {
-                out.println(" * " + line.replaceFirst("\\$\\{year\\}", year));
-                line = br.readLine();
-            }
-            out.println(" */");
-            br.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
+        out.println(" */");
     }
 
     protected File getPackageFile(String packagePath) {
@@ -334,7 +317,7 @@ public abstract class ZigBeeBaseClassGenerator {
     }
 
     protected void outputClassGenerated(PrintWriter out) {
-        out.println("@Generated(value = \"" + ZigBeeCodeGenerator.class.getName() + "\", date = \"" + generatedDate
+        out.println("@Generated(value = \"" + getClass().getName() + "\", date = \"" + generatedDate
                 + "\")");
     }
 
@@ -404,7 +387,7 @@ public abstract class ZigBeeBaseClassGenerator {
             return attribute.implementationClass;
         }
 
-        System.out.println("Unknown data type " + attribute.type);
+        log.warn("Unknown data type {}", attribute.type);
         return "(UNKNOWN::" + attribute.type + ")";
         // }
         // return attribute.implementationClass;
@@ -422,7 +405,7 @@ public abstract class ZigBeeBaseClassGenerator {
         }
 
         if (dataType.isEmpty()) {
-            System.out.println("Unknown data type " + field.type);
+            log.warn("Unknown data type {}", field.type);
             return "(UNKNOWN::" + field.type + ")";
         }
 

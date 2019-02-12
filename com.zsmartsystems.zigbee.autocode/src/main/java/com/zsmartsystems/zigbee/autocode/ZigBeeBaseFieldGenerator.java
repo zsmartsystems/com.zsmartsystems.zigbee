@@ -26,6 +26,10 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
     private final String OPERATOR_LESS_THAN = "LESS_THAN";
     private final String OPERATOR_LESS_THAN_OR_EQUAL = "LESS_THAN_OR_EQUAL";
 
+    ZigBeeBaseFieldGenerator(String sourceRootPath, String licenseText) {
+        super(sourceRootPath, licenseText);
+    }
+
     protected void generateFields(PrintWriter out, String parentClass, String className, List<ZigBeeXmlField> fields,
             List<String> reservedFields) {
         for (final ZigBeeXmlField field : fields) {
@@ -271,9 +275,6 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
 
     protected ZigBeeXmlField getAutoSized(List<ZigBeeXmlField> fields, String name) {
         for (ZigBeeXmlField field : fields) {
-            if (field.sizer != null) {
-                System.out.println();
-            }
             if (name.equals(field.sizer)) {
                 return field;
             }
