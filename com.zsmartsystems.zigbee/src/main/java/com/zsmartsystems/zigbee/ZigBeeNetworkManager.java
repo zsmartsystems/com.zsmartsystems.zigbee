@@ -1034,7 +1034,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return {@link ZigBeeStatus} with the status of function
      */
     public ZigBeeStatus permitJoin(final ZigBeeEndpointAddress destination, final int duration) {
-        if (duration < 0 || duration >= 255) {
+        if (duration <= 0 || duration >= 255) {
             logger.debug("Permit join to {} invalid period of {} seconds.", destination, duration);
             return ZigBeeStatus.INVALID_ARGUMENTS;
         }
