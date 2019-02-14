@@ -1,0 +1,40 @@
+variables:
+    MAVEN_EXCLUDED_MODULES: '!com.zsmartsystems.zigbee.test,!com.zsmartsystems.zigbee.autocode,!com.zsmartsystems.zigbee.dongle.xbee.autocode,!com.zsmartsystems.zigbee.dongle.ember.autocode,!com.zsmartsystems.zigbee.dongle.telegesis.autocode,!com.zsmartsystems.zigbee.console.main'
+    NEXUS_RELEASE_REPO: nexus-releases::default::http://qivicon-wbench.psst.t-online.corp/nexus/content/repositories/2ndparty/
+    NEXUS3_RELEASE_REPO: maven-releases::default::http://qivicon-wbench.psst.t-online.corp/nexus3/repository/maven-releases/
+    MAVEN_CLI_PARAMS: --projects $MAVEN_EXCLUDED_MODULES --batch-mode --fail-at-end -Dmaven.javadoc.skip=true 
+    BUILD_IMAGE: qivicon-wbench.psst.t-online.corp/workbench/work-horse/image:abtenauer
+
+stages:
+  - prepare
+  - build
+  - deploy
+
+build-and-unit-test:
+  stage: build
+  image: $BUILD_IMAGE
+  tags:
+    - run_docker
+  except:
+    - tags
+  variables:
+    EXPOSE_MAVEN: "config"
+    EXPOSE_NEXUS: "nexus3"
+  script:
+    - mvn clean verify $MAVEN_CLI_PARAMS
+
+build-and-deploy:
+  stage: deploy
+  when: manual
+  image: $BUILD_IMAGE
+  dependencies:
+    - 'build-and-unit-test'
+  tags:
+    - run_docker
+  except:
+    - tags
+  variables:
+    EXPOSE_MAVEN: "config"
+    EXPOSE_NEXUS: "nexus3"
+  script:
+    - mvn clean deploy $MAVEN_CLI_PARAMS -DskipTests=true -DaltDeploymentRepository=$NEXUS3_RELEASE_REPO
