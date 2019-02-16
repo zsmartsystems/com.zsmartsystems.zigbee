@@ -2067,6 +2067,56 @@
 	</command>
 
 	<command>
+		<name>getTransientLinkKey</name>
+		<id>0xCE</id>
+		<description>This is a function to get the transient link key structure in the transient key table. The EUI of the passed in key structure is searched and, if a match is found, the rest of the key structure is filled in.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>eui</name>
+				<description>The IEEE address to look up the transient key for.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>The success or failure of getting the transient key.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberTransientKeyData</data_type>
+				<name>transientKeyData</name>
+				<description>The transient key structure that is filled in upon success.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getTransientKeyTableEntry</name>
+		<id>0x6D</id>
+		<description>Gets the transient link key at the index specified in the transient key table.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index in the transient key table to fetch data from.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>The success or failure of getting the transient key.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberTransientKeyData</data_type>
+				<name>transientKeyData</name>
+				<description>The transient key structure that is filled in upon success.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>switchNetworkKeyHandler</name>
 		<id>0x6E</id>
 		<description>A callback to inform the application that the Network Key has been updated and the node has been switched over to use the new key. The actual key being used is not passed up, but the sequence number is.</description>
@@ -3223,6 +3273,33 @@
 	</structure>
 
 	<structure>
+		<name>EmberTransientKeyData</name>
+		<description>The transient key data structure.</description>
+		<parameters>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>eui64</name>
+				<description>The IEEE address paired with the transient link key.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberKeyData</data_type>
+				<name>keyData</name>
+				<description>The key data structure matching the transient key.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint32_t</data_type>
+				<name>incomingFrameCounter</name>
+				<description>The incoming frame counter associated with this key.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint32_t</data_type>
+				<name>countdownTimerMs</name>
+				<description>The number of milliseconds remaining before the key is automatically timed out of the transient key table.</description>
+			</parameter>
+		</parameters>
+	</structure>
+
+	<structure>
 		<name>EmberPublicKeyData</name>
 		<description>The public key data used in CBKE.</description>
 		<parameters>
@@ -3682,7 +3759,29 @@
 			</parameter>
 		</parameters>
 	</structure>
-<!--
+
+	<structure>
+		<name>EmberGpSinkListEntry</name>
+		<description>A sink list entry</description>
+		<parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>type</name>
+				<description>The sink list type.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>sinkEui</name>
+				<description>The EUI64 of the target sink.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>sinkNodeId</name>
+				<description>The short address of the target sink.</description>
+			</parameter>
+		</parameters>
+	</structure>
+<!-- 
 	<structure>
 		<name>EmberGpProxyTableEntry</name>
 		<description>The internal representation of a proxy table entry.</description>
@@ -3744,7 +3843,64 @@
 			</parameter>
 		</parameters>
 	</structure>
--->
+
+	<structure>
+		<name>EmberGpSinkTableEntry</name>
+		<description>The internal representation of a sink table entry.</description>
+		<parameters>
+			<parameter>
+				<data_type>EmberGpSinkTableEntryStatus</data_type>
+				<name>status</name>
+				<description>Internal status of the sink table entry.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint32_t</data_type>
+				<name>options</name>
+				<description>The tunneling options (this contains both options and extendedOptions from the spec).</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberGpAddress</data_type>
+				<name>gpd</name>
+				<description>The addressing info of the GPD.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>deviceId</name>
+				<description>The device id for the GPD.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberGpSinkListEntry</data_type>
+				<name>sinkList[]</name>
+				<description>The list of sinks (hardcoded to 2 which is the spec minimum).</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>assignedAlias</name>
+				<description>The assigned alias for the GPD.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>groupcastRadius</name>
+				<description>The groupcast radius.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>securityOptions</name>
+				<description>The security options field.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberGpSecurityFrameCounter</data_type>
+				<name>gpdSecurityFrameCounter</name>
+				<description>The security frame counter of the GPD.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberKeyData</data_type>
+				<name>gpdKey</name>
+				<description>The key to use for GPD.</description>
+			</parameter>
+		</parameters>
+	</structure>
+ -->
 	<enum>
 		<name>EzspPolicyId</name>
 		<description></description>
@@ -6404,6 +6560,21 @@
 				<name>EZSP_VALUE_MFGLIB_OPTIONS</name>
 				<enum_value>0x33</enum_value>
 				<description>Configure manufacturing library options (0-non-CSMA transmits,1-CSMA transmits).</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_USE_NEGOTIATED_POWER_BY_LPD</name>
+				<enum_value>0x34</enum_value>
+				<description>Sets the flag to use either negotiated power by link power delta (LPD) or fixed power value provided by user while forming/joining a network for packet transmissions on subghz interface. This is mainly for testing purposes.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_PTA_PWM_OPTIONS</name>
+				<enum_value>0x35</enum_value>
+				<description>Set packet traffic arbitration PWM options.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_PTA_DIRECTIONAL_PRIORITY_PULSE_WIDTH</name>
+				<enum_value>0x36</enum_value>
+				<description>Set packet traffic arbitration directional priority pulse width in microseconds.</description>
 			</value>
 		</values>
 	</enum>
