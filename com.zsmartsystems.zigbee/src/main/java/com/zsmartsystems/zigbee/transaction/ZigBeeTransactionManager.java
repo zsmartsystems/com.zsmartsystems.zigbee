@@ -409,9 +409,6 @@ public class ZigBeeTransactionManager {
         synchronized (this) {
             ZigBeeTransactionQueue queue = getTransactionQueue(transaction);
             queue.transactionComplete(transaction, state);
-            if (state == TransactionState.FAILED) {
-                queueTransaction(queue, transaction);
-            }
         }
     }
 
@@ -446,10 +443,8 @@ public class ZigBeeTransactionManager {
         logger.debug("notifyTransactionProgress: TID {} -> {} == {}", transactionId, state,
                 outstandingTransactions.size());
         synchronized (outstandingTransactions) {
-            logger.debug("notifyTransactionProgress: TID {} synced", transactionId);
             // Notify the listeners
             for (final ZigBeeTransaction transaction : outstandingTransactions) {
-                logger.debug("notifyTransactionProgress: TID {} notifying {}", transactionId, transaction);
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {

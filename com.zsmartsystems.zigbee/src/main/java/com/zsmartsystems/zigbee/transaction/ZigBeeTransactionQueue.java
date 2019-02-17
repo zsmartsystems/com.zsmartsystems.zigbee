@@ -220,6 +220,7 @@ public class ZigBeeTransactionQueue {
                 // Transaction failed - requeue
                 addToQueue(transaction);
             } else {
+                logger.debug("{}: transactionComplete exceeded retries {}", queueName, transaction.getSendCnt());
                 transaction.cancel();
             }
         }
