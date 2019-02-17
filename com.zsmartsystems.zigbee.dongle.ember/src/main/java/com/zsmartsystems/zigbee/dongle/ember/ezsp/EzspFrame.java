@@ -133,6 +133,8 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GET_POLICY = 0x56;
     protected static final int FRAME_ID_GET_ROUTE_TABLE_ENTRY = 0x7B;
     protected static final int FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY = 0x91;
+    protected static final int FRAME_ID_GET_TRANSIENT_KEY_TABLE_ENTRY = 0x6D;
+    protected static final int FRAME_ID_GET_TRANSIENT_LINK_KEY = 0xCE;
     protected static final int FRAME_ID_GET_VALUE = 0xAA;
     protected static final int FRAME_ID_GET_XNCP_INFO = 0x13;
     protected static final int FRAME_ID_GP_PROXY_TABLE_LOOKUP = 0xC0;
@@ -268,6 +270,8 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_POLICY, EzspGetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_ROUTE_TABLE_ENTRY, EzspGetRouteTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY, EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_TRANSIENT_KEY_TABLE_ENTRY, EzspGetTransientKeyTableEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_TRANSIENT_LINK_KEY, EzspGetTransientLinkKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_VALUE, EzspGetValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_XNCP_INFO, EzspGetXncpInfoResponse.class);
         ezspHandlerMap.put(FRAME_ID_GP_PROXY_TABLE_LOOKUP, EzspGpProxyTableLookupResponse.class);

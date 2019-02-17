@@ -46,6 +46,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberPublicKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberRouteTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberSmacData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberTransientKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberZigbeeNetwork;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
@@ -351,5 +352,9 @@ public class EzspDeserializer {
 
     public EmberLibraryStatus deserializeEmberLibraryStatus() {
         return EmberLibraryStatus.getEmberLibraryStatus(deserializeUInt8());
+    }
+
+    public EmberTransientKeyData deserializeEmberTransientKeyData() {
+        return new EmberTransientKeyData(this);
     }
 }

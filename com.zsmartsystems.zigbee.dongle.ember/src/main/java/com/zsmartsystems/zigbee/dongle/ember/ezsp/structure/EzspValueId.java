@@ -213,7 +213,24 @@ public enum EzspValueId {
     /**
      * Configure manufacturing library options (0-non-CSMA transmits,1-CSMA transmits).
      */
-    EZSP_VALUE_MFGLIB_OPTIONS(0x0033);
+    EZSP_VALUE_MFGLIB_OPTIONS(0x0033),
+
+    /**
+     * Sets the flag to use either negotiated power by link power delta (LPD) or fixed power value
+     * provided by user while forming/joining a network for packet transmissions on subghz
+     * interface. This is mainly for testing purposes.
+     */
+    EZSP_VALUE_USE_NEGOTIATED_POWER_BY_LPD(0x0034),
+
+    /**
+     * Set packet traffic arbitration PWM options.
+     */
+    EZSP_VALUE_PTA_PWM_OPTIONS(0x0035),
+
+    /**
+     * Set packet traffic arbitration directional priority pulse width in microseconds.
+     */
+    EZSP_VALUE_PTA_DIRECTIONAL_PRIORITY_PULSE_WIDTH(0x0036);
 
     /**
      * A mapping between the integer code and its corresponding type to

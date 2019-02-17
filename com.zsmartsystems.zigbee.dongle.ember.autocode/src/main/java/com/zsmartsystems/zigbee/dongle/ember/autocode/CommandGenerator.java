@@ -795,6 +795,8 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberSmacData":
             case "EmberLibraryId":
             case "EmberLibraryStatus":
+            case "EmberTransientKeyData":
+            case "EmberGpSinkListEntry":
                 addImport(ezspStructurePackage + "." + dataTypeLocal);
                 return dataTypeLocal;
             default:
@@ -861,6 +863,8 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberPrivateKeyData":
             case "EmberPrivateKey283k1Data":
             case "EmberSmacData":
+            case "EmberTransientKeyData":
+            case "EmberGpSinkListEntry":
                 return dataTypeLocal;
             default:
                 return dataType;
