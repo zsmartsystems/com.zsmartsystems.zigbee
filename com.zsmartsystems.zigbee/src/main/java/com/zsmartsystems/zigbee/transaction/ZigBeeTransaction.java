@@ -133,6 +133,24 @@ public class ZigBeeTransaction {
     }
 
     /**
+     * Set the transaction ID - this is set just before the command is first transmitted
+     *
+     * @param transactionId the transaction ID
+     */
+    public void setTransactionId(int transactionId) {
+        command.setTransactionId(transactionId);
+    }
+
+    /**
+     * Gets the transaction ID from the command
+     *
+     * @return the transaction ID
+     */
+    public Integer getTransactionId() {
+        return command.getTransactionId();
+    }
+
+    /**
      * Gets the time that the command was added to the queue, or null if the command is not in a queue
      *
      * @return the queueTime

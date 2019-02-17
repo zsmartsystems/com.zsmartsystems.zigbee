@@ -50,6 +50,7 @@ public class ZigBeeTransactionManagerTest {
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
         ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
         Mockito.when(command.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(123));
+        Mockito.when(command.getTransactionId()).thenReturn(null);
         ZigBeeTransactionMatcher responseMatcher = Mockito.mock(ZigBeeTransactionMatcher.class);
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
         Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
@@ -66,16 +67,17 @@ public class ZigBeeTransactionManagerTest {
         transactionManager.setDefaultProfile(new ZigBeeTransactionProfile(0, 12, 0, false));
         transactionManager.setMulticastProfile(new ZigBeeTransactionProfile(2, 100, 0, true));
         transactionManager.setBroadcastProfile(new ZigBeeTransactionProfile(2, 100, 0, true));
+        transactionManager.setMaxOutstandingTransactions(4);
+        assertEquals(4, transactionManager.getMaxOutstandingTransactions());
 
         assertNull(transactionManager.getQueue(new IeeeAddress("1234567890ABCDEF")));
 
         // Send a transaction to a node that is known by the network manager - the transaction should be sent
         Future<CommandResult> cmdResult = transactionManager.sendTransaction(command, responseMatcher);
         assertNotNull(cmdResult);
+        Mockito.verify(command, Mockito.times(1)).setTransactionId(ArgumentMatchers.anyInt());
         Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).sendCommand(command);
         assertNotNull(transactionManager.getQueue(new IeeeAddress("1234567890ABCDEF")));
-
-        ZigBeeTransactionQueue queue = transactionManager.getQueue(new IeeeAddress("1234567890ABCDEF"));
 
         // Send a transaction to a node that is unknown by the transaction manager. This will not be sent.
         ZigBeeCommand unknownCommand = Mockito.mock(ZigBeeCommand.class);
