@@ -23,6 +23,7 @@ import org.mockito.Mockito;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
+import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
 
 /**
  *
@@ -213,5 +214,13 @@ public class ZigBeeTransactionTest {
         int timeout2 = transaction.getTimerPeriod1();
         transaction.setTimerPeriod1(timeout2 + 23);
         assertEquals(timeout2 + 23, transaction.getTimerPeriod1());
+    }
+
+    @Test
+    public void setTransactionId() {
+        ZigBeeTransaction transaction = new ZigBeeTransaction(null, new OffCommand(), null);
+        assertNull(transaction.getTransactionId());
+        transaction.setTransactionId(1);
+        assertEquals(Integer.valueOf(1), transaction.getTransactionId());
     }
 }

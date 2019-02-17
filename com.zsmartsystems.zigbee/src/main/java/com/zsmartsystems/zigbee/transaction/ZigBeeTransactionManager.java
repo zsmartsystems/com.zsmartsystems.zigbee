@@ -253,10 +253,6 @@ public class ZigBeeTransactionManager {
      * @return the future {@link CommandResult}
      */
     public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
-        if (command.getTransactionId() == null) {
-            command.setTransactionId(transactionIdCounter.getAndIncrement() & 0xff);
-        }
-
         ZigBeeTransaction transaction = new ZigBeeTransaction(this, command, responseMatcher);
 
         synchronized (this) {
@@ -282,7 +278,6 @@ public class ZigBeeTransactionManager {
             outstandingQueues.add(queue);
         }
 
-        // TODO: ???
         sendNextTransaction();
 
         return transaction.getFuture();
@@ -328,6 +323,9 @@ public class ZigBeeTransactionManager {
      * @param transaction the {@link ZigBeeTransaction} to send
      */
     private void send(ZigBeeTransaction transaction) {
+        if (transaction.getTransactionId() == null) {
+            transaction.setTransactionId(transactionIdCounter.getAndIncrement() & 0xff);
+        }
         logger.debug("{}: Sending {}", transaction.getDestinationAddress(), transaction);
         addTransactionListener(transaction);
         networkManager.sendCommand(transaction.startTransaction());
