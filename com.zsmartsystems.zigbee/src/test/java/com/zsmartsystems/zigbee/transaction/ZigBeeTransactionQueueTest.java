@@ -33,10 +33,13 @@ public class ZigBeeTransactionQueueTest {
     @Test
     public void testQueueFifo() {
         ZigBeeTransactionQueue queue = new ZigBeeTransactionQueue("QueueName");
+        assertFalse(queue.isSleepy());
+        queue.setSleepy(true);
+        assertTrue(queue.isSleepy());
         queue.getNextReleaseTime();
 
         // Set duplicate removal and delays to 0 so we can immediately read back the queued transaction
-        queue.setProfile(new ZigBeeTransactionProfile(2, 2, 0, false));
+        queue.setProfile(new ZigBeeTransactionProfile(2, 2, 0));
 
         assertEquals(2, queue.getProfile().getMaxRetries());
         assertEquals(0, queue.getProfile().getInterTransactionDelay());

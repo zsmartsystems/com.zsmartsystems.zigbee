@@ -35,18 +35,26 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 
 /**
  * The centralised transaction manager is designed to solve a number of issues associated with the sending
- * of transactions to devices -:
+ * of transactions to devices, and ensure a smooth flow of data under most circumstances. It sits between the
+ * applications that are sending commands with no knowledge of other applications, or knowledge of the network state.
+ * <p>
+ * The following issues are covered -:
  * <ul>
  * <li>ZigBee specifies a maximum rate at which broadcast transactions can be sent. This is primarily designed to limit
- * the
- * amount of memory required in a ZigBee router to buffer frames to sleepy child devices.
+ * the amount of memory required in a ZigBee router to buffer frames to sleepy child devices.
  * <li>Sending multiple transactions to a single device without waiting for the response to the first transactions may
  * result in lost transactions.
- * <li>Retry management.
+ * <li>Retry management. Each queue can be configured to allow retries. The transaction futures are not completed until
+ * the transaction completes successfully, or the maximum number of retries are attempted.
  * <li>Account for transport layer feedback.
+ * <li>Manage sleepy devices. The queue manager will only send a certain number of transactions to sleepy devices at
+ * once. This ensures that there is always bandwidth reserved for mains powered devices, thus ensuring that the queue
+ * can not be filled with commands to sleepy devices, which would adversely affect the overall performance of the
+ * system.
  * </ul>
  *
  * @author Chris Jackson
@@ -58,22 +66,31 @@ public class ZigBeeTransactionManager {
      */
     private final Logger logger = LoggerFactory.getLogger(ZigBeeTransactionManager.class);
 
-    private final int OUTSTANDING_TRANSACTIONS = 10;
+    /**
+     * The maximum number of outstanding transactions from all queues
+     */
+    private final int MAX_OUTSTANDING_TRANSACTIONS = 10;
+
+    /**
+     * The maximum number of outstanding transactions from sleepy queues
+     */
+    private final int MAX_SLEEPY_TRANSACTIONS = 5;
 
     private final int NODE_RETRIES = 2;
     private final int NODE_TRANSACTIONS = 2;
     private final int NODE_DELAY = 50;
-    private final boolean NODE_DUPLICATES = true;
+
+    private final int SLEEPY_RETRIES = 2;
+    private final int SLEEPY_TRANSACTIONS = 2;
+    private final int SLEEPY_DELAY = 7600;
 
     private final int MCAST_RETRIES = 0;
     private final int MCAST_TRANSACTIONS = 3;
     private final int MCAST_DELAY = 1200;
-    private final boolean MCAST_DUPLICATES = true;
 
     private final int BCAST_RETRIES = 0;
     private final int BCAST_TRANSACTIONS = 3;
     private final int BCAST_DELAY = 1200;
-    private final boolean BDCST_DUPLICATES = true;
 
     /**
      * The {@link ZigBeeNetworkManager} to which this manager belongs
@@ -88,7 +105,17 @@ public class ZigBeeTransactionManager {
     /**
      * The maximum number of transactions the manager will allow at any time
      */
-    private int maxOutstandingTransactions = OUTSTANDING_TRANSACTIONS;
+    private int maxOutstandingTransactions = MAX_OUTSTANDING_TRANSACTIONS;
+
+    /**
+     * The maximum number of outstanding transactions from sleepy queues
+     */
+    private int maxSleepyTransactions = MAX_SLEEPY_TRANSACTIONS;
+
+    /**
+     * A counter holding the number of sleepy transactions
+     */
+    private int sleepyTransactions = 0;
 
     /**
      * Executor service to execute update threads for discovery or mesh updates etc.
@@ -118,6 +145,7 @@ public class ZigBeeTransactionManager {
     private final ZigBeeTransactionQueue multicastQueue;
 
     private ZigBeeTransactionProfile defaultProfile;
+    private ZigBeeTransactionProfile defaultSleepyProfile;
 
     /**
      * Timer used to keep the queue running
@@ -127,15 +155,14 @@ public class ZigBeeTransactionManager {
     public ZigBeeTransactionManager(ZigBeeNetworkManager manager) {
         this.networkManager = manager;
 
-        defaultProfile = new ZigBeeTransactionProfile(NODE_RETRIES, NODE_TRANSACTIONS, NODE_DELAY, NODE_DUPLICATES);
+        defaultProfile = new ZigBeeTransactionProfile(NODE_RETRIES, NODE_TRANSACTIONS, NODE_DELAY);
+        defaultSleepyProfile = new ZigBeeTransactionProfile(SLEEPY_RETRIES, SLEEPY_TRANSACTIONS, SLEEPY_DELAY);
 
         broadcastQueue = new ZigBeeTransactionQueue("Broadcast");
-        broadcastQueue.setProfile(
-                new ZigBeeTransactionProfile(BCAST_RETRIES, BCAST_TRANSACTIONS, BCAST_DELAY, BDCST_DUPLICATES));
+        broadcastQueue.setProfile(new ZigBeeTransactionProfile(BCAST_RETRIES, BCAST_TRANSACTIONS, BCAST_DELAY));
 
         multicastQueue = new ZigBeeTransactionQueue("Multicast");
-        multicastQueue.setProfile(
-                new ZigBeeTransactionProfile(MCAST_RETRIES, MCAST_TRANSACTIONS, MCAST_DELAY, MCAST_DUPLICATES));
+        multicastQueue.setProfile(new ZigBeeTransactionProfile(MCAST_RETRIES, MCAST_TRANSACTIONS, MCAST_DELAY));
     }
 
     /**
@@ -190,12 +217,21 @@ public class ZigBeeTransactionManager {
     }
 
     /**
-     * Gets the maximum number of transactions the broadcast queue will release at once.
+     * Gets the maximum number of sleepy transactions permitted at any time.
      *
-     * @return the maximum number of transactions the queue is allowed to have outstanding
+     * @return the the maximum number of sleepy transactions permitted at any time
      */
-    public ZigBeeTransactionProfile getBroadcastProfile() {
-        return broadcastQueue.getProfile();
+    public int getMaxSleepyTransactions() {
+        return maxSleepyTransactions;
+    }
+
+    /**
+     * Sets the maximum number of sleepy transactions permitted at any time.
+     *
+     * @param maxOutstandingTransactions the maximum number of sleepy transactions permitted at any time
+     */
+    public void setMaxSleepyTransactions(int maxSleepyTransactions) {
+        this.maxSleepyTransactions = maxSleepyTransactions;
     }
 
     /**
@@ -212,8 +248,26 @@ public class ZigBeeTransactionManager {
      *
      * return the {@link ZigBeeTransactionProfile}
      */
-    public ZigBeeTransactionProfile setDefaultProfile() {
+    public ZigBeeTransactionProfile getDefaultProfile() {
         return defaultProfile;
+    }
+
+    /**
+     * Sets the {@link ZigBeeTransactionProfile} for the sleepy node queues
+     *
+     * @param profile the {@link ZigBeeTransactionProfile}
+     */
+    public void setSleepyProfile(ZigBeeTransactionProfile profile) {
+        defaultSleepyProfile = profile;
+    }
+
+    /**
+     * Gets the {@link ZigBeeTransactionProfile} for the sleepy node queues
+     *
+     * return the {@link ZigBeeTransactionProfile}
+     */
+    public ZigBeeTransactionProfile getSleepyProfile() {
+        return defaultSleepyProfile;
     }
 
     /**
@@ -222,7 +276,16 @@ public class ZigBeeTransactionManager {
      * @param profile the {@link ZigBeeTransactionProfile}
      */
     public void setMulticastProfile(ZigBeeTransactionProfile profile) {
-        broadcastQueue.setProfile(profile);
+        multicastQueue.setProfile(profile);
+    }
+
+    /**
+     * Gets the {@link ZigBeeTransactionProfile} for the multicast queue
+     *
+     * return the {@link ZigBeeTransactionProfile}
+     */
+    public ZigBeeTransactionProfile getMulticastProfile() {
+        return multicastQueue.getProfile();
     }
 
     /**
@@ -232,6 +295,15 @@ public class ZigBeeTransactionManager {
      */
     public void setBroadcastProfile(ZigBeeTransactionProfile profile) {
         broadcastQueue.setProfile(profile);
+    }
+
+    /**
+     * Gets the {@link ZigBeeTransactionProfile} for the broadcast queue
+     *
+     * return the {@link ZigBeeTransactionProfile}
+     */
+    public ZigBeeTransactionProfile getBroadcastProfile() {
+        return broadcastQueue.getProfile();
     }
 
     /**
@@ -304,7 +376,13 @@ public class ZigBeeTransactionManager {
                 logger.debug("{}: Creating new Transaction Queue", node.getIeeeAddress());
                 queue = new ZigBeeTransactionQueue(node.getIeeeAddress().toString());
 
-                queue.setProfile(defaultProfile);
+                if (!node.getNodeDescriptor().getMacCapabilities()
+                        .contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)) {
+                    queue.setSleepy(true);
+                    queue.setProfile(defaultSleepyProfile);
+                } else {
+                    queue.setProfile(defaultProfile);
+                }
 
                 nodeQueue.put(node.getIeeeAddress(), queue);
             }
@@ -407,7 +485,13 @@ public class ZigBeeTransactionManager {
         synchronized (this) {
             ZigBeeTransactionQueue queue = getTransactionQueue(transaction);
             queue.transactionComplete(transaction, state);
+
+            if (queue.isSleepy()) {
+                sleepyTransactions--;
+            }
         }
+
+        sendNextTransaction();
     }
 
     /**
@@ -438,7 +522,7 @@ public class ZigBeeTransactionManager {
      * @param state the current {@link ZigBeeTransportProgressState} for the transaction
      */
     private void notifyTransactionProgress(final int transactionId, ZigBeeTransportProgressState state) {
-        logger.debug("notifyTransactionProgress: TID {} -> {} == {}", transactionId, state,
+        logger.debug("notifyTransactionProgress: TID {} {} -> {}", String.format("%02X", transactionId), state,
                 outstandingTransactions.size());
         synchronized (outstandingTransactions) {
             // Notify the listeners
@@ -484,8 +568,7 @@ public class ZigBeeTransactionManager {
      * <p>
      * The order of transmission from each queue is randomised to ensure a fair ordering of transactions to each device.
      * If a queue returns null, then it does not have transactions to send at that time and we let the timer take care
-     * of
-     * rescheduling the transmission.
+     * of rescheduling the transmission.
      */
     private void sendNextTransaction() {
         synchronized (this) {
@@ -522,9 +605,18 @@ public class ZigBeeTransactionManager {
                         break;
                     }
 
+                    // If this is a sleepy queue, and we've exceeded the sleepy transmissions, then ignore the queue
+                    if (queue.isSleepy() && sleepyTransactions >= maxSleepyTransactions) {
+                        continue;
+                    }
+
                     // Queue may return null if it has transactions queued, but it can't release any at this time
                     transaction = queue.getTransaction();
                     if (transaction != null) {
+                        if (queue.isSleepy()) {
+                            sleepyTransactions++;
+                        }
+
                         // Send the transaction.
                         send(transaction);
                         sendDone = false;

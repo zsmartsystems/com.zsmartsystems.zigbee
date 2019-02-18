@@ -11,12 +11,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
@@ -35,6 +38,8 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 
 /**
  * Tests for {@link ZigBeeTransactionManager}
@@ -48,14 +53,33 @@ public class ZigBeeTransactionManagerTest {
     @Test
     public void sendTransaction() {
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
-        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(command.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(123));
+        ZigBeeCommand command = getCommand(123);
         Mockito.when(command.getTransactionId()).thenReturn(null);
         ZigBeeTransactionMatcher responseMatcher = Mockito.mock(ZigBeeTransactionMatcher.class);
+
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
         Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
-
+        NodeDescriptor nodeDescriptor = Mockito.mock(NodeDescriptor.class);
+        Set<MacCapabilitiesType> macCapabilities = new HashSet<>();
+        macCapabilities.add(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE);
+        Mockito.when(nodeDescriptor.getMacCapabilities()).thenReturn(macCapabilities);
+        Mockito.when(node.getNodeDescriptor()).thenReturn(nodeDescriptor);
         Mockito.when(networkManager.getNode(123)).thenReturn(node);
+
+        ZigBeeNode sleepyNode = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(sleepyNode.getIeeeAddress()).thenReturn(new IeeeAddress("FEDCBA0987654321"));
+        NodeDescriptor sleepyNodeDescriptor = Mockito.mock(NodeDescriptor.class);
+        Set<MacCapabilitiesType> sleepyMacCapabilities = new HashSet<>();
+        Mockito.when(sleepyNodeDescriptor.getMacCapabilities()).thenReturn(sleepyMacCapabilities);
+        Mockito.when(sleepyNode.getNodeDescriptor()).thenReturn(sleepyNodeDescriptor);
+        Mockito.when(networkManager.getNode(456)).thenReturn(sleepyNode);
+
+        ZigBeeNode sleepyNode2 = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(sleepyNode2.getIeeeAddress()).thenReturn(new IeeeAddress("1111111111111111"));
+        NodeDescriptor sleepyNodeDescriptor2 = Mockito.mock(NodeDescriptor.class);
+        Mockito.when(sleepyNodeDescriptor2.getMacCapabilities()).thenReturn(sleepyMacCapabilities);
+        Mockito.when(sleepyNode2.getNodeDescriptor()).thenReturn(sleepyNodeDescriptor2);
+        Mockito.when(networkManager.getNode(111)).thenReturn(sleepyNode2);
 
         ZigBeeTransactionManager transactionManager = new ZigBeeTransactionManager(networkManager) {
             @Override
@@ -64,11 +88,18 @@ public class ZigBeeTransactionManagerTest {
             }
         };
 
-        transactionManager.setDefaultProfile(new ZigBeeTransactionProfile(0, 12, 0, false));
-        transactionManager.setMulticastProfile(new ZigBeeTransactionProfile(2, 100, 0, true));
-        transactionManager.setBroadcastProfile(new ZigBeeTransactionProfile(2, 100, 0, true));
+        transactionManager.setDefaultProfile(new ZigBeeTransactionProfile(0, 12, 0));
+        assertEquals(12, transactionManager.getDefaultProfile().getMaxOutstandingTransactions());
+        transactionManager.setSleepyProfile(new ZigBeeTransactionProfile(0, 13, 0));
+        assertEquals(13, transactionManager.getSleepyProfile().getMaxOutstandingTransactions());
+        transactionManager.setMulticastProfile(new ZigBeeTransactionProfile(2, 90, 0));
+        assertEquals(90, transactionManager.getMulticastProfile().getMaxOutstandingTransactions());
+        transactionManager.setBroadcastProfile(new ZigBeeTransactionProfile(2, 100, 0));
+        assertEquals(100, transactionManager.getBroadcastProfile().getMaxOutstandingTransactions());
         transactionManager.setMaxOutstandingTransactions(4);
         assertEquals(4, transactionManager.getMaxOutstandingTransactions());
+        transactionManager.setMaxSleepyTransactions(1);
+        assertEquals(1, transactionManager.getMaxSleepyTransactions());
 
         assertNull(transactionManager.getQueue(new IeeeAddress("1234567890ABCDEF")));
 
@@ -78,16 +109,36 @@ public class ZigBeeTransactionManagerTest {
         Mockito.verify(command, Mockito.times(1)).setTransactionId(ArgumentMatchers.anyInt());
         Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).sendCommand(command);
         assertNotNull(transactionManager.getQueue(new IeeeAddress("1234567890ABCDEF")));
+        assertFalse(transactionManager.getQueue(new IeeeAddress("1234567890ABCDEF")).isSleepy());
+
+        // Send a transaction to a sleepy node that is known by the network manager - the transaction should be sent
+        ZigBeeCommand sleepyCommand = Mockito.mock(ZigBeeCommand.class);
+        Mockito.when(sleepyCommand.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(456));
+        cmdResult = transactionManager.sendTransaction(sleepyCommand, responseMatcher);
+        assertNotNull(cmdResult);
+        Mockito.verify(command, Mockito.times(1)).setTransactionId(ArgumentMatchers.anyInt());
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).sendCommand(command);
+        assertNotNull(transactionManager.getQueue(new IeeeAddress("FEDCBA0987654321")));
+        assertTrue(transactionManager.getQueue(new IeeeAddress("FEDCBA0987654321")).isSleepy());
+
+        // Send a transaction to a sleepy node that is known by the network manager - the transaction should not be sent
+        ZigBeeCommand sleepyCommand2 = Mockito.mock(ZigBeeCommand.class);
+        Mockito.when(sleepyCommand2.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(111));
+        cmdResult = transactionManager.sendTransaction(sleepyCommand2, responseMatcher);
+        assertNotNull(cmdResult);
+        Mockito.verify(command, Mockito.times(1)).setTransactionId(ArgumentMatchers.anyInt());
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).sendCommand(command);
+        assertNotNull(transactionManager.getQueue(new IeeeAddress("1111111111111111")));
+        assertTrue(transactionManager.getQueue(new IeeeAddress("1111111111111111")).isSleepy());
 
         // Send a transaction to a node that is unknown by the transaction manager. This will not be sent.
         ZigBeeCommand unknownCommand = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(unknownCommand.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(456));
+        Mockito.when(unknownCommand.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(789));
         cmdResult = transactionManager.sendTransaction(unknownCommand, responseMatcher);
         assertNull(cmdResult);
 
         // Send a transaction without matcher
-        command = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(command.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(123));
+        command = getCommand(123);
         transactionManager.sendTransaction(command);
         Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).sendCommand(command);
 
@@ -115,8 +166,7 @@ public class ZigBeeTransactionManagerTest {
 
         IeeeAddress ieeeAddress = new IeeeAddress("1234567890ABCDEF");
         ZigBeeTransactionQueue queue = Mockito.mock(ZigBeeTransactionQueue.class);
-        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(command.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(123));
+        ZigBeeCommand command = getCommand(123);
 
         Map<IeeeAddress, ZigBeeTransactionQueue> nodeQueue = new ConcurrentHashMap<>();
         nodeQueue.put(ieeeAddress, queue);
@@ -157,8 +207,7 @@ public class ZigBeeTransactionManagerTest {
 
         IeeeAddress ieeeAddress = new IeeeAddress("1234567890ABCDEF");
         ZigBeeTransactionQueue queue = Mockito.mock(ZigBeeTransactionQueue.class);
-        ZigBeeCommand rxCommand = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(rxCommand.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(123));
+        ZigBeeCommand rxCommand = getCommand(123);
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
         Mockito.when(node.getIeeeAddress()).thenReturn(ieeeAddress);
         Mockito.when(networkManager.getNode(123)).thenReturn(node);
@@ -239,5 +288,52 @@ public class ZigBeeTransactionManagerTest {
 
         assertFalse(delayCapture.isEmpty());
         assertEquals(Long.valueOf(111), delayCapture.get(0));
+    }
+
+    @Test
+    public void testSleepyManagement() {
+        // This test sets the max sleepy transactions to 2, then fills the queue with 3 frames and makes sure only 2 are
+        // sent
+
+        ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        ZigBeeTransactionManager transactionManager = new ZigBeeTransactionManager(networkManager);
+        transactionManager.setMaxSleepyTransactions(2);
+        ZigBeeTransactionProfile profile = new ZigBeeTransactionProfile(0, 5, 0);
+        transactionManager.setSleepyProfile(profile);
+
+        ZigBeeNode sleepyNode = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(sleepyNode.getIeeeAddress()).thenReturn(new IeeeAddress("1111111111111111"));
+        NodeDescriptor sleepyNodeDescriptor = Mockito.mock(NodeDescriptor.class);
+        Set<MacCapabilitiesType> sleepyMacCapabilities = new HashSet<>();
+        Mockito.when(sleepyNodeDescriptor.getMacCapabilities()).thenReturn(sleepyMacCapabilities);
+        Mockito.when(sleepyNode.getNodeDescriptor()).thenReturn(sleepyNodeDescriptor);
+        Mockito.when(networkManager.getNode(111)).thenReturn(sleepyNode);
+
+        ZigBeeTransactionMatcher responseMatcher = Mockito.mock(ZigBeeTransactionMatcher.class);
+
+        ZigBeeCommand command = getCommand(111);
+        Mockito.when(command.getTransactionId()).thenReturn(99);
+        transactionManager.sendTransaction(command, responseMatcher);
+        Mockito.verify(networkManager, Mockito.times(1)).sendCommand(command);
+
+        command = getCommand(111);
+        transactionManager.sendTransaction(command, responseMatcher);
+        Mockito.verify(networkManager, Mockito.times(1)).sendCommand(command);
+
+        command = getCommand(111);
+        transactionManager.sendTransaction(command, responseMatcher);
+        Mockito.verify(networkManager, Mockito.never()).sendCommand(command);
+
+        // Complete command 1 and the third command should then be sent
+        // This makes sure we are keeping tabs on the outstanding sleepy transactions
+        transactionManager.receiveCommandState(99, ZigBeeTransportProgressState.TX_NAK);
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).sendCommand(command);
+    }
+
+    private ZigBeeCommand getCommand(int address) {
+        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
+        Mockito.when(command.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(address));
+
+        return command;
     }
 }

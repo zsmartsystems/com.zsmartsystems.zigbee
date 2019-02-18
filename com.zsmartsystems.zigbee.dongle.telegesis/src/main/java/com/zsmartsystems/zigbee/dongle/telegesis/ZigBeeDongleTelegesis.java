@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -319,6 +321,8 @@ public class ZigBeeDongleTelegesis
      * Map used to correlate the Telegesis sequence IDs with the APS counter we use to correlate messages in the stack
      */
     private Map<Integer, Integer> messageIdMap = new ConcurrentHashMap<>();
+
+    private ExecutorService commandScheduler = Executors.newCachedThreadPool();
 
     /**
      * Constructor for Telegesis dongle.
@@ -652,7 +656,7 @@ public class ZigBeeDongleTelegesis
 
         // We need to get the Telegesis SEQ number for the transaction so we can correlate the transaction ID
         // This is done by spawning a new thread to send the transaction so we get the response.
-        new Thread() {
+        Runnable commandHandler = new Runnable() {
             @Override
             public void run() {
                 frameHandler.sendRequest(command);
@@ -669,7 +673,9 @@ public class ZigBeeDongleTelegesis
 
                 messageIdMap.put(((TelegesisSendUnicastCommand) command).getMessageId(), msgTag);
             }
-        }.start();
+        };
+
+        commandScheduler.execute(commandHandler);
     }
 
     @Override
