@@ -365,12 +365,9 @@ public class ZigBeeTransaction {
      */
     public void transactionStatusReceived(ZigBeeTransportProgressState progress, int transactionId) {
         synchronized (command) {
-            logger.debug("commandStatusReceived: TID {} ---> {}", transactionId, command.getTransactionId());
             if (command.getTransactionId() != transactionId) {
                 return;
             }
-
-            logger.debug("Transaction state update : TID {} -> {} == {}", transactionId, progress, state);
 
             switch (progress) {
                 case TX_NAK:
@@ -402,7 +399,8 @@ public class ZigBeeTransaction {
                     break;
             }
         }
-        logger.debug("Transaction state updated: TID {} -> {} == {}", transactionId, progress, state);
+        logger.debug("Transaction state updated: TID {} -> {} == {}", String.format("%02X", transactionId), progress,
+                state);
     }
 
     @Override

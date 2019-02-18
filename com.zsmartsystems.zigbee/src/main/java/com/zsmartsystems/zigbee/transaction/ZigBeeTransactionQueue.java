@@ -75,6 +75,11 @@ public class ZigBeeTransactionQueue {
     private final String queueName;
 
     /**
+     * The type of queue - true if the device associated with the queue is a sleepy device
+     */
+    private boolean sleepy = false;
+
+    /**
      * The number of transactions currently outstanding from this queue
      */
     private int outstandingTransactions = 0;
@@ -110,6 +115,7 @@ public class ZigBeeTransactionQueue {
      */
     public void setProfile(ZigBeeTransactionProfile profile) {
         this.profile = profile;
+        logger.debug("{}: Set profile to {}", queueName, profile);
     }
 
     /**
@@ -119,6 +125,25 @@ public class ZigBeeTransactionQueue {
      */
     public ZigBeeTransactionProfile getProfile() {
         return profile;
+    }
+
+    /**
+     * Sets the queue for a sleepy or non-sleepy queue
+     *
+     * @param sleepy true if this is a queue for a sleepy device
+     */
+    public void setSleepy(boolean sleepy) {
+        this.sleepy = sleepy;
+        logger.debug("{}: Set sleepy to {}", queueName, sleepy);
+    }
+
+    /**
+     * Gets the type of queue - either a sleepy or non-sleepy queue
+     *
+     * @return true if this is a queue for a sleepy device
+     */
+    public boolean isSleepy() {
+        return sleepy;
     }
 
     /**
@@ -225,5 +250,4 @@ public class ZigBeeTransactionQueue {
             }
         }
     }
-
 }

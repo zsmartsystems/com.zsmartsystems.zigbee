@@ -20,24 +20,24 @@ package com.zsmartsystems.zigbee.transaction;
  *
  */
 public class ZigBeeTransactionProfile {
-    private final int RETRIES = 3;
-    private final int TRANSACTIONS = 2;
-    private final int DELAY = 50;
+    private static final int RETRIES = 3;
+    private static final int TRANSACTIONS = 2;
+    private static final int DELAY = 50;
 
     /**
      * The maximum number of outstanding transactions the queue will have outstanding.
      */
-    private int maxOutstandingTransactions = 1;
+    private int maxOutstandingTransactions;
 
     /**
      * The minimum time that will be enforced between sending each packet.
      */
-    private int interTransactionDelay = 0;
+    private int interTransactionDelay;
 
     /**
      * The maximum number of retries that may be attempted
      */
-    private int maxRetries = 3;
+    private int maxRetries;
 
     /**
      * Constructs a {@link ZigBeeTransactionProfile}
@@ -54,10 +54,8 @@ public class ZigBeeTransactionProfile {
      * @param maxRetries the maximum number of retries that will be performed
      * @param maxOutstandingTransactions the maximum number of simultaneous transactions the queue will release
      * @param interTransactionDelay the minimum delay between transactions
-     * @param duplicateRemoval true if duplicate transactions should be removed
      */
-    public ZigBeeTransactionProfile(int maxRetries, int maxOutstandingTransactions, int interTransactionDelay,
-            boolean duplicateRemoval) {
+    public ZigBeeTransactionProfile(int maxRetries, int maxOutstandingTransactions, int interTransactionDelay) {
         this.maxRetries = maxRetries;
         this.maxOutstandingTransactions = maxOutstandingTransactions;
         this.interTransactionDelay = interTransactionDelay;
@@ -117,5 +115,11 @@ public class ZigBeeTransactionProfile {
      */
     public void setMaxRetries(int maxRetries) {
         this.maxRetries = maxRetries;
+    }
+
+    @Override
+    public String toString() {
+        return "ZigBeeTransactionProfile [maxOutstandingTransactions=" + maxOutstandingTransactions
+                + ", interTransactionDelay=" + interTransactionDelay + ", maxRetries=" + maxRetries + "]";
     }
 }
