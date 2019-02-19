@@ -98,14 +98,15 @@ public class TelegesisFrameHandler {
     private ScheduledFuture<?> timeoutTimer = null;
 
     /**
-     * The maximum number of milliseconds to wait for the response from the stick once the request was sent
+     * The maximum number of milliseconds to wait for the response from the stick once the request was sent.
+     * This must account for any delays in the host.
      */
-    private final int DEFAULT_TRANSACTION_TIMEOUT = 1000;
+    private final int DEFAULT_TRANSACTION_TIMEOUT = 3000;
 
     /**
      * The maximum number of milliseconds to wait for the completion of the transaction after it's queued
      */
-    private final int DEFAULT_COMMAND_TIMEOUT = 5000;
+    private final int DEFAULT_COMMAND_TIMEOUT = 8000;
 
     /**
      * The maximum number of milliseconds to wait for the response from the stick once the request was sent
