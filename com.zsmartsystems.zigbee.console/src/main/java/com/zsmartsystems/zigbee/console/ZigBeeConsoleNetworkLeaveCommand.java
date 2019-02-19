@@ -30,7 +30,7 @@ public class ZigBeeConsoleNetworkLeaveCommand extends ZigBeeConsoleAbstractComma
 
     @Override
     public String getSyntax() {
-        return "NODE [PARENT]";
+        return "[forceNodeRemoval|fnr] NODE [PARENT]";
     }
 
     @Override
@@ -39,23 +39,28 @@ public class ZigBeeConsoleNetworkLeaveCommand extends ZigBeeConsoleAbstractComma
     }
 
     @Override
-    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
-            throws IllegalArgumentException {
-        if (args.length > 3) {
-            throw new IllegalArgumentException("Invalid number of arguments");
+    public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) {
+        if (args.length < 2) {
+            throw new IllegalArgumentException("Not enough arguments");
         }
 
-        ZigBeeNode leaver = getNode(networkManager, args[1]);
+        boolean forceNodeRemoval = args[1].equals("forceNodeRemoval") || args[1].equals("fnr");
 
-        if (args.length == 2) {
-            networkManager.leave(leaver.getNetworkAddress(), leaver.getIeeeAddress());
-            return;
+        if (args.length > (forceNodeRemoval ? 3 : 4)) {
+            throw new IllegalArgumentException("Too many arguments");
         }
 
-        if (args.length == 3) {
-            ZigBeeNode parent = getNode(networkManager, args[2]);
-            networkManager.leave(parent.getNetworkAddress(), leaver.getIeeeAddress());
-            return;
+        int leaverArgumentPosition = forceNodeRemoval ? 2 : 1;
+        int parentArgumentPosition = forceNodeRemoval ? 3 : 2;
+
+        ZigBeeNode leaver = getNode(networkManager, args[leaverArgumentPosition]);
+
+        if (args.length <= parentArgumentPosition) {
+            networkManager.leave(leaver.getNetworkAddress(), leaver.getIeeeAddress(), forceNodeRemoval);
+        } else {
+            ZigBeeNode parent = getNode(networkManager, args[parentArgumentPosition]);
+            networkManager.leave(parent.getNetworkAddress(), leaver.getIeeeAddress(), forceNodeRemoval);
         }
+
     }
 }

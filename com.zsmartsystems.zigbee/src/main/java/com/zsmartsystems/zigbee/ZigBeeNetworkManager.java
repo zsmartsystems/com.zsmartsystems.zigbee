@@ -1091,13 +1091,27 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Sends a ZDO Leave Request to a device requesting that an end device leave the network.
+     * Sends a ZDO Leave Request to a device requesting that an end device leave the network. 
+     * Only in case of a successful response is the corresponding node removed from the node list.
      *
      * @param destinationAddress the network address to send the request to - this is the device parent or the the
      *            device we want to leave.
      * @param leaveAddress the {@link IeeeAddress} of the end device we want to leave the network
      */
     public void leave(final Integer destinationAddress, final IeeeAddress leaveAddress) {
+        leave(destinationAddress, leaveAddress, false);
+    }
+    
+    /**
+     * Sends a ZDO Leave Request to a device requesting that an end device leave the network. 
+     *
+     * @param destinationAddress the network address to send the request to - this is the device parent or the the
+     *            device we want to leave.
+     * @param leaveAddress the {@link IeeeAddress} of the end device we want to leave the network
+     * @param forceNodeRemoval If this flag is set, then the corresponding  node is removed from the node list 
+     *            even if there was no success response to the leave command.
+     */
+    public void leave(final Integer destinationAddress, final IeeeAddress leaveAddress, boolean forceNodeRemoval) {
         final ManagementLeaveRequest command = new ManagementLeaveRequest();
 
         command.setDeviceAddress(leaveAddress);
@@ -1112,16 +1126,23 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             public void run() {
                 try {
                     CommandResult response = sendTransaction(command, command).get();
-                    if (response.getStatusCode() == 0) {
-                        ZigBeeNode node = getNode(leaveAddress);
-                        if (node != null) {
+                    ZigBeeNode node = getNode(leaveAddress);
+
+                    if (node != null) {
+                        if (response.getStatusCode() == 0) {
                             removeNode(node);
                         } else {
-                            logger.debug("{}: No node found after successful leave command", leaveAddress);
+                            logger.debug("{}: No successful response received to leave command (status code {})",
+                                    leaveAddress, response.getStatusCode());
+                            if (forceNodeRemoval) {
+                                logger.debug(
+                                        "{}: Force-removing node from the node list after unsuccessful leave request",
+                                        leaveAddress);
+                                removeNode(node);
+                            }
                         }
                     } else {
-                        logger.debug("{}: No successful response received to leave command (status code {})",
-                                leaveAddress, response.getStatusCode());
+                        logger.debug("{}: No node found after leave command", leaveAddress);
                     }
                 } catch (InterruptedException | ExecutionException e) {
                     logger.debug("Error sending leave command.", e);
