@@ -1126,24 +1126,23 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             public void run() {
                 try {
                     CommandResult response = sendTransaction(command, command).get();
-                    if (response.getStatusCode() == 0) {
-                        ZigBeeNode node = getNode(leaveAddress);
-                        if (node != null) {
+                    ZigBeeNode node = getNode(leaveAddress);
+
+                    if (node != null) {
+                        if (response.getStatusCode() == 0) {
                             removeNode(node);
                         } else {
-                            logger.debug("{}: No node found after successful leave command", leaveAddress);
-                        }
-                    } else {
-                        logger.debug("{}: No successful response received to leave command (status code {})",
-                                leaveAddress, response.getStatusCode());
-                        if (forceNodeRemoval) {
-                            ZigBeeNode node = getNode(leaveAddress);
-                            if (node != null) {
-                                logger.debug("{}: Force-removing node from the node list after unsuccessful leave request", 
+                            logger.debug("{}: No successful response received to leave command (status code {})",
+                                    leaveAddress, response.getStatusCode());
+                            if (forceNodeRemoval) {
+                                logger.debug(
+                                        "{}: Force-removing node from the node list after unsuccessful leave request",
                                         leaveAddress);
                                 removeNode(node);
                             }
                         }
+                    } else {
+                        logger.debug("{}: No node found after leave command", leaveAddress);
                     }
                 } catch (InterruptedException | ExecutionException e) {
                     logger.debug("Error sending leave command.", e);
