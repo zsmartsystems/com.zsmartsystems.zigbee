@@ -289,7 +289,7 @@ public class ZigBeeTransaction {
         if (timeoutTask != null) {
             timeoutTask.cancel(false);
         }
-        logger.debug("Transaction terminated: {}", command);
+        logger.debug("Transaction terminated: {}", this);
         if (transactionFuture != null) {
             synchronized (transactionFuture) {
                 transactionFuture.cancel(false);

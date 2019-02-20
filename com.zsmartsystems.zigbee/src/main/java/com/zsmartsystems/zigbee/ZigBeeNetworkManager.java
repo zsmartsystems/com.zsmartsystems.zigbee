@@ -538,6 +538,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         transport.shutdown();
+        transactionManager.shutdown();
     }
 
     /**

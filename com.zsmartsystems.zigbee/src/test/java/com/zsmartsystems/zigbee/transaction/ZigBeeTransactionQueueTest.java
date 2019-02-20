@@ -34,7 +34,8 @@ public class ZigBeeTransactionQueueTest {
     public void testQueueFifo() {
         ZigBeeTransactionQueue queue = new ZigBeeTransactionQueue("QueueName");
         assertFalse(queue.isSleepy());
-        queue.setSleepy(true);
+        assertFalse(queue.setSleepy(true));
+        assertTrue(queue.setSleepy(true));
         assertTrue(queue.isSleepy());
         queue.getNextReleaseTime();
 
@@ -103,5 +104,13 @@ public class ZigBeeTransactionQueueTest {
         assertTrue(queue.isEmpty());
 
         queue.shutdown();
+
+        assertNull(queue.addToQueue(Mockito.mock(ZigBeeTransaction.class)));
+
+        ZigBeeTransaction transactionShutdown = Mockito.mock(ZigBeeTransaction.class);
+        queue.transactionComplete(transactionShutdown, TransactionState.TRANSMITTED);
+        Mockito.verify(transactionShutdown, Mockito.times(1)).cancel();
+
+        assertTrue(queue.isEmpty());
     }
 }
