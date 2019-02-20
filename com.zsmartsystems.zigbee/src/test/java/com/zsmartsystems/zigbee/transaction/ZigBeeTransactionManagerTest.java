@@ -7,6 +7,8 @@
  */
 package com.zsmartsystems.zigbee.transaction;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -149,12 +151,40 @@ public class ZigBeeTransactionManagerTest {
         transactionManager.sendTransaction(command);
         Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).sendCommand(command);
 
-        transactionManager.removeNode(new IeeeAddress("1234567890ABCDEF"));
-        assertNull(transactionManager.getQueue(new IeeeAddress("1234567890ABCDEF")));
+        transactionManager.removeNode(new IeeeAddress("1111111111111111"));
+        assertNull(transactionManager.getQueue(new IeeeAddress("1111111111111111")));
 
         transactionManager.removeNode(new IeeeAddress("9999999999999999"));
 
         transactionManager.shutdown();
+    }
+
+    @Test
+    public void shutdown() {
+        ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        ZigBeeTransactionManager transactionManager = new ZigBeeTransactionManager(networkManager);
+        ZigBeeTransactionMatcher responseMatcher = Mockito.mock(ZigBeeTransactionMatcher.class);
+
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1111111111111111"));
+        NodeDescriptor nodeDescriptor = Mockito.mock(NodeDescriptor.class);
+        Set<MacCapabilitiesType> macCapabilities = new HashSet<>();
+        Mockito.when(nodeDescriptor.getMacCapabilities()).thenReturn(macCapabilities);
+        Mockito.when(node.getNodeDescriptor()).thenReturn(nodeDescriptor);
+        Mockito.when(networkManager.getNode(111)).thenReturn(node);
+
+        // Add a message to the queue and verify it is sent
+        // then remove this node to ensure the transaction is cancelled and removed
+        ZigBeeCommand command = getCommand(111);
+        Future<CommandResult> cmdResult = transactionManager.sendTransaction(command, responseMatcher);
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).sendCommand(command);
+        assertNotNull(transactionManager.getQueue(new IeeeAddress("1111111111111111")));
+
+        transactionManager.shutdown();
+
+        await().atMost(TIMEOUT, SECONDS)
+                .until(() -> assertNull(transactionManager.getQueue(new IeeeAddress("1111111111111111"))));
+        assertTrue(cmdResult.isCancelled());
     }
 
     @Test
@@ -294,7 +324,6 @@ public class ZigBeeTransactionManagerTest {
     public void testSleepyManagement() {
         // This test sets the max sleepy transactions to 2, then fills the queue with 3 frames and makes sure only 2 are
         // sent
-
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
         ZigBeeTransactionManager transactionManager = new ZigBeeTransactionManager(networkManager);
         transactionManager.setMaxSleepyTransactions(2);
@@ -328,6 +357,46 @@ public class ZigBeeTransactionManagerTest {
         // This makes sure we are keeping tabs on the outstanding sleepy transactions
         transactionManager.receiveCommandState(99, ZigBeeTransportProgressState.TX_NAK);
         Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).sendCommand(command);
+    }
+
+    @Test
+    public void testNodeUpdate() {
+        // This test sets the max sleepy transactions to 2,
+        // then fills the queue with 3 frames and makes sure only 2 are sent
+        ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        ZigBeeTransactionManager transactionManager = new ZigBeeTransactionManager(networkManager);
+
+        IeeeAddress address = new IeeeAddress("1111111111111111");
+
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getIeeeAddress()).thenReturn(address);
+        transactionManager.nodeAdded(node);
+
+        NodeDescriptor nodeDescriptor = Mockito.mock(NodeDescriptor.class);
+        Set<MacCapabilitiesType> macCapabilities = new HashSet<>();
+        macCapabilities.add(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE);
+        Mockito.when(nodeDescriptor.getMacCapabilities()).thenReturn(macCapabilities);
+        Mockito.when(node.getNodeDescriptor()).thenReturn(nodeDescriptor);
+        Mockito.when(networkManager.getNode(111)).thenReturn(node);
+
+        ZigBeeTransactionMatcher responseMatcher = Mockito.mock(ZigBeeTransactionMatcher.class);
+        ZigBeeCommand command = getCommand(111);
+        Mockito.when(command.getTransactionId()).thenReturn(99);
+        transactionManager.sendTransaction(command, responseMatcher);
+        Mockito.verify(networkManager, Mockito.times(1)).sendCommand(command);
+
+        ZigBeeTransactionQueue queue = transactionManager.getQueue(address);
+        assertFalse(queue.isSleepy());
+
+        macCapabilities.clear();
+
+        transactionManager.nodeUpdated(node);
+
+        assertTrue(queue.isSleepy());
+
+        transactionManager.nodeRemoved(node);
+
+        assertNull(transactionManager.getQueue(address));
     }
 
     private ZigBeeCommand getCommand(int address) {

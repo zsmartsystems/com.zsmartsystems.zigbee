@@ -31,6 +31,7 @@ import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
@@ -60,7 +61,7 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
  * @author Chris Jackson
  *
  */
-public class ZigBeeTransactionManager {
+public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * The logger.
      */
@@ -134,7 +135,7 @@ public class ZigBeeTransactionManager {
     /**
      * {@link AtomicInteger} used to generate transaction IDs
      */
-    private final static AtomicInteger transactionIdCounter = new AtomicInteger();
+    private final AtomicInteger transactionIdCounter = new AtomicInteger();
 
     /**
      * A List of queues with outstanding commands. This is used for random access when sending transactions.
@@ -163,6 +164,8 @@ public class ZigBeeTransactionManager {
 
         multicastQueue = new ZigBeeTransactionQueue("Multicast");
         multicastQueue.setProfile(new ZigBeeTransactionProfile(MCAST_RETRIES, MCAST_TRANSACTIONS, MCAST_DELAY));
+
+        networkManager.addNetworkNodeListener(this);
     }
 
     /**
@@ -170,6 +173,8 @@ public class ZigBeeTransactionManager {
      */
     public void shutdown() {
         logger.debug("Shutting down transaction manager");
+
+        networkManager.removeNetworkNodeListener(this);
 
         executorService.shutdown();
 
@@ -356,7 +361,10 @@ public class ZigBeeTransactionManager {
     }
 
     /**
-     * Gets the transaction queue for a specific transaction.
+     * Gets the transaction queue for a specific transaction. If there is no existing queue relevant for the
+     * transaction, one will be created.
+     * <p>
+     * This method will only return null if the node address is unknown, and therefore no queue can be created.
      *
      * @param transaction the {@link ZigBeeTransaction}
      * @return the {@link ZigBeeTransactionQueue} or null if no queue could be derived
@@ -375,14 +383,7 @@ public class ZigBeeTransactionManager {
             if (queue == null) {
                 logger.debug("{}: Creating new Transaction Queue", node.getIeeeAddress());
                 queue = new ZigBeeTransactionQueue(node.getIeeeAddress().toString());
-
-                if (!node.getNodeDescriptor().getMacCapabilities()
-                        .contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)) {
-                    queue.setSleepy(true);
-                    queue.setProfile(defaultSleepyProfile);
-                } else {
-                    queue.setProfile(defaultProfile);
-                }
+                setQueueType(node, queue);
 
                 nodeQueue.put(node.getIeeeAddress(), queue);
             }
@@ -393,6 +394,25 @@ public class ZigBeeTransactionManager {
         } else {
             return multicastQueue;
         }
+    }
+
+    /**
+     * Sets the queue type to sleepy or non-sleepy. This will update the profile, and the sleepy flag in the quque
+     *
+     * @param node the {@link ZigBeeNode} of the queue to update
+     * @param queue the {@link ZigBeeTransactionQueue} to update
+     * @return true if the queue state was changed
+     */
+    private boolean setQueueType(ZigBeeNode node, ZigBeeTransactionQueue queue) {
+        boolean sleepy;
+        if (!node.getNodeDescriptor().getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)) {
+            queue.setProfile(defaultSleepyProfile);
+            sleepy = true;
+        } else {
+            queue.setProfile(defaultProfile);
+            sleepy = false;
+        }
+        return queue.setSleepy(sleepy) != sleepy;
     }
 
     /**
@@ -554,12 +574,24 @@ public class ZigBeeTransactionManager {
      * @param address the {@link IeeeAddress} of the node
      */
     public void removeNode(IeeeAddress address) {
-        ZigBeeTransactionQueue queue = nodeQueue.remove(address);
+        ZigBeeTransactionQueue queue = nodeQueue.get(address);
         if (queue == null) {
             return;
         }
-
         queue.shutdown();
+
+        logger.debug("{}: Removing queue from transaction manager", address);
+
+        // Remove any outstanding transactions from this queue that have already been sent
+        synchronized (outstandingTransactions) {
+            for (ZigBeeTransaction transaction : outstandingTransactions) {
+                if (getTransactionQueue(transaction) == queue) {
+                    transactionComplete(transaction, TransactionState.FAILED);
+                }
+            }
+        }
+        nodeQueue.remove(address);
+        outstandingQueues.remove(queue);
     }
 
     /**
@@ -660,5 +692,43 @@ public class ZigBeeTransactionManager {
                 sendNextTransaction();
             }
         }, timeout);
+    }
+
+    @Override
+    public void nodeAdded(ZigBeeNode node) {
+        nodeUpdated(node);
+    }
+
+    @Override
+    public void nodeUpdated(ZigBeeNode node) {
+        // Make sure that the queue is set to the correct type for this node
+        // This is handled here as this may change after the device is initially paired
+        // since the {@link NodeDescriptor} isn't initially known
+        ZigBeeTransactionQueue queue = nodeQueue.get(node.getIeeeAddress());
+        if (queue == null) {
+            return;
+        }
+
+        if (setQueueType(node, queue)) {
+            synchronized (outstandingTransactions) {
+                int sleepyCnt = 0;
+                // The queue type changed - resync the sleepyTransactions counter
+                for (ZigBeeTransaction transaction : outstandingTransactions) {
+                    ZigBeeTransactionQueue transactionQueue = getTransactionQueue(transaction);
+                    if (transactionQueue != null && transactionQueue.isSleepy()) {
+                        sleepyCnt++;
+                        continue;
+                    }
+                }
+                logger.debug("Sleepy transaction count resynchronised: was {}, now {}", sleepyCnt, sleepyTransactions);
+                sleepyTransactions = sleepyCnt;
+            }
+        }
+    }
+
+    @Override
+    public void nodeRemoved(ZigBeeNode node) {
+        // Node is gone, remove the queue
+        removeNode(node.getIeeeAddress());
     }
 }

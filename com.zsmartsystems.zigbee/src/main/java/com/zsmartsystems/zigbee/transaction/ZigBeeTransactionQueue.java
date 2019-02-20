@@ -90,6 +90,11 @@ public class ZigBeeTransactionQueue {
     private ZigBeeTransactionProfile profile = new ZigBeeTransactionProfile();
 
     /**
+     * Flag to remember if we have shut down this queue
+     */
+    private boolean isShutdown = false;
+
+    /**
      * Constructs a {@link ZigBeeTransactionQueue}
      *
      * @param queueName a queue name - used for logging to differentiate multiple queues
@@ -102,6 +107,9 @@ public class ZigBeeTransactionQueue {
      * Shuts down the queue and releases all resources
      */
     protected void shutdown() {
+        logger.debug("{}: Queue shutdown", queueName);
+        isShutdown = true;
+
         // Cancel any outstanding transactions
         for (ZigBeeTransaction transaction : queue) {
             transaction.cancel();
@@ -131,10 +139,14 @@ public class ZigBeeTransactionQueue {
      * Sets the queue for a sleepy or non-sleepy queue
      *
      * @param sleepy true if this is a queue for a sleepy device
+     * @return the previous state of the sleepy flag
      */
-    public void setSleepy(boolean sleepy) {
+    public boolean setSleepy(boolean sleepy) {
+        boolean currentlySleepy = this.sleepy;
+        logger.debug("{}: Set sleepy from {} to {}", queueName, this.sleepy, sleepy);
         this.sleepy = sleepy;
-        logger.debug("{}: Set sleepy to {}", queueName, sleepy);
+
+        return currentlySleepy;
     }
 
     /**
@@ -149,11 +161,16 @@ public class ZigBeeTransactionQueue {
     /**
      * Adds a {@link ZigBeeTransaction} to the queue, returning a {@link CommandResult} Future that will be fulfilled
      * once the transaction completes.
+     * Once the queue has been shutdown with {@link #shutdown()} no further transactions will be accepted and this
+     * method will return null.
      *
      * @param transaction {@link ZigBeeTransaction}
-     * @return the Future {@link CommandResult} for the transaction
+     * @return the Future {@link CommandResult} for the transaction. Will return null if the queue has been shut down
      */
     protected Future<CommandResult> addToQueue(ZigBeeTransaction transaction) {
+        if (isShutdown) {
+            return null;
+        }
         if (transaction.getFuture() == null) {
             transaction.setFuture(new ZigBeeTransactionFuture());
         }
@@ -240,6 +257,12 @@ public class ZigBeeTransactionQueue {
     protected void transactionComplete(ZigBeeTransaction transaction, TransactionState state) {
         outstandingTransactions--;
         logger.debug("{}: transactionComplete {} {}", queueName, state, outstandingTransactions);
+
+        if (isShutdown) {
+            transaction.cancel();
+            return;
+        }
+
         if (state == TransactionState.FAILED) {
             if (transaction.getSendCnt() < profile.getMaxRetries()) {
                 // Transaction failed - requeue

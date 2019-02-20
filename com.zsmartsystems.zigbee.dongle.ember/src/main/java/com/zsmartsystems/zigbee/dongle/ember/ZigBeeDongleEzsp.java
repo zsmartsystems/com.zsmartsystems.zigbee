@@ -502,7 +502,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         }
         lastSendCommand = System.currentTimeMillis();
 
-        int messageTag = apsFrame.getApsCounter();
         EzspTransaction transaction;
 
         EmberApsFrame emberApsFrame = new EmberApsFrame();
