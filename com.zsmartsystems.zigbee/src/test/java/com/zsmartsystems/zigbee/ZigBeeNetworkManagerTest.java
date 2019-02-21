@@ -30,6 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.awaitility.Awaitility;
 import org.junit.Test;
@@ -838,6 +841,40 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
                 br.close();
             }
         }
+    }
+
+    @Test
+    public void scheduleTask() throws Exception {
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+        ScheduledExecutorService scheduler = Mockito.mock(ScheduledExecutorService.class);
+        TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "executorService", scheduler);
+
+        assertNull(networkManager.scheduleTask(Mockito.mock(Runnable.class), 0, 0));
+        assertNull(networkManager.scheduleTask(Mockito.mock(Runnable.class), 0, 1));
+        assertNull(networkManager.scheduleTask(Mockito.mock(Runnable.class), 0));
+        networkManager.executeTask(Mockito.mock(Runnable.class));
+        assertNull(networkManager.rescheduleTask(Mockito.mock(ScheduledFuture.class), Mockito.mock(Runnable.class), 0));
+
+        TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeTransportState.ONLINE);
+
+        networkManager.scheduleTask(Mockito.mock(Runnable.class), 0, 0);
+        Mockito.verify(scheduler, Mockito.times(2)).schedule(ArgumentMatchers.any(Runnable.class),
+                ArgumentMatchers.anyLong(), ArgumentMatchers.any(TimeUnit.class));
+
+        networkManager.scheduleTask(Mockito.mock(Runnable.class), 0, 1);
+        Mockito.verify(scheduler, Mockito.times(2)).scheduleAtFixedRate(ArgumentMatchers.any(Runnable.class),
+                ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong(), ArgumentMatchers.any(TimeUnit.class));
+
+        networkManager.scheduleTask(Mockito.mock(Runnable.class), 0);
+        Mockito.verify(scheduler, Mockito.times(3)).schedule(ArgumentMatchers.any(Runnable.class),
+                ArgumentMatchers.anyLong(), ArgumentMatchers.any(TimeUnit.class));
+
+        networkManager.executeTask(Mockito.mock(Runnable.class));
+        Mockito.verify(scheduler, Mockito.times(1)).execute(ArgumentMatchers.any(Runnable.class));
+
+        networkManager.rescheduleTask(Mockito.mock(ScheduledFuture.class), Mockito.mock(Runnable.class), 0);
+        Mockito.verify(scheduler, Mockito.times(4)).schedule(ArgumentMatchers.any(Runnable.class),
+                ArgumentMatchers.anyLong(), ArgumentMatchers.any(TimeUnit.class));
     }
 
 }
