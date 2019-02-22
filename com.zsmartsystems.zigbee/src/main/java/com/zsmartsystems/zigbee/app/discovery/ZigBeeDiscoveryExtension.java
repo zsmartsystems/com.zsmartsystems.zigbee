@@ -7,10 +7,13 @@
  */
 package com.zsmartsystems.zigbee.app.discovery;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +27,19 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
+import com.zsmartsystems.zigbee.app.discovery.ZigBeeNodeServiceDiscoverer.NodeDiscoveryTask;
 import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveResponse;
 import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
 
 /**
  * This class implements a {@link ZigBeeNetworkExtension} to perform network discovery and monitoring.
+ * <p>
+ * The periodic mesh update will periodically request information from the node so as to keep information updated. The
+ * tasks may be specified from the list of {@link NodeDiscoveryTask}s, and in general it may be expected to update the
+ * routing information (with {@link NodeDiscoveryTask#ROUTES}) and the neighbour information (with
+ * {@link NodeDiscoveryTask#NEIGHBORS}). In some networks, it may be advantageous not to update all information as it
+ * may place a high load on the network.
  *
  * @author Chris Jackson
  *
@@ -42,14 +52,13 @@ public class ZigBeeDiscoveryExtension
     private final Logger logger = LoggerFactory.getLogger(ZigBeeDiscoveryExtension.class);
 
     /**
-     * The ZigBee network {@link ZigBeeNetworkDiscoverer}. The discover is
-     * responsible for monitoring the network for new devices and the initial
-     * interrogation of their capabilities.
+     * The ZigBee network {@link ZigBeeNetworkDiscoverer}. The discover is responsible for monitoring the network for
+     * new devices and the initial interrogation of their capabilities.
      */
     private ZigBeeNetworkDiscoverer networkDiscoverer;
 
     /**
-     *
+     * Map of {@link ZigBeeNodeServiceDiscoverer} for each node
      */
     private final Map<IeeeAddress, ZigBeeNodeServiceDiscoverer> nodeDiscovery = new ConcurrentHashMap<>();
 
@@ -63,6 +72,12 @@ public class ZigBeeDiscoveryExtension
     private ZigBeeNetworkManager networkManager;
 
     private boolean extensionStarted = false;
+
+    /**
+     * List of tasks to be completed during a mesh update
+     */
+    private List<NodeDiscoveryTask> meshUpdateTasks = Arrays
+            .asList(new NodeDiscoveryTask[] { NodeDiscoveryTask.NEIGHBORS, NodeDiscoveryTask.ROUTES });
 
     @Override
     public ZigBeeStatus extensionInitialize(ZigBeeNetworkManager networkManager) {
@@ -94,6 +109,8 @@ public class ZigBeeDiscoveryExtension
         networkManager.removeNetworkNodeListener(this);
         networkManager.removeCommandListener(this);
 
+        stopScheduler();
+
         if (networkDiscoverer != null) {
             networkDiscoverer.shutdown();
         }
@@ -104,9 +121,6 @@ public class ZigBeeDiscoveryExtension
 
         extensionStarted = false;
 
-        if (futureTask != null) {
-            futureTask.cancel(true);
-        }
         logger.debug("DISCOVERY Extension: Shutdown");
     }
 
@@ -134,6 +148,16 @@ public class ZigBeeDiscoveryExtension
     }
 
     /**
+     * Updates the list of tasks to be completed when the mesh update is executed. The change will take effect at the
+     * next update.
+     *
+     * @param tasks a List of {@link NodeDiscoveryTask}s to execute as part of the mesh update
+     */
+    public void setUpdateMeshTasks(List<NodeDiscoveryTask> tasks) {
+        meshUpdateTasks = tasks;
+    }
+
+    /**
      * Gets the current period at which the mesh data is being updated (in seconds). A return value of 0 indicates that
      * automatic updates are currently disabled.
      *
@@ -145,8 +169,8 @@ public class ZigBeeDiscoveryExtension
     }
 
     /**
-     * Performs an immediate refresh of the network. Subsequent updates are performed at the current update rate, and
-     * the timer is restarted from the time of calling this method.
+     * Performs an immediate refresh of the network mesh information. Subsequent updates are performed at the current
+     * update rate, and the timer is restarted from the time of calling this method.
      */
     public void refresh() {
         logger.debug("DISCOVERY Extension: Start mesh update task with interval of {} seconds", updatePeriod);
@@ -215,6 +239,7 @@ public class ZigBeeDiscoveryExtension
 
     protected void startDiscovery(ZigBeeNode node) {
         ZigBeeNodeServiceDiscoverer nodeDiscoverer = new ZigBeeNodeServiceDiscoverer(networkManager, node);
+        nodeDiscoverer.setUpdateMeshTasks(meshUpdateTasks);
         nodeDiscovery.put(node.getIeeeAddress(), nodeDiscoverer);
         nodeDiscoverer.startDiscovery();
     }
@@ -242,12 +267,14 @@ public class ZigBeeDiscoveryExtension
                 logger.debug("DISCOVERY Extension: Starting mesh update");
                 for (ZigBeeNodeServiceDiscoverer node : nodeDiscovery.values()) {
                     logger.debug("DISCOVERY Extension: Starting mesh update for {}", node.getNode().getIeeeAddress());
+                    node.setUpdateMeshTasks(meshUpdateTasks);
                     node.updateMesh();
                 }
             }
         };
 
-        futureTask = networkManager.scheduleTask(meshUpdateThread, initialPeriod, updatePeriod * 1000);
+        futureTask = networkManager.scheduleTask(meshUpdateThread, initialPeriod,
+                TimeUnit.SECONDS.toMillis(updatePeriod));
     }
 
     /**
