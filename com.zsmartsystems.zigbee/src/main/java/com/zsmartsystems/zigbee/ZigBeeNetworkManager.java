@@ -588,14 +588,20 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Schedules a runnable task for periodic execution. This uses a fixed size scheduler to limit thread execution
      * resources.
+     * If period is set to 0, then the task will be scheduled for a single execution.
      *
      * @param runnableTask the {@link Runnable} to execute
      * @param initialDelay the delay in milliseconds before the task will be executed
-     * @param period the period in milliseconds between each subsequent execution
+     * @param period the period in milliseconds between each subsequent execution. If set to 0, the task will only be
+     *            scheduled once.
      * @return the {@link ScheduledFuture} for the scheduled task
      */
     public ScheduledFuture<?> scheduleTask(Runnable runnableTask, long initialDelay, long period) {
-        return executorService.scheduleAtFixedRate(runnableTask, initialDelay, period, TimeUnit.MILLISECONDS);
+        if (period == 0) {
+            return executorService.schedule(runnableTask, initialDelay, TimeUnit.MILLISECONDS);
+        } else {
+            return executorService.scheduleAtFixedRate(runnableTask, initialDelay, period, TimeUnit.MILLISECONDS);
+        }
     }
 
     /**
@@ -1091,7 +1097,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Sends a ZDO Leave Request to a device requesting that an end device leave the network. 
+     * Sends a ZDO Leave Request to a device requesting that an end device leave the network.
      * Only in case of a successful response is the corresponding node removed from the node list.
      *
      * @param destinationAddress the network address to send the request to - this is the device parent or the the
@@ -1101,14 +1107,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public void leave(final Integer destinationAddress, final IeeeAddress leaveAddress) {
         leave(destinationAddress, leaveAddress, false);
     }
-    
+
     /**
-     * Sends a ZDO Leave Request to a device requesting that an end device leave the network. 
+     * Sends a ZDO Leave Request to a device requesting that an end device leave the network.
      *
      * @param destinationAddress the network address to send the request to - this is the device parent or the the
      *            device we want to leave.
      * @param leaveAddress the {@link IeeeAddress} of the end device we want to leave the network
-     * @param forceNodeRemoval If this flag is set, then the corresponding  node is removed from the node list 
+     * @param forceNodeRemoval If this flag is set, then the corresponding node is removed from the node list
      *            even if there was no success response to the leave command.
      */
     public void leave(final Integer destinationAddress, final IeeeAddress leaveAddress, boolean forceNodeRemoval) {
