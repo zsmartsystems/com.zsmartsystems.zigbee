@@ -101,12 +101,12 @@ public class TelegesisFrameHandler {
      * The maximum number of milliseconds to wait for the response from the stick once the request was sent.
      * This must account for any delays in the host.
      */
-    private final int DEFAULT_TRANSACTION_TIMEOUT = 3000;
+    private final int DEFAULT_COMMAND_TIMEOUT = 3000;
 
     /**
      * The maximum number of milliseconds to wait for the completion of the transaction after it's queued
      */
-    private final int DEFAULT_COMMAND_TIMEOUT = 8000;
+    private final int DEFAULT_TRANSACTION_TIMEOUT = 8000;
 
     /**
      * The maximum number of milliseconds to wait for the response from the stick once the request was sent
@@ -637,7 +637,7 @@ public class TelegesisFrameHandler {
     public TelegesisEvent eventWait(final Class<?> eventClass) {
         Future<TelegesisEvent> future = waitEventAsync(eventClass);
         try {
-            return future.get(commandTimeout, TimeUnit.MILLISECONDS);
+            return future.get(transactionTimeout, TimeUnit.MILLISECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             logger.debug("Telegesis interrupted in eventWait {}", eventClass);
             future.cancel(true);
