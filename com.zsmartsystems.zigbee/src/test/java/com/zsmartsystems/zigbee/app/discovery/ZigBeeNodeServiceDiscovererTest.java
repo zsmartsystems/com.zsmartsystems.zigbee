@@ -9,9 +9,12 @@ package com.zsmartsystems.zigbee.app.discovery;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -251,5 +254,52 @@ public class ZigBeeNodeServiceDiscovererTest {
         Mockito.verify(futureTask, Mockito.times(1)).cancel(true);
 
         assertFalse(discoverer.getTasks().contains(NodeDiscoveryTask.ACTIVE_ENDPOINTS));
+
+        assertNotNull(discoverer.getLastDiscoveryStarted());
+        assertNull(discoverer.getLastDiscoveryCompleted());
+        discoverer.stopDiscovery();
+    }
+
+    @Test
+    public void updateMesh() throws Exception {
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        ZigBeeNodeServiceDiscoverer discoverer = new ZigBeeNodeServiceDiscoverer(networkManager, node);
+        discoverer.setUpdateMeshTasks(
+                Arrays.asList(new NodeDiscoveryTask[] { NodeDiscoveryTask.ROUTES, NodeDiscoveryTask.NEIGHBORS }));
+
+        Mockito.when(
+                networkManager.scheduleTask(ArgumentMatchers.any(Runnable.class), ArgumentMatchers.any(long.class)))
+                .thenReturn(null);
+        TestUtilities.setField(ZigBeeNodeServiceDiscoverer.class, discoverer, "retryPeriod", 1000);
+
+        NodeDescriptor initialNodeDescriptor = Mockito.mock(NodeDescriptor.class);
+        Mockito.when(initialNodeDescriptor.getLogicalType()).thenReturn(LogicalType.END_DEVICE);
+        Mockito.when(node.getNodeDescriptor()).thenReturn(initialNodeDescriptor);
+
+        PowerDescriptor initialPowerDescriptor = Mockito.mock(PowerDescriptor.class);
+        Mockito.when(initialPowerDescriptor.getCurrentPowerMode()).thenReturn(CurrentPowerModeType.UNKNOWN);
+        Mockito.when(node.getPowerDescriptor()).thenReturn(initialPowerDescriptor);
+
+        Mockito.when(node.getNetworkAddress()).thenReturn(1);
+
+        ScheduledFuture<?> futureTask = Mockito.mock(ScheduledFuture.class);
+        TestUtilities.setField(ZigBeeNodeServiceDiscoverer.class, discoverer, "futureTask", futureTask);
+
+        discoverer.updateMesh();
+        assertFalse(discoverer.getTasks().contains(NodeDiscoveryTask.ROUTES));
+        assertTrue(discoverer.getTasks().contains(NodeDiscoveryTask.NEIGHBORS));
+
+        Mockito.when(initialNodeDescriptor.getLogicalType()).thenReturn(LogicalType.ROUTER);
+        discoverer.updateMesh();
+        assertTrue(discoverer.getTasks().contains(NodeDiscoveryTask.ROUTES));
+        assertTrue(discoverer.getTasks().contains(NodeDiscoveryTask.NEIGHBORS));
+
+        discoverer.getTasks().clear();
+
+        discoverer.setUpdateMeshTasks(Arrays.asList(new NodeDiscoveryTask[] { NodeDiscoveryTask.NEIGHBORS }));
+
+        discoverer.updateMesh();
+        assertFalse(discoverer.getTasks().contains(NodeDiscoveryTask.ROUTES));
+        assertTrue(discoverer.getTasks().contains(NodeDiscoveryTask.NEIGHBORS));
     }
 }

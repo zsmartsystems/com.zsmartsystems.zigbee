@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.app.discovery;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -140,6 +141,11 @@ public class ZigBeeNodeServiceDiscoverer {
     private Calendar lastDiscoveryCompleted;
 
     /**
+     * List of tasks to be completed during a mesh update
+     */
+    private List<NodeDiscoveryTask> meshUpdateTasks = Collections.emptyList();
+
+    /**
      *
      *
      */
@@ -191,7 +197,8 @@ public class ZigBeeNodeServiceDiscoverer {
             if (!supportsManagementLqi && newTasks.contains(NodeDiscoveryTask.NEIGHBORS)) {
                 newTasks.remove(NodeDiscoveryTask.NEIGHBORS);
             }
-            if (!supportsManagementRouting && newTasks.contains(NodeDiscoveryTask.ROUTES)) {
+            if ((!supportsManagementRouting || node.getNodeDescriptor().getLogicalType() == LogicalType.END_DEVICE)
+                    && newTasks.contains(NodeDiscoveryTask.ROUTES)) {
                 newTasks.remove(NodeDiscoveryTask.ROUTES);
             }
 
@@ -682,11 +689,7 @@ public class ZigBeeNodeServiceDiscoverer {
         logger.debug("{}: Node SVC Discovery: Update mesh", node.getIeeeAddress());
         Set<NodeDiscoveryTask> tasks = new HashSet<NodeDiscoveryTask>();
 
-        tasks.add(NodeDiscoveryTask.NEIGHBORS);
-
-        if (node.getNodeDescriptor().getLogicalType() != LogicalType.END_DEVICE) {
-            tasks.add(NodeDiscoveryTask.ROUTES);
-        }
+        tasks.addAll(meshUpdateTasks);
 
         startDiscovery(tasks);
     }
@@ -725,5 +728,14 @@ public class ZigBeeNodeServiceDiscoverer {
      */
     public Calendar getLastDiscoveryCompleted() {
         return lastDiscoveryCompleted;
+    }
+
+    /**
+     * Updates the list of tasks to be completed with the mesh update is executed
+     *
+     * @param tasks a List of {@link NodeDiscoveryTask}s to execute as part of the mesh update
+     */
+    public void setUpdateMeshTasks(List<NodeDiscoveryTask> tasks) {
+        meshUpdateTasks = tasks;
     }
 }

@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.app.discovery;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,6 +25,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.app.discovery.ZigBeeNodeServiceDiscoverer.NodeDiscoveryTask;
 import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveResponse;
 
@@ -45,6 +47,9 @@ public class ZigBeeDiscoveryExtensionTest {
         Mockito.doNothing().when(extension).startDiscovery(node);
         Mockito.doNothing().when(extension).stopDiscovery(node);
         Mockito.doNothing().when(extension).startScheduler(ArgumentMatchers.any(int.class));
+
+        extension.setUpdateMeshTasks(
+                Arrays.asList(new NodeDiscoveryTask[] { NodeDiscoveryTask.ROUTES, NodeDiscoveryTask.NEIGHBORS }));
 
         extension.setUpdatePeriod(0);
 
