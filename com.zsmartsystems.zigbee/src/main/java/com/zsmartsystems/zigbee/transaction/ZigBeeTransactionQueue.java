@@ -203,9 +203,6 @@ public class ZigBeeTransactionQueue {
      * @return the {@link ZigBeeTransaction} to send, or null if no transaction is available.
      */
     protected ZigBeeTransaction getTransaction() {
-        logger.debug(queueName + ": Timer " + profile.getInterTransactionDelay() + " >> " + nextReleaseTime + " -- "
-                + System.currentTimeMillis() + " == " + (nextReleaseTime - System.currentTimeMillis())
-                + ", outstanding=" + outstandingTransactions + "/" + profile.getMaxOutstandingTransactions());
         if (queue.isEmpty() || nextReleaseTime > System.currentTimeMillis()
                 || outstandingTransactions >= profile.getMaxOutstandingTransactions()) {
             return null;
@@ -213,7 +210,6 @@ public class ZigBeeTransactionQueue {
         outstandingTransactions++;
         nextReleaseTime = System.currentTimeMillis() + profile.getInterTransactionDelay();
 
-        logger.debug(queueName + "Timer set " + nextReleaseTime);
         return queue.poll();
     }
 

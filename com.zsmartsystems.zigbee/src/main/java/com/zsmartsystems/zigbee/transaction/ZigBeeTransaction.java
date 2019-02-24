@@ -163,9 +163,7 @@ public class ZigBeeTransaction {
     }
 
     /**
-     * Sets the time the transaction is added to a queue
-     *
-     * @param queueTime the queueTime to set
+     * Records the time the transaction is added to a queue using the current system time.
      */
     protected void setQueueTime() {
         this.queueTime = System.currentTimeMillis();
@@ -308,9 +306,7 @@ public class ZigBeeTransaction {
         // Ensure that received command is not processed before command is sent
         // and hence transaction ID for the command set.
         synchronized (command) {
-            logger.debug("commandReceived: {} ----> {}", command, receivedCommand);
             if (responseMatcher.isTransactionMatch(command, receivedCommand)) {
-                logger.debug("commandReceived: MATCHED");
                 completeTransaction(receivedCommand);
             }
         }
@@ -335,7 +331,7 @@ public class ZigBeeTransaction {
         if (timeoutTask != null) {
             timeoutTask.cancel(false);
         }
-        logger.debug("Transaction completed: {}", command);
+        logger.debug("Transaction completed: {}", this);
         if (transactionFuture != null) {
             synchronized (transactionFuture) {
                 transactionFuture.set(new CommandResult(receivedCommand));
@@ -351,7 +347,7 @@ public class ZigBeeTransaction {
         if (timeoutTask != null) {
             timeoutTask.cancel(false);
         }
-        logger.debug("Transaction cancelled: {}", command);
+        logger.debug("Transaction cancelled: {}", this);
 
         transactionManager.transactionComplete(this, TransactionState.FAILED);
     }
@@ -396,6 +392,8 @@ public class ZigBeeTransaction {
                     state = TransactionState.ACKED;
                     break;
                 default:
+                    logger.debug("Unknown transaction state update: TID {} to {}", String.format("%02X", transactionId),
+                            progress);
                     break;
             }
         }

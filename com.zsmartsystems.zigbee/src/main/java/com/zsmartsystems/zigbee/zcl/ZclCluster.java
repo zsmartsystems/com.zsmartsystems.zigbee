@@ -587,10 +587,8 @@ public abstract class ZclCluster {
                 // Synchronise the request to avoid multiple simultaneous requests to this update the list on this
                 // cluster which would cause errors consolidating the responses
                 synchronized (supportedAttributes) {
-                    logger.debug("discoverAttributes starting");
                     // If we don't want to rediscover, and we already have the list of attributes, then return
                     if (!rediscover && !supportedAttributes.isEmpty()) {
-                        logger.debug("discoverAttributes ret true");
                         return true;
                     }
 
@@ -605,11 +603,8 @@ public abstract class ZclCluster {
                         command.setStartAttributeIdentifier(index);
                         command.setMaximumAttributeIdentifiers(10);
 
-                        logger.debug("discoverAttributes sending {}", command);
-
                         CommandResult result = send(command).get();
                         if (result.isError()) {
-                            logger.debug("discoverAttributes isError");
                             return false;
                         }
 
