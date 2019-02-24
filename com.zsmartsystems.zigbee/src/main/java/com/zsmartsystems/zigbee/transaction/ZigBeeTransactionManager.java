@@ -41,7 +41,8 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 /**
  * The centralised transaction manager is designed to solve a number of issues associated with the sending
  * of transactions to devices, and ensure a smooth flow of data under most circumstances. It sits between the
- * applications that are sending commands with no knowledge of other applications, or knowledge of the network state.
+ * applications that are sending commands with no knowledge of other applications, or knowledge of the network state,
+ * and the transport layer.
  * <p>
  * The following issues are covered -:
  * <ul>
@@ -57,6 +58,12 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
  * can not be filled with commands to sleepy devices, which would adversely affect the overall performance of the
  * system.
  * </ul>
+ * <p>
+ * Each time a transaction is sent to the transaction manager, or a transaction completes, the transaction manager will
+ * attempt to send the next transaction in order to keep the transport layer full, while also fulfilling the various
+ * constraints in the queues.
+ * <p>
+ * When sending, queues are polled in random order to ensure that all queues get a fair chance at sending data.
  *
  * @author Chris Jackson
  *
@@ -204,36 +211,36 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Gets the maximum number of transactions permitted at any time.
+     * Gets the maximum number of transactions permitted to be outstanding at any time.
      *
-     * @return the the maximum number of transactions permitted at any time
+     * @return the the maximum number of transactions permitted to be outstanding at any time
      */
     public int getMaxOutstandingTransactions() {
         return maxOutstandingTransactions;
     }
 
     /**
-     * Sets the maximum number of transactions permitted at any time.
+     * Sets the maximum number of transactions permitted to be outstanding at any time.
      *
-     * @param maxOutstandingTransactions the maximum number of transactions permitted at any time
+     * @param maxOutstandingTransactions the maximum number of transactions permitted to be outstanding at any time
      */
     public void setMaxOutstandingTransactions(int maxOutstandingTransactions) {
         this.maxOutstandingTransactions = maxOutstandingTransactions;
     }
 
     /**
-     * Gets the maximum number of sleepy transactions permitted at any time.
+     * Gets the maximum number of sleepy transactions permitted to be outstanding at any time.
      *
-     * @return the the maximum number of sleepy transactions permitted at any time
+     * @return the maximum number of sleepy transactions permitted to be outstanding at any time
      */
     public int getMaxSleepyTransactions() {
         return maxSleepyTransactions;
     }
 
     /**
-     * Sets the maximum number of sleepy transactions permitted at any time.
+     * Sets the maximum number of sleepy transactions permitted to be sent at any time.
      *
-     * @param maxOutstandingTransactions the maximum number of sleepy transactions permitted at any time
+     * @param maxSleepyTransactions the maximum number of sleepy transactions permitted to be outstanding at any time
      */
     public void setMaxSleepyTransactions(int maxSleepyTransactions) {
         this.maxSleepyTransactions = maxSleepyTransactions;
