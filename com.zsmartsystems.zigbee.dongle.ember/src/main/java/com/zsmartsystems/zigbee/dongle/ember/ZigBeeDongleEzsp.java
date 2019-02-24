@@ -27,6 +27,7 @@ import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
@@ -191,6 +192,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * The rate at which we will do a status poll if we've not sent any other messages within this period
      */
     private int pollRate = 1000;
+
+    /**
+     * The time the last command was sent from the {@link ZigBeeNetworkManager}. This is used by the dongle polling task
+     * to not poll if commands are otherwise being sent so as to reduce unnecessary communications with the dongle.
+     */
+    private long lastSendCommand;
 
     /**
      * If the dongle is being used with the manufacturing library, then this records the listener to be called when
@@ -424,6 +431,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     /**
      * This method schedules sending a status request frame on the interval specified by pollRate. If the frameHandler
      * does not receive a response after a certain amount of retries, the state will be set to OFFLINE.
+     * The poll will not be sent if other commands have been sent to the dongle within the pollRate period so as to
+     * eliminate any unnecessary traffic with the dongle.
      */
     private void scheduleNetworkStatePolling() {
         if (pollingTimer != null) {
@@ -434,7 +443,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             @Override
             public void run() {
                 // Don't poll the state if the network is down
-                if (!networkStateUp) {
+                // or we've sent a command to the dongle within the pollRate
+                if (!networkStateUp || (lastSendCommand + pollRate > System.currentTimeMillis())) {
                     return;
                 }
                 frameHandler.queueFrame(new EzspNetworkStateRequest());
@@ -490,6 +500,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (frameHandler == null) {
             return;
         }
+        lastSendCommand = System.currentTimeMillis();
+
         int messageTag = apsFrame.getApsCounter();
         EzspTransaction transaction;
 
@@ -542,7 +554,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
             transaction = new EzspSingleResponseTransaction(emberMulticast, EzspSendMulticastResponse.class);
         } else {
-            logger.debug("EZSP message not sent: {}, {}", apsFrame);
+            logger.debug("EZSP message not sent: {}", apsFrame);
             // ZigBeeGroupAddress groupAddress = (ZigBeeGroupAddress) zclCommand.getDestinationAddress();
             // apsFrame.setGroupId(groupAddress.getGroupId());
             return;
@@ -566,7 +578,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 } else if (transaction.getResponse() instanceof EzspSendMulticastResponse) {
                     status = ((EzspSendMulticastResponse) transaction.getResponse()).getStatus();
                 } else {
-                    logger.debug("Unable to get response from {} :: ", transaction.getRequest(),
+                    logger.debug("Unable to get response from {} :: {}", transaction.getRequest(),
                             transaction.getResponse());
                     return;
                 }

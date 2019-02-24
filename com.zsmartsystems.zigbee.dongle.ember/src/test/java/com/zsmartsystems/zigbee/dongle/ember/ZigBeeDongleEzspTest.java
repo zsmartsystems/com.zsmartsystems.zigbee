@@ -42,6 +42,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransactio
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.TrustCentreJoinMode;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
@@ -292,9 +293,24 @@ public class ZigBeeDongleEzspTest {
         Mockito.verify(frameHandler, Mockito.timeout(TIMEOUT).times(0))
                 .queueFrame(ArgumentMatchers.any(EzspFrameRequest.class));
 
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "lastSendCommand", Long.MAX_VALUE - 1);
         TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "networkStateUp", true);
+        TestUtilities.invokeMethod(ZigBeeDongleEzsp.class, dongle, "scheduleNetworkStatePolling");
+        Mockito.verify(frameHandler, Mockito.timeout(TIMEOUT).times(0))
+                .queueFrame(ArgumentMatchers.any(EzspFrameRequest.class));
+
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "lastSendCommand", 0);
         TestUtilities.invokeMethod(ZigBeeDongleEzsp.class, dongle, "scheduleNetworkStatePolling");
         Mockito.verify(frameHandler, Mockito.timeout(TIMEOUT).atLeast(1))
                 .queueFrame(ArgumentMatchers.any(EzspFrameRequest.class));
+    }
+
+    @Test
+    public void shutdown() throws Exception {
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "serialPort", Mockito.mock(ZigBeePort.class));
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", Mockito.mock(EzspProtocolHandler.class));
+
+        dongle.shutdown();
     }
 }
