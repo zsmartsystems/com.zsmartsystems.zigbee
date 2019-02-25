@@ -200,7 +200,7 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
                 out.println("    public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {");
                 if (command.response.matchers.isEmpty()) {
                     out.println("        return (response instanceof " + command.response.command + ")");
-                    out.println("                & ((ZdoRequest) request).getDestinationAddress().equals((("
+                    out.println("                && ((ZdoRequest) request).getDestinationAddress().equals((("
                             + command.response.command + ") response).getSourceAddress());");
                 } else {
                     out.println("        if (!(response instanceof " + command.response.command + ")) {");
