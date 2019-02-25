@@ -218,7 +218,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * The current {@link ZigBeeTransportState}
      */
-    private ZigBeeTransportState networkState;
+    private ZigBeeTransportState networkState = ZigBeeTransportState.UNINITIALISED;
 
     /**
      * Map of allowable state transitions
@@ -302,7 +302,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Initializes ZigBee manager components and initializes the transport layer.
+     * Initializes ZigBee manager components and initializes the transport layer. This call may only be called once in
+     * the life of the network.
      * <p>
      * If a network state was previously serialized, it will be deserialized here if the serializer is set with the
      * {@link #setNetworkStateSerializer} method.
@@ -323,9 +324,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return {@link ZigBeeStatus}
      */
     public ZigBeeStatus initialize() {
-        setNetworkState(ZigBeeTransportState.UNINITIALISED);
-
         synchronized (this) {
+            if (networkState != ZigBeeTransportState.UNINITIALISED) {
+                return ZigBeeStatus.INVALID_STATE;
+            }
+            setNetworkState(ZigBeeTransportState.INITIALISING);
+
             if (networkStateSerializer != null) {
                 networkStateSerializer.deserialize(this);
             }
@@ -336,7 +340,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             setNetworkState(ZigBeeTransportState.OFFLINE);
             return transportResponse;
         }
-        setNetworkState(ZigBeeTransportState.INITIALISING);
 
         addLocalNode();
 
@@ -383,7 +386,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Note that this method may only be called following the {@link #initialize} call, and before the {@link #startup}
      * call.
      *
-     * @param channel {@link int} defining the channel to use
+     * @param channel {@link ZigBeeChannel} defining the channel to use
      * @return {@link ZigBeeStatus} with the status of function
      */
     public ZigBeeStatus setZigBeeChannel(ZigBeeChannel channel) {
@@ -502,13 +505,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     /**
      * Starts up ZigBee manager components.
-     * <p>
      *
      * @param reinitialize true if the provider is to reinitialise the network with the parameters configured since the
      *            {@link #initialize} method was called.
      * @return {@link ZigBeeStatus} with the status of function
      */
     public ZigBeeStatus startup(boolean reinitialize) {
+        if (networkState == ZigBeeTransportState.UNINITIALISED) {
+            return ZigBeeStatus.INVALID_STATE;
+        }
+
         ZigBeeStatus status = transport.startup(reinitialize);
         if (status != ZigBeeStatus.SUCCESS) {
             setNetworkState(ZigBeeTransportState.OFFLINE);
@@ -960,7 +966,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     private void setNetworkStateRunnable(final ZigBeeTransportState state) {
         synchronized (this) {
-
             networkState = state;
 
             logger.debug("Network state is updated to {}", state);
