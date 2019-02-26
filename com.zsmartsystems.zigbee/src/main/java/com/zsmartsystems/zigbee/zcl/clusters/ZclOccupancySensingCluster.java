@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclOccupancySensingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -97,10 +97,9 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      */
     public static final int ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD = 0x0022;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(8);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(8);
 
         attributeMap.put(ATTR_OCCUPANCY, new ZclAttribute(ZclClusterType.OCCUPANCY_SENSING, ATTR_OCCUPANCY, "Occupancy", ZclDataType.BITMAP_8_BIT, true, true, false, true));
         attributeMap.put(ATTR_OCCUPANCYSENSORTYPE, new ZclAttribute(ZclClusterType.OCCUPANCY_SENSING, ATTR_OCCUPANCYSENSORTYPE, "Occupancy Sensor Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));

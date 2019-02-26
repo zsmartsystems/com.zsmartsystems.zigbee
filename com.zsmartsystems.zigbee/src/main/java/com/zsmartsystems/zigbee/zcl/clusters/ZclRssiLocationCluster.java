@@ -48,7 +48,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T16:51:35Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -162,10 +162,9 @@ public class ZclRssiLocationCluster extends ZclCluster {
      */
     public static final int ATTR_NUMBERRSSIMEASUREMENTS = 0x0017;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(13);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(13);
 
         attributeMap.put(ATTR_LOCATIONTYPE, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_LOCATIONTYPE, "Location Type", ZclDataType.DATA_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_LOCATIONMETHOD, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_LOCATIONMETHOD, "Location Method", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
@@ -182,6 +181,37 @@ public class ZclRssiLocationCluster extends ZclCluster {
         attributeMap.put(ATTR_NUMBERRSSIMEASUREMENTS, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_NUMBERRSSIMEASUREMENTS, "Number RSSI Measurements", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(8);
+
+        commandMap.put(0x0000, DeviceConfigurationResponse.class);
+        commandMap.put(0x0001, LocationDataResponse.class);
+        commandMap.put(0x0002, LocationDataNotificationCommand.class);
+        commandMap.put(0x0003, CompactLocationDataNotificationCommand.class);
+        commandMap.put(0x0004, RssiPingCommand.class);
+        commandMap.put(0x0005, RssiRequestCommand.class);
+        commandMap.put(0x0006, ReportRssiMeasurementsCommand.class);
+        commandMap.put(0x0007, RequestOwnLocationCommand.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(7);
+
+        commandMap.put(0x0000, SetAbsoluteLocationCommand.class);
+        commandMap.put(0x0001, SetDeviceConfigurationCommand.class);
+        commandMap.put(0x0002, GetDeviceConfigurationCommand.class);
+        commandMap.put(0x0003, GetLocationDataCommand.class);
+        commandMap.put(0x0004, RssiResponse.class);
+        commandMap.put(0x0005, SendPingsCommand.class);
+        commandMap.put(0x0006, AnchorNodeAnnounceCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -1434,51 +1464,5 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setRequestingAddress(requestingAddress);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // SET_ABSOLUTE_LOCATION_COMMAND
-                return new SetAbsoluteLocationCommand();
-            case 0x01: // SET_DEVICE_CONFIGURATION_COMMAND
-                return new SetDeviceConfigurationCommand();
-            case 0x02: // GET_DEVICE_CONFIGURATION_COMMAND
-                return new GetDeviceConfigurationCommand();
-            case 0x03: // GET_LOCATION_DATA_COMMAND
-                return new GetLocationDataCommand();
-            case 0x04: // RSSI_RESPONSE
-                return new RssiResponse();
-            case 0x05: // SEND_PINGS_COMMAND
-                return new SendPingsCommand();
-            case 0x06: // ANCHOR_NODE_ANNOUNCE_COMMAND
-                return new AnchorNodeAnnounceCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // DEVICE_CONFIGURATION_RESPONSE
-                return new DeviceConfigurationResponse();
-            case 0x01: // LOCATION_DATA_RESPONSE
-                return new LocationDataResponse();
-            case 0x02: // LOCATION_DATA_NOTIFICATION_COMMAND
-                return new LocationDataNotificationCommand();
-            case 0x03: // COMPACT_LOCATION_DATA_NOTIFICATION_COMMAND
-                return new CompactLocationDataNotificationCommand();
-            case 0x04: // RSSI_PING_COMMAND
-                return new RssiPingCommand();
-            case 0x05: // RSSI_REQUEST_COMMAND
-                return new RssiRequestCommand();
-            case 0x06: // REPORT_RSSI_MEASUREMENTS_COMMAND
-                return new ReportRssiMeasurementsCommand();
-            case 0x07: // REQUEST_OWN_LOCATION_COMMAND
-                return new RequestOwnLocationCommand();
-            default:
-                return null;
-        }
     }
 }

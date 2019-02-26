@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclIdentifyCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -63,14 +63,32 @@ public class ZclIdentifyCluster extends ZclCluster {
      */
     public static final int ATTR_IDENTIFYTIME = 0x0000;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(1);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
         attributeMap.put(ATTR_IDENTIFYTIME, new ZclAttribute(ZclClusterType.IDENTIFY, ATTR_IDENTIFYTIME, "Identify Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(1);
+
+        commandMap.put(0x0000, IdentifyQueryResponse.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(2);
+
+        commandMap.put(0x0000, IdentifyCommand.class);
+        commandMap.put(0x0001, IdentifyQueryCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -236,27 +254,5 @@ public class ZclIdentifyCluster extends ZclCluster {
         command.setIdentifyTime(identifyTime);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // IDENTIFY_COMMAND
-                return new IdentifyCommand();
-            case 0x01: // IDENTIFY_QUERY_COMMAND
-                return new IdentifyQueryCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // IDENTIFY_QUERY_RESPONSE
-                return new IdentifyQueryResponse();
-            default:
-                return null;
-        }
     }
 }

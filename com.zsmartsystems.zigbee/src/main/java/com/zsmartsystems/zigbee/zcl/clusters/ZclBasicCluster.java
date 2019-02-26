@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -125,10 +125,9 @@ public class ZclBasicCluster extends ZclCluster {
      */
     public static final int ATTR_SWBUILDID = 0x4000;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(14);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(14);
 
         attributeMap.put(ATTR_ZCLVERSION, new ZclAttribute(ZclClusterType.BASIC, ATTR_ZCLVERSION, "ZCL Version", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_APPLICATIONVERSION, new ZclAttribute(ZclClusterType.BASIC, ATTR_APPLICATIONVERSION, "Application Version", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
@@ -146,6 +145,15 @@ public class ZclBasicCluster extends ZclCluster {
         attributeMap.put(ATTR_SWBUILDID, new ZclAttribute(ZclClusterType.BASIC, ATTR_SWBUILDID, "SW Build ID", ZclDataType.CHARACTER_STRING, false, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(1);
+
+        commandMap.put(0x0000, ResetToFactoryDefaultsCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -1141,13 +1149,5 @@ public class ZclBasicCluster extends ZclCluster {
      */
     public Future<CommandResult> resetToFactoryDefaultsCommand() {
         return send(new ResetToFactoryDefaultsCommand());
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            default:
-                return null;
-        }
     }
 }

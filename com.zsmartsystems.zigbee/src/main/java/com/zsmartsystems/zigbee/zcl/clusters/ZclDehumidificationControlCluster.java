@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T16:51:35Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclDehumidificationControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -84,10 +84,9 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      */
     public static final int ATTR_RELATIVEHUMIDITYDISPLAY = 0x0015;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(8);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(8);
 
         attributeMap.put(ATTR_RELATIVEHUMIDITY, new ZclAttribute(ZclClusterType.DEHUMIDIFICATION_CONTROL, ATTR_RELATIVEHUMIDITY, "Relative Humidity", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_DEHUMIDIFICATIONCOOLING, new ZclAttribute(ZclClusterType.DEHUMIDIFICATION_CONTROL, ATTR_DEHUMIDIFICATIONCOOLING, "Dehumidification Cooling", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));

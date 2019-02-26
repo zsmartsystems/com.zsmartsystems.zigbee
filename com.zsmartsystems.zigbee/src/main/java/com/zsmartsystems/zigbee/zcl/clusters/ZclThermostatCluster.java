@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-15T23:41:21Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -111,10 +111,9 @@ public class ZclThermostatCluster extends ZclCluster {
     public static final int ATTR_ALARMMASK = 0x001D;
     public static final int ATTR_THERMOSTATRUNNINGMODE = 0x001E;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(25);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(25);
 
         attributeMap.put(ATTR_LOCALTEMPERATURE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_LOCALTEMPERATURE, "Local Temperature", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, false, true));
         attributeMap.put(ATTR_OUTDOORTEMPERATURE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_OUTDOORTEMPERATURE, "Outdoor Temperature", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
@@ -143,6 +142,29 @@ public class ZclThermostatCluster extends ZclCluster {
         attributeMap.put(ATTR_THERMOSTATRUNNINGMODE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_THERMOSTATRUNNINGMODE, "Thermostat Running Mode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(2);
+
+        commandMap.put(0x0000, GetWeeklyScheduleResponse.class);
+        commandMap.put(0x0001, GetRelayStatusLogResponse.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(5);
+
+        commandMap.put(0x0000, SetpointRaiseLowerCommand.class);
+        commandMap.put(0x0001, SetWeeklySchedule.class);
+        commandMap.put(0x0002, GetWeeklySchedule.class);
+        commandMap.put(0x0003, ClearWeeklySchedule.class);
+        commandMap.put(0x0004, GetRelayStatusLog.class);
+
+        return commandMap;
     }
 
     /**
@@ -1390,35 +1412,5 @@ public class ZclThermostatCluster extends ZclCluster {
         command.setUnreadEntries(unreadEntries);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // SETPOINT_RAISE_LOWER_COMMAND
-                return new SetpointRaiseLowerCommand();
-            case 0x01: // SET_WEEKLY_SCHEDULE
-                return new SetWeeklySchedule();
-            case 0x02: // GET_WEEKLY_SCHEDULE
-                return new GetWeeklySchedule();
-            case 0x03: // CLEAR_WEEKLY_SCHEDULE
-                return new ClearWeeklySchedule();
-            case 0x04: // GET_RELAY_STATUS_LOG
-                return new GetRelayStatusLog();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // GET_WEEKLY_SCHEDULE_RESPONSE
-                return new GetWeeklyScheduleResponse();
-            case 0x01: // GET_RELAY_STATUS_LOG_RESPONSE
-                return new GetRelayStatusLogResponse();
-            default:
-                return null;
-        }
     }
 }

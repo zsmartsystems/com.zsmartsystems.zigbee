@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclIasZoneCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -111,10 +111,9 @@ public class ZclIasZoneCluster extends ZclCluster {
      */
     public static final int ATTR_CURRENTZONESENSITIVITYLEVEL = 0x0013;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(7);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(7);
 
         attributeMap.put(ATTR_ZONESTATE, new ZclAttribute(ZclClusterType.IAS_ZONE, ATTR_ZONESTATE, "Zone State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_ZONETYPE, new ZclAttribute(ZclClusterType.IAS_ZONE, ATTR_ZONETYPE, "Zone Type", ZclDataType.ENUMERATION_16_BIT, true, true, false, false));
@@ -125,6 +124,27 @@ public class ZclIasZoneCluster extends ZclCluster {
         attributeMap.put(ATTR_CURRENTZONESENSITIVITYLEVEL, new ZclAttribute(ZclClusterType.IAS_ZONE, ATTR_CURRENTZONESENSITIVITYLEVEL, "Current Zone Sensitivity Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(2);
+
+        commandMap.put(0x0000, ZoneStatusChangeNotificationCommand.class);
+        commandMap.put(0x0001, ZoneEnrollRequestCommand.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(3);
+
+        commandMap.put(0x0000, ZoneEnrollResponse.class);
+        commandMap.put(0x0001, InitiateNormalOperationModeCommand.class);
+        commandMap.put(0x0002, InitiateTestModeCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -772,31 +792,5 @@ public class ZclIasZoneCluster extends ZclCluster {
         command.setManufacturerCode(manufacturerCode);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // ZONE_ENROLL_RESPONSE
-                return new ZoneEnrollResponse();
-            case 0x01: // INITIATE_NORMAL_OPERATION_MODE_COMMAND
-                return new InitiateNormalOperationModeCommand();
-            case 0x02: // INITIATE_TEST_MODE_COMMAND
-                return new InitiateTestModeCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // ZONE_STATUS_CHANGE_NOTIFICATION_COMMAND
-                return new ZoneStatusChangeNotificationCommand();
-            case 0x01: // ZONE_ENROLL_REQUEST_COMMAND
-                return new ZoneEnrollRequestCommand();
-            default:
-                return null;
-        }
     }
 }

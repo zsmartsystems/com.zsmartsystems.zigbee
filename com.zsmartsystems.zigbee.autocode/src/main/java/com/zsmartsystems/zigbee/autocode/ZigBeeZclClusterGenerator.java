@@ -189,11 +189,10 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
             out.println();
         }
 
-        out.println("    // Attribute initialisation");
         out.println("    @Override");
         out.println("    protected Map<Integer, ZclAttribute> initializeAttributes() {");
-        out.println("        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>("
-                + attributesServer + ");");
+        out.println(
+                "        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(" + attributesServer + ");");
 
         if (attributesServer != 0) {
             out.println();
@@ -217,13 +216,50 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                 }
             }
         }
-
-        // TODO: Add client attributes
-
         out.println();
         out.println("        return attributeMap;");
         out.println("    }");
         out.println();
+
+        // TODO: Add client attributes
+
+        if (commandsServer != 0) {
+            out.println("    @Override");
+            out.println("    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {");
+            out.println("        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>("
+                    + commandsServer + ");");
+            out.println();
+            for (final ZigBeeXmlCommand command : cluster.commands) {
+                if (command.source.equalsIgnoreCase("server")) {
+                    out.println("        commandMap.put(0x" + String.format("%04X", command.code) + ", "
+                            + stringToUpperCamelCase(command.name) + ".class);");
+                }
+            }
+            out.println();
+
+            out.println("        return commandMap;");
+            out.println("    }");
+            out.println();
+        }
+
+        if (commandsClient != 0) {
+            out.println("    @Override");
+            out.println("    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {");
+            out.println("        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>("
+                    + commandsClient + ");");
+            out.println();
+            for (final ZigBeeXmlCommand command : cluster.commands) {
+                if (command.source.equalsIgnoreCase("client")) {
+                    out.println("        commandMap.put(0x" + String.format("%04X", command.code) + ", "
+                            + stringToUpperCamelCase(command.name) + ".class);");
+                }
+            }
+            out.println();
+
+            out.println("        return commandMap;");
+            out.println("    }");
+            out.println();
+        }
 
         out.println("    /**");
         out.println("     * Default constructor to create a " + cluster.name + " cluster.");
@@ -394,42 +430,6 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                 out.println();
                 out.println("        return send(command);");
             }
-            out.println("    }");
-        }
-
-        if (commandsServer > 0) {
-            out.println();
-            out.println("    @Override");
-            out.println("    public ZclCommand getCommandFromId(int commandId) {");
-            out.println("        switch (commandId) {");
-            for (final ZigBeeXmlCommand command : cluster.commands) {
-                if (command.source.equalsIgnoreCase("client")) {
-                    out.println("            case 0x" + String.format("%02X", command.code) + ": // "
-                            + stringToConstant(command.name));
-                    out.println("                return new " + stringToUpperCamelCase(command.name) + "();");
-                }
-            }
-            out.println("            default:");
-            out.println("                return null;");
-            out.println("        }");
-            out.println("    }");
-        }
-
-        if (commandsClient > 0) {
-            out.println();
-            out.println("    @Override");
-            out.println("    public ZclCommand getResponseFromId(int commandId) {");
-            out.println("        switch (commandId) {");
-            for (final ZigBeeXmlCommand command : cluster.commands) {
-                if (command.source.equalsIgnoreCase("server")) {
-                    out.println("            case 0x" + String.format("%02X", command.code) + ": // "
-                            + stringToConstant(command.name));
-                    out.println("                return new " + stringToUpperCamelCase(command.name) + "();");
-                }
-            }
-            out.println("            default:");
-            out.println("                return null;");
-            out.println("        }");
             out.println("    }");
         }
 

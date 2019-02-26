@@ -63,7 +63,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclKeyEstablishmentCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -91,14 +91,36 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      */
     public static final int ATTR_SERVERKEYESTABLISHMENTSUITE = 0x0000;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(1);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
         attributeMap.put(ATTR_SERVERKEYESTABLISHMENTSUITE, new ZclAttribute(ZclClusterType.KEY_ESTABLISHMENT, ATTR_SERVERKEYESTABLISHMENTSUITE, "Server Key Establishment Suite", ZclDataType.ENUMERATION_16_BIT, true, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(4);
+
+        commandMap.put(0x0000, InitiateKeyEstablishmentResponse.class);
+        commandMap.put(0x0001, EphemeralDataResponse.class);
+        commandMap.put(0x0002, ConfirmKeyResponse.class);
+        commandMap.put(0x0003, TerminateKeyEstablishment.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(3);
+
+        commandMap.put(0x0000, InitiateKeyEstablishmentRequestCommand.class);
+        commandMap.put(0x0001, EphemeralDataRequestCommand.class);
+        commandMap.put(0x0002, ConfirmKeyDataRequestCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -410,35 +432,5 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
         command.setKeyEstablishmentSuite(keyEstablishmentSuite);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // INITIATE_KEY_ESTABLISHMENT_REQUEST_COMMAND
-                return new InitiateKeyEstablishmentRequestCommand();
-            case 0x01: // EPHEMERAL_DATA_REQUEST_COMMAND
-                return new EphemeralDataRequestCommand();
-            case 0x02: // CONFIRM_KEY_DATA_REQUEST_COMMAND
-                return new ConfirmKeyDataRequestCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // INITIATE_KEY_ESTABLISHMENT_RESPONSE
-                return new InitiateKeyEstablishmentResponse();
-            case 0x01: // EPHEMERAL_DATA_RESPONSE
-                return new EphemeralDataResponse();
-            case 0x02: // CONFIRM_KEY_RESPONSE
-                return new ConfirmKeyResponse();
-            case 0x03: // TERMINATE_KEY_ESTABLISHMENT
-                return new TerminateKeyEstablishment();
-            default:
-                return null;
-        }
     }
 }

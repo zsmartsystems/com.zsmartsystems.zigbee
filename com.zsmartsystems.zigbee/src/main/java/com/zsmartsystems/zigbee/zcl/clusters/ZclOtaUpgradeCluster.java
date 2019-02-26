@@ -62,7 +62,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T18:52:32Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclOtaUpgradeCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -158,12 +158,37 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      */
     public static final int ATTR_IMAGESTAMP = 0x000A;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(5);
+
+        commandMap.put(0x0000, ImageNotifyCommand.class);
+        commandMap.put(0x0002, QueryNextImageResponse.class);
+        commandMap.put(0x0005, ImageBlockResponse.class);
+        commandMap.put(0x0007, UpgradeEndResponse.class);
+        commandMap.put(0x0009, QuerySpecificFileResponse.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(5);
+
+        commandMap.put(0x0001, QueryNextImageCommand.class);
+        commandMap.put(0x0003, ImageBlockCommand.class);
+        commandMap.put(0x0004, ImagePageCommand.class);
+        commandMap.put(0x0006, UpgradeEndCommand.class);
+        commandMap.put(0x0008, QuerySpecificFileCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -1328,41 +1353,5 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setImageSize(imageSize);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x01: // QUERY_NEXT_IMAGE_COMMAND
-                return new QueryNextImageCommand();
-            case 0x03: // IMAGE_BLOCK_COMMAND
-                return new ImageBlockCommand();
-            case 0x04: // IMAGE_PAGE_COMMAND
-                return new ImagePageCommand();
-            case 0x06: // UPGRADE_END_COMMAND
-                return new UpgradeEndCommand();
-            case 0x08: // QUERY_SPECIFIC_FILE_COMMAND
-                return new QuerySpecificFileCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // IMAGE_NOTIFY_COMMAND
-                return new ImageNotifyCommand();
-            case 0x02: // QUERY_NEXT_IMAGE_RESPONSE
-                return new QueryNextImageResponse();
-            case 0x05: // IMAGE_BLOCK_RESPONSE
-                return new ImageBlockResponse();
-            case 0x07: // UPGRADE_END_RESPONSE
-                return new UpgradeEndResponse();
-            case 0x09: // QUERY_SPECIFIC_FILE_RESPONSE
-                return new QuerySpecificFileResponse();
-            default:
-                return null;
-        }
     }
 }

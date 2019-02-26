@@ -67,7 +67,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclMeteringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -2648,10 +2648,9 @@ public class ZclMeteringCluster extends ZclCluster {
     public static final int ATTR_PREVIOUSMONTH23ALTERNATIVECONSUMPTIONRECEIVED = 0x0C5A;
     public static final int ATTR_PREVIOUSMONTH25ALTERNATIVECONSUMPTIONRECEIVED = 0x0C5C;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(198);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(198);
 
         attributeMap.put(ATTR_CURRENTSUMMATIONDELIVERED, new ZclAttribute(ZclClusterType.METERING, ATTR_CURRENTSUMMATIONDELIVERED, "Current Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_CURRENTSUMMATIONRECEIVED, new ZclAttribute(ZclClusterType.METERING, ATTR_CURRENTSUMMATIONRECEIVED, "Current Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
@@ -3515,6 +3514,51 @@ public class ZclMeteringCluster extends ZclCluster {
         attributeMap.put(ATTR_PREVIOUSMONTH25ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(ZclClusterType.METERING, ATTR_PREVIOUSMONTH25ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 25 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(14);
+
+        commandMap.put(0x0000, GetProfileResponse.class);
+        commandMap.put(0x0001, RequestMirror.class);
+        commandMap.put(0x0002, RemoveMirror.class);
+        commandMap.put(0x0003, RequestFastPollModeResponse.class);
+        commandMap.put(0x0004, ScheduleSnapshotResponse.class);
+        commandMap.put(0x0005, TakeSnapshotResponse.class);
+        commandMap.put(0x0006, PublishSnapshot.class);
+        commandMap.put(0x0007, GetSampledDataResponse.class);
+        commandMap.put(0x0008, ConfigureMirror.class);
+        commandMap.put(0x0009, ConfigureNotificationScheme.class);
+        commandMap.put(0x000A, ConfigureNotificationFlags.class);
+        commandMap.put(0x000B, GetNotifiedMessage.class);
+        commandMap.put(0x000C, SupplyStatusResponse.class);
+        commandMap.put(0x000D, StartSamplingResponse.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(15);
+
+        commandMap.put(0x0000, GetProfile.class);
+        commandMap.put(0x0001, RequestMirrorResponse.class);
+        commandMap.put(0x0002, MirrorRemoved.class);
+        commandMap.put(0x0003, RequestFastPollMode.class);
+        commandMap.put(0x0004, ScheduleSnapshot.class);
+        commandMap.put(0x0005, TakeSnapshot.class);
+        commandMap.put(0x0006, GetSnapshot.class);
+        commandMap.put(0x0007, StartSampling.class);
+        commandMap.put(0x0008, GetSampledData.class);
+        commandMap.put(0x0009, MirrorReportAttributeResponse.class);
+        commandMap.put(0x000A, ResetLoadLimitCounter.class);
+        commandMap.put(0x000B, ChangeSupply.class);
+        commandMap.put(0x000C, LocalChangeSupply.class);
+        commandMap.put(0x000D, SetSupplyStatus.class);
+        commandMap.put(0x000E, SetUncontrolledFlowThreshold.class);
+
+        return commandMap;
     }
 
     /**
@@ -16756,79 +16800,5 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSampleId(sampleId);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // GET_PROFILE
-                return new GetProfile();
-            case 0x01: // REQUEST_MIRROR_RESPONSE
-                return new RequestMirrorResponse();
-            case 0x02: // MIRROR_REMOVED
-                return new MirrorRemoved();
-            case 0x03: // REQUEST_FAST_POLL_MODE
-                return new RequestFastPollMode();
-            case 0x04: // SCHEDULE_SNAPSHOT
-                return new ScheduleSnapshot();
-            case 0x05: // TAKE_SNAPSHOT
-                return new TakeSnapshot();
-            case 0x06: // GET_SNAPSHOT
-                return new GetSnapshot();
-            case 0x07: // START_SAMPLING
-                return new StartSampling();
-            case 0x08: // GET_SAMPLED_DATA
-                return new GetSampledData();
-            case 0x09: // MIRROR_REPORT_ATTRIBUTE_RESPONSE
-                return new MirrorReportAttributeResponse();
-            case 0x0A: // RESET_LOAD_LIMIT_COUNTER
-                return new ResetLoadLimitCounter();
-            case 0x0B: // CHANGE_SUPPLY
-                return new ChangeSupply();
-            case 0x0C: // LOCAL_CHANGE_SUPPLY
-                return new LocalChangeSupply();
-            case 0x0D: // SET_SUPPLY_STATUS
-                return new SetSupplyStatus();
-            case 0x0E: // SET_UNCONTROLLED_FLOW_THRESHOLD
-                return new SetUncontrolledFlowThreshold();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // GET_PROFILE_RESPONSE
-                return new GetProfileResponse();
-            case 0x01: // REQUEST_MIRROR
-                return new RequestMirror();
-            case 0x02: // REMOVE_MIRROR
-                return new RemoveMirror();
-            case 0x03: // REQUEST_FAST_POLL_MODE_RESPONSE
-                return new RequestFastPollModeResponse();
-            case 0x04: // SCHEDULE_SNAPSHOT_RESPONSE
-                return new ScheduleSnapshotResponse();
-            case 0x05: // TAKE_SNAPSHOT_RESPONSE
-                return new TakeSnapshotResponse();
-            case 0x06: // PUBLISH_SNAPSHOT
-                return new PublishSnapshot();
-            case 0x07: // GET_SAMPLED_DATA_RESPONSE
-                return new GetSampledDataResponse();
-            case 0x08: // CONFIGURE_MIRROR
-                return new ConfigureMirror();
-            case 0x09: // CONFIGURE_NOTIFICATION_SCHEME
-                return new ConfigureNotificationScheme();
-            case 0x0A: // CONFIGURE_NOTIFICATION_FLAGS
-                return new ConfigureNotificationFlags();
-            case 0x0B: // GET_NOTIFIED_MESSAGE
-                return new GetNotifiedMessage();
-            case 0x0C: // SUPPLY_STATUS_RESPONSE
-                return new SupplyStatusResponse();
-            case 0x0D: // START_SAMPLING_RESPONSE
-                return new StartSamplingResponse();
-            default:
-                return null;
-        }
     }
 }

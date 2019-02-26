@@ -46,7 +46,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:39:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclColorControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -208,10 +208,9 @@ public class ZclColorControlCluster extends ZclCluster {
      */
     public static final int ATTR_COLORTEMPERATUREMAX = 0x400C;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(19);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(19);
 
         attributeMap.put(ATTR_CURRENTHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTHUE, "Current Hue", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
         attributeMap.put(ATTR_CURRENTSATURATION, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTSATURATION, "Current Saturation", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
@@ -234,6 +233,29 @@ public class ZclColorControlCluster extends ZclCluster {
         attributeMap.put(ATTR_COLORTEMPERATUREMAX, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_COLORTEMPERATUREMAX, "Color Temperature Max", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(15);
+
+        commandMap.put(0x0000, MoveToHueCommand.class);
+        commandMap.put(0x0001, MoveHueCommand.class);
+        commandMap.put(0x0002, StepHueCommand.class);
+        commandMap.put(0x0003, MoveToSaturationCommand.class);
+        commandMap.put(0x0004, MoveSaturationCommand.class);
+        commandMap.put(0x0005, StepSaturationCommand.class);
+        commandMap.put(0x0006, MoveToHueAndSaturationCommand.class);
+        commandMap.put(0x0007, MoveToColorCommand.class);
+        commandMap.put(0x0008, MoveColorCommand.class);
+        commandMap.put(0x0009, StepColorCommand.class);
+        commandMap.put(0x000A, MoveToColorTemperatureCommand.class);
+        commandMap.put(0x0040, EnhancedMoveToHueCommand.class);
+        commandMap.put(0x0041, EnhancedStepHueCommand.class);
+        commandMap.put(0x0042, EnhancedMoveToHueAndSaturationCommand.class);
+        commandMap.put(0x0043, ColorLoopSetCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -1512,13 +1534,5 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setStartHue(startHue);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            default:
-                return null;
-        }
     }
 }

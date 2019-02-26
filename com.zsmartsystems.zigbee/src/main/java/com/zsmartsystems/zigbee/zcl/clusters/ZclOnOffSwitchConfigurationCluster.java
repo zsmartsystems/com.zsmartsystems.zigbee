@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -51,10 +51,9 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
      */
     public static final int ATTR_SWITCHACTIONS = 0x0010;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(2);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(2);
 
         attributeMap.put(ATTR_SWITCHTYPE, new ZclAttribute(ZclClusterType.ON_OFF_SWITCH_CONFIGURATION, ATTR_SWITCHTYPE, "Switch Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_SWITCHACTIONS, new ZclAttribute(ZclClusterType.ON_OFF_SWITCH_CONFIGURATION, ATTR_SWITCHACTIONS, "Switch Actions", ZclDataType.ENUMERATION_8_BIT, true, true, true, false));

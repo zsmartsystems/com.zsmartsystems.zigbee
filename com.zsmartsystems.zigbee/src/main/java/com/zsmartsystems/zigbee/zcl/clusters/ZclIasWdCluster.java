@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclIasWdCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -52,14 +52,23 @@ public class ZclIasWdCluster extends ZclCluster {
      */
     public static final int ATTR_MAXDURATION = 0x0000;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(1);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
         attributeMap.put(ATTR_MAXDURATION, new ZclAttribute(ZclClusterType.IAS_WD, ATTR_MAXDURATION, "Max Duration", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(2);
+
+        commandMap.put(0x0000, StartWarningCommand.class);
+        commandMap.put(0x0001, Squawk.class);
+
+        return commandMap;
     }
 
     /**
@@ -189,13 +198,5 @@ public class ZclIasWdCluster extends ZclCluster {
         command.setSquawkInfo(squawkInfo);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            default:
-                return null;
-        }
     }
 }

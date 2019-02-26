@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclFlowMeasurementCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -78,10 +78,9 @@ public class ZclFlowMeasurementCluster extends ZclCluster {
      */
     public static final int ATTR_TOLERANCE = 0x0003;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(4);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(4);
 
         attributeMap.put(ATTR_MEASUREDVALUE, new ZclAttribute(ZclClusterType.FLOW_MEASUREMENT, ATTR_MEASUREDVALUE, "Measured Value", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
         attributeMap.put(ATTR_MINMEASUREDVALUE, new ZclAttribute(ZclClusterType.FLOW_MEASUREMENT, ATTR_MINMEASUREDVALUE, "Min Measured Value", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));

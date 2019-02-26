@@ -51,7 +51,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclScenesCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -103,10 +103,9 @@ public class ZclScenesCluster extends ZclCluster {
      */
     public static final int ATTR_LASTCONFIGUREDBY = 0x0005;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(6);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(6);
 
         attributeMap.put(ATTR_SCENECOUNT, new ZclAttribute(ZclClusterType.SCENES, ATTR_SCENECOUNT, "Scene Count", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_CURRENTSCENE, new ZclAttribute(ZclClusterType.SCENES, ATTR_CURRENTSCENE, "Current Scene", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
@@ -116,6 +115,35 @@ public class ZclScenesCluster extends ZclCluster {
         attributeMap.put(ATTR_LASTCONFIGUREDBY, new ZclAttribute(ZclClusterType.SCENES, ATTR_LASTCONFIGUREDBY, "Last Configured By", ZclDataType.IEEE_ADDRESS, false, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(6);
+
+        commandMap.put(0x0000, AddSceneResponse.class);
+        commandMap.put(0x0001, ViewSceneResponse.class);
+        commandMap.put(0x0002, RemoveSceneResponse.class);
+        commandMap.put(0x0003, RemoveAllScenesResponse.class);
+        commandMap.put(0x0004, StoreSceneResponse.class);
+        commandMap.put(0x0005, GetSceneMembershipResponse.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(7);
+
+        commandMap.put(0x0000, AddSceneCommand.class);
+        commandMap.put(0x0001, ViewSceneCommand.class);
+        commandMap.put(0x0002, RemoveSceneCommand.class);
+        commandMap.put(0x0003, RemoveAllScenesCommand.class);
+        commandMap.put(0x0004, StoreSceneCommand.class);
+        commandMap.put(0x0005, RecallSceneCommand.class);
+        commandMap.put(0x0006, GetSceneMembershipCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -762,47 +790,5 @@ public class ZclScenesCluster extends ZclCluster {
         command.setSceneList(sceneList);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // ADD_SCENE_COMMAND
-                return new AddSceneCommand();
-            case 0x01: // VIEW_SCENE_COMMAND
-                return new ViewSceneCommand();
-            case 0x02: // REMOVE_SCENE_COMMAND
-                return new RemoveSceneCommand();
-            case 0x03: // REMOVE_ALL_SCENES_COMMAND
-                return new RemoveAllScenesCommand();
-            case 0x04: // STORE_SCENE_COMMAND
-                return new StoreSceneCommand();
-            case 0x05: // RECALL_SCENE_COMMAND
-                return new RecallSceneCommand();
-            case 0x06: // GET_SCENE_MEMBERSHIP_COMMAND
-                return new GetSceneMembershipCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // ADD_SCENE_RESPONSE
-                return new AddSceneResponse();
-            case 0x01: // VIEW_SCENE_RESPONSE
-                return new ViewSceneResponse();
-            case 0x02: // REMOVE_SCENE_RESPONSE
-                return new RemoveSceneResponse();
-            case 0x03: // REMOVE_ALL_SCENES_RESPONSE
-                return new RemoveAllScenesResponse();
-            case 0x04: // STORE_SCENE_RESPONSE
-                return new StoreSceneResponse();
-            case 0x05: // GET_SCENE_MEMBERSHIP_RESPONSE
-                return new GetSceneMembershipResponse();
-            default:
-                return null;
-        }
     }
 }

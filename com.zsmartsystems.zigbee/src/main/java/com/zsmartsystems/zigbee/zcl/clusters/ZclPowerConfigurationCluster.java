@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclPowerConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -201,10 +201,9 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      */
     public static final int ATTR_BATTERYALARMSTATE = 0x003E;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(23);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(23);
 
         attributeMap.put(ATTR_MAINSVOLTAGE, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSVOLTAGE, "Mains Voltage", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_MAINSFREQUENCY, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSFREQUENCY, "Mains Frequency", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));

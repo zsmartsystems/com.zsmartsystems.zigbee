@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T18:52:32Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -107,12 +107,32 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      */
     public static final int ATTR_DEVICECLASSVALUE = 0x0003;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(3);
+
+        commandMap.put(0x0000, LoadControlEventCommand.class);
+        commandMap.put(0x0001, CancelLoadControlEvent.class);
+        commandMap.put(0x0002, CancelAllLoadControlEvents.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(2);
+
+        commandMap.put(0x0000, ReportEventStatus.class);
+        commandMap.put(0x0001, GetScheduledEvents.class);
+
+        return commandMap;
     }
 
     /**
@@ -584,31 +604,5 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
         command.setCancelControl(cancelControl);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // REPORT_EVENT_STATUS
-                return new ReportEventStatus();
-            case 0x01: // GET_SCHEDULED_EVENTS
-                return new GetScheduledEvents();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // LOAD_CONTROL_EVENT_COMMAND
-                return new LoadControlEventCommand();
-            case 0x01: // CANCEL_LOAD_CONTROL_EVENT
-                return new CancelLoadControlEvent();
-            case 0x02: // CANCEL_ALL_LOAD_CONTROL_EVENTS
-                return new CancelAllLoadControlEvents();
-            default:
-                return null;
-        }
     }
 }

@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T17:03:43Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclWindowCoveringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -175,10 +175,9 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      */
     public static final int ATTR_INTERMEDIATESETPOINTSTILT = 0x0019;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(20);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(20);
 
         attributeMap.put(ATTR_WINDOWCOVERINGTYPE, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_WINDOWCOVERINGTYPE, "Window Covering Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_PHYSICALCLOSEDLIMITLIFT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_PHYSICALCLOSEDLIMITLIFT, "Physical Closed Limit - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
@@ -202,6 +201,21 @@ public class ZclWindowCoveringCluster extends ZclCluster {
         attributeMap.put(ATTR_INTERMEDIATESETPOINTSTILT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_INTERMEDIATESETPOINTSTILT, "Intermediate Setpoints - Tilt", ZclDataType.OCTET_STRING, false, true, true, true));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(7);
+
+        commandMap.put(0x0000, WindowCoveringUpOpen.class);
+        commandMap.put(0x0001, WindowCoveringDownClose.class);
+        commandMap.put(0x0002, WindowCoveringStop.class);
+        commandMap.put(0x0004, WindowCoveringGoToLiftValue.class);
+        commandMap.put(0x0005, WindowCoveringGoToLiftPercentage.class);
+        commandMap.put(0x0007, WindowCoveringGoToTiltValue.class);
+        commandMap.put(0x0008, WindowCoveringGoToTiltPercentage.class);
+
+        return commandMap;
     }
 
     /**
@@ -1633,13 +1647,5 @@ public class ZclWindowCoveringCluster extends ZclCluster {
         command.setPercentageTiltValue(percentageTiltValue);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            default:
-                return null;
-        }
     }
 }

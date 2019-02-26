@@ -56,7 +56,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -312,10 +312,9 @@ public class ZclDoorLockCluster extends ZclCluster {
      */
     public static final int ATTR_RFIDPROGRAMMINGEVENTMASK = 0x0047;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(43);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(43);
 
         attributeMap.put(ATTR_LOCKSTATE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LOCKSTATE, "Lock State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_LOCKTYPE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LOCKTYPE, "Lock Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
@@ -362,6 +361,30 @@ public class ZclDoorLockCluster extends ZclCluster {
         attributeMap.put(ATTR_RFIDPROGRAMMINGEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFIDPROGRAMMINGEVENTMASK, "RFID Programming Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(4);
+
+        commandMap.put(0x0000, LockDoorResponse.class);
+        commandMap.put(0x0001, UnlockDoorResponse.class);
+        commandMap.put(0x0002, ToggleResponse.class);
+        commandMap.put(0x0003, UnlockWithTimeoutResponse.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(4);
+
+        commandMap.put(0x0000, LockDoorCommand.class);
+        commandMap.put(0x0001, UnlockDoorCommand.class);
+        commandMap.put(0x0002, Toggle.class);
+        commandMap.put(0x0003, UnlockWithTimeout.class);
+
+        return commandMap;
     }
 
     /**
@@ -3277,37 +3300,5 @@ public class ZclDoorLockCluster extends ZclCluster {
         command.setStatus(status);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // LOCK_DOOR_COMMAND
-                return new LockDoorCommand();
-            case 0x01: // UNLOCK_DOOR_COMMAND
-                return new UnlockDoorCommand();
-            case 0x02: // TOGGLE
-                return new Toggle();
-            case 0x03: // UNLOCK_WITH_TIMEOUT
-                return new UnlockWithTimeout();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // LOCK_DOOR_RESPONSE
-                return new LockDoorResponse();
-            case 0x01: // UNLOCK_DOOR_RESPONSE
-                return new UnlockDoorResponse();
-            case 0x02: // TOGGLE_RESPONSE
-                return new ToggleResponse();
-            case 0x03: // UNLOCK_WITH_TIMEOUT_RESPONSE
-                return new UnlockWithTimeoutResponse();
-            default:
-                return null;
-        }
     }
 }

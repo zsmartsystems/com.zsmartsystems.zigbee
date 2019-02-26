@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.command.UnbindResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:28:39Z")
 public class UnbindRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * Src Address command message field.
@@ -251,7 +251,7 @@ public class UnbindRequest extends ZdoRequest implements ZigBeeTransactionMatche
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
         return (response instanceof UnbindResponse)
-                & ((ZdoRequest) request).getDestinationAddress().equals(((UnbindResponse) response).getSourceAddress());
+                && ((ZdoRequest) request).getDestinationAddress().equals(((UnbindResponse) response).getSourceAddress());
     }
 
     @Override
