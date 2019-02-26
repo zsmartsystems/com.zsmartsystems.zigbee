@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zdo.command.BindResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:28:39Z")
 public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * Src Address command message field.
@@ -253,7 +253,7 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
         return (response instanceof BindResponse)
-                & ((ZdoRequest) request).getDestinationAddress().equals(((BindResponse) response).getSourceAddress());
+                && ((ZdoRequest) request).getDestinationAddress().equals(((BindResponse) response).getSourceAddress());
     }
 
     @Override

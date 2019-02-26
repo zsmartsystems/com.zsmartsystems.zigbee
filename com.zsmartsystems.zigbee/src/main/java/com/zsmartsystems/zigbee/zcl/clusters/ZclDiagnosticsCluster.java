@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T16:51:35Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclDiagnosticsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -96,10 +96,9 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     public static final int ATTR_LASTMESSAGELQI = 0x011C;
     public static final int ATTR_LASTMESSAGERSSI = 0x011D;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(32);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(32);
 
         attributeMap.put(ATTR_NUMBEROFRESETS, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_NUMBEROFRESETS, "Number Of Resets", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_PERSISTENTMEMORYWRITES, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_PERSISTENTMEMORYWRITES, "Persistent Memory Writes", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));

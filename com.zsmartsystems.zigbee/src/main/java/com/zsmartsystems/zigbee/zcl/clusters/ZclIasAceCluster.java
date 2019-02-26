@@ -49,7 +49,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.iasace.ZoneStatusChangedCommand;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclIasAceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -61,12 +61,46 @@ public class ZclIasAceCluster extends ZclCluster {
      */
     public static final String CLUSTER_NAME = "IAS ACE";
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(9);
+
+        commandMap.put(0x0000, ArmResponse.class);
+        commandMap.put(0x0001, GetZoneIdMapResponse.class);
+        commandMap.put(0x0002, GetZoneInformationResponse.class);
+        commandMap.put(0x0003, ZoneStatusChangedCommand.class);
+        commandMap.put(0x0004, PanelStatusChangedCommand.class);
+        commandMap.put(0x0005, GetPanelStatusResponse.class);
+        commandMap.put(0x0006, SetBypassedZoneListCommand.class);
+        commandMap.put(0x0007, BypassResponse.class);
+        commandMap.put(0x0008, GetZoneStatusResponse.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(10);
+
+        commandMap.put(0x0000, ArmCommand.class);
+        commandMap.put(0x0001, BypassCommand.class);
+        commandMap.put(0x0002, EmergencyCommand.class);
+        commandMap.put(0x0003, FireCommand.class);
+        commandMap.put(0x0004, PanicCommand.class);
+        commandMap.put(0x0005, GetZoneIdMapCommand.class);
+        commandMap.put(0x0006, GetZoneInformationCommand.class);
+        commandMap.put(0x0007, GetPanelStatusCommand.class);
+        commandMap.put(0x0008, GetBypassedZoneListCommand.class);
+        commandMap.put(0x0009, GetZoneStatusCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -471,59 +505,5 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setZoneStatus(zoneStatus);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // ARM_COMMAND
-                return new ArmCommand();
-            case 0x01: // BYPASS_COMMAND
-                return new BypassCommand();
-            case 0x02: // EMERGENCY_COMMAND
-                return new EmergencyCommand();
-            case 0x03: // FIRE_COMMAND
-                return new FireCommand();
-            case 0x04: // PANIC_COMMAND
-                return new PanicCommand();
-            case 0x05: // GET_ZONE_ID_MAP_COMMAND
-                return new GetZoneIdMapCommand();
-            case 0x06: // GET_ZONE_INFORMATION_COMMAND
-                return new GetZoneInformationCommand();
-            case 0x07: // GET_PANEL_STATUS_COMMAND
-                return new GetPanelStatusCommand();
-            case 0x08: // GET_BYPASSED_ZONE_LIST_COMMAND
-                return new GetBypassedZoneListCommand();
-            case 0x09: // GET_ZONE_STATUS_COMMAND
-                return new GetZoneStatusCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // ARM_RESPONSE
-                return new ArmResponse();
-            case 0x01: // GET_ZONE_ID_MAP_RESPONSE
-                return new GetZoneIdMapResponse();
-            case 0x02: // GET_ZONE_INFORMATION_RESPONSE
-                return new GetZoneInformationResponse();
-            case 0x03: // ZONE_STATUS_CHANGED_COMMAND
-                return new ZoneStatusChangedCommand();
-            case 0x04: // PANEL_STATUS_CHANGED_COMMAND
-                return new PanelStatusChangedCommand();
-            case 0x05: // GET_PANEL_STATUS_RESPONSE
-                return new GetPanelStatusResponse();
-            case 0x06: // SET_BYPASSED_ZONE_LIST_COMMAND
-                return new SetBypassedZoneListCommand();
-            case 0x07: // BYPASS_RESPONSE
-                return new BypassResponse();
-            case 0x08: // GET_ZONE_STATUS_RESPONSE
-                return new GetZoneStatusResponse();
-            default:
-                return null;
-        }
     }
 }

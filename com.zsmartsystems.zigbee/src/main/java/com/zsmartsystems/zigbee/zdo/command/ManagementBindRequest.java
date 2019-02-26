@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementBindResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:28:39Z")
 public class ManagementBindRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * Start Index command message field.
@@ -77,7 +77,7 @@ public class ManagementBindRequest extends ZdoRequest implements ZigBeeTransacti
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
         return (response instanceof ManagementBindResponse)
-                & ((ZdoRequest) request).getDestinationAddress().equals(((ManagementBindResponse) response).getSourceAddress());
+                && ((ZdoRequest) request).getDestinationAddress().equals(((ManagementBindResponse) response).getSourceAddress());
     }
 
     @Override

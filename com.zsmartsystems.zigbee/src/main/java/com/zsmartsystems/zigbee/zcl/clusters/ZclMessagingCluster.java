@@ -40,7 +40,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclMessagingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -52,12 +52,35 @@ public class ZclMessagingCluster extends ZclCluster {
      */
     public static final String CLUSTER_NAME = "Messaging";
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(4);
+
+        commandMap.put(0x0000, GetLastMessage.class);
+        commandMap.put(0x0001, MessageConfirmation.class);
+        commandMap.put(0x0002, GetMessageCancellation.class);
+        commandMap.put(0x0003, CancelAllMessages.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(4);
+
+        commandMap.put(0x0000, DisplayMessageCommand.class);
+        commandMap.put(0x0001, CancelMessageCommand.class);
+        commandMap.put(0x0002, DisplayProtectedMessageCommand.class);
+        commandMap.put(0x0003, CancelAllMessagesCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -252,37 +275,5 @@ public class ZclMessagingCluster extends ZclCluster {
         command.setImplementationDateTime(implementationDateTime);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // DISPLAY_MESSAGE_COMMAND
-                return new DisplayMessageCommand();
-            case 0x01: // CANCEL_MESSAGE_COMMAND
-                return new CancelMessageCommand();
-            case 0x02: // DISPLAY_PROTECTED_MESSAGE_COMMAND
-                return new DisplayProtectedMessageCommand();
-            case 0x03: // CANCEL_ALL_MESSAGES_COMMAND
-                return new CancelAllMessagesCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // GET_LAST_MESSAGE
-                return new GetLastMessage();
-            case 0x01: // MESSAGE_CONFIRMATION
-                return new MessageConfirmation();
-            case 0x02: // GET_MESSAGE_CANCELLATION
-                return new GetMessageCancellation();
-            case 0x03: // CANCEL_ALL_MESSAGES
-                return new CancelAllMessages();
-            default:
-                return null;
-        }
     }
 }

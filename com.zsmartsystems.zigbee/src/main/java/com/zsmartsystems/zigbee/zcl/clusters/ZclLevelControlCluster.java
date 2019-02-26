@@ -52,7 +52,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclLevelControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -113,10 +113,9 @@ public class ZclLevelControlCluster extends ZclCluster {
      */
     public static final int ATTR_DEFAULTMOVERATE = 0x0014;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(7);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(7);
 
         attributeMap.put(ATTR_CURRENTLEVEL, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_CURRENTLEVEL, "Current Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, true));
         attributeMap.put(ATTR_REMAININGTIME, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_REMAININGTIME, "Remaining Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
@@ -127,6 +126,22 @@ public class ZclLevelControlCluster extends ZclCluster {
         attributeMap.put(ATTR_DEFAULTMOVERATE, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_DEFAULTMOVERATE, "Default Move Rate", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(8);
+
+        commandMap.put(0x0000, MoveToLevelCommand.class);
+        commandMap.put(0x0001, MoveCommand.class);
+        commandMap.put(0x0002, StepCommand.class);
+        commandMap.put(0x0003, StopCommand.class);
+        commandMap.put(0x0004, MoveToLevelWithOnOffCommand.class);
+        commandMap.put(0x0005, MoveWithOnOffCommand.class);
+        commandMap.put(0x0006, StepWithOnOffCommand.class);
+        commandMap.put(0x0007, Stop2Command.class);
+
+        return commandMap;
     }
 
     /**
@@ -733,13 +748,5 @@ public class ZclLevelControlCluster extends ZclCluster {
      */
     public Future<CommandResult> stop2Command() {
         return send(new Stop2Command());
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            default:
-                return null;
-        }
     }
 }

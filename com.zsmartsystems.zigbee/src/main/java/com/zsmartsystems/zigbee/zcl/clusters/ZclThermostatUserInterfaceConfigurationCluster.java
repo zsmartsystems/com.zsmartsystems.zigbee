@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:59:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -64,10 +64,9 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      */
     public static final int ATTR_SCHEDULEPROGRAMMINGVISIBILITY = 0x0002;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(3);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(3);
 
         attributeMap.put(ATTR_TEMPERATUREDISPLAYMODE, new ZclAttribute(ZclClusterType.THERMOSTAT_USER_INTERFACE_CONFIGURATION, ATTR_TEMPERATUREDISPLAYMODE, "Temperature Display Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
         attributeMap.put(ATTR_KEYPADLOCKOUT, new ZclAttribute(ZclClusterType.THERMOSTAT_USER_INTERFACE_CONFIGURATION, ATTR_KEYPADLOCKOUT, "Keypad Lockout", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));

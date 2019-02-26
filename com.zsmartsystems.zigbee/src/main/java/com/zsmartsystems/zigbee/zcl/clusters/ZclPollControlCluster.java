@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclPollControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -132,10 +132,9 @@ public class ZclPollControlCluster extends ZclCluster {
      */
     public static final int ATTR_FASTPOLLTIMEOUTMIN = 0x0006;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(7);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(7);
 
         attributeMap.put(ATTR_CHECKININTERVAL, new ZclAttribute(ZclClusterType.POLL_CONTROL, ATTR_CHECKININTERVAL, "Checkin Interval", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, true, true));
         attributeMap.put(ATTR_LONGPOLLINTERVAL, new ZclAttribute(ZclClusterType.POLL_CONTROL, ATTR_LONGPOLLINTERVAL, "Long Poll Interval", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, true));
@@ -146,6 +145,27 @@ public class ZclPollControlCluster extends ZclCluster {
         attributeMap.put(ATTR_FASTPOLLTIMEOUTMIN, new ZclAttribute(ZclClusterType.POLL_CONTROL, ATTR_FASTPOLLTIMEOUTMIN, "Fast Poll Timeout Min", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(1);
+
+        commandMap.put(0x0000, CheckInCommand.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(4);
+
+        commandMap.put(0x0000, CheckInResponse.class);
+        commandMap.put(0x0001, FastPollStopCommand.class);
+        commandMap.put(0x0002, SetLongPollIntervalCommand.class);
+        commandMap.put(0x0003, SetShortPollIntervalCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -859,31 +879,5 @@ public class ZclPollControlCluster extends ZclCluster {
      */
     public Future<CommandResult> checkInCommand() {
         return send(new CheckInCommand());
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // CHECK_IN_RESPONSE
-                return new CheckInResponse();
-            case 0x01: // FAST_POLL_STOP_COMMAND
-                return new FastPollStopCommand();
-            case 0x02: // SET_LONG_POLL_INTERVAL_COMMAND
-                return new SetLongPollIntervalCommand();
-            case 0x03: // SET_SHORT_POLL_INTERVAL_COMMAND
-                return new SetShortPollIntervalCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // CHECK_IN_COMMAND
-                return new CheckInCommand();
-            default:
-                return null;
-        }
     }
 }

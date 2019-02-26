@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclOnOffCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -86,10 +86,9 @@ public class ZclOnOffCluster extends ZclCluster {
      */
     public static final int ATTR_OFFWAITTIME = 0x4002;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(4);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(4);
 
         attributeMap.put(ATTR_ONOFF, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_ONOFF, "On Off", ZclDataType.BOOLEAN, true, true, false, true));
         attributeMap.put(ATTR_GLOBALSCENECONTROL, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_GLOBALSCENECONTROL, "Global Scene Control", ZclDataType.BOOLEAN, true, true, false, false));
@@ -97,6 +96,20 @@ public class ZclOnOffCluster extends ZclCluster {
         attributeMap.put(ATTR_OFFWAITTIME, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_OFFWAITTIME, "Off Wait Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(6);
+
+        commandMap.put(0x0000, OffCommand.class);
+        commandMap.put(0x0001, OnCommand.class);
+        commandMap.put(0x0002, ToggleCommand.class);
+        commandMap.put(0x0040, OffWithEffectCommand.class);
+        commandMap.put(0x0041, OnWithRecallGlobalSceneCommand.class);
+        commandMap.put(0x0042, OnWithTimedOffCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -549,13 +562,5 @@ public class ZclOnOffCluster extends ZclCluster {
         command.setOffWaitTime(offWaitTime);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            default:
-                return null;
-        }
     }
 }

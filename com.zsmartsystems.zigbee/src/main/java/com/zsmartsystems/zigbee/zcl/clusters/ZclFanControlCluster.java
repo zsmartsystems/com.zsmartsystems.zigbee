@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
 public class ZclFanControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -51,10 +51,9 @@ public class ZclFanControlCluster extends ZclCluster {
      */
     public static final int ATTR_FANMODESEQUENCE = 0x0001;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(2);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(2);
 
         attributeMap.put(ATTR_FANMODE, new ZclAttribute(ZclClusterType.FAN_CONTROL, ATTR_FANMODE, "Fan Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
         attributeMap.put(ATTR_FANMODESEQUENCE, new ZclAttribute(ZclClusterType.FAN_CONTROL, ATTR_FANMODESEQUENCE, "Fan Mode Sequence", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));

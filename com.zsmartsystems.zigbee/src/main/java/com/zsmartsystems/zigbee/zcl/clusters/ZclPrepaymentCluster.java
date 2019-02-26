@@ -65,7 +65,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclPrepaymentCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -603,10 +603,9 @@ public class ZclPrepaymentCluster extends ZclCluster {
      */
     public static final int ATTR_HISTORICALFREEZETIME = 0x055C;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(131);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(131);
 
         attributeMap.put(ATTR_PAYMENTCONTROLCONFIGURATION, new ZclAttribute(ZclClusterType.PREPAYMENT, ATTR_PAYMENTCONTROLCONFIGURATION, "Payment Control Configuration", ZclDataType.BITMAP_16_BIT, true, true, false, false));
         attributeMap.put(ATTR_CREDITREMAINING, new ZclAttribute(ZclClusterType.PREPAYMENT, ATTR_CREDITREMAINING, "Credit Remaining", ZclDataType.SIGNED_32_BIT_INTEGER, true, true, false, false));
@@ -741,6 +740,39 @@ public class ZclPrepaymentCluster extends ZclCluster {
         attributeMap.put(ATTR_HISTORICALFREEZETIME, new ZclAttribute(ZclClusterType.PREPAYMENT, ATTR_HISTORICALFREEZETIME, "Historical Freeze Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(5);
+
+        commandMap.put(0x0001, PublishPrepaySnapshot.class);
+        commandMap.put(0x0002, ChangePaymentModeResponse.class);
+        commandMap.put(0x0003, ConsumerTopUpResponse.class);
+        commandMap.put(0x0005, PublishTopUpLog.class);
+        commandMap.put(0x0006, PublishDebtLog.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(12);
+
+        commandMap.put(0x0000, SelectAvailableEmergencyCredit.class);
+        commandMap.put(0x0002, ChangeDebt.class);
+        commandMap.put(0x0003, EmergencyCreditSetup.class);
+        commandMap.put(0x0004, ConsumerTopUp.class);
+        commandMap.put(0x0005, CreditAdjustment.class);
+        commandMap.put(0x0006, ChangePaymentMode.class);
+        commandMap.put(0x0007, GetPrepaySnapshot.class);
+        commandMap.put(0x0008, GetTopUpLog.class);
+        commandMap.put(0x0009, SetLowCreditWarningLevel.class);
+        commandMap.put(0x000A, GetDebtRepaymentLog.class);
+        commandMap.put(0x000B, SetMaximumCreditLimit.class);
+        commandMap.put(0x000C, SetOverallDebtCap.class);
+
+        return commandMap;
     }
 
     /**
@@ -8979,55 +9011,5 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setDebtPayload(debtPayload);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // SELECT_AVAILABLE_EMERGENCY_CREDIT
-                return new SelectAvailableEmergencyCredit();
-            case 0x02: // CHANGE_DEBT
-                return new ChangeDebt();
-            case 0x03: // EMERGENCY_CREDIT_SETUP
-                return new EmergencyCreditSetup();
-            case 0x04: // CONSUMER_TOP_UP
-                return new ConsumerTopUp();
-            case 0x05: // CREDIT_ADJUSTMENT
-                return new CreditAdjustment();
-            case 0x06: // CHANGE_PAYMENT_MODE
-                return new ChangePaymentMode();
-            case 0x07: // GET_PREPAY_SNAPSHOT
-                return new GetPrepaySnapshot();
-            case 0x08: // GET_TOP_UP_LOG
-                return new GetTopUpLog();
-            case 0x09: // SET_LOW_CREDIT_WARNING_LEVEL
-                return new SetLowCreditWarningLevel();
-            case 0x0A: // GET_DEBT_REPAYMENT_LOG
-                return new GetDebtRepaymentLog();
-            case 0x0B: // SET_MAXIMUM_CREDIT_LIMIT
-                return new SetMaximumCreditLimit();
-            case 0x0C: // SET_OVERALL_DEBT_CAP
-                return new SetOverallDebtCap();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x01: // PUBLISH_PREPAY_SNAPSHOT
-                return new PublishPrepaySnapshot();
-            case 0x02: // CHANGE_PAYMENT_MODE_RESPONSE
-                return new ChangePaymentModeResponse();
-            case 0x03: // CONSUMER_TOP_UP_RESPONSE
-                return new ConsumerTopUpResponse();
-            case 0x05: // PUBLISH_TOP_UP_LOG
-                return new PublishTopUpLog();
-            case 0x06: // PUBLISH_DEBT_LOG
-                return new PublishDebtLog();
-            default:
-                return null;
-        }
     }
 }

@@ -62,7 +62,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclGroupsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -82,14 +82,39 @@ public class ZclGroupsCluster extends ZclCluster {
      */
     public static final int ATTR_NAMESUPPORT = 0x0000;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(1);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
         attributeMap.put(ATTR_NAMESUPPORT, new ZclAttribute(ZclClusterType.GROUPS, ATTR_NAMESUPPORT, "Name Support", ZclDataType.BITMAP_8_BIT, true, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(4);
+
+        commandMap.put(0x0000, AddGroupResponse.class);
+        commandMap.put(0x0001, ViewGroupResponse.class);
+        commandMap.put(0x0002, GetGroupMembershipResponse.class);
+        commandMap.put(0x0003, RemoveGroupResponse.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(6);
+
+        commandMap.put(0x0000, AddGroupCommand.class);
+        commandMap.put(0x0001, ViewGroupCommand.class);
+        commandMap.put(0x0002, GetGroupMembershipCommand.class);
+        commandMap.put(0x0003, RemoveGroupCommand.class);
+        commandMap.put(0x0004, RemoveAllGroupsCommand.class);
+        commandMap.put(0x0005, AddGroupIfIdentifyingCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -359,41 +384,5 @@ public class ZclGroupsCluster extends ZclCluster {
         command.setGroupId(groupId);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // ADD_GROUP_COMMAND
-                return new AddGroupCommand();
-            case 0x01: // VIEW_GROUP_COMMAND
-                return new ViewGroupCommand();
-            case 0x02: // GET_GROUP_MEMBERSHIP_COMMAND
-                return new GetGroupMembershipCommand();
-            case 0x03: // REMOVE_GROUP_COMMAND
-                return new RemoveGroupCommand();
-            case 0x04: // REMOVE_ALL_GROUPS_COMMAND
-                return new RemoveAllGroupsCommand();
-            case 0x05: // ADD_GROUP_IF_IDENTIFYING_COMMAND
-                return new AddGroupIfIdentifyingCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // ADD_GROUP_RESPONSE
-                return new AddGroupResponse();
-            case 0x01: // VIEW_GROUP_RESPONSE
-                return new ViewGroupResponse();
-            case 0x02: // GET_GROUP_MEMBERSHIP_RESPONSE
-                return new GetGroupMembershipResponse();
-            case 0x03: // REMOVE_GROUP_RESPONSE
-                return new RemoveGroupResponse();
-            default:
-                return null;
-        }
     }
 }

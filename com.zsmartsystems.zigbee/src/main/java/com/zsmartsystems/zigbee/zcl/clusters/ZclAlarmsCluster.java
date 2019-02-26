@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclAlarmsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -67,14 +67,35 @@ public class ZclAlarmsCluster extends ZclCluster {
      */
     public static final int ATTR_ALARMCOUNT = 0x0000;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(1);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
         attributeMap.put(ATTR_ALARMCOUNT, new ZclAttribute(ZclClusterType.ALARMS, ATTR_ALARMCOUNT, "Alarm Count", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(2);
+
+        commandMap.put(0x0000, AlarmCommand.class);
+        commandMap.put(0x0001, GetAlarmResponse.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(4);
+
+        commandMap.put(0x0000, ResetAlarmCommand.class);
+        commandMap.put(0x0001, ResetAllAlarmsCommand.class);
+        commandMap.put(0x0002, GetAlarmCommand.class);
+        commandMap.put(0x0003, ResetAlarmLogCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -244,33 +265,5 @@ public class ZclAlarmsCluster extends ZclCluster {
         command.setTimestamp(timestamp);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // RESET_ALARM_COMMAND
-                return new ResetAlarmCommand();
-            case 0x01: // RESET_ALL_ALARMS_COMMAND
-                return new ResetAllAlarmsCommand();
-            case 0x02: // GET_ALARM_COMMAND
-                return new GetAlarmCommand();
-            case 0x03: // RESET_ALARM_LOG_COMMAND
-                return new ResetAlarmLogCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // ALARM_COMMAND
-                return new AlarmCommand();
-            case 0x01: // GET_ALARM_RESPONSE
-                return new GetAlarmResponse();
-            default:
-                return null;
-        }
     }
 }

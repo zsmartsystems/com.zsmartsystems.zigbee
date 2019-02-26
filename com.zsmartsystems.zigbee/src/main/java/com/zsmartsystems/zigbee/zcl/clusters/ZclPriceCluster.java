@@ -72,7 +72,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclPriceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -3679,10 +3679,9 @@ public class ZclPriceCluster extends ZclCluster {
     public static final int ATTR_RECEIVEDLASTBILLINGPERIODDURATION = 0x8703;
     public static final int ATTR_RECEIVEDLASTBILLINGPERIODCONSOLIDATEDBILL = 0x8704;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(135);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(135);
 
         attributeMap.put(ATTR_TIER1PRICELABEL, new ZclAttribute(ZclClusterType.PRICE, ATTR_TIER1PRICELABEL, "Tier 1 Price Label", ZclDataType.CHARACTER_STRING, false, true, true, false));
         attributeMap.put(ATTR_TIER2PRICELABEL, new ZclAttribute(ZclClusterType.PRICE, ATTR_TIER2PRICELABEL, "Tier 2 Price Label", ZclDataType.CHARACTER_STRING, false, true, true, false));
@@ -4712,6 +4711,54 @@ public class ZclPriceCluster extends ZclCluster {
         attributeMap.put(ATTR_RECEIVEDLASTBILLINGPERIODCONSOLIDATEDBILL, new ZclAttribute(ZclClusterType.PRICE, ATTR_RECEIVEDLASTBILLINGPERIODCONSOLIDATEDBILL, "Received Last Billing Period Consolidated Bill", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(15);
+
+        commandMap.put(0x0000, PublishPriceCommand.class);
+        commandMap.put(0x0001, PublishBlockPeriodCommand.class);
+        commandMap.put(0x0002, PublishConversionFactorCommand.class);
+        commandMap.put(0x0003, PublishCalorificValueCommand.class);
+        commandMap.put(0x0004, PublishTariffInformationCommand.class);
+        commandMap.put(0x0005, PublishPriceMatrixCommand.class);
+        commandMap.put(0x0006, PublishBlockThresholdsCommand.class);
+        commandMap.put(0x0007, PublishCo2ValueCommand.class);
+        commandMap.put(0x0008, PublishTierLabelsCommand.class);
+        commandMap.put(0x0009, PublishBillingPeriodCommand.class);
+        commandMap.put(0x000A, PublishConsolidatedBillCommand.class);
+        commandMap.put(0x000B, PublishCppEventCommand.class);
+        commandMap.put(0x000C, PublishCreditPaymentCommand.class);
+        commandMap.put(0x000D, PublishCurrencyConversionCommand.class);
+        commandMap.put(0x000E, CancelTariffCommand.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(17);
+
+        commandMap.put(0x0000, GetCurrentPriceCommand.class);
+        commandMap.put(0x0001, GetScheduledPricesCommand.class);
+        commandMap.put(0x0002, PriceAcknowledgementCommand.class);
+        commandMap.put(0x0003, GetBlockPeriodCommand.class);
+        commandMap.put(0x0004, GetConversionFactorCommand.class);
+        commandMap.put(0x0005, GetCalorificValueCommand.class);
+        commandMap.put(0x0006, GetTariffInformationCommand.class);
+        commandMap.put(0x0007, GetPriceMatrixCommand.class);
+        commandMap.put(0x0008, GetBlockThresholdsCommand.class);
+        commandMap.put(0x0009, GetCo2ValueCommand.class);
+        commandMap.put(0x000A, GetTierLabelsCommand.class);
+        commandMap.put(0x000B, GetBillingPeriodCommand.class);
+        commandMap.put(0x000C, GetConsolidatedBillCommand.class);
+        commandMap.put(0x000D, CppEventResponse.class);
+        commandMap.put(0x000E, GetCreditPaymentCommand.class);
+        commandMap.put(0x000F, GetCurrencyConversionCommand.class);
+        commandMap.put(0x0010, GetTariffCancellationCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -12030,85 +12077,5 @@ public class ZclPriceCluster extends ZclCluster {
         command.setTariffType(tariffType);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // GET_CURRENT_PRICE_COMMAND
-                return new GetCurrentPriceCommand();
-            case 0x01: // GET_SCHEDULED_PRICES_COMMAND
-                return new GetScheduledPricesCommand();
-            case 0x02: // PRICE_ACKNOWLEDGEMENT_COMMAND
-                return new PriceAcknowledgementCommand();
-            case 0x03: // GET_BLOCK_PERIOD_COMMAND
-                return new GetBlockPeriodCommand();
-            case 0x04: // GET_CONVERSION_FACTOR_COMMAND
-                return new GetConversionFactorCommand();
-            case 0x05: // GET_CALORIFIC_VALUE_COMMAND
-                return new GetCalorificValueCommand();
-            case 0x06: // GET_TARIFF_INFORMATION_COMMAND
-                return new GetTariffInformationCommand();
-            case 0x07: // GET_PRICE_MATRIX_COMMAND
-                return new GetPriceMatrixCommand();
-            case 0x08: // GET_BLOCK_THRESHOLDS_COMMAND
-                return new GetBlockThresholdsCommand();
-            case 0x09: // GET_CO2_VALUE_COMMAND
-                return new GetCo2ValueCommand();
-            case 0x0A: // GET_TIER_LABELS_COMMAND
-                return new GetTierLabelsCommand();
-            case 0x0B: // GET_BILLING_PERIOD_COMMAND
-                return new GetBillingPeriodCommand();
-            case 0x0C: // GET_CONSOLIDATED_BILL_COMMAND
-                return new GetConsolidatedBillCommand();
-            case 0x0D: // CPP_EVENT_RESPONSE
-                return new CppEventResponse();
-            case 0x0E: // GET_CREDIT_PAYMENT_COMMAND
-                return new GetCreditPaymentCommand();
-            case 0x0F: // GET_CURRENCY_CONVERSION_COMMAND
-                return new GetCurrencyConversionCommand();
-            case 0x10: // GET_TARIFF_CANCELLATION_COMMAND
-                return new GetTariffCancellationCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // PUBLISH_PRICE_COMMAND
-                return new PublishPriceCommand();
-            case 0x01: // PUBLISH_BLOCK_PERIOD_COMMAND
-                return new PublishBlockPeriodCommand();
-            case 0x02: // PUBLISH_CONVERSION_FACTOR_COMMAND
-                return new PublishConversionFactorCommand();
-            case 0x03: // PUBLISH_CALORIFIC_VALUE_COMMAND
-                return new PublishCalorificValueCommand();
-            case 0x04: // PUBLISH_TARIFF_INFORMATION_COMMAND
-                return new PublishTariffInformationCommand();
-            case 0x05: // PUBLISH_PRICE_MATRIX_COMMAND
-                return new PublishPriceMatrixCommand();
-            case 0x06: // PUBLISH_BLOCK_THRESHOLDS_COMMAND
-                return new PublishBlockThresholdsCommand();
-            case 0x07: // PUBLISH_CO2_VALUE_COMMAND
-                return new PublishCo2ValueCommand();
-            case 0x08: // PUBLISH_TIER_LABELS_COMMAND
-                return new PublishTierLabelsCommand();
-            case 0x09: // PUBLISH_BILLING_PERIOD_COMMAND
-                return new PublishBillingPeriodCommand();
-            case 0x0A: // PUBLISH_CONSOLIDATED_BILL_COMMAND
-                return new PublishConsolidatedBillCommand();
-            case 0x0B: // PUBLISH_CPP_EVENT_COMMAND
-                return new PublishCppEventCommand();
-            case 0x0C: // PUBLISH_CREDIT_PAYMENT_COMMAND
-                return new PublishCreditPaymentCommand();
-            case 0x0D: // PUBLISH_CURRENCY_CONVERSION_COMMAND
-                return new PublishCurrencyConversionCommand();
-            case 0x0E: // CANCEL_TARIFF_COMMAND
-                return new CancelTariffCommand();
-            default:
-                return null;
-        }
     }
 }

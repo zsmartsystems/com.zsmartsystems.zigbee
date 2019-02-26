@@ -42,7 +42,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclElectricalMeasurementCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -242,10 +242,9 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
     public static final int ATTR_RMSVOLTAGESAGPERIODPHASEC = 0x0A16;
     public static final int ATTR_RMSVOLTAGESWELLPERIODPHASEC = 0x0A17;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(128);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(128);
 
         attributeMap.put(ATTR_MEASUREMENTTYPE, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_MEASUREMENTTYPE, "Measurement Type", ZclDataType.BITMAP_32_BIT, true, true, false, false));
         attributeMap.put(ATTR_DCVOLTAGE, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_DCVOLTAGE, "DC Voltage", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, false, false));
@@ -377,6 +376,26 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         attributeMap.put(ATTR_RMSVOLTAGESWELLPERIODPHASEC, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_RMSVOLTAGESWELLPERIODPHASEC, "RMS Voltage Swell Period Phase C", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(2);
+
+        commandMap.put(0x0000, GetProfileInfoResponseCommand.class);
+        commandMap.put(0x0001, GetMeasurementProfileResponseCommand.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(2);
+
+        commandMap.put(0x0000, GetProfileInfoCommand.class);
+        commandMap.put(0x0001, GetMeasurementProfileCommand.class);
+
+        return commandMap;
     }
 
     /**
@@ -7255,29 +7274,5 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         command.setIntervals(intervals);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // GET_PROFILE_INFO_COMMAND
-                return new GetProfileInfoCommand();
-            case 0x01: // GET_MEASUREMENT_PROFILE_COMMAND
-                return new GetMeasurementProfileCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // GET_PROFILE_INFO_RESPONSE_COMMAND
-                return new GetProfileInfoResponseCommand();
-            case 0x01: // GET_MEASUREMENT_PROFILE_RESPONSE_COMMAND
-                return new GetMeasurementProfileResponseCommand();
-            default:
-                return null;
-        }
     }
 }

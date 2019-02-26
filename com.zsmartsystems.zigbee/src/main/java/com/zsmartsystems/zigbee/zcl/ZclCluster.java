@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -121,6 +122,18 @@ public abstract class ZclCluster {
     protected Map<Integer, ZclAttribute> attributes = initializeAttributes();
 
     /**
+     * Map of server side commands supported by the cluster. This contains all server commands, even if they are not
+     * supported by the remote device.
+     */
+    protected Map<Integer, Class<? extends ZclCommand>> serverCommands = initializeServerCommands();
+
+    /**
+     * Map of client side commands supported by the cluster. This contains all client commands, even if they are not
+     * supported by the remote device.
+     */
+    protected Map<Integer, Class<? extends ZclCommand>> clientCommands = initializeClientCommands();
+
+    /**
      * The {@link ZclAttributeNormalizer} is used to normalize attribute data types to ensure that data types are
      * consistent with the ZCL definition. This ensures that the application can rely on consistent and deterministic
      * data type when listening to attribute updates.
@@ -140,6 +153,26 @@ public abstract class ZclCluster {
      * @return a {@link Map} of all attributes this cluster is known to support
      */
     protected abstract Map<Integer, ZclAttribute> initializeAttributes();
+
+    /**
+     * Abstract method called when the cluster starts to initialise the list of server side commands defined in this
+     * cluster by the cluster library
+     *
+     * @return a {@link Map} of all server side commands this cluster is known to support
+     */
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        return new ConcurrentHashMap<>(0);
+    }
+
+    /**
+     * Abstract method called when the cluster starts to initialise the list of client side commands defined in this
+     * cluster by the cluster library
+     *
+     * @return a {@link Map} of all client side commands this cluster is known to support
+     */
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        return new ConcurrentHashMap<>(0);
+    }
 
     /**
      * Creates a cluster
@@ -933,10 +966,10 @@ public abstract class ZclCluster {
      * found, null is returned.
      *
      * @param commandId the command ID
-     * @return the {@link ZclCommand} or null if no command found.
+     * @return the {@link ZclCommand} or null if no command was found.
      */
     public ZclCommand getCommandFromId(int commandId) {
-        return null;
+        return getCommand(commandId, clientCommands);
     }
 
     /**
@@ -944,9 +977,22 @@ public abstract class ZclCluster {
      * found, null is returned.
      *
      * @param commandId the command ID
-     * @return the {@link ZclCommand} or null if no command found.
+     * @return the {@link ZclCommand} or null if no command was found.
      */
     public ZclCommand getResponseFromId(int commandId) {
+        return getCommand(commandId, serverCommands);
+    }
+
+    private ZclCommand getCommand(int commandId, Map<Integer, Class<? extends ZclCommand>> commands) {
+        if (!commands.containsKey(commandId)) {
+            return null;
+        }
+
+        try {
+            return commands.get(commandId).getConstructor().newInstance();
+        } catch (Exception e) {
+            logger.debug("Error instantiating cluster command {}, id={}", clusterName, commandId);
+        }
         return null;
     }
 

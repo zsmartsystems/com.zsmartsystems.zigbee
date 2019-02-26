@@ -66,7 +66,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
 public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -87,14 +87,43 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      */
     public static final int ATTR_CLOSETUNNELTIMEOUT = 0x0000;
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(1);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
         attributeMap.put(ATTR_CLOSETUNNELTIMEOUT, new ZclAttribute(ZclClusterType.SMART_ENERGY_TUNNELING, ATTR_CLOSETUNNELTIMEOUT, "Close Tunnel Timeout", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(7);
+
+        commandMap.put(0x0000, RequestTunnelResponse.class);
+        commandMap.put(0x0001, TransferDataServerToClient.class);
+        commandMap.put(0x0002, TransferDataErrorServerToClient.class);
+        commandMap.put(0x0003, AckTransferDataServerToClient.class);
+        commandMap.put(0x0004, ReadyDataServerToClient.class);
+        commandMap.put(0x0005, SupportedTunnelProtocolsResponse.class);
+        commandMap.put(0x0006, TunnelClosureNotification.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(7);
+
+        commandMap.put(0x0000, RequestTunnel.class);
+        commandMap.put(0x0001, CloseTunnel.class);
+        commandMap.put(0x0002, TransferDataClientToServer.class);
+        commandMap.put(0x0003, TransferDataErrorClientToServer.class);
+        commandMap.put(0x0004, AckTransferDataClientToServer.class);
+        commandMap.put(0x0005, ReadyDataClientToServer.class);
+        commandMap.put(0x0006, GetSupportedTunnelProtocols.class);
+
+        return commandMap;
     }
 
     /**
@@ -501,49 +530,5 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
 
         return send(command);
-    }
-
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // REQUEST_TUNNEL
-                return new RequestTunnel();
-            case 0x01: // CLOSE_TUNNEL
-                return new CloseTunnel();
-            case 0x02: // TRANSFER_DATA_CLIENT_TO_SERVER
-                return new TransferDataClientToServer();
-            case 0x03: // TRANSFER_DATA_ERROR_CLIENT_TO_SERVER
-                return new TransferDataErrorClientToServer();
-            case 0x04: // ACK_TRANSFER_DATA_CLIENT_TO_SERVER
-                return new AckTransferDataClientToServer();
-            case 0x05: // READY_DATA_CLIENT_TO_SERVER
-                return new ReadyDataClientToServer();
-            case 0x06: // GET_SUPPORTED_TUNNEL_PROTOCOLS
-                return new GetSupportedTunnelProtocols();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0x00: // REQUEST_TUNNEL_RESPONSE
-                return new RequestTunnelResponse();
-            case 0x01: // TRANSFER_DATA_SERVER_TO_CLIENT
-                return new TransferDataServerToClient();
-            case 0x02: // TRANSFER_DATA_ERROR_SERVER_TO_CLIENT
-                return new TransferDataErrorServerToClient();
-            case 0x03: // ACK_TRANSFER_DATA_SERVER_TO_CLIENT
-                return new AckTransferDataServerToClient();
-            case 0x04: // READY_DATA_SERVER_TO_CLIENT
-                return new ReadyDataServerToClient();
-            case 0x05: // SUPPORTED_TUNNEL_PROTOCOLS_RESPONSE
-                return new SupportedTunnelProtocolsResponse();
-            case 0x06: // TUNNEL_CLOSURE_NOTIFICATION
-                return new TunnelClosureNotification();
-            default:
-                return null;
-        }
     }
 }
