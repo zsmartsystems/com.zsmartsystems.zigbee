@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
+import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.ColorLoopSetCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveToHueAndSaturationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveToHueCommand;
@@ -39,20 +40,26 @@ public class ZclColorControlClusterTest {
     public void test() {
         ZclColorControlCluster cluster = new ZclColorControlCluster(Mockito.mock(ZigBeeEndpoint.class));
 
-        assertTrue(cluster.getCommandFromId(0) instanceof MoveToHueCommand);
-        assertTrue(cluster.getCommandFromId(1) instanceof MoveHueCommand);
-        assertTrue(cluster.getCommandFromId(2) instanceof StepHueCommand);
-        assertTrue(cluster.getCommandFromId(3) instanceof MoveToSaturationCommand);
-        assertTrue(cluster.getCommandFromId(4) instanceof MoveSaturationCommand);
-        assertTrue(cluster.getCommandFromId(5) instanceof StepSaturationCommand);
-        assertTrue(cluster.getCommandFromId(6) instanceof MoveToHueAndSaturationCommand);
-        assertTrue(cluster.getCommandFromId(7) instanceof MoveToColorCommand);
-        assertTrue(cluster.getCommandFromId(8) instanceof MoveColorCommand);
-        assertTrue(cluster.getCommandFromId(9) instanceof StepColorCommand);
-        assertTrue(cluster.getCommandFromId(10) instanceof MoveToColorTemperatureCommand);
-        assertTrue(cluster.getCommandFromId(64) instanceof EnhancedMoveToHueCommand);
-        assertTrue(cluster.getCommandFromId(65) instanceof EnhancedStepHueCommand);
-        assertTrue(cluster.getCommandFromId(66) instanceof EnhancedMoveToHueAndSaturationCommand);
-        assertTrue(cluster.getCommandFromId(67) instanceof ColorLoopSetCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 0) instanceof MoveToHueCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 1) instanceof MoveHueCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 2) instanceof StepHueCommand);
+        assertTrue(
+                cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 3) instanceof MoveToSaturationCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 4) instanceof MoveSaturationCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 5) instanceof StepSaturationCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND,
+                6) instanceof MoveToHueAndSaturationCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 7) instanceof MoveToColorCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 8) instanceof MoveColorCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 9) instanceof StepColorCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND,
+                10) instanceof MoveToColorTemperatureCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND,
+                64) instanceof EnhancedMoveToHueCommand);
+        assertTrue(
+                cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 65) instanceof EnhancedStepHueCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND,
+                66) instanceof EnhancedMoveToHueAndSaturationCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 67) instanceof ColorLoopSetCommand);
     }
 }

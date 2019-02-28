@@ -119,7 +119,6 @@ public class ZigBeeCodeGenerator {
         new ZigBeeZclConstantGenerator(zclClusters, generatedDate, zclTypes);
         new ZigBeeZclStructureGenerator(zclClusters, generatedDate, zclTypes);
         new ZigBeeZclClusterTypeGenerator(zclClusters, generatedDate, zclTypes);
-        new ZigBeeZclCommandTypeGenerator(zclClusters, generatedDate, zclTypes);
         new ZigBeeZclDataTypeGenerator(dataTypes, generatedDate);
 
         new ZigBeeZclCommandGenerator(zdoClusters, generatedDate, zclTypes);
