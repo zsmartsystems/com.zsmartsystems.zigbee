@@ -3,25 +3,25 @@
 # Comments can be added with the # on the first character and empty lines are allowed
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=29303/3, profile=0104, cluster=0006, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=51, payload=00 51 06 00 00 00 10 01 00 20 1C]
-ConfigureReportingCommand [On/Off: 0/0 -> 29303/3, cluster=0006, TID=51, records=[AttributeReportingConfigurationRecord: [attributeDataType=BOOLEAN, attributeIdentifier=0, direction=0, minimumReportingInterval=1, maximumReportingInterval=7200]]]
+ConfigureReportingCommand [On/Off: 0/1 -> 29303/3, cluster=0006, TID=51, records=[AttributeReportingConfigurationRecord: [attributeDataType=BOOLEAN, attributeIdentifier=0, direction=0, minimumReportingInterval=1, maximumReportingInterval=7200]]]
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=18314/3, profile=0104, cluster=0006, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=15, payload=00 15 0C 00 00 0A]
-DiscoverAttributesCommand [On/Off: 0/0 -> 18314/3, cluster=0006, TID=15, startAttributeIdentifier=0, maximumAttributeIdentifiers=10]
+DiscoverAttributesCommand [On/Off: 0/1 -> 18314/3, cluster=0006, TID=15, startAttributeIdentifier=0, maximumAttributeIdentifiers=10]
 
-ZigBeeApsFrame [sourceAddress=18314/3, destinationAddress=0/1, profile=0104, cluster=0006, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=17, payload=18 15 0D 01 00 00 10 00 40 10 01 40 21 02 40 21]
-DiscoverAttributesResponse [On/Off: 18314/3 -> 0/1, cluster=0006, TID=15, discoveryComplete=true, attributeInformation=[Attribute Information [dataType=BOOLEAN, identifier=0], Attribute Information [dataType=BOOLEAN, identifier=16384], Attribute Information [dataType=UNSIGNED_16_BIT_INTEGER, identifier=16385], Attribute Information [dataType=UNSIGNED_16_BIT_INTEGER, identifier=16386]]]
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0006, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=17, payload=18 15 0D 01 00 00 10 00 40 10 01 40 21 02 40 21]
+DiscoverAttributesResponse [On/Off: 0/1 -> 0/1, cluster=0006, TID=15, discoveryComplete=true, attributeInformation=[Attribute Information [dataType=BOOLEAN, identifier=0], Attribute Information [dataType=BOOLEAN, identifier=16384], Attribute Information [dataType=UNSIGNED_16_BIT_INTEGER, identifier=16385], Attribute Information [dataType=UNSIGNED_16_BIT_INTEGER, identifier=16386]]]
 
-ZigBeeApsFrame [sourceAddress=32274/1, destinationAddress=0/1, profile=0104, cluster=0201, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=00, payload=18 3D 0D 01]
-DiscoverAttributesResponse [Thermostat: 32274/1 -> 0/1, cluster=0201, TID=3D, discoveryComplete=true, attributeInformation=[]]
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0201, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=00, payload=18 3D 0D 01]
+DiscoverAttributesResponse [Thermostat: 0/1 -> 0/1, cluster=0201, TID=3D, discoveryComplete=true, attributeInformation=[]]
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=18314/3, profile=0104, cluster=0006, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=11, payload=00 11 11 00 14]
-DiscoverCommandsReceived [On/Off: 0/0 -> 18314/3, cluster=0006, TID=11, startCommandIdentifier=0, maximumCommandIdentifiers=20]
+DiscoverCommandsReceived [On/Off: 0/1 -> 0/1, cluster=0006, TID=11, startCommandIdentifier=0, maximumCommandIdentifiers=20]
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=37410/1, profile=0104, cluster=0B04, addressMode=DEVICE, radius=31, sequence=40, payload=00 28 06 00 08 05 21 03 00 20 1C 01 00]
-ConfigureReportingCommand [Electrical Measurement: 0/0 -> 37410/1, cluster=0B04, TID=28, records=[AttributeReportingConfigurationRecord: [attributeDataType=UNSIGNED_16_BIT_INTEGER, attributeIdentifier=1288, direction=0, minimumReportingInterval=3, maximumReportingInterval=7200, reportableChange=1]]]
+ConfigureReportingCommand [Electrical Measurement: 0/1 -> 37410/1, cluster=0B04, TID=28, records=[AttributeReportingConfigurationRecord: [attributeDataType=UNSIGNED_16_BIT_INTEGER, attributeIdentifier=1288, direction=0, minimumReportingInterval=3, maximumReportingInterval=7200, reportableChange=1]]]
 
-ZigBeeApsFrame [sourceAddress=37410/1, destinationAddress=0/0, profile=0104, cluster=0B04, addressMode=DEVICE, radius=0, sequence=0, payload=08 28 07 00]
-ConfigureReportingResponse [Electrical Measurement: 37410/1 -> 0/0, cluster=0B04, TID=28, status=SUCCESS, records=null]
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/0, profile=0104, cluster=0B04, addressMode=DEVICE, radius=0, sequence=0, payload=08 28 07 00]
+ConfigureReportingResponse [Electrical Measurement: 0/1 -> 0/0, cluster=0B04, TID=28, status=SUCCESS, records=null]
 
-ZigBeeApsFrame [sourceAddress=0/2, destinationAddress=54832/1, profile=0104, cluster=0702, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=4C, payload=08 7A 0B 0C 01]
-DefaultResponse [Metering: 0/2 -> 54832/1, cluster=0702, TID=7A, commandIdentifier=12, statusCode=FAILURE]
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0702, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=4C, payload=08 7A 0B 0C 01]
+DefaultResponse [Metering: 0/1 -> 0/1, cluster=0702, TID=7A, commandIdentifier=12, statusCode=FAILURE]

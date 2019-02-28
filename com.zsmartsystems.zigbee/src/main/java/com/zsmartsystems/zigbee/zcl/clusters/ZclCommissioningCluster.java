@@ -7,11 +7,16 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.ResetStartupParametersCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.ResetStartupParametersResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestartDeviceCommand;
@@ -20,10 +25,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestoreStartupParamet
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestoreStartupParametersResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.SaveStartupParametersCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.SaveStartupParametersResponse;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-import javax.annotation.Generated;
 
 /**
  * <b>Commissioning</b> cluster implementation (<i>Cluster ID 0x0015</i>).
@@ -43,6 +44,7 @@ public class ZclCommissioningCluster extends ZclCluster {
     public static final String CLUSTER_NAME = "Commissioning";
 
     // Attribute initialisation
+    @Override
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(0);
 
@@ -188,35 +190,4 @@ public class ZclCommissioningCluster extends ZclCluster {
         return send(command);
     }
 
-    @Override
-    public ZclCommand getCommandFromId(int commandId) {
-        switch (commandId) {
-            case 0: // RESTART_DEVICE_COMMAND
-                return new RestartDeviceCommand();
-            case 1: // SAVE_STARTUP_PARAMETERS_COMMAND
-                return new SaveStartupParametersCommand();
-            case 2: // RESTORE_STARTUP_PARAMETERS_COMMAND
-                return new RestoreStartupParametersCommand();
-            case 3: // RESET_STARTUP_PARAMETERS_COMMAND
-                return new ResetStartupParametersCommand();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public ZclCommand getResponseFromId(int commandId) {
-        switch (commandId) {
-            case 0: // RESTART_DEVICE_RESPONSE_RESPONSE
-                return new RestartDeviceResponseResponse();
-            case 1: // SAVE_STARTUP_PARAMETERS_RESPONSE
-                return new SaveStartupParametersResponse();
-            case 2: // RESTORE_STARTUP_PARAMETERS_RESPONSE
-                return new RestoreStartupParametersResponse();
-            case 3: // RESET_STARTUP_PARAMETERS_RESPONSE
-                return new ResetStartupParametersResponse();
-            default:
-                return null;
-        }
-    }
 }

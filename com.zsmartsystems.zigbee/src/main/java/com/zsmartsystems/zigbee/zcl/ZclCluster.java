@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +32,11 @@ import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.database.ZclClusterDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtended;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtendedResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsGenerated;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsGeneratedResponse;
@@ -40,8 +44,16 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsReceived;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsReceivedResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesStructuredCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesNoResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesStructuredCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesStructuredResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesUndividedCommand;
 import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
@@ -134,6 +146,11 @@ public abstract class ZclCluster {
     protected Map<Integer, Class<? extends ZclCommand>> clientCommands = initializeClientCommands();
 
     /**
+     * Map of the generic commands as implemented by all clusters
+     */
+    protected static Map<Integer, Class<? extends ZclCommand>> genericCommands = new HashMap<>();
+
+    /**
      * The {@link ZclAttributeNormalizer} is used to normalize attribute data types to ensure that data types are
      * consistent with the ZCL definition. This ensures that the application can rely on consistent and deterministic
      * data type when listening to attribute updates.
@@ -145,6 +162,32 @@ public abstract class ZclCluster {
      * with the link key will be rejected and all frames sent will use APS encryption.
      */
     private boolean apsSecurityRequired = false;
+
+    static {
+        genericCommands.put(0x0000, ReadAttributesCommand.class);
+        genericCommands.put(0x0001, ReadAttributesResponse.class);
+        genericCommands.put(0x0002, WriteAttributesCommand.class);
+        genericCommands.put(0x0003, WriteAttributesUndividedCommand.class);
+        genericCommands.put(0x0004, WriteAttributesResponse.class);
+        genericCommands.put(0x0005, WriteAttributesNoResponse.class);
+        genericCommands.put(0x0006, ConfigureReportingCommand.class);
+        genericCommands.put(0x0007, ConfigureReportingResponse.class);
+        genericCommands.put(0x0008, ReadReportingConfigurationCommand.class);
+        genericCommands.put(0x0009, ReadReportingConfigurationResponse.class);
+        genericCommands.put(0x000A, ReportAttributesCommand.class);
+        genericCommands.put(0x000B, DefaultResponse.class);
+        genericCommands.put(0x000C, DiscoverAttributesCommand.class);
+        genericCommands.put(0x000D, DiscoverAttributesResponse.class);
+        genericCommands.put(0x000E, ReadAttributesStructuredCommand.class);
+        genericCommands.put(0x000F, WriteAttributesStructuredCommand.class);
+        genericCommands.put(0x0010, WriteAttributesStructuredResponse.class);
+        genericCommands.put(0x0011, DiscoverCommandsReceived.class);
+        genericCommands.put(0x0012, DiscoverCommandsReceivedResponse.class);
+        genericCommands.put(0x0013, DiscoverCommandsGenerated.class);
+        genericCommands.put(0x0014, DiscoverCommandsGeneratedResponse.class);
+        genericCommands.put(0x0015, DiscoverAttributesExtended.class);
+        genericCommands.put(0x0016, DiscoverAttributesExtendedResponse.class);
+    }
 
     /**
      * Abstract method called when the cluster starts to initialise the list of attributes defined in this cluster by
@@ -965,22 +1008,32 @@ public abstract class ZclCluster {
      * Gets a command from the command ID (ie a command from client to server). If no command with the requested id is
      * found, null is returned.
      *
+     * @param zclFrameType the {@link ZclFrameType} of the command
      * @param commandId the command ID
      * @return the {@link ZclCommand} or null if no command was found.
      */
-    public ZclCommand getCommandFromId(int commandId) {
-        return getCommand(commandId, clientCommands);
+    public ZclCommand getCommandFromId(ZclFrameType zclFrameType, int commandId) {
+        if (zclFrameType == ZclFrameType.CLUSTER_SPECIFIC_COMMAND) {
+            return getCommand(commandId, clientCommands);
+        } else {
+            return getCommand(commandId, genericCommands);
+        }
     }
 
     /**
      * Gets a response from the command ID (ie a command from server to client). If no command with the requested id is
      * found, null is returned.
      *
+     * @param zclFrameType the {@link ZclFrameType} of the command
      * @param commandId the command ID
      * @return the {@link ZclCommand} or null if no command was found.
      */
-    public ZclCommand getResponseFromId(int commandId) {
-        return getCommand(commandId, serverCommands);
+    public ZclCommand getResponseFromId(ZclFrameType zclFrameType, int commandId) {
+        if (zclFrameType == ZclFrameType.CLUSTER_SPECIFIC_COMMAND) {
+            return getCommand(commandId, serverCommands);
+        } else {
+            return getCommand(commandId, genericCommands);
+        }
     }
 
     private ZclCommand getCommand(int commandId, Map<Integer, Class<? extends ZclCommand>> commands) {

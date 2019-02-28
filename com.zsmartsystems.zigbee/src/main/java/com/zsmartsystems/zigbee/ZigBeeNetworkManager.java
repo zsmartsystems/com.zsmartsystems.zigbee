@@ -50,12 +50,13 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveRequest;
@@ -752,6 +753,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             final ZigBeeApsFrame apsFrame) {
         ZdoCommandType commandType = ZdoCommandType.getValueById(apsFrame.getCluster());
         if (commandType == null) {
+            logger.debug("Error instantiating ZDO command: Unknown cluster {}",
+                    String.format("%04X", apsFrame.getCluster()));
             return null;
         }
 
@@ -778,25 +781,36 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
         logger.debug("RX ZCL: {}", zclHeader);
 
-        // Get the command type
-        ZclCommandType commandType = null;
-        if (zclHeader.getFrameType() == ZclFrameType.ENTIRE_PROFILE_COMMAND) {
-            commandType = ZclCommandType.getGeneric(zclHeader.getCommandId());
-        } else {
-            commandType = ZclCommandType.getCommandType(apsFrame.getCluster(), zclHeader.getCommandId(),
-                    zclHeader.getDirection());
-        }
-
-        if (commandType == null) {
-            logger.debug("No command type found for {}, cluster={}, command={}, direction={}", zclHeader.getFrameType(),
-                    apsFrame.getCluster(), zclHeader.getCommandId(), zclHeader.getDirection());
+        ZigBeeNode node = getNode(apsFrame.getSourceAddress());
+        if (node == null) {
+            logger.debug("Unknown node {}", apsFrame.getSourceAddress());
             return null;
         }
 
-        ZclCommand command = commandType.instantiateCommand();
+        ZigBeeEndpoint endpoint = node.getEndpoint(apsFrame.getSourceEndpoint());
+        if (endpoint == null) {
+            logger.debug("Unknown endpoint {}", apsFrame.getSourceEndpoint());
+            return null;
+        }
+
+        ZclCommand command;
+        if (zclHeader.getDirection() == ZclCommandDirection.SERVER_TO_CLIENT) {
+            ZclCluster cluster = endpoint.getInputCluster(apsFrame.getCluster());
+            if (cluster == null) {
+                logger.debug("Unknown input cluster {}", apsFrame.getCluster());
+                return null;
+            }
+            command = cluster.getResponseFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
+        } else {
+            ZclCluster cluster = endpoint.getOutputCluster(apsFrame.getCluster());
+            if (cluster == null) {
+                logger.debug("Unknown output cluster {}", apsFrame.getCluster());
+                return null;
+            }
+            command = cluster.getCommandFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
+        }
         if (command == null) {
-            logger.debug("No command found for {}, cluster={}, command={}", zclHeader.getFrameType(),
-                    apsFrame.getCluster(), zclHeader.getCommandId());
+            logger.debug("Unknown command {}", zclHeader.getCommandId());
             return null;
         }
 

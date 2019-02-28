@@ -47,10 +47,19 @@ import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclElectricalMeasurementCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclMeteringCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclThermostatCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 
@@ -230,6 +239,17 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
     public void testReceiveZclCommand() throws Exception {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
+
+        ZigBeeEndpoint endpoint = Mockito.mock(ZigBeeEndpoint.class);
+        ZclCluster cluster = new ZclOnOffCluster(endpoint);
+        Mockito.when(endpoint.getOutputCluster(6)).thenReturn(cluster);
+
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1111111111111111"));
+        Mockito.when(node.getNetworkAddress()).thenReturn(1234);
+        Mockito.when(node.getEndpoint(5)).thenReturn(endpoint);
+
+        networkManager.addNode(node);
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setSourceAddress(1234);
@@ -498,6 +518,41 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
     private ZigBeeCommand getZigBeeCommand(ZigBeeApsFrame apsFrame) throws Exception {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
+
+        ZigBeeEndpoint endpoint = Mockito.mock(ZigBeeEndpoint.class);
+        ZclCluster cluster;
+
+        cluster = new ZclOnOffCluster(endpoint);
+        Mockito.when(endpoint.getInputCluster(0x0006)).thenReturn(cluster);
+        Mockito.when(endpoint.getOutputCluster(0x0006)).thenReturn(cluster);
+        cluster = new ZclLevelControlCluster(endpoint);
+        Mockito.when(endpoint.getInputCluster(0x0008)).thenReturn(cluster);
+        Mockito.when(endpoint.getOutputCluster(0x0008)).thenReturn(cluster);
+        cluster = new ZclOtaUpgradeCluster(endpoint);
+        Mockito.when(endpoint.getInputCluster(0x0019)).thenReturn(cluster);
+        Mockito.when(endpoint.getOutputCluster(0x0019)).thenReturn(cluster);
+        cluster = new ZclThermostatCluster(endpoint);
+        Mockito.when(endpoint.getInputCluster(0x0201)).thenReturn(cluster);
+        Mockito.when(endpoint.getOutputCluster(0x0201)).thenReturn(cluster);
+        cluster = new ZclColorControlCluster(endpoint);
+        Mockito.when(endpoint.getInputCluster(0x0300)).thenReturn(cluster);
+        Mockito.when(endpoint.getOutputCluster(0x0300)).thenReturn(cluster);
+        cluster = new ZclIasZoneCluster(endpoint);
+        Mockito.when(endpoint.getInputCluster(0x0500)).thenReturn(cluster);
+        Mockito.when(endpoint.getOutputCluster(0x0500)).thenReturn(cluster);
+        cluster = new ZclMeteringCluster(endpoint);
+        Mockito.when(endpoint.getInputCluster(0x0702)).thenReturn(cluster);
+        Mockito.when(endpoint.getOutputCluster(0x0702)).thenReturn(cluster);
+        cluster = new ZclElectricalMeasurementCluster(endpoint);
+        Mockito.when(endpoint.getInputCluster(0x0B04)).thenReturn(cluster);
+        Mockito.when(endpoint.getOutputCluster(0x0B04)).thenReturn(cluster);
+
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1111111111111111"));
+        Mockito.when(node.getNetworkAddress()).thenReturn(0);
+        Mockito.when(node.getEndpoint(1)).thenReturn(endpoint);
+
+        networkManager.addNode(node);
 
         networkManager.receiveCommand(apsFrame);
         Awaitility.await().until(() -> commandListenerUpdated());
@@ -768,8 +823,8 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
     public void processLogEntry(String apsString, String zclString) throws Exception {
         System.out.println("---> Processing log");
-        System.out.println("  -> " + apsString);
-        System.out.println("  -> " + zclString);
+        System.out.println("  => " + apsString);
+        System.out.println("  => " + zclString);
 
         ZigBeeApsFrame apsFrame = getApsFrame(apsString);
         System.out.println("  <- " + apsFrame);
@@ -825,7 +880,6 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
     public void processLogs() throws Exception {
         File dir = FileSystems.getDefault().getPath("./src/test/resource/logs").toFile();
 
-        // File dir = new File(file.toFile());
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null) {
             for (File file : directoryListing) {
