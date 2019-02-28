@@ -8,6 +8,9 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
@@ -17,6 +20,7 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 
 /**
  *
@@ -24,6 +28,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
  *
  */
 public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractCommand {
+
     @Override
     public String getCommand() {
         return "read";
@@ -31,12 +36,12 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
 
     @Override
     public String getDescription() {
-        return "Read an attribute.";
+        return "Read one or more attributes.";
     }
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT CLUSTER ATTRIBUTE";
+        return "ENDPOINT CLUSTER ATTRIBUTE1 [ATTRIBUTE2 ...]";
     }
 
     @Override
@@ -47,42 +52,43 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
-        if (args.length != 4) {
+        if (args.length < 4) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
         ZclCluster cluster = getCluster(endpoint, args[2]);
 
-        final Integer attributeId = parseAttribute(args[3]);
-        String attributeName;
-        ZclAttribute attribute = cluster.getAttribute(attributeId);
-        if (attribute == null) {
-            attributeName = "Attribute " + attributeId;
-        } else {
-            attributeName = attribute.getName();
+        final Map<Integer, String> attributes = new HashMap<>();
+        for (int i = 3; i < args.length; i++) {
+            Integer attributeId = parseAttribute(args[i]);
+            ZclAttribute attribute = cluster.getAttribute(attributeId);
+            attributes.put(attributeId,
+                    attribute != null ? attribute.getName() : String.format("Attribute %d", attributeId));
         }
 
-        out.println("Reading " + printCluster(cluster) + ", " + attributeName);
+        out.println("Reading " + printCluster(cluster) + ", attributes " + String.join(", ", attributes.values()));
 
-        CommandResult result;
-        result = cluster.read(attributeId).get();
+        CommandResult result = cluster.read(new ArrayList<>(attributes.keySet())).get();
 
         if (result.isSuccess()) {
             final ReadAttributesResponse response = result.getResponse();
+
+            out.println(String.format("Response for cluster 0x%04x", response.getClusterId()));
+
             if (response.getRecords().size() == 0) {
                 out.println("No records returned");
                 return;
             }
 
-            final ZclStatus statusCode = response.getRecords().get(0).getStatus();
-            if (statusCode == ZclStatus.SUCCESS) {
-                out.println("Cluster " + String.format("%04X", response.getClusterId()) + ", Attribute "
-                        + response.getRecords().get(0).getAttributeIdentifier() + ", type "
-                        + response.getRecords().get(0).getAttributeDataType() + ", value: "
-                        + response.getRecords().get(0).getAttributeValue());
-            } else {
-                out.println("Attribute value read error: " + statusCode);
+            for (ReadAttributeStatusRecord statusRecord : response.getRecords()) {
+                if (statusRecord.getStatus() == ZclStatus.SUCCESS) {
+                    out.println("Attribute " + statusRecord.getAttributeIdentifier() + ", type "
+                            + statusRecord.getAttributeDataType() + ", value: " + statusRecord.getAttributeValue());
+                } else {
+                    out.println("Attribute " + statusRecord.getAttributeIdentifier() + " error: "
+                            + statusRecord.getStatus());
+                }
             }
 
             return;
