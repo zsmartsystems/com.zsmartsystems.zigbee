@@ -19,6 +19,12 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 
 /**
  * Transaction class to handle the sending of commands and timeout in the event there is no response.
+ * <p>
+ * The transaction handles the feedback from the dongle via the
+ * {@link #transactionStatusReceived(ZigBeeTransportProgressState, int)} callback, and if these notifications are
+ * provided, will ensure that the dongle sends an APS ack/nak before the transaction is completed. This is done to avoid
+ * the situation where at application level the transaction is considered complete as the response command was received,
+ * but at transport level the APS ACK has not yet been received and the transport has not released the transaction.
  *
  * @author Chris Jackson
  *
@@ -29,6 +35,10 @@ public class ZigBeeTransaction {
      */
     private final Logger logger = LoggerFactory.getLogger(ZigBeeTransaction.class);
 
+    /**
+     * Enumeration defining the transaction states
+     *
+     */
     public enum TransactionState {
         /**
          * Transaction is idle and should be waiting in the queue to be sent
@@ -46,9 +56,16 @@ public class ZigBeeTransaction {
         TRANSMITTED,
 
         /**
-         * The low level ACK was received to confirm the command was received by the remote device
+         * The low level APS ACK was received to confirm the command was received by the remote device
          */
         ACKED,
+
+        /**
+         * The transaction has received a response that the TransactionMatcher has used to complete the transaction.
+         * This state is used only if we have not received the RX_NAK/RX_ACK updates from the transport to avoid sending
+         * further transactions to the transport when it is still handling the APS level transaction.
+         */
+        RESPONDED,
 
         /**
          * Transaction has been completed successfully
@@ -95,6 +112,12 @@ public class ZigBeeTransaction {
      * The current state of the transaction
      */
     private TransactionState state = TransactionState.WAITING;
+
+    /**
+     * In the event that the application level response is received before the transport response, we need to remember
+     * the command that completed the transaction.
+     */
+    private ZigBeeCommand completionCommand;
 
     /**
      * The amount of time (in milliseconds) from when the command is sent to the transport, until when the transport
@@ -307,7 +330,19 @@ public class ZigBeeTransaction {
         // and hence transaction ID for the command set.
         synchronized (command) {
             if (responseMatcher.isTransactionMatch(command, receivedCommand)) {
-                completeTransaction(receivedCommand);
+                // If the transaction state is TRANSMITTED, then we know that the transport layer
+                // is providing state updates. We need to ensure in this case that we get the RX_ACK or RX_NAK
+                // states so that we know that the transport layer has completed the APS transaction.
+                // If the state is TRANSMITTED, then we have not yet received this, and we need to hold off
+                // completing this transaction to avoid sending another transaction to the transport that it
+                // Cannot currently handle.
+                if (state == TransactionState.TRANSMITTED) {
+                    state = TransactionState.RESPONDED;
+                    completionCommand = receivedCommand;
+                    logger.debug("Transaction response received - waiting TX_ACK: {}", this);
+                } else {
+                    completeTransaction(receivedCommand);
+                }
             }
         }
     }
@@ -385,11 +420,23 @@ public class ZigBeeTransaction {
                     break;
                 case RX_NAK:
                     // The transport layer failed to get an ack from the remote device
-                    cancelTransaction();
+                    if (state == TransactionState.RESPONDED) {
+                        // Even though the transport thinks this transaction was not ACKed at APS level,
+                        // we did receive a response that completed the transaction at application level
+                        completeTransaction(completionCommand);
+                    } else {
+                        cancelTransaction();
+                    }
                     break;
                 case RX_ACK:
                     // The remote device confirmed receipt of the command
-                    state = TransactionState.ACKED;
+                    if (state == TransactionState.RESPONDED) {
+                        // We've already received a response that completed the application level transaction
+                        // so we're done.
+                        completeTransaction(completionCommand);
+                    } else {
+                        state = TransactionState.ACKED;
+                    }
                     break;
                 default:
                     logger.debug("Unknown transaction state update: TID {} to {}", String.format("%02X", transactionId),

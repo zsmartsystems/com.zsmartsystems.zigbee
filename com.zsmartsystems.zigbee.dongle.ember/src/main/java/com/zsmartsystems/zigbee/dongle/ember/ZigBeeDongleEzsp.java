@@ -632,9 +632,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             EzspMessageSentHandler sentHandler = (EzspMessageSentHandler) response;
             ZigBeeTransportProgressState sentHandlerState;
             if (sentHandler.getStatus() == EmberStatus.EMBER_SUCCESS) {
-                sentHandlerState = ZigBeeTransportProgressState.TX_ACK;
+                sentHandlerState = ZigBeeTransportProgressState.RX_ACK;
             } else {
-                sentHandlerState = ZigBeeTransportProgressState.TX_NAK;
+                sentHandlerState = ZigBeeTransportProgressState.RX_NAK;
             }
             zigbeeTransportReceive.receiveCommandState(sentHandler.getMessageTag(), sentHandlerState);
             return;
