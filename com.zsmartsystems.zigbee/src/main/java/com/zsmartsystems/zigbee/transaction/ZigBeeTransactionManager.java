@@ -506,7 +506,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @param state the {@link TransactionState} of the transaction on completion
      */
     protected void transactionComplete(ZigBeeTransaction transaction, TransactionState state) {
-        logger.debug("transactionComplete: {}  {}", transaction, state);
+        logger.debug("Transaction complete: {}", transaction);
         removeTransactionListener(transaction);
 
         synchronized (this) {
@@ -549,8 +549,8 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @param state the current {@link ZigBeeTransportProgressState} for the transaction
      */
     private void notifyTransactionProgress(final int transactionId, ZigBeeTransportProgressState state) {
-        logger.debug("notifyTransactionProgress: TID {} {} -> {}", String.format("%02X", transactionId), state,
-                outstandingTransactions.size());
+        logger.debug("notifyTransactionProgress: TID={}, state={}, outstanding={}",
+                String.format("%02X", transactionId), state, outstandingTransactions.size());
         synchronized (outstandingTransactions) {
             // Notify the listeners
             for (final ZigBeeTransaction transaction : outstandingTransactions) {
@@ -593,7 +593,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (outstandingTransactions) {
             for (ZigBeeTransaction transaction : outstandingTransactions) {
                 if (getTransactionQueue(transaction) == queue) {
-                    transactionComplete(transaction, TransactionState.FAILED);
+                    transaction.cancel();
                 }
             }
         }

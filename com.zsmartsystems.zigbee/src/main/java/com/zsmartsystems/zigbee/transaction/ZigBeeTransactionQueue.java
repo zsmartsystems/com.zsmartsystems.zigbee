@@ -142,11 +142,14 @@ public class ZigBeeTransactionQueue {
      * @return the previous state of the sleepy flag
      */
     public boolean setSleepy(boolean sleepy) {
-        boolean currentlySleepy = this.sleepy;
-        logger.debug("{}: Set sleepy from {} to {}", queueName, this.sleepy, sleepy);
+        if (this.sleepy == sleepy) {
+            return sleepy;
+        }
+
+        logger.debug("{}: Udpdated sleepy state from {} to {}", queueName, this.sleepy, sleepy);
         this.sleepy = sleepy;
 
-        return currentlySleepy;
+        return !this.sleepy;
     }
 
     /**
