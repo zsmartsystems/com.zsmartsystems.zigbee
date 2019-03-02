@@ -55,7 +55,7 @@ public interface ZigBeeTransportReceive {
      *
      * @param state the updated {@link ZigBeeTransportState}
      */
-    void setNetworkState(final ZigBeeTransportState state);
+    void setTransportState(final ZigBeeTransportState state);
 
     /**
      * Announce a node has joined or left the network.

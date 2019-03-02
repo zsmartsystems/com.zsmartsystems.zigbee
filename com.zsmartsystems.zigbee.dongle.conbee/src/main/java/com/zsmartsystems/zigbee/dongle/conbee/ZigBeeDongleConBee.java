@@ -102,7 +102,7 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
     public ZigBeeStatus initialize() {
         logger.debug("ConBee transport initialize");
 
-        zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.UNINITIALISED);
+        zigbeeNetworkReceive.setTransportState(ZigBeeTransportState.UNINITIALISED);
 
         if (!serialPort.open()) {
             logger.error("Unable to open ConBee serial port");
@@ -283,7 +283,7 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
             return;
         }
         conbeeHandler.setClosing();
-        zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        zigbeeNetworkReceive.setTransportState(ZigBeeTransportState.OFFLINE);
         serialPort.close();
         conbeeHandler.close();
         logger.debug("ConBee dongle shutdown.");
@@ -374,12 +374,12 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
             currentNetworkState = deviceState.getNetworkState();
             switch (deviceState.getNetworkState()) {
                 case NET_CONNECTED:
-                    zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.ONLINE);
+                    zigbeeNetworkReceive.setTransportState(ZigBeeTransportState.ONLINE);
                     break;
                 case NET_JOINING:
                 case NET_LEAVING:
                 case NET_OFFLINE:
-                    zigbeeNetworkReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+                    zigbeeNetworkReceive.setTransportState(ZigBeeTransportState.OFFLINE);
                     break;
                 default:
                     break;
