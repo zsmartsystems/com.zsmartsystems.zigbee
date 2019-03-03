@@ -326,6 +326,10 @@ public class ZigBeeTransaction {
      * @param receivedCommand the incoming {@link ZigBeeCommand}
      */
     public void commandReceived(ZigBeeCommand receivedCommand) {
+        if (responseMatcher == null) {
+            return;
+        }
+
         // Ensure that received command is not processed before command is sent
         // and hence transaction ID for the command set.
         synchronized (command) {
@@ -434,9 +438,9 @@ public class ZigBeeTransaction {
                     break;
                 case RX_ACK:
                     // The remote device confirmed receipt of the command
-                    if (state == TransactionState.RESPONDED) {
-                        // We've already received a response that completed the application level transaction
-                        // so we're done.
+                    if (responseMatcher == null || state == TransactionState.RESPONDED) {
+                        // We've already received a response that completed the application level transaction,
+                        // or we weren't waiting for a response - either way, we're done.
                         completeTransaction(completionCommand);
                     } else {
                         state = TransactionState.ACKED;

@@ -360,7 +360,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // print current security state to debug logs
         ncp.getCurrentSecurityState();
 
-        executorService = Executors.newScheduledThreadPool(6);
+        /*
+         * Create the scheduler with a single thread. This ensures that commands sent to the dongle, and the processing
+         * of responses is performed in order
+         */
+        executorService = Executors.newScheduledThreadPool(1);
         scheduleNetworkStatePolling();
 
         logger.debug("EZSP dongle initialize done: Initialised {}", initResponse != EmberStatus.EMBER_NOT_JOINED);
@@ -447,6 +451,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 if (!networkStateUp || (lastSendCommand + pollRate > System.currentTimeMillis())) {
                     return;
                 }
+                // Don't wait for the response. This is running in a single thread scheduler
                 frameHandler.queueFrame(new EzspNetworkStateRequest());
             }
         }, pollRate, pollRate, TimeUnit.MILLISECONDS);
@@ -561,7 +566,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // The response from the SendXxxcast messages returns the network layer sequence number
         // We need to correlate this with the messageTag
-        executorService.schedule(new Runnable() {
+        executorService.execute(new Runnable() {
             @Override
             public void run() {
                 frameHandler.sendEzspTransaction(transaction);
@@ -586,7 +591,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 }
                 zigbeeTransportReceive.receiveCommandState(msgTag, ZigBeeTransportProgressState.TX_NAK);
             }
-        }, 0, TimeUnit.MILLISECONDS);
+        });
     }
 
     @Override
@@ -629,18 +634,22 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // Message has been completed by the NCP
         if (response instanceof EzspMessageSentHandler) {
-            EzspMessageSentHandler sentHandler = (EzspMessageSentHandler) response;
-            ZigBeeTransportProgressState sentHandlerState;
-            if (sentHandler.getStatus() == EmberStatus.EMBER_SUCCESS) {
-                sentHandlerState = ZigBeeTransportProgressState.RX_ACK;
-            } else {
-                sentHandlerState = ZigBeeTransportProgressState.RX_NAK;
-            }
-            zigbeeTransportReceive.receiveCommandState(sentHandler.getMessageTag(), sentHandlerState);
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    EzspMessageSentHandler sentHandler = (EzspMessageSentHandler) response;
+                    ZigBeeTransportProgressState sentHandlerState;
+                    if (sentHandler.getStatus() == EmberStatus.EMBER_SUCCESS) {
+                        sentHandlerState = ZigBeeTransportProgressState.RX_ACK;
+                    } else {
+                        sentHandlerState = ZigBeeTransportProgressState.RX_NAK;
+                    }
+                    zigbeeTransportReceive.receiveCommandState(sentHandler.getMessageTag(), sentHandlerState);
+                }
+            });
             return;
         }
 
-        // TODO: Check if this should be done only after initialisation is complete?
         if (response instanceof EzspStackStatusHandler) {
             switch (((EzspStackStatusHandler) response).getStatus()) {
                 case EMBER_NETWORK_BUSY:

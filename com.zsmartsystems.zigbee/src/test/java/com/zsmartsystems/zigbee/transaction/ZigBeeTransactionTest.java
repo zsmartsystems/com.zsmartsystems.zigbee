@@ -230,8 +230,7 @@ public class ZigBeeTransactionTest {
                 TransactionState.COMPLETE);
     }
 
-    @Test
-    public void testSendOnly() {
+    public void testSendOnly(ZigBeeTransportProgressState state) {
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
         ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
         Mockito.when(command.getTransactionId()).thenReturn(12);
@@ -239,14 +238,13 @@ public class ZigBeeTransactionTest {
         ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
 
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, null);
+        transaction.setTimerPeriod1(Integer.MAX_VALUE);
+        transaction.setTimerPeriod2(Integer.MAX_VALUE);
         transaction.setFuture(transactionFuture);
 
-        // transaction.startTimer();
         assertEquals(command, transaction.startTransaction());
         Mockito.verify(transactionManager, Mockito.times(1)).scheduleTask(ArgumentMatchers.any(Runnable.class),
                 ArgumentMatchers.anyLong());
-
-        transaction.transactionStatusReceived(ZigBeeTransportProgressState.RX_ACK, 12);
 
         // Wrong TID so gets ignored
         transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_NAK, 123);
@@ -254,13 +252,23 @@ public class ZigBeeTransactionTest {
         assertFalse(transactionFuture.isCancelled());
 
         // Correct TID
-        transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_ACK, 12);
+        transaction.transactionStatusReceived(state, 12);
 
         Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction,
                 TransactionState.COMPLETE);
 
         assertTrue(transactionFuture.isDone());
         assertFalse(transactionFuture.isCancelled());
+    }
+
+    @Test
+    public void testSendOnlyTxAck() {
+        testSendOnly(ZigBeeTransportProgressState.TX_ACK);
+    }
+
+    @Test
+    public void testSendOnlyRxAck() {
+        testSendOnly(ZigBeeTransportProgressState.RX_ACK);
     }
 
     @Test

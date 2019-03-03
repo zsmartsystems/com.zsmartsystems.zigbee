@@ -272,6 +272,7 @@ public class ZigBeeDongleEzspTest {
         dongle.setZigBeeTransportReceive(transport);
 
         TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "executorService", Executors.newScheduledThreadPool(1));
 
         EzspMessageSentHandler response = Mockito.mock(EzspMessageSentHandler.class);
         Mockito.when(response.getMessageTag()).thenReturn(231);
