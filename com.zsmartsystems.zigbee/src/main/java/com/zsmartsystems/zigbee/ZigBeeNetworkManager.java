@@ -1295,22 +1295,27 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             networkNodes.remove(node.getIeeeAddress());
         }
 
-        synchronized (this) {
-            for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-                NotificationService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        listener.nodeRemoved(node);
-                    }
-                });
-            }
-
-            node.shutdown();
-
-            if (networkStateSerializer != null) {
-                networkStateSerializer.serialize(this);
-            }
+        for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
+            NotificationService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    listener.nodeRemoved(node);
+                }
+            });
         }
+
+        node.shutdown();
+
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (ZigBeeNetworkManager.this) {
+                    if (networkStateSerializer != null) {
+                        networkStateSerializer.serialize(ZigBeeNetworkManager.this);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -1335,24 +1340,29 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             networkNodes.put(node.getIeeeAddress(), node);
         }
 
-        synchronized (this) {
-            if (networkState != ZigBeeTransportState.ONLINE) {
-                return;
-            }
-
-            for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-                NotificationService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        listener.nodeAdded(node);
-                    }
-                });
-            }
-
-            if (networkStateSerializer != null) {
-                networkStateSerializer.serialize(this);
-            }
+        if (networkState != ZigBeeTransportState.ONLINE) {
+            return;
         }
+
+        for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
+            NotificationService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    listener.nodeAdded(node);
+                }
+            });
+        }
+
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (ZigBeeNetworkManager.this) {
+                    if (networkStateSerializer != null) {
+                        networkStateSerializer.serialize(ZigBeeNetworkManager.this);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -1389,24 +1399,29 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             nodeDiscoveryComplete.add(node.getIeeeAddress());
         }
 
-        synchronized (this) {
-            for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-                NotificationService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (updated) {
-                            listener.nodeUpdated(currentNode);
-                        } else {
-                            listener.nodeAdded(currentNode);
-                        }
+        for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
+            NotificationService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    if (updated) {
+                        listener.nodeUpdated(currentNode);
+                    } else {
+                        listener.nodeAdded(currentNode);
                     }
-                });
-            }
-
-            if (networkStateSerializer != null) {
-                networkStateSerializer.serialize(this);
-            }
+                }
+            });
         }
+
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (ZigBeeNetworkManager.this) {
+                    if (networkStateSerializer != null) {
+                        networkStateSerializer.serialize(ZigBeeNetworkManager.this);
+                    }
+                }
+            }
+        });
     }
 
     /**
