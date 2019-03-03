@@ -20,6 +20,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
@@ -31,8 +32,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
  *
  */
 public class ZigBeeTransactionTest {
-    @Test
-    public void testTimeout() {
+    private void testTimeout(TransactionState transactionState) throws Exception {
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
         ScheduledFuture timerFuture = Mockito.mock(ScheduledFuture.class);
         ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
@@ -49,6 +49,7 @@ public class ZigBeeTransactionTest {
 
         assertEquals(0, transaction.getSendCnt());
         assertEquals(command, transaction.startTransaction());
+        TestUtilities.setField(ZigBeeTransaction.class, transaction, "state", transactionState);
         Mockito.verify(transactionManager, Mockito.times(1)).scheduleTask(ArgumentMatchers.any(Runnable.class),
                 ArgumentMatchers.eq(10000L));
 
@@ -61,11 +62,33 @@ public class ZigBeeTransactionTest {
         assertFalse(transactionFuture.isCancelled());
 
         timeout.run();
-        Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction, TransactionState.FAILED);
 
-        // A timeout doesn't complete the transaction - this is done by the queue so it can account for retries
-        assertFalse(transactionFuture.isDone());
-        assertFalse(transactionFuture.isCancelled());
+        if (transactionState == TransactionState.DISPATCHED) {
+            Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction,
+                    TransactionState.FAILED);
+
+            // A timeout doesn't complete the transaction - this is done by the queue so it can account for retries
+            assertFalse(transactionFuture.isDone());
+            assertFalse(transactionFuture.isCancelled());
+        } else {
+            Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction,
+                    TransactionState.COMPLETE);
+
+            // A timeout doesn't complete the transaction - this is done by the queue so it can account for retries
+            assertTrue(transactionFuture.isDone());
+            assertFalse(transactionFuture.isCancelled());
+        }
+    }
+
+    @Test
+    public void testTimeoutFailed() throws Exception {
+        testTimeout(TransactionState.DISPATCHED);
+    }
+
+    @Test
+    public void testTimeoutResponded() throws Exception {
+        testTimeout(TransactionState.RESPONDED);
+
     }
 
     @Test
