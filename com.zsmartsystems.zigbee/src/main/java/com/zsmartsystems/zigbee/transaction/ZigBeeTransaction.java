@@ -356,7 +356,13 @@ public class ZigBeeTransaction {
         timeoutTask = transactionManager.scheduleTask(new Runnable() {
             @Override
             public void run() {
-                cancelTransaction();
+                if (state == TransactionState.RESPONDED) {
+                    // Even though this transaction has timed out waiting for the transport,
+                    // we did receive a response that completed the transaction at application level
+                    completeTransaction(completionCommand);
+                } else {
+                    cancelTransaction();
+                }
             }
         }, timeout);
     }
