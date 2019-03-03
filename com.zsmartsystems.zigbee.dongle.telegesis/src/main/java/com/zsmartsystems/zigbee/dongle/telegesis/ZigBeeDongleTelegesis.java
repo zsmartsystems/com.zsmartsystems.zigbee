@@ -322,7 +322,11 @@ public class ZigBeeDongleTelegesis
      */
     private Map<Integer, Integer> messageIdMap = new ConcurrentHashMap<>();
 
-    private ExecutorService commandScheduler = Executors.newCachedThreadPool();
+    /**
+     * We need to put all received events in a "pipeline" to make sure we process "SEQ/OK/ERROR" responses
+     * from the dongle before "ACK/NAK" responses, or even before the command response arrives from the remote device
+     */
+    private ExecutorService commandScheduler = Executors.newFixedThreadPool(1);
 
     /**
      * Constructor for Telegesis dongle.
@@ -655,16 +659,15 @@ public class ZigBeeDongleTelegesis
         logger.debug("Telegesis send: {}", command.toString());
 
         // We need to get the Telegesis SEQ number for the transaction so we can correlate the transaction ID
-        // This is done by spawning a new thread to send the transaction so we get the response.
+        // This is done in a separate thread that puts all the responses from the dongle in a pipeline
         Runnable commandHandler = new Runnable() {
             @Override
             public void run() {
                 frameHandler.sendRequest(command);
 
                 // Let the stack know the frame is sent
-                zigbeeTransportReceive.receiveCommandState(msgTag,
-                        command.getStatus() == TelegesisStatusCode.SUCCESS ? ZigBeeTransportProgressState.TX_ACK
-                                : ZigBeeTransportProgressState.TX_NAK);
+                zigbeeTransportReceive.receiveCommandState(msgTag, command.getStatus() == TelegesisStatusCode.SUCCESS
+                        ? ZigBeeTransportProgressState.TX_ACK : ZigBeeTransportProgressState.TX_NAK);
 
                 // Multicast doesn't have a sequence returned, so nothing more to do here
                 if (command instanceof TelegesisSendMulticastCommand) {
@@ -685,6 +688,18 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public void telegesisEventReceived(TelegesisEvent event) {
+        // This is done in a separate thread that puts all the responses from the dongle in a pipeline
+        Runnable eventHandler = new Runnable() {
+            @Override
+            public void run() {
+                telegesisEventReceivedRunnable(event);
+            }
+        };
+
+        commandScheduler.execute(eventHandler);
+    }
+
+    public void telegesisEventReceivedRunnable(TelegesisEvent event) {
         // Ignore events prior to the app starting - to avoid confusion!
         if (!startupComplete) {
             return;
