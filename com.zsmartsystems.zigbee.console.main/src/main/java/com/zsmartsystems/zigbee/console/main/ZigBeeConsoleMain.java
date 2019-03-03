@@ -24,7 +24,6 @@ import org.apache.log4j.xml.DOMConfigurator;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
-import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleMmoHashCommand;
@@ -38,6 +37,7 @@ import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpVersionCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleSecurityStateCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleTransientKeyCommand;
 import com.zsmartsystems.zigbee.console.telegesis.TelegesisConsoleSecurityStateCommand;
+import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
 import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
@@ -230,11 +230,11 @@ public class ZigBeeConsoleMain {
 
         ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(dongle);
 
-        ZigBeeNetworkStateSerializer networkStateSerializer = new ZigBeeNetworkStateSerializerImpl(dongleName);
+        ZigBeeNetworkDataStore dataStore = new ZigBeeDataStore(dongleName);
         if (resetNetwork) {
             // networkStateSerializer.remove();
         }
-        networkManager.setNetworkStateSerializer(networkStateSerializer);
+        networkManager.setNetworkDataStore(dataStore);
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
         final ZigBeeConsole console = new ZigBeeConsole(networkManager, dongle, commands);
 
