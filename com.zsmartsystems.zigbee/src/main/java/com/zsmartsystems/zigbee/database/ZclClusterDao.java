@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.dao;
+package com.zsmartsystems.zigbee.database;
 
 import java.util.HashMap;
 import java.util.Map;
