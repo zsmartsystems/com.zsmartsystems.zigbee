@@ -1,11 +1,13 @@
 target/
 bin/
+database/
 *.iml
 *.log
 *.log.*
 *.json
 .metadata
 local.properties
+pom.xml.releaseBackup
 
 # Eclipse project specific
 .classpath

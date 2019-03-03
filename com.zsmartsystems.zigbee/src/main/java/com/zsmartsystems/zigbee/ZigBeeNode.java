@@ -24,8 +24,8 @@ import java.util.concurrent.RunnableFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.dao.ZigBeeEndpointDao;
-import com.zsmartsystems.zigbee.dao.ZigBeeNodeDao;
+import com.zsmartsystems.zigbee.database.ZigBeeEndpointDao;
+import com.zsmartsystems.zigbee.database.ZigBeeNodeDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -747,7 +747,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     public ZigBeeNodeDao getDao() {
         ZigBeeNodeDao dao = new ZigBeeNodeDao();
 
-        dao.setIeeeAddress(ieeeAddress.toString());
+        dao.setIeeeAddress(ieeeAddress);
         dao.setNetworkAddress(networkAddress);
         dao.setNodeDescriptor(nodeDescriptor);
         dao.setPowerDescriptor(powerDescriptor);
@@ -763,7 +763,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     }
 
     public void setDao(ZigBeeNodeDao dao) {
-        ieeeAddress = new IeeeAddress(dao.getIeeeAddress());
+        ieeeAddress = dao.getIeeeAddress();
         networkAddress = dao.getNetworkAddress();
         nodeDescriptor = dao.getNodeDescriptor();
         powerDescriptor = dao.getPowerDescriptor();
