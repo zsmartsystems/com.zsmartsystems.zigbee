@@ -77,7 +77,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * The maximum number of outstanding transactions from all queues
      */
-    private final int MAX_OUTSTANDING_TRANSACTIONS = 10;
+    private final int MAX_OUTSTANDING_TRANSACTIONS = 9;
 
     /**
      * The maximum number of outstanding transactions from sleepy queues
