@@ -131,16 +131,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * The node listeners of the ZigBee network. Registered listeners will be
      * notified of additions, deletions and changes to {@link ZigBeeNode}s.
      */
-    private List<ZigBeeNetworkNodeListener> nodeListeners = Collections
-            .unmodifiableList(new ArrayList<ZigBeeNetworkNodeListener>());
+    private List<ZigBeeNetworkNodeListener> nodeListeners = Collections.unmodifiableList(new ArrayList<>());
 
     /**
      * The announce listeners are notified whenever a new device is discovered.
      * This can be called from the transport layer, or internally by methods watching
      * the network state.
      */
-    private List<ZigBeeAnnounceListener> announceListeners = Collections
-            .unmodifiableList(new ArrayList<ZigBeeAnnounceListener>());
+    private List<ZigBeeAnnounceListener> announceListeners = Collections.unmodifiableList(new ArrayList<>());
 
     /**
      * {@link AtomicInteger} used to generate APS header counters
@@ -179,8 +177,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * The listeners of the ZigBee network state.
      */
-    private List<ZigBeeNetworkStateListener> stateListeners = Collections
-            .unmodifiableList(new ArrayList<ZigBeeNetworkStateListener>());
+    private List<ZigBeeNetworkStateListener> stateListeners = Collections.unmodifiableList(new ArrayList<>());
 
     /**
      * A Set used to remember if node discovery has been completed. This is used to manage the lifecycle notifications.
@@ -249,7 +246,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param transport the dongle
      */
     public ZigBeeNetworkManager(final ZigBeeTransportTransmit transport) {
-        Map<ZigBeeTransportState, Set<ZigBeeTransportState>> transitions = new HashMap<ZigBeeTransportState, Set<ZigBeeTransportState>>();
+        Map<ZigBeeTransportState, Set<ZigBeeTransportState>> transitions = new HashMap<>();
 
         transitions.put(null, new HashSet<>(Arrays.asList(ZigBeeTransportState.UNINITIALISED)));
         transitions.put(ZigBeeTransportState.UNINITIALISED,
@@ -614,12 +611,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Sends a command directly to the ZigBeeTransportTransmit} interface
+     * Sends a command directly to the ZigBeeTransportTransmit} interface. This method should only be used by the
+     * transaction manager.
      *
      * @param command the {@link ZigBeeCommand} to send
-     * @return
+     * @return true if the command was successfully passed to the transport layer
      */
-    public int sendCommand(ZigBeeCommand command) {
+    public boolean sendCommand(ZigBeeCommand command) {
         // Create the application frame
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
 
@@ -657,7 +655,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
             logger.debug("Error serializing ZigBee frame {}", e);
-            return 0;
+            return false;
         }
 
         if (command instanceof ZdoCommand) {
@@ -701,8 +699,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         logger.debug("TX APS: {}", apsFrame);
 
         transport.sendCommand(command.getTransactionId(), apsFrame);
-
-        return command.getTransactionId();
+        return true;
     }
 
     @Override
@@ -837,8 +834,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param announceListener the new {@link ZigBeeAnnounceListener} to add
      */
     public void addAnnounceListener(ZigBeeAnnounceListener announceListener) {
-        final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<ZigBeeAnnounceListener>(
-                announceListeners);
+        final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<>(announceListeners);
         modifiedStateListeners.add(announceListener);
         announceListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
@@ -849,8 +845,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param announceListener the new {@link ZigBeeAnnounceListener} to remove
      */
     public void removeAnnounceListener(ZigBeeAnnounceListener announceListener) {
-        final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<ZigBeeAnnounceListener>(
-                announceListeners);
+        final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<>(announceListeners);
         modifiedStateListeners.remove(announceListener);
         announceListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
@@ -911,8 +906,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param stateListener the {@link ZigBeeNetworkStateListener} to receive the notifications
      */
     public void addNetworkStateListener(ZigBeeNetworkStateListener stateListener) {
-        final List<ZigBeeNetworkStateListener> modifiedStateListeners = new ArrayList<ZigBeeNetworkStateListener>(
-                stateListeners);
+        final List<ZigBeeNetworkStateListener> modifiedStateListeners = new ArrayList<>(stateListeners);
         modifiedStateListeners.add(stateListener);
         stateListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
@@ -923,8 +917,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param stateListener the {@link ZigBeeNetworkStateListener} to stop receiving the notifications
      */
     public void removeNetworkStateListener(ZigBeeNetworkStateListener stateListener) {
-        final List<ZigBeeNetworkStateListener> modifiedStateListeners = new ArrayList<ZigBeeNetworkStateListener>(
-                stateListeners);
+        final List<ZigBeeNetworkStateListener> modifiedStateListeners = new ArrayList<>(stateListeners);
         modifiedStateListeners.remove(stateListener);
         stateListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
@@ -1139,7 +1132,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     public List<ZigBeeGroupAddress> getGroups() {
         synchronized (networkGroups) {
-            return new ArrayList<ZigBeeGroupAddress>(networkGroups.values());
+            return new ArrayList<>(networkGroups.values());
         }
     }
 
@@ -1152,8 +1145,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (networkNodeListener == null) {
             return;
         }
-        final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<ZigBeeNetworkNodeListener>(
-                nodeListeners);
+        final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<>(nodeListeners);
         modifiedListeners.add(networkNodeListener);
         nodeListeners = Collections.unmodifiableList(modifiedListeners);
     }
@@ -1164,8 +1156,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param networkNodeListener the {@link ZigBeeNetworkNodeListener} to remove
      */
     public void removeNetworkNodeListener(final ZigBeeNetworkNodeListener networkNodeListener) {
-        final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<ZigBeeNetworkNodeListener>(
-                nodeListeners);
+        final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<>(nodeListeners);
         modifiedListeners.remove(networkNodeListener);
         nodeListeners = Collections.unmodifiableList(modifiedListeners);
     }
@@ -1192,7 +1183,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public Set<ZigBeeNode> getNodes() {
         synchronized (networkNodes) {
-            return new HashSet<ZigBeeNode>(networkNodes.values());
+            return new HashSet<>(networkNodes.values());
         }
     }
 

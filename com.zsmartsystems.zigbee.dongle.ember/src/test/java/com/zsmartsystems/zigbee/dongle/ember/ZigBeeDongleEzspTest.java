@@ -278,14 +278,14 @@ public class ZigBeeDongleEzspTest {
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_SUCCESS);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandState(231,
-                ZigBeeTransportProgressState.TX_ACK);
+                ZigBeeTransportProgressState.RX_ACK);
 
         response = Mockito.mock(EzspMessageSentHandler.class);
         Mockito.when(response.getMessageTag()).thenReturn(231);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_DOWN);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandState(231,
-                ZigBeeTransportProgressState.TX_NAK);
+                ZigBeeTransportProgressState.RX_NAK);
     }
 
     @Test

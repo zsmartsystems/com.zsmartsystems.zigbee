@@ -356,7 +356,13 @@ public class ZigBeeTransaction {
         timeoutTask = transactionManager.scheduleTask(new Runnable() {
             @Override
             public void run() {
-                cancelTransaction();
+                if (state == TransactionState.RESPONDED) {
+                    // Even though this transaction has timed out waiting for the transport,
+                    // we did receive a response that completed the transaction at application level
+                    completeTransaction(completionCommand);
+                } else {
+                    cancelTransaction();
+                }
             }
         }, timeout);
     }
@@ -366,7 +372,6 @@ public class ZigBeeTransaction {
         if (timeoutTask != null) {
             timeoutTask.cancel(false);
         }
-        logger.debug("Transaction completed: {}", this);
         if (transactionFuture != null) {
             synchronized (transactionFuture) {
                 transactionFuture.set(new CommandResult(receivedCommand));
@@ -382,7 +387,6 @@ public class ZigBeeTransaction {
         if (timeoutTask != null) {
             timeoutTask.cancel(false);
         }
-        logger.debug("Transaction cancelled: {}", this);
 
         transactionManager.transactionComplete(this, TransactionState.FAILED);
     }
