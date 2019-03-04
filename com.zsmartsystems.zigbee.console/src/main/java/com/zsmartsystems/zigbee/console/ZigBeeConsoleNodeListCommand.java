@@ -7,8 +7,6 @@
  */
 package com.zsmartsystems.zigbee.console;
 
-import static com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster.*;
-
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,18 +91,23 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
 
             first = false;
         }
+
+        // Print the node information if there are no known endpoints
+        if (first) {
+            out.println(nodeInfo);
+        }
     }
 
     private String getManufacturer(ZigBeeEndpoint endpoint) {
         ZclBasicCluster cluster = getBasicCluster(endpoint);
-        ZclAttribute attribute = cluster != null ? cluster.getAttribute(ATTR_MANUFACTURERNAME) : null;
+        ZclAttribute attribute = cluster != null ? cluster.getAttribute(ZclBasicCluster.ATTR_MANUFACTURERNAME) : null;
         Object lastValue = attribute != null ? attribute.getLastValue() : null;
         return lastValue != null ? lastValue.toString() : "";
     }
 
     private String getModel(ZigBeeEndpoint endpoint) {
         ZclBasicCluster cluster = getBasicCluster(endpoint);
-        ZclAttribute attribute = cluster != null ? cluster.getAttribute(ATTR_MODELIDENTIFIER) : null;
+        ZclAttribute attribute = cluster != null ? cluster.getAttribute(ZclBasicCluster.ATTR_MODELIDENTIFIER) : null;
         Object lastValue = attribute != null ? attribute.getLastValue() : null;
         return lastValue != null ? lastValue.toString() : "";
     }
