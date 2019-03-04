@@ -13,7 +13,6 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
-import com.zsmartsystems.zigbee.ZigBeeNetwork;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
@@ -27,7 +26,7 @@ import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
  * <p>
  * The ZCL interface allows the stack to specify the NWK (Network) header, the APS (Application Support Sublayer) and
  * the payload. The headers are provided separately to allow the framework to specify the configuration in some detail,
- * while allowing the transport implementation (eg dongle) to format the data as per its needs. The payload is
+ * while allowing the transport implementation (e.g. dongle) to format the data as per its needs. The payload is
  * serialised by the framework using the {@link ZigBeeSerializer} and {@link ZigBeeDeserializer} interfaces, thus
  * allowing the format to be set for different hardware implementations.
  *
@@ -90,20 +89,15 @@ public interface ZigBeeTransportTransmit {
 
     /**
      * Sends ZigBee Cluster Library command without waiting for response. Responses are provided to the framework
-     * through the {@link ZigBeeNetwork#receiveZclCommand} callback.
+     * through the {@link ZigBeeTransportReceive#receiveCommand(ZigBeeApsFrame)} callback.
      * <p>
-     * This method must return instantly - it should NOT wait for a response.
-     * <p>
-     * The ZCL method allows the stack to specify the NWK (Network) header, the APS (Application Support Sublayer) and
-     * the payload. The headers are provided separately to allow the framework to specify the configuration in some
-     * detail, while allowing the transport implementation (eg dongle) to format the data as per its needs. The payload
-     * is serialised by the framework using the {@link ZigBeeSerializer} interface, thus allowing the format to be set
-     * for different hardware implementations.
+     * This method must return instantly - it should NOT wait for a response. State updates are provided with the
+     * {@link ZigBeeTransportReceive#receiveCommandState(int, ZigBeeTransportProgressState)} method.
      *
+     * @param msgTag the message tag for this command
      * @param apsFrame the {@link ZigBeeApsFrame} to be sent
-     * @return transaction ID
      */
-    void sendCommand(final ZigBeeApsFrame apsFrame);
+    void sendCommand(final int msgTag, final ZigBeeApsFrame apsFrame);
 
     /**
      * Sets the {@link ZigBeeTransportReceive}. Set by the network so that the {@link ZigBeeTransportTransmit} can send

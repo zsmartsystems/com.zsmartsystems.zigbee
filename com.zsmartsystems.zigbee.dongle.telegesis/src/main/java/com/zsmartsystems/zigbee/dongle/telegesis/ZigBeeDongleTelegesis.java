@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -321,6 +323,12 @@ public class ZigBeeDongleTelegesis
     private Map<Integer, Integer> messageIdMap = new ConcurrentHashMap<>();
 
     /**
+     * We need to put all received events in a "pipeline" to make sure we process "SEQ/OK/ERROR" responses
+     * from the dongle before "ACK/NAK" responses, or even before the command response arrives from the remote device
+     */
+    private ExecutorService commandScheduler = Executors.newFixedThreadPool(1);
+
+    /**
      * Constructor for Telegesis dongle.
      *
      * @param serialPort the {@link ZigBeePort} for communicating with the dongle
@@ -609,7 +617,7 @@ public class ZigBeeDongleTelegesis
     }
 
     @Override
-    public void sendCommand(final ZigBeeApsFrame apsFrame) {
+    public void sendCommand(final int msgTag, final ZigBeeApsFrame apsFrame) {
         if (frameHandler == null) {
             logger.debug("Telegesis frame handler not set for send.");
             return;
@@ -651,14 +659,14 @@ public class ZigBeeDongleTelegesis
         logger.debug("Telegesis send: {}", command.toString());
 
         // We need to get the Telegesis SEQ number for the transaction so we can correlate the transaction ID
-        // This is done by spawning a new thread to send the transaction so we get the response.
-        new Thread() {
+        // This is done in a separate thread that puts all the responses from the dongle in a pipeline
+        commandScheduler.execute(new Runnable() {
             @Override
             public void run() {
                 frameHandler.sendRequest(command);
 
                 // Let the stack know the frame is sent
-                zigbeeTransportReceive.receiveCommandStatus(apsFrame.getApsCounter(),
+                zigbeeTransportReceive.receiveCommandState(msgTag,
                         command.getStatus() == TelegesisStatusCode.SUCCESS ? ZigBeeTransportProgressState.TX_ACK
                                 : ZigBeeTransportProgressState.TX_NAK);
 
@@ -667,9 +675,9 @@ public class ZigBeeDongleTelegesis
                     return;
                 }
 
-                messageIdMap.put(((TelegesisSendUnicastCommand) command).getMessageId(), apsFrame.getApsCounter());
+                messageIdMap.put(((TelegesisSendUnicastCommand) command).getMessageId(), msgTag);
             }
-        }.start();
+        });
     }
 
     @Override
@@ -684,6 +692,16 @@ public class ZigBeeDongleTelegesis
             return;
         }
 
+        // This is done in a separate thread that puts all the responses from the dongle in a pipeline
+        commandScheduler.execute(new Runnable() {
+            @Override
+            public void run() {
+                telegesisEventReceivedRunnable(event);
+            }
+        });
+    }
+
+    public void telegesisEventReceivedRunnable(TelegesisEvent event) {
         if (event instanceof TelegesisReceiveMessageEvent) {
             TelegesisReceiveMessageEvent rxMessage = (TelegesisReceiveMessageEvent) event;
 
@@ -707,7 +725,7 @@ public class ZigBeeDongleTelegesis
                 return;
             }
 
-            zigbeeTransportReceive.receiveCommandStatus(messageIdMap.remove(ackEvent.getMessageId()),
+            zigbeeTransportReceive.receiveCommandState(messageIdMap.remove(ackEvent.getMessageId()),
                     ZigBeeTransportProgressState.RX_ACK);
             return;
         }
@@ -719,7 +737,7 @@ public class ZigBeeDongleTelegesis
                 logger.debug("No sequence correlated for NAK messageId {}", nackEvent.getMessageId());
                 return;
             }
-            zigbeeTransportReceive.receiveCommandStatus(messageIdMap.remove(nackEvent.getMessageId()),
+            zigbeeTransportReceive.receiveCommandState(messageIdMap.remove(nackEvent.getMessageId()),
                     ZigBeeTransportProgressState.RX_NAK);
             return;
         }

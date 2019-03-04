@@ -97,7 +97,7 @@ public class ClusterMatcher implements ZigBeeCommandListener {
             matchResponse.setDestinationAddress(command.getSourceAddress());
             matchResponse.setNwkAddrOfInterest(matchRequest.getNwkAddrOfInterest());
             logger.debug("{}: ClusterMatcher sending match {}", networkManager.getZigBeeExtendedPanId(), matchResponse);
-            networkManager.sendCommand(matchResponse);
+            networkManager.sendTransaction(matchResponse);
         }
     }
 }

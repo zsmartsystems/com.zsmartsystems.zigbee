@@ -40,7 +40,6 @@ import com.zsmartsystems.zigbee.internal.ZigBeeCommandNotifier;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
-import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
@@ -54,7 +53,6 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
-import com.zsmartsystems.zigbee.zcl.ZclTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandType;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
@@ -133,21 +131,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * The node listeners of the ZigBee network. Registered listeners will be
      * notified of additions, deletions and changes to {@link ZigBeeNode}s.
      */
-    private List<ZigBeeNetworkNodeListener> nodeListeners = Collections
-            .unmodifiableList(new ArrayList<ZigBeeNetworkNodeListener>());
+    private List<ZigBeeNetworkNodeListener> nodeListeners = Collections.unmodifiableList(new ArrayList<>());
 
     /**
      * The announce listeners are notified whenever a new device is discovered.
      * This can be called from the transport layer, or internally by methods watching
      * the network state.
      */
-    private List<ZigBeeAnnounceListener> announceListeners = Collections
-            .unmodifiableList(new ArrayList<ZigBeeAnnounceListener>());
-
-    /**
-     * {@link AtomicInteger} used to generate transaction sequence numbers
-     */
-    private final static AtomicInteger sequenceNumber = new AtomicInteger();
+    private List<ZigBeeAnnounceListener> announceListeners = Collections.unmodifiableList(new ArrayList<>());
 
     /**
      * {@link AtomicInteger} used to generate APS header counters
@@ -186,8 +177,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * The listeners of the ZigBee network state.
      */
-    private List<ZigBeeNetworkStateListener> stateListeners = Collections
-            .unmodifiableList(new ArrayList<ZigBeeNetworkStateListener>());
+    private List<ZigBeeNetworkStateListener> stateListeners = Collections.unmodifiableList(new ArrayList<>());
 
     /**
      * A Set used to remember if node discovery has been completed. This is used to manage the lifecycle notifications.
@@ -256,7 +246,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param transport the dongle
      */
     public ZigBeeNetworkManager(final ZigBeeTransportTransmit transport) {
-        Map<ZigBeeTransportState, Set<ZigBeeTransportState>> transitions = new HashMap<ZigBeeTransportState, Set<ZigBeeTransportState>>();
+        Map<ZigBeeTransportState, Set<ZigBeeTransportState>> transitions = new HashMap<>();
 
         transitions.put(null, new HashSet<>(Arrays.asList(ZigBeeTransportState.UNINITIALISED)));
         transitions.put(ZigBeeTransportState.UNINITIALISED,
@@ -545,6 +535,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         transport.shutdown();
+        transactionManager.shutdown();
     }
 
     /**
@@ -620,23 +611,15 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Sends a command directly to the ZigBeeTransportTransmit} interface
+     * Sends a command directly to the ZigBeeTransportTransmit} interface. This method should only be used by the
+     * transaction manager.
      *
      * @param command the {@link ZigBeeCommand} to send
-     * @return
+     * @return true if the command was successfully passed to the transport layer
      */
-    public int sendCommand(ZigBeeCommand command) {
+    public boolean sendCommand(ZigBeeCommand command) {
         // Create the application frame
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
-
-        if (command.getTransactionId() == null) {
-            command.setTransactionId(sequenceNumber.getAndIncrement() & 0xff);
-        }
-
-        // Set the source address - should probably be improved!
-        // Note that the endpoint is set (currently!) in the transport layer
-        // TODO: Use only a single endpoint for HA and fix this here
-        command.setSourceAddress(new ZigBeeEndpointAddress(localNwkAddress));
 
         logger.debug("TX CMD: {}", command);
 
@@ -672,7 +655,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
             logger.debug("Error serializing ZigBee frame {}", e);
-            return 0;
+            return false;
         }
 
         if (command instanceof ZdoCommand) {
@@ -715,9 +698,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
         logger.debug("TX APS: {}", apsFrame);
 
-        transport.sendCommand(apsFrame);
-
-        return command.getTransactionId();
+        transport.sendCommand(command.getTransactionId(), apsFrame);
+        return true;
     }
 
     @Override
@@ -852,8 +834,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param announceListener the new {@link ZigBeeAnnounceListener} to add
      */
     public void addAnnounceListener(ZigBeeAnnounceListener announceListener) {
-        final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<ZigBeeAnnounceListener>(
-                announceListeners);
+        final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<>(announceListeners);
         modifiedStateListeners.add(announceListener);
         announceListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
@@ -864,8 +845,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param announceListener the new {@link ZigBeeAnnounceListener} to remove
      */
     public void removeAnnounceListener(ZigBeeAnnounceListener announceListener) {
-        final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<ZigBeeAnnounceListener>(
-                announceListeners);
+        final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<>(announceListeners);
         modifiedStateListeners.remove(announceListener);
         announceListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
@@ -926,8 +906,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param stateListener the {@link ZigBeeNetworkStateListener} to receive the notifications
      */
     public void addNetworkStateListener(ZigBeeNetworkStateListener stateListener) {
-        final List<ZigBeeNetworkStateListener> modifiedStateListeners = new ArrayList<ZigBeeNetworkStateListener>(
-                stateListeners);
+        final List<ZigBeeNetworkStateListener> modifiedStateListeners = new ArrayList<>(stateListeners);
         modifiedStateListeners.add(stateListener);
         stateListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
@@ -938,8 +917,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param stateListener the {@link ZigBeeNetworkStateListener} to stop receiving the notifications
      */
     public void removeNetworkStateListener(ZigBeeNetworkStateListener stateListener) {
-        final List<ZigBeeNetworkStateListener> modifiedStateListeners = new ArrayList<ZigBeeNetworkStateListener>(
-                stateListeners);
+        final List<ZigBeeNetworkStateListener> modifiedStateListeners = new ArrayList<>(stateListeners);
         modifiedStateListeners.remove(stateListener);
         stateListeners = Collections.unmodifiableList(modifiedStateListeners);
     }
@@ -1012,40 +990,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Sends {@link ZclCommand} command to {@link ZigBeeAddress}.
-     *
-     * @param destination the destination
-     * @param command the {@link ZclCommand}
-     * @return the command result future
-     */
-    public Future<CommandResult> send(ZigBeeAddress destination, ZclCommand command) {
-        command.setDestinationAddress(destination);
-        if (destination.isGroup()) {
-            return broadcast(command);
-        } else {
-            final ZigBeeTransactionMatcher responseMatcher = new ZclTransactionMatcher();
-            return sendTransaction(command, responseMatcher);
-        }
-    }
-
-    /**
-     * Broadcasts command i.e. does not wait for response.
-     *
-     * @param command the {@link ZigBeeCommand}
-     * @return the {@link CommandResult} future.
-     */
-    private Future<CommandResult> broadcast(final ZigBeeCommand command) {
-        synchronized (command) {
-            final ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
-
-            sendCommand(command);
-            transactionFuture.set(new CommandResult(new BroadcastResponse()));
-
-            return transactionFuture;
-        }
-    }
-
-    /**
      * Enables or disables devices to join the whole network.
      * <p>
      * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
@@ -1084,18 +1028,18 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setDestinationAddress(destination);
         command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
-        sendCommand(command);
+        sendTransaction(command);
 
         // If this is a broadcast, then we send it to our own address as well
         // This seems to be required for some stacks (eg ZNP)
-        if (ZigBeeBroadcastDestination.getBroadcastDestination(destination.getAddress()) != null) {
+        if (ZigBeeBroadcastDestination.isBroadcast(destination.getAddress())) {
             command = new ManagementPermitJoiningRequest();
             command.setPermitDuration(duration);
             command.setTcSignificance(true);
             command.setDestinationAddress(new ZigBeeEndpointAddress(0));
             command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
-            sendCommand(command);
+            sendTransaction(command);
         }
 
         return ZigBeeStatus.SUCCESS;
@@ -1188,7 +1132,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     public List<ZigBeeGroupAddress> getGroups() {
         synchronized (networkGroups) {
-            return new ArrayList<ZigBeeGroupAddress>(networkGroups.values());
+            return new ArrayList<>(networkGroups.values());
         }
     }
 
@@ -1201,8 +1145,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (networkNodeListener == null) {
             return;
         }
-        final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<ZigBeeNetworkNodeListener>(
-                nodeListeners);
+        final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<>(nodeListeners);
         modifiedListeners.add(networkNodeListener);
         nodeListeners = Collections.unmodifiableList(modifiedListeners);
     }
@@ -1213,8 +1156,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param networkNodeListener the {@link ZigBeeNetworkNodeListener} to remove
      */
     public void removeNetworkNodeListener(final ZigBeeNetworkNodeListener networkNodeListener) {
-        final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<ZigBeeNetworkNodeListener>(
-                nodeListeners);
+        final List<ZigBeeNetworkNodeListener> modifiedListeners = new ArrayList<>(nodeListeners);
         modifiedListeners.remove(networkNodeListener);
         nodeListeners = Collections.unmodifiableList(modifiedListeners);
     }
@@ -1241,7 +1183,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public Set<ZigBeeNode> getNodes() {
         synchronized (networkNodes) {
-            return new HashSet<ZigBeeNode>(networkNodes.values());
+            return new HashSet<>(networkNodes.values());
         }
     }
 
@@ -1500,18 +1442,33 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         return localNwkAddress;
     }
 
+    /**
+     * Finalises the command in preparation for sending. This adds the local source address to an outgoing command.
+     *
+     * @param command the {@link ZigBeeCommand} that is being sent
+     */
+    private void finaliseOutgoingCommand(ZigBeeCommand command) {
+        // Set the source address - should probably be improved!
+        // Note that the endpoint is set (currently!) in the transport layer
+        // TODO: Use only a single endpoint for HA and fix this here
+        command.setSourceAddress(new ZigBeeEndpointAddress(localNwkAddress));
+    }
+
     @Override
     public void sendTransaction(ZigBeeCommand command) {
+        finaliseOutgoingCommand(command);
         transactionManager.sendTransaction(command);
     }
 
     @Override
     public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
+        finaliseOutgoingCommand(command);
         return transactionManager.sendTransaction(command, responseMatcher);
     }
 
     @Override
-    public void receiveCommandStatus(int transactionId, ZigBeeTransportProgressState status) {
-        transactionManager.receiveCommandStatus(transactionId, status);
+    public void receiveCommandState(int msgTag, ZigBeeTransportProgressState state) {
+        logger.debug("RX STA: msgTag={} state={}", String.format("%02X", msgTag), state);
+        transactionManager.receiveCommandState(msgTag, state);
     }
 }

@@ -39,7 +39,7 @@ public class ClusterMatcherTest {
             public Integer answer(InvocationOnMock invocation) {
                 return 0;
             }
-        }).when(mockedNetworkManager).sendCommand(mockedCommandCaptor.capture());
+        }).when(mockedNetworkManager).sendTransaction(mockedCommandCaptor.capture());
 
         ClusterMatcher matcher = new ClusterMatcher(mockedNetworkManager);
 

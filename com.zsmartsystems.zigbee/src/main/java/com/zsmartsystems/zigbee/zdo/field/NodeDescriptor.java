@@ -26,12 +26,12 @@ public class NodeDescriptor {
     private boolean complexDescriptorAvailable;
     private int manufacturerCode;
     private LogicalType logicalType = LogicalType.UNKNOWN;
-    private Set<ServerCapabilitiesType> serverCapabilities = new HashSet<ServerCapabilitiesType>();
+    private Set<ServerCapabilitiesType> serverCapabilities = new HashSet<>();
     private int incomingTransferSize;
     private int outgoingTransferSize;
     private boolean userDescriptorAvailable;
     private Set<FrequencyBandType> frequencyBands = new HashSet<FrequencyBandType>();
-    private final Set<MacCapabilitiesType> macCapabilities = new HashSet<MacCapabilitiesType>();
+    private final Set<MacCapabilitiesType> macCapabilities = new HashSet<>();
     private boolean extendedEndpointListAvailable;
     private boolean extendedSimpleDescriptorListAvailable;
     private int stackCompliance;
