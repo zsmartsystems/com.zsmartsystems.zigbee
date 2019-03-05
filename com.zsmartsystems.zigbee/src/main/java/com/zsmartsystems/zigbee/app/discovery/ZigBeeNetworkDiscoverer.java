@@ -90,8 +90,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
     /**
      * Map of node discovery times.
      */
-    private final Map<Integer, Long> discoveryStartTime = Collections
-            .synchronizedMap(new ConcurrentHashMap<Integer, Long>());
+    private final Map<Integer, Long> discoveryStartTime = Collections.synchronizedMap(new ConcurrentHashMap<>());
 
     /**
      * Flag used to initialise the discoverer once the network is ONLINE
@@ -202,17 +201,62 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
     }
 
     /**
-     * Starts a discovery on a node.
+     * Starts a discovery on a node given the network address.
      *
-     * @param nodeAddress the network address of the node to discover
+     * @param networkAddress the network address of the node to discover
      */
-    protected void rediscoverNode(final int nodeAddress) {
+    protected void rediscoverNode(final int networkAddress) {
         if (!initialized) {
             logger.debug("Network discovery task: can't perform rediscovery on {} until initialization complete.",
-                    nodeAddress);
+                    networkAddress);
             return;
         }
-        startNodeDiscovery(nodeAddress);
+
+        networkManager.executeTask(new Runnable() {
+            @Override
+            public void run() {
+                logger.debug("{}: NWK Discovery starting node rediscovery", networkAddress);
+                int retries = 0;
+
+                try {
+                    do {
+                        // Request basic response, start index for associated list is 0
+                        final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
+                        ieeeAddressRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
+                        ieeeAddressRequest.setRequestType(0);
+                        ieeeAddressRequest.setStartIndex(0);
+                        ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
+                        CommandResult response = networkManager.sendTransaction(ieeeAddressRequest, ieeeAddressRequest)
+                                .get();
+                        if (response.isError()) {
+                            return;
+                        }
+
+                        final IeeeAddressResponse ieeeAddressResponse = response.getResponse();
+                        logger.debug("{}: NWK Discovery IeeeAddressRequest returned {}", networkAddress,
+                                ieeeAddressResponse);
+                        if (ieeeAddressResponse != null && ieeeAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
+                            addNode(ieeeAddressResponse.getIeeeAddrRemoteDev(),
+                                    ieeeAddressResponse.getNwkAddrRemoteDev());
+                            startNodeDiscovery(ieeeAddressResponse.getNwkAddrRemoteDev());
+                            break;
+                        }
+
+                        // We failed with the last request. Wait a bit then retry
+                        try {
+                            logger.debug("{}: NWK Discovery node rediscovery request failed. Wait before retry.",
+                                    networkAddress);
+                            Thread.sleep(retryPeriod);
+                        } catch (InterruptedException e) {
+                            break;
+                        }
+                    } while (retries++ < retryCount);
+                } catch (InterruptedException | ExecutionException e) {
+                    logger.debug("NWK Discovery Error in checkIeeeAddressResponse ", e);
+                }
+                logger.debug("{}: NWK Discovery finishing node rediscovery after {} attempts", networkAddress, retries);
+            }
+        });
     }
 
     /**
@@ -228,7 +272,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
             return;
         }
 
-        Runnable runnable = new Runnable() {
+        networkManager.executeTask(new Runnable() {
             @Override
             public void run() {
                 logger.debug("{}: NWK Discovery starting node rediscovery", ieeeAddress);
@@ -268,11 +312,9 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
                 } catch (InterruptedException | ExecutionException e) {
                     logger.debug("NWK Discovery error in rediscoverNode ", e);
                 }
-                logger.debug("{}: NWK Discovery finishing node rediscovery", ieeeAddress);
+                logger.debug("{}: NWK Discovery finishing node rediscovery after {} attempts", ieeeAddress, retries);
             }
-        };
-
-        networkManager.executeTask(runnable);
+        });
     }
 
     /**
