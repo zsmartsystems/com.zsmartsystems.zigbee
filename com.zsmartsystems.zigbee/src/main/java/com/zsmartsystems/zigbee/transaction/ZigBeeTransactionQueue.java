@@ -146,7 +146,7 @@ public class ZigBeeTransactionQueue {
             return sleepy;
         }
 
-        logger.debug("{}: Udpdated sleepy state from {} to {}", queueName, this.sleepy, sleepy);
+        logger.debug("{}: Updated sleepy state from {} to {}", queueName, this.sleepy, sleepy);
         this.sleepy = sleepy;
 
         return !this.sleepy;
