@@ -1,0 +1,7 @@
+group = 'com.zsmartsystems.zigbee'
+description = ''
+dependencies {
+ compile project(':com.zsmartsystems.zigbee')
+  
+ testCompile project(':com.zsmartsystems.zigbee').sourceSets.test.output
+}
