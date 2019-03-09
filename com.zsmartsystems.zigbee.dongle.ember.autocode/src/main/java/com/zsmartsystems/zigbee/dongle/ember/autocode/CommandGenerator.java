@@ -473,7 +473,7 @@ public class CommandGenerator extends ClassGenerator {
                 continue;
             }
             if (autoSizers.get(parameter.name) != null) {
-                out.println("        " + parameter.name + "= deserializer.deserialize"
+                out.println("        " + parameter.name + " = deserializer.deserialize"
                         + getTypeSerializer(parameter.data_type) + "(" + autoSizers.get(parameter.name) + ");");
                 continue;
             }

@@ -1,0 +1,7 @@
+group = 'com.zsmartsystems.zigbee'
+description = ''
+dependencies {
+ compile project(':com.zsmartsystems.zigbee')
+ compile project(':com.zsmartsystems.zigbee.console')
+ compile project(':com.zsmartsystems.zigbee.dongle.zstack’)
+}

@@ -40,16 +40,19 @@
 		<module>com.zsmartsystems.zigbee.autocode</module>
 		<module>com.zsmartsystems.zigbee.dongle.xbee</module>
 		<module>com.zsmartsystems.zigbee.dongle.xbee.autocode</module>
-		<module>com.zsmartsystems.zigbee.dongle.cc2531</module>
+        <module>com.zsmartsystems.zigbee.dongle.cc2531</module>
         <module>com.zsmartsystems.zigbee.dongle.ember</module>
         <module>com.zsmartsystems.zigbee.dongle.ember.autocode</module>
 		<module>com.zsmartsystems.zigbee.dongle.conbee</module>
 		<module>com.zsmartsystems.zigbee.dongle.telegesis</module>
 		<module>com.zsmartsystems.zigbee.dongle.telegesis.autocode</module>
+        <module>com.zsmartsystems.zigbee.dongle.zstack</module>
+        <module>com.zsmartsystems.zigbee.dongle.zstack.autocode</module>
 		<module>com.zsmartsystems.zigbee.console</module>
 		<module>com.zsmartsystems.zigbee.console.ember</module>
 		<module>com.zsmartsystems.zigbee.console.main</module>
-		<module>com.zsmartsystems.zigbee.console.telegesis</module>
+        <module>com.zsmartsystems.zigbee.console.telegesis</module>
+        <module>com.zsmartsystems.zigbee.console.zstack</module>
 		<module>com.zsmartsystems.zigbee.serial</module>
 		<module>com.zsmartsystems.zigbee.test</module>
 		<module>releng/p2repo</module>
