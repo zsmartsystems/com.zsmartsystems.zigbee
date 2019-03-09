@@ -91,27 +91,27 @@ public abstract class ZclCluster {
      * After initialisation, the list will contain an empty list. Once a successful call to
      * {@link #discoverAttributes()} has been made, the list will reflect the attributes supported by the remote device.
      */
-    private final Set<Integer> supportedAttributes = new TreeSet<Integer>();
+    private final Set<Integer> supportedAttributes = new TreeSet<>();
 
     /**
      * The list of supported commands that the remote device can generate
      */
-    private final Set<Integer> supportedCommandsReceived = new HashSet<Integer>();
+    private final Set<Integer> supportedCommandsReceived = new HashSet<>();
 
     /**
      * The list of supported commands that the remote device can receive
      */
-    private final Set<Integer> supportedCommandsGenerated = new HashSet<Integer>();
+    private final Set<Integer> supportedCommandsGenerated = new HashSet<>();
 
     /**
      * Set of listeners to receive notifications when an attribute updates its value
      */
-    private final Set<ZclAttributeListener> attributeListeners = new CopyOnWriteArraySet<ZclAttributeListener>();
+    private final Set<ZclAttributeListener> attributeListeners = new CopyOnWriteArraySet<>();
 
     /**
      * Set of listeners to receive notifications when a command is received
      */
-    private final Set<ZclCommandListener> commandListeners = new CopyOnWriteArraySet<ZclCommandListener>();
+    private final Set<ZclCommandListener> commandListeners = new CopyOnWriteArraySet<>();
 
     /**
      * Map of attributes supported by the cluster. This contains all attributes, even if they are not supported by the
@@ -575,16 +575,17 @@ public abstract class ZclCluster {
      * and the user can use existing results. Normally there should not be a need to set rediscover to true.
      * <p>
      * This method returns a future to a boolean. Upon success the caller should call {@link #getSupportedAttributes()}
-     * to get the list of supported attributes.
+     * to get the list of supported attributes or {@link #isAttributeSupported(int)} to test if a single attribute is
+     * supported.
      *
      * @param rediscover true to perform a discovery even if it was previously completed
      * @return {@link Future} returning a {@link Boolean}
      */
     public Future<Boolean> discoverAttributes(final boolean rediscover) {
-        RunnableFuture<Boolean> future = new FutureTask<Boolean>(new Callable<Boolean>() {
+        RunnableFuture<Boolean> future = new FutureTask<>(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
-                // Synchronise the request to avoid multiple simultaneous requests to this update the list on this
+                // Synchronise the request to avoid multiple simultaneous requests to this update of the list on this
                 // cluster which would cause errors consolidating the responses
                 synchronized (supportedAttributes) {
                     // If we don't want to rediscover, and we already have the list of attributes, then return
@@ -594,7 +595,7 @@ public abstract class ZclCluster {
 
                     int index = 0;
                     boolean complete = false;
-                    Set<AttributeInformation> attributes = new HashSet<AttributeInformation>();
+                    Set<AttributeInformation> attributes = new HashSet<>();
 
                     do {
                         final DiscoverAttributesCommand command = new DiscoverAttributesCommand();
@@ -610,7 +611,8 @@ public abstract class ZclCluster {
 
                         DiscoverAttributesResponse response = (DiscoverAttributesResponse) result.getResponse();
                         complete = response.getDiscoveryComplete();
-                        if (response.getAttributeInformation() != null) {
+                        if (response.getAttributeInformation() != null
+                                && !response.getAttributeInformation().isEmpty()) {
                             attributes.addAll(response.getAttributeInformation());
                             index = Collections.max(attributes).getIdentifier() + 1;
                         }
@@ -625,7 +627,7 @@ public abstract class ZclCluster {
             }
         });
 
-        // start the thread to execute it
+        // Create the thread to execute it
         new Thread(future).start();
         return future;
     }
@@ -638,7 +640,7 @@ public abstract class ZclCluster {
      */
     public Set<Integer> getSupportedCommandsReceived() {
         synchronized (supportedCommandsReceived) {
-            return new HashSet<Integer>(supportedCommandsReceived);
+            return new HashSet<>(supportedCommandsReceived);
         }
     }
 
@@ -666,7 +668,7 @@ public abstract class ZclCluster {
      * @return Command future {@link Boolean} with the success of the discovery
      */
     public Future<Boolean> discoverCommandsReceived(final boolean rediscover) {
-        RunnableFuture<Boolean> future = new FutureTask<Boolean>(new Callable<Boolean>() {
+        RunnableFuture<Boolean> future = new FutureTask<>(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
                 // Synchronise the request to avoid multiple simultaneous requests to this update the list on this
@@ -679,7 +681,7 @@ public abstract class ZclCluster {
 
                     int index = 0;
                     boolean complete = false;
-                    Set<Integer> commands = new HashSet<Integer>();
+                    Set<Integer> commands = new HashSet<>();
 
                     do {
                         final DiscoverCommandsReceived command = new DiscoverCommandsReceived();
@@ -722,7 +724,7 @@ public abstract class ZclCluster {
      */
     public Set<Integer> getSupportedCommandsGenerated() {
         synchronized (supportedCommandsGenerated) {
-            return new HashSet<Integer>(supportedCommandsGenerated);
+            return new HashSet<>(supportedCommandsGenerated);
         }
     }
 
@@ -750,7 +752,7 @@ public abstract class ZclCluster {
      * @return Command future {@link Boolean} with the success of the discovery
      */
     public Future<Boolean> discoverCommandsGenerated(final boolean rediscover) {
-        RunnableFuture<Boolean> future = new FutureTask<Boolean>(new Callable<Boolean>() {
+        RunnableFuture<Boolean> future = new FutureTask<>(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
                 // Synchronise the request to avoid multiple simultaneous requests to this update the list on this
@@ -762,7 +764,7 @@ public abstract class ZclCluster {
                     }
                     int index = 0;
                     boolean complete = false;
-                    Set<Integer> commands = new HashSet<Integer>();
+                    Set<Integer> commands = new HashSet<>();
 
                     do {
                         final DiscoverCommandsGenerated command = new DiscoverCommandsGenerated();
@@ -953,9 +955,9 @@ public abstract class ZclCluster {
 
         dao.setClusterId(clusterId);
         dao.setClient(isClient);
-        dao.setSupportedAttributes(supportedAttributes);
-        dao.setSupportedCommandsGenerated(supportedCommandsGenerated);
-        dao.setSupportedCommandsReceived(supportedCommandsReceived);
+        dao.setSupportedAttributes(Collections.unmodifiableSet(new TreeSet<>(supportedAttributes)));
+        dao.setSupportedCommandsGenerated(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsGenerated)));
+        dao.setSupportedCommandsReceived(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsReceived)));
         dao.setAttributes(attributes);
 
         return dao;
