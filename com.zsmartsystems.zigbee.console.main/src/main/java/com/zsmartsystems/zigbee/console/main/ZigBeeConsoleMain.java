@@ -51,6 +51,9 @@ import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpVersionCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleSecurityStateCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleTransientKeyCommand;
 import com.zsmartsystems.zigbee.console.telegesis.TelegesisConsoleSecurityStateCommand;
+import com.zsmartsystems.zigbee.console.zstack.ZstackConsoleNcpDiagnosticsCommand;
+import com.zsmartsystems.zigbee.console.zstack.ZstackConsoleNcpSecurityCommand;
+import com.zsmartsystems.zigbee.console.zstack.ZstackConsoleNcpStateCommand;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
 import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
@@ -58,6 +61,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.dongle.xbee.ZigBeeDongleXBee;
+import com.zsmartsystems.zigbee.dongle.zstack.ZigBeeDongleZstack;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serial.ZigBeeSerialPort;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
@@ -134,7 +138,8 @@ public class ZigBeeConsoleMain {
 
         Options options = new Options();
         options.addOption(Option.builder("d").longOpt("dongle").hasArg().argName("dongle type")
-                .desc("Set the dongle type to use (EMBER | CC2531 | TELEGESIS | CONBEE | XBEE)").required().build());
+                .desc("Set the dongle type to use (EMBER | CC2531 | ZSTACK | TELEGESIS | CONBEE | XBEE)").required()
+                .build());
         options.addOption(Option.builder("p").longOpt("port").argName("port name").hasArg().desc("Set the port")
                 .required().build());
         options.addOption(
@@ -234,6 +239,13 @@ public class ZigBeeConsoleMain {
         if (dongleName.toUpperCase().equals("CC2531")) {
             dongle = new ZigBeeDongleTiCc2531(serialPort);
             transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 3);
+        } else if (dongleName.toUpperCase().equals("ZSTACK")) {
+            dongle = new ZigBeeDongleZstack(serialPort);
+            transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 3);
+
+            commands.add(ZstackConsoleNcpStateCommand.class);
+            commands.add(ZstackConsoleNcpSecurityCommand.class);
+            commands.add(ZstackConsoleNcpDiagnosticsCommand.class);
         } else if (dongleName.toUpperCase().equals("EMBER")) {
             ZigBeeDongleEzsp emberDongle = new ZigBeeDongleEzsp(serialPort);
             dongle = emberDongle;
