@@ -32,7 +32,7 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
 
     @Override
     public String getCommand() {
-        return "nodelist";
+        return "nodes";
     }
 
     @Override
@@ -60,8 +60,8 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
         }
 
         Collections.sort(nodeIds);
-        String tableHeader = String.format("%7s  %4s  %17s  %13s  %3s  %25s  %15s  %15s  %15s", "Network", "Addr",
-                "IEEE Address", "Logical Type", "EP", "Profile", "Device Type", "Manufacturer", "Model");
+        String tableHeader = String.format("%-7s  %-4s  %-17s  %-13s  %-3s  %-25s  %-15s  %-15s  %-15s", "Network",
+                "Addr", "IEEE Address", "Logical Type", "EP", "Profile", "Device Type", "Manufacturer", "Model");
         out.println(tableHeader);
 
         for (Integer nodeId : nodeIds) {
@@ -70,7 +70,7 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
     }
 
     private void printNode(ZigBeeNode node, PrintStream out) {
-        String nodeInfo = String.format("%7d  %04X  %17s  %13s ", node.getNetworkAddress(), node.getNetworkAddress(),
+        String nodeInfo = String.format("%7d  %04X  %-17s  %-13s ", node.getNetworkAddress(), node.getNetworkAddress(),
                 node.getIeeeAddress(), node.getLogicalType());
         String nodeInfoPadding = String.format("%7s  %4s  %17s  %13s ", "", "", "", "");
 
@@ -79,11 +79,21 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
 
         boolean first = true;
         for (ZigBeeEndpoint endpoint : endpoints) {
+            String profileType;
+            if (ZigBeeProfileType.getByValue(endpoint.getProfileId()) == null) {
+                profileType = String.format("%04X", endpoint.getProfileId());
+            } else {
+                profileType = ZigBeeProfileType.getByValue(endpoint.getProfileId()).toString();
+            }
+            String deviceType;
+            if (ZigBeeProfileType.getByValue(endpoint.getProfileId()) == null) {
+                deviceType = String.format("%04X", endpoint.getDeviceId());
+            } else {
+                deviceType = ZigBeeDeviceType.getByValue(endpoint.getDeviceId()).toString();
+            }
             boolean showManufacturerAndModel = endpoint.getParentNode().getNetworkAddress() != 0;
-            String endpointInfo = String.format("%3d  %25s  %15s  %15s  %15s", endpoint.getEndpointId(),
-                    ZigBeeProfileType.getByValue(endpoint.getProfileId()),
-                    ZigBeeDeviceType.getByValue(endpoint.getDeviceId()),
-                    showManufacturerAndModel ? getManufacturer(endpoint) : "",
+            String endpointInfo = String.format("%3d  %-25s  %-15s  %-15s  %-15s", endpoint.getEndpointId(),
+                    profileType, deviceType, showManufacturerAndModel ? getManufacturer(endpoint) : "",
                     showManufacturerAndModel ? getModel(endpoint) : "");
 
             String tableLine = String.format("%s %s", first ? nodeInfo : nodeInfoPadding, endpointInfo);
