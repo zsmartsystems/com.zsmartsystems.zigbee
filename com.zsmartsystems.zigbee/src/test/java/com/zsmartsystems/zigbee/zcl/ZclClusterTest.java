@@ -14,23 +14,28 @@ import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Future;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.dao.ZclClusterDao;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
@@ -60,7 +65,8 @@ public class ZclClusterTest {
         Mockito.when(endpoint.getEndpointAddress()).thenReturn(new ZigBeeEndpointAddress(1234, 5));
         commandCapture = ArgumentCaptor.forClass(ZigBeeCommand.class);
         matcherCapture = ArgumentCaptor.forClass(ZigBeeTransactionMatcher.class);
-        Mockito.when(node.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(null);
+        Mockito.when(node.sendTransaction(commandCapture.capture(), matcherCapture.capture()))
+                .thenReturn(Mockito.mock(Future.class));
         Mockito.when(endpoint.getParentNode()).thenReturn(node);
         Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(null);
     }
@@ -306,6 +312,32 @@ public class ZclClusterTest {
         assertEquals(Integer.valueOf(4), command.getIdentifiers().get(0));
         assertEquals(Integer.valueOf(5), command.getIdentifiers().get(1));
         assertEquals(Integer.valueOf(6), command.getIdentifiers().get(2));
+    }
+
+    @Test
+    public void discoverAttributes() throws Exception {
+        createEndpoint();
+        DiscoverAttributesResponse response = new DiscoverAttributesResponse();
+        response.setDiscoveryComplete(true);
+        response.setAttributeInformation(Collections.emptyList());
+        Future future = Mockito.mock(Future.class);
+        CommandResult result = Mockito.mock(CommandResult.class);
+        Mockito.when(result.isError()).thenReturn(false);
+        Mockito.when(result.getResponse()).thenReturn(response);
+        Mockito.when(future.get()).thenReturn(result);
+        Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(future);
+
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+        assertFalse(cluster.getSupportedAttributes().isEmpty());
+        assertEquals(4, cluster.getSupportedAttributes().size());
+
+        ZclClusterDao clusterDao = cluster.getDao();
+        assertEquals(0, cluster.getDao().getSupportedAttributes().size());
+        cluster.discoverAttributes(false).get();
+        assertFalse(cluster.getSupportedAttributes().isEmpty());
+
+        cluster.setDao(clusterDao);
+        assertEquals(4, cluster.getSupportedAttributes().size());
     }
 
 }
