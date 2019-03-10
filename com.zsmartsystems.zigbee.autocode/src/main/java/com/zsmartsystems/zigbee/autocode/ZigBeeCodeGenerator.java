@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
 
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCluster;
@@ -112,14 +111,12 @@ public class ZigBeeCodeGenerator {
         allClusters.addAll(zdoClusters);
         ZigBeeZclDependencyGenerator typeGenerator = new ZigBeeZclDependencyGenerator(allClusters);
         Map<String, String> zclTypes = typeGenerator.getDependencyMap();
-        Set<String> dataTypes = typeGenerator.getZclTypeMap();
 
         new ZigBeeZclClusterGenerator(zclClusters, generatedDate, zclTypes);
         new ZigBeeZclCommandGenerator(zclClusters, generatedDate, zclTypes);
         new ZigBeeZclConstantGenerator(zclClusters, generatedDate, zclTypes);
         new ZigBeeZclStructureGenerator(zclClusters, generatedDate, zclTypes);
         new ZigBeeZclClusterTypeGenerator(zclClusters, generatedDate, zclTypes);
-        new ZigBeeZclDataTypeGenerator(dataTypes, generatedDate);
 
         new ZigBeeZclCommandGenerator(zdoClusters, generatedDate, zclTypes);
 
