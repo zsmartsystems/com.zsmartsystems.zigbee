@@ -30,6 +30,12 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  */
 public class SerializerIntegrationTest {
     @Test
+    public void testDeserialize_FLOAT_32_BIT() {
+        Double valIn = 1234.56e9;
+        testSerializer(valIn, ZclDataType.FLOAT_32_BIT);
+    }
+
+    @Test
     public void testDeserialize_ZDO_STATUS() {
         ZdoStatus valIn = ZdoStatus.NO_DESCRIPTOR;
         testSerializer(valIn, ZclDataType.ZDO_STATUS);
@@ -231,6 +237,8 @@ public class SerializerIntegrationTest {
             assertTrue(Arrays.equals((int[]) objectIn, (int[]) objectOut));
         } else if (objectIn instanceof byte[]) {
             assertTrue(Arrays.equals((byte[]) objectIn, (byte[]) objectOut));
+        } else if (objectIn instanceof Double) {
+            assertTrue(Math.abs((Double) objectOut - (Double) objectIn) < 50000);
         } else {
             assertEquals(objectIn, objectOut);
         }

@@ -12,12 +12,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Generated;
-import com.zsmartsystems.zigbee.zcl.field.*;
-import com.zsmartsystems.zigbee.zcl.ZclStatus;
-import com.zsmartsystems.zigbee.zdo.ZdoStatus;
-import com.zsmartsystems.zigbee.zdo.field.*;
-import com.zsmartsystems.zigbee.IeeeAddress;
+
 import com.zsmartsystems.zigbee.ExtendedPanId;
+import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
+import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
+import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
+import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
+import com.zsmartsystems.zigbee.zcl.field.AttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ExtendedAttributeInformation;
+import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
+import com.zsmartsystems.zigbee.zcl.field.NeighborInformation;
+import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
+import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
+import com.zsmartsystems.zigbee.zdo.field.BindingTable;
+import com.zsmartsystems.zigbee.zdo.field.ComplexDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
+import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.UserDescriptor;
 
 /**
  * Enumeration of the ZCL data types
@@ -37,22 +56,26 @@ public enum ZclDataType {
     DATA_8_BIT("8-bit data", Integer.class, 0x08, false),
     ENUMERATION_16_BIT("16-bit enumeration", Integer.class, 0x31, false),
     ENUMERATION_8_BIT("8-bit Enumeration", Integer.class, 0x30, false),
+    FLOAT_32_BIT("Single precision float", Double.class, 0x39, true),
     IEEE_ADDRESS("IEEE Address", IeeeAddress.class, 0xF0, false),
     N_X_ATTRIBUTE_IDENTIFIER("N X Attribute identifier", Integer.class, 0x00, false),
     N_X_ATTRIBUTE_INFORMATION("N X Attribute information", AttributeInformation.class, 0x00, false),
     N_X_ATTRIBUTE_RECORD("N X Attribute record", AttributeRecord.class, 0x00, false),
     N_X_ATTRIBUTE_REPORT("N X Attribute report", AttributeReport.class, 0x00, false),
-    N_X_ATTRIBUTE_REPORTING_CONFIGURATION_RECORD("N X Attribute reporting configuration record", AttributeReportingConfigurationRecord.class, 0x00, false),
+    N_X_ATTRIBUTE_REPORTING_CONFIGURATION_RECORD("N X Attribute reporting configuration record",
+            AttributeReportingConfigurationRecord.class, 0x00, false),
     N_X_ATTRIBUTE_SELECTOR("N X Attribute selector", Object.class, 0x00, false),
     N_X_ATTRIBUTE_STATUS_RECORD("N X Attribute status record", AttributeStatusRecord.class, 0x00, false),
-    N_X_EXTENDED_ATTRIBUTE_INFORMATION("N x Extended Attribute Information", ExtendedAttributeInformation.class, 0x00, false),
+    N_X_EXTENDED_ATTRIBUTE_INFORMATION("N x Extended Attribute Information", ExtendedAttributeInformation.class, 0x00,
+            false),
     N_X_EXTENSION_FIELD_SET("N X Extension field set", ExtensionFieldSet.class, 0x00, false),
     N_X_NEIGHBORS_INFORMATION("N X Neighbors information", NeighborInformation.class, 0x00, false),
     N_X_READ_ATTRIBUTE_STATUS_RECORD("N X Read attribute status record", ReadAttributeStatusRecord.class, 0x00, false),
     N_X_UNSIGNED_16_BIT_INTEGER("N X Unsigned 16-bit integer", Integer.class, 0x00, false),
     N_X_UNSIGNED_8_BIT_INTEGER("N x Unsigned 8-bit Integer", Integer.class, 0x00, false),
     N_X_WRITE_ATTRIBUTE_RECORD("N X Write attribute record", WriteAttributeRecord.class, 0x00, false),
-    N_X_WRITE_ATTRIBUTE_STATUS_RECORD("N X Write attribute status record", WriteAttributeStatusRecord.class, 0x00, false),
+    N_X_WRITE_ATTRIBUTE_STATUS_RECORD("N X Write attribute status record", WriteAttributeStatusRecord.class, 0x00,
+            false),
     OCTET_STRING("Octet string", ByteArray.class, 0x41, false),
     SIGNED_16_BIT_INTEGER("Signed 16-bit Integer", Integer.class, 0x29, true),
     SIGNED_32_BIT_INTEGER("Signed 32-bit Integer", Integer.class, 0x2B, true),
