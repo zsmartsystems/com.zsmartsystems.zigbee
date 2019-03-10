@@ -267,6 +267,11 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 }
                 value[0] = new ByteArray(arrayB8);
                 break;
+            case FLOAT_32_BIT:
+                Float float32 = Float.intBitsToFloat(payload[index++] + (payload[index++] << 8)
+                        + (payload[index++] << 16) + (payload[index++] << 24));
+                value[0] = float32.doubleValue();
+                break;
             default:
                 throw new IllegalArgumentException("No reader defined in " + ZigBeeDeserializer.class.getSimpleName()
                         + " for " + type.toString() + " (" + type.getId() + ")");
