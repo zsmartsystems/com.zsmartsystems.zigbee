@@ -5,29 +5,29 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee.transport;
+package com.zsmartsystems.zigbee;
 
 /**
- * An enumeration of the current state of the transport layer.
+ * An enumeration of possible network states
  *
  * @author Chris Jackson
  *
  */
-public enum ZigBeeTransportState {
+public enum ZigBeeNetworkState {
     /**
-     * Transport has not yet been initialised
+     * Network has not yet been initialised
      */
     UNINITIALISED,
     /**
-     * Transport is currently initialising
+     * Network is currently initialising
      */
     INITIALISING,
     /**
-     * Transport is online and able to be used
+     * Network is online and able to be used
      */
     ONLINE,
     /**
-     * Transport is offline and not able to be used
+     * Network is offline and not able to be used
      */
     OFFLINE
 }
