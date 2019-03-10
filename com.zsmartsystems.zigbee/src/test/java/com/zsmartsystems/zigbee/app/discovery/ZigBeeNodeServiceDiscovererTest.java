@@ -10,7 +10,6 @@ package com.zsmartsystems.zigbee.app.discovery;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -216,8 +215,6 @@ public class ZigBeeNodeServiceDiscovererTest {
 
         discoverer.startDiscovery();
 
-        assertTrue(discoverer.getTasks().contains(NodeDiscoveryTask.ACTIVE_ENDPOINTS));
-
         Mockito.verify(node, Mockito.timeout(TIMEOUT).times(1)).addEndpoint(endpointCapture.capture());
 
         // Then wait for the node to be updated
@@ -253,10 +250,13 @@ public class ZigBeeNodeServiceDiscovererTest {
 
         Mockito.verify(futureTask, Mockito.times(1)).cancel(true);
 
-        assertFalse(discoverer.getTasks().contains(NodeDiscoveryTask.ACTIVE_ENDPOINTS));
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).updateNode(nodeCapture.capture());
 
         assertNotNull(discoverer.getLastDiscoveryStarted());
-        assertNull(discoverer.getLastDiscoveryCompleted());
+        assertNotNull(discoverer.getLastDiscoveryCompleted());
+
+        TestUtilities.setField(ZigBeeNodeServiceDiscoverer.class, discoverer, "futureTask",
+                Mockito.mock(ScheduledFuture.class));
         discoverer.stopDiscovery();
     }
 
@@ -301,5 +301,7 @@ public class ZigBeeNodeServiceDiscovererTest {
         discoverer.updateMesh();
         assertFalse(discoverer.getTasks().contains(NodeDiscoveryTask.ROUTES));
         assertTrue(discoverer.getTasks().contains(NodeDiscoveryTask.NEIGHBORS));
+
+        discoverer.stopDiscovery();
     }
 }

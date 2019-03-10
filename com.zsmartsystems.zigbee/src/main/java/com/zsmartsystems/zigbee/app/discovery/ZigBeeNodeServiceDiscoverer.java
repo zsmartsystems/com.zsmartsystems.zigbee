@@ -194,10 +194,12 @@ public class ZigBeeNodeServiceDiscoverer {
         // complete. When no tasks are left in the queue, the worker thread will exit.
         synchronized (discoveryTasks) {
             // Remove any tasks that we know are not supported by this device
-            if (!supportsManagementLqi && newTasks.contains(NodeDiscoveryTask.NEIGHBORS)) {
+            if ((!supportsManagementLqi || node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN)
+                    && newTasks.contains(NodeDiscoveryTask.NEIGHBORS)) {
                 newTasks.remove(NodeDiscoveryTask.NEIGHBORS);
             }
-            if ((!supportsManagementRouting || node.getNodeDescriptor().getLogicalType() == LogicalType.END_DEVICE)
+            if ((!supportsManagementRouting || node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN
+                    || node.getNodeDescriptor().getLogicalType() == LogicalType.END_DEVICE)
                     && newTasks.contains(NodeDiscoveryTask.ROUTES)) {
                 newTasks.remove(NodeDiscoveryTask.ROUTES);
             }
@@ -301,7 +303,7 @@ public class ZigBeeNodeServiceDiscoverer {
      * @throws InterruptedException
      */
     private boolean requestAssociatedNodes() throws InterruptedException, ExecutionException {
-        Integer startIndex = 0;
+        int startIndex = 0;
         int totalAssociatedDevices = 0;
         Set<Integer> associatedDevices = new HashSet<Integer>();
 
@@ -670,11 +672,9 @@ public class ZigBeeNodeServiceDiscoverer {
             tasks.add(NodeDiscoveryTask.POWER_DESCRIPTOR);
         }
 
-        if (node.getEndpoints().size() == 0 && node.getNetworkAddress() != networkManager.getLocalNwkAddress()) {
+        if (node.getEndpoints().size() == 0 && !networkManager.getLocalNwkAddress().equals(node.getNetworkAddress())) {
             tasks.add(NodeDiscoveryTask.ACTIVE_ENDPOINTS);
         }
-
-        tasks.add(NodeDiscoveryTask.NEIGHBORS);
 
         startDiscovery(tasks);
     }
