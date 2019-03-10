@@ -284,7 +284,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
             return;
         }
         frameHandler.setClosing();
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
         serialPort.close();
         frameHandler.close();
         logger.debug("XBee dongle shutdown.");
@@ -398,7 +398,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
 
     private void setNetworkState(ZigBeeTransportState state) {
         if (initialisationComplete) {
-            zigbeeTransportReceive.setNetworkState(state);
+            zigbeeTransportReceive.setTransportState(state);
         }
     }
 
