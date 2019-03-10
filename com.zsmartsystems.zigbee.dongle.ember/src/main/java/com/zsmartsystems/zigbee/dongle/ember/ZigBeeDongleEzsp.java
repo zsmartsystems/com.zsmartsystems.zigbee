@@ -734,7 +734,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 }
                 // Handle link changes and notify framework
                 zigbeeTransportReceive
-                        .setNetworkState(linkState ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
+                        .setTransportState(linkState ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
             }
         }.start();
     }
@@ -962,7 +962,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             return false;
         }
 
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
         callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);
 
         // Initialise the EZSP protocol so we can start the bootloader
