@@ -11,8 +11,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Generated;
-
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
@@ -40,10 +38,9 @@ import com.zsmartsystems.zigbee.zdo.field.UserDescriptor;
 
 /**
  * Enumeration of the ZCL data types.
- * <p>
- * Code is auto-generated. Modifications may be overwritten!
+ *
+ * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:41:47Z")
 public enum ZclDataType {
     BINDING_TABLE(BindingTable.class, 0x00, false),
     BITMAP_16_BIT(Integer.class, 0x19, false),
