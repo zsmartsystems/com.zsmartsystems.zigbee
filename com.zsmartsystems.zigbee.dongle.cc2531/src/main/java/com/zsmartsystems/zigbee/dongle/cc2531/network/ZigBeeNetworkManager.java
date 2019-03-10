@@ -262,13 +262,8 @@ public class ZigBeeNetworkManager {
         // Now reset the dongle
         setState(DriverStatus.HARDWARE_OPEN);
         if (!dongleReset()) {
-            logger.warn("Dongle reset failed. Assuming bootloader is running and sending magic byte {}.",
-                    String.format("0x%02x", BOOTLOADER_MAGIC_BYTE));
-            if (!bootloaderGetOut(BOOTLOADER_MAGIC_BYTE)) {
-                logger.warn("Attempt to get out from bootloader failed.");
-                shutdown();
-                return null;
-            }
+            shutdown();
+            return null;
         }
 
         setState(DriverStatus.HARDWARE_READY);
@@ -710,7 +705,16 @@ public class ZigBeeNetworkManager {
 
         SYS_RESET_RESPONSE response = (SYS_RESET_RESPONSE) waiter.getCommand(RESET_TIMEOUT);
 
-        return response != null;
+        if (response == null) {
+            logger.warn("Dongle reset failed. Assuming bootloader is running and sending magic byte {}.",
+                    String.format("0x%02x", BOOTLOADER_MAGIC_BYTE));
+            if (!bootloaderGetOut(BOOTLOADER_MAGIC_BYTE)) {
+                logger.warn("Attempt to get out from bootloader failed.");
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private boolean dongleSetStartupOption(int mask) {
