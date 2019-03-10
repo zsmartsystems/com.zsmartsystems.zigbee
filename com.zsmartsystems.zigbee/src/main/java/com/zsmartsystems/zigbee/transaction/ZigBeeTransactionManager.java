@@ -89,8 +89,8 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     private final int NODE_DELAY = 50;
 
     private final int SLEEPY_RETRIES = 2;
-    private final int SLEEPY_TRANSACTIONS = 2;
-    private final int SLEEPY_DELAY = 7600;
+    private final int SLEEPY_TRANSACTIONS = 1;
+    private final int SLEEPY_DELAY = 50;
 
     private final int MCAST_RETRIES = 0;
     private final int MCAST_TRANSACTIONS = 3;
