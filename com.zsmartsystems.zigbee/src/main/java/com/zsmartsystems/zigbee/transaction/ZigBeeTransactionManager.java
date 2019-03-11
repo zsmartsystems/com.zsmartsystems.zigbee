@@ -481,7 +481,6 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @param transaction the {@link ZigBeeTransaction} to remove
      */
     private void removeTransactionListener(ZigBeeTransaction transaction) {
-        logger.debug("removeTransactionListener: {}", transaction);
         synchronized (outstandingTransactions) {
             outstandingTransactions.remove(transaction);
         }
@@ -511,10 +510,14 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
         synchronized (this) {
             ZigBeeTransactionQueue queue = getTransactionQueue(transaction);
-            queue.transactionComplete(transaction, state);
+            if (queue == null) {
+                logger.debug("Transaction complete: No queue found {}", transaction);
+            } else {
+                queue.transactionComplete(transaction, state);
 
-            if (queue.isSleepy()) {
-                sleepyTransactions--;
+                if (queue.isSleepy()) {
+                    sleepyTransactions--;
+                }
             }
         }
 
@@ -631,7 +634,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                 // Exit unless we send at least one transaction
                 sendDone = true;
 
-                // Randomise the list
+                // Randomise the lists
                 Collections.shuffle(outstandingQueues);
 
                 // Clear the list of queues that have been emptied
