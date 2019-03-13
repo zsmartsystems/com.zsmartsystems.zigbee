@@ -103,6 +103,7 @@ public class ZigBeeTransactionQueueTest {
         assertEquals(0, queue.size());
         assertTrue(queue.isEmpty());
 
+        System.out.println(queue);
         queue.shutdown();
 
         assertNull(queue.addToQueue(Mockito.mock(ZigBeeTransaction.class)));
