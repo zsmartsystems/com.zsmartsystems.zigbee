@@ -272,4 +272,10 @@ public class ZigBeeTransactionQueue {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "ZigBeeTransactionQueue [queueName=" + queueName + ", sleepy=" + sleepy + ", outstandingTransactions="
+                + outstandingTransactions + ", profile=" + profile + "]";
+    }
 }
