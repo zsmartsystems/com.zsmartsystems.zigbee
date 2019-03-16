@@ -92,6 +92,7 @@ public class ZigBeeConsoleDescribeEndpointCommand extends ZigBeeConsoleAbstractC
 
         for (ZclCluster cluster : clusterTree.values()) {
             out.println("   " + printClusterId(cluster.getClusterId()) + " " + cluster.getClusterName());
+            out.println("     - APS Security " + (cluster.getApsSecurityRequired() ? "en" : "dis") + "abled");
             printAttributes(cluster, out);
         }
     }
