@@ -368,9 +368,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                         spiTransactionComplete();
                         stateConnected = (packetData[0] & SPI_MASK_READY) == SPI_MASK_READY;
                         logger.debug("SPI Protocol Ready: {}", stateConnected);
-                        if (stateConnected) {
-                            frameHandler.handleLinkStateChange(true);
-                        } else {
+                        if (!stateConnected) {
                             outputFrame(requestSpiStatus);
                         }
                         break;
