@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-03-25T10:30:58Z")
 public class ZclPollControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -136,13 +136,13 @@ public class ZclPollControlCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(7);
 
-        attributeMap.put(ATTR_CHECKININTERVAL, new ZclAttribute(ZclClusterType.POLL_CONTROL, ATTR_CHECKININTERVAL, "Checkin Interval", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, true, true));
-        attributeMap.put(ATTR_LONGPOLLINTERVAL, new ZclAttribute(ZclClusterType.POLL_CONTROL, ATTR_LONGPOLLINTERVAL, "Long Poll Interval", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, true));
-        attributeMap.put(ATTR_SHORTPOLLINTERVAL, new ZclAttribute(ZclClusterType.POLL_CONTROL, ATTR_SHORTPOLLINTERVAL, "Short Poll Interval", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
-        attributeMap.put(ATTR_FASTPOLLTIMEOUT, new ZclAttribute(ZclClusterType.POLL_CONTROL, ATTR_FASTPOLLTIMEOUT, "Fast Poll Timeout", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
-        attributeMap.put(ATTR_CHECKININTERVALMIN, new ZclAttribute(ZclClusterType.POLL_CONTROL, ATTR_CHECKININTERVALMIN, "Checkin Interval Min", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_LONGPOLLINTERVALMIN, new ZclAttribute(ZclClusterType.POLL_CONTROL, ATTR_LONGPOLLINTERVALMIN, "Long Poll Interval Min", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_FASTPOLLTIMEOUTMIN, new ZclAttribute(ZclClusterType.POLL_CONTROL, ATTR_FASTPOLLTIMEOUTMIN, "Fast Poll Timeout Min", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CHECKININTERVAL, new ZclAttribute(this, ATTR_CHECKININTERVAL, "Checkin Interval", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, true, true));
+        attributeMap.put(ATTR_LONGPOLLINTERVAL, new ZclAttribute(this, ATTR_LONGPOLLINTERVAL, "Long Poll Interval", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, true));
+        attributeMap.put(ATTR_SHORTPOLLINTERVAL, new ZclAttribute(this, ATTR_SHORTPOLLINTERVAL, "Short Poll Interval", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
+        attributeMap.put(ATTR_FASTPOLLTIMEOUT, new ZclAttribute(this, ATTR_FASTPOLLTIMEOUT, "Fast Poll Timeout", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
+        attributeMap.put(ATTR_CHECKININTERVALMIN, new ZclAttribute(this, ATTR_CHECKININTERVALMIN, "Checkin Interval Min", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_LONGPOLLINTERVALMIN, new ZclAttribute(this, ATTR_LONGPOLLINTERVALMIN, "Long Poll Interval Min", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_FASTPOLLTIMEOUTMIN, new ZclAttribute(this, ATTR_FASTPOLLTIMEOUTMIN, "Fast Poll Timeout Min", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
 
         return attributeMap;
     }

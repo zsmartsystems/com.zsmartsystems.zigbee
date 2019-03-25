@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-03-25T10:30:58Z")
 public class ZclMultistateOutputBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -155,15 +155,15 @@ public class ZclMultistateOutputBasicCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(9);
 
-        attributeMap.put(ATTR_STATETEXT, new ZclAttribute(ZclClusterType.MULTISTATE_OUTPUT_BASIC, ATTR_STATETEXT, "State Text", ZclDataType.CHARACTER_STRING, false, true, true, false));
-        attributeMap.put(ATTR_DESCRIPTION, new ZclAttribute(ZclClusterType.MULTISTATE_OUTPUT_BASIC, ATTR_DESCRIPTION, "Description", ZclDataType.CHARACTER_STRING, false, true, true, false));
-        attributeMap.put(ATTR_NUMBEROFSTATES, new ZclAttribute(ZclClusterType.MULTISTATE_OUTPUT_BASIC, ATTR_NUMBEROFSTATES, "Number Of States", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
-        attributeMap.put(ATTR_OUTOFSERVICE, new ZclAttribute(ZclClusterType.MULTISTATE_OUTPUT_BASIC, ATTR_OUTOFSERVICE, "Out Of Service", ZclDataType.BOOLEAN, true, true, true, false));
-        attributeMap.put(ATTR_PRESENTVALUE, new ZclAttribute(ZclClusterType.MULTISTATE_OUTPUT_BASIC, ATTR_PRESENTVALUE, "Present Value", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
-        attributeMap.put(ATTR_RELIABILITY, new ZclAttribute(ZclClusterType.MULTISTATE_OUTPUT_BASIC, ATTR_RELIABILITY, "Reliability", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
-        attributeMap.put(ATTR_RELINQUISHDEFAULT, new ZclAttribute(ZclClusterType.MULTISTATE_OUTPUT_BASIC, ATTR_RELINQUISHDEFAULT, "Relinquish Default", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_STATUSFLAGS, new ZclAttribute(ZclClusterType.MULTISTATE_OUTPUT_BASIC, ATTR_STATUSFLAGS, "Status Flags", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_APPLICATIONTYPE, new ZclAttribute(ZclClusterType.MULTISTATE_OUTPUT_BASIC, ATTR_APPLICATIONTYPE, "Application Type", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_STATETEXT, new ZclAttribute(this, ATTR_STATETEXT, "State Text", ZclDataType.CHARACTER_STRING, false, true, true, false));
+        attributeMap.put(ATTR_DESCRIPTION, new ZclAttribute(this, ATTR_DESCRIPTION, "Description", ZclDataType.CHARACTER_STRING, false, true, true, false));
+        attributeMap.put(ATTR_NUMBEROFSTATES, new ZclAttribute(this, ATTR_NUMBEROFSTATES, "Number Of States", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_OUTOFSERVICE, new ZclAttribute(this, ATTR_OUTOFSERVICE, "Out Of Service", ZclDataType.BOOLEAN, true, true, true, false));
+        attributeMap.put(ATTR_PRESENTVALUE, new ZclAttribute(this, ATTR_PRESENTVALUE, "Present Value", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_RELIABILITY, new ZclAttribute(this, ATTR_RELIABILITY, "Reliability", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_RELINQUISHDEFAULT, new ZclAttribute(this, ATTR_RELINQUISHDEFAULT, "Relinquish Default", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_STATUSFLAGS, new ZclAttribute(this, ATTR_STATUSFLAGS, "Status Flags", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_APPLICATIONTYPE, new ZclAttribute(this, ATTR_APPLICATIONTYPE, "Application Type", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
     }

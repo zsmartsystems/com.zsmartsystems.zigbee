@@ -66,7 +66,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-03-25T10:30:58Z")
 public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -91,7 +91,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
-        attributeMap.put(ATTR_CLOSETUNNELTIMEOUT, new ZclAttribute(ZclClusterType.SMART_ENERGY_TUNNELING, ATTR_CLOSETUNNELTIMEOUT, "Close Tunnel Timeout", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CLOSETUNNELTIMEOUT, new ZclAttribute(this, ATTR_CLOSETUNNELTIMEOUT, "Close Tunnel Timeout", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
 
         return attributeMap;
     }

@@ -56,7 +56,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-03-25T10:30:58Z")
 public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -316,49 +316,49 @@ public class ZclDoorLockCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(43);
 
-        attributeMap.put(ATTR_LOCKSTATE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LOCKSTATE, "Lock State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_LOCKTYPE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LOCKTYPE, "Lock Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ACTUATORENABLED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ACTUATORENABLED, "Actuator Enabled", ZclDataType.BOOLEAN, true, true, false, false));
-        attributeMap.put(ATTR_DOORSTATE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_DOORSTATE, "Door State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_DOOROPENEVENTS, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_DOOROPENEVENTS, "Door Open Events", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_DOORCLOSEDEVENTS, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_DOORCLOSEDEVENTS, "Door Closed Events", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_OPENPERIOD, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_OPENPERIOD, "Open Period", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_NUMLOCKRECORDSSUPPORTED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMLOCKRECORDSSUPPORTED, "Num Lock Records Supported", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMTOTALUSERSSUPPORTED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMTOTALUSERSSUPPORTED, "Num Total Users Supported", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMPINUSERSSUPPORTED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMPINUSERSSUPPORTED, "Num PIN Users Supported", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMRFIDUSERSSUPPORTED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMRFIDUSERSSUPPORTED, "Num RFID Users Supported", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER, "Num Weekday Schedules Supported Per User", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER, "Num Yearday Schedules Supported Per User", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER, "Num Holiday Schedules Supported Per User", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MAXPINLENGTH, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MAXPINLENGTH, "Max PIN Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MINPINLENGTH, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MINPINLENGTH, "Min PIN Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MAXRFIDCODELENGTH, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MAXRFIDCODELENGTH, "Max RFID Code Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MINRFIDCODELENGTH, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MINRFIDCODELENGTH, "Min RFID Code Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_ENABLELOGGING, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ENABLELOGGING, "Enable Logging", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_LANGUAGE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LANGUAGE, "Language", ZclDataType.CHARACTER_STRING, false, true, true, true));
-        attributeMap.put(ATTR_LEDSETTINGS, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LEDSETTINGS, "LED Settings", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_AUTORELOCKTIME, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_AUTORELOCKTIME, "Auto Relock Time", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_SOUNDVOLUME, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_SOUNDVOLUME, "Sound Volume", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_OPERATINGMODE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_OPERATINGMODE, "Operating Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
-        attributeMap.put(ATTR_SUPPORTEDOPERATINGMODES, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_SUPPORTEDOPERATINGMODES, "Supported Operating Modes", ZclDataType.BITMAP_16_BIT, true, true, false, false));
-        attributeMap.put(ATTR_DEFAULTCONFIGURATIONREGISTER, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_DEFAULTCONFIGURATIONREGISTER, "Default Configuration Register", ZclDataType.BITMAP_16_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ENABLELOCALPROGRAMMING, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ENABLELOCALPROGRAMMING, "Enable Local Programming", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_ENABLEONETOUCHLOCKING, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ENABLEONETOUCHLOCKING, "Enable One Touch Locking", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_ENABLEINSIDESTATUSLED, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ENABLEINSIDESTATUSLED, "Enable Inside Status Led", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_ENABLEPRIVACYMODEBUTTON, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ENABLEPRIVACYMODEBUTTON, "Enable Privacy Mode Button", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_WRONGCODEENTRYLIMIT, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_WRONGCODEENTRYLIMIT, "Wrong Code Entry Limit", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_USERCODETEMPORARYDISABLETIME, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_USERCODETEMPORARYDISABLETIME, "User Code Temporary Disable Time", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_SENDPINOVERTHEAIR, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_SENDPINOVERTHEAIR, "Send PIN Over The Air", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_REQUIREPINFORRFOPERATION, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_REQUIREPINFORRFOPERATION, "Require PIN For RF Operation", ZclDataType.BOOLEAN, false, true, true, true));
-        attributeMap.put(ATTR_ZIGBEESECURITYLEVEL, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ZIGBEESECURITYLEVEL, "ZigBee Security Level", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ALARMMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_ALARMMASK, "Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_KEYPADOPERATIONEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_KEYPADOPERATIONEVENTMASK, "Keypad Operation Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_RFOPERATIONEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFOPERATIONEVENTMASK, "RF Operation Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_MANUALOPERATIONEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_MANUALOPERATIONEVENTMASK, "Manual Operation Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_RFIDOPERATIONEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFIDOPERATIONEVENTMASK, "RFID Operation Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_KEYPADPROGRAMMINGEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_KEYPADPROGRAMMINGEVENTMASK, "Keypad Programming Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_RFPROGRAMMINGEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFPROGRAMMINGEVENTMASK, "RF Programming Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_RFIDPROGRAMMINGEVENTMASK, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_RFIDPROGRAMMINGEVENTMASK, "RFID Programming Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_LOCKSTATE, new ZclAttribute(this, ATTR_LOCKSTATE, "Lock State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_LOCKTYPE, new ZclAttribute(this, ATTR_LOCKTYPE, "Lock Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_ACTUATORENABLED, new ZclAttribute(this, ATTR_ACTUATORENABLED, "Actuator Enabled", ZclDataType.BOOLEAN, true, true, false, false));
+        attributeMap.put(ATTR_DOORSTATE, new ZclAttribute(this, ATTR_DOORSTATE, "Door State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_DOOROPENEVENTS, new ZclAttribute(this, ATTR_DOOROPENEVENTS, "Door Open Events", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_DOORCLOSEDEVENTS, new ZclAttribute(this, ATTR_DOORCLOSEDEVENTS, "Door Closed Events", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_OPENPERIOD, new ZclAttribute(this, ATTR_OPENPERIOD, "Open Period", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_NUMLOCKRECORDSSUPPORTED, new ZclAttribute(this, ATTR_NUMLOCKRECORDSSUPPORTED, "Num Lock Records Supported", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMTOTALUSERSSUPPORTED, new ZclAttribute(this, ATTR_NUMTOTALUSERSSUPPORTED, "Num Total Users Supported", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMPINUSERSSUPPORTED, new ZclAttribute(this, ATTR_NUMPINUSERSSUPPORTED, "Num PIN Users Supported", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMRFIDUSERSSUPPORTED, new ZclAttribute(this, ATTR_NUMRFIDUSERSSUPPORTED, "Num RFID Users Supported", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER, new ZclAttribute(this, ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER, "Num Weekday Schedules Supported Per User", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER, new ZclAttribute(this, ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER, "Num Yearday Schedules Supported Per User", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER, new ZclAttribute(this, ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER, "Num Holiday Schedules Supported Per User", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MAXPINLENGTH, new ZclAttribute(this, ATTR_MAXPINLENGTH, "Max PIN Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MINPINLENGTH, new ZclAttribute(this, ATTR_MINPINLENGTH, "Min PIN Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MAXRFIDCODELENGTH, new ZclAttribute(this, ATTR_MAXRFIDCODELENGTH, "Max RFID Code Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MINRFIDCODELENGTH, new ZclAttribute(this, ATTR_MINRFIDCODELENGTH, "Min RFID Code Length", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_ENABLELOGGING, new ZclAttribute(this, ATTR_ENABLELOGGING, "Enable Logging", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_LANGUAGE, new ZclAttribute(this, ATTR_LANGUAGE, "Language", ZclDataType.CHARACTER_STRING, false, true, true, true));
+        attributeMap.put(ATTR_LEDSETTINGS, new ZclAttribute(this, ATTR_LEDSETTINGS, "LED Settings", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_AUTORELOCKTIME, new ZclAttribute(this, ATTR_AUTORELOCKTIME, "Auto Relock Time", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_SOUNDVOLUME, new ZclAttribute(this, ATTR_SOUNDVOLUME, "Sound Volume", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_OPERATINGMODE, new ZclAttribute(this, ATTR_OPERATINGMODE, "Operating Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
+        attributeMap.put(ATTR_SUPPORTEDOPERATINGMODES, new ZclAttribute(this, ATTR_SUPPORTEDOPERATINGMODES, "Supported Operating Modes", ZclDataType.BITMAP_16_BIT, true, true, false, false));
+        attributeMap.put(ATTR_DEFAULTCONFIGURATIONREGISTER, new ZclAttribute(this, ATTR_DEFAULTCONFIGURATIONREGISTER, "Default Configuration Register", ZclDataType.BITMAP_16_BIT, true, true, false, false));
+        attributeMap.put(ATTR_ENABLELOCALPROGRAMMING, new ZclAttribute(this, ATTR_ENABLELOCALPROGRAMMING, "Enable Local Programming", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_ENABLEONETOUCHLOCKING, new ZclAttribute(this, ATTR_ENABLEONETOUCHLOCKING, "Enable One Touch Locking", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_ENABLEINSIDESTATUSLED, new ZclAttribute(this, ATTR_ENABLEINSIDESTATUSLED, "Enable Inside Status Led", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_ENABLEPRIVACYMODEBUTTON, new ZclAttribute(this, ATTR_ENABLEPRIVACYMODEBUTTON, "Enable Privacy Mode Button", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_WRONGCODEENTRYLIMIT, new ZclAttribute(this, ATTR_WRONGCODEENTRYLIMIT, "Wrong Code Entry Limit", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_USERCODETEMPORARYDISABLETIME, new ZclAttribute(this, ATTR_USERCODETEMPORARYDISABLETIME, "User Code Temporary Disable Time", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_SENDPINOVERTHEAIR, new ZclAttribute(this, ATTR_SENDPINOVERTHEAIR, "Send PIN Over The Air", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_REQUIREPINFORRFOPERATION, new ZclAttribute(this, ATTR_REQUIREPINFORRFOPERATION, "Require PIN For RF Operation", ZclDataType.BOOLEAN, false, true, true, true));
+        attributeMap.put(ATTR_ZIGBEESECURITYLEVEL, new ZclAttribute(this, ATTR_ZIGBEESECURITYLEVEL, "ZigBee Security Level", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_ALARMMASK, new ZclAttribute(this, ATTR_ALARMMASK, "Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_KEYPADOPERATIONEVENTMASK, new ZclAttribute(this, ATTR_KEYPADOPERATIONEVENTMASK, "Keypad Operation Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_RFOPERATIONEVENTMASK, new ZclAttribute(this, ATTR_RFOPERATIONEVENTMASK, "RF Operation Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_MANUALOPERATIONEVENTMASK, new ZclAttribute(this, ATTR_MANUALOPERATIONEVENTMASK, "Manual Operation Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_RFIDOPERATIONEVENTMASK, new ZclAttribute(this, ATTR_RFIDOPERATIONEVENTMASK, "RFID Operation Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_KEYPADPROGRAMMINGEVENTMASK, new ZclAttribute(this, ATTR_KEYPADPROGRAMMINGEVENTMASK, "Keypad Programming Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_RFPROGRAMMINGEVENTMASK, new ZclAttribute(this, ATTR_RFPROGRAMMINGEVENTMASK, "RF Programming Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_RFIDPROGRAMMINGEVENTMASK, new ZclAttribute(this, ATTR_RFIDPROGRAMMINGEVENTMASK, "RFID Programming Event Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
 
         return attributeMap;
     }

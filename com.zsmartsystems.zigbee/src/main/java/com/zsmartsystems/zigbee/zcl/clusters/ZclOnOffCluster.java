@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-03-25T10:30:58Z")
 public class ZclOnOffCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -90,10 +90,10 @@ public class ZclOnOffCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(4);
 
-        attributeMap.put(ATTR_ONOFF, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_ONOFF, "On Off", ZclDataType.BOOLEAN, true, true, false, true));
-        attributeMap.put(ATTR_GLOBALSCENECONTROL, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_GLOBALSCENECONTROL, "Global Scene Control", ZclDataType.BOOLEAN, true, true, false, false));
-        attributeMap.put(ATTR_ONTIME, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_ONTIME, "On Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
-        attributeMap.put(ATTR_OFFWAITTIME, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_OFFWAITTIME, "Off Wait Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_ONOFF, new ZclAttribute(this, ATTR_ONOFF, "On Off", ZclDataType.BOOLEAN, true, true, false, true));
+        attributeMap.put(ATTR_GLOBALSCENECONTROL, new ZclAttribute(this, ATTR_GLOBALSCENECONTROL, "Global Scene Control", ZclDataType.BOOLEAN, true, true, false, false));
+        attributeMap.put(ATTR_ONTIME, new ZclAttribute(this, ATTR_ONTIME, "On Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_OFFWAITTIME, new ZclAttribute(this, ATTR_OFFWAITTIME, "Off Wait Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
 
         return attributeMap;
     }
