@@ -22,7 +22,7 @@ public class ZclAttribute {
     /**
      *
      */
-    private final ZclClusterType cluster;
+    private final ZclCluster cluster;
 
     /**
      * The attribute identifier field is 16-bits in length and shall contain the
@@ -128,7 +128,7 @@ public class ZclAttribute {
      * @param writeable
      * @param reportable
      */
-    public ZclAttribute(final ZclClusterType cluster, final int id, final String name, final ZclDataType dataType,
+    public ZclAttribute(final ZclCluster cluster, final int id, final String name, final ZclDataType dataType,
             final boolean mandatory, final boolean readable, final boolean writeable, final boolean reportable) {
         this.cluster = cluster;
         this.id = id;
@@ -152,7 +152,7 @@ public class ZclAttribute {
      * @param reportable
      * @param manufacturerCode
      */
-    public ZclAttribute(final ZclClusterType cluster, final int id, final String name, final ZclDataType dataType,
+    public ZclAttribute(final ZclCluster cluster, final int id, final String name, final ZclDataType dataType,
             final boolean mandatory, final boolean readable, final boolean writeable, final boolean reportable,
             final int manufacturerCode) {
         this.cluster = cluster;
@@ -167,11 +167,11 @@ public class ZclAttribute {
     }
 
     /**
-     * Gets the {@link ZclClusterType} to which this attribute belongs
+     * Gets the {@link ZclCluster} to which this attribute belongs
      *
      * @return the {@link ZclClusterType} for this attribute
      */
-    public ZclClusterType getCluster() {
+    public ZclCluster getCluster() {
         return cluster;
     }
 
@@ -363,7 +363,7 @@ public class ZclAttribute {
      * Updates the attribute value This will also record the time of the last update
      *
      * @param attributeValue
-     *            the attribute value to be updated {@link Object}
+     *                           the attribute value to be updated {@link Object}
      */
     public void updateValue(Object attributeValue) {
         lastValue = attributeValue;

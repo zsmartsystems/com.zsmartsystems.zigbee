@@ -12,9 +12,9 @@ import static org.junit.Assert.*;
 import java.util.Calendar;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 /**
  *
@@ -24,10 +24,11 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 public class ZclAttributeTest {
     @Test
     public void testConstructor() {
-        ZclAttribute attribute = new ZclAttribute(ZclClusterType.ON_OFF, 0, "Test Name",
-                ZclDataType.UNSIGNED_8_BIT_INTEGER, false, false, false, false);
+        ZclCluster cluster = Mockito.mock(ZclCluster.class);
+        ZclAttribute attribute = new ZclAttribute(cluster, 0, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, false,
+                false, false, false);
 
-        assertEquals(ZclClusterType.ON_OFF, attribute.getCluster());
+        assertEquals(cluster, attribute.getCluster());
         assertEquals(0, attribute.getId());
         assertEquals("Test Name", attribute.getName());
         assertEquals(ZclDataType.UNSIGNED_8_BIT_INTEGER, attribute.getDataType());
@@ -38,8 +39,8 @@ public class ZclAttributeTest {
         assertEquals(false, attribute.isManufacturerSpecific());
         System.out.println(attribute.toString());
 
-        attribute = new ZclAttribute(ZclClusterType.ON_OFF, 0, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER,
-                true, true, true, true, 0x1234);
+        attribute = new ZclAttribute(cluster, 0, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, true,
+                true, 0x1234);
 
         assertEquals(true, attribute.isMandatory());
         assertEquals(true, attribute.isWritable());
@@ -52,8 +53,9 @@ public class ZclAttributeTest {
 
     @Test
     public void getLastReportTime() {
-        ZclAttribute attribute = new ZclAttribute(ZclClusterType.ON_OFF, 0, "Test Name",
-                ZclDataType.UNSIGNED_8_BIT_INTEGER, false, false, false, false);
+        ZclCluster cluster = Mockito.mock(ZclCluster.class);
+        ZclAttribute attribute = new ZclAttribute(cluster, 0, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, false,
+                false, false, false);
 
         // No value has been set, so should always be false
         assertFalse(attribute.isLastValueCurrent(Long.MAX_VALUE));

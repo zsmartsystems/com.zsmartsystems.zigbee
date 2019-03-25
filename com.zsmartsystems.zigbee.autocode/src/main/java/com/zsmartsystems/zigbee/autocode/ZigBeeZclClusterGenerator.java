@@ -440,9 +440,9 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
     }
 
     private String defineAttribute(ZigBeeXmlAttribute attribute, String clusterName, String attributeName, int count) {
-        return "new ZclAttribute(ZclClusterType." + stringToConstant(clusterName) + ", " + getEnum(attributeName)
-                + ", \"" + attributeName + "\", " + "ZclDataType." + attribute.type + ", " + !attribute.optional + ", "
-                + true + ", " + attribute.writable + ", " + attribute.reportable + ")";
+        return "new ZclAttribute(this, " + getEnum(attributeName) + ", \"" + attributeName + "\", " + "ZclDataType."
+                + attribute.type + ", " + !attribute.optional + ", " + true + ", " + attribute.writable + ", "
+                + attribute.reportable + ")";
     }
 
     private String getEnum(String name) {
