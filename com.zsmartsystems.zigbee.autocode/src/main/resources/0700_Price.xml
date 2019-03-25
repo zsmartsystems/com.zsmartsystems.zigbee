@@ -1142,7 +1142,7 @@
     <attribute code="0x0851" type="UTCTIME" side="server" optional="true" writable="false" reportable="false">
         <name>Credit Card Payment Date 5</name>
     </attribute>
-    <attribute code="0x0852" type="OCTET_STRING" side="server" optional="true" writable="true" reportable="false">
+    <attribute code="0x0852" type="OCTET_STRING" side="server" optional="true" writable="false" reportable="false">
         <name>Credit Card Payment Ref 5</name>
     </attribute>
     <attribute code="0x8000" arraystart="1" arraycount="48" type="OCTET_STRING" side="server" optional="true" writable="true" reportable="false">

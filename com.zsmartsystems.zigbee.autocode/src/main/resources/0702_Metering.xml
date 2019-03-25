@@ -532,15 +532,15 @@
         <name>Power Factor</name>
         <description>PowerFactor contains the Average Power Factor ratio in 1/100ths. Valid values are 0 to 99.</description>
     </attribute>
-    <attribute code="0x0007" type="UTCTIME" side="server" optional="false" writable="true" reportable="false">
+    <attribute code="0x0007" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
         <name>Reading Snapshot Time</name>
         <description>The ReadingSnapshotTime attribute represents the last time all of the CurrentSummationDelivered, CurrentSummationReceived, CurrentMaxDemandDelivered, and CurrentMaxDemandReceived attributes that are supported by the device were updated.</description>
     </attribute>
-    <attribute code="0x0008" type="UTCTIME" side="server" optional="false" writable="true" reportable="false">
+    <attribute code="0x0008" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
         <name>Current Max Demand Delivered Time</name>
         <description>The CurrentMaxDemandDeliveredTime attribute represents the time when CurrentMaxDemandDelivered reading was captured.</description>
     </attribute>
-    <attribute code="0x0009" type="UTCTIME" side="server" optional="false" writable="true" reportable="false">
+    <attribute code="0x0009" type="UTCTIME" side="server" optional="false" writable="false" reportable="false">
         <name>Current Max Demand Received Time</name>
         <description>The CurrentMaxDemandReceivedTime attribute represents the time when CurrentMaxDemandReceived reading was captured.</description>
     </attribute>
