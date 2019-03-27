@@ -72,10 +72,10 @@ public interface EzspProtocolHandler {
 
     /**
      * Sends an EZSP request to the NCP and waits for the response. The response is correlated with the request and the
-     * returned {@link EzspFrame} contains the request and response data.
+     * returned {@link EzspTransaction} contains the request and response data.
      *
-     * @param ezspTransaction Request {@link EzspFrame}
-     * @return response {@link EzspFrame}
+     * @param ezspTransaction Request {@link EzspTransaction}
+     * @return response {@link EzspTransaction}
      */
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction);
 
