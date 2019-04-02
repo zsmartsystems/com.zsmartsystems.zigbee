@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
@@ -29,6 +30,7 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.database.ZclClusterDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
@@ -1167,7 +1169,12 @@ public abstract class ZclCluster {
         dao.setSupportedAttributes(Collections.unmodifiableSet(new TreeSet<>(supportedAttributes)));
         dao.setSupportedCommandsGenerated(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsGenerated)));
         dao.setSupportedCommandsReceived(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsReceived)));
-        dao.setAttributes(attributes);
+
+        Map<Integer, ZclAttributeDao> attributeDaos = new HashMap<>();
+        for (Entry<Integer, ZclAttribute> entry : attributes.entrySet()) {
+            attributeDaos.put(entry.getKey(), entry.getValue().getDao());
+        }
+        dao.setAttributes(attributeDaos);
 
         return dao;
     }
@@ -1178,7 +1185,9 @@ public abstract class ZclCluster {
         supportedAttributes.addAll(dao.getSupportedAttributes());
         supportedCommandsGenerated.addAll(dao.getSupportedCommandsGenerated());
         supportedCommandsReceived.addAll(dao.getSupportedCommandsReceived());
-        attributes = dao.getAttributes();
+        for (Entry<Integer, ZclAttributeDao> entry : dao.getAttributes().entrySet()) {
+            attributes.put(entry.getKey(), ZclAttribute.fromDao(entry.getValue(), this));
+        }
     }
 
     /**

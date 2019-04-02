@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.zcl;
 
 import java.util.Calendar;
 
+import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -154,7 +155,7 @@ public class ZclAttribute {
      */
     public ZclAttribute(final ZclCluster cluster, final int id, final String name, final ZclDataType dataType,
             final boolean mandatory, final boolean readable, final boolean writeable, final boolean reportable,
-            final int manufacturerCode) {
+            final Integer manufacturerCode) {
         this.cluster = cluster;
         this.id = id;
         this.name = name;
@@ -391,5 +392,44 @@ public class ZclAttribute {
         builder.append(']');
 
         return builder.toString();
+    }
+
+    public static ZclAttribute fromDao(ZclAttributeDao dao, ZclCluster zclCluster) {
+        ZclAttribute result = new ZclAttribute(zclCluster, dao.getId(), dao.getName(), dao.getDataType(),
+                dao.isMandatory(), dao.isReadable(), dao.isWriteable(), dao.isReportable(), dao.getManufacturerCode());
+        result.minimumReportingPeriod = dao.getMinimumReportingPeriod();
+        result.maximumReportingPeriod = dao.getMaximumReportingPeriod();
+        result.reportingChange = dao.getReportingChange();
+        result.reportingTimeout = dao.getReportingTimeout();
+        result.implemented = dao.isImplemented();
+        result.lastReportTime = dao.getLastReportTime();
+        result.lastValue = dao.getLastValue();
+        return result;
+    }
+
+    public ZclAttributeDao getDao() {
+        ZclAttributeDao result = new ZclAttributeDao();
+        result.setId(id);
+        result.setName(name);
+        result.setDataType(dataType);
+        result.setMandatory(mandatory);
+        result.setReadable(readable);
+        result.setWriteable(writeable);
+        result.setReportable(reportable);
+        result.setManufacturerCode(manufacturerCode);
+        result.setMinimumReportingPeriod(minimumReportingPeriod);
+        result.setMaximumReportingPeriod(maximumReportingPeriod);
+        result.setReportingChange(reportingChange);
+        result.setReportingTimeout(reportingTimeout);
+        result.setImplemented(implemented);
+        result.setLastReportTime(lastReportTime);
+        result.setLastValue(lastValue);
+
+        ZclClusterType clusterType = ZclClusterType.getValueById(cluster.getClusterId());
+        if (clusterType != null) {
+            result.setCluster(clusterType);
+        }
+
+        return result;
     }
 }
