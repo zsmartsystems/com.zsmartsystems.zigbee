@@ -122,4 +122,53 @@ public class ZigBeeChannelMask {
     public boolean containsChannel(ZigBeeChannel channel) {
         return ((channelMask & channel.getMask()) != 0);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("Channel");
+        if (Integer.bitCount(channelMask) > 1) {
+            builder.append('s');
+        }
+        builder.append(' ');
+        int mask = 1;
+        int start = -1;
+        int channel;
+        boolean first = true;
+        for (channel = 0; channel < 31; channel++) {
+            if ((channelMask & mask) != 0) {
+                if (start == -1) {
+                    start = channel;
+                }
+            } else if (start != -1) {
+                if (!first) {
+                    builder.append(", ");
+                }
+                first = false;
+                builder.append(Integer.toString(start));
+                if (start != channel - 1) {
+                    builder.append('-');
+                    builder.append(Integer.toString(channel - 1));
+                }
+
+                start = -1;
+            }
+
+            mask = mask << 1;
+        }
+
+        if (start != -1) {
+            if (!first) {
+                builder.append(", ");
+            }
+            builder.append(Integer.toString(start));
+            if (start != channel - 1) {
+                builder.append('-');
+                builder.append(Integer.toString(channel - 1));
+            }
+        }
+
+        return builder.toString();
+    }
 }

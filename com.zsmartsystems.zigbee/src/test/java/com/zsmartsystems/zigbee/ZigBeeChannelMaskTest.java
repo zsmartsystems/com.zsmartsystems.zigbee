@@ -35,6 +35,7 @@ public class ZigBeeChannelMaskTest {
         mask.addChannel(ZigBeeChannel.CHANNEL_11);
         assertEquals(2, mask.getChannels().size());
         assertEquals(0xc00, mask.getChannelMask());
+        System.out.println("Mask=" + mask.toString());
 
         mask = new ZigBeeChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ);
         assertEquals(16, mask.getChannels().size());
@@ -45,6 +46,7 @@ public class ZigBeeChannelMaskTest {
         assertTrue(mask.getChannels().contains(ZigBeeChannel.CHANNEL_26));
         assertTrue(mask.containsChannel(11));
         assertTrue(mask.containsChannel(ZigBeeChannel.CHANNEL_11));
+        System.out.println("Mask=" + mask.toString());
 
         assertFalse(mask.containsChannel(8));
         mask.addChannel(8);
@@ -53,5 +55,16 @@ public class ZigBeeChannelMaskTest {
         mask.addChannel(-1);
         mask.addChannel(33);
         assertEquals(17, mask.getChannels().size());
+
+        mask = new ZigBeeChannelMask();
+        mask.addChannel(ZigBeeChannel.CHANNEL_11);
+        System.out.println("Mask=" + mask.toString());
+        mask.addChannel(ZigBeeChannel.CHANNEL_20);
+        System.out.println("Mask=" + mask.toString());
+        mask.addChannel(ZigBeeChannel.CHANNEL_12);
+        System.out.println("Mask=" + mask.toString());
+
+        mask = new ZigBeeChannelMask(0x80F36E);
+        System.out.println("Mask=" + mask.toString());
     }
 }
