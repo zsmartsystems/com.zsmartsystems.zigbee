@@ -175,6 +175,7 @@ public class ZclClusterTest {
 
         ZclAttributeListener listenerMock = Mockito.mock(ZclAttributeListener.class);
         ArgumentCaptor<ZclAttribute> attributeCapture = ArgumentCaptor.forClass(ZclAttribute.class);
+        ArgumentCaptor<Object> valueCaptor = ArgumentCaptor.forClass(Object.class);
         cluster.addAttributeListener(listenerMock);
         cluster.addAttributeListener(listenerMock);
         List<AttributeReport> attributeList = new ArrayList<AttributeReport>();
@@ -185,17 +186,37 @@ public class ZclClusterTest {
         report.setAttributeValue(Integer.valueOf(1));
         System.out.println(report);
         attributeList.add(report);
+
+        AttributeReport report2;
+        report2 = new AttributeReport();
+        report2.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
+        report2.setAttributeIdentifier(0);
+        report2.setAttributeValue(0);
+        System.out.println(report2);
+        attributeList.add(report2);
         cluster.handleAttributeReport(attributeList);
         ZclAttribute attribute = cluster.getAttribute(0);
         assertTrue(attribute.getLastValue() instanceof Boolean);
 
-        Mockito.verify(listenerMock, Mockito.timeout(1000).times(1)).attributeUpdated(attributeCapture.capture());
+        Mockito.verify(listenerMock, Mockito.timeout(1000).times(2)).attributeUpdated(attributeCapture.capture(), valueCaptor.capture());
 
-        attribute = attributeCapture.getValue();
+        List<ZclAttribute> updatedAttributes = attributeCapture.getAllValues();
+        assertEquals(2, updatedAttributes.size());
+        List<Object> values = valueCaptor.getAllValues();
+
+        attribute = updatedAttributes.get(0);
         assertTrue(attribute.getLastValue() instanceof Boolean);
         assertEquals(ZclDataType.BOOLEAN, attribute.getDataType());
         assertEquals(0, attribute.getId());
-        assertEquals(true, attribute.getLastValue());
+        assertEquals(false, attribute.getLastValue());
+        assertEquals(true, values.get(0));
+
+        attribute = updatedAttributes.get(1);
+        assertTrue(attribute.getLastValue() instanceof Boolean);
+        assertEquals(ZclDataType.BOOLEAN, attribute.getDataType());
+        assertEquals(0, attribute.getId());
+        assertEquals(false, attribute.getLastValue());
+        assertEquals(false, values.get(1));
 
         cluster.removeAttributeListener(listenerMock);
     }
