@@ -826,13 +826,14 @@ public abstract class ZclCluster {
      * Notify attribute listeners of an updated {@link ZclAttribute}.
      *
      * @param attribute the {@link ZclAttribute} to notify
+     * @param value the current value of the attribute
      */
-    private void notifyAttributeListener(final ZclAttribute attribute) {
+    private void notifyAttributeListener(final ZclAttribute attribute, final Object value) {
         for (final ZclAttributeListener listener : attributeListeners) {
             NotificationService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    listener.attributeUpdated(attribute);
+                    listener.attributeUpdated(attribute, value);
                 }
             });
         }
@@ -912,8 +913,9 @@ public abstract class ZclCluster {
             logger.debug("{}: Unknown attribute {} in cluster {}", zigbeeEndpoint.getEndpointAddress(), attributeId,
                     clusterId);
         } else {
-            attribute.updateValue(normalizer.normalizeZclData(attribute.getDataType(), attributeValue));
-            notifyAttributeListener(attribute);
+            Object value = normalizer.normalizeZclData(attribute.getDataType(), attributeValue);
+            attribute.updateValue(value);
+            notifyAttributeListener(attribute, value);
         }
     }
 
